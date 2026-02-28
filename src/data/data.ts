@@ -47,11 +47,21 @@ export const data: Array<Course> = [
             },
             {
                 id: "module-5",
-                name: "Authentication & Authorization",
-                description: "Xây dựng hệ thống xác thực và phân quyền trong NestJS với Passport và JWT; triển khai đăng nhập/đăng ký, access & refresh token, guards, role-based access control (RBAC), và tích hợp OAuth2 (Google) để hỗ trợ social login và bảo mật API",
+                name: "WebSocket & Real-time Communication",
+                description:
+                  "Triển khai real-time communication trong NestJS với WebSocket Gateway (Socket.IO), xử lý events, rooms/namespaces, authentication cho socket, và các best practices để đảm bảo hiệu năng và ổn định khi scale.",
                 video: "https://via.placeholder.com/150",
                 duration: "1 hour",
-                order: 3,
+                order: 4,
+            },
+            {
+                id: "module-5",
+                name: "Cron Jobs & Background Processing",
+                description:
+                  "Xây dựng hệ thống tác vụ nền trong NestJS: scheduling với Cron (nestjs/schedule) cho job định kỳ, và xử lý hàng đợi với BullMQ + Redis cho background jobs.",
+                video: "https://via.placeholder.com/150",
+                duration: "1 hour",
+                order: 5,
             }
         ]
     },

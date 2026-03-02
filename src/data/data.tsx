@@ -880,44 +880,933 @@ export const data: Array<Course> = [
     },
     {
         id: "system-design",
-        name: "Khóa System Design",
-        description: "Camp 1 description",
+        name: "System Design Mastery",
+        description: "Khóa học dành cho developers muốn nâng cao kỹ năng thiết kế hệ thống, hiểu sâu về kiến trúc phân tán, scalability, và các pattern phổ biến trong thực tế. Chương trình giúp bạn tự tin tham gia các cuộc phỏng vấn System Design và có khả năng thiết kế hệ thống production-ready.",
         image: "https://via.placeholder.com/150",
+        commitmentTexts: [
+            "Chương trình tập trung vào tư duy và kỹ năng thiết kế hệ thống thực tế.",
+            "Thực hành thiết kế các hệ thống phổ biến: social network, video streaming, e-commerce...",
+            "Được hỗ trợ review design và nhận feedback từ mentor có kinh nghiệm."
+        ],
         price: 100,
         location: "Location 1",
+        originalPrice: 1999000,
+        pricing: [
+            {
+                phase: PricingPhase.Pioneer,
+                price: 1299000,
+                name: "Pioneer",
+                startDate: "2021-01-01",
+                endDate: "2021-01-01",
+                slotAvailable: 15,
+                slotSold: 0,
+            },
+            {
+                phase: PricingPhase.EarlyBird,
+                price: 1599000,
+                name: "Early Bird",
+                startDate: "2021-01-01",
+                endDate: "2021-01-01",
+                slotAvailable: 30,
+                slotSold: 0,
+            },
+            {
+                phase: PricingPhase.Regular,
+                price: 1999000,
+                name: "Regular",
+                startDate: "2021-01-01",
+                endDate: "2021-01-01",
+                slotAvailable: Infinity,
+                slotSold: 0,
+            },
+        ],
+        currentPhase: PricingPhase.Pioneer,
         date: "2021-01-01",
         time: "10:00",
         duration: "1 hour",
         modules: [
             {
-                id: "module-1",
-                name: "Module 1",
-                description: "Module 1 description",
-                video: "https://via.placeholder.com/150",
-                duration: "1 hour",
+                id: "sd-module-1",
+                name: "Fundamentals of System Design",
+                description: "Nền tảng về System Design: scalability, reliability, availability, consistency. Hiểu các khái niệm cơ bản và metrics quan trọng trong thiết kế hệ thống.",
+                video: "",
+                duration: "~2 hours",
                 order: 1,
-            }
-        ]
+                content: (
+                    <div className="text-sm flex flex-col gap-4 ml-4">
+                        <div>
+                            <div className="font-medium">
+                        Module này giúp bạn xây dựng nền tảng vững chắc về System Design,
+                        hiểu các khái niệm cốt lõi và metrics quan trọng.
+                            </div>
+              
+                            <Spacer y={2} />
+    
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>Hiểu các khái niệm cơ bản: scalability, reliability, availability, consistency</li>
+                                <li>Nắm vững các metrics quan trọng: latency, throughput, CAP theorem</li>
+                                <li>Phân biệt vertical scaling vs horizontal scaling</li>
+                                <li>Hiểu các trade-offs trong thiết kế hệ thống</li>
+                                <li>Làm quen với quy trình thiết kế hệ thống từ requirements đến implementation</li>
+                            </ul>
+                        </div>
+              
+                        <div>
+                            <div className="font-medium">
+                        Sau module này, bạn sẽ:
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>Có nền tảng vững chắc về các khái niệm System Design</li>
+                                <li>Biết cách đánh giá và so sánh các giải pháp thiết kế</li>
+                                <li>Hiểu các trade-offs và biết cách đưa ra quyết định phù hợp</li>
+                                <li>Sẵn sàng bước vào phần thiết kế hệ thống cụ thể</li>
+                            </ul>
+                        </div>
+              
+                        <div>
+                            <div className="font-medium">
+                        Cam kết:
+                            </div>
+              
+                            <Spacer y={2} />
+
+                            <div className="text-foreground-500">
+                        Sau khi hoàn tất module này, bạn có nền tảng vững chắc về System Design,
+                        sẵn sàng để thiết kế các hệ thống phức tạp trong các module tiếp theo.
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <Link size="sm" color="primary" underline="always">
+                        Đọc thêm
+                            </Link>
+                        </div>
+                    </div>
+                ),
+            },
+            {
+                id: "sd-module-2",
+                name: "Microservices & Kubernetes Fundamentals",
+                description: "Giới thiệu Microservices và Kubernetes ở mức nền tảng",
+                video: "",
+                duration: "~2 hours",
+                order: 2,
+                content: (
+                    <div className="text-sm flex flex-col gap-4 ml-4">
+                        <div>
+                            <div className="font-medium">
+                        Module này bao gồm:
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>Microservices là gì? So sánh với kiến trúc Monolith</li>
+                                <li>Tại sao hệ thống lớn lại cần chia nhỏ thành nhiều service</li>
+                                <li>Ưu và nhược điểm của kiến trúc Microservices</li>
+                                <li>Kubernetes là gì và giải quyết vấn đề gì trong vận hành</li>
+                                <li>Các khái niệm cơ bản trong k8s: Pod, Deployment, Service</li>
+                                <li>Cách Microservices và Kubernetes phối hợp với nhau trong thực tế</li>
+                            </ul>
+                        </div>
+              
+                        <div>
+                            <div className="font-medium">
+                        Sau module này, bạn sẽ:
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>Hiểu rõ tư duy thiết kế hệ thống theo hướng chia nhỏ service</li>
+                                <li>Biết khi nào nên dùng Microservices thay vì Monolith</li>
+                                <li>Nắm được vai trò của Kubernetes trong việc quản lý và scale hệ thống</li>
+                                <li>Có nền tảng để triển khai các hệ thống phân tán ở mức cơ bản</li>
+                            </ul>
+                        </div>
+              
+                        <div>
+                            <div className="font-medium">
+                        Cam kết:
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <div className="text-foreground-500">
+                        Sau khi hoàn tất module này, bạn hiểu được cách các hệ thống hiện đại
+                        được chia nhỏ và vận hành trong production, sẵn sàng bước vào các
+                        bài thiết kế và triển khai thực tế ở các module tiếp theo.
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <Link size="sm" color="primary" underline="always">
+                        Đọc thêm
+                            </Link>
+                        </div>
+                    </div>
+                ),
+            },
+            {
+                id: "sd-module-3",
+                name: "Communication Patterns",
+                description: "Các pattern giao tiếp phổ biến giữa services trong hệ thống Microservices",
+                video: "",
+                duration: "~2 hours",
+                order: 3,
+                content: (
+                    <div className="text-sm flex flex-col gap-4 ml-4">
+                        <div>
+                            <div className="font-medium">
+                        Module này bao gồm:
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>API Gateway Pattern: 1 cổng vào cho client, routing và auth cơ bản</li>
+                                <li>Backend for Frontend (BFF): tách backend theo từng loại client (web/mobile)</li>
+                                <li>Service-to-Service: giao tiếp giữa services bằng REST vs gRPC</li>
+                                <li>Event-Driven Architecture: dùng Kafka để xử lý bất đồng bộ</li>
+                                <li>Publish–Subscribe: publish event, nhiều consumer xử lý song song</li>
+                            </ul>
+                        </div>
+              
+                        <div>
+                            <div className="font-medium">
+                        Sau module này, bạn sẽ:
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>Biết chọn đúng cách giao tiếp giữa services theo từng bài toán</li>
+                                <li>Hiểu khi nào nên dùng sync (REST/gRPC) và khi nào nên dùng async (Kafka)</li>
+                                <li>Nắm được vai trò của API Gateway và BFF trong hệ thống thực tế</li>
+                                <li>Hiểu Pub/Sub hoạt động ra sao và áp dụng được cho các flow phổ biến</li>
+                            </ul>
+                        </div>
+              
+                        <div>
+                            <div className="font-medium">
+                        Cam kết:
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <div className="text-foreground-500">
+                        Sau khi hoàn tất module này, bạn có thể thiết kế luồng giao tiếp giữa các services
+                        một cách rõ ràng và hợp lý, tránh lỗi “gọi nhau lung tung” và sẵn sàng bước vào
+                        các pattern về dữ liệu và consistency ở module tiếp theo.
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <Link size="sm" color="primary" underline="always">
+                        Đọc thêm
+                            </Link>
+                        </div>
+                    </div>
+                ),
+            },
+            {
+                id: "sd-module-4",
+                name: "Data & Consistency Patterns",
+                description: "Các pattern dữ liệu và consistency khi hệ thống có nhiều services",
+                video: "",
+                duration: "~2 hours",
+                order: 4,
+                content: (
+                    <div className="text-sm flex flex-col gap-4 ml-4">
+                        <div>
+                            <div className="font-medium">
+                        Module này bao gồm:
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>Database per Service: mỗi service quản lý dữ liệu của mình</li>
+                                <li>Consistency là gì? Strong vs Eventual (hiểu ở mức đơn giản)</li>
+                                <li>Vì sao distributed transaction khó và không nên “join DB” giữa services</li>
+                                <li>Saga Pattern: xử lý nhiều bước (đặt hàng → thanh toán → trừ kho)</li>
+                                <li>CQRS: tách read và write để dễ scale và tối ưu</li>
+                                <li>Cache Aside: tăng tốc đọc dữ liệu với cache</li>
+                                <li>Idempotency: xử lý retry mà không bị double charge / double create</li>
+                            </ul>
+                        </div>
+              
+                        <div>
+                            <div className="font-medium">
+                        Sau module này, bạn sẽ:
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>Hiểu cách tổ chức dữ liệu khi có nhiều services</li>
+                                <li>Biết vì sao hệ thống phân tán thường chấp nhận eventual consistency</li>
+                                <li>Biết áp dụng Saga để tránh lỗi “lỗi giữa chừng” trong flow nhiều bước</li>
+                                <li>Nắm được tư duy CQRS và cache để tối ưu hiệu năng ở mức cơ bản</li>
+                            </ul>
+                        </div>
+              
+                        <div>
+                            <div className="font-medium">
+                        Cam kết:
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <div className="text-foreground-500">
+                        Kết thúc module này, bạn hiểu được cách các hệ thống microservices xử lý dữ liệu
+                        và consistency trong thực tế, đủ nền tảng để tiếp tục sang phần scale/performance
+                        và reliability ở các module tiếp theo.
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <Link size="sm" color="primary" underline="always">
+                        Đọc thêm
+                            </Link>
+                        </div>
+                    </div>
+                ),
+            },
+            {
+                id: "sd-module-5",
+                name: "Scalability & Performance Patterns",
+                description: "Các pattern giúp hệ thống chịu tải tốt và chạy nhanh hơn khi traffic tăng",
+                video: "",
+                duration: "~2 hours",
+                order: 5,
+                content: (
+                    <div className="text-sm flex flex-col gap-4 ml-4">
+                        <div>
+                            <div className="font-medium">
+                        Module này bao gồm:
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>Scalability là gì? Khi traffic tăng thì hệ thống “đứt” ở đâu</li>
+                                <li>Horizontal scaling: scale service bằng cách tăng replicas</li>
+                                <li>Load Balancer: phân phối request đều giữa nhiều instance</li>
+                                <li>Caching cơ bản: cache để giảm tải DB và tăng tốc đọc</li>
+                                <li>Read replica: tách read ra để hệ thống chịu tải tốt hơn</li>
+                                <li>Sharding/Partitioning: chia dữ liệu để tránh “1 DB gánh hết”</li>
+                                <li>Rate limiting: chặn spam và bảo vệ hệ thống khi quá tải</li>
+                                <li>CDN (ở mức khái niệm): tăng tốc nội dung tĩnh cho người dùng</li>
+                            </ul>
+                        </div>
+              
+                        <div>
+                            <div className="font-medium">
+                        Sau module này, bạn sẽ:
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>Biết cách scale service khi lượng người dùng tăng</li>
+                                <li>Hiểu vì sao cache và read replica giúp hệ thống nhanh và rẻ hơn</li>
+                                <li>Biết khi nào nên chia dữ liệu (shard/partition) và trade-off cơ bản</li>
+                                <li>Biết cách bảo vệ hệ thống bằng rate limiting khi gặp traffic bất thường</li>
+                            </ul>
+                        </div>
+              
+                        <div>
+                            <div className="font-medium">
+                        Cam kết:
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <div className="text-foreground-500">
+                        Kết thúc module này, bạn có thể chọn và kết hợp các pattern scale/performance
+                        để hệ thống chạy ổn khi traffic tăng, sẵn sàng bước sang phần reliability/resilience
+                        ở module tiếp theo.
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <Link size="sm" color="primary" underline="always">
+                        Đọc thêm
+                            </Link>
+                        </div>
+                    </div>
+                ),
+            },
+            {
+                id: "sd-module-6",
+                name: "Reliability & Resilience Patterns",
+                description: "Các pattern giúp hệ thống chịu lỗi tốt và không sập dây chuyền.",
+                video: "",
+                duration: "~2 hours",
+                order: 6,
+                content: (
+                    <div className="text-sm flex flex-col gap-4 ml-4">
+                        <div>
+                            <div className="font-medium">Module này bao gồm:</div>
+                            <Spacer y={2} />
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>Failure là bình thường trong distributed system</li>
+                                <li>Timeout: tránh “đợi vô hạn” làm nghẽn hệ thống</li>
+                                <li>Retry + backoff: retry đúng cách để không làm tình hình tệ hơn</li>
+                                <li>Circuit Breaker: ngăn lỗi lan dây chuyền</li>
+                                <li>Bulkhead: cô lập tài nguyên để tránh sập toàn hệ</li>
+                                <li>Health checks: liveness/readiness để tự hồi phục</li>
+                                <li>Graceful degradation: giảm tính năng nhưng vẫn sống</li>
+                            </ul>
+                        </div>
+            
+                        <div>
+                            <div className="font-medium">Sau module này, bạn sẽ:</div>
+                            <Spacer y={2} />
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>Biết thiết kế hệ thống “chịu lỗi” thay vì chỉ “chạy được”</li>
+                                <li>Biết dùng timeout/retry/circuit breaker đúng tình huống</li>
+                                <li>Hiểu cách tránh lỗi cascade làm sập hệ thống</li>
+                                <li>Biết các nguyên tắc vận hành để hệ thống ổn định hơn</li>
+                            </ul>
+                        </div>
+            
+                        <div>
+                            <div className="font-medium">Cam kết:</div>
+                            <Spacer y={2} />
+                            <div className="text-foreground-500">
+                        Kết thúc module, bạn có tư duy và toolkit cơ bản để thiết kế hệ thống ổn định,
+                        chịu lỗi tốt trong môi trường production.
+                            </div>
+                            <Spacer y={2} />
+                            <Link size="sm" color="primary" underline="always">
+                        Đọc thêm
+                            </Link>
+                        </div>
+                    </div>
+                ),
+            },
+            {
+                id: "sd-module-7",
+                name: "Monitoring & Observability",
+                description: "Theo dõi hệ thống để phát hiện lỗi sớm và debug nhanh trong production",
+                video: "",
+                duration: "~2 hours",
+                order: 7,
+                content: (
+                    <div className="text-sm flex flex-col gap-4 ml-4">
+                        <div>
+                            <div className="font-medium">
+                        Module này bao gồm:
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>Monitoring vs Observability: khác nhau ở mức ý tưởng</li>
+                                <li>3 trụ cột: Logs, Metrics, Traces (hiểu đơn giản và dễ áp dụng)</li>
+                                <li>Các metrics quan trọng: latency, throughput, error rate</li>
+                                <li>Golden Signals (SRE): 4 tín hiệu để biết hệ thống “đang ổn hay không”</li>
+                                <li>Centralized logging: gom log về một chỗ để dễ tìm và debug</li>
+                                <li>Distributed tracing: theo dõi một request đi qua nhiều services</li>
+                                <li>Health check & alerting: báo động khi có vấn đề trước khi user than</li>
+                                <li>Dashboard cơ bản: nhìn là biết service nào đang “đỏ”</li>
+                            </ul>
+                        </div>
+              
+                        <div>
+                            <div className="font-medium">
+                        Sau module này, bạn sẽ:
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>Biết theo dõi hệ thống bằng logs/metrics ở mức cơ bản</li>
+                                <li>Biết chọn metrics quan trọng để đo “sức khỏe” của service</li>
+                                <li>Hiểu tracing giúp debug hệ microservices nhanh hơn như thế nào</li>
+                                <li>Biết cách thiết kế alerting để phát hiện lỗi sớm</li>
+                            </ul>
+                        </div>
+              
+                        <div>
+                            <div className="font-medium">
+                        Cam kết:
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <div className="text-foreground-500">
+                        Kết thúc module này, bạn có thể tự xây một “bộ quan sát” cơ bản cho hệ thống:
+                        biết đo, biết theo dõi, biết cảnh báo và biết debug — đủ để vận hành các hệ
+                        microservices một cách tự tin hơn trong production.
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <Link size="sm" color="primary" underline="always">
+                        Đọc thêm
+                            </Link>
+                        </div>
+                    </div>
+                ),
+            },
+            {
+                id: "sd-module-8",
+                name: "System Security & Infrastructure Protection",
+                description: "Bảo vệ hệ thống ở mức production: network, key management và access control",
+                video: "",
+                duration: "~2 hours",
+                order: 8,
+                content: (
+                    <div className="text-sm flex flex-col gap-4 ml-4">
+                        <div>
+                            <div className="font-medium">
+                        Module này bao gồm:
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>Security trong distributed system: vì sao production luôn phải assume “zero trust”</li>
+                                <li>Key Management: API keys, JWT secrets, encryption keys</li>
+                                <li>Secrets management: env vs K8s Secret vs Vault (ở mức khái niệm)</li>
+                                <li>Firewall & Network isolation: chặn traffic không cần thiết</li>
+                                <li>VPC & private network (hiểu cách cô lập service nội bộ)</li>
+                                <li>Service-to-service authentication (mTLS ở mức tư duy)</li>
+                                <li>Role-Based Access Control (RBAC) trong hệ thống</li>
+                                <li>Nguyên tắc least privilege và separation of concerns</li>
+                            </ul>
+                        </div>
+              
+                        <div>
+                            <div className="font-medium">
+                        Sau module này, bạn sẽ:
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>Hiểu vì sao security phải thiết kế từ đầu, không phải vá sau</li>
+                                <li>Biết cách quản lý secrets và keys an toàn hơn</li>
+                                <li>Hiểu network isolation giúp giảm rủi ro ra sao</li>
+                                <li>Có tư duy production-level security khi thiết kế hệ thống</li>
+                            </ul>
+                        </div>
+              
+                        <div>
+                            <div className="font-medium">
+                        Cam kết:
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <div className="text-foreground-500">
+                        Kết thúc module này, bạn có nền tảng bảo vệ hệ thống ở mức infrastructure —
+                        hiểu cách quản lý key, cô lập network và kiểm soát quyền truy cập để hệ
+                        thống không chỉ “chạy được” mà còn “chạy an toàn” trong production.
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <Link size="sm" color="primary" underline="always">
+                        Đọc thêm
+                            </Link>
+                        </div>
+                    </div>
+                ),
+            },
+            {
+                id: "sd-module-9",
+                name: "System Design Case Study",
+                description: "Áp dụng toàn bộ kiến thức để thiết kế một hệ thống production hoàn chỉnh",
+                video: "",
+                duration: "~3 hours",
+                order: 9,
+                content: (
+                    <div className="text-sm flex flex-col gap-4 ml-4">
+                        <div>
+                            <div className="font-medium">
+                        Module này bao gồm:
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>Phân tích requirements: functional vs non-functional</li>
+                                <li>Thiết kế high-level architecture (microservices + gateway)</li>
+                                <li>Thiết kế communication flow (sync vs async)</li>
+                                <li>Thiết kế database & consistency strategy</li>
+                                <li>Áp dụng caching, read replica, scaling strategy</li>
+                                <li>Xử lý failure: retry, circuit breaker, graceful degradation</li>
+                                <li>Monitoring & alerting cho production</li>
+                                <li>Security: auth, key management, network isolation</li>
+                            </ul>
+                        </div>
+              
+                        <div>
+                            <div className="font-medium">
+                        Case study thực hành:
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>Design E-commerce System</li>
+                                <li>Design Chat Application</li>
+                                <li>Design Payment System</li>
+                                <li>Design Real-time Notification System</li>
+                            </ul>
+                        </div>
+              
+                        <div>
+                            <div className="font-medium">
+                        Sau module này, bạn sẽ:
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>Biết cách bắt đầu một bài System Design từ con số 0</li>
+                                <li>Biết trình bày kiến trúc logic và có cấu trúc</li>
+                                <li>Biết chọn trade-off phù hợp với requirement</li>
+                                <li>Có template tư duy để tự luyện các bài design khác</li>
+                            </ul>
+                        </div>
+              
+                        <div>
+                            <div className="font-medium">
+                        Cam kết:
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <div className="text-foreground-500">
+                        Kết thúc module này, bạn có khả năng thiết kế và giải thích một hệ thống
+                        production hoàn chỉnh, từ architecture đến scale, reliability,
+                        monitoring và security — đủ nền tảng cho project thực tế hoặc interview.
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <Link size="sm" color="primary" underline="always">
+                        Đọc thêm
+                            </Link>
+                        </div>
+                    </div>
+                ),
+            },
+            {
+                id: "sd-module-10",
+                name: "Advanced Topics",
+                description: "Các chủ đề nâng cao thường gặp khi build hệ thống production",
+                video: "",
+                duration: "~3 hours",
+                order: 10,
+                content: (
+                    <div className="text-sm flex flex-col gap-4 ml-4">
+                        <div>
+                            <div className="font-medium">
+                        Module này bao gồm:
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>SSO (Single Sign-On): đăng nhập 1 lần cho nhiều hệ thống/app</li>
+                                <li>OAuth/OIDC (khái niệm): nền tảng phổ biến để triển khai SSO</li>
+                                <li>Time-series DB là gì? Khi nào nên dùng (metrics, price, logs…)</li>
+                                <li>So sánh nhanh TSDB vs relational DB trong use case thực tế</li>
+                                <li>Service Discovery là gì? Tại sao microservices cần nó</li>
+                                <li>Service Discovery trong k8s: Service name, DNS, load balancing nội bộ</li>
+                                <li>Trade-offs & pitfalls phổ biến khi áp dụng các chủ đề nâng cao</li>
+                            </ul>
+                        </div>
+              
+                        <div>
+                            <div className="font-medium">
+                        Sau module này, bạn sẽ:
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>Hiểu SSO hoạt động ra sao và dùng khi nào</li>
+                                <li>Biết nhận diện bài toán phù hợp cho time-series database</li>
+                                <li>Hiểu service discovery giúp các service “tìm nhau” trong production</li>
+                                <li>Biết các trade-offs cơ bản để chọn giải pháp phù hợp</li>
+                            </ul>
+                        </div>
+              
+                        <div>
+                            <div className="font-medium">
+                        Cam kết:
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <div className="text-foreground-500">
+                        Kết thúc module này, bạn có thêm bộ “vũ khí nâng cao” để đọc kiến trúc production
+                        dễ hơn và tự tin hơn khi gặp các bài toán hệ thống thực tế vượt khỏi mức cơ bản.
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <Link size="sm" color="primary" underline="always">
+                        Đọc thêm
+                            </Link>
+                        </div>
+                    </div>
+                ),
+            }            
+        ],
+
     },
     {
         id: "devops-cloud",
-        name: "Khóa DevOps & Cloud",
-        description: "Camp 1 description",
+        name: "DevOps & Cloud Mastery",
+        description: "Khóa học dành cho developers muốn làm chủ DevOps và Cloud infrastructure. Học cách sử dụng Terraform để quản lý infrastructure as code, triển khai trên các cloud provider phổ biến (AWS, Digital Ocean, GCP), và xây dựng CI/CD pipeline với Jenkins, GitHub Actions và ArgoCD. Chương trình giúp bạn tự tin quản lý và vận hành hệ thống production trên cloud.",
         image: "https://via.placeholder.com/150",
+        commitmentTexts: [
+            "Chương trình thực hành với các công cụ DevOps phổ biến trong thực tế.",
+            "Thực hành triển khai infrastructure trên AWS, Digital Ocean và GCP.",
+            "Xây dựng CI/CD pipeline hoàn chỉnh từ code đến production."
+        ],
         price: 100,
         location: "Location 1",
+        originalPrice: 2199000,
+        pricing: [
+            {
+                phase: PricingPhase.Pioneer,
+                price: 1499000,
+                name: "Pioneer",
+                startDate: "2021-01-01",
+                endDate: "2021-01-01",
+                slotAvailable: 15,
+                slotSold: 0,
+            },
+            {
+                phase: PricingPhase.EarlyBird,
+                price: 1799000,
+                name: "Early Bird",
+                startDate: "2021-01-01",
+                endDate: "2021-01-01",
+                slotAvailable: 30,
+                slotSold: 0,
+            },
+            {
+                phase: PricingPhase.Regular,
+                price: 2199000,
+                name: "Regular",
+                startDate: "2021-01-01",
+                endDate: "2021-01-01",
+                slotAvailable: Infinity,
+                slotSold: 0,
+            },
+        ],
+        currentPhase: PricingPhase.Pioneer,
         date: "2021-01-01",
         time: "10:00",
         duration: "1 hour",
         modules: [
             {
-                id: "module-1",
-                name: "Module 1",
-                description: "Module 1 description",
-                video: "https://via.placeholder.com/150",
-                duration: "1 hour",
+                id: "devops-module-1",
+                name: "Terraform Fundamentals & Infrastructure as Code",
+                description: "Làm quen với Terraform, hiểu Infrastructure as Code (IaC), viết Terraform configuration để quản lý infrastructure một cách tự động và có thể tái sử dụng.",
+                video: "",
+                duration: "~3 hours",
                 order: 1,
-            }
-        ]
+                content: (
+                    <div className="text-sm flex flex-col gap-4 ml-4">
+                        <div>
+                            <div className="font-medium">
+                        Module này giúp bạn làm chủ Terraform để quản lý infrastructure như code,
+                        thay vì tạo tài nguyên thủ công trên cloud console.
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>Hiểu Infrastructure as Code (IaC) và lợi ích của việc quản lý infrastructure bằng code</li>
+                                <li>Cài đặt và cấu hình Terraform, hiểu cấu trúc file .tf</li>
+                                <li>Viết Terraform configuration: providers, resources, variables, outputs</li>
+                                <li>Sử dụng Terraform state để quản lý trạng thái infrastructure</li>
+                                <li>Áp dụng best practices: modules, workspaces, remote state</li>
+                                <li>Xử lý dependencies và lifecycle management trong Terraform</li>
+                            </ul>
+                        </div>
+              
+                        <div>
+                            <div className="font-medium">
+                        Sau module này, bạn sẽ:
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>Biết cách viết Terraform configuration để tạo và quản lý infrastructure</li>
+                                <li>Hiểu cách tổ chức Terraform code theo module để tái sử dụng</li>
+                                <li>Tự tin quản lý infrastructure bằng code thay vì click trên console</li>
+                                <li>Sẵn sàng áp dụng Terraform cho các cloud provider khác nhau</li>
+                            </ul>
+                        </div>
+              
+                        <div>
+                            <div className="font-medium">
+                        Cam kết:
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <div className="text-foreground-500">
+                        Sau khi hoàn tất module này, bạn có thể viết Terraform configuration
+                        để quản lý infrastructure một cách tự động và có tổ chức, sẵn sàng
+                        triển khai trên các cloud provider.
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <Link size="sm" color="primary" underline="always">
+                        Đọc thêm
+                            </Link>
+                        </div>
+                    </div>
+                ),
+            },
+            {
+                id: "devops-module-2",
+                name: "Cloud Infrastructure: AWS, Digital Ocean & GCP",
+                description: "Thực hành tạo và quản lý tài nguyên trên các cloud provider phổ biến: AWS, Digital Ocean và GCP. Học cách sử dụng Terraform để triển khai infrastructure trên từng platform.",
+                video: "",
+                duration: "~4 hours",
+                order: 2,
+                content: (
+                    <div className="text-sm flex flex-col gap-4 ml-4">
+                        <div>
+                            <div className="font-medium">
+                        Module này giúp bạn làm quen với các cloud provider phổ biến và
+                        cách sử dụng Terraform để triển khai infrastructure trên từng platform.
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>AWS: EC2, S3, RDS, VPC, IAM, Load Balancer - thiết lập infrastructure cơ bản</li>
+                                <li>Digital Ocean: Droplets, Spaces, Managed Databases, Load Balancers</li>
+                                <li>GCP: Compute Engine, Cloud Storage, Cloud SQL, VPC, IAM</li>
+                                <li>Sử dụng Terraform providers cho AWS, Digital Ocean và GCP</li>
+                                <li>So sánh và lựa chọn cloud provider phù hợp cho từng use case</li>
+                                <li>Quản lý multi-cloud infrastructure với Terraform</li>
+                                <li>Best practices cho security, cost optimization và monitoring</li>
+                            </ul>
+                        </div>
+              
+                        <div>
+                            <div className="font-medium">
+                        Sau module này, bạn sẽ:
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>Biết cách tạo và quản lý tài nguyên trên AWS, Digital Ocean và GCP</li>
+                                <li>Tự tin sử dụng Terraform để triển khai infrastructure trên nhiều cloud provider</li>
+                                <li>Hiểu sự khác biệt giữa các cloud provider và khi nào nên dùng cái nào</li>
+                                <li>Có khả năng thiết kế và triển khai infrastructure production-ready</li>
+                            </ul>
+                        </div>
+              
+                        <div>
+                            <div className="font-medium">
+                        Cam kết:
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <div className="text-foreground-500">
+                        Sau khi hoàn tất module này, bạn có thể tự triển khai infrastructure
+                        trên AWS, Digital Ocean và GCP bằng Terraform, sẵn sàng cho các
+                        bước CI/CD và automation phía sau.
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <Link size="sm" color="primary" underline="always">
+                        Đọc thêm
+                            </Link>
+                        </div>
+                    </div>
+                ),
+            },
+            {
+                id: "devops-module-3",
+                name: "CI/CD Pipeline: Jenkins, GitHub Actions & ArgoCD",
+                description: "Xây dựng CI/CD pipeline hoàn chỉnh với Jenkins, GitHub Actions và ArgoCD. Tự động hóa quy trình build, test, deploy và quản lý ứng dụng trên Kubernetes.",
+                video: "",
+                duration: "~4 hours",
+                order: 3,
+                content: (
+                    <div className="text-sm flex flex-col gap-4 ml-4">
+                        <div>
+                            <div className="font-medium">
+                        Module này giúp bạn xây dựng CI/CD pipeline hoàn chỉnh,
+                        tự động hóa quy trình từ code đến production.
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>Jenkins: Setup Jenkins server, tạo pipeline với Jenkinsfile, tích hợp với Git</li>
+                                <li>GitHub Actions: Workflow syntax, actions, secrets, matrix builds, deployment</li>
+                                <li>ArgoCD: GitOps workflow, application management, sync policies, rollback</li>
+                                <li>Thiết kế CI pipeline: build, test, lint, security scanning</li>
+                                <li>Thiết kế CD pipeline: build Docker image, push to registry, deploy to Kubernetes</li>
+                                <li>Tích hợp với cloud infrastructure đã tạo ở module trước</li>
+                                <li>Best practices: environment promotion, blue-green deployment, canary releases</li>
+                            </ul>
+                        </div>
+              
+                        <div>
+                            <div className="font-medium">
+                        Sau module này, bạn sẽ:
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>Biết cách setup và sử dụng Jenkins, GitHub Actions và ArgoCD</li>
+                                <li>Tự xây dựng được CI/CD pipeline hoàn chỉnh cho dự án thực tế</li>
+                                <li>Hiểu GitOps workflow và cách quản lý deployment bằng Git</li>
+                                <li>Tự tin triển khai ứng dụng tự động từ code đến production</li>
+                            </ul>
+                        </div>
+              
+                        <div>
+                            <div className="font-medium">
+                        Cam kết:
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <div className="text-foreground-500">
+                        Sau khi hoàn tất module này, bạn có thể xây dựng CI/CD pipeline
+                        hoàn chỉnh với Jenkins, GitHub Actions và ArgoCD, tự động hóa
+                        quy trình deploy và quản lý ứng dụng trên cloud.
+                            </div>
+              
+                            <Spacer y={2} />
+              
+                            <Link size="sm" color="primary" underline="always">
+                        Đọc thêm
+                            </Link>
+                        </div>
+                    </div>
+                ),
+            },
+        ],
     }
 ]

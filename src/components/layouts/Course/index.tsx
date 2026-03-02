@@ -11,7 +11,7 @@ export interface CourseProps {
 }
 export const Course = ({ course }: CourseProps) => {
     return (
-        <div className="p-6">
+        <div>
             <Breadcrumbs>
                 <BreadcrumbItem>
                     <Link href="/">Home</Link>

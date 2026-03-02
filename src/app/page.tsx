@@ -115,7 +115,7 @@ const Page = () => {
             >
                 <Image removeWrapper src="/3.png" alt="1" className="col-span-2"/>
                 <div className="col-span-3">
-                    <div className="text-xl font-bold flex gap-1">Project có giá trị thực tế</div>
+                    <div className="text-xl font-bold flex gap-1">From Code to Career</div>
                     <Spacer y={4} />
                     <div className="text-sm text-foreground-500 text-justify">
                     Chúng tôi dạy để bạn xây dựng những project có giá trị thực sự và hỗ trợ lâu dài trong quá trình phát triển sự nghiệp.

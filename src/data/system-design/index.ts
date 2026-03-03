@@ -22,11 +22,11 @@ export const systemDesignCourse: Course = {
     ],
     price: 100,
     location: "Location 1",
-    originalPrice: 1999000,
+    originalPrice: 2499000,
     pricing: [
         {
             phase: PricingPhase.Pioneer,
-            price: 1299000,
+            price: 1499000,
             name: "Pioneer",
             startDate: "2021-01-01",
             endDate: "2021-01-01",
@@ -35,7 +35,7 @@ export const systemDesignCourse: Course = {
         },
         {
             phase: PricingPhase.EarlyBird,
-            price: 1599000,
+            price: 2249000,
             name: "Early Bird",
             startDate: "2021-01-01",
             endDate: "2021-01-01",
@@ -44,7 +44,7 @@ export const systemDesignCourse: Course = {
         },
         {
             phase: PricingPhase.Regular,
-            price: 1999000,
+            price: 2999000,
             name: "Regular",
             startDate: "2021-01-01",
             endDate: "2021-01-01",

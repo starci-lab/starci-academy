@@ -21,7 +21,7 @@ export const devopsCloudCourse: Course = {
     ],
     price: 100,
     location: "Location 1",
-    originalPrice: 2199000,
+    originalPrice: 2999000,
     pricing: [
         {
             phase: PricingPhase.Pioneer,
@@ -34,7 +34,7 @@ export const devopsCloudCourse: Course = {
         },
         {
             phase: PricingPhase.EarlyBird,
-            price: 1799000,
+            price: 2249000,
             name: "Early Bird",
             startDate: "2021-01-01",
             endDate: "2021-01-01",
@@ -43,7 +43,7 @@ export const devopsCloudCourse: Course = {
         },
         {
             phase: PricingPhase.Regular,
-            price: 2199000,
+            price: 2999000,
             name: "Regular",
             startDate: "2021-01-01",
             endDate: "2021-01-01",

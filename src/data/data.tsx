@@ -417,7 +417,7 @@ export const data: Array<Course> = [
                 content: (
                     <div className="text-sm flex flex-col gap-4 ml-4">
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Module này giúp bạn nhìn backend như một hệ thống hoàn chỉnh —
                         có kiến trúc, có logging và có kiểm soát bảo mật,
                         thay vì chỉ là tập hợp các file controller và service.
@@ -436,7 +436,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Sau module này, bạn sẽ:
                             </div>
               
@@ -451,7 +451,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Cam kết:
                             </div>
               
@@ -483,7 +483,7 @@ export const data: Array<Course> = [
                 content: (
                     <div className="text-sm flex flex-col gap-4 ml-4">
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Module này giúp bạn containerize backend và triển khai lên VPS thực tế,
                         thay vì chỉ chạy trên localhost.
                             </div>
@@ -501,7 +501,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Sau module này, bạn sẽ:
                             </div>
               
@@ -516,7 +516,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Cam kết:
                             </div>
               
@@ -550,7 +550,7 @@ export const data: Array<Course> = [
                 content: (
                     <div className="text-sm flex flex-col gap-4 ml-4">
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Module này giúp bạn xây dựng nền tảng frontend React có cấu trúc rõ ràng,
                         sẵn sàng tích hợp với backend đã xây ở các phần trước.
                             </div>
@@ -567,7 +567,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Sau module này, bạn sẽ:
                             </div>
               
@@ -582,7 +582,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Cam kết:
                             </div>
               
@@ -613,7 +613,7 @@ export const data: Array<Course> = [
                 content: (
                     <div className="text-sm flex flex-col gap-4 ml-4">
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Module này giúp bạn viết React có cấu trúc và kiểm soát,
                         tách logic khỏi UI và quản lý state rõ ràng khi dự án bắt đầu phức tạp.
                             </div>
@@ -632,7 +632,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Sau module này, bạn sẽ:
                             </div>
               
@@ -648,7 +648,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Cam kết:
                             </div>
               
@@ -679,7 +679,7 @@ export const data: Array<Course> = [
                 content: (
                     <div className="text-sm flex flex-col gap-4 ml-4">
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Module này giúp bạn xây dựng giao diện dashboard có cấu trúc,
                         đồng bộ và sẵn sàng cho sản phẩm thực tế.
                             </div>
@@ -696,7 +696,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Sau module này, bạn sẽ:
                             </div>
               
@@ -711,7 +711,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Cam kết:
                             </div>
               
@@ -742,7 +742,7 @@ export const data: Array<Course> = [
                 content: (
                     <div className="text-sm flex flex-col gap-4 ml-4">
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Module này giúp bạn tổ chức frontend theo hướng production-ready:
                         có data layer, form system và utilities rõ ràng, đồng thời triển khai lên Vercel
                         để sẵn sàng cho người dùng truy cập từ internet.
@@ -775,7 +775,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Sau module này, bạn sẽ:
                             </div>
               
@@ -793,7 +793,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Cam kết:
                             </div>
               
@@ -825,7 +825,7 @@ export const data: Array<Course> = [
                 content: (
                     <div className="text-sm flex flex-col gap-4 ml-4">
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Đây là module tổng hợp, nơi bạn ghép tất cả kỹ năng đã học thành một sản phẩm fullstack hoàn chỉnh.
                             </div>
               
@@ -841,7 +841,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Sau module này, bạn sẽ:
                             </div>
               
@@ -856,7 +856,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Cam kết:
                             </div>
               
@@ -935,7 +935,7 @@ export const data: Array<Course> = [
                 content: (
                     <div className="text-sm flex flex-col gap-4 ml-4">
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Module này giúp bạn xây dựng nền tảng vững chắc về System Design,
                         hiểu các khái niệm cốt lõi và metrics quan trọng.
                             </div>
@@ -952,7 +952,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Sau module này, bạn sẽ:
                             </div>
               
@@ -967,7 +967,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Cam kết:
                             </div>
               
@@ -997,7 +997,7 @@ export const data: Array<Course> = [
                 content: (
                     <div className="text-sm flex flex-col gap-4 ml-4">
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Module này bao gồm:
                             </div>
               
@@ -1014,7 +1014,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Sau module này, bạn sẽ:
                             </div>
               
@@ -1029,7 +1029,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Cam kết:
                             </div>
               
@@ -1060,7 +1060,7 @@ export const data: Array<Course> = [
                 content: (
                     <div className="text-sm flex flex-col gap-4 ml-4">
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Module này bao gồm:
                             </div>
               
@@ -1076,7 +1076,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Sau module này, bạn sẽ:
                             </div>
               
@@ -1091,7 +1091,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Cam kết:
                             </div>
               
@@ -1122,7 +1122,7 @@ export const data: Array<Course> = [
                 content: (
                     <div className="text-sm flex flex-col gap-4 ml-4">
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Module này bao gồm:
                             </div>
               
@@ -1140,7 +1140,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Sau module này, bạn sẽ:
                             </div>
               
@@ -1155,7 +1155,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Cam kết:
                             </div>
               
@@ -1186,7 +1186,7 @@ export const data: Array<Course> = [
                 content: (
                     <div className="text-sm flex flex-col gap-4 ml-4">
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Module này bao gồm:
                             </div>
               
@@ -1205,7 +1205,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Sau module này, bạn sẽ:
                             </div>
               
@@ -1220,7 +1220,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Cam kết:
                             </div>
               
@@ -1251,7 +1251,7 @@ export const data: Array<Course> = [
                 content: (
                     <div className="text-sm flex flex-col gap-4 ml-4">
                         <div>
-                            <div className="font-medium">Module này bao gồm:</div>
+                            <div>Module này bao gồm:</div>
                             <Spacer y={2} />
                             <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
                                 <li>Failure là bình thường trong distributed system</li>
@@ -1265,7 +1265,7 @@ export const data: Array<Course> = [
                         </div>
             
                         <div>
-                            <div className="font-medium">Sau module này, bạn sẽ:</div>
+                            <div>Sau module này, bạn sẽ:</div>
                             <Spacer y={2} />
                             <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
                                 <li>Biết thiết kế hệ thống “chịu lỗi” thay vì chỉ “chạy được”</li>
@@ -1276,7 +1276,7 @@ export const data: Array<Course> = [
                         </div>
             
                         <div>
-                            <div className="font-medium">Cam kết:</div>
+                            <div>Cam kết:</div>
                             <Spacer y={2} />
                             <div className="text-foreground-500">
                         Kết thúc module, bạn có tư duy và toolkit cơ bản để thiết kế hệ thống ổn định,
@@ -1300,7 +1300,7 @@ export const data: Array<Course> = [
                 content: (
                     <div className="text-sm flex flex-col gap-4 ml-4">
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Module này bao gồm:
                             </div>
               
@@ -1319,7 +1319,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Sau module này, bạn sẽ:
                             </div>
               
@@ -1334,7 +1334,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Cam kết:
                             </div>
               
@@ -1365,7 +1365,7 @@ export const data: Array<Course> = [
                 content: (
                     <div className="text-sm flex flex-col gap-4 ml-4">
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Module này bao gồm:
                             </div>
               
@@ -1384,7 +1384,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Sau module này, bạn sẽ:
                             </div>
               
@@ -1399,7 +1399,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Cam kết:
                             </div>
               
@@ -1430,7 +1430,7 @@ export const data: Array<Course> = [
                 content: (
                     <div className="text-sm flex flex-col gap-4 ml-4">
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Module này bao gồm:
                             </div>
               
@@ -1449,7 +1449,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Case study thực hành:
                             </div>
               
@@ -1464,7 +1464,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Sau module này, bạn sẽ:
                             </div>
               
@@ -1479,7 +1479,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Cam kết:
                             </div>
               
@@ -1510,7 +1510,7 @@ export const data: Array<Course> = [
                 content: (
                     <div className="text-sm flex flex-col gap-4 ml-4">
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Module này bao gồm:
                             </div>
               
@@ -1528,7 +1528,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Sau module này, bạn sẽ:
                             </div>
               
@@ -1543,7 +1543,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Cam kết:
                             </div>
               
@@ -1623,7 +1623,7 @@ export const data: Array<Course> = [
                 content: (
                     <div className="text-sm flex flex-col gap-4 ml-4">
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Module này giúp bạn làm chủ Terraform để quản lý infrastructure như code,
                         thay vì tạo tài nguyên thủ công trên cloud console.
                             </div>
@@ -1641,7 +1641,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Sau module này, bạn sẽ:
                             </div>
               
@@ -1656,7 +1656,7 @@ export const data: Array<Course> = [
                         </div>
               
                         <div>
-                            <div className="font-medium">
+                            <div>
                         Cam kết:
                             </div>
               
@@ -1679,64 +1679,66 @@ export const data: Array<Course> = [
             },
             {
                 id: "devops-module-2",
-                name: "Cloud Infrastructure: AWS, Digital Ocean & GCP",
-                description: "Thực hành tạo và quản lý tài nguyên trên các cloud provider phổ biến: AWS, Digital Ocean và GCP. Học cách sử dụng Terraform để triển khai infrastructure trên từng platform.",
+                name: "AWS Core Infrastructure: VPC, IAM & EC2 with Terraform",
+                description:
+                    "Xây nền tảng AWS trước khi lên Kubernetes: thiết kế VPC (public/private), IAM policy cơ bản, và triển khai EC2 theo chuẩn production tối thiểu — tất cả đều bằng Terraform.",
                 video: "",
-                duration: "~4 hours",
+                duration: "~3 hours",
                 order: 2,
                 content: (
                     <div className="text-sm flex flex-col gap-4 ml-4">
                         <div>
-                            <div className="font-medium">
-                        Module này giúp bạn làm quen với các cloud provider phổ biến và
-                        cách sử dụng Terraform để triển khai infrastructure trên từng platform.
+                            <div>
+                                Module này giúp bạn nắm “xương sống” của AWS để dựng hạ tầng chuẩn bài:
+                                mạng (VPC) + quyền (IAM) + compute (EC2). Bạn sẽ viết Terraform end-to-end
+                                để tạo một bộ infrastructure AWS cơ bản, sẵn sàng nối sang CI/CD và EKS ở module sau.
                             </div>
-              
+            
                             <Spacer y={2} />
-              
+            
                             <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
-                                <li>AWS: EC2, S3, RDS, VPC, IAM, Load Balancer - thiết lập infrastructure cơ bản</li>
-                                <li>Digital Ocean: Droplets, Spaces, Managed Databases, Load Balancers</li>
-                                <li>GCP: Compute Engine, Cloud Storage, Cloud SQL, VPC, IAM</li>
-                                <li>Sử dụng Terraform providers cho AWS, Digital Ocean và GCP</li>
-                                <li>So sánh và lựa chọn cloud provider phù hợp cho từng use case</li>
-                                <li>Quản lý multi-cloud infrastructure với Terraform</li>
-                                <li>Best practices cho security, cost optimization và monitoring</li>
+                                <li>Thiết kế VPC: public/private subnets, route tables, Internet Gateway (IGW), NAT Gateway</li>
+                                <li>Network security: Security Group, NACL (đủ hiểu và áp dụng đúng use case)</li>
+                                <li>IAM basics: users/roles/policies, least privilege, instance profile</li>
+                                <li>EC2 fundamentals: AMI, instance types, key pair, User Data bootstrap</li>
+                                <li>Operational access: SSM Session Manager (hạn chế SSH, chuẩn production)</li>
+                                <li>Storage cho EC2: EBS cơ bản (size/type, attach, persistence)</li>
+                                <li>EC2 scaling: Launch Template + Auto Scaling Group (mức cơ bản)</li>
+                                <li>S3 basics: dùng cho Terraform remote state backend + artifact storage</li>
+                                <li>CloudWatch cơ bản: logs/metrics để quan sát instance và debug khi có sự cố</li>
+                                <li>Thực hành viết Terraform full stack: VPC + IAM + SG + EC2 (production-ready tối thiểu)</li>
                             </ul>
                         </div>
-              
+            
                         <div>
-                            <div className="font-medium">
-                        Sau module này, bạn sẽ:
-                            </div>
-              
+                            <div>Sau module này, bạn sẽ:</div>
+            
                             <Spacer y={2} />
-              
+            
                             <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
-                                <li>Biết cách tạo và quản lý tài nguyên trên AWS, Digital Ocean và GCP</li>
-                                <li>Tự tin sử dụng Terraform để triển khai infrastructure trên nhiều cloud provider</li>
-                                <li>Hiểu sự khác biệt giữa các cloud provider và khi nào nên dùng cái nào</li>
-                                <li>Có khả năng thiết kế và triển khai infrastructure production-ready</li>
+                                <li>Tự thiết kế được network AWS chuẩn: public/private subnets, routing, NAT/IGW</li>
+                                <li>Biết set IAM role/policy đúng nguyên tắc least privilege cho EC2 workload</li>
+                                <li>Triển khai EC2 theo chuẩn vận hành: bootstrap bằng user-data, truy cập qua SSM</li>
+                                <li>Biết cách setup remote state backend trên S3 để làm việc team/prod an toàn</li>
+                                <li>Có thể dựng “AWS core stack” bằng Terraform để làm nền cho EKS/CI-CD</li>
                             </ul>
                         </div>
-              
+            
                         <div>
-                            <div className="font-medium">
-                        Cam kết:
-                            </div>
-              
+                            <div>Cam kết:</div>
+            
                             <Spacer y={2} />
-              
+            
                             <div className="text-foreground-500">
-                        Sau khi hoàn tất module này, bạn có thể tự triển khai infrastructure
-                        trên AWS, Digital Ocean và GCP bằng Terraform, sẵn sàng cho các
-                        bước CI/CD và automation phía sau.
+                                Sau khi hoàn tất module này, bạn có thể dựng được “hạ tầng AWS cơ bản” bằng Terraform
+                                (VPC + IAM + Security Group + EC2), có remote state và monitoring cơ bản — đủ tiêu chuẩn
+                                để triển khai ứng dụng thật và sẵn sàng bước sang Kubernetes (EKS) ở module tiếp theo.
                             </div>
-              
+            
                             <Spacer y={2} />
-              
+            
                             <Link size="sm" color="primary" underline="always">
-                        Đọc thêm
+                                Đọc thêm
                             </Link>
                         </div>
                     </div>
@@ -1744,64 +1746,520 @@ export const data: Array<Course> = [
             },
             {
                 id: "devops-module-3",
-                name: "CI/CD Pipeline: Jenkins, GitHub Actions & ArgoCD",
-                description: "Xây dựng CI/CD pipeline hoàn chỉnh với Jenkins, GitHub Actions và ArgoCD. Tự động hóa quy trình build, test, deploy và quản lý ứng dụng trên Kubernetes.",
+                name: "AWS Kubernetes: EKS, Networking & Deployment with Terraform",
+                description:
+                    "Triển khai Kubernetes trên AWS với EKS theo chuẩn production: dựng cluster + node group, cấu hình networking, add-ons cơ bản và deploy ứng dụng — tất cả bằng Terraform.",
                 video: "",
-                duration: "~4 hours",
+                duration: "~2 hours",
                 order: 3,
                 content: (
                     <div className="text-sm flex flex-col gap-4 ml-4">
                         <div>
-                            <div className="font-medium">
-                        Module này giúp bạn xây dựng CI/CD pipeline hoàn chỉnh,
-                        tự động hóa quy trình từ code đến production.
+                            <div>
+                                Module này đưa bạn từ “AWS core stack” (VPC/IAM/EC2) lên Kubernetes thật sự với EKS.
+                                Bạn sẽ dựng EKS bằng Terraform, hiểu cách EKS ăn vào VPC/subnet/security group,
+                                cài các thành phần cần thiết để deploy app và vận hành cơ bản.
                             </div>
-              
+            
                             <Spacer y={2} />
-              
+            
                             <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
-                                <li>Jenkins: Setup Jenkins server, tạo pipeline với Jenkinsfile, tích hợp với Git</li>
-                                <li>GitHub Actions: Workflow syntax, actions, secrets, matrix builds, deployment</li>
-                                <li>ArgoCD: GitOps workflow, application management, sync policies, rollback</li>
-                                <li>Thiết kế CI pipeline: build, test, lint, security scanning</li>
-                                <li>Thiết kế CD pipeline: build Docker image, push to registry, deploy to Kubernetes</li>
-                                <li>Tích hợp với cloud infrastructure đã tạo ở module trước</li>
-                                <li>Best practices: environment promotion, blue-green deployment, canary releases</li>
+                                <li>EKS overview: control plane vs worker nodes, managed node group vs self-managed</li>
+                                <li>Dựng EKS bằng Terraform: cluster, node groups, scaling cơ bản</li>
+                                <li>Networking cho EKS: subnet tagging, security group pattern, endpoint access (public/private)</li>
+                                <li>IAM cho Kubernetes: roles cho node group, giới thiệu IRSA (IAM Roles for Service Accounts)</li>
+                                <li>Cluster access: kubeconfig, aws-auth config map (hiểu đúng quyền và cách truy cập)</li>
+                                <li>Add-ons tối thiểu: metrics-server, CoreDNS, VPC CNI (hiểu vai trò & cấu hình cơ bản)</li>
+                                <li>Ingress fundamentals: chọn hướng ALB Ingress Controller hoặc Nginx Ingress (tùy use case)</li>
+                                <li>Deploy ứng dụng demo: Deployment, Service, Ingress, rolling update</li>
+                                <li>Autoscaling: HPA cơ bản + hiểu metrics nguồn vào</li>
+                                <li>Observability cơ bản: CloudWatch Container Insights (overview) / logs để debug</li>
+                                <li>Tách Terraform modules: vpc / iam / eks / addons (structure chuẩn để scale team)</li>
                             </ul>
                         </div>
-              
+            
                         <div>
-                            <div className="font-medium">
-                        Sau module này, bạn sẽ:
-                            </div>
-              
+                            <div>Sau module này, bạn sẽ:</div>
+            
                             <Spacer y={2} />
-              
+            
                             <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
-                                <li>Biết cách setup và sử dụng Jenkins, GitHub Actions và ArgoCD</li>
-                                <li>Tự xây dựng được CI/CD pipeline hoàn chỉnh cho dự án thực tế</li>
-                                <li>Hiểu GitOps workflow và cách quản lý deployment bằng Git</li>
-                                <li>Tự tin triển khai ứng dụng tự động từ code đến production</li>
+                                <li>Tự dựng được EKS cluster + node group bằng Terraform theo chuẩn production tối thiểu</li>
+                                <li>Hiểu EKS networking (subnets, security groups, endpoint access) để tránh lỗi “mù mạng”</li>
+                                <li>Deploy được ứng dụng lên EKS: service exposure, ingress, rolling update</li>
+                                <li>Biết setup autoscaling cơ bản và nắm luồng vận hành/debug bằng logs/metrics</li>
+                                <li>Có nền tảng sẵn sàng để nối CI/CD (ArgoCD/GitOps) và triển khai dự án thật</li>
                             </ul>
                         </div>
-              
+            
                         <div>
-                            <div className="font-medium">
-                        Cam kết:
-                            </div>
-              
+                            <div>Cam kết:</div>
+            
                             <Spacer y={2} />
-              
+            
                             <div className="text-foreground-500">
-                        Sau khi hoàn tất module này, bạn có thể xây dựng CI/CD pipeline
-                        hoàn chỉnh với Jenkins, GitHub Actions và ArgoCD, tự động hóa
-                        quy trình deploy và quản lý ứng dụng trên cloud.
+                                Sau khi hoàn tất module này, bạn có thể tự triển khai Kubernetes trên AWS (EKS) bằng Terraform,
+                                cấu hình networking đúng chuẩn, cài add-ons cần thiết và deploy một ứng dụng end-to-end.
+                                Đây là nền tảng để đi tiếp sang GitOps/CI-CD và vận hành production.
                             </div>
-              
+            
                             <Spacer y={2} />
-              
+            
                             <Link size="sm" color="primary" underline="always">
-                        Đọc thêm
+                                Đọc thêm
+                            </Link>
+                        </div>
+                    </div>
+                ),
+            },
+            {
+                id: "devops-module-4",
+                name: "Kubernetes RBAC & AWS IAM Deep Dive",
+                description:
+                    "Hiểu và thiết kế hệ thống phân quyền chuẩn production cho Kubernetes trên AWS: RBAC trong cluster, IAM ngoài AWS và IRSA để kết nối bảo mật giữa hai thế giới.",
+                video: "",
+                duration: "~4.5 hours",
+                order: 4,
+                content: (
+                    <div className="text-sm flex flex-col gap-4 ml-4">
+                        <div>
+                            <div>
+                                Module này giúp bạn làm chủ security layer của hệ thống.
+                                Sau khi đã deploy được EKS, bước tiếp theo là kiểm soát quyền truy cập đúng chuẩn:
+                                ai được làm gì trong cluster, pod được phép truy cập tài nguyên AWS nào,
+                                và làm sao để thiết kế least privilege thực sự.
+                            </div>
+            
+                            <Spacer y={2} />
+            
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li><strong>Kubernetes RBAC:</strong> Role vs ClusterRole</li>
+                                <li>RoleBinding vs ClusterRoleBinding</li>
+                                <li>Namespace isolation & thiết kế boundary giữa dev / staging / prod</li>
+                                <li>ServiceAccount và cách Kubernetes gán identity cho workload</li>
+                                <li>Principle of least privilege trong cluster</li>
+                                <li>Multi-tenant cluster basics (cách tránh “dev chạm prod”)</li>
+                                <li><strong>Thực hành:</strong> Dev chỉ được deploy trong namespace dev</li>
+                                <li>Không được xem Secret namespace prod</li>
+                                <li>CI chỉ được apply manifest, không được delete cluster resource</li>
+                            </ul>
+                        </div>
+            
+                        <div>
+                            <div>
+                                AWS IAM cho EKS:
+                            </div>
+            
+                            <Spacer y={2} />
+            
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>IAM Users vs IAM Roles (khi nào dùng cái nào)</li>
+                                <li>aws-auth ConfigMap và cách map IAM ↔ Kubernetes RBAC</li>
+                                <li>IAM Role cho node group (instance profile)</li>
+                                <li>Thiết kế IAM Policy cơ bản (least privilege)</li>
+                                <li>Phân tách quyền giữa admin, dev và CI trong AWS</li>
+                            </ul>
+                        </div>
+            
+                        <div>
+                            <div>
+                                IRSA (IAM Roles for Service Accounts) – phần quan trọng nhất:
+                            </div>
+            
+                            <Spacer y={2} />
+            
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>Vì sao không nhét AWS credentials vào container?</li>
+                                <li>Pod cần access S3 thì làm thế nào đúng chuẩn?</li>
+                                <li>Map ServiceAccount ↔ IAM Role bằng OIDC provider</li>
+                                <li>Thiết kế trust policy giữa EKS và AWS IAM</li>
+                                <li>Security boundary giữa Kubernetes và AWS</li>
+                                <li>Thực hành: tạo IAM Role cho workload truy cập S3 theo nguyên tắc least privilege</li>
+                            </ul>
+                        </div>
+            
+                        <div>
+                            <div>
+                                Sau module này, bạn sẽ:
+                            </div>
+            
+                            <Spacer y={2} />
+            
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>Thiết kế được RBAC chuẩn production cho multi-namespace</li>
+                                <li>Hiểu cách IAM và Kubernetes RBAC phối hợp trong EKS</li>
+                                <li>Triển khai IRSA đúng chuẩn để workload truy cập tài nguyên AWS an toàn</li>
+                                <li>Tránh các lỗi bảo mật phổ biến khi triển khai EKS</li>
+                                <li>Nâng cấp tư duy từ “deploy được” lên “deploy an toàn & kiểm soát được”</li>
+                            </ul>
+                        </div>
+            
+                        <div>
+                            <div>
+                                Cam kết:
+                            </div>
+            
+                            <Spacer y={2} />
+            
+                            <div className="text-foreground-500">
+                                Sau khi hoàn tất module này, bạn có thể thiết kế và triển khai hệ thống phân quyền
+                                Kubernetes + AWS IAM đúng chuẩn production, áp dụng least privilege cho cả cluster
+                                và workload. Đây là bước chuyển từ DevOps triển khai sang DevOps hiểu security thực sự.
+                            </div>
+            
+                            <Spacer y={2} />
+            
+                            <Link size="sm" color="primary" underline="always">
+                                Đọc thêm
+                            </Link>
+                        </div>
+                    </div>
+                ),
+            },
+            {
+                id: "devops-module-5",
+                name: "CI Pipeline with Jenkins & Kaniko + GitOps Introduction (ArgoCD)",
+                description:
+                    "Xây dựng CI pipeline chuẩn production với Jenkins + Kaniko để build Docker image trong Kubernetes, và giới thiệu GitOps workflow với ArgoCD để deploy lên EKS.",
+                video: "",
+                duration: "~4.5 hours",
+                order: 5,
+                content: (
+                    <div className="text-sm flex flex-col gap-4 ml-4">
+                        <div>
+                            <div>
+                                Module này tập trung vào CI thực chiến: build, test, push image một cách an toàn
+                                trong Kubernetes bằng Jenkins + Kaniko (không dùng Docker daemon).
+                                Phần CD sẽ giới thiệu GitOps với ArgoCD, tận dụng Terraform đã setup từ trước.
+                            </div>
+            
+                            <Spacer y={2} />
+            
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>CI mindset: build → test → package → publish artifact</li>
+                                <li>Triển khai Jenkins trên Kubernetes (hoặc EC2) và cấu trúc Jenkinsfile</li>
+                                <li>Declarative pipeline: stages, agents, environment variables</li>
+                                <li>Kaniko là gì? Vì sao không dùng Docker-in-Docker?</li>
+                                <li>Build Docker image bằng Kaniko trong Kubernetes</li>
+                                <li>Tagging strategy: commit SHA, version, latest</li>
+                                <li>Push image lên Amazon ECR (auth bằng IAM role / IRSA)</li>
+                                <li>Quản lý secrets trong Jenkins (credentials binding)</li>
+                                <li>Security mindset: không hardcode credentials</li>
+                            </ul>
+                        </div>
+            
+                        <div>
+                            <div>
+                                GitOps Introduction với ArgoCD:
+                            </div>
+            
+                            <Spacer y={2} />
+            
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>GitOps concept: Git là single source of truth</li>
+                                <li>ArgoCD architecture overview</li>
+                                <li>Tạo Application và sync từ Git repository</li>
+                                <li>Manual sync vs auto-sync</li>
+                                <li>Rollback bằng cách revert Git commit</li>
+                                <li>Kết nối pipeline: Jenkins update image tag → ArgoCD sync</li>
+                            </ul>
+                        </div>
+            
+                        <div>
+                            <div>
+                                Sau module này, bạn sẽ:
+                            </div>
+            
+                            <Spacer y={2} />
+            
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>Tự xây dựng được CI pipeline với Jenkins + Kaniko</li>
+                                <li>Build và push image an toàn lên ECR không cần Docker daemon</li>
+                                <li>Hiểu GitOps workflow và vai trò của ArgoCD trong CD</li>
+                                <li>Kết nối hoàn chỉnh flow: Code → Image → Git → ArgoCD → Kubernetes</li>
+                            </ul>
+                        </div>
+            
+                        <div>
+                            <div>
+                                Cam kết:
+                            </div>
+            
+                            <Spacer y={2} />
+            
+                            <div className="text-foreground-500">
+                                Sau khi hoàn tất module này, bạn có thể tự động hóa quy trình build và publish image
+                                theo chuẩn production bằng Jenkins + Kaniko, và triển khai ứng dụng lên EKS theo GitOps workflow.
+                                Đây là bước hoàn thiện vòng đời DevOps từ code đến production.
+                            </div>
+            
+                            <Spacer y={2} />
+            
+                            <Link size="sm" color="primary" underline="always">
+                                Đọc thêm
+                            </Link>
+                        </div>
+                    </div>
+                ),
+            },
+            {
+                id: "devops-module-6",
+                name: "AWS Production Services: KMS, Secrets, SQS, RDS & More",
+                description:
+                    "Mở rộng hệ thống trên AWS với các services hay gặp trong production: mã hóa (KMS), quản lý secrets, messaging queue, database managed và các mảnh ghép vận hành thực tế khi chạy trên EKS.",
+                video: "",
+                duration: "~4.5 hours",
+                order: 6,
+                content: (
+                    <div className="text-sm flex flex-col gap-4 ml-4">
+                        <div>
+                            <div>
+                                Module này giúp bạn “ghép các mảnh production” trên AWS thay vì chỉ có compute + Kubernetes.
+                                Bạn sẽ hiểu khi nào dùng từng service, cách tích hợp với EKS, và các best practices tối thiểu
+                                để hệ thống an toàn, dễ vận hành và scale được.
+                            </div>
+            
+                            <Spacer y={2} />
+            
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li><strong>KMS (Key Management Service):</strong> encryption at rest, customer-managed keys (CMK), key policy cơ bản</li>
+                                <li><strong>Secrets Manager / SSM Parameter Store:</strong> lưu secrets đúng chuẩn, rotation (overview), phân quyền truy cập</li>
+                                <li><strong>S3 nâng cao:</strong> bucket policy, encryption, versioning, lifecycle, presigned URL</li>
+                                <li><strong>SQS / SNS:</strong> queue vs pub/sub, retry & DLQ, khi nào nên tách async processing</li>
+                                <li><strong>RDS / Aurora (overview):</strong> managed database, backups, multi-AZ, connection strategy</li>
+                                <li><strong>ElastiCache Redis (overview):</strong> caching vs session vs rate-limit, persistence & failover concept</li>
+                                <li><strong>CloudWatch nâng cao:</strong> log groups, metrics, alarms, basic dashboarding</li>
+                                <li><strong>ALB/NLB basics:</strong> load balancer types, when to use, mapping với Ingress/EKS</li>
+                                <li><strong>Security baseline:</strong> IAM least privilege, security groups pattern, audit mindset</li>
+                                <li><strong>Integration patterns:</strong> EKS workload dùng IRSA để access S3/SQS/Secrets an toàn</li>
+                            </ul>
+                        </div>
+            
+                        <div>
+                            <div>
+                                Sau module này, bạn sẽ:
+                            </div>
+            
+                            <Spacer y={2} />
+            
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>Hiểu “bộ services AWS” phổ biến cho production và cách chọn đúng theo use case</li>
+                                <li>Biết dùng KMS/Secrets Manager để bảo vệ secrets & dữ liệu đúng chuẩn</li>
+                                <li>Thiết kế được luồng async bằng SQS/SNS (retry, DLQ) để hệ thống ổn định hơn</li>
+                                <li>Biết cách tích hợp EKS với AWS services bằng IRSA theo least privilege</li>
+                                <li>Nâng tư duy từ “deploy chạy được” sang “deploy có security & vận hành được”</li>
+                            </ul>
+                        </div>
+            
+                        <div>
+                            <div>
+                                Cam kết:
+                            </div>
+            
+                            <Spacer y={2} />
+            
+                            <div className="text-foreground-500">
+                                Sau khi hoàn tất module này, bạn có thể lựa chọn và tích hợp các AWS services quan trọng
+                                (KMS, Secrets, SQS, RDS, S3, CloudWatch...) để xây dựng hệ thống production-ready,
+                                an toàn và dễ mở rộng khi chạy trên Kubernetes (EKS).
+                            </div>
+            
+                            <Spacer y={2} />
+            
+                            <Link size="sm" color="primary" underline="always">
+                                Đọc thêm
+                            </Link>
+                        </div>
+                    </div>
+                ),
+            },
+            {
+                id: "devops-module-7",
+                name: "GCP Quick Overview: Core Services & Architecture",
+                description:
+                    "Giới thiệu nhanh hệ sinh thái GCP và các services quan trọng để bạn hiểu cách GCP map với AWS và dùng khi nào hợp lý.",
+                video: "",
+                duration: "~2 hours",
+                order: 7,
+                content: (
+                    <div className="text-sm flex flex-col gap-4 ml-4">
+                        <div>
+                            <div>
+                                Module này giúp bạn nắm GCP ở mức “đủ dùng để đi làm”: hiểu các dịch vụ cốt lõi,
+                                cách tổ chức project/account, và đối chiếu nhanh với AWS để không bị bỡ ngỡ khi gặp hệ thống multi-cloud.
+                            </div>
+            
+                            <Spacer y={2} />
+            
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>GCP basics: Project, Billing, IAM, Service Accounts (overview)</li>
+                                <li>Networking: VPC, subnets, firewall rules, Cloud NAT (map tương đương AWS)</li>
+                                <li>Compute: Compute Engine, Instance templates, Managed Instance Groups (overview)</li>
+                                <li>Storage: Cloud Storage buckets, IAM/policies, lifecycle (overview)</li>
+                                <li>Database: Cloud SQL (overview) + khi nào dùng managed DB</li>
+                                <li>Observability: Cloud Logging, Cloud Monitoring (overview)</li>
+                                <li>So sánh nhanh AWS ↔ GCP: naming, mental model, dịch vụ tương đương</li>
+                            </ul>
+                        </div>
+            
+                        <div>
+                            <div>
+                                Sau module này, bạn sẽ:
+                            </div>
+            
+                            <Spacer y={2} />
+            
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>Hiểu cách GCP tổ chức account/project và permission ở mức cơ bản</li>
+                                <li>Nắm các dịch vụ GCP hay gặp và map được sang AWS tương đương</li>
+                                <li>Không bị “ngợp” khi chuyển môi trường hoặc đọc infra trên GCP</li>
+                            </ul>
+                        </div>
+            
+                        <div>
+                            <div>
+                                Cam kết:
+                            </div>
+            
+                            <Spacer y={2} />
+            
+                            <div className="text-foreground-500">
+                                Sau module này, bạn có thể đọc hiểu hệ thống cơ bản trên GCP và đối chiếu nhanh với AWS,
+                                đủ nền tảng để làm việc với các dự án multi-cloud hoặc migrate đơn giản.
+                            </div>
+            
+                            <Spacer y={2} />
+            
+                            <Link size="sm" color="primary" underline="always">
+                                Đọc thêm
+                            </Link>
+                        </div>
+                    </div>
+                ),
+            },
+            {
+                id: "devops-module-8",
+                name: "GKE Quick Start: Kubernetes on GCP (Compare with EKS)",
+                description:
+                    "Giới thiệu nhanh Kubernetes trên GCP với GKE: cách tạo cluster, networking cơ bản và cách GKE khác EKS để bạn nắm được “điểm rơi” khi làm thực tế.",
+                video: "",
+                duration: "~2 hours",
+                order: 8,
+                content: (
+                    <div className="text-sm flex flex-col gap-4 ml-4">
+                        <div>
+                            <div>
+                                Module này là “tour nhanh” về GKE để bạn hiểu Kubernetes managed trên GCP vận hành thế nào,
+                                và so sánh trực tiếp với EKS: IAM/RBAC, networking, ingress/load balancer, và cách debug cơ bản.
+                            </div>
+            
+                            <Spacer y={2} />
+            
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>GKE overview: control plane, node pools, autopilot vs standard (overview)</li>
+                                <li>Tạo cluster nhanh, cấu hình node pool và autoscaling cơ bản</li>
+                                <li>Networking: VPC-native cluster, services exposure, firewall/LB concept</li>
+                                <li>Ingress trên GKE (overview): load balancer integration</li>
+                                <li>Identity & access (overview): IAM, service accounts, workload identity (so sánh với IRSA)</li>
+                                <li>Observability: Cloud Logging/Monitoring cho GKE (overview)</li>
+                                <li>So sánh thực chiến: EKS vs GKE (khi nào chọn cái nào)</li>
+                            </ul>
+                        </div>
+            
+                        <div>
+                            <div>
+                                Sau module này, bạn sẽ:
+                            </div>
+            
+                            <Spacer y={2} />
+            
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>Hiểu cách GKE hoạt động và những khác biệt chính so với EKS</li>
+                                <li>Nắm được các khái niệm cần thiết để deploy/operate Kubernetes trên GCP</li>
+                                <li>Biết cách map workload identity trên GCP với IRSA trên AWS ở mức concept</li>
+                            </ul>
+                        </div>
+            
+                        <div>
+                            <div>
+                                Cam kết:
+                            </div>
+            
+                            <Spacer y={2} />
+            
+                            <div className="text-foreground-500">
+                                Sau khi hoàn tất module này, bạn có thể đọc hiểu và triển khai Kubernetes cơ bản trên GKE,
+                                đồng thời so sánh được EKS vs GKE để chọn nền tảng phù hợp cho từng bài toán.
+                            </div>
+            
+                            <Spacer y={2} />
+            
+                            <Link size="sm" color="primary" underline="always">
+                                Đọc thêm
+                            </Link>
+                        </div>
+                    </div>
+                ),
+            },
+            {
+                id: "devops-module-9",
+                name: "DigitalOcean Quick Overview: Deploy & Operate for Small Teams",
+                description:
+                    "Giới thiệu nhanh DigitalOcean: lựa chọn tối ưu cho team nhỏ/startup cần triển khai nhanh với chi phí dễ kiểm soát.",
+                video: "",
+                duration: "~1.5 hours",
+                order: 9,
+                content: (
+                    <div className="text-sm flex flex-col gap-4 ml-4">
+                        <div>
+                            <div>
+                                Module này giúp bạn hiểu DigitalOcean theo hướng thực dụng: khi nào DO phù hợp,
+                                các dịch vụ quan trọng (Droplet, DOKS, Managed DB, Spaces) và cách triển khai nhanh một hệ thống nhỏ.
+                            </div>
+            
+                            <Spacer y={2} />
+            
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>DigitalOcean overview: pricing mindset, use case phù hợp (startup/SMB)</li>
+                                <li>Compute: Droplets, snapshots, basic firewall (overview)</li>
+                                <li>Kubernetes: DOKS overview, node pools, load balancer integration</li>
+                                <li>Managed DB: PostgreSQL/Redis basics (overview) + backup concept</li>
+                                <li>Storage: Spaces (S3-compatible), CDN concept</li>
+                                <li>Networking basics: VPC, floating IP, load balancers (overview)</li>
+                                <li>So sánh nhanh: DO vs AWS (đơn giản hóa vs độ linh hoạt)</li>
+                            </ul>
+                        </div>
+            
+                        <div>
+                            <div>
+                                Sau module này, bạn sẽ:
+                            </div>
+            
+                            <Spacer y={2} />
+            
+                            <ul className="list-disc list-inside ml-4 text-foreground-500 space-y-1">
+                                <li>Biết khi nào nên chọn DigitalOcean thay vì AWS/GCP</li>
+                                <li>Hiểu các dịch vụ DO thường dùng để deploy nhanh hệ thống nhỏ</li>
+                                <li>Đủ nền tảng để đọc hiểu infra và vận hành cơ bản trên DO</li>
+                            </ul>
+                        </div>
+            
+                        <div>
+                            <div>
+                                Cam kết:
+                            </div>
+            
+                            <Spacer y={2} />
+            
+                            <div className="text-foreground-500">
+                                Sau khi hoàn tất module này, bạn có thể triển khai và vận hành cơ bản trên DigitalOcean,
+                                hiểu rõ trade-off về chi phí, độ đơn giản và khả năng mở rộng khi so với AWS/GCP.
+                            </div>
+            
+                            <Spacer y={2} />
+            
+                            <Link size="sm" color="primary" underline="always">
+                                Đọc thêm
                             </Link>
                         </div>
                     </div>

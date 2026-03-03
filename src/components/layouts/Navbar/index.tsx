@@ -9,8 +9,8 @@ export const Navbar = () => {
             </NavbarBrand>
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
                 <NavbarItem>
-                    <Link color="foreground" href="#">
-            Giới thiệu
+                    <Link color="foreground" href="/">
+            Trang chủ
                     </Link>
                 </NavbarItem>
                 <NavbarItem isActive>

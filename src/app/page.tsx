@@ -67,7 +67,7 @@ const Page = () => {
             </motion.div>
             <Spacer y={24} />
             <motion.div
-                className="grid grid-cols-1 md:grid-cols-5 gap-6"
+                className="grid grid-cols-1 md:grid-cols-5 gap-6 items-center"
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
@@ -102,13 +102,13 @@ const Page = () => {
                     <Spacer y={4} />
                     <div className="text-sm text-foreground-500 text-justify">
       StarCi Academy vận hành theo mô hình tinh gọn, loại bỏ các chi phí không cần thiết để giữ học phí ở mức dễ tiếp cận.
-      Mục tiêu của chúng tôi là tạo ra một môi trường học tập chất lượng cao mà bất kỳ ai nghiêm túc với nghề đều có thể tham gia.
+      Mục tiêu của chúng tớ là tạo ra một môi trường học tập chất lượng cao mà bất kỳ ai nghiêm túc với nghề đều có thể tham gia.
                     </div>
                 </div>
             </motion.div>
             <Spacer y={24} />
             <motion.div
-                className="grid grid-cols-1 md:grid-cols-5 gap-6"
+                className="grid grid-cols-1 md:grid-cols-5 gap-6 items-center"
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
@@ -118,7 +118,7 @@ const Page = () => {
                     <div className="text-xl font-bold flex gap-1">From Code to Career</div>
                     <Spacer y={4} />
                     <div className="text-sm text-foreground-500 text-justify">
-                    Chúng tôi dạy để bạn xây dựng những project có giá trị thực sự và hỗ trợ lâu dài trong quá trình phát triển sự nghiệp.
+                    Chúng tớ dạy để bạn xây dựng những project có giá trị thực sự và hỗ trợ lâu dài trong quá trình phát triển sự nghiệp.
                     </div>
                 </div>
             </motion.div>

@@ -6,6 +6,8 @@ export interface CourseCardProps {
     course: Course
 }
 export const CourseCard = ({ course }: CourseCardProps) => {
+    const originalPrice = course.originalPrice
+    const actualPrice = course.pricing.find(pricing => pricing.phase === course.currentPhase)?.price
     return (
         <Card>
             <CardBody>
@@ -13,19 +15,15 @@ export const CourseCard = ({ course }: CourseCardProps) => {
                 <Spacer y={4} />
                 <div className="font-bold">{course.name}</div>
                 <Spacer y={4} />
-                <div className="text-sm text-foreground-500 text-justify italic">{course.description}</div>
+                <div className="text-sm text-foreground-500 text-justify italic line-clamp-3">{course.description}</div>
             </CardBody>
             <CardFooter>
-                <div>
+                <div className="w-full">
                     <Button color="primary" size="lg" className="w-full">View Course</Button>
-                    <Spacer y={4} />
-                    <div className="text-sm text-foreground-500 text-justify">
-                        <div>
-                            <span className="font-bold">Price:</span> {course.price} VND
-                        </div>
-                        <div>
-                            <span className="font-bold">Location:</span> {course.location}
-                        </div>
+                    <Spacer y={2} />
+                    <div className="text-sm text-justify flex gap-2">
+                        <span className="line-through text-foreground-500">{originalPrice} VND</span>
+                        <span>{actualPrice} VND</span>
                     </div>
                 </div>
             </CardFooter>

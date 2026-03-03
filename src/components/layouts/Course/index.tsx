@@ -14,10 +14,10 @@ export const Course = ({ course }: CourseProps) => {
         <div>
             <Breadcrumbs>
                 <BreadcrumbItem>
-                    <Link href="/">Home</Link>
+                    <Link href="/">Trang chủ</Link>
                 </BreadcrumbItem>
                 <BreadcrumbItem>
-                    <Link href="/khoa-hoc">Courses</Link>
+                    <Link href="/khoa-hoc">Khóa học</Link>
                 </BreadcrumbItem>
                 <BreadcrumbItem>
                     <Link href={`/khoa-hoc/${course.id}`}>{course.name}</Link>

@@ -1,5 +1,5 @@
 import React from "react"
-import { Card, CardBody, CardFooter, CardHeader, Image, Button } from "@heroui/react"
+import { Card, CardBody, CardFooter, Image, Button, Spacer } from "@heroui/react"
 import { Course } from "../../../../types"
 
 export interface CourseCardProps {
@@ -8,14 +8,26 @@ export interface CourseCardProps {
 export const CourseCard = ({ course }: CourseCardProps) => {
     return (
         <Card>
-            <CardHeader>
-                <Image src={course.image} alt={course.name} />
-            </CardHeader>
             <CardBody>
-                <h1>{course.name}</h1>
+                <Image src={course.image} alt={course.name} />
+                <Spacer y={4} />
+                <div className="font-bold">{course.name}</div>
+                <Spacer y={4} />
+                <div className="text-sm text-foreground-500 text-justify italic">{course.description}</div>
             </CardBody>
             <CardFooter>
-                <Button>View Camp</Button>
+                <div>
+                    <Button color="primary" size="lg" className="w-full">View Course</Button>
+                    <Spacer y={4} />
+                    <div className="text-sm text-foreground-500 text-justify">
+                        <div>
+                            <span className="font-bold">Price:</span> {course.price} VND
+                        </div>
+                        <div>
+                            <span className="font-bold">Location:</span> {course.location}
+                        </div>
+                    </div>
+                </div>
             </CardFooter>
         </Card>
     )

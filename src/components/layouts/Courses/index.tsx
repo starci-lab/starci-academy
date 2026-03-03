@@ -1,6 +1,6 @@
 import React from "react"
 import { CourseCard } from "./CourseCard"
-import { data } from "../../../data/data"
+import { data } from "../../../data"
 
 export const Courses = () => {
     return (

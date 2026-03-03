@@ -8,7 +8,7 @@ export const data: Array<Course> = [
         id: "fullstack",
         name: "Fullstack Mastery",
         description: "Khóa học dành cho học sinh và sinh viên muốn tích lũy tư duy, kiến thức và kỹ năng cần thiết để có thể đi thực tập hoặc làm việc ở vị trí Fresher/Junior Developer. Chương trình bao quát đầy đủ kiến thức Fullstack với tất cả các khái niệm cơ bản từ frontend đến backend, giúp bạn hiểu nền tảng và có thể bắt đầu làm việc thực tế.",
-        image: "/fullstack.png",
+        image: "/fullstack-mastery.png",
         commitmentTexts: [
             "Chương trình 2 tháng, tập trung vào nền tảng và tư duy tự học.",
             "Sở hữu capstone fullstack hoàn chỉnh để đưa vào portfolio.",
@@ -882,7 +882,7 @@ export const data: Array<Course> = [
         id: "system-design",
         name: "System Design Mastery",
         description: "Khóa học dành cho developers muốn nâng cao kỹ năng thiết kế hệ thống, hiểu sâu về kiến trúc phân tán, scalability, và các pattern phổ biến trong thực tế. Chương trình giúp bạn tự tin tham gia các cuộc phỏng vấn System Design và có khả năng thiết kế hệ thống production-ready.",
-        image: "https://via.placeholder.com/150",
+        image: "/system-design-mastery.png",
         commitmentTexts: [
             "Chương trình tập trung vào tư duy và kỹ năng thiết kế hệ thống thực tế.",
             "Thực hành thiết kế các hệ thống phổ biến: social network, video streaming, e-commerce...",
@@ -1570,7 +1570,7 @@ export const data: Array<Course> = [
         id: "devops-cloud",
         name: "DevOps & Cloud Mastery",
         description: "Khóa học dành cho developers muốn làm chủ DevOps và Cloud infrastructure. Học cách sử dụng Terraform để quản lý infrastructure as code, triển khai trên các cloud provider phổ biến (AWS, Digital Ocean, GCP), và xây dựng CI/CD pipeline với Jenkins, GitHub Actions và ArgoCD. Chương trình giúp bạn tự tin quản lý và vận hành hệ thống production trên cloud.",
-        image: "https://via.placeholder.com/150",
+        image: "/devops-cloud-mastery.png",
         commitmentTexts: [
             "Chương trình thực hành với các công cụ DevOps phổ biến trong thực tế.",
             "Thực hành triển khai infrastructure trên AWS, Digital Ocean và GCP.",

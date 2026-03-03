@@ -71,5 +71,5 @@ export const devopsCloudCourse: Course = {
         devopsModule8,
         devopsModule9
     ],
-    registrationUrl: "https://forms.gle/ABPoHd1MNqpDnGdL7",
+    registrationUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdqbwN3lG0_XkBV_yYRqFXhjCH9EMFEzWoCcMq3i7X0amJx5A/viewform?usp=sharing&ouid=113453348335674169476",
 }

@@ -34,14 +34,14 @@ const Page = () => {
                         <div className="text-sm text-secondary italic">Nguyen Van Tu Cuong, Founder & Core Instructor </div>
                         <Spacer y={2} />
                         <div className="flex items-center gap-2">
-                            <Link href="https://www.facebook.com/starci183y"><FacebookLogoIcon size={20} className="text-secondary" /></Link>
+                            <Link href="https://www.facebook.com/starci183"><FacebookLogoIcon size={20} className="text-secondary" /></Link>
                             <Link href="https://github.com/starci183"><GithubLogoIcon size={20} className="text-secondary" /></Link>
                         </div>
                     </div>
                 </div>
                 <iframe
                     className="w-full h-full rounded-medium col-span-2"
-                    src="https://www.youtube.com/embed/RgvasEOP00A?autoplay=1&mute=1&loop=1&playlist=RgvasEOP00A"
+                    src="https://www.youtube.com/watch?v=KlkRLUpHDPc"
                     title="YouTube video"
                     allow="autoplay; encrypted-media"
                     allowFullScreen

@@ -3,7 +3,7 @@ import React from "react"
 import type { Course as CourseType } from "@/types"
 import { Curriculum } from "./Curriculum"
 import { Alert, BreadcrumbItem, Breadcrumbs, Button, Card, CardBody, CardFooter, Link, Spacer } from "@heroui/react"
-import { LightbulbFilamentIcon, SealCheckIcon } from "@phosphor-icons/react"
+import { LightbulbFilamentIcon, SealCheckIcon, WarningCircleIcon } from "@phosphor-icons/react"
 import { Stepper } from "./Stepper"
 
 export interface CourseProps {
@@ -30,6 +30,17 @@ export const Course = ({ course }: CourseProps) => {
                 <div className="order-2 md:order-1 md:col-span-3">
                     <Alert icon={<LightbulbFilamentIcon size={24} />} className="text-sm" color="secondary" variant="faded">{course.description}</Alert>
                     <Spacer y={6} />
+                    <Alert title="Yêu cầu tối thiểu" icon={<WarningCircleIcon size={24} />} className="text-sm" color="warning" variant="faded">
+                        <Spacer y={2} />
+                        <ul className="list-disc list-inside text-warning text-start w-full">
+                            {course.prerequisites?.map((prerequisite, index) => (
+                                <li key={index} className="text-sm text-warning">
+                                    {prerequisite}
+                                </li>
+                            ))}
+                        </ul>
+                    </Alert>
+                    <Spacer y={12} />
                     <Curriculum course={course} />
                 </div>
                 <Card className="order-1 md:order-2 md:col-span-2 bg-inherit border border-divider h-fit">

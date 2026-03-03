@@ -59,6 +59,10 @@ export const fullstackCourse: Course = {
     date: "2021-01-01",
     time: "10:00",
     duration: "1 hour",
+    prerequisites: [
+        "Cần nắm được JavaScript cơ bản.",
+        "Hiểu về tư duy lập trình."
+    ],
     modules: [
         fsModule1,
         fsModule2,

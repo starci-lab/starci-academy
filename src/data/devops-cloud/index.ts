@@ -55,6 +55,11 @@ export const devopsCloudCourse: Course = {
     date: "2021-01-01",
     time: "10:00",
     duration: "1 hour",
+    prerequisites: [
+        "Nắm được kiến thức cơ bản về Docker và Kubernetes (biết build image, chạy container, hiểu Pod, Deployment, Service là gì).",
+        "Hiểu các khái niệm nền tảng của Cloud Computing (VM, networking, storage, scalability).",
+        "Có kiến thức cơ bản về Microservices (kiến trúc phân tán, giao tiếp giữa service, ưu/nhược điểm so với monolith)."
+    ],
     modules: [
         devopsModule1,
         devopsModule2,

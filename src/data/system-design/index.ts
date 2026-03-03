@@ -56,6 +56,11 @@ export const systemDesignCourse: Course = {
     date: "2021-01-01",
     time: "10:00",
     duration: "1 hour",
+    prerequisites: [
+        "Nắm vững kiến thức nền tảng về Backend, Frontend và Database.",
+        "Hiểu các khái niệm Backend cơ bản: Authentication, Authorization, JWT, REST API.",
+        "Hiểu cơ chế caching (Redis hoặc tương đương) và mục đích tối ưu performance."
+    ],
     modules: [
         sdModule1,
         sdModule2,

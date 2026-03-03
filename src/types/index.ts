@@ -24,6 +24,7 @@ export interface Course {
     pricing: Array<Pricing>
     currentPhase: PricingPhase
     originalPrice: number
+    prerequisites?: Array<string>
 }
 
 export enum PricingPhase {

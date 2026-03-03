@@ -25,6 +25,7 @@ export interface Course {
     currentPhase: PricingPhase
     originalPrice: number
     prerequisites?: Array<string>
+    registrationUrl?: string
 }
 
 export enum PricingPhase {

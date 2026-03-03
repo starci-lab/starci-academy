@@ -60,7 +60,21 @@ export const Course = ({ course }: CourseProps) => {
                     </CardBody>
                     <CardFooter>
                         <div className="w-full">
-                            <Button color="primary" size="lg" className="w-full">Đăng ký</Button>
+                            {course.registrationUrl ? (
+                                <Button 
+                                    color="primary" 
+                                    size="lg" 
+                                    className="w-full"
+                                    as={Link}
+                                    href={course.registrationUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    Đăng ký
+                                </Button>
+                            ) : (
+                                <Button color="primary" size="lg" className="w-full">Đăng ký</Button>
+                            )}
                             <Spacer y={4} />
                             <div className="text-sm text-foreground-500">
                                 0 người đã đăng ký

@@ -73,4 +73,5 @@ export const systemDesignCourse: Course = {
         sdModule9,
         sdModule10
     ],
+    registrationUrl: "https://forms.gle/5LjdFcTVu1mPE4f86",
 }

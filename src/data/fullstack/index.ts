@@ -78,4 +78,5 @@ export const fullstackCourse: Course = {
         fsModule12,
         fsModule13
     ],
+    registrationUrl: "https://forms.gle/3eT3qNsHo8Zx8DeF6",
 }

@@ -20,7 +20,7 @@ export const CourseCard = ({ course }: CourseCardProps) => {
             </CardBody>
             <CardFooter>
                 <div className="w-full">
-                    <Button color="primary" size="lg" className="w-full" onPress={() => router.push(`/khoa-hoc/${course.id}`)}>View Course</Button>
+                    <Button color="primary" size="lg" className="w-full" onPress={() => router.push(`/courses/${course.id}`)}>View Course</Button>
                     <Spacer y={2} />
                     <div className="text-sm text-justify flex gap-2">
                         <span className="line-through text-foreground-500">{originalPrice} VND</span>

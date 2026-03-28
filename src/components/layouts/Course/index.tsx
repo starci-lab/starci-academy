@@ -20,7 +20,7 @@ export const Course = ({ course }: CourseProps) => {
                     <Link href="/khoa-hoc">Khóa học</Link>
                 </BreadcrumbItem>
                 <BreadcrumbItem>
-                    <Link href={`/khoa-hoc/${course.id}`}>{course.name}</Link>
+                    <Link href={`/khoa  -hoc/${course.id}`}>{course.name}</Link>
                 </BreadcrumbItem>
             </Breadcrumbs>
             <Spacer y={6} />

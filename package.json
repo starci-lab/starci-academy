@@ -9,8 +9,10 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@apollo/client": "^4.1.6",
     "@heroui/react": "^2.8.9",
     "@phosphor-icons/react": "^2.1.10",
+    "@reduxjs/toolkit": "^2.11.2",
     "decimal.js": "^10.6.0",
     "framer-motion": "^12.34.3",
     "next": "16.1.6",
@@ -18,6 +20,7 @@
     "numeral": "^2.0.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "react-redux": "^9.2.0",
     "swr": "^2.4.0"
   },
   "devDependencies": {

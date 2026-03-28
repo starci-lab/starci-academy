@@ -1,11 +1,11 @@
-import { useSignInDisclosure } from "@/hooks/singleton"
+import { useAuthenticationDisclosure } from "@/hooks/singleton"
 import {
     Navbar as HeroUINavbar, 
     NavbarBrand, NavbarContent, NavbarItem, Link, Button} from "@heroui/react"
 import React from "react"
 
 export const Navbar = () => {
-    const { onOpenChange } = useSignInDisclosure()
+    const { onOpenChange } = useAuthenticationDisclosure()
     return (
         <HeroUINavbar shouldHideOnScroll>
             <NavbarBrand>

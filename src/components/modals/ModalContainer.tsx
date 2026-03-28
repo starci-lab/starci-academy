@@ -1,10 +1,8 @@
 import React from "react"
-import { SignInModal } from "./SignInModal"
+import { AuthenticationModal } from "./AuthenticationModal"
 
 export const ModalContainer = () => {
     return (
-        <>
-            <SignInModal />
-        </>
+        <AuthenticationModal />
     )
 }

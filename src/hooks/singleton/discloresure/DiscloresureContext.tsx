@@ -10,7 +10,7 @@ import {
     useUpdateRpcsDisclosureCore,
     useSelectPoolsDisclosureCore,
     useSelectTokenDisclosureCore,
-    useSignInDisclosureCore,
+    useAuthenticationDisclosureCore,
     useManageMFASettingsDisclosureCore,
     useMFAVerificationDisclosureCore,
     usePositionDisclosureCore,
@@ -32,7 +32,7 @@ export interface DiscloresureContextType {
     updateRpcs: ReturnType<typeof useUpdateRpcsDisclosureCore>
     selectPools: ReturnType<typeof useSelectPoolsDisclosureCore>
     selectToken: ReturnType<typeof useSelectTokenDisclosureCore>
-    signIn: ReturnType<typeof useSignInDisclosureCore>
+    authentication: ReturnType<typeof useAuthenticationDisclosureCore>
     manageMFASettings: ReturnType<typeof useManageMFASettingsDisclosureCore>
     mfaVerification: ReturnType<typeof useMFAVerificationDisclosureCore>
     position: ReturnType<typeof usePositionDisclosureCore>
@@ -56,7 +56,7 @@ export const DiscloresureProvider = ({ children }: PropsWithChildren) => {
     const updateRpcs = useUpdateRpcsDisclosureCore()
     const selectPools = useSelectPoolsDisclosureCore()
     const selectToken = useSelectTokenDisclosureCore()
-    const signIn = useSignInDisclosureCore()
+    const authentication = useAuthenticationDisclosureCore()
     const manageMFASettings = useManageMFASettingsDisclosureCore()
     const mfaVerification = useMFAVerificationDisclosureCore()
     const position = usePositionDisclosureCore()
@@ -76,7 +76,7 @@ export const DiscloresureProvider = ({ children }: PropsWithChildren) => {
         updateRpcs,
         selectPools,
         selectToken,
-        signIn,
+        authentication,
         manageMFASettings,
         mfaVerification,
         position,
@@ -96,7 +96,7 @@ export const DiscloresureProvider = ({ children }: PropsWithChildren) => {
         updateRpcs,
         selectPools,
         selectToken,
-        signIn,
+        authentication,
         manageMFASettings,
         mfaVerification,
         position,

@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit"
 import { 
+    tabsReducer,
     courseReducer,
     userReducer,
 } from "./slices"
 
 export const store = configureStore({
     reducer: {
+        tabs: tabsReducer,
         course: courseReducer,
         user: userReducer,
     },

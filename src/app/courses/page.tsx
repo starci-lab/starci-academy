@@ -1,6 +1,6 @@
 "use client"
 import React from "react"
-import { Courses } from "@/components"
+import { Courses } from "@/components/layouts"
 
 const Page = () => {
     return (

@@ -1,7 +1,11 @@
-import {Navbar as HeroUINavbar, NavbarBrand, NavbarContent, NavbarItem, Link} from "@heroui/react"
+import { useSignInDisclosure } from "@/hooks/singleton"
+import {
+    Navbar as HeroUINavbar, 
+    NavbarBrand, NavbarContent, NavbarItem, Link, Button} from "@heroui/react"
 import React from "react"
 
 export const Navbar = () => {
+    const { onOpenChange } = useSignInDisclosure()
     return (
         <HeroUINavbar shouldHideOnScroll>
             <NavbarBrand>
@@ -10,19 +14,24 @@ export const Navbar = () => {
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
                 <NavbarItem>
                     <Link color="foreground" href="/">
-            Trang chủ
+            Home
                     </Link>
                 </NavbarItem>
                 <NavbarItem isActive>
                     <Link aria-current="page" href="/khoa-hoc">
-            Khóa học
+            Courses
                     </Link>
                 </NavbarItem>
                 <NavbarItem>
                     <Link color="foreground" href="#">
-            Liên hệ
+            Contact
                     </Link>
                 </NavbarItem>
+            </NavbarContent>
+            <NavbarContent justify="end">
+                <Button onPress={onOpenChange}>
+                    Sign In
+                </Button>
             </NavbarContent>
         </HeroUINavbar>
     )

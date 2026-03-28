@@ -1,7 +1,7 @@
 "use client"
 import React from "react"
 import { motion } from "framer-motion"
-import { Courses } from "@/components"
+import { Courses } from "@/components/layouts"
 import { Image, Link, Spacer } from "@heroui/react"
 import { FacebookLogoIcon, GithubLogoIcon, QuotesIcon } from "@phosphor-icons/react"
 

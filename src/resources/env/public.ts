@@ -40,5 +40,15 @@ export const publicEnv = () => {
                 fractionDigits: Number(process.env.NEXT_PUBLIC_COMPUTATION_PERCENTAGE_FRACTION_DIGITS || 5),
             },
         },
+        keycloak: {
+            /** The URL of the Keycloak server. */
+            url: process.env.NEXT_PUBLIC_KEYCLOAK_URL || "http://localhost:8089",
+            /** The realm of the Keycloak server. */
+            realm: process.env.NEXT_PUBLIC_KEYCLOAK_REALM || "master",
+            /** The client ID of the Keycloak server. */
+            clientId: process.env.NEXT_PUBLIC_KEYCLOAK_CLIENT_ID || "academy-web",
+            /** The redirect URI of the Keycloak server. */
+            redirectUri: process.env.NEXT_PUBLIC_KEYCLOAK_REDIRECT_URI || "http://localhost:3001/api/v1/keycloak/google/callback",
+        },
     }
 }

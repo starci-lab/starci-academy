@@ -28,6 +28,16 @@ export const AuthenticationModal = () => {
         }
     }, [bounds.height, tab])
 
+    useEffect(() => {
+        if (!isOpen) {
+            const timeout = setTimeout(() => {
+                setHeight(0)
+            }, 300)
+    
+            return () => clearTimeout(timeout)
+        }
+    }, [isOpen])
+
     return (
         <StarCiModal
             isOpen={isOpen}
@@ -36,7 +46,6 @@ export const AuthenticationModal = () => {
             scrollBehavior="inside"
         >
             <StarCiModalContent>
-                {/* ✅ chỉ animate height */}
                 <motion.div
                     animate={{ height }}
                     initial={false}

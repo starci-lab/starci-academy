@@ -1,4 +1,4 @@
-import { useAuthenticationDisclosure } from "@/hooks/singleton"
+import { useAuthenticationDisclosure, useKeycloak } from "@/hooks/singleton"
 import {
     Navbar as HeroUINavbar, 
     NavbarBrand, NavbarContent, NavbarItem, Link, Button} from "@heroui/react"
@@ -6,6 +6,7 @@ import React from "react"
 
 export const Navbar = () => {
     const { onOpenChange } = useAuthenticationDisclosure()
+    const { data: keycloak, isLoading: keycloakLoading } = useKeycloak()
     return (
         <HeroUINavbar shouldHideOnScroll>
             <NavbarBrand>
@@ -29,9 +30,19 @@ export const Navbar = () => {
                 </NavbarItem>
             </NavbarContent>
             <NavbarContent justify="end">
-                <Button onPress={onOpenChange}>
-                    Sign In
-                </Button>
+                {keycloakLoading ? (
+                    <Button isDisabled variant="flat">
+                        …
+                    </Button>
+                ) : keycloak?.authenticated ? (
+                    <Button onPress={() => keycloak.logout()}>
+                        Logout
+                    </Button>
+                ) : (
+                    <Button onPress={onOpenChange}>
+                        Sign In
+                    </Button>
+                )}
             </NavbarContent>
         </HeroUINavbar>
     )

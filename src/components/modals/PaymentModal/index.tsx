@@ -17,12 +17,15 @@ import { useMutateCourseEnrollSwr, usePaymentDisclosure } from "@/hooks/singleto
 import { useAppSelector } from "@/redux"
 import { PaymentType } from "@/modules/types"
 import { assetConfig } from "@/resources"
+import { runGraphQLWithToast } from "@/modules/toast"
+import { useRouter } from "next/navigation"
 
 export const PaymentModal = () => {
     const { isOpen, onOpenChange } = usePaymentDisclosure()
     const swr = useMutateCourseEnrollSwr()
     const course = useAppSelector((state) => state.course.course)
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentType | null>(null)
+    const router = useRouter()
 
     const paymentData = useMemo(() => {
         return {
@@ -68,15 +71,38 @@ export const PaymentModal = () => {
                                     radius="none"
                                     isPressable={!paymentMethod.disabled}
                                     className="bg-default/40"
-                                    onPress={() => {
-                                        swr.trigger({
-                                            request: {
-                                                courseId: course?.id ?? "",
-                                                paymentType: paymentMethod.type,
-                                            },
-                                        })
-                                        setSelectedPaymentMethod(paymentMethod.type)
-                                    }}
+                                    onPress={
+                                        async () => {
+                                            let checkoutUrl: string | null = null
+                                            setSelectedPaymentMethod(paymentMethod.type)
+                                            const success = await runGraphQLWithToast(
+                                                async () => {
+                                                    const response = await swr.trigger(
+                                                        {
+                                                            request: {
+                                                                courseId: course?.id ?? "",
+                                                                paymentType: paymentMethod.type,
+                                                                payosReturnUrl: window.location.href,
+                                                                payosCancelUrl: window.location.href,
+                                                            },
+                                                        }
+                                                    )
+                                                    if (!response.data?.courseEnroll) {
+                                                        throw new Error("Failed to update bot settings")
+                                                    }
+                                                    checkoutUrl = response.data.courseEnroll.data?.checkoutUrl ?? null
+                                                    return response.data?.courseEnroll
+                                                },
+                                                {
+                                                    showSuccessToast: false,
+                                                    showErrorToast: true,
+                                                }
+                                            )
+                                            if (success) {
+                                                router.push(checkoutUrl ?? "")
+                                            }
+                                        }
+                                    }
                                 >
                                     <StarCiCardBody>
                                         <div className="grid grid-cols-3 gap-4 items-center">

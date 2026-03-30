@@ -1,12 +1,8 @@
-import type { CourseEntity } from "@/modules/types"
+
+import { CourseEntity } from "@/modules/types"
 import { createApolloClient } from "../clients"
 import type { GraphQLResponse } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
-
-/** Inner `data` field after the global GraphQL response interceptor. */
-export interface QueryCoursePayload {
-    data: CourseEntity | null
-}
 
 const query1 = gql`
   query Course($request: CourseRequest!) {
@@ -15,14 +11,47 @@ const query1 = gql`
       message
       error
       data {
-        data {
+        id
+        createdAt
+        updatedAt
+        title
+        slug
+        description
+        cdnUrl
+        originalPrice
+        currentPhase
+        pricingPhases {
           id
-          createdAt
-          updatedAt
+          price
+          phase
+          slotAvailable
+          orderIndex
+        }
+        prerequisites {
+          id
+          content
+        }
+        valuePropositions {
+          id
+          content
+          orderIndex
+        }
+        modules {
+          id
           title
-          slug
           description
-          cdnUrl
+          orderIndex
+          contents {
+            id
+            orderIndex
+            data
+          }
+        }
+        qnas {
+          id
+          question
+          answer
+          orderIndex
         }
       }
     }
@@ -51,7 +80,7 @@ export interface QueryCourseParams {
 }
 
 export interface QueryCourseResponse {
-    course: GraphQLResponse<QueryCoursePayload>
+    course: GraphQLResponse<CourseEntity>
 }
 
 /**

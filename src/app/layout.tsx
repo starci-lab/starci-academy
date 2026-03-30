@@ -1,17 +1,12 @@
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+import { Figtree } from "next/font/google"
 import "./globals.css"
-import React from "react"
+import React, { PropsWithChildren } from "react"
 import { InnerLayout } from "./InnerLayout"
 
-const geistSans = Geist({
-    variable: "--font-geist-sans",
+const figtree = Figtree({
     subsets: ["latin"],
-})
-
-const geistMono = Geist_Mono({
-    variable: "--font-geist-mono",
-    subsets: ["latin"],
+    variable: "--font-figtree",
 })
 
 export const metadata: Metadata = {
@@ -19,15 +14,11 @@ export const metadata: Metadata = {
     description: "StarCi Academy is a platform for learning and growing",
 }
 
-export default function RootLayout({
-    children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+const Layout = ({ children }: PropsWithChildren) => {
     return (
         <html lang="en">
             <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+                className={`${figtree.className} antialiased`}
             >
                 <InnerLayout> 
                     <div className="p-6 max-w-[1024px] mx-auto">
@@ -38,3 +29,5 @@ export default function RootLayout({
         </html>
     )
 }
+
+export default Layout

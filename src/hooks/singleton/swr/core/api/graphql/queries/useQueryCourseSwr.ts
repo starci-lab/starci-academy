@@ -1,11 +1,14 @@
 import { queryCourse } from "@/modules/api"
-import { useAppSelector } from "@/redux"
+import { useAppDispatch, useAppSelector } from "@/redux"
+import { setCourse } from "@/redux/slices"
 import useSWR from "swr"
 
 /**
  * The core function to query courses with SWR.
  */
 export const useQueryCourseSwrCore = () => {
+    /** The dispatch. */
+    const dispatch = useAppDispatch()
     /** The course id. */
     const id = useAppSelector((state) => state.course.id)
     /** The SWR. */
@@ -33,6 +36,8 @@ export const useQueryCourseSwrCore = () => {
             if (!data || !data.data) {
                 throw new Error("Course not found")
             }
+            /** Set the course. */
+            dispatch(setCourse(data.data.course.data ?? null))
             /** Return the data. */
             return data.data
         })

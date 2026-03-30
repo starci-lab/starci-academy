@@ -88,7 +88,7 @@ export const PaymentModal = () => {
                                                         }
                                                     )
                                                     if (!response.data?.courseEnroll) {
-                                                        throw new Error("Failed to update bot settings")
+                                                        throw new Error("Failed to enroll in course")
                                                     }
                                                     checkoutUrl = response.data.courseEnroll.data?.checkoutUrl ?? null
                                                     return response.data?.courseEnroll

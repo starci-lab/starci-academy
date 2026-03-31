@@ -3,6 +3,7 @@ import { Figtree } from "next/font/google"
 import "./globals.css"
 import React, { PropsWithChildren } from "react"
 import { InnerLayout } from "./InnerLayout"
+import { NextIntlClientProvider } from "next-intl"
 
 const figtree = Figtree({
     subsets: ["latin"],
@@ -20,11 +21,13 @@ const Layout = ({ children }: PropsWithChildren) => {
             <body
                 className={`${figtree.className} antialiased`}
             >
-                <InnerLayout> 
-                    <div className="p-6 max-w-[1024px] mx-auto">
-                        {children}
-                    </div>
-                </InnerLayout>
+                <NextIntlClientProvider>
+                    <InnerLayout> 
+                        <div className="p-6 max-w-[1024px] mx-auto">
+                            {children}
+                        </div>
+                    </InnerLayout>
+                </NextIntlClientProvider>
             </body>
         </html>
     )

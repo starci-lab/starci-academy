@@ -68,13 +68,18 @@ export const Modules = ({ modules, isLoading }: ModulesProps) => {
                                 >
                                     <div className="text-sm text-start w-full ml-4 gap-3 flex flex-col">
                                         {
-                                            _.cloneDeep(module.contents)?.
+                                            _.cloneDeep(module.previewContents)?.
                                                 sort((previous, current) => previous.orderIndex - current.orderIndex)
                                                 .map(
                                                     (content) => (
                                                         <div key={content.id} className="flex items-center gap-3">
                                                             <BracketsCurlyIcon className="w-5 h-5 min-w-5 min-h-5" />
-                                                            <span  dangerouslySetInnerHTML={{ __html: content.data ?? "" }} />
+                                                            <span
+                                                                dangerouslySetInnerHTML={{
+                                                                    __html:
+                                                                        content.data,
+                                                                }}
+                                                            />
                                                         </div>
                                                     )
                                                 )

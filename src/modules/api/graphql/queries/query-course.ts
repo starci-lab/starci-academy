@@ -30,6 +30,7 @@ const query1 = gql`
         prerequisites {
           id
           content
+          orderIndex
         }
         valuePropositions {
           id
@@ -41,7 +42,7 @@ const query1 = gql`
           title
           description
           orderIndex
-          contents {
+          previewContents {
             id
             orderIndex
             data

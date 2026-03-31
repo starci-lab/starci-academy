@@ -5,6 +5,7 @@ import type { CourseEntity } from "./course"
 import type { ExclusiveLessonVideoEntity } from "./exclusive-lesson-video"
 import type { GeneralContentEntity } from "./general-content"
 import type { OutcomeEntity } from "./outcome"
+import type { PreviewContentEntity } from "./preview-content"
 import type { SubmissionEntity } from "./submission"
 
 /**
@@ -25,6 +26,8 @@ export interface ModuleEntity extends AbstractEntity {
     advancedContent?: AdvancedContentEntity
     /** The contents of the module. */
     contents?: Array<ContentEntity>
+    /** Preview bullet/paragraph line items for the module. */
+    previewContents?: Array<PreviewContentEntity>
     /** The exclusive lesson videos of the module. */
     exclusiveLessonVideos?: Array<ExclusiveLessonVideoEntity>
     /** The outcomes of the module. */

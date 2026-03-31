@@ -5,7 +5,7 @@ import type { CourseEntity } from "./course"
  * One bullet value-proposition line for a course (1:N from {@link CourseEntity}).
  */
 export interface ValuePropositionEntity extends AbstractEntity {
-    /** HTML or plain text line shown on the landing page. */
+    /** Short HTML snippet safe for previews. */
     content: string
     /** Display order (lower first). */
     orderIndex: number

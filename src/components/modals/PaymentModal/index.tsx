@@ -19,6 +19,8 @@ import { PaymentType } from "@/modules/types"
 import { assetConfig } from "@/resources"
 import { runGraphQLWithToast } from "@/modules/toast"
 import { useRouter } from "next/navigation"
+import { useTranslations } from "next-intl"
+
 
 export const PaymentModal = () => {
     const { isOpen, onOpenChange } = usePaymentDisclosure()
@@ -26,6 +28,7 @@ export const PaymentModal = () => {
     const course = useAppSelector((state) => state.course.course)
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentType | null>(null)
     const router = useRouter()
+    const t = useTranslations()
 
     const paymentData = useMemo(() => {
         return {
@@ -34,7 +37,7 @@ export const PaymentModal = () => {
                     id: "payos",
                     type: PaymentType.PayOS,
                     name: "PayOS",
-                    description: "Pay with PayOS",
+                    description: t("payment.payos.desc"),
                     iconUrl: assetConfig().icon().payment().payos,
                     disabled: false,
                 },
@@ -42,13 +45,13 @@ export const PaymentModal = () => {
                     id: "sepay",
                     type: PaymentType.Sepay,
                     name: "Sepay",
-                    description: "Pay with Sepay",
+                    description: t("payment.sepay.desc"),
                     iconUrl: assetConfig().icon().payment().sepay,
                     disabled: true,
                 },
             ],
         }
-    }, [])
+    }, [t])
 
     return (
         <StarCiModal
@@ -59,8 +62,8 @@ export const PaymentModal = () => {
         >
             <StarCiModalContent>
                 <StarCiModalHeader
-                    title="Choose Payment Method"
-                    description="Choose a payment method to continue"
+                    title={t("payment.title")}
+                    description={t("payment.desc")}
                 />
                 <StarCiModalBody>
                     <div className="flex flex-col rounded-medium overflow-hidden">
@@ -73,7 +76,7 @@ export const PaymentModal = () => {
                                     className="bg-default/40"
                                     onPress={
                                         async () => {
-                                            let checkoutUrl: string | null = null
+                                            let checkoutUrl = ""
                                             setSelectedPaymentMethod(paymentMethod.type)
                                             const success = await runGraphQLWithToast(
                                                 async () => {
@@ -88,9 +91,9 @@ export const PaymentModal = () => {
                                                         }
                                                     )
                                                     if (!response.data?.courseEnroll) {
-                                                        throw new Error("Failed to enroll in course")
+                                                        throw new Error(response.error?.message)
                                                     }
-                                                    checkoutUrl = response.data.courseEnroll.data?.checkoutUrl ?? null
+                                                    checkoutUrl = response.data.courseEnroll.data?.checkoutUrl ?? ""
                                                     return response.data?.courseEnroll
                                                 },
                                                 {
@@ -99,7 +102,7 @@ export const PaymentModal = () => {
                                                 }
                                             )
                                             if (success) {
-                                                router.push(checkoutUrl ?? "")
+                                                router.push(checkoutUrl)
                                             }
                                         }
                                     }
@@ -125,7 +128,7 @@ export const PaymentModal = () => {
                                                             size="sm"
                                                             className="text-xs"
                                                         >
-                                                            Disabled
+                                                            {t("common.disabled")}
                                                         </StarCiChip>
                                                     )}
                                                 </div>

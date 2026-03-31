@@ -4,6 +4,7 @@ import React from "react"
 import { Spacer } from "@heroui/react"
 import { BracketsCurlyIcon, ClockIcon } from "@phosphor-icons/react"
 import type { ModuleEntity } from "@/modules/types"
+import { useTranslations } from "next-intl"
 import {
     StarCiAccordion,
     StarCiAccordionItem,
@@ -19,6 +20,7 @@ export interface ModulesProps {
 
 export const Modules = ({ modules, isLoading }: ModulesProps) => {
     const list = modules ?? []
+    const t = useTranslations()
     if (!isLoading && list.length === 0) {
         return null
     }
@@ -30,7 +32,7 @@ export const Modules = ({ modules, isLoading }: ModulesProps) => {
                     {Array.from({ length: 3 }).map((_, index) => (
                         <StarCiAccordionItem
                             key={index}
-                            aria-label={`Module ${index + 1}`}
+                            aria-label={t("course.modules.moduleAria", { index: index + 1 })}
                             title={
                                 <div className="flex flex-col gap-2">
                                     <StarCiSkeleton className="h-4 w-[30%] rounded-lg my-[4px]" />

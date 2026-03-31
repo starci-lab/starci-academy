@@ -1,0 +1,93 @@
+{
+  "nav": {
+    "brand": "StarCi Academy",
+    "home": "Trang chủ",
+    "courses": "Khóa học",
+    "contact": "Liên hệ",
+    "logout": "Đăng xuất",
+    "signIn": "Đăng nhập"
+  },
+  "courses": {
+    "featuredTitle": "Khóa học tiêu biểu",
+    "viewCourse": "Xem khóa học"
+  },
+  "course": {
+    "enroll": "Đăng ký",
+    "enrolled": "Đã đăng ký",
+    "prerequisites": "Yêu cầu đầu vào",
+    "modules": {
+      "moduleAria": "Học phần {index}"
+    },
+    "qna": {
+      "title": "Hỏi & Đáp",
+      "questionAria": "Câu hỏi {index}"
+    },
+    "usersEnrolled": "{count} người đã đăng ký"
+  },
+  "auth": {
+    "signIn": {
+      "google": "Đăng nhập với Google",
+      "title": "Đăng nhập",
+      "desc": "Đăng nhập để tiếp tục",
+      "email": {
+        "label": "Email",
+        "placeholder": "Nhập email của bạn"
+      },
+      "password": {
+        "label": "Mật khẩu",
+        "placeholder": "Nhập mật khẩu của bạn",
+        "show": "Hiện mật khẩu",
+        "hide": "Ẩn mật khẩu"
+      },
+      "rememberMe": "Ghi nhớ đăng nhập",
+      "forgotPassword": "Quên mật khẩu?",
+      "submit": "Đăng nhập",
+      "noAccount": "Chưa có tài khoản?",
+      "signUp": "Đăng ký"
+    },
+    "signUp": {
+      "title": "Đăng ký",
+      "desc": "Tạo tài khoản để tiếp tục",
+      "email": {
+        "label": "Email",
+        "placeholder": "Nhập email của bạn"
+      },
+      "password": {
+        "label": "Mật khẩu",
+        "placeholder": "Nhập mật khẩu của bạn",
+        "show": "Hiện mật khẩu",
+        "hide": "Ẩn mật khẩu"
+      },
+      "confirmPassword": {
+        "label": "Xác nhận mật khẩu",
+        "placeholder": "Nhập lại mật khẩu",
+        "show": "Hiện xác nhận mật khẩu",
+        "hide": "Ẩn xác nhận mật khẩu"
+      },
+      "agreeToTerms": {
+        "aria": "Tôi đồng ý với điều khoản và điều kiện",
+        "prefix": "Tôi đã đọc và đồng ý với",
+        "terms": "Điều khoản dịch vụ",
+        "and": "và",
+        "privacy": "Chính sách bảo mật"
+      },
+      "submit": "Đăng ký",
+      "haveAccount": "Đã có tài khoản?",
+      "signIn": "Đăng nhập"
+    }
+  },
+  "payment": {
+    "title": "Chọn phương thức thanh toán",
+    "desc": "Chọn một phương thức để tiếp tục",
+    "payos": {
+      "desc": "Thanh toán qua PayOS"
+    },
+    "sepay": {
+      "desc": "Thanh toán qua Sepay"
+    }
+  },
+  "common": {
+    "disabled": "Tạm tắt"
+  }
+}
+

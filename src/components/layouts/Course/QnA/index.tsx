@@ -3,6 +3,7 @@
 import React, { useMemo } from "react"
 import { Spacer } from "@heroui/react"
 import type { QnaEntity } from "@/modules/types"
+import { useTranslations } from "next-intl"
 import {
     StarCiAccordion,
     StarCiAccordionItem,
@@ -15,6 +16,7 @@ export interface QnAProps {
 }
 
 export const QnA = ({ qnas, isLoading }: QnAProps) => {
+    const t = useTranslations()
     const rows = useMemo(() => {
         return [...(qnas ?? [])].sort((a, b) => a.orderIndex - b.orderIndex)
     }, [qnas])
@@ -25,7 +27,7 @@ export const QnA = ({ qnas, isLoading }: QnAProps) => {
 
     return (
         <div>
-            <div className="text-lg font-medium text-start text-foreground-500">Questions & Answers</div>
+            <div className="text-lg font-medium text-start text-foreground-500">{t("course.qna.title")}</div>
             <Spacer y={3} />
             {
                 isLoading ? (
@@ -33,7 +35,7 @@ export const QnA = ({ qnas, isLoading }: QnAProps) => {
                         {Array.from({ length: 2 }).map((_, index) => (
                             <StarCiAccordionItem
                                 key={index}
-                                aria-label={`Question ${index + 1}`}
+                                aria-label={t("course.qna.questionAria", { index: index + 1 })}
                                 title={<StarCiSkeleton className="h-[14px] w-[40%] rounded-lg my-[3px]" />}
                             >
                             </StarCiAccordionItem>

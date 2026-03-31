@@ -12,6 +12,7 @@ import { Spacer } from "@heroui/react"
 import { GoogleIcon } from "../../../svg"
 import { useAppDispatch } from "@/redux"
 import { EyeIcon, EyeClosedIcon } from "@phosphor-icons/react"
+import { useTranslations } from "next-intl"
 import {
     AuthenticationModalTab,
     setAuthenticationModalTab,
@@ -23,6 +24,7 @@ export const SignInSection = () => {
     const [showPassword, setShowPassword] = useState(false)
     const { data: keycloak, isLoading: keycloakLoading } = useKeycloak()
     const dispatch = useAppDispatch()
+    const t = useTranslations()
     const {
         values,
         errors,
@@ -49,7 +51,7 @@ export const SignInSection = () => {
                     }
                 }
             >
-                    Sign In With Google
+                {t("auth.signIn.google")}
             </StarCiButton>
             <Spacer y={3} />
             <StarCiDivider />
@@ -57,8 +59,8 @@ export const SignInSection = () => {
             <StarCiInput
                 isRequired
                 type="email"
-                label="Email"
-                placeholder="Enter your email"
+                label={t("auth.signIn.email.label")}
+                placeholder={t("auth.signIn.email.placeholder")}
                 name="email"
                 value={values.email}
                 onValueChange={(email) => setFieldValue("email", email)}
@@ -70,8 +72,8 @@ export const SignInSection = () => {
             <StarCiInput
                 isRequired
                 type={showPassword ? "text" : "password"}
-                label="Password"
-                placeholder="Enter your password"
+                label={t("auth.signIn.password.label")}
+                placeholder={t("auth.signIn.password.placeholder")}
                 name="password"
                 value={values.password}
                 onValueChange={(password) => setFieldValue("password", password)}
@@ -83,7 +85,7 @@ export const SignInSection = () => {
                         as="button"
                         className="mr-1 flex items-center justify-center rounded-md p-1 text-foreground-500 outline-none transition-opacity hover:opacity-80"
                         aria-label={
-                            showPassword ? "Hide password" : "Show password"
+                            showPassword ? t("auth.signIn.password.hide") : t("auth.signIn.password.show")
                         }
                         onClick={() => setShowPassword((s) => !s)}
                     >
@@ -100,15 +102,15 @@ export const SignInSection = () => {
                 <div className="flex items-center gap-1.5">
                     <StarCiCheckbox
                         size="sm"
-                        aria-label="Remember me"
+                        aria-label={t("auth.signIn.rememberMe")}
                         isSelected={values.rememberMe}
                         onValueChange={(rememberMe) => setFieldValue("rememberMe", rememberMe)}
                     />
                     <div className="text-xs text-foreground-500">
-                            Remember me
+                        {t("auth.signIn.rememberMe")}
                     </div>
                 </div>
-                <StarCiLink className="text-xs">Forgot Password?</StarCiLink>
+                <StarCiLink className="text-xs">{t("auth.signIn.forgotPassword")}</StarCiLink>
             </div>
             <Spacer y={3} />
             <StarCiButton
@@ -117,12 +119,12 @@ export const SignInSection = () => {
                 fullWidth
                 isLoading={isSubmitting}
             >
-                    Sign In
+                {t("auth.signIn.submit")}
             </StarCiButton>
             <Spacer y={3} />
             <div className="flex justify-center items-center gap-1">
                 <div className="text-xs text-foreground-500">
-                        Don&apos;t have an account?
+                    {t("auth.signIn.noAccount")}
                 </div>
                 <StarCiLink
                     className="text-xs"
@@ -134,7 +136,7 @@ export const SignInSection = () => {
                         )
                     }
                 >
-                        Sign Up
+                    {t("auth.signIn.signUp")}
                 </StarCiLink>
             </div>
         </StarCiModalBody>

@@ -19,6 +19,7 @@ import { ValuePropositions } from "./ValuePropositions"
 import { QnA } from "./QnA"
 import { useQueryCourseEnrollmentStatusSwr } from "@/hooks/singleton/swr"
 import { usePaymentDisclosure } from "@/hooks/singleton"
+import { useTranslations } from "next-intl"
 
 /**
  * The props for the Course component.
@@ -36,6 +37,7 @@ export const Course = ({ course, isLoading }: CourseProps) => {
     const enrollmentPayload = enrollmentSwr.data?.courseEnrollmentStatus?.data
     const isEnrolled = enrollmentPayload?.isEnrolled === true
     const enrollmentCount = enrollmentPayload?.enrollmentCount ?? 0
+    const t = useTranslations()
 
     return (
         <div>
@@ -45,10 +47,10 @@ export const Course = ({ course, isLoading }: CourseProps) => {
                 ) : (
                     <StarCiBreadcrumb>
                         <StarCiBreadcrumbItem>
-                            <Link href="/">Home</Link>
+                            <Link href="/">{t("nav.home")}</Link>
                         </StarCiBreadcrumbItem>
                         <StarCiBreadcrumbItem>
-                            <Link href="/courses">Courses</Link>
+                            <Link href="/courses">{t("nav.courses")}</Link>
                         </StarCiBreadcrumbItem>
                         <StarCiBreadcrumbItem>
                             <Link href={`/courses/${course?.id}`}>
@@ -83,7 +85,7 @@ export const Course = ({ course, isLoading }: CourseProps) => {
                         }
                     </StarCiAlert>
                     <Spacer y={6} />
-                    <StarCiAlert title="Prerequisites" icon={<WarningCircleIcon size={24} />} className="text-sm" color="warning" variant="faded">
+                    <StarCiAlert title={t("course.prerequisites")} icon={<WarningCircleIcon size={24} />} className="text-sm" color="warning" variant="faded">
                         {
                             isLoading ? (
                                 <div className="w-full">
@@ -125,11 +127,11 @@ export const Course = ({ course, isLoading }: CourseProps) => {
                                 isDisabled={isEnrolled}
                                 onPress={onOpen}
                             >
-                                Enroll
+                                {t("course.enroll")}
                             </StarCiButton>
                             <Spacer y={4} />
                             <div className="text-sm text-foreground-500">
-                                {enrollmentCount} users have enrolled
+                                {t("course.usersEnrolled", { count: enrollmentCount })}
                             </div>
                         </div>
                     </StarCiCardFooter>

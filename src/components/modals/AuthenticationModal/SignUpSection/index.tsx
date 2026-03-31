@@ -15,11 +15,13 @@ import {
 } from "@/redux/slices"
 import { EyeIcon, EyeClosedIcon } from "@phosphor-icons/react"
 import { useSignUpFormik } from "@/hooks/singleton"
+import { useTranslations } from "next-intl"
 
 export const SignUpSection = () => {
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
     const dispatch = useAppDispatch()
+    const t = useTranslations()
     const {
         values,
         errors,
@@ -34,8 +36,8 @@ export const SignUpSection = () => {
             <StarCiInput
                 isRequired
                 type="email"
-                label="Email"
-                placeholder="Enter your email"
+                label={t("auth.signUp.email.label")}
+                placeholder={t("auth.signUp.email.placeholder")}
                 name="email"
                 value={values.email}
                 onValueChange={(email) => setFieldValue("email", email)}
@@ -46,8 +48,8 @@ export const SignUpSection = () => {
             <Spacer y={3} />
             <StarCiInput
                 isRequired
-                label="Password"
-                placeholder="Enter your password"
+                label={t("auth.signUp.password.label")}
+                placeholder={t("auth.signUp.password.placeholder")}
                 type={showPassword ? "text" : "password"}
                 name="password"
                 value={values.password}
@@ -60,7 +62,7 @@ export const SignUpSection = () => {
                         as="button"
                         className="mr-1 flex items-center justify-center rounded-md p-1 text-foreground-500 outline-none transition-opacity hover:opacity-80"
                         aria-label={
-                            showPassword ? "Hide password" : "Show password"
+                            showPassword ? t("auth.signUp.password.hide") : t("auth.signUp.password.show")
                         }
                         onClick={() => setShowPassword((s) => !s)}
                     >
@@ -76,8 +78,8 @@ export const SignUpSection = () => {
             <StarCiInput
                 isRequired
                 type={showConfirmPassword ? "text" : "password"}
-                label="Confirm password"
-                placeholder="Confirm your password"
+                label={t("auth.signUp.confirmPassword.label")}
+                placeholder={t("auth.signUp.confirmPassword.placeholder")}
                 name="confirmPassword"
                 value={values.confirmPassword}
                 onValueChange={(v) => setFieldValue("confirmPassword", v)}
@@ -96,8 +98,8 @@ export const SignUpSection = () => {
                         className="mr-1 flex items-center justify-center rounded-md p-1 text-foreground-500 outline-none transition-opacity hover:opacity-80"
                         aria-label={
                             showConfirmPassword
-                                ? "Hide confirm password"
-                                : "Show confirm password"
+                                ? t("auth.signUp.confirmPassword.hide")
+                                : t("auth.signUp.confirmPassword.show")
                         }
                         onClick={() => setShowConfirmPassword((s) => !s)}
                     >
@@ -115,7 +117,7 @@ export const SignUpSection = () => {
                     <StarCiCheckbox
                         size="sm"
                         className="mt-0.5"
-                        aria-label="I agree to the terms and conditions"
+                        aria-label={t("auth.signUp.agreeToTerms.aria")}
                         isSelected={values.agreeToTerms}
                         isInvalid={
                             !!(touched.agreeToTerms && errors.agreeToTerms)
@@ -126,13 +128,13 @@ export const SignUpSection = () => {
                         }}
                     />
                     <div className="text-xs text-foreground-500">
-                            I have read and agree to the{" "}
+                        {t("auth.signUp.agreeToTerms.prefix")}{" "}
                         <StarCiLink className="text-xs">
-                                Terms of Service
+                            {t("auth.signUp.agreeToTerms.terms")}
                         </StarCiLink>{" "}
-                            and{" "}
+                        {t("auth.signUp.agreeToTerms.and")}{" "}
                         <StarCiLink className="text-xs">
-                                Privacy Policy
+                            {t("auth.signUp.agreeToTerms.privacy")}
                         </StarCiLink>
                     </div>
                 </div>
@@ -149,12 +151,12 @@ export const SignUpSection = () => {
                 fullWidth
                 isLoading={isSubmitting}
             >
-                    Sign Up
+                {t("auth.signUp.submit")}
             </StarCiButton>
             <Spacer y={3} />
             <div className="flex justify-center items-center gap-1">
                 <div className="text-xs text-foreground-500">
-                        Already have an account?
+                    {t("auth.signUp.haveAccount")}
                 </div>
                 <StarCiLink
                     className="text-xs"
@@ -166,7 +168,7 @@ export const SignUpSection = () => {
                         )
                     }
                 >
-                        Sign In
+                    {t("auth.signUp.signIn")}
                 </StarCiLink>
             </div>
         </StarCiModalBody>

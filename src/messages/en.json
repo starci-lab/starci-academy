@@ -1,0 +1,93 @@
+{
+  "nav": {
+    "brand": "StarCi Academy",
+    "home": "Home",
+    "courses": "Courses",
+    "contact": "Contact",
+    "logout": "Logout",
+    "signIn": "Sign In"
+  },
+  "courses": {
+    "featuredTitle": "Featured courses",
+    "viewCourse": "View Course"
+  },
+  "course": {
+    "enroll": "Enroll",
+    "enrolled": "Enrolled",
+    "prerequisites": "Prerequisites",
+    "modules": {
+      "moduleAria": "Module {index}"
+    },
+    "qna": {
+      "title": "Questions & Answers",
+      "questionAria": "Question {index}"
+    },
+    "usersEnrolled": "{count} users have enrolled"
+  },
+  "auth": {
+    "signIn": {
+      "google": "Sign In With Google",
+      "title": "Sign In",
+      "desc": "Sign in to your account to continue",
+      "email": {
+        "label": "Email",
+        "placeholder": "Enter your email"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter your password",
+        "show": "Show password",
+        "hide": "Hide password"
+      },
+      "rememberMe": "Remember me",
+      "forgotPassword": "Forgot Password?",
+      "submit": "Sign In",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign Up"
+    },
+    "signUp": {
+      "title": "Sign Up",
+      "desc": "Create an account to continue",
+      "email": {
+        "label": "Email",
+        "placeholder": "Enter your email"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter your password",
+        "show": "Show password",
+        "hide": "Hide password"
+      },
+      "confirmPassword": {
+        "label": "Confirm password",
+        "placeholder": "Confirm your password",
+        "show": "Show confirm password",
+        "hide": "Hide confirm password"
+      },
+      "agreeToTerms": {
+        "aria": "I agree to the terms and conditions",
+        "prefix": "I have read and agree to the",
+        "terms": "Terms of Service",
+        "and": "and",
+        "privacy": "Privacy Policy"
+      },
+      "submit": "Sign Up",
+      "haveAccount": "Already have an account?",
+      "signIn": "Sign In"
+    }
+  },
+  "payment": {
+    "title": "Choose Payment Method",
+    "desc": "Choose a payment method to continue",
+    "payos": {
+      "desc": "Pay with PayOS"
+    },
+    "sepay": {
+      "desc": "Pay with Sepay"
+    }
+  },
+  "common": {
+    "disabled": "Disabled"
+  }
+}
+

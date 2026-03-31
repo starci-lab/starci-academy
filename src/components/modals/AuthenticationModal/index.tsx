@@ -11,11 +11,13 @@ import { useAppSelector } from "@/redux"
 import { AuthenticationModalTab } from "@/redux/slices"
 import { SignInSection } from "./SignInSection"
 import { SignUpSection } from "./SignUpSection"
+import { useTranslations } from "next-intl"
 
 export const AuthenticationModal = () => {
     const { isOpen, onOpenChange } = useAuthenticationDisclosure()
     const tab = useAppSelector((state) => state.tabs.tab)
     const isSignIn = tab === AuthenticationModalTab.SignIn
+    const t = useTranslations()
 
     return (
         <StarCiModal
@@ -28,16 +30,16 @@ export const AuthenticationModal = () => {
                 {isSignIn ? (
                     <>
                         <StarCiModalHeader
-                            title="Sign In"
-                            description="Sign in to your account to continue"
+                            title={t("auth.signIn.title")}
+                            description={t("auth.signIn.desc")}
                         />
                         <SignInSection />
                     </>
                 ) : (
                     <>
                         <StarCiModalHeader
-                            title="Sign Up"
-                            description="Create an account to continue"
+                            title={t("auth.signUp.title")}
+                            description={t("auth.signUp.desc")}
                         />
                         <SignUpSection />
                     </>

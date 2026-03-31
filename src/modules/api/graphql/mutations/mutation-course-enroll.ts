@@ -6,9 +6,8 @@ import { DocumentNode, gql } from "@apollo/client"
 /** Payload inside `courseEnroll.data` after the standard API wrapper. */
 export interface CourseEnrollData {
     checkoutUrl: string
-    orderCode: string
-    preflightTransactionId: string
-    paymentLinkId: string
+    transactionId: string
+    referenceId: string
     amount: number
 }
 
@@ -20,9 +19,8 @@ const mutation1 = gql`
       error
       data {
         checkoutUrl
-        orderCode
-        preflightTransactionId
-        paymentLinkId
+        transactionId
+        referenceId
         amount
       }
     }

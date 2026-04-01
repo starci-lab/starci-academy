@@ -1,7 +1,7 @@
 
 import { CourseEntity } from "@/modules/types"
 import { createApolloClient } from "../clients"
-import type { GraphQLResponse } from "../types"
+import type { GraphQLResponse, QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
 const query1 = gql`
@@ -68,17 +68,10 @@ const queryMap: Record<QueryCourse, DocumentNode> = {
 }
 
 /** Apollo variables for `course(input: CourseInput!)`. */
-export interface QueryCourseVariables {
-    request: {
-      id: string
-    }
+export interface QueryCourseRequest {
+    id: string
 }
 
-export interface QueryCourseParams {
-    query?: QueryCourse
-    variables: QueryCourseVariables
-    token?: string
-}
 
 export interface QueryCourseResponse {
     course: GraphQLResponse<CourseEntity>
@@ -92,9 +85,9 @@ export interface QueryCourseResponse {
  */
 export const queryCourse = async ({
     query = QueryCourse.Query1,
-    variables,
+    request,
     token,
-}: QueryCourseParams) => {
+}: QueryParams<QueryCourse, QueryCourseRequest>) => {
     const apollo = createApolloClient({
         auth: Boolean(token),
         cache: false,
@@ -103,6 +96,8 @@ export const queryCourse = async ({
 
     return apollo.query<QueryCourseResponse>({
         query: queryMap[query],
-        variables,
+        variables: {
+            request,
+        },
     })
 }

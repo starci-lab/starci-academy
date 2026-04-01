@@ -1,12 +1,14 @@
 import { queryCourseEnrollmentStatus } from "@/modules/api"
 import { useKeycloak } from "@/hooks/singleton"
-import { useAppSelector } from "@/redux"
+import { useAppDispatch, useAppSelector } from "@/redux"
+import { setEnrolled } from "@/redux/slices"
 import useSWR from "swr"
 
 /**
  * The core function to query course enrollment status with SWR.
  */
 export const useQueryCourseEnrollmentStatusSwrCore = () => {
+    const dispatch = useAppDispatch()
     const keycloak = useKeycloak()
     const courseId = useAppSelector((state) => state.course.id)
     const authenticated = Boolean(keycloak.data?.authenticated)
@@ -35,6 +37,7 @@ export const useQueryCourseEnrollmentStatusSwrCore = () => {
             if (!data || !data.data) {
                 throw new Error("Course enrollment status not found")
             }
+            dispatch(setEnrolled(Boolean(data.data.courseEnrollmentStatus.data?.isEnrolled)))
             return data.data
         }
     )

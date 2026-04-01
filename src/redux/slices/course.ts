@@ -1,5 +1,6 @@
 import { 
-    CourseEntity 
+    CourseEntity,
+    ModuleEntity
 } from "@/modules/types"
 import { 
     createSlice, 
@@ -11,11 +12,15 @@ import {
  */
 export interface CourseSlice {
     /** The course id. */
-    id: string | null
+    id?: string
     /** The course. */
-    course: CourseEntity | null
+    course?: CourseEntity
     /** The courses. */
     courses: Array<CourseEntity>
+    /** The module id. */
+    moduleId?: string
+    /** The module. */
+    module?: ModuleEntity
 }
 
 /**
@@ -23,11 +28,15 @@ export interface CourseSlice {
  */
 const initialState: CourseSlice = {
     /** The course id. */
-    id: null,
+    id: undefined,
     /** The course. */
-    course: null,
+    course: undefined,
     /** The courses. */
     courses: [],
+    /** The module id. */
+    moduleId: undefined,
+    /** The module. */
+    module: undefined,
 }
 
 /**
@@ -44,7 +53,7 @@ export const courseSlice = createSlice(
             /** The action to set the course. */
             setCourse: (
                 state, 
-                action: PayloadAction<CourseEntity | null>
+                action: PayloadAction<CourseEntity | undefined>
             ) => {
                 state.course = action.payload
             },
@@ -58,9 +67,23 @@ export const courseSlice = createSlice(
             /** The action to set the course id. */
             setCourseId: (
                 state, 
-                action: PayloadAction<string | null>
+                action: PayloadAction<string | undefined>
             ) => {
                 state.id = action.payload
+            },
+            /** The action to set the module id. */
+            setModuleId: (
+                state, 
+                action: PayloadAction<string | undefined>
+            ) => {
+                state.moduleId = action.payload
+            },
+            /** The action to set the module. */
+            setModule: (
+                state, 
+                action: PayloadAction<ModuleEntity | undefined>
+            ) => {
+                state.module = action.payload
             },
         },
     }
@@ -74,4 +97,6 @@ export const {
     setCourse,
     setCourses,
     setCourseId,
+    setModuleId,
+    setModule,
 } = courseSlice.actions

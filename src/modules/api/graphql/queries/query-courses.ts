@@ -4,6 +4,7 @@ import {
     SortBy,
     SortOrder,
     type GraphQLResponse,
+    type QueryParams,
     type PaginationFilters,
 } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
@@ -53,20 +54,12 @@ export const defaultCoursesSorts = [
 ] as const
 
 /** Apollo variables for `courses(input: CoursesInput!)`. */
-export interface QueryCoursesVariables {
-    request: {
-        filters: PaginationFilters<SortBy>
-    }
+export interface QueryCoursesRequest {
+    filters: PaginationFilters<SortBy>
 }
 
 export interface QueryCoursesResponse {
     courses: GraphQLResponse<QueryCoursesPayload>
-}
-
-export interface QueryCoursesParams {
-    query?: QueryCourses
-    variables: QueryCoursesVariables
-    token?: string
 }
 
 /**
@@ -77,9 +70,9 @@ export interface QueryCoursesParams {
  */
 export const queryCourses = async ({
     query = QueryCourses.Query1,
-    variables,
+    request,
     token,
-}: QueryCoursesParams) => {
+}: QueryParams<QueryCourses, QueryCoursesRequest>) => {
     const apollo = createApolloClient({
         auth: Boolean(token),
         cache: false,
@@ -88,6 +81,8 @@ export const queryCourses = async ({
 
     return apollo.query<QueryCoursesResponse>({
         query: queryMap[query],
-        variables,
+        variables: {
+            request,
+        },
     })
 }

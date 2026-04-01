@@ -14,6 +14,8 @@ export interface UserSlice {
     user: UserEntity | null
     /** Whether the user is authenticated. */
     authenticated: boolean
+    /** Whether the user is enrolled in the course. */
+    enrolled: boolean
 }
 
 /**
@@ -24,6 +26,8 @@ const initialState: UserSlice = {
     user: null,
     /** Whether the user is authenticated. */
     authenticated: false,
+    /** Whether the user is enrolled in the course. */
+    enrolled: false,
 }
 
 /**
@@ -51,6 +55,13 @@ export const userSlice = createSlice(
             ) => {
                 state.authenticated = action.payload
             },
+            /** The action to set the enrolled state. */
+            setEnrolled: (
+                state, 
+                action: PayloadAction<boolean>
+            ) => {
+                state.enrolled = action.payload
+            },
         },
     },
 )
@@ -62,4 +73,5 @@ export const userReducer = userSlice.reducer
 export const { 
     setUser,
     setAuthenticated,
+    setEnrolled,
 } = userSlice.actions

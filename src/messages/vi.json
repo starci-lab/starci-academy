@@ -5,7 +5,8 @@
     "courses": "Khóa học",
     "contact": "Liên hệ",
     "logout": "Đăng xuất",
-    "signIn": "Đăng nhập"
+    "signIn": "Đăng nhập",
+    "learn": "Học"
   },
   "courses": {
     "featuredTitle": "Khóa học tiêu biểu",
@@ -14,9 +15,14 @@
   "course": {
     "enroll": "Đăng ký",
     "enrolled": "Đã đăng ký",
+    "continueLearning": "Tiếp tục học",
     "prerequisites": "Yêu cầu đầu vào",
     "modules": {
-      "moduleAria": "Học phần {index}"
+      "moduleAria": "Học phần {index}",
+      "lessonVideos": "Bài giảng",
+      "foundations": "Cơ bản",
+      "challenges": "Thử thách",
+      "topAchievers": "Top người học"
     },
     "qna": {
       "title": "Hỏi & Đáp",

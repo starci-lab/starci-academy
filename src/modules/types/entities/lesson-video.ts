@@ -4,7 +4,7 @@ import type { ModuleEntity } from "./module"
 /**
  * Video link and metadata attached to a module.
  */
-export interface ExclusiveLessonVideoEntity extends AbstractEntity {
+export interface LessonVideoEntity extends AbstractEntity {
     /** The title of the exclusive lesson video. */
     title: string
     /** The description of the exclusive lesson video. */

@@ -15,8 +15,8 @@ import { useTranslations } from "next-intl"
 
 export const AuthenticationModal = () => {
     const { isOpen, onOpenChange } = useAuthenticationDisclosure()
-    const tab = useAppSelector((state) => state.tabs.tab)
-    const isSignIn = tab === AuthenticationModalTab.SignIn
+    const authenticationModalTab = useAppSelector((state) => state.tabs.authenticationModalTab)
+    const isSignIn = authenticationModalTab === AuthenticationModalTab.SignIn
     const t = useTranslations()
 
     return (

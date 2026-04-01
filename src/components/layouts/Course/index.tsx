@@ -1,7 +1,7 @@
 "use client"
 import React from "react"
 import { Link, Spacer } from "@heroui/react"
-import { LightbulbFilamentIcon, PencilSimpleLineIcon, WarningCircleIcon } from "@phosphor-icons/react"
+import { BookOpenIcon, LightbulbFilamentIcon, PencilSimpleLineIcon, WarningCircleIcon } from "@phosphor-icons/react"
 import { CourseEntity } from "@/modules/types"
 import { 
     StarCiAlert, 
@@ -17,9 +17,9 @@ import { Modules } from "./Modules"
 import { Stepper } from "./Stepper"
 import { ValuePropositions } from "./ValuePropositions"
 import { QnA } from "./QnA"
-import { useQueryCourseEnrollmentStatusSwr } from "@/hooks/singleton/swr"
-import { usePaymentDisclosure } from "@/hooks/singleton"
+import { useQueryCourseEnrollmentStatusSwr, usePaymentDisclosure } from "@/hooks/singleton"
 import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
 
 /**
  * The props for the Course component.
@@ -38,6 +38,7 @@ export const Course = ({ course, isLoading }: CourseProps) => {
     const isEnrolled = enrollmentPayload?.isEnrolled === true
     const enrollmentCount = enrollmentPayload?.enrollmentCount ?? 0
     const t = useTranslations()
+    const router = useRouter()
 
     return (
         <div>
@@ -119,16 +120,30 @@ export const Course = ({ course, isLoading }: CourseProps) => {
                     </StarCiCardBody>
                     <StarCiCardFooter>
                         <div className="w-full">
-                            <StarCiButton 
-                                color="primary" 
-                                size="lg" 
-                                startContent={<PencilSimpleLineIcon className="w-5 h-5" />}
-                                className="w-full"
-                                isDisabled={isEnrolled}
-                                onPress={onOpen}
-                            >
-                                {t("course.enroll")}
-                            </StarCiButton>
+                            {
+                                !isEnrolled ? (
+                                    <StarCiButton 
+                                        color="primary" 
+                                        size="lg" 
+                                        startContent={<PencilSimpleLineIcon className="w-5 h-5" />}
+                                        className="w-full"
+                                        isDisabled={isEnrolled}
+                                        onPress={onOpen}
+                                    >
+                                        {t("course.enroll")}
+                                    </StarCiButton>
+                                ) : (
+                                    <StarCiButton 
+                                        color="primary" 
+                                        size="lg" 
+                                        startContent={<BookOpenIcon className="w-5 h-5" />}
+                                        className="w-full"
+                                        isDisabled={!isEnrolled}
+                                        onPress={() => router.push(`/courses/${course?.id}/learn`)}
+                                    >
+                                        {t("course.continueLearning")}
+                                    </StarCiButton>
+                                )}
                             <Spacer y={4} />
                             <div className="text-sm text-foreground-500">
                                 {t("course.usersEnrolled", { count: enrollmentCount })}

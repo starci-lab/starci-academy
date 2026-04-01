@@ -18,11 +18,9 @@ export const useQueryCoursesSwrCore = () => {
             /** The data. */
             const data = await queryCourses(
                 { 
-                    variables: {
-                        request: {
-                            filters: {
-                                sorts: [],
-                            },
+                    request: {
+                        filters: {
+                            sorts: [],
                         },
                     }
                 }

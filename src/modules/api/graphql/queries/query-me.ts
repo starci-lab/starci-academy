@@ -1,6 +1,6 @@
 import type { UserEntity } from "@/modules/types"
 import { createApolloClient } from "../clients"
-import type { GraphQLResponse } from "../types"
+import type { GraphQLResponse, QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
 /** Inner `data` field after the global GraphQL response interceptor. */
@@ -30,10 +30,6 @@ export enum QueryMe {
 const queryMap: Record<QueryMe, DocumentNode> = {
     [QueryMe.Query1]: query1,
 }
-export interface QueryMeParams {
-    query?: QueryMe
-    token?: string
-}
 
 export interface QueryMeResponse {
     me: GraphQLResponse<QueryMePayload>
@@ -48,7 +44,7 @@ export interface QueryMeResponse {
 export const queryMe = async ({
     query = QueryMe.Query1,
     token,
-}: QueryMeParams) => {
+}: QueryParams<QueryMe, undefined>) => {
     const apollo = createApolloClient({
         auth: Boolean(token),
         cache: false,

@@ -2,4 +2,5 @@
 export * from "./query-course"
 export * from "./query-course-enrollment-status"
 export * from "./query-courses"
+export * from "./query-module"
 export * from "./query-me"

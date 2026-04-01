@@ -5,7 +5,8 @@
     "courses": "Courses",
     "contact": "Contact",
     "logout": "Logout",
-    "signIn": "Sign In"
+    "signIn": "Sign In",
+    "learn": "Learn"
   },
   "courses": {
     "featuredTitle": "Featured courses",
@@ -14,9 +15,14 @@
   "course": {
     "enroll": "Enroll",
     "enrolled": "Enrolled",
+    "continueLearning": "Continue Learning",
     "prerequisites": "Prerequisites",
     "modules": {
-      "moduleAria": "Module {index}"
+      "moduleAria": "Module {index}",
+      "lessonVideos": "Lesson Videos",
+      "foundations": "Foundations",
+      "challenges": "Challenges",
+      "topAchievers": "Top Achievers"
     },
     "qna": {
       "title": "Questions & Answers",

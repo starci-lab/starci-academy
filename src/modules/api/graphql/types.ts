@@ -12,8 +12,7 @@ export interface GraphQLResponse<TData = undefined> {
 
 /** Header names used for MFA or OTP flows when calling protected operations. */
 export enum GraphQLHeadersKey {
-    TOTP = "X-TOTP",
-    EmailOTP = "X-Email-OTP",
+    XCourseId = "X-Course-Id",
 }
 
 export type GraphQLHeaders = Partial<Record<GraphQLHeadersKey, string>>

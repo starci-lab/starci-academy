@@ -25,10 +25,8 @@ export const useQueryCourseSwrCore = () => {
             /** The data. */
             const data = await queryCourse(
                 { 
-                    variables: {
-                        request: {
-                            id,
-                        }
+                    request: {
+                        id,
                     }
                 }
             )
@@ -37,7 +35,7 @@ export const useQueryCourseSwrCore = () => {
                 throw new Error("Course not found")
             }
             /** Set the course. */
-            dispatch(setCourse(data.data.course.data ?? null))
+            dispatch(setCourse(data.data.course.data))
             /** Return the data. */
             return data.data
         })

@@ -1,5 +1,7 @@
 import React from "react"
 import { AuthenticationModal } from "./AuthenticationModal"
+import { ChallengeModal } from "./ChallengeModal"
+import { ContentModal } from "./ContentModal"
 import { PaymentModal } from "./PaymentModal"
 
 export const ModalContainer = () => {
@@ -7,6 +9,8 @@ export const ModalContainer = () => {
         <>
             <AuthenticationModal />
             <PaymentModal />
+            <ContentModal />
+            <ChallengeModal />
         </>
     )
 }

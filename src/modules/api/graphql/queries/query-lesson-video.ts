@@ -1,0 +1,63 @@
+import type { LessonVideoEntity } from "@/modules/types"
+import { createApolloClient } from "../clients"
+import type { GraphQLResponse, QueryParams } from "../types"
+import { DocumentNode, gql } from "@apollo/client"
+
+const query1 = gql`
+  query LessonVideo($request: LessonVideoRequest!) {
+    lessonVideo(request: $request) {
+      success
+      message
+      error
+      data {
+        id
+        title
+        description
+        url
+        durationMs
+        orderIndex
+        thumbnailUrl
+      }
+    }
+  }
+`
+
+export enum QueryLessonVideo {
+    Query1 = "query1",
+}
+
+const queryMap: Record<QueryLessonVideo, DocumentNode> = {
+    [QueryLessonVideo.Query1]: query1,
+}
+
+export interface QueryLessonVideoResponse {
+    lessonVideo: GraphQLResponse<LessonVideoEntity>
+}
+
+export interface LessonVideoRequest {
+    id: string
+}
+
+/**
+ * One lesson video by id (`ref/queries/lesson-videos`).
+ */
+export const queryLessonVideo = async ({
+    query = QueryLessonVideo.Query1,
+    request,
+    headers,
+    token,
+}: QueryParams<QueryLessonVideo, LessonVideoRequest>) => {
+    const apollo = createApolloClient({
+        auth: Boolean(token),
+        cache: false,
+        token,
+        headers,
+    })
+
+    return apollo.query<QueryLessonVideoResponse>({
+        query: queryMap[query],
+        variables: {
+            request,
+        },
+    })
+}

@@ -11,6 +11,8 @@ import type { PricingPhase } from "../enums"
  * Course with ordered modules and landing-page metadata.
  */
 export interface CourseEntity extends AbstractEntity {
+    /** The display id of the course. */
+    displayId: string
     /** The title of the course. */
     title: string
     /** The slug of the course. */

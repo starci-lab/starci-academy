@@ -20,9 +20,24 @@
     "modules": {
       "moduleAria": "Học phần {index}",
       "lessonVideos": "Bài giảng",
-      "foundations": "Cơ bản",
+      "lessonVideosCount": "{count} bài giảng có sẵn",
+      "content": "Nội dung",
+      "minutesRead": "{minutes} phút đọc",
+      "contentCount": "{count} nội dung có sẵn",
+      "contentEmpty": "Chưa có nội dung cho học phần này.",
       "challenges": "Thử thách",
-      "topAchievers": "Top người học"
+      "challengesCount": "{count} thử thách trong học phần này",
+      "challengesEmpty": "Chưa có thử thách cho học phần này.",
+      "challengeStepsTitle": "Các bước hướng dẫn",
+      "challengeInputsCount": "{count} bước",
+      "challengeInputsTitle": "Các bước thực hiện",
+      "challengeInputLabel": "Bước {index}",
+      "challengeScore": "{score} điểm",
+      "challengeDifficultyEasy": "Dễ",
+      "challengeDifficultyMedium": "Trung bình",
+      "challengeDifficultyHard": "Khó",
+      "topAchievers": "Top người học",
+      "referencesTitle": "Tài liệu tham khảo"
     },
     "qna": {
       "title": "Hỏi & Đáp",

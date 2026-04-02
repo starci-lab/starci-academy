@@ -3,6 +3,7 @@ import {
     tabsReducer,
     courseReducer,
     userReducer,
+    modalReducer,
 } from "./slices"
 
 export const store = configureStore({
@@ -10,6 +11,7 @@ export const store = configureStore({
         tabs: tabsReducer,
         course: courseReducer,
         user: userReducer,
+        modal: modalReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false,

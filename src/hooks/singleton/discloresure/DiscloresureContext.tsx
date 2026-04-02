@@ -3,12 +3,16 @@ import React, { PropsWithChildren, useMemo } from "react"
 import { createContext } from "react"
 import {
     useAuthenticationDisclosureCore,
+    useChallengeDisclosureCore,
+    useContentDisclosureCore,
     usePaymentDisclosureCore,
 } from "./core"
 
 export interface DiscloresureContextType {
     authentication: ReturnType<typeof useAuthenticationDisclosureCore>
     payment: ReturnType<typeof usePaymentDisclosureCore>
+    content: ReturnType<typeof useContentDisclosureCore>
+    challenge: ReturnType<typeof useChallengeDisclosureCore>
 }
 
 export const DiscloresureContext = createContext<DiscloresureContextType | null>(null)
@@ -16,12 +20,18 @@ export const DiscloresureContext = createContext<DiscloresureContextType | null>
 export const DiscloresureProvider = ({ children }: PropsWithChildren) => {
     const authentication = useAuthenticationDisclosureCore()
     const payment = usePaymentDisclosureCore()
+    const content = useContentDisclosureCore()
+    const challenge = useChallengeDisclosureCore()
     const value = useMemo(() => ({
         authentication,
         payment,
+        content,
+        challenge,
     }), [
         authentication,
         payment,
+        content,
+        challenge,
     ])
     return (
         <DiscloresureContext.Provider value={value}>

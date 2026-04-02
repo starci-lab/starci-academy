@@ -17,4 +17,6 @@ export interface LessonVideoEntity extends AbstractEntity {
     orderIndex: number
     /** The course module that the exclusive lesson video belongs to. */
     module?: ModuleEntity
+    /** The thumbnail URL of the exclusive lesson video. */
+    thumbnailUrl?: string
 }

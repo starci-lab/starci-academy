@@ -1,5 +1,6 @@
 import type { AbstractEntity } from "./abstract"
 import type { AdvancedContentEntity } from "./advanced-content"
+import type { ChallengeEntity } from "./challenge"
 import type { ContentEntity } from "./content"
 import type { CourseEntity } from "./course"
 import type { LessonVideoEntity } from "./lesson-video"
@@ -11,6 +12,8 @@ import type { SubmissionEntity } from "./submission"
  * One module inside a course.
  */
 export interface ModuleEntity extends AbstractEntity {
+    /** The display id of the module. */
+    displayId: string
     /** The title of the module. */
     title: string
     /** The description of the module. */
@@ -31,6 +34,8 @@ export interface ModuleEntity extends AbstractEntity {
     exclusiveLessonVideos?: Array<LessonVideoEntity>
     /** The lesson videos of the module. */
     lessonVideos?: Array<LessonVideoEntity>
+    /** Hands-on challenges for this module. */
+    challenges?: Array<ChallengeEntity>
     /** The submissions of the module. */
     submissions?: Array<SubmissionEntity>
 }

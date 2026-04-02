@@ -2,8 +2,12 @@ import { ModuleEntity } from "@/modules/types"
 import { createApolloClient } from "../clients"
 import type { GraphQLResponse, QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
-import { ModuleRequest } from "../../../../../ref/module/graphql-types"
 
+/**
+ * Module shell only — matches `ref/queries/module/module.service.ts`
+ * (no nested full contents / lesson videos / challenges; use `content`, `lessonVideo`, `challenge` queries).
+ * Lists may still return `{ id, orderIndex }` stubs when the API provides them for hydration.
+ */
 const query1 = gql`
   query Module($request: ModuleRequest!) {
     module(request: $request) {
@@ -12,21 +16,35 @@ const query1 = gql`
       error
       data {
         id
+        displayId
         title
         description
         orderIndex
-        contents {
+        previewContents {
           id
           orderIndex
-          title
-          body
+          data
+        }
+        contents {
+          id
+          thumbnailUrl
+          description
+          name
+          minutesRead
+          orderIndex
         }
         lessonVideos {
           id
-          title
+          thumbnailUrl
           description
-          url
-          durationMs
+          name
+          orderIndex
+        }
+        challenges {
+          id
+          thumbnailUrl
+          description
+          name
           orderIndex
         }
       }
@@ -46,10 +64,15 @@ export interface QueryModuleResponse {
     module: GraphQLResponse<ModuleEntity>
 }
 
+export interface ModuleRequest {
+    /** The display id. */
+    displayId?: string
+    /** The id. */
+    id?: string
+}
+
 /**
- * Fetches one module by id via Apollo.
- *
- * Mirrors `ref/module/module.resolver.ts`.
+ * Fetches one module shell by id or displayId via Apollo.
  */
 export const queryModule = async ({
     query = QueryModule.Query1,
@@ -71,4 +94,3 @@ export const queryModule = async ({
         },
     })
 }
-

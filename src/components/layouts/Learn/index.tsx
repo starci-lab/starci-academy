@@ -1,7 +1,6 @@
 "use client"
 import React, { useMemo } from "react"
 import { Link, Spacer } from "@heroui/react"
-import { CourseEntity } from "@/modules/types"
 import { 
     StarCiBreadcrumb, 
     StarCiBreadcrumbItem, 
@@ -15,21 +14,17 @@ import { LearnTab, setLearnTab } from "@/redux/slices"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import { BookOpenIcon, TrophyIcon, UsersIcon, VideoIcon } from "@phosphor-icons/react"
 import { VideoLessionSection } from "./VideoLessionSection"
+import { ChallengeSection } from "./ChallengeSection"
+import { ContentSection } from "./ContentSection"
+import { useQueryCourseSwr } from "@/hooks/singleton"
 
-/**
- * The props for the Course component.
- */
-export interface LearnProps {
-    /** The course. */
-    course?: CourseEntity
-    /** The loading state. */
-    isLoading: boolean
-}
 
-export const Learn = ({ course, isLoading }: LearnProps) => {
+export const Learn = () => {
     const t = useTranslations()
     const dispatch = useAppDispatch()
     const module = useAppSelector((state) => state.course.module)
+    const course = useAppSelector((state) => state.course.course)
+    const { isLoading } = useQueryCourseSwr()
     const learnTab = useAppSelector((state) => state.tabs.learnTab)
     const tabs = useMemo(() => [
         {
@@ -38,7 +33,7 @@ export const Learn = ({ course, isLoading }: LearnProps) => {
             icon: VideoIcon
         },
         {
-            label: t("course.modules.foundations"),
+            label: t("course.modules.content"),
             value: LearnTab.Foundations,
             icon: BookOpenIcon
         },
@@ -56,11 +51,11 @@ export const Learn = ({ course, isLoading }: LearnProps) => {
     const renderContent = () => {
         switch (learnTab) {
         case LearnTab.LessonVideos:
-            return <VideoLessionSection videoLessons={module?.lessonVideos || []} />
+            return <VideoLessionSection />
         case LearnTab.Foundations:
-            return <div/>
+            return <ContentSection />
         case LearnTab.Challenges:
-            return <div/>
+            return <ChallengeSection />
         case LearnTab.TopAchievers:
             return <div/>
         }

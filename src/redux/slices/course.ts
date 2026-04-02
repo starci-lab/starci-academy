@@ -1,6 +1,9 @@
-import { 
+import type {
+    ChallengeEntity,
+    ContentEntity,
     CourseEntity,
-    ModuleEntity
+    LessonVideoEntity,
+    ModuleEntity,
 } from "@/modules/types"
 import { 
     createSlice, 
@@ -21,6 +24,12 @@ export interface CourseSlice {
     moduleId?: string
     /** The module. */
     module?: ModuleEntity
+    /** When set, `useQueryContentSwr` fetches this content id. */
+    detailContentId?: string
+    /** When set, `useQueryLessonVideoSwr` / context `queryLessonVideo` uses this id. */
+    detailLessonVideoId?: string
+    /** When set, `useQueryChallengeSwr` fetches this challenge id. */
+    detailChallengeId?: string
 }
 
 /**
@@ -37,6 +46,9 @@ const initialState: CourseSlice = {
     moduleId: undefined,
     /** The module. */
     module: undefined,
+    detailContentId: undefined,
+    detailLessonVideoId: undefined,
+    detailChallengeId: undefined,
 }
 
 /**
@@ -85,6 +97,49 @@ export const courseSlice = createSlice(
             ) => {
                 state.module = action.payload
             },
+            /**
+             * Merge full learn resources after lazy-loading via `content` / `lessonVideo` / `challenge`.
+             */
+            mergeModuleLearnData: (
+                state,
+                action: PayloadAction<{
+                    contents?: Array<ContentEntity>
+                    lessonVideos?: Array<LessonVideoEntity>
+                    challenges?: Array<ChallengeEntity>
+                }>,
+            ) => {
+                if (!state.module) {
+                    return
+                }
+                const { contents, lessonVideos, challenges } = action.payload
+                if (contents !== undefined) {
+                    state.module.contents = contents
+                }
+                if (lessonVideos !== undefined) {
+                    state.module.lessonVideos = lessonVideos
+                }
+                if (challenges !== undefined) {
+                    state.module.challenges = challenges
+                }
+            },
+            setDetailContentId: (
+                state,
+                action: PayloadAction<string | undefined>,
+            ) => {
+                state.detailContentId = action.payload
+            },
+            setDetailLessonVideoId: (
+                state,
+                action: PayloadAction<string | undefined>,
+            ) => {
+                state.detailLessonVideoId = action.payload
+            },
+            setDetailChallengeId: (
+                state,
+                action: PayloadAction<string | undefined>,
+            ) => {
+                state.detailChallengeId = action.payload
+            },
         },
     }
 )
@@ -99,4 +154,8 @@ export const {
     setCourseId,
     setModuleId,
     setModule,
+    mergeModuleLearnData,
+    setDetailContentId,
+    setDetailLessonVideoId,
+    setDetailChallengeId,
 } = courseSlice.actions

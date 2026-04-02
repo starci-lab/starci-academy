@@ -10,7 +10,7 @@ import useSWR from "swr"
 export const useQueryCourseEnrollmentStatusSwrCore = () => {
     const dispatch = useAppDispatch()
     const keycloak = useKeycloak()
-    const courseId = useAppSelector((state) => state.course.id)
+    const courseId = useAppSelector((state) => state.course.course?.id)
     const authenticated = Boolean(keycloak.data?.authenticated)
     /** The SWR. */
     const swr = useSWR(

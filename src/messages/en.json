@@ -20,9 +20,25 @@
     "modules": {
       "moduleAria": "Module {index}",
       "lessonVideos": "Lesson Videos",
-      "foundations": "Foundations",
+      "lessonVideosAria": "{count} lesson videos available",
+      "minutesRead": "{minutes} minutes reading",
+      "content": "Content",
+      "lessonVideosCount": "{count} lesson videos available",
+      "contentCount": "{count} content items in this module",
+      "contentEmpty": "No content for this module yet.",
       "challenges": "Challenges",
-      "topAchievers": "Top Achievers"
+      "challengesCount": "{count} challenges in this module",
+      "challengesEmpty": "No challenges for this module yet.",
+      "challengeStepsTitle": "Guided steps",
+      "challengeInputsCount": "{count} steps",
+      "challengeInputsTitle": "Your tasks",
+      "challengeInputLabel": "Step {index}",
+      "challengeScore": "{score} pts",
+      "challengeDifficultyEasy": "Easy",
+      "challengeDifficultyMedium": "Medium",
+      "challengeDifficultyHard": "Hard",
+      "topAchievers": "Top Achievers",
+      "referencesTitle": "References"
     },
     "qna": {
       "title": "Questions & Answers",

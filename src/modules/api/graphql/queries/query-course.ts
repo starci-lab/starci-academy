@@ -69,7 +69,10 @@ const queryMap: Record<QueryCourse, DocumentNode> = {
 
 /** Apollo variables for `course(input: CourseInput!)`. */
 export interface QueryCourseRequest {
-    id: string
+    /** The display id. */
+    displayId?: string
+    /** The id. */
+    id?: string
 }
 
 

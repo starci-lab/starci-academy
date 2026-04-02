@@ -1,18 +1,30 @@
-import React from "react"
-import { LessonVideoEntity } from "@/modules/types"
+import React, { useMemo } from "react"
 import { VideoLessionCard } from "./VideoLessionCard"
-
-export interface VideoLessionSectionProps {
-    /** The video lessons. */
-    videoLessons: Array<LessonVideoEntity>
-}
-
-export const VideoLessionSection = ({ videoLessons }: VideoLessionSectionProps) => {
+import { Spacer } from "@heroui/react"
+import { useTranslations } from "next-intl"
+import { useAppSelector } from "@/redux"
+export const VideoLessionSection = () => {
+    const t = useTranslations()
+    const module = useAppSelector((state) => state.course.module)
+    const lessonVideos = useMemo(() => {
+        return [...(module?.lessonVideos ?? [])].sort((a, b) => a.orderIndex - b.orderIndex)
+    }, [module?.lessonVideos])
     return (
         <div>
-            {videoLessons.map((videoLesson) => (
-                <VideoLessionCard key={videoLesson.id} videoLesson={videoLesson} />
-            ))}
+            <div className="text-sm text-foreground-500">{
+                t(
+                    "course.modules.lessonVideosCount",
+                    {
+                        count: lessonVideos.length
+                    }
+                )
+            }</div>
+            <Spacer y={3}/>
+            <div className="flex flex-col gap-3">
+                {lessonVideos.map((lessonVideo) => (
+                    <VideoLessionCard key={lessonVideo.id} lessonVideo={lessonVideo} />
+                ))}
+            </div>
         </div>
     )
 }

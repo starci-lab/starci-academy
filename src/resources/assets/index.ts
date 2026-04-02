@@ -10,8 +10,16 @@ export const assetConfig = () => {
                 sepay: `${paymentPath}/sepay.svg`,
             }
         }
+        const submissions = () => {
+            const submissionPath = `${iconsPath}/submissions`
+            return {
+                github: `${submissionPath}/github.svg`,
+                google: `${submissionPath}/google-docs.svg`,
+            }
+        }
         return {
             payment,
+            submissions,
         }
     }
     return {

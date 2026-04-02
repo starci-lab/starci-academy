@@ -41,8 +41,8 @@ export const useQueryLessonVideosSwrCore = () => {
             }
             const data = await queryLessonVideos({
                 request: {
+                    moduleId,
                     filters: {
-                        moduleId,
                         pageNumber,
                         limit,
                         sorts: defaultLessonVideosListSorts,

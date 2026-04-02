@@ -1,5 +1,6 @@
 import type {
     ChallengeEntity,
+    ChallengeSubmissionEntity,
 } from "@/modules/types"
 import { 
     createSlice, 
@@ -20,6 +21,8 @@ export interface ChallengeSlice {
     pageNumber?: number
     /** The challenges limit. */
     limit?: number
+    /** Rows from `challengeSubmissions` for the focused challenge. */
+    challengeSubmissions: Array<ChallengeSubmissionEntity>
 }
 
 /**
@@ -36,6 +39,8 @@ const initialState: ChallengeSlice = {
     pageNumber: undefined,
     /** The challenges limit. */
     limit: undefined,
+    /** Challenge submission rows (see `challengeSubmissions` query). */
+    challengeSubmissions: [],
 }
 
 /**
@@ -84,6 +89,13 @@ export const challengeSlice = createSlice(
             ) => {
                 state.limit = action.payload
             },
+            /** The action to set challenge submission rows for the current challenge. */
+            setChallengeSubmissions: (
+                state,
+                action: PayloadAction<Array<ChallengeSubmissionEntity>>,
+            ) => {
+                state.challengeSubmissions = action.payload
+            },
         },
     }
 )
@@ -98,4 +110,5 @@ export const {
     setChallengeId,
     setChallengePageNumber,
     setChallengeLimit,
+    setChallengeSubmissions,
 } = challengeSlice.actions

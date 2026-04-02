@@ -1,4 +1,5 @@
 export * from "./challenge-difficulty"
+export * from "./submission-type"
 export * from "./resource-type"
 export * from "./job-status"
 export * from "./pricing-phase"

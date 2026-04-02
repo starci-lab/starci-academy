@@ -40,8 +40,8 @@ export const useQueryContentsSwrCore = () => {
             }
             const data = await queryContents({
                 request: {
+                    moduleId: module?.id,
                     filters: {
-                        moduleId: module?.id,
                         pageNumber,
                         limit,
                         sorts: [],

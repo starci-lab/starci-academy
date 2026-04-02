@@ -58,12 +58,11 @@ const queryMap: Record<QueryContents, DocumentNode> = {
     [QueryContents.Query1]: query1,
 }
 
-export type ContentsListFilters = PaginationFilters<ContentsSortBy> & {
-    moduleId: string
-}
+export type ContentsListFilters = PaginationFilters<ContentsSortBy>
 
 export interface ContentsListRequest {
     filters: ContentsListFilters
+    moduleId: string
 }
 
 export interface QueryContentsResponse {

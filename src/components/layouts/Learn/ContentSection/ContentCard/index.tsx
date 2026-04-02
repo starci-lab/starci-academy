@@ -37,13 +37,7 @@ export const ContentCard = ({ content }: ContentCardProps) => {
                 <div>
                     <div className="flex flex-col">
                         <div className="line-clamp-1 font-medium">
-                            <span className="text-primary-500">
-                                {
-                                    t("content.number", {
-                                        index: content.orderIndex + 1,
-                                    }
-                                    )
-                                }:</span> {content.title}</div>
+                            {content.orderIndex + 1}{". "} {content.title}</div>
                         <Spacer y={3} />
                         <div className="line-clamp-2 text-justify text-sm italic text-foreground-500">
                             {content.description}

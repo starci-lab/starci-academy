@@ -16,9 +16,12 @@ import { ListNumbersIcon, TrophyIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { Spacer } from "@heroui/react"
 import { useAppSelector } from "@/redux"
+import { ChallengeCard } from "./ChallengeCard"
 
-const challengeDifficultyMessageKey = (d: ChallengeDifficulty | undefined) => {
-    switch (d) {
+const challengeDifficultyMessageKey = (difficulty: ChallengeDifficulty | undefined) => {
+    switch (difficulty) {
+    case ChallengeDifficulty.Easy:
+        return "challenge.difficulty.easy"
     case ChallengeDifficulty.Medium:
         return "challenge.difficulty.medium"
     case ChallengeDifficulty.Hard:
@@ -83,6 +86,8 @@ export const ChallengeModal = () => {
                 />
                 <StarCiModalBody>
                     <StarCiScrollShadow hideScrollBar>
+                        <ChallengeCard />
+                        <Spacer y={6} />
                         {challenge?.brief?.trim() ? (
                             <>
                                 <div className="text-sm font-medium text-foreground-600">

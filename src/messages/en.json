@@ -50,7 +50,19 @@
       "label": "Step {index}"
     },
     "tasks": "Tasks",
-    "score": "{score} pts"
+    "score": "{score} pts",
+    "battle": {
+      "cta": "Battle"
+    },
+    "submissionModal": {
+      "title": "Submit",
+      "empty": "No submission requirements for this challenge yet.",
+      "requirement": "Requirement {index}",
+      "yourScore": "Score: {score}",
+      "yourScoreLabel": "Your score",
+      "scoreFraction": "{earned}/{max}",
+      "attempts": "Attempts: {count}"
+    }
   },
   "leaderboard": {
     "topAchievers": "Top Achievers"

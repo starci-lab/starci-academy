@@ -39,8 +39,8 @@ export const useQueryChallengesSwrCore = () => {
             }
             const data = await queryChallenges({
                 request: {
+                    moduleId: module.id,
                     filters: {
-                        moduleId: module.id,
                         pageNumber,
                         limit,
                         sorts: [],

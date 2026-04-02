@@ -1,0 +1,67 @@
+import type { ChallengeSubmissionEntity } from "@/modules/types"
+import { createApolloClient } from "../clients"
+import type { GraphQLResponse, QueryParams } from "../types"
+import { DocumentNode, gql } from "@apollo/client"
+
+const query1 = gql`
+  query ChallengeSubmission($request: ChallengeSubmissionRequest!) {
+    challengeSubmission(request: $request) {
+      success
+      message
+      error
+      data {
+        id
+        type
+        name
+        description
+        userSubmission {
+          submissionUrl
+          attempts
+          score
+        }
+      }
+    }
+  }
+`
+
+export enum QueryChallengeSubmission {
+    Query1 = "query1",
+}
+
+const queryMap: Record<QueryChallengeSubmission, DocumentNode> = {
+    [QueryChallengeSubmission.Query1]: query1,
+}
+
+export interface QueryChallengeSubmissionResponse {
+    challengeSubmission: GraphQLResponse<ChallengeSubmissionEntity>
+}
+
+/** Matches `ChallengeSubmissionRequest` (`ref/challenge-submissions`). */
+export interface ChallengeSubmissionRequest {
+    challengeSubmissionId: string
+}
+
+/**
+ * One challenge submission by id, including optional `userSubmission` for the current user
+ * (`ref/challenge-submissions/challenge-submission`).
+ */
+export const queryChallengeSubmission = async ({
+    query = QueryChallengeSubmission.Query1,
+    request,
+    headers,
+    token,
+}: QueryParams<QueryChallengeSubmission, ChallengeSubmissionRequest>) => {
+    const apollo = createApolloClient({
+        auth: Boolean(token),
+        cache: false,
+        token,
+        headers,
+    })
+
+    return apollo.query<QueryChallengeSubmissionResponse>({
+        query: queryMap[query],
+        variables: {
+            request,
+        },
+    })
+}

@@ -1,4 +1,5 @@
 export * from "./useQueryChallengeSwr"
+export * from "./useQueryChallengeSubmissionsSwr"
 export * from "./useQueryChallengesSwr"
 export * from "./useQueryContentSwr"
 export * from "./useQueryContentsSwr"

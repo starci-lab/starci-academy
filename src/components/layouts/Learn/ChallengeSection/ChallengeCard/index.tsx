@@ -47,10 +47,7 @@ export const ChallengeCard = ({ challenge }: ChallengeCardProps) => {
                 <div>
                     <div className="flex flex-col">
                         <div className="line-clamp-1 font-medium">
-                            <span className="text-primary-500">
-                                {t("challenge.number", {
-                                    index: challenge.orderIndex + 1,
-                                })}:</span> {challenge.title}</div>
+                            {challenge.orderIndex + 1}{". "} {challenge.title}</div>
                         <Spacer y={3} />
                         <div className="line-clamp-2 text-justify text-sm italic text-foreground-500">
                             {challenge.description}

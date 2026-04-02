@@ -52,11 +52,10 @@ const queryMap: Record<QueryLessonVideos, DocumentNode> = {
     [QueryLessonVideos.Query1]: query1,
 }
 
-export type LessonVideosListFilters = PaginationFilters<LessonVideosSortBy> & {
-    moduleId: string
-}
+export type LessonVideosListFilters = PaginationFilters<LessonVideosSortBy>
 
 export interface LessonVideosListRequest {
+    moduleId: string
     filters: LessonVideosListFilters
 }
 

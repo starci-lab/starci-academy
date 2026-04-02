@@ -4,6 +4,7 @@ import { createContext } from "react"
 import {
     useAuthenticationDisclosureCore,
     useChallengeDisclosureCore,
+    useChallengeSubmissionDisclosureCore,
     useContentDisclosureCore,
     usePaymentDisclosureCore,
 } from "./core"
@@ -22,16 +23,19 @@ export const DiscloresureProvider = ({ children }: PropsWithChildren) => {
     const payment = usePaymentDisclosureCore()
     const content = useContentDisclosureCore()
     const challenge = useChallengeDisclosureCore()
+    const challengeSubmission = useChallengeSubmissionDisclosureCore()
     const value = useMemo(() => ({
         authentication,
         payment,
         content,
         challenge,
+        challengeSubmission,
     }), [
         authentication,
         payment,
         content,
         challenge,
+        challengeSubmission,
     ])
     return (
         <DiscloresureContext.Provider value={value}>

@@ -1,5 +1,7 @@
 // Course-related GraphQL operations (document + runner per query).
 export * from "./query-challenge"
+export * from "./query-challenge-submission"
+export * from "./query-challenge-submissions"
 export * from "./query-challenges"
 export * from "./query-content"
 export * from "./query-contents"

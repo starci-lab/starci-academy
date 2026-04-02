@@ -58,12 +58,11 @@ const queryMap: Record<QueryChallenges, DocumentNode> = {
     [QueryChallenges.Query1]: query1,
 }
 
-export type ChallengesListFilters = PaginationFilters<ChallengesSortBy> & {
-    moduleId: string
-}
+export type ChallengesListFilters = PaginationFilters<ChallengesSortBy>
 
 export interface ChallengesListRequest {
     filters: ChallengesListFilters
+    moduleId: string
 }
 
 export interface QueryChallengesResponse {

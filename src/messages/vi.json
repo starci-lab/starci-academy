@@ -50,7 +50,19 @@
       "label": "Bước {index}"
     },
     "tasks": "Các bước thực hiện",
-    "score": "{score} điểm"
+    "score": "{score} điểm",
+    "battle": {
+      "cta": "Chiến đấu"
+    },
+    "submissionModal": {
+      "title": "Nộp bài",
+      "empty": "Chưa có yêu cầu nộp bài cho thử thách này.",
+      "requirement": "Yêu cầu {index}",
+      "yourScore": "Điểm: {score}",
+      "yourScoreLabel": "Điểm của bạn",
+      "scoreFraction": "{earned}/{max}",
+      "attempts": "Số lần thử: {count}"
+    }
   },
   "leaderboard": {
     "topAchievers": "Top người học"

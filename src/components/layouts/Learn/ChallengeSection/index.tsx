@@ -1,44 +1,59 @@
 "use client"
 
-import React, { useMemo } from "react"
+import React from "react"
 import { useTranslations } from "next-intl"
 import { useAppSelector } from "@/redux"
 import { Spacer } from "@heroui/react"
 import { TrophyIcon } from "@phosphor-icons/react"
 import { ChallengeCard } from "./ChallengeCard"
+import { StarCiSkeleton } from "@/components/atomic"
+import { useQueryChallengesSwr } from "@/hooks/singleton"
+import { ChallengeCardSkeleton } from "./ChallengeCardSkeleton"
 
 /**
  * Learn tab “Challenges”: ordered module challenges (title, brief, input count).
  */
 export const ChallengeSection = () => {
     const t = useTranslations()
-    const challenges = useAppSelector((state) => state.course.module?.challenges)
-
-    const rows = useMemo(() => {
-        return [...(challenges ?? [])].sort((a, b) => a.orderIndex - b.orderIndex)
-    }, [challenges])
+    const challenges = useAppSelector((state) => state.challenge.entities)
+    const { isLoading: isChallengesLoading } = useQueryChallengesSwr()
 
     return (
         <div>
-            <div className="text-sm text-foreground-500">
-                {t("course.modules.challengesCount", { count: rows.length })}
-            </div>
-            <Spacer y={3} />
-            {rows.length === 0 ? (
+            {isChallengesLoading ? (
+                <StarCiSkeleton className="h-[14px] w-[150px] my-[3px]" />
+            ) : (
+                <div className="text-sm text-foreground-500">
+                    {t("challenge.count", { count: challenges?.length ?? 0 })}
+                </div>
+            )}
+            <Spacer y={6} />
+            {isChallengesLoading ? (
+                <div className="flex flex-col gap-3 w-full">
+                    {Array.from({ length: 3 }).map((_, index) => (
+                        <ChallengeCardSkeleton key={index} />
+                    ))}
+                </div>
+            ) : challenges?.length === 0 ? (
                 <div className="rounded-medium border border-dashed border-divider bg-default/30 px-6 py-12 text-center">
                     <TrophyIcon
                         className="mx-auto mb-3 size-10 text-foreground-400"
                         aria-hidden
                     />
                     <div className="text-sm text-foreground-500">
-                        {t("course.modules.challengesEmpty")}
+                        {t("challenge.empty")}
                     </div>
                 </div>
             ) : (
-                <div className="flex flex-col gap-3">
-                    {rows.map((item) => (
-                        <ChallengeCard key={item.id} challenge={item} />
-                    ))}
+                <div className="flex flex-col gap-3 w-full">
+                    {
+                        challenges?.sort(
+                            (prev, next) => prev.orderIndex - next.orderIndex
+                        ).map((challenge) => (
+                            <ChallengeCard key={challenge.id} challenge={challenge} />
+                        )
+                        )
+                    }
                 </div>
             )}
         </div>

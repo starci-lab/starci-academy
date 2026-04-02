@@ -1,12 +1,12 @@
 import type { ContentEntity } from "@/modules/types"
 import { createApolloClient } from "../clients"
-import {
-    SortOrder,
-    type GraphQLResponse,
-    type PaginationFilters,
-    type QueryParams,
-    type SortInput,
+import type {
+    GraphQLResponse,
+    PaginationFilters,
+    QueryParams,
+    SortInput,
 } from "../types"
+import { SortOrder } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
 /** Sort keys for `contents` list (`ContentsSortBy` on the API). */
@@ -33,7 +33,6 @@ const query1 = gql`
         count
         data {
           id
-          thumbnailUrl
           description
           orderIndex
           minutesRead
@@ -44,14 +43,6 @@ const query1 = gql`
             alias
             url
             orderIndex
-            defaultLocale
-            translations {
-              id
-              contentReferenceId
-              locale
-              field
-              value
-            }
           }
         }
       }
@@ -79,6 +70,7 @@ export interface QueryContentsResponse {
     contents: GraphQLResponse<QueryContentsPayload>
 }
 
+/** Default sort order for module contents list (`orderIndex` asc). */
 export const defaultContentsListSorts: Array<SortInput<ContentsSortBy>> = [
     {
         by: ContentsSortBy.OrderIndex,
@@ -86,7 +78,7 @@ export const defaultContentsListSorts: Array<SortInput<ContentsSortBy>> = [
     },
 ]
 
-/** Default page size for module-scoped list queries (`contents` / `lessonVideos` / `challenges`). */
+/** Default page size for module-scoped list queries. */
 export const defaultModuleListLimit = 100
 
 /**

@@ -1,46 +1,54 @@
 "use client"
 
-import React, { useMemo } from "react"
+import React from "react"
 import { useTranslations } from "next-intl"
 import { useAppSelector } from "@/redux"
 import { Spacer } from "@heroui/react"
-import { BookOpenIcon } from "@phosphor-icons/react"
 import { ContentCard } from "./ContentCard"
+import { useQueryContentsSwr } from "@/hooks/singleton"
+import { ContentCardSkeleton } from "./ContentCardSkeleton"
+import { StarCiSkeleton } from "@/components/atomic"
 
 /**
  * Learn tab “Content”: ordered module contents (title + body, optional thumbnail).
  */
 export const ContentSection = () => {
     const t = useTranslations()
-    const contents = useAppSelector((state) => state.course.module?.contents)
-
-    const rows = useMemo(() => {
-        return [...(contents ?? [])].sort((a, b) => a.orderIndex - b.orderIndex)
-    }, [contents])
+    const contents = useAppSelector((state) => state.content.entities)
+    const count = useAppSelector((state) => state.content.count)
+    const { isLoading: isContentsLoading } = useQueryContentsSwr()
 
     return (
         <div>
-            <div className="text-sm text-foreground-500">
-                {t("course.modules.contentCount", { count: rows.length })}
-            </div>
-            <Spacer y={3} />
-            {rows.length === 0 ? (
-                <div className="rounded-medium border border-dashed border-divider bg-default/30 px-6 py-12 text-center">
-                    <BookOpenIcon
-                        className="mx-auto mb-3 size-10 text-foreground-400"
-                        aria-hidden
-                    />
+            {
+                isContentsLoading ? (
+                    <StarCiSkeleton className="h-[14px] w-[150px] my-[3px]" />
+                ) : (
                     <div className="text-sm text-foreground-500">
-                        {t("course.modules.contentEmpty")}
+                        {t("content.count", { count: count ?? 0 })}
                     </div>
-                </div>
-            ) : (
-                <div className="flex flex-col gap-3">
-                    {rows.map((item) => (
-                        <ContentCard key={item.id} content={item} />
+                )
+            }
+            <Spacer y={6} />
+            {isContentsLoading ? (
+                <div className="flex flex-col gap-3 w-full">
+                    {Array.from({ length: 3 }).map((_, index) => (
+                        <ContentCardSkeleton key={index} />
                     ))}
                 </div>
-            )}
+            )
+                : (
+                    <div className="flex flex-col gap-3 w-full">
+                        {
+                            contents?.sort(
+                                (prev, next) => prev.orderIndex - next.orderIndex
+                            ).map((content) => (
+                                <ContentCard key={content.id} content={content} />
+                            )
+                            )
+                        }
+                    </div>
+                )}
         </div>
     )
 }

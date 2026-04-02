@@ -1,13 +1,14 @@
 "use client"
 
-import { StarCiCard, StarCiCardBody, StarCiChip, StarCiImage } from "@/components/atomic"
+import { StarCiCard, StarCiCardBody, StarCiChip } from "@/components/atomic"
 import { useContentDisclosure } from "@/hooks/singleton"
 import type { ContentEntity } from "@/modules/types"
 import { useAppDispatch } from "@/redux"
-import { setContentModalData } from "@/redux/slices"
+import { setContentId } from "@/redux/slices"
 import { ClockIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import React from "react"
+import { Spacer } from "@heroui/react"
 
 export interface ContentCardProps {
     /** One module content block from API. */
@@ -21,43 +22,40 @@ export const ContentCard = ({ content }: ContentCardProps) => {
     const t = useTranslations()
     const { onOpen } = useContentDisclosure()
     const dispatch = useAppDispatch()
-    const thumb = content.thumbnailUrl?.trim()
 
     return (
         <StarCiCard
+            fullWidth
             isPressable
             onPress={() => {
-                dispatch(setContentModalData({ data: content }))
+                dispatch(setContentId(content.id))
                 onOpen()
             }
             }
         >
             <StarCiCardBody>
-                <div className="grid grid-cols-3 gap-4">
-                    {thumb ? (
-                        <StarCiImage
-                            src={thumb}
-                            alt={content.title}
-                            className="aspect-video h-full rounded-md object-cover"
-                        />
-                    ) : (
-                        <div
-                            className="aspect-video h-full rounded-md bg-default-200"
-                            aria-hidden
-                        />
-                    )}
-                    <div className="col-span-2 flex flex-col gap-3 text-start">
-                        <div className="line-clamp-1 font-medium">{content.title}</div>
-                        <div className="line-clamp-3 text-justify text-sm italic text-foreground-500">
+                <div>
+                    <div className="flex flex-col">
+                        <div className="line-clamp-1 font-medium">
+                            <span className="text-primary-500">
+                                {
+                                    t("content.number", {
+                                        index: content.orderIndex + 1,
+                                    }
+                                    )
+                                }:</span> {content.title}</div>
+                        <Spacer y={3} />
+                        <div className="line-clamp-2 text-justify text-sm italic text-foreground-500">
                             {content.description}
                         </div>
+                        <Spacer y={3} />
                         <StarCiChip
                             startContent={<ClockIcon className="size-5" />}
-                            color="primary"
+                            color="secondary"
                             size="sm"
                             variant="flat"
                         >
-                            {t("course.modules.minutesRead", {
+                            {t("content.minutesRead", {
                                 minutes: content.minutesRead,
                             })}
                         </StarCiChip>

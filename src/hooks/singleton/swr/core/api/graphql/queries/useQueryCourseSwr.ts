@@ -10,23 +10,26 @@ export const useQueryCourseSwrCore = () => {
     /** The dispatch. */
     const dispatch = useAppDispatch()
     /** The course id. */
-    const courseId = useAppSelector((state) => state.course.id)
+    const id = useAppSelector((state) => state.course.id)
+    const displayId = useAppSelector((state) => state.course.displayId)
     /** The SWR. */
     const swr = useSWR(
-        courseId ? [
+        (id || displayId) ? [
             "QUERY_COURSE_SWR",
-            courseId,
+            id,
+            displayId,
         ] : null, 
         async () => {
             /** If the id is not found, throw an error. */
-            if (!courseId) {
+            if (!id && !displayId) {
                 throw new Error("Course id not found")
             }
             /** The data. */
             const data = await queryCourse(
                 { 
                     request: {
-                        displayId: courseId,
+                        id,
+                        displayId,
                     }
                 }
             )

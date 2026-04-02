@@ -17,33 +17,50 @@
     "enrolled": "Đã đăng ký",
     "continueLearning": "Tiếp tục học",
     "prerequisites": "Yêu cầu đầu vào",
-    "modules": {
-      "moduleAria": "Học phần {index}",
-      "lessonVideos": "Bài giảng",
-      "lessonVideosCount": "{count} bài giảng có sẵn",
-      "content": "Nội dung",
-      "minutesRead": "{minutes} phút đọc",
-      "contentCount": "{count} nội dung có sẵn",
-      "contentEmpty": "Chưa có nội dung cho học phần này.",
-      "challenges": "Thử thách",
-      "challengesCount": "{count} thử thách trong học phần này",
-      "challengesEmpty": "Chưa có thử thách cho học phần này.",
-      "challengeStepsTitle": "Các bước hướng dẫn",
-      "challengeInputsCount": "{count} bước",
-      "challengeInputsTitle": "Các bước thực hiện",
-      "challengeInputLabel": "Bước {index}",
-      "challengeScore": "{score} điểm",
-      "challengeDifficultyEasy": "Dễ",
-      "challengeDifficultyMedium": "Trung bình",
-      "challengeDifficultyHard": "Khó",
-      "topAchievers": "Top người học",
-      "referencesTitle": "Tài liệu tham khảo"
-    },
-    "qna": {
-      "title": "Hỏi & Đáp",
-      "questionAria": "Câu hỏi {index}"
-    },
     "usersEnrolled": "{count} người đã đăng ký"
+  },
+  "module": {
+    "aria": "Học phần {index}"
+  },
+  "lesson": {
+    "videos": "Bài giảng",
+    "videosCount": "{count} bài giảng trong học phần này",
+    "videosAria": "{count} bài giảng trong học phần này"
+  },
+  "content": {
+    "title": "Nội dung",
+    "count": "{count} nội dung trong học phần này",
+    "empty": "Chưa có nội dung cho học phần này.",
+    "number": "Nội dung {index}",
+    "minutesRead": "{minutes} phút đọc"
+  },
+  "challenge": {
+    "title": "Thử thách",
+    "count": "{count} thử thách trong học phần này",
+    "empty": "Chưa có thử thách cho học phần này.",
+    "number": "Thử thách {index}",
+    "difficulty": {
+      "easy": "Dễ",
+      "medium": "Trung bình",
+      "hard": "Khó"
+    },
+    "steps": {
+      "title": "Các bước hướng dẫn",
+      "count": "{count} bước",
+      "label": "Bước {index}"
+    },
+    "tasks": "Các bước thực hiện",
+    "score": "{score} điểm"
+  },
+  "leaderboard": {
+    "topAchievers": "Top người học"
+  },
+  "reference": {
+    "title": "Tài liệu tham khảo"
+  },
+  "qna": {
+    "title": "Hỏi & Đáp",
+    "questionAria": "Câu hỏi {index}"
   },
   "auth": {
     "signIn": {

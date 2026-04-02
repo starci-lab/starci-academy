@@ -32,13 +32,13 @@ export const Modules = ({ modules, isLoading }: ModulesProps) => {
                     {Array.from({ length: 3 }).map((_, index) => (
                         <StarCiAccordionItem
                             key={index}
-                            aria-label={t("course.modules.moduleAria", { index: index + 1 })}
+                            aria-label={t("module.aria", { index: index + 1 })}
                             title={
                                 <div className="flex flex-col gap-2">
-                                    <StarCiSkeleton className="h-4 w-[30%] rounded-lg my-[4px]" />
+                                    <StarCiSkeleton className="h-4 w-[30%] my-[4px]" />
                                     <div>
-                                        <StarCiSkeleton className="h-[14px] w-[60%] rounded-lg my-[3px]" />
-                                        <StarCiSkeleton className="h-[14px] w-[40%] rounded-lg my-[3px]" />
+                                        <StarCiSkeleton className="h-[14px] w-[60%] my-[3px]" />
+                                        <StarCiSkeleton className="h-[14px] w-[40%] my-[3px]" />
                                     </div>
                                 </div>
                             }

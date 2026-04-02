@@ -11,7 +11,6 @@ const query1 = gql`
       error
       data {
         id
-        thumbnailUrl
         description
         orderIndex
         minutesRead
@@ -22,14 +21,6 @@ const query1 = gql`
           alias
           url
           orderIndex
-          defaultLocale
-          translations {
-            id
-            contentReferenceId
-            locale
-            field
-            value
-          }
         }
       }
     }

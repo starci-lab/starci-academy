@@ -1,12 +1,13 @@
 "use client"
 
-import React, { useMemo } from "react"
+import React from "react"
 import {
     StarCiChip,
     StarCiModal,
     StarCiModalBody,
     StarCiModalContent,
     StarCiModalHeader,
+    StarCiScrollShadow,
 } from "../../atomic"
 import { MarkdownContent, ReferenceLinks } from "@/components/reuseable"
 import { useChallengeDisclosure } from "@/hooks/singleton"
@@ -19,31 +20,21 @@ import { useAppSelector } from "@/redux"
 const challengeDifficultyMessageKey = (d: ChallengeDifficulty | undefined) => {
     switch (d) {
     case ChallengeDifficulty.Medium:
-        return "course.modules.challengeDifficultyMedium"
+        return "challenge.difficulty.medium"
     case ChallengeDifficulty.Hard:
-        return "course.modules.challengeDifficultyHard"
+        return "challenge.difficulty.hard"
     default:
-        return "course.modules.challengeDifficultyEasy"
+        return "challenge.difficulty.easy"
     }
 }
 
 export const ChallengeModal = () => {
     const { isOpen, onOpenChange } = useChallengeDisclosure()
+    const challenge = useAppSelector((state) => state.challenge.entity)
+    const steps = useAppSelector((state) => state.challenge.entity?.steps ?? [])
+    const inputs = useAppSelector((state) => state.challenge.entity?.inputs ?? [])
+    const references = useAppSelector((state) => state.challenge.entity?.references ?? [])
     const t = useTranslations()
-    const challenge = useAppSelector((state) => state.modal.challengeData?.data)
-
-    const steps = useMemo(() => {
-        return [...(challenge?.steps ?? [])].sort(
-            (a, b) => a.orderIndex - b.orderIndex,
-        )
-    }, [challenge?.steps])
-
-    const inputs = useMemo(() => {
-        return [...(challenge?.inputs ?? [])].sort(
-            (a, b) => a.orderIndex - b.orderIndex,
-        )
-    }, [challenge?.inputs])
-
     return (
         <StarCiModal
             isOpen={isOpen}
@@ -66,7 +57,7 @@ export const ChallengeModal = () => {
                                 size="sm"
                                 variant="flat"
                             >
-                                {t("course.modules.challengeScore", {
+                                {t("challenge.score", {
                                     score: challenge?.score ?? 0,
                                 })}
                             </StarCiChip>
@@ -83,7 +74,7 @@ export const ChallengeModal = () => {
                                 size="sm"
                                 variant="flat"
                             >
-                                {t("course.modules.challengeInputsCount", {
+                                {t("challenge.steps.count", {
                                     count: inputs.length,
                                 })}
                             </StarCiChip>
@@ -91,72 +82,74 @@ export const ChallengeModal = () => {
                     }
                 />
                 <StarCiModalBody>
-                    {challenge?.brief?.trim() ? (
-                        <>
-                            <div className="text-sm font-medium text-foreground-600">
-                                {challenge.brief}
-                            </div>
-                            <Spacer y={4} />
-                        </>
-                    ) : null}
-                    <MarkdownContent markdown={challenge?.description ?? ""} />
-                    {steps.length > 0 ? (
-                        <>
-                            <Spacer y={8} />
-                            <div className="text-sm font-semibold text-foreground">
-                                {t("course.modules.challengeStepsTitle")}
-                            </div>
-                            <Spacer y={3} />
-                            <div className="flex flex-col gap-6">
-                                {steps.map((step) => (
-                                    <div key={step.id}>
-                                        {step.title?.trim() ? (
-                                            <div className="mb-2 text-sm font-medium text-foreground-700">
-                                                {step.title}
-                                            </div>
-                                        ) : null}
-                                        {step.description?.trim() ? (
-                                            <div className="mb-2 text-sm text-foreground-600">
-                                                {step.description}
-                                            </div>
-                                        ) : null}
-                                        <MarkdownContent
-                                            className="rounded-medium border border-divider bg-content1/30 p-3"
-                                            markdown={step.body ?? ""}
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-                        </>
-                    ) : null}
-                    {inputs.length > 0 ? (
-                        <>
-                            <Spacer y={8} />
-                            <div className="text-sm font-semibold text-foreground">
-                                {t("course.modules.challengeInputsTitle")}
-                            </div>
-                            <Spacer y={3} />
-                            <div className="flex flex-col gap-6">
-                                {inputs.map((input, index) => (
-                                    <div key={input.id}>
-                                        <div className="mb-2 text-xs font-medium uppercase tracking-wide text-foreground-500">
-                                            {t("course.modules.challengeInputLabel", {
-                                                index: index + 1,
-                                            })}
+                    <StarCiScrollShadow hideScrollBar>
+                        {challenge?.brief?.trim() ? (
+                            <>
+                                <div className="text-sm font-medium text-foreground-600">
+                                    {challenge.brief}
+                                </div>
+                                <Spacer y={4} />
+                            </>
+                        ) : null}
+                        <MarkdownContent markdown={challenge?.description ?? ""} />
+                        {steps.length > 0 ? (
+                            <>
+                                <Spacer y={8} />
+                                <div className="text-sm font-semibold text-foreground">
+                                    {t("challenge.steps.title")}
+                                </div>
+                                <Spacer y={3} />
+                                <div className="flex flex-col gap-6">
+                                    {steps.map((step) => (
+                                        <div key={step.id}>
+                                            {step.title?.trim() ? (
+                                                <div className="mb-2 text-sm font-medium text-foreground-700">
+                                                    {step.title}
+                                                </div>
+                                            ) : null}
+                                            {step.description?.trim() ? (
+                                                <div className="mb-2 text-sm text-foreground-600">
+                                                    {step.description}
+                                                </div>
+                                            ) : null}
+                                            <MarkdownContent
+                                                className="rounded-medium border border-divider bg-content1/30 p-3"
+                                                markdown={step.body ?? ""}
+                                            />
                                         </div>
-                                        <MarkdownContent
-                                            className="rounded-medium border border-divider bg-content1/30 p-3"
-                                            markdown={input.description ?? ""}
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-                        </>
-                    ) : null}
-                    <ReferenceLinks
-                        references={challenge?.references ?? []}
-                        titleKey="course.modules.referencesTitle"
-                    />
+                                    ))}
+                                </div>
+                            </>
+                        ) : null}
+                        {inputs.length > 0 ? (
+                            <>
+                                <Spacer y={8} />
+                                <div className="text-sm font-semibold text-foreground">
+                                    {t("challenge.tasks")}
+                                </div>
+                                <Spacer y={3} />
+                                <div className="flex flex-col gap-6">
+                                    {inputs.map((input, index) => (
+                                        <div key={input.id}>
+                                            <div className="mb-2 text-xs font-medium uppercase tracking-wide text-foreground-500">
+                                                {t("challenge.steps.label", {
+                                                    index: index + 1,
+                                                })}
+                                            </div>
+                                            <MarkdownContent
+                                                className="rounded-medium border border-divider bg-content1/30 p-3"
+                                                markdown={input.description ?? ""}
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            </>
+                        ) : null}
+                        <ReferenceLinks
+                            references={references}
+                            titleKey="reference.title"
+                        />
+                    </StarCiScrollShadow>
                 </StarCiModalBody>
             </StarCiModalContent>
         </StarCiModal>

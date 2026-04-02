@@ -16,56 +16,24 @@ const query1 = gql`
         description
         score
         difficulty
-        thumbnailUrl
         orderIndex
-        defaultLocale
-        translations {
-          id
-          challengeId
-          locale
-          field
-          value
-        }
         steps {
           id
           title
           description
           body
           orderIndex
-          defaultLocale
-          translations {
-            challengeStepId
-            locale
-            field
-            value
-          }
         }
         inputs {
           id
           description
           orderIndex
-          defaultLocale
-          translations {
-            id
-            challengeInputId
-            locale
-            field
-            value
-          }
         }
         references {
           id
           alias
           url
           orderIndex
-          defaultLocale
-          translations {
-            id
-            challengeReferenceId
-            locale
-            field
-            value
-          }
         }
       }
     }

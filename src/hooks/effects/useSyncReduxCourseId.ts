@@ -1,7 +1,7 @@
 import { useAppDispatch } from "@/redux"
 import { useEffect } from "react"
 import { useParams, usePathname } from "next/navigation"
-import { setCourseId } from "@/redux/slices"
+import { setCourseDisplayId } from "@/redux/slices"
 
 export const useSyncReduxCourseId = () => {
     /** The dispatch. */
@@ -13,7 +13,7 @@ export const useSyncReduxCourseId = () => {
         () => {
         /** If the pathname is not a course path, set the course id to null. */
             if (params.courseId) {
-                dispatch(setCourseId(params.courseId as string))
+                dispatch(setCourseDisplayId(params.courseId as string))
             }
         }, [pathname, params.id]
     )

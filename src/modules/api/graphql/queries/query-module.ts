@@ -20,33 +20,6 @@ const query1 = gql`
         title
         description
         orderIndex
-        previewContents {
-          id
-          orderIndex
-          data
-        }
-        contents {
-          id
-          thumbnailUrl
-          description
-          name
-          minutesRead
-          orderIndex
-        }
-        lessonVideos {
-          id
-          thumbnailUrl
-          description
-          name
-          orderIndex
-        }
-        challenges {
-          id
-          thumbnailUrl
-          description
-          name
-          orderIndex
-        }
       }
     }
   }

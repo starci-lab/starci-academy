@@ -17,34 +17,50 @@
     "enrolled": "Enrolled",
     "continueLearning": "Continue Learning",
     "prerequisites": "Prerequisites",
-    "modules": {
-      "moduleAria": "Module {index}",
-      "lessonVideos": "Lesson Videos",
-      "lessonVideosAria": "{count} lesson videos available",
-      "minutesRead": "{minutes} minutes reading",
-      "content": "Content",
-      "lessonVideosCount": "{count} lesson videos available",
-      "contentCount": "{count} content items in this module",
-      "contentEmpty": "No content for this module yet.",
-      "challenges": "Challenges",
-      "challengesCount": "{count} challenges in this module",
-      "challengesEmpty": "No challenges for this module yet.",
-      "challengeStepsTitle": "Guided steps",
-      "challengeInputsCount": "{count} steps",
-      "challengeInputsTitle": "Your tasks",
-      "challengeInputLabel": "Step {index}",
-      "challengeScore": "{score} pts",
-      "challengeDifficultyEasy": "Easy",
-      "challengeDifficultyMedium": "Medium",
-      "challengeDifficultyHard": "Hard",
-      "topAchievers": "Top Achievers",
-      "referencesTitle": "References"
-    },
-    "qna": {
-      "title": "Questions & Answers",
-      "questionAria": "Question {index}"
-    },
     "usersEnrolled": "{count} users have enrolled"
+  },
+  "module": {
+    "aria": "Module {index}"
+  },
+  "lesson": {
+    "videos": "Videos",
+    "videosCount": "{count} videos",
+    "videosAria": "{count} videos"
+  },
+  "content": {
+    "title": "Content",
+    "count": "{count} items",
+    "empty": "No content yet.",
+    "number": "Content {index}",
+    "minutesRead": "{minutes} min read"
+  },
+  "challenge": {
+    "title": "Challenges",
+    "count": "{count} challenges",
+    "empty": "No challenges yet.",
+    "number": "Challenge {index}",
+    "difficulty": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard"
+    },
+    "steps": {
+      "title": "Steps",
+      "count": "{count} steps",
+      "label": "Step {index}"
+    },
+    "tasks": "Tasks",
+    "score": "{score} pts"
+  },
+  "leaderboard": {
+    "topAchievers": "Top Achievers"
+  },
+  "reference": {
+    "title": "References"
+  },
+  "qna": {
+    "title": "Q&A",
+    "questionAria": "Question {index}"
   },
   "auth": {
     "signIn": {

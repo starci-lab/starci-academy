@@ -1,14 +1,11 @@
 import {
     GraphQLHeadersKey,
-    defaultChallengesListSorts,
-    defaultModuleListLimit,
     queryChallenges,
 } from "@/modules/api"
 import { useKeycloak } from "@/hooks/singleton"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import useSWR from "swr"
-import { mergeModuleLearnData } from "@/redux/slices"
-
+import { setChallenges } from "@/redux/slices"
 /**
  * Lists module challenges via `challenges` and merges into `course.module.challenges`.
  */
@@ -16,33 +13,41 @@ export const useQueryChallengesSwrCore = () => {
     const keycloak = useKeycloak()
     const token = keycloak.data?.authenticated ? keycloak.data?.token : undefined
     const enrolled = useAppSelector((state) => state.user.enrolled)
-    const courseId = useAppSelector((state) => state.course.course?.id)
-    const modulePk = useAppSelector((state) => state.course.module?.id)
+    const course = useAppSelector((state) => state.course.entity)
+    const module = useAppSelector((state) => state.module.entity)
+    const pageNumber = useAppSelector(
+        (state) => state.module.pageNumber,
+    )
+    const limit = useAppSelector(
+        (state) => state.module.limit,
+    )
     const dispatch = useAppDispatch()
     const swr = useSWR(
-        enrolled && courseId && modulePk
+        enrolled && course?.id && module?.id
             ? [
                 "QUERY_CHALLENGES_SWR",
-                modulePk,
-                courseId,
+                module?.id,
+                course?.id,
                 enrolled,
+                pageNumber,
+                limit,
             ]
             : null,
         async () => {
-            if (!modulePk || !courseId) {
+            if (!module?.id || !course?.id) {
                 throw new Error("Module or course id not found")
             }
             const data = await queryChallenges({
                 request: {
                     filters: {
-                        moduleId: modulePk,
-                        pageNumber: 0,
-                        limit: defaultModuleListLimit,
-                        sorts: defaultChallengesListSorts,
+                        moduleId: module.id,
+                        pageNumber,
+                        limit,
+                        sorts: [],
                     },
                 },
                 headers: {
-                    [GraphQLHeadersKey.XCourseId]: courseId,
+                    [GraphQLHeadersKey.XCourseId]: course.id,
                 },
                 token,
             })
@@ -50,7 +55,7 @@ export const useQueryChallengesSwrCore = () => {
             if (!payload) {
                 throw new Error("Challenges not found")
             }
-            dispatch(mergeModuleLearnData({ challenges: payload.data }))
+            dispatch(setChallenges(payload.data))
             return payload
         },
     )

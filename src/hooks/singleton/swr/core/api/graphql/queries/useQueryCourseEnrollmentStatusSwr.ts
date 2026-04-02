@@ -10,19 +10,19 @@ import useSWR from "swr"
 export const useQueryCourseEnrollmentStatusSwrCore = () => {
     const dispatch = useAppDispatch()
     const keycloak = useKeycloak()
-    const courseId = useAppSelector((state) => state.course.course?.id)
+    const course = useAppSelector((state) => state.course.entity)
     const authenticated = Boolean(keycloak.data?.authenticated)
     /** The SWR. */
     const swr = useSWR(
-        courseId && authenticated
+        course?.id && authenticated
             ? [
                 "QUERY_COURSE_ENROLLMENT_STATUS_SWR",
-                courseId,
+                course?.id,
                 authenticated,
             ]
             : null,
         async () => {
-            if (!courseId) {
+            if (!course?.id) {
                 throw new Error("Course id not found")
             }
             const token = keycloak.data?.authenticated
@@ -30,7 +30,7 @@ export const useQueryCourseEnrollmentStatusSwrCore = () => {
                 : undefined
             const data = await queryCourseEnrollmentStatus({
                 variables: {
-                    request: { courseId },
+                    request: { courseId: course?.id },
                 },
                 token,
             })

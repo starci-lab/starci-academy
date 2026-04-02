@@ -18,7 +18,8 @@ import { useAppSelector } from "@/redux"
 export const ContentModal = () => {
     const { isOpen, onOpenChange } = useContentDisclosure()
     const t = useTranslations()
-    const content = useAppSelector((state) => state.modal.data?.data)
+    const content = useAppSelector((state) => state.content.entity)
+    const references = useAppSelector((state) => state.content.entity?.references ?? [])
     return (
         <StarCiModal
             isOpen={isOpen}
@@ -41,7 +42,7 @@ export const ContentModal = () => {
                                 size="sm"
                                 variant="flat"
                             >
-                                {t("course.modules.minutesRead", {
+                                {t("content.minutesRead", {
                                     minutes: content?.minutesRead ?? 0,
                                 })}
                             </StarCiChip>
@@ -50,7 +51,7 @@ export const ContentModal = () => {
                 />
                 <StarCiModalBody>
                     <MarkdownContent markdown={content?.body ?? ""} />
-                    <ContentReferences references={content?.references ?? []} />
+                    <ContentReferences references={references} />
                 </StarCiModalBody>
             </StarCiModalContent>
         </StarCiModal>

@@ -27,7 +27,7 @@ export const QnA = ({ qnas, isLoading }: QnAProps) => {
 
     return (
         <div>
-            <div className="text-lg font-medium text-start text-foreground-500">{t("course.qna.title")}</div>
+            <div className="text-lg font-medium text-start text-foreground-500">{t("qna.title")}</div>
             <Spacer y={3} />
             {
                 isLoading ? (
@@ -35,7 +35,7 @@ export const QnA = ({ qnas, isLoading }: QnAProps) => {
                         {Array.from({ length: 2 }).map((_, index) => (
                             <StarCiAccordionItem
                                 key={index}
-                                aria-label={t("course.qna.questionAria", { index: index + 1 })}
+                                aria-label={t("qna.questionAria", { index: index + 1 })}
                                 title={<StarCiSkeleton className="h-[14px] w-[40%] rounded-lg my-[3px]" />}
                             >
                             </StarCiAccordionItem>

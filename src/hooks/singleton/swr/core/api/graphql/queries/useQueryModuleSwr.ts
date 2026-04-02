@@ -13,42 +13,41 @@ export const useQueryModuleSwrCore = () => {
     const keycloak = useKeycloak()
     const token = keycloak.data?.authenticated ? keycloak.data?.token : undefined
     const enrolled = useAppSelector((state) => state.user.enrolled)
-    const moduleId = useAppSelector((state) => state.course.moduleId)
-    const courseId = useAppSelector((state) => state.course.course?.id)
+    const displayId = useAppSelector((state) => state.module.displayId)
+    const id = useAppSelector((state) => state.module.id)
+    const course = useAppSelector((state) => state.course.entity)
     const dispatch = useAppDispatch()
     const swr = useSWR(
-        enrolled && courseId
+        enrolled && (id || displayId)
             ? [
                 "QUERY_MODULE_SWR",
-                moduleId,
-                courseId,
+                id,
+                displayId,
+                course?.id,
                 enrolled,
             ]
             : null,
         async () => {
-            if (!moduleId) {
+            if (!id && !displayId) {
                 throw new Error("Module id not found")
             }
-            if (!courseId) {
+            if (!course?.id) {
                 throw new Error("Course id not found")
             }
             const data = await queryModule({
                 request: {
-                    displayId: moduleId,
+                    id,
+                    displayId,
                 },
                 headers: {
-                    [GraphQLHeadersKey.XCourseId]: courseId,
+                    [GraphQLHeadersKey.XCourseId]: course?.id,
                 },
                 token,
             })
             if (!data || !data.data) {
                 throw new Error("Module not found")
             }
-            const shell = data.data.module.data
-            if (!shell) {
-                throw new Error("Module not found")
-            }
-            dispatch(setModule(shell))
+            dispatch(setModule(data.data.module.data))
             return data.data
         },
     )

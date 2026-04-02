@@ -25,16 +25,16 @@ export const ValuePropositions = ({
         return (
             <div className="flex flex-col gap-2 text-foreground-500">
                 <div className="flex items-center gap-2">
-                    <StarCiSkeleton className="h-5 w-5 shrink-0 rounded-full" />
-                    <StarCiSkeleton className="h-4 flex-1 max-w-[90%] rounded-md" />
+                    <StarCiSkeleton className="h-5 w-5 shrink-0" />
+                    <StarCiSkeleton className="h-4 flex-1 max-w-[90%]" />
                 </div>
                 <div className="flex items-center gap-2">
-                    <StarCiSkeleton className="h-5 w-5 shrink-0 rounded-full" />
-                    <StarCiSkeleton className="h-4 flex-1 max-w-[75%] rounded-md" />
+                    <StarCiSkeleton className="h-5 w-5 shrink-0" />
+                    <StarCiSkeleton className="h-4 flex-1 max-w-[75%]" />
                 </div>
                 <div className="flex items-center gap-2">
-                    <StarCiSkeleton className="h-5 w-5 shrink-0 rounded-full" />
-                    <StarCiSkeleton className="h-4 flex-1 max-w-[85%] rounded-md" />
+                    <StarCiSkeleton className="h-5 w-5 shrink-0" />
+                    <StarCiSkeleton className="h-4 flex-1 max-w-[85%]" />
                 </div>
             </div>
         )

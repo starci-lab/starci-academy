@@ -4,6 +4,10 @@ import {
     courseReducer,
     userReducer,
     modalReducer,
+    moduleReducer,
+    contentReducer,
+    challengeReducer,
+    lessonVideoReducer,
 } from "./slices"
 
 export const store = configureStore({
@@ -12,6 +16,10 @@ export const store = configureStore({
         course: courseReducer,
         user: userReducer,
         modal: modalReducer,
+        module: moduleReducer,
+        content: contentReducer,
+        challenge: challengeReducer,
+        lessonVideo: lessonVideoReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false,

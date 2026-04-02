@@ -16,34 +16,36 @@ import { BookOpenIcon, TrophyIcon, UsersIcon, VideoIcon } from "@phosphor-icons/
 import { VideoLessionSection } from "./VideoLessionSection"
 import { ChallengeSection } from "./ChallengeSection"
 import { ContentSection } from "./ContentSection"
-import { useQueryCourseSwr } from "@/hooks/singleton"
+import { useQueryCourseSwr, useQueryModuleSwr } from "@/hooks/singleton"
 
 
 export const Learn = () => {
     const t = useTranslations()
     const dispatch = useAppDispatch()
-    const module = useAppSelector((state) => state.course.module)
-    const course = useAppSelector((state) => state.course.course)
-    const { isLoading } = useQueryCourseSwr()
+    const module = useAppSelector((state) => state.module.entity)
+    const course = useAppSelector((state) => state.course.entity)
+    const { isLoading: isCourseLoading } = useQueryCourseSwr()
+    const { isLoading: isModuleLoading } = useQueryModuleSwr()
+    const isLoading = isCourseLoading || isModuleLoading
     const learnTab = useAppSelector((state) => state.tabs.learnTab)
     const tabs = useMemo(() => [
         {
-            label: t("course.modules.lessonVideos"),
+            label: t("lesson.videos"),
             value: LearnTab.LessonVideos,
             icon: VideoIcon
         },
         {
-            label: t("course.modules.content"),
+            label: t("content.title"),
             value: LearnTab.Foundations,
             icon: BookOpenIcon
         },
         {
-            label: t("course.modules.challenges"),
+            label: t("challenge.title"),
             value: LearnTab.Challenges,
             icon: TrophyIcon
         },
         {
-            label: t("course.modules.topAchievers"),
+            label: t("leaderboard.topAchievers"),
             value: LearnTab.TopAchievers,
             icon: UsersIcon
         }
@@ -64,7 +66,7 @@ export const Learn = () => {
         <div>
             {
                 isLoading ? (
-                    <StarCiSkeleton disableAnimation className="w-30 h-5 rounded-md" />
+                    <StarCiSkeleton className="w-30 h-5" />
                 ) : (
                     <StarCiBreadcrumb>
                         <StarCiBreadcrumbItem>
@@ -88,14 +90,26 @@ export const Learn = () => {
             }
             <Spacer y={6} />
             <div className="grid grid-cols-3 gap-4">
-                <div className="col-span-2">
-                    <div className="text-xl font-bold">
-                        {module?.title}
-                    </div>
+                <div className="col-span-2">  
+                    {
+                        isModuleLoading ? (
+                            <StarCiSkeleton className="w-60 my-1 h-5" />
+                        ) : (
+                            <div className="text-xl font-bold">{module?.title}</div>
+                        )
+                    }    
                     <Spacer y={4} />
-                    <div className="text-sm text-foreground-500">
-                        {module?.description}
-                    </div>
+                    {
+                        isModuleLoading ? (
+                            <div className="w-full">
+                                <StarCiSkeleton className="h-[14px] w-[60%] my-[3px]" />
+                                <StarCiSkeleton className="h-[14px] w-[50%] my-[3px]" />
+                                <StarCiSkeleton className="h-[14px] w-[40%] my-[3px]" />
+                            </div>
+                        ) : (
+                            <div className="text-sm text-foreground-500">{module?.description}</div>
+                        )
+                    }
                     <Spacer y={6} />
                     <StarCiTabs 
                         color="primary"

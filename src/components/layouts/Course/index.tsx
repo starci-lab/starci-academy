@@ -39,7 +39,7 @@ export const Course = () => {
     const isEnrolled = enrollmentPayload?.isEnrolled === true
     const enrollmentCount = enrollmentPayload?.enrollmentCount ?? 0
     const courseId = useAppSelector((state) => state.course.id)
-    const course = useAppSelector((state) => state.course.course)
+    const course = useAppSelector((state) => state.course.entity)
     const t = useTranslations()
     const router = useRouter()
     const { isLoading } = useQueryCourseSwr()
@@ -48,7 +48,7 @@ export const Course = () => {
         <div>
             {
                 isLoading ? (
-                    <StarCiSkeleton disableAnimation className="w-30 h-5 rounded-md" />
+                    <StarCiSkeleton className="w-30 h-5" />
                 ) : (
                     <StarCiBreadcrumb>
                         <StarCiBreadcrumbItem>
@@ -68,7 +68,7 @@ export const Course = () => {
             <Spacer y={6} />
             <div className="text-4xl font-bold">{
                 isLoading ? 
-                    <StarCiSkeleton disableAnimation className="w-60 h-10 rounded-md" /> 
+                    <StarCiSkeleton className="w-60 h-10" /> 
                     : (
                         <div className="text-4xl font-bold">{course?.title}</div>
                     )
@@ -80,9 +80,9 @@ export const Course = () => {
                         {
                             isLoading ? (
                                 <div className="w-full">
-                                    <StarCiSkeleton disableAnimation className="h-[14px] w-[60%] rounded-md !bg-secondary-500/10 my-[3px]" />
-                                    <StarCiSkeleton disableAnimation className="h-[14px] w-[50%] rounded-md !bg-secondary-500/10 my-[3px]" />
-                                    <StarCiSkeleton disableAnimation className="h-[14px] w-[40%] rounded-md !bg-secondary-500/10 my-[3px]" />
+                                    <StarCiSkeleton className="h-[14px] w-[60%] !bg-secondary-500/10 my-[3px]" />
+                                    <StarCiSkeleton className="h-[14px] w-[50%] !bg-secondary-500/10 my-[3px]" />
+                                    <StarCiSkeleton className="h-[14px] w-[40%] !bg-secondary-500/10 my-[3px]" />
                                 </div>
                             ) : (
                                 <span className="text-sm" dangerouslySetInnerHTML={{ __html: course?.description ?? "" }} />
@@ -94,8 +94,8 @@ export const Course = () => {
                         {
                             isLoading ? (
                                 <div className="w-full">
-                                    <StarCiSkeleton disableAnimation className="h-[14px] w-[60%] rounded-md !bg-warning-500/10 my-[3px]" />
-                                    <StarCiSkeleton disableAnimation className="h-[14px] w-[50%] rounded-md !bg-warning-500/10 my-[3px]" />
+                                    <StarCiSkeleton  className="h-[14px] w-[60%] !bg-warning-500/10 my-[3px]" />
+                                    <StarCiSkeleton  className="h-[14px] w-[50%] !bg-warning-500/10 my-[3px]" />
                                 </div>
                             ) : (
                                 <ul className="list-disc list-inside text-warning text-start w-full">

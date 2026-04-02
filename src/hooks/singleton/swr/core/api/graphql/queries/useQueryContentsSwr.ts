@@ -1,13 +1,11 @@
 import {
-    GraphQLHeadersKey,
-    defaultContentsListSorts,
-    defaultModuleListLimit,
+    GraphQLHeadersKey,  
     queryContents,
 } from "@/modules/api"
 import { useKeycloak } from "@/hooks/singleton"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import useSWR from "swr"
-import { mergeModuleLearnData } from "@/redux/slices"
+import { setContents, setContentsCount } from "@/redux/slices"
 
 /**
  * Lists module contents via `contents` and merges rows into `course.module.contents`.
@@ -16,33 +14,41 @@ export const useQueryContentsSwrCore = () => {
     const keycloak = useKeycloak()
     const token = keycloak.data?.authenticated ? keycloak.data?.token : undefined
     const enrolled = useAppSelector((state) => state.user.enrolled)
-    const courseId = useAppSelector((state) => state.course.course?.id)
-    const modulePk = useAppSelector((state) => state.course.module?.id)
+    const course = useAppSelector((state) => state.course.entity)
+    const module = useAppSelector((state) => state.module.entity)
+    const pageNumber = useAppSelector(
+        (state) => state.module.pageNumber,
+    )
+    const limit = useAppSelector(
+        (state) => state.module.limit,
+    )
     const dispatch = useAppDispatch()
     const swr = useSWR(
-        enrolled && courseId && modulePk
+        enrolled && course?.id && module?.id
             ? [
                 "QUERY_CONTENTS_SWR",
-                modulePk,
-                courseId,
+                module?.id,
+                course?.id,
                 enrolled,
+                pageNumber,
+                limit,
             ]
             : null,
         async () => {
-            if (!modulePk || !courseId) {
+            if (!module?.id || !course?.id) {
                 throw new Error("Module or course id not found")
             }
             const data = await queryContents({
                 request: {
                     filters: {
-                        moduleId: modulePk,
-                        pageNumber: 0,
-                        limit: defaultModuleListLimit,
-                        sorts: defaultContentsListSorts,
+                        moduleId: module?.id,
+                        pageNumber,
+                        limit,
+                        sorts: [],
                     },
                 },
                 headers: {
-                    [GraphQLHeadersKey.XCourseId]: courseId,
+                    [GraphQLHeadersKey.XCourseId]: course?.id,
                 },
                 token,
             })
@@ -50,7 +56,8 @@ export const useQueryContentsSwrCore = () => {
             if (!payload) {
                 throw new Error("Contents not found")
             }
-            dispatch(mergeModuleLearnData({ contents: payload.data }))
+            dispatch(setContents(payload.data))
+            dispatch(setContentsCount(payload.count))
             return payload
         },
     )

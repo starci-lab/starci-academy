@@ -1,68 +1,91 @@
 "use client"
 
-import { StarCiCard, StarCiCardBody, StarCiChip, StarCiImage } from "@/components/atomic"
+import { StarCiCard, StarCiCardBody, StarCiChip } from "@/components/atomic"
 import { useChallengeDisclosure } from "@/hooks/singleton"
-import type { ChallengeEntity } from "@/modules/types"
+import { ChallengeDifficulty, ChallengeEntity } from "@/modules/types"
 import { useAppDispatch } from "@/redux"
-import { setChallengeModalData } from "@/redux/slices"
-import { ListNumbersIcon, TrophyIcon } from "@phosphor-icons/react"
+import { setChallengeId } from "@/redux/slices"
+import { ListNumbersIcon, SwordIcon, TrophyIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import React from "react"
+import React, { useMemo } from "react"
+import { Spacer } from "@heroui/react"
 
 export interface ChallengeCardProps {
+    /** One module challenge block from API. */
     challenge: ChallengeEntity
 }
 
 /**
- * One challenge row in the Learn “Challenges” tab; opens ChallengeModal.
+ * Single challenge row in the Learn “Challenges” tab; opens full detail in ChallengeModal.
  */
 export const ChallengeCard = ({ challenge }: ChallengeCardProps) => {
     const t = useTranslations()
     const { onOpen } = useChallengeDisclosure()
     const dispatch = useAppDispatch()
-    const inputCount = challenge.inputs?.length ?? 0
-    const thumb = challenge.thumbnailUrl?.trim()
 
+    const difficultyName = useMemo(() => {
+        switch (challenge.difficulty) {
+        case ChallengeDifficulty.Medium:
+            return "challenge.difficulty.medium"
+        case ChallengeDifficulty.Hard:
+            return "challenge.difficulty.hard"
+        default:
+            return "challenge.difficulty.easy"
+        }
+    }, [challenge.difficulty, t])
     return (
         <StarCiCard
+            fullWidth
             isPressable
-            className="transition-background hover:bg-content2/40"
             onPress={() => {
-                dispatch(setChallengeModalData({ data: challenge }))
+                dispatch(setChallengeId(challenge.id))
                 onOpen()
-            }}
+            }
+            }
         >
             <StarCiCardBody>
-                <div className="grid grid-cols-3 gap-4">
-                    {thumb ? (
-                        <StarCiImage
-                            src={thumb}
-                            alt={challenge.title}
-                            className="aspect-video h-full rounded-md object-cover"
-                        />
-                    ) : (
-                        <div
-                            className="flex aspect-video h-full items-center justify-center rounded-md bg-warning-100 dark:bg-warning-500/20"
-                            aria-hidden
-                        >
-                            <TrophyIcon className="size-12 text-warning-600 dark:text-warning-400" />
+                <div>
+                    <div className="flex flex-col">
+                        <div className="line-clamp-1 font-medium">
+                            <span className="text-primary-500">
+                                {t("challenge.number", {
+                                    index: challenge.orderIndex + 1,
+                                })}:</span> {challenge.title}</div>
+                        <Spacer y={3} />
+                        <div className="line-clamp-2 text-justify text-sm italic text-foreground-500">
+                            {challenge.description}
                         </div>
-                    )}
-                    <div className="col-span-2 flex flex-col gap-3 text-start">
-                        <div className="line-clamp-1 font-medium">{challenge.title}</div>
-                        <div className="line-clamp-3 text-justify text-sm italic text-foreground-500">
-                            {challenge.brief}
+                        <Spacer y={3} />
+                        <div className="flex flex-wrap gap-2">
+                            <StarCiChip
+                                startContent={<TrophyIcon className="size-5" />}
+                                color="secondary"
+                                size="sm"
+                                variant="flat"
+                            >
+                                {t("challenge.score", {
+                                    score: challenge.score,
+                                })}
+                            </StarCiChip>
+                            <StarCiChip
+                                startContent={<SwordIcon className="size-5" />}
+                                color="danger"
+                                size="sm"
+                                variant="flat"
+                            >
+                                {t(difficultyName)}
+                            </StarCiChip>
+                            <StarCiChip
+                                startContent={<ListNumbersIcon className="size-5" />}
+                                color="warning"
+                                size="sm"
+                                variant="flat"
+                            >
+                                {t("challenge.steps.count", {
+                                    count: challenge.steps?.length ?? 0,
+                                })}
+                            </StarCiChip>
                         </div>
-                        <StarCiChip
-                            startContent={<ListNumbersIcon className="size-5" />}
-                            color="warning"
-                            size="sm"
-                            variant="flat"
-                        >
-                            {t("course.modules.challengeInputsCount", {
-                                count: inputCount,
-                            })}
-                        </StarCiChip>
                     </div>
                 </div>
             </StarCiCardBody>

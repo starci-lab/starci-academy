@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl"
 import { useAppSelector } from "@/redux"
 export const VideoLessionSection = () => {
     const t = useTranslations()
-    const module = useAppSelector((state) => state.course.module)
+    const module = useAppSelector((state) => state.module.entity)
     const lessonVideos = useMemo(() => {
         return [...(module?.lessonVideos ?? [])].sort((a, b) => a.orderIndex - b.orderIndex)
     }, [module?.lessonVideos])
@@ -13,7 +13,7 @@ export const VideoLessionSection = () => {
         <div>
             <div className="text-sm text-foreground-500">{
                 t(
-                    "course.modules.lessonVideosCount",
+                    "lesson.videosCount",
                     {
                         count: lessonVideos.length
                     }

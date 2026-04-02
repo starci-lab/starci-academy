@@ -1,9 +1,5 @@
 import type {
-    ChallengeEntity,
-    ContentEntity,
     CourseEntity,
-    LessonVideoEntity,
-    ModuleEntity,
 } from "@/modules/types"
 import { 
     createSlice, 
@@ -14,41 +10,28 @@ import {
  * The slice for the course.
  */
 export interface CourseSlice {
+    /** The course display id. */
+    displayId?: string
+    /** The course entity. */
+    entity?: CourseEntity
     /** The course id. */
     id?: string
-    /** The course. */
-    course?: CourseEntity
-    /** The courses. */
-    courses: Array<CourseEntity>
-    /** The module id. */
-    moduleId?: string
-    /** The module. */
-    module?: ModuleEntity
-    /** When set, `useQueryContentSwr` fetches this content id. */
-    detailContentId?: string
-    /** When set, `useQueryLessonVideoSwr` / context `queryLessonVideo` uses this id. */
-    detailLessonVideoId?: string
-    /** When set, `useQueryChallengeSwr` fetches this challenge id. */
-    detailChallengeId?: string
+    /** The course entities */
+    entities?: Array<CourseEntity>
 }
 
 /**
  * The initial state of the course slice.
  */
 const initialState: CourseSlice = {
+    /** The course display id. */
+    displayId: undefined,
+    /** The course entity. */
+    entity: undefined,
     /** The course id. */
     id: undefined,
-    /** The course. */
-    course: undefined,
-    /** The courses. */
-    courses: [],
-    /** The module id. */
-    moduleId: undefined,
-    /** The module. */
-    module: undefined,
-    detailContentId: undefined,
-    detailLessonVideoId: undefined,
-    detailChallengeId: undefined,
+    /** The course entities. */
+    entities: [],
 }
 
 /**
@@ -67,14 +50,21 @@ export const courseSlice = createSlice(
                 state, 
                 action: PayloadAction<CourseEntity | undefined>
             ) => {
-                state.course = action.payload
+                state.entity = action.payload
             },
             /** The action to set the courses. */
             setCourses: (
                 state, 
                 action: PayloadAction<Array<CourseEntity>>
             ) => {
-                state.courses = action.payload
+                state.entities = action.payload
+            },
+            /** The action to set the course id. */
+            setCourseDisplayId: (
+                state, 
+                action: PayloadAction<string | undefined>
+            ) => {
+                state.displayId = action.payload
             },
             /** The action to set the course id. */
             setCourseId: (
@@ -82,63 +72,6 @@ export const courseSlice = createSlice(
                 action: PayloadAction<string | undefined>
             ) => {
                 state.id = action.payload
-            },
-            /** The action to set the module id. */
-            setModuleId: (
-                state, 
-                action: PayloadAction<string | undefined>
-            ) => {
-                state.moduleId = action.payload
-            },
-            /** The action to set the module. */
-            setModule: (
-                state, 
-                action: PayloadAction<ModuleEntity | undefined>
-            ) => {
-                state.module = action.payload
-            },
-            /**
-             * Merge full learn resources after lazy-loading via `content` / `lessonVideo` / `challenge`.
-             */
-            mergeModuleLearnData: (
-                state,
-                action: PayloadAction<{
-                    contents?: Array<ContentEntity>
-                    lessonVideos?: Array<LessonVideoEntity>
-                    challenges?: Array<ChallengeEntity>
-                }>,
-            ) => {
-                if (!state.module) {
-                    return
-                }
-                const { contents, lessonVideos, challenges } = action.payload
-                if (contents !== undefined) {
-                    state.module.contents = contents
-                }
-                if (lessonVideos !== undefined) {
-                    state.module.lessonVideos = lessonVideos
-                }
-                if (challenges !== undefined) {
-                    state.module.challenges = challenges
-                }
-            },
-            setDetailContentId: (
-                state,
-                action: PayloadAction<string | undefined>,
-            ) => {
-                state.detailContentId = action.payload
-            },
-            setDetailLessonVideoId: (
-                state,
-                action: PayloadAction<string | undefined>,
-            ) => {
-                state.detailLessonVideoId = action.payload
-            },
-            setDetailChallengeId: (
-                state,
-                action: PayloadAction<string | undefined>,
-            ) => {
-                state.detailChallengeId = action.payload
             },
         },
     }
@@ -151,11 +84,6 @@ export const courseReducer = courseSlice.reducer
 export const { 
     setCourse,
     setCourses,
+    setCourseDisplayId,
     setCourseId,
-    setModuleId,
-    setModule,
-    mergeModuleLearnData,
-    setDetailContentId,
-    setDetailLessonVideoId,
-    setDetailChallengeId,
 } = courseSlice.actions

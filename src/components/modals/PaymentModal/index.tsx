@@ -25,7 +25,7 @@ import { useTranslations } from "next-intl"
 export const PaymentModal = () => {
     const { isOpen, onOpenChange } = usePaymentDisclosure()
     const swr = useMutateCourseEnrollSwr()
-    const course = useAppSelector((state) => state.course.course)
+    const course = useAppSelector((state) => state.course.entity)
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentType | null>(null)
     const router = useRouter()
     const t = useTranslations()

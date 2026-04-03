@@ -3,7 +3,8 @@ import React, { PropsWithChildren, useMemo } from "react"
 import { createContext } from "react"
 import {
     useMutateCourseEnrollSwrCore,
-    useMutateSyncChallengeSubmissionUrlsSwrCore,
+    useMutateSubmitChallengeSubmissionsSwrCore,
+    useMutateSyncChallengeSubmissionsSwrCore,
     useQueryChallengeSwrCore,
     useQueryChallengesSwrCore,
     useQueryContentSwrCore,
@@ -24,7 +25,8 @@ export interface SwrContextType {
     queryCoursesSwr: ReturnType<typeof useQueryCoursesSwrCore>;
     queryUserSwr: ReturnType<typeof useQueryUserSwrCore>;
     mutateCourseEnrollSwr: ReturnType<typeof useMutateCourseEnrollSwrCore>;
-    mutateSyncChallengeSubmissionUrlsSwr: ReturnType<typeof useMutateSyncChallengeSubmissionUrlsSwrCore>;
+    mutateSyncChallengeSubmissionsSwr: ReturnType<typeof useMutateSyncChallengeSubmissionsSwrCore>;
+    mutateSubmitChallengeSubmissionsSwr: ReturnType<typeof useMutateSubmitChallengeSubmissionsSwrCore>;
     queryModuleSwr: ReturnType<typeof useQueryModuleSwrCore>;
     queryContentSwr: ReturnType<typeof useQueryContentSwrCore>;
     queryLessonVideo: ReturnType<typeof useQueryLessonVideoSwrCore>;
@@ -43,8 +45,10 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
     const queryCoursesSwr = useQueryCoursesSwrCore()
     const queryUserSwr = useQueryUserSwrCore()
     const mutateCourseEnrollSwr = useMutateCourseEnrollSwrCore()
-    const mutateSyncChallengeSubmissionUrlsSwr =
-        useMutateSyncChallengeSubmissionUrlsSwrCore()
+    const mutateSyncChallengeSubmissionsSwr =
+        useMutateSyncChallengeSubmissionsSwrCore()
+    const mutateSubmitChallengeSubmissionsSwr =
+        useMutateSubmitChallengeSubmissionsSwrCore()
     const queryModuleSwr = useQueryModuleSwrCore()
     const queryContentSwr = useQueryContentSwrCore()
     const queryLessonVideo = useQueryLessonVideoSwrCore()
@@ -60,7 +64,8 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
             queryCoursesSwr,
             queryUserSwr,
             mutateCourseEnrollSwr,
-            mutateSyncChallengeSubmissionUrlsSwr,
+            mutateSyncChallengeSubmissionsSwr,
+            mutateSubmitChallengeSubmissionsSwr,
             queryModuleSwr,
             queryContentSwr,
             queryLessonVideo,
@@ -76,7 +81,8 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
             queryCoursesSwr,
             queryUserSwr,
             mutateCourseEnrollSwr,
-            mutateSyncChallengeSubmissionUrlsSwr,
+            mutateSyncChallengeSubmissionsSwr,
+            mutateSubmitChallengeSubmissionsSwr,
             queryModuleSwr,
             queryContentSwr,
             queryLessonVideo,

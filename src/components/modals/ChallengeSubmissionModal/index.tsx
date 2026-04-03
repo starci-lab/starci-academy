@@ -19,7 +19,7 @@ import { Spacer } from "@heroui/react"
 import { ChallengeSubmissionEntity, SubmissionType, UserChallengeSubmissionEntity } from "@/modules/types"
 import { assetConfig } from "@/resources/assets"
 import { FormikErrors, FormikTouched } from "formik"
-import { useMutateSyncChallengeSubmissionUrlsSwr } from "@/hooks/singleton"
+import { useMutateSyncChallengeSubmissionsSwr } from "@/hooks/singleton"
 
 export const ChallengeSubmissionModal = () => {
     const { isOpen, onOpenChange } = useChallengeSubmissionDisclosure()
@@ -29,7 +29,7 @@ export const ChallengeSubmissionModal = () => {
         [SubmissionType.GithubUrl]: assetConfig().icon().submissions().github,
         [SubmissionType.GoogleDocsUrl]: assetConfig().icon().submissions().google,
     }
-    const swr = useMutateSyncChallengeSubmissionUrlsSwr()
+    const swr = useMutateSyncChallengeSubmissionsSwr()
     return (
         <StarCiModal
             isOpen={isOpen}
@@ -123,7 +123,8 @@ export const ChallengeSubmissionModal = () => {
                         variant="solid"
                         size="lg"
                         fullWidth
-                        onPress={onOpenChange}
+                        isLoading={formik.isSubmitting}
+                        onPress={formik.submitForm}
                     >
                         {t("challenge.submissionModal.submit")}
                     </StarCiButton>

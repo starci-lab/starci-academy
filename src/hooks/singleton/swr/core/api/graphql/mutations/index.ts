@@ -1,2 +1,3 @@
 export * from "./useMutateCourseEnrollSwr"
-export * from "./useMutateSyncChallengeSubmissionUrlsSwr"
+export * from "./useMutateSubmitChallengeSubmissionsSwr"
+export * from "./useMutateSyncChallengeSubmissionsSwr"

@@ -16,12 +16,12 @@ export const ContentSection = () => {
     const t = useTranslations()
     const contents = useAppSelector((state) => state.content.entities)
     const count = useAppSelector((state) => state.content.count)
-    const { isLoading: isContentsLoading } = useQueryContentsSwr()
+    const { isLoading } = useQueryContentsSwr()
 
     return (
         <div>
             {
-                isContentsLoading ? (
+                isLoading || !contents ? (
                     <StarCiSkeleton className="h-[14px] w-[150px] my-[3px]" />
                 ) : (
                     <div className="text-sm text-foreground-500">
@@ -30,25 +30,27 @@ export const ContentSection = () => {
                 )
             }
             <Spacer y={6} />
-            {isContentsLoading ? (
-                <div className="flex flex-col gap-3 w-full">
-                    {Array.from({ length: 3 }).map((_, index) => (
-                        <ContentCardSkeleton key={index} />
-                    ))}
-                </div>
-            )
-                : (
+            {
+                isLoading || !contents ? (
                     <div className="flex flex-col gap-3 w-full">
-                        {
-                            contents?.sort(
-                                (prev, next) => prev.orderIndex - next.orderIndex
-                            ).map((content) => (
-                                <ContentCard key={content.id} content={content} />
-                            )
-                            )
-                        }
+                        {Array.from({ length: 3 }).map((_, index) => (
+                            <ContentCardSkeleton key={index} />
+                        ))}
                     </div>
-                )}
+                )
+                    : (
+                        <div className="flex flex-col gap-3 w-full">
+                            {
+                                contents?.sort(
+                                    (prev, next) => prev.orderIndex - next.orderIndex
+                                ).map((content) => (
+                                    <ContentCard key={content.id} content={content} />
+                                )
+                                )
+                            }
+                        </div>
+                    )
+            }
         </div>
     )
 }

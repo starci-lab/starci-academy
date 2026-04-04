@@ -3,7 +3,9 @@ import { VideoLessionCard } from "./LessionVideoCard"
 import { Spacer } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { useAppSelector } from "@/redux"
-// import { useQueryLessonVideosSwr } from "@/hooks/singleton"
+import { StarCiSkeleton } from "@/components/atomic"
+import { useQueryLessonVideosSwr } from "@/hooks/singleton"
+import { LessionVideoCardSkeleton } from "../LessionVideoSection/LessionVideoCardSkeleton"
 
 /**
  * Learn tab “Videos”: exclusive lesson videos (title + body, optional thumbnail).
@@ -11,23 +13,38 @@ import { useAppSelector } from "@/redux"
 export const LessonVideoSection = () => {
     const t = useTranslations()
     const lessionVideos = useAppSelector((state) => state.lessonVideo.entities)
-    //const swr = useQueryLessonVideosSwr()
+    const { isLoading } = useQueryLessonVideosSwr()
     return (
         <div>
-            <div className="text-sm text-foreground-500">{
-                t(
-                    "lesson.videosCount",
-                    {
-                        count: lessionVideos?.length ?? 0
-                    }
+            {
+                isLoading || !lessionVideos ? (
+                    <StarCiSkeleton className="h-[14px] w-[150px] my-[3px]" />
+                ) : (
+                    <div className="text-sm text-foreground-500">
+                        {t("content.count", { count: lessionVideos?.length ?? 0 })}
+                    </div>
                 )
-            }</div>
-            <Spacer y={3}/>
-            <div className="flex flex-col gap-3">
-                {lessionVideos?.map((lessonVideo) => (
-                    <VideoLessionCard key={lessonVideo.id} lessonVideo={lessonVideo} />
-                ))}
-            </div>
+            }
+            <Spacer y={6} />
+            {isLoading || !lessionVideos ? (
+                <div className="flex flex-col gap-3 w-full">
+                    {Array.from({ length: 3 }).map((_, index) => (
+                        <LessionVideoCardSkeleton key={index} />
+                    ))}
+                </div>
+            )
+                : (
+                    <div className="flex flex-col gap-3 w-full">
+                        {
+                            lessionVideos?.sort(
+                                (prev, next) => prev.orderIndex - next.orderIndex
+                            ).map((lessonVideo) => (
+                                <VideoLessionCard key={lessonVideo.id} lessonVideo={lessonVideo} />
+                            )
+                            )
+                        }
+                    </div>
+                )}
         </div>
     )
 }

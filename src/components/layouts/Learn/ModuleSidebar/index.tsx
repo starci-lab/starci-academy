@@ -16,18 +16,23 @@ export const ModuleSidebar = () => {
     const router = useRouter()
     const locale = useLocale()
     return (
-        <StarCiAccordion className="px-0" onSelectionChange={(selection) => {
-            const key = Array.from(selection)[0]
-            if (key) {
-                router.push(
-                    pathConfig().locale(locale).course(courseDisplayId).learn().module(key.toString()).build()
-                )
+        <StarCiAccordion 
+            className="px-0" 
+            selectedKeys={moduleDisplayId ? [moduleDisplayId] : []}
+            onSelectionChange={(selection) => {
+                const key = Array.from(selection)[0]
+                if (key) {
+                    router.push(
+                        pathConfig().locale(locale).course(courseDisplayId).learn().module(key.toString()).build()
+                    )
+                }
             }
-        }}>
+            }
+        >
             {
                 modules.map(
                     (module) => (
-                        <StarCiAccordionItem key={module.displayId} 
+                        <StarCiAccordionItem key={module.displayId}
                             aria-label={module.title} 
                             title={<div className={cn("cursor-pointer", module.id === activeModule?.id ? "text-primary" : "")}>{module.title}</div>}>
                         </StarCiAccordionItem>

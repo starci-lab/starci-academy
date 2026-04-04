@@ -18,9 +18,10 @@ import { Stepper } from "./Stepper"
 import { ValuePropositions } from "./ValuePropositions"
 import { QnA } from "./QnA"
 import { useQueryCourseEnrollmentStatusSwr, usePaymentDisclosure, useQueryCourseSwr } from "@/hooks/singleton"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { useAppSelector } from "@/redux"
+import { pathConfig } from "@/resources"
 
 /**
  * The props for the Course component.
@@ -38,12 +39,12 @@ export const Course = () => {
     const enrollmentPayload = enrollmentSwr.data?.courseEnrollmentStatus?.data
     const isEnrolled = enrollmentPayload?.isEnrolled === true
     const enrollmentCount = enrollmentPayload?.enrollmentCount ?? 0
-    const courseId = useAppSelector((state) => state.course.id)
     const course = useAppSelector((state) => state.course.entity)
     const t = useTranslations()
     const router = useRouter()
     const { isLoading } = useQueryCourseSwr()
-
+    const locale = useLocale()
+    const courseDisplayId = useAppSelector((state) => state.course.displayId)
     return (
         <div>
             {
@@ -55,10 +56,12 @@ export const Course = () => {
                             <Link href="/">{t("nav.home")}</Link>
                         </StarCiBreadcrumbItem>
                         <StarCiBreadcrumbItem>
-                            <Link href="/courses">{t("nav.courses")}</Link>
+                            <Link onPress={() => router.push(pathConfig().locale(locale).course().build())}>
+                                {t("nav.courses")}
+                            </Link>
                         </StarCiBreadcrumbItem>
                         <StarCiBreadcrumbItem>
-                            <Link href={`/courses/${courseId}`}>
+                            <Link onPress={() => router.push(pathConfig().locale(locale).course(courseDisplayId).build())}>
                                 {course?.title}
                             </Link>
                         </StarCiBreadcrumbItem>
@@ -143,7 +146,16 @@ export const Course = () => {
                                         startContent={<BookOpenIcon className="w-5 h-5" />}
                                         className="w-full"
                                         isDisabled={!isEnrolled}
-                                        onPress={() => router.push(`/courses/${courseId}/learn`)}
+                                        onPress={() => router.push(
+                                            pathConfig()
+                                                .locale(locale)
+                                                .course(courseDisplayId)
+                                                .learn()
+                                                .module(
+                                                    course?.modules?.[0]?.displayId ?? ""
+                                                ).build()
+                                        )
+                                        }
                                     >
                                         {t("course.continueLearning")}
                                     </StarCiButton>

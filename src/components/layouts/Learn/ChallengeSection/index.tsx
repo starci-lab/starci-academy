@@ -16,11 +16,11 @@ import { ChallengeCardSkeleton } from "./ChallengeCardSkeleton"
 export const ChallengeSection = () => {
     const t = useTranslations()
     const challenges = useAppSelector((state) => state.challenge.entities)
-    const { isLoading: isChallengesLoading } = useQueryChallengesSwr()
+    const { isLoading } = useQueryChallengesSwr()
 
     return (
         <div>
-            {isChallengesLoading ? (
+            {isLoading || !challenges ? (
                 <StarCiSkeleton className="h-[14px] w-[150px] my-[3px]" />
             ) : (
                 <div className="text-sm text-foreground-500">
@@ -28,7 +28,7 @@ export const ChallengeSection = () => {
                 </div>
             )}
             <Spacer y={6} />
-            {isChallengesLoading ? (
+            {isLoading || !challenges ? (
                 <div className="flex flex-col gap-3 w-full">
                     {Array.from({ length: 3 }).map((_, index) => (
                         <ChallengeCardSkeleton key={index} />

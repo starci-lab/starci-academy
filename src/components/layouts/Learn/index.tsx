@@ -8,7 +8,7 @@ import {
     StarCiTab,
     StarCiTabs
 } from "@/components/atomic"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { ModuleSidebar } from "./ModuleSidebar"
 import { LearnTab, setLearnTab } from "@/redux/slices"
 import { useAppDispatch, useAppSelector } from "@/redux"
@@ -17,16 +17,19 @@ import { LessonVideoSection } from "./LessionVideoSection"
 import { ChallengeSection } from "./ChallengeSection"
 import { ContentSection } from "./ContentSection"
 import { useQueryCourseSwr, useQueryModuleSwr } from "@/hooks/singleton"
-
+import { pathConfig } from "@/resources"
+import { useRouter } from "next/navigation"
 
 export const Learn = () => {
     const t = useTranslations()
     const dispatch = useAppDispatch()
+    const locale = useLocale()
     const module = useAppSelector((state) => state.module.entity)
     const course = useAppSelector((state) => state.course.entity)
+    const courseDisplayId = useAppSelector((state) => state.course.displayId)
     const { isLoading: isCourseLoading } = useQueryCourseSwr()
     const { isLoading: isModuleLoading } = useQueryModuleSwr()
-    const isLoading = isCourseLoading || isModuleLoading
+    const isLoading = isCourseLoading || isModuleLoading || !module || !course
     const learnTab = useAppSelector((state) => state.tabs.learnTab)
     const tabs = useMemo(() => [
         {
@@ -50,6 +53,7 @@ export const Learn = () => {
             icon: UsersIcon
         }
     ], [t])
+    const router = useRouter()
     const renderContent = () => {
         switch (learnTab) {
         case LearnTab.LessonVideos:
@@ -76,12 +80,12 @@ export const Learn = () => {
                             <Link href="/courses">{t("nav.courses")}</Link>
                         </StarCiBreadcrumbItem>
                         <StarCiBreadcrumbItem>
-                            <Link href={`/courses/${course?.id}`}>
+                            <Link onPress={() => router.push(pathConfig().locale(locale).course(courseDisplayId).build())}>
                                 {course?.title}
                             </Link>
                         </StarCiBreadcrumbItem>
                         <StarCiBreadcrumbItem>
-                            <Link href={`/courses/${course?.id}/learn`}>
+                            <Link onPress={() => router.push(pathConfig().locale(locale).course(courseDisplayId).learn().build())}>
                                 {t("nav.learn")}
                             </Link>
                         </StarCiBreadcrumbItem>
@@ -92,7 +96,7 @@ export const Learn = () => {
             <div className="grid grid-cols-3 gap-4">
                 <div className="col-span-2">  
                     {
-                        isModuleLoading ? (
+                        (isModuleLoading || !module) ? (
                             <StarCiSkeleton className="w-60 my-1 h-5" />
                         ) : (
                             <div className="text-xl font-bold">{module?.title}</div>
@@ -100,7 +104,7 @@ export const Learn = () => {
                     }    
                     <Spacer y={4} />
                     {
-                        isModuleLoading ? (
+                        (isModuleLoading || !module) ? (
                             <div className="w-full">
                                 <StarCiSkeleton className="h-[14px] w-[60%] my-[3px]" />
                                 <StarCiSkeleton className="h-[14px] w-[50%] my-[3px]" />

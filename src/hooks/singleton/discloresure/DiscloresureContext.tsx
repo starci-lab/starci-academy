@@ -14,6 +14,7 @@ export interface DiscloresureContextType {
     payment: ReturnType<typeof usePaymentDisclosureCore>
     content: ReturnType<typeof useContentDisclosureCore>
     challenge: ReturnType<typeof useChallengeDisclosureCore>
+    challengeSubmission: ReturnType<typeof useChallengeSubmissionDisclosureCore>
 }
 
 export const DiscloresureContext = createContext<DiscloresureContextType | null>(null)

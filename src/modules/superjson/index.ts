@@ -1,6 +1,5 @@
 import SuperJSON from "superjson"
 import BN from "bn.js"
-import { PublicKey } from "@solana/web3.js"
 import Decimal from "decimal.js"
 import dayjs from "dayjs"
 import { Dayjs } from "dayjs"
@@ -20,16 +19,6 @@ superjson.registerCustom<BN, string>(
         deserialize: (v) => new BN(v),
     },
     "bn.js" // identifier
-)
-superjson.registerCustom<PublicKey, string>(
-    {
-        isApplicable: (v): v is PublicKey => {
-            return v instanceof PublicKey
-        },
-        serialize: (v) => v.toString(),
-        deserialize: (v) => new PublicKey(v),
-    },
-    "solana.web3.js.PublicKey" // identifier
 )
 superjson.registerCustom<Decimal, string>(
     {

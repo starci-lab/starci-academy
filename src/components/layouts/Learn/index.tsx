@@ -13,7 +13,7 @@ import { ModuleSidebar } from "./ModuleSidebar"
 import { LearnTab, setLearnTab } from "@/redux/slices"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import { BookOpenIcon, TrophyIcon, UsersIcon, VideoIcon } from "@phosphor-icons/react"
-import { VideoLessionSection } from "./VideoLessionSection"
+import { LessonVideoSection } from "./LessionVideoSection"
 import { ChallengeSection } from "./ChallengeSection"
 import { ContentSection } from "./ContentSection"
 import { useQueryCourseSwr, useQueryModuleSwr } from "@/hooks/singleton"
@@ -53,7 +53,7 @@ export const Learn = () => {
     const renderContent = () => {
         switch (learnTab) {
         case LearnTab.LessonVideos:
-            return <VideoLessionSection />
+            return <LessonVideoSection />
         case LearnTab.Foundations:
             return <ContentSection />
         case LearnTab.Challenges:

@@ -30,7 +30,7 @@ const query1 = gql`
         data {
           id
           type
-          name
+          title
           orderIndex
           description
           userSubmission {

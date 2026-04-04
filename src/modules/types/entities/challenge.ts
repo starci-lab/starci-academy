@@ -1,5 +1,4 @@
 import type { AbstractEntity } from "./abstract"
-import type { ChallengeInputEntity } from "./challenge-input"
 import type { ChallengeStepEntity } from "./challenge-step"
 import type { ChallengeReferenceEntity } from "./challenge-reference"
 import type { ChallengeTranslationEntity } from "./challenge-translation"
@@ -13,7 +12,7 @@ export interface ChallengeEntity extends AbstractEntity {
     /** Challenge title. */
     title: string
     /** Short summary before full description. */
-    brief: string
+    requirements: string
     /** Full instructions (e.g. markdown). */
     description: string
     /** Points / score when completed. */
@@ -30,8 +29,6 @@ export interface ChallengeEntity extends AbstractEntity {
     module?: ModuleEntity
     /** Ordered guided steps (instructions). */
     steps?: Array<ChallengeStepEntity>
-    /** Ordered inputs. */
-    inputs?: Array<ChallengeInputEntity>
     /** External URL references. */
     references?: Array<ChallengeReferenceEntity>
     /** Localized overrides for title, brief, description. */

@@ -12,7 +12,7 @@ const query1 = gql`
       data {
         id
         type
-        name
+        title
         description
         userSubmission {
           submissionUrl

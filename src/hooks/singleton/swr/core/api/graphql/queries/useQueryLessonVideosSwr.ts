@@ -15,8 +15,8 @@ export const useQueryLessonVideosSwrCore = () => {
     const keycloak = useKeycloak()
     const token = keycloak.data?.authenticated ? keycloak.data?.token : undefined
     const enrolled = useAppSelector((state) => state.user.enrolled)
-    const courseId = useAppSelector((state) => state.course.id)
-    const moduleId = useAppSelector((state) => state.module.id)
+    const course = useAppSelector((state) => state.course.entity)
+    const module = useAppSelector((state) => state.module.entity)
     const pageNumber = useAppSelector(
         (state) => state.module.pageNumber,
     )
@@ -25,23 +25,23 @@ export const useQueryLessonVideosSwrCore = () => {
     )
     const dispatch = useAppDispatch()
     const swr = useSWR(
-        enrolled && courseId && moduleId
+        enrolled && course?.id && module?.id
             ? [
                 "QUERY_LESSON_VIDEOS_SWR",
-                moduleId,
-                courseId,
+                module?.id,
+                course?.id,
                 enrolled,
                 pageNumber,
                 limit,
             ]
             : null,
         async () => {
-            if (!moduleId || !courseId) {
+            if (!module?.id || !course?.id) {
                 throw new Error("Module or course id not found")
             }
             const data = await queryLessonVideos({
                 request: {
-                    moduleId,
+                    moduleId: module.id,
                     filters: {
                         pageNumber,
                         limit,
@@ -49,7 +49,7 @@ export const useQueryLessonVideosSwrCore = () => {
                     },
                 },
                 headers: {
-                    [GraphQLHeadersKey.XCourseId]: courseId,
+                    [GraphQLHeadersKey.XCourseId]: course.id,
                 },
                 token,
             })

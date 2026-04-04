@@ -12,7 +12,7 @@ const query1 = gql`
       data {
         id
         title
-        brief
+        requirements
         description
         score
         difficulty
@@ -20,13 +20,7 @@ const query1 = gql`
         steps {
           id
           title
-          description
           body
-          orderIndex
-        }
-        inputs {
-          id
-          description
           orderIndex
         }
         references {

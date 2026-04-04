@@ -27,13 +27,13 @@ export const ReferenceLinks = ({ references, titleKey }: ReferenceLinksProps) =>
     }
     return (
         <>
-            <Spacer y={8} />
-            <div className="text-sm font-semibold text-foreground">
+            <Spacer y={6} />
+            <div className="font-semibold text-foreground">
                 {t(titleKey)}
             </div>
-            <Spacer y={2} />
+            <Spacer y={3} />
             <ul className="flex flex-col gap-2">
-                {references.sort((prev, next) => prev.orderIndex - next.orderIndex).map((reference) => {
+                {references?.sort((prev, next) => prev.orderIndex - next.orderIndex).map((reference) => {
                     return (
                         <li key={reference.id} className="flex flex-wrap items-center gap-2">
                             <span className="text-sm text-foreground-500">{reference.alias}</span>

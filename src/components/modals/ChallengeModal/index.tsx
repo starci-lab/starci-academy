@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useMemo } from "react"
 import {
     StarCiChip,
     StarCiModal,
@@ -17,6 +17,7 @@ import { useTranslations } from "next-intl"
 import { Spacer } from "@heroui/react"
 import { useAppSelector } from "@/redux"
 import { ChallengeCard } from "./ChallengeCard"
+import _ from "lodash"
 
 const challengeDifficultyMessageKey = (difficulty: ChallengeDifficulty | undefined) => {
     switch (difficulty) {
@@ -34,9 +35,8 @@ const challengeDifficultyMessageKey = (difficulty: ChallengeDifficulty | undefin
 export const ChallengeModal = () => {
     const { isOpen, onOpenChange } = useChallengeDisclosure()
     const challenge = useAppSelector((state) => state.challenge.entity)
-    const steps = useAppSelector((state) => state.challenge.entity?.steps ?? [])
-    const inputs = useAppSelector((state) => state.challenge.entity?.inputs ?? [])
-    const references = useAppSelector((state) => state.challenge.entity?.references ?? [])
+    const steps = useMemo(() => _.cloneDeep(challenge?.steps ?? []), [challenge?.steps])
+    const references = useMemo(() => _.cloneDeep(challenge?.references ?? []), [challenge?.references])
     const t = useTranslations()
     return (
         <StarCiModal
@@ -78,7 +78,7 @@ export const ChallengeModal = () => {
                                 variant="flat"
                             >
                                 {t("challenge.steps.count", {
-                                    count: inputs.length,
+                                    count: steps.length,
                                 })}
                             </StarCiChip>
                         </div>
@@ -88,19 +88,15 @@ export const ChallengeModal = () => {
                     <StarCiScrollShadow hideScrollBar>
                         <ChallengeCard />
                         <Spacer y={6} />
-                        {challenge?.brief?.trim() ? (
+                        {challenge?.requirements?.trim() ? (
                             <>
-                                <div className="text-sm font-medium text-foreground-600">
-                                    {challenge.brief}
-                                </div>
-                                <Spacer y={4} />
+                                <MarkdownContent markdown={challenge.requirements} />   
                             </>
                         ) : null}
-                        <MarkdownContent markdown={challenge?.description ?? ""} />
                         {steps.length > 0 ? (
                             <>
-                                <Spacer y={8} />
-                                <div className="text-sm font-semibold text-foreground">
+                                <Spacer y={6} />
+                                <div className="font-semibold text-foreground">
                                     {t("challenge.steps.title")}
                                 </div>
                                 <Spacer y={3} />
@@ -108,50 +104,23 @@ export const ChallengeModal = () => {
                                     {steps.map((step) => (
                                         <div key={step.id}>
                                             {step.title?.trim() ? (
-                                                <div className="mb-2 text-sm font-medium text-foreground-700">
-                                                    {step.title}
+                                                <div className="text-sm text-foreground-500">
+                                                    {`${step.orderIndex + 1}. ${step.title}`}
                                                 </div>
                                             ) : null}
-                                            {step.description?.trim() ? (
-                                                <div className="mb-2 text-sm text-foreground-600">
-                                                    {step.description}
-                                                </div>
-                                            ) : null}
-                                            <MarkdownContent
-                                                className="rounded-medium border border-divider bg-content1/30 p-3"
-                                                markdown={step.body ?? ""}
-                                            />
-                                        </div>
-                                    ))}
-                                </div>
-                            </>
-                        ) : null}
-                        {inputs.length > 0 ? (
-                            <>
-                                <Spacer y={8} />
-                                <div className="text-sm font-semibold text-foreground">
-                                    {t("challenge.tasks")}
-                                </div>
-                                <Spacer y={3} />
-                                <div className="flex flex-col gap-6">
-                                    {inputs.map((input, index) => (
-                                        <div key={input.id}>
-                                            <div className="mb-2 text-xs font-medium uppercase tracking-wide text-foreground-500">
-                                                {t("challenge.steps.label", {
-                                                    index: index + 1,
-                                                })}
+                                            <Spacer y={1.5} />
+                                            <div className="border border-divider rounded-large p-3">
+                                                <MarkdownContent
+                                                    markdown={step.body ?? ""}
+                                                />
                                             </div>
-                                            <MarkdownContent
-                                                className="rounded-medium border border-divider bg-content1/30 p-3"
-                                                markdown={input.description ?? ""}
-                                            />
                                         </div>
                                     ))}
                                 </div>
                             </>
                         ) : null}
                         <ReferenceLinks
-                            references={references}
+                            references={references ?? []}
                             titleKey="reference.title"
                         />
                     </StarCiScrollShadow>

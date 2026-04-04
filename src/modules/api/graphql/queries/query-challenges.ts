@@ -33,15 +33,12 @@ const query1 = gql`
         data {
           id
           title
-          brief
+          requirements
           description
           score
           difficulty
           orderIndex
           steps {
-            id
-          }
-          inputs {
             id
           }
         }

@@ -12,8 +12,7 @@ const query1 = gql`
       error
       data {
         id
-        createdAt
-        updatedAt
+        displayId
         title
         slug
         description
@@ -39,6 +38,7 @@ const query1 = gql`
         }
         modules {
           id
+          displayId
           title
           description
           orderIndex

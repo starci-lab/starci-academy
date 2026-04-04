@@ -76,10 +76,10 @@ export const MarkdownContent = ({ markdown }: MarkdownContentProps) => {
             remarkPlugins={[remarkGfm]}
             components={{
                 h1: ({ children }) => (
-                    <h1 className="mb-2 text-xl font-bold last:mb-0">{children}</h1>
+                    <div className="mb-2 text-xl font-bold last:mb-0">{children}</div>
                 ),
                 h2: ({ children }) => (
-                    <h2 className="mb-2 text-lg font-semibold last:mb-0">{children}</h2>
+                    <div className="mb-2 text-lg font-semibold last:mb-0">{children}</div>
                 ),
                 code: (
                     { children, className, node }
@@ -114,10 +114,12 @@ export const MarkdownContent = ({ markdown }: MarkdownContentProps) => {
                         />
                     )
                 },
+                hr: () => <div className="h-px my-2 border-divider" />,
+                ol: ({ children }) => <div className="list-decimal pl-5 mb-2 last:mb-0 text-sm text-foreground-500">{children}</div>,
                 p: ({ children }) => <div className="text-sm mb-2 last:mb-0">{children}</div>,
-                ul: ({ children }) => <ul className="list-disc pl-5 mb-2 last:mb-0">{children}</ul>,
+                ul: ({ children }) => <div className="list-disc pl-5 mb-2 last:mb-0 text-sm text-foreground-500">{children}</div>,
                 a: ({ href, children }) => (
-                    <a href={href} className="text-primary underline">
+                    <a href={href} className="text-primary underline text-sm">
                         {children}
                     </a>
                 ),

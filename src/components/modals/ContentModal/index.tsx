@@ -1,12 +1,14 @@
 "use client"
 
-import React from "react"
+import React, { useMemo } from "react"
+import _ from "lodash"
 import {
     StarCiChip,
     StarCiModal,
     StarCiModalBody,
     StarCiModalContent,
     StarCiModalHeader,
+    StarCiScrollShadow,
 } from "../../atomic"
 import { MarkdownContent } from "@/components/reuseable"
 import { ContentReferences } from "./ContentReferences"
@@ -14,12 +16,13 @@ import { useContentDisclosure } from "@/hooks/singleton"
 import { ClockIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { useAppSelector } from "@/redux"
+import { Spacer } from "@heroui/react"
 
 export const ContentModal = () => {
     const { isOpen, onOpenChange } = useContentDisclosure()
     const t = useTranslations()
     const content = useAppSelector((state) => state.content.entity)
-    const references = useAppSelector((state) => state.content.entity?.references ?? [])
+    const references = useMemo(() => _.cloneDeep(content?.references ?? []), [content?.references])
     return (
         <StarCiModal
             isOpen={isOpen}
@@ -50,8 +53,11 @@ export const ContentModal = () => {
                     }
                 />
                 <StarCiModalBody>
-                    <MarkdownContent markdown={content?.body ?? ""} />
-                    <ContentReferences references={references} />
+                    <StarCiScrollShadow hideScrollBar>
+                        <MarkdownContent markdown={content?.body ?? ""} />
+                        <ContentReferences references={references} />
+                        <Spacer y={6} />
+                    </StarCiScrollShadow>
                 </StarCiModalBody>
             </StarCiModalContent>
         </StarCiModal>

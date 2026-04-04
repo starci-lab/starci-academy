@@ -131,7 +131,7 @@ export const Learn = () => {
                     <Spacer y={6} />
                     {renderContent()}
                 </div>
-                <ModuleSidebar modules={course?.modules} />
+                <ModuleSidebar />
             </div>
         </div>
     )

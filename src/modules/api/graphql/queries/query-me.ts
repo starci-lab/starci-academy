@@ -3,11 +3,6 @@ import { createApolloClient } from "../clients"
 import type { GraphQLResponse, QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
-/** Inner `data` field after the global GraphQL response interceptor. */
-export interface QueryMePayload {
-    data: UserEntity | null
-}
-
 const query1 = gql`
   query Me {
     me {
@@ -18,6 +13,7 @@ const query1 = gql`
         id
         email
         avatar
+        username
       }
     }
   }
@@ -32,7 +28,7 @@ const queryMap: Record<QueryMe, DocumentNode> = {
 }
 
 export interface QueryMeResponse {
-    me: GraphQLResponse<QueryMePayload>
+    me: GraphQLResponse<UserEntity>
 }
 
 /**

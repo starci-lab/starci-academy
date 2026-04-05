@@ -1,28 +1,32 @@
 import React from "react"
 import { Card, CardBody, CardFooter, Image, Button, Spacer } from "@heroui/react"
-import { Course } from "../../../../types"
+import { CourseEntity } from "@/modules/types"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
+import { useLocale } from "next-intl"
+import { pathConfig } from "@/resources/path"
+
 export interface CourseCardProps {
-    course: Course
+    course: CourseEntity
 }
 export const CourseCard = ({ course }: CourseCardProps) => {
+    const locale = useLocale()
     const originalPrice = course.originalPrice
-    const actualPrice = course.pricing.find(pricing => pricing.phase === course.currentPhase)?.price
+    const actualPrice = course.pricingPhases?.find((pricingPhase) => pricingPhase.phase === course.currentPhase)?.price
     const router = useRouter()
     const t = useTranslations()
     return (
         <Card>
             <CardBody>
-                <Image src={course.image} alt={course.name} />
+                <Image src={course.cdnUrl ?? ""} alt={course.title} />
                 <Spacer y={4} />
-                <div className="font-bold">{course.name}</div>
+                <div className="font-bold">{course.title}</div>
                 <Spacer y={4} />
                 <div className="text-sm text-foreground-500 text-justify italic line-clamp-3">{course.description}</div>
             </CardBody>
             <CardFooter>
                 <div className="w-full">
-                    <Button color="primary" size="lg" className="w-full" onPress={() => router.push(`/courses/${course.id}`)}>{t("courses.viewCourse")}</Button>
+                    <Button color="primary" size="lg" className="w-full" onPress={() => router.push(pathConfig().locale(locale).course(course.displayId).build())}>{t("courses.viewCourse")}</Button>
                     <Spacer y={2} />
                     <div className="text-sm text-justify flex gap-2">
                         <span className="line-through text-foreground-500">{originalPrice} VND</span>

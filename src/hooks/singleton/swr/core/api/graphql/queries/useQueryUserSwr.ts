@@ -22,8 +22,9 @@ export const useQueryUserSwrCore = () => {
             if (!data || !data.data || !data.data.me.data) {
                 throw new Error("User not found")
             }
+            console.log(data.data.me.data)
             /** Set the user. */
-            dispatch(setUser(data.data.me.data.data))
+            dispatch(setUser(data.data.me.data))
             /** Return the data. */
             return data.data
         })

@@ -2,10 +2,55 @@ import { Locale } from "next-intl"
 
 // represent as a function to ensure optional loading or logic processing
 export const pathConfig = () => {
-    const locale = (locale: Locale) => {
-        const localePath = `/${locale}`
+    const locale = (locale?: Locale) => {
+        const localePath = locale ? `/${locale}` : ""
         const build = () => {
             return `${localePath}`
+        }
+        const profile = () => {
+            const profilePath = `${localePath}/profile`
+            const build = () => {
+                return profilePath
+            }
+            return {
+                build,
+            }
+        }
+        const authentication = () => {
+            const authenticationPath = `${localePath}/authentication`
+            const build = () => {
+                return authenticationPath
+            }
+            const google = () => {
+                const googlePath = `${authenticationPath}/google`
+                const build = () => {
+                    return googlePath
+                }
+                const login = () => {
+                    const loginPath = `${googlePath}/login`
+                    const build = () => {
+                        return loginPath
+                    }
+                    return {
+                        build,
+                    }
+                }
+                const logout = () => {
+                    const logoutPath = `${googlePath}/logout`
+                    const build = () => {
+                        return logoutPath
+                    }
+                    return {
+                        build,
+                    }
+                }
+                return {
+                    build, login, logout,
+                }
+            }
+            return {
+                build, google,
+            }
         }
         const course = (displayId?: string) => {
             const coursePath = displayId ? `${localePath}/courses/${displayId}` : `${localePath}/courses`
@@ -39,6 +84,8 @@ export const pathConfig = () => {
         return {
             build,
             course,
+            profile,
+            authentication,
         }
     }
     return {

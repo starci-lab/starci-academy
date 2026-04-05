@@ -1,13 +1,13 @@
 import type { Metadata } from "next"
-import { Figtree } from "next/font/google"
+import { Open_Sans } from "next/font/google"
 import "./globals.css"
 import React, { PropsWithChildren } from "react"
 import { InnerLayout } from "./InnerLayout"
 import { NextIntlClientProvider } from "next-intl"
 
-const figtree = Figtree({
+const font = Open_Sans({
     subsets: ["latin"],
-    variable: "--font-figtree",
+    variable: "--font-open-sans",
 })
 
 export const metadata: Metadata = {
@@ -19,7 +19,7 @@ const Layout = ({ children }: PropsWithChildren) => {
     return (
         <html lang="en">
             <body
-                className={`${figtree.className} antialiased`}
+                className={`${font.className} antialiased`}
             >
                 <NextIntlClientProvider>
                     <InnerLayout> 

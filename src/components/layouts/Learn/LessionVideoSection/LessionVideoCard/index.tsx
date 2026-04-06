@@ -1,6 +1,9 @@
 import { StarCiCard, StarCiCardBody, StarCiChip, StarCiImage } from "@/components/atomic"
+import { useLessonVideoDisclosure } from "@/hooks/singleton"
 import { dayjs } from "@/modules/dayjs"
 import { LessonVideoEntity } from "@/modules/types"
+import { useAppDispatch } from "@/redux"
+import { setLessonVideo, setLessonVideoId } from "@/redux/slices"
 import { ClockIcon } from "@phosphor-icons/react"
 import React from "react"
 
@@ -10,14 +13,16 @@ export interface VideoLessionCardProps {
 }
 
 export const VideoLessionCard = ({ lessonVideo }: VideoLessionCardProps) => {
+    const { onOpen } = useLessonVideoDisclosure()
+    const dispatch = useAppDispatch()
     return (
-        <StarCiCard 
-            isPressable={true} 
-            onPress={
-                () => {
-                    window.open(lessonVideo.url, "_blank")
-                }
-            }
+        <StarCiCard
+            isPressable={true}
+            onPress={() => {
+                dispatch(setLessonVideoId(lessonVideo.id))
+                dispatch(setLessonVideo(lessonVideo))
+                onOpen()
+            }}
         >
             <StarCiCardBody>
                 <div className="grid grid-cols-3 gap-4">

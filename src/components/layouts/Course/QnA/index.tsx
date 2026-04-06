@@ -2,29 +2,24 @@
 
 import React, { useMemo } from "react"
 import { Spacer } from "@heroui/react"
-import type { QnaEntity } from "@/modules/types"
 import { useTranslations } from "next-intl"
+import { useAppSelector } from "@/redux"
+import { useQueryCourseSwr } from "@/hooks/singleton"
 import {
     StarCiAccordion,
     StarCiAccordionItem,
     StarCiSkeleton,
 } from "@/components/atomic"
+import _ from "lodash"
 
-export interface QnAProps {
-    qnas?: Array<QnaEntity>
-    isLoading: boolean
-}
-
-export const QnA = ({ qnas, isLoading }: QnAProps) => {
+export const QnA = () => {
+    const course = useAppSelector((state) => state.course.entity)
+    const { isLoading } = useQueryCourseSwr()
     const t = useTranslations()
-    const rows = useMemo(() => {
-        return [...(qnas ?? [])].sort((a, b) => a.orderIndex - b.orderIndex)
-    }, [qnas])
-
-    if (rows.length === 0) {
-        return null
-    }
-
+    const qnas = useMemo(() => {
+        return _.cloneDeep(course?.qnas ?? []).sort(
+            (prev, next) => prev.orderIndex - next.orderIndex)
+    }, [course])
     return (
         <div>
             <div className="text-lg font-medium text-start text-foreground-500">{t("qna.title")}</div>
@@ -43,22 +38,22 @@ export const QnA = ({ qnas, isLoading }: QnAProps) => {
                     </StarCiAccordion>
                 ) : (
                     <StarCiAccordion className="px-0">
-                        {rows.map((row) => (
+                        {qnas.map((qna) => (
                             <StarCiAccordionItem
-                                key={row.id}
-                                aria-label={row.question}
+                                key={qna.id}
+                                aria-label={qna.question}
                                 title={
                                     <span
                                         className="text-sm font-medium text-start"
                                         dangerouslySetInnerHTML={{
-                                            __html: row.question,
+                                            __html: qna.question,
                                         }}
                                     />
                                 }
                             >
                                 <div
                                     className="text-sm text-foreground-600 pb-2 text-start"
-                                    dangerouslySetInnerHTML={{ __html: row.answer }}
+                                    dangerouslySetInnerHTML={{ __html: qna.answer }}
                                 />
                             </StarCiAccordionItem>
                         ))}

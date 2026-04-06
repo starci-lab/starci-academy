@@ -3,8 +3,9 @@
 import React from "react"
 import { Spacer } from "@heroui/react"
 import { BracketsCurlyIcon, ClockIcon } from "@phosphor-icons/react"
-import type { ModuleEntity } from "@/modules/types"
 import { useTranslations } from "next-intl"
+import { useAppSelector } from "@/redux"
+import { useQueryCourseSwr } from "@/hooks/singleton"
 import {
     StarCiAccordion,
     StarCiAccordionItem,
@@ -13,18 +14,11 @@ import {
 } from "@/components/atomic"
 import _ from "lodash"
 
-export interface ModulesProps {
-    modules?: Array<ModuleEntity>
-    isLoading: boolean
-}
-
-export const Modules = ({ modules, isLoading }: ModulesProps) => {
+export const Modules = () => {
+    const modules = useAppSelector((state) => state.course.entity?.modules)
+    const { isLoading } = useQueryCourseSwr()
     const list = modules ?? []
     const t = useTranslations()
-    if (!isLoading && list.length === 0) {
-        return null
-    }
-
     return (
         <div>
             {isLoading ? (
@@ -77,7 +71,7 @@ export const Modules = ({ modules, isLoading }: ModulesProps) => {
                                                             <span
                                                                 dangerouslySetInnerHTML={{
                                                                     __html:
-                                                                        content.data,
+                                                                        content.text,
                                                                 }}
                                                             />
                                                         </div>

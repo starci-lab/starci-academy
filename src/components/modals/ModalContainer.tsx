@@ -3,6 +3,7 @@ import { AuthenticationModal } from "./AuthenticationModal"
 import { ChallengeModal } from "./ChallengeModal"
 import { ChallengeSubmissionModal } from "./ChallengeSubmissionModal"
 import { ContentModal } from "./ContentModal"
+import { LessonVideoModal } from "./LessonVideoModal"
 import { PaymentModal } from "./PaymentModal"
 
 export const ModalContainer = () => {
@@ -11,6 +12,7 @@ export const ModalContainer = () => {
             <AuthenticationModal />
             <PaymentModal />
             <ContentModal />
+            <LessonVideoModal />
             <ChallengeModal />
             <ChallengeSubmissionModal />
         </>

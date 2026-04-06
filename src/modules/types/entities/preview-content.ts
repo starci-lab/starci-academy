@@ -5,8 +5,8 @@ import type { ModuleEntity } from "./module"
  * One preview content line item in a module.
  */
 export interface PreviewContentEntity extends AbstractEntity {
-    /** The body of the preview line item (HTML or plain text). */
-    data: string
+    /** The text of the preview line item (HTML or plain text). */
+    text: string
     /** Display order within the module preview list. */
     orderIndex: number
     /** Parent module. */

@@ -12,7 +12,7 @@ import {
 import { MarkdownContent, ReferenceLinks } from "@/components/reuseable"
 import { useChallengeDisclosure } from "@/hooks/singleton"
 import { ChallengeDifficulty } from "@/modules/types"
-import { ListNumbersIcon, TrophyIcon } from "@phosphor-icons/react"
+import { ListNumbersIcon, SwordIcon, TrophyIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { Spacer } from "@heroui/react"
 import { useAppSelector } from "@/redux"
@@ -54,33 +54,36 @@ export const ChallengeModal = () => {
                     title={challenge?.title ?? ""}
                     description={
                         <div className="flex flex-wrap justify-center gap-2">
-                            <StarCiChip
-                                startContent={<TrophyIcon className="size-4" />}
-                                color="primary"
-                                size="sm"
-                                variant="flat"
-                            >
-                                {t("challenge.score", {
-                                    score: challenge?.score ?? 0,
-                                })}
-                            </StarCiChip>
-                            <StarCiChip
-                                color="secondary"
-                                size="sm"
-                                variant="flat"
-                            >
-                                {t(challengeDifficultyMessageKey(challenge?.difficulty))}
-                            </StarCiChip>
-                            <StarCiChip
-                                startContent={<ListNumbersIcon className="size-4" />}
-                                color="warning"
-                                size="sm"
-                                variant="flat"
-                            >
-                                {t("challenge.steps.count", {
-                                    count: steps.length,
-                                })}
-                            </StarCiChip>
+                            <div className="flex flex-wrap gap-2">
+                                <StarCiChip
+                                    startContent={<TrophyIcon className="size-5" />}
+                                    color="secondary"
+                                    size="sm"
+                                    variant="flat"
+                                >
+                                    {t("challenge.score", {
+                                        score: challenge?.score ?? 0,
+                                    })}
+                                </StarCiChip>
+                                <StarCiChip
+                                    startContent={<SwordIcon className="size-5" />}
+                                    color="danger"
+                                    size="sm"
+                                    variant="flat"
+                                >
+                                    {t(challengeDifficultyMessageKey(challenge?.difficulty))}
+                                </StarCiChip>
+                                <StarCiChip
+                                    startContent={<ListNumbersIcon className="size-5" />}
+                                    color="warning"
+                                    size="sm"
+                                    variant="flat"
+                                >
+                                    {t("challenge.steps.count", {
+                                        count: steps.length,
+                                    })}
+                                </StarCiChip>
+                            </div>
                         </div>
                     }
                 />

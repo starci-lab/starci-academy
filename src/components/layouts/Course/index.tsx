@@ -2,7 +2,6 @@
 import React from "react"
 import { Link, Spacer } from "@heroui/react"
 import { BookOpenIcon, LightbulbFilamentIcon, PencilSimpleLineIcon, WarningCircleIcon } from "@phosphor-icons/react"
-import { CourseEntity } from "@/modules/types"
 import { 
     StarCiAlert, 
     StarCiBreadcrumb, 
@@ -22,16 +21,6 @@ import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { useAppSelector } from "@/redux"
 import { pathConfig } from "@/resources"
-
-/**
- * The props for the Course component.
- */
-export interface CourseProps {
-    /** The course. */
-    course?: CourseEntity
-    /** The loading state. */
-    isLoading: boolean
-}
 
 export const Course = () => {
     const { onOpen } = usePaymentDisclosure()
@@ -104,7 +93,7 @@ export const Course = () => {
                                 <ul className="list-disc list-inside text-warning text-start w-full">
                                     {course?.prerequisites?.map((prerequisite) => (
                                         <li key={prerequisite.id} className="text-sm text-warning">
-                                            <span dangerouslySetInnerHTML={{ __html: prerequisite.content ?? "" }} />
+                                            <span dangerouslySetInnerHTML={{ __html: prerequisite.text ?? "" }} />
                                         </li>
                                     ))}
                                 </ul>
@@ -112,18 +101,15 @@ export const Course = () => {
                         }
                     </StarCiAlert>
                     <Spacer y={12} />
-                    <Modules modules={course?.modules} isLoading={isLoading} />
+                    <Modules />
                     <Spacer y={12} />
-                    <QnA qnas={course?.qnas} isLoading={isLoading} />
+                    <QnA />
                 </div>
                 <StarCiCard className="order-1 md:order-2 md:col-span-2 bg-inherit border border-divider h-fit">
                     <StarCiCardBody>
-                        {course ? <Stepper course={course} /> : null}
+                        <Stepper />
                         <Spacer y={6} />
-                        <ValuePropositions
-                            valuePropositions={course?.valuePropositions}
-                            isLoading={isLoading}
-                        />
+                        <ValuePropositions />
                     </StarCiCardBody>
                     <StarCiCardFooter>
                         <div className="w-full">

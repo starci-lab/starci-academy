@@ -6,6 +6,7 @@ import {
     useChallengeDisclosureCore,
     useChallengeSubmissionDisclosureCore,
     useContentDisclosureCore,
+    useLessonVideoDisclosureCore,
     usePaymentDisclosureCore,
 } from "./core"
 
@@ -13,6 +14,7 @@ export interface DiscloresureContextType {
     authentication: ReturnType<typeof useAuthenticationDisclosureCore>
     payment: ReturnType<typeof usePaymentDisclosureCore>
     content: ReturnType<typeof useContentDisclosureCore>
+    lessonVideo: ReturnType<typeof useLessonVideoDisclosureCore>
     challenge: ReturnType<typeof useChallengeDisclosureCore>
     challengeSubmission: ReturnType<typeof useChallengeSubmissionDisclosureCore>
 }
@@ -23,18 +25,21 @@ export const DiscloresureProvider = ({ children }: PropsWithChildren) => {
     const authentication = useAuthenticationDisclosureCore()
     const payment = usePaymentDisclosureCore()
     const content = useContentDisclosureCore()
+    const lessonVideo = useLessonVideoDisclosureCore()
     const challenge = useChallengeDisclosureCore()
     const challengeSubmission = useChallengeSubmissionDisclosureCore()
     const value = useMemo(() => ({
         authentication,
         payment,
         content,
+        lessonVideo,
         challenge,
         challengeSubmission,
     }), [
         authentication,
         payment,
         content,
+        lessonVideo,
         challenge,
         challengeSubmission,
     ])

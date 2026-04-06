@@ -1,6 +1,7 @@
-import React, { useMemo } from "react"
+"use client"
+
+import React, { useCallback, useMemo } from "react"
 import {
-    CourseEntity,
     PricingPhase,
     PricingPhaseEntity,
 } from "@/modules/types"
@@ -10,29 +11,8 @@ import { Divider, Spacer } from "@heroui/react"
 import Decimal from "decimal.js"
 import { StarCiChip, StarCiTooltip } from "@/components/atomic"
 import { computePercentage } from "@/modules/utils"
-
-/**
- * Display price for a tier: `regular` when set; Regular tier falls back to course list price.
- */
-const pricingPhaseDisplayPrice = (
-    pricingPhase: PricingPhaseEntity,
-    course: CourseEntity
-): number => {
-    if (pricingPhase.price != null) {
-        return pricingPhase.price
-    }
-    if (pricingPhase.phase === PricingPhase.Regular) {
-        return course.originalPrice ?? 0
-    }
-    return 0
-}
-
-/**
- * The props for the Stepper component.
- */
-export interface StepperProps {
-    course: CourseEntity
-}
+import { useAppSelector } from "@/redux"
+import _ from "lodash"
 
 /**
  * The data for a pricing phase.
@@ -47,14 +27,36 @@ export interface PricingPhaseData {
 /**
  * The Stepper component.
  */
-export const Stepper = ({ course }: StepperProps) => {
+export const Stepper = () => {
+    /**
+     * The course entity.
+     */
+    const course = useAppSelector((state) => state.course.entity)
+    /**
+    * Display price for a tier: `regular` when set; Regular tier falls back to course list price.
+    */
+    const pricingPhaseDisplayPrice = useCallback(
+        (
+            pricingPhase: PricingPhaseEntity,
+        ): number => {
+            if (pricingPhase.price != null) {
+                return pricingPhase.price
+            }
+            if (pricingPhase.phase === PricingPhase.Regular) {
+                return course?.originalPrice ?? 0
+            }
+            return course?.originalPrice ?? 0
+        }, []
+    )
+    /**
+     * The pricing phases.
+     */
     const pricingPhases = useMemo(() => {
-        return [...(course.pricingPhases ?? [])].sort(
-            (previous, current) => previous.orderIndex - current.orderIndex
-        )
-    }, [course.pricingPhases])
+        return _.cloneDeep(course?.pricingPhases ?? []).sort(
+            (prev, next) => prev.orderIndex - next.orderIndex)
+    }, [course])
 
-    const listPrice = course.originalPrice ?? 0
+    const listPrice = course?.originalPrice ?? 0
 
     const phaseData: Record<PricingPhase, PricingPhaseData> = React.useMemo(
         () => {
@@ -65,24 +67,35 @@ export const Stepper = ({ course }: StepperProps) => {
             }
         }, [])
 
-    const currentPhase = course.currentPhase ?? PricingPhase.Pioneer
+    const currentPhase = course?.currentPhase ?? PricingPhase.Pioneer
 
-    const calculateDiscount = (tierPrice: number, refPrice: number): number => {
-        if (refPrice <= 0 || tierPrice >= refPrice) return 0
-        const discount = new Decimal(refPrice)
-            .minus(tierPrice)
-            .dividedBy(refPrice)
-            .times(100)
-        return discount.toNumber()
-    }
+    /**
+     * Calculate the discount for a pricing phase.
+     */
+    const calculateDiscount = useCallback(
+        (tierPrice: number, refPrice: number): number => {
+            if (refPrice <= 0 || tierPrice >= refPrice) return 0
+            const discount = new Decimal(refPrice)
+                .minus(tierPrice)
+                .dividedBy(refPrice)
+                .times(100)
+            return discount.toNumber()
+        }, []
+    )
 
-    const segmentCount = Math.max(1, pricingPhases.length - 1)
-    
-    const currentPhaseData = course.pricingPhases?.find(phase => phase.phase === currentPhase)
+    /**
+     * The segment count.
+     */
+    const segmentCount = useMemo(() => {
+        return Math.max(1, pricingPhases.length - 1)
+    }, [pricingPhases])
 
-    if (pricingPhases.length === 0) {
-        return null
-    }
+    /**
+     * The current phase data.
+     */
+    const currentPhaseData = useMemo(() => {
+        return course?.pricingPhases?.find(phase => phase.phase === currentPhase)
+    }, [course, currentPhase])
 
     return (
         <div>
@@ -130,10 +143,9 @@ export const Stepper = ({ course }: StepperProps) => {
 
                                                 <motion.div
                                                     initial={false}
-                                                    className={`cursor-pointer rounded-full relative z-10 ${
-                                                        isPast || isCurrent
-                                                            ? "bg-primary"
-                                                            : "bg-foreground-500"
+                                                    className={`cursor-pointer rounded-full relative z-10 ${isPast || isCurrent
+                                                        ? "bg-primary"
+                                                        : "bg-foreground-500"
                                                     }`}
                                                     animate={
                                                         isCurrent
@@ -181,20 +193,19 @@ export const Stepper = ({ course }: StepperProps) => {
                             return (
                                 <div key={pricingPhase.id} className="flex-1 flex flex-col items-center">
                                     <div className="text-center text-sm font-medium text-foreground-500">
-                                        {numeral(pricingPhaseDisplayPrice(pricingPhase, course)).format("0,0")}
+                                        {numeral(pricingPhaseDisplayPrice(pricingPhase)).format("0,0")}
                                     </div>
                                     <Spacer y={1} />
                                     {
                                         pricingPhase.price != null && (
                                             <StarCiChip color="primary" size="sm" variant="flat">
-                                                {`Save ${
-                                                    computePercentage(
-                                                        { 
-                                                            numerator: new Decimal(calculateDiscount(pricingPhaseDisplayPrice(pricingPhase, course), listPrice)), 
-                                                            denominator: new Decimal(100),
-                                                            fractionDigits: 2
-                                                        }
-                                                    ).toNumber()
+                                                {`Save ${computePercentage(
+                                                    {
+                                                        numerator: new Decimal(calculateDiscount(pricingPhaseDisplayPrice(pricingPhase), listPrice)),
+                                                        denominator: new Decimal(100),
+                                                        fractionDigits: 2
+                                                    }
+                                                ).toNumber()
                                                 }%`
                                                 }
                                             </StarCiChip>

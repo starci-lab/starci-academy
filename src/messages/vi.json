@@ -26,7 +26,8 @@
   "lesson": {
     "videos": "Bài giảng",
     "videosCount": "{count} bài giảng trong học phần này",
-    "videosAria": "{count} bài giảng trong học phần này"
+    "videosAria": "{count} bài giảng trong học phần này",
+    "videoUnavailable": "Không thể phát video này."
   },
   "content": {
     "title": "Nội dung",

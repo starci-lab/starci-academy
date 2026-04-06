@@ -26,7 +26,8 @@
   "lesson": {
     "videos": "Videos",
     "videosCount": "{count} videos",
-    "videosAria": "{count} videos"
+    "videosAria": "{count} videos",
+    "videoUnavailable": "This video is not available."
   },
   "content": {
     "title": "Content",

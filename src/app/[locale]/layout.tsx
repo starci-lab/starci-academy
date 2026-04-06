@@ -11,8 +11,9 @@ const font = Open_Sans({
 
 export default async function LocaleLayout({
     children,
-    params: { locale }
-}: PropsWithChildren & { params: { locale: string } }) {
+    params,
+}: PropsWithChildren & { params: Promise<{ locale: string }> }) {
+    const { locale } = await params;
     const messages = await getMessages()
 
     return (

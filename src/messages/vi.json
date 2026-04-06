@@ -62,7 +62,8 @@
       "yourScore": "Điểm: {score}",
       "yourScoreLabel": "Điểm của bạn",
       "scoreFraction": "{earned}/{max}",
-      "attempts": "Số lần thử: {count}"
+      "attempts": "Số lần thử: {count}",
+      "submit": "Nộp bài"
     }
   },
   "leaderboard": {

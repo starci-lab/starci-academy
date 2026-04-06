@@ -17,6 +17,7 @@ const query1 = gql`
         slug
         description
         cdnUrl
+        coverImageUrl
         originalPrice
         currentPhase
         pricingPhases {
@@ -28,12 +29,12 @@ const query1 = gql`
         }
         prerequisites {
           id
-          content
+          text
           orderIndex
         }
         valuePropositions {
           id
-          content
+          text
           orderIndex
         }
         modules {
@@ -45,7 +46,7 @@ const query1 = gql`
           previewContents {
             id
             orderIndex
-            data
+            
           }
         }
         qnas {

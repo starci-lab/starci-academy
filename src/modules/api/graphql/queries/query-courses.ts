@@ -27,10 +27,13 @@ const query1 = gql`
           id
           createdAt
           updatedAt
+          displayId
           title
           slug
           description
           cdnUrl
+          coverImageUrl
+          originalPrice
         }
       }
     }

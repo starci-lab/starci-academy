@@ -46,7 +46,7 @@ export const Navbar = () => {
                     </StarCiLink>
                 </StarCiNavbarItem>
                 <StarCiNavbarItem>
-                    <StarCiLink color="foreground" href="#">
+                    <StarCiLink color="foreground" onPress={() => router.push(pathConfig().locale(locale).contact().build())}>
                         {t("nav.contact")}
                     </StarCiLink>
                 </StarCiNavbarItem>

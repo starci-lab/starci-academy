@@ -62,7 +62,8 @@
       "yourScore": "Score: {score}",
       "yourScoreLabel": "Your score",
       "scoreFraction": "{earned}/{max}",
-      "attempts": "Attempts: {count}"
+      "attempts": "Attempts: {count}",
+      "submit": "Submit"
     }
   },
   "leaderboard": {
@@ -141,4 +142,3 @@
     "disabled": "Disabled"
   }
 }
-

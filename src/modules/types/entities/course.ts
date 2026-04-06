@@ -21,6 +21,8 @@ export interface CourseEntity extends AbstractEntity {
     description: string | null
     /** The CDN URL of the course. */
     cdnUrl: string | null
+    /** The cover image URL of the course. */
+    coverImageUrl: string | null
     /**
      * List / Regular (niêm yết) price. Tier Regular in `pricingPhases` has `regular: null` — use this.
      */

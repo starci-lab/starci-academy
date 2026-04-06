@@ -81,11 +81,21 @@ export const pathConfig = () => {
                 learn,
             }
         }
+        const contact = () => {
+            const contactPath = `${localePath}/contact`
+            const build = () => {
+                return contactPath
+            }
+            return {
+                build,
+            }
+        }
         return {
             build,
             course,
             profile,
             authentication,
+            contact,
         }
     }
     return {

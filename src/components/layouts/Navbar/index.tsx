@@ -4,10 +4,6 @@ import {
     useAuthenticationDisclosure, 
     useKeycloak 
 } from "@/hooks/singleton"
-import React from "react"
-import { useTranslations } from "next-intl"
-import { AuthenticatedDropdown } from "./AuthenticatedDropdown"
-import { useAppSelector } from "@/redux"
 import { 
     StarCiAvatar, 
     StarCiButton, 
@@ -15,12 +11,15 @@ import {
     StarCiNavbar, 
     StarCiNavbarBrand, 
     StarCiNavbarContent, 
-    StarCiNavbarItem 
-} from "@/components/atomic"
+    StarCiNavbarItem } from "@/components/atomic"
 import { UserIcon } from "@phosphor-icons/react"
-import { useRouter } from "next/navigation"
+import { useLocale, useTranslations } from "next-intl"
+import { usePathname, useRouter } from "@/i18n/navigation"
+import { AuthenticatedDropdown } from "./AuthenticatedDropdown"
+import { useAppSelector } from "@/redux"
 import { pathConfig } from "@/resources/path"
-import { useLocale } from "next-intl"
+import { MultiLanguageDropdown } from "../MultiLanguageDropdown"
+import { DarkLightModeSwitch } from "../DarkLightMode"
 
 export const Navbar = () => {
     const { onOpenChange } = useAuthenticationDisclosure()
@@ -28,6 +27,7 @@ export const Navbar = () => {
     const t = useTranslations()
     const user = useAppSelector((state) => state.user.user)
     const router = useRouter()
+    const pathname = usePathname()
     const locale = useLocale()
     return (
         <StarCiNavbar shouldHideOnScroll>
@@ -36,22 +36,28 @@ export const Navbar = () => {
             </StarCiNavbarBrand>
             <StarCiNavbarContent className="hidden sm:flex gap-4" justify="center">
                 <StarCiNavbarItem>
-                    <StarCiLink color="foreground" onPress={() => router.push(pathConfig().locale(locale).build())}>
+                    <StarCiLink color="foreground" onPress={() => router.push(pathConfig().locale().build())}>
                         {t("nav.home")}
                     </StarCiLink>
                 </StarCiNavbarItem>
                 <StarCiNavbarItem isActive>
-                    <StarCiLink aria-current="page" onPress={() => router.push(pathConfig().locale(locale).course().build())}>
+                    <StarCiLink aria-current="page" onPress={() => router.push(pathConfig().locale().course().build())}>
                         {t("nav.courses")}
                     </StarCiLink>
                 </StarCiNavbarItem>
                 <StarCiNavbarItem>
-                    <StarCiLink color="foreground" onPress={() => router.push(pathConfig().locale(locale).contact().build())}>
+                    <StarCiLink color="foreground" onPress={() => router.push(pathConfig().locale().contact().build())}>
                         {t("nav.contact")}
                     </StarCiLink>
                 </StarCiNavbarItem>
             </StarCiNavbarContent>
             <StarCiNavbarContent justify="end">
+                <StarCiNavbarItem>
+                    <DarkLightModeSwitch />
+                </StarCiNavbarItem>
+                <StarCiNavbarItem>
+                    <MultiLanguageDropdown />
+                </StarCiNavbarItem>
                 {keycloak?.isLoading ? (
                     <StarCiButton 
                         isIconOnly

@@ -7,7 +7,8 @@
     "logout": "Đăng xuất",
     "profile": "Hồ sơ",
     "signIn": "Đăng nhập",
-    "learn": "Học"
+    "learn": "Học",
+    "toggleLanguage": "Chuyển đổi ngôn ngữ"
   },
   "courses": {
     "featuredTitle": "Khóa học tiêu biểu",
@@ -141,6 +142,23 @@
   },
   "common": {
     "disabled": "Tạm tắt"
+  },
+  "home": {
+    "intro": "Khóa học IT trên mạng tràn lan, nhưng nội dung cô đọng và đi vào tư duy thực chiến lại rất ít.",
+    "intro2": "StarCi Academy được thành lập ra để thay đổi điều đó.",
+    "intro3": "Chúng tớ tập trung xây dựng tư duy lập trình - từ Fullstack, DevOps, Security đến Solution Architect - với lộ trình rõ ràng và thực tế.",
+    "diff": {
+      "title": "Điều gì làm cho StarCi Academy khác biệt?",
+      "des1": "StarCi Academy tập trung vào bản chất của ngành IT. Chúng tớ không chỉ dạy kiến thức mà còn đào tạo tư duy lập trình chuẩn mực và khả năng thiết kế hệ thống - những năng lực cốt lõi giúp bạn phát triển bền vững trong thời đại AI.",
+      "des2": "Tư duy trước stack",
+      "des3": "Công nghệ thay đổi liên tục và kiến thức thì ở khắp nơi. Chúng tớ tập trung dạy bản chất, keyword và tư duy để sau khóa bạn tự research, đọc docs và mở rộng theo bất kỳ stack nào.",
+      "des4": "Chi phí tối thiểu, tiêu chuẩn cao",
+      "des5": "StarCi Academy vận hành theo mô hình tinh gọn, loại bỏ các chi phí không cần thiết để giữ học phí ở mức dễ tiếp cận. Mục tiêu của chúng tớ là tạo ra một môi trường học tập chất lượng cao mà bất kỳ ai nghiêm túc với nghề đều có thể tham gia.",
+      "des6": "Chúng tớ dạy để bạn xây dựng những project có giá trị thực sự và hỗ trợ lâu dài trong quá trình phát triển sự nghiệp."
+    }
+  },
+  "languages": {
+    "en": "Tiếng Anh",
+    "vi": "Tiếng Việt"
   }
 }
-

@@ -1,18 +1,17 @@
-import React from "react"
-import { 
-    StarCiDropdown, 
-    StarCiDropdownMenu, 
-    StarCiDropdownItem, 
-    StarCiDropdownTrigger, 
-    StarCiAvatar,
-    StarCiDropdownSection
-} from "../../../atomic"
+import { useKeycloak } from "@/hooks/singleton"
+import { useRouter } from "@/i18n/navigation"
 import { useAppSelector } from "@/redux"
+import { pathConfig } from "@/resources/path"
 import { SignOutIcon, UserIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import { useRouter } from "next/navigation"
-import { useKeycloak } from "@/hooks/singleton"
-import { pathConfig } from "@/resources/path"
+import {
+    StarCiAvatar,
+    StarCiDropdown,
+    StarCiDropdownItem,
+    StarCiDropdownMenu,
+    StarCiDropdownSection,
+    StarCiDropdownTrigger
+} from "../../../atomic"
 
 /**
  * AuthenticatedDropdown is a dropdown component that is used to display the authenticated user's information.

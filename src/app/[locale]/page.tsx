@@ -1,9 +1,9 @@
 "use client"
-import React from "react"
 import { motion } from "framer-motion"
 import { Courses } from "@/components/layouts"
 import { Image, Link, Spacer } from "@heroui/react"
 import { FacebookLogoIcon, GithubLogoIcon, QuotesIcon } from "@phosphor-icons/react"
+import { useTranslations } from "next-intl"
 
 const fadeInUp = {
     initial: { opacity: 0, y: 16 },
@@ -12,6 +12,7 @@ const fadeInUp = {
 }
 
 const Page = () => {
+    const t = useTranslations()
     return (
         <div>
             <Spacer y={20} />
@@ -26,9 +27,9 @@ const Page = () => {
                         <QuotesIcon size={20} className="text-foreground-500" />
                         <Spacer y={2} />
                         <div className="text-sm text-foreground-500 flex flex-col gap-1 italic text-justify">
-                            <div>Khóa học IT trên mạng tràn lan, nhưng nội dung cô đọng và đi vào tư duy thực chiến lại rất ít.</div>
-                            <div>StarCi Academy được thành lập ra để thay đổi điều đó.</div>
-                            <div>Chúng tớ tập trung xây dựng tư duy lập trình - từ Fullstack, DevOps, Security đến Solution Architect - với lộ trình rõ ràng và thực tế.</div>
+                            <div>{t("home.intro")}</div>
+                            <div>{t("home.intro2")}</div>
+                            <div>{t("home.intro3")}</div>
                         </div >
                         <Spacer y={2} />
                         <div className="text-sm text-secondary italic">Nguyen Van Tu Cuong, Founder & Core Instructor </div>
@@ -54,7 +55,7 @@ const Page = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
             >
-                <div className="text-2xl font-bold flex gap-1">Điều gì làm cho StarCi Academy khác biệt?</div>
+                <div className="text-2xl font-bold flex gap-1">{t("home.diff.title")}</div>
             </motion.div>
             <Spacer y={6} />
             <motion.div
@@ -63,7 +64,7 @@ const Page = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.15, ease: "easeOut" }}
             >
-                StarCi Academy tập trung vào bản chất của ngành IT. Chúng tớ không chỉ dạy kiến thức mà còn đào tạo tư duy lập trình chuẩn mực và khả năng thiết kế hệ thống - những năng lực cốt lõi giúp bạn phát triển bền vững trong thời đại AI.
+                {t("home.diff.des1")}
             </motion.div>
             <Spacer y={24} />
             <motion.div
@@ -74,11 +75,10 @@ const Page = () => {
             >
                 <Image removeWrapper src="/1.png" alt="1" className="col-span-2"/>
                 <div className="col-span-3">
-                    <div className="text-xl font-bold flex gap-1">Tư duy trước stack</div>
+                    <div className="text-xl font-bold flex gap-1">{t("home.diff.des2")}</div>
                     <Spacer y={4} />
                     <div className="text-sm text-foreground-500 text-justify">
-                    Công nghệ thay đổi liên tục và kiến thức thì ở khắp nơi. Chúng tớ tập trung dạy bản chất, keyword và tư duy
-                    để sau khóa bạn tự research, đọc docs và mở rộng theo bất kỳ stack nào.
+                    {t("home.diff.des3")}
                     </div>
                 </div>
             </motion.div>
@@ -97,12 +97,11 @@ const Page = () => {
                 />
                 <div className="col-span-1 sm:col-span-3 order-2 sm:order-1">
                     <div className="text-xl font-bold">
-      Chi phí tối thiểu, tiêu chuẩn cao
+      {t("home.diff.des4")}
                     </div>
                     <Spacer y={4} />
                     <div className="text-sm text-foreground-500 text-justify">
-      StarCi Academy vận hành theo mô hình tinh gọn, loại bỏ các chi phí không cần thiết để giữ học phí ở mức dễ tiếp cận.
-      Mục tiêu của chúng tớ là tạo ra một môi trường học tập chất lượng cao mà bất kỳ ai nghiêm túc với nghề đều có thể tham gia.
+      {t("home.diff.des5")}
                     </div>
                 </div>
             </motion.div>
@@ -118,7 +117,7 @@ const Page = () => {
                     <div className="text-xl font-bold flex gap-1">From Code to Career</div>
                     <Spacer y={4} />
                     <div className="text-sm text-foreground-500 text-justify">
-                    Chúng tớ dạy để bạn xây dựng những project có giá trị thực sự và hỗ trợ lâu dài trong quá trình phát triển sự nghiệp.
+                    {t("home.diff.des6")}
                     </div>
                 </div>
             </motion.div>

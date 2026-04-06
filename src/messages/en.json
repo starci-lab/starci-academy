@@ -7,7 +7,8 @@
     "logout": "Logout",
     "profile": "Profile",
     "signIn": "Sign In",
-    "learn": "Learn"
+    "learn": "Learn",
+    "toggleLanguage": "Toggle Language"
   },
   "courses": {
     "featuredTitle": "Featured courses",
@@ -140,5 +141,23 @@
   },
   "common": {
     "disabled": "Disabled"
+  },
+  "home": {
+    "intro": "IT courses are everywhere online, but content that is concise and focuses on practical thinking is rare.",
+    "intro2": "StarCi Academy was founded to change that.",
+    "intro3": "We focus on building programming thinking - from Fullstack, DevOps, Security to Solution Architect - with a clear and practical roadmap.",
+    "diff": {
+      "title": "What makes StarCi Academy different?",
+      "des1": "StarCi Academy focuses on the essence of the IT industry. We don't just teach knowledge, but also train standard programming thinking and system design skills - core competencies that help you develop sustainably in the AI era.",
+      "des2": "Thinking before stack",
+      "des3": "Technology changes constantly and knowledge is everywhere. We focus on teaching the fundamentals, keywords, and thinking skills so that after the course, you can research, read docs, and expand on any stack you want.",
+      "des4": "Low cost, high standard",
+      "des5": "StarCi Academy operates on a lean model, eliminating unnecessary costs to keep tuition affordable. Our goal is to create a high-quality learning environment that anyone serious about the profession can join.",
+      "des6": "We teach you to build truly valuable projects and provide long-term support throughout your career development."
+    }
+  },
+  "languages": {
+    "en": "English",
+    "vi": "Vietnamese"
   }
 }

@@ -7,7 +7,6 @@ import {
     DropdownSection,
     DropdownMenuProps,
 } from "@heroui/react"
-import React from "react"
 
 export const StarCiDropdown = Dropdown
 export const StarCiDropdownTrigger = DropdownTrigger

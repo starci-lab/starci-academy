@@ -14,6 +14,7 @@ import {
     useQueryCoursesSwrCore,
     useQueryLessonVideoSwrCore,
     useQueryLessonVideosSwrCore,
+    useQueryLivestreamSessionsSwrCore,
     useQueryUserSwrCore,
     useQueryModuleSwrCore,
     useQueryChallengeSubmissionsSwrCore,
@@ -33,6 +34,7 @@ export interface SwrContextType {
     queryChallengeSwr: ReturnType<typeof useQueryChallengeSwrCore>;
     queryContentsSwr: ReturnType<typeof useQueryContentsSwrCore>;
     queryLessonVideosSwr: ReturnType<typeof useQueryLessonVideosSwrCore>;
+    queryLivestreamSessionsSwr: ReturnType<typeof useQueryLivestreamSessionsSwrCore>;
     queryChallengesSwr: ReturnType<typeof useQueryChallengesSwrCore>;
     queryChallengeSubmissionsSwr: ReturnType<typeof useQueryChallengeSubmissionsSwrCore>;
 }
@@ -55,6 +57,7 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
     const queryChallengeSwr = useQueryChallengeSwrCore()
     const queryContentsSwr = useQueryContentsSwrCore()
     const queryLessonVideosSwr = useQueryLessonVideosSwrCore()
+    const queryLivestreamSessionsSwr = useQueryLivestreamSessionsSwrCore()
     const queryChallengesSwr = useQueryChallengesSwrCore()
     const queryChallengeSubmissionsSwr = useQueryChallengeSubmissionsSwrCore()
     const values = useMemo(
@@ -72,6 +75,7 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
             queryChallengeSwr,
             queryContentsSwr,
             queryLessonVideosSwr,
+            queryLivestreamSessionsSwr,
             queryChallengesSwr,
             queryChallengeSubmissionsSwr,
         }),
@@ -89,6 +93,7 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
             queryChallengeSwr,
             queryContentsSwr,
             queryLessonVideosSwr,
+            queryLivestreamSessionsSwr,
             queryChallengesSwr,
             queryChallengeSubmissionsSwr,
         ]

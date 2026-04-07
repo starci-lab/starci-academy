@@ -160,5 +160,49 @@
   "languages": {
     "en": "English",
     "vi": "Vietnamese"
+  },
+  "videoHostPlatform": {
+    "youtube": "YouTube",
+    "googleDrive": "Google Drive",
+    "vimeo": "Vimeo",
+    "cloudflareStream": "Cloudflare Stream"
+  },
+  "lessonVideoKind": {
+    "rawStream": {
+      "label": "Raw Stream",
+      "tooltip": "Original unedited stream. Full content, but may be rough and not fully optimized for viewing."
+    },
+    "editedStream": {
+      "label": "Edited Stream",
+      "tooltip": "Edited version with trimmed content, clearer structure, and improved viewing experience."
+    },
+    "premiumRecord": {
+      "label": "Premium Record",
+      "tooltip": "Highest quality version with polished visuals, audio, and an optimized learning experience."
+    }
+  },
+  "livestream": {
+    "calendar": {
+      "title": "Livestream calendar",
+      "subtitle": "Join the upcoming livestream sessions",
+      "button": "View schedule",
+      "nextSession": "Next: {day} {time}, {date}",
+      "countdown": "Starts in {days}d {hours}h {minutes}m {seconds}s",
+      "modalTitle": "Livestream schedule",
+      "modalDescription": "Recurring weekly slots. Available weekdays are highlighted in the calendar.",
+      "empty": "No livestream sessions configured.",
+      "sessionTime": "{start} – {end}",
+      "nextOn": "Next: {date}",
+      "aria": "Course livestream calendar",
+      "days": {
+        "sunday": "Sunday",
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wednesday": "Wednesday",
+        "thursday": "Thursday",
+        "friday": "Friday",
+        "saturday": "Saturday"
+      }
+    }
   }
 }

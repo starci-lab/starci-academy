@@ -11,12 +11,18 @@ const query1 = gql`
       error
       data {
         id
+        createdAt
+        updatedAt
+        displayId
         title
         description
+        kind
+        caption
+        hostPlatform
         url
+        thumbnailUrl
         durationMs
         orderIndex
-        thumbnailUrl
       }
     }
   }

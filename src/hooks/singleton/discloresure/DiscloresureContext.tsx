@@ -6,6 +6,7 @@ import {
     useChallengeDisclosureCore,
     useChallengeSubmissionDisclosureCore,
     useContentDisclosureCore,
+    useLivestreamCalendarDisclosureCore,
     useLessonVideoDisclosureCore,
     usePaymentDisclosureCore,
 } from "./core"
@@ -14,6 +15,7 @@ export interface DiscloresureContextType {
     authentication: ReturnType<typeof useAuthenticationDisclosureCore>
     payment: ReturnType<typeof usePaymentDisclosureCore>
     content: ReturnType<typeof useContentDisclosureCore>
+    livestreamCalendar: ReturnType<typeof useLivestreamCalendarDisclosureCore>
     lessonVideo: ReturnType<typeof useLessonVideoDisclosureCore>
     challenge: ReturnType<typeof useChallengeDisclosureCore>
     challengeSubmission: ReturnType<typeof useChallengeSubmissionDisclosureCore>
@@ -25,6 +27,7 @@ export const DiscloresureProvider = ({ children }: PropsWithChildren) => {
     const authentication = useAuthenticationDisclosureCore()
     const payment = usePaymentDisclosureCore()
     const content = useContentDisclosureCore()
+    const livestreamCalendar = useLivestreamCalendarDisclosureCore()
     const lessonVideo = useLessonVideoDisclosureCore()
     const challenge = useChallengeDisclosureCore()
     const challengeSubmission = useChallengeSubmissionDisclosureCore()
@@ -32,6 +35,7 @@ export const DiscloresureProvider = ({ children }: PropsWithChildren) => {
         authentication,
         payment,
         content,
+        livestreamCalendar,
         lessonVideo,
         challenge,
         challengeSubmission,
@@ -39,6 +43,7 @@ export const DiscloresureProvider = ({ children }: PropsWithChildren) => {
         authentication,
         payment,
         content,
+        livestreamCalendar,
         lessonVideo,
         challenge,
         challengeSubmission,

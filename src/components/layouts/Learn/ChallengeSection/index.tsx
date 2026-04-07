@@ -27,7 +27,7 @@ export const ChallengeSection = () => {
                     {t("challenge.count", { count: challenges?.length ?? 0 })}
                 </div>
             )}
-            <Spacer y={6} />
+            <Spacer y={3} />
             {isLoading || !challenges ? (
                 <div className="flex flex-col gap-3 w-full">
                     {Array.from({ length: 3 }).map((_, index) => (

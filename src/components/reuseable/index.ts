@@ -1,3 +1,6 @@
 export * from "./QRCode"
 export * from "./MarkdownContent"
 export * from "./ReferenceLinks"
+export * from "./HostPlatformChip"
+export * from "./LessonVideoKindChip"
+export * from "./VideoRenderer"

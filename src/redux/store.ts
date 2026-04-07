@@ -8,6 +8,7 @@ import {
     contentReducer,
     challengeReducer,
     lessonVideoReducer,
+    livestreamSessionReducer,
 } from "./slices"
 
 export const store = configureStore({
@@ -20,6 +21,7 @@ export const store = configureStore({
         content: contentReducer,
         challenge: challengeReducer,
         lessonVideo: lessonVideoReducer,
+        livestreamSession: livestreamSessionReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false,

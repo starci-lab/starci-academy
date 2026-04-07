@@ -1,3 +1,4 @@
+export * from "./day-of-week"
 export * from "./challenge-difficulty"
 export * from "./submission-type"
 export * from "./resource-type"

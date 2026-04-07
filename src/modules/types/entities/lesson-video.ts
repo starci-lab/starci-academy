@@ -1,22 +1,43 @@
 import type { AbstractEntity } from "./abstract"
+import type { LessonVideoKind, VideoHostPlatform } from "../enums"
+import type { LessonVideoTranslationEntity } from "./lesson-video-translation"
 import type { ModuleEntity } from "./module"
 
 /**
  * Video link and metadata attached to a module.
+ *
+ * Mirrors Nest `LessonVideoEntity` / table `lesson_videos`.
  */
 export interface LessonVideoEntity extends AbstractEntity {
-    /** The title of the exclusive lesson video. */
+    /** Human-facing stable id from the lesson-video mount folder (`{index}-{slug}` slug segment). */
+    displayId: string
+    /** The title of the lesson video. */
     title: string
-    /** The description of the exclusive lesson video. */
+    /** Optional video description. */
     description: string | null
-    /** The URL of the exclusive lesson video. */
+    /** Production type (raw stream, edited, premium recording). */
+    kind: LessonVideoKind
+    /** Optional short caption or note (default locale column; localized via translations). */
+    caption: string | null
+    /** Host or delivery platform for {@link LessonVideoEntity.url}. */
+    hostPlatform: VideoHostPlatform
+    /** Video URL (e.g. YouTube watch or embed link). */
     url: string
-    /** The duration of the exclusive lesson video in milliseconds. */
-    durationMs: number
-    /** The order index of the exclusive lesson video. */
-    orderIndex: number
-    /** The course module that the exclusive lesson video belongs to. */
-    module?: ModuleEntity
-    /** The thumbnail URL of the exclusive lesson video. */
+    /** Optional thumbnail image URL. */
     thumbnailUrl?: string
+    /** Video duration in milliseconds. */
+    durationMs: number
+    /** Display order within the module lesson video list. */
+    orderIndex: number
+    /** Default locale for this row (Nest `Locale` / GraphQL `GraphQLTypeLocale`). */
+    defaultLocale: string
+    /** Parent module. */
+    module?: ModuleEntity
+    /**
+     * Nullable pricing phase id gating access (Nest column `pricing_phase_id`).
+     * GraphQL property name on the API may be `moduleId` (backend entity quirk).
+     */
+    moduleId?: string | null
+    /** Localized overrides (e.g. title, description, caption). */
+    translations?: Array<LessonVideoTranslationEntity>
 }

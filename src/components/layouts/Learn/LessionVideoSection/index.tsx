@@ -5,7 +5,8 @@ import { useTranslations } from "next-intl"
 import { useAppSelector } from "@/redux"
 import { StarCiSkeleton } from "@/components/atomic"
 import { useQueryLessonVideosSwr } from "@/hooks/singleton"
-import { LessionVideoCardSkeleton } from "../LessionVideoSection/LessionVideoCardSkeleton"
+import { LessionVideoCardSkeleton } from "./LessionVideoCardSkeleton"
+import { LivestreamCalendar } from "./LivestreamCalendar"
 
 /**
  * Learn tab “Videos”: exclusive lesson videos (title + body, optional thumbnail).
@@ -16,6 +17,8 @@ export const LessonVideoSection = () => {
     const { isLoading } = useQueryLessonVideosSwr()
     return (
         <div>
+            <LivestreamCalendar />
+            <Spacer y={6} />
             {
                 isLoading || !lessionVideos ? (
                     <StarCiSkeleton className="h-[14px] w-[150px] my-[3px]" />
@@ -25,7 +28,7 @@ export const LessonVideoSection = () => {
                     </div>
                 )
             }
-            <Spacer y={6} />
+            <Spacer y={3} />
             {isLoading || !lessionVideos ? (
                 <div className="flex flex-col gap-3 w-full">
                     {Array.from({ length: 3 }).map((_, index) => (

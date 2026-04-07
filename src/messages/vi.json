@@ -160,5 +160,49 @@
   "languages": {
     "en": "Tiếng Anh",
     "vi": "Tiếng Việt"
+  },
+  "videoHostPlatform": {
+    "youtube": "YouTube",
+    "googleDrive": "Google Drive",
+    "vimeo": "Vimeo",
+    "cloudflareStream": "Cloudflare Stream"
+  },
+  "lessonVideoKind": {
+    "rawStream": {
+      "label": "Raw Stream",
+      "tooltip": "Luồng video gốc chưa qua chỉnh sửa. Nội dung đầy đủ nhưng có thể còn thô, lỗi nhỏ hoặc chưa tối ưu trải nghiệm."
+    },
+    "editedStream": {
+      "label": "Edited Stream",
+      "tooltip": "Luồng video đã được chỉnh sửa. Nội dung được cắt gọn, rõ ràng và dễ theo dõi hơn."
+    },
+    "premiumRecord": {
+      "label": "Premium Record",
+      "tooltip": "Phiên bản chất lượng cao nhất. Nội dung được đầu tư kỹ lưỡng về hình ảnh, âm thanh và trải nghiệm học tập."
+    }
+  },
+  "livestream": {
+    "calendar": {
+      "title": "Lịch livestream",
+      "subtitle": "Tham gia các buổi livestream sắp tới",
+      "button": "Xem lịch",
+      "nextSession": "Lần tới: {day} {time}, {date}",
+      "countdown": "Bắt đầu sau {days} ngày {hours} giờ {minutes} phút {seconds} giây",
+      "modalTitle": "Lịch livestream",
+      "modalDescription": "Các khung giờ lặp lại theo tuần. Các ngày có buổi livestream được tô sáng trên lịch.",
+      "empty": "Chưa cấu hình lịch livestream.",
+      "sessionTime": "{start} - {end}",
+      "nextOn": "Lần tới: {date}",
+      "aria": "Lịch livestream khóa học",
+      "days": {
+        "sunday": "Chủ nhật",
+        "monday": "Thứ hai",
+        "tuesday": "Thứ ba",
+        "wednesday": "Thứ tư",
+        "thursday": "Thứ năm",
+        "friday": "Thứ sáu",
+        "saturday": "Thứ bảy"
+      }
+    }
   }
 }

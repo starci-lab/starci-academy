@@ -8,6 +8,7 @@ import { ContentCard } from "./ContentCard"
 import { useQueryContentsSwr } from "@/hooks/singleton"
 import { ContentCardSkeleton } from "./ContentCardSkeleton"
 import { StarCiSkeleton } from "@/components/atomic"
+import _ from "lodash"
 
 /**
  * Learn tab “Content”: ordered module contents (title + body, optional thumbnail).
@@ -41,7 +42,7 @@ export const ContentSection = () => {
                     : (
                         <div className="flex flex-col gap-3 w-full">
                             {
-                                contents?.sort(
+                                _.cloneDeep(contents)?.sort(
                                     (prev, next) => prev.orderIndex - next.orderIndex
                                 ).map((content) => (
                                     <ContentCard key={content.id} content={content} />

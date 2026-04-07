@@ -6,6 +6,7 @@ import { cn } from "@heroui/react"
 import { useRouter } from "next/navigation"
 import { useLocale } from "next-intl"
 import { pathConfig } from "@/resources"
+import { BracketsCurlyIcon } from "@phosphor-icons/react"
 
 export const ModuleSidebar = () => {
     const course = useAppSelector((state) => state.course.entity)
@@ -35,6 +36,25 @@ export const ModuleSidebar = () => {
                         <StarCiAccordionItem key={module.displayId}
                             aria-label={module.title} 
                             title={<div className={cn("cursor-pointer", module.id === activeModule?.id ? "text-primary" : "")}>{module.title}</div>}>
+                            <div className="text-sm text-start w-full ml-4 gap-3 flex flex-col">
+                                {
+                                    _.cloneDeep(module.previewContents)?.
+                                        sort((previous, current) => previous.orderIndex - current.orderIndex)
+                                        .map(
+                                            (content) => (
+                                                <div key={content.id} className="flex items-center gap-3 text-xs text-foreground-500">
+                                                    <BracketsCurlyIcon className="w-5 h-5 min-w-5 min-h-5" />
+                                                    <span
+                                                        dangerouslySetInnerHTML={{
+                                                            __html:
+                                                            content.text,
+                                                        }}
+                                                    />
+                                                </div>
+                                            )
+                                        )
+                                }
+                            </div>
                         </StarCiAccordionItem>
                     )
                 )

@@ -8,7 +8,8 @@
     "profile": "Profile",
     "signIn": "Sign In",
     "learn": "Learn",
-    "toggleLanguage": "Toggle Language"
+    "toggleLanguage": "Toggle Language",
+    "appearance": "Appearance"
   },
   "courses": {
     "featuredTitle": "Featured courses",
@@ -141,7 +142,13 @@
     }
   },
   "common": {
-    "disabled": "Disabled"
+    "disabled": "Disabled",
+    "streak": {
+      "current": "Current Streak",
+      "longest": "Longest Streak",
+      "count": "{count} days"
+    }
+
   },
   "home": {
     "intro": "IT courses are everywhere online, but content that is concise and focuses on practical thinking is rare.",

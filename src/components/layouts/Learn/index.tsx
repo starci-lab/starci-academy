@@ -93,28 +93,28 @@ export const Learn = () => {
                 )
             }
             <Spacer y={6} />
-            <div className="grid grid-cols-3 gap-4">
-                <div className="col-span-2">  
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="sm:col-span-2">  
                     {
                         (isModuleLoading || !module) ? (
-                            <StarCiSkeleton className="w-60 my-1 h-5" />
+                            <StarCiSkeleton className="w-60 my-1 h-5 hidden sm:block" />
                         ) : (
-                            <div className="text-xl font-bold">{module?.title}</div>
+                            <div className="text-xl font-bold hidden sm:block">{module?.title}</div>
                         )
                     }    
-                    <Spacer y={4} />
+                    <Spacer y={4} className="hidden sm:block" />
                     {
                         (isModuleLoading || !module) ? (
-                            <div className="w-full">
+                            <div className="w-full hidden sm:block">
                                 <StarCiSkeleton className="h-[14px] w-[60%] my-[3px]" />
                                 <StarCiSkeleton className="h-[14px] w-[50%] my-[3px]" />
                                 <StarCiSkeleton className="h-[14px] w-[40%] my-[3px]" />
                             </div>
                         ) : (
-                            <div className="text-sm text-foreground-500">{module?.description}</div>
+                            <div className="text-sm text-foreground-500 hidden sm:block">{module?.description}</div>
                         )
                     }
-                    <Spacer y={6} />
+                    <Spacer y={6} className="hidden sm:block" />
                     <StarCiTabs 
                         color="primary"
                         variant="underlined"
@@ -124,9 +124,9 @@ export const Learn = () => {
                         {
                             tabs.map((tab) => (
                                 <StarCiTab title={
-                                    <div className="flex items-center gap-2">
-                                        <tab.icon className="size-5" />
-                                        {tab.label}
+                                    <div className="flex items-center justify-center gap-2 w-full">
+                                        <tab.icon className="size-5 shrink-0" />
+                                        <span className="hidden sm:inline">{tab.label}</span>
                                     </div>} key={tab.value} value={tab.value}
                                 />
                             ))
@@ -135,7 +135,9 @@ export const Learn = () => {
                     <Spacer y={6} />
                     {renderContent()}
                 </div>
-                <ModuleSidebar />
+                <div className="hidden sm:block">
+                    <ModuleSidebar />
+                </div>
             </div>
         </div>
     )

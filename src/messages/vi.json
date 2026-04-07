@@ -8,7 +8,8 @@
     "profile": "Hồ sơ",
     "signIn": "Đăng nhập",
     "learn": "Học",
-    "toggleLanguage": "Chuyển đổi ngôn ngữ"
+    "toggleLanguage": "Chuyển đổi ngôn ngữ",
+    "appearance": "Giao diện"
   },
   "courses": {
     "featuredTitle": "Khóa học tiêu biểu",
@@ -141,8 +142,15 @@
     }
   },
   "common": {
-    "disabled": "Tạm tắt"
+    "disabled": "Tạm tắt",
+    "streak": {
+      "current": "Chuỗi hiện tại",
+      "longest": "Chuỗi dài nhất",
+      "count": "{count} ngày"
+    }
+
   },
+
   "home": {
     "intro": "Khóa học IT trên mạng tràn lan, nhưng nội dung cô đọng và đi vào tư duy thực chiến lại rất ít.",
     "intro2": "StarCi Academy được thành lập ra để thay đổi điều đó.",

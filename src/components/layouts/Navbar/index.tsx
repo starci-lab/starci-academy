@@ -1,5 +1,5 @@
 "use client"
-
+import React from "react"
 import { 
     useAuthenticationDisclosure, 
     useKeycloak 
@@ -11,8 +11,14 @@ import {
     StarCiNavbar, 
     StarCiNavbarBrand, 
     StarCiNavbarContent, 
-    StarCiNavbarItem } from "@/components/atomic"
-import { UserIcon } from "@phosphor-icons/react"
+    StarCiNavbarItem,
+    StarCiNavbarMenuToggle } from "@/components/atomic"
+import { 
+    BookOpenIcon, 
+    ChatCenteredTextIcon, 
+    HouseIcon, 
+    UserIcon 
+} from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { usePathname, useRouter } from "@/i18n/navigation"
 import { AuthenticatedDropdown } from "./AuthenticatedDropdown"
@@ -20,6 +26,7 @@ import { useAppSelector } from "@/redux"
 import { pathConfig } from "@/resources/path"
 import { MultiLanguageDropdown } from "../MultiLanguageDropdown"
 import { DarkLightModeSwitch } from "../DarkLightMode"
+import { MobileNavbar } from "./MobileNavbar"
 
 export const Navbar = () => {
     const { onOpenChange } = useAuthenticationDisclosure()
@@ -29,33 +36,57 @@ export const Navbar = () => {
     const router = useRouter()
     const pathname = usePathname()
     const locale = useLocale()
+    const [isMenuOpen, setIsMenuOpen] = React.useState(false)
+
+     const navItems = [
+        { 
+            label: t("nav.home"), 
+            path: pathConfig().locale().build(), 
+            icon: HouseIcon,
+            isActive: pathname === "/" || pathname === ""
+        },
+        { 
+            label: t("nav.courses"), 
+            path: pathConfig().locale().course().build(), 
+            icon: BookOpenIcon,
+            isActive: pathname.startsWith("/courses") 
+        },
+        { 
+            label: t("nav.contact"), 
+            path: pathConfig().locale().contact().build(), 
+            icon: ChatCenteredTextIcon,
+            isActive: pathname.startsWith("/contact")
+        },
+    ]
+
     return (
-        <StarCiNavbar shouldHideOnScroll>
-            <StarCiNavbarBrand>
-                <div className="font-bold text-inherit">{t("nav.brand")}</div>
-            </StarCiNavbarBrand>
-            <StarCiNavbarContent className="hidden sm:flex gap-4" justify="center">
-                <StarCiNavbarItem>
-                    <StarCiLink color="foreground" onPress={() => router.push(pathConfig().locale().build())}>
-                        {t("nav.home")}
-                    </StarCiLink>
-                </StarCiNavbarItem>
-                <StarCiNavbarItem isActive>
-                    <StarCiLink aria-current="page" onPress={() => router.push(pathConfig().locale().course().build())}>
-                        {t("nav.courses")}
-                    </StarCiLink>
-                </StarCiNavbarItem>
-                <StarCiNavbarItem>
-                    <StarCiLink color="foreground" onPress={() => router.push(pathConfig().locale().contact().build())}>
-                        {t("nav.contact")}
-                    </StarCiLink>
-                </StarCiNavbarItem>
+        <StarCiNavbar isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen} shouldHideOnScroll>
+            <StarCiNavbarContent justify="start">
+                <StarCiNavbarBrand>
+                    <div className="font-bold text-inherit">{t("nav.brand")}</div>
+                </StarCiNavbarBrand>
             </StarCiNavbarContent>
+
+            {/* Center part: Desktop Navigation Links */}
+            <StarCiNavbarContent className="hidden sm:flex gap-4" justify="center">
+                {navItems.map((item) => (
+                    <StarCiNavbarItem key={item.path} isActive={item.isActive}>
+                        <StarCiLink color="foreground" onPress={() => router.push(item.path)}>
+                            {item.label}
+                        </StarCiLink>
+                    </StarCiNavbarItem>
+                ))}
+            </StarCiNavbarContent>
+
+            {/* Right part: Icons and Profile */}
             <StarCiNavbarContent justify="end">
-                <StarCiNavbarItem>
+                {/* <StarCiNavbarItem className="max-sm:!hidden">
+                    <UserStreak />
+                </StarCiNavbarItem> */}
+                <StarCiNavbarItem className="max-sm:!hidden">
                     <DarkLightModeSwitch />
                 </StarCiNavbarItem>
-                <StarCiNavbarItem>
+                <StarCiNavbarItem className="max-sm:!hidden">
                     <MultiLanguageDropdown />
                 </StarCiNavbarItem>
                 {keycloak?.isLoading ? (
@@ -89,7 +120,25 @@ export const Navbar = () => {
                     </StarCiButton>
                 )
                 }
+                {/* <div className="flex items-center gap-2 sm:hidden">
+                    <UserStreak />
+                </div> */}
+                <StarCiNavbarMenuToggle
+                    aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+                    className="sm:hidden rounded-none border-1 border-foreground-200 h-10 w-10 min-w-10 p-0 flex items-center justify-center transition-all bg-transparent"
+                />
             </StarCiNavbarContent>
+
+
+            {/* Mobile Navigation Menu */}
+            <MobileNavbar 
+                navItems={navItems} 
+                isMenuOpen={isMenuOpen} 
+                setIsMenuOpen={setIsMenuOpen} 
+                locale={locale} 
+            />
+
         </StarCiNavbar>
+
     )
 }

@@ -25,8 +25,6 @@ const query1 = gql`
         count
         data {
           id
-          createdAt
-          updatedAt
           displayId
           title
           slug

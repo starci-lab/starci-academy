@@ -7,6 +7,7 @@ import { LivestreamCalendarModal } from "./LivestreamCalendarModal"
 import { LessonVideoModal } from "./LessonVideoModal"
 import { PaymentModal } from "./PaymentModal"
 import { LanguageModal } from "./LanguageModal"
+import { FeedbackDetailsModal } from "./FeedbackDetailsModal"
 
 export const ModalContainer = () => {
     return (
@@ -19,6 +20,7 @@ export const ModalContainer = () => {
             <ChallengeModal />
             <ChallengeSubmissionModal />
             <LanguageModal />
+            <FeedbackDetailsModal />
         </>
     )
 }

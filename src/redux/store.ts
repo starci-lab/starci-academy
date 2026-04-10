@@ -9,7 +9,8 @@ import {
     challengeReducer,
     lessonVideoReducer,
     livestreamSessionReducer,
-    challengeSubmissionReducer,
+    submissionAttemptReducer,
+    submissionFeedbackReducer,
 } from "./slices"
 
 export const store = configureStore({
@@ -23,7 +24,8 @@ export const store = configureStore({
         challenge: challengeReducer,
         lessonVideo: lessonVideoReducer,
         livestreamSession: livestreamSessionReducer,
-        challengeSubmission: challengeSubmissionReducer,
+        submissionAttempt: submissionAttemptReducer,
+        submissionFeedback: submissionFeedbackReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false,

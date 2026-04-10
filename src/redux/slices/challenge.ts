@@ -25,6 +25,8 @@ export interface ChallengeSlice {
     count?: number
     /** Rows from `challengeSubmissions` for the focused challenge. */
     challengeSubmissions: Array<ChallengeSubmissionEntity>
+    /** The challenge submission id. */
+    challengeSubmissionId?: string
 }
 
 /**
@@ -107,6 +109,13 @@ export const challengeSlice = createSlice(
             ) => {
                 state.challengeSubmissions = action.payload
             },
+            /** The action to set the challenge submission id. */
+            setChallengeSubmissionId: (
+                state,
+                action: PayloadAction<string | undefined>,
+            ) => {
+                state.challengeSubmissionId = action.payload
+            },
         },
     }
 )
@@ -123,4 +132,5 @@ export const {
     setChallengeLimit,
     setChallengeCount,
     setChallengeSubmissions,
+    setChallengeSubmissionId,
 } = challengeSlice.actions

@@ -12,6 +12,7 @@ import {
     useAccountMenuDisclosureCore,
     useLanguageDisclosureCore,
     useSubmissionAttemptsDisclosureCore,
+    useFeedbackDetailsDisclosureCore,
 } from "./core"
 
 export interface DiscloresureContextType {
@@ -25,6 +26,7 @@ export interface DiscloresureContextType {
     accountMenu: ReturnType<typeof useAccountMenuDisclosureCore>
     language: ReturnType<typeof useLanguageDisclosureCore>
     submissionAttempts: ReturnType<typeof useSubmissionAttemptsDisclosureCore>
+    feedbackDetails: ReturnType<typeof useFeedbackDetailsDisclosureCore>
 }
 
 export const DiscloresureContext = createContext<DiscloresureContextType | null>(null)
@@ -40,6 +42,7 @@ export const DiscloresureProvider = ({ children }: PropsWithChildren) => {
     const accountMenu = useAccountMenuDisclosureCore()
     const language = useLanguageDisclosureCore()
     const submissionAttempts = useSubmissionAttemptsDisclosureCore()
+    const feedbackDetails = useFeedbackDetailsDisclosureCore()
     const value = useMemo(() => ({
         authentication,
         payment,
@@ -51,6 +54,7 @@ export const DiscloresureProvider = ({ children }: PropsWithChildren) => {
         accountMenu,
         language,
         submissionAttempts,
+        feedbackDetails,
     }), [
         authentication,
         payment,
@@ -62,6 +66,7 @@ export const DiscloresureProvider = ({ children }: PropsWithChildren) => {
         accountMenu,
         language,
         submissionAttempts,
+        feedbackDetails,
     ])
     return (
         <DiscloresureContext.Provider value={value}>

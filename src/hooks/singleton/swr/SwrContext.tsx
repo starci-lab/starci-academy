@@ -18,6 +18,8 @@ import {
     useQueryUserSwrCore,
     useQueryModuleSwrCore,
     useQueryChallengeSubmissionsSwrCore,
+    useQuerySubmissionAttemptsSwrCore,
+    useQuerySubmissionFeedbacksSwrCore,
 } from "./core"
 
 export interface SwrContextType {
@@ -37,6 +39,8 @@ export interface SwrContextType {
     queryLivestreamSessionsSwr: ReturnType<typeof useQueryLivestreamSessionsSwrCore>;
     queryChallengesSwr: ReturnType<typeof useQueryChallengesSwrCore>;
     queryChallengeSubmissionsSwr: ReturnType<typeof useQueryChallengeSubmissionsSwrCore>;
+    querySubmissionAttemptsSwr: ReturnType<typeof useQuerySubmissionAttemptsSwrCore>;
+    querySubmissionFeedbacksSwr: ReturnType<typeof useQuerySubmissionFeedbacksSwrCore>;
 }
 
 export const SwrContext = createContext<SwrContextType | null>(null)
@@ -60,6 +64,8 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
     const queryLivestreamSessionsSwr = useQueryLivestreamSessionsSwrCore()
     const queryChallengesSwr = useQueryChallengesSwrCore()
     const queryChallengeSubmissionsSwr = useQueryChallengeSubmissionsSwrCore()
+    const querySubmissionAttemptsSwr = useQuerySubmissionAttemptsSwrCore()
+    const querySubmissionFeedbacksSwr = useQuerySubmissionFeedbacksSwrCore()
     const values = useMemo(
         () => ({
             queryCourseSwr,
@@ -78,6 +84,8 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
             queryLivestreamSessionsSwr,
             queryChallengesSwr,
             queryChallengeSubmissionsSwr,
+            querySubmissionAttemptsSwr,
+            querySubmissionFeedbacksSwr,
         }),
         [
             queryCourseSwr,
@@ -96,6 +104,8 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
             queryLivestreamSessionsSwr,
             queryChallengesSwr,
             queryChallengeSubmissionsSwr,
+            querySubmissionAttemptsSwr,
+            querySubmissionFeedbacksSwr,
         ]
     )
     return (

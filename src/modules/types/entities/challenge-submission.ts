@@ -11,13 +11,22 @@ import type { UserChallengeSubmissionEntity } from "./user-challenge-submission"
  * Nested `challenge` / `translations` / `userSubmissions` may be omitted or partial depending on the query.
  */
 export interface ChallengeSubmissionEntity extends AbstractEntity {
+    /** The type of the challenge submission. */
     type: SubmissionType
+    /** The title of the challenge submission. */
     title: string
+    /** The description of the challenge submission. */
     description: string | null
+    /** The challenge of the challenge submission. */
     challenge?: ChallengeEntity
+    /** The order index of the challenge submission. */
     orderIndex: number
+    /** The translations of the challenge submission. */
     translations?: Array<ChallengeSubmissionTranslationEntity>
+    /** The user submissions of the challenge submission. */
     userSubmissions?: Array<UserChallengeSubmissionEntity>
     /** Hydrated for the current user only (not a DB column). */
     userSubmission?: UserChallengeSubmissionEntity | null
+    /** The score of the challenge submission. */
+    score: number
 }

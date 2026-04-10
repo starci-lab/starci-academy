@@ -31,6 +31,7 @@ const query1 = gql`
           id
           type
           title
+          score
           orderIndex
           description
           userSubmission {

@@ -100,12 +100,6 @@ export const useEditSubmissionFormikCore = () => {
         if (Object.keys(formik.errors).length > 0) {
             return
         }
-        if (
-            JSON.stringify(formik.values.submissions) ===
-            JSON.stringify(initialValues.submissions)
-        ) {
-            return
-        }
         const debouncedTrigger = debounce(() => {
             void syncChallengeSubmissionsSwr.trigger({
                 items: formik.values.submissions.map((submission) => ({
@@ -113,7 +107,7 @@ export const useEditSubmissionFormikCore = () => {
                     url: submission.userSubmission?.submissionUrl ?? "",
                 })),
             })
-        }, 1000)
+        }, 300)
         debouncedTrigger()
         return () => {
             debouncedTrigger.cancel()

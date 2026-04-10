@@ -16,7 +16,6 @@ const query1 = gql`
         description
         userSubmission {
           submissionUrl
-          attempts
           score
         }
       }

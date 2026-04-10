@@ -2,13 +2,14 @@
 
 import React from "react"
 import { useTranslations } from "next-intl"
-import { useAppSelector } from "@/redux"
+import { useAppDispatch, useAppSelector } from "@/redux"
 import { Spacer } from "@heroui/react"
-import { TrophyIcon } from "@phosphor-icons/react"
 import { ChallengeCard } from "./ChallengeCard"
-import { StarCiSkeleton } from "@/components/atomic"
+import { StarCiPagination, StarCiSkeleton } from "@/components/atomic"
 import { useQueryChallengesSwr } from "@/hooks/singleton"
 import { ChallengeCardSkeleton } from "./ChallengeCardSkeleton"
+import { SearchBar } from "@/components/reuseable"
+import { setChallengePageNumber } from "@/redux/slices"
 
 /**
  * Learn tab “Challenges”: ordered module challenges (title, brief, input count).
@@ -17,9 +18,14 @@ export const ChallengeSection = () => {
     const t = useTranslations()
     const challenges = useAppSelector((state) => state.challenge.entities)
     const { isLoading } = useQueryChallengesSwr()
-
+    const count = useAppSelector((state) => state.challenge.count)
+    const limit = useAppSelector((state) => state.challenge.limit)
+    const pageNumber = useAppSelector((state) => state.challenge.pageNumber)
+    const dispatch = useAppDispatch()
     return (
         <div>
+            <SearchBar />
+            <Spacer y={6} />
             {isLoading || !challenges ? (
                 <StarCiSkeleton className="h-[14px] w-[150px] my-[3px]" />
             ) : (
@@ -27,31 +33,38 @@ export const ChallengeSection = () => {
                     {t("challenge.count", { count: challenges?.length ?? 0 })}
                 </div>
             )}
-            <Spacer y={3} />
+            <Spacer y={4} />
             {isLoading || !challenges ? (
                 <div className="flex flex-col gap-3 w-full">
                     {Array.from({ length: 3 }).map((_, index) => (
                         <ChallengeCardSkeleton key={index} />
                     ))}
                 </div>
-            ) : challenges?.length === 0 ? (
-                <div className="rounded-medium border border-dashed border-divider bg-default/30 px-6 py-12 text-center">
-                    <TrophyIcon
-                        className="mx-auto mb-3 size-10 text-foreground-400"
-                        aria-hidden
-                    />
-                    <div className="text-sm text-foreground-500">
-                        {t("challenge.empty")}
-                    </div>
-                </div>
             ) : (
-                <div className="flex flex-col gap-3 w-full">
+                <div>
+                    <div className="flex flex-col gap-3 w-full">
+                        {
+                            challenges?.sort(
+                                (prev, next) => prev.orderIndex - next.orderIndex
+                            ).map((challenge) => (
+                                <ChallengeCard key={challenge.id} challenge={challenge} />
+                            )
+                            )
+                        }
+                    </div>
                     {
-                        challenges?.sort(
-                            (prev, next) => prev.orderIndex - next.orderIndex
-                        ).map((challenge) => (
-                            <ChallengeCard key={challenge.id} challenge={challenge} />
-                        )
+                        count && (
+                            <>
+                                <Spacer y={4} />
+                                <StarCiPagination
+                                    total={Math.ceil((count ?? 0) / (limit ?? 10))}
+                                    page={pageNumber ?? 1}
+                                    onChange={(page) => {
+                                        dispatch(setChallengePageNumber(page))
+                                    }
+                                    }
+                                />
+                            </>
                         )
                     }
                 </div>

@@ -7,9 +7,9 @@ import {
 } from "@/modules/types"
 import { motion } from "framer-motion"
 import numeral from "numeral"
-import { Divider, Spacer } from "@heroui/react"
+import { Spacer } from "@heroui/react"
 import Decimal from "decimal.js"
-import { StarCiChip, StarCiTooltip } from "@/components/atomic"
+import { StarCiChip, StarCiDivider, StarCiTooltip } from "@/components/atomic"
 import { computePercentage } from "@/modules/utils"
 import { useAppSelector } from "@/redux"
 import _ from "lodash"
@@ -100,9 +100,9 @@ export const Stepper = () => {
     return (
         <div>
             <div className="relative flex items-center justify-between w-full">
-                <Divider className="absolute top-6 left-0 right-0 z-0" />
+                <StarCiDivider className="absolute top-6 left-0 right-0 z-0" />
                 <motion.div
-                    className="absolute top-6 left-0 h-[2px] bg-primary z-0 w-full"
+                    className="absolute top-6 left-0  z-0 w-full"
                     initial={false}
                     animate={{
                         width: `${(currentPhaseData?.orderIndex ?? 0 / segmentCount) * 100}%`,

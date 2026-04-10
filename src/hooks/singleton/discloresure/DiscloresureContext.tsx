@@ -9,6 +9,9 @@ import {
     useLivestreamCalendarDisclosureCore,
     useLessonVideoDisclosureCore,
     usePaymentDisclosureCore,
+    useAccountMenuDisclosureCore,
+    useLanguageDisclosureCore,
+    useSubmissionAttemptsDisclosureCore,
 } from "./core"
 
 export interface DiscloresureContextType {
@@ -19,6 +22,9 @@ export interface DiscloresureContextType {
     lessonVideo: ReturnType<typeof useLessonVideoDisclosureCore>
     challenge: ReturnType<typeof useChallengeDisclosureCore>
     challengeSubmission: ReturnType<typeof useChallengeSubmissionDisclosureCore>
+    accountMenu: ReturnType<typeof useAccountMenuDisclosureCore>
+    language: ReturnType<typeof useLanguageDisclosureCore>
+    submissionAttempts: ReturnType<typeof useSubmissionAttemptsDisclosureCore>
 }
 
 export const DiscloresureContext = createContext<DiscloresureContextType | null>(null)
@@ -31,6 +37,9 @@ export const DiscloresureProvider = ({ children }: PropsWithChildren) => {
     const lessonVideo = useLessonVideoDisclosureCore()
     const challenge = useChallengeDisclosureCore()
     const challengeSubmission = useChallengeSubmissionDisclosureCore()
+    const accountMenu = useAccountMenuDisclosureCore()
+    const language = useLanguageDisclosureCore()
+    const submissionAttempts = useSubmissionAttemptsDisclosureCore()
     const value = useMemo(() => ({
         authentication,
         payment,
@@ -39,6 +48,9 @@ export const DiscloresureProvider = ({ children }: PropsWithChildren) => {
         lessonVideo,
         challenge,
         challengeSubmission,
+        accountMenu,
+        language,
+        submissionAttempts,
     }), [
         authentication,
         payment,
@@ -47,6 +59,9 @@ export const DiscloresureProvider = ({ children }: PropsWithChildren) => {
         lessonVideo,
         challenge,
         challengeSubmission,
+        accountMenu,
+        language,
+        submissionAttempts,
     ])
     return (
         <DiscloresureContext.Provider value={value}>

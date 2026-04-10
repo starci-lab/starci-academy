@@ -13,7 +13,7 @@ export enum AuthenticationModalTab {
  */
 export enum LearnTab {
     LessonVideos = "lessonVideos",
-    Foundations = "foundations",
+    Contents = "contents",
     Challenges = "challenges",
     TopAchievers = "topAchievers",
 }

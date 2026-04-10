@@ -6,7 +6,7 @@ import {
 import { useKeycloak } from "@/hooks/singleton"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import useSWR from "swr"
-import { setLessonVideos } from "@/redux/slices"
+import { setLessonVideoCount, setLessonVideos } from "@/redux/slices"
 
 /**
  * Lists module lesson videos via `lessonVideos` and merges into `course.module.lessonVideos`.
@@ -58,6 +58,7 @@ export const useQueryLessonVideosSwrCore = () => {
                 throw new Error("Lesson videos not found")
             }
             dispatch(setLessonVideos(payload.data))
+            dispatch(setLessonVideoCount(payload.count))
             return payload
         },
     )

@@ -39,7 +39,7 @@ export const Learn = () => {
         },
         {
             label: t("content.title"),
-            value: LearnTab.Foundations,
+            value: LearnTab.Contents,
             icon: BookOpenIcon
         },
         {
@@ -58,7 +58,7 @@ export const Learn = () => {
         switch (learnTab) {
         case LearnTab.LessonVideos:
             return <LessonVideoSection />
-        case LearnTab.Foundations:
+        case LearnTab.Contents:
             return <ContentSection />
         case LearnTab.Challenges:
             return <ChallengeSection />
@@ -93,7 +93,7 @@ export const Learn = () => {
                 )
             }
             <Spacer y={6} />
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-12">
                 <div className="sm:col-span-2">  
                     {
                         (isModuleLoading || !module) ? (
@@ -135,7 +135,7 @@ export const Learn = () => {
                     <Spacer y={6} />
                     {renderContent()}
                 </div>
-                <div className="hidden sm:block">
+                <div className="col-span-1 sm:col-span-1">
                     <ModuleSidebar />
                 </div>
             </div>

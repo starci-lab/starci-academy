@@ -12,6 +12,8 @@ import {
     StarCiDropdownSection,
     StarCiDropdownTrigger
 } from "../../../atomic"
+import React from "react"
+import { useLanguageDisclosure } from "@/hooks/singleton"
 
 /**
  * AuthenticatedDropdown is a dropdown component that is used to display the authenticated user's information.
@@ -21,8 +23,12 @@ export const AuthenticatedDropdown = () => {
     const t = useTranslations()
     const router = useRouter()
     const keycloak = useKeycloak()
+    const { isOpen, onOpenChange } = useLanguageDisclosure()
     return (
-        <StarCiDropdown>
+        <StarCiDropdown
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+        >
             <StarCiDropdownTrigger>
                 <StarCiAvatar 
                     src={user?.avatar}
@@ -33,7 +39,7 @@ export const AuthenticatedDropdown = () => {
             </StarCiDropdownTrigger>
             <StarCiDropdownMenu>
                 <StarCiDropdownSection showDivider>
-                    <StarCiDropdownItem key="account">
+                    <StarCiDropdownItem key="account" onPress={() => onOpenChange()}>
                         <div>
                             <div>{user?.username}</div>
                             <div className="text-xs text-foreground-500">{user?.email}</div>
@@ -48,7 +54,10 @@ export const AuthenticatedDropdown = () => {
                     <StarCiDropdownItem 
                         variant="flat" 
                         key="profile" 
-                        onPress={() => router.push(pathConfig().locale().profile().build())}
+                        onPress={() => {
+                            router.push(pathConfig().locale().profile().build())
+                            onOpenChange()
+                        }}
                         startContent={
                             <UserIcon className="size-5" />
                         }>

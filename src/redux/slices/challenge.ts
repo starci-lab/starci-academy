@@ -21,6 +21,8 @@ export interface ChallengeSlice {
     pageNumber?: number
     /** The challenges limit. */
     limit?: number
+    /** The challenges count. */
+    count?: number
     /** Rows from `challengeSubmissions` for the focused challenge. */
     challengeSubmissions: Array<ChallengeSubmissionEntity>
 }
@@ -39,6 +41,8 @@ const initialState: ChallengeSlice = {
     pageNumber: undefined,
     /** The challenges limit. */
     limit: undefined,
+    /** The challenges count. */
+    count: undefined,
     /** Challenge submission rows (see `challengeSubmissions` query). */
     challengeSubmissions: [],
 }
@@ -89,6 +93,13 @@ export const challengeSlice = createSlice(
             ) => {
                 state.limit = action.payload
             },
+            /** The action to set the challenge count. */
+            setChallengeCount: (
+                state,
+                action: PayloadAction<number | undefined>,
+            ) => {
+                state.count = action.payload
+            },
             /** The action to set challenge submission rows for the current challenge. */
             setChallengeSubmissions: (
                 state,
@@ -110,5 +121,6 @@ export const {
     setChallengeId,
     setChallengePageNumber,
     setChallengeLimit,
+    setChallengeCount,
     setChallengeSubmissions,
 } = challengeSlice.actions

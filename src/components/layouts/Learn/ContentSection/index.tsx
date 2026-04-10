@@ -2,13 +2,15 @@
 
 import React from "react"
 import { useTranslations } from "next-intl"
-import { useAppSelector } from "@/redux"
+import { useAppDispatch, useAppSelector } from "@/redux"
 import { Spacer } from "@heroui/react"
 import { ContentCard } from "./ContentCard"
 import { useQueryContentsSwr } from "@/hooks/singleton"
 import { ContentCardSkeleton } from "./ContentCardSkeleton"
-import { StarCiSkeleton } from "@/components/atomic"
+import { StarCiPagination, StarCiSkeleton } from "@/components/atomic"
 import _ from "lodash"
+import { SearchBar } from "@/components/reuseable"
+import { setContentPageNumber } from "@/redux/slices/content"
 
 /**
  * Learn tab “Content”: ordered module contents (title + body, optional thumbnail).
@@ -17,10 +19,15 @@ export const ContentSection = () => {
     const t = useTranslations()
     const contents = useAppSelector((state) => state.content.entities)
     const count = useAppSelector((state) => state.content.count)
+    const limit = useAppSelector((state) => state.content.limit)
+    const pageNumber = useAppSelector((state) => state.content.pageNumber)
     const { isLoading } = useQueryContentsSwr()
+    const dispatch = useAppDispatch()
 
     return (
         <div>
+            <SearchBar />
+            <Spacer y={6} />
             {
                 isLoading || !contents ? (
                     <StarCiSkeleton className="h-[14px] w-[150px] my-[3px]" />
@@ -30,7 +37,7 @@ export const ContentSection = () => {
                     </div>
                 )
             }
-            <Spacer y={6} />
+            <Spacer y={4} />
             {
                 isLoading || !contents ? (
                     <div className="flex flex-col gap-3 w-full">
@@ -40,13 +47,29 @@ export const ContentSection = () => {
                     </div>
                 )
                     : (
-                        <div className="flex flex-col gap-3 w-full">
+                        <div>
+                            <div className="flex flex-col gap-3 w-full">
+                                {
+                                    _.cloneDeep(contents)?.sort(
+                                        (prev, next) => prev.orderIndex - next.orderIndex
+                                    ).map((content) => (
+                                        <ContentCard key={content.id} content={content} />
+                                    )
+                                    )
+                                }
+                            </div>
                             {
-                                _.cloneDeep(contents)?.sort(
-                                    (prev, next) => prev.orderIndex - next.orderIndex
-                                ).map((content) => (
-                                    <ContentCard key={content.id} content={content} />
-                                )
+                                count && (
+                                    <>
+                                        <Spacer y={4} />
+                                        <StarCiPagination
+                                            total={Math.ceil((count ?? 0) / (limit ?? 10))}
+                                            page={pageNumber ?? 1}
+                                            onChange={(page) => {
+                                                dispatch(setContentPageNumber(page))
+                                            }}
+                                        />
+                                    </>
                                 )
                             }
                         </div>

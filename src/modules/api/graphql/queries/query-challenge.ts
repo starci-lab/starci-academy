@@ -23,6 +23,16 @@ const query1 = gql`
           body
           orderIndex
         }
+        submissions {
+          id
+          type
+          title
+          description
+          orderIndex
+          userSubmission {
+            submissionUrl
+          }
+        }
         references {
           id
           alias

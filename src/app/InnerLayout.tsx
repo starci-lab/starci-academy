@@ -10,7 +10,7 @@ import React, { PropsWithChildren, Suspense } from "react"
 import { SingletonHookProvider } from "@/hooks/singleton"
 import { ReduxProvider } from "@/redux"
 import { UseEffects } from "@/hooks"
-import { ModalContainer } from "../components/modals"
+import { ModalContainer, DrawerContainer } from "../components"
 
 export const InnerLayout = ({ children }: PropsWithChildren) => {
     return (
@@ -28,6 +28,7 @@ export const InnerLayout = ({ children }: PropsWithChildren) => {
                                 <UseEffects />
                                 <Navbar />
                                 <ModalContainer />
+                                <DrawerContainer />
                                 {children}
                             </SingletonHookProvider>
                             <ToastProvider />

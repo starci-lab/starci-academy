@@ -22,6 +22,15 @@
     "prerequisites": "Yêu cầu đầu vào",
     "usersEnrolled": "{count} người đã đăng ký"
   },
+  "settings": {
+    "language": {
+      "title": "Ngôn ngữ",
+      "confirm": "Xác nhận",
+      "cancel": "Hủy",
+      "popular": "Ngôn ngữ phổ biến",
+      "all": "Tất cả ngôn ngữ"
+    }
+  },
   "module": {
     "aria": "Học phần {index}"
   },
@@ -66,6 +75,7 @@
       "yourScoreLabel": "Điểm của bạn",
       "scoreFraction": "{earned}/{max}",
       "attempts": "Số lần thử: {count}",
+      "viewAttempts": "Xem lịch sử nộp bài",
       "submit": "Nộp bài"
     }
   },

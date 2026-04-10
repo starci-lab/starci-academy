@@ -5,7 +5,7 @@ import {
 import { useKeycloak } from "@/hooks/singleton"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import useSWR from "swr"
-import { setChallenges } from "@/redux/slices"
+import { setChallengeCount, setChallenges } from "@/redux/slices"
 /**
  * Lists module challenges via `challenges` and merges into `course.module.challenges`.
  */
@@ -56,6 +56,7 @@ export const useQueryChallengesSwrCore = () => {
                 throw new Error("Challenges not found")
             }
             dispatch(setChallenges(payload.data))
+            dispatch(setChallengeCount(payload.count))
             return payload
         },
     )

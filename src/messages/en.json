@@ -66,7 +66,8 @@
       "yourScoreLabel": "Your score",
       "scoreFraction": "{earned}/{max}",
       "attempts": "Attempts: {count}",
-      "submit": "Submit"
+      "submit": "Submit",
+      "viewAttempts": "View Attempts"
     }
   },
   "leaderboard": {
@@ -186,6 +187,15 @@
     "premiumRecord": {
       "label": "Premium Record",
       "tooltip": "Highest quality version with polished visuals, audio, and an optimized learning experience."
+    }
+  },
+  "settings": {
+    "language": {
+      "title": "Language",
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "popular": "Popular Languages",
+      "all": "All Languages"
     }
   },
   "livestream": {

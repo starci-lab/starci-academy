@@ -8,7 +8,6 @@ import { PaintBrushIcon, TranslateIcon } from "@phosphor-icons/react";
 import { useTranslations } from "next-intl";
 import router from "next/router";
 import { DarkLightModeSwitch } from "../../DarkLightMode";
-import { MultiLanguageDropdown } from "../../MultiLanguageDropdown";
 
 export interface mobileNavbarProps {
   navItems: any[];
@@ -82,7 +81,6 @@ export const MobileNavbar = ({
               </span>
             </div>
           </div>
-          <MultiLanguageDropdown />
         </div>
       </div>
     </StarCiNavbarMenu>

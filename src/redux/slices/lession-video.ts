@@ -18,6 +18,12 @@ export interface LessonVideoSlice {
     id?: string
     /** The lesson video entities */
     entities?: Array<LessonVideoEntity>
+    /** The lesson video page number. */
+    pageNumber?: number
+    /** The lesson video limit. */
+    limit?: number
+    /** The lesson video count. */
+    count?: number
 }
 
 /**
@@ -32,6 +38,12 @@ const initialState: LessonVideoSlice = {
     id: undefined,
     /** The lesson video entities. */
     entities: [],
+    /** The lesson video page number. */
+    pageNumber: undefined,
+    /** The lesson video limit. */
+    limit: undefined,
+    /** The lesson video count. */
+    count: undefined,
 }
 
 /**
@@ -73,6 +85,27 @@ export const lessonVideoSlice = createSlice(
             ) => {
                 state.id = action.payload
             },
+            /** The action to set the lesson video page number. */
+            setLessonVideoPageNumber: (
+                state,
+                action: PayloadAction<number | undefined>,
+            ) => {
+                state.pageNumber = action.payload
+            },
+            /** The action to set the lesson video limit. */
+            setLessonVideoLimit: (
+                state,
+                action: PayloadAction<number | undefined>,
+            ) => {
+                state.limit = action.payload
+            },
+            /** The action to set the lesson video count. */
+            setLessonVideoCount: (
+                state,
+                action: PayloadAction<number | undefined>,
+            ) => {
+                state.count = action.payload
+            },
         },
     }
 )
@@ -86,4 +119,7 @@ export const {
     setLessonVideos,
     setLessonVideoDisplayId,
     setLessonVideoId,
+    setLessonVideoPageNumber,
+    setLessonVideoLimit,
+    setLessonVideoCount,
 } = lessonVideoSlice.actions

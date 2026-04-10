@@ -12,7 +12,7 @@ import type { UserChallengeSubmissionEntity } from "./user-challenge-submission"
  */
 export interface ChallengeSubmissionEntity extends AbstractEntity {
     type: SubmissionType
-    name: string
+    title: string
     description: string | null
     challenge?: ChallengeEntity
     orderIndex: number

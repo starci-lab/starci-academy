@@ -57,7 +57,7 @@ export const ChallengeSubmissionModal = () => {
                             <div className="flex flex-col gap-6">
                                 {
                                     formik.values.submissions.sort((prev, next) => prev.orderIndex - next.orderIndex).map((
-                                        submission, 
+                                        submission,
                                         index
                                     ) => (
                                         <div key={submission.id} className="border border-divider p-3 rounded-medium w-full">
@@ -73,7 +73,7 @@ export const ChallengeSubmissionModal = () => {
                                                         {iconMap[submission.type]}
                                                     </div>
                                                     <Spacer y={1.5} />
-                                                    <div className="text-xs text-foreground-500">      
+                                                    <div className="text-xs text-foreground-500">
                                                         {submission.description}
                                                     </div>
                                                     <Spacer y={3} />
@@ -95,9 +95,9 @@ export const ChallengeSubmissionModal = () => {
                                                                 ?.userSubmission as unknown as FormikErrors<UserChallengeSubmissionEntity>)?.submissionUrl}
                                                         isInvalid={!!(
                                                             ((formik.errors.submissions?.[index] as unknown as FormikErrors<ChallengeSubmissionEntity>)
-                                                                ?.userSubmission as unknown as FormikErrors<UserChallengeSubmissionEntity>)?.submissionUrl 
-                                                    && ((formik.touched.submissions?.[index] as unknown as FormikTouched<ChallengeSubmissionEntity>)
-                                                        ?.userSubmission as unknown as FormikTouched<UserChallengeSubmissionEntity>)?.submissionUrl)}
+                                                                ?.userSubmission as unknown as FormikErrors<UserChallengeSubmissionEntity>)?.submissionUrl
+                                                            && ((formik.touched.submissions?.[index] as unknown as FormikTouched<ChallengeSubmissionEntity>)
+                                                                ?.userSubmission as unknown as FormikTouched<UserChallengeSubmissionEntity>)?.submissionUrl)}
                                                     />
                                                 </div>
                                             </div>
@@ -124,6 +124,17 @@ export const ChallengeSubmissionModal = () => {
                                                     {t("challenge.submissionModal.viewAttempts")}
                                                 </StarCiButton>
                                             </div>
+                                            {
+                                                submission.userSubmission?.lastAttempt && (
+                                                    <>
+                                                        <Spacer y={3} />
+                                                        <div className="flex gap-2">
+                                                            <div className="text-sm text-foreground-500">Your last attempt score is </div>
+                                                            <div className="text-sm text-foreground-500">{submission.userSubmission.lastAttempt.score}/{submission.score}</div>
+                                                        </div>
+                                                    </>
+                                                )
+                                            }
                                         </div>
                                     ))}
                             </div>

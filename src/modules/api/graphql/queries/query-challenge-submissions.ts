@@ -36,6 +36,9 @@ const query1 = gql`
           description
           userSubmission {
             submissionUrl
+            lastAttempt {
+                score
+            }
           }
         }
       }
@@ -65,11 +68,11 @@ export interface QueryChallengeSubmissionsResponse {
 export const defaultChallengeSubmissionsSorts: Array<
     SortInput<ChallengeSubmissionsSortBy>
 > = [
-    {
-        by: ChallengeSubmissionsSortBy.CreatedAt,
-        order: SortOrder.Asc,
-    },
-]
+        {
+            by: ChallengeSubmissionsSortBy.CreatedAt,
+            order: SortOrder.Asc,
+        },
+    ]
 
 /**
  * All submission requirements for one challenge (`ref/challenge-submissions`).

@@ -1,5 +1,6 @@
 import type { AbstractEntity } from "./abstract"
 import type { ChallengeSubmissionEntity } from "./challenge-submission"
+import { SubmissionAttemptEntity } from "./submission-attempt"
 import type { UserEntity } from "./user"
 
 /**
@@ -15,4 +16,5 @@ export interface UserChallengeSubmissionEntity extends AbstractEntity {
     submissionUrl: string
     attempts: number
     score: number
+    lastAttempt?: SubmissionAttemptEntity
 }

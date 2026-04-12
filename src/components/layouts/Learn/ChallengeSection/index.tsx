@@ -10,6 +10,7 @@ import { useQueryChallengesSwr } from "@/hooks/singleton"
 import { ChallengeCardSkeleton } from "./ChallengeCardSkeleton"
 import { SearchBar } from "@/components/reuseable"
 import { setChallengePageNumber } from "@/redux/slices"
+import _ from "lodash"
 
 /**
  * Learn tab “Challenges”: ordered module challenges (title, brief, input count).
@@ -44,9 +45,7 @@ export const ChallengeSection = () => {
                 <div>
                     <div className="flex flex-col gap-3 w-full">
                         {
-                            challenges?.sort(
-                                (prev, next) => prev.orderIndex - next.orderIndex
-                            ).map((challenge) => (
+                            _.sortBy(challenges, "orderIndex").map((challenge) => (
                                 <ChallengeCard key={challenge.id} challenge={challenge} />
                             )
                             )

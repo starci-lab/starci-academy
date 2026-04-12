@@ -96,13 +96,11 @@ export const MarkdownContent = ({ markdown }: MarkdownContentProps) => {
                         {children}
                     </thead>
                 ),
-
                 th: ({ children }) => (
                     <th className="border px-4 py-2 text-left font-semibold">
                         {children}
                     </th>
                 ),
-
                 td: ({ children }) => (
                     <td className="border px-4 py-2">
                         {children}
@@ -148,7 +146,7 @@ export const MarkdownContent = ({ markdown }: MarkdownContentProps) => {
                 },
                 hr: () => <div className="h-px my-2 border-divider" />,
                 ol: ({ children }) => <div className="list-decimal pl-5 mb-2 last:mb-0 text-sm text-foreground-500">{children}</div>,
-                p: ({ children }) => <div className="text-sm mb-2 last:mb-0">{children}</div>,
+                p: ({ children }) => <div className="text-sm mb-2 last:mb-0 gap-1 leading-relaxed ">{children}</div>,
                 ul: ({ children }) => <div className="list-disc pl-5 mb-2 last:mb-0 text-sm">{children}</div>,
                 li: ({ children }) => <div className="mb-2 last:mb-0">{children}</div>,
                 a: ({ href, children }) => (

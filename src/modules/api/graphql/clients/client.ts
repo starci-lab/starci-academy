@@ -88,6 +88,11 @@ export const createApolloClient = (
         defaultOptions: customDefaultOptions,
     } = options
 
+    const finalHeaders = {
+        ...headers,
+    }
+
+
     const links: Array<ApolloLink> = [
         createRetryLink(),
     ]
@@ -99,8 +104,9 @@ export const createApolloClient = (
     links.push(
         createErrorLink(),
         createTimeoutLink(),
-        createHttpLink(withCredentials, headers)
+        createHttpLink(withCredentials, finalHeaders)
     )
+
 
     const finalDefaultOptions = customDefaultOptions || (cache ? defaultOptions : undefined)
 

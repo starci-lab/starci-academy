@@ -7,6 +7,8 @@ import { useLocale } from "next-intl"
 export const useSetCookie = () => {
     const locale = useLocale()
     useEffect(() => {
-        document.cookie = `locale=${locale}`
+        document.cookie = `locale=${locale}; path=/`
     }, [locale])
+
+
 }

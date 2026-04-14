@@ -1,3 +1,5 @@
 export * from "./mutation-course-enroll"
 export * from "./mutation-submit-challenge-submissions"
 export * from "./mutation-sync-challenge-submissions"
+export * from "./mutation-get-cv-presigned-url"
+export * from "./mutation-process-cv"

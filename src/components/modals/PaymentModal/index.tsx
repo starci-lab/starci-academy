@@ -18,12 +18,14 @@ import { useAppSelector } from "@/redux"
 import { PaymentType } from "@/modules/types"
 import { assetConfig } from "@/resources"
 import { runGraphQLWithToast } from "@/modules/toast"
-import { useRouter } from "next/navigation"
+import { useRouter } from "@/i18n/navigation"
 import { useTranslations } from "next-intl"
+import { CourseEnrollData } from "@/modules/api"
 
 
 export const PaymentModal = () => {
-    const { isOpen, onOpenChange } = usePaymentDisclosure()
+    const disclosure = usePaymentDisclosure()
+    const { isOpen, onOpenChange, onClose } = disclosure
     const swr = useMutateCourseEnrollSwr()
     const course = useAppSelector((state) => state.course.entity)
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentType | null>(null)
@@ -47,7 +49,7 @@ export const PaymentModal = () => {
                     name: "Sepay",
                     description: t("payment.sepay.desc"),
                     iconUrl: assetConfig().icon().payment().sepay,
-                    disabled: true,
+                    disabled: false,
                 },
             ],
         }
@@ -77,6 +79,7 @@ export const PaymentModal = () => {
                                     onPress={
                                         async () => {
                                             let checkoutUrl = ""
+                                            let responseData: CourseEnrollData | null = null
                                             setSelectedPaymentMethod(paymentMethod.type)
                                             const success = await runGraphQLWithToast(
                                                 async () => {
@@ -93,16 +96,31 @@ export const PaymentModal = () => {
                                                     if (!response.data?.courseEnroll) {
                                                         throw new Error(response.error?.message)
                                                     }
-                                                    checkoutUrl = response.data.courseEnroll.data?.checkoutUrl ?? ""
-                                                    return response.data?.courseEnroll
+                                                    const enrollData = response.data.courseEnroll.data
+                                                    checkoutUrl = enrollData?.checkoutUrl ?? ""
+                                                    responseData = enrollData ?? null
+                                                    return response.data.courseEnroll
                                                 },
                                                 {
                                                     showSuccessToast: false,
                                                     showErrorToast: true,
                                                 }
                                             )
-                                            if (success) {
-                                                router.push(checkoutUrl)
+                                            if (success && responseData) {
+                                                const data = responseData as CourseEnrollData
+                                                if (paymentMethod.type === PaymentType.Sepay) {
+                                                    const params = new URLSearchParams({
+                                                        qr: data.checkoutUrl ?? "",
+                                                        amount: String(data.amount ?? ""),
+                                                        ref: data.referenceId ?? "",
+                                                        courseId: course?.id ?? "",
+                                                        courseTitle: course?.title ?? "",
+                                                    })
+                                                    onClose()
+                                                    router.push(`/checkout/sepay?${params.toString()}`)
+                                                } else {
+                                                    router.push(checkoutUrl)
+                                                }
                                             }
                                         }
                                     }

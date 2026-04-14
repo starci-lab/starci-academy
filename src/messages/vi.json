@@ -148,7 +148,18 @@
       "desc": "Thanh toán qua PayOS"
     },
     "sepay": {
-      "desc": "Thanh toán qua Sepay"
+      "desc": "Thanh toán qua Sepay",
+      "instruction": "Sử dụng ứng dụng ngân hàng để quét mã QR bên dưới để thanh toán.",
+      "bank": "Ngân hàng",
+      "account": "Số tài khoản",
+      "amount": "Số tiền",
+      "content": "Nội dung chuyển khoản",
+      "copy": "Sao chép",
+      "copied": "Đã sao chép vào bộ nhớ tạm!",
+      "waiting": "Đang chờ thanh toán...",
+      "success": "Thanh toán thành công!",
+      "redirecting": "Đang chuyển hướng đến khóa học của bạn...",
+      "checkStatus": "Kiểm tra trạng thái"
     }
   },
   "common": {

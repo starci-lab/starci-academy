@@ -2,7 +2,10 @@
  * Shared GraphQL client types: response envelope, optional auth headers, generic query params.
  */
 
+import { Locale } from "next-intl"
+
 /** Standard API wrapper around resolver payloads (`success`, `message`, optional `error`, nested `data`). */
+
 export interface GraphQLResponse<TData = undefined> {
     success: boolean
     message: string
@@ -13,6 +16,7 @@ export interface GraphQLResponse<TData = undefined> {
 /** Header names used for MFA or OTP flows when calling protected operations. */
 export enum GraphQLHeadersKey {
     XCourseId = "X-Course-Id",
+    XLocale = "X-Locale",
 }
 
 export type GraphQLHeaders = Partial<Record<GraphQLHeadersKey, string>>
@@ -23,7 +27,10 @@ export interface QueryParams<TQuery, TRequest = undefined> {
     request?: TRequest
     headers?: GraphQLHeaders
     token?: string
+    locale?: Locale
 }
+
+
 
 /** Variables bag when the operation expects a single `request` object. */
 export interface QueryVariables<TRequest> {

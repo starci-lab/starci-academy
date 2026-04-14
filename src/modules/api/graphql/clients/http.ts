@@ -8,7 +8,7 @@ import { publicEnv } from "@/resources/env"
  * @param headers - Extra static headers merged into each request.
  */
 export const createHttpLink = (
-    withCredentials = false, 
+    withCredentials = true,
     headers: Record<string, string> = {}
 ) => {
     return new HttpLink({

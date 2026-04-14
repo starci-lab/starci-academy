@@ -139,7 +139,18 @@
       "desc": "Pay with PayOS"
     },
     "sepay": {
-      "desc": "Pay with Sepay"
+      "desc": "Pay with Sepay",
+      "instruction": "Scan the QR code below using your banking app to pay.",
+      "bank": "Bank",
+      "account": "Account Number",
+      "amount": "Amount",
+      "content": "Transfer Content",
+      "copy": "Copy",
+      "copied": "Copied to clipboard!",
+      "waiting": "Waiting for payment...",
+      "success": "Payment Successful!",
+      "redirecting": "Redirecting to your course...",
+      "checkStatus": "Check Status"
     }
   },
   "common": {

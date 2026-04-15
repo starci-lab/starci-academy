@@ -9,14 +9,14 @@ import {
     StarCiModalHeader,
 } from "@/components/atomic"
 import {
-    useLivestreamCalendarDisclosure,
+    useLivestreamCalendarOverlayState,
 } from "@/hooks/singleton"
 import type { LivestreamSessionEntity } from "@/modules/types"
 import { DayOfWeek } from "@/modules/types"
 import { useAppSelector } from "@/redux"
 import { CalendarDate, getLocalTimeZone, today } from "@internationalized/date"
-import type { DateValue } from "@react-types/calendar"
-import { Spacer } from "@heroui/react"
+import type { DateValue } from "@heroui/react/rac"
+import { Spacer } from "@/components/reuseable"
 import { ClockIcon } from "@phosphor-icons/react"
 import { useFormatter, useTranslations } from "next-intl"
 import React, { useMemo } from "react"
@@ -77,7 +77,7 @@ const formatTime = (hhmmss: string) => hhmmss.slice(0, 5)
 export const LivestreamCalendarModal = () => {
     const t = useTranslations()
     const format = useFormatter()
-    const { isOpen, onOpenChange } = useLivestreamCalendarDisclosure()
+    const { isOpen, onOpenChange } = useLivestreamCalendarOverlayState()
     const sessions = useAppSelector((state) => state.livestreamSession.entities)
     const sessionDow = useSessionWeekdaySet(sessions)
     const visibleSessions = useMemo(() => {
@@ -112,14 +112,9 @@ export const LivestreamCalendarModal = () => {
     return (
         <StarCiModal
             isOpen={isOpen}
-            size="2xl"
-            scrollBehavior="inside"
             onOpenChange={onOpenChange}
-            classNames={{
-                base: "max-w-lg",
-            }}
         >
-            <StarCiModalContent>
+            <StarCiModalContent size="lg" className="max-w-lg">
                 <StarCiModalHeader
                     title={t("livestream.calendar.modalTitle")}
                     description={t("livestream.calendar.modalDescription")}
@@ -137,14 +132,8 @@ export const LivestreamCalendarModal = () => {
                                         aria-label={t("livestream.calendar.aria")}
                                         defaultFocusedValue={defaultFocusedValue}
                                         firstDayOfWeek="mon"
-                                        classNames={{
-                                            base: "shadow-none overflow-hidden",
-                                        }}
-                                        color="primary"
-                                        errorMessage={" "}
-                                        isReadOnly
+                                        className="shadow-none overflow-hidden"
                                         defaultValue={today(getLocalTimeZone())}
-                                        hideDisabledDates={false}
                                         isDateUnavailable={isDateUnavailable}
                                     />
                                 </div>
@@ -167,18 +156,18 @@ export const LivestreamCalendarModal = () => {
                                                     >
                                                         <div className="flex flex-wrap items-center gap-2">
                                                             <StarCiChip
-                                                                color="secondary"
+                                                                color="accent"
                                                                 size="sm"
-                                                                variant="flat"
+                                                                variant="soft"
                                                             >
                                                                 {dayLabel}
                                                             </StarCiChip>
                                                             <StarCiChip
-                                                                color="primary"
+                                                                color="accent"
                                                                 size="sm"
-                                                                startContent={<ClockIcon className="size-4" />}
-                                                                variant="flat"
+                                                                variant="soft"
                                                             >
+                                                                <ClockIcon className="size-4" />{" "}
                                                                 {t("livestream.calendar.sessionTime", {
                                                                     start: formatTime(session.startTime),
                                                                     end: formatTime(session.expectedEndTime),

@@ -1,13 +1,13 @@
 import {
-    StarCiLink,
-    StarCiNavbarMenu,
-    StarCiNavbarMenuItem,
-} from "@/components/atomic";
-import { cn } from "@heroui/react";
+    Link,
+    NavbarMenu,
+    NavbarMenuItem,
+    cn,
+} from "@heroui/react";
 import { PaintBrushIcon, TranslateIcon } from "@phosphor-icons/react";
 import { useTranslations } from "next-intl";
 import router from "next/router";
-import { DarkLightModeSwitch } from "../../DarkLightMode";
+import { DarkLightModeSwitch } from "../AccountMenuDropdown/DarkLightMode";
 
 export interface mobileNavbarProps {
   navItems: any[];
@@ -24,31 +24,29 @@ export const MobileNavbar = ({
 }: mobileNavbarProps) => {
   const t = useTranslations();
   return (
-    <StarCiNavbarMenu className="backdrop-blur-xl bg-background/80 flex flex-col h-[calc(100vh-64px)] pb-10">
+    <NavbarMenu className="backdrop-blur-xl bg-background/80 flex flex-col h-[calc(100vh-64px)] pb-10">
       <div className="flex flex-col gap-2 mt-4 flex-grow">
         {navItems.map((item, index) => (
-          <StarCiNavbarMenuItem key={`${item.path}-${index}`}>
-            <StarCiLink
+          <NavbarMenuItem key={`${item.path}-${index}`}>
+            <Link
               className={cn(
                 "w-full flex items-center gap-4 p-4 rounded-2xl transition-all duration-300",
                 item.isActive
                   ? "bg-primary/10 text-primary shadow-sm"
                   : "hover:bg-default-100",
               )}
-              color={item.isActive ? "primary" : "foreground"}
               onPress={() => {
                 router.push(item.path);
                 setIsMenuOpen(false);
               }}
-              size="lg"
             >
               <item.icon
                 weight={item.isActive ? "fill" : "regular"}
                 className="size-6"
               />
               <span className="font-bold tracking-tight">{item.label}</span>
-            </StarCiLink>
-          </StarCiNavbarMenuItem>
+            </Link>
+          </NavbarMenuItem>
         ))}
       </div>
 
@@ -83,6 +81,6 @@ export const MobileNavbar = ({
           </div>
         </div>
       </div>
-    </StarCiNavbarMenu>
+    </NavbarMenu>
   );
 };

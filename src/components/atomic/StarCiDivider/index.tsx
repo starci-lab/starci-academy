@@ -1,6 +1,7 @@
-import { Divider, DividerProps } from "@heroui/react"
+import { Separator } from "@heroui/react"
+import type { SeparatorRootProps } from "@heroui/react"
 import React from "react"
 
-export const StarCiDivider = (props: DividerProps) => {
-    return <Divider {...props} />
+export const StarCiDivider = (props: SeparatorRootProps) => {
+    return <Separator {...props} />
 }

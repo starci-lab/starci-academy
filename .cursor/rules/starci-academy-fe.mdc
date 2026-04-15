@@ -1,12 +1,6 @@
 ---
-description: Next.js App Router + React frontend conventions for starci-academy (components, pages, data, styling).
-globs:
-  - src/app/**/*
-  - src/components/**/*
-  - src/data/**/*
-  - src/types/**/*.ts
+alwaysApply: true
 ---
-
 # Frontend Conventions (StarCI Academy)
 
 Stack: **Next.js** (App Router), **React 19**, **Tailwind CSS v4**, **HeroUI** (`@heroui/react`), **next-themes**, **SWR**, **Phosphor Icons**, **Framer Motion** where needed.

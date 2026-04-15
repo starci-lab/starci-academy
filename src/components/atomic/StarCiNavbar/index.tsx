@@ -1,45 +1,40 @@
 import React from "react"
-import {
-    Navbar,
-    NavbarBrand,
-    NavbarContent,
-    NavbarItem,
-    NavbarMenu,
-    NavbarMenuItem,
-    NavbarMenuToggle,
-    NavbarProps,
-    NavbarBrandProps,
-    NavbarContentProps,
-    NavbarItemProps,
-    NavbarMenuProps,
-    NavbarMenuItemProps,
-    NavbarMenuToggleProps,
-} from "@heroui/react"
 
-export const StarCiNavbar = (props: NavbarProps) => {
-    return <Navbar {...props} />
+interface NavbarProps extends React.ComponentPropsWithRef<"nav"> {
+    children?: React.ReactNode
+    isBordered?: boolean
+    isMenuOpen?: boolean
+    onMenuOpenChange?: (isOpen: boolean) => void
+    maxWidth?: string
+    className?: string
 }
 
-export const StarCiNavbarBrand = (props: NavbarBrandProps) => {
-    return <NavbarBrand {...props} />
+export const StarCiNavbar = ({ children, className, ...props }: NavbarProps) => {
+    return <nav className={`flex items-center justify-between px-4 py-2 ${className ?? ""}`} {...props}>{children}</nav>
 }
 
-export const StarCiNavbarContent = (props: NavbarContentProps) => {
-    return <NavbarContent {...props} />
-}
+export const StarCiNavbarBrand = ({ children, className, ...props }: React.ComponentPropsWithRef<"div"> & { children?: React.ReactNode }) => (
+    <div className={className} {...props}>{children}</div>
+)
 
-export const StarCiNavbarItem = (props: NavbarItemProps) => {
-    return <NavbarItem {...props} />
-}
+export const StarCiNavbarContent = ({ children, className, justify, ...props }: React.ComponentPropsWithRef<"div"> & { children?: React.ReactNode; justify?: "start" | "center" | "end" }) => (
+    <div className={`flex items-center ${justify === "end" ? "ml-auto" : justify === "center" ? "mx-auto" : ""} ${className ?? ""}`} {...props}>{children}</div>
+)
 
-export const StarCiNavbarMenu = (props: NavbarMenuProps) => {
-    return <NavbarMenu {...props} />
-}
+export const StarCiNavbarItem = ({ children, className, ...props }: React.ComponentPropsWithRef<"div"> & { children?: React.ReactNode }) => (
+    <div className={className} {...props}>{children}</div>
+)
 
-export const StarCiNavbarMenuItem = (props: NavbarMenuItemProps) => {
-    return <NavbarMenuItem {...props} />
+interface NavbarMenuToggleProps extends React.ComponentPropsWithRef<"button"> {
+    icon?: React.ReactNode
+    srOnlyText?: string
 }
+export const StarCiNavbarMenuToggle = (props: NavbarMenuToggleProps) => <button {...props} />
 
-export const StarCiNavbarMenuToggle = (props: NavbarMenuToggleProps) => {
-    return <NavbarMenuToggle {...props} />
-}
+export const StarCiNavbarMenu = ({ children, className, ...props }: React.ComponentPropsWithRef<"div"> & { children?: React.ReactNode }) => (
+    <div className={className} {...props}>{children}</div>
+)
+
+export const StarCiNavbarMenuItem = ({ children, className, ...props }: React.ComponentPropsWithRef<"div"> & { children?: React.ReactNode }) => (
+    <div className={className} {...props}>{children}</div>
+)

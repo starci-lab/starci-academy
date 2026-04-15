@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useMemo } from "react"
-import { Spacer } from "@heroui/react"
+import { Spacer } from "@/components/reuseable"
 import { useTranslations } from "next-intl"
 import { useAppSelector } from "@/redux"
 import { useQueryCourseSwr } from "@/hooks/singleton"
@@ -10,6 +10,7 @@ import {
     StarCiAccordionItem,
     StarCiSkeleton,
 } from "@/components/atomic"
+import { AccordionHeading, AccordionTrigger, AccordionPanel } from "@heroui/react"
 import _ from "lodash"
 
 export const QnA = () => {
@@ -31,8 +32,11 @@ export const QnA = () => {
                             <StarCiAccordionItem
                                 key={index}
                                 aria-label={t("qna.questionAria", { index: index + 1 })}
-                                title={<StarCiSkeleton className="h-[14px] w-[40%] rounded-lg my-[3px]" />}
                             >
+                                <AccordionHeading><AccordionTrigger>
+                                    <StarCiSkeleton className="h-[14px] w-[40%] rounded-lg my-[3px]" />
+                                </AccordionTrigger></AccordionHeading>
+                                <AccordionPanel>{""}</AccordionPanel>
                             </StarCiAccordionItem>
                         ))}
                     </StarCiAccordion>
@@ -42,19 +46,21 @@ export const QnA = () => {
                             <StarCiAccordionItem
                                 key={qna.id}
                                 aria-label={qna.question}
-                                title={
+                            >
+                                <AccordionHeading><AccordionTrigger>
                                     <span
                                         className="text-sm font-medium text-start"
                                         dangerouslySetInnerHTML={{
                                             __html: qna.question,
                                         }}
                                     />
-                                }
-                            >
-                                <div
-                                    className="text-sm text-foreground-600 pb-2 text-start"
-                                    dangerouslySetInnerHTML={{ __html: qna.answer }}
-                                />
+                                </AccordionTrigger></AccordionHeading>
+                                <AccordionPanel>
+                                    <div
+                                        className="text-sm text-foreground-600 pb-2 text-start"
+                                        dangerouslySetInnerHTML={{ __html: qna.answer }}
+                                    />
+                                </AccordionPanel>
                             </StarCiAccordionItem>
                         ))}
                     </StarCiAccordion>

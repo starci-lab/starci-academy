@@ -1,8 +1,8 @@
 "use client"
 
 import React, { useEffect } from "react"
-import { Spacer } from "@heroui/react"
 import { StarCiSpinner } from "@/components/atomic"
+import { Spacer } from "@/components/reuseable"
 
 import { useRouter } from "next/navigation"
 import { pathConfig } from "@/resources/path"
@@ -28,8 +28,7 @@ const Page = () => {
             >
                 <StarCiSpinner 
                     size="lg" 
-                    color="primary" 
-                    variant="wave" 
+                    color="accent" 
                 />
                 <Spacer y={3} />
                 <div

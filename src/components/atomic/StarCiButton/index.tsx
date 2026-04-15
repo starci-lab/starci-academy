@@ -1,6 +1,7 @@
-import { Button, ButtonProps } from "@heroui/react"
+import { Button } from "@heroui/react"
+import type { ButtonRootProps } from "@heroui/react"
 import React, { forwardRef } from "react"
-export const StarCiButton = forwardRef<HTMLButtonElement, ButtonProps>(
+export const StarCiButton = forwardRef<HTMLButtonElement, ButtonRootProps>(
     (props, ref) => {
         return <Button {...props} ref={ref} />
     }

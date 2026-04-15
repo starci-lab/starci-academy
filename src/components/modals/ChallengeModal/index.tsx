@@ -9,12 +9,11 @@ import {
     StarCiModalHeader,
     StarCiScrollShadow,
 } from "../../atomic"
-import { MarkdownContent, ReferenceLinks } from "@/components/reuseable"
-import { useChallengeDisclosure } from "@/hooks/singleton"
+import { MarkdownContent, ReferenceLinks, Spacer } from "@/components/reuseable"
+import { useChallengeOverlayState } from "@/hooks/singleton"
 import { ChallengeDifficulty } from "@/modules/types"
 import { ListNumbersIcon, SwordIcon, TrophyIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import { Spacer } from "@heroui/react"
 import { useAppSelector } from "@/redux"
 import { ChallengeCard } from "./ChallengeCard"
 import _ from "lodash"
@@ -33,7 +32,7 @@ const challengeDifficultyMessageKey = (difficulty: ChallengeDifficulty | undefin
 }
 
 export const ChallengeModal = () => {
-    const { isOpen, onOpenChange } = useChallengeDisclosure()
+    const { isOpen, onOpenChange } = useChallengeOverlayState()
     const challenge = useAppSelector((state) => state.challenge.entity)
     const steps = useMemo(() => _.cloneDeep(challenge?.steps ?? []), [challenge?.steps])
     const references = useMemo(() => _.cloneDeep(challenge?.references ?? []), [challenge?.references])
@@ -41,44 +40,38 @@ export const ChallengeModal = () => {
     return (
         <StarCiModal
             isOpen={isOpen}
-            size="full"
             onOpenChange={onOpenChange}
-            classNames={{
-                header: "max-w-[768px] mx-auto",
-                body: "max-w-[768px] mx-auto",
-            }}
-            scrollBehavior="inside"
         >
-            <StarCiModalContent>
+            <StarCiModalContent size="full" className="[&_header]:max-w-[768px] [&_header]:mx-auto [&_.modal-body]:max-w-[768px] [&_.modal-body]:mx-auto">
                 <StarCiModalHeader
                     title={challenge?.title ?? ""}
                     description={
                         <div className="flex flex-wrap justify-center gap-2">
                             <div className="flex flex-wrap gap-2">
                                 <StarCiChip
-                                    startContent={<TrophyIcon className="size-5" />}
-                                    color="secondary"
+                                    color="accent"
                                     size="sm"
-                                    variant="flat"
+                                    variant="soft"
                                 >
+                                    <TrophyIcon className="size-5" />{" "}
                                     {t("challenge.score", {
                                         score: challenge?.score ?? 0,
                                     })}
                                 </StarCiChip>
                                 <StarCiChip
-                                    startContent={<SwordIcon className="size-5" />}
                                     color="danger"
                                     size="sm"
-                                    variant="flat"
+                                    variant="soft"
                                 >
+                                    <SwordIcon className="size-5" />{" "}
                                     {t(challengeDifficultyMessageKey(challenge?.difficulty))}
                                 </StarCiChip>
                                 <StarCiChip
-                                    startContent={<ListNumbersIcon className="size-5" />}
                                     color="warning"
                                     size="sm"
-                                    variant="flat"
+                                    variant="soft"
                                 >
+                                    <ListNumbersIcon className="size-5" />{" "}
                                     {t("challenge.steps.count", {
                                         count: steps.length,
                                     })}

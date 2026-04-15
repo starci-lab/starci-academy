@@ -8,17 +8,17 @@ import {
     StarCiModalHeader,
 } from "../../atomic"
 import { useLocale, useTranslations } from "next-intl"
-import { useLanguageDisclosure } from "@/hooks/singleton"
+import { useLanguageOverlayState } from "@/hooks/singleton"
 import { useRouter } from "@/i18n/navigation"
 import { usePathname } from "@/i18n/navigation"
-import { Spacer } from "@heroui/react"
+import { Spacer } from "@/components/reuseable"
 import { LanguageCard } from "./LanguageCard"
 import { languages } from "@/resources"
 /**
  * LanguageModal is a modal component that is used to display the language selection.
  */
 export const LanguageModal = () => {
-    const { isOpen, onOpenChange } = useLanguageDisclosure()
+    const { isOpen, onOpenChange } = useLanguageOverlayState()
     const t = useTranslations()
     const locale = useLocale()
     const currentLanguage = languages.find((lang) => lang.code === locale)

@@ -1,15 +1,30 @@
 import {
-  Avatar,
-  AvatarGroup,
-  AvatarGroupProps,
-  AvatarProps,
-} from "@heroui/react";
-import React from "react";
+    Avatar,
+    AvatarFallbackProps,
+    AvatarImageProps,
+    type AvatarRootProps,
+} from "@heroui/react"
+import React from "react"
 
-export const StarCiAvatar = (props: AvatarProps) => {
-  return <Avatar {...props} />;
-};
+/**
+ * StarCiAvatar is the avatar component for the application.
+ */
+export const StarCiAvatar = (props: AvatarRootProps) => {
+    return (
+        <Avatar {...props}/>
+    )
+}
 
-export const StarCiAvatarGroup = (props: AvatarGroupProps) => {
-  return <AvatarGroup {...props} />;
-};
+/**
+ * StarCiAvatarImage is the image component for the avatar.
+ */
+export const StarCiAvatarImage = (props: AvatarImageProps) => {
+    return <Avatar.Image {...props}/>
+}
+
+/**
+ * StarCiAvatarFallback is the fallback component for the avatar.
+ */
+export const StarCiAvatarFallback = (props: AvatarFallbackProps) => {
+    return <Avatar.Fallback {...props}/>
+}

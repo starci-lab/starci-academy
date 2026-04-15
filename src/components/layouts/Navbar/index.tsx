@@ -1,87 +1,103 @@
 "use client"
 import React from "react"
-import { 
-    StarCiLink, 
-    StarCiNavbar, 
-    StarCiNavbarBrand, 
-    StarCiNavbarContent, 
-    StarCiNavbarItem,
-    StarCiNavbarMenuToggle } from "@/components/atomic"
-import { 
-    BookOpenIcon, 
-    ChatCenteredTextIcon, 
-    HouseIcon, 
-} from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { usePathname, useRouter } from "@/i18n/navigation"
 import { pathConfig } from "@/resources/path"
-import { MobileNavbar } from "./MobileNavbar"
+import { useMemo } from "react"
+import { Logo } from "./Logo"
+import { Link } from "@heroui/react"
+import { cn } from "@heroui/react"
 import { AccountMenuDropdown } from "./AccountMenuDropdown"
 
+/**
+ * Navbar item interface
+ */
+export interface NavbarItem {
+    /**
+     * Label of the navbar item
+     */
+    label: string
+    /**
+     * Path of the navbar item
+     */
+    path: string
+    /**
+     * Whether the navbar item is active
+     */
+    isActive: boolean
+}
+
+/**
+ * Navbar is the main navigation component for the application.
+ */
 export const Navbar = () => {
+    /**
+     * Translations hook
+     */
     const t = useTranslations()
+    /**
+     * Router hook
+     */
     const router = useRouter()
+    /**
+     * Pathname hook
+     */
     const pathname = usePathname()
+    /**
+     * Locale hook
+     */
     const locale = useLocale()
-    const [isMenuOpen, setIsMenuOpen] = React.useState(false)
-    const navItems = [
+    /**
+     * Navigation items
+     */
+    const items: Array<NavbarItem> = useMemo(() => [
         { 
             label: t("nav.home"), 
             path: pathConfig().locale().build(), 
-            icon: HouseIcon,
-            isActive: pathname === "/" || pathname === ""
+            isActive: pathname === pathConfig().locale(locale).build() || pathname === "/"
         },
         { 
             label: t("nav.courses"), 
-            path: pathConfig().locale().course().build(), 
-            icon: BookOpenIcon,
-            isActive: pathname.startsWith("/courses") 
+            path: pathConfig().locale(locale).course().build(), 
+            isActive: pathname.startsWith(pathConfig().locale(locale).course().build()) 
         },
         { 
             label: t("nav.contact"), 
-            path: pathConfig().locale().contact().build(), 
-            icon: ChatCenteredTextIcon,
-            isActive: pathname.startsWith("/contact")
+            path: pathConfig().locale(locale).contact().build(), 
+            isActive: pathname.startsWith(pathConfig().locale(locale).contact().build())
         },
-    ]
+    ], [pathname, locale])
+    
     return (
-        <StarCiNavbar isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
-            <StarCiNavbarContent justify="start">
-                <StarCiNavbarBrand>
-                    <div className="font-bold text-inherit">{t("nav.brand")}</div>
-                </StarCiNavbarBrand>
-            </StarCiNavbarContent>
-
-            {/* Center part: Desktop Navigation Links */}
-            <StarCiNavbarContent className="hidden sm:flex gap-4" justify="center">
-                {navItems.map((item) => (
-                    <StarCiNavbarItem key={item.path} isActive={item.isActive}>
-                        <StarCiLink color="foreground" onPress={() => router.push(item.path)}>
-                            {item.label}
-                        </StarCiLink>
-                    </StarCiNavbarItem>
-                ))}
-            </StarCiNavbarContent>
-
-            {/* Right part: Icons and Profile */}
-            <StarCiNavbarContent justify="end">
-                <StarCiNavbarItem className="max-sm:!hidden">
+        <nav className="border-b border-divider px-6 py-3">
+            {/**
+             * Navbar content
+             */}
+            <div className="max-w-[1024px] mx-auto flex items-center justify-between">
+                {/**
+                 * Logo
+                 */}
+                <Logo className="flex-1 justify-start" />
+                {/**
+                 * Navbar items
+                 */}
+                <div className="flex items-center gap-3 flex-1 justify-center">
+                    {items.map(
+                        (item) => (
+                            <Link key={item.path} onPress={() => router.push(item.path)}>
+                                <span className={cn("text-sm", item.isActive ? "text-accent" : "")}>{item.label}</span>
+                            </Link>
+                        )
+                    )
+                    }
+                </div>
+                {/**
+                 * User actions
+                 */}
+                <div className="flex items-center gap-2 flex-1 justify-end">
                     <AccountMenuDropdown />
-                </StarCiNavbarItem>
-                <StarCiNavbarMenuToggle
-                    aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-                    className="sm:hidden rounded-none border-1 border-foreground-200 h-10 w-10 min-w-10 p-0 flex items-center justify-center transition-all bg-transparent"
-                />
-            </StarCiNavbarContent>
-            {/* Mobile Navigation Menu */}
-            <MobileNavbar 
-                navItems={navItems} 
-                isMenuOpen={isMenuOpen} 
-                setIsMenuOpen={setIsMenuOpen} 
-                locale={locale} 
-            />
-
-        </StarCiNavbar>
-
+                </div>
+            </div>
+        </nav>
     )
 }

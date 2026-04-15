@@ -8,44 +8,36 @@ import {
     StarCiModalContent,
     StarCiModalHeader,
 } from "../../atomic"
-import { useLessonVideoDisclosure } from "@/hooks/singleton"
+import { useLessonVideoOverlayState } from "@/hooks/singleton"
 import { useAppSelector } from "@/redux"
 import { ClockIcon, LinkIcon } from "@phosphor-icons/react"
 import { dayjs } from "@/modules/dayjs"
-import { HostPlatformChip, LessonVideoKindChip, VideoRenderer } from "@/components/reuseable"
+import { HostPlatformChip, LessonVideoKindChip, Spacer, VideoRenderer } from "@/components/reuseable"
 import { LessonVideoKind, VideoHostPlatform } from "@/modules/types"
-import { Spacer } from "@heroui/react"
-
 /**
  * The modal for the lesson video.
  * @returns The modal for the lesson video.
  */
 export const LessonVideoModal = () => {
-    const { isOpen, onOpenChange } = useLessonVideoDisclosure()
+    const { isOpen, onOpenChange } = useLessonVideoOverlayState()
     const lessonVideo = useAppSelector((state) => state.lessonVideo.entity)
     return (
         <StarCiModal
             isOpen={isOpen}
-            size="full"
-            scrollBehavior="inside"
             onOpenChange={onOpenChange}
-            classNames={{
-                header: "max-w-[640px] mx-auto",
-                body: "max-w-[640px] mx-auto",
-            }}
         >
-            <StarCiModalContent>
+            <StarCiModalContent size="full" className="[&_header]:max-w-[640px] [&_header]:mx-auto [&_.modal-body]:max-w-[640px] [&_.modal-body]:mx-auto">
                 <StarCiModalHeader
                     title={lessonVideo?.title ?? ""}
                     description={
                         <div className="w-full place-content-center flex">
                             <div className="flex items-center gap-2">
                                 <StarCiChip
-                                    startContent={<ClockIcon className="size-4" />}
-                                    color="primary"
+                                    color="accent"
                                     size="sm"
-                                    variant="flat"
+                                    variant="soft"
                                 >
+                                    <ClockIcon className="size-4" />{" "}
                                     {dayjs.duration(lessonVideo?.durationMs ?? 0).format("HH:mm")}
                                 </StarCiChip>
                                 <HostPlatformChip hostPlatform={lessonVideo?.hostPlatform ?? VideoHostPlatform.Youtube} />
@@ -65,12 +57,13 @@ export const LessonVideoModal = () => {
                         <StarCiLink
                             href={lessonVideo?.url ?? ""}
                             target="_blank"
-                            size="sm"
-                            showAnchorIcon
-                            anchorIcon={<LinkIcon className="size-5" />}
                             rel="noopener noreferrer"
+                            className="text-sm"
                         >
-                            {lessonVideo?.url ?? ""}
+                            <span className="flex items-center gap-1">
+                                {lessonVideo?.url ?? ""}
+                                <LinkIcon className="size-5" />
+                            </span>
                         </StarCiLink>
                     </div>
                     <Spacer y={6} />
@@ -86,6 +79,6 @@ export const LessonVideoModal = () => {
                     ) : null}
                 </StarCiModalBody>
             </StarCiModalContent>
-        </StarCiModal >
+        </StarCiModal>
     )
 }

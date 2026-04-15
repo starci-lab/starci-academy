@@ -1,6 +1,6 @@
 import React from "react"
 import { CourseCard } from "./CourseCard"
-import { Spacer } from "@heroui/react"
+import { Spacer } from "@/components/reuseable"
 import { useTranslations } from "next-intl"
 import { useAppSelector } from "@/redux"
 export const Courses = () => {

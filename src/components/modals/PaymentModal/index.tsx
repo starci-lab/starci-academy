@@ -13,7 +13,7 @@ import {
     StarCiChip,
     StarCiSpinner,
 } from "../../atomic"
-import { useMutateCourseEnrollSwr, usePaymentDisclosure } from "@/hooks/singleton"
+import { useMutateCourseEnrollSwr, usePaymentOverlayState } from "@/hooks/singleton"
 import { useAppSelector } from "@/redux"
 import { PaymentType } from "@/modules/types"
 import { assetConfig } from "@/resources"
@@ -23,7 +23,7 @@ import { useTranslations } from "next-intl"
 
 
 export const PaymentModal = () => {
-    const { isOpen, onOpenChange } = usePaymentDisclosure()
+    const { isOpen, onOpenChange } = usePaymentOverlayState()
     const swr = useMutateCourseEnrollSwr()
     const course = useAppSelector((state) => state.course.entity)
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentType | null>(null)
@@ -56,11 +56,9 @@ export const PaymentModal = () => {
     return (
         <StarCiModal
             isOpen={isOpen}
-            size="xs"
             onOpenChange={onOpenChange}
-            scrollBehavior="inside"
         >
-            <StarCiModalContent>
+            <StarCiModalContent size="xs">
                 <StarCiModalHeader
                     title={t("payment.title")}
                     description={t("payment.desc")}
@@ -70,41 +68,44 @@ export const PaymentModal = () => {
                         {paymentData.paymentMethods.map((paymentMethod, index) => (
                             <React.Fragment key={paymentMethod.id}>
                                 <StarCiCard
-                                    shadow="none"
-                                    radius="none"
-                                    isPressable={!paymentMethod.disabled}
-                                    className="bg-default/40"
-                                    onPress={
-                                        async () => {
-                                            let checkoutUrl = ""
-                                            setSelectedPaymentMethod(paymentMethod.type)
-                                            const success = await runGraphQLWithToast(
-                                                async () => {
-                                                    const response = await swr.trigger(
-                                                        {
-                                                            request: {
-                                                                courseId: course?.id ?? "",
-                                                                paymentType: paymentMethod.type,
-                                                                payosReturnUrl: window.location.href,
-                                                                payosCancelUrl: window.location.href,
-                                                            },
+                                    className={
+                                        paymentMethod.disabled
+                                            ? "bg-default/40 shadow-none rounded-none opacity-60 cursor-not-allowed"
+                                            : "bg-default/40 shadow-none rounded-none cursor-pointer transition-colors hover:bg-default/55 active:scale-[0.99]"
+                                    }
+                                    onClick={
+                                        paymentMethod.disabled
+                                            ? undefined
+                                            : async () => {
+                                                let checkoutUrl = ""
+                                                setSelectedPaymentMethod(paymentMethod.type)
+                                                const success = await runGraphQLWithToast(
+                                                    async () => {
+                                                        const response = await swr.trigger(
+                                                            {
+                                                                request: {
+                                                                    courseId: course?.id ?? "",
+                                                                    paymentType: paymentMethod.type,
+                                                                    payosReturnUrl: window.location.href,
+                                                                    payosCancelUrl: window.location.href,
+                                                                },
+                                                            }
+                                                        )
+                                                        if (!response.data?.courseEnroll) {
+                                                            throw new Error(response.error?.message)
                                                         }
-                                                    )
-                                                    if (!response.data?.courseEnroll) {
-                                                        throw new Error(response.error?.message)
+                                                        checkoutUrl = response.data.courseEnroll.data?.checkoutUrl ?? ""
+                                                        return response.data?.courseEnroll
+                                                    },
+                                                    {
+                                                        showSuccessToast: false,
+                                                        showErrorToast: true,
                                                     }
-                                                    checkoutUrl = response.data.courseEnroll.data?.checkoutUrl ?? ""
-                                                    return response.data?.courseEnroll
-                                                },
-                                                {
-                                                    showSuccessToast: false,
-                                                    showErrorToast: true,
+                                                )
+                                                if (success) {
+                                                    router.push(checkoutUrl)
                                                 }
-                                            )
-                                            if (success) {
-                                                router.push(checkoutUrl)
                                             }
-                                        }
                                     }
                                 >
                                     <StarCiCardBody>
@@ -124,7 +125,7 @@ export const PaymentModal = () => {
                                                     {paymentMethod.disabled && (
                                                         <StarCiChip
                                                             color="danger"
-                                                            variant="flat"
+                                                            variant="soft"
                                                             size="sm"
                                                             className="text-xs"
                                                         >

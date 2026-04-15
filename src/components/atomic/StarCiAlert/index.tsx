@@ -1,15 +1,10 @@
-import { Alert, AlertProps, cn } from "@heroui/react"
+import { Alert } from "@heroui/react"
+import type { AlertRootProps } from "@heroui/react"
 import React from "react"
 
-export const StarCiAlert = (props: AlertProps) => {
+export const StarCiAlert = (props: AlertRootProps) => {
     return <Alert 
         {...props} 
-        classNames={
-            { 
-                title: cn("mb-2 text-sm", props.classNames?.title), 
-                description: cn("text-xs", props.classNames?.description),
-                ...props.classNames, 
-            }
-        } 
+        className="bg-transparent border-divider border"
     />
 }   

@@ -1,6 +1,7 @@
-import { cn, Skeleton, SkeletonProps } from "@heroui/react"
+import { cn, Skeleton } from "@heroui/react"
+import type { SkeletonRootProps } from "@heroui/react"
 import React from "react"
 
-export const StarCiSkeleton = (props: SkeletonProps) => {
-    return <Skeleton {...props} disableAnimation className={cn(props.className, "rounded-medium")}/>
+export const StarCiSkeleton = (props: SkeletonRootProps) => {
+    return <Skeleton {...props} animationType="none" className={cn(props.className, "rounded-medium")}/>
 }

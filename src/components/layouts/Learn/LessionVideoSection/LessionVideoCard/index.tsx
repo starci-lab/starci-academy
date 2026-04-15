@@ -1,6 +1,6 @@
 import { StarCiCard, StarCiCardBody, StarCiChip, StarCiImage } from "@/components/atomic"
 import { HostPlatformChip, LessonVideoKindChip } from "@/components/reuseable"
-import { useLessonVideoDisclosure } from "@/hooks/singleton"
+import { useLessonVideoOverlayState } from "@/hooks/singleton"
 import { dayjs } from "@/modules/dayjs"
 import { LessonVideoEntity, LessonVideoKind, VideoHostPlatform } from "@/modules/types"
 import { useAppDispatch } from "@/redux"
@@ -23,12 +23,12 @@ export interface VideoLessionCardProps {
  * @returns The card for the lesson video.
  */
 export const VideoLessionCard = ({ lessonVideo }: VideoLessionCardProps) => {
-    const { onOpen } = useLessonVideoDisclosure()
+    const { onOpen } = useLessonVideoOverlayState()
     const dispatch = useAppDispatch()
     return (
         <StarCiCard
-            isPressable={true}
-            onPress={() => {
+            className="cursor-pointer"
+            onClick={() => {
                 dispatch(setLessonVideoId(lessonVideo.id))
                 dispatch(setLessonVideo(lessonVideo))
                 onOpen()
@@ -42,11 +42,11 @@ export const VideoLessionCard = ({ lessonVideo }: VideoLessionCardProps) => {
                         <div className="text-sm text-foreground-500 text-justify italic line-clamp-3">{lessonVideo.description}</div>
                         <div className="flex items-center gap-2">
                             <StarCiChip
-                                startContent={<ClockIcon className="size-4" />}
-                                color="primary"
+                                color="accent"
                                 size="sm"
-                                variant="flat"
+                                variant="soft"
                             >
+                                <ClockIcon className="size-4" />
                                 {dayjs.duration(lessonVideo?.durationMs ?? 0).format("HH:mm")}
                             </StarCiChip>
                             <HostPlatformChip hostPlatform={lessonVideo?.hostPlatform ?? VideoHostPlatform.Youtube} />

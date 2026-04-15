@@ -7,9 +7,10 @@ import {
 } from "@/modules/types"
 import { motion } from "framer-motion"
 import numeral from "numeral"
-import { Spacer } from "@heroui/react"
+import { Spacer } from "@/components/reuseable"
 import Decimal from "decimal.js"
 import { StarCiChip, StarCiDivider, StarCiTooltip } from "@/components/atomic"
+import { TooltipTrigger, TooltipContent } from "@heroui/react"
 import { computePercentage } from "@/modules/utils"
 import { useAppSelector } from "@/redux"
 import _ from "lodash"
@@ -174,10 +175,13 @@ export const Stepper = () => {
                         (pricingPhase: PricingPhaseEntity) => {
                             return (
                                 <div key={pricingPhase.id} className="flex-1">
-                                    <StarCiTooltip content={phaseData[pricingPhase.phase].description}>
-                                        <div className="text-center text-sm font-medium">
-                                            {phaseData[pricingPhase.phase].name}
-                                        </div>
+                                    <StarCiTooltip>
+                                        <TooltipTrigger>
+                                            <div className="text-center text-sm font-medium">
+                                                {phaseData[pricingPhase.phase].name}
+                                            </div>
+                                        </TooltipTrigger>
+                                        <TooltipContent>{phaseData[pricingPhase.phase].description}</TooltipContent>
                                     </StarCiTooltip>
                                 </div>
                             )
@@ -198,7 +202,7 @@ export const Stepper = () => {
                                     <Spacer y={1} />
                                     {
                                         pricingPhase.price != null && (
-                                            <StarCiChip color="primary" size="sm" variant="flat">
+                                            <StarCiChip color="accent" size="sm" variant="soft">
                                                 {`Save ${computePercentage(
                                                     {
                                                         numerator: new Decimal(calculateDiscount(pricingPhaseDisplayPrice(pricingPhase), listPrice)),

@@ -11,8 +11,8 @@ import {
     StarCiChip,
     StarCiButton,
 } from "../../atomic"
-import { useFeedbackDetailsDisclosure, useSubmissionAttemptsDisclosure } from "@/hooks/singleton"
-import { Spacer } from "@heroui/react"
+import { useFeedbackDetailsOverlayState, useSubmissionAttemptsOverlayState } from "@/hooks/singleton"
+import { Spacer } from "@/components/reuseable"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import { setSubmissionAttemptId } from "@/redux/slices"
 /**
@@ -20,8 +20,8 @@ import { setSubmissionAttemptId } from "@/redux/slices"
  */
 export const SubmissionAttemptsDrawer = () => {
     const dispatch = useAppDispatch()
-    const { isOpen, onOpenChange } = useSubmissionAttemptsDisclosure()
-    const { onOpen: onOpenFeedbackDetails } = useFeedbackDetailsDisclosure()
+    const { isOpen, onOpenChange } = useSubmissionAttemptsOverlayState()
+    const { onOpen: onOpenFeedbackDetails } = useFeedbackDetailsOverlayState()
     const submissionAttempts = useAppSelector((state) => state.submissionAttempt.submissionAttempts)
     const challengeSubmissions = useAppSelector((state) => state.challenge.challengeSubmissions)
     const challengeSubmissionId = useAppSelector((state) => state.challenge.challengeSubmissionId)
@@ -48,12 +48,12 @@ export const SubmissionAttemptsDrawer = () => {
                         {
                             submissionAttempts.map(
                                 (submissionAttempt) => (
-                                    <StarCiCard key={submissionAttempt.id} className="border border-divider bg-transparent" shadow="none">
+                                    <StarCiCard key={submissionAttempt.id} className="border border-divider bg-transparent">
                                         <StarCiCardBody>
                                             <div>
                                                 <div className="flex items-center gap-3 justify-between">
                                                     <div className="text-sm">Attempt {submissionAttempt.attemptNumber}</div>
-                                                    <StarCiChip color={getScoreStyle(submissionAttempt.score)} size="sm" variant="flat">
+                                                    <StarCiChip color={getScoreStyle(submissionAttempt.score)} size="sm" variant="soft">
                                                         {submissionAttempt.score}/{challengeSubmission?.score}
                                                     </StarCiChip>
                                                 </div>
@@ -62,8 +62,7 @@ export const SubmissionAttemptsDrawer = () => {
                                                 <Spacer y={3} />
                                                 <div className="flex items-center gap-2">
                                                     <StarCiButton
-                                                        color="primary"
-                                                        variant="flat"
+                                                        variant="tertiary"
                                                         onPress={() => {
                                                             dispatch(setSubmissionAttemptId(submissionAttempt.id))
                                                             onOpenFeedbackDetails()
@@ -75,8 +74,7 @@ export const SubmissionAttemptsDrawer = () => {
                                                         onPress={() => {
                                                             window.open(submissionAttempt.submissionUrl, "_blank")
                                                         }}
-                                                        color="primary"
-                                                        variant="light"
+                                                        variant="ghost"
                                                     >
                                                         View Submission
                                                     </StarCiButton>

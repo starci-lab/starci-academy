@@ -1,7 +1,7 @@
 "use client"
 import React from "react"
-import { Link, Spacer } from "@heroui/react"
-import { BookOpenIcon, LightbulbFilamentIcon, PencilSimpleLineIcon, WarningCircleIcon } from "@phosphor-icons/react"
+import { Link } from "@heroui/react"
+import { BookOpenIcon, PencilSimpleLineIcon } from "@phosphor-icons/react"
 import { 
     StarCiAlert, 
     StarCiBreadcrumb, 
@@ -16,14 +16,15 @@ import { Modules } from "./Modules"
 import { Stepper } from "./Stepper"
 import { ValuePropositions } from "./ValuePropositions"
 import { QnA } from "./QnA"
-import { useQueryCourseEnrollmentStatusSwr, usePaymentDisclosure, useQueryCourseSwr } from "@/hooks/singleton"
+import { useQueryCourseEnrollmentStatusSwr, usePaymentOverlayState, useQueryCourseSwr } from "@/hooks/singleton"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { useAppSelector } from "@/redux"
 import { pathConfig } from "@/resources"
+import { Spacer } from "@/components/reuseable"
 
 export const Course = () => {
-    const { onOpen } = usePaymentDisclosure()
+    const { onOpen } = usePaymentOverlayState()
     const enrollmentSwr = useQueryCourseEnrollmentStatusSwr()
     const enrollmentPayload = enrollmentSwr.data?.courseEnrollmentStatus?.data
     const isEnrolled = enrollmentPayload?.isEnrolled === true
@@ -68,7 +69,7 @@ export const Course = () => {
             <Spacer y={12} />
             <div className="grid grid-cols-1 md:grid-cols-5 gap-12">
                 <div className="order-2 md:order-1 md:col-span-3">
-                    <StarCiAlert icon={<LightbulbFilamentIcon size={24} />} className="text-sm" color="secondary" variant="faded">
+                    <StarCiAlert className="text-sm" status="default">
                         {
                             isLoading ? (
                                 <div className="w-full">
@@ -82,7 +83,7 @@ export const Course = () => {
                         }
                     </StarCiAlert>
                     <Spacer y={6} />
-                    <StarCiAlert title={t("course.prerequisites")} icon={<WarningCircleIcon size={24} />} className="text-sm" color="warning" variant="faded">
+                    <StarCiAlert className="text-sm" status="warning">
                         {
                             isLoading ? (
                                 <div className="w-full">
@@ -116,20 +117,19 @@ export const Course = () => {
                             {
                                 !isEnrolled ? (
                                     <StarCiButton 
-                                        color="primary" 
+                                        variant="primary" 
                                         size="lg" 
-                                        startContent={<PencilSimpleLineIcon className="w-5 h-5" />}
                                         className="w-full"
                                         isDisabled={isEnrolled}
                                         onPress={onOpen}
                                     >
+                                        <PencilSimpleLineIcon className="w-5 h-5" />
                                         {t("course.enroll")}
                                     </StarCiButton>
                                 ) : (
                                     <StarCiButton 
-                                        color="primary" 
+                                        variant="primary" 
                                         size="lg" 
-                                        startContent={<BookOpenIcon className="w-5 h-5" />}
                                         className="w-full"
                                         isDisabled={!isEnrolled}
                                         onPress={() => router.push(
@@ -143,6 +143,7 @@ export const Course = () => {
                                         )
                                         }
                                     >
+                                        <BookOpenIcon className="w-5 h-5" />
                                         {t("course.continueLearning")}
                                     </StarCiButton>
                                 )}

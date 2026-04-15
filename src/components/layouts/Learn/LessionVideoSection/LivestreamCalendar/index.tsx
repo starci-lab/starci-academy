@@ -4,12 +4,12 @@ import React, { useEffect, useMemo, useState } from "react"
 import { useFormatter, useTranslations } from "next-intl"
 import { CalendarIcon, CalendarBlankIcon } from "@phosphor-icons/react"
 import { StarCiButton, StarCiSkeleton } from "@/components/atomic"
-import { useLivestreamCalendarDisclosure, useQueryLivestreamSessionsSwr } from "@/hooks/singleton"
+import { useLivestreamCalendarOverlayState, useQueryLivestreamSessionsSwr } from "@/hooks/singleton"
 import { useAppSelector } from "@/redux"
 import { dayjs } from "@/modules/dayjs"
 import { DayOfWeek, type LivestreamSessionEntity } from "@/modules/types"
 import { CalendarDate } from "@internationalized/date"
-import { Spacer } from "@heroui/react"
+import { Spacer } from "@/components/reuseable"
 
 /** JS `Date#getDay()` (0 = Sunday … 6 = Saturday). */
 export const dayOfWeekToNumber: Record<DayOfWeek, number> = {
@@ -115,7 +115,7 @@ export const countdownParts = (totalSeconds: number): CountdownParts => {
 export const LivestreamCalendar = () => {
     const t = useTranslations()
     const format = useFormatter()
-    const { onOpen } = useLivestreamCalendarDisclosure()
+    const { onOpen } = useLivestreamCalendarOverlayState()
     const { isLoading, data } = useQueryLivestreamSessionsSwr()
     const sessions = useAppSelector((state) => state.livestreamSession.entities)
     const [nowMs, setNowMs] = useState(() => Date.now())
@@ -166,11 +166,10 @@ export const LivestreamCalendar = () => {
                 )}
                 <Spacer y={3} />
                 <StarCiButton
-                    color="default"
-                    variant="flat"
-                    startContent={<CalendarBlankIcon className="w-5 h-5" />}
+                    variant="tertiary"
                     onPress={onOpen}
                 >
+                    <CalendarBlankIcon className="w-5 h-5" />
                     {t("livestream.calendar.button")}
                 </StarCiButton>
             </div>

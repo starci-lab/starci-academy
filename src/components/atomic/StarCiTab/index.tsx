@@ -1,7 +1,8 @@
-import { Tab, Tabs, TabsProps } from "@heroui/react"
+import { Tab, Tabs } from "@heroui/react"
+import type { TabsRootProps } from "@heroui/react"
 import React from "react"
 
-export const StarCiTabs = (props: TabsProps) => {
+export const StarCiTabs = (props: TabsRootProps) => {
     return <Tabs {...props} />
 }
 export const StarCiTab = Tab

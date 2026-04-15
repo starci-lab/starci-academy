@@ -54,11 +54,11 @@ export const HostPlatformChip = ({ hostPlatform }: HostPlatformChipProps) => {
     const { icon, label } = useMemo(() => renderHostPlatform(), [hostPlatform])
     return (
         <StarCiChip 
-            startContent={icon} 
-            color="secondary" 
+            color="accent" 
             size="sm" 
-            variant="flat"
+            variant="soft"
         >
+            {icon}
             {t(label)}
         </StarCiChip>
     )

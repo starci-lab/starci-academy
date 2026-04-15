@@ -3,12 +3,11 @@
 import React from "react"
 import { useTranslations } from "next-intl"
 import { useAppDispatch, useAppSelector } from "@/redux"
-import { Spacer } from "@heroui/react"
 import { ChallengeCard } from "./ChallengeCard"
-import { StarCiPagination, StarCiSkeleton } from "@/components/atomic"
+import { StarCiButton, StarCiSkeleton } from "@/components/atomic"
 import { useQueryChallengesSwr } from "@/hooks/singleton"
 import { ChallengeCardSkeleton } from "./ChallengeCardSkeleton"
-import { SearchBar } from "@/components/reuseable"
+import { SearchBar, Spacer } from "@/components/reuseable"
 import { setChallengePageNumber } from "@/redux/slices"
 import _ from "lodash"
 
@@ -55,14 +54,19 @@ export const ChallengeSection = () => {
                         count && (
                             <>
                                 <Spacer y={4} />
-                                <StarCiPagination
-                                    total={Math.ceil((count ?? 0) / (limit ?? 10))}
-                                    page={pageNumber ?? 1}
-                                    onChange={(page) => {
-                                        dispatch(setChallengePageNumber(page))
-                                    }
-                                    }
-                                />
+                                <div className="flex gap-2 items-center justify-center">
+                                    {Array.from({ length: Math.ceil((count ?? 0) / (limit ?? 10)) }, (_, i) => i + 1).map(p => (
+                                        <StarCiButton
+                                            key={p}
+                                            size="sm"
+                                            variant={p === (pageNumber ?? 1) ? "primary" : "ghost"}
+                                            isIconOnly
+                                            onPress={() => dispatch(setChallengePageNumber(p))}
+                                        >
+                                            {p}
+                                        </StarCiButton>
+                                    ))}
+                                </div>
                             </>
                         )
                     }

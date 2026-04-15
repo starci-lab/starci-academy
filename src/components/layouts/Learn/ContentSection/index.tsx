@@ -3,13 +3,12 @@
 import React from "react"
 import { useTranslations } from "next-intl"
 import { useAppDispatch, useAppSelector } from "@/redux"
-import { Spacer } from "@heroui/react"
 import { ContentCard } from "./ContentCard"
 import { useQueryContentsSwr } from "@/hooks/singleton"
 import { ContentCardSkeleton } from "./ContentCardSkeleton"
-import { StarCiPagination, StarCiSkeleton } from "@/components/atomic"
+import { StarCiButton, StarCiSkeleton } from "@/components/atomic"
 import _ from "lodash"
-import { SearchBar } from "@/components/reuseable"
+import { SearchBar, Spacer } from "@/components/reuseable"
 import { setContentPageNumber } from "@/redux/slices/content"
 
 /**
@@ -62,13 +61,19 @@ export const ContentSection = () => {
                                 count && (
                                     <>
                                         <Spacer y={4} />
-                                        <StarCiPagination
-                                            total={Math.ceil((count ?? 0) / (limit ?? 10))}
-                                            page={pageNumber ?? 1}
-                                            onChange={(page) => {
-                                                dispatch(setContentPageNumber(page))
-                                            }}
-                                        />
+                                        <div className="flex gap-2 items-center justify-center">
+                                            {Array.from({ length: Math.ceil((count ?? 0) / (limit ?? 10)) }, (_, i) => i + 1).map(p => (
+                                                <StarCiButton
+                                                    key={p}
+                                                    size="sm"
+                                                    variant={p === (pageNumber ?? 1) ? "primary" : "ghost"}
+                                                    isIconOnly
+                                                    onPress={() => dispatch(setContentPageNumber(p))}
+                                                >
+                                                    {p}
+                                                </StarCiButton>
+                                            ))}
+                                        </div>
                                     </>
                                 )
                             }

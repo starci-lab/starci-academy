@@ -15,8 +15,8 @@ export const UserStreak = () => {
           </div>
         </StarCiDropdownTrigger>
         <StarCiDropdownMenu aria-label="User streak information" className="min-w-64">
-          <StarCiDropdownSection title={t("streak.current")}>
-            <StarCiDropdownItem key="streaks" isReadOnly className="cursor-default opacity-100 data-[hover=true]:bg-transparent">
+          <StarCiDropdownSection>
+            <StarCiDropdownItem key="streaks" className="cursor-default opacity-100 data-[hover=true]:bg-transparent">
               <div className="grid grid-cols-2 gap-4">
                 <div className="flex flex-col gap-1 rounded-lg bg-pink-50/50 p-2 text-center dark:bg-pink-950/20">
                   <p className="text-xs font-semibold text-pink-500 underline decoration-pink-300 underline-offset-4">
@@ -40,8 +40,8 @@ export const UserStreak = () => {
             </StarCiDropdownItem>
           </StarCiDropdownSection>
 
-          <StarCiDropdownSection showDivider={false} className="border-t border-divider pt-2 mt-2">
-            <StarCiDropdownItem key="weekly" isReadOnly className="cursor-default opacity-100 data-[hover=true]:bg-transparent">
+          <StarCiDropdownSection className="border-t border-divider pt-2 mt-2">
+            <StarCiDropdownItem key="weekly" className="cursor-default opacity-100 data-[hover=true]:bg-transparent">
               <div className="flex justify-between px-1">
                 {["M", "T", "W", "T", "F", "S", "S"].map((day, i) => (
                   <div

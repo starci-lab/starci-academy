@@ -1,12 +1,12 @@
 import {
     Table, 
-    TableProps, 
     TableHeader, 
     TableColumn, 
     TableBody, 
     TableRow, 
     TableCell
 } from "@heroui/react"
+import type { TableProps } from "@heroui/react"
 import React, { forwardRef } from "react"
 
 export const StarCiTable = forwardRef<HTMLTableElement, TableProps>((props, ref) => {

@@ -1,8 +1,8 @@
 import React from "react"
-import { Spacer } from "@heroui/react"
+import { Spacer } from "@/components/reuseable"
 import { StarCiButton } from "@/components/atomic"
 import {
-    useChallengeSubmissionDisclosure,
+    useChallengeSubmissionOverlayState,
 } from "@/hooks/singleton"
 import { SwordIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
@@ -10,7 +10,7 @@ import { useAppSelector } from "@/redux"
 import { TrophyIcon } from "@phosphor-icons/react"
 
 export const ChallengeCard = () => {
-    const { onOpen } = useChallengeSubmissionDisclosure()
+    const { onOpen } = useChallengeSubmissionOverlayState()
     const challenge = useAppSelector((state) => state.challenge.entity)
     const submissions = useAppSelector(
         (state) => state.challenge.challengeSubmissions,
@@ -40,12 +40,13 @@ export const ChallengeCard = () => {
                 </div>
                 <Spacer y={3} />
                 <StarCiButton
-                    color="default"
-                    variant="flat"
-                    startContent={<SwordIcon className="size-5" />}
+                    variant="tertiary"
                     onPress={onOpen}
                 >
-                    {t("challenge.battle.cta")}
+                    <span className="inline-flex items-center gap-2">
+                        <SwordIcon className="size-5" />
+                        {t("challenge.battle.cta")}
+                    </span>
                 </StarCiButton>
             </div>
         </div>

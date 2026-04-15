@@ -10,41 +10,33 @@ import {
     StarCiModalHeader,
     StarCiScrollShadow,
 } from "../../atomic"
-import { MarkdownContent } from "@/components/reuseable"
+import { MarkdownContent, Spacer } from "@/components/reuseable"
 import { ContentReferences } from "./ContentReferences"
-import { useContentDisclosure } from "@/hooks/singleton"
+import { useContentOverlayState } from "@/hooks/singleton"
 import { ClockIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { useAppSelector } from "@/redux"
-import { Spacer } from "@heroui/react"
-
 export const ContentModal = () => {
-    const { isOpen, onOpenChange } = useContentDisclosure()
+    const { isOpen, onOpenChange } = useContentOverlayState()
     const t = useTranslations()
     const content = useAppSelector((state) => state.content.entity)
     const references = useMemo(() => _.cloneDeep(content?.references ?? []), [content?.references])
     return (
         <StarCiModal
             isOpen={isOpen}
-            size="full"
             onOpenChange={onOpenChange}
-            classNames={{
-                header: "max-w-[768px] mx-auto",
-                body: "max-w-[768px] mx-auto",
-            }}
-            scrollBehavior="inside"
         >
-            <StarCiModalContent>
+            <StarCiModalContent size="full" className="[&_header]:max-w-[768px] [&_header]:mx-auto [&_.modal-body]:max-w-[768px] [&_.modal-body]:mx-auto">
                 <StarCiModalHeader
                     title={content?.title ?? ""}
                     description={
                         <div className="flex flex-wrap justify-center gap-2">
                             <StarCiChip
-                                startContent={<ClockIcon className="size-4" />}
-                                color="primary"
+                                color="accent"
                                 size="sm"
-                                variant="flat"
+                                variant="soft"
                             >
+                                <ClockIcon className="size-4" />{" "}
                                 {t("content.minutesRead", {
                                     minutes: content?.minutesRead ?? 0,
                                 })}

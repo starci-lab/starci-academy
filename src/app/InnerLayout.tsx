@@ -1,16 +1,17 @@
 "use client"
 import {
     HeroUIProvider,
+    Navbar,
     NextThemesProvider,
     SwrProvider,
-    Navbar,
+    // Navbar,
 } from "../components"
 import { ToastProvider } from "@heroui/react"
 import React, { PropsWithChildren, Suspense } from "react"
 import { SingletonHookProvider } from "@/hooks/singleton"
 import { ReduxProvider } from "@/redux"
-import { UseEffects } from "@/hooks"
-import { ModalContainer, DrawerContainer } from "../components"
+// import { UseEffects } from "@/hooks"
+import { ModalContainer } from "@/components/modals"
 
 export const InnerLayout = ({ children }: PropsWithChildren) => {
     return (
@@ -25,10 +26,12 @@ export const InnerLayout = ({ children }: PropsWithChildren) => {
                     <ReduxProvider>
                         <SwrProvider>
                             <SingletonHookProvider>
-                                <UseEffects />
                                 <Navbar />
                                 <ModalContainer />
-                                <DrawerContainer />
+                                {/* <UseEffects />
+                                <Navbar />
+                                
+                                <DrawerContainer /> */}
                                 {children}
                             </SingletonHookProvider>
                             <ToastProvider />

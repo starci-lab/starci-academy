@@ -1,170 +1,201 @@
-import { 
-    StarCiAvatar, 
-    StarCiDropdown, 
-    StarCiDropdownTrigger, 
-    StarCiDropdownMenu, 
-    StarCiDropdownSection, 
-    StarCiDropdownItem, 
-    StarCiButton, 
-    StarCiBadge
-} from "@/components/atomic"
-import React from "react"
-import { useAccountMenuDisclosure, useAuthenticationDisclosure, useKeycloak } from "@/hooks/singleton"
-import { BellIcon, CaretRightIcon, ListIcon } from "@phosphor-icons/react"
+
+import {
+    Avatar,
+    AvatarFallback,
+    Badge,
+    Button,
+    Dropdown,
+    DropdownItem,
+    DropdownMenu,
+    DropdownPopover,
+    DropdownSection,
+    Link,
+    Separator,
+    Spinner,
+} from "@heroui/react"
+import React, { useMemo } from "react"
+import {
+    useAccountMenuOverlayState,
+    useAuthenticationOverlayState,
+    useKeycloak,
+    useLanguageOverlayState,
+} from "@/hooks/singleton"
+import { BellIcon, CaretRightIcon } from "@phosphor-icons/react"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import { languages } from "@/resources/constants"
-import { useLocale } from "next-intl"
-import { useLanguageDisclosure } from "@/hooks/singleton"
-import { DarkLightModeSwitch } from "../../DarkLightMode"
+import { useLocale, useTranslations } from "next-intl"
+import { DarkLightModeSwitch } from "./DarkLightMode"
 import { setAuthenticationModalTab } from "@/redux/slices"
 import { AuthenticationModalTab } from "@/redux/slices/tabs"
 import { truncate } from "lodash"
+import { cn } from "@heroui/react"
+import { pathConfig } from "@/resources/path"
+import { WithClassNames } from "@/modules/types"
+import { UserIcon } from "@phosphor-icons/react"
 
-export const AccountMenuDropdown = () => {
-    const { isOpen, onOpenChange, onClose } = useAccountMenuDisclosure()
+/**
+ * Props for AccountMenuDropdown component.
+ */
+export type AccountMenuDropdownProps = WithClassNames<{
+    button?: string
+    menuContainer?: string
+}>
+
+/**
+ * AccountActionItem interface
+ */
+export interface AccountActionItem {
+    key: string
+    label: string
+    variant: "primary" | "tertiary"
+    tab: AuthenticationModalTab
+}
+/**
+ * AccountMenuDropdown displays account actions and settings in navbar.
+ * @param props AccountMenuDropdownProps used for custom class names.
+ */
+export const AccountMenuDropdown = (props: AccountMenuDropdownProps) => {
+    const { classNames } = props
+    const { isOpen, onOpenChange, onClose } = useAccountMenuOverlayState()
     const keycloak = useKeycloak()
     const user = useAppSelector((state) => state.user.user)
     const locale = useLocale()
-    const currentLanguage = languages.find((lang) => lang.code === locale)
-    const { onOpenChange: onLanguageOpen } = useLanguageDisclosure()
-    const { onOpen: onAuthenticationOpen } = useAuthenticationDisclosure()
+    const t = useTranslations()
+    const { onOpen: onLanguageOpen } = useLanguageOverlayState()
+    const { onOpen: onAuthenticationOpen } = useAuthenticationOverlayState()
     const dispatch = useAppDispatch()
+    const currentLanguage = useMemo(
+        () => languages.find((lang) => lang.code === locale),
+        [locale]
+    )
+    const accountActionItems: Array<AccountActionItem> = useMemo(() => ([
+        {
+            key: "sign-in",
+            label: t("auth.signIn.submit"),
+            variant: "primary",
+            tab: AuthenticationModalTab.SignIn,
+        },
+        {
+            key: "sign-up",
+            label: t("auth.signUp.submit"),
+            variant: "tertiary",
+            tab: AuthenticationModalTab.SignUp,
+        },
+    ]), [t])
+    const isAuthenticated = Boolean(keycloak?.data?.authenticated)
+    const isLoading = Boolean(keycloak?.isLoading)
+
     return (
-        <StarCiDropdown
+        <Dropdown
             isOpen={isOpen}
             onOpenChange={onOpenChange}
-            className="w-[300px]"
+            className={cn(classNames?.menuContainer)}
         >
-            <StarCiDropdownTrigger>
-                <StarCiButton 
-                    className="border border-divider rounded-full p-1 flex items-center justify-center gap-1 bg-transparent min-w-fit overflow-visible"
-                >
-                    <ListIcon className="size-5 text-foreground-500" />
-                    {keycloak?.isLoading ? (
-                        <StarCiButton 
-                            isIconOnly
-                            isLoading
-                            size="sm"
-                            radius="full" 
-                            onPress={onOpenChange}
-                        />
-                    ) : keycloak?.data?.authenticated ? (
-                        <>
-                            <StarCiBadge size="sm" className="border-0" content="0" color="secondary">
-                                <StarCiAvatar
-                                    size="sm"
-                                    src={user?.avatar}
-                                    className="cursor-pointer"
-                                    color="primary"
-                                    name={user?.username}
-                                />
-                            </StarCiBadge>
-                        </>
-                    ) : (
-                        <StarCiAvatar
-                            size="sm"
-                        />
-                    )
-                    }
-                </StarCiButton>
-            </StarCiDropdownTrigger>
-            <StarCiDropdownMenu closeOnSelect={false}>
-                <StarCiDropdownSection showDivider>
-                    <StarCiDropdownItem key="account" isReadOnly 
-                        classNames={{
-                            base: "data-[hover=true]:bg-transparent data-[selectable=true]:focus:bg-transparent data-[focus-visible=true]:outline-none",
-                        }}>
-                        {   
-                            user ? (
-                                <div className="flex items-center justify-between gap-4">
-                                    <div className="flex items-center gap-2">
-                                        <StarCiAvatar
-                                            src={user?.avatar}
-                                            className="cursor-pointer"
-                                            color="primary"
-                                            name={user?.username}
-                                        />
-                                        <div className="flex flex-col gap-1">
-                                            <div className="text-sm">Hi, {truncate(user?.username, { length: 10 })}...</div>
-                                            <div className="text-xs text-foreground-500">{user?.email}</div>
-                                        </div>
+            {/** Dropdown trigger */}
+            <Link
+                onPress={() => onOpenChange(!isOpen)}
+                className={cn(classNames?.button)}
+            >
+                {isLoading ? (
+                    <Button isIconOnly isDisabled className="rounded-full" variant="tertiary">
+                        <Spinner color="current" />
+                    </Button>
+                ) : isAuthenticated ? (
+                    <Badge size="sm" className="border-0" content="0" color="accent">
+                        <Avatar size="sm" className="cursor-pointer">
+                            <AvatarFallback>
+                                {truncate(user?.username, { length: 1 })}
+                            </AvatarFallback>
+                        </Avatar>
+                    </Badge>
+                ) : (
+                    <Button isIconOnly isDisabled className="rounded-full" variant="tertiary">
+                        <UserIcon className="size-5" />
+                    </Button>
+                )}
+            </Link>
+            {/** Dropdown content */}
+            <DropdownPopover placement="bottom right" className="w-[300px] min-w-[300px]" >
+                <div className="p-1.5">
+                    {user ? (
+                        <div className="flex items-center justify-between gap-4">
+                            <div className="flex items-center gap-2">
+                                <Avatar className="cursor-pointer">
+                                    <AvatarFallback>
+                                        {truncate(user?.username, { length: 1 })}
+                                    </AvatarFallback>
+                                </Avatar>
+                                <div className="flex flex-col gap-1">
+                                    <div className="text-sm">
+                                        {truncate(user?.username, { length: 10 })}
                                     </div>
-                                    <StarCiBadge size="sm" className="border-0" content="0" color="secondary">
-                                        <BellIcon className="size-6 text-divider" />
-                                    </StarCiBadge>
+                                    <div className="text-xs text-foreground-500">{user?.email}</div>
                                 </div>
-                            ) : (
-                                <div className="flex flex-items-center gap-2">
-                                    <StarCiButton 
-                                        color="primary"
-                                        onPress={
-                                            () => {
-                                                dispatch(setAuthenticationModalTab(AuthenticationModalTab.SignIn))
-                                                onClose()
-                                                onAuthenticationOpen()
-                                            }
-                                        }
-                                    >
-                                    Sign In
-                                    </StarCiButton>
-                                    <StarCiButton 
-                                        color="primary"
-                                        variant="flat"
-                                        onPress={
-                                            () => {
-                                                dispatch(setAuthenticationModalTab(AuthenticationModalTab.SignUp))
-                                                onClose()
-                                                onAuthenticationOpen()
-                                            }
-                                        }
-                                    >
-                                    Sign Up
-                                    </StarCiButton>
-                                </div>
-                            )
-                        }
-                    </StarCiDropdownItem>
-                </StarCiDropdownSection>
-                <StarCiDropdownSection showDivider>
-                    <StarCiDropdownItem key="language" onPress={
-                        () => {
-                            onClose()
-                            onLanguageOpen()
-                        }} className="py-3">
-                        <div className="flex items-center justify-between gap-3">
-                            <div className="text-sm">Language</div>
-                            <div className="flex items-center gap-1 text-sm text-foreground-500">
-                                {currentLanguage?.label}
-                                <CaretRightIcon className="size-4" />
                             </div>
+                            <Badge size="sm" className="border-0" content="0" color="accent">
+                                <BellIcon className="size-6 text-divider" />
+                            </Badge>
                         </div>
-                    </StarCiDropdownItem>
-                    <StarCiDropdownItem key="theme" 
-                        classNames={
-                            {
-                                base: "data-[hover=true]:bg-transparent data-[selectable=true]:focus:bg-transparent data-[focus-visible=true]:outline-none",
-                            }
-                        }>
-                        <div className="flex items-center justify-between gap-3">
-                            <div className="text-sm">Theme</div>
-                            <DarkLightModeSwitch />
+                    ) : (
+                        <div className="flex items-center gap-2">
+                            {accountActionItems.map((item) => (
+                                <Button
+                                    key={item.key}
+                                    variant={item.variant}
+                                    onPress={() => {
+                                        dispatch(setAuthenticationModalTab(item.tab))
+                                        onClose()
+                                        onAuthenticationOpen()
+                                    }}
+                                >
+                                    {item.label}
+                                </Button>
+                            ))}
                         </div>
-                    </StarCiDropdownItem>
-                </StarCiDropdownSection>
-                <StarCiDropdownSection>
-                    <StarCiDropdownItem 
-                        key="logout" 
-                        variant="flat"
-                        color="danger"
-                        className="py-3"
-                        classNames={{
-                            title: "text-danger",
-                        }}
-                    >
-                        Sign Out
-                    </StarCiDropdownItem>
-                </StarCiDropdownSection>
-            </StarCiDropdownMenu>
-        </StarCiDropdown>
+                    )}
+                </div>
+                <Separator />
+                <DropdownMenu>
+                    {/** Settings block */}
+                    <DropdownSection>
+                        <DropdownItem
+                            key="language"
+                            onPress={() => {
+                                onClose()
+                                onLanguageOpen()
+                            }}
+                            className="py-3"
+                        >
+                            <div className="flex items-center justify-between gap-3 w-full">
+                                <div className="text-sm">{t("nav.toggleLanguage")}</div>
+                                <div className="flex items-center gap-1 text-sm text-foreground-500">
+                                    {currentLanguage?.label}
+                                    <CaretRightIcon className="size-4" />
+                                </div>
+                            </div>
+                        </DropdownItem>
+                    </DropdownSection>
+                </DropdownMenu>
+                <div className="flex items-center justify-between gap-3 py-3 px-4">
+                    <div className="text-sm">{t("nav.appearance")}</div>
+                    <DarkLightModeSwitch />
+                </div>
+                <Separator />
+                <DropdownMenu>
+                    {/** Logout block */}
+                    <DropdownSection>
+                        <DropdownItem
+                            key="logout"
+                            className="py-3 text-danger"
+                            onPress={() => keycloak.data?.logout({
+                                redirectUri: `${window.location.origin}${pathConfig().locale().authentication().google().logout().build()}`,
+                            })}
+                        >
+                            {t("nav.logout")}
+                        </DropdownItem>
+                    </DropdownSection>
+                </DropdownMenu>
+            </DropdownPopover>
+        </Dropdown>
     )
 }

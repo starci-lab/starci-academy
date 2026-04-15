@@ -1,24 +1,14 @@
 import {
     Autocomplete,
-    AutocompleteProps,
-    AutocompleteSection,
-    AutocompleteItem
+    ListBoxItem,
+    ListBoxSection,
 } from "@heroui/react"
+import type { AutocompleteRootProps } from "@heroui/react"
 import React from "react"
 
-/**
- * StarCiAutocomplete is a component that allows the user to search for content.
- */
-export const StarCiAutocomplete = (props: AutocompleteProps) => {
+export const StarCiAutocomplete = <T extends object = object>(props: AutocompleteRootProps<T>) => {
     return <Autocomplete {...props} />
 }
 
-/**
- * StarCiAutocompleteSection is a component that allows the user to search for content.
- */
-export const StarCiAutocompleteSection = AutocompleteSection
-
-/**
- * StarCiAutocompleteItem is a component that allows the user to search for content.
- */
-export const StarCiAutocompleteItem = AutocompleteItem
+export const StarCiAutocompleteItem = ListBoxItem
+export const StarCiAutocompleteSection = ListBoxSection

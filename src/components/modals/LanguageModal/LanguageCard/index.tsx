@@ -18,7 +18,7 @@ export const LanguageCard = ({ code, label, isSelected, onPress }: LanguageCardP
     return (
         <StarCiButton 
             isDisabled={isSelected}
-            variant="light" 
+            variant="ghost" 
             className="h-fit p-2 w-full flex data-[disabled=true]:opacity-100 data-[disabled=true]:bg-default/40"  
             onPress={onPress}
         >

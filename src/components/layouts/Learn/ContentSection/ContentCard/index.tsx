@@ -1,14 +1,14 @@
 "use client"
 
 import { StarCiCard, StarCiCardBody, StarCiChip } from "@/components/atomic"
-import { useContentDisclosure } from "@/hooks/singleton"
+import { useContentOverlayState } from "@/hooks/singleton"
 import type { ContentEntity } from "@/modules/types"
 import { useAppDispatch } from "@/redux"
 import { setContentId } from "@/redux/slices"
 import { ClockIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import React from "react"
-import { Spacer } from "@heroui/react"
+import { Spacer } from "@/components/reuseable"
 
 export interface ContentCardProps {
     /** One module content block from API. */
@@ -20,14 +20,13 @@ export interface ContentCardProps {
  */
 export const ContentCard = ({ content }: ContentCardProps) => {
     const t = useTranslations()
-    const { onOpen } = useContentDisclosure()
+    const { onOpen } = useContentOverlayState()
     const dispatch = useAppDispatch()
 
     return (
         <StarCiCard
-            fullWidth
-            isPressable
-            onPress={() => {
+            className="w-full cursor-pointer"
+            onClick={() => {
                 dispatch(setContentId(content.id))
                 onOpen()
             }
@@ -44,11 +43,11 @@ export const ContentCard = ({ content }: ContentCardProps) => {
                         </div>
                         <Spacer y={3} />
                         <StarCiChip
-                            startContent={<ClockIcon className="size-5" />}
-                            color="secondary"
+                            color="accent"
                             size="sm"
-                            variant="flat"
+                            variant="soft"
                         >
+                            <ClockIcon className="size-5" />
                             {t("content.minutesRead", {
                                 minutes: content.minutesRead,
                             })}

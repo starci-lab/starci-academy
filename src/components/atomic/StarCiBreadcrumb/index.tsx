@@ -1,7 +1,8 @@
-import { Breadcrumbs, BreadcrumbsProps, BreadcrumbItem } from "@heroui/react"
+import { Breadcrumbs, BreadcrumbsItem } from "@heroui/react"
+import type { BreadcrumbsRootProps } from "@heroui/react"
 import React from "react"
 
-export const StarCiBreadcrumb = (props: BreadcrumbsProps) => {
+export const StarCiBreadcrumb = (props: BreadcrumbsRootProps) => {
     return <Breadcrumbs {...props} />
 }   
-export const StarCiBreadcrumbItem = BreadcrumbItem
+export const StarCiBreadcrumbItem = BreadcrumbsItem

@@ -1,10 +1,11 @@
 import React from "react"
-import { Card, CardBody, CardFooter, Image, Button, Spacer } from "@heroui/react"
+import { StarCiCard, StarCiCardBody, StarCiCardFooter, StarCiButton } from "@/components/atomic"
 import { CourseEntity } from "@/modules/types"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { useLocale } from "next-intl"
 import { pathConfig } from "@/resources/path"
+import { Spacer } from "@/components/reuseable"
 
 export interface CourseCardProps {
     course: CourseEntity
@@ -16,24 +17,24 @@ export const CourseCard = ({ course }: CourseCardProps) => {
     const router = useRouter()
     const t = useTranslations()
     return (
-        <Card>
-            <CardBody>
-                <Image src={course.coverImageUrl ?? ""} alt={course.title} />
+        <StarCiCard>
+            <StarCiCardBody>
+                <img src={course.coverImageUrl ?? ""} alt={course.title} />
                 <Spacer y={4} />
                 <div className="font-bold">{course.title}</div>
                 <Spacer y={4} />
                 <div className="text-sm text-foreground-500 text-justify italic line-clamp-3">{course.description}</div>
-            </CardBody>
-            <CardFooter>
+            </StarCiCardBody>
+            <StarCiCardFooter>
                 <div className="w-full">
-                    <Button color="primary" size="lg" className="w-full" onPress={() => router.push(pathConfig().locale(locale).course(course.displayId).build())}>{t("courses.viewCourse")}</Button>
+                    <StarCiButton variant="primary" size="lg" className="w-full" onPress={() => router.push(pathConfig().locale(locale).course(course.displayId).build())}>{t("courses.viewCourse")}</StarCiButton>
                     <Spacer y={2} />
                     <div className="text-sm text-justify flex gap-2">
                         <span className="line-through text-foreground-500">{originalPrice} VND</span>
                         <span>{actualPrice} VND</span>
                     </div>
                 </div>
-            </CardFooter>
-        </Card>
+            </StarCiCardFooter>
+        </StarCiCard>
     )
 }

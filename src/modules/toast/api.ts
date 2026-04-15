@@ -1,6 +1,6 @@
 // Helper to display toast notifications based on GraphQL API responses
 import { GraphQLResponse } from "@/modules/api"
-import { addToast } from "@heroui/toast"
+import { toast } from "@heroui/react"
 
 // Show a toast depending on whether the GraphQL response was successful or not
 export const showGraphQLToast = <T>(response: GraphQLResponse<T>) => {
@@ -9,19 +9,17 @@ export const showGraphQLToast = <T>(response: GraphQLResponse<T>) => {
     const description =
         message || (success ? "Operation completed." : "Something went wrong.")
 
-    addToast({
-        title: success ? "Success" : "Error",
-        description,
-        color: success ? "success" : "danger",
-    })
+    if (success) {
+        toast.success("Success", { description })
+    } else {
+        toast.danger("Error", { description })
+    }
 }
 
 // Show a toast when the user is not authorized to access a resource
 export const showUnauthorizedToast = () => {
-    addToast({
-        title: "Unauthorized",
+    toast.danger("Unauthorized", {
         description: "You are not authorized to access this resource.",
-        color: "danger",
     })
 }
 
@@ -53,10 +51,8 @@ export const runGraphQLWithToast = async <T>(
             return false
         }
         if (options?.showErrorToast) {
-            addToast({
-                title: "Error",
+            toast.danger("Error", {
                 description: _error.message,
-                color: "danger",
             })
         }
         return false

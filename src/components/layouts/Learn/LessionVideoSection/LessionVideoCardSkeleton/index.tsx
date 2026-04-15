@@ -1,5 +1,5 @@
 import { StarCiCard, StarCiCardBody, StarCiSkeleton } from "@/components/atomic"
-import { Spacer } from "@heroui/react"
+import { Spacer } from "@/components/reuseable"
 import React from "react"
 
 export const LessionVideoCardSkeleton = () => {

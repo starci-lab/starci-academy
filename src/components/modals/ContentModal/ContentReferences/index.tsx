@@ -1,7 +1,7 @@
 "use client"
 
 import type { ContentReferenceEntity } from "@/modules/types"
-import { ReferenceLinks } from "@/components/reuseable/ReferenceLinks"
+import { ReferenceLinks } from "@/components/reuseable"
 import React from "react"
 
 export interface ContentReferencesProps {

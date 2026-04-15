@@ -1,10 +1,7 @@
 import React from "react"
-import { Tooltip, TooltipProps } from "@heroui/react"
+import { Tooltip } from "@heroui/react"
+import type { TooltipRootProps } from "@heroui/react"
 
-export const StarCiTooltip = (props: TooltipProps) => {
-    return <Tooltip classNames={
-        {
-            base: "max-w-[300px]",
-        }
-    } {...props} />
+export const StarCiTooltip = (props: TooltipRootProps) => {
+    return <Tooltip {...props} />
 }

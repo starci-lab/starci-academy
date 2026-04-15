@@ -3,7 +3,6 @@ import React from "react"
 import { SubmissionFeedbackSeverity } from "@/modules/types"
 import { StarCiCard, StarCiCardBody, StarCiChip } from "@/components/atomic"
 import { LightbulbFilamentIcon, MapPinLineIcon } from "@phosphor-icons/react"
-import { Spacer } from "@heroui/react"
 
 interface FeedbackCardProps {
   submissionFeedback: SubmissionFeedbackEntity
@@ -21,18 +20,18 @@ export const FeedbackCard = ({ submissionFeedback }: FeedbackCardProps) => {
     const getSeverityChip = () => {
         switch (severity) {
         case SubmissionFeedbackSeverity.High:
-            return <StarCiChip color="danger" size="sm" variant="flat">High</StarCiChip>
+            return <StarCiChip color="danger" size="sm" variant="primary">High</StarCiChip>
         case SubmissionFeedbackSeverity.Medium:
-            return <StarCiChip color="warning" size="sm" variant="flat">Medium</StarCiChip>
+            return <StarCiChip color="warning" size="sm" variant="primary">Medium</StarCiChip>
         case SubmissionFeedbackSeverity.Low:
-            return <StarCiChip color="primary" size="sm" variant="flat">Low</StarCiChip>
+            return <StarCiChip color="success" size="sm" variant="primary">Low</StarCiChip>
         default:
-            return <StarCiChip color="secondary" size="sm" variant="flat">Unknown</StarCiChip>
+            return <StarCiChip color="default" size="sm" variant="primary">Unknown</StarCiChip>
         }
     }
 
     return (
-        <StarCiCard shadow="none" className="bg-transparent border-divider border">
+        <StarCiCard className="bg-transparent border-divider border">
             <StarCiCardBody>
                 {/* Header */}
                 <div className="flex items-center justify-between">
@@ -41,14 +40,12 @@ export const FeedbackCard = ({ submissionFeedback }: FeedbackCardProps) => {
                     </div>
                     {getSeverityChip()}
                 </div>
-                <Spacer y={3} />
                 {/* Detail */}
                 {detail && (
                     <div className="text-xs text-foreground-500">
                         {detail}
                     </div>
                 )}
-                <Spacer y={2} />
                 {/* Suggestion */}
                 {suggestion && (
                     <div className="flex items-center gap-2 text-foreground-500 text-xs">
@@ -56,7 +53,6 @@ export const FeedbackCard = ({ submissionFeedback }: FeedbackCardProps) => {
                         {suggestion}
                     </div>
                 )}
-                <Spacer y={2} />
                 {location && (
                     <div className="flex items-center gap-2 text-foreground-500 text-xs">
                         <MapPinLineIcon className="size-4" />

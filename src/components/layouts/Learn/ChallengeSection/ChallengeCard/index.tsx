@@ -1,14 +1,14 @@
 "use client"
 
 import { StarCiCard, StarCiCardBody, StarCiChip } from "@/components/atomic"
-import { useChallengeDisclosure } from "@/hooks/singleton"
+import { useChallengeOverlayState } from "@/hooks/singleton"
 import { ChallengeDifficulty, ChallengeEntity } from "@/modules/types"
 import { useAppDispatch } from "@/redux"
 import { setChallengeId } from "@/redux/slices"
 import { ListNumbersIcon, SwordIcon, TrophyIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import React, { useMemo } from "react"
-import { Spacer } from "@heroui/react"
+import { Spacer } from "@/components/reuseable"
 
 export interface ChallengeCardProps {
     /** One module challenge block from API. */
@@ -20,7 +20,7 @@ export interface ChallengeCardProps {
  */
 export const ChallengeCard = ({ challenge }: ChallengeCardProps) => {
     const t = useTranslations()
-    const { onOpen } = useChallengeDisclosure()
+    const { onOpen } = useChallengeOverlayState()
     const dispatch = useAppDispatch()
 
     const difficultyName = useMemo(() => {
@@ -35,9 +35,8 @@ export const ChallengeCard = ({ challenge }: ChallengeCardProps) => {
     }, [challenge.difficulty, t])
     return (
         <StarCiCard
-            fullWidth
-            isPressable
-            onPress={() => {
+            className="w-full cursor-pointer"
+            onClick={() => {
                 dispatch(setChallengeId(challenge.id))
                 onOpen()
             }
@@ -55,29 +54,29 @@ export const ChallengeCard = ({ challenge }: ChallengeCardProps) => {
                         <Spacer y={3} />
                         <div className="flex flex-wrap gap-2">
                             <StarCiChip
-                                startContent={<TrophyIcon className="size-5" />}
-                                color="secondary"
+                                color="accent"
                                 size="sm"
-                                variant="flat"
+                                variant="soft"
                             >
+                                <TrophyIcon className="size-5" />
                                 {t("challenge.score", {
                                     score: challenge.score,
                                 })}
                             </StarCiChip>
                             <StarCiChip
-                                startContent={<SwordIcon className="size-5" />}
                                 color="danger"
                                 size="sm"
-                                variant="flat"
+                                variant="soft"
                             >
+                                <SwordIcon className="size-5" />
                                 {t(difficultyName)}
                             </StarCiChip>
                             <StarCiChip
-                                startContent={<ListNumbersIcon className="size-5" />}
                                 color="warning"
                                 size="sm"
-                                variant="flat"
+                                variant="soft"
                             >
+                                <ListNumbersIcon className="size-5" />
                                 {t("challenge.steps.count", {
                                     count: challenge.steps?.length ?? 0,
                                 })}

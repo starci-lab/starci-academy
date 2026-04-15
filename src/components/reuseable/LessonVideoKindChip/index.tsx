@@ -1,5 +1,6 @@
 import React, { useMemo } from "react"
 import { StarCiChip, StarCiTooltip } from "@/components/atomic"
+import { TooltipTrigger, TooltipContent } from "@heroui/react"
 import { LessonVideoKind } from "@/modules/types"
 import { useTranslations } from "next-intl"
 import { 
@@ -50,17 +51,18 @@ export const LessonVideoKindChip = ({ kind }: LessonVideoKindChipProps) => {
     }
     const { icon, label, tooltip } = useMemo(() => renderLessonVideoKind(), [kind])
     return (
-        <StarCiTooltip
-            content={t(tooltip)}
-        >
-            <StarCiChip 
-                startContent={icon} 
-                color="warning" 
-                size="sm" 
-                variant="flat"
-            >
-                {t(label)}
-            </StarCiChip>
+        <StarCiTooltip>
+            <TooltipTrigger>
+                <StarCiChip 
+                    color="warning" 
+                    size="sm" 
+                    variant="soft"
+                >
+                    {icon}
+                    {t(label)}
+                </StarCiChip>
+            </TooltipTrigger>
+            <TooltipContent>{t(tooltip)}</TooltipContent>
         </StarCiTooltip>
     )
 }

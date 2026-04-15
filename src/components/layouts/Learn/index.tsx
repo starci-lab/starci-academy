@@ -1,6 +1,6 @@
 "use client"
 import React, { useMemo } from "react"
-import { Link, Spacer } from "@heroui/react"
+import { Link } from "@heroui/react"
 import { 
     StarCiBreadcrumb, 
     StarCiBreadcrumbItem, 
@@ -19,6 +19,7 @@ import { ContentSection } from "./ContentSection"
 import { useQueryCourseSwr, useQueryModuleSwr } from "@/hooks/singleton"
 import { pathConfig } from "@/resources"
 import { useRouter } from "next/navigation"
+import { Spacer } from "@/components/reuseable"
 
 export const Learn = () => {
     const t = useTranslations()
@@ -116,19 +117,17 @@ export const Learn = () => {
                     }
                     <Spacer y={6} className="hidden sm:block" />
                     <StarCiTabs 
-                        color="primary"
-                        variant="underlined"
                         selectedKey={learnTab} 
                         onSelectionChange={(value) => dispatch(setLearnTab(value as LearnTab))}
                     >
                         {
                             tabs.map((tab) => (
-                                <StarCiTab title={
+                                <StarCiTab key={tab.value} id={tab.value}>
                                     <div className="flex items-center justify-center gap-2 w-full">
                                         <tab.icon className="size-5 shrink-0" />
                                         <span className="hidden sm:inline">{tab.label}</span>
-                                    </div>} key={tab.value} value={tab.value}
-                                />
+                                    </div>
+                                </StarCiTab>
                             ))
                         }
                     </StarCiTabs>

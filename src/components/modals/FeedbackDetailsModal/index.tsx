@@ -6,23 +6,22 @@ import {
     StarCiScrollShadow
 } from "@/components/atomic"
 import React from "react"
-import { useFeedbackDetailsDisclosure } from "@/hooks/singleton"
+import { useFeedbackDetailsOverlayState } from "@/hooks/singleton"
 import { useAppSelector } from "@/redux"
 import { FeedbackCard } from "./FeedbackCard"
-import { Spacer } from "@heroui/react"
+import { Spacer } from "@/components/reuseable"
 /**
  * FeedbackDetailsModal is a modal component that is used to display the feedback details.
  */
 export const FeedbackDetailsModal = () => {
-    const { isOpen, onOpenChange } = useFeedbackDetailsDisclosure()
+    const { isOpen, onOpenChange } = useFeedbackDetailsOverlayState()
     const submissionFeedbacks = useAppSelector((state) => state.submissionFeedback.submissionFeedbacks)
     return (
         <StarCiModal
             isOpen={isOpen}
-            size="2xl"
             onOpenChange={onOpenChange}
         >
-            <StarCiModalContent>
+            <StarCiModalContent size="lg">
                 <StarCiModalHeader title="Feedback Details"/>
                 <StarCiModalBody>
                     <StarCiScrollShadow hideScrollBar className="max-h-[500px]">

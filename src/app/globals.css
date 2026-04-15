@@ -1,9 +1,23 @@
 @import "tailwindcss";
-@plugin './hero.ts';
+@import "@heroui/styles"; 
 /* Note: You may need to change the path to fit your project structure */
 @source '../../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
 @custom-variant dark (&:is(.dark *));
 
 svg:focus {
     outline: none;
+}
+
+:root {
+    --accent: oklch(0.7 0.14 180);
+    --accent-foreground: oklch(0.98 0 0);
+  }
+
+@layer components {
+    .link {
+      @apply flex items-center gap-2 no-underline cursor-pointer hover:opacity-80;
+    }
+    .modal__dialog {
+        @apply p-3;
+    }
 }

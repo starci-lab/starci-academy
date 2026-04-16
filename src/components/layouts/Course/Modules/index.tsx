@@ -66,7 +66,7 @@ export const Modules = (props: ModuleProps) => {
         <div className={cn(props.className, props.classNames?.base)}>
             <div className="text-lg font-semibold mb-3">{t("module.pathIntroduction")}</div>
             {isLoading ? (
-                <Accordion className="px-0 border border-divider rounded-2xl" variant="surface">
+                <Accordion variant="surface">
                     {Array.from({ length: 3 }).map((_, index) => (
                         <Accordion.Item
                             key={index}
@@ -93,11 +93,11 @@ export const Modules = (props: ModuleProps) => {
                     ))}
                 </Accordion>
             ) : (
-                <Accordion className="border border-divider rounded-3xl" variant="surface">
+                <Accordion variant="surface">
                     {list.map((module) => (
-                        <Accordion.Item className="gap-2" key={module.id} aria-label={module.title}>
+                        <Accordion.Item key={module.id} aria-label={module.title}>
                             <Accordion.Heading>
-                                <Accordion.Trigger className="w-full">
+                                <Accordion.Trigger>
                                     <div className="flex w-full items-start justify-between gap-3">
                                         <div className="min-w-0 flex-1 text-start">
                                             <div className="text-lg font-semibold mb-1.5">{module.title}</div>

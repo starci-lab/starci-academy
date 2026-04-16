@@ -87,7 +87,13 @@
       "attempts": "Attempts: {count}",
       "submit": "Submit",
       "viewAttempts": "View Attempts",
+      "urlLabel": "Submission URL",
       "urlPlaceholder": "Paste your submission URL",
+      "errors": {
+        "urlRequired": "A submission URL is required.",
+        "invalidGithubUrl": "Enter a valid GitHub URL (https://github.com/owner or https://github.com/owner/repo).",
+        "invalidGoogleDocsUrl": "Enter a valid Google Docs, Sheets, or Slides URL (https://docs.google.com/...)."
+      },
       "loading": "Updating submissions…",
       "lastAttemptScore": "Your last attempt score is {earned}/{max}"
     }

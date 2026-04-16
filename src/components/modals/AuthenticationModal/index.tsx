@@ -33,7 +33,7 @@ export const AuthenticationModal = () => {
                             </div>
                         </Modal.Header>
                         <div className="h-6" />
-                        {isSignIn ? <SignInSection /> : <SignUpSection />}
+                        {isSignIn ? <SignInSection className="w-full" /> : <SignUpSection className="w-full" />}
                     </Modal.Dialog>
                 </Modal.Container>
             </Modal.Backdrop>

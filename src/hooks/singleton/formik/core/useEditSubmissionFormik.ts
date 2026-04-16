@@ -17,6 +17,10 @@ const GITHUB_REGEX =
 const GOOGLE_DOCS_REGEX =
     /^https:\/\/docs\.google\.com\/(document|spreadsheets|presentation)\/d\/[A-Za-z0-9_-]+/
 
+const MSG_URL_REQUIRED = "challenge.submissionModal.errors.urlRequired" as const
+const MSG_INVALID_GITHUB = "challenge.submissionModal.errors.invalidGithubUrl" as const
+const MSG_INVALID_GOOGLE = "challenge.submissionModal.errors.invalidGoogleDocsUrl" as const
+
 /** The values for the edit submission form */
 export interface EditSubmissionFormValues {
     /** The submissions to edit */
@@ -51,23 +55,29 @@ export const useEditSubmissionFormikCore = () => {
                     type: Yup.mixed<SubmissionType>().required(),
                     userSubmission: Yup.object({
                         submissionUrl: Yup.string()
-                            .required("URL is required")
-                            .test(
-                                "url-by-type",
-                                "Invalid URL for this submission type",
-                                function (value) {
-                                    const submission = this.from?.[1]?.value
-                                    if (!value) return false
-                                    if (submission.type === SubmissionType.GithubUrl) {
-                                        return GITHUB_REGEX.test(value as string)
-                                    }
-                                    if (submission.type === SubmissionType.GoogleDocsUrl) {
-                                        return GOOGLE_DOCS_REGEX.test(value as string)
-                                    }
+                            .required(MSG_URL_REQUIRED)
+                            .test("url-by-type", function (value) {
+                                const submission = this.from?.[1]?.value as
+                                    | ChallengeSubmissionEntity
+                                    | undefined
+                                if (!submission) {
                                     return true
-                                },
-                            )
-                            .required("URL is required"),
+                                }
+                                if (!value || !String(value).trim()) {
+                                    return this.createError({ message: MSG_URL_REQUIRED })
+                                }
+                                if (submission.type === SubmissionType.GithubUrl) {
+                                    return GITHUB_REGEX.test(value as string)
+                                        ? true
+                                        : this.createError({ message: MSG_INVALID_GITHUB })
+                                }
+                                if (submission.type === SubmissionType.GoogleDocsUrl) {
+                                    return GOOGLE_DOCS_REGEX.test(value as string)
+                                        ? true
+                                        : this.createError({ message: MSG_INVALID_GOOGLE })
+                                }
+                                return true
+                            }),
                     }).nullable(),
                 }),
             ),

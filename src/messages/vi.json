@@ -96,7 +96,13 @@
       "attempts": "Số lần thử: {count}",
       "viewAttempts": "Xem lịch sử nộp bài",
       "submit": "Nộp bài",
+      "urlLabel": "URL bài nộp",
       "urlPlaceholder": "Dán URL bài nộp của bạn",
+      "errors": {
+        "urlRequired": "Vui lòng nhập URL bài nộp.",
+        "invalidGithubUrl": "Nhập URL GitHub hợp lệ (https://github.com/owner hoặc https://github.com/owner/repo).",
+        "invalidGoogleDocsUrl": "Nhập URL Google Docs, Sheets hoặc Slides hợp lệ (https://docs.google.com/...)."
+      },
       "loading": "Đang cập nhật bài nộp…",
       "lastAttemptScore": "Điểm lần thử gần nhất của bạn là {earned}/{max}"
     }

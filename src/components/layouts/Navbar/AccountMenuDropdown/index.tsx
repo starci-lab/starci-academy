@@ -116,7 +116,7 @@ export const AccountMenuDropdown = (props: AccountMenuDropdownProps) => {
             </Link>
             {/** Dropdown content */}
             <DropdownPopover placement="bottom right" className="min-w-[300px] overflow-hidden" >
-                <div className="p-1.5">
+                <div className="p-3">
                     {user ? (
                         <div className="flex items-center justify-between gap-4">
                             <div className="flex items-center gap-2">

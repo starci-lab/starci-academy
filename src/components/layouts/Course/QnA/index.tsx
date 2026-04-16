@@ -24,21 +24,21 @@ export const QnA = () => {
             <div className="h-3" />
             {
                 isLoading ? (
-                    <Accordion className="px-0 border border-divider rounded-2xl">
+                    <Accordion variant="surface">
                         {Array.from({ length: 2 }).map((_, index) => (
                             <Accordion.Item
                                 key={index}
                                 aria-label={t("qna.questionAria", { index: index + 1 })}
                             >
                                 <Accordion.Heading><Accordion.Trigger>
-                                    <Skeleton className="h-[14px] w-[40%] rounded-lg my-[3px]" />
+                                    <Skeleton className="h-[14px] w-[40%] rounded-3xl my-[3px]" />
                                 </Accordion.Trigger></Accordion.Heading>
                                 <Accordion.Panel>{""}</Accordion.Panel>
                             </Accordion.Item>
                         ))}
                     </Accordion>
                 ) : (
-                    <Accordion className="px-0 border border-divider rounded-2xl">
+                    <Accordion variant="surface">
                         {qnas.map((qna) => (
                             <Accordion.Item
                                 key={qna.id}
@@ -52,12 +52,15 @@ export const QnA = () => {
                                                 __html: qna.question,
                                             }}
                                         />
-                                    </Accordion.Trigger></Accordion.Heading>
-                                <Accordion.Panel className="p-3">
-                                    <span
-                                        className="text-sm text-muted text-start"
-                                        dangerouslySetInnerHTML={{ __html: qna.answer }}
-                                    />
+                                    </Accordion.Trigger>
+                                </Accordion.Heading>
+                                <Accordion.Panel>
+                                    <Accordion.Body>
+                                        <span
+                                            className="text-sm text-muted text-start"
+                                            dangerouslySetInnerHTML={{ __html: qna.answer }}
+                                        />
+                                    </Accordion.Body>
                                 </Accordion.Panel>
                             </Accordion.Item>
                         ))}

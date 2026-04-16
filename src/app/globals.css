@@ -103,25 +103,18 @@
     .chip {
       @apply gap-1 px-2;
     }
-
+    .dropdown__menu {
+        @apply p-3;
+    }
     /* Modal.Container: constrain HeroUI modal-header / modal-body slots (768px). */
     .modal__headers {
         @apply [&_[data-slot=modal-header]]:max-w-[768px] [&_[data-slot=modal-header]]:mx-auto;
     }
     .modal__body {
-        @apply [&_[data-slot=modal-body]]:max-w-[768px] [&_[data-slot=modal-body]]:mx-auto;
+        @apply [&_[data-slot=modal-body]]:max-w-[768px] [&_[data-slot=modal-body]]:mx-auto p-0;
     }
     /* Same as `.modal__headers` + `.modal__body` (Tailwind cannot @apply custom components). */
     .modal__container {
-        @apply [&_[data-slot=modal-header]]:max-w-[768px] [&_[data-slot=modal-header]]:mx-auto [&_[data-slot=modal-body]]:max-w-[960px] [&_[data-slot=modal-body]]:mx-auto;
-    }
-    .modal__headers--narrow {
-        @apply [&_[data-slot=modal-header]]:max-w-[640px] [&_[data-slot=modal-header]]:mx-auto;
-    }
-    .modal__body--narrow {
-        @apply [&_[data-slot=modal-body]]:max-w-[640px] [&_[data-slot=modal-body]]:mx-auto;
-    }
-    .modal__container--narrow {
-        @apply [&_[data-slot=modal-header]]:max-w-[640px] [&_[data-slot=modal-header]]:mx-auto [&_[data-slot=modal-body]]:max-w-[640px] [&_[data-slot=modal-body]]:mx-auto;
+        @apply [&_[data-slot=modal-header]]:max-w-[768px] [&_[data-slot=modal-header]]:mx-auto [&_[data-slot=modal-body]]:max-w-[768px] [&_[data-slot=modal-body]]:mx-auto;
     }
 }

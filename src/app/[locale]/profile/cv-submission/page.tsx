@@ -40,22 +40,36 @@ const CVSubmissionPage = () => {
                 </div>
 
                 {successMessage && (
-                    <Alert
-                        color="success"
-                        className="mb-6"
-                        onClose={() => setSuccessMessage(null)}
-                    >
-                        {successMessage}
+                    <Alert className="mb-6" status="success">
+                        <Alert.Indicator />
+                        <Alert.Content className="flex w-full flex-row items-start justify-between gap-2">
+                            <Alert.Description>{successMessage}</Alert.Description>
+                            <Button
+                                aria-label="Dismiss"
+                                size="sm"
+                                variant="ghost"
+                                onPress={() => setSuccessMessage(null)}
+                            >
+                                ×
+                            </Button>
+                        </Alert.Content>
                     </Alert>
                 )}
 
                 {errorMessage && (
-                    <Alert
-                        color="danger"
-                        className="mb-6"
-                        onClose={() => setErrorMessage(null)}
-                    >
-                        {errorMessage}
+                    <Alert className="mb-6" status="danger">
+                        <Alert.Indicator />
+                        <Alert.Content className="flex w-full flex-row items-start justify-between gap-2">
+                            <Alert.Description>{errorMessage}</Alert.Description>
+                            <Button
+                                aria-label="Dismiss"
+                                size="sm"
+                                variant="ghost"
+                                onPress={() => setErrorMessage(null)}
+                            >
+                                ×
+                            </Button>
+                        </Alert.Content>
                     </Alert>
                 )}
 
@@ -97,8 +111,8 @@ const CVSubmissionPage = () => {
                                 </div>
                                 <Link href="/profile/cv-status">
                                     <Button
-                                        color="secondary"
                                         className="w-full"
+                                        variant="secondary"
                                     >
                                         View Processing Status
                                     </Button>

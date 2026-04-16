@@ -5,7 +5,7 @@ import {
     mutateGetCVPresignedUrl,
     mutateProcessCV,
 } from "@/modules/api/graphql/mutations"
-import { Button, Card, Progress, Spinner } from "@heroui/react"
+import { Button, Card, ProgressBar, Spinner } from "@heroui/react"
 import { Form, Formik } from "formik"
 import React, { useState } from "react"
 import * as Yup from "yup"
@@ -239,18 +239,24 @@ export const CVSubmissionForm: React.FC<CVSubmissionFormProps> = ({
                                         {uploadProgress}%
                                     </span>
                                 </div>
-                                <Progress
-                                    value={uploadProgress}
+                                <ProgressBar
                                     className="w-full"
-                                />
+                                    maxValue={100}
+                                    minValue={0}
+                                    value={uploadProgress}
+                                >
+                                    <ProgressBar.Track>
+                                        <ProgressBar.Fill />
+                                    </ProgressBar.Track>
+                                </ProgressBar>
                             </div>
                         )}
 
                         <Button
                             type="submit"
-                            color="primary"
-                            disabled={isUploading || isProcessing || isSubmitting}
+                            isDisabled={isUploading || isProcessing || isSubmitting}
                             className="w-full"
+                            variant="primary"
                         >
                             {isUploading ? (
                                 <>
@@ -264,15 +270,15 @@ export const CVSubmissionForm: React.FC<CVSubmissionFormProps> = ({
 
                         <Button
                             type="button"
-                            color="secondary"
-                            onPress={handleProcess}
-                            disabled={
+                            isDisabled={
                                 !uploadedFileName ||
                                 !uploadedS3Key ||
                                 isUploading ||
                                 isProcessing
                             }
                             className="w-full"
+                            variant="secondary"
+                            onPress={handleProcess}
                         >
                             {isProcessing ? (
                                 <>

@@ -12,6 +12,7 @@ import { SiGithub, SiGoogledrive } from "@icons-pack/react-simple-icons"
 import { setChallengeSubmissionId } from "@/redux/slices"
 import { useAppDispatch } from "@/redux"
 import { AppModalHeader } from "../AppModalHeader"
+import _ from "lodash"
 
 export const ChallengeSubmissionModal = () => {
     const { isOpen, onOpenChange } = useChallengeSubmissionOverlayState()
@@ -40,7 +41,7 @@ export const ChallengeSubmissionModal = () => {
                                 ) : (
                                     <div className="flex flex-col gap-6">
                                         {
-                                            formik.values.submissions.sort((prev, next) => prev.orderIndex - next.orderIndex).map((
+                                            _.cloneDeep(formik.values.submissions).sort((prev, next) => prev.orderIndex - next.orderIndex).map((
                                                 submission,
                                                 index
                                             ) => {

@@ -1,11 +1,15 @@
+"use client"
+
 import { SubmissionFeedbackEntity } from "@/modules/types"
 import React from "react"
 import { SubmissionFeedbackSeverity } from "@/modules/types"
-import { StarCiCard, StarCiCardBody, StarCiChip } from "@/components/atomic"
+import { Card, Chip } from "@heroui/react"
 import { LightbulbFilamentIcon, MapPinLineIcon } from "@phosphor-icons/react"
+import { useTranslations } from "next-intl"
 
 interface FeedbackCardProps {
-  submissionFeedback: SubmissionFeedbackEntity
+    /** One feedback row from the grader. */
+    submissionFeedback: SubmissionFeedbackEntity
 }
 
 export const FeedbackCard = ({ submissionFeedback }: FeedbackCardProps) => {
@@ -16,50 +20,64 @@ export const FeedbackCard = ({ submissionFeedback }: FeedbackCardProps) => {
         location,
         suggestion,
     } = submissionFeedback
+    const t = useTranslations()
 
     const getSeverityChip = () => {
         switch (severity) {
         case SubmissionFeedbackSeverity.High:
-            return <StarCiChip color="danger" size="sm" variant="primary">High</StarCiChip>
+            return (
+                <Chip color="danger" size="sm" variant="primary">
+                    <Chip.Label>{t("feedback.severity.high")}</Chip.Label>
+                </Chip>
+            )
         case SubmissionFeedbackSeverity.Medium:
-            return <StarCiChip color="warning" size="sm" variant="primary">Medium</StarCiChip>
+            return (
+                <Chip color="warning" size="sm" variant="primary">
+                    <Chip.Label>{t("feedback.severity.medium")}</Chip.Label>
+                </Chip>
+            )
         case SubmissionFeedbackSeverity.Low:
-            return <StarCiChip color="success" size="sm" variant="primary">Low</StarCiChip>
+            return (
+                <Chip color="success" size="sm" variant="primary">
+                    <Chip.Label>{t("feedback.severity.low")}</Chip.Label>
+                </Chip>
+            )
         default:
-            return <StarCiChip color="default" size="sm" variant="primary">Unknown</StarCiChip>
+            return (
+                <Chip color="default" size="sm" variant="primary">
+                    <Chip.Label>{t("feedback.severity.unknown")}</Chip.Label>
+                </Chip>
+            )
         }
     }
 
     return (
-        <StarCiCard className="bg-transparent border-divider border">
-            <StarCiCardBody>
-                {/* Header */}
+        <Card className="border border-divider bg-transparent">
+            <Card.Content>
                 <div className="flex items-center justify-between">
                     <div className="text-sm">
                         {message}
                     </div>
                     {getSeverityChip()}
                 </div>
-                {/* Detail */}
-                {detail && (
+                {detail ? (
                     <div className="text-xs text-foreground-500">
                         {detail}
                     </div>
-                )}
-                {/* Suggestion */}
-                {suggestion && (
-                    <div className="flex items-center gap-2 text-foreground-500 text-xs">
+                ) : null}
+                {suggestion ? (
+                    <div className="flex items-center gap-2 text-xs text-foreground-500">
                         <LightbulbFilamentIcon className="size-4" />
                         {suggestion}
                     </div>
-                )}
-                {location && (
-                    <div className="flex items-center gap-2 text-foreground-500 text-xs">
+                ) : null}
+                {location ? (
+                    <div className="flex items-center gap-2 text-xs text-foreground-500">
                         <MapPinLineIcon className="size-4" />
                         {location}
                     </div>
-                )}
-            </StarCiCardBody>
-        </StarCiCard>
+                ) : null}
+            </Card.Content>
+        </Card>
     )
 }

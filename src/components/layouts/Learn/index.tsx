@@ -1,25 +1,21 @@
 "use client"
 import React, { useMemo } from "react"
-import { Link } from "@heroui/react"
-import { 
-    StarCiBreadcrumb, 
-    StarCiBreadcrumbItem, 
-    StarCiSkeleton,
-    StarCiTab,
-    StarCiTabs
-} from "@/components/atomic"
+import {
+    Breadcrumbs,
+    Skeleton,
+    Tabs,
+} from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { ModuleSidebar } from "./ModuleSidebar"
 import { LearnTab, setLearnTab } from "@/redux/slices"
 import { useAppDispatch, useAppSelector } from "@/redux"
-import { BookOpenIcon, TrophyIcon, UsersIcon, VideoIcon } from "@phosphor-icons/react"
+import { BookOpenIcon, SwordIcon, UsersIcon, VideoIcon } from "@phosphor-icons/react"
 import { LessonVideoSection } from "./LessionVideoSection"
 import { ChallengeSection } from "./ChallengeSection"
 import { ContentSection } from "./ContentSection"
 import { useQueryCourseSwr, useQueryModuleSwr } from "@/hooks/singleton"
 import { pathConfig } from "@/resources"
 import { useRouter } from "next/navigation"
-import { Spacer } from "@/components/reuseable"
 
 export const Learn = () => {
     const t = useTranslations()
@@ -46,7 +42,7 @@ export const Learn = () => {
         {
             label: t("challenge.title"),
             value: LearnTab.Challenges,
-            icon: TrophyIcon
+            icon: SwordIcon
         },
         {
             label: t("leaderboard.topAchievers"),
@@ -55,84 +51,82 @@ export const Learn = () => {
         }
     ], [t])
     const router = useRouter()
-    const renderContent = () => {
-        switch (learnTab) {
-        case LearnTab.LessonVideos:
-            return <LessonVideoSection />
-        case LearnTab.Contents:
-            return <ContentSection />
-        case LearnTab.Challenges:
-            return <ChallengeSection />
-        case LearnTab.TopAchievers:
-            return <div/>
-        }
-    }
     return (
         <div>
             {
                 isLoading ? (
-                    <StarCiSkeleton className="w-30 h-5" />
+                    <Skeleton className="w-30 h-5" />
                 ) : (
-                    <StarCiBreadcrumb>
-                        <StarCiBreadcrumbItem>
-                            <Link href="/">{t("nav.home")}</Link>
-                        </StarCiBreadcrumbItem>
-                        <StarCiBreadcrumbItem>
-                            <Link href="/courses">{t("nav.courses")}</Link>
-                        </StarCiBreadcrumbItem>
-                        <StarCiBreadcrumbItem>
-                            <Link onPress={() => router.push(pathConfig().locale(locale).course(courseDisplayId).build())}>
-                                {course?.title}
-                            </Link>
-                        </StarCiBreadcrumbItem>
-                        <StarCiBreadcrumbItem>
-                            <Link onPress={() => router.push(pathConfig().locale(locale).course(courseDisplayId).learn().build())}>
-                                {t("nav.learn")}
-                            </Link>
-                        </StarCiBreadcrumbItem>
-                    </StarCiBreadcrumb>
+                    <Breadcrumbs>
+                        <Breadcrumbs.Item onPress={() => router.push(pathConfig().locale().build())}>
+                            {t("nav.home")}
+                        </Breadcrumbs.Item>
+                        <Breadcrumbs.Item onPress={() => router.push(pathConfig().locale(locale).course().build())}>
+                            {t("nav.courses")}
+                        </Breadcrumbs.Item>
+                        <Breadcrumbs.Item onPress={() => router.push(pathConfig().locale(locale).course(courseDisplayId).build())}>
+                            {course?.title}
+                        </Breadcrumbs.Item>
+                        <Breadcrumbs.Item>
+                            <span>{t("nav.learn")}</span>
+                        </Breadcrumbs.Item>
+                    </Breadcrumbs>
                 )
             }
-            <Spacer y={6} />
+            <div className="h-12" />
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-12">
-                <div className="sm:col-span-2">  
+                <div className="sm:col-span-2">
                     {
                         (isModuleLoading || !module) ? (
-                            <StarCiSkeleton className="w-60 my-1 h-5 hidden sm:block" />
+                            <Skeleton className="w-60 my-1 h-5 hidden sm:block" />
                         ) : (
                             <div className="text-xl font-bold hidden sm:block">{module?.title}</div>
                         )
-                    }    
-                    <Spacer y={4} className="hidden sm:block" />
+                    }
+                    <div className="hidden sm:block h-6" />
                     {
                         (isModuleLoading || !module) ? (
                             <div className="w-full hidden sm:block">
-                                <StarCiSkeleton className="h-[14px] w-[60%] my-[3px]" />
-                                <StarCiSkeleton className="h-[14px] w-[50%] my-[3px]" />
-                                <StarCiSkeleton className="h-[14px] w-[40%] my-[3px]" />
+                                <Skeleton className="h-[14px] w-[60%] my-[3px]" />
+                                <Skeleton className="h-[14px] w-[50%] my-[3px]" />
+                                <Skeleton className="h-[14px] w-[40%] my-[3px]" />
                             </div>
                         ) : (
-                            <div className="text-sm text-foreground-500 hidden sm:block">{module?.description}</div>
+                            <div className="text-sm text-muted hidden sm:block">{module?.description}</div>
                         )
                     }
-                    <Spacer y={6} className="hidden sm:block" />
-                    <StarCiTabs 
-                        selectedKey={learnTab} 
+                    <div className="hidden sm:block h-12" />
+                    <Tabs
+                        selectedKey={learnTab}
+                        variant="secondary"
                         onSelectionChange={(value) => dispatch(setLearnTab(value as LearnTab))}
                     >
-                        {
-                            tabs.map((tab) => (
-                                <StarCiTab key={tab.value} id={tab.value}>
-                                    <div className="flex items-center justify-center gap-2 w-full">
-                                        <tab.icon className="size-5 shrink-0" />
-                                        <span className="hidden sm:inline">{tab.label}</span>
-                                    </div>
-                                </StarCiTab>
-                            ))
-                        }
-                    </StarCiTabs>
-                    <Spacer y={6} />
-                    {renderContent()}
+                        <Tabs.ListContainer>
+                            <Tabs.List aria-label={t("module.tabListAria")}>
+                                {tabs.map((tab) => (
+                                    <Tabs.Tab key={tab.value} id={tab.value} className="data-[selected=true]:text-accent">
+                                        <div className="flex items-center justify-center gap-2 w-full">
+                                            <tab.icon className="size-5 shrink-0" />
+                                            <span className="hidden sm:inline">{tab.label}</span>
+                                        </div>
+                                        <Tabs.Indicator className="bg-accent" />
+                                    </Tabs.Tab>
+                                ))}
+                            </Tabs.List>
+                        </Tabs.ListContainer>
+                        <Tabs.Panel id={LearnTab.LessonVideos} className="mt-6">
+                            <LessonVideoSection />
+                        </Tabs.Panel>
+                        <Tabs.Panel id={LearnTab.Contents} className="mt-6">
+                            <ContentSection />
+                        </Tabs.Panel>
+                        <Tabs.Panel id={LearnTab.Challenges} className="mt-6">
+                            <ChallengeSection />
+                        </Tabs.Panel>
+                        <Tabs.Panel id={LearnTab.TopAchievers} className="mt-6">
+                            <div />
+                        </Tabs.Panel>
+                    </Tabs>
                 </div>
                 <div className="col-span-1 sm:col-span-1">
                     <ModuleSidebar />

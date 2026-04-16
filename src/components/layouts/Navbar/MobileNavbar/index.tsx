@@ -1,9 +1,4 @@
-import {
-    Link,
-    NavbarMenu,
-    NavbarMenuItem,
-    cn,
-} from "@heroui/react";
+import { Link, cn } from "@heroui/react"
 import { PaintBrushIcon, TranslateIcon } from "@phosphor-icons/react";
 import { useTranslations } from "next-intl";
 import router from "next/router";
@@ -24,10 +19,13 @@ export const MobileNavbar = ({
 }: mobileNavbarProps) => {
   const t = useTranslations();
   return (
-    <NavbarMenu className="backdrop-blur-xl bg-background/80 flex flex-col h-[calc(100vh-64px)] pb-10">
+    <nav
+      className="backdrop-blur-xl bg-background/80 flex flex-col h-[calc(100vh-64px)] pb-10"
+      aria-label={t("nav.mobileMenu")}
+    >
       <div className="flex flex-col gap-2 mt-4 flex-grow">
         {navItems.map((item, index) => (
-          <NavbarMenuItem key={`${item.path}-${index}`}>
+          <div key={`${item.path}-${index}`} className="w-full">
             <Link
               className={cn(
                 "w-full flex items-center gap-4 p-4 rounded-2xl transition-all duration-300",
@@ -46,7 +44,7 @@ export const MobileNavbar = ({
               />
               <span className="font-bold tracking-tight">{item.label}</span>
             </Link>
-          </NavbarMenuItem>
+          </div>
         ))}
       </div>
 
@@ -81,6 +79,6 @@ export const MobileNavbar = ({
           </div>
         </div>
       </div>
-    </NavbarMenu>
+    </nav>
   );
 };

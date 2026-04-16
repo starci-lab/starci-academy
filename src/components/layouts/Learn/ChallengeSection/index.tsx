@@ -1,13 +1,13 @@
 "use client"
 
-import React from "react"
+import React, { useMemo } from "react"
 import { useTranslations } from "next-intl"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import { ChallengeCard } from "./ChallengeCard"
-import { StarCiButton, StarCiSkeleton } from "@/components/atomic"
+import { Pagination, Skeleton } from "@heroui/react"
 import { useQueryChallengesSwr } from "@/hooks/singleton"
 import { ChallengeCardSkeleton } from "./ChallengeCardSkeleton"
-import { SearchBar, Spacer } from "@/components/reuseable"
+import { SearchBar } from "@/components/reuseable"
 import { setChallengePageNumber } from "@/redux/slices"
 import _ from "lodash"
 
@@ -22,18 +22,34 @@ export const ChallengeSection = () => {
     const limit = useAppSelector((state) => state.challenge.limit)
     const pageNumber = useAppSelector((state) => state.challenge.pageNumber)
     const dispatch = useAppDispatch()
+
+    const pageSize = limit ?? 10
+    const totalPages = useMemo(() => {
+        if (count == null || count <= 0) {
+            return 0
+        }
+        return Math.max(1, Math.ceil(count / pageSize))
+    }, [count, pageSize])
+
+    const pageNumbers = useMemo(
+        () => Array.from({ length: totalPages }, (_, index) => index + 1),
+        [totalPages]
+    )
+
+    const currentPage = pageNumber ?? 1
+
     return (
         <div>
             <SearchBar />
-            <Spacer y={6} />
+            <div className="h-6" />
             {isLoading || !challenges ? (
-                <StarCiSkeleton className="h-[14px] w-[150px] my-[3px]" />
+                <Skeleton className="h-[14px] w-[150px] my-[3px]" />
             ) : (
-                <div className="text-sm text-foreground-500">
-                    {t("challenge.count", { count: challenges?.length ?? 0 })}
+                <div className="text-sm text-muted">
+                    {t("challenge.count", { count: count ?? 0 })}
                 </div>
             )}
-            <Spacer y={4} />
+            <div className="h-6" />
             {isLoading || !challenges ? (
                 <div className="flex flex-col gap-3 w-full">
                     {Array.from({ length: 3 }).map((_, index) => (
@@ -43,33 +59,57 @@ export const ChallengeSection = () => {
             ) : (
                 <div>
                     <div className="flex flex-col gap-3 w-full">
-                        {
-                            _.sortBy(challenges, "orderIndex").map((challenge) => (
+                        {_.cloneDeep(challenges)
+                            ?.sort((prev, next) => prev.orderIndex - next.orderIndex)
+                            .map((challenge) => (
                                 <ChallengeCard key={challenge.id} challenge={challenge} />
-                            )
-                            )
-                        }
+                            ))}
                     </div>
-                    {
-                        count && (
-                            <>
-                                <Spacer y={4} />
-                                <div className="flex gap-2 items-center justify-center">
-                                    {Array.from({ length: Math.ceil((count ?? 0) / (limit ?? 10)) }, (_, i) => i + 1).map(p => (
-                                        <StarCiButton
-                                            key={p}
-                                            size="sm"
-                                            variant={p === (pageNumber ?? 1) ? "primary" : "ghost"}
-                                            isIconOnly
-                                            onPress={() => dispatch(setChallengePageNumber(p))}
+                    {count ? (
+                        <>
+                            <div className="h-12" />
+                            <Pagination
+                                aria-label={t("common.pagination.navAria")}
+                                className="justify-center"
+                                size="sm"
+                            >
+                                <Pagination.Content className="flex flex-wrap justify-center gap-1">
+                                    <Pagination.Item>
+                                        <Pagination.Previous
+                                            aria-label={t("common.pagination.previous")}
+                                            isDisabled={currentPage <= 1}
+                                            onPress={() =>
+                                                dispatch(setChallengePageNumber(currentPage - 1))
+                                            }
                                         >
-                                            {p}
-                                        </StarCiButton>
+                                            <Pagination.PreviousIcon />
+                                        </Pagination.Previous>
+                                    </Pagination.Item>
+                                    {pageNumbers.map((p) => (
+                                        <Pagination.Item key={p}>
+                                            <Pagination.Link
+                                                isActive={p === currentPage}
+                                                onPress={() => dispatch(setChallengePageNumber(p))}
+                                            >
+                                                {p}
+                                            </Pagination.Link>
+                                        </Pagination.Item>
                                     ))}
-                                </div>
-                            </>
-                        )
-                    }
+                                    <Pagination.Item>
+                                        <Pagination.Next
+                                            aria-label={t("common.pagination.next")}
+                                            isDisabled={currentPage >= totalPages}
+                                            onPress={() =>
+                                                dispatch(setChallengePageNumber(currentPage + 1))
+                                            }
+                                        >
+                                            <Pagination.NextIcon />
+                                        </Pagination.Next>
+                                    </Pagination.Item>
+                                </Pagination.Content>
+                            </Pagination>
+                        </>
+                    ) : null}
                 </div>
             )}
         </div>

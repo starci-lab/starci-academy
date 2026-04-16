@@ -1,84 +1,79 @@
 "use client"
+
 import React from "react"
-import {
-    StarCiChip,
-    StarCiLink,
-    StarCiModal,
-    StarCiModalBody,
-    StarCiModalContent,
-    StarCiModalHeader,
-} from "../../atomic"
+import { Chip, Link, Modal } from "@heroui/react"
 import { useLessonVideoOverlayState } from "@/hooks/singleton"
 import { useAppSelector } from "@/redux"
 import { ClockIcon, LinkIcon } from "@phosphor-icons/react"
 import { dayjs } from "@/modules/dayjs"
 import { HostPlatformChip, LessonVideoKindChip, Spacer, VideoRenderer } from "@/components/reuseable"
 import { LessonVideoKind, VideoHostPlatform } from "@/modules/types"
+import { AppModalHeader } from "../AppModalHeader"
+
 /**
- * The modal for the lesson video.
- * @returns The modal for the lesson video.
+ * Full-screen lesson video dialog with metadata and external link.
  */
 export const LessonVideoModal = () => {
     const { isOpen, onOpenChange } = useLessonVideoOverlayState()
     const lessonVideo = useAppSelector((state) => state.lessonVideo.entity)
     return (
-        <StarCiModal
-            isOpen={isOpen}
-            onOpenChange={onOpenChange}
-        >
-            <StarCiModalContent size="full" className="[&_header]:max-w-[640px] [&_header]:mx-auto [&_.modal-body]:max-w-[640px] [&_.modal-body]:mx-auto">
-                <StarCiModalHeader
-                    title={lessonVideo?.title ?? ""}
-                    description={
-                        <div className="w-full place-content-center flex">
-                            <div className="flex items-center gap-2">
-                                <StarCiChip
-                                    color="accent"
-                                    size="sm"
-                                    variant="soft"
-                                >
-                                    <ClockIcon className="size-4" />{" "}
-                                    {dayjs.duration(lessonVideo?.durationMs ?? 0).format("HH:mm")}
-                                </StarCiChip>
-                                <HostPlatformChip hostPlatform={lessonVideo?.hostPlatform ?? VideoHostPlatform.Youtube} />
-                                <LessonVideoKindChip kind={lessonVideo?.kind ?? LessonVideoKind.RawStream} />
-                            </div>
-                        </div>
-                    }
-                />
-                <StarCiModalBody>
-                    <div className="flex flex-col items-center">
-                        <VideoRenderer
-                            hostPlatform={lessonVideo?.hostPlatform ?? VideoHostPlatform.Youtube}
-                            title={lessonVideo?.title}
-                            url={lessonVideo?.url ?? ""}
+        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+            <Modal.Backdrop>
+                <Modal.Container className="modal__container--narrow" size="full">
+                    <Modal.Dialog>
+                        <Modal.CloseTrigger />
+                        <AppModalHeader
+                            description={
+                                <div className="flex w-full place-content-center">
+                                    <div className="flex flex-wrap items-center justify-center gap-2">
+                                        <Chip color="accent" size="sm" variant="soft">
+                                            <ClockIcon className="size-4" />
+                                            <Chip.Label>
+                                                {dayjs.duration(lessonVideo?.durationMs ?? 0).format("HH:mm")}
+                                            </Chip.Label>
+                                        </Chip>
+                                        <HostPlatformChip hostPlatform={lessonVideo?.hostPlatform ?? VideoHostPlatform.Youtube} />
+                                        <LessonVideoKindChip kind={lessonVideo?.kind ?? LessonVideoKind.RawStream} />
+                                    </div>
+                                </div>
+                            }
+                            title={lessonVideo?.title ?? ""}
                         />
-                        <Spacer y={3} />
-                        <StarCiLink
-                            href={lessonVideo?.url ?? ""}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-sm"
-                        >
-                            <span className="flex items-center gap-1">
-                                {lessonVideo?.url ?? ""}
-                                <LinkIcon className="size-5" />
-                            </span>
-                        </StarCiLink>
-                    </div>
-                    <Spacer y={6} />
-                    {lessonVideo?.description?.trim() ? (
-                        <div className="text-foreground-500 w-full text-justify text-sm whitespace-pre-wrap">
-                            {lessonVideo.description}
-                        </div>
-                    ) : null}
-                    {lessonVideo?.caption?.trim() ? (
-                        <div className="text-foreground-500 w-full text-sm italic">
-                            {lessonVideo.caption}
-                        </div>
-                    ) : null}
-                </StarCiModalBody>
-            </StarCiModalContent>
-        </StarCiModal>
+                        <Modal.Body className="gap-0 p-4">
+                            <div className="flex flex-col items-center">
+                                <VideoRenderer
+                                    hostPlatform={lessonVideo?.hostPlatform ?? VideoHostPlatform.Youtube}
+                                    title={lessonVideo?.title}
+                                    url={lessonVideo?.url ?? ""}
+                                />
+                                <Spacer y={3} />
+                                <Link
+                                    className="text-sm"
+                                    href={lessonVideo?.url ?? ""}
+                                    rel="noopener noreferrer"
+                                    target="_blank"
+                                >
+                                    <span className="flex items-center gap-1">
+                                        {lessonVideo?.url ?? ""}
+                                        <LinkIcon className="size-5" />
+                                    </span>
+                                </Link>
+                            </div>
+                            <Spacer y={6} />
+                            {lessonVideo?.description?.trim() ? (
+                                <div className="w-full whitespace-pre-wrap text-justify text-sm text-foreground-500">
+                                    {lessonVideo.description}
+                                </div>
+                            ) : null}
+                            {lessonVideo?.caption?.trim() ? (
+                                <div className="w-full text-sm italic text-foreground-500">
+                                    {lessonVideo.caption}
+                                </div>
+                            ) : null}
+                        </Modal.Body>
+                    </Modal.Dialog>
+                </Modal.Container>
+            </Modal.Backdrop>
+        </Modal>
     )
 }

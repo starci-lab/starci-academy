@@ -1,17 +1,13 @@
 "use client"
 import React from "react"
-import { Link } from "@heroui/react"
+import {
+    Alert,
+    Breadcrumbs,
+    Button,
+    Card,
+    Skeleton,
+} from "@heroui/react"
 import { BookOpenIcon, PencilSimpleLineIcon } from "@phosphor-icons/react"
-import { 
-    StarCiAlert, 
-    StarCiBreadcrumb, 
-    StarCiBreadcrumbItem, 
-    StarCiCard, 
-    StarCiCardBody, 
-    StarCiCardFooter, 
-    StarCiSkeleton,
-    StarCiButton
-} from "@/components/atomic"
 import { Modules } from "./Modules"
 import { Stepper } from "./Stepper"
 import { ValuePropositions } from "./ValuePropositions"
@@ -21,7 +17,6 @@ import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { useAppSelector } from "@/redux"
 import { pathConfig } from "@/resources"
-import { Spacer } from "@/components/reuseable"
 
 export const Course = () => {
     const { onOpen } = usePaymentOverlayState()
@@ -39,84 +34,90 @@ export const Course = () => {
         <div>
             {
                 isLoading ? (
-                    <StarCiSkeleton className="w-30 h-5" />
+                    <Skeleton className="w-30 h-5" />
                 ) : (
-                    <StarCiBreadcrumb>
-                        <StarCiBreadcrumbItem>
-                            <Link href="/">{t("nav.home")}</Link>
-                        </StarCiBreadcrumbItem>
-                        <StarCiBreadcrumbItem>
-                            <Link onPress={() => router.push(pathConfig().locale(locale).course().build())}>
-                                {t("nav.courses")}
-                            </Link>
-                        </StarCiBreadcrumbItem>
-                        <StarCiBreadcrumbItem>
-                            <Link onPress={() => router.push(pathConfig().locale(locale).course(courseDisplayId).build())}>
-                                {course?.title}
-                            </Link>
-                        </StarCiBreadcrumbItem>
-                    </StarCiBreadcrumb>
+                    <Breadcrumbs>
+                        <Breadcrumbs.Item onPress={() => router.push(pathConfig().locale().build())}>
+                            {t("nav.home")}
+                        </Breadcrumbs.Item>
+                        <Breadcrumbs.Item onPress={() => router.push(pathConfig().locale(locale).course().build())}>
+                            {t("nav.courses")}
+                        </Breadcrumbs.Item>
+                        <Breadcrumbs.Item>
+                            <span>{course?.title}</span>
+                        </Breadcrumbs.Item>
+                    </Breadcrumbs>
                 )
             }
-            <Spacer y={6} />
-            <div className="text-4xl font-bold">{
-                isLoading ? 
-                    <StarCiSkeleton className="w-60 h-10" /> 
-                    : (
-                        <div className="text-4xl font-bold">{course?.title}</div>
-                    )
-            }</div>
-            <Spacer y={12} />
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-12">
-                <div className="order-2 md:order-1 md:col-span-3">
-                    <StarCiAlert className="text-sm" status="default">
-                        {
-                            isLoading ? (
-                                <div className="w-full">
-                                    <StarCiSkeleton className="h-[14px] w-[60%] !bg-secondary-500/10 my-[3px]" />
-                                    <StarCiSkeleton className="h-[14px] w-[50%] !bg-secondary-500/10 my-[3px]" />
-                                    <StarCiSkeleton className="h-[14px] w-[40%] !bg-secondary-500/10 my-[3px]" />
-                                </div>
+            <div className="h-12" />
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-12 items-start">
+                <div className="order-2 md:order-1 md:col-span-3 flex min-w-0 flex-col">
+                    {isLoading ? (
+                        <Skeleton className="h-10 w-60 max-w-full" />
+                    ) : (
+                        <h1 className="text-4xl font-bold">{course?.title}</h1>
+                    )}
+                    {isLoading ? (
+                        <div className="mt-3 space-y-2">
+                            <Skeleton className="h-[14px] w-[60%] max-w-full" />
+                            <Skeleton className="h-[14px] w-[50%] max-w-full" />
+                            <Skeleton className="h-[14px] w-[40%] max-w-full" />
+                        </div>
+                    ) : (
+                        <div
+                            className="text-sm text-muted mt-3"
+                            dangerouslySetInnerHTML={{ __html: course?.description ?? "" }}
+                        />
+                    )}
+                    <div className="h-6 shrink-0" />
+                    <Alert status="warning" className="text-sm">
+                        <Alert.Indicator />
+                        <Alert.Content className="gap-1">
+                            {isLoading ? (
+                                <Alert.Description className="w-full">
+                                    <Skeleton className="h-[14px] w-[60%] !bg-warning-500/10 my-[3px]" />
+                                    <Skeleton className="h-[14px] w-[50%] !bg-warning-500/10 my-[3px]" />
+                                </Alert.Description>
                             ) : (
-                                <span className="text-sm" dangerouslySetInnerHTML={{ __html: course?.description ?? "" }} />
-                            )
-                        }
-                    </StarCiAlert>
-                    <Spacer y={6} />
-                    <StarCiAlert className="text-sm" status="warning">
-                        {
-                            isLoading ? (
-                                <div className="w-full">
-                                    <StarCiSkeleton  className="h-[14px] w-[60%] !bg-warning-500/10 my-[3px]" />
-                                    <StarCiSkeleton  className="h-[14px] w-[50%] !bg-warning-500/10 my-[3px]" />
-                                </div>
-                            ) : (
-                                <ul className="list-disc list-inside text-warning text-start w-full">
-                                    {course?.prerequisites?.map((prerequisite) => (
-                                        <li key={prerequisite.id} className="text-sm text-warning">
-                                            <span dangerouslySetInnerHTML={{ __html: prerequisite.text ?? "" }} />
-                                        </li>
-                                    ))}
-                                </ul>
-                            )
-                        }
-                    </StarCiAlert>
-                    <Spacer y={12} />
+                                <>
+                                    <Alert.Title>{t("course.prerequisites")}</Alert.Title>
+                                    <Alert.Description>
+                                        <ul className="list-disc list-inside text-start w-full">
+                                            {course?.prerequisites?.map((prerequisite) => (
+                                                <li key={prerequisite.id} className="text-sm">
+                                                    <span dangerouslySetInnerHTML={{ __html: prerequisite.text ?? "" }} />
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </Alert.Description>
+                                </>
+                            )}
+                        </Alert.Content>
+                    </Alert>
+                    <div className="h-6" />
                     <Modules />
-                    <Spacer y={12} />
+                    <div className="h-6" />
                     <QnA />
                 </div>
-                <StarCiCard className="order-1 md:order-2 md:col-span-2 bg-inherit border border-divider h-fit">
-                    <StarCiCardBody>
-                        <Stepper />
-                        <Spacer y={6} />
-                        <ValuePropositions />
-                    </StarCiCardBody>
-                    <StarCiCardFooter>
+                <Card className="order-1 md:order-2 md:col-span-2 w-full bg-inherit border border-divider h-fit shrink-0 p-0">
+                    <Card.Content>
+                        <img
+                            className="w-full h-full object-cover"
+                            alt={course?.title ?? ""}
+                            loading="lazy"
+                            src={course?.coverImageUrl ?? ""}
+                        />
+                        <div className="p-3">
+                            <Stepper />
+                            <div className="h-12" />
+                            <ValuePropositions />
+                        </div>
+                    </Card.Content>
+                    <Card.Footer className="px-3 pb-3">
                         <div className="w-full">
                             {
                                 !isEnrolled ? (
-                                    <StarCiButton 
+                                    <Button 
                                         variant="primary" 
                                         size="lg" 
                                         className="w-full"
@@ -125,9 +126,9 @@ export const Course = () => {
                                     >
                                         <PencilSimpleLineIcon className="w-5 h-5" />
                                         {t("course.enroll")}
-                                    </StarCiButton>
+                                    </Button>
                                 ) : (
-                                    <StarCiButton 
+                                    <Button 
                                         variant="primary" 
                                         size="lg" 
                                         className="w-full"
@@ -145,15 +146,15 @@ export const Course = () => {
                                     >
                                         <BookOpenIcon className="w-5 h-5" />
                                         {t("course.continueLearning")}
-                                    </StarCiButton>
+                                    </Button>
                                 )}
-                            <Spacer y={4} />
+                            <div className="h-12" />
                             <div className="text-sm text-foreground-500">
                                 {t("course.usersEnrolled", { count: enrollmentCount })}
                             </div>
                         </div>
-                    </StarCiCardFooter>
-                </StarCiCard>
+                    </Card.Footer>
+                </Card>
             </div>
         </div>
     )

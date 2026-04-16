@@ -2,7 +2,7 @@
 
 import React, { useMemo } from "react"
 import { SealCheckIcon } from "@phosphor-icons/react"
-import { StarCiSkeleton } from "@/components/atomic"
+import { Skeleton } from "@heroui/react"
 import { useAppSelector } from "@/redux"
 import { useQueryCourseSwr } from "@/hooks/singleton"
 import _ from "lodash"
@@ -18,16 +18,16 @@ export const ValuePropositions = () => {
         return (
             <div className="flex flex-col gap-2 text-foreground-500">
                 <div className="flex items-center gap-2">
-                    <StarCiSkeleton className="h-5 w-5 shrink-0" />
-                    <StarCiSkeleton className="h-4 flex-1 max-w-[90%]" />
+                    <Skeleton className="h-5 w-5 shrink-0" />
+                    <Skeleton className="h-4 flex-1 max-w-[90%]" />
                 </div>
                 <div className="flex items-center gap-2">
-                    <StarCiSkeleton className="h-5 w-5 shrink-0" />
-                    <StarCiSkeleton className="h-4 flex-1 max-w-[75%]" />
+                    <Skeleton className="h-5 w-5 shrink-0" />
+                    <Skeleton className="h-4 flex-1 max-w-[75%]" />
                 </div>
                 <div className="flex items-center gap-2">
-                    <StarCiSkeleton className="h-5 w-5 shrink-0" />
-                    <StarCiSkeleton className="h-4 flex-1 max-w-[85%]" />
+                    <Skeleton className="h-5 w-5 shrink-0" />
+                    <Skeleton className="h-4 flex-1 max-w-[85%]" />
                 </div>
             </div>
         )

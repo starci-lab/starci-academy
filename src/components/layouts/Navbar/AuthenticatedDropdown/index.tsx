@@ -30,11 +30,12 @@ export const AuthenticatedDropdown = () => {
             onOpenChange={onOpenChange}
         >
             <DropdownTrigger>
-                <Avatar
-                    src={user?.avatar}
-                    className="cursor-pointer"
-                    name={user?.username} 
-                />
+                <Avatar className="cursor-pointer">
+                    <Avatar.Image src={user?.avatar} alt={user?.username ?? ""} />
+                    <Avatar.Fallback>
+                        {(user?.username?.[0] ?? "?").toUpperCase()}
+                    </Avatar.Fallback>
+                </Avatar>
             </DropdownTrigger>
             <DropdownMenu>
                 <DropdownSection>

@@ -1,30 +1,29 @@
+"use client"
+
 import React, { useMemo } from "react"
-import { StarCiChip, StarCiTooltip } from "@/components/atomic"
-import { TooltipTrigger, TooltipContent } from "@heroui/react"
+import { Chip, Tooltip } from "@heroui/react"
 import { LessonVideoKind } from "@/modules/types"
 import { useTranslations } from "next-intl"
-import { 
+import {
     TwitchLogoIcon,
     SparkleIcon,
     FilmReelIcon,
 } from "@phosphor-icons/react"
 
 /**
- * The props for the HostPlatformChip component.
+ * The props for the LessonVideoKindChip component.
  * @param kind - The kind of the lesson video.
  */
 export interface LessonVideoKindChipProps {
+    /** Lesson video kind from the API. */
     kind: LessonVideoKind
 }
 
 /**
- * A chip that displays the host platform of a lesson video.
- * @param kind - The kind of the lesson video.
- * @returns A chip that displays the host platform of a lesson video.
+ * Chip with a tooltip explaining the lesson video kind (raw stream, edited, premium).
  */
 export const LessonVideoKindChip = ({ kind }: LessonVideoKindChipProps) => {
     const t = useTranslations()
-    // switch case to return the icon and label
     const renderLessonVideoKind = () => {
         switch (kind) {
         case LessonVideoKind.RawStream:
@@ -51,18 +50,14 @@ export const LessonVideoKindChip = ({ kind }: LessonVideoKindChipProps) => {
     }
     const { icon, label, tooltip } = useMemo(() => renderLessonVideoKind(), [kind])
     return (
-        <StarCiTooltip>
-            <TooltipTrigger>
-                <StarCiChip 
-                    color="warning" 
-                    size="sm" 
-                    variant="soft"
-                >
+        <Tooltip>
+            <Tooltip.Trigger>
+                <Chip color="warning" size="sm" variant="soft">
                     {icon}
-                    {t(label)}
-                </StarCiChip>
-            </TooltipTrigger>
-            <TooltipContent>{t(tooltip)}</TooltipContent>
-        </StarCiTooltip>
+                    <Chip.Label>{t(label)}</Chip.Label>
+                </Chip>
+            </Tooltip.Trigger>
+            <Tooltip.Content>{t(tooltip)}</Tooltip.Content>
+        </Tooltip>
     )
 }

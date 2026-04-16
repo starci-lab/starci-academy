@@ -1,5 +1,5 @@
 import React from "react"
-import { StarCiCard, StarCiCardBody, StarCiCardFooter, StarCiButton } from "@/components/atomic"
+import { Button, Card, CardContent, CardFooter } from "@heroui/react"
 import { CourseEntity } from "@/modules/types"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
@@ -17,24 +17,24 @@ export const CourseCard = ({ course }: CourseCardProps) => {
     const router = useRouter()
     const t = useTranslations()
     return (
-        <StarCiCard>
-            <StarCiCardBody>
+        <Card>
+            <CardContent>
                 <img src={course.coverImageUrl ?? ""} alt={course.title} />
                 <Spacer y={4} />
                 <div className="font-bold">{course.title}</div>
                 <Spacer y={4} />
                 <div className="text-sm text-foreground-500 text-justify italic line-clamp-3">{course.description}</div>
-            </StarCiCardBody>
-            <StarCiCardFooter>
+            </CardContent>
+            <CardFooter>
                 <div className="w-full">
-                    <StarCiButton variant="primary" size="lg" className="w-full" onPress={() => router.push(pathConfig().locale(locale).course(course.displayId).build())}>{t("courses.viewCourse")}</StarCiButton>
+                    <Button variant="primary" size="lg" className="w-full" onPress={() => router.push(pathConfig().locale(locale).course(course.displayId).build())}>{t("courses.viewCourse")}</Button>
                     <Spacer y={2} />
                     <div className="text-sm text-justify flex gap-2">
                         <span className="line-through text-foreground-500">{originalPrice} VND</span>
                         <span>{actualPrice} VND</span>
                     </div>
                 </div>
-            </StarCiCardFooter>
-        </StarCiCard>
+            </CardFooter>
+        </Card>
     )
 }

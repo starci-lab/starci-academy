@@ -58,22 +58,22 @@ export const Navbar = () => {
         },
         { 
             label: t("nav.courses"), 
-            path: pathConfig().locale(locale).course().build(), 
+            path: pathConfig().locale().course().build(), 
             isActive: pathname.startsWith(pathConfig().locale(locale).course().build()) 
         },
         { 
             label: t("nav.contact"), 
-            path: pathConfig().locale(locale).contact().build(), 
+            path: pathConfig().locale().contact().build(), 
             isActive: pathname.startsWith(pathConfig().locale(locale).contact().build())
         },
     ], [pathname, locale])
     
     return (
-        <nav className="border-b border-divider px-6 py-3">
+        <nav className="border-b border-divider py-3 sticky top-0 z-50 bg-background">
             {/**
              * Navbar content
              */}
-            <div className="max-w-[1024px] mx-auto flex items-center justify-between">
+            <div className="max-w-[1256px] px-6 mx-auto flex items-center justify-between">
                 {/**
                  * Logo
                  */}

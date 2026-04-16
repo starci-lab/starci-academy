@@ -40,7 +40,7 @@ export type SignInSectionProps = WithClassNames<{
  */
 export const SignInSection = ({ className, classNames }: SignInSectionProps) => {
     const [showPassword, setShowPassword] = useState(false)
-    const { data: keycloak, isLoading: keycloakLoading } = useKeycloak()
+    const { data: keycloak } = useKeycloak()
     const dispatch = useAppDispatch()
     const t = useTranslations()
     const {
@@ -63,7 +63,7 @@ export const SignInSection = ({ className, classNames }: SignInSectionProps) => 
                 type="button"
                 variant="outline"
                 className="w-full text-sm"
-                isDisabled={keycloakLoading || !keycloak}
+                isDisabled={!keycloak}
                 onPress={
                     async () => {
                         await keycloak?.login({

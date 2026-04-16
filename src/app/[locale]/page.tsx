@@ -18,7 +18,7 @@ const Page = () => {
     return (
         <div>
             <Spacer y={20} />
-            {/* <motion.div
+            <motion.div
                 className="grid grid-cols-1 md:grid-cols-5 gap-6"
                 {...fadeInUp}
             >
@@ -80,7 +80,7 @@ const Page = () => {
                     <div className="text-xl font-bold flex gap-1">{t("home.diff.des2")}</div>
                     <Spacer y={4} />
                     <div className="text-sm text-foreground-500 text-justify">
-                    {t("home.diff.des3")}
+                        {t("home.diff.des3")}
                     </div>
                 </div>
             </motion.div>
@@ -98,11 +98,11 @@ const Page = () => {
                 />
                 <div className="col-span-1 sm:col-span-3 order-2 sm:order-1">
                     <div className="text-xl font-bold">
-      {t("home.diff.des4")}
+                        {t("home.diff.des4")}
                     </div>
                     <Spacer y={4} />
                     <div className="text-sm text-foreground-500 text-justify">
-      {t("home.diff.des5")}
+                        {t("home.diff.des5")}
                     </div>
                 </div>
             </motion.div>
@@ -118,7 +118,7 @@ const Page = () => {
                     <div className="text-xl font-bold flex gap-1">From Code to Career</div>
                     <Spacer y={4} />
                     <div className="text-sm text-foreground-500 text-justify">
-                    {t("home.diff.des6")}
+                        {t("home.diff.des6")}
                     </div>
                 </div>
             </motion.div>
@@ -129,7 +129,7 @@ const Page = () => {
                 transition={{ duration: 0.5, delay: 0.35, ease: "easeOut" }}
             >
                 <Courses />
-            </motion.div> */}
+            </motion.div>
         </div>
     )
 }

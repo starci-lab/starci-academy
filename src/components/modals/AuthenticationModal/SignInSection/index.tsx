@@ -63,6 +63,7 @@ export const SignInSection = ({ className, classNames }: SignInSectionProps) => 
                 type="button"
                 variant="outline"
                 className="w-full text-sm"
+                isDisabled={!keycloak}
                 onPress={
                     async () => {
                         await keycloak?.login({

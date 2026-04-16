@@ -27,9 +27,9 @@ export const SubmissionAttemptsDrawer = () => {
         return "danger"
     }
     return (
-        <Drawer>
+        <Drawer >
             <Drawer.Backdrop isOpen={isOpen} onOpenChange={onOpenChange}>
-                <Drawer.Content>
+                <Drawer.Content  placement="right">
                     <Drawer.Dialog>
                         <Drawer.CloseTrigger />
                         <Drawer.Header>

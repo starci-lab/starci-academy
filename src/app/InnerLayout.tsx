@@ -1,5 +1,6 @@
 "use client"
 import {
+    DrawerContainer,
     HeroUIProvider,
     Navbar,
     NextThemesProvider,
@@ -29,9 +30,10 @@ export const InnerLayout = ({ children }: PropsWithChildren) => {
                                 <UseEffects />
                                 <Navbar />
                                 <ModalContainer />
+                                <DrawerContainer />
                                 {/*
                                 <Navbar />  
-                                <DrawerContainer /> */}
+                                 */}
                                 {children}
                             </SingletonHookProvider>
                             <ToastProvider />

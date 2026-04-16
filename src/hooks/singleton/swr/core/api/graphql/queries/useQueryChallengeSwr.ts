@@ -12,13 +12,18 @@ export const useQueryChallengeSwrCore = () => {
     const token = keycloak.data?.authenticated ? keycloak.data?.token : undefined
     const challengeId = useAppSelector((state) => state.challenge.id)
     const course = useAppSelector((state) => state.course.entity)
+    const enrolled = useAppSelector((state) => state.user.enrolled)
     const dispatch = useAppDispatch()
+    console.log(
+        `enrolled && challengeId && course?.id: ${enrolled} && ${challengeId} && ${course?.id}`,
+    )
     const swr = useSWR(
-        challengeId && course?.id
+        enrolled && challengeId && course?.id
             ? [
                 "QUERY_CHALLENGE_SWR",
                 challengeId,
                 course?.id,
+                enrolled,
             ]
             : null,
         async () => {

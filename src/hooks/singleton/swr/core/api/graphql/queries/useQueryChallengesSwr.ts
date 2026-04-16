@@ -22,7 +22,7 @@ export const useQueryChallengesSwrCore = () => {
         (state) => state.module.limit,
     )
     const dispatch = useAppDispatch()
-    const swr = useSWR(
+    return useSWR(
         enrolled && course?.id && module?.id
             ? [
                 "QUERY_CHALLENGES_SWR",
@@ -60,5 +60,4 @@ export const useQueryChallengesSwrCore = () => {
             return payload
         },
     )
-    return swr
 }

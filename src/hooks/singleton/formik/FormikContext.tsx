@@ -1,5 +1,5 @@
 "use client"
-import React, { PropsWithChildren, useMemo } from "react"
+import React, { PropsWithChildren } from "react"
 import { createContext } from "react"
 import {
     useSignInFormikCore,
@@ -20,21 +20,12 @@ export const FormikProvider = ({ children }: PropsWithChildren) => {
     const signInFormik = useSignInFormikCore()
     const signUpFormik = useSignUpFormikCore()
     const editSubmissionFormik = useEditSubmissionFormikCore()
-    const value = useMemo(
-        () => (
-            {
-                signInFormik,
-                signUpFormik,
-                editSubmissionFormik,
-            }), [
+    return (
+        <FormikContext.Provider value={{
             signInFormik,
             signUpFormik,
             editSubmissionFormik,
-        ]
-    )
-
-    return (
-        <FormikContext.Provider value={value}>
+        }}>
             {children}
         </FormikContext.Provider>
     )

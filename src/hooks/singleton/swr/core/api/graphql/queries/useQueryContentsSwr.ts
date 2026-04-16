@@ -22,8 +22,11 @@ export const useQueryContentsSwrCore = () => {
     const limit = useAppSelector(
         (state) => state.module.limit,
     )
+    console.log(
+        `contents: enrolled: ${enrolled}, course?.id: ${course?.id}, module?.id: ${module?.id}`,
+    )
     const dispatch = useAppDispatch()
-    const swr = useSWR(
+    return useSWR(
         enrolled && course?.id && module?.id
             ? [
                 "QUERY_CONTENTS_SWR",
@@ -59,7 +62,6 @@ export const useQueryContentsSwrCore = () => {
             dispatch(setContents(payload.data))
             dispatch(setContentsCount(payload.count))
             return payload
-        },
+        }
     )
-    return swr
 }

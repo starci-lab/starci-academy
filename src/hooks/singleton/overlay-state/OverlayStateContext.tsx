@@ -1,5 +1,5 @@
 "use client"
-import React, { PropsWithChildren, useMemo } from "react"
+import React, { PropsWithChildren } from "react"
 import { createContext } from "react"
 import {
     useAuthenticationOverlayStateCore,
@@ -43,33 +43,20 @@ export const OverlayStateProvider = ({ children }: PropsWithChildren) => {
     const language = useLanguageOverlayStateCore()
     const submissionAttempts = useSubmissionAttemptsOverlayStateCore()
     const feedbackDetails = useFeedbackDetailsOverlayStateCore()
-    const value = useMemo(() => ({
-        authentication,
-        payment,
-        content,
-        livestreamCalendar,
-        lessonVideo,
-        challenge,
-        challengeSubmission,
-        accountMenu,
-        language,
-        submissionAttempts,
-        feedbackDetails,
-    }), [
-        authentication,
-        payment,
-        content,
-        livestreamCalendar,
-        lessonVideo,
-        challenge,
-        challengeSubmission,
-        accountMenu,
-        language,
-        submissionAttempts,
-        feedbackDetails,
-    ])
     return (
-        <OverlayStateContext.Provider value={value}>
+        <OverlayStateContext.Provider value={{
+            authentication,
+            payment,
+            content,
+            livestreamCalendar,
+            lessonVideo,
+            challenge,
+            challengeSubmission,
+            accountMenu,
+            language,
+            submissionAttempts,
+            feedbackDetails,
+        }}>
             {children}
         </OverlayStateContext.Provider>
     )

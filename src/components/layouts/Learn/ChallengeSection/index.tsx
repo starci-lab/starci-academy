@@ -17,7 +17,7 @@ import _ from "lodash"
 export const ChallengeSection = () => {
     const t = useTranslations()
     const challenges = useAppSelector((state) => state.challenge.entities)
-    const { isLoading } = useQueryChallengesSwr()
+    const queryChallengesSwr = useQueryChallengesSwr()
     const count = useAppSelector((state) => state.challenge.count)
     const limit = useAppSelector((state) => state.challenge.limit)
     const pageNumber = useAppSelector((state) => state.challenge.pageNumber)
@@ -37,12 +37,14 @@ export const ChallengeSection = () => {
     )
 
     const currentPage = pageNumber ?? 1
-
+    console.log(
+        queryChallengesSwr
+    )
     return (
         <div>
             <SearchBar />
             <div className="h-6" />
-            {isLoading || !challenges ? (
+            {queryChallengesSwr.isLoading || !challenges ? (
                 <Skeleton className="h-[14px] w-[150px] my-[3px]" />
             ) : (
                 <div className="text-sm text-muted">
@@ -50,7 +52,7 @@ export const ChallengeSection = () => {
                 </div>
             )}
             <div className="h-6" />
-            {isLoading || !challenges ? (
+            {queryChallengesSwr.isLoading || !challenges ? (
                 <div className="flex flex-col gap-3 w-full">
                     {Array.from({ length: 3 }).map((_, index) => (
                         <ChallengeCardSkeleton key={index} />

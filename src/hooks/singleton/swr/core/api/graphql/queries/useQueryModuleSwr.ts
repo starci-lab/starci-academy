@@ -48,6 +48,9 @@ export const useQueryModuleSwrCore = () => {
                 throw new Error("Module not found")
             }
             dispatch(setModule(data.data.module.data))
+            console.log(
+                `module set: ${data.data.module.data?.id}`,
+            )
             return data.data
         },
     )

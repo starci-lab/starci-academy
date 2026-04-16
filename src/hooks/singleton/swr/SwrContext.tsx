@@ -1,5 +1,5 @@
 "use client"
-import React, { PropsWithChildren, useMemo } from "react"
+import React, { PropsWithChildren } from "react"
 import { createContext } from "react"
 import {
     useMutateCourseEnrollSwrCore,
@@ -66,50 +66,27 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
     const queryChallengeSubmissionsSwr = useQueryChallengeSubmissionsSwrCore()
     const querySubmissionAttemptsSwr = useQuerySubmissionAttemptsSwrCore()
     const querySubmissionFeedbacksSwr = useQuerySubmissionFeedbacksSwrCore()
-    const values = useMemo(
-        () => ({
-            queryCourseSwr,
-            queryCourseEnrollmentStatusSwr,
-            queryCoursesSwr,
-            queryUserSwr,
-            mutateCourseEnrollSwr,
-            mutateSyncChallengeSubmissionsSwr,
-            mutateSubmitChallengeSubmissionsSwr,
-            queryModuleSwr,
-            queryContentSwr,
-            queryLessonVideo,
-            queryChallengeSwr,
-            queryContentsSwr,
-            queryLessonVideosSwr,
-            queryLivestreamSessionsSwr,
-            queryChallengesSwr,
-            queryChallengeSubmissionsSwr,
-            querySubmissionAttemptsSwr,
-            querySubmissionFeedbacksSwr,
-        }),
-        [
-            queryCourseSwr,
-            queryCourseEnrollmentStatusSwr,
-            queryCoursesSwr,
-            queryUserSwr,
-            mutateCourseEnrollSwr,
-            mutateSyncChallengeSubmissionsSwr,
-            mutateSubmitChallengeSubmissionsSwr,
-            queryModuleSwr,
-            queryContentSwr,
-            queryLessonVideo,
-            queryChallengeSwr,
-            queryContentsSwr,
-            queryLessonVideosSwr,
-            queryLivestreamSessionsSwr,
-            queryChallengesSwr,
-            queryChallengeSubmissionsSwr,
-            querySubmissionAttemptsSwr,
-            querySubmissionFeedbacksSwr,
-        ]
-    )
     return (
-        <SwrContext.Provider value={values}>
+        <SwrContext.Provider value={{
+            queryCourseSwr,
+            queryCourseEnrollmentStatusSwr,
+            queryCoursesSwr,
+            queryUserSwr,
+            mutateCourseEnrollSwr,
+            mutateSyncChallengeSubmissionsSwr,
+            mutateSubmitChallengeSubmissionsSwr,
+            queryModuleSwr,
+            queryContentSwr,
+            queryLessonVideo,
+            queryChallengeSwr,
+            queryContentsSwr,
+            queryLessonVideosSwr,
+            queryLivestreamSessionsSwr,
+            queryChallengesSwr,
+            queryChallengeSubmissionsSwr,
+            querySubmissionAttemptsSwr,
+            querySubmissionFeedbacksSwr,
+        }}>
             {children}
         </SwrContext.Provider>
     )

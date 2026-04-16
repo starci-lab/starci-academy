@@ -4,7 +4,6 @@ import React, { useMemo } from "react"
 import { useTranslations } from "next-intl"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import { ContentCard } from "./ContentCard"
-import { useQueryContentsSwr } from "@/hooks/singleton"
 import { ContentCardSkeleton } from "./ContentCardSkeleton"
 import { Pagination, Skeleton } from "@heroui/react"
 import _ from "lodash"
@@ -20,7 +19,6 @@ export const ContentSection = () => {
     const count = useAppSelector((state) => state.content.count)
     const limit = useAppSelector((state) => state.content.limit)
     const pageNumber = useAppSelector((state) => state.content.pageNumber)
-    const { isLoading } = useQueryContentsSwr()
     const dispatch = useAppDispatch()
 
     const pageSize = limit ?? 10
@@ -43,7 +41,7 @@ export const ContentSection = () => {
             <SearchBar />
             <div className="h-6" />
             {
-                isLoading || !contents ? (
+                !contents ? (
                     <Skeleton className="h-[14px] w-[150px] my-[3px]" />
                 ) : (
                     <div className="text-sm text-muted">
@@ -53,7 +51,7 @@ export const ContentSection = () => {
             }
             <div className="h-6" />
             {
-                isLoading || !contents ? (
+                !contents ? (
                     <div className="flex flex-col gap-3 w-full">
                         {Array.from({ length: 3 }).map((_, index) => (
                             <ContentCardSkeleton key={index} />

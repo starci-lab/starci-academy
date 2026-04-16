@@ -93,7 +93,7 @@ export const ChallengeModal = () => {
                                                         </div>
                                                     ) : null}
                                                     <div className="h-3"/>
-                                                    <Surface className="p-3 text-muted rounded-3xl border border-divider" variant="transparent">
+                                                    <Surface className="p-1.5 text-muted rounded-3xl border border-divider" variant="transparent">
                                                         <MarkdownContent
                                                             markdown={step.body ?? ""}
                                                         />

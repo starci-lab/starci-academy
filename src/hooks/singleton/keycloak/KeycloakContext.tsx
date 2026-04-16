@@ -11,9 +11,8 @@ export const KeycloakContext = createContext<KeycloakContextType | null>(null)
 
 export const KeycloakProvider = ({ children }: PropsWithChildren) => {
     const keycloakSwr = useKeycloakCore()
-    const value: KeycloakContextType = { keycloakSwr }
     return (
-        <KeycloakContext.Provider value={value}>
+        <KeycloakContext.Provider value={{ keycloakSwr}}>
             {children}
         </KeycloakContext.Provider>
     )

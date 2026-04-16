@@ -1,8 +1,8 @@
 "use client"
 
 import React, { useMemo } from "react"
-import { Chip, Modal, ScrollShadow } from "@heroui/react"
-import { MarkdownContent, ReferenceLinks, Spacer } from "@/components/reuseable"
+import { Chip, Modal, ScrollShadow, Surface } from "@heroui/react"
+import { MarkdownContent, ReferenceLinks } from "@/components/reuseable"
 import { useChallengeOverlayState } from "@/hooks/singleton"
 import { ChallengeDifficulty } from "@/modules/types"
 import { ListNumbersIcon, SwordIcon, TrophyIcon } from "@phosphor-icons/react"
@@ -68,10 +68,10 @@ export const ChallengeModal = () => {
                             }
                             title={challenge?.title ?? ""}
                         />
-                        <Modal.Body className="gap-0 p-4">
-                            <ScrollShadow hideScrollBar>
+                        <Modal.Body>
+                            <ScrollShadow hideScrollBar={true} className="px-3">
                                 <ChallengeCard />
-                                <Spacer y={6} />
+                                <div className="h-6"/>
                                 {challenge?.requirements?.trim() ? (
                                     <>
                                         <MarkdownContent markdown={challenge.requirements} />
@@ -79,25 +79,25 @@ export const ChallengeModal = () => {
                                 ) : null}
                                 {steps.length > 0 ? (
                                     <>
-                                        <Spacer y={6} />
-                                        <div className="font-semibold text-foreground">
+                                        <div className="h-6"/>
+                                        <div className="font-semibold text-foreground text-base">
                                             {t("challenge.steps.title")}
                                         </div>
-                                        <Spacer y={3} />
+                                        <div className="h-3"/>
                                         <div className="flex flex-col gap-6">
                                             {steps.map((step) => (
                                                 <div key={step.id}>
                                                     {step.title?.trim() ? (
-                                                        <div className="text-sm text-foreground-500">
+                                                        <div className="text-sm text-foreground font-semibold">
                                                             {`${step.orderIndex + 1}. ${step.title}`}
                                                         </div>
                                                     ) : null}
-                                                    <Spacer y={1.5} />
-                                                    <div className="rounded-large border border-divider p-3">
+                                                    <div className="h-3"/>
+                                                    <Surface className="p-3 text-muted rounded-3xl border border-divider" variant="transparent">
                                                         <MarkdownContent
                                                             markdown={step.body ?? ""}
                                                         />
-                                                    </div>
+                                                    </Surface>
                                                 </div>
                                             ))}
                                         </div>
@@ -107,6 +107,7 @@ export const ChallengeModal = () => {
                                     references={references ?? []}
                                     titleKey="reference.title"
                                 />
+                                <div className="h-6"/>
                             </ScrollShadow>
                         </Modal.Body>
                     </Modal.Dialog>

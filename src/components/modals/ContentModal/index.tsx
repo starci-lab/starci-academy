@@ -3,7 +3,7 @@
 import React, { useMemo } from "react"
 import _ from "lodash"
 import { Chip, Modal, ScrollShadow } from "@heroui/react"
-import { MarkdownContent, Spacer } from "@/components/reuseable"
+import { MarkdownContent } from "@/components/reuseable"
 import { ContentReferences } from "./ContentReferences"
 import { useContentOverlayState } from "@/hooks/singleton"
 import { ClockIcon } from "@phosphor-icons/react"
@@ -19,7 +19,7 @@ export const ContentModal = () => {
     return (
         <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
             <Modal.Backdrop>
-                <Modal.Container className="modal__container" size="full">
+                <Modal.Container size="full" scroll="inside">
                     <Modal.Dialog>
                         <Modal.CloseTrigger />
                         <AppModalHeader
@@ -37,11 +37,11 @@ export const ContentModal = () => {
                             }
                             title={content?.title ?? ""}
                         />
-                        <Modal.Body className="gap-0 p-4">
-                            <ScrollShadow hideScrollBar={true}>
+                        <Modal.Body>
+                            <ScrollShadow hideScrollBar={true} className="px-3">   
                                 <MarkdownContent markdown={content?.body ?? ""} />
                                 <ContentReferences references={references} />
-                                <Spacer y={6} />
+                                <div className="h-6"/>
                             </ScrollShadow>
                         </Modal.Body>
                     </Modal.Dialog>

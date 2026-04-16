@@ -283,5 +283,8 @@
         "saturday": "Thứ bảy"
       }
     }
+  },
+  "markdown": {
+    "tableAriaLabel": "Bảng nội dung"
   }
 }

@@ -282,5 +282,8 @@
         "saturday": "Saturday"
       }
     }
+  },
+  "markdown": {
+    "tableAriaLabel": "Content table"
   }
 }

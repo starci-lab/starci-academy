@@ -1,12 +1,15 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
+import React from "react"
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import { isInlineCode } from "react-shiki"
 import { useTheme } from "next-themes"
+import { useTranslations } from "next-intl"
 import { codeToHtml } from "shiki"
 import { SnippetIcon } from "../SnippetIcon"
+import { Chip, cn, Link, Table } from "@heroui/react"
+import useSWR from "swr"
 
 /**
  * Props for the CodeToHtml component.
@@ -21,38 +24,21 @@ export interface CodeToHtmlProps {
  * Converts code to HTML using Shiki.
  */
 export const CodeToHtml = ({ code, language, theme }: CodeToHtmlProps) => {
-    const [html, setHtml] = useState<string>("")
-    const [isLoading, setIsLoading] = useState<boolean>(false)
-    useEffect(() => {
-        setIsLoading(true)
-        codeToHtml(
-            code, {
-            lang: language,
-            theme,
-        }).then((html) => {
-            setHtml(html)
-            setIsLoading(false)
-        })
-    }, [code, language, theme])
-    return (
-        <>
-            {
-                isLoading ? (
-                    <div className="p-2 bg-default/40 rounded-medium relative mb-2 last:mb-0">
-                        <div className="absolute top-2 right-2">
-                            <SnippetIcon copyString={code} />
-                        </div>
-                    </div>
-                ) : (
-                    <div className="p-2 bg-default/40 rounded-medium relative mb-2 last:mb-0">
-                        <div className="absolute top-2 right-2">
-                            <SnippetIcon copyString={code} />
-                        </div>
-                        <div className="[&_pre]:!bg-transparent [&_pre]:!p-0 text-sm" dangerouslySetInnerHTML={{ __html: html }} />
-                    </div>
-                )
-            }
-        </>
+    const { data } = useSWR(
+        code,
+        () => codeToHtml(code, { lang: language, theme }),
+        {
+            revalidateOnFocus: false,
+            revalidateOnReconnect: false,
+        }
+    )
+    return ( 
+        <div className="p-3 bg-background rounded-xl relative my-1.5">
+            <div className="absolute top-3 right-3">
+                <SnippetIcon copyString={code} />
+            </div>
+            <div className="[&_pre]:!bg-transparent [&_pre]:!p-0 text-sm" dangerouslySetInnerHTML={{ __html: data || "" }} />
+        </div>
     )
 }
 /**
@@ -66,50 +52,88 @@ export interface MarkdownContentProps {
 }
 
 /**
+ * Flattens thead row output (e.g. fragment wrapping columns) for `Table.Header`.
+ */
+function flattenMarkdownTableHeaderChildren(children: React.ReactNode): Array<React.ReactNode> {
+    const flattened: Array<React.ReactNode> = []
+    React.Children.forEach(children, (row) => {
+        if (!React.isValidElement<{ children?: React.ReactNode }>(row)) {
+            return
+        }
+        React.Children.forEach(row.props.children, (column) => {
+            flattened.push(column)
+        })
+    })
+    return flattened
+}
+
+/**
+ * Detects header rows from the original HAST `tr` node (GFM uses `th` cells in thead).
+ */
+function isMarkdownHeaderTableRowNode(node: unknown): boolean {
+    if (!node || typeof node !== "object") {
+        return false
+    }
+    const element = node as {
+        type?: string
+        children?: Array<{ type?: string; tagName?: string }>
+    }
+    if (element.type !== "element") {
+        return false
+    }
+    if (!Array.isArray(element.children) || element.children.length === 0) {
+        return false
+    }
+    return element.children.every(
+        (child) =>
+            child.type === "element" &&
+            typeof child.tagName === "string" &&
+            child.tagName.toLowerCase() === "th",
+    )
+}
+
+/**
  * Renders markdown with GFM and shared typography aligned with the app theme.
  */
 export const MarkdownContent = ({ markdown }: MarkdownContentProps) => {
     const theme = useTheme()
+    const t = useTranslations()
     return (
         <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{
                 h1: ({ children }) => (
-                    <div className="mb-2 text-2xl font-semibold last:mb-0">{children}</div>
+                    <div className="my-2 text-2xl font-semibold text-foreground last:mb-0">{children}</div>
                 ),
                 h2: ({ children }) => (
-                    <div className="mb-2 text-xl font-semibold last:mb-0">{children}</div>
+                    <div className="my-2 text-xl font-semibold text-foreground last:mb-0">{children}</div>
                 ),
                 h3: ({ children }) => (
-                    <div className="mb-2 text-lg font-semibold last:mb-0">{children}</div>
+                    <div className="my-2 text-lg font-semibold text-foreground last:mb-0">{children}</div>
                 ),
                 table: ({ children }) => (
-                    <div className="overflow-x-auto my-4">
-                        <table className="min-w-full">
-                            {children}
-                        </table>
-                    </div>
+                    <Table className="my-2 bg-background" variant="primary">
+                        <Table.ScrollContainer>
+                            <Table.Content aria-label={t("markdown.tableAriaLabel")}>
+                                {children}
+                            </Table.Content>
+                        </Table.ScrollContainer>
+                    </Table>
                 ),
                 thead: ({ children }) => (
-                    <thead>
-                        {children}
-                    </thead>
+                    <Table.Header className="bg-background">
+                        {flattenMarkdownTableHeaderChildren(children)}
+                    </Table.Header>
                 ),
-                th: ({ children }) => (
-                    <th className="border px-4 py-2 text-left font-semibold">
-                        {children}
-                    </th>
-                ),
-                td: ({ children }) => (
-                    <td className="border px-4 py-2">
-                        {children}
-                    </td>
-                ),
-                tr: ({ children }) => (
-                    <tr>
-                        {children}
-                    </tr>
-                ),
+                tbody: ({ children }) => <Table.Body>{children}</Table.Body>,
+                th: ({ children }) => <Table.Column>{children}</Table.Column>,
+                td: ({ children }) => <Table.Cell>{children}</Table.Cell>,
+                tr: ({ children, node }) =>
+                    isMarkdownHeaderTableRowNode(node) ? (
+                        <>{children}</>
+                    ) : (
+                        <Table.Row>{children}</Table.Row>
+                    ),
                 code: (
                     { children, className, node }
                 ) => {
@@ -119,22 +143,22 @@ export const MarkdownContent = ({ markdown }: MarkdownContentProps) => {
                         return children
                     }
                     return (
-                        <code
-                            className={`rounded-md bg-default-100 px-2 py-1 text-sm ${className ?? ""}`}
+                        <Chip 
+                            size="sm"
+                            variant="secondary"
+                            color="accent" 
+                            className={cn("font-mono text-sm", className)}
                         >
                             {code}
-                        </code>
+                        </Chip>
                     )
                 },
                 pre: ({ children }) => {
                     const child = React.Children.only(children) as React.ReactElement
-
                     const className = (child.props as { className?: string }).className || ""
                     const match = /language-(\w+)/.exec(className)
                     const lang = match?.[1] || "bash"
-
                     const code = String((child.props as { children?: React.ReactNode }).children || "").replace(/\n$/, "")
-
                     return (
                         <CodeToHtml
                             code={code}
@@ -145,15 +169,16 @@ export const MarkdownContent = ({ markdown }: MarkdownContentProps) => {
                         />
                     )
                 },
-                hr: () => <div className="h-px my-2 border-divider" />,
-                ol: ({ children }) => <div className="list-decimal pl-5 mb-2 last:mb-0 text-sm text-foreground-500">{children}</div>,
-                p: ({ children }) => <div className="text-sm mb-2 last:mb-0 gap-1 leading-relaxed ">{children}</div>,
-                ul: ({ children }) => <div className="list-disc pl-5 mb-2 last:mb-0 text-sm">{children}</div>,
-                li: ({ children }) => <div className="mb-2 last:mb-0">{children}</div>,
+                strong: ({ children }) => <strong className="font-semibold text-sm text-foreground">{children}</strong>,
+                hr: () => <hr className="h-px my-3 border-divider" />,
+                ol: ({ children }) => <ol className="list-decimal pl-5 my-2">{children}</ol>,
+                p: ({ children }) => <div className="text-sm my-2 gap-1 leading-relaxed">{children}</div>,
+                ul: ({ children }) => <ul className="list-disc pl-5 my-2">{children}</ul>,
+                li: ({ children }) => <li className="my-2 leading-relaxed">{children}</li>,
                 a: ({ href, children }) => (
-                    <a href={href} className="text-primary underline text-sm">
+                    <Link href={href} target="_blank" className="text-sm text-accent inline my-2">
                         {children}
-                    </a>
+                    </Link>
                 ),
             }}
         >

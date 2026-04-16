@@ -1,26 +1,20 @@
 "use client"
 
+import { Calendar, Chip, Modal } from "@heroui/react"
 import {
-    StarCiCalendar,
-    StarCiChip,
-    StarCiModal,
-    StarCiModalBody,
-    StarCiModalContent,
-    StarCiModalHeader,
-} from "@/components/atomic"
-import {
-    useLivestreamCalendarDisclosure,
+    useLivestreamCalendarOverlayState,
 } from "@/hooks/singleton"
 import type { LivestreamSessionEntity } from "@/modules/types"
 import { DayOfWeek } from "@/modules/types"
 import { useAppSelector } from "@/redux"
 import { CalendarDate, getLocalTimeZone, today } from "@internationalized/date"
-import type { DateValue } from "@react-types/calendar"
-import { Spacer } from "@heroui/react"
+import type { DateValue } from "@heroui/react/rac"
+import { Spacer } from "@/components/reuseable"
 import { ClockIcon } from "@phosphor-icons/react"
 import { useFormatter, useTranslations } from "next-intl"
 import React, { useMemo } from "react"
 import dayjs from "dayjs"
+import { AppModalHeader } from "../AppModalHeader"
 
 /** JS `Date#getDay()` (0 = Sunday … 6 = Saturday). */
 export const dayOfWeekToNumber: Record<DayOfWeek, number> = {
@@ -77,7 +71,7 @@ const formatTime = (hhmmss: string) => hhmmss.slice(0, 5)
 export const LivestreamCalendarModal = () => {
     const t = useTranslations()
     const format = useFormatter()
-    const { isOpen, onOpenChange } = useLivestreamCalendarDisclosure()
+    const { isOpen, onOpenChange } = useLivestreamCalendarOverlayState()
     const sessions = useAppSelector((state) => state.livestreamSession.entities)
     const sessionDow = useSessionWeekdaySet(sessions)
     const visibleSessions = useMemo(() => {
@@ -110,105 +104,87 @@ export const LivestreamCalendarModal = () => {
     }
 
     return (
-        <StarCiModal
-            isOpen={isOpen}
-            size="2xl"
-            scrollBehavior="inside"
-            onOpenChange={onOpenChange}
-            classNames={{
-                base: "max-w-lg",
-            }}
-        >
-            <StarCiModalContent>
-                <StarCiModalHeader
-                    title={t("livestream.calendar.modalTitle")}
-                    description={t("livestream.calendar.modalDescription")}
-                />
-                <StarCiModalBody>
-                    {
-                        visibleSessions.length === 0 ? (
-                            <div className="text-foreground-500 text-center text-sm">
-                                {t("livestream.calendar.empty")}
-                            </div>
-                        ) : (
-                            <>
-                                <div className="w-full flex flex-col items-center">
-                                    <StarCiCalendar
-                                        aria-label={t("livestream.calendar.aria")}
-                                        defaultFocusedValue={defaultFocusedValue}
-                                        firstDayOfWeek="mon"
-                                        classNames={{
-                                            base: "shadow-none overflow-hidden",
-                                        }}
-                                        color="primary"
-                                        errorMessage={" "}
-                                        isReadOnly
-                                        defaultValue={today(getLocalTimeZone())}
-                                        hideDisabledDates={false}
-                                        isDateUnavailable={isDateUnavailable}
-                                    />
-                                </div>
-                                <Spacer y={3} />
-                                <div className="flex flex-col gap-3">
-                                    {
-                                        visibleSessions
-                                            .sort((prev, next) => {
-                                            // sort base on day of week
-                                                return dayOfWeekToNumber[next.dayOfWeek as DayOfWeek] - dayOfWeekToNumber[prev.dayOfWeek as DayOfWeek]
-                                            })
-                                            .map((session) => {
-                                                const dow = session.dayOfWeek as DayOfWeek
-                                                const next = nextOccurrenceForDayOfWeek(dow)
-                                                const dayLabel = t(`livestream.calendar.days.${dow}`)
-                                                return (
-                                                    <div
-                                                        key={session.id}
-                                                        className="border-divider flex flex-col rounded-large border p-3 gap-3"
-                                                    >
-                                                        <div className="flex flex-wrap items-center gap-2">
-                                                            <StarCiChip
-                                                                color="secondary"
-                                                                size="sm"
-                                                                variant="flat"
+        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+            <Modal.Backdrop>
+                <Modal.Container className="max-w-lg" size="lg">
+                    <Modal.Dialog>
+                        <Modal.CloseTrigger />
+                        <AppModalHeader
+                            description={t("livestream.calendar.modalDescription")}
+                            title={t("livestream.calendar.modalTitle")}
+                        />
+                        <Modal.Body className="gap-0 p-4">
+                            {
+                                visibleSessions.length === 0 ? (
+                                    <div className="text-center text-sm text-foreground-500">
+                                        {t("livestream.calendar.empty")}
+                                    </div>
+                                ) : (
+                                    <>
+                                        <div className="flex w-full flex-col items-center">
+                                            <Calendar
+                                                aria-label={t("livestream.calendar.aria")}
+                                                className="overflow-hidden shadow-none"
+                                                defaultFocusedValue={defaultFocusedValue}
+                                                defaultValue={today(getLocalTimeZone())}
+                                                firstDayOfWeek="mon"
+                                                isDateUnavailable={isDateUnavailable}
+                                            />
+                                        </div>
+                                        <Spacer y={3} />
+                                        <div className="flex flex-col gap-3">
+                                            {
+                                                visibleSessions
+                                                    .sort((prev, next) => {
+                                                        return dayOfWeekToNumber[next.dayOfWeek as DayOfWeek] - dayOfWeekToNumber[prev.dayOfWeek as DayOfWeek]
+                                                    })
+                                                    .map((session) => {
+                                                        const dow = session.dayOfWeek as DayOfWeek
+                                                        const next = nextOccurrenceForDayOfWeek(dow)
+                                                        const dayLabel = t(`livestream.calendar.days.${dow}`)
+                                                        return (
+                                                            <div
+                                                                key={session.id}
+                                                                className="flex flex-col gap-3 rounded-large border border-divider p-3"
                                                             >
-                                                                {dayLabel}
-                                                            </StarCiChip>
-                                                            <StarCiChip
-                                                                color="primary"
-                                                                size="sm"
-                                                                startContent={<ClockIcon className="size-4" />}
-                                                                variant="flat"
-                                                            >
-                                                                {t("livestream.calendar.sessionTime", {
-                                                                    start: formatTime(session.startTime),
-                                                                    end: formatTime(session.expectedEndTime),
-                                                                })}
-                                                            </StarCiChip>
-                                                        </div>
-                                                        <div className="text-sm">
-                                                            {t("livestream.calendar.nextOn", {
-                                                                date: format.dateTime(next.toDate(), {
-                                                                    dateStyle: "long",
-                                                                }),
-                                                            })}
+                                                                <div className="flex flex-wrap items-center gap-2">
+                                                                    <Chip color="accent" size="sm" variant="soft">
+                                                                        <Chip.Label>{dayLabel}</Chip.Label>
+                                                                    </Chip>
+                                                                    <Chip color="accent" size="sm" variant="soft">
+                                                                        <ClockIcon className="size-4" />
+                                                                        <Chip.Label>
+                                                                            {t("livestream.calendar.sessionTime", {
+                                                                                start: formatTime(session.startTime),
+                                                                                end: formatTime(session.expectedEndTime),
+                                                                            })}
+                                                                        </Chip.Label>
+                                                                    </Chip>
+                                                                </div>
+                                                                <div className="text-sm">
+                                                                    {t("livestream.calendar.nextOn", {
+                                                                        date: format.dateTime(next.toDate(), {
+                                                                            dateStyle: "long",
+                                                                        }),
+                                                                    })}
 
-                                                        </div>
-                                                        {session.note?.trim() ? (
-                                                            <div className="text-foreground-600 text-sm">
-                                                                {session.note}
+                                                                </div>
+                                                                {session.note?.trim() ? (
+                                                                    <div className="text-sm text-foreground-600">
+                                                                        {session.note}
+                                                                    </div>
+                                                                ) : null}
                                                             </div>
-                                                        ) : null}
-                                                    </div>
-                                                )
+                                                        )
+                                                    })
                                             }
-                                            )
-                                    }
-                                </div>
-                            </>
-                        )}
-                </StarCiModalBody>
-            </StarCiModalContent>
-        </StarCiModal>
+                                        </div>
+                                    </>
+                                )}
+                        </Modal.Body>
+                    </Modal.Dialog>
+                </Modal.Container>
+            </Modal.Backdrop>
+        </Modal>
     )
 }
-

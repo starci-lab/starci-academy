@@ -1,5 +1,7 @@
+"use client"
+
 import React, { useMemo } from "react"
-import { StarCiChip } from "@/components/atomic"
+import { Chip } from "@heroui/react"
 import { VideoHostPlatform } from "@/modules/types"
 import { useTranslations } from "next-intl"
 import { 
@@ -53,13 +55,9 @@ export const HostPlatformChip = ({ hostPlatform }: HostPlatformChipProps) => {
     }
     const { icon, label } = useMemo(() => renderHostPlatform(), [hostPlatform])
     return (
-        <StarCiChip 
-            startContent={icon} 
-            color="secondary" 
-            size="sm" 
-            variant="flat"
-        >
-            {t(label)}
-        </StarCiChip>
+        <Chip color="accent" size="sm" variant="soft">
+            {icon}
+            <Chip.Label>{t(label)}</Chip.Label>
+        </Chip>
     )
 }

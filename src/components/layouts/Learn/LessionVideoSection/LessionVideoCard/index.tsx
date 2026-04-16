@@ -1,6 +1,8 @@
-import { StarCiCard, StarCiCardBody, StarCiChip, StarCiImage } from "@/components/atomic"
+"use client"
+
+import { Card, Chip } from "@heroui/react"
 import { HostPlatformChip, LessonVideoKindChip } from "@/components/reuseable"
-import { useLessonVideoDisclosure } from "@/hooks/singleton"
+import { useLessonVideoOverlayState } from "@/hooks/singleton"
 import { dayjs } from "@/modules/dayjs"
 import { LessonVideoEntity, LessonVideoKind, VideoHostPlatform } from "@/modules/types"
 import { useAppDispatch } from "@/redux"
@@ -23,38 +25,40 @@ export interface VideoLessionCardProps {
  * @returns The card for the lesson video.
  */
 export const VideoLessionCard = ({ lessonVideo }: VideoLessionCardProps) => {
-    const { onOpen } = useLessonVideoDisclosure()
+    const { onOpen } = useLessonVideoOverlayState()
     const dispatch = useAppDispatch()
     return (
-        <StarCiCard
-            isPressable={true}
-            onPress={() => {
+        <Card
+            className="cursor-pointer"
+            onClick={() => {
                 dispatch(setLessonVideoId(lessonVideo.id))
                 dispatch(setLessonVideo(lessonVideo))
                 onOpen()
             }}
         >
-            <StarCiCardBody>
+            <Card.Content>
                 <div className="grid grid-cols-3 gap-4">
-                    <StarCiImage src={lessonVideo.thumbnailUrl} alt={lessonVideo.title} className="aspect-video h-full object-cover rounded-md" />
+                    <img src={lessonVideo.thumbnailUrl ?? undefined} alt={lessonVideo.title} className="aspect-video h-full object-cover rounded-md" />
                     <div className="flex flex-col gap-3 col-span-2">
                         <div className="line-clamp-1">{lessonVideo.title}</div>
                         <div className="text-sm text-foreground-500 text-justify italic line-clamp-3">{lessonVideo.description}</div>
                         <div className="flex items-center gap-2">
-                            <StarCiChip
-                                startContent={<ClockIcon className="size-4" />}
-                                color="primary"
+                            <Chip
+                                color="accent"
                                 size="sm"
-                                variant="flat"
+                                variant="soft"
                             >
-                                {dayjs.duration(lessonVideo?.durationMs ?? 0).format("HH:mm")}
-                            </StarCiChip>
+                                <ClockIcon className="size-4" />
+                                <Chip.Label>
+                                    {dayjs.duration(lessonVideo?.durationMs ?? 0).format("HH:mm")}
+                                </Chip.Label>
+                            </Chip>
                             <HostPlatformChip hostPlatform={lessonVideo?.hostPlatform ?? VideoHostPlatform.Youtube} />
                             <LessonVideoKindChip kind={lessonVideo?.kind ?? LessonVideoKind.RawStream} />
                         </div>
                     </div>
                 </div>
-            </StarCiCardBody>
-        </StarCiCard>
+            </Card.Content>
+        </Card>
     )
 }

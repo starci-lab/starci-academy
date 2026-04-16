@@ -1,43 +1,44 @@
-import { 
-    StarCiModal, 
-    StarCiModalHeader, 
-    StarCiModalContent, 
-    StarCiModalBody, 
-    StarCiScrollShadow
-} from "@/components/atomic"
+"use client"
+
 import React from "react"
-import { useFeedbackDetailsDisclosure } from "@/hooks/singleton"
+import { Modal, ScrollShadow } from "@heroui/react"
+import { useFeedbackDetailsOverlayState } from "@/hooks/singleton"
 import { useAppSelector } from "@/redux"
 import { FeedbackCard } from "./FeedbackCard"
-import { Spacer } from "@heroui/react"
+import { Spacer } from "@/components/reuseable"
+import { useTranslations } from "next-intl"
+import { AppModalHeader } from "../AppModalHeader"
+
 /**
- * FeedbackDetailsModal is a modal component that is used to display the feedback details.
+ * Modal listing feedback entries for the current submission attempt.
  */
 export const FeedbackDetailsModal = () => {
-    const { isOpen, onOpenChange } = useFeedbackDetailsDisclosure()
+    const { isOpen, onOpenChange } = useFeedbackDetailsOverlayState()
     const submissionFeedbacks = useAppSelector((state) => state.submissionFeedback.submissionFeedbacks)
+    const t = useTranslations()
     return (
-        <StarCiModal
-            isOpen={isOpen}
-            size="2xl"
-            onOpenChange={onOpenChange}
-        >
-            <StarCiModalContent>
-                <StarCiModalHeader title="Feedback Details"/>
-                <StarCiModalBody>
-                    <StarCiScrollShadow hideScrollBar className="max-h-[500px]">
-                        <div className="flex flex-col gap-3">
-                            {
-                                submissionFeedbacks.map((submissionFeedback) => (
-                                    <FeedbackCard key={submissionFeedback.id} submissionFeedback={submissionFeedback} />
-                                )
-                                )
-                            }
-                        </div>
-                        <Spacer y={6} />
-                    </StarCiScrollShadow>
-                </StarCiModalBody>
-            </StarCiModalContent>
-        </StarCiModal>
+        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+            <Modal.Backdrop>
+                <Modal.Container size="lg">
+                    <Modal.Dialog>
+                        <Modal.CloseTrigger />
+                        <AppModalHeader title={t("feedback.detailsTitle")} />
+                        <Modal.Body className="gap-0 p-4">
+                            <ScrollShadow className="max-h-[500px]" hideScrollBar>
+                                <div className="flex flex-col gap-3">
+                                    {
+                                        submissionFeedbacks.map((submissionFeedback) => (
+                                            <FeedbackCard key={submissionFeedback.id} submissionFeedback={submissionFeedback} />
+                                        )
+                                        )
+                                    }
+                                </div>
+                                <Spacer y={6} />
+                            </ScrollShadow>
+                        </Modal.Body>
+                    </Modal.Dialog>
+                </Modal.Container>
+            </Modal.Backdrop>
+        </Modal>
     )
 }

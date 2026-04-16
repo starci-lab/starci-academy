@@ -1,8 +1,9 @@
+"use client"
+
 import React, { useMemo } from "react"
 import { useAppSelector } from "@/redux"
-import { StarCiAccordion, StarCiAccordionItem } from "@/components/atomic"
+import { Accordion, cn } from "@heroui/react"
 import _ from "lodash"
-import { cn } from "@heroui/react"
 import { useRouter } from "next/navigation"
 import { useLocale } from "next-intl"
 import { pathConfig } from "@/resources"
@@ -17,48 +18,58 @@ export const ModuleSidebar = () => {
     const router = useRouter()
     const locale = useLocale()
     return (
-        <StarCiAccordion 
-            className="px-0" 
-            selectedKeys={moduleDisplayId ? [moduleDisplayId] : []}
-            onSelectionChange={(selection) => {
-                const key = Array.from(selection)[0]
-                if (key) {
-                    router.push(
-                        pathConfig().locale(locale).course(courseDisplayId).learn().module(key.toString()).build()
-                    )
-                }
-            }
-            }
-        >
-            {
-                modules.map(
-                    (module) => (
-                        <StarCiAccordionItem key={module.displayId}
-                            aria-label={module.title} 
-                            title={<div className={cn("cursor-pointer", module.id === activeModule?.id ? "text-primary" : "")}>{module.title}</div>}>
-                            <div className="text-sm text-start w-full ml-4 gap-3 flex flex-col">
-                                {
-                                    _.cloneDeep(module.previewContents)?.
-                                        sort((previous, current) => previous.orderIndex - current.orderIndex)
-                                        .map(
-                                            (content) => (
-                                                <div key={content.id} className="flex items-center gap-3 text-xs text-foreground-500">
-                                                    <BracketsCurlyIcon className="w-5 h-5 min-w-5 min-h-5" />
-                                                    <span
-                                                        dangerouslySetInnerHTML={{
-                                                            __html:
-                                                            content.text,
-                                                        }}
-                                                    />
-                                                </div>
-                                            )
-                                        )
-                                }
-                            </div>
-                        </StarCiAccordionItem>
-                    )
-                )
-            }
-        </StarCiAccordion>
+        <aside className="sticky top-24 z-10 w-full max-h-[calc(100vh-6rem)] overflow-y-auto overscroll-contain">
+            <Accordion
+                variant="surface"
+                className="px-0"
+                expandedKeys={moduleDisplayId ? [moduleDisplayId] : []}
+                onExpandedChange={(selection) => {
+                    const key = Array.from(selection)[0]
+                    if (key) {
+                        router.push(
+                            pathConfig().locale(locale).course(courseDisplayId).learn().module(key.toString()).build()
+                        )
+                    }
+                }}
+            >
+                {modules.map((module) => (
+                    <Accordion.Item key={module.displayId} id={module.displayId}>
+                        <Accordion.Heading>
+                            <Accordion.Trigger className="w-full">
+                                <div className="flex w-full items-center justify-between gap-2">
+                                    <span
+                                        className={cn(
+                                            "min-w-0 flex-1 cursor-pointer text-start",
+                                            module.id === activeModule?.id ? "text-primary" : ""
+                                        )}
+                                    >
+                                        {module.title}
+                                    </span>
+                                    <Accordion.Indicator />
+                                </div>
+                            </Accordion.Trigger>
+                        </Accordion.Heading>
+                        <Accordion.Panel>
+                            <Accordion.Body className="p-3">
+                                <div className="text-sm text-start w-full ml-4 gap-3 flex flex-col">
+                                    {_.cloneDeep(module.previewContents)
+                                        ?.sort((previous, current) => previous.orderIndex - current.orderIndex)
+                                        .map((content) => (
+                                            <div key={content.id} className="flex items-center gap-3 text-xs text-foreground-500">
+                                                <BracketsCurlyIcon className="w-5 h-5 min-w-5 min-h-5" />
+                                                <span
+                                                    dangerouslySetInnerHTML={{
+                                                        __html: content.text,
+                                                    }}
+                                                />
+                                            </div>
+                                        ))}
+                                </div>
+                            </Accordion.Body>
+                        </Accordion.Panel>
+                    </Accordion.Item>
+                ))}
+            </Accordion>
+        </aside>
     )
 }

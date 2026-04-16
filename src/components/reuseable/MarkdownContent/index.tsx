@@ -5,7 +5,6 @@ import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import { isInlineCode } from "react-shiki"
 import { useTheme } from "next-themes"
-import { StarCiCode } from "@/components/atomic"
 import { codeToHtml } from "shiki"
 import { SnippetIcon } from "../SnippetIcon"
 
@@ -120,9 +119,11 @@ export const MarkdownContent = ({ markdown }: MarkdownContentProps) => {
                         return children
                     }
                     return (
-                        <StarCiCode className={className}>
+                        <code
+                            className={`rounded-md bg-default-100 px-2 py-1 text-sm ${className ?? ""}`}
+                        >
                             {code}
-                        </StarCiCode>
+                        </code>
                     )
                 },
                 pre: ({ children }) => {

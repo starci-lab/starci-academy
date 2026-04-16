@@ -1,9 +1,11 @@
 "use client"
 import { motion } from "framer-motion"
 import { Courses } from "@/components/layouts"
-import { Image, Link, Spacer } from "@heroui/react"
+import { Spacer } from "@/components/reuseable"
+import { Link } from "@heroui/react"
 import { FacebookLogoIcon, GithubLogoIcon, QuotesIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
+import React from "react"
 
 const fadeInUp = {
     initial: { opacity: 0, y: 16 },
@@ -16,7 +18,7 @@ const Page = () => {
     return (
         <div>
             <Spacer y={20} />
-            <motion.div
+            {/* <motion.div
                 className="grid grid-cols-1 md:grid-cols-5 gap-6"
                 {...fadeInUp}
             >
@@ -73,7 +75,7 @@ const Page = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
             >
-                <Image removeWrapper src="/1.png" alt="1" className="col-span-2"/>
+                <img src="/1.png" alt="1" className="col-span-2 rounded-medium"/>
                 <div className="col-span-3">
                     <div className="text-xl font-bold flex gap-1">{t("home.diff.des2")}</div>
                     <Spacer y={4} />
@@ -89,11 +91,10 @@ const Page = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.25, ease: "easeOut" }}
             >
-                <Image
-                    removeWrapper
+                <img
                     src="/2.png"
                     alt="2"
-                    className="col-span-1 sm:col-span-2 order-1 sm:order-2"
+                    className="col-span-1 sm:col-span-2 order-1 sm:order-2 rounded-medium"
                 />
                 <div className="col-span-1 sm:col-span-3 order-2 sm:order-1">
                     <div className="text-xl font-bold">
@@ -112,7 +113,7 @@ const Page = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
             >
-                <Image removeWrapper src="/3.png" alt="1" className="col-span-2"/>
+                <img src="/3.png" alt="1" className="col-span-2 rounded-medium"/>
                 <div className="col-span-3">
                     <div className="text-xl font-bold flex gap-1">From Code to Career</div>
                     <Spacer y={4} />
@@ -128,7 +129,7 @@ const Page = () => {
                 transition={{ duration: 0.5, delay: 0.35, ease: "easeOut" }}
             >
                 <Courses />
-            </motion.div>
+            </motion.div> */}
         </div>
     )
 }

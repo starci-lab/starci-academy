@@ -1,9 +1,10 @@
+"use client"
+
 import React from "react"
 import { VideoLessionCard } from "./LessionVideoCard"
-import { Spacer } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { useAppDispatch, useAppSelector } from "@/redux"
-import { StarCiPagination, StarCiSkeleton } from "@/components/atomic"
+import { Button, Skeleton } from "@heroui/react"
 import { useQueryLessonVideosSwr } from "@/hooks/singleton"
 import { LessionVideoCardSkeleton } from "./LessionVideoCardSkeleton"
 import { LivestreamCalendar } from "./LivestreamCalendar"
@@ -24,19 +25,19 @@ export const LessonVideoSection = () => {
     return (
         <div>
             <LivestreamCalendar />
-            <Spacer y={6} />
+            <div className="h-12" />
             <SearchBar />
-            <Spacer y={6} />
+            <div className="h-12" />
             {
                 isLoading || !lessionVideos ? (
-                    <StarCiSkeleton className="h-[14px] w-[150px] my-[3px]" />
+                    <Skeleton className="h-[14px] w-[150px] my-[3px]" />
                 ) : (
                     <div className="text-sm text-foreground-500">
                         {t("content.count", { count: lessionVideos?.length ?? 0 })}
                     </div>
                 )
             }
-            <Spacer y={4} />
+            <div className="h-12" />
             {isLoading || !lessionVideos ? (
                 <div className="flex flex-col gap-3 w-full">
                     {Array.from({ length: 3 }).map((_, index) => (
@@ -59,14 +60,20 @@ export const LessonVideoSection = () => {
                         {
                             count && (
                                 <>
-                                    <Spacer y={4} />
-                                    <StarCiPagination
-                                        total={Math.ceil((count ?? 0) / (limit ?? 10))}
-                                        page={pageNumber ?? 1}
-                                        onChange={(page) => {
-                                            dispatch(setContentPageNumber(page))
-                                        }}
-                                    />
+                                    <div className="h-12" />
+                                    <div className="flex gap-2 items-center justify-center">
+                                        {Array.from({ length: Math.ceil((count ?? 0) / (limit ?? 10)) }, (_, i) => i + 1).map(p => (
+                                            <Button
+                                                key={p}
+                                                size="sm"
+                                                variant={p === (pageNumber ?? 1) ? "primary" : "ghost"}
+                                                isIconOnly
+                                                onPress={() => dispatch(setContentPageNumber(p))}
+                                            >
+                                                {p}
+                                            </Button>
+                                        ))}
+                                    </div>
                                 </>
                             )
                         }

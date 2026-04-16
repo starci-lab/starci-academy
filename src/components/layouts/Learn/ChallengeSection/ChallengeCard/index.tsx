@@ -1,14 +1,48 @@
 "use client"
-
-import { StarCiCard, StarCiCardBody, StarCiChip } from "@/components/atomic"
-import { useChallengeDisclosure } from "@/hooks/singleton"
+import { Button, Chip } from "@heroui/react"
+import { useChallengeOverlayState } from "@/hooks/singleton"
 import { ChallengeDifficulty, ChallengeEntity } from "@/modules/types"
 import { useAppDispatch } from "@/redux"
 import { setChallengeId } from "@/redux/slices"
 import { ListNumbersIcon, SwordIcon, TrophyIcon } from "@phosphor-icons/react"
+import { TagChips } from "@/components/reuseable"
 import { useTranslations } from "next-intl"
 import React, { useMemo } from "react"
-import { Spacer } from "@heroui/react"
+import { difficultyPalette } from "@/components/pallettes"
+
+
+
+/** Demo tags until `ChallengeEntity` exposes a `tags` field from the API. */
+const CHALLENGE_DEMO_TAGS: Array<string> = [
+    "#NodeJS",
+    "#React",
+    "#NextJS",
+    "#TailwindCSS",
+    "#TypeScript",
+    "#JavaScript",
+    "#HTML",
+    "#CSS",
+    "#Python",
+    "#Java",
+    "#C++",
+    "#C#",
+    "#PHP",
+    "#Ruby",
+    "#Swift",
+    "#Kotlin",
+    "#Go",
+    "#Rust",
+    "#Scala",
+    "#Haskell",
+    "#OCaml",
+    "#Erlang",
+    "#Elixir",
+    "#F#",
+    "#Dart",
+    "#Flutter",
+    "#React Native",
+    "#React Native",
+]
 
 export interface ChallengeCardProps {
     /** One module challenge block from API. */
@@ -20,9 +54,8 @@ export interface ChallengeCardProps {
  */
 export const ChallengeCard = ({ challenge }: ChallengeCardProps) => {
     const t = useTranslations()
-    const { onOpen } = useChallengeDisclosure()
+    const { onOpen } = useChallengeOverlayState()
     const dispatch = useAppDispatch()
-
     const difficultyName = useMemo(() => {
         switch (challenge.difficulty) {
         case ChallengeDifficulty.Medium:
@@ -32,60 +65,65 @@ export const ChallengeCard = ({ challenge }: ChallengeCardProps) => {
         default:
             return "challenge.difficulty.easy"
         }
-    }, [challenge.difficulty, t])
+    }, [challenge.difficulty])
+
     return (
-        <StarCiCard
-            fullWidth
-            isPressable
+        <Button
+            className="w-full h-fit p-3 card card--default cursor-pointer flex flex-col items-start text-left"
+            variant="tertiary"
             onPress={() => {
                 dispatch(setChallengeId(challenge.id))
                 onOpen()
-            }
-            }
+            }}
         >
-            <StarCiCardBody>
-                <div>
-                    <div className="flex flex-col">
-                        <div className="line-clamp-1 font-medium">
-                            {challenge.orderIndex + 1}{". "} {challenge.title}</div>
-                        <Spacer y={3} />
-                        <div className="line-clamp-2 text-justify text-sm italic text-foreground-500">
-                            {challenge.description}
-                        </div>
-                        <Spacer y={3} />
-                        <div className="flex flex-wrap gap-2">
-                            <StarCiChip
-                                startContent={<TrophyIcon className="size-5" />}
-                                color="secondary"
-                                size="sm"
-                                variant="flat"
-                            >
-                                {t("challenge.score", {
-                                    score: challenge.score,
-                                })}
-                            </StarCiChip>
-                            <StarCiChip
-                                startContent={<SwordIcon className="size-5" />}
-                                color="danger"
-                                size="sm"
-                                variant="flat"
-                            >
-                                {t(difficultyName)}
-                            </StarCiChip>
-                            <StarCiChip
-                                startContent={<ListNumbersIcon className="size-5" />}
-                                color="warning"
-                                size="sm"
-                                variant="flat"
-                            >
-                                {t("challenge.steps.count", {
-                                    count: challenge.steps?.length ?? 0,
-                                })}
-                            </StarCiChip>
-                        </div>
-                    </div>
+            <div className="flex flex-col gap-3 w-full">
+                <div className="font-semibold text-lg overflow-hidden whitespace-normal">
+                    {challenge.orderIndex + 1}
+                    {". "}
+                    {challenge.title}{" "}
+                    <span>(20/40)</span>
                 </div>
-            </StarCiCardBody>
-        </StarCiCard>
+                <div className="flex items-center gap-2">
+                    <Chip
+                        variant="secondary"
+                        size="sm"
+                        color="accent"
+                    >
+                        <TrophyIcon className="size-4" />
+                        <Chip.Label>
+                            {t("challenge.score", {
+                                score: challenge.score,
+                            })}
+                        </Chip.Label>
+                    </Chip>
+                    <Chip
+                        variant="secondary"
+                        color="accent"
+                        size="sm"
+                    >
+                        <ListNumbersIcon className="size-4" />
+                        <Chip.Label>
+                            {t("challenge.steps.count", {
+                                count: challenge.steps?.length ?? 0,
+                            })}
+                        </Chip.Label>
+                    </Chip>
+                    <Chip
+                        variant="secondary"
+                        size="sm"
+                        color="accent"
+                        className={difficultyPalette[challenge.difficulty].text}
+                    >
+                        <SwordIcon className="size-4" />
+                        <Chip.Label>{t(difficultyName)}</Chip.Label>
+                    </Chip>
+                </div>
+                <div className="line-clamp-3 text-justify text-sm italic text-muted overflow-hidden whitespace-normal">
+                    {challenge.description}
+                </div>
+                <TagChips tags={CHALLENGE_DEMO_TAGS} variant="soft" />
+            </div>
+        </Button>
     )
 }
+

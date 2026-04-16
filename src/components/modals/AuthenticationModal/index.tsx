@@ -1,50 +1,42 @@
 "use client"
 
 import React from "react"
-import {
-    StarCiModal,
-    StarCiModalContent,
-    StarCiModalHeader,
-} from "../../atomic"
-import { useAuthenticationDisclosure } from "@/hooks/singleton"
+import { useAuthenticationOverlayState } from "@/hooks/singleton"
 import { useAppSelector } from "@/redux"
 import { AuthenticationModalTab } from "@/redux/slices"
 import { SignInSection } from "./SignInSection"
 import { SignUpSection } from "./SignUpSection"
 import { useTranslations } from "next-intl"
+import { Modal } from "@heroui/react"
 
 export const AuthenticationModal = () => {
-    const { isOpen, onOpenChange } = useAuthenticationDisclosure()
+    const { isOpen, onOpenChange } = useAuthenticationOverlayState()
     const authenticationModalTab = useAppSelector((state) => state.tabs.authenticationModalTab)
     const isSignIn = authenticationModalTab === AuthenticationModalTab.SignIn
     const t = useTranslations()
+    const heading = isSignIn ? t("auth.signIn.title") : t("auth.signUp.title")
+    const description = isSignIn ? t("auth.signIn.desc") : t("auth.signUp.desc")
 
     return (
-        <StarCiModal
+        <Modal
             isOpen={isOpen}
-            size="xs"
             onOpenChange={onOpenChange}
-            scrollBehavior="inside"
         >
-            <StarCiModalContent>
-                {isSignIn ? (
-                    <>
-                        <StarCiModalHeader
-                            title={t("auth.signIn.title")}
-                            description={t("auth.signIn.desc")}
-                        />
-                        <SignInSection />
-                    </>
-                ) : (
-                    <>
-                        <StarCiModalHeader
-                            title={t("auth.signUp.title")}
-                            description={t("auth.signUp.desc")}
-                        />
-                        <SignUpSection />
-                    </>
-                )}
-            </StarCiModalContent>
-        </StarCiModal>
+            <Modal.Backdrop>
+                <Modal.Container size="xs">
+                    <Modal.Dialog>
+                        <Modal.CloseTrigger />
+                        <Modal.Header>
+                            <div className="text-center">
+                                <div className="font-semibold text-lg">{heading}</div>
+                                <div className="text-xs text-muted">{description}</div>
+                            </div>
+                        </Modal.Header>
+                        <div className="h-6" />
+                        {isSignIn ? <SignInSection /> : <SignUpSection />}
+                    </Modal.Dialog>
+                </Modal.Container>
+            </Modal.Backdrop>
+        </Modal>
     )
 }

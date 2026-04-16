@@ -9,7 +9,18 @@
     "signIn": "Đăng nhập",
     "learn": "Học",
     "toggleLanguage": "Chuyển đổi ngôn ngữ",
-    "appearance": "Giao diện"
+    "appearance": "Giao diện",
+    "mobileMenu": "Điều hướng mobile"
+  },
+  "search": {
+    "label": "Tìm kiếm",
+    "placeholder": "Tìm kiếm",
+    "filtersAria": "Bộ lọc tìm kiếm",
+    "suggestions": {
+      "courses": "Khóa học",
+      "modules": "Học phần",
+      "videos": "Video"
+    }
   },
   "courses": {
     "featuredTitle": "Khóa học tiêu biểu",
@@ -32,7 +43,12 @@
     }
   },
   "module": {
-    "aria": "Học phần {index}"
+    "aria": "Học phần {index}",
+    "pathIntroduction": "Giới thiệu lộ trình",
+    "chipContentsHint": "Số bài đọc trong học phần.",
+    "chipVideosHint": "Số video bài học trong học phần.",
+    "chipChallengesHint": "Số thử thách trong học phần.",
+    "tabListAria": "Các mục trong trang học"
   },
   "lesson": {
     "videos": "Bài giảng",
@@ -45,7 +61,10 @@
     "count": "{count} nội dung trong học phần này",
     "empty": "Chưa có nội dung cho học phần này.",
     "number": "Nội dung {index}",
-    "minutesRead": "{minutes} phút đọc"
+    "minutesRead": "{minutes} phút đọc",
+    "unread": "Chưa đọc",
+    "hasLecture": "Có bài giảng",
+    "advancedKnowledge": "Kiến thức nâng cao"
   },
   "challenge": {
     "title": "Thử thách",
@@ -76,7 +95,26 @@
       "scoreFraction": "{earned}/{max}",
       "attempts": "Số lần thử: {count}",
       "viewAttempts": "Xem lịch sử nộp bài",
-      "submit": "Nộp bài"
+      "submit": "Nộp bài",
+      "urlPlaceholder": "Dán URL bài nộp của bạn",
+      "loading": "Đang cập nhật bài nộp…",
+      "lastAttemptScore": "Điểm lần thử gần nhất của bạn là {earned}/{max}"
+    }
+  },
+  "submissionAttempts": {
+    "title": "Lịch sử nộp bài",
+    "subtitle": "Các lần thử cho yêu cầu nộp bài này.",
+    "attemptLine": "Lần thử {number}",
+    "viewDetails": "Xem chi tiết",
+    "viewSubmission": "Xem bài nộp"
+  },
+  "feedback": {
+    "detailsTitle": "Chi tiết phản hồi",
+    "severity": {
+      "high": "Cao",
+      "medium": "Trung bình",
+      "low": "Thấp",
+      "unknown": "Không rõ"
     }
   },
   "leaderboard": {
@@ -139,6 +177,11 @@
       "submit": "Đăng ký",
       "haveAccount": "Đã có tài khoản?",
       "signIn": "Đăng nhập"
+    },
+    "oauth": {
+      "authenticating": "Đang xác thực…",
+      "signingIn": "Đang đăng nhập…",
+      "signingOut": "Đang đăng xuất…"
     }
   },
   "payment": {
@@ -163,6 +206,13 @@
     }
   },
   "common": {
+    "tagsMore": "+{count}",
+    "tagsMenuAria": "Tất cả thẻ",
+    "pagination": {
+      "navAria": "Phân trang",
+      "previous": "Trang trước",
+      "next": "Trang sau"
+    },
     "disabled": "Tạm tắt",
     "streak": {
       "current": "Chuỗi hiện tại",

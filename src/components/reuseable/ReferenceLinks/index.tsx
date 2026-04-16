@@ -1,5 +1,6 @@
-import { Link, Spacer } from "@heroui/react"
-import { LinkSimpleIcon } from "@phosphor-icons/react"
+import { Link } from "@heroui/react"
+import { Spacer } from "@/components/reuseable"
+import { ArrowUpRightIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import React from "react"
 
@@ -40,12 +41,11 @@ export const ReferenceLinks = ({ references, titleKey }: ReferenceLinksProps) =>
                             <span className="text-sm text-foreground">•</span>
                             <Link
                                 href={reference.url}
-                                isExternal
-                                showAnchorIcon
+                                target="_blank"
                                 className="text-sm text-primary"
-                                anchorIcon={<LinkSimpleIcon className="size-4" />}
                             >
                                 {reference.url}
+                                <ArrowUpRightIcon className="size-4" />
                             </Link>
                         </li>
                     )

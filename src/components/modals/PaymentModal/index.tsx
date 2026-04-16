@@ -1,31 +1,18 @@
 "use client"
 
 import React, { useMemo, useState } from "react"
-import {
-    StarCiModal,
-    StarCiModalContent,
-    StarCiModalHeader,
-    StarCiImage,
-    StarCiCardBody,
-    StarCiCard,
-    StarCiModalBody,
-    StarCiDivider,
-    StarCiChip,
-    StarCiSpinner,
-} from "../../atomic"
-import { useMutateCourseEnrollSwr, usePaymentDisclosure } from "@/hooks/singleton"
+import { Card, Chip, Modal, Separator, Spinner } from "@heroui/react"
+import { useMutateCourseEnrollSwr, usePaymentOverlayState } from "@/hooks/singleton"
 import { useAppSelector } from "@/redux"
 import { PaymentType } from "@/modules/types"
 import { assetConfig } from "@/resources"
 import { runGraphQLWithToast } from "@/modules/toast"
-import { useRouter } from "@/i18n/navigation"
+import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
-import { CourseEnrollData } from "@/modules/api"
-
+import { AppModalHeader } from "../AppModalHeader"
 
 export const PaymentModal = () => {
-    const disclosure = usePaymentDisclosure()
-    const { isOpen, onOpenChange, onClose } = disclosure
+    const { isOpen, onOpenChange } = usePaymentOverlayState()
     const swr = useMutateCourseEnrollSwr()
     const course = useAppSelector((state) => state.course.entity)
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentType | null>(null)
@@ -49,120 +36,107 @@ export const PaymentModal = () => {
                     name: "Sepay",
                     description: t("payment.sepay.desc"),
                     iconUrl: assetConfig().icon().payment().sepay,
-                    disabled: false,
+                    disabled: true,
                 },
             ],
         }
     }, [t])
 
     return (
-        <StarCiModal
-            isOpen={isOpen}
-            size="xs"
-            onOpenChange={onOpenChange}
-            scrollBehavior="inside"
-        >
-            <StarCiModalContent>
-                <StarCiModalHeader
-                    title={t("payment.title")}
-                    description={t("payment.desc")}
-                />
-                <StarCiModalBody>
-                    <div className="flex flex-col rounded-medium overflow-hidden">
-                        {paymentData.paymentMethods.map((paymentMethod, index) => (
-                            <React.Fragment key={paymentMethod.id}>
-                                <StarCiCard
-                                    shadow="none"
-                                    radius="none"
-                                    isPressable={!paymentMethod.disabled}
-                                    className="bg-default/40"
-                                    onPress={
-                                        async () => {
-                                            let checkoutUrl = ""
-                                            let responseData: CourseEnrollData | null = null
-                                            setSelectedPaymentMethod(paymentMethod.type)
-                                            const success = await runGraphQLWithToast(
-                                                async () => {
-                                                    const response = await swr.trigger(
-                                                        {
-                                                            request: {
-                                                                courseId: course?.id ?? "",
-                                                                paymentType: paymentMethod.type,
-                                                                payosReturnUrl: window.location.href,
-                                                                payosCancelUrl: window.location.href,
-                                                            },
-                                                        }
-                                                    )
-                                                    if (!response.data?.courseEnroll) {
-                                                        throw new Error(response.error?.message)
-                                                    }
-                                                    const enrollData = response.data.courseEnroll.data
-                                                    checkoutUrl = enrollData?.checkoutUrl ?? ""
-                                                    responseData = enrollData ?? null
-                                                    return response.data.courseEnroll
-                                                },
-                                                {
-                                                    showSuccessToast: false,
-                                                    showErrorToast: true,
-                                                }
-                                            )
-                                            if (success && responseData) {
-                                                const data = responseData as CourseEnrollData
-                                                if (paymentMethod.type === PaymentType.Sepay) {
-                                                    const params = new URLSearchParams({
-                                                        qr: data.checkoutUrl ?? "",
-                                                        amount: String(data.amount ?? ""),
-                                                        ref: data.referenceId ?? "",
-                                                        courseId: course?.id ?? "",
-                                                        courseTitle: course?.title ?? "",
-                                                    })
-                                                    onClose()
-                                                    router.push(`/checkout/sepay?${params.toString()}`)
-                                                } else {
-                                                    router.push(checkoutUrl)
-                                                }
+        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+            <Modal.Backdrop>
+                <Modal.Container size="xs">
+                    <Modal.Dialog>
+                        <Modal.CloseTrigger />
+                        <AppModalHeader
+                            description={t("payment.desc")}
+                            title={t("payment.title")}
+                        />
+                        <Modal.Body className="gap-0 p-4">
+                            <div className="flex flex-col overflow-hidden rounded-medium">
+                                {paymentData.paymentMethods.map((paymentMethod, index) => (
+                                    <React.Fragment key={paymentMethod.id}>
+                                        <Card
+                                            className={
+                                                paymentMethod.disabled
+                                                    ? "cursor-not-allowed rounded-none bg-default/40 opacity-60 shadow-none"
+                                                    : "cursor-pointer rounded-none bg-default/40 shadow-none transition-colors hover:bg-default/55 active:scale-[0.99]"
                                             }
-                                        }
-                                    }
-                                >
-                                    <StarCiCardBody>
-                                        <div className="grid grid-cols-3 gap-4 items-center">
-                                            <StarCiImage
-                                                src={paymentMethod.iconUrl}
-                                                alt={paymentMethod.name}
-                                                className="w-full col-span-1"
-                                            />
-                                            <div className="flex flex-col gap-1 col-span-2">
-                                                <div className="flex items-center gap-2">
-                                                    {swr.isMutating &&
-                                                        selectedPaymentMethod === paymentMethod.type && (
-                                                        <StarCiSpinner size="sm" />
-                                                    )}
-                                                    <div className="text-sm">{paymentMethod.name}</div>
-                                                    {paymentMethod.disabled && (
-                                                        <StarCiChip
-                                                            color="danger"
-                                                            variant="flat"
-                                                            size="sm"
-                                                            className="text-xs"
-                                                        >
-                                                            {t("common.disabled")}
-                                                        </StarCiChip>
-                                                    )}
+                                            onClick={
+                                                paymentMethod.disabled
+                                                    ? undefined
+                                                    : async () => {
+                                                        let checkoutUrl = ""
+                                                        setSelectedPaymentMethod(paymentMethod.type)
+                                                        const success = await runGraphQLWithToast(
+                                                            async () => {
+                                                                const response = await swr.trigger(
+                                                                    {
+                                                                        request: {
+                                                                            courseId: course?.id ?? "",
+                                                                            paymentType: paymentMethod.type,
+                                                                            payosReturnUrl: window.location.href,
+                                                                            payosCancelUrl: window.location.href,
+                                                                        },
+                                                                    }
+                                                                )
+                                                                if (!response.data?.courseEnroll) {
+                                                                    throw new Error(response.error?.message)
+                                                                }
+                                                                checkoutUrl = response.data.courseEnroll.data?.checkoutUrl ?? ""
+                                                                return response.data?.courseEnroll
+                                                            },
+                                                            {
+                                                                showSuccessToast: false,
+                                                                showErrorToast: true,
+                                                            }
+                                                        )
+                                                        if (success) {
+                                                            router.push(checkoutUrl)
+                                                        }
+                                                    }
+                                            }
+                                        >
+                                            <Card.Content>
+                                                <div className="grid grid-cols-3 items-center gap-4">
+                                                    <img
+                                                        alt={paymentMethod.name}
+                                                        className="col-span-1 w-full"
+                                                        src={paymentMethod.iconUrl}
+                                                    />
+                                                    <div className="col-span-2 flex flex-col gap-1">
+                                                        <div className="flex items-center gap-2">
+                                                            {swr.isMutating &&
+                                                                selectedPaymentMethod === paymentMethod.type && (
+                                                                <Spinner size="sm" />
+                                                            )}
+                                                            <div className="text-sm">{paymentMethod.name}</div>
+                                                            {paymentMethod.disabled && (
+                                                                <Chip
+                                                                    className="text-xs"
+                                                                    color="danger"
+                                                                    size="sm"
+                                                                    variant="soft"
+                                                                >
+                                                                    <Chip.Label>{t("common.disabled")}</Chip.Label>
+                                                                </Chip>
+                                                            )}
+                                                        </div>
+                                                        <div className="text-xs text-foreground-500">
+                                                            {paymentMethod.description}
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div className="text-xs text-foreground-500">
-                                                    {paymentMethod.description}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </StarCiCardBody>
-                                </StarCiCard>
-                                {index !== paymentData.paymentMethods.length - 1 && <StarCiDivider />}
-                            </React.Fragment>
-                        ))}
-                    </div>
-                </StarCiModalBody>
-            </StarCiModalContent>
-        </StarCiModal>
+                                            </Card.Content>
+                                        </Card>
+                                        {index !== paymentData.paymentMethods.length - 1 ? <Separator /> : null}
+                                    </React.Fragment>
+                                ))}
+                            </div>
+                        </Modal.Body>
+                    </Modal.Dialog>
+                </Modal.Container>
+            </Modal.Backdrop>
+        </Modal>
     )
 }

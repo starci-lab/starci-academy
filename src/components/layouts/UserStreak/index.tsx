@@ -1,6 +1,14 @@
-import { StarCiDropdown, StarCiDropdownTrigger, StarCiDropdownMenu, StarCiDropdownSection, StarCiDropdownItem } from "@/components/atomic";
-import { Flame } from "lucide-react";
-import { useTranslations } from "next-intl";
+"use client"
+
+import {
+    Dropdown,
+    DropdownTrigger,
+    DropdownMenu,
+    DropdownSection,
+    DropdownItem,
+} from "@heroui/react"
+import { Flame } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 
 
@@ -8,15 +16,15 @@ export const UserStreak = () => {
     const t = useTranslations("common");
 
     return (
-      <StarCiDropdown>
-        <StarCiDropdownTrigger>
+      <Dropdown>
+        <DropdownTrigger>
           <div className="group relative flex size-10 cursor-pointer items-center justify-center rounded-full border-4 border-dashed border-pink-400 bg-pink-50/50 transition-all hover:scale-110 active:scale-95 dark:border-pink-500/50 dark:bg-pink-950/20">
             <Flame className="size-6 fill-pink-500 text-pink-500 dark:fill-pink-400 dark:text-pink-400" />
           </div>
-        </StarCiDropdownTrigger>
-        <StarCiDropdownMenu aria-label="User streak information" className="min-w-64">
-          <StarCiDropdownSection title={t("streak.current")}>
-            <StarCiDropdownItem key="streaks" isReadOnly className="cursor-default opacity-100 data-[hover=true]:bg-transparent">
+        </DropdownTrigger>
+        <DropdownMenu aria-label="User streak information" className="min-w-64">
+          <DropdownSection>
+            <DropdownItem key="streaks" className="cursor-default opacity-100 data-[hover=true]:bg-transparent">
               <div className="grid grid-cols-2 gap-4">
                 <div className="flex flex-col gap-1 rounded-lg bg-pink-50/50 p-2 text-center dark:bg-pink-950/20">
                   <p className="text-xs font-semibold text-pink-500 underline decoration-pink-300 underline-offset-4">
@@ -37,11 +45,11 @@ export const UserStreak = () => {
                   </div>
                 </div>
               </div>
-            </StarCiDropdownItem>
-          </StarCiDropdownSection>
+            </DropdownItem>
+          </DropdownSection>
 
-          <StarCiDropdownSection showDivider={false} className="border-t border-divider pt-2 mt-2">
-            <StarCiDropdownItem key="weekly" isReadOnly className="cursor-default opacity-100 data-[hover=true]:bg-transparent">
+          <DropdownSection className="border-t border-divider pt-2 mt-2">
+            <DropdownItem key="weekly" className="cursor-default opacity-100 data-[hover=true]:bg-transparent">
               <div className="flex justify-between px-1">
                 {["M", "T", "W", "T", "F", "S", "S"].map((day, i) => (
                   <div
@@ -58,11 +66,11 @@ export const UserStreak = () => {
                   </div>
                 ))}
               </div>
-            </StarCiDropdownItem>
-          </StarCiDropdownSection>
-        </StarCiDropdownMenu>
+            </DropdownItem>
+          </DropdownSection>
+        </DropdownMenu>
 
 
-      </StarCiDropdown>
+      </Dropdown>
     );
 }

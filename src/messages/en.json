@@ -9,7 +9,18 @@
     "signIn": "Sign In",
     "learn": "Learn",
     "toggleLanguage": "Toggle Language",
-    "appearance": "Appearance"
+    "appearance": "Appearance",
+    "mobileMenu": "Mobile navigation"
+  },
+  "search": {
+    "label": "Search",
+    "placeholder": "Search",
+    "filtersAria": "Search filters",
+    "suggestions": {
+      "courses": "Courses",
+      "modules": "Modules",
+      "videos": "Videos"
+    }
   },
   "courses": {
     "featuredTitle": "Featured courses",
@@ -23,7 +34,12 @@
     "usersEnrolled": "{count} users have enrolled"
   },
   "module": {
-    "aria": "Module {index}"
+    "aria": "Module {index}",
+    "pathIntroduction": "Module roadmap",
+    "chipContentsHint": "Reading items in this module.",
+    "chipVideosHint": "Lesson videos in this module.",
+    "chipChallengesHint": "Challenges in this module.",
+    "tabListAria": "Module learn sections"
   },
   "lesson": {
     "videos": "Videos",
@@ -36,7 +52,10 @@
     "count": "{count} items",
     "empty": "No content yet.",
     "number": "Content {index}",
-    "minutesRead": "{minutes} min read"
+    "minutesRead": "{minutes} min read",
+    "unread": "Unread",
+    "hasLecture": "Includes lecture",
+    "advancedKnowledge": "Advanced"
   },
   "challenge": {
     "title": "Challenges",
@@ -67,7 +86,26 @@
       "scoreFraction": "{earned}/{max}",
       "attempts": "Attempts: {count}",
       "submit": "Submit",
-      "viewAttempts": "View Attempts"
+      "viewAttempts": "View Attempts",
+      "urlPlaceholder": "Paste your submission URL",
+      "loading": "Updating submissions…",
+      "lastAttemptScore": "Your last attempt score is {earned}/{max}"
+    }
+  },
+  "submissionAttempts": {
+    "title": "Submission attempts",
+    "subtitle": "Attempts for this submission requirement.",
+    "attemptLine": "Attempt {number}",
+    "viewDetails": "View details",
+    "viewSubmission": "View submission"
+  },
+  "feedback": {
+    "detailsTitle": "Feedback details",
+    "severity": {
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low",
+      "unknown": "Unknown"
     }
   },
   "leaderboard": {
@@ -130,6 +168,11 @@
       "submit": "Sign Up",
       "haveAccount": "Already have an account?",
       "signIn": "Sign In"
+    },
+    "oauth": {
+      "authenticating": "Authenticating you…",
+      "signingIn": "Signing you in…",
+      "signingOut": "Signing you out…"
     }
   },
   "payment": {
@@ -154,6 +197,13 @@
     }
   },
   "common": {
+    "tagsMore": "+{count}",
+    "tagsMenuAria": "All tags",
+    "pagination": {
+      "navAria": "Pagination",
+      "previous": "Previous page",
+      "next": "Next page"
+    },
     "disabled": "Disabled",
     "streak": {
       "current": "Current Streak",

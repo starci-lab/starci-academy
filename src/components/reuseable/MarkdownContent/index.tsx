@@ -103,13 +103,13 @@ export const MarkdownContent = ({ markdown }: MarkdownContentProps) => {
             remarkPlugins={[remarkGfm]}
             components={{
                 h1: ({ children }) => (
-                    <div className="my-2 text-2xl font-semibold text-foreground last:mb-0">{children}</div>
+                    <div className="my-5 text-3xl font-semibold text-foreground last:mb-0">{children}</div>
                 ),
                 h2: ({ children }) => (
-                    <div className="my-2 text-xl font-semibold text-foreground last:mb-0">{children}</div>
+                    <div className="my-4 text-2xl font-semibold text-foreground last:mb-0">{children}</div>
                 ),
                 h3: ({ children }) => (
-                    <div className="my-2 text-lg font-semibold text-foreground last:mb-0">{children}</div>
+                    <div className="my-3 text-xl font-semibold text-foreground last:mb-0">{children}</div>
                 ),
                 table: ({ children }) => (
                     <Table className="my-2 bg-background" variant="primary">
@@ -124,6 +124,9 @@ export const MarkdownContent = ({ markdown }: MarkdownContentProps) => {
                     <Table.Header className="bg-background">
                         {flattenMarkdownTableHeaderChildren(children)}
                     </Table.Header>
+                ),
+                img: ({ src, alt }) => (
+                    <img src={src} alt={alt} className="my-2 bg-inherit rounded-3xl p-3" />
                 ),
                 tbody: ({ children }) => <Table.Body>{children}</Table.Body>,
                 th: ({ children }) => <Table.Column>{children}</Table.Column>,

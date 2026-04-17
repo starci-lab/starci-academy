@@ -9,9 +9,17 @@ export const routing = defineRouting({
     locales: ["en", "vi"],
     defaultLocale: "vi",
     localeCookie: {
-        name: "NEXT_LOCALE",
+        /** The name of the cookie. */
+        name: "LOCALE",
+        /** The max age of the cookie. */
         maxAge: 60 * 60 * 24 * 365,
+        /** The path of the cookie. */
         path: "/",
-        sameSite: "lax",
+        /** The secure of the cookie. */
+        secure: true,
+        /** The same site of the cookie. */
+        sameSite: "none",
+        /** The domain of the cookie. */
+        domain: ".academy.starci.org"
     },
 })

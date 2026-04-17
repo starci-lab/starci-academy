@@ -58,6 +58,8 @@
   },
   "content": {
     "title": "Nội dung",
+    "mindMapAria": "Sơ đồ khóa học và các học phần",
+    "mindMapEmpty": "Chưa có học phần để hiển thị.",
     "count": "{count} nội dung trong học phần này",
     "empty": "Chưa có nội dung cho học phần này.",
     "number": "Nội dung {index}",

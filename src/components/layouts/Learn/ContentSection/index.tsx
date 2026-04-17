@@ -9,6 +9,7 @@ import { Pagination, Skeleton } from "@heroui/react"
 import _ from "lodash"
 import { SearchBar } from "@/components/reuseable"
 import { setContentPageNumber } from "@/redux/slices/content"
+import { CourseModuleMindMap } from "./CourseModuleMindMap"
 
 /**
  * Learn tab “Content”: ordered module contents (title + body, optional thumbnail).
@@ -38,6 +39,8 @@ export const ContentSection = () => {
 
     return (
         <div>
+            <CourseModuleMindMap />
+            <div className="h-8" />
             <SearchBar />
             <div className="h-6" />
             {

@@ -103,13 +103,13 @@ export const MarkdownContent = ({ markdown }: MarkdownContentProps) => {
             remarkPlugins={[remarkGfm]}
             components={{
                 h1: ({ children }) => (
-                    <div className="my-5 text-3xl font-semibold text-foreground last:mb-0">{children}</div>
+                    <div className="my-3 text-xl font-semibold text-foreground">{children}</div>
                 ),
                 h2: ({ children }) => (
-                    <div className="my-4 text-2xl font-semibold text-foreground last:mb-0">{children}</div>
+                    <div className="my-3 text-lg font-semibold text-foreground">{children}</div>
                 ),
                 h3: ({ children }) => (
-                    <div className="my-3 text-xl font-semibold text-foreground last:mb-0">{children}</div>
+                    <div className="my-3 text-base font-semibold text-foreground">{children}</div>
                 ),
                 table: ({ children }) => (
                     <Table className="my-2 bg-background" variant="primary">

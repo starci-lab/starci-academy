@@ -83,7 +83,7 @@ export const createApolloClient = (
         auth = true,
         cache = true,
         token,
-        withCredentials = false,
+        withCredentials = true,
         headers = {},
         defaultOptions: customDefaultOptions,
     } = options

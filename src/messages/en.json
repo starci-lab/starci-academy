@@ -51,6 +51,8 @@
     "title": "Content",
     "mindMapAria": "Course and modules overview",
     "mindMapEmpty": "No modules to show yet.",
+    "mindMapHelloWorld": "Hello world",
+    "mindMapModuleToggleAria": "Show or hide sample cards for this module",
     "count": "{count} items",
     "empty": "No content yet.",
     "number": "Content {index}",

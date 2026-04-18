@@ -117,7 +117,7 @@ export const build = ({ course, activeModuleId, themeMode = "light" }: BuildPara
                 pastelBackground: pastelBackgroundForIndex(index, themeMode),
             },
             draggable: false,
-            selectable: false,
+            selectable: true,
         }
     })
 

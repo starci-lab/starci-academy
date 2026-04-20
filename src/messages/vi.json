@@ -31,7 +31,13 @@
     "enrolled": "Đã đăng ký",
     "continueLearning": "Tiếp tục học",
     "prerequisites": "Yêu cầu đầu vào",
-    "usersEnrolled": "{count} người đã đăng ký"
+    "usersEnrolled": "{count} người đã đăng ký",
+    "cvTitle": "Lộ trình CV",
+    "cvDescription": "Chuẩn bị và chỉnh sửa CV developer theo hướng dẫn trong khóa học.",
+    "cvPlaceholder": "Công cụ và bài tập CV sẽ hiển thị tại đây.",
+    "finalProjectTitle": "Đồ án cuối khóa",
+    "finalProjectDescription": "Đề bài, mốc nộp bài và chi tiết nộp đồ án cho khóa học này.",
+    "finalProjectPlaceholder": "Đề bài và không gian làm việc sẽ hiển thị tại đây."
   },
   "settings": {
     "language": {

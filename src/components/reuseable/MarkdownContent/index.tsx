@@ -1,12 +1,13 @@
 "use client"
 
-import React from "react"
+import React, { useId } from "react"
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import { isInlineCode } from "react-shiki"
 import { useTheme } from "next-themes"
 import { useTranslations } from "next-intl"
 import { codeToHtml } from "shiki"
+import mermaid from "mermaid"
 import { SnippetIcon } from "../SnippetIcon"
 import { Chip, cn, Link, Table } from "@heroui/react"
 import useSWR from "swr"
@@ -38,6 +39,51 @@ export const CodeToHtml = ({ code, language, theme }: CodeToHtmlProps) => {
                 <SnippetIcon copyString={code} />
             </div>
             <div className="[&_pre]:!bg-transparent [&_pre]:!p-0 text-sm" dangerouslySetInnerHTML={{ __html: data || "" }} />
+        </div>
+    )
+}
+
+/**
+ * Props for Mermaid diagram renderer.
+ */
+export interface MermaidDiagramProps {
+    /** Mermaid source string. */
+    code: string
+    /** Mermaid theme key resolved from app theme. */
+    theme: "default" | "dark"
+    /** Translated loading text while diagram is rendering. */
+    loadingLabel: string
+}
+
+/**
+ * Renders mermaid code blocks to SVG with SWR cache.
+ */
+export const MermaidDiagram = ({ code, theme, loadingLabel }: MermaidDiagramProps) => {
+    const renderId = useId().replace(/:/g, "-")
+    const { data } = useSWR(
+        `mermaid:${theme}:${code}`,
+        async () => {
+            mermaid.initialize({
+                startOnLoad: false,
+                theme,
+                securityLevel: "strict",
+            })
+            const { svg } = await mermaid.render(`mermaid-${renderId}`, code)
+            return svg
+        },
+        {
+            revalidateOnFocus: false,
+            revalidateOnReconnect: false,
+        },
+    )
+
+    return (
+        <div className="my-2 rounded-xl border border-divider bg-background p-3 dark:border-zinc-600">
+            {data ? (
+                <div className="[&_svg]:h-auto [&_svg]:max-w-full" dangerouslySetInnerHTML={{ __html: data }} />
+            ) : (
+                <div className="text-sm text-muted">{loadingLabel}</div>
+            )}
         </div>
     )
 }
@@ -162,6 +208,15 @@ export const MarkdownContent = ({ markdown }: MarkdownContentProps) => {
                     const match = /language-(\w+)/.exec(className)
                     const lang = match?.[1] || "bash"
                     const code = String((child.props as { children?: React.ReactNode }).children || "").replace(/\n$/, "")
+                    if (lang.toLowerCase() === "mermaid") {
+                        return (
+                            <MermaidDiagram
+                                code={code}
+                                theme={theme.theme === "dark" ? "dark" : "default"}
+                                loadingLabel={t("markdown.mermaidRendering")}
+                            />
+                        )
+                    }
                     return (
                         <CodeToHtml
                             code={code}

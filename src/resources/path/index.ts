@@ -76,9 +76,33 @@ export const pathConfig = () => {
                     module,
                 }
             }
+            const mindMap = () => {
+                const mindMapPath = `${coursePath}/mind-map`
+                const build = () => {
+                    return mindMapPath
+                }
+                return { build }
+            }
+            const cv = () => {
+                const cvPath = `${coursePath}/cv`
+                const build = () => {
+                    return cvPath
+                }
+                return { build }
+            }
+            const finalProject = () => {
+                const finalProjectPath = `${coursePath}/final-project`
+                const build = () => {
+                    return finalProjectPath
+                }
+                return { build }
+            }
             return {
                 build,
                 learn,
+                mindMap,
+                cv,
+                finalProject,
             }
         }
         const contact = () => {

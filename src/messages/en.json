@@ -31,7 +31,13 @@
     "enrolled": "Enrolled",
     "continueLearning": "Continue Learning",
     "prerequisites": "Prerequisites",
-    "usersEnrolled": "{count} users have enrolled"
+    "usersEnrolled": "{count} users have enrolled",
+    "cvTitle": "CV track",
+    "cvDescription": "Prepare and refine your developer CV with guidance from this course.",
+    "cvPlaceholder": "CV tools and assignments will appear here.",
+    "finalProjectTitle": "Final project",
+    "finalProjectDescription": "Capstone brief, milestones, and submission details for this course.",
+    "finalProjectPlaceholder": "Project brief and workspace will appear here."
   },
   "module": {
     "aria": "Module {index}",
@@ -294,6 +300,7 @@
     }
   },
   "markdown": {
-    "tableAriaLabel": "Content table"
+    "tableAriaLabel": "Content table",
+    "mermaidRendering": "Rendering diagram..."
   }
 }

@@ -116,7 +116,7 @@ export const Sidebar = () => {
             ],
             url: pathConfig().locale(locale).course(courseDisplayId).learn().starciAi().build(),
         },
-    ], [t])
+    ], [t, courseDisplayId, locale])
     return (
         <div className="sticky top-16 self-start border-r border-divider">
             <ScrollShadow

@@ -144,7 +144,7 @@ const Page = () => {
                             <span>{t("course.cvTitle")}</span>
                         </Breadcrumbs.Item>
                     </Breadcrumbs>
-                    <div className="h-12" />
+                    <div className="h-6" />
                     <div className="flex flex-col gap-6">
                         <div>
                             <div className="text-3xl font-bold">{t("course.cvTitle")}</div>

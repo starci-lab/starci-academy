@@ -151,7 +151,6 @@ const Page = () => {
                             <div className="text-muted mt-2 text-sm">{t("course.cvDescription")}</div>
                         </div>
                         <div>
-
                             <div className="mb-3 text-base font-medium">{t("cv.submission.fileCardTitle")}</div>
                             <Card className="w-full">
                                 <CardContent className="flex items-center">
@@ -224,7 +223,7 @@ const Page = () => {
                 </div>
             </div>
             <div className="col-span-2 lg:sticky lg:top-16 lg:self-start lg:h-[calc(100vh-64px)]">
-                <div className="flex h-full flex-col p-3">
+                <div className="flex h-full flex-col">
                     <PDFView
                         src={previewPdfUrl}
                         title={t("cv.preview.title")}
@@ -233,7 +232,7 @@ const Page = () => {
                         allowVerticalScroll={true}
                         fitToContainer={true}
                     />
-                    <div className="sticky bottom-0 mt-3 bg-background/95 pb-1 pt-2 backdrop-blur">
+                    <div className="sticky bottom-0 p-3 backdrop-blur border-t border-divider">
                         <Button
                             className="w-full"
                             size="lg"

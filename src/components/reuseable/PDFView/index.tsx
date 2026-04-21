@@ -58,7 +58,7 @@ export const PDFView = ({
     return (
         <div
             ref={containerRef}
-            className={`${heightClassName} overflow-x-auto ${allowVerticalScroll ? "overflow-y-auto" : "overflow-y-hidden"} rounded-3xl bg-surface p-3 scrollbar-thin scrollbar-thumb-accent scrollbar-track-surface-secondary border border-divider`}
+            className={`${heightClassName} overflow-x-auto ${allowVerticalScroll ? "overflow-y-auto" : "overflow-y-hidden"} bg-surface scrollbar-thin scrollbar-thumb-accent scrollbar-track-surface-secondary`}
         >
             {file ? (
                 <Document

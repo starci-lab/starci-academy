@@ -56,6 +56,48 @@
     "chipChallengesHint": "Số thử thách trong học phần.",
     "tabListAria": "Các mục trong trang học"
   },
+  "modules": {
+    "title": "Học phần"
+  },
+  "mindMap": {
+    "title": "Sơ đồ tư duy"
+  },
+  "cv": {
+    "title": "CV",
+    "preview": {
+      "title": "Xem trước CV (PDF)"
+    },
+    "submission": {
+      "fileCardTitle": "Thông tin CV đã nộp",
+      "submittedAt": "Đã nộp vào 21/04/2026",
+      "download": "Tải xuống",
+      "reviewAction": "Review",
+      "feedbackTitle": "Đánh giá CV",
+      "feedbackSummary": "CV của bạn đã được ghi nhận. Mentor sẽ phản hồi chi tiết trong phiên review tiếp theo.",
+      "updateAction": "Cập nhật CV mới"
+    },
+    "form": {
+      "submit": "Tải CV",
+      "cancel": "Hủy",
+      "modal": {
+        "title": "Cập nhật CV mới",
+        "description": "Tải bản CV mới để thay thế phiên bản hiện tại.",
+        "confirm": "Xác nhận nộp"
+      },
+      "cvFile": {
+        "label": "File CV (PDF)",
+        "hint": "Chỉ chấp nhận file PDF, tối đa 10MB."
+      },
+      "errors": {
+        "fileRequired": "Vui lòng chọn file CV.",
+        "fileTypeInvalid": "CV phải là định dạng PDF.",
+        "fileSizeInvalid": "Dung lượng file tối đa là 10MB."
+      }
+    }
+  },
+  "finalProject": {
+    "title": "Đồ án cuối khóa"
+  },
   "lesson": {
     "videos": "Bài giảng",
     "videosCount": "{count} bài giảng trong học phần này",
@@ -134,7 +176,11 @@
     }
   },
   "leaderboard": {
+    "title": "Bảng xếp hạng",
     "topAchievers": "Top người học"
+  },
+  "starciAi": {
+    "title": "StarCi AI"
   },
   "reference": {
     "title": "Tài liệu tham khảo"

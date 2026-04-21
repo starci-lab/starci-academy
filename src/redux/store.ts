@@ -11,6 +11,7 @@ import {
     livestreamSessionReducer,
     submissionAttemptReducer,
     submissionFeedbackReducer,
+    sidebarReducer,
 } from "./slices"
 
 export const store = configureStore({
@@ -26,6 +27,7 @@ export const store = configureStore({
         livestreamSession: livestreamSessionReducer,
         submissionAttempt: submissionAttemptReducer,
         submissionFeedback: submissionFeedbackReducer,
+        sidebar: sidebarReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false,

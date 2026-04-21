@@ -47,6 +47,48 @@
     "chipChallengesHint": "Challenges in this module.",
     "tabListAria": "Module learn sections"
   },
+  "modules": {
+    "title": "Modules"
+  },
+  "mindMap": {
+    "title": "Mind map"
+  },
+  "cv": {
+    "title": "CV",
+    "preview": {
+      "title": "CV preview (PDF)"
+    },
+    "submission": {
+      "fileCardTitle": "Submitted CV information",
+      "submittedAt": "Submitted on 21/04/2026",
+      "download": "Download",
+      "reviewAction": "Review",
+      "feedbackTitle": "CV feedback",
+      "feedbackSummary": "Your CV has been received. Mentor feedback will be provided in the next review session.",
+      "updateAction": "Update CV"
+    },
+    "form": {
+      "submit": "Upload CV",
+      "cancel": "Cancel",
+      "modal": {
+        "title": "Update CV",
+        "description": "Upload a new CV file to replace the current version.",
+        "confirm": "Confirm submission"
+      },
+      "cvFile": {
+        "label": "CV file (PDF)",
+        "hint": "Only PDF files are accepted, up to 10MB."
+      },
+      "errors": {
+        "fileRequired": "CV file is required.",
+        "fileTypeInvalid": "CV file must be a PDF.",
+        "fileSizeInvalid": "File size must be 10MB or less."
+      }
+    }
+  },
+  "finalProject": {
+    "title": "Final project"
+  },
   "lesson": {
     "videos": "Videos",
     "videosCount": "{count} videos",
@@ -125,7 +167,11 @@
     }
   },
   "leaderboard": {
+    "title": "Leaderboard",
     "topAchievers": "Top Achievers"
+  },
+  "starciAi": {
+    "title": "StarCi AI"
   },
   "reference": {
     "title": "References"

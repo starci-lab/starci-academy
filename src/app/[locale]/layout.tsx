@@ -20,7 +20,7 @@ const Layout = async ({
             <body className={`${font.className} antialiased  bg-background`}>
                 <NextIntlClientProvider locale={locale} messages={messages}>
                     <InnerLayout>
-                        <div className="p-6 max-w-[1256px] mx-auto">
+                        <div>
                             {children}
                         </div>
                     </InnerLayout>

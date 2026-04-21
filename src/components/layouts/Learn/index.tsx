@@ -6,7 +6,6 @@ import {
     Tabs,
 } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
-import { ModuleSidebar } from "./ModuleSidebar"
 import { LearnTab, setLearnTab } from "@/redux/slices"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import { BookOpenIcon, SwordIcon, UsersIcon, VideoIcon } from "@phosphor-icons/react"
@@ -127,9 +126,6 @@ export const Learn = () => {
                             <div />
                         </Tabs.Panel>
                     </Tabs>
-                </div>
-                <div className="col-span-1 sm:col-span-1">
-                    <ModuleSidebar />
                 </div>
             </div>
         </div>

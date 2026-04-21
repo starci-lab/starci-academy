@@ -62,6 +62,42 @@ export const pathConfig = () => {
                 const build = () => {
                     return learnPath
                 }
+                const mindMap = () => {
+                    const mindMapPath = `${learnPath}/mind-map`
+                    const build = () => {
+                        return mindMapPath
+                    }
+                    return {
+                        build,
+                    }
+                }
+                const cv = () => {
+                    const cvPath = `${learnPath}/cv`
+                    const build = () => {
+                        return cvPath
+                    }
+                    return {
+                        build,
+                    }
+                }
+                const finalProject = () => {
+                    const finalProjectPath = `${learnPath}/final-project`
+                    const build = () => {
+                        return finalProjectPath
+                    }
+                    return {
+                        build,
+                    }
+                }
+                const leaderboard = () => {
+                    const leaderboardPath = `${learnPath}/leaderboard`
+                    const build = () => {
+                        return leaderboardPath
+                    }
+                    return {
+                        build,
+                    }
+                }
                 const module = (displayId?: string) => {
                     const modulePath = displayId ? `${learnPath}/modules/${displayId}` : `${learnPath}/modules`
                     const build = () => {
@@ -73,36 +109,17 @@ export const pathConfig = () => {
                 }
                 return {
                     build,
+                    mindMap,
+                    cv,
+                    finalProject,
+                    leaderboard,
                     module,
                 }
             }
-            const mindMap = () => {
-                const mindMapPath = `${coursePath}/mind-map`
-                const build = () => {
-                    return mindMapPath
-                }
-                return { build }
-            }
-            const cv = () => {
-                const cvPath = `${coursePath}/cv`
-                const build = () => {
-                    return cvPath
-                }
-                return { build }
-            }
-            const finalProject = () => {
-                const finalProjectPath = `${coursePath}/final-project`
-                const build = () => {
-                    return finalProjectPath
-                }
-                return { build }
-            }
+            
             return {
                 build,
                 learn,
-                mindMap,
-                cv,
-                finalProject,
             }
         }
         const contact = () => {

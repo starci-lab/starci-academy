@@ -69,11 +69,11 @@ export const Navbar = () => {
     ], [pathname, locale])
     
     return (
-        <nav className="border-b border-divider py-3 sticky top-0 z-50 bg-background">
+        <nav className="border-b border-divider h-16 min-h-16 sticky top-0 z-50 bg-background flex flex-col items-center justify-center">
             {/**
              * Navbar content
              */}
-            <div className="max-w-[1256px] px-6 mx-auto flex items-center justify-between">
+            <div className="px-6 mx-auto w-full flex items-center justify-between">
                 {/**
                  * Logo
                  */}

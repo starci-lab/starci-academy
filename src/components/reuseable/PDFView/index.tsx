@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useMemo, useState } from "react"
+import React, { useEffect, useMemo, useRef, useState } from "react"
 import { Document, Page, pdfjs } from "react-pdf"
 
 pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`
@@ -14,6 +14,12 @@ export interface PDFViewProps {
     heightClassName?: string
     /** Optional page width for PDF rendering. */
     pageWidth?: number
+    /** Render all pages or only first page. */
+    showAllPages?: boolean
+    /** Allow vertical scroll in viewer container. */
+    allowVerticalScroll?: boolean
+    /** Auto fit rendered PDF width to container width. */
+    fitToContainer?: boolean
 }
 
 /**
@@ -25,12 +31,35 @@ export const PDFView = ({
     title,
     heightClassName = "h-[560px]",
     pageWidth = 840,
+    showAllPages = true,
+    allowVerticalScroll = false,
+    fitToContainer = false,
 }: PDFViewProps) => {
     const file = useMemo(() => (src ? src : undefined), [src])
     const [numPages, setNumPages] = useState(0)
+    const containerRef = useRef<HTMLDivElement | null>(null)
+    const [containerWidth, setContainerWidth] = useState(0)
+    const computedPageWidth = fitToContainer && containerWidth > 0
+        ? Math.max(320, containerWidth - 24)
+        : pageWidth
+
+    useEffect(() => {
+        if (!fitToContainer) return
+        const element = containerRef.current
+        if (!element) return
+        const observer = new ResizeObserver((entries) => {
+            const nextWidth = entries[0]?.contentRect.width ?? 0
+            setContainerWidth(nextWidth)
+        })
+        observer.observe(element)
+        return () => observer.disconnect()
+    }, [fitToContainer])
 
     return (
-        <div className={`${heightClassName} overflow-auto rounded-3xl bg-surface p-3 scrollbar-thin scrollbar-thumb-accent scrollbar-track-surface-secondary border border-divider`}>
+        <div
+            ref={containerRef}
+            className={`${heightClassName} overflow-x-auto ${allowVerticalScroll ? "overflow-y-auto" : "overflow-y-hidden"} rounded-3xl bg-surface p-3 scrollbar-thin scrollbar-thumb-accent scrollbar-track-surface-secondary border border-divider`}
+        >
             {file ? (
                 <Document
                     file={file}
@@ -40,11 +69,11 @@ export const PDFView = ({
                     onLoadSuccess={(pdf) => setNumPages(pdf.numPages)}
                 >
                     <div className="flex flex-col gap-3">
-                        {Array.from({ length: numPages }, (_, index) => (
+                        {Array.from({ length: showAllPages ? numPages : Math.min(1, numPages) }, (_, index) => (
                             <Page
                                 key={`pdf-page-${index + 1}`}
                                 pageNumber={index + 1}
-                                width={pageWidth}
+                                width={computedPageWidth}
                                 renderTextLayer={false}
                                 renderAnnotationLayer={false}
                             />

@@ -8,6 +8,8 @@ import { LessonVideoModal } from "./LessonVideoModal"
 import { PaymentModal } from "./PaymentModal"
 import { LanguageModal } from "./LanguageModal"
 import { FeedbackDetailsModal } from "./FeedbackDetailsModal"
+import { CvPreviewModal } from "./CvPreviewModal"
+import { CvUpdateModal } from "./CvUpdateModal"
 
 export const ModalContainer = () => {
     return (
@@ -21,6 +23,8 @@ export const ModalContainer = () => {
             <ChallengeSubmissionModal />
             <LanguageModal />
             <FeedbackDetailsModal />
+            <CvPreviewModal />
+            <CvUpdateModal />
         </>
     )
 }

@@ -7,7 +7,7 @@ export enum SidebarTab {
     MindMap = "mindMap",
     Modules = "modules",
     Cv = "cv",
-    FinalProject = "finalProject",
+    PersonalProject = "personalProject",
     Leaderboard = "leaderboard",
     StarciAi = "starciAi",
 }

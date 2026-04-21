@@ -1,20 +1,22 @@
 "use client"
 
-import React, { useEffect, useMemo, useState } from "react"
+import React, { useEffect, useMemo } from "react"
 import {
     Breadcrumbs,
     Button,
     Card,
+    CardContent,
+    Chip,
     Link,
-    Modal,
 } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { pathConfig } from "@/resources"
 import { useAppSelector } from "@/redux"
-import { useCvApplyFormik } from "@/hooks/singleton"
-import { Dropzone, PDFView } from "@/components/reuseable"
-import { ClockIcon, DownloadSimpleIcon, FilePdfIcon } from "@phosphor-icons/react"
+import { useCvApplyFormik, useCvPreviewOverlayState, useCvUpdateOverlayState } from "@/hooks/singleton"
+import { MarkdownContent, PDFView } from "@/components/reuseable"
+import { CvReviewHistory } from "@/components/layouts/Learn/CvReviewHistory"
+import { ClockIcon, DownloadSimpleIcon, FilePdfIcon, MagnifyingGlassPlusIcon, SparkleIcon } from "@phosphor-icons/react"
 
 const REMOTE_TEST_PDF_URL = "https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf"
 
@@ -25,7 +27,8 @@ const Page = () => {
     const course = useAppSelector((state) => state.course.entity)
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
     const formik = useCvApplyFormik()
-    const [isUpdateCvModalOpen, setIsUpdateCvModalOpen] = useState(false)
+    const { onOpen: onOpenCvUpdateModal } = useCvUpdateOverlayState()
+    const { onOpen: onOpenCvPreviewModal } = useCvPreviewOverlayState()
     const selectedFileUrl = useMemo(() => {
         if (!formik.values.cvFile) return ""
         return URL.createObjectURL(formik.values.cvFile)
@@ -33,7 +36,20 @@ const Page = () => {
     const previewPdfUrl = selectedFileUrl || REMOTE_TEST_PDF_URL
     const currentCvLink = selectedFileUrl || REMOTE_TEST_PDF_URL
     const currentCvLinkLabel = formik.values.cvFile?.name || "my-name.pdf"
-    const hasSubmittedCv = Boolean(currentCvLink)
+    const recentFeedbackRows = useMemo(() => [
+        {
+            id: "1",
+            fileName: currentCvLinkLabel,
+            submittedAt: "21/04/2026 10:30",
+            feedback: "Bố cục CV rõ ràng, cần bổ sung thêm số liệu thành tích.",
+        },
+        {
+            id: "2",
+            fileName: "my-name-v0.pdf",
+            submittedAt: "18/04/2026 16:10",
+            feedback: "Cần tối ưu phần tóm tắt và mô tả kinh nghiệm thực tế.",
+        },
+    ], [currentCvLinkLabel])
 
     useEffect(() => {
         return () => {
@@ -42,159 +58,111 @@ const Page = () => {
     }, [selectedFileUrl])
 
     return (
-        <div>
-            <Breadcrumbs>
-                <Breadcrumbs.Item onPress={() => router.push(pathConfig().locale().build())}>
-                    {t("nav.home")}
-                </Breadcrumbs.Item>
-                <Breadcrumbs.Item onPress={() => router.push(pathConfig().locale(locale).course().build())}>
-                    {t("nav.courses")}
-                </Breadcrumbs.Item>
-                <Breadcrumbs.Item onPress={() => router.push(pathConfig().locale(locale).course(courseDisplayId).build())}>
-                    {course?.title || t("nav.courses")}
-                </Breadcrumbs.Item>
-                <Breadcrumbs.Item>
-                    <span>{t("course.cvTitle")}</span>
-                </Breadcrumbs.Item>
-            </Breadcrumbs>
+        <div className="grid grid-cols-1 lg:grid-cols-5">
+            <div className="col-span-3 lg:border-r lg:border-divider/60">
+                <div className="p-6">
+                    <Breadcrumbs>
+                        <Breadcrumbs.Item onPress={() => router.push(pathConfig().locale().build())}>
+                            {t("nav.home")}
+                        </Breadcrumbs.Item>
+                        <Breadcrumbs.Item onPress={() => router.push(pathConfig().locale(locale).course().build())}>
+                            {t("nav.courses")}
+                        </Breadcrumbs.Item>
+                        <Breadcrumbs.Item onPress={() => router.push(pathConfig().locale(locale).course(courseDisplayId).build())}>
+                            {course?.title || t("nav.courses")}
+                        </Breadcrumbs.Item>
+                        <Breadcrumbs.Item>
+                            <span>{t("course.cvTitle")}</span>
+                        </Breadcrumbs.Item>
+                    </Breadcrumbs>
+                    <div className="h-12" />
+                    <div className="flex flex-col gap-6">
+                        <div>
+                            <div className="text-3xl font-bold">{t("course.cvTitle")}</div>
+                            <div className="text-muted mt-2 text-sm">{t("course.cvDescription")}</div>
+                        </div>
+                        <div>
 
-            <div className="h-12" />
-
-            <div className="flex flex-col gap-6">
-                <div>
-                    <div className="text-3xl font-bold">{t("course.cvTitle")}</div>
-                    <div className="text-muted mt-2 text-sm">{t("course.cvDescription")}</div>
-                </div>
-                <Card className="p-4">
-                    <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
-                        <div className="order-1 lg:col-span-2">
-                            {hasSubmittedCv ? (
-                                <div className="flex flex-col gap-4">
-                                    <div className="rounded-large border border-divider p-4">
-                                        <div className="mb-3 text-sm font-medium">{t("cv.submission.fileCardTitle")}</div>
-                                        <div className="flex items-start justify-between gap-3">
-                                            <div className="flex min-w-0 items-start gap-2">
-                                                <FilePdfIcon className="size-5" />
-                                                <div className="min-w-0">
-                                                    <div className="truncate text-sm font-medium">{currentCvLinkLabel}</div>
-                                                    <div className="mt-1 flex items-center gap-1 text-xs text-muted">
-                                                        <ClockIcon className="size-4" />
-                                                        {t("cv.submission.submittedAt")}
-                                                    </div>
+                            <div className="mb-3 text-base font-medium">{t("cv.submission.fileCardTitle")}</div>
+                            <Card className="w-full">
+                                <CardContent className="flex items-center">
+                                    <div className="flex items-center justify-between gap-3 w-full">
+                                        <div className="flex items-center gap-2">
+                                            <FilePdfIcon className="size-10" />
+                                            <div className="min-w-0">
+                                                <Link
+                                                    href={currentCvLink}
+                                                    target="_blank"
+                                                    className="truncate text-sm font-medium text-accent underline"
+                                                >
+                                                    {currentCvLinkLabel}
+                                                </Link>
+                                                <div className="flex items-center gap-1 mt-1 text-xs text-muted">
+                                                    <ClockIcon className="size-4" />
+                                                    {t("cv.submission.submittedAt")}
                                                 </div>
                                             </div>
-                                            <Link
-                                                href={currentCvLink}
-                                                target="_blank"
-                                                className="inline-flex items-center gap-1 text-sm text-accent"
-                                            >
-                                                <DownloadSimpleIcon className="size-4" />
-                                                {t("cv.submission.download")}
-                                            </Link>
                                         </div>
-                                    </div>
-                                    <div className="flex justify-end gap-3 w-full">
-                                        <Button variant="outline" className="flex-1">
-                                            {t("cv.submission.reviewAction")}
-                                        </Button>
-                                        <Button variant="secondary" onPress={() => setIsUpdateCvModalOpen(true)} className="flex-1">
-                                            {t("cv.submission.updateAction")}
-                                        </Button>
-                                    </div>
-                                    <div className="rounded-large border border-divider p-4">
-                                        <div className="mb-2 text-sm font-medium">{t("cv.submission.feedbackTitle")}</div>
-                                        <div className="text-sm text-foreground-600">{t("cv.submission.feedbackSummary")}</div>
-                                    </div> 
-                                </div>
-                            ) : (
-                                <div className="flex flex-col gap-3">
-                                    <div className="mb-2 text-sm">{t("cv.form.cvFile.label")}</div>
-                                    <Dropzone
-                                        hint={t("cv.form.cvFile.hint")}
-                                        file={formik.values.cvFile}
-                                        errorMessage={formik.touched.cvFile && formik.errors.cvFile ? t(formik.errors.cvFile) : undefined}
-                                        acceptedMimeTypes={["application/pdf"]}
-                                        maxSizeInBytes={10 * 1024 * 1024}
-                                        onChange={(file) => formik.setFieldValue("cvFile", file)}
-                                        onBlur={() => formik.setFieldTouched("cvFile", true)}
-                                    />
-                                    <Link
-                                        href={currentCvLink}
-                                        target="_blank"
-                                        className="flex items-center gap-2 text-sm text-accent underline"
-                                    >
-                                        {currentCvLinkLabel}
-                                    </Link>
-                                    <div className="flex items-center justify-end gap-2">
-                                        <Button
-                                            variant="primary"
-                                            onPress={() => {
-                                                void formik.submitForm()
-                                            }}
+                                        <Link
+                                            href={currentCvLink}
+                                            target="_blank"
+                                            className="inline-flex items-center gap-1 text-sm text-accent"
                                         >
-                                            {t("cv.form.submit")}
-                                        </Button>
+                                            <DownloadSimpleIcon className="size-5" />
+                                            {t("cv.submission.download")}
+                                        </Link>
                                     </div>
-                                </div>
-                            )}
-                        </div>
-                        <div className="order-2 lg:col-span-3">
-                            <div className="flex flex-col gap-2">
-                                <div className="text-sm font-medium">{t("cv.preview.title")}</div>
-                                <PDFView
-                                    src={previewPdfUrl}
-                                    title={t("cv.preview.title")}
-                                    heightClassName="h-[700px]"
-                                />
+                                </CardContent>
+                            </Card>
+                            <div className="h-3" />
+                            <div className="flex gap-3">
+                                <Button >
+                                    {t("cv.submission.reviewAction")}
+                                </Button>
+                                <Button variant="secondary" onPress={onOpenCvUpdateModal}>
+                                    {t("cv.submission.updateAction")}
+                                </Button>
                             </div>
+                            <div className="h-6" />
+                            <div>
+                                <div className="mb-3 text-base font-medium flex items-center gap-2">{t("cv.submission.feedbackTitle")}<Chip variant="secondary" color="accent"><SparkleIcon className="size-5" />StarCi AI</Chip></div>
+                                <div className="border border-divider rounded-3xl p-3">
+                                    <MarkdownContent
+                                        markdown="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                                    />
+                                </div>
+                            </div> 
+                            <div className="h-6" />
+                            <div>
+                                <div className="mb-3 text-base font-medium flex items-center gap-2">{t("cv.submission.historyTitle")}</div>
+                                <CvReviewHistory items={recentFeedbackRows} />
+                            </div> 
                         </div>
                     </div>
-                </Card>
+                </div>
             </div>
-            <Modal isOpen={isUpdateCvModalOpen} onOpenChange={setIsUpdateCvModalOpen}>
-                <Modal.Backdrop>
-                    <Modal.Container size="md">
-                        <Modal.Dialog>
-                            <Modal.CloseTrigger />
-                            <Modal.Header>
-                                <div className="text-base font-semibold">{t("cv.form.modal.title")}</div>
-                                <div className="text-xs text-muted">{t("cv.form.modal.description")}</div>
-                            </Modal.Header>
-                            <Modal.Body className="flex flex-col gap-4">
-                                <Dropzone
-                                    hint={t("cv.form.cvFile.hint")}
-                                    file={formik.values.cvFile}
-                                    errorMessage={formik.touched.cvFile && formik.errors.cvFile ? t(formik.errors.cvFile) : undefined}
-                                    acceptedMimeTypes={["application/pdf"]}
-                                    maxSizeInBytes={10 * 1024 * 1024}
-                                    onChange={(file) => formik.setFieldValue("cvFile", file)}
-                                    onBlur={() => formik.setFieldTouched("cvFile", true)}
-                                />
-                                <div className="flex items-center justify-end gap-2">
-                                    <Button
-                                        variant="ghost"
-                                        onPress={() => {
-                                            formik.setFieldValue("cvFile", null)
-                                            setIsUpdateCvModalOpen(false)
-                                        }}
-                                    >
-                                        {t("cv.form.cancel")}
-                                    </Button>
-                                    <Button
-                                        variant="primary"
-                                        onPress={() => {
-                                            void formik.submitForm()
-                                            setIsUpdateCvModalOpen(false)
-                                        }}
-                                    >
-                                        {t("cv.form.modal.confirm")}
-                                    </Button>
-                                </div>
-                            </Modal.Body>
-                        </Modal.Dialog>
-                    </Modal.Container>
-                </Modal.Backdrop>
-            </Modal>
+            <div className="col-span-2 lg:sticky lg:top-16 lg:self-start lg:h-[calc(100vh-64px)]">
+                <div className="flex h-full flex-col p-3">
+                    <PDFView
+                        src={previewPdfUrl}
+                        title={t("cv.preview.title")}
+                        heightClassName="h-[300px] lg:h-full"
+                        showAllPages={true}
+                        allowVerticalScroll={true}
+                        fitToContainer={true}
+                    />
+                    <div className="sticky bottom-0 mt-3 bg-background/95 pb-1 pt-2 backdrop-blur">
+                        <Button
+                            className="w-full"
+                            size="lg"
+                            onPress={onOpenCvPreviewModal}
+                        >
+                            <MagnifyingGlassPlusIcon className="size-5" />
+                            {t("cv.preview.fullscreen")}
+                        </Button>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

@@ -45,6 +45,17 @@ alwaysApply: true
 - UI components/pages only consume singleton hooks (e.g. `useCvApplyFormik`) and bind HeroUI fields to Formik state.
 - Validation messages should use i18n message keys; map keys to translated text in UI with `t(...)`.
 
+## 3.2) Singleton Modal Overlay Pattern (`src/hooks/singleton/overlay-state` + `src/components/modals`)
+
+- Keep modal open/close state in singleton overlay hooks, not as local page state when the modal is part of global app UX.
+- Structure for each overlay:
+  - `core/useXxxOverlayState.ts`: returns `useOverlayState()`.
+  - `impls/useXxxOverlayState.ts`: maps context state to `{ isOpen, onOpen, onClose, onOpenChange }`.
+  - register in `OverlayStateContext.tsx` and provider value.
+  - export via `core/index.ts`, `impls/index.ts`, and `overlay-state/index.ts`.
+- Put modal UI under `src/components/modals/XxxModal/index.tsx` and mount in `ModalContainer`.
+- Pages/components should call singleton overlay hooks (e.g. `onOpen`) instead of rendering modal markup inline.
+
 ## 4) Routing Pattern (`pathConfig`)
 
 - Build routes through `pathConfig()` only; avoid hardcoding path strings in components/hooks.

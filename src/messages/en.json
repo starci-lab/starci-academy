@@ -35,8 +35,8 @@
     "cvTitle": "CV track",
     "cvDescription": "Prepare and refine your developer CV with guidance from this course.",
     "cvPlaceholder": "CV tools and assignments will appear here.",
-    "finalProjectTitle": "Final project",
-    "finalProjectDescription": "Capstone brief, milestones, and submission details for this course.",
+    "finalProjectTitle": "Personal project",
+    "finalProjectDescription": "Requirements, milestones, and submission details for your personal project in this course.",
     "finalProjectPlaceholder": "Project brief and workspace will appear here."
   },
   "module": {
@@ -56,7 +56,8 @@
   "cv": {
     "title": "CV",
     "preview": {
-      "title": "CV preview (PDF)"
+      "title": "CV preview (PDF)",
+      "fullscreen": "View full"
     },
     "submission": {
       "fileCardTitle": "Submitted CV information",
@@ -65,7 +66,15 @@
       "reviewAction": "Review",
       "feedbackTitle": "CV feedback",
       "feedbackSummary": "Your CV has been received. Mentor feedback will be provided in the next review session.",
-      "updateAction": "Update CV"
+      "updateAction": "Update CV",
+      "historyTitle": "Review history",
+      "history": {
+        "file": "CV file",
+        "submittedAt": "Submitted at",
+        "feedback": "Feedback",
+        "actions": "Actions",
+        "viewDetails": "View details"
+      }
     },
     "form": {
       "submit": "Upload CV",
@@ -87,7 +96,85 @@
     }
   },
   "finalProject": {
-    "title": "Final project"
+    "title": "Personal project",
+    "page": {
+      "submit": {
+        "title": "Submit personal project GitHub link",
+        "placeholder": "Paste your GitHub repository link",
+        "lastSubmission": "Latest submission: 21/04/2026 20:45",
+        "cta": "Submit project"
+      },
+      "feedback": {
+        "title": "AI feedback",
+        "content": "Temporary: project architecture is clear, but core-flow tests and deployment documentation should be improved."
+      },
+      "history": {
+        "title": "Feedback history",
+        "columns": {
+          "gitUrl": "GitHub link",
+          "submittedAt": "Submitted at",
+          "feedback": "Feedback"
+        },
+        "viewDetails": "View details",
+        "items": {
+          "v1": {
+            "submittedAt": "19/04/2026 09:10",
+            "feedback": "Add an overall architecture section to the README."
+          },
+          "v2": {
+            "submittedAt": "21/04/2026 20:45",
+            "feedback": "API is more stable; add integration tests for auth."
+          }
+        }
+      },
+      "milestones": {
+        "title": "Project milestones",
+        "items": {
+          "scope": {
+            "title": "Milestone 1 - Scope & Design",
+            "dueAt": "Week 1",
+            "requirements": {
+              "problem": {
+                "title": "Define the problem",
+                "description": "Describe the target problem, user persona, and success criteria."
+              },
+              "architecture": {
+                "title": "Architecture design",
+                "description": "Draft system architecture, data flow, and core modules."
+              }
+            }
+          },
+          "implementation": {
+            "title": "Milestone 2 - Implementation",
+            "dueAt": "Week 2",
+            "requirements": {
+              "api": {
+                "title": "Build core features",
+                "description": "Implement the primary APIs/features from the approved scope."
+              },
+              "quality": {
+                "title": "Quality checks",
+                "description": "Add baseline tests and error handling for critical flows."
+              }
+            }
+          },
+          "release": {
+            "title": "Milestone 3 - Release",
+            "dueAt": "Week 3",
+            "requirements": {
+              "deploy": {
+                "title": "Deploy demo",
+                "description": "Ship a publicly accessible demo release."
+              },
+              "readme": {
+                "title": "Complete documentation",
+                "description": "Update README with setup, architecture, and run guide."
+              }
+            }
+          }
+        }
+      }
+    }
   },
   "lesson": {
     "videos": "Videos",

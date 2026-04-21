@@ -64,8 +64,8 @@ export const Sidebar = () => {
         },
         {
             label: t("finalProject.title"),
-            value: "final-project",
-            tab: SidebarTab.FinalProject,
+            value: "personal-project",
+            tab: SidebarTab.PersonalProject,
             icon: GraduationCapIcon,
             isAccordion: false,
         },

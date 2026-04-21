@@ -31,8 +31,8 @@ export const useSidebar = () => {
         case SidebarTab.Cv:
             targetPath = pathConfig().locale(locale).course(courseDisplayId).learn().cv().build()
             break
-        case SidebarTab.FinalProject:
-            targetPath = pathConfig().locale(locale).course(courseDisplayId).learn().finalProject().build()
+        case SidebarTab.PersonalProject:
+            targetPath = pathConfig().locale(locale).course(courseDisplayId).learn().personalProject().build()
             break
         case SidebarTab.Leaderboard:
             targetPath = pathConfig().locale(locale).course(courseDisplayId).learn().leaderboard().build()

@@ -80,10 +80,10 @@ export const pathConfig = () => {
                         build,
                     }
                 }
-                const finalProject = () => {
-                    const finalProjectPath = `${learnPath}/final-project`
+                const personalProject = () => {
+                    const personalProjectPath = `${learnPath}/personal-project`
                     const build = () => {
-                        return finalProjectPath
+                        return personalProjectPath
                     }
                     return {
                         build,
@@ -111,7 +111,7 @@ export const pathConfig = () => {
                     build,
                     mindMap,
                     cv,
-                    finalProject,
+                    personalProject,
                     leaderboard,
                     module,
                 }

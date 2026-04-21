@@ -35,8 +35,8 @@
     "cvTitle": "Lộ trình CV",
     "cvDescription": "Chuẩn bị và chỉnh sửa CV developer theo hướng dẫn trong khóa học.",
     "cvPlaceholder": "Công cụ và bài tập CV sẽ hiển thị tại đây.",
-    "finalProjectTitle": "Đồ án cuối khóa",
-    "finalProjectDescription": "Đề bài, mốc nộp bài và chi tiết nộp đồ án cho khóa học này.",
+    "finalProjectTitle": "Dự án cá nhân",
+    "finalProjectDescription": "Yêu cầu, milestone và chi tiết nộp dự án cá nhân trong khóa học này.",
     "finalProjectPlaceholder": "Đề bài và không gian làm việc sẽ hiển thị tại đây."
   },
   "settings": {
@@ -65,7 +65,8 @@
   "cv": {
     "title": "CV",
     "preview": {
-      "title": "Xem trước CV (PDF)"
+      "title": "Xem trước CV (PDF)",
+      "fullscreen": "Xem full"
     },
     "submission": {
       "fileCardTitle": "Thông tin CV đã nộp",
@@ -74,7 +75,15 @@
       "reviewAction": "Review",
       "feedbackTitle": "Đánh giá CV",
       "feedbackSummary": "CV của bạn đã được ghi nhận. Mentor sẽ phản hồi chi tiết trong phiên review tiếp theo.",
-      "updateAction": "Cập nhật CV mới"
+      "updateAction": "Cập nhật CV mới",
+      "historyTitle": "Lịch sử đánh giá",
+      "history": {
+        "file": "File CV",
+        "submittedAt": "Thời gian nộp",
+        "feedback": "Feedback",
+        "actions": "Hành động",
+        "viewDetails": "Xem chi tiết"
+      }
     },
     "form": {
       "submit": "Tải CV",
@@ -96,7 +105,85 @@
     }
   },
   "finalProject": {
-    "title": "Đồ án cuối khóa"
+    "title": "Dự án cá nhân",
+    "page": {
+      "submit": {
+        "title": "Nộp link GitHub dự án cá nhân",
+        "placeholder": "Dán link repository GitHub của bạn",
+        "lastSubmission": "Lần nộp gần nhất: 21/04/2026 20:45",
+        "cta": "Nộp dự án"
+      },
+      "feedback": {
+        "title": "AI feedback",
+        "content": "Tạm thời: kiến trúc dự án đã rõ ràng, cần bổ sung test cho các luồng chính và tối ưu tài liệu triển khai."
+      },
+      "history": {
+        "title": "Lịch sử feedback",
+        "columns": {
+          "gitUrl": "Link GitHub",
+          "submittedAt": "Thời gian nộp",
+          "feedback": "Feedback"
+        },
+        "viewDetails": "Xem chi tiết",
+        "items": {
+          "v1": {
+            "submittedAt": "19/04/2026 09:10",
+            "feedback": "Cần bổ sung mô tả kiến trúc tổng quan trong README."
+          },
+          "v2": {
+            "submittedAt": "21/04/2026 20:45",
+            "feedback": "API ổn định hơn, cần thêm test integration cho auth."
+          }
+        }
+      },
+      "milestones": {
+        "title": "Milestone dự án cá nhân",
+        "items": {
+          "scope": {
+            "title": "Milestone 1 - Scope & Design",
+            "dueAt": "Tuần 1",
+            "requirements": {
+              "problem": {
+                "title": "Xác định bài toán",
+                "description": "Mô tả rõ vấn đề, user persona và tiêu chí thành công."
+              },
+              "architecture": {
+                "title": "Thiết kế kiến trúc",
+                "description": "Draft kiến trúc hệ thống, flow dữ liệu và các module chính."
+              }
+            }
+          },
+          "implementation": {
+            "title": "Milestone 2 - Implementation",
+            "dueAt": "Tuần 2",
+            "requirements": {
+              "api": {
+                "title": "Hoàn thiện chức năng lõi",
+                "description": "Triển khai các API/chức năng chính theo scope đã chốt."
+              },
+              "quality": {
+                "title": "Đảm bảo chất lượng",
+                "description": "Thêm test cơ bản và xử lý lỗi cho các luồng quan trọng."
+              }
+            }
+          },
+          "release": {
+            "title": "Milestone 3 - Release",
+            "dueAt": "Tuần 3",
+            "requirements": {
+              "deploy": {
+                "title": "Deploy bản demo",
+                "description": "Triển khai bản demo có thể truy cập công khai."
+              },
+              "readme": {
+                "title": "Hoàn thiện tài liệu",
+                "description": "Cập nhật README gồm setup, kiến trúc và hướng dẫn chạy."
+              }
+            }
+          }
+        }
+      }
+    }
   },
   "lesson": {
     "videos": "Bài giảng",

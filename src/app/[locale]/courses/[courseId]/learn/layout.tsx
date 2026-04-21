@@ -5,7 +5,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
     return (
         <div className="grid grid-cols-4 items-start">
             <Sidebar />
-            <div className="col-span-3 p-6">
+            <div className="col-span-3">
                 {children}
             </div>
         </div>

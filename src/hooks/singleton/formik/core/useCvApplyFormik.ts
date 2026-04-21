@@ -6,6 +6,8 @@ import * as Yup from "yup"
  */
 export interface CvApplyFormikValues {
     cvFile: File | null
+    cvSubmissionId: string | null
+    cvSubmissionAttemptId: string | null
 }
 
 /**
@@ -15,6 +17,8 @@ export const useCvApplyFormikCore = () =>
     useFormik<CvApplyFormikValues>({
         initialValues: {
             cvFile: null,
+            cvSubmissionId: null,
+            cvSubmissionAttemptId: null,
         },
         validationSchema: Yup.object({
             cvFile: Yup.mixed<File>()

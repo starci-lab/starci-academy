@@ -1,6 +1,7 @@
 export * from "./useQueryChallengeSwr"
 export * from "./useQueryChallengeSubmissionsSwr"
 export * from "./useQueryChallengesSwr"
+export * from "./useQueryCvReviewHistorySwr"
 export * from "./useQueryContentSwr"
 export * from "./useQueryContentsSwr"
 export * from "./useQueryCourseSwr"

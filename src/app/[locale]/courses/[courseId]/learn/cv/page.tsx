@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useMemo } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import {
     Breadcrumbs,
     Button,
@@ -8,18 +8,36 @@ import {
     CardContent,
     Chip,
     Link,
+    toast,
 } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { pathConfig } from "@/resources"
 import { useAppSelector } from "@/redux"
-import { useCvApplyFormik, useCvPreviewOverlayState, useCvUpdateOverlayState } from "@/hooks/singleton"
+import { useCvApplyFormik, useCvPreviewOverlayState, useCvUpdateOverlayState, useKeycloak, useQueryCvReviewHistorySwr } from "@/hooks/singleton"
 import { MarkdownContent } from "@/components/reuseable"
 import { PDFView } from "@/components/reuseable/PDFView"
 import { CvReviewHistory } from "@/components/layouts/Learn/CvReviewHistory"
 import { ClockIcon, DownloadSimpleIcon, FilePdfIcon, MagnifyingGlassPlusIcon, SparkleIcon } from "@phosphor-icons/react"
+import { dayjs } from "@/modules/dayjs"
+import { mutateTriggerCvSubmission } from "@/modules/api"
+import type { CvReviewHistoryItemPayload } from "@/modules/api"
 
-const REMOTE_TEST_PDF_URL = "https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf"
+const getFileNameFromUrl = (url: string) => {
+    try {
+        const pathname = new URL(url).pathname
+        const lastPart = pathname.split("/").filter(Boolean).at(-1)
+        return lastPart ? decodeURIComponent(lastPart) : url
+    } catch {
+        const lastPart = url.split("/").filter(Boolean).at(-1)
+        return lastPart ? decodeURIComponent(lastPart) : url
+    }
+}
+
+const isRenderablePdfSource = (value?: string) => {
+    if (!value) return false
+    return value.startsWith("http://") || value.startsWith("https://") || value.startsWith("blob:") || value.startsWith("data:")
+}
 
 const Page = () => {
     const t = useTranslations()
@@ -28,29 +46,79 @@ const Page = () => {
     const course = useAppSelector((state) => state.course.entity)
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
     const formik = useCvApplyFormik()
+    const keycloak = useKeycloak()
+    const token = keycloak.data?.authenticated ? keycloak.data?.token : undefined
+    const [isReviewing, setIsReviewing] = useState(false)
     const { onOpen: onOpenCvUpdateModal } = useCvUpdateOverlayState()
     const { onOpen: onOpenCvPreviewModal } = useCvPreviewOverlayState()
     const selectedFileUrl = useMemo(() => {
         if (!formik.values.cvFile) return ""
         return URL.createObjectURL(formik.values.cvFile)
     }, [formik.values.cvFile])
-    const previewPdfUrl = selectedFileUrl || REMOTE_TEST_PDF_URL
-    const currentCvLink = selectedFileUrl || REMOTE_TEST_PDF_URL
-    const currentCvLinkLabel = formik.values.cvFile?.name || "my-name.pdf"
-    const recentFeedbackRows = useMemo(() => [
-        {
-            id: "1",
-            fileName: currentCvLinkLabel,
-            submittedAt: "21/04/2026 10:30",
-            feedback: "Bố cục CV rõ ràng, cần bổ sung thêm số liệu thành tích.",
-        },
-        {
-            id: "2",
-            fileName: "my-name-v0.pdf",
-            submittedAt: "18/04/2026 16:10",
-            feedback: "Cần tối ưu phần tóm tắt và mô tả kinh nghiệm thực tế.",
-        },
-    ], [currentCvLinkLabel])
+    const reviewHistorySwr = useQueryCvReviewHistorySwr()
+    const latestHistoryItem = reviewHistorySwr.data?.data?.[0]
+    const cvSubmissionId = reviewHistorySwr.data?.cvSubmissionId
+    const historyFileUrl = latestHistoryItem?.fileUrl || ""
+    const downloadableCvUrl = isRenderablePdfSource(historyFileUrl) ? historyFileUrl : ""
+    const currentCvLink = selectedFileUrl || downloadableCvUrl
+    const currentCvLinkLabel = formik.values.cvFile?.name ||
+        (latestHistoryItem?.fileUrl ? getFileNameFromUrl(latestHistoryItem.fileUrl) : "my-name.pdf")
+    const previewPdfUrl = selectedFileUrl || downloadableCvUrl
+    const recentFeedbackRows = useMemo(() =>
+        (reviewHistorySwr.data?.data || []).map((item: CvReviewHistoryItemPayload) => ({
+            id: item.attemptId,
+            fileName: getFileNameFromUrl(item.fileUrl),
+            fileUrl: item.fileUrl,
+            submittedAt: dayjs(item.submittedAt).format("DD/MM/YYYY HH:mm"),
+            feedback: item.feedback || "-",
+        })),
+    [reviewHistorySwr.data?.data])
+
+    const handleReviewCv = async () => {
+        if (!token) {
+            toast.danger("Error", {
+                description: "Authentication token not found",
+            })
+            return
+        }
+
+        if (!cvSubmissionId) {
+            toast.danger("Error", {
+                description: "CV submission not found",
+            })
+            return
+        }
+
+        try {
+            setIsReviewing(true)
+            const response = await mutateTriggerCvSubmission({
+                variables: {
+                    request: {
+                        cvSubmissionId,
+                        cvSubmissionAttemptId: latestHistoryItem?.attemptId,
+                    },
+                },
+                token,
+            })
+
+            const payload = response.data?.triggerCvSubmission
+            if (!payload?.success) {
+                throw new Error(payload?.message || "Failed to queue CV processing")
+            }
+
+            toast.success("Success", {
+                description: payload.message || t("cv.submission.reviewAction"),
+            })
+            await reviewHistorySwr.mutate()
+        } catch (error) {
+            const message = error instanceof Error ? error.message : "Failed to queue CV processing"
+            toast.danger("Error", {
+                description: message,
+            })
+        } finally {
+            setIsReviewing(false)
+        }
+    }
 
     useEffect(() => {
         return () => {
@@ -87,37 +155,50 @@ const Page = () => {
                             <div className="mb-3 text-base font-medium">{t("cv.submission.fileCardTitle")}</div>
                             <Card className="w-full">
                                 <CardContent className="flex items-center">
-                                    <div className="flex items-center justify-between gap-3 w-full">
-                                        <div className="flex items-center gap-2">
+                                    <div className="flex w-full items-center justify-between gap-3">
+                                        <div className="flex min-w-0 flex-1 items-center gap-2">
                                             <FilePdfIcon className="size-10" />
-                                            <div className="min-w-0">
-                                                <Link
-                                                    href={currentCvLink}
-                                                    target="_blank"
-                                                    className="truncate text-sm font-medium text-accent underline"
-                                                >
-                                                    {currentCvLinkLabel}
-                                                </Link>
+                                            <div className="min-w-0 flex-1" title={currentCvLinkLabel}>
+                                                {currentCvLink ? (
+                                                    <Link
+                                                        href={currentCvLink}
+                                                        target="_blank"
+                                                        className="block w-full truncate text-sm font-medium text-accent underline"
+                                                    >
+                                                        {currentCvLinkLabel}
+                                                    </Link>
+                                                ) : (
+                                                    <span className="block w-full truncate text-sm font-medium text-foreground-500">
+                                                        {currentCvLinkLabel}
+                                                    </span>
+                                                )}
                                                 <div className="flex items-center gap-1 mt-1 text-xs text-muted">
                                                     <ClockIcon className="size-4" />
                                                     {t("cv.submission.submittedAt")}
                                                 </div>
                                             </div>
                                         </div>
-                                        <Link
-                                            href={currentCvLink}
-                                            target="_blank"
-                                            className="inline-flex items-center gap-1 text-sm text-accent"
-                                        >
-                                            <DownloadSimpleIcon className="size-5" />
-                                            {t("cv.submission.download")}
-                                        </Link>
+                                        {currentCvLink ? (
+                                            <Link
+                                                href={currentCvLink}
+                                                target="_blank"
+                                                className="shrink-0 inline-flex items-center gap-1 text-sm text-accent"
+                                            >
+                                                <DownloadSimpleIcon className="size-5" />
+                                                {t("cv.submission.download")}
+                                            </Link>
+                                        ) : (
+                                            <span className="shrink-0 inline-flex items-center gap-1 text-sm text-foreground-500">
+                                                <DownloadSimpleIcon className="size-5" />
+                                                {t("cv.submission.download")}
+                                            </span>
+                                        )}
                                     </div>
                                 </CardContent>
                             </Card>
                             <div className="h-3" />
                             <div className="flex gap-3">
-                                <Button >
+                                <Button isDisabled={isReviewing || !cvSubmissionId} onPress={handleReviewCv}>
                                     {t("cv.submission.reviewAction")}
                                 </Button>
                                 <Button variant="secondary" onPress={onOpenCvUpdateModal}>
@@ -129,7 +210,7 @@ const Page = () => {
                                 <div className="mb-3 text-base font-medium flex items-center gap-2">{t("cv.submission.feedbackTitle")}<Chip variant="secondary" color="accent"><SparkleIcon className="size-5" />StarCi AI</Chip></div>
                                 <div className="border border-divider rounded-3xl p-3">
                                     <MarkdownContent
-                                        markdown="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                                        markdown={latestHistoryItem?.feedback || "This CV currently does not have feedback"}
                                     />
                                 </div>
                             </div> 

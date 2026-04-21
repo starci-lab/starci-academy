@@ -20,6 +20,7 @@ import {
     useQueryChallengeSubmissionsSwrCore,
     useQuerySubmissionAttemptsSwrCore,
     useQuerySubmissionFeedbacksSwrCore,
+    useQueryCvReviewHistorySwrCore,
 } from "./core"
 
 export interface SwrContextType {
@@ -41,6 +42,7 @@ export interface SwrContextType {
     queryChallengeSubmissionsSwr: ReturnType<typeof useQueryChallengeSubmissionsSwrCore>;
     querySubmissionAttemptsSwr: ReturnType<typeof useQuerySubmissionAttemptsSwrCore>;
     querySubmissionFeedbacksSwr: ReturnType<typeof useQuerySubmissionFeedbacksSwrCore>;
+    queryCvReviewHistorySwr: ReturnType<typeof useQueryCvReviewHistorySwrCore>;
 }
 
 export const SwrContext = createContext<SwrContextType | null>(null)
@@ -66,6 +68,7 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
     const queryChallengeSubmissionsSwr = useQueryChallengeSubmissionsSwrCore()
     const querySubmissionAttemptsSwr = useQuerySubmissionAttemptsSwrCore()
     const querySubmissionFeedbacksSwr = useQuerySubmissionFeedbacksSwrCore()
+    const queryCvReviewHistorySwr = useQueryCvReviewHistorySwrCore()
     return (
         <SwrContext.Provider value={{
             queryCourseSwr,
@@ -86,6 +89,7 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
             queryChallengeSubmissionsSwr,
             querySubmissionAttemptsSwr,
             querySubmissionFeedbacksSwr,
+            queryCvReviewHistorySwr,
         }}>
             {children}
         </SwrContext.Provider>

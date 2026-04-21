@@ -4,11 +4,15 @@ import React from "react"
 import { Button, Link, Table } from "@heroui/react"
 import { useTranslations } from "next-intl"
 
+const isPublicUrl = (value: string) => value.startsWith("http://") || value.startsWith("https://") || value.startsWith("blob:") || value.startsWith("data:")
+
 export interface CvReviewHistoryItem {
     /** Unique id for table row. */
     id: string
-    /** Submitted CV filename. */
+    /** Submitted CV filename shown to user. */
     fileName: string
+    /** Submitted CV file URL. */
+    fileUrl: string
     /** Submitted datetime text. */
     submittedAt: string
     /** Feedback summary text. */
@@ -38,7 +42,13 @@ export const CvReviewHistory = ({ items }: CvReviewHistoryProps) => {
                     <Table.Body>
                         {items.map((item) => (
                             <Table.Row key={item.id}>
-                                <Table.Cell><Link className="text-sm font-medium text-accent underline" href={item.fileName} target="_blank">{item.fileName}</Link></Table.Cell>
+                                <Table.Cell>
+                                    {isPublicUrl(item.fileUrl) ? (
+                                        <Link className="text-sm font-medium text-accent underline" href={item.fileUrl} target="_blank">{item.fileName}</Link>
+                                    ) : (
+                                        <span className="text-sm font-medium text-foreground-500">{item.fileName}</span>
+                                    )}
+                                </Table.Cell>
                                 <Table.Cell>{item.submittedAt}</Table.Cell>
                                 <Table.Cell>{item.feedback}</Table.Cell>
                             </Table.Row>

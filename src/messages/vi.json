@@ -50,7 +50,8 @@
   },
   "module": {
     "aria": "Học phần {index}",
-    "pathIntroduction": "Giới thiệu lộ trình",
+    "pathIntroduction": "Giới thiệu",
+    "numContents": "{count} nội dung",
     "chipContentsHint": "Số bài đọc trong học phần.",
     "chipVideosHint": "Số video bài học trong học phần.",
     "chipChallengesHint": "Số thử thách trong học phần.",

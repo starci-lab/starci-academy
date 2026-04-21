@@ -118,4 +118,10 @@
     .modal__container {
         @apply [&_[data-slot=modal-header]]:max-w-[768px] [&_[data-slot=modal-header]]:mx-auto [&_[data-slot=modal-body]]:max-w-[768px] [&_[data-slot=modal-body]]:mx-auto;
     }
+    .card {
+        @apply p-3;
+    }
+    .accordion__trigger {
+        @apply pb-1.5;
+    }
 }

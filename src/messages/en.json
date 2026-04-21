@@ -41,7 +41,8 @@
   },
   "module": {
     "aria": "Module {index}",
-    "pathIntroduction": "Module roadmap",
+    "pathIntroduction": "Introduction",
+    "numContents": "{count} contents",
     "chipContentsHint": "Reading items in this module.",
     "chipVideosHint": "Lesson videos in this module.",
     "chipChallengesHint": "Challenges in this module.",

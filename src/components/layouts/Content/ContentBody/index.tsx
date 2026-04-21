@@ -30,7 +30,7 @@ export const ContentBody = ({ className }: ContentBodyProps) => {
     }
 
     return (
-        <div className={cn("text-sm text-muted", className)}>
+        <div className={cn("text-sm text-muted overflow-x-auto", className)}>
             <MarkdownContent markdown={content?.body || t("content.empty")} />
             <div className="h-6" />
             <ReferenceLinks

@@ -2,11 +2,11 @@ import { NextIntlClientProvider } from "next-intl"
 import { getMessages } from "next-intl/server"
 import { InnerLayout } from "../InnerLayout"
 import React, { PropsWithChildren } from "react"
-import { JetBrains_Mono } from "next/font/google"
+import { Nunito } from "next/font/google"
 
-const font = JetBrains_Mono({
+const font = Nunito({
     subsets: ["latin"],
-    variable: "--font-jetbrains-mono",
+    variable: "--font-nunito",
 })
 
 const Layout = async ({

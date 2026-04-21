@@ -1,3 +1,4 @@
+"use client"
 import React from "react"
 import { Button, Card, CardContent, CardFooter } from "@heroui/react"
 import { CourseEntity } from "@/modules/types"

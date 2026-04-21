@@ -34,6 +34,8 @@ const query1 = gql`
         data {
           id
           displayId
+          numLessons
+          numChallenges
           description
           orderIndex
           minutesRead

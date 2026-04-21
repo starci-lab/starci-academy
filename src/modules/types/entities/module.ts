@@ -38,4 +38,6 @@ export interface ModuleEntity extends AbstractEntity {
     challenges?: Array<ChallengeEntity>
     /** The submissions of the module. */
     submissions?: Array<SubmissionEntity>
+    /** The number of contents in the module. */
+    numContents: number
 }

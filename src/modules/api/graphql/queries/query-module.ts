@@ -19,7 +19,13 @@ const query1 = gql`
         displayId
         title
         description
+        numContents
         orderIndex
+        previewContents {
+          id
+          orderIndex
+          text
+        }
       }
     }
   }

@@ -2,19 +2,21 @@
 
 import React, { useEffect, useMemo } from "react"
 import { Modal } from "@heroui/react"
+import dynamic from "next/dynamic"
 import { useTranslations } from "next-intl"
-import { PDFView } from "@/components/reuseable"
 import { useCvApplyFormik, useCvPreviewOverlayState } from "@/hooks/singleton"
+
+const PDFView = dynamic(
+    () => import("@/components/reuseable/PDFView").then((module) => module.PDFView),
+    { ssr: false },
+)
 
 const REMOTE_TEST_PDF_URL = "https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf"
 
-interface CvPreviewModalProps {}
-
 /**
  * Full-screen CV preview modal controlled by singleton overlay state.
- * @param {CvPreviewModalProps} _props Modal props (currently unused).
  */
-export const CvPreviewModal = (_props: CvPreviewModalProps) => {
+export const CvPreviewModal = () => {
     const t = useTranslations()
     const formik = useCvApplyFormik()
     const { isOpen, onOpenChange } = useCvPreviewOverlayState()

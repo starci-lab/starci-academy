@@ -98,6 +98,15 @@ export const pathConfig = () => {
                         build,
                     }
                 }
+                const starciAi = () => {
+                    const starciAiPath = `${learnPath}/starci-ai`
+                    const build = () => {
+                        return starciAiPath
+                    }
+                    return {
+                        build,
+                    }
+                }
                 const module = (displayId?: string) => {
                     const modulePath = displayId ? `${learnPath}/modules/${displayId}` : `${learnPath}/modules`
                     const build = () => {
@@ -123,6 +132,7 @@ export const pathConfig = () => {
                     cv,
                     personalProject,
                     leaderboard,
+                    starciAi,
                     module,
                 }
             }

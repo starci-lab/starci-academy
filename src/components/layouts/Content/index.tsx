@@ -11,6 +11,7 @@ import { LessonBody } from "./LessonBody"
 import { ContentBody } from "./ContentBody"
 import { ChallengeBody } from "./ChallengeBody"
 import { ContentTab, setContentTab } from "@/redux/slices"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 
 export type ContentProps = WithClassNames<undefined>
 
@@ -53,11 +54,21 @@ export const Content = ({ className }: ContentProps) => {
         }
     ]
     const dispatch = useAppDispatch()
+    const router = useRouter()
+    const pathname = usePathname()
+    const searchParams = useSearchParams()
     const contentTab = useAppSelector((state) => state.tabs.contentTab)
     const bodyComponent = useMemo(() => tabItems.find((item) => item.key === contentTab)?.component, [contentTab])
+    const onTabChange = (key: React.Key) => {
+        const nextTab = key as ContentTab
+        dispatch(setContentTab(nextTab))
+        const params = new URLSearchParams(searchParams.toString())
+        params.set("tab", nextTab)
+        router.replace(`${pathname}?${params.toString()}`)
+    }
     return (
         <div className={cn("", className)}>
-            <div className="h-6" />
+            <div className="h-3" />
             {isLoading ? (
                 <div>
                     <div className="p-3">
@@ -68,7 +79,10 @@ export const Content = ({ className }: ContentProps) => {
                         <div className="h-3" />
                         <Skeleton className="h-6 w-[100px] rounded-full" />
                     </div>
-                    <Tabs selectedKey={contentTab} variant="secondary" onSelectionChange={(key) => dispatch(setContentTab(key as ContentTab))}>
+                    <Tabs selectedKey={contentTab} 
+                        variant="secondary" 
+                        onSelectionChange={onTabChange}
+                    >
                         <Tabs.ListContainer>
                             <Tabs.List aria-label={t("module.tabListAria")}>
                                 {tabItems.map((item) => (
@@ -93,7 +107,7 @@ export const Content = ({ className }: ContentProps) => {
                 <div>
                     <div className="p-3">
                         <div className="text-2xl font-bold">{content?.title}</div>
-                        <div className="h-3" />
+                        <div className="h-2" />
                         <div className="text-sm text-muted">{content?.description}</div>
                         <div className="h-3" />
                         <div className="flex items-center gap-2">
@@ -124,7 +138,7 @@ export const Content = ({ className }: ContentProps) => {
                         </div>
                         <div className="h-3" />
                     </div>
-                    <Tabs selectedKey={contentTab} variant="secondary" onSelectionChange={(key) => dispatch(setContentTab(key as ContentTab))}>
+                    <Tabs selectedKey={contentTab} variant="secondary" onSelectionChange={onTabChange}>
                         <Tabs.ListContainer>
                             <Tabs.List aria-label={t("module.tabListAria")}>
                                 {tabItems.map((item) => (

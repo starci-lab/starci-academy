@@ -1,7 +1,8 @@
-import React from "react"
-import { Sidebar } from "./Sidebar"
+"use client"
+import React, { PropsWithChildren } from "react"
+import { Sidebar } from "@/components/layouts"
 
-export const Layout = ({ children }: { children: React.ReactNode }) => {
+export const Layout = ({ children }: PropsWithChildren) => {
     return (
         <div className="grid grid-cols-4 items-start">
             <Sidebar />

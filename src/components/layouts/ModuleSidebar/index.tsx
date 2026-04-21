@@ -2,12 +2,14 @@
 
 import React, { useMemo } from "react"
 import { useAppSelector } from "@/redux"
-import { Accordion, Card, CardContent, cn, Link } from "@heroui/react"
+import { Accordion, Chip, cn, Link } from "@heroui/react"
 import _ from "lodash"
 import { WithClassNames } from "@/modules/types"
 import { useRouter } from "next/navigation"
 import { pathConfig } from "@/resources/path"
-import { useLocale } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
+import { ClockIcon, SwordIcon, VideoIcon } from "@phosphor-icons/react"
+import { motion } from "framer-motion"
 
 type ModuleSidebarProps = WithClassNames<undefined>
 
@@ -19,16 +21,17 @@ export const ModuleSidebar = (props: ModuleSidebarProps) => {
     const course = useAppSelector((state) => state.course.entity)
     const moduleDisplayId = useAppSelector((state) => state.module.displayId)
     const modules = useMemo(() => _.cloneDeep(course?.modules ?? []), [course?.modules])
-    const activeModule = useMemo(() => modules.find((module) => module.displayId === moduleDisplayId), [modules, moduleDisplayId])
     const contents = useAppSelector((state) => state.content.entities)
     const router = useRouter()
     const locale = useLocale()
+    const t = useTranslations()
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
+    const activeContent = useAppSelector((state) => state.content.entity)
     return (
-        <div className={cn("lg:sticky lg:top-16 lg:self-start lg:h-[calc(100vh-64px)]", props.className)}>
+        <div className={cn("lg:sticky lg:top-16 lg:self-start lg:h-[calc(100vh-64px)] lg:overflow-y-auto", props.className)}>
             <Accordion
                 variant="default"
-                className={cn("px-0 rounded-none border-none shadow-none", props.className)}
+                className="rounded-none border-none px-0 shadow-none"
                 expandedKeys={new Set(moduleDisplayId ? [String(moduleDisplayId)] : [])}
                 onExpandedChange={
                     (selection) => {
@@ -47,12 +50,13 @@ export const ModuleSidebar = (props: ModuleSidebarProps) => {
                                 <Accordion.Trigger className="w-full">
                                     <div className="flex w-full items-center justify-between gap-2">
                                         <span
-                                            className={cn(
-                                                "min-w-0 flex-1 cursor-pointer text-start",
-                                                module.id === activeModule?.id ? "text-primary" : ""
-                                            )}
+                                            className={
+                                                cn(
+                                                    "min-w-0 flex-1 cursor-pointer text-start text-base font-semibold",
+                                                )
+                                            }
                                         >
-                                            {module.title}
+                                            {`${module.orderIndex + 1}. ${module.title}`}
                                         </span>
                                         <Accordion.Indicator />
                                     </div>
@@ -63,17 +67,63 @@ export const ModuleSidebar = (props: ModuleSidebarProps) => {
                                     <div className="flex flex-col gap-3">
                                         {_.cloneDeep(contents ?? [])
                                             ?.sort((prev, next) => prev.orderIndex - next.orderIndex)
-                                            ?.map((content) => (
-                                                <Card key={content.id} className="shadow-none">
-                                                    <CardContent>
-                                                        <Link onPress={() => router.push(pathConfig().locale(locale).course(courseDisplayId).learn().module(moduleDisplayId).content(content.displayId).build()) } className="font-medium text-foreground">
-                                                            {content.title}
+                                            ?.map((content, index) => (
+                                                <div key={content.id}>
+                                                    <div>
+                                                        <Link onPress={
+                                                            () => router.push(pathConfig().locale(locale).course(courseDisplayId).learn().module(moduleDisplayId).content(content.displayId).build()) 
+                                                        } 
+                                                        className={
+                                                            cn(
+                                                                "font-medium text-foreground",
+                                                                content.id === activeContent?.id ? "text-accent" : ""
+                                                            )
+                                                        }
+                                                        >
+                                                            {`${content.orderIndex + 1}. ${content.title}`}
                                                         </Link>
+                                                        <div className="h-2" />
                                                         <div className="line-clamp-3 text-xs text-muted">
                                                             {content.description}
                                                         </div>
-                                                    </CardContent>
-                                                </Card>
+                                                        <div className="h-3" />
+                                                        <div className="overflow-hidden">
+                                                            <motion.div
+                                                                className="flex w-max items-center gap-2"
+                                                                drag="x"
+                                                                dragConstraints={{ left: -100, right: 0 }}
+                                                                whileTap={{ cursor: "grabbing" }}
+                                                            >
+                                                                <Chip variant="tertiary" color="default" className="text-muted" size="sm">
+                                                                    <ClockIcon className="size-4" />
+                                                                    <Chip.Label>
+                                                                        {t("content.minutesRead", {
+                                                                            minutes: content?.minutesRead ?? 0,
+                                                                        })}
+                                                                    </Chip.Label>
+                                                                </Chip>
+                                                                <Chip variant="tertiary" color="default" className="text-muted" size="sm">
+                                                                    <VideoIcon className="size-4" />
+                                                                    <Chip.Label>
+                                                                        {t("content.lessonCount", {
+                                                                            count: content?.numLessons ?? 0,
+                                                                        })}
+                                                                    </Chip.Label>
+                                                                </Chip>
+                                                                <Chip variant="tertiary" color="default" className="text-muted" size="sm">
+                                                                    <SwordIcon className="size-4" />
+                                                                    <Chip.Label>
+                                                                        {t("content.challengeCount", {
+                                                                            count: content?.numChallenges ?? 0,
+                                                                        })}
+                                                                    </Chip.Label>
+                                                                </Chip>
+                                                            </motion.div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="h-3" />
+                                                    {index !== (contents?.length ?? 0) - 1 && <div className="border-t border-divider" />}
+                                                </div>
                                             ))}
                                     </div>
                                 </Accordion.Body>

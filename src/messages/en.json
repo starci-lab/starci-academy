@@ -192,12 +192,27 @@
     "empty": "No content yet.",
     "number": "Content {index}",
     "minutesRead": "{minutes} min read",
+    "lessonCount": "{count} lessons",
+    "challengeCount": "{count} challenges",
+    "lessonVideosEmpty": "No lesson videos available for this content.",
+    "tabs": {
+      "content": "Content",
+      "lessonVideos": "Lesson videos",
+      "challenges": "Challenges"
+    },
     "unread": "Unread",
     "hasLecture": "Includes lecture",
     "advancedKnowledge": "Advanced"
   },
   "challenge": {
     "title": "Challenges",
+    "do": "Do",
+    "viewAttempts": "View previous attempts",
+    "pass": "Pass",
+    "fail": "Fail",
+    "minimumPassRequirement": "(Minimum required score is {score})",
+    "lastFeedback": "Last feedback",
+    "noFeedback": "No feedback yet.",
     "count": "{count} challenges",
     "empty": "No challenges yet.",
     "number": "Challenge {index}",
@@ -212,6 +227,7 @@
       "label": "Step {index}"
     },
     "tasks": "Tasks",
+    "yourScore": "Your result",
     "score": "{score} pts",
     "battle": {
       "cta": "Battle"

@@ -1,5 +1,4 @@
 import { Link } from "@heroui/react"
-import { Spacer } from "@/components/reuseable"
 import { ArrowUpRightIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import React from "react"
@@ -28,12 +27,11 @@ export const ReferenceLinks = ({ references, titleKey }: ReferenceLinksProps) =>
     }
     return (
         <>
-            <Spacer y={6} />
-            <div className="font-semibold text-foreground">
+            <div className="font-semibold text-base text-foreground">
                 {t(titleKey)}
             </div>
-            <Spacer y={3} />
-            <ul className="flex flex-col gap-2">
+            <div className="h-3" />
+            <ul className="flex flex-col gap-3">
                 {references?.sort((prev, next) => prev.orderIndex - next.orderIndex).map((reference) => {
                     return (
                         <li key={reference.id} className="flex flex-wrap items-center gap-2">

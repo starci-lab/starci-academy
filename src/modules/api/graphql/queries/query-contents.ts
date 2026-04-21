@@ -33,6 +33,7 @@ const query1 = gql`
         count
         data {
           id
+          displayId
           description
           orderIndex
           minutesRead

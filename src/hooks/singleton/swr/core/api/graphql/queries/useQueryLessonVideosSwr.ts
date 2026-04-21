@@ -16,7 +16,7 @@ export const useQueryLessonVideosSwrCore = () => {
     const token = keycloak.data?.authenticated ? keycloak.data?.token : undefined
     const enrolled = useAppSelector((state) => state.user.enrolled)
     const course = useAppSelector((state) => state.course.entity)
-    const module = useAppSelector((state) => state.module.entity)
+    const content = useAppSelector((state) => state.content.entity)
     const pageNumber = useAppSelector(
         (state) => state.module.pageNumber,
     )
@@ -25,10 +25,10 @@ export const useQueryLessonVideosSwrCore = () => {
     )
     const dispatch = useAppDispatch()
     const swr = useSWR(
-        enrolled && course?.id && module?.id
+        enrolled && course?.id && content?.id
             ? [
                 "QUERY_LESSON_VIDEOS_SWR",
-                module?.id,
+                content?.id,
                 course?.id,
                 enrolled,
                 pageNumber,
@@ -36,12 +36,12 @@ export const useQueryLessonVideosSwrCore = () => {
             ]
             : null,
         async () => {
-            if (!module?.id || !course?.id) {
+            if (!content?.id || !course?.id) {
                 throw new Error("Module or course id not found")
             }
             const data = await queryLessonVideos({
                 request: {
-                    moduleId: module.id,
+                    contentId: content.id,
                     filters: {
                         pageNumber,
                         limit,

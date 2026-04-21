@@ -55,7 +55,7 @@ const queryMap: Record<QueryLessonVideos, DocumentNode> = {
 export type LessonVideosListFilters = PaginationFilters<LessonVideosSortBy>
 
 export interface LessonVideosListRequest {
-    moduleId: string
+    contentId: string
     filters: LessonVideosListFilters
 }
 
@@ -71,7 +71,7 @@ export const defaultLessonVideosListSorts: Array<SortInput<LessonVideosSortBy>> 
 ]
 
 /**
- * Paginated module lesson videos (`ref/queries/lesson-videos/lesson-videos`).
+ * Paginated content lesson videos (`ref/queries/lesson-videos/lesson-videos`).
  */
 export const queryLessonVideos = async ({
     query = QueryLessonVideos.Query1,

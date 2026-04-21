@@ -14,9 +14,6 @@ export const useQueryChallengeSwrCore = () => {
     const course = useAppSelector((state) => state.course.entity)
     const enrolled = useAppSelector((state) => state.user.enrolled)
     const dispatch = useAppDispatch()
-    console.log(
-        `enrolled && challengeId && course?.id: ${enrolled} && ${challengeId} && ${course?.id}`,
-    )
     const swr = useSWR(
         enrolled && challengeId && course?.id
             ? [

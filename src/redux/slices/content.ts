@@ -12,6 +12,8 @@ import {
 export interface ContentSlice {
     /** When set, `useQueryContentSwr` fetches this row (`content` query). */
     id?: string
+    /** The content display id. */
+    displayId?: string
     /** The content entity. */
     entity?: ContentEntity
     /** The contents entities. */
@@ -30,6 +32,8 @@ export interface ContentSlice {
 const initialState: ContentSlice = {
     /** When set, `useQueryContentSwr` fetches this row (`content` query). */
     id: undefined,
+    /** The content display id. */
+    displayId: undefined,
     /** The content. */
     entity: undefined,
     /** The contents entities. */
@@ -59,6 +63,13 @@ export const contentSlice = createSlice(
                 action: PayloadAction<ContentEntity | undefined>
             ) => {
                 state.entity = action.payload
+            },
+            /** The action to set the content display id. */
+            setContentDisplayId: (
+                state, 
+                action: PayloadAction<string | undefined>
+            ) => {
+                state.displayId = action.payload
             },
             /** The action to set the contents. */
             setContents: (
@@ -107,6 +118,7 @@ export const {
     setContent,
     setContents,
     setContentId,
+    setContentDisplayId,
     setContentPageNumber,
     setContentLimit,
     setContentsCount,

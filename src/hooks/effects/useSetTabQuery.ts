@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/redux"
-import { LearnTab, setLearnTab } from "@/redux/slices"
+import { ContentTab, setContentTab } from "@/redux/slices"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useRef } from "react"
 
@@ -9,7 +9,7 @@ import { useEffect, useRef } from "react"
 export const useSetTabQuery = () => {
     const dispatch = useAppDispatch()
     const searchParams = useSearchParams()
-    const tab = useAppSelector((state) => state.tabs.learnTab)
+    const tab = useAppSelector((state) => state.tabs.contentTab)
     const router = useRouter()
 
     const isSyncingFromUrlRef = useRef(false)
@@ -36,13 +36,13 @@ export const useSetTabQuery = () => {
 
     // URL Redux (allow on mount)
     useEffect(() => {
-        const tabFromUrl = searchParams.get("tab") as LearnTab | null
+        const tabFromUrl = searchParams.get("tab") as ContentTab | null
         if (!tabFromUrl) return
 
         if (tabFromUrl === tab) return
 
         isSyncingFromUrlRef.current = true
-        dispatch(setLearnTab(tabFromUrl))
+        dispatch(setContentTab(tabFromUrl))
     }, [searchParams])
 
     // Mark mounted AFTER first render

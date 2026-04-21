@@ -59,7 +59,7 @@ export type ChallengesListFilters = PaginationFilters<ChallengesSortBy>
 
 export interface ChallengesListRequest {
     filters: ChallengesListFilters
-    moduleId: string
+    contentId: string
 }
 
 export interface QueryChallengesResponse {
@@ -74,7 +74,7 @@ export const defaultChallengesListSorts: Array<SortInput<ChallengesSortBy>> = [
 ]
 
 /**
- * Paginated module challenges (`ref/queries/challenges/challenges`).
+ * Paginated content challenges (`ref/queries/challenges/challenges`).
  */
 export const queryChallenges = async ({
     query = QueryChallenges.Query1,

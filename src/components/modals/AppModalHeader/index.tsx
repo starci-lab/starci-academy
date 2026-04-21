@@ -3,6 +3,7 @@
 import { Button, Modal, cn } from "@heroui/react"
 import { ArrowLeftIcon } from "@phosphor-icons/react"
 import type { ComponentProps } from "react"
+import React from "react"
 
 /**
  * Centered modal header with optional back control and subtitle, aligned with legacy modal layout.
@@ -22,7 +23,7 @@ export interface AppModalHeaderProps extends Omit<ComponentProps<typeof Modal.He
 
 export const AppModalHeader = ({ title, description, onPrev, className, ...rest }: AppModalHeaderProps) => {
     return (
-        <Modal.Header className={cn("justify-center pb-2", className)} {...rest}>
+        <Modal.Header className={cn("justify-center pb-2 max-w-full", className)} {...rest}>
             {onPrev ? (
                 <div className="absolute left-4 top-[14px]">
                     <Button size="sm" variant="ghost" isIconOnly onPress={onPrev}>

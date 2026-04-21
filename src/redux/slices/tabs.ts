@@ -18,12 +18,19 @@ export enum LearnTab {
     TopAchievers = "topAchievers",
 }
 
+export enum ContentTab {
+    Content = "content",
+    LessonVideos = "lessonVideos",
+    Challenges = "challenges",
+}
+
 /**
  * The slice for the authentication modal.
  */
 export interface TabsSlice {
     authenticationModalTab: AuthenticationModalTab
     learnTab: LearnTab
+    contentTab: ContentTab
 }
 
 /**
@@ -32,6 +39,7 @@ export interface TabsSlice {
 const initialState: TabsSlice = {
     authenticationModalTab: AuthenticationModalTab.SignIn,
     learnTab: LearnTab.LessonVideos,
+    contentTab: ContentTab.Content,
 }
 
 /**
@@ -59,6 +67,15 @@ export const tabsSlice = createSlice({
         resetLearnTab: (state) => {
             state.learnTab = LearnTab.LessonVideos
         },
+        setContentTab: (
+            state,
+            action: PayloadAction<ContentTab>
+        ) => {
+            state.contentTab = action.payload
+        },
+        resetContentTab: (state) => {
+            state.contentTab = ContentTab.Content
+        },
     },
 })
 
@@ -75,4 +92,6 @@ export const {
     resetAuthenticationModalTab,
     setLearnTab,
     resetLearnTab,
+    setContentTab,
+    resetContentTab,
 } = tabsSlice.actions

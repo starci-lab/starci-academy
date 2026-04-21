@@ -9,25 +9,27 @@ import { setContent } from "@/redux/slices"
 export const useQueryContentSwrCore = () => {
     const keycloak = useKeycloak()
     const token = keycloak.data?.authenticated ? keycloak.data?.token : undefined
-    const contentId = useAppSelector((state) => state.content.id)
+    const displayId = useAppSelector((state) => state.content.displayId)
+    const module = useAppSelector((state) => state.module.entity)
     const course = useAppSelector((state) => state.course.entity)
     const dispatch = useAppDispatch()
     const swr = useSWR(
-        contentId && course?.id
+        displayId && module?.id
             ? [
                 "QUERY_CONTENT_SWR",
-                contentId,
+                displayId,
+                module?.id,
                 course?.id,
             ]
             : null,
         async () => {
-            if (!contentId || !course?.id) {
+            if (!displayId || !module?.id) {
                 throw new Error("Content or course id not found")
             }
             const data = await queryContent({
-                request: { id: contentId },
+                request: { displayId },
                 headers: {
-                    [GraphQLHeadersKey.XCourseId]: course.id,
+                    [GraphQLHeadersKey.XCourseId]: course?.id,
                 },
                 token,
             })

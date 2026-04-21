@@ -201,14 +201,29 @@
     "empty": "Chưa có nội dung cho học phần này.",
     "number": "Nội dung {index}",
     "minutesRead": "{minutes} phút đọc",
+    "lessonCount": "{count} bài giảng",
+    "challengeCount": "{count} thử thách",
+    "lessonVideosEmpty": "Chưa có bài giảng cho nội dung này.",
+    "tabs": {
+      "content": "Nội dung",
+      "lessonVideos": "Bài giảng",
+      "challenges": "Thử thách"
+    },
     "unread": "Chưa đọc",
     "hasLecture": "Có bài giảng",
     "advancedKnowledge": "Kiến thức nâng cao"
   },
   "challenge": {
     "title": "Thử thách",
+    "do": "Làm",
+    "viewAttempts": "Xem những lần thử trước",
+    "pass": "Đạt",
+    "fail": "Trượt",
+    "minimumPassRequirement": "(Yêu cầu tối thiểu đạt điểm {score})",
+    "lastFeedback": "Phản hồi gần nhất",
+    "noFeedback": "Chưa có phản hồi.",
     "count": "{count} thử thách trong học phần này",
-    "empty": "Chưa có thử thách cho học phần này.",
+    "empty": "Chưa có thử thách cho nội dung này.",
     "number": "Thử thách {index}",
     "difficulty": {
       "easy": "Dễ",
@@ -221,6 +236,7 @@
       "label": "Bước {index}"
     },
     "tasks": "Các bước thực hiện",
+    "yourScore": "Kết quả của bạn",
     "score": "{score} điểm",
     "battle": {
       "cta": "Chiến đấu"

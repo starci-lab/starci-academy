@@ -11,11 +11,14 @@ const query1 = gql`
       error
       data {
         id
+        displayId
         description
         orderIndex
         minutesRead
         title
         body
+        numChallenges
+        numLessons
         references {
           id
           alias
@@ -40,7 +43,11 @@ export interface QueryContentResponse {
 }
 
 export interface ContentRequest {
-    id: string
+    /** The display id. */
+    displayId?: string
+    /** The id. */
+    id?: string
+
 }
 
 /**

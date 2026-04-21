@@ -34,7 +34,7 @@ export const CodeToHtml = ({ code, language, theme }: CodeToHtmlProps) => {
         }
     )
     return ( 
-        <div className="p-3 bg-background rounded-xl relative my-1.5">
+        <div className="p-3 bg-default rounded-xl relative my-1.5">
             <div className="absolute top-3 right-3">
                 <SnippetIcon copyString={code} />
             </div>

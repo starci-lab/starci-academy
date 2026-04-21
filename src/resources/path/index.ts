@@ -103,8 +103,18 @@ export const pathConfig = () => {
                     const build = () => {
                         return modulePath
                     }
+                    const content = (displayId?: string) => {
+                        const contentPath = displayId ? `${modulePath}/contents/${displayId}` : `${modulePath}/contents`
+                        const build = () => {
+                            return contentPath
+                        }
+                        return {
+                            build,
+                        }
+                    }
                     return {
                         build,
+                        content,
                     }
                 }
                 return {

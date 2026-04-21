@@ -1,7 +1,6 @@
 "use client"
 
 import { cn, ListBox, ScrollShadow } from "@heroui/react"
-import _ from "lodash"
 import React, { useMemo } from "react"
 import { useTranslations } from "next-intl"
 import { 
@@ -44,16 +43,7 @@ export const Sidebar = () => {
             value: "modules",
             tab: SidebarTab.Modules,
             icon: BracketsCurlyIcon,
-            isAccordion: true,
-            items:_.cloneDeep(course?.modules ?? [])
-                .sort((prev, next) => prev.orderIndex - next.orderIndex)
-                .map((module, index) => ({
-                    key: module.id,
-                    label: module.title,
-                    orderIndex: index,
-                }
-                )
-                )
+            isAccordion: false,
         },
         {
             label: t("cv.title"),
@@ -90,12 +80,12 @@ export const Sidebar = () => {
                 },
             ]
         },
-    ], [t, course?.modules])
+    ], [t])
     return (
         <div className="sticky top-16 self-start border-r border-divider">
             <ScrollShadow
                 hideScrollBar
-                className="max-h-[calc(100vh-4rem)] overflow-y-auto pr-1 p-6"
+                className="max-h-[calc(100vh-4rem)] overflow-y-auto pr-1 p-3"
                 size={40}
             >
                 {items.map((item) => {

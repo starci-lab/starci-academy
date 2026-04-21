@@ -167,7 +167,6 @@ const Page = () => {
                                 <MarkdownContent markdown={t("finalProject.page.feedback.content")} />
                             </div>
                         </div>
-
                         <div>
                             <div className="mb-3 text-base font-medium">{t("finalProject.page.history.title")}</div>
                             <Table variant="primary">

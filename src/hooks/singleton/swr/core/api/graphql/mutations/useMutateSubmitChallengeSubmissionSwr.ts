@@ -1,29 +1,28 @@
 import { useKeycloak } from "@/hooks/singleton"
 import {
     GraphQLHeadersKey,
-    mutateSyncChallengeSubmissions,
-    type SyncSubmissionsRequest,
+    mutateSubmitChallengeSubmission,
+    type SubmitChallengeSubmissionRequest,
 } from "@/modules/api"
 import { useAppSelector } from "@/redux"
 import useSWRMutation from "swr/mutation"
 
-type MutateSyncChallengeSubmissionsResult = Awaited<
-    ReturnType<typeof mutateSyncChallengeSubmissions>
+type MutateSubmitChallengeSubmissionResult = Awaited<
+    ReturnType<typeof mutateSubmitChallengeSubmission>
 >
-
 /**
- * SWR mutation for {@link mutateSyncChallengeSubmissions} (`X-Course-Id` from Redux).
+ * SWR mutation for {@link mutateSubmitChallengeSubmission} (`X-Course-Id` from Redux).
  */
-export const useMutateSyncChallengeSubmissionsSwrCore = () => {
+export const useMutateSubmitChallengeSubmissionSwrCore = () => {
     const keycloak = useKeycloak()
     const courseId = useAppSelector((state) => state.course.entity?.id)
     const swr = useSWRMutation<
-        MutateSyncChallengeSubmissionsResult,
+        MutateSubmitChallengeSubmissionResult,
         Error,
         string,
-        SyncSubmissionsRequest
+        SubmitChallengeSubmissionRequest
     >(
-        "MUTATE_SYNC_CHALLENGE_SUBMISSIONS_SWR",
+        "MUTATE_SUBMIT_CHALLENGE_SUBMISSION_SWR",
         async (_key, { arg }) => {
             const token = keycloak.data?.token
             if (!token) {
@@ -32,7 +31,7 @@ export const useMutateSyncChallengeSubmissionsSwrCore = () => {
             if (!courseId) {
                 throw new Error("Course id not found")
             }
-            return mutateSyncChallengeSubmissions({
+            return mutateSubmitChallengeSubmission({
                 variables: {
                     request: arg,
                 },

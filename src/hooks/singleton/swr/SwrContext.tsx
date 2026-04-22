@@ -3,8 +3,8 @@ import React, { PropsWithChildren } from "react"
 import { createContext } from "react"
 import {
     useMutateCourseEnrollSwrCore,
-    useMutateSubmitChallengeSubmissionsSwrCore,
-    useMutateSyncChallengeSubmissionsSwrCore,
+    useMutateSubmitChallengeSubmissionSwrCore,
+    useMutateSyncChallengeSubmissionSwrCore,
     useQueryChallengeSwrCore,
     useQueryChallengesSwrCore,
     useQueryContentSwrCore,
@@ -18,6 +18,7 @@ import {
     useQueryUserSwrCore,
     useQueryModuleSwrCore,
     useQueryChallengeSubmissionsSwrCore,
+    useQueryIncompleteChallengeSubmissionJobsSwrCore,
     useQuerySubmissionAttemptsSwrCore,
     useQuerySubmissionFeedbacksSwrCore,
     useQueryCvReviewHistorySwrCore,
@@ -29,8 +30,8 @@ export interface SwrContextType {
     queryCoursesSwr: ReturnType<typeof useQueryCoursesSwrCore>;
     queryUserSwr: ReturnType<typeof useQueryUserSwrCore>;
     mutateCourseEnrollSwr: ReturnType<typeof useMutateCourseEnrollSwrCore>;
-    mutateSyncChallengeSubmissionsSwr: ReturnType<typeof useMutateSyncChallengeSubmissionsSwrCore>;
-    mutateSubmitChallengeSubmissionsSwr: ReturnType<typeof useMutateSubmitChallengeSubmissionsSwrCore>;
+    mutateSyncChallengeSubmissionsSwr: ReturnType<typeof useMutateSyncChallengeSubmissionSwrCore>;
+    mutateSubmitChallengeSubmissionSwr: ReturnType<typeof useMutateSubmitChallengeSubmissionSwrCore>;
     queryModuleSwr: ReturnType<typeof useQueryModuleSwrCore>;
     queryContentSwr: ReturnType<typeof useQueryContentSwrCore>;
     queryLessonVideo: ReturnType<typeof useQueryLessonVideoSwrCore>;
@@ -40,6 +41,7 @@ export interface SwrContextType {
     queryLivestreamSessionsSwr: ReturnType<typeof useQueryLivestreamSessionsSwrCore>;
     queryChallengesSwr: ReturnType<typeof useQueryChallengesSwrCore>;
     queryChallengeSubmissionsSwr: ReturnType<typeof useQueryChallengeSubmissionsSwrCore>;
+    queryIncompleteChallengeSubmissionJobsSwr: ReturnType<typeof useQueryIncompleteChallengeSubmissionJobsSwrCore>;
     querySubmissionAttemptsSwr: ReturnType<typeof useQuerySubmissionAttemptsSwrCore>;
     querySubmissionFeedbacksSwr: ReturnType<typeof useQuerySubmissionFeedbacksSwrCore>;
     queryCvReviewHistorySwr: ReturnType<typeof useQueryCvReviewHistorySwrCore>;
@@ -54,9 +56,9 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
     const queryUserSwr = useQueryUserSwrCore()
     const mutateCourseEnrollSwr = useMutateCourseEnrollSwrCore()
     const mutateSyncChallengeSubmissionsSwr =
-        useMutateSyncChallengeSubmissionsSwrCore()
-    const mutateSubmitChallengeSubmissionsSwr =
-        useMutateSubmitChallengeSubmissionsSwrCore()
+        useMutateSyncChallengeSubmissionSwrCore()
+    const mutateSubmitChallengeSubmissionSwr =
+        useMutateSubmitChallengeSubmissionSwrCore()
     const queryModuleSwr = useQueryModuleSwrCore()
     const queryContentSwr = useQueryContentSwrCore()
     const queryLessonVideo = useQueryLessonVideoSwrCore()
@@ -66,6 +68,8 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
     const queryLivestreamSessionsSwr = useQueryLivestreamSessionsSwrCore()
     const queryChallengesSwr = useQueryChallengesSwrCore()
     const queryChallengeSubmissionsSwr = useQueryChallengeSubmissionsSwrCore()
+    const queryIncompleteChallengeSubmissionJobsSwr =
+        useQueryIncompleteChallengeSubmissionJobsSwrCore()
     const querySubmissionAttemptsSwr = useQuerySubmissionAttemptsSwrCore()
     const querySubmissionFeedbacksSwr = useQuerySubmissionFeedbacksSwrCore()
     const queryCvReviewHistorySwr = useQueryCvReviewHistorySwrCore()
@@ -77,7 +81,7 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
             queryUserSwr,
             mutateCourseEnrollSwr,
             mutateSyncChallengeSubmissionsSwr,
-            mutateSubmitChallengeSubmissionsSwr,
+            mutateSubmitChallengeSubmissionSwr,
             queryModuleSwr,
             queryContentSwr,
             queryLessonVideo,
@@ -87,6 +91,7 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
             queryLivestreamSessionsSwr,
             queryChallengesSwr,
             queryChallengeSubmissionsSwr,
+            queryIncompleteChallengeSubmissionJobsSwr,
             querySubmissionAttemptsSwr,
             querySubmissionFeedbacksSwr,
             queryCvReviewHistorySwr,

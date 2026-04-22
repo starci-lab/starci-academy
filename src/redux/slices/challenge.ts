@@ -27,6 +27,8 @@ export interface ChallengeSlice {
     challengeSubmissions: Array<ChallengeSubmissionEntity>
     /** The challenge submission id. */
     challengeSubmissionId?: string
+    /** The loading challenge submissions. */
+    loadingChallengeSubmissionIds: Array<string>
 }
 
 /**
@@ -47,6 +49,8 @@ const initialState: ChallengeSlice = {
     count: undefined,
     /** Challenge submission rows (see `challengeSubmissions` query). */
     challengeSubmissions: [],
+    /** The loading challenge submissions. */
+    loadingChallengeSubmissionIds: [],
 }
 
 /**
@@ -116,6 +120,13 @@ export const challengeSlice = createSlice(
             ) => {
                 state.challengeSubmissionId = action.payload
             },
+            /** The action to set the loading challenge submission ids. */
+            setLoadingChallengeSubmissionIds: (
+                state,
+                action: PayloadAction<Array<string>>,
+            ) => {
+                state.loadingChallengeSubmissionIds = action.payload
+            },
         },
     }
 )
@@ -133,4 +144,5 @@ export const {
     setChallengeCount,
     setChallengeSubmissions,
     setChallengeSubmissionId,
+    setLoadingChallengeSubmissionIds,
 } = challengeSlice.actions

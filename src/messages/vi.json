@@ -264,7 +264,13 @@
         "invalidGoogleDocsUrl": "Nhập URL Google Docs, Sheets hoặc Slides hợp lệ (https://docs.google.com/...)."
       },
       "loading": "Đang cập nhật bài nộp…",
-      "lastAttemptScore": "Điểm lần thử gần nhất của bạn là {earned}/{max}"
+      "lastAttemptScore": "Điểm lần thử gần nhất của bạn là {earned}/{max}",
+      "jobStatus": {
+        "queued": "Bài của bạn đang nằm trong hàng đợi, chờ chút nhé...",
+        "processing": "StarCi AI đang phân tích bài của bạn, chờ chút nhé...",
+        "completed": "Bài của bạn đã được StarCi AI phân tích hoàn tất.",
+        "failed": "Thất bại"
+      }
     }
   },
   "submissionAttempts": {

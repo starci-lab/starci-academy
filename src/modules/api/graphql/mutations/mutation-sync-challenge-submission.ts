@@ -3,8 +3,8 @@ import type { GraphQLHeaders, GraphQLResponse } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
 const mutation1 = gql`
-  mutation SyncChallengeSubmissions($request: SyncSubmissionsRequest!) {
-    syncChallengeSubmissions(request: $request) {
+  mutation SyncSubmission($request: SyncSubmissionRequest!) {
+    syncSubmission(request: $request) {
       success
       message
       error
@@ -20,19 +20,16 @@ const mutationMap: Record<MutationSyncChallengeSubmissions, DocumentNode> = {
     [MutationSyncChallengeSubmissions.Mutation1]: mutation1,
 }
 
-/** One row: challenge submission id + URL (`SyncSubmissionItemInput`). */
-export interface SyncSubmissionItemInput {
+/** Request for `syncSubmission` (`challenge-submissions/sync-submission`). */
+export interface SyncSubmissionRequest {
+    /** Challenge submission id. */
     id: string
+    /** Submission URL (GitHub/Google Docs per submission type). */
     url: string
 }
 
-/** Request for `syncChallengeSubmissions` (`ref/sync-submissions`). */
-export interface SyncSubmissionsRequest {
-    items: Array<SyncSubmissionItemInput>
-}
-
 export interface MutateSyncChallengeSubmissionsVariables {
-    request: SyncSubmissionsRequest
+    request: SyncSubmissionRequest
 }
 
 export interface MutateSyncChallengeSubmissionsParams {
@@ -43,13 +40,13 @@ export interface MutateSyncChallengeSubmissionsParams {
 }
 
 export interface MutateSyncChallengeSubmissionsResponse {
-    syncChallengeSubmissions: GraphQLResponse
+    syncSubmission: GraphQLResponse
 }
 
 /**
- * Upserts submission URLs for the current user (`syncChallengeSubmissions`).
+ * Upserts one submission URL for the current user (`syncSubmission`).
  *
- * Mirrors `ref/sync-submissions`.
+ * Mirrors backend `challenge-submissions/sync-submission`.
  */
 export const mutateSyncChallengeSubmissions = async ({
     mutation = MutationSyncChallengeSubmissions.Mutation1,

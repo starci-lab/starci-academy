@@ -255,7 +255,13 @@
         "invalidGoogleDocsUrl": "Enter a valid Google Docs, Sheets, or Slides URL (https://docs.google.com/...)."
       },
       "loading": "Updating submissions…",
-      "lastAttemptScore": "Your last attempt score is {earned}/{max}"
+      "lastAttemptScore": "Your last attempt score is {earned}/{max}",
+      "jobStatus": {
+        "queued": "Your submission is in the queue — hang tight…",
+        "processing": "StarCi AI is analyzing your submission — hang tight...",
+        "completed": "Your submission has been analyzed by StarCi AI.",
+        "failed": "Failed"
+      }
     }
   },
   "submissionAttempts": {

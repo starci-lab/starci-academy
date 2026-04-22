@@ -1,7 +1,7 @@
 import { SwrContext } from "../../../../SwrContext"
 import { use } from "react"
 
-export const useMutateSyncChallengeSubmissionsSwr = () => {
+export const useMutateSyncChallengeSubmissionSwr = () => {
     const { mutateSyncChallengeSubmissionsSwr } = use(SwrContext)!
     return mutateSyncChallengeSubmissionsSwr
 }

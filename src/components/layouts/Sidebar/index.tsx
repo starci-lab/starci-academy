@@ -130,7 +130,6 @@ export const Sidebar = () => {
                             <SidebarAccordion
                                 key={item.value}
                                 label={item.label}
-                
                                 icon={item.icon}
                                 items={item.items ?? []}
                                 onSelectSubItem={(extraId) => onSelectSidebarTab(item.tab, extraId)}
@@ -143,7 +142,7 @@ export const Sidebar = () => {
                         selectionMode="single"
                     >
                         <ListBox.Item
-                            className={cn("", selectedSidebar.tab === item.tab ? "text-accent bg-accent/10" : "")}
+                            className={cn("", selectedSidebar.tab === item.tab && selectedSidebar.extraId === undefined ? "text-accent bg-accent/10" : "")}
                             onPress={() => {
                                 onSelectSidebarTab(item.tab, undefined)
                                 router.replace(item.url ?? "")

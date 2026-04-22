@@ -53,6 +53,7 @@ export const ModuleSidebar = (props: ModuleSidebarProps) => {
                                             className={
                                                 cn(
                                                     "min-w-0 flex-1 cursor-pointer text-start text-base font-semibold",
+                                                    module.displayId === moduleDisplayId ? "text-accent" : ""
                                                 )
                                             }
                                         >

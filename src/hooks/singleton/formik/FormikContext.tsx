@@ -6,6 +6,7 @@ import {
     useSignUpFormikCore,
     useEditSubmissionFormikCore,
     useCvApplyFormikCore,
+    useGlobalSearchFormikCore,
 } from "./core"
 
 export interface FormikContextType {
@@ -13,6 +14,7 @@ export interface FormikContextType {
     signUpFormik: ReturnType<typeof useSignUpFormikCore>
     editSubmissionFormik: ReturnType<typeof useEditSubmissionFormikCore>
     cvApplyFormik: ReturnType<typeof useCvApplyFormikCore>
+    globalSearchFormik: ReturnType<typeof useGlobalSearchFormikCore>
 }
 
 export const FormikContext = createContext<FormikContextType | null>(null)
@@ -23,12 +25,14 @@ export const FormikProvider = ({ children }: PropsWithChildren) => {
     const signUpFormik = useSignUpFormikCore()
     const editSubmissionFormik = useEditSubmissionFormikCore()
     const cvApplyFormik = useCvApplyFormikCore()
+    const globalSearchFormik = useGlobalSearchFormikCore()
     return (
         <FormikContext.Provider value={{
             signInFormik,
             signUpFormik,
             editSubmissionFormik,
             cvApplyFormik,
+            globalSearchFormik,
         }}>
             {children}
         </FormikContext.Provider>

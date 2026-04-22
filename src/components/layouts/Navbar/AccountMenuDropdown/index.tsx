@@ -9,7 +9,6 @@ import {
     DropdownMenu,
     DropdownPopover,
     DropdownSection,
-    Link,
     Separator,
     Spinner,
 } from "@heroui/react"
@@ -92,28 +91,32 @@ export const AccountMenuDropdown = (props: AccountMenuDropdownProps) => {
             className={cn(classNames?.menuContainer)}
         >
             {/** Dropdown trigger */}
-            <Link
-                onPress={() => onOpenChange(!isOpen)}
-                className={cn(classNames?.button)}
-            >
+            <>
                 {isLoading ? (
                     <Button isIconOnly isDisabled className="rounded-full" variant="tertiary">
                         <Spinner color="current" />
                     </Button>
                 ) : isAuthenticated ? (
-                    <Badge size="sm" className="border-0" content="0" color="accent">
-                        <Avatar size="sm" className="cursor-pointer">
-                            <AvatarFallback>
-                                {truncate(user?.username, { length: 1 })}
-                            </AvatarFallback>
-                        </Avatar>
-                    </Badge>
+                    <Button
+                        onPress={() => onOpenChange(!isOpen)}
+                        isIconOnly 
+                        className="rounded-full" variant="tertiary">
+                        <Badge size="sm" className="border-0" content="0" color="accent">
+                            <Avatar size="sm" className="cursor-pointer">
+                                <AvatarFallback>
+                                    {truncate(user?.username, { length: 1 })}
+                                </AvatarFallback>
+                            </Avatar>
+                        </Badge>
+                    </Button>
                 ) : (
-                    <Button isIconOnly isDisabled className="rounded-full" variant="tertiary">
+                    <Button 
+                        onPress={() => onOpenChange(!isOpen)}
+                        isIconOnly className="rounded-full" variant="tertiary">
                         <UserIcon className="size-5" />
                     </Button>
                 )}
-            </Link>
+            </>
             {/** Dropdown content */}
             <DropdownPopover placement="bottom right" className="min-w-[300px] overflow-hidden" >
                 <div className="p-3">

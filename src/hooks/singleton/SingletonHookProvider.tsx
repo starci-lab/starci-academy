@@ -5,6 +5,7 @@ import { OverlayStateProvider } from "./overlay-state"
 import { KeycloakProvider } from "./keycloak"
 import { SwrProvider } from "./swr"
 import { FormikProvider } from "./formik"
+import { SocketIoProvider } from "./socketio"
 
 export const SingletonHookProvider = ({ children }: PropsWithChildren) => {
     return (
@@ -12,7 +13,9 @@ export const SingletonHookProvider = ({ children }: PropsWithChildren) => {
             <KeycloakProvider>
                 <SwrProvider>
                     <FormikProvider>
-                        {children}
+                        <SocketIoProvider>
+                            {children}
+                        </SocketIoProvider>
                     </FormikProvider>
                 </SwrProvider>
             </KeycloakProvider>

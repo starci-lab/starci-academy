@@ -12,6 +12,7 @@ import {
     submissionAttemptReducer,
     submissionFeedbackReducer,
     sidebarReducer,
+    socketIoReducer,
 } from "./slices"
 
 export const store = configureStore({
@@ -28,6 +29,7 @@ export const store = configureStore({
         submissionAttempt: submissionAttemptReducer,
         submissionFeedback: submissionFeedbackReducer,
         sidebar: sidebarReducer,
+        socketIo: socketIoReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false,

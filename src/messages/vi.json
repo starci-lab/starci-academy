@@ -16,10 +16,14 @@
     "label": "Tìm kiếm",
     "placeholder": "Tìm kiếm",
     "filtersAria": "Bộ lọc tìm kiếm",
+    "noResults": "Không tìm thấy kết quả.",
     "suggestions": {
       "courses": "Khóa học",
       "modules": "Học phần",
-      "videos": "Video"
+      "videos": "Video",
+      "challenges": "Thử thách",
+      "contents": "Nội dung",
+      "lessonVideos": "Bài giảng"
     }
   },
   "courses": {

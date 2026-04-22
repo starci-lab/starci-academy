@@ -2,7 +2,7 @@
 import { ChallengeSubmissionEntity, SubmissionType } from "@/modules/types"
 import { useAppSelector } from "@/redux"
 import { useFormik } from "formik"
-import { useEffect, useMemo } from "react"
+import { useEffect, useMemo, useRef } from "react"
 import * as Yup from "yup"
 import { 
     useMutateSubmitChallengeSubmissionsSwr, 
@@ -106,7 +106,12 @@ export const useEditSubmissionFormikCore = () => {
         },
     })
 
+    const mountedRef = useRef(false)
     useEffect(() => {
+        if (!mountedRef.current) {
+            mountedRef.current = true
+            return
+        }
         if (Object.keys(formik.errors).length > 0) {
             return
         }

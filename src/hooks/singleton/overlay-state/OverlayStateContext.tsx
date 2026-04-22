@@ -15,6 +15,7 @@ import {
     useLanguageOverlayStateCore,
     useSubmissionAttemptsOverlayStateCore,
     useFeedbackDetailsOverlayStateCore,
+    useSearchOverlayStateCore,
 } from "./core"
 
 export interface OverlayStateContextType {
@@ -31,6 +32,7 @@ export interface OverlayStateContextType {
     language: ReturnType<typeof useLanguageOverlayStateCore>
     submissionAttempts: ReturnType<typeof useSubmissionAttemptsOverlayStateCore>
     feedbackDetails: ReturnType<typeof useFeedbackDetailsOverlayStateCore>
+    search: ReturnType<typeof useSearchOverlayStateCore>
 }
 
 export const OverlayStateContext = createContext<OverlayStateContextType | null>(null)
@@ -49,6 +51,7 @@ export const OverlayStateProvider = ({ children }: PropsWithChildren) => {
     const language = useLanguageOverlayStateCore()
     const submissionAttempts = useSubmissionAttemptsOverlayStateCore()
     const feedbackDetails = useFeedbackDetailsOverlayStateCore()
+    const search = useSearchOverlayStateCore()
     return (
         <OverlayStateContext.Provider value={{
             authentication,
@@ -64,6 +67,7 @@ export const OverlayStateProvider = ({ children }: PropsWithChildren) => {
             language,
             submissionAttempts,
             feedbackDetails,
+            search,
         }}>
             {children}
         </OverlayStateContext.Provider>

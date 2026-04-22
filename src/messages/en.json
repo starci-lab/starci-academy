@@ -16,10 +16,14 @@
     "label": "Search",
     "placeholder": "Search",
     "filtersAria": "Search filters",
+    "noResults": "No matches found.",
     "suggestions": {
       "courses": "Courses",
       "modules": "Modules",
-      "videos": "Videos"
+      "videos": "Videos",
+      "challenges": "Challenges",
+      "contents": "Contents",
+      "lessonVideos": "Lesson videos"
     }
   },
   "courses": {

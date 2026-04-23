@@ -1,6 +1,0 @@
-export * from "./system-challenge-config.module"
-export * from "./system-challenge-config.resolver"
-export * from "./system-challenge-config.service"
-export * from "./system-challenge-config.handler"
-export * from "./system-challenge-config.query"
-export * from "./graphql-types"

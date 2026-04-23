@@ -106,7 +106,7 @@ export const CourseModuleNode = (props: NodeProps<CourseModuleFlowNode>) => {
         <div
             className={cn(
                 "relative flex min-h-[100px] min-w-[300px] w-[300px] flex-col items-stretch rounded-3xl px-4 py-3 text-center",
-                "border border-divider/60 shadow-sm dark:border-zinc-500/50 dark:shadow-lg dark:shadow-black/30",
+                "border /60 shadow-sm dark:border-zinc-500/50 dark:shadow-lg dark:shadow-black/30",
                 data.isActive && "border-accent ring-2 ring-accent/35 dark:ring-accent/45",
                 selected && "ring-2 ring-accent/25 dark:ring-accent/35",
             )}

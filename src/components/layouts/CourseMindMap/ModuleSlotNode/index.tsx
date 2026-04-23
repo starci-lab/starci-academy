@@ -26,7 +26,7 @@ export const CourseModuleSlotNode = (props: NodeProps<CourseModuleSlotFlowNode>)
         <div
             className={cn(
                 "relative flex min-w-[200px] w-[200px] items-center justify-center rounded-2xl px-3 py-2 text-center",
-                "border border-divider/70 bg-background/90 text-sm font-medium text-foreground shadow-sm",
+                "border /70 bg-background/90 text-sm font-medium text-foreground shadow-sm",
                 "dark:border-zinc-600/80 dark:bg-zinc-900/90",
                 selected && "ring-2 ring-accent/25 dark:ring-accent/35",
             )}

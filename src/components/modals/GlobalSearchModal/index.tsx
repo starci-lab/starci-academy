@@ -78,7 +78,7 @@ export const GlobalSearchModal = () => {
                                     <Kbd.Content>ESC</Kbd.Content>
                                 </Kbd>
                             </TextField>
-                            <div className="border-b border-divider"/>
+                            <div className="border-b "/>
                             <GlobalSearchContent />
                         </Modal.Body>
                     </Modal.Dialog>

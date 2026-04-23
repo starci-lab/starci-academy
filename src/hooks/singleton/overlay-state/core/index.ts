@@ -1,6 +1,5 @@
 export * from "./useAuthenticationOverlayState"
 export * from "./useChallengeOverlayState"
-export * from "./useChallengeSubmissionOverlayState"
 export * from "./useCvUpdateOverlayState"
 export * from "./useCvPreviewOverlayState"
 export * from "./useContentOverlayState"

@@ -3,11 +3,13 @@ import EventEmitter2 from "eventemitter2"
 import { createManager } from "./utils"
 import { PublicationEvent, SubscriptionEvent } from "./enums"
 import { useKeycloak } from "../keycloak"
-import { useAppDispatch } from "@/redux"
-import { setJobStatusMessageForJob } from "@/redux/slices/socketio"
-import type { JobStatusUpdatedSocketIoMessage, SubscribeJobNotificationSocketIoPayload } from "./types"
-import { useQueryIncompleteChallengeSubmissionJobsSwr } from "../swr"
+import { useAppDispatch, useAppSelector } from "@/redux"
+import type { 
+    JobStatusUpdatedSocketIoMessage, 
+    SubscribeJobNotificationSocketIoPayload 
+} from "./types"
 import { useLocale } from "next-intl"
+import { setJobStatusMessageForJob } from "@/redux/slices"
 
 /** Fan-out for listeners that are not couched in Redux. */
 export const jobNotificationsSocketIoEventEmitter = new EventEmitter2()
@@ -15,13 +17,17 @@ export const jobNotificationsSocketIoEventEmitter = new EventEmitter2()
 /**
  * Client for `/job_notifications` namespace: connect with Keycloak, listen for
  * `SubscriptionEvent.JobStatusUpdated`, forward to `jobNotificationsSocketIoEventEmitter`, and
- * merge payloads into `state.socketio.jobStatusByJobId`. Emit `PublicationEvent.SubscribeJobNotification`
+ * merge payloads into `state.socketio.jobStatusByJobId` and into `state.job` for incomplete rows.
+ * Emit `PublicationEvent.SubscribeJobNotification`
  * (with `locale` + `data.jobId`) before expecting updates, mirroring `useAutocompleteSocketIo`.
  */
 export const useJobNotificationsSocketIo = () => {
     const socketRef = useRef(createManager().socket("/job_notifications"))
     const keycloak = useKeycloak()
     const dispatch = useAppDispatch()
+    const incompleteChallengeSubmissionJobs = useAppSelector(
+        (state) => state.job.incompleteChallengeSubmissionJobs,
+    )
 
     useEffect(() => {
         const socket = socketRef.current
@@ -65,14 +71,12 @@ export const useJobNotificationsSocketIo = () => {
         void run()
     }, [keycloak.data?.authenticated])
 
-    const swr = useQueryIncompleteChallengeSubmissionJobsSwr()
     const locale = useLocale()
     useEffect(() => {
-        if (!swr.data?.items) {
+        if (incompleteChallengeSubmissionJobs.length === 0) {
             return
         }
-        const items = swr.data.items
-        for (const item of items) {
+        for (const item of incompleteChallengeSubmissionJobs) {
             const payload: SubscribeJobNotificationSocketIoPayload = {
                 data: {
                     jobId: item.jobId,
@@ -80,17 +84,19 @@ export const useJobNotificationsSocketIo = () => {
                 locale,
             }
             socketRef.current.emit(
-                PublicationEvent.SubscribeJobNotification, 
+                PublicationEvent.SubscribeJobNotification,
                 payload,
             )
         }
-    }, [swr.data?.items])
+    }, [incompleteChallengeSubmissionJobs, locale])
 
     useEffect(
         () => {
             const onMessage = (message: JobStatusUpdatedSocketIoMessage) => {
                 const challengeSubmissionId = message.data?.challengeSubmissionId
-                if (!challengeSubmissionId) {
+                const jobId = message.data?.jobId
+                const status = message.data?.status
+                if (!challengeSubmissionId || !jobId || !status) {
                     return
                 }
                 dispatch(

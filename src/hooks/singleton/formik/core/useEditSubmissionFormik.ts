@@ -4,8 +4,8 @@ import { useAppSelector } from "@/redux"
 import { useFormik } from "formik"
 import { useEffect, useMemo, useRef } from "react"
 import * as Yup from "yup"
-import { 
-    useChallengeSubmissionOverlayState,
+import {
+    useChallengeOverlayState,
     useMutateSyncChallengeSubmissionSwr,
     useQueryChallengeSubmissionsSwr
 } from "@/hooks/singleton"
@@ -88,7 +88,7 @@ export const useEditSubmissionFormikCore = () => {
         }),
         onSubmit: async () => {},
     })
-    const { isOpen } = useChallengeSubmissionOverlayState()
+    const { isOpen } = useChallengeOverlayState()
     const mountedRef = useRef(false)
     const dispatch = useAppDispatch()
     useEffect(
@@ -98,7 +98,7 @@ export const useEditSubmissionFormikCore = () => {
                 mountedRef.current = true
                 return
             }
-            /** If the overlay is not open, return */
+            /** If the challenge modal is not open, return */
             if (!isOpen) {
                 return
             }

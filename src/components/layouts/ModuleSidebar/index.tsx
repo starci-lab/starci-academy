@@ -123,7 +123,7 @@ export const ModuleSidebar = (props: ModuleSidebarProps) => {
                                                         </div>
                                                     </div>
                                                     <div className="h-3" />
-                                                    {index !== (contents?.length ?? 0) - 1 && <div className="border-t border-divider" />}
+                                                    {index !== (contents?.length ?? 0) - 1 && <div className="border-t " />}
                                                 </div>
                                             ))}
                                     </div>

@@ -5,7 +5,7 @@ import {
 import { useKeycloak } from "@/hooks/singleton"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import useSWR from "swr"
-import { setChallengeCount, setChallenges } from "@/redux/slices"
+import { ContentTab, setChallengeCount, setChallenges } from "@/redux/slices"
 /**
  * Lists module challenges via `challenges` and merges into `course.module.challenges`.
  */
@@ -21,9 +21,10 @@ export const useQueryChallengesSwrCore = () => {
     const limit = useAppSelector(
         (state) => state.module.limit,
     )
+    const contentTab = useAppSelector((state) => state.tabs.contentTab)
     const dispatch = useAppDispatch()
     return useSWR(
-        enrolled && course?.id && content?.id
+        enrolled && course?.id && content?.id && contentTab === ContentTab.Challenges
             ? [
                 "QUERY_CHALLENGES_SWR",
                 content?.id,
@@ -31,6 +32,7 @@ export const useQueryChallengesSwrCore = () => {
                 enrolled,
                 pageNumber,
                 limit,
+                contentTab,
             ]
             : null,
         async () => {

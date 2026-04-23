@@ -2,7 +2,7 @@ import { GraphQLHeadersKey, queryContent } from "@/modules/api"
 import { useKeycloak } from "@/hooks/singleton"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import useSWR from "swr"
-import { setContent } from "@/redux/slices"
+import { ContentTab, setContent } from "@/redux/slices"
 /**
  * Singleton SWR for `content(request: { id })` — id from `content.id` (`setContentId`).
  */
@@ -12,14 +12,16 @@ export const useQueryContentSwrCore = () => {
     const displayId = useAppSelector((state) => state.content.displayId)
     const module = useAppSelector((state) => state.module.entity)
     const course = useAppSelector((state) => state.course.entity)
+    const contentTab = useAppSelector((state) => state.tabs.contentTab)
     const dispatch = useAppDispatch()
     const swr = useSWR(
-        displayId && module?.id
+        displayId && module?.id && contentTab === ContentTab.Content
             ? [
                 "QUERY_CONTENT_SWR",
                 displayId,
                 module?.id,
                 course?.id,
+                contentTab,
             ]
             : null,
         async () => {

@@ -26,7 +26,7 @@ const Layout = ({ children }: LayoutProps) => {
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-3">
-            <div className="col-span-2 lg:border-r lg:border-divider/60">
+            <div className="col-span-2 lg:border-r lg:/60">
                 <div className="px-3 pt-3">
                     {isLoading ? (
                         <Skeleton className="h-5 w-32" />

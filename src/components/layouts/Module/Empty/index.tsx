@@ -14,7 +14,7 @@ export type EmptyProps = WithClassNames<undefined>
 export const Empty = ({ className }: EmptyProps) => {
     const t = useTranslations()
     return (
-        <div className={cn("rounded-2xl border border-divider p-4 text-sm text-muted", className)}>
+        <div className={cn("rounded-2xl border  p-4 text-sm text-muted", className)}>
             {t("content.empty")}
         </div>
     )

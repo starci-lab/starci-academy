@@ -108,7 +108,7 @@ const Page = () => {
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-5">
-            <div className="col-span-3 lg:border-r lg:border-divider/60">
+            <div className="col-span-3 lg:border-r lg:/60">
                 <div className="p-6">
                     <Breadcrumbs>
                         <Breadcrumbs.Item onPress={() => router.push(pathConfig().locale().build())}>
@@ -163,7 +163,7 @@ const Page = () => {
                                     StarCi AI
                                 </Chip>
                             </div>
-                            <div className="rounded-3xl border border-divider p-3">
+                            <div className="rounded-3xl border  p-3">
                                 <MarkdownContent markdown={t("finalProject.page.feedback.content")} />
                             </div>
                         </div>
@@ -200,7 +200,7 @@ const Page = () => {
 
             <div className="col-span-2 lg:sticky lg:top-16 lg:self-start lg:h-[calc(100vh-64px)]">
                 <div className="h-full p-3">
-                    <div className="h-full overflow-y-auto rounded-3xl border border-divider bg-surface p-4">
+                    <div className="h-full overflow-y-auto rounded-3xl border  bg-surface p-4">
                         <div className="mb-3 text-base font-medium">{t("finalProject.page.milestones.title")}</div>
                         <div className="flex flex-col gap-3">
                             {milestones.map((milestone, milestoneIndex) => (
@@ -218,7 +218,7 @@ const Page = () => {
                                         </div>
                                         <div className="flex flex-col gap-2">
                                             {milestone.requirements.map((requirement, requirementIndex) => (
-                                                <div key={`${milestone.id}-${requirementIndex}`} className="rounded-2xl border border-divider p-2">
+                                                <div key={`${milestone.id}-${requirementIndex}`} className="rounded-2xl border  p-2">
                                                     <div className="text-sm font-medium">{requirement.title}</div>
                                                     <div className="text-xs text-muted">{requirement.description}</div>
                                                 </div>

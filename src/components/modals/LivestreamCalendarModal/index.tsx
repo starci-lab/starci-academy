@@ -145,7 +145,7 @@ export const LivestreamCalendarModal = () => {
                                                         return (
                                                             <div
                                                                 key={session.id}
-                                                                className="flex flex-col gap-3 rounded-large border border-divider p-3"
+                                                                className="flex flex-col gap-3 rounded-large border  p-3"
                                                             >
                                                                 <div className="flex flex-wrap items-center gap-2">
                                                                     <Chip color="accent" size="sm" variant="soft">

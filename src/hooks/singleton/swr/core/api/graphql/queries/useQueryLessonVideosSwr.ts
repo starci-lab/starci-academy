@@ -6,7 +6,7 @@ import {
 import { useKeycloak } from "@/hooks/singleton"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import useSWR from "swr"
-import { setLessonVideoCount, setLessonVideos } from "@/redux/slices"
+import { ContentTab, setLessonVideoCount, setLessonVideos } from "@/redux/slices"
 
 /**
  * Lists module lesson videos via `lessonVideos` and merges into `course.module.lessonVideos`.
@@ -23,9 +23,10 @@ export const useQueryLessonVideosSwrCore = () => {
     const limit = useAppSelector(
         (state) => state.module.limit,
     )
+    const contentTab = useAppSelector((state) => state.tabs.contentTab)
     const dispatch = useAppDispatch()
     const swr = useSWR(
-        enrolled && course?.id && content?.id
+        enrolled && course?.id && content?.id && contentTab === ContentTab.LessonVideos
             ? [
                 "QUERY_LESSON_VIDEOS_SWR",
                 content?.id,
@@ -33,6 +34,7 @@ export const useQueryLessonVideosSwrCore = () => {
                 enrolled,
                 pageNumber,
                 limit,
+                contentTab,
             ]
             : null,
         async () => {

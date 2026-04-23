@@ -43,7 +43,7 @@ function buildCourseModuleGraph(
                     position: { x: 0, y: 0 },
                     data: { label: title || "—" },
                     className:
-                        "rounded-2xl border border-divider bg-surface px-4 py-3 text-center text-sm font-semibold text-foreground shadow-sm max-w-[220px]",
+                        "rounded-2xl border  bg-surface px-4 py-3 text-center text-sm font-semibold text-foreground shadow-sm max-w-[220px]",
                     draggable: false,
                     selectable: false,
                 },
@@ -78,7 +78,7 @@ function buildCourseModuleGraph(
             },
             className: [
                 "rounded-xl border px-3 py-2 text-center text-xs text-foreground max-w-[200px] leading-snug shadow-sm",
-                isActive ? "border-accent bg-accent/10" : "border-divider bg-background/80",
+                isActive ? "border-accent bg-accent/10" : " bg-background/80",
             ].join(" "),
             draggable: false,
             selectable: false,
@@ -126,7 +126,7 @@ function CourseModuleMindMapCanvas() {
     }
 
     return (
-        <div className="h-[min(420px,55vh)] w-full overflow-hidden rounded-2xl border border-divider bg-background/50">
+        <div className="h-[min(420px,55vh)] w-full overflow-hidden rounded-2xl border  bg-background/50">
             <ReactFlow
                 aria-label={t("content.mindMapAria")}
                 className="text-foreground"
@@ -144,7 +144,7 @@ function CourseModuleMindMapCanvas() {
             >
                 <MindMapFitView courseId={course.id} />
                 <Background gap={16} variant={BackgroundVariant.Dots} />
-                <Controls className="border-divider bg-surface shadow-sm" showInteractive={false} />
+                <Controls className=" bg-surface shadow-sm" showInteractive={false} />
             </ReactFlow>
         </div>
     )
@@ -178,7 +178,7 @@ export const CourseModuleMindMap = () => {
 
     if (!hasModules) {
         return (
-            <div className="rounded-2xl border border-dashed border-divider px-4 py-6 text-center text-sm text-muted">
+            <div className="rounded-2xl border border-dashed  px-4 py-6 text-center text-sm text-muted">
                 {t("content.mindMapEmpty")}
             </div>
         )

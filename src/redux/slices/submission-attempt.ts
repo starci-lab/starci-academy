@@ -8,7 +8,7 @@ import { SubmissionAttemptEntity } from "@/modules/types"
  * The slice for the submission attempt.
  */
 export interface SubmissionAttemptSlice {
-    /** The submission attempt id. */
+    /** The submission attempt id (selected row for feedback details). */
     id?: string
     /** The submission attempt. */
     submissionAttempt?: SubmissionAttemptEntity
@@ -16,6 +16,12 @@ export interface SubmissionAttemptSlice {
     submissionAttempts: Array<SubmissionAttemptEntity>
     /** The count of the submission attempts. */
     count: number
+    /** Which challenge submission row the attempts list / drawer is scoped to. */
+    activeChallengeSubmissionId?: string
+    /** 1-based page for the paginated `submissionAttempts` list. */
+    pageNumber?: number
+    /** Page size for `submissionAttempts` query. */
+    limit?: number
 }
 
 /**
@@ -30,6 +36,12 @@ const initialState: SubmissionAttemptSlice = {
     submissionAttempts: [],
     /** The count of the submission attempts. */
     count: 0,
+    /** Which challenge submission row the attempts list is scoped to. */
+    activeChallengeSubmissionId: undefined,
+    /** 1-based page. */
+    pageNumber: 1,
+    /** Page size. */
+    limit: 10,
 }
 
 /**
@@ -71,6 +83,30 @@ export const submissionAttemptSlice = createSlice(
             ) => {
                 state.count = action.payload
             },
+            /** The action to set which challenge submission the attempts list refers to. Resets page to 1 when the id changes. */
+            setActiveChallengeSubmissionId: (
+                state,
+                action: PayloadAction<string | undefined>,
+            ) => {
+                if (state.activeChallengeSubmissionId !== action.payload) {
+                    state.pageNumber = 1
+                }
+                state.activeChallengeSubmissionId = action.payload
+            },
+            /** The action to set the submission attempts list page (1-based). */
+            setSubmissionAttemptsPageNumber: (
+                state,
+                action: PayloadAction<number | undefined>,
+            ) => {
+                state.pageNumber = action.payload
+            },
+            /** The action to set the page size for submission attempts queries. */
+            setSubmissionAttemptsLimit: (
+                state,
+                action: PayloadAction<number | undefined>,
+            ) => {
+                state.limit = action.payload
+            },
         },
     }
 )
@@ -84,4 +120,7 @@ export const {
     setSubmissionAttempt,
     setSubmissionAttempts,
     setSubmissionAttemptsCount,
+    setActiveChallengeSubmissionId,
+    setSubmissionAttemptsPageNumber,
+    setSubmissionAttemptsLimit,
 } = submissionAttemptSlice.actions

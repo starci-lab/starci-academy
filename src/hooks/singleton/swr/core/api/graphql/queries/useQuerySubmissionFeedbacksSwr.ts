@@ -1,4 +1,5 @@
 import {
+    useFeedbackDetailsOverlayState,
     useKeycloak } from "@/hooks/singleton"
 import { 
     defaultSubmissionFeedbacksListSorts, 
@@ -24,11 +25,12 @@ export const useQuerySubmissionFeedbacksSwrCore = () => {
     const enrolled = useAppSelector((state) => state.user.enrolled)
     const course = useAppSelector((state) => state.course.entity)
     const dispatch = useAppDispatch()
+    const { isOpen } = useFeedbackDetailsOverlayState()
     const submissionAttemptId = useAppSelector(
         (state) => state.submissionAttempt.id
     )
     const swr = useSWR(
-        enrolled && course?.id && submissionAttemptId
+        enrolled && course?.id && submissionAttemptId && isOpen
             ? [
                 "QUERY_SUBMISSION_FEEDBACKS_SWR",
                 submissionAttemptId,

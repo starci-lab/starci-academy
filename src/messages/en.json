@@ -216,6 +216,7 @@
     "pass": "Pass",
     "fail": "Fail",
     "minimumPassRequirement": "(Minimum required score is {score})",
+    "minimumPassRequirementAll": "(All requirements must pass to pass the challenge)",
     "lastFeedback": "Last feedback",
     "noFeedback": "No feedback yet.",
     "count": "{count} challenges",
@@ -256,6 +257,7 @@
       },
       "loading": "Updating submissions…",
       "lastAttemptScore": "Your last attempt score is {earned}/{max}",
+      "lastAttemptScoreWithRequirement": "Your last attempt score is <n>{earned}</n><n>/</n><n>{max}</n>. Minimum required <n>{required}</n>.",
       "jobStatus": {
         "queued": "Your submission is in the queue — hang tight…",
         "processing": "StarCi AI is analyzing your submission — hang tight...",
@@ -267,12 +269,27 @@
   "submissionAttempts": {
     "title": "Submission attempts",
     "subtitle": "Attempts for this submission requirement.",
+    "noAttempts": "No submission attempts yet.",
     "attemptLine": "Attempt {number}",
     "viewDetails": "View details",
     "viewSubmission": "View submission"
   },
+  "timeAgo": {
+    "justNow": "Just now",
+    "yearsAgo": "{years} years ago",
+    "monthsAgo": "{months} months ago",
+    "daysAgo": "{days} days ago",
+    "daysHoursAgo": "{days} days {hours} hours ago",
+    "hoursAgo": "{hours} hours ago",
+    "hoursMinutesAgo": "{hours} hours {minutes} minutes ago",
+    "minutesAgo": "{minutes} minutes ago",
+    "minutesSecondsAgo": "{minutes} minutes {seconds} seconds ago",
+    "secondsAgo": "{seconds} seconds ago"
+  },
   "feedback": {
     "detailsTitle": "Feedback details",
+    "empty": "No feedback yet.",
+    "suggestion": "Suggestion",
     "severity": {
       "high": "High",
       "medium": "Medium",

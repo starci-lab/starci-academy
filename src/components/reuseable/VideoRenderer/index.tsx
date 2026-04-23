@@ -131,7 +131,7 @@ const isDirectVideoUrl = (raw: string): boolean => {
 }
 
 const invalidBox = (message: string) => (
-    <div className="text-foreground-500 flex min-h-[12rem] items-center justify-center rounded-medium border border-dashed border-divider p-4 text-center text-sm">
+    <div className="text-foreground-500 flex min-h-[12rem] items-center justify-center rounded-medium border border-dashed  p-4 text-center text-sm">
         {message}
     </div>
 )

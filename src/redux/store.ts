@@ -13,6 +13,8 @@ import {
     submissionFeedbackReducer,
     sidebarReducer,
     socketIoReducer,
+    systemReducer,
+    jobReducer,
 } from "./slices"
 
 export const store = configureStore({
@@ -30,6 +32,8 @@ export const store = configureStore({
         submissionFeedback: submissionFeedbackReducer,
         sidebar: sidebarReducer,
         socketIo: socketIoReducer,
+        system: systemReducer,
+        job: jobReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false,

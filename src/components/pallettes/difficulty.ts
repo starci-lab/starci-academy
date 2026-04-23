@@ -6,8 +6,8 @@ import { ChallengeDifficulty } from "@/modules/types"
 export const difficultyPalette = {
     /** Easy difficulty color. */   
     [ChallengeDifficulty.Easy]: {
-        bg: "bg-green-500",
-        text: "text-green-500",
+        bg: "bg-cyan-500",
+        text: "text-cyan-500",
     },
     /** Medium difficulty color. */
     [ChallengeDifficulty.Medium]: {

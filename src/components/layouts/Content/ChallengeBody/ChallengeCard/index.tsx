@@ -6,7 +6,7 @@ import { ChallengeDifficulty, type ChallengeEntity } from "@/modules/types"
 import { SwordIcon, TrophyIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { difficultyPalette } from "../../../../pallettes"
-import { useChallengeOverlayState, useSubmissionAttemptsOverlayState } from "@/hooks"
+import { useChallengeOverlayState } from "@/hooks"
 import { setChallengeId } from "@/redux/slices"
 import { useAppDispatch } from "@/redux"
 
@@ -34,7 +34,6 @@ export const ChallengeCard = ({ challenge }: ChallengeCardProps) => {
         }
     }, [challenge.difficulty])
     const challengeOverlayState = useChallengeOverlayState()
-    const submissionAttemptsOverlayState = useSubmissionAttemptsOverlayState()
     const dispatch = useAppDispatch()
     return (
         <Card>
@@ -60,9 +59,6 @@ export const ChallengeCard = ({ challenge }: ChallengeCardProps) => {
                         }}>
                             <SwordIcon className="size-5" />
                             {t("challenge.do")}
-                        </Button>
-                        <Button variant="secondary" onPress={() => submissionAttemptsOverlayState.onOpen()}>
-                            {t("challenge.viewAttempts")}
                         </Button>
                     </div>
                 </div>

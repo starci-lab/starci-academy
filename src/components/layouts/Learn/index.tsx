@@ -49,7 +49,7 @@ export const Learn = () => {
             ) : (
                 <div className="space-y-4">
                     <div className="text-2xl font-bold">{selectedContent?.title || module?.title}</div>
-                    <div className="rounded-3xl border border-divider p-4">
+                    <div className="rounded-3xl border  p-4">
                         <MarkdownContent markdown={selectedContent?.body || t("content.empty")} />
                     </div>
                 </div>

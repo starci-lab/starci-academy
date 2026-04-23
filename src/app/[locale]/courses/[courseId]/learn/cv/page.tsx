@@ -128,7 +128,7 @@ const Page = () => {
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-5">
-            <div className="col-span-3 lg:border-r lg:border-divider/60">
+            <div className="col-span-3 lg:border-r lg:/60">
                 <div className="p-6">
                     <Breadcrumbs>
                         <Breadcrumbs.Item onPress={() => router.push(pathConfig().locale().build())}>
@@ -207,7 +207,7 @@ const Page = () => {
                             <div className="h-6" />
                             <div>
                                 <div className="mb-3 text-base font-medium flex items-center gap-2">{t("cv.submission.feedbackTitle")}<Chip variant="secondary" color="accent"><SparkleIcon className="size-5" />StarCi AI</Chip></div>
-                                <div className="border border-divider rounded-3xl p-3">
+                                <div className="border  rounded-3xl p-3">
                                     <MarkdownContent
                                         markdown={latestHistoryItem?.feedback || "This CV currently does not have feedback"}
                                     />
@@ -232,7 +232,7 @@ const Page = () => {
                         allowVerticalScroll={true}
                         fitToContainer={true}
                     />
-                    <div className="sticky bottom-0 p-3 backdrop-blur border-t border-divider">
+                    <div className="sticky bottom-0 p-3 backdrop-blur border-t ">
                         <Button
                             className="w-full"
                             size="lg"

@@ -118,7 +118,7 @@ export const Sidebar = () => {
         },
     ], [t, courseDisplayId, locale])
     return (
-        <div className="sticky top-16 self-start border-r border-divider">
+        <div className="sticky top-16 self-start border-r ">
             <ScrollShadow
                 hideScrollBar
                 className="min-h-[calc(100vh-4rem)] overflow-y-auto pr-1 p-3"

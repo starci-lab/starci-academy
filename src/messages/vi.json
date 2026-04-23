@@ -225,6 +225,7 @@
     "pass": "Đạt",
     "fail": "Trượt",
     "minimumPassRequirement": "(Yêu cầu tối thiểu đạt điểm {score})",
+    "minimumPassRequirementAll": "(Tất cả bài làm phải đạt để qua thử thách)",
     "lastFeedback": "Phản hồi gần nhất",
     "noFeedback": "Chưa có phản hồi.",
     "count": "{count} thử thách trong học phần này",
@@ -265,6 +266,7 @@
       },
       "loading": "Đang cập nhật bài nộp…",
       "lastAttemptScore": "Điểm lần thử gần nhất của bạn là {earned}/{max}",
+      "lastAttemptScoreWithRequirement": "Điểm lần thử gần nhất của bạn là <n>{earned}</n><n>/</n><n>{max}</n>. Yêu cầu tối thiểu <n>{required}</n>.",
       "jobStatus": {
         "queued": "Bài của bạn đang nằm trong hàng đợi, chờ chút nhé...",
         "processing": "StarCi AI đang phân tích bài của bạn, chờ chút nhé...",
@@ -276,12 +278,27 @@
   "submissionAttempts": {
     "title": "Lịch sử nộp bài",
     "subtitle": "Các lần thử cho yêu cầu nộp bài này.",
+    "noAttempts": "Chưa có lần nộp bài nào.",
     "attemptLine": "Lần thử {number}",
     "viewDetails": "Xem chi tiết",
     "viewSubmission": "Xem bài nộp"
   },
+  "timeAgo": {
+    "justNow": "Vừa xong",
+    "yearsAgo": "{years} năm trước",
+    "monthsAgo": "{months} tháng trước",
+    "daysAgo": "{days} ngày trước",
+    "daysHoursAgo": "{days} ngày {hours} tiếng trước",
+    "hoursAgo": "{hours} tiếng trước",
+    "hoursMinutesAgo": "{hours} tiếng {minutes} phút trước",
+    "minutesAgo": "{minutes} phút trước",
+    "minutesSecondsAgo": "{minutes} phút {seconds} giây trước",
+    "secondsAgo": "{seconds} giây trước"
+  },
   "feedback": {
     "detailsTitle": "Chi tiết phản hồi",
+    "empty": "Chưa có phản hồi nào.",
+    "suggestion": "Gợi ý",
     "severity": {
       "high": "Cao",
       "medium": "Trung bình",

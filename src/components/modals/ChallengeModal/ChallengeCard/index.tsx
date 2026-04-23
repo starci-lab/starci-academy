@@ -3,16 +3,14 @@
 import React from "react"
 import { Button } from "@heroui/react"
 import { Spacer } from "@/components/reuseable"
-import {
-    useChallengeSubmissionOverlayState,
-} from "@/hooks/singleton"
+import { useChallengeOverlayState } from "@/hooks/singleton"
 import { SwordIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { useAppSelector } from "@/redux"
 import { TrophyIcon } from "@phosphor-icons/react"
 
 export const ChallengeCard = () => {
-    const { onOpen } = useChallengeSubmissionOverlayState()
+    const { onOpen } = useChallengeOverlayState()
     const challenge = useAppSelector((state) => state.challenge.entity)
     const submissions = useAppSelector(
         (state) => state.challenge.challengeSubmissions,

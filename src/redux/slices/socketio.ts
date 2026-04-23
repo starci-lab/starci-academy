@@ -64,4 +64,7 @@ export interface SetJobStatusMessageForJobPayload {
  * The reducer for the socketio slice.
  */
 export const socketIoReducer = socketIoSlice.reducer
-export const { setGlobalSearchResults, setJobStatusMessageForJob } = socketIoSlice.actions
+export const { 
+    setGlobalSearchResults, 
+    setJobStatusMessageForJob 
+} = socketIoSlice.actions

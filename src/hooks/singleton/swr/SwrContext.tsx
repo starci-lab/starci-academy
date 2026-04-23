@@ -18,6 +18,7 @@ import {
     useQueryUserSwrCore,
     useQueryModuleSwrCore,
     useQueryChallengeSubmissionsSwrCore,
+    useQuerySystemConfigSwrCore,
     useQueryIncompleteChallengeSubmissionJobsSwrCore,
     useQuerySubmissionAttemptsSwrCore,
     useQuerySubmissionFeedbacksSwrCore,
@@ -41,6 +42,7 @@ export interface SwrContextType {
     queryLivestreamSessionsSwr: ReturnType<typeof useQueryLivestreamSessionsSwrCore>;
     queryChallengesSwr: ReturnType<typeof useQueryChallengesSwrCore>;
     queryChallengeSubmissionsSwr: ReturnType<typeof useQueryChallengeSubmissionsSwrCore>;
+    querySystemConfigSwr: ReturnType<typeof useQuerySystemConfigSwrCore>;
     queryIncompleteChallengeSubmissionJobsSwr: ReturnType<typeof useQueryIncompleteChallengeSubmissionJobsSwrCore>;
     querySubmissionAttemptsSwr: ReturnType<typeof useQuerySubmissionAttemptsSwrCore>;
     querySubmissionFeedbacksSwr: ReturnType<typeof useQuerySubmissionFeedbacksSwrCore>;
@@ -68,6 +70,7 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
     const queryLivestreamSessionsSwr = useQueryLivestreamSessionsSwrCore()
     const queryChallengesSwr = useQueryChallengesSwrCore()
     const queryChallengeSubmissionsSwr = useQueryChallengeSubmissionsSwrCore()
+    const querySystemConfigSwr = useQuerySystemConfigSwrCore()
     const queryIncompleteChallengeSubmissionJobsSwr =
         useQueryIncompleteChallengeSubmissionJobsSwrCore()
     const querySubmissionAttemptsSwr = useQuerySubmissionAttemptsSwrCore()
@@ -91,6 +94,7 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
             queryLivestreamSessionsSwr,
             queryChallengesSwr,
             queryChallengeSubmissionsSwr,
+            querySystemConfigSwr,
             queryIncompleteChallengeSubmissionJobsSwr,
             querySubmissionAttemptsSwr,
             querySubmissionFeedbacksSwr,

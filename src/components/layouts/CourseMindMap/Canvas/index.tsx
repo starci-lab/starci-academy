@@ -87,7 +87,7 @@ export const Canvas = () => {
     }
 
     return (
-        <div className="h-full w-full overflow-hidden rounded-2xl border border-divider bg-background/50 dark:bg-background/70">
+        <div className="h-full w-full overflow-hidden rounded-2xl border  bg-background/50 dark:bg-background/70">
             <ReactFlow
                 aria-label={t("content.mindMapAria")}
                 className="text-foreground"
@@ -106,7 +106,7 @@ export const Canvas = () => {
                 zoomOnDoubleClick={false}
             >
                 <Background gap={16} variant={BackgroundVariant.Dots} />
-                <Controls className="border-divider bg-surface shadow-sm dark:border-zinc-600 dark:bg-zinc-900/90" showInteractive={false} />
+                <Controls className=" bg-surface shadow-sm dark:border-zinc-600 dark:bg-zinc-900/90" showInteractive={false} />
             </ReactFlow>
         </div>
     )

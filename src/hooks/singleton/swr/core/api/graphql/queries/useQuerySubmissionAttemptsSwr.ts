@@ -3,7 +3,7 @@ import {
     GraphQLHeadersKey,
     querySubmissionAttempts,
 } from "@/modules/api"
-import { useKeycloak } from "@/hooks/singleton"
+import { useKeycloak, useSubmissionAttemptsOverlayState } from "@/hooks/singleton"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import useSWR from "swr"
 import { 
@@ -20,26 +20,34 @@ export const useQuerySubmissionAttemptsSwrCore = () => {
     const enrolled = useAppSelector((state) => state.user.enrolled)
     const course = useAppSelector((state) => state.course.entity)
     const dispatch = useAppDispatch()
-    const challengeSubmissionId = useAppSelector(
-        (state) => state.challenge.challengeSubmissionId
+    const activeChallengeSubmissionId = useAppSelector(
+        (state) => state.submissionAttempt.activeChallengeSubmissionId,
     )
+    const pageNumber = useAppSelector((state) => state.submissionAttempt.pageNumber)
+    const limit = useAppSelector((state) => state.submissionAttempt.limit)
+    const { isOpen } = useSubmissionAttemptsOverlayState()
     const swr = useSWR(
-        enrolled && course?.id && challengeSubmissionId
+        enrolled && course?.id && activeChallengeSubmissionId && isOpen
             ? [
                 "QUERY_SUBMISSION_ATTEMPTS_SWR",
-                challengeSubmissionId,
+                activeChallengeSubmissionId,
                 course.id,
                 enrolled,
+                isOpen,
+                pageNumber,
+                limit,
             ]
             : null,
         async () => {
-            if (!course?.id || !challengeSubmissionId) {
+            if (!course?.id || !activeChallengeSubmissionId) {
                 throw new Error("Course or challenge submission id not found")
             }
             const data = await querySubmissionAttempts({
                 request: {
-                    challengeSubmissionId,
+                    challengeSubmissionId: activeChallengeSubmissionId,
                     filters: {
+                        pageNumber: pageNumber ? pageNumber - 1 : 0,
+                        limit: limit ?? 10,
                         sorts: defaultSubmissionAttemptsListSorts,
                     },
                 },

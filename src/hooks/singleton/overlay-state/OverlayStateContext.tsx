@@ -4,7 +4,6 @@ import { createContext } from "react"
 import {
     useAuthenticationOverlayStateCore,
     useChallengeOverlayStateCore,
-    useChallengeSubmissionOverlayStateCore,
     useCvPreviewOverlayStateCore,
     useCvUpdateOverlayStateCore,
     useContentOverlayStateCore,
@@ -25,7 +24,6 @@ export interface OverlayStateContextType {
     livestreamCalendar: ReturnType<typeof useLivestreamCalendarOverlayStateCore>
     lessonVideo: ReturnType<typeof useLessonVideoOverlayStateCore>
     challenge: ReturnType<typeof useChallengeOverlayStateCore>
-    challengeSubmission: ReturnType<typeof useChallengeSubmissionOverlayStateCore>
     cvPreview: ReturnType<typeof useCvPreviewOverlayStateCore>
     cvUpdate: ReturnType<typeof useCvUpdateOverlayStateCore>
     accountMenu: ReturnType<typeof useAccountMenuOverlayStateCore>
@@ -44,7 +42,6 @@ export const OverlayStateProvider = ({ children }: PropsWithChildren) => {
     const livestreamCalendar = useLivestreamCalendarOverlayStateCore()
     const lessonVideo = useLessonVideoOverlayStateCore()
     const challenge = useChallengeOverlayStateCore()
-    const challengeSubmission = useChallengeSubmissionOverlayStateCore()
     const cvPreview = useCvPreviewOverlayStateCore()
     const cvUpdate = useCvUpdateOverlayStateCore()
     const accountMenu = useAccountMenuOverlayStateCore()
@@ -60,7 +57,6 @@ export const OverlayStateProvider = ({ children }: PropsWithChildren) => {
             livestreamCalendar,
             lessonVideo,
             challenge,
-            challengeSubmission,
             cvPreview,
             cvUpdate,
             accountMenu,

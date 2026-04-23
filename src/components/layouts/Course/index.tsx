@@ -99,7 +99,7 @@ export const Course = () => {
                     <div className="h-6" />
                     <QnA />
                 </div>
-                <Card className="order-1 md:order-2 md:col-span-2 w-full bg-inherit border border-divider h-fit shrink-0 p-0">
+                <Card className="order-1 md:order-2 md:col-span-2 w-full bg-inherit border  h-fit shrink-0 p-0">
                     <Card.Content>
                         <img
                             className="w-full h-full object-cover"

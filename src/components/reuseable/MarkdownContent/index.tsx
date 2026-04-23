@@ -78,7 +78,7 @@ export const MermaidDiagram = ({ code, theme, loadingLabel }: MermaidDiagramProp
     )
 
     return (
-        <div className="my-2 rounded-xl border border-divider bg-background p-3 dark:border-zinc-600">
+        <div className="my-2 rounded-xl border  bg-background p-3 dark:border-zinc-600">
             {data ? (
                 <div className="[&_svg]:h-auto [&_svg]:max-w-full" dangerouslySetInnerHTML={{ __html: data }} />
             ) : (
@@ -228,7 +228,7 @@ export const MarkdownContent = ({ markdown }: MarkdownContentProps) => {
                     )
                 },
                 strong: ({ children }) => <strong className="font-semibold text-sm text-foreground">{children}</strong>,
-                hr: () => <hr className="h-px my-3 border-divider" />,
+                hr: () => <hr className="h-px my-3 " />,
                 ol: ({ children }) => <ol className="list-decimal pl-5 my-2">{children}</ol>,
                 p: ({ children }) => <div className="text-sm my-2 gap-1 leading-relaxed">{children}</div>,
                 ul: ({ children }) => <ul className="list-disc pl-5 my-2">{children}</ul>,

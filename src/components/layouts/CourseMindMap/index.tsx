@@ -20,7 +20,7 @@ export const CourseMindMap = () => {
 
     if (!hasModules) {
         return (
-            <div className="rounded-2xl border border-dashed border-divider px-4 py-6 text-center text-sm text-muted dark:border-zinc-600">
+            <div className="rounded-2xl border border-dashed  px-4 py-6 text-center text-sm text-muted dark:border-zinc-600">
                 {t("content.mindMapEmpty")}
             </div>
         )

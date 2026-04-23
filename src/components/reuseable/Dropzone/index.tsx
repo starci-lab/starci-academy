@@ -58,7 +58,7 @@ export const Dropzone = ({
             <div
                 {...getRootProps()}
                 className={cn(
-                    "cursor-pointer rounded-large border border-dashed border-divider bg-surface border-2 rounded-3xl p-2 transition-colors",
+                    "cursor-pointer rounded-large border border-dashed  bg-surface border-2 rounded-3xl p-2 transition-colors",
                     isDragActive ? "border-accent bg-accent/10" : "",
                     errorMessage ? "border-danger" : "",
                 )}

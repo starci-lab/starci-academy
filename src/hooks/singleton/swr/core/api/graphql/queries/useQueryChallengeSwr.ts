@@ -9,7 +9,10 @@ import { setChallenge } from "@/redux/slices"
  */
 export const useQueryChallengeSwrCore = () => {
     const keycloak = useKeycloak()
-    const token = keycloak.data?.authenticated ? keycloak.data?.token : undefined
+    const getAccessToken = () =>
+        keycloak.data?.authenticated ? keycloak.data?.token : undefined
+    const refreshAccessToken = async (minValiditySeconds = 30) =>
+        (await keycloak.data?.updateToken(minValiditySeconds)) ?? false
     const challengeId = useAppSelector((state) => state.challenge.id)
     const course = useAppSelector((state) => state.course.entity)
     const enrolled = useAppSelector((state) => state.user.enrolled)
@@ -32,7 +35,8 @@ export const useQueryChallengeSwrCore = () => {
                 headers: {
                     [GraphQLHeadersKey.XCourseId]: course.id,
                 },
-                token,
+                getAccessToken,
+                refreshAccessToken,
             })
             if (!data?.data?.challenge?.data) {
                 throw new Error("Challenge not found")

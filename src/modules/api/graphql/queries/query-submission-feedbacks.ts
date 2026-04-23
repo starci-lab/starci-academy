@@ -82,12 +82,21 @@ export const querySubmissionFeedbacks = async ({
     request,
     headers,
     token,
+    getAccessToken,
+    refreshAccessToken,
+    minValiditySeconds,
+    debug,
 }: QueryParams<QuerySubmissionFeedbacks, SubmissionFeedbacksListRequest>) => {
+    const hasAuth = Boolean(token) || Boolean(getAccessToken)
     const apollo = createApolloClient({
-        auth: Boolean(token),
+        auth: hasAuth,
         cache: false,
         token,
+        getAccessToken,
+        refreshAccessToken,
+        minValiditySeconds,
         headers,
+        debug,
     })
 
     return apollo.query<QuerySubmissionFeedbacksResponse>({

@@ -14,7 +14,10 @@ import { setChallengeSubmissions } from "@/redux/slices"
  */
 export const useQueryChallengeSubmissionsSwrCore = () => {
     const keycloak = useKeycloak()
-    const token = keycloak.data?.authenticated ? keycloak.data?.token : undefined
+    const getAccessToken = () =>
+        keycloak.data?.authenticated ? keycloak.data?.token : undefined
+    const refreshAccessToken = async (minValiditySeconds = 30) =>
+        (await keycloak.data?.updateToken(minValiditySeconds)) ?? false
     const enrolled = useAppSelector((state) => state.user.enrolled)
     const course = useAppSelector((state) => state.course.entity)
     const challengeId = useAppSelector(
@@ -44,7 +47,8 @@ export const useQueryChallengeSubmissionsSwrCore = () => {
                 headers: {
                     [GraphQLHeadersKey.XCourseId]: course.id,
                 },
-                token,
+                getAccessToken,
+                refreshAccessToken,
             })
             const payload = data.data?.challengeSubmissions?.data
             if (!payload) {

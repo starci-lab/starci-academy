@@ -16,7 +16,10 @@ import {
  */
 export const useQueryLivestreamSessionsSwrCore = () => {
     const keycloak = useKeycloak()
-    const token = keycloak.data?.authenticated ? keycloak.data?.token : undefined
+    const getAccessToken = () =>
+        keycloak.data?.authenticated ? keycloak.data?.token : undefined
+    const refreshAccessToken = async (minValiditySeconds = 30) =>
+        (await keycloak.data?.updateToken(minValiditySeconds)) ?? false
     const enrolled = useAppSelector((state) => state.user.enrolled)
     const courseId = useAppSelector((state) => state.course.entity?.id)
     const pageNumber = useAppSelector((state) => state.livestreamSession.pageNumber)
@@ -48,7 +51,8 @@ export const useQueryLivestreamSessionsSwrCore = () => {
                 headers: {
                     [GraphQLHeadersKey.XCourseId]: courseId,
                 },
-                token,
+                getAccessToken,
+                refreshAccessToken,
             })
             const payload = data.data?.livestreamSessions?.data
             if (!payload) {

@@ -68,11 +68,11 @@ export interface QueryChallengeSubmissionsResponse {
 export const defaultChallengeSubmissionsSorts: Array<
     SortInput<ChallengeSubmissionsSortBy>
 > = [
-        {
-            by: ChallengeSubmissionsSortBy.CreatedAt,
-            order: SortOrder.Asc,
-        },
-    ]
+    {
+        by: ChallengeSubmissionsSortBy.CreatedAt,
+        order: SortOrder.Asc,
+    },
+]
 
 /**
  * All submission requirements for one challenge (`ref/challenge-submissions`).
@@ -82,12 +82,21 @@ export const queryChallengeSubmissions = async ({
     request,
     headers,
     token,
+    getAccessToken,
+    refreshAccessToken,
+    minValiditySeconds,
+    debug,
 }: QueryParams<QueryChallengeSubmissions, ChallengeSubmissionsListRequest>) => {
+    const hasAuth = Boolean(token) || Boolean(getAccessToken)
     const apollo = createApolloClient({
-        auth: Boolean(token),
+        auth: hasAuth,
         cache: false,
         token,
+        getAccessToken,
+        refreshAccessToken,
+        minValiditySeconds,
         headers,
+        debug,
     })
 
     return apollo.query<QueryChallengeSubmissionsResponse>({

@@ -35,8 +35,13 @@ export interface MutateSyncChallengeSubmissionsVariables {
 export interface MutateSyncChallengeSubmissionsParams {
     mutation?: MutationSyncChallengeSubmissions
     variables: MutateSyncChallengeSubmissionsVariables
-    token: string
+    token?: string
+    getAccessToken?: () => string | undefined
+    refreshAccessToken?: (minValiditySeconds?: number) => Promise<boolean>
+    minValiditySeconds?: number
     headers?: GraphQLHeaders
+    /** When `true`, logs the Apollo link chain flow to console. */
+    debug?: boolean
 }
 
 export interface MutateSyncChallengeSubmissionsResponse {
@@ -53,12 +58,24 @@ export const mutateSyncChallengeSubmissions = async ({
     variables,
     token,
     headers,
+    getAccessToken,
+    refreshAccessToken,
+    minValiditySeconds,
+    debug,
 }: MutateSyncChallengeSubmissionsParams) => {
+    const hasAuth = Boolean(token) || Boolean(getAccessToken)
+    if (!hasAuth) {
+        throw new Error("Not authenticated")
+    }
     const apollo = createApolloClient({
         auth: true,
         cache: false,
         token,
+        getAccessToken,
+        refreshAccessToken,
+        minValiditySeconds,
         headers,
+        debug,
     })
 
     return apollo.mutate<MutateSyncChallengeSubmissionsResponse>({

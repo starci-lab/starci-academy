@@ -12,7 +12,10 @@ import { setContents, setContentsCount } from "@/redux/slices"
  */
 export const useQueryContentsSwrCore = () => {
     const keycloak = useKeycloak()
-    const token = keycloak.data?.authenticated ? keycloak.data?.token : undefined
+    const getAccessToken = () =>
+        keycloak.data?.authenticated ? keycloak.data?.token : undefined
+    const refreshAccessToken = async (minValiditySeconds = 30) =>
+        (await keycloak.data?.updateToken(minValiditySeconds)) ?? false
     const enrolled = useAppSelector((state) => state.user.enrolled)
     const course = useAppSelector((state) => state.course.entity)
     const module = useAppSelector((state) => state.module.entity)
@@ -50,7 +53,8 @@ export const useQueryContentsSwrCore = () => {
                 headers: {
                     [GraphQLHeadersKey.XCourseId]: course?.id,
                 },
-                token,
+                getAccessToken,
+                refreshAccessToken,
             })
             const payload = data.data?.contents?.data
             if (!payload) {

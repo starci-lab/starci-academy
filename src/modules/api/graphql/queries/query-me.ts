@@ -40,11 +40,20 @@ export interface QueryMeResponse {
 export const queryMe = async ({
     query = QueryMe.Query1,
     token,
+    getAccessToken,
+    refreshAccessToken,
+    minValiditySeconds,
+    debug,
 }: QueryParams<QueryMe, undefined>) => {
+    const hasAuth = Boolean(token) || Boolean(getAccessToken)
     const apollo = createApolloClient({
-        auth: Boolean(token),
+        auth: hasAuth,
         cache: false,
         token,
+        getAccessToken,
+        refreshAccessToken,
+        minValiditySeconds,
+        debug,
     })
 
     return apollo.query<QueryMeResponse>({

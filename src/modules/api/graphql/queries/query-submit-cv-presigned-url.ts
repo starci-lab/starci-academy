@@ -38,14 +38,23 @@ export const querySubmitCvPresignedUrl = async ({
     query = QuerySubmitCvPresignedUrl.Query1,
     request,
     token,
+    getAccessToken,
+    refreshAccessToken,
+    minValiditySeconds,
+    debug,
 }: QueryParams<
   QuerySubmitCvPresignedUrl,
   QuerySubmitCvPresignedUrlRequest
 >) => {
+    const hasAuth = Boolean(token) || Boolean(getAccessToken)
     const apollo = createApolloClient({
-        auth: Boolean(token),
+        auth: hasAuth,
         cache: false,
         token,
+        getAccessToken,
+        refreshAccessToken,
+        minValiditySeconds,
+        debug,
     })
 
     return apollo.query<QuerySubmitCvPresignedUrlResponse>({

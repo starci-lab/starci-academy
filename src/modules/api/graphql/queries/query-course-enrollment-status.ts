@@ -42,6 +42,14 @@ export interface QueryCourseEnrollmentStatusParams {
     variables: QueryCourseEnrollmentStatusVariables
     /** When set, `isEnrolled` reflects the current user; omit for anonymous (count only). */
     token?: string
+    /** Optional token getter (preferred over static `token` for refresh + retry flows). */
+    getAccessToken?: () => string | undefined
+    /** Optional refresh callback; should call `keycloak.updateToken(minValiditySeconds)`. */
+    refreshAccessToken?: (minValiditySeconds?: number) => Promise<boolean>
+    /** Default min-validity seconds for refresh, used by auth-refresh link. */
+    minValiditySeconds?: number
+    /** When `true`, logs the Apollo link chain flow to console. */
+    debug?: boolean
 }
 
 export interface QueryCourseEnrollmentStatusResponse {
@@ -57,12 +65,23 @@ export const queryCourseEnrollmentStatus = async ({
     query = QueryCourseEnrollmentStatus.Query1,
     variables,
     token,
+    getAccessToken,
+    refreshAccessToken,
+    minValiditySeconds,
+    debug,
 }: QueryCourseEnrollmentStatusParams) => {
-    const apollo = createApolloClient({
-        auth: Boolean(token),
-        cache: false,
-        token,
-    })
+    const hasAuth = Boolean(token) || Boolean(getAccessToken)
+    const apollo = createApolloClient(
+        {
+            auth: hasAuth,
+            cache: false,
+            token,
+            getAccessToken,
+            refreshAccessToken,
+            minValiditySeconds,
+            debug,
+        }
+    )
 
     return apollo.query<QueryCourseEnrollmentStatusResponse>({
         query: queryMap[query],

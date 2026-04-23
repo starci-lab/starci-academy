@@ -49,7 +49,12 @@ export interface MutateCourseEnrollParams {
     mutation?: MutationCourseEnroll
     variables: MutateCourseEnrollVariables
     /** Required: mutation is guarded by Keycloak. */
-    token: string
+    token?: string
+    getAccessToken?: () => string | undefined
+    refreshAccessToken?: (minValiditySeconds?: number) => Promise<boolean>
+    minValiditySeconds?: number
+    /** When `true`, logs the Apollo link chain flow to console. */
+    debug?: boolean
 }
 
 export interface MutateCourseEnrollResponse {
@@ -65,11 +70,23 @@ export const mutateCourseEnroll = async ({
     mutation = MutationCourseEnroll.Mutation1,
     variables,
     token,
+    getAccessToken,
+    refreshAccessToken,
+    minValiditySeconds,
+    debug,
 }: MutateCourseEnrollParams) => {
+    const hasAuth = Boolean(token) || Boolean(getAccessToken)
+    if (!hasAuth) {
+        throw new Error("Not authenticated")
+    }
     const apollo = createApolloClient({
         auth: true,
         cache: false,
         token,
+        getAccessToken,
+        refreshAccessToken,
+        minValiditySeconds,
+        debug,
     })
 
     return apollo.mutate<MutateCourseEnrollResponse>({

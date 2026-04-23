@@ -12,6 +12,10 @@ export const useQueryCourseEnrollmentStatusSwrCore = () => {
     const keycloak = useKeycloak()
     const course = useAppSelector((state) => state.course.entity)
     const authenticated = Boolean(keycloak.data?.authenticated)
+    const getAccessToken = () =>
+        keycloak.data?.authenticated ? keycloak.data?.token : undefined
+    const refreshAccessToken = async (minValiditySeconds = 30) =>
+        (await keycloak.data?.updateToken(minValiditySeconds)) ?? false
     /** The SWR. */
     const swr = useSWR(
         course?.id && authenticated
@@ -25,14 +29,12 @@ export const useQueryCourseEnrollmentStatusSwrCore = () => {
             if (!course?.id) {
                 throw new Error("Course id not found")
             }
-            const token = keycloak.data?.authenticated
-                ? keycloak.data?.token
-                : undefined
             const data = await queryCourseEnrollmentStatus({
                 variables: {
                     request: { courseId: course?.id },
                 },
-                token,
+                getAccessToken,
+                refreshAccessToken,
             })
             if (!data || !data.data) {
                 throw new Error("Course enrollment status not found")

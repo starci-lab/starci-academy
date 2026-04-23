@@ -91,13 +91,21 @@ export const queryCourse = async ({
     query = QueryCourse.Query1,
     request,
     token,
+    getAccessToken,
+    refreshAccessToken,
+    minValiditySeconds,
+    debug,
 }: QueryParams<QueryCourse, QueryCourseRequest>) => {
+    const hasAuth = Boolean(token) || Boolean(getAccessToken)
     const apollo = createApolloClient({
-        auth: Boolean(token),
+        auth: hasAuth,
         cache: false,
         token,
+        getAccessToken,
+        refreshAccessToken,
+        minValiditySeconds,
+        debug,
     })
-
     return apollo.query<QueryCourseResponse>({
         query: queryMap[query],
         variables: {

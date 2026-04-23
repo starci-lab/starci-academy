@@ -13,7 +13,10 @@ import { ContentTab, setLessonVideoCount, setLessonVideos } from "@/redux/slices
  */
 export const useQueryLessonVideosSwrCore = () => {
     const keycloak = useKeycloak()
-    const token = keycloak.data?.authenticated ? keycloak.data?.token : undefined
+    const getAccessToken = () =>
+        keycloak.data?.authenticated ? keycloak.data?.token : undefined
+    const refreshAccessToken = async (minValiditySeconds = 30) =>
+        (await keycloak.data?.updateToken(minValiditySeconds)) ?? false
     const enrolled = useAppSelector((state) => state.user.enrolled)
     const course = useAppSelector((state) => state.course.entity)
     const content = useAppSelector((state) => state.content.entity)
@@ -53,7 +56,8 @@ export const useQueryLessonVideosSwrCore = () => {
                 headers: {
                     [GraphQLHeadersKey.XCourseId]: course.id,
                 },
-                token,
+                getAccessToken,
+                refreshAccessToken,
             })
             const payload = data.data?.lessonVideos?.data
             if (!payload) {

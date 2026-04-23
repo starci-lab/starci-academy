@@ -9,6 +9,10 @@ import { setUser } from "@/redux/slices"
 export const useQueryUserSwrCore = () => {
     const keycloak = useKeycloak()
     const dispatch = useAppDispatch()
+    const getAccessToken = () =>
+        keycloak.data?.authenticated ? keycloak.data?.token : undefined
+    const refreshAccessToken = async (minValiditySeconds = 30) =>
+        (await keycloak.data?.updateToken(minValiditySeconds)) ?? false
     /** The SWR. */
     const swr = useSWR(
         keycloak.data?.authenticated ? ["QUERY_USER_SWR"] : null,
@@ -16,13 +20,13 @@ export const useQueryUserSwrCore = () => {
             /** The data. */
             const data = await queryMe(
                 { 
-                    token: keycloak.data?.token,
+                    getAccessToken,
+                    refreshAccessToken,
                 }
             )
             if (!data || !data.data || !data.data.me.data) {
                 throw new Error("User not found")
             }
-            console.log(data.data.me.data)
             /** Set the user. */
             dispatch(setUser(data.data.me.data))
             /** Return the data. */

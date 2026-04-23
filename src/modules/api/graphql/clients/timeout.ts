@@ -2,7 +2,15 @@ import { publicEnv } from "@/resources/env/public"
 import { ApolloLink, Observable } from "@apollo/client"
 
 /**
- * Aborts the downstream observable if the operation does not finish within the configured window.
+ * Aborts the downstream {@link https://www.apollographql.com/docs/react/api/link/introduction | Apollo Link}
+ * observable if the operation does not finish within the configured timeout window
+ * (`publicEnv().graphql.timeout`).
+ *
+ * Placed **after** the error link and **before** the HTTP link in the chain so
+ * that upstream links still receive the timeout error.
+ *
+ * @see {@link https://www.apollographql.com/docs/react/api/link/introduction | Apollo Link overview}
+ * @see {@link https://www.apollographql.com/docs/react/networking/advanced-http-networking | Advanced HTTP networking}
  */
 export const createTimeoutLink = () => {
     const timeoutMs = publicEnv().graphql.timeout

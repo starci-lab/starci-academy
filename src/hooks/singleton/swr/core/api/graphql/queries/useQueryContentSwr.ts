@@ -8,7 +8,10 @@ import { setContent } from "@/redux/slices"
  */
 export const useQueryContentSwrCore = () => {
     const keycloak = useKeycloak()
-    const token = keycloak.data?.authenticated ? keycloak.data?.token : undefined
+    const getAccessToken = () =>
+        keycloak.data?.authenticated ? keycloak.data?.token : undefined
+    const refreshAccessToken = async (minValiditySeconds = 30) =>
+        (await keycloak.data?.updateToken(minValiditySeconds)) ?? false
     const displayId = useAppSelector((state) => state.content.displayId)
     const module = useAppSelector((state) => state.module.entity)
     const course = useAppSelector((state) => state.course.entity)
@@ -31,7 +34,8 @@ export const useQueryContentSwrCore = () => {
                 headers: {
                     [GraphQLHeadersKey.XCourseId]: course?.id,
                 },
-                token,
+                getAccessToken,
+                refreshAccessToken,
             })
             if (!data?.data?.content?.data) {
                 throw new Error("Content not found")

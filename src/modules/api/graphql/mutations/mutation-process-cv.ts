@@ -42,7 +42,12 @@ export interface MutateProcessCVParams {
     mutation?: MutationProcessCV
     variables: MutateProcessCVVariables
     /** Required: mutation is guarded by Keycloak. */
-    token: string
+    token?: string
+    getAccessToken?: () => string | undefined
+    refreshAccessToken?: (minValiditySeconds?: number) => Promise<boolean>
+    minValiditySeconds?: number
+    /** When `true`, logs the Apollo link chain flow to console. */
+    debug?: boolean
 }
 
 export interface MutateProcessCVResponse {
@@ -58,11 +63,23 @@ export const mutateProcessCV = async ({
     mutation = MutationProcessCV.Mutation1,
     variables,
     token,
+    getAccessToken,
+    refreshAccessToken,
+    minValiditySeconds,
+    debug,
 }: MutateProcessCVParams) => {
+    const hasAuth = Boolean(token) || Boolean(getAccessToken)
+    if (!hasAuth) {
+        throw new Error("Not authenticated")
+    }
     const apollo = createApolloClient({
         auth: true,
         cache: false,
         token,
+        getAccessToken,
+        refreshAccessToken,
+        minValiditySeconds,
+        debug,
     })
 
     return apollo.mutate<MutateProcessCVResponse>({

@@ -44,9 +44,11 @@ export interface QuerySystemConfigResponse {
  */
 export const querySystemConfig = async ({
     query = QuerySystemConfig.Query1,
+    debug,
 }: QueryParams<QuerySystemConfig, undefined>) => {
     const apollo = createApolloClient({
         cache: false,
+        debug,
     })
     return apollo.query<QuerySystemConfigResponse>({
         query: queryMap[query],

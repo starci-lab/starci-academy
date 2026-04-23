@@ -11,7 +11,10 @@ import { setModule } from "@/redux/slices"
  */
 export const useQueryModuleSwrCore = () => {
     const keycloak = useKeycloak()
-    const token = keycloak.data?.authenticated ? keycloak.data?.token : undefined
+    const getAccessToken = () =>
+        keycloak.data?.authenticated ? keycloak.data?.token : undefined
+    const refreshAccessToken = async (minValiditySeconds = 30) =>
+        (await keycloak.data?.updateToken(minValiditySeconds)) ?? false
     const enrolled = useAppSelector((state) => state.user.enrolled)
     const displayId = useAppSelector((state) => state.module.displayId)
     const id = useAppSelector((state) => state.module.id)
@@ -42,7 +45,8 @@ export const useQueryModuleSwrCore = () => {
                 headers: {
                     [GraphQLHeadersKey.XCourseId]: course?.id,
                 },
-                token,
+                getAccessToken,
+                refreshAccessToken,
             })
             if (!data || !data.data) {
                 throw new Error("Module not found")

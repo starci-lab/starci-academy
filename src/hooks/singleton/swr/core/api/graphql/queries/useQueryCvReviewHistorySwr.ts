@@ -7,18 +7,22 @@ import useSWR from "swr"
  */
 export const useQueryCvReviewHistorySwrCore = () => {
     const keycloak = useKeycloak()
-    const token = keycloak.data?.authenticated ? keycloak.data?.token : undefined
+    const getAccessToken = () =>
+        keycloak.data?.authenticated ? keycloak.data?.token : undefined
+    const refreshAccessToken = async (minValiditySeconds = 30) =>
+        (await keycloak.data?.updateToken(minValiditySeconds)) ?? false
 
     const swr = useSWR(
-        token
+        keycloak.data?.authenticated
             ? [
                 "QUERY_CV_REVIEW_HISTORY_SWR",
-                token,
+                keycloak.data?.authenticated,
             ]
             : null,
         async () => {
             const response = await queryCvReviewHistory({
-                token,
+                getAccessToken,
+                refreshAccessToken,
             })
 
             const payload = response.data?.cvReviewHistory?.data

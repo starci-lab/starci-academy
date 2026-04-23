@@ -73,11 +73,20 @@ export const queryCourses = async ({
     query = QueryCourses.Query1,
     request,
     token,
+    getAccessToken,
+    refreshAccessToken,
+    minValiditySeconds,
+    debug,
 }: QueryParams<QueryCourses, QueryCoursesRequest>) => {
+    const hasAuth = Boolean(token) || Boolean(getAccessToken)
     const apollo = createApolloClient({
-        auth: Boolean(token),
+        auth: hasAuth,
         cache: false,
         token,
+        getAccessToken,
+        refreshAccessToken,
+        minValiditySeconds,
+        debug,
     })
 
     return apollo.query<QueryCoursesResponse>({

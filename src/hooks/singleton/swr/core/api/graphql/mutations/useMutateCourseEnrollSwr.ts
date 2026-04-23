@@ -12,6 +12,10 @@ type MutateCourseEnrollResult = Awaited<ReturnType<typeof mutateCourseEnroll>>
  */
 export const useMutateCourseEnrollSwrCore = () => {
     const keycloak = useKeycloak()
+    const getAccessToken = () =>
+        keycloak.data?.authenticated ? keycloak.data?.token : undefined
+    const refreshAccessToken = async (minValiditySeconds = 30) =>
+        (await keycloak.data?.updateToken(minValiditySeconds)) ?? false
     /** The SWR mutation. */
     const swr = useSWRMutation<
         MutateCourseEnrollResult,
@@ -21,13 +25,13 @@ export const useMutateCourseEnrollSwrCore = () => {
     >(
         "MUTATE_COURSE_ENROLL_SWR",
         async (_key, { arg }) => {
-            const token = keycloak.data?.token
-            if (!token) {
+            if (!keycloak.data?.authenticated) {
                 throw new Error("Not authenticated")
             }
             return mutateCourseEnroll({
                 variables: arg,
-                token,
+                getAccessToken,
+                refreshAccessToken,
             })
         }
     )

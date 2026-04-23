@@ -27,7 +27,15 @@ export interface QueryParams<TQuery, TRequest = undefined> {
     request?: TRequest
     headers?: GraphQLHeaders
     token?: string
+    /** Optional token getter (preferred over static `token` for refresh + retry flows). */
+    getAccessToken?: () => string | undefined
+    /** Optional refresh callback; should call `keycloak.updateToken(minValiditySeconds)`. */
+    refreshAccessToken?: (minValiditySeconds?: number) => Promise<boolean>
+    /** Default min-validity seconds for refresh, used by auth-refresh link. */
+    minValiditySeconds?: number
     locale?: Locale
+    /** When `true`, logs the Apollo link chain flow (DynamicAuthLink, AuthRefreshLink) to console. */
+    debug?: boolean
 }
 
 

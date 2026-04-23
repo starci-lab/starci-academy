@@ -68,14 +68,24 @@ export const queryChallenge = async ({
     request,
     headers,
     token,
+    getAccessToken,
+    refreshAccessToken,
+    minValiditySeconds,
+    debug,
 }: QueryParams<QueryChallenge, ChallengeRequest>) => {
-    const apollo = createApolloClient({
-        auth: Boolean(token),
-        cache: false,
-        token,
-        headers,
-    })
-
+    const hasAuth = Boolean(token) || Boolean(getAccessToken)
+    const apollo = createApolloClient(
+        {
+            auth: hasAuth,
+            cache: false,
+            token,
+            getAccessToken,
+            refreshAccessToken,
+            minValiditySeconds,
+            headers,
+            debug,
+        }
+    )
     return apollo.query<QueryChallengeResponse>({
         query: queryMap[query],
         variables: {

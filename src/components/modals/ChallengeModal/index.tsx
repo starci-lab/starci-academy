@@ -120,7 +120,7 @@ export const ChallengeModal = () => {
                                 </div>
                                 <div className="min-h-0 border-l  lg:col-span-3 lg:h-full lg:overflow-y-auto">
                                     <Accordion className="px-0" allowsMultipleExpanded>
-                                        {steps.map((step) => (
+                                        {_.cloneDeep(steps).sort((prev, next) => prev.orderIndex - next.orderIndex).map((step) => (
                                             <Accordion.Item key={step.id} id={step.id}>
                                                 <Accordion.Heading>
                                                     <Accordion.Trigger className="w-full">

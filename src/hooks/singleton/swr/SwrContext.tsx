@@ -5,6 +5,8 @@ import {
     useMutateCourseEnrollSwrCore,
     useMutateSubmitChallengeSubmissionSwrCore,
     useMutateSyncChallengeSubmissionSwrCore,
+    usePostKeycloakLoginSwrCore,
+    usePostKeycloakRegisterSwrCore,
     useQueryChallengeSwrCore,
     useQueryChallengesSwrCore,
     useQueryContentSwrCore,
@@ -47,6 +49,8 @@ export interface SwrContextType {
     querySubmissionAttemptsSwr: ReturnType<typeof useQuerySubmissionAttemptsSwrCore>;
     querySubmissionFeedbacksSwr: ReturnType<typeof useQuerySubmissionFeedbacksSwrCore>;
     queryCvReviewHistorySwr: ReturnType<typeof useQueryCvReviewHistorySwrCore>;
+    postKeycloakLoginSwr: ReturnType<typeof usePostKeycloakLoginSwrCore>;
+    postKeycloakRegisterSwr: ReturnType<typeof usePostKeycloakRegisterSwrCore>;
 }
 
 export const SwrContext = createContext<SwrContextType | null>(null)
@@ -76,6 +80,8 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
     const querySubmissionAttemptsSwr = useQuerySubmissionAttemptsSwrCore()
     const querySubmissionFeedbacksSwr = useQuerySubmissionFeedbacksSwrCore()
     const queryCvReviewHistorySwr = useQueryCvReviewHistorySwrCore()
+    const postKeycloakLoginSwr = usePostKeycloakLoginSwrCore()
+    const postKeycloakRegisterSwr = usePostKeycloakRegisterSwrCore()
     return (
         <SwrContext.Provider value={{
             queryCourseSwr,
@@ -99,6 +105,8 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
             querySubmissionAttemptsSwr,
             querySubmissionFeedbacksSwr,
             queryCvReviewHistorySwr,
+            postKeycloakLoginSwr,
+            postKeycloakRegisterSwr,
         }}>
             {children}
         </SwrContext.Provider>

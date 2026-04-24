@@ -58,3 +58,51 @@ export const runGraphQLWithToast = async <T>(
         return false
     }
 }
+
+export interface RunRestWithToastOptions {
+    /** Message shown on success. Defaults to `"Operation completed."`. */
+    successMessage?: string
+    /** Whether to show a toast on success. */
+    showSuccessToast?: boolean
+    /** Whether to show a toast on error. */
+    showErrorToast?: boolean
+}
+
+/**
+ * Execute a REST API action and automatically show a toast based on the result.
+ *
+ * @param action - Async function that returns the response payload.
+ * @param options - Toast display options.
+ * @returns The response data on success, or `null` on failure.
+ */
+export const runRestWithToast = async <T>(
+    action: () => Promise<T>,
+    options: RunRestWithToastOptions = {
+        showSuccessToast: true,
+        showErrorToast: true,
+    },
+): Promise<T | null> => {
+    try {
+        const response = await action()
+        if (options?.showSuccessToast) {
+            toast.success("Success", {
+                description: options?.successMessage ?? "Operation completed.",
+            })
+        }
+        return response
+    } catch (error) {
+        const _error = error as Error
+        if (_error.message.toLowerCase().includes("unauthorized")) {
+            if (options?.showErrorToast) {
+                showUnauthorizedToast()
+            }
+            return null
+        }
+        if (options?.showErrorToast) {
+            toast.danger("Error", {
+                description: _error.message,
+            })
+        }
+        return null
+    }
+}

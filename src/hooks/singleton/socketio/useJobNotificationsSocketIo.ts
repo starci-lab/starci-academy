@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react"
+import { useRef, useEffect, useState } from "react"
 import EventEmitter2 from "eventemitter2"
 import { createManager } from "./utils"
 import { PublicationEvent, SubscriptionEvent } from "./enums"
@@ -28,6 +28,7 @@ export const useJobNotificationsSocketIo = () => {
     const incompleteChallengeSubmissionJobs = useAppSelector(
         (state) => state.job.incompleteChallengeSubmissionJobs,
     )
+    const [disconnectCount, setDisconnectCount] = useState(0)
 
     useEffect(() => {
         const socket = socketRef.current
@@ -45,9 +46,11 @@ export const useJobNotificationsSocketIo = () => {
         )
         socket.on("disconnect", (reason) => {
             console.log(`[Job notifications Socket] Disconnected — reason: ${reason}`)
+            setDisconnectCount((prev) => prev + 1)
         })
         socket.on("connect_error", (err) => {
             console.error("[Job notifications Socket] Connection error:", err.message)
+            setDisconnectCount((prev) => prev + 1)
         })
         return () => {
             socket.off("connect")
@@ -55,7 +58,7 @@ export const useJobNotificationsSocketIo = () => {
             socket.off("connect_error")
             socket.off(SubscriptionEvent.JobStatusUpdated)
         }
-    }, [])
+    }, [disconnectCount])
 
     useEffect(() => {
         if (!keycloak.data?.authenticated) {
@@ -63,13 +66,17 @@ export const useJobNotificationsSocketIo = () => {
         }
         const run = async () => {
             const socket = socketRef.current
+            // if connected, disconnect
+            if (socket.connected) {
+                socket.disconnect()
+            }
             socket.auth = {
                 token: keycloak.data?.token,
             }
             socket.connect()
         }
         void run()
-    }, [keycloak.data?.authenticated])
+    }, [keycloak.data?.authenticated, disconnectCount])
 
     const locale = useLocale()
     useEffect(() => {

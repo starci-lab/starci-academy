@@ -47,6 +47,7 @@ export const SignInSection = ({ className, classNames }: SignInSectionProps) => 
         values,
         errors,
         touched,
+        submitForm,
         setFieldValue,
         setFieldTouched,
         isSubmitting,
@@ -147,7 +148,10 @@ export const SignInSection = ({ className, classNames }: SignInSectionProps) => 
                 type="submit"
                 variant="primary"
                 fullWidth
-                isDisabled={isSubmitting}
+                isPending={isSubmitting}
+                onPress={() => {
+                    submitForm()
+                }}
             >
                 {t("auth.signIn.submit")}
             </Button>

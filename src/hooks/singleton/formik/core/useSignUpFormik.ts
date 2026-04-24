@@ -1,13 +1,21 @@
 import { useFormik } from "formik"
 import * as Yup from "yup"
+import { 
+    usePostKeycloakRegisterSwr 
+} from "@/hooks/singleton"
+import { runRestWithToast } from "@/modules/toast"
 
 /**
  * Formik values for the sign up form
  */
 export interface SignUpFormikValues {
+    /** User email address (also used as username). */
     email: string
+    /** Plain-text password. */
     password: string
+    /** Password confirmation. */
     confirmPassword: string
+    /** Must accept terms before submitting. */
     agreeToTerms: boolean
 }
 
@@ -41,13 +49,32 @@ const validationSchema = Yup.object({
 })
 
 /**
- * Hook to use the sign up formik
+ * Hook to use the sign up formik.
+ * Calls `POST /api/v1/keycloak/auth/register` via SWR mutation on submit,
+ * then redirects to Keycloak login so the user can sign in with the new account.
  */
-export const useSignUpFormikCore = () =>
-    useFormik<SignUpFormikValues>({
+export const useSignUpFormikCore = () => {
+    const { trigger: postKeycloakRegister } = usePostKeycloakRegisterSwr()
+
+    return useFormik<SignUpFormikValues>({
         initialValues,
         validationSchema,
-        onSubmit: (values) => {
-            window.alert(JSON.stringify(values, null, 2))
+        onSubmit: async (values) => {
+            await runRestWithToast(
+                () => postKeycloakRegister({
+                    username: values.email,
+                    email: values.email,
+                    password: values.password,
+                    firstName: null,
+                    lastName: null,
+                    sendVerifyEmail: true,
+                }),
+                { 
+                    successMessage: "Đăng ký thành công!",
+                    showErrorToast: false,
+                    showSuccessToast: false,
+                }
+            )
         },
     })
+}

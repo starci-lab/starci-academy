@@ -6,7 +6,7 @@ export const createManager = () => {
         publicEnv().api.socketIo, 
         {
             transports: ["websocket"],
-            reconnection: true,
+            reconnection: false,
             autoConnect: false,
             reconnectionAttempts: Infinity,
             reconnectionDelay: 1000,

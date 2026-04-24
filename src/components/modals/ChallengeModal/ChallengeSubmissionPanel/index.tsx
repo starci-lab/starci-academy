@@ -130,7 +130,7 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
 
     return (
         <div className={cn(className, "flex flex-col")}>
-            {sortedSubmissions.map((submission) => {
+            {_.cloneDeep(sortedSubmissions).sort((prev, next) => prev.orderIndex - next.orderIndex).map((submission) => {
                 const index =
                             values.submissions?.findIndex((_submission) => _submission.id === submission.id) ?? -1
                 if (index < 0) {

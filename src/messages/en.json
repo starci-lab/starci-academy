@@ -314,6 +314,7 @@
   "auth": {
     "signIn": {
       "google": "Sign In With Google",
+      "github": "Sign In With GitHub",
       "title": "Sign In",
       "desc": "Sign in to your account to continue",
       "email": {

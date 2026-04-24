@@ -48,8 +48,35 @@ export const pathConfig = () => {
                     build, login, logout,
                 }
             }
+            const github = () => {
+                const githubPath = `${authenticationPath}/github`
+                const build = () => {
+                    return githubPath
+                }
+                const login = () => {
+                    const loginPath = `${githubPath}/login`
+                    const build = () => {
+                        return loginPath
+                    }
+                    return {
+                        build,
+                    }
+                }
+                const logout = () => {
+                    const logoutPath = `${githubPath}/logout`
+                    const build = () => {
+                        return logoutPath
+                    }
+                    return {
+                        build,
+                    }
+                }
+                return {
+                    build, login, logout,
+                }
+            }
             return {
-                build, google,
+                build, google, github,
             }
         }
         const course = (displayId?: string) => {

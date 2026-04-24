@@ -12,7 +12,7 @@ import {
     FieldError,
     cn,
 } from "@heroui/react"
-import { GoogleIcon } from "../../../svg"
+import { GoogleIcon, GithubIcon } from "../../../svg"
 import { useAppDispatch } from "@/redux"
 import { EyeIcon, EyeClosedIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
@@ -22,6 +22,7 @@ import {
 } from "@/redux/slices"
 import { useSignInFormik } from "@/hooks/singleton"
 import { useKeycloak } from "@/hooks/singleton"
+import { pathConfig } from "@/resources/path"
 import { WithClassNames } from "@/modules/types"
 
 /**
@@ -43,6 +44,7 @@ export const SignInSection = ({ className, classNames }: SignInSectionProps) => 
     const { data: keycloak } = useKeycloak()
     const dispatch = useAppDispatch()
     const t = useTranslations()
+    const authenticationPath = pathConfig().locale().authentication()
     const {
         values,
         errors,
@@ -51,6 +53,13 @@ export const SignInSection = ({ className, classNames }: SignInSectionProps) => 
         setFieldTouched,
         isSubmitting,
     } = useSignInFormik()
+
+    const handleProviderSignIn = async (idpHint: string, redirectPath: string) => {
+        await keycloak?.login({
+            idpHint,
+            redirectUri: `${window.location.origin}${redirectPath}`,
+        })
+    }
 
     return (
         <Modal.Body className={cn(
@@ -65,17 +74,33 @@ export const SignInSection = ({ className, classNames }: SignInSectionProps) => 
                 className="w-full text-sm"
                 isDisabled={!keycloak}
                 onPress={
-                    async () => {
-                        await keycloak?.login({
-                            idpHint: "google",
-                        }
-                        )
-                    }
+                    async () => handleProviderSignIn(
+                        "google",
+                        authenticationPath.google().login().build()
+                    )
                 }
             >
                 <span className="inline-flex items-center justify-center gap-2">
                     <GoogleIcon className="w-5 h-5" />
                     {t("auth.signIn.google")}
+                </span>
+            </Button>
+            <div className="h-2" />
+            <Button
+                type="button"
+                variant="outline"
+                className="w-full text-sm"
+                isDisabled={!keycloak}
+                onPress={
+                    async () => handleProviderSignIn(
+                        "github",
+                        authenticationPath.github().login().build()
+                    )
+                }
+            >
+                <span className="inline-flex items-center justify-center gap-2">
+                    <GithubIcon className="w-5 h-5" />
+                    {t("auth.signIn.github")}
                 </span>
             </Button>
             <div className="h-3" />

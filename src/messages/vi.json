@@ -323,6 +323,7 @@
   "auth": {
     "signIn": {
       "google": "Đăng nhập với Google",
+      "github": "Đăng nhập với GitHub",
       "title": "Đăng nhập",
       "desc": "Đăng nhập để tiếp tục",
       "email": {

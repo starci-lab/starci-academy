@@ -31,7 +31,7 @@ export const Course = () => {
     const locale = useLocale()
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
     return (
-        <div>
+        <div className="p-3 max-w-[1280px] mx-auto">
             {
                 isLoading ? (
                     <Skeleton className="w-30 h-5" />

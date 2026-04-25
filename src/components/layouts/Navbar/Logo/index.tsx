@@ -1,14 +1,12 @@
 import {
-    Avatar,
-    AvatarFallback,
-    AvatarImage,
+    cn,
     Link,
 } from "@heroui/react"
 import { pathConfig } from "@/resources/path"
 import { useRouter } from "@/i18n/navigation"
 import React from "react"
-import { cn } from "@heroui/react"
 import { WithClassNames } from "@/modules/types"
+import Image from "next/image"
 
 /**
  * Logo props interface
@@ -27,22 +25,7 @@ export const Logo = ({ className }: LogoProps) => {
             onPress={() => router.push(pathConfig().locale().build())} 
             className={cn(className)}
         >
-            <Avatar>
-                {/**
-             * Avatar image
-             */}
-                <AvatarImage src="/logo.svg" />
-                {/**
-             * Avatar fallback
-             */}
-                <AvatarFallback>
-                SA
-                </AvatarFallback>
-            </Avatar>
-            {/**
-             * Logo text
-             */}
-            <div className="font-semibold">StarCi Academy</div>
+            <Image src="/logo.svg" alt="Logo" width={80} height={100} />
         </Link>
     )
 }

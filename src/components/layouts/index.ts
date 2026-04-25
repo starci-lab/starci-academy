@@ -1,6 +1,7 @@
 export * from "./Navbar"
 export * from "./Courses"
 export * from "./Course"
+export * from "./LandingPage"
 export * from "./Learn"
 export * from "./UserStreak"
 export * from "./CourseMindMap"

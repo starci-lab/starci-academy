@@ -72,7 +72,7 @@ export const Navbar = () => {
     )
 
     return (
-        <nav className="sticky top-0 z-50 h-16 min-h-16 border-b  bg-background">
+        <nav className="sticky top-0 z-50 h-16 min-h-16 border-b bg-background">
             <div className="mx-auto flex h-full w-full items-center justify-between px-3">
                 <div className="flex items-center gap-6">
                     <Logo className="flex-1 justify-start" />

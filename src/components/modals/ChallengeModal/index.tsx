@@ -120,29 +120,33 @@ export const ChallengeModal = () => {
                                 </div>
                                 <div className="min-h-0 border-l  lg:col-span-3 lg:h-full lg:overflow-y-auto">
                                     <Accordion className="px-0" allowsMultipleExpanded>
-                                        {_.cloneDeep(steps).sort((prev, next) => prev.orderIndex - next.orderIndex).map((step) => (
-                                            <Accordion.Item key={step.id} id={step.id}>
-                                                <Accordion.Heading>
-                                                    <Accordion.Trigger className="w-full">
-                                                        <div className="flex w-full items-center justify-between gap-2">
-                                                            <div className="font-semibold text-base text-foreground">
-                                                                {`${step.orderIndex + 1}. ${step.title || t("challenge.steps.label", { index: step.orderIndex + 1 })}`}
-                                                            </div>
-                                                            <Accordion.Indicator />
-                                                        </div>
-                                                    </Accordion.Trigger>
-                                                </Accordion.Heading>
-                                                <Accordion.Panel>
-                                                    <Accordion.Body>
-                                                        <Surface className="rounded-3xl bg-background px-3 py-1.5">
-                                                            <MarkdownContent markdown={step.body ?? ""} />
-                                                        </Surface>
-                                                    </Accordion.Body>
-                                                </Accordion.Panel>
-                                            </Accordion.Item>
-                                        ))}
+                                        {
+                                            _.cloneDeep(steps)
+                                                .sort((prev, next) => prev.orderIndex - next.orderIndex)
+                                                .map(
+                                                    (step) => (
+                                                        <Accordion.Item key={step.id} id={step.id}>
+                                                            <Accordion.Heading>
+                                                                <Accordion.Trigger className="w-full">
+                                                                    <div className="flex w-full items-center justify-between gap-2">
+                                                                        <div className="font-semibold text-base text-foreground">
+                                                                            {`${step.orderIndex + 1}. ${step.title || t("challenge.steps.label", { index: step.orderIndex + 1 })}`}
+                                                                        </div>
+                                                                        <Accordion.Indicator />
+                                                                    </div>
+                                                                </Accordion.Trigger>
+                                                            </Accordion.Heading>
+                                                            <Accordion.Panel>
+                                                                <Accordion.Body>
+                                                                    <Surface className="rounded-3xl bg-background px-3 py-1.5">
+                                                                        <MarkdownContent markdown={step.body ?? ""} />
+                                                                    </Surface>
+                                                                </Accordion.Body>
+                                                            </Accordion.Panel>
+                                                        </Accordion.Item>
+                                                    ))}
                                     </Accordion>
-                                    <div className="border-t "/>
+                                    <div className="border-t"/>
                                     <div className="p-3">
                                         <ReferenceLinks references={_.cloneDeep(challenge?.references ?? []).sort((prev, next) => prev.orderIndex - next.orderIndex)} titleKey="reference.title" />
                                     </div>

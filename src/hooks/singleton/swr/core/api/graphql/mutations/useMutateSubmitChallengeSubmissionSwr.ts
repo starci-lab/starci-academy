@@ -1,4 +1,4 @@
-import { useKeycloak } from "@/hooks/singleton"
+import { useKeycloakZustand } from "@/hooks/zustand"
 import {
     GraphQLHeadersKey,
     mutateSubmitChallengeSubmission,
@@ -14,12 +14,12 @@ type MutateSubmitChallengeSubmissionResult = Awaited<
  * SWR mutation for {@link mutateSubmitChallengeSubmission} (`X-Course-Id` from Redux).
  */
 export const useMutateSubmitChallengeSubmissionSwrCore = () => {
-    const keycloak = useKeycloak()
+    const keycloak = useKeycloakZustand()
     const courseId = useAppSelector((state) => state.course.entity?.id)
     const getAccessToken = () =>
-        keycloak.data?.authenticated ? keycloak.data?.token : undefined
+        keycloak.authenticated ? keycloak.token : undefined
     const refreshAccessToken = async (minValiditySeconds = 30) =>
-        (await keycloak.data?.updateToken(minValiditySeconds)) ?? false
+        (await keycloak.updateToken(minValiditySeconds)) ?? false
     const swr = useSWRMutation<
         MutateSubmitChallengeSubmissionResult,
         Error,
@@ -28,7 +28,7 @@ export const useMutateSubmitChallengeSubmissionSwrCore = () => {
     >(
         "MUTATE_SUBMIT_CHALLENGE_SUBMISSION_SWR",
         async (_key, { arg }) => {
-            if (!keycloak.data?.authenticated) {
+            if (!keycloak.authenticated) {
                 throw new Error("Not authenticated")
             }
             if (!courseId) {

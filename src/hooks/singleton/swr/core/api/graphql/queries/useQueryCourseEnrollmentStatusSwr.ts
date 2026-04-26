@@ -1,5 +1,5 @@
 import { queryCourseEnrollmentStatus } from "@/modules/api"
-import { useKeycloak } from "@/hooks/singleton"
+import { useKeycloakZustand } from "@/hooks/zustand"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import { setEnrolled } from "@/redux/slices"
 import useSWR from "swr"
@@ -9,13 +9,13 @@ import useSWR from "swr"
  */
 export const useQueryCourseEnrollmentStatusSwrCore = () => {
     const dispatch = useAppDispatch()
-    const keycloak = useKeycloak()
+    const keycloak = useKeycloakZustand()
     const course = useAppSelector((state) => state.course.entity)
-    const authenticated = Boolean(keycloak.data?.authenticated)
+    const authenticated = Boolean(keycloak.authenticated)
     const getAccessToken = () =>
-        keycloak.data?.authenticated ? keycloak.data?.token : undefined
+        keycloak.authenticated ? keycloak.token : undefined
     const refreshAccessToken = async (minValiditySeconds = 30) =>
-        (await keycloak.data?.updateToken(minValiditySeconds)) ?? false
+        (await keycloak.updateToken(minValiditySeconds)) ?? false
     /** The SWR. */
     const swr = useSWR(
         course?.id && authenticated

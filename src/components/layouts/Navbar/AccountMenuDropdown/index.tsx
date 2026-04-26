@@ -16,9 +16,9 @@ import React, { useMemo } from "react"
 import {
     useAccountMenuOverlayState,
     useAuthenticationOverlayState,
-    useKeycloak,
     useLanguageOverlayState,
 } from "@/hooks/singleton"
+import { useKeycloakZustand } from "@/hooks/zustand"
 import { BellIcon, CaretRightIcon } from "@phosphor-icons/react"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import { languages } from "@/resources/constants"
@@ -56,7 +56,7 @@ export interface AccountActionItem {
 export const AccountMenuDropdown = (props: AccountMenuDropdownProps) => {
     const { classNames } = props
     const { isOpen, onOpenChange, onClose } = useAccountMenuOverlayState()
-    const keycloak = useKeycloak()
+    const { authenticated, isLoading, logout } = useKeycloakZustand()
     const user = useAppSelector((state) => state.user.user)
     const locale = useLocale()
     const t = useTranslations()
@@ -81,8 +81,7 @@ export const AccountMenuDropdown = (props: AccountMenuDropdownProps) => {
             tab: AuthenticationModalTab.SignUp,
         },
     ]), [t])
-    const isAuthenticated = Boolean(keycloak?.data?.authenticated)
-    const isLoading = Boolean(keycloak?.isLoading)
+    const isAuthenticated = Boolean(authenticated)
 
     return (
         <Dropdown
@@ -190,7 +189,7 @@ export const AccountMenuDropdown = (props: AccountMenuDropdownProps) => {
                         <DropdownItem
                             key="logout"
                             className="py-3 text-danger"
-                            onPress={() => keycloak.data?.logout({
+                            onPress={() => logout({
                                 redirectUri: `${window.location.origin}${pathConfig().locale().authentication().google().logout().build()}`,
                             })}
                         >

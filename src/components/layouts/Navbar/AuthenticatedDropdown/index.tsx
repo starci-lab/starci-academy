@@ -1,4 +1,4 @@
-import { useKeycloak } from "@/hooks/singleton"
+import { useKeycloakZustand } from "@/hooks/zustand"
 import { useRouter } from "@/i18n/navigation"
 import { useAppSelector } from "@/redux"
 import { pathConfig } from "@/resources/path"
@@ -22,7 +22,7 @@ export const AuthenticatedDropdown = () => {
     const user = useAppSelector((state) => state.user.user)
     const t = useTranslations()
     const router = useRouter()
-    const keycloak = useKeycloak()
+    const keycloak = useKeycloakZustand()
     const { isOpen, onOpenChange } = useLanguageOverlayState()
     return (
         <Dropdown
@@ -62,7 +62,7 @@ export const AuthenticatedDropdown = () => {
                         key="logout" 
                         className="text-danger"
                         onPress={
-                            () => keycloak.data?.logout(
+                            () => keycloak.logout(
                                 {
                                     redirectUri: `${window.location.origin}${pathConfig().locale().authentication().google().logout().build()}`,
                                 }

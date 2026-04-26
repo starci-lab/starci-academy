@@ -1,6 +1,7 @@
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import { usePostKeycloakLoginSwr } from "@/hooks/singleton"
+import { useKeycloakZustand } from "@/hooks/zustand"
 import { runRestWithToast } from "@/modules/toast"
 
 /**
@@ -44,7 +45,7 @@ const validationSchema = Yup.object({
  */
 export const useSignInFormikCore = () => {
     const { trigger: postKeycloakLogin } = usePostKeycloakLoginSwr()
-
+    const { init } = useKeycloakZustand()
     return useFormik<SignInFormikValues>({
         initialValues,
         validationSchema,
@@ -61,7 +62,12 @@ export const useSignInFormikCore = () => {
                 },
             )
             if (result) {
-                window.location.reload()
+                await init({
+                    onLoad: "check-sso",
+                    token: result.accessToken,
+                    refreshToken: result.refreshToken,
+                    checkLoginIframe: false,
+                })
             }
         },
     })

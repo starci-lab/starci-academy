@@ -1,2 +1,2 @@
 export * from "./keycloak"
-export * from "./types"
+export * from "./socketio"

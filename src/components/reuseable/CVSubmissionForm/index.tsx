@@ -1,6 +1,6 @@
 "use client"
 
-import { useKeycloak } from "@/hooks/singleton"
+import { useKeycloakZustand } from "@/hooks/zustand"
 import {
     mutateGetCVPresignedUrl,
     mutateProcessCV,
@@ -34,7 +34,7 @@ export const CVSubmissionForm: React.FC<CVSubmissionFormProps> = ({
     onSuccess,
     onError,
 }) => {
-    const keycloak = useKeycloak()
+    const keycloak = useKeycloakZustand()
     const [isUploading, setIsUploading] = useState(false)
     const [isProcessing, setIsProcessing] = useState(false)
     const [uploadProgress, setUploadProgress] = useState(0)
@@ -45,7 +45,7 @@ export const CVSubmissionForm: React.FC<CVSubmissionFormProps> = ({
         values: { cv: File | null },
         { resetForm }: { resetForm: () => void }
     ) => {
-        const token = keycloak.data?.token
+        const token = keycloak.token
         if (!token) {
             onError?.("Authentication token not found")
             return
@@ -115,7 +115,7 @@ export const CVSubmissionForm: React.FC<CVSubmissionFormProps> = ({
     }
 
     const handleProcess = async () => {
-        const token = keycloak.data?.token
+        const token = keycloak.token
         if (!token) {
             onError?.("Authentication token not found")
             return

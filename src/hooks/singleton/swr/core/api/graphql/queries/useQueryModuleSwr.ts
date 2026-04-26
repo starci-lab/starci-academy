@@ -1,5 +1,5 @@
 import { GraphQLHeadersKey, queryModule } from "@/modules/api"
-import { useKeycloak } from "@/hooks/singleton"
+import { useKeycloakZustand } from "@/hooks/zustand"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import useSWR from "swr"
 import { setModule } from "@/redux/slices"
@@ -10,11 +10,11 @@ import { setModule } from "@/redux/slices"
  * `useQueryLessonVideosSwr` / `useQueryChallengesSwr` (list queries under `ref/queries/...`).
  */
 export const useQueryModuleSwrCore = () => {
-    const keycloak = useKeycloak()
+    const keycloak = useKeycloakZustand()
     const getAccessToken = () =>
-        keycloak.data?.authenticated ? keycloak.data?.token : undefined
+        keycloak.authenticated ? keycloak.token : undefined
     const refreshAccessToken = async (minValiditySeconds = 30) =>
-        (await keycloak.data?.updateToken(minValiditySeconds)) ?? false
+        (await keycloak.updateToken(minValiditySeconds)) ?? false
     const enrolled = useAppSelector((state) => state.user.enrolled)
     const displayId = useAppSelector((state) => state.module.displayId)
     const id = useAppSelector((state) => state.module.id)

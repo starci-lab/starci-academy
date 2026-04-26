@@ -3,7 +3,7 @@ import {
     defaultLessonVideosListSorts,
     queryLessonVideos,
 } from "@/modules/api"
-import { useKeycloak } from "@/hooks/singleton"
+import { useKeycloakZustand } from "@/hooks/zustand"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import useSWR from "swr"
 import { ContentTab, setLessonVideoCount, setLessonVideos } from "@/redux/slices"
@@ -12,11 +12,11 @@ import { ContentTab, setLessonVideoCount, setLessonVideos } from "@/redux/slices
  * Lists module lesson videos via `lessonVideos` and merges into `course.module.lessonVideos`.
  */
 export const useQueryLessonVideosSwrCore = () => {
-    const keycloak = useKeycloak()
+    const keycloak = useKeycloakZustand()
     const getAccessToken = () =>
-        keycloak.data?.authenticated ? keycloak.data?.token : undefined
+        keycloak.authenticated ? keycloak.token : undefined
     const refreshAccessToken = async (minValiditySeconds = 30) =>
-        (await keycloak.data?.updateToken(minValiditySeconds)) ?? false
+        (await keycloak.updateToken(minValiditySeconds)) ?? false
     const enrolled = useAppSelector((state) => state.user.enrolled)
     const course = useAppSelector((state) => state.course.entity)
     const content = useAppSelector((state) => state.content.entity)

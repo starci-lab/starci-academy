@@ -1,6 +1,5 @@
-import {
-    useFeedbackDetailsOverlayState,
-    useKeycloak } from "@/hooks/singleton"
+import { useFeedbackDetailsOverlayState } from "@/hooks/singleton"
+import { useKeycloakZustand } from "@/hooks/zustand"
 import { 
     defaultSubmissionFeedbacksListSorts, 
     GraphQLHeadersKey, 
@@ -15,16 +14,14 @@ import useSWR from "swr"
 
 /**
  * Lists submission feedbacks for the focused challenge submission (`challengeSubmissions`).
-import { defaultSubmissionFeedbacksListSorts } from "@/modules/api"
-import { GraphQLHeadersKey } from "@/modules/api"
  * Runs when `challengeSubmission.id` and course context exist.
  */
 export const useQuerySubmissionFeedbacksSwrCore = () => {
-    const keycloak = useKeycloak()
+    const keycloak = useKeycloakZustand()
     const getAccessToken = () =>
-        keycloak.data?.authenticated ? keycloak.data?.token : undefined
+        keycloak.authenticated ? keycloak.token : undefined
     const refreshAccessToken = async (minValiditySeconds = 30) =>
-        (await keycloak.data?.updateToken(minValiditySeconds)) ?? false
+        (await keycloak.updateToken(minValiditySeconds)) ?? false
     const enrolled = useAppSelector((state) => state.user.enrolled)
     const course = useAppSelector((state) => state.course.entity)
     const dispatch = useAppDispatch()

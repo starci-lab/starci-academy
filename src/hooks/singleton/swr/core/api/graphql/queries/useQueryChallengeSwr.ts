@@ -1,5 +1,5 @@
 import { GraphQLHeadersKey, queryChallenge } from "@/modules/api"
-import { useKeycloak } from "@/hooks/singleton"
+import { useKeycloakZustand } from "@/hooks/zustand"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import useSWR from "swr"
 import { setChallenge } from "@/redux/slices"
@@ -8,11 +8,11 @@ import { setChallenge } from "@/redux/slices"
  * Singleton SWR for `challenge(request: { id })` — id from `challenge.id` (`setChallengeId`).
  */
 export const useQueryChallengeSwrCore = () => {
-    const keycloak = useKeycloak()
+    const keycloak = useKeycloakZustand()
     const getAccessToken = () =>
-        keycloak.data?.authenticated ? keycloak.data?.token : undefined
+        keycloak.authenticated ? keycloak.token : undefined
     const refreshAccessToken = async (minValiditySeconds = 30) =>
-        (await keycloak.data?.updateToken(minValiditySeconds)) ?? false
+        (await keycloak.updateToken(minValiditySeconds)) ?? false
     const challengeId = useAppSelector((state) => state.challenge.id)
     const course = useAppSelector((state) => state.course.entity)
     const enrolled = useAppSelector((state) => state.user.enrolled)

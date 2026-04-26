@@ -1,56 +1,54 @@
-import { useRef, useEffect, useState } from "react"
+import { useEffect } from "react"
 import EventEmitter2 from "eventemitter2"
-import { createManager } from "./utils"
-import { PublicationEvent, SubscriptionEvent } from "./enums"
-import { useKeycloak } from "../keycloak"
+import { useKeycloakZustand } from "@/hooks/zustand/keycloak"
 import { useAppDispatch, useAppSelector } from "@/redux"
-import type { 
-    JobStatusUpdatedSocketIoMessage, 
-    SubscribeJobNotificationSocketIoPayload 
-} from "./types"
 import { useLocale } from "next-intl"
 import { setJobStatusMessageForJob } from "@/redux/slices"
+import {
+    JobStatusUpdatedSocketIoMessage,
+    SubscribeJobNotificationSocketIoPayload,
+} from "@/hooks/singleton/socketio/types"
+import { PublicationEvent, SubscriptionEvent } from "@/hooks/singleton/socketio/enums"
+import { useSocketIoZustand, type SocketIoStoreState } from "./useSocketIoZustand"
 
 /** Fan-out for listeners that are not couched in Redux. */
 export const jobNotificationsSocketIoEventEmitter = new EventEmitter2()
 
 /**
- * Client for `/job_notifications` namespace: connect with Keycloak, listen for
- * `SubscriptionEvent.JobStatusUpdated`, forward to `jobNotificationsSocketIoEventEmitter`, and
- * merge payloads into `state.socketio.jobStatusByJobId` and into `state.job` for incomplete rows.
- * Emit `PublicationEvent.SubscribeJobNotification`
- * (with `locale` + `data.jobId`) before expecting updates, mirroring `useAutocompleteSocketIo`.
+ * Client for `/job_notifications`: Keycloak `auth`, `SubscriptionEvent.JobStatusUpdated`, Redux merge.
  */
 export const useJobNotificationsSocketIo = () => {
-    const socketRef = useRef(createManager().socket("/job_notifications"))
-    const keycloak = useKeycloak()
+    const keycloak = useKeycloakZustand()
     const dispatch = useAppDispatch()
     const incompleteChallengeSubmissionJobs = useAppSelector(
         (state) => state.job.incompleteChallengeSubmissionJobs,
     )
-    const [disconnectCount, setDisconnectCount] = useState(0)
+    const locale = useLocale()
+    const disconnectCount = useSocketIoZustand(
+        (s: SocketIoStoreState) => s.disconnectCountJob,
+    )
+    const incDisconnect = useSocketIoZustand(
+        (s: SocketIoStoreState) => s.incrementDisconnectJob,
+    )
+    const getSocket = useSocketIoZustand(
+        (s: SocketIoStoreState) => s.getJobNotificationsSocket,
+    )
 
     useEffect(() => {
-        const socket = socketRef.current
+        const socket = getSocket()
         socket.on("connect", () => {
             console.log("[Job notifications Socket] Connected.")
         })
-        socket.on(
-            SubscriptionEvent.JobStatusUpdated,
-            (message: JobStatusUpdatedSocketIoMessage) => {
-                jobNotificationsSocketIoEventEmitter.emit(
-                    SubscriptionEvent.JobStatusUpdated,
-                    message,
-                )
-            },
-        )
+        socket.on(SubscriptionEvent.JobStatusUpdated, (message: JobStatusUpdatedSocketIoMessage) => {
+            jobNotificationsSocketIoEventEmitter.emit(SubscriptionEvent.JobStatusUpdated, message)
+        })
         socket.on("disconnect", (reason) => {
             console.log(`[Job notifications Socket] Disconnected — reason: ${reason}`)
-            setDisconnectCount((prev) => prev + 1)
+            incDisconnect()
         })
         socket.on("connect_error", (err) => {
             console.error("[Job notifications Socket] Connection error:", err.message)
-            setDisconnectCount((prev) => prev + 1)
+            incDisconnect()
         })
         return () => {
             socket.off("connect")
@@ -58,44 +56,35 @@ export const useJobNotificationsSocketIo = () => {
             socket.off("connect_error")
             socket.off(SubscriptionEvent.JobStatusUpdated)
         }
-    }, [disconnectCount])
+    }, [disconnectCount, getSocket, incDisconnect])
 
     useEffect(() => {
-        if (!keycloak.data?.authenticated) {
+        if (!keycloak.authenticated) {
             return
         }
         const run = async () => {
-            const socket = socketRef.current
-            // if connected, disconnect
+            const socket = getSocket()
             if (socket.connected) {
                 socket.disconnect()
             }
-            socket.auth = {
-                token: keycloak.data?.token,
-            }
+            socket.auth = { token: keycloak.token as string }
             socket.connect()
         }
         void run()
-    }, [keycloak.data?.authenticated, disconnectCount])
+    }, [keycloak.authenticated, keycloak.token, disconnectCount, getSocket])
 
-    const locale = useLocale()
     useEffect(() => {
         if (incompleteChallengeSubmissionJobs.length === 0) {
             return
         }
         for (const item of incompleteChallengeSubmissionJobs) {
             const payload: SubscribeJobNotificationSocketIoPayload = {
-                data: {
-                    jobId: item.jobId,
-                },
+                data: { jobId: item.jobId },
                 locale,
             }
-            socketRef.current.emit(
-                PublicationEvent.SubscribeJobNotification,
-                payload,
-            )
+            getSocket().emit(PublicationEvent.SubscribeJobNotification, payload)
         }
-    }, [incompleteChallengeSubmissionJobs, locale])
+    }, [incompleteChallengeSubmissionJobs, locale, getSocket])
 
     useEffect(
         () => {
@@ -117,7 +106,9 @@ export const useJobNotificationsSocketIo = () => {
             return () => {
                 jobNotificationsSocketIoEventEmitter.off(SubscriptionEvent.JobStatusUpdated, onMessage)
             }
-        }, [dispatch])
+        },
+        [dispatch],
+    )
 
-    return socketRef.current
+    return getSocket()
 }

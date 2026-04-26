@@ -6,8 +6,8 @@ import { useSWRConfig } from "swr"
 import {
     useCvApplyFormik,
     useCvUpdateOverlayState,
-    useKeycloak,
 } from "@/hooks/singleton"
+import { useKeycloakZustand } from "@/hooks/zustand"
 import { useTranslations } from "next-intl"
 import { Dropzone } from "@/components/reuseable"
 import { querySubmitCvPresignedUrl } from "@/modules/api"
@@ -15,7 +15,7 @@ import { querySubmitCvPresignedUrl } from "@/modules/api"
 export const CvUpdateModal = () => {
     const { isOpen, onOpenChange } = useCvUpdateOverlayState()
     const formik = useCvApplyFormik()
-    const keycloak = useKeycloak()
+    const keycloak = useKeycloakZustand()
     const t = useTranslations()
     const { mutate } = useSWRConfig()
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -28,7 +28,7 @@ export const CvUpdateModal = () => {
             return
         }
 
-        const token = keycloak.data?.token
+        const token = keycloak.token
         if (!token) {
             toast.danger("Error", {
                 description: "Authentication token not found",

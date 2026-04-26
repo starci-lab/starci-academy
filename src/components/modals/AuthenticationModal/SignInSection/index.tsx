@@ -21,7 +21,7 @@ import {
     setAuthenticationModalTab,
 } from "@/redux/slices"
 import { useSignInFormik } from "@/hooks/singleton"
-import { useKeycloak } from "@/hooks/singleton"
+import { useKeycloakZustand } from "@/hooks/zustand"
 import { pathConfig } from "@/resources/path"
 import { WithClassNames } from "@/modules/types"
 
@@ -41,7 +41,7 @@ export type SignInSectionProps = WithClassNames<{
  */
 export const SignInSection = ({ className, classNames }: SignInSectionProps) => {
     const [showPassword, setShowPassword] = useState(false)
-    const { data: keycloak } = useKeycloak()
+    const keycloak = useKeycloakZustand()
     const dispatch = useAppDispatch()
     const t = useTranslations()
     const authenticationPath = pathConfig().locale().authentication()
@@ -55,11 +55,16 @@ export const SignInSection = ({ className, classNames }: SignInSectionProps) => 
         isSubmitting,
     } = useSignInFormik()
 
-    const handleProviderSignIn = async (idpHint: string, redirectPath: string) => {
-        await keycloak?.login({
-            idpHint,
-            redirectUri: `${window.location.origin}${redirectPath}`,
-        })
+    const handleProviderSignIn = async (
+        idpHint: string, 
+        redirectPath: string
+    ) => {
+        await keycloak?.login(
+            {
+                idpHint,
+                redirectUri: `${window.location.origin}${redirectPath}`,
+            }
+        )
     }
 
     return (

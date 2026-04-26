@@ -3,7 +3,8 @@ import {
     GraphQLHeadersKey,
     querySubmissionAttempts,
 } from "@/modules/api"
-import { useKeycloak, useSubmissionAttemptsOverlayState } from "@/hooks/singleton"
+import { useSubmissionAttemptsOverlayState } from "@/hooks/singleton"
+import { useKeycloakZustand } from "@/hooks/zustand"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import useSWR from "swr"
 import { 
@@ -15,11 +16,11 @@ import {
  * Runs when `challenge.id` (or loaded `challenge.entity.id`) and course context exist.
  */
 export const useQuerySubmissionAttemptsSwrCore = () => {
-    const keycloak = useKeycloak()
+    const keycloak = useKeycloakZustand()
     const getAccessToken = () =>
-        keycloak.data?.authenticated ? keycloak.data?.token : undefined
+        keycloak.authenticated ? keycloak.token : undefined
     const refreshAccessToken = async (minValiditySeconds = 30) =>
-        (await keycloak.data?.updateToken(minValiditySeconds)) ?? false
+        (await keycloak.updateToken(minValiditySeconds)) ?? false
     const enrolled = useAppSelector((state) => state.user.enrolled)
     const course = useAppSelector((state) => state.course.entity)
     const dispatch = useAppDispatch()

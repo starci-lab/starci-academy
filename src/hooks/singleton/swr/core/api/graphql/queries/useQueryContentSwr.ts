@@ -1,5 +1,5 @@
 import { GraphQLHeadersKey, queryContent } from "@/modules/api"
-import { useKeycloak } from "@/hooks/singleton"
+import { useKeycloakZustand } from "@/hooks/zustand"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import useSWR from "swr"
 import { setContent } from "@/redux/slices"
@@ -7,11 +7,11 @@ import { setContent } from "@/redux/slices"
  * Singleton SWR for `content(request: { id })` — id from `content.id` (`setContentId`).
  */
 export const useQueryContentSwrCore = () => {
-    const keycloak = useKeycloak()
+    const keycloak = useKeycloakZustand()
     const getAccessToken = () =>
-        keycloak.data?.authenticated ? keycloak.data?.token : undefined
+        keycloak.authenticated ? keycloak.token : undefined
     const refreshAccessToken = async (minValiditySeconds = 30) =>
-        (await keycloak.data?.updateToken(minValiditySeconds)) ?? false
+        (await keycloak.updateToken(minValiditySeconds)) ?? false
     const displayId = useAppSelector((state) => state.content.displayId)
     const module = useAppSelector((state) => state.module.entity)
     const course = useAppSelector((state) => state.course.entity)

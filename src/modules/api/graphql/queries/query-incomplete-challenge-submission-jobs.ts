@@ -1,5 +1,5 @@
 import { createApolloClient } from "../clients"
-import type { GraphQLResponse, QueryParams } from "../types"
+import { withAbortContext, type GraphQLResponse, type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 import type { JobStatus } from "@/modules/types"
 
@@ -58,6 +58,7 @@ export const queryIncompleteChallengeSubmissionJobs = async ({
     refreshAccessToken,
     minValiditySeconds,
     debug,
+    signal,
 }: QueryParams<QueryIncompleteChallengeSubmissionJobs, undefined>) => {
     const hasAuth = Boolean(token) || Boolean(getAccessToken)
     const apollo = createApolloClient({
@@ -73,5 +74,6 @@ export const queryIncompleteChallengeSubmissionJobs = async ({
 
     return apollo.query<QueryIncompleteChallengeSubmissionJobsResponse>({
         query: queryMap[query],
+        ...withAbortContext(signal),
     })
 }

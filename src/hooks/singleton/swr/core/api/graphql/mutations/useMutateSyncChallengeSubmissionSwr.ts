@@ -36,9 +36,7 @@ export const useMutateSyncChallengeSubmissionSwrCore = () => {
                 throw new Error("Course id not found")
             }
             return mutateSyncChallengeSubmissions({
-                variables: {
-                    request: arg,
-                },
+                request: arg,
                 getAccessToken,
                 refreshAccessToken,
                 headers: {

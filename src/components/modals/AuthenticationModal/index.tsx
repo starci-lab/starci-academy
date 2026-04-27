@@ -32,7 +32,6 @@ export const AuthenticationModal = () => {
                                 <div className="text-xs text-muted">{description}</div>
                             </div>
                         </Modal.Header>
-                        <div className="h-6" />
                         {isSignIn ? <SignInSection className="w-full" /> : <SignUpSection className="w-full" />}
                     </Modal.Dialog>
                 </Modal.Container>

@@ -1,3 +1,4 @@
+export * from "./useQueryCheckEmailExistsSwr"
 export * from "./useQueryChallengeSwr"
 export * from "./useQueryChallengeSubmissionsSwr"
 export * from "./useQueryChallengesSwr"

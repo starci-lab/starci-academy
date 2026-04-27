@@ -4,8 +4,8 @@ import { useKeycloakZustand } from "@/hooks/zustand/keycloak"
 import { setGlobalSearchResults } from "@/redux/slices/socketio"
 import { useAppDispatch } from "@/redux"
 import { sleep } from "@/modules/utils"
-import { GlobalSearchSocketIoMessage } from "@/hooks/singleton/socketio/types"
-import { SubscriptionEvent } from "@/hooks/singleton/socketio/enums"
+import { GlobalSearchSocketIoMessage } from "./types"
+import { SubscriptionEvent } from "./enums"
 import { useSocketIoZustand, type SocketIoStoreState } from "./useSocketIoZustand"
 
 /** Fan-out for consumers that are not tied to this hook’s Redux wiring. */

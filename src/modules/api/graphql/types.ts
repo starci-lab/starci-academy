@@ -21,11 +21,34 @@ export enum GraphQLHeadersKey {
 
 export type GraphQLHeaders = Partial<Record<GraphQLHeadersKey, string>>
 
+/**
+ * Per-operation options for Apollo: passed into `context.fetchOptions` for {@link https://developer.mozilla.org/en-US/docs/Web/API/AbortController | fetch abort}.
+ * Used by query helpers and mutation helpers.
+ */
+export interface GraphQLOperationContext {
+    /** Optional abort signal. */
+    signal?: AbortSignal
+}
+
+/**
+ * Returns Apollo `context` so the HTTP link passes `signal` to `fetch`.
+ *
+ * @param signal - From `AbortController` or SWR; omit when not cancellable.
+ */
+export const withAbortContext = (signal: AbortSignal | undefined) =>
+    signal
+        ? { context: { fetchOptions: { signal } } as const }
+        : ({} as const)
+
 /** Generic query helper shape (variant, extra headers, bearer token). */
-export interface QueryParams<TQuery, TRequest = undefined> {
+export interface QueryParams<TQuery, TRequest = undefined> extends GraphQLOperationContext {
+    /** The query to call. */
     query?: TQuery
+    /** The request object to pass to the query. */
     request?: TRequest
+    /** Optional headers to pass to the query. */
     headers?: GraphQLHeaders
+    /** Optional bearer token to pass to the query. */
     token?: string
     /** Optional token getter (preferred over static `token` for refresh + retry flows). */
     getAccessToken?: () => string | undefined
@@ -38,12 +61,35 @@ export interface QueryParams<TQuery, TRequest = undefined> {
     debug?: boolean
 }
 
+export interface MutateParams<TMutation, TRequest> extends GraphQLOperationContext {
+    /** The mutation to call. */
+    mutation?: TMutation
+    /** The request object to pass to the mutation. */
+    request: TRequest
+    /** Optional headers to pass to the mutation. */
+    headers?: GraphQLHeaders
+    /** Optional bearer token to pass to the mutation. */
+    token?: string
+    /** Optional token getter (preferred over static `token` for refresh + retry flows). */
+    getAccessToken?: () => string | undefined
+    /** Optional refresh callback; should call `keycloak.updateToken(minValiditySeconds)`. */
+    refreshAccessToken?: (minValiditySeconds?: number) => Promise<boolean>
+    /** Default min-validity seconds for refresh, used by auth-refresh link. */
+    minValiditySeconds?: number
+    /** When `true`, logs the Apollo link chain flow (DynamicAuthLink, AuthRefreshLink) to console. */
+    debug?: boolean
+}
 
+export interface MutateVariables<TRequest> {
+    request: TRequest
+}
 
 /** Variables bag when the operation expects a single `request` object. */
 export interface QueryVariables<TRequest> {
     request: TRequest
 }
+
+
 
 /** Allowed sort keys for paginated course lists (GraphQL `SortBy`). */
 export enum SortBy {
@@ -69,4 +115,12 @@ export interface PaginationFilters<T extends string> {
     pageNumber?: number
     limit?: number
     sorts: Array<SortInput<T>>
+}
+
+/** Request object with optional abort signal. */
+export interface AbortableRequest<TRequest = undefined> {
+    /** Optional request object. */
+    request?: TRequest
+    /** Optional abort signal. */
+    signal?: AbortSignal
 }

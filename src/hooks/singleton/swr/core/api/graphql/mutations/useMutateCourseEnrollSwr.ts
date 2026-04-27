@@ -1,7 +1,7 @@
 import { useKeycloakZustand } from "@/hooks/zustand"
 import {
     mutateCourseEnroll,
-    type MutateCourseEnrollVariables,
+    type CourseEnrollRequest,
 } from "@/modules/api"
 import useSWRMutation from "swr/mutation"
 
@@ -21,7 +21,7 @@ export const useMutateCourseEnrollSwrCore = () => {
         MutateCourseEnrollResult,
         Error,
         string,
-        MutateCourseEnrollVariables
+        CourseEnrollRequest
     >(
         "MUTATE_COURSE_ENROLL_SWR",
         async (_key, { arg }) => {
@@ -29,7 +29,7 @@ export const useMutateCourseEnrollSwrCore = () => {
                 throw new Error("Not authenticated")
             }
             return mutateCourseEnroll({
-                variables: arg,
+                request: arg,
                 getAccessToken,
                 refreshAccessToken,
             })

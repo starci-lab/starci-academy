@@ -25,6 +25,9 @@ import {
     useQuerySubmissionAttemptsSwrCore,
     useQuerySubmissionFeedbacksSwrCore,
     useQueryCvReviewHistorySwrCore,
+    useQueryCheckEmailExistsSwrCore,
+    useMutateExchangeCodeForTokenSwrCore,
+    useMutateRefreshKeycloakTokenSwrCore,
 } from "./core"
 
 export interface SwrContextType {
@@ -51,6 +54,9 @@ export interface SwrContextType {
     queryCvReviewHistorySwr: ReturnType<typeof useQueryCvReviewHistorySwrCore>;
     postKeycloakLoginSwr: ReturnType<typeof usePostKeycloakLoginSwrCore>;
     postKeycloakRegisterSwr: ReturnType<typeof usePostKeycloakRegisterSwrCore>;
+    queryCheckEmailExistsSwr: ReturnType<typeof useQueryCheckEmailExistsSwrCore>;
+    mutateExchangeCodeForTokenSwr: ReturnType<typeof useMutateExchangeCodeForTokenSwrCore>;
+    mutateRefreshKeycloakTokenSwr: ReturnType<typeof useMutateRefreshKeycloakTokenSwrCore>;
 }
 
 export const SwrContext = createContext<SwrContextType | null>(null)
@@ -82,32 +88,40 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
     const queryCvReviewHistorySwr = useQueryCvReviewHistorySwrCore()
     const postKeycloakLoginSwr = usePostKeycloakLoginSwrCore()
     const postKeycloakRegisterSwr = usePostKeycloakRegisterSwrCore()
+    const queryCheckEmailExistsSwr = useQueryCheckEmailExistsSwrCore()
+    const mutateExchangeCodeForTokenSwr = useMutateExchangeCodeForTokenSwrCore()
+    const mutateRefreshKeycloakTokenSwr = useMutateRefreshKeycloakTokenSwrCore()
     return (
-        <SwrContext.Provider value={{
-            queryCourseSwr,
-            queryCourseEnrollmentStatusSwr,
-            queryCoursesSwr,
-            queryUserSwr,
-            mutateCourseEnrollSwr,
-            mutateSyncChallengeSubmissionsSwr,
-            mutateSubmitChallengeSubmissionSwr,
-            queryModuleSwr,
-            queryContentSwr,
-            queryLessonVideo,
-            queryChallengeSwr,
-            queryContentsSwr,
-            queryLessonVideosSwr,
-            queryLivestreamSessionsSwr,
-            queryChallengesSwr,
-            queryChallengeSubmissionsSwr,
-            querySystemConfigSwr,
-            queryIncompleteChallengeSubmissionJobsSwr,
-            querySubmissionAttemptsSwr,
-            querySubmissionFeedbacksSwr,
-            queryCvReviewHistorySwr,
-            postKeycloakLoginSwr,
-            postKeycloakRegisterSwr,
-        }}>
+        <SwrContext.Provider value={
+            {
+                queryCourseSwr,
+                queryCourseEnrollmentStatusSwr,
+                queryCoursesSwr,
+                queryUserSwr,
+                mutateCourseEnrollSwr,
+                mutateSyncChallengeSubmissionsSwr,
+                mutateSubmitChallengeSubmissionSwr,
+                queryModuleSwr,
+                queryContentSwr,
+                queryLessonVideo,
+                queryChallengeSwr,
+                queryContentsSwr,
+                queryLessonVideosSwr,
+                queryLivestreamSessionsSwr,
+                queryChallengesSwr,
+                queryChallengeSubmissionsSwr,
+                querySystemConfigSwr,
+                queryIncompleteChallengeSubmissionJobsSwr,
+                querySubmissionAttemptsSwr,
+                querySubmissionFeedbacksSwr,
+                queryCvReviewHistorySwr,
+                postKeycloakLoginSwr,
+                postKeycloakRegisterSwr,
+                queryCheckEmailExistsSwr,
+                mutateExchangeCodeForTokenSwr,
+                mutateRefreshKeycloakTokenSwr,
+            }
+        }>
             {children}
         </SwrContext.Provider>
     )

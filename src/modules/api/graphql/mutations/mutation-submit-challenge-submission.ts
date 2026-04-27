@@ -1,5 +1,10 @@
 import { createApolloClient } from "../clients"
-import type { GraphQLHeaders, GraphQLResponse } from "../types"
+import {
+    withAbortContext,
+    type GraphQLResponse,
+    type MutateParams,
+    type QueryVariables,
+} from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
 const mutation1 = gql`
@@ -29,21 +34,13 @@ export interface SubmitChallengeSubmissionRequest {
     challengeSubmissionId: string
 }
 
-export interface MutateSubmitChallengeSubmissionVariables {
-    request: SubmitChallengeSubmissionRequest
-}
+export type MutateSubmitChallengeSubmissionVariables =
+    QueryVariables<SubmitChallengeSubmissionRequest>
 
-export interface MutateSubmitChallengeSubmissionParams {
-    mutation?: MutationSubmitChallengeSubmission
-    variables: MutateSubmitChallengeSubmissionVariables
-    token?: string
-    getAccessToken?: () => string | undefined
-    refreshAccessToken?: (minValiditySeconds?: number) => Promise<boolean>
-    minValiditySeconds?: number
-    headers?: GraphQLHeaders
-    /** When `true`, logs the Apollo link chain flow to console. */
-    debug?: boolean
-}
+export type MutateSubmitChallengeSubmissionParams = MutateParams<
+    MutationSubmitChallengeSubmission,
+    SubmitChallengeSubmissionRequest
+>
 
 export interface MutateSubmitChallengeSubmissionResponse {
     submitChallengeSubmission: GraphQLResponse<{
@@ -58,13 +55,14 @@ export interface MutateSubmitChallengeSubmissionResponse {
  */
 export const mutateSubmitChallengeSubmission = async ({
     mutation = MutationSubmitChallengeSubmission.Mutation1,
-    variables,
+    request,
     token,
     headers,
     getAccessToken,
     refreshAccessToken,
     minValiditySeconds,
     debug,
+    signal,
 }: MutateSubmitChallengeSubmissionParams) => {
     const hasAuth = Boolean(token) || Boolean(getAccessToken)
     if (!hasAuth) {
@@ -83,6 +81,7 @@ export const mutateSubmitChallengeSubmission = async ({
 
     return apollo.mutate<MutateSubmitChallengeSubmissionResponse>({
         mutation: mutationMap[mutation],
-        variables,
+        variables: { request },
+        ...withAbortContext(signal),
     })
 }

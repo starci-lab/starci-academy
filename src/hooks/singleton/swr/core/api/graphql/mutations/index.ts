@@ -1,3 +1,5 @@
 export * from "./useMutateCourseEnrollSwr"
 export * from "./useMutateSubmitChallengeSubmissionSwr"
 export * from "./useMutateSyncChallengeSubmissionSwr"
+export * from "./useMutateExchangeCodeForTokenSwr"
+export * from "./useMutateRefreshKeycloakTokenSwr"

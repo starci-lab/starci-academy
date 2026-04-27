@@ -35,9 +35,7 @@ export const useMutateSubmitChallengeSubmissionSwrCore = () => {
                 throw new Error("Course id not found")
             }
             return mutateSubmitChallengeSubmission({
-                variables: {
-                    request: arg,
-                },
+                request: arg,
                 getAccessToken,
                 refreshAccessToken,
                 headers: {

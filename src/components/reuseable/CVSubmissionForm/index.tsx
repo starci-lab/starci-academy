@@ -65,11 +65,9 @@ export const CVSubmissionForm: React.FC<CVSubmissionFormProps> = ({
             // Step 1: Get presigned URL from backend
             setUploadProgress(20)
             const presignedUrlResponse = await mutateGetCVPresignedUrl({
-                variables: {
-                    request: {
-                        fileName: values.cv.name,
-                        fileType: values.cv.type,
-                    },
+                request: {
+                    fileName: values.cv.name,
+                    fileType: values.cv.type,
                 },
                 token,
             })
@@ -129,11 +127,9 @@ export const CVSubmissionForm: React.FC<CVSubmissionFormProps> = ({
         try {
             setIsProcessing(true)
             const processResponse = await mutateProcessCV({
-                variables: {
-                    request: {
-                        s3Key: uploadedS3Key,
-                        fileName: uploadedFileName,
-                    },
+                request: {
+                    s3Key: uploadedS3Key,
+                    fileName: uploadedFileName,
                 },
                 token,
             })

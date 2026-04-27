@@ -49,7 +49,6 @@ export const SignUpSection = ({ className, classNames }: SignUpSectionProps) => 
         setFieldTouched,
         isSubmitting,
     } = useSignUpFormik()
-
     return (
         <Modal.Body className={cn("overflow-visible", className, classNames?.container)}>
             <TextField isInvalid={!!(touched.email && errors.email)}>
@@ -64,7 +63,10 @@ export const SignUpSection = ({ className, classNames }: SignUpSectionProps) => 
                     placeholder={t("auth.signUp.email.placeholder")}
                     name="email"
                     value={values.email}
-                    onChange={(e) => setFieldValue("email", e.target.value)}
+                    onChange={(event) => setFieldValue(
+                        "email", 
+                        event.target.value
+                    )}
                     onBlur={() => setFieldTouched("email", true)}
                 />
                 <FieldError>{errors.email}</FieldError>

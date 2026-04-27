@@ -6,7 +6,7 @@ import type {
     QueryParams,
     SortInput,
 } from "../types"
-import { SortOrder } from "../types"
+import { SortOrder, withAbortContext } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
 /** Sort keys for `contents` list (`ContentsSortBy` on the API). */
@@ -95,6 +95,7 @@ export const queryContents = async ({
     refreshAccessToken,
     minValiditySeconds,
     debug,
+    signal,
 }: QueryParams<QueryContents, ContentsListRequest>) => {
     const hasAuth = Boolean(token) || Boolean(getAccessToken)
     const apollo = createApolloClient({
@@ -113,5 +114,6 @@ export const queryContents = async ({
         variables: {
             request,
         },
+        ...withAbortContext(signal),
     })
 }

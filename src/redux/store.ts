@@ -15,6 +15,7 @@ import {
     socketIoReducer,
     systemReducer,
     jobReducer,
+    keycloakReducer,
 } from "./slices"
 
 export const store = configureStore({
@@ -34,6 +35,7 @@ export const store = configureStore({
         socketIo: socketIoReducer,
         system: systemReducer,
         job: jobReducer,
+        keycloak: keycloakReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false,

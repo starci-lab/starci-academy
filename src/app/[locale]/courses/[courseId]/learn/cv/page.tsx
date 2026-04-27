@@ -93,11 +93,9 @@ const Page = () => {
         try {
             setIsReviewing(true)
             const response = await mutateTriggerCvSubmission({
-                variables: {
-                    request: {
-                        cvSubmissionId,
-                        cvSubmissionAttemptId: latestHistoryItem?.attemptId,
-                    },
+                request: {
+                    cvSubmissionId,
+                    cvSubmissionAttemptId: latestHistoryItem?.attemptId,
                 },
                 token,
             })

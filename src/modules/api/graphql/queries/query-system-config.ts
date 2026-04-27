@@ -1,5 +1,5 @@
 import { createApolloClient } from "../clients"
-import type { GraphQLResponse, QueryParams } from "../types"
+import { withAbortContext, type GraphQLResponse, type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
 /**
@@ -45,6 +45,7 @@ export interface QuerySystemConfigResponse {
 export const querySystemConfig = async ({
     query = QuerySystemConfig.Query1,
     debug,
+    signal,
 }: QueryParams<QuerySystemConfig, undefined>) => {
     const apollo = createApolloClient({
         cache: false,
@@ -52,5 +53,6 @@ export const querySystemConfig = async ({
     })
     return apollo.query<QuerySystemConfigResponse>({
         query: queryMap[query],
+        ...withAbortContext(signal),
     })
 }

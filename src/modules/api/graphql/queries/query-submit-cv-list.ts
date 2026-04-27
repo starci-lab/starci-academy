@@ -1,5 +1,5 @@
 import { createApolloClient } from "../clients"
-import type { QueryParams } from "../types"
+import { withAbortContext, type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
 const query1 = gql`
@@ -59,6 +59,7 @@ export const queryCvReviewHistory = async ({
     refreshAccessToken,
     minValiditySeconds,
     debug,
+    signal,
 }: QueryParams<QueryCvReviewHistory>) => {
     const hasAuth = Boolean(token) || Boolean(getAccessToken)
     const apollo = createApolloClient({
@@ -74,5 +75,6 @@ export const queryCvReviewHistory = async ({
     return apollo.query<QueryCvReviewHistoryResponse>({
         query: queryMap[query],
         fetchPolicy: "no-cache",
+        ...withAbortContext(signal),
     })
 }

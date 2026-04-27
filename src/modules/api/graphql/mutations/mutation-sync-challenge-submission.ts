@@ -1,5 +1,10 @@
 import { createApolloClient } from "../clients"
-import type { GraphQLHeaders, GraphQLResponse } from "../types"
+import {
+    withAbortContext,
+    type GraphQLResponse,
+    type MutateParams,
+    type QueryVariables,
+} from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
 const mutation1 = gql`
@@ -28,21 +33,12 @@ export interface SyncSubmissionRequest {
     url: string
 }
 
-export interface MutateSyncChallengeSubmissionsVariables {
-    request: SyncSubmissionRequest
-}
+export type MutateSyncChallengeSubmissionsVariables = QueryVariables<SyncSubmissionRequest>
 
-export interface MutateSyncChallengeSubmissionsParams {
-    mutation?: MutationSyncChallengeSubmissions
-    variables: MutateSyncChallengeSubmissionsVariables
-    token?: string
-    getAccessToken?: () => string | undefined
-    refreshAccessToken?: (minValiditySeconds?: number) => Promise<boolean>
-    minValiditySeconds?: number
-    headers?: GraphQLHeaders
-    /** When `true`, logs the Apollo link chain flow to console. */
-    debug?: boolean
-}
+export type MutateSyncChallengeSubmissionsParams = MutateParams<
+    MutationSyncChallengeSubmissions,
+    SyncSubmissionRequest
+>
 
 export interface MutateSyncChallengeSubmissionsResponse {
     syncSubmission: GraphQLResponse
@@ -55,13 +51,14 @@ export interface MutateSyncChallengeSubmissionsResponse {
  */
 export const mutateSyncChallengeSubmissions = async ({
     mutation = MutationSyncChallengeSubmissions.Mutation1,
-    variables,
+    request,
     token,
     headers,
     getAccessToken,
     refreshAccessToken,
     minValiditySeconds,
     debug,
+    signal,
 }: MutateSyncChallengeSubmissionsParams) => {
     const hasAuth = Boolean(token) || Boolean(getAccessToken)
     if (!hasAuth) {
@@ -80,6 +77,7 @@ export const mutateSyncChallengeSubmissions = async ({
 
     return apollo.mutate<MutateSyncChallengeSubmissionsResponse>({
         mutation: mutationMap[mutation],
-        variables,
+        variables: { request },
+        ...withAbortContext(signal),
     })
 }

@@ -1,5 +1,5 @@
 import { createApolloClient } from "../clients"
-import type { GraphQLResponse } from "../types"
+import { withAbortContext, type GraphQLOperationContext, type GraphQLResponse } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
 /** Payload inside `courseEnrollmentStatus.data` after the standard API wrapper. */
@@ -37,7 +37,7 @@ export interface QueryCourseEnrollmentStatusVariables {
     }
 }
 
-export interface QueryCourseEnrollmentStatusParams {
+export interface QueryCourseEnrollmentStatusParams extends GraphQLOperationContext {
     query?: QueryCourseEnrollmentStatus
     variables: QueryCourseEnrollmentStatusVariables
     /** When set, `isEnrolled` reflects the current user; omit for anonymous (count only). */
@@ -69,6 +69,7 @@ export const queryCourseEnrollmentStatus = async ({
     refreshAccessToken,
     minValiditySeconds,
     debug,
+    signal,
 }: QueryCourseEnrollmentStatusParams) => {
     const hasAuth = Boolean(token) || Boolean(getAccessToken)
     const apollo = createApolloClient(
@@ -86,5 +87,6 @@ export const queryCourseEnrollmentStatus = async ({
     return apollo.query<QueryCourseEnrollmentStatusResponse>({
         query: queryMap[query],
         variables,
+        ...withAbortContext(signal),
     })
 }

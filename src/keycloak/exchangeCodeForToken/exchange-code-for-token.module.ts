@@ -1,0 +1,22 @@
+import {
+    Module,
+} from "@nestjs/common"
+import {
+    ExchangeCodeForTokenResolver,
+} from "./exchange-code-for-token.resolver"
+import {
+    ExchangeCodeForTokenService,
+} from "./exchange-code-for-token.service"
+import {
+    ExchangeCodeForTokenHandler,
+} from "./exchange-code-for-token.handler"
+
+@Module({
+    providers: [
+        ExchangeCodeForTokenService,
+        ExchangeCodeForTokenResolver,
+        ExchangeCodeForTokenHandler,
+    ],
+})
+export class ExchangeCodeForTokenMutationModule {}
+

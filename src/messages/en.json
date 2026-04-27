@@ -315,53 +315,71 @@
     "signIn": {
       "google": "Sign In With Google",
       "github": "Sign In With GitHub",
+      "or": "OR",
       "title": "Sign In",
       "desc": "Sign in to your account to continue",
       "email": {
         "label": "Email",
-        "placeholder": "Enter your email"
+        "placeholder": "Enter your email",
+        "invalid": "Please enter a valid email address",
+        "required": "Email is required",
+        "notExists": "No account found for this email",
+        "checking": "Checking email…"
       },
       "password": {
         "label": "Password",
         "placeholder": "Enter your password",
         "show": "Show password",
-        "hide": "Hide password"
+        "hide": "Hide password",
+        "required": "Password is required",
+        "minLength": "Password must be at least 8 characters"
       },
       "rememberMe": "Remember me",
       "forgotPassword": "Forgot Password?",
       "submit": "Sign In",
       "noAccount": "Don't have an account?",
-      "signUp": "Sign Up"
+      "signUp": "Sign Up",
+      "success": "Signed in successfully"
     },
     "signUp": {
       "title": "Sign Up",
       "desc": "Create an account to continue",
       "email": {
         "label": "Email",
-        "placeholder": "Enter your email"
+        "placeholder": "Enter your email",
+        "invalid": "Please enter a valid email address",
+        "required": "Email is required",
+        "checking": "Checking email…",
+        "alreadyExists": "This email is already registered"
       },
       "password": {
         "label": "Password",
         "placeholder": "Enter your password",
         "show": "Show password",
-        "hide": "Hide password"
+        "hide": "Hide password",
+        "required": "Password is required",
+        "minLength": "Password must be at least 8 characters"
       },
       "confirmPassword": {
         "label": "Confirm password",
         "placeholder": "Confirm your password",
         "show": "Show confirm password",
-        "hide": "Hide confirm password"
+        "hide": "Hide confirm password",
+        "required": "Please confirm your password",
+        "mismatch": "Passwords must match"
       },
       "agreeToTerms": {
         "aria": "I agree to the terms and conditions",
         "prefix": "I have read and agree to the",
         "terms": "Terms of Service",
         "and": "and",
-        "privacy": "Privacy Policy"
+        "privacy": "Privacy Policy",
+        "required": "You must accept the terms and privacy policy"
       },
       "submit": "Sign Up",
       "haveAccount": "Already have an account?",
-      "signIn": "Sign In"
+      "signIn": "Sign In",
+      "success": "Registration successful"
     },
     "oauth": {
       "authenticating": "Authenticating you…",

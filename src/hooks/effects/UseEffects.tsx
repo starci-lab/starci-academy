@@ -5,6 +5,7 @@ import { useSetTabQuery } from "./useSetTabQuery"
 import { useSidebar } from "./useSidebar"
 import { useSyncReduxContentId } from "./useSyncReduxContentId"
 import { useDefaultRedirect } from "./useDefaultRedirect"
+import { useExchangeCodeForToken } from "./useExchangeCodeForToken"
 
 export const UseEffects = () => {
     /** The useEffect to sync the redux course id. */
@@ -19,6 +20,8 @@ export const UseEffects = () => {
     useSidebar()
     /** The useEffect to redirect to the default path. */
     useDefaultRedirect()
+    /** OIDC: exchange `code` from Keycloak redirect for app tokens. */
+    useExchangeCodeForToken()
     return (
         <></>
     )

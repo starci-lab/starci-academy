@@ -7,8 +7,8 @@ import { setJobStatusMessageForJob } from "@/redux/slices"
 import {
     JobStatusUpdatedSocketIoMessage,
     SubscribeJobNotificationSocketIoPayload,
-} from "@/hooks/singleton/socketio/types"
-import { PublicationEvent, SubscriptionEvent } from "@/hooks/singleton/socketio/enums"
+} from "./types"
+import { PublicationEvent, SubscriptionEvent } from "./enums"
 import { useSocketIoZustand, type SocketIoStoreState } from "./useSocketIoZustand"
 
 /** Fan-out for listeners that are not couched in Redux. */

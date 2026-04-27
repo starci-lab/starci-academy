@@ -3,6 +3,7 @@ import { createApolloClient } from "../clients"
 import {
     SortBy,
     SortOrder,
+    withAbortContext,
     type GraphQLResponse,
     type QueryParams,
     type PaginationFilters,
@@ -77,6 +78,7 @@ export const queryCourses = async ({
     refreshAccessToken,
     minValiditySeconds,
     debug,
+    signal,
 }: QueryParams<QueryCourses, QueryCoursesRequest>) => {
     const hasAuth = Boolean(token) || Boolean(getAccessToken)
     const apollo = createApolloClient({
@@ -94,5 +96,6 @@ export const queryCourses = async ({
         variables: {
             request,
         },
+        ...withAbortContext(signal),
     })
 }

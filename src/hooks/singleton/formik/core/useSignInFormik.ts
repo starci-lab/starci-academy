@@ -1,15 +1,20 @@
 import { useFormik } from "formik"
 import * as Yup from "yup"
-import { usePostKeycloakLoginSwr } from "@/hooks/singleton"
+import { usePostKeycloakLoginSwr, useQueryCheckEmailExistsSwr } from "@/hooks/singleton"
 import { useKeycloakZustand } from "@/hooks/zustand"
 import { runRestWithToast } from "@/modules/toast"
-
+import { useEffect, useMemo } from "react"
+import { useTranslations } from "next-intl"
+import validator from "validator"
+import _ from "lodash"
 /**
  * Formik values for the sign in form
  */
 export interface SignInFormikValues {
     /** User email address. */
     email: string
+    /** Whether the email exists in the database. */
+    emailExists: boolean
     /** Plain-text password. */
     password: string
     /** Whether to persist the session. */
@@ -21,22 +26,10 @@ export interface SignInFormikValues {
  */
 const initialValues: SignInFormikValues = {
     email: "",
+    emailExists: true,
     password: "",
     rememberMe: false,
 }
-
-/**
- * Validation schema for the sign in form
- */
-const validationSchema = Yup.object({
-    email: Yup.string()
-        .email("Invalid email address")
-        .required("Email is required"),
-    password: Yup.string()
-        .required("Password is required")
-        .min(8, "Password must be at least 8 characters"),
-    rememberMe: Yup.boolean(),
-})
 
 /**
  * Hook to use the sign in formik.
@@ -45,10 +38,43 @@ const validationSchema = Yup.object({
  */
 export const useSignInFormikCore = () => {
     const { trigger: postKeycloakLogin } = usePostKeycloakLoginSwr()
+    const { trigger: queryCheckEmailExists } = useQueryCheckEmailExistsSwr()
     const { init } = useKeycloakZustand()
-    return useFormik<SignInFormikValues>({
+    const t = useTranslations()
+    const validationSchema = useMemo(
+        () => Yup.object(
+            {
+                email: Yup.string()
+                    .test(
+                        "is-email", 
+                        t("auth.signIn.email.invalid"), 
+                        (value) => {
+                            if (!value) {
+                                return true
+                            }
+                            return validator.isEmail(value)
+                        }
+                    )
+                    .test(
+                        "is-email-exists",
+                        t("auth.signIn.email.notExists"),
+                        function () {
+                            const emailExists = this.parent.emailExists
+                            return emailExists
+                        }
+                    )
+                    .required(t("auth.signIn.email.required")),
+                password: Yup.string()
+                    .required(t("auth.signIn.password.required"))
+                    .min(8, t("auth.signIn.password.minLength")),
+                rememberMe: Yup.boolean(),
+            }
+        ), [t]
+    )
+    const formik = useFormik<SignInFormikValues>({
         initialValues,
         validationSchema,
+        enableReinitialize: true,
         onSubmit: async (values) => {
             const result = await runRestWithToast(
                 () => postKeycloakLogin({
@@ -56,7 +82,7 @@ export const useSignInFormikCore = () => {
                     password: values.password,
                 }),
                 { 
-                    successMessage: "Đăng nhập thành công!",
+                    successMessage: t("auth.signIn.success"),
                     showErrorToast: false,
                     showSuccessToast: false,
                 },
@@ -70,5 +96,49 @@ export const useSignInFormikCore = () => {
                 })
             }
         },
-    })
+    }
+    )
+
+    /**
+     * Debounced bloom-filter check: invalid email, or email already on file (sign-in).
+     */
+    useEffect(
+        () => {
+            const controller = new AbortController()
+            const debounced = _.debounce(
+                async () => {
+                    const trimmed = formik.values.email.trim()
+                    if (!trimmed) {
+                        return
+                    }
+                    const valid = validator.isEmail(trimmed)
+                    if (!valid) {
+                        return
+                    }
+                    const result = await queryCheckEmailExists(
+                        { 
+                            request: {
+                                email: trimmed, 
+                            },
+                            signal: controller.signal,
+                        }
+                    )
+                    if (result.isBloomFilterReady) {
+                        formik.setFieldValue(
+                            "emailExists", 
+                            result.exists
+                        )
+                    }
+                },
+                300
+            )
+            debounced()
+            return () => {
+                controller.abort()
+                debounced.cancel()
+            }
+        },
+        [formik.values.email, queryCheckEmailExists]
+    )
+    return formik
 }

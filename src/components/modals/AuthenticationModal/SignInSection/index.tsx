@@ -24,6 +24,10 @@ import { useSignInFormik } from "@/hooks/singleton"
 import { useKeycloakZustand } from "@/hooks/zustand"
 import { pathConfig } from "@/resources/path"
 import { WithClassNames } from "@/modules/types"
+import { 
+    redirectToGoogleAuthentication, 
+    redirectToGithubAuthentication 
+} from "@/modules/keycloak"
 
 /**
  * Props for SignInSection component
@@ -37,7 +41,6 @@ export type SignInSectionProps = WithClassNames<{
 
 /**
  * SignInSection component
- * @returns {JSX.Element}
  */
 export const SignInSection = ({ className, classNames }: SignInSectionProps) => {
     const [showPassword, setShowPassword] = useState(false)
@@ -54,25 +57,29 @@ export const SignInSection = ({ className, classNames }: SignInSectionProps) => 
         setFieldTouched,
         isSubmitting,
     } = useSignInFormik()
-
     const handleProviderSignIn = async (
         idpHint: string, 
         redirectPath: string
     ) => {
-        await keycloak?.login(
-            {
-                idpHint,
-                redirectUri: `${window.location.origin}${redirectPath}`,
-            }
-        )
+        await keycloak.init({
+            onLoad: "check-sso",
+            silentCheckSsoRedirectUri: `${location.origin}/silent-check-sso.html`,
+            responseMode: "query",
+            pkceMethod: "S256",
+            redirectUri: `${location.origin}/${redirectPath}`,
+        })
+        await keycloak?.login({
+            idpHint,
+            redirectUri: `${location.origin}/${redirectPath}`,
+        })
     }
-
     return (
-        <Modal.Body className={cn(
-            "overflow-visible", 
-            className, 
-            classNames?.container
-        )
+        <Modal.Body className={
+            cn(
+                "overflow-visible p-3", 
+                className, 
+                classNames?.container
+            )
         }>
             <Button
                 type="button"
@@ -80,10 +87,7 @@ export const SignInSection = ({ className, classNames }: SignInSectionProps) => 
                 className="w-full text-sm"
                 isDisabled={!keycloak}
                 onPress={
-                    async () => handleProviderSignIn(
-                        "google",
-                        authenticationPath.google().login().build()
-                    )
+                    async () => redirectToGoogleAuthentication()
                 }
             >
                 <span className="inline-flex items-center justify-center gap-2">
@@ -98,10 +102,7 @@ export const SignInSection = ({ className, classNames }: SignInSectionProps) => 
                 className="w-full text-sm"
                 isDisabled={!keycloak}
                 onPress={
-                    async () => handleProviderSignIn(
-                        "github",
-                        authenticationPath.github().login().build()
-                    )
+                    async () => redirectToGithubAuthentication()
                 }
             >
                 <span className="inline-flex items-center justify-center gap-2">
@@ -110,7 +111,11 @@ export const SignInSection = ({ className, classNames }: SignInSectionProps) => 
                 </span>
             </Button>
             <div className="h-3" />
-            <Separator />
+            <div className="flex items-center justify-center">
+                <Separator className="flex-1"/>
+                <div className="text-xs text-foreground-500">{t("auth.signIn.or")}</div>
+                <Separator className="flex-1"/>
+            </div>
             <div className="h-3" />
             <TextField
                 isInvalid={!!(touched.email && errors.email)}
@@ -126,7 +131,9 @@ export const SignInSection = ({ className, classNames }: SignInSectionProps) => 
                     placeholder={t("auth.signIn.email.placeholder")}
                     name="email"
                     value={values.email}
-                    onChange={(e) => setFieldValue("email", e.target.value)}
+                    onChange={(event) => setFieldValue(
+                        "email", event.target.value
+                    )}
                     onBlur={() => setFieldTouched("email", true)}
                 />
                 <FieldError>{errors.email}</FieldError>

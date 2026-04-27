@@ -1,5 +1,10 @@
 import { createApolloClient } from "../clients"
-import type { GraphQLResponse } from "../types"
+import {
+    withAbortContext,
+    type GraphQLResponse,
+    type MutateParams,
+    type QueryVariables,
+} from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
 const mutation1 = gql`
@@ -25,20 +30,12 @@ export interface TriggerCvSubmissionRequest {
     cvSubmissionAttemptId?: string
 }
 
-export interface MutateTriggerCvSubmissionVariables {
-    request: TriggerCvSubmissionRequest
-}
+export type MutateTriggerCvSubmissionVariables = QueryVariables<TriggerCvSubmissionRequest>
 
-export interface MutateTriggerCvSubmissionParams {
-    mutation?: MutationTriggerCvSubmission
-    variables: MutateTriggerCvSubmissionVariables
-    token?: string
-    getAccessToken?: () => string | undefined
-    refreshAccessToken?: (minValiditySeconds?: number) => Promise<boolean>
-    minValiditySeconds?: number
-    /** When `true`, logs the Apollo link chain flow to console. */
-    debug?: boolean
-}
+export type MutateTriggerCvSubmissionParams = MutateParams<
+    MutationTriggerCvSubmission,
+    TriggerCvSubmissionRequest
+>
 
 export interface MutateTriggerCvSubmissionResponse {
     triggerCvSubmission: GraphQLResponse
@@ -46,12 +43,13 @@ export interface MutateTriggerCvSubmissionResponse {
 
 export const mutateTriggerCvSubmission = async ({
     mutation = MutationTriggerCvSubmission.Mutation1,
-    variables,
+    request,
     token,
     getAccessToken,
     refreshAccessToken,
     minValiditySeconds,
     debug,
+    signal,
 }: MutateTriggerCvSubmissionParams) => {
     const hasAuth = Boolean(token) || Boolean(getAccessToken)
     if (!hasAuth) {
@@ -69,6 +67,7 @@ export const mutateTriggerCvSubmission = async ({
 
     return apollo.mutate<MutateTriggerCvSubmissionResponse>({
         mutation: mutationMap[mutation],
-        variables,
+        variables: { request },
+        ...withAbortContext(signal),
     })
 }

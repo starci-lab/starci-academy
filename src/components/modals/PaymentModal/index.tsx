@@ -72,12 +72,10 @@ export const PaymentModal = () => {
                                                             async () => {
                                                                 const response = await swr.trigger(
                                                                     {
-                                                                        request: {
-                                                                            courseId: course?.id ?? "",
-                                                                            paymentType: paymentMethod.type,
-                                                                            payosReturnUrl: window.location.href,
-                                                                            payosCancelUrl: window.location.href,
-                                                                        },
+                                                                        courseId: course?.id ?? "",
+                                                                        paymentType: paymentMethod.type,
+                                                                        payosReturnUrl: window.location.href,
+                                                                        payosCancelUrl: window.location.href,
                                                                     }
                                                                 )
                                                                 if (!response.data?.courseEnroll) {

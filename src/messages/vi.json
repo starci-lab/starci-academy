@@ -324,53 +324,71 @@
     "signIn": {
       "google": "Đăng nhập với Google",
       "github": "Đăng nhập với GitHub",
+      "or": "HOẶC",
       "title": "Đăng nhập",
       "desc": "Đăng nhập để tiếp tục",
       "email": {
         "label": "Email",
-        "placeholder": "Nhập email của bạn"
+        "placeholder": "Nhập email của bạn",
+        "invalid": "Vui lòng nhập địa chỉ email hợp lệ",
+        "required": "Vui lòng nhập email",
+        "notExists": "Không tìm thấy tài khoản với email này",
+        "checking": "Đang kiểm tra email…"
       },
       "password": {
         "label": "Mật khẩu",
         "placeholder": "Nhập mật khẩu của bạn",
         "show": "Hiện mật khẩu",
-        "hide": "Ẩn mật khẩu"
+        "hide": "Ẩn mật khẩu",
+        "required": "Vui lòng nhập mật khẩu",
+        "minLength": "Mật khẩu phải có ít nhất 8 ký tự"
       },
       "rememberMe": "Ghi nhớ đăng nhập",
       "forgotPassword": "Quên mật khẩu?",
       "submit": "Đăng nhập",
       "noAccount": "Chưa có tài khoản?",
-      "signUp": "Đăng ký"
+      "signUp": "Đăng ký",
+      "success": "Đăng nhập thành công"
     },
     "signUp": {
       "title": "Đăng ký",
       "desc": "Tạo tài khoản để tiếp tục",
       "email": {
         "label": "Email",
-        "placeholder": "Nhập email của bạn"
+        "placeholder": "Nhập email của bạn",
+        "invalid": "Vui lòng nhập địa chỉ email hợp lệ",
+        "required": "Vui lòng nhập email",
+        "checking": "Đang kiểm tra email…",
+        "alreadyExists": "Email này đã được đăng ký"
       },
       "password": {
         "label": "Mật khẩu",
         "placeholder": "Nhập mật khẩu của bạn",
         "show": "Hiện mật khẩu",
-        "hide": "Ẩn mật khẩu"
+        "hide": "Ẩn mật khẩu",
+        "required": "Vui lòng nhập mật khẩu",
+        "minLength": "Mật khẩu phải có ít nhất 8 ký tự"
       },
       "confirmPassword": {
         "label": "Xác nhận mật khẩu",
         "placeholder": "Nhập lại mật khẩu",
         "show": "Hiện xác nhận mật khẩu",
-        "hide": "Ẩn xác nhận mật khẩu"
+        "hide": "Ẩn xác nhận mật khẩu",
+        "required": "Vui lòng xác nhận mật khẩu",
+        "mismatch": "Hai mật khẩu phải trùng khớp"
       },
       "agreeToTerms": {
         "aria": "Tôi đồng ý với điều khoản và điều kiện",
         "prefix": "Tôi đã đọc và đồng ý với",
         "terms": "Điều khoản dịch vụ",
         "and": "và",
-        "privacy": "Chính sách bảo mật"
+        "privacy": "Chính sách bảo mật",
+        "required": "Bạn phải chấp nhận điều khoản và chính sách bảo mật"
       },
       "submit": "Đăng ký",
       "haveAccount": "Đã có tài khoản?",
-      "signIn": "Đăng nhập"
+      "signIn": "Đăng nhập",
+      "success": "Đăng ký thành công"
     },
     "oauth": {
       "authenticating": "Đang xác thực…",

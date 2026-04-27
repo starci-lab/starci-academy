@@ -1,5 +1,10 @@
 import { createApolloClient } from "../clients"
-import type { GraphQLResponse } from "../types"
+import {
+    withAbortContext,
+    type GraphQLResponse,
+    type MutateParams,
+    type QueryVariables,
+} from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
 /** Payload inside `getCVPresignedUrl.data` after the standard API wrapper. */
@@ -30,25 +35,15 @@ const mutationMap: Record<MutationGetCVPresignedUrl, DocumentNode> = {
     [MutationGetCVPresignedUrl.Mutation1]: mutation1,
 }
 
-/** Variables for {@link GetCVPresignedUrlRequest} on the schema. */
-export interface MutateGetCVPresignedUrlVariables {
-    request: {
-        fileName: string
-        fileType: string
-    }
+/** GraphQL `GetCVPresignedUrlRequest` body. */
+export type GetCVPresignedUrlRequest = {
+    fileName: string
+    fileType: string
 }
 
-export interface MutateGetCVPresignedUrlParams {
-    mutation?: MutationGetCVPresignedUrl
-    variables: MutateGetCVPresignedUrlVariables
-    /** Required: mutation is guarded by Keycloak. */
-    token?: string
-    getAccessToken?: () => string | undefined
-    refreshAccessToken?: (minValiditySeconds?: number) => Promise<boolean>
-    minValiditySeconds?: number
-    /** When `true`, logs the Apollo link chain flow to console. */
-    debug?: boolean
-}
+export type MutateGetCVPresignedUrlVariables = QueryVariables<GetCVPresignedUrlRequest>
+
+export type MutateGetCVPresignedUrlParams = MutateParams<MutationGetCVPresignedUrl, GetCVPresignedUrlRequest>
 
 export interface MutateGetCVPresignedUrlResponse {
     getCVPresignedUrl: GraphQLResponse<GetCVPresignedUrlData>
@@ -61,12 +56,13 @@ export interface MutateGetCVPresignedUrlResponse {
  */
 export const mutateGetCVPresignedUrl = async ({
     mutation = MutationGetCVPresignedUrl.Mutation1,
-    variables,
+    request,
     token,
     getAccessToken,
     refreshAccessToken,
     minValiditySeconds,
     debug,
+    signal,
 }: MutateGetCVPresignedUrlParams) => {
     const hasAuth = Boolean(token) || Boolean(getAccessToken)
     if (!hasAuth) {
@@ -84,6 +80,7 @@ export const mutateGetCVPresignedUrl = async ({
 
     return apollo.mutate<MutateGetCVPresignedUrlResponse>({
         mutation: mutationMap[mutation],
-        variables,
+        variables: { request },
+        ...withAbortContext(signal),
     })
 }

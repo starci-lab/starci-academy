@@ -1,5 +1,10 @@
 import { createApolloClient } from "../clients"
-import type { GraphQLResponse } from "../types"
+import {
+    withAbortContext,
+    type GraphQLResponse,
+    type MutateParams,
+    type QueryVariables,
+} from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
 /** Payload inside `processCV.data` after the standard API wrapper. */
@@ -30,25 +35,15 @@ const mutationMap: Record<MutationProcessCV, DocumentNode> = {
     [MutationProcessCV.Mutation1]: mutation1,
 }
 
-/** Variables for {@link ProcessCVRequest} on the schema. */
-export interface MutateProcessCVVariables {
-    request: {
-        s3Key: string
-        fileName: string
-    }
+/** GraphQL `ProcessCVRequest` body. */
+export type ProcessCVRequest = {
+    s3Key: string
+    fileName: string
 }
 
-export interface MutateProcessCVParams {
-    mutation?: MutationProcessCV
-    variables: MutateProcessCVVariables
-    /** Required: mutation is guarded by Keycloak. */
-    token?: string
-    getAccessToken?: () => string | undefined
-    refreshAccessToken?: (minValiditySeconds?: number) => Promise<boolean>
-    minValiditySeconds?: number
-    /** When `true`, logs the Apollo link chain flow to console. */
-    debug?: boolean
-}
+export type MutateProcessCVVariables = QueryVariables<ProcessCVRequest>
+
+export type MutateProcessCVParams = MutateParams<MutationProcessCV, ProcessCVRequest>
 
 export interface MutateProcessCVResponse {
     processCV: GraphQLResponse<ProcessCVData>
@@ -61,12 +56,13 @@ export interface MutateProcessCVResponse {
  */
 export const mutateProcessCV = async ({
     mutation = MutationProcessCV.Mutation1,
-    variables,
+    request,
     token,
     getAccessToken,
     refreshAccessToken,
     minValiditySeconds,
     debug,
+    signal,
 }: MutateProcessCVParams) => {
     const hasAuth = Boolean(token) || Boolean(getAccessToken)
     if (!hasAuth) {
@@ -84,6 +80,7 @@ export const mutateProcessCV = async ({
 
     return apollo.mutate<MutateProcessCVResponse>({
         mutation: mutationMap[mutation],
-        variables,
+        variables: { request },
+        ...withAbortContext(signal),
     })
 }

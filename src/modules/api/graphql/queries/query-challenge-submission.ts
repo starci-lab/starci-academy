@@ -1,6 +1,6 @@
 import type { ChallengeSubmissionEntity } from "@/modules/types"
 import { createApolloClient } from "../clients"
-import { withAbortContext, type GraphQLResponse, type QueryParams } from "../types"
+import { type GraphQLResponse, type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
 const query1 = gql`
@@ -65,6 +65,7 @@ export const queryChallengeSubmission = async ({
         minValiditySeconds,
         headers,
         debug,
+        signal,
     })
 
     return apollo.query<QueryChallengeSubmissionResponse>({
@@ -72,6 +73,5 @@ export const queryChallengeSubmission = async ({
         variables: {
             request,
         },
-        ...withAbortContext(signal),
     })
 }

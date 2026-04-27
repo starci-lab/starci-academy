@@ -22,23 +22,13 @@ export enum GraphQLHeadersKey {
 export type GraphQLHeaders = Partial<Record<GraphQLHeadersKey, string>>
 
 /**
- * Per-operation options for Apollo: passed into `context.fetchOptions` for {@link https://developer.mozilla.org/en-US/docs/Web/API/AbortController | fetch abort}.
- * Used by query helpers and mutation helpers.
+ * Per-operation options: optional `signal` is forwarded to `createApolloClient({ signal })`
+ * so the HTTP link aborts the underlying `fetch` (e.g. SWR revalidation / cleanup).
  */
 export interface GraphQLOperationContext {
     /** Optional abort signal. */
     signal?: AbortSignal
 }
-
-/**
- * Returns Apollo `context` so the HTTP link passes `signal` to `fetch`.
- *
- * @param signal - From `AbortController` or SWR; omit when not cancellable.
- */
-export const withAbortContext = (signal: AbortSignal | undefined) =>
-    signal
-        ? { context: { fetchOptions: { signal } } as const }
-        : ({} as const)
 
 /** Generic query helper shape (variant, extra headers, bearer token). */
 export interface QueryParams<TQuery, TRequest = undefined> extends GraphQLOperationContext {

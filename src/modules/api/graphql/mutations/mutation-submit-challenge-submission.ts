@@ -1,6 +1,5 @@
 import { createApolloClient } from "../clients"
 import {
-    withAbortContext,
     type GraphQLResponse,
     type MutateParams,
     type QueryVariables,
@@ -77,11 +76,11 @@ export const mutateSubmitChallengeSubmission = async ({
         minValiditySeconds,
         headers,
         debug,
+        signal,
     })
 
     return apollo.mutate<MutateSubmitChallengeSubmissionResponse>({
         mutation: mutationMap[mutation],
         variables: { request },
-        ...withAbortContext(signal),
     })
 }

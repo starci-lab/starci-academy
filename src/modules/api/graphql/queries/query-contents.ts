@@ -6,7 +6,7 @@ import type {
     QueryParams,
     SortInput,
 } from "../types"
-import { SortOrder, withAbortContext } from "../types"
+import { SortOrder } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
 /** Sort keys for `contents` list (`ContentsSortBy` on the API). */
@@ -107,6 +107,7 @@ export const queryContents = async ({
         minValiditySeconds,
         headers,
         debug,
+        signal,
     })
 
     return apollo.query<QueryContentsResponse>({
@@ -114,6 +115,5 @@ export const queryContents = async ({
         variables: {
             request,
         },
-        ...withAbortContext(signal),
     })
 }

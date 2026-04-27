@@ -1,5 +1,5 @@
 import { createApolloClient } from "../clients"
-import { withAbortContext, type GraphQLOperationContext, type GraphQLResponse } from "../types"
+import { type GraphQLOperationContext, type GraphQLResponse } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
 /** Payload inside `courseEnrollmentStatus.data` after the standard API wrapper. */
@@ -81,12 +81,12 @@ export const queryCourseEnrollmentStatus = async ({
             refreshAccessToken,
             minValiditySeconds,
             debug,
+            signal,
         }
     )
 
     return apollo.query<QueryCourseEnrollmentStatusResponse>({
         query: queryMap[query],
         variables,
-        ...withAbortContext(signal),
     })
 }

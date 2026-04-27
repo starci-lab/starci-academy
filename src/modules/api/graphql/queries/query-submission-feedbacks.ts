@@ -2,7 +2,6 @@ import type { SubmissionFeedbackEntity } from "@/modules/types"
 import { createApolloClient } from "../clients"
 import {
     SortOrder,
-    withAbortContext,
     type GraphQLResponse,
     type PaginationFilters,
     type QueryParams,
@@ -99,6 +98,7 @@ export const querySubmissionFeedbacks = async ({
         minValiditySeconds,
         headers,
         debug,
+        signal,
     })
 
     return apollo.query<QuerySubmissionFeedbacksResponse>({
@@ -106,6 +106,5 @@ export const querySubmissionFeedbacks = async ({
         variables: {
             request,
         },
-        ...withAbortContext(signal),
     })
 }

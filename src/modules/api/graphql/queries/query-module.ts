@@ -1,6 +1,6 @@
 import { ModuleEntity } from "@/modules/types"
 import { createApolloClient } from "../clients"
-import { withAbortContext, type GraphQLResponse, type QueryParams } from "../types"
+import { type GraphQLResponse, type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
 /**
@@ -74,6 +74,7 @@ export const queryModule = async ({
         minValiditySeconds,
         headers,
         debug,
+        signal,
     })
 
     return apollo.query<QueryModuleResponse>({
@@ -81,6 +82,5 @@ export const queryModule = async ({
         variables: {
             request,
         },
-        ...withAbortContext(signal),
     })
 }

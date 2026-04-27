@@ -1,6 +1,5 @@
 import { createApolloClient } from "../clients"
 import {
-    withAbortContext,
     type GraphQLResponse,
     type MutateParams,
     type QueryVariables,
@@ -66,10 +65,10 @@ export const mutateRefreshKeycloakToken = async ({
         auth: false,
         cache: false,
         debug,
+        signal,
     })
     return apollo.mutate<MutateRefreshKeycloakTokenResponse>({
         mutation: mutationMap[mutation],
         variables: { request },
-        ...withAbortContext(signal),
     })
 }

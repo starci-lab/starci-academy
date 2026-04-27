@@ -1,5 +1,5 @@
 import { createApolloClient } from "../clients"
-import { withAbortContext, type QueryParams } from "../types"
+import { type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
 const query1 = gql`
@@ -56,6 +56,7 @@ export const querySubmitCvPresignedUrl = async ({
         refreshAccessToken,
         minValiditySeconds,
         debug,
+        signal,
     })
 
     return apollo.query<QuerySubmitCvPresignedUrlResponse>({
@@ -64,6 +65,5 @@ export const querySubmitCvPresignedUrl = async ({
             request,
         },
         fetchPolicy: "no-cache",
-        ...withAbortContext(signal),
     })
 }

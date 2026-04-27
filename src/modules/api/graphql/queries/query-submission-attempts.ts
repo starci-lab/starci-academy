@@ -2,7 +2,6 @@ import type { SubmissionAttemptEntity } from "@/modules/types"
 import { createApolloClient } from "../clients"
 import {
     SortOrder,
-    withAbortContext,
     type GraphQLResponse,
     type PaginationFilters,
     type QueryParams,
@@ -100,6 +99,7 @@ export const querySubmissionAttempts = async ({
         minValiditySeconds,
         headers,
         debug,
+        signal,
     })
 
     return apollo.query<QuerySubmissionAttemptsResponse>({
@@ -107,6 +107,5 @@ export const querySubmissionAttempts = async ({
         variables: {
             request,
         },
-        ...withAbortContext(signal),
     })
 }

@@ -3,7 +3,7 @@
  *
  * Link chain order:
  * ```
- * RetryLink → AuthRefreshLink? → DynamicAuthLink? → ErrorLink → TimeoutLink → HttpLink
+ * RetryLink → AuthRefreshLink? → DynamicAuthLink? → ErrorLink → TimeoutLink → AbortSignal? → HttpLink
  * ```
  *
  * **Key Apollo concepts used here:**
@@ -172,6 +172,22 @@ const createAuthRefreshLink = (
 }
 
 /**
+ * Forwards a fixed {@link AbortSignal} to HttpLink `fetchOptions` (one client instance = one in-flight request scope).
+ */
+const createAbortSignalLink = (signal: AbortSignal) =>
+    new ApolloLink((operation, forward) => {
+        const ctx = operation.getContext() as { fetchOptions?: RequestInit }
+        const fetchOptions = ctx.fetchOptions ?? {}
+        operation.setContext({
+            fetchOptions: {
+                ...fetchOptions,
+                signal,
+            },
+        })
+        return forward(operation)
+    })
+
+/**
  * Centralized logging for GraphQL, protocol, and network errors.
  *
  * @see {@link https://www.apollographql.com/docs/react/api/link/apollo-link-error | ErrorLink API}
@@ -253,6 +269,11 @@ export interface CreateApolloClientOptions {
      * (DynamicAuthLink, AuthRefreshLink, ErrorLink, HttpLink).
      */
     debug?: boolean
+    /**
+     * Optional {@link https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal | AbortSignal} for all operations
+     * on this client; merged into {@link https://www.apollographql.com/docs/react/api/link/apollo-link-http | HttpLink} `fetchOptions`.
+     */
+    signal?: AbortSignal
 }
 
 /**
@@ -263,9 +284,10 @@ export interface CreateApolloClientOptions {
  * 1. **RetryLink** — exponential-backoff retries on network failures.
  * 2. **AuthRefreshLink** *(opt-in)* — refreshes expired tokens and retries once.
  * 3. **DynamicAuthLink** *(opt-in)* — injects `Authorization` header per request.
- * 4. **ErrorLink** — logs GraphQL, protocol, and network errors.
- * 5. **TimeoutLink** — aborts requests that exceed the configured timeout.
- * 6. **HttpLink** — sends the operation to the GraphQL endpoint.
+     * 4. **ErrorLink** — logs GraphQL, protocol, and network errors.
+     * 5. **TimeoutLink** — aborts requests that exceed the configured timeout.
+     * 6. **AbortSignal link** *(opt-in)* — forwards `signal` to `fetch` (e.g. SWR cancel).
+     * 7. **HttpLink** — sends the operation to the GraphQL endpoint.
  *
  * @param options - Link and cache configuration.
  * @returns A new `ApolloClient` instance (not shared; callers may cache as needed).
@@ -304,12 +326,15 @@ export const createApolloClient = (
         const getter: AccessTokenGetter = getAccessToken ?? (() => token)
         links.push(createDynamicAccessTokenAuthLink(getter, debug))
     }
-    // Add the error link, timeout link, and http link
+    // Add the error link, timeout link, optional abort, and http link
     links.push(
         createErrorLink(),
         createTimeoutLink(),
-        createHttpLink(withCredentials, finalHeaders)
     )
+    if (signal) {
+        links.push(createAbortSignalLink(signal))
+    }
+    links.push(createHttpLink(withCredentials, finalHeaders))
 
     // Final default options are the custom default options passed in the options plus the default options passed in the options
     const finalDefaultOptions = customDefaultOptions || (cache ? defaultOptions : undefined)

@@ -1,5 +1,5 @@
 import { createApolloClient } from "../clients"
-import { withAbortContext, type GraphQLResponse, type QueryParams, type QueryVariables } from "../types"
+import { type GraphQLResponse, type QueryParams, type QueryVariables } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
 /** Request body for `checkEmailExists` (mirrors GraphQL `CheckEmailExistsRequest`). */
@@ -62,6 +62,7 @@ export const queryCheckEmailExists = async ({
         {
             cache: false,
             debug,
+            signal,
         },
     )
     return apollo.query<
@@ -71,7 +72,6 @@ export const queryCheckEmailExists = async ({
         {
             query: queryMap[query],
             variables: { request },
-            ...withAbortContext(signal),
         },
     )
 }

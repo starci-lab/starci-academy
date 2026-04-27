@@ -1,7 +1,6 @@
 import type { PaymentType } from "@/modules/types"
 import { createApolloClient } from "../clients"
 import {
-    withAbortContext,
     type GraphQLResponse,
     type MutateParams,
     type QueryVariables,
@@ -84,11 +83,11 @@ export const mutateCourseEnroll = async ({
         refreshAccessToken,
         minValiditySeconds,
         debug,
+        signal,
     })
 
     return apollo.mutate<MutateCourseEnrollResponse>({
         mutation: mutationMap[mutation],
         variables: { request },
-        ...withAbortContext(signal),
     })
 }

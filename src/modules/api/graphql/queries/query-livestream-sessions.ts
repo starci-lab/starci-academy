@@ -2,7 +2,6 @@ import type { LivestreamSessionEntity } from "@/modules/types"
 import { createApolloClient } from "../clients"
 import {
     SortOrder,
-    withAbortContext,
     type GraphQLResponse,
     type PaginationFilters,
     type QueryParams,
@@ -95,6 +94,7 @@ export const queryLivestreamSessions = async ({
         minValiditySeconds,
         headers,
         debug,
+        signal,
     })
 
     return apollo.query<QueryLivestreamSessionsResponse>({
@@ -102,6 +102,5 @@ export const queryLivestreamSessions = async ({
         variables: {
             request,
         },
-        ...withAbortContext(signal),
     })
 }

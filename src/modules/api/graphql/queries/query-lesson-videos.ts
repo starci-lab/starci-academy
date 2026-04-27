@@ -2,7 +2,6 @@ import type { LessonVideoEntity } from "@/modules/types"
 import { createApolloClient } from "../clients"
 import {
     SortOrder,
-    withAbortContext,
     type GraphQLResponse,
     type PaginationFilters,
     type QueryParams,
@@ -95,6 +94,7 @@ export const queryLessonVideos = async ({
         minValiditySeconds,
         headers,
         debug,
+        signal,
     })
 
     return apollo.query<QueryLessonVideosResponse>({
@@ -102,6 +102,5 @@ export const queryLessonVideos = async ({
         variables: {
             request,
         },
-        ...withAbortContext(signal),
     })
 }

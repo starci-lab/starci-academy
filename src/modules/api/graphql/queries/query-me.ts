@@ -1,6 +1,6 @@
 import type { UserEntity } from "@/modules/types"
 import { createApolloClient } from "../clients"
-import { withAbortContext, type GraphQLResponse, type QueryParams } from "../types"
+import { type GraphQLResponse, type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
 const query1 = gql`
@@ -55,10 +55,10 @@ export const queryMe = async ({
         refreshAccessToken,
         minValiditySeconds,
         debug,
+        signal,
     })
 
     return apollo.query<QueryMeResponse>({
         query: queryMap[query],
-        ...withAbortContext(signal),
     })
 }

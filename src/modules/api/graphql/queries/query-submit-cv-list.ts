@@ -1,4 +1,4 @@
-import { createApolloClient } from "../clients"
+import { createAuthApolloClient } from "../clients"
 import { type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
@@ -54,21 +54,11 @@ export interface QueryCvReviewHistoryResponse {
 
 export const queryCvReviewHistory = async ({
     query = QueryCvReviewHistory.Query1,
-    token,
-    getAccessToken,
-    refreshAccessToken,
-    minValiditySeconds,
     debug,
     signal,
 }: QueryParams<QueryCvReviewHistory>) => {
-    const hasAuth = Boolean(token) || Boolean(getAccessToken)
-    const apollo = createApolloClient({
-        auth: hasAuth,
+    const apollo = createAuthApolloClient({
         cache: false,
-        token,
-        getAccessToken,
-        refreshAccessToken,
-        minValiditySeconds,
         debug,
         signal,
     })

@@ -1,4 +1,4 @@
-import { createApolloClient } from "../clients"
+import { createNoAuthApolloClient } from "../clients/clients"
 import { type GraphQLResponse, type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
@@ -47,7 +47,7 @@ export const querySystemConfig = async ({
     debug,
     signal,
 }: QueryParams<QuerySystemConfig, undefined>) => {
-    const apollo = createApolloClient({
+    const apollo = createNoAuthApolloClient({
         cache: false,
         debug,
         signal,

@@ -21,15 +21,12 @@ import {
     setAuthenticationModalTab,
 } from "@/redux/slices"
 import { useSignInFormik } from "@/hooks/singleton"
-import { useKeycloakZustand } from "@/hooks/zustand"
-import { pathConfig } from "@/resources/path"
 import { WithClassNames } from "@/modules/types"
-import { 
-    redirectToGoogleAuthentication, 
-    redirectToGithubAuthentication 
-} from "@/modules/keycloak"
+import { useRouter } from "next/navigation"
+import { KeycloakIdentityProvider, keycloakRedirect } from "@/modules/api"
+import { SessionStorage, SessionStorageId, SessionStorageOauthIdpHint } from "@/modules/storage"
 
-/**
+/** 
  * Props for SignInSection component
  */
 export type SignInSectionProps = WithClassNames<{
@@ -44,10 +41,9 @@ export type SignInSectionProps = WithClassNames<{
  */
 export const SignInSection = ({ className, classNames }: SignInSectionProps) => {
     const [showPassword, setShowPassword] = useState(false)
-    const keycloak = useKeycloakZustand()
     const dispatch = useAppDispatch()
     const t = useTranslations()
-    const authenticationPath = pathConfig().locale().authentication()
+    const router = useRouter()
     const {
         values,
         errors,
@@ -57,22 +53,6 @@ export const SignInSection = ({ className, classNames }: SignInSectionProps) => 
         setFieldTouched,
         isSubmitting,
     } = useSignInFormik()
-    const handleProviderSignIn = async (
-        idpHint: string, 
-        redirectPath: string
-    ) => {
-        await keycloak.init({
-            onLoad: "check-sso",
-            silentCheckSsoRedirectUri: `${location.origin}/silent-check-sso.html`,
-            responseMode: "query",
-            pkceMethod: "S256",
-            redirectUri: `${location.origin}/${redirectPath}`,
-        })
-        await keycloak?.login({
-            idpHint,
-            redirectUri: `${location.origin}/${redirectPath}`,
-        })
-    }
     return (
         <Modal.Body className={
             cn(
@@ -85,9 +65,18 @@ export const SignInSection = ({ className, classNames }: SignInSectionProps) => 
                 type="button"
                 variant="outline"
                 className="w-full text-sm"
-                isDisabled={!keycloak}
                 onPress={
-                    async () => redirectToGoogleAuthentication()
+                    () => {
+                        SessionStorage.setItem<SessionStorageOauthIdpHint>(
+                            SessionStorageId.OauthIdpHint, 
+                            {
+                                provider: KeycloakIdentityProvider.Google
+                            }
+                        )
+                        const url = keycloakRedirect.google
+                        url.searchParams.set("redirect_uri", window.location.href)
+                        router.push(url.toString())
+                    }
                 }
             >
                 <span className="inline-flex items-center justify-center gap-2">
@@ -100,9 +89,18 @@ export const SignInSection = ({ className, classNames }: SignInSectionProps) => 
                 type="button"
                 variant="outline"
                 className="w-full text-sm"
-                isDisabled={!keycloak}
                 onPress={
-                    async () => redirectToGithubAuthentication()
+                    () => {
+                        SessionStorage.setItem<SessionStorageOauthIdpHint>(
+                            SessionStorageId.OauthIdpHint, 
+                            {
+                                provider: KeycloakIdentityProvider.Github
+                            }
+                        )
+                        const url = keycloakRedirect.github
+                        url.searchParams.set("redirect_uri", window.location.href)
+                        router.push(url.toString()) 
+                    }
                 }
             >
                 <span className="inline-flex items-center justify-center gap-2">

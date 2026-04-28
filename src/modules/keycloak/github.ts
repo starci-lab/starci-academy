@@ -31,7 +31,9 @@ export const redirectToGithubAuthentication = async () => {
         idp_hint: "github"
     }
 
-    Object.entries(params).forEach(([key, val]) => url.searchParams.set(key, val))
+    Object.entries(params).forEach(
+        ([key, val]) => url.searchParams.set(key, val)
+    )
 
     /** Redirect to the URL. */
     window.location.href = url.toString()

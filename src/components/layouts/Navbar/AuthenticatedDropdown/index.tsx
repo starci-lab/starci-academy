@@ -1,6 +1,5 @@
-import { useKeycloakZustand } from "@/hooks/zustand"
 import { useRouter } from "@/i18n/navigation"
-import { useAppSelector } from "@/redux"
+import { useAppDispatch, useAppSelector } from "@/redux"
 import { pathConfig } from "@/resources/path"
 import { SignOutIcon, UserIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
@@ -13,7 +12,12 @@ import {
     DropdownTrigger,
 } from "@heroui/react"
 import React from "react"
-import { useLanguageOverlayState } from "@/hooks/singleton"
+import { 
+    useLanguageOverlayState, 
+    useMutationSignOutSwr 
+} from "@/hooks/singleton"
+import { LocalStorage, LocalStorageId } from "@/modules/storage"
+import { setAuthenticated } from "@/redux/slices"
 
 /**
  * AuthenticatedDropdown is a dropdown component that is used to display the authenticated user's information.
@@ -22,8 +26,9 @@ export const AuthenticatedDropdown = () => {
     const user = useAppSelector((state) => state.user.user)
     const t = useTranslations()
     const router = useRouter()
-    const keycloak = useKeycloakZustand()
     const { isOpen, onOpenChange } = useLanguageOverlayState()
+    const mutateSignOutSwr = useMutationSignOutSwr()
+    const dispatch = useAppDispatch()
     return (
         <Dropdown
             isOpen={isOpen}
@@ -62,12 +67,15 @@ export const AuthenticatedDropdown = () => {
                         key="logout" 
                         className="text-danger"
                         onPress={
-                            () => keycloak.logout(
-                                {
-                                    redirectUri: `${window.location.origin}${pathConfig().locale().authentication().google().logout().build()}`,
-                                }
-                            )
-                        }>
+                            async () => {
+                                LocalStorage.removeItem(
+                                    LocalStorageId.KeycloakAccessToken
+                                )
+                                await mutateSignOutSwr.trigger()
+                                dispatch(setAuthenticated(false))
+                            }
+                        }
+                    >
                         <div className="flex items-center gap-2">
                             <SignOutIcon className="size-5 text-danger" />
                             {t("nav.logout")}

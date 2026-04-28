@@ -1,5 +1,5 @@
 import type { LivestreamSessionEntity } from "@/modules/types"
-import { createApolloClient } from "../clients"
+import { createAuthApolloClient } from "../clients"
 import {
     SortOrder,
     type GraphQLResponse,
@@ -77,21 +77,11 @@ export const queryLivestreamSessions = async ({
     query = QueryLivestreamSessions.Query1,
     request,
     headers,
-    token,
-    getAccessToken,
-    refreshAccessToken,
-    minValiditySeconds,
     debug,
     signal,
 }: QueryParams<QueryLivestreamSessions, LivestreamSessionsListRequest>) => {
-    const hasAuth = Boolean(token) || Boolean(getAccessToken)
-    const apollo = createApolloClient({
-        auth: hasAuth,
+    const apollo = createAuthApolloClient({
         cache: false,
-        token,
-        getAccessToken,
-        refreshAccessToken,
-        minValiditySeconds,
         headers,
         debug,
         signal,

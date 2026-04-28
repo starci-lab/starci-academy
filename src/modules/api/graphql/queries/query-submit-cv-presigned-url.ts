@@ -1,4 +1,4 @@
-import { createApolloClient } from "../clients"
+import { createAuthApolloClient } from "../clients"
 import { type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
@@ -37,24 +37,14 @@ export interface QuerySubmitCvPresignedUrlResponse {
 export const querySubmitCvPresignedUrl = async ({
     query = QuerySubmitCvPresignedUrl.Query1,
     request,
-    token,
-    getAccessToken,
-    refreshAccessToken,
-    minValiditySeconds,
     debug,
     signal,
 }: QueryParams<
   QuerySubmitCvPresignedUrl,
   QuerySubmitCvPresignedUrlRequest
 >) => {
-    const hasAuth = Boolean(token) || Boolean(getAccessToken)
-    const apollo = createApolloClient({
-        auth: hasAuth,
+    const apollo = createAuthApolloClient({
         cache: false,
-        token,
-        getAccessToken,
-        refreshAccessToken,
-        minValiditySeconds,
         debug,
         signal,
     })

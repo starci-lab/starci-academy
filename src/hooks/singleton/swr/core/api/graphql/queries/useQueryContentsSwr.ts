@@ -2,7 +2,6 @@ import {
     GraphQLHeadersKey,  
     queryContents,
 } from "@/modules/api"
-import { useKeycloakZustand } from "@/hooks/zustand"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import useSWR from "swr"
 import { setContents, setContentsCount } from "@/redux/slices"
@@ -11,11 +10,7 @@ import { setContents, setContentsCount } from "@/redux/slices"
  * Lists module contents via `contents` and merges rows into `course.module.contents`.
  */
 export const useQueryContentsSwrCore = () => {
-    const keycloak = useKeycloakZustand()
-    const getAccessToken = () =>
-        keycloak.authenticated ? keycloak.token : undefined
-    const refreshAccessToken = async (minValiditySeconds = 30) =>
-        (await keycloak.updateToken(minValiditySeconds)) ?? false
+    const authenticated = useAppSelector((state) => state.keycloak.authenticated)
     const enrolled = useAppSelector((state) => state.user.enrolled)
     const course = useAppSelector((state) => state.course.entity)
     const module = useAppSelector((state) => state.module.entity)
@@ -27,12 +22,13 @@ export const useQueryContentsSwrCore = () => {
     )
     const dispatch = useAppDispatch()
     return useSWR(
-        enrolled && course?.id && module?.id
+        authenticated && enrolled && course?.id && module?.id
             ? [
                 "QUERY_CONTENTS_SWR",
                 module?.id,
                 course?.id,
                 enrolled,
+                authenticated,
                 pageNumber,
                 limit,
             ]
@@ -53,8 +49,6 @@ export const useQueryContentsSwrCore = () => {
                 headers: {
                     [GraphQLHeadersKey.XCourseId]: course?.id,
                 },
-                getAccessToken,
-                refreshAccessToken,
             })
             const payload = data.data?.contents?.data
             if (!payload) {

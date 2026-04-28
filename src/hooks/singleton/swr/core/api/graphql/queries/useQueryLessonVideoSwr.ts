@@ -8,10 +8,6 @@ import { setLessonVideo } from "@/redux/slices"
  */
 export const useQueryLessonVideoSwrCore = () => {
     const keycloak = useKeycloakZustand()
-    const getAccessToken = () =>
-        keycloak.authenticated ? keycloak.token : undefined
-    const refreshAccessToken = async (minValiditySeconds = 30) =>
-        (await keycloak.updateToken(minValiditySeconds)) ?? false
     const lessonVideoId = useAppSelector((state) => state.lessonVideo.id)
     const courseId = useAppSelector((state) => state.course.id)
     const dispatch = useAppDispatch()
@@ -32,8 +28,6 @@ export const useQueryLessonVideoSwrCore = () => {
                 headers: {
                     [GraphQLHeadersKey.XCourseId]: courseId,
                 },
-                getAccessToken,
-                refreshAccessToken,
             })
             if (!data?.data?.lessonVideo?.data) {
                 throw new Error("Lesson video not found")

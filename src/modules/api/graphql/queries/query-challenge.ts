@@ -1,5 +1,5 @@
 import type { ChallengeEntity } from "@/modules/types"
-import { createApolloClient } from "../clients"
+import { createAuthApolloClient } from "../clients"
 import { type GraphQLResponse, type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
@@ -67,26 +67,15 @@ export const queryChallenge = async ({
     query = QueryChallenge.Query1,
     request,
     headers,
-    token,
-    getAccessToken,
-    refreshAccessToken,
-    minValiditySeconds,
     debug,
     signal,
 }: QueryParams<QueryChallenge, ChallengeRequest>) => {
-    const hasAuth = Boolean(token) || Boolean(getAccessToken)
-    const apollo = createApolloClient(
-        {
-            auth: hasAuth,
-            cache: false,
-            token,
-            getAccessToken,
-            refreshAccessToken,
-            minValiditySeconds,
-            headers,
-            debug,
-            signal,
-        }
+    const apollo = createAuthApolloClient({
+        cache: false,
+        headers,
+        debug,
+        signal,
+    }
     )
     return apollo.query<QueryChallengeResponse>({
         query: queryMap[query],

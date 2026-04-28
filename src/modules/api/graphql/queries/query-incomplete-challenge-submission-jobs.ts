@@ -1,4 +1,4 @@
-import { createApolloClient } from "../clients"
+import { createNoAuthApolloClient } from "../clients"
 import { type GraphQLResponse, type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 import type { JobStatus } from "@/modules/types"
@@ -53,21 +53,11 @@ export interface QueryIncompleteChallengeSubmissionJobsResponse {
 export const queryIncompleteChallengeSubmissionJobs = async ({
     query = QueryIncompleteChallengeSubmissionJobs.Query1,
     headers,
-    token,
-    getAccessToken,
-    refreshAccessToken,
-    minValiditySeconds,
     debug,
     signal,
 }: QueryParams<QueryIncompleteChallengeSubmissionJobs, undefined>) => {
-    const hasAuth = Boolean(token) || Boolean(getAccessToken)
-    const apollo = createApolloClient({
-        auth: hasAuth,
+    const apollo = createNoAuthApolloClient({
         cache: false,
-        token,
-        getAccessToken,
-        refreshAccessToken,
-        minValiditySeconds,
         headers,
         debug,
         signal,

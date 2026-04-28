@@ -1,6 +1,6 @@
 
 import { CourseEntity } from "@/modules/types"
-import { createApolloClient } from "../clients"
+import { createNoAuthApolloClient } from "../clients"
 import { type GraphQLResponse, type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
@@ -84,27 +84,17 @@ export interface QueryCourseResponse {
 /**
  * Fetches one course by id via Apollo.
  *
- * @param params - Document key, GraphQL variables, and optional bearer token
+ * @param params - Document key, GraphQL variables
  * @returns Apollo query result; entity at `data.course.data.data`
  */
 export const queryCourse = async ({
     query = QueryCourse.Query1,
-    request,
-    token,
-    getAccessToken,
-    refreshAccessToken,
-    minValiditySeconds,
+    request,  
     debug,
     signal,
 }: QueryParams<QueryCourse, QueryCourseRequest>) => {
-    const hasAuth = Boolean(token) || Boolean(getAccessToken)
-    const apollo = createApolloClient({
-        auth: hasAuth,
+    const apollo = createNoAuthApolloClient({
         cache: false,
-        token,
-        getAccessToken,
-        refreshAccessToken,
-        minValiditySeconds,
         debug,
         signal,
     })

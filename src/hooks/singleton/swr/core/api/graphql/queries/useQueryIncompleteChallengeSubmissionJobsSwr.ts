@@ -13,10 +13,6 @@ import useSWR from "swr"
  */
 export const useQueryIncompleteChallengeSubmissionJobsSwrCore = () => {
     const keycloak = useKeycloakZustand()
-    const getAccessToken = () =>
-        keycloak.authenticated ? keycloak.token : undefined
-    const refreshAccessToken = async (minValiditySeconds = 30) =>
-        (await keycloak.updateToken(minValiditySeconds)) ?? false
     const enrolled = useAppSelector((state) => state.user.enrolled)
     const course = useAppSelector((state) => state.course.entity)
     const dispatch = useAppDispatch()
@@ -36,8 +32,6 @@ export const useQueryIncompleteChallengeSubmissionJobsSwrCore = () => {
                 headers: {
                     [GraphQLHeadersKey.XCourseId]: course.id,
                 },
-                getAccessToken,
-                refreshAccessToken,
             })
             const envelope = data?.incompleteChallengeSubmissionJobs
             const inner = envelope?.data

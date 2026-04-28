@@ -1,5 +1,5 @@
 import type { ContentEntity } from "@/modules/types"
-import { createApolloClient } from "../clients"
+import { createAuthApolloClient } from "../clients"
 import { type GraphQLResponse, type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
@@ -57,21 +57,11 @@ export const queryContent = async ({
     query = QueryContent.Query1,
     request,
     headers,
-    token,
-    getAccessToken,
-    refreshAccessToken,
-    minValiditySeconds,
     debug,
     signal,
 }: QueryParams<QueryContent, ContentRequest>) => {
-    const hasAuth = Boolean(token) || Boolean(getAccessToken)
-    const apollo = createApolloClient({
-        auth: hasAuth,
+    const apollo = createAuthApolloClient({
         cache: false,
-        token,
-        getAccessToken,
-        refreshAccessToken,
-        minValiditySeconds,
         headers,
         debug,
         signal,

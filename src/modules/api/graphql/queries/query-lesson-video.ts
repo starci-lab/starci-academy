@@ -1,5 +1,5 @@
 import type { LessonVideoEntity } from "@/modules/types"
-import { createApolloClient } from "../clients"
+import { createAuthApolloClient } from "../clients"
 import { type GraphQLResponse, type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
@@ -51,21 +51,11 @@ export const queryLessonVideo = async ({
     query = QueryLessonVideo.Query1,
     request,
     headers,
-    token,
-    getAccessToken,
-    refreshAccessToken,
-    minValiditySeconds,
     debug,
     signal,
 }: QueryParams<QueryLessonVideo, LessonVideoRequest>) => {
-    const hasAuth = Boolean(token) || Boolean(getAccessToken)
-    const apollo = createApolloClient({
-        auth: hasAuth,
+    const apollo = createAuthApolloClient({
         cache: false,
-        token,
-        getAccessToken,
-        refreshAccessToken,
-        minValiditySeconds,
         headers,
         debug,
         signal,

@@ -1,4 +1,4 @@
-import { createApolloClient } from "../clients"
+import { createAuthApolloClient } from "../clients"
 import {
     type GraphQLResponse,
     type MutateParams,
@@ -51,25 +51,12 @@ export interface MutateSyncChallengeSubmissionsResponse {
 export const mutateSyncChallengeSubmissions = async ({
     mutation = MutationSyncChallengeSubmissions.Mutation1,
     request,
-    token,
     headers,
-    getAccessToken,
-    refreshAccessToken,
-    minValiditySeconds,
     debug,
     signal,
 }: MutateSyncChallengeSubmissionsParams) => {
-    const hasAuth = Boolean(token) || Boolean(getAccessToken)
-    if (!hasAuth) {
-        throw new Error("Not authenticated")
-    }
-    const apollo = createApolloClient({
-        auth: true,
+    const apollo = createAuthApolloClient({
         cache: false,
-        token,
-        getAccessToken,
-        refreshAccessToken,
-        minValiditySeconds,
         headers,
         debug,
         signal,

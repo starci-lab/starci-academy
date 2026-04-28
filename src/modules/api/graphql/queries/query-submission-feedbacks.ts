@@ -1,5 +1,5 @@
 import type { SubmissionFeedbackEntity } from "@/modules/types"
-import { createApolloClient } from "../clients"
+import { createAuthApolloClient } from "../clients"
 import {
     SortOrder,
     type GraphQLResponse,
@@ -81,21 +81,11 @@ export const querySubmissionFeedbacks = async ({
     query = QuerySubmissionFeedbacks.Query1,
     request,
     headers,
-    token,
-    getAccessToken,
-    refreshAccessToken,
-    minValiditySeconds,
     debug,
     signal,
 }: QueryParams<QuerySubmissionFeedbacks, SubmissionFeedbacksListRequest>) => {
-    const hasAuth = Boolean(token) || Boolean(getAccessToken)
-    const apollo = createApolloClient({
-        auth: hasAuth,
+    const apollo = createAuthApolloClient({
         cache: false,
-        token,
-        getAccessToken,
-        refreshAccessToken,
-        minValiditySeconds,
         headers,
         debug,
         signal,

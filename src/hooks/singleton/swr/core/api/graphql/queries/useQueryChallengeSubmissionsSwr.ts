@@ -3,7 +3,6 @@ import {
     GraphQLHeadersKey,
     queryChallengeSubmissions,
 } from "@/modules/api"
-import { useKeycloakZustand } from "@/hooks/zustand"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import useSWR from "swr"
 import { setChallengeSubmissions } from "@/redux/slices"
@@ -13,11 +12,7 @@ import { setChallengeSubmissions } from "@/redux/slices"
  * Runs when `challenge.id` (or loaded `challenge.entity.id`) and course context exist.
  */
 export const useQueryChallengeSubmissionsSwrCore = () => {
-    const keycloak = useKeycloakZustand()
-    const getAccessToken = () =>
-        keycloak.authenticated ? keycloak.token : undefined
-    const refreshAccessToken = async (minValiditySeconds = 30) =>
-        (await keycloak.updateToken(minValiditySeconds)) ?? false
+    const authenticated = useAppSelector((state) => state.keycloak.authenticated)
     const enrolled = useAppSelector((state) => state.user.enrolled)
     const course = useAppSelector((state) => state.course.entity)
     const challengeId = useAppSelector(
@@ -25,12 +20,13 @@ export const useQueryChallengeSubmissionsSwrCore = () => {
     )
     const dispatch = useAppDispatch()
     const swr = useSWR(
-        enrolled && course?.id && challengeId
+        authenticated && enrolled && course?.id && challengeId
             ? [
                 "QUERY_CHALLENGE_SUBMISSIONS_SWR",
                 challengeId,
                 course.id,
                 enrolled,
+                authenticated,
             ]
             : null,
         async () => {
@@ -47,8 +43,6 @@ export const useQueryChallengeSubmissionsSwrCore = () => {
                 headers: {
                     [GraphQLHeadersKey.XCourseId]: course.id,
                 },
-                getAccessToken,
-                refreshAccessToken,
             })
             const payload = data.data?.challengeSubmissions?.data
             if (!payload) {

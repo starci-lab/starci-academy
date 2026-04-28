@@ -1,5 +1,5 @@
 import type { CourseEntity } from "@/modules/types"
-import { createApolloClient } from "../clients"
+import { createNoAuthApolloClient } from "../clients"
 import {
     SortBy,
     SortOrder,
@@ -72,25 +72,16 @@ export interface QueryCoursesResponse {
 export const queryCourses = async ({
     query = QueryCourses.Query1,
     request,
-    token,
-    getAccessToken,
-    refreshAccessToken,
-    minValiditySeconds,
     debug,
     signal,
 }: QueryParams<QueryCourses, QueryCoursesRequest>) => {
-    const hasAuth = Boolean(token) || Boolean(getAccessToken)
-    const apollo = createApolloClient({
-        auth: hasAuth,
-        cache: false,
-        token,
-        getAccessToken,
-        refreshAccessToken,
-        minValiditySeconds,
-        debug,
-        signal,
-    })
-
+    const apollo = createNoAuthApolloClient(
+        {
+            cache: false,
+            debug,
+            signal,
+        }
+    )
     return apollo.query<QueryCoursesResponse>({
         query: queryMap[query],
         variables: {

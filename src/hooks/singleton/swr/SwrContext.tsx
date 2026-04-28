@@ -27,7 +27,7 @@ import {
     useQueryCvReviewHistorySwrCore,
     useQueryCheckEmailExistsSwrCore,
     useMutateExchangeCodeForTokenSwrCore,
-    useMutateRefreshKeycloakTokenSwrCore,
+    useMutateSignOutSwrCore,
 } from "./core"
 
 export interface SwrContextType {
@@ -56,7 +56,7 @@ export interface SwrContextType {
     postKeycloakRegisterSwr: ReturnType<typeof usePostKeycloakRegisterSwrCore>;
     queryCheckEmailExistsSwr: ReturnType<typeof useQueryCheckEmailExistsSwrCore>;
     mutateExchangeCodeForTokenSwr: ReturnType<typeof useMutateExchangeCodeForTokenSwrCore>;
-    mutateRefreshKeycloakTokenSwr: ReturnType<typeof useMutateRefreshKeycloakTokenSwrCore>;
+    mutateSignOutSwr: ReturnType<typeof useMutateSignOutSwrCore>;
 }
 
 export const SwrContext = createContext<SwrContextType | null>(null)
@@ -90,7 +90,7 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
     const postKeycloakRegisterSwr = usePostKeycloakRegisterSwrCore()
     const queryCheckEmailExistsSwr = useQueryCheckEmailExistsSwrCore()
     const mutateExchangeCodeForTokenSwr = useMutateExchangeCodeForTokenSwrCore()
-    const mutateRefreshKeycloakTokenSwr = useMutateRefreshKeycloakTokenSwrCore()
+    const mutateSignOutSwr = useMutateSignOutSwrCore()
     return (
         <SwrContext.Provider value={
             {
@@ -119,7 +119,7 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
                 postKeycloakRegisterSwr,
                 queryCheckEmailExistsSwr,
                 mutateExchangeCodeForTokenSwr,
-                mutateRefreshKeycloakTokenSwr,
+                mutateSignOutSwr,
             }
         }>
             {children}

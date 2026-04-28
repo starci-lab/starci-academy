@@ -1,5 +1,4 @@
 import { GraphQLHeadersKey, queryContent } from "@/modules/api"
-import { useKeycloakZustand } from "@/hooks/zustand"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import useSWR from "swr"
 import { setContent } from "@/redux/slices"
@@ -7,22 +6,19 @@ import { setContent } from "@/redux/slices"
  * Singleton SWR for `content(request: { id })` — id from `content.id` (`setContentId`).
  */
 export const useQueryContentSwrCore = () => {
-    const keycloak = useKeycloakZustand()
-    const getAccessToken = () =>
-        keycloak.authenticated ? keycloak.token : undefined
-    const refreshAccessToken = async (minValiditySeconds = 30) =>
-        (await keycloak.updateToken(minValiditySeconds)) ?? false
     const displayId = useAppSelector((state) => state.content.displayId)
+    const authenticated = useAppSelector((state) => state.keycloak.authenticated)
     const module = useAppSelector((state) => state.module.entity)
     const course = useAppSelector((state) => state.course.entity)
     const dispatch = useAppDispatch()
     const swr = useSWR(
-        displayId && module?.id
+        authenticated && displayId && module?.id
             ? [
                 "QUERY_CONTENT_SWR",
                 displayId,
                 module?.id,
                 course?.id,
+                authenticated,
             ]
             : null,
         async () => {
@@ -34,8 +30,6 @@ export const useQueryContentSwrCore = () => {
                 headers: {
                     [GraphQLHeadersKey.XCourseId]: course?.id,
                 },
-                getAccessToken,
-                refreshAccessToken,
             })
             if (!data?.data?.content?.data) {
                 throw new Error("Content not found")

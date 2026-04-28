@@ -1,5 +1,5 @@
 import type { PaymentType } from "@/modules/types"
-import { createApolloClient } from "../clients"
+import { createAuthApolloClient } from "../clients"
 import {
     type GraphQLResponse,
     type MutateParams,
@@ -64,24 +64,11 @@ export interface MutateCourseEnrollResponse {
 export const mutateCourseEnroll = async ({
     mutation = MutationCourseEnroll.Mutation1,
     request,
-    token,
-    getAccessToken,
-    refreshAccessToken,
-    minValiditySeconds,
     debug,
     signal,
 }: MutateCourseEnrollParams) => {
-    const hasAuth = Boolean(token) || Boolean(getAccessToken)
-    if (!hasAuth) {
-        throw new Error("Not authenticated")
-    }
-    const apollo = createApolloClient({
-        auth: true,
+    const apollo = createAuthApolloClient({
         cache: false,
-        token,
-        getAccessToken,
-        refreshAccessToken,
-        minValiditySeconds,
         debug,
         signal,
     })

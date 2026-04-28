@@ -2,7 +2,6 @@ import {
     GraphQLHeadersKey,
     queryChallenges,
 } from "@/modules/api"
-import { useKeycloakZustand } from "@/hooks/zustand"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import useSWR from "swr"
 import { ContentTab, setChallengeCount, setChallenges } from "@/redux/slices"
@@ -10,11 +9,7 @@ import { ContentTab, setChallengeCount, setChallenges } from "@/redux/slices"
  * Lists module challenges via `challenges` and merges into `course.module.challenges`.
  */
 export const useQueryChallengesSwrCore = () => {
-    const keycloak = useKeycloakZustand()
-    const getAccessToken = () =>
-        keycloak.authenticated ? keycloak.token : undefined
-    const refreshAccessToken = async (minValiditySeconds = 30) =>
-        (await keycloak.updateToken(minValiditySeconds)) ?? false
+    const authenticated = useAppSelector((state) => state.keycloak.authenticated)
     const enrolled = useAppSelector((state) => state.user.enrolled)
     const course = useAppSelector((state) => state.course.entity)
     const content = useAppSelector((state) => state.content.entity)
@@ -27,12 +22,13 @@ export const useQueryChallengesSwrCore = () => {
     const contentTab = useAppSelector((state) => state.tabs.contentTab)
     const dispatch = useAppDispatch()
     return useSWR(
-        enrolled && course?.id && content?.id && contentTab === ContentTab.Challenges
+        authenticated && enrolled && course?.id && content?.id && contentTab === ContentTab.Challenges
             ? [
                 "QUERY_CHALLENGES_SWR",
                 content?.id,
                 course?.id,
                 enrolled,
+                authenticated,
                 pageNumber,
                 limit,
                 contentTab,
@@ -54,8 +50,6 @@ export const useQueryChallengesSwrCore = () => {
                 headers: {
                     [GraphQLHeadersKey.XCourseId]: course.id,
                 },
-                getAccessToken,
-                refreshAccessToken,
             })
             const payload = data.data?.challenges?.data
             if (!payload) {

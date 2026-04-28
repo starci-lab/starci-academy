@@ -1,4 +1,4 @@
-import { createApolloClient } from "../clients"
+import { createNoAuthApolloClient } from "../clients"
 import { type GraphQLResponse, type QueryParams, type QueryVariables } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
@@ -58,12 +58,12 @@ export const queryCheckEmailExists = async ({
     if (!request) {
         throw new Error("queryCheckEmailExists requires `request`")
     }
-    const apollo = createApolloClient(
+    const apollo = createNoAuthApolloClient(
         {
             cache: false,
             debug,
             signal,
-        },
+        }
     )
     return apollo.query<
         QueryCheckEmailExistsResponse,

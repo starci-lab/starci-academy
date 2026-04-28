@@ -1,4 +1,4 @@
-import { createApolloClient } from "../clients"
+import { createNoAuthApolloClient } from "../clients/clients"
 import {
     type GraphQLResponse,
     type MutateParams,
@@ -18,12 +18,6 @@ export enum KeycloakIdentityProvider {
 /** Token payload inside `exchangeCodeForToken.data` (mirrors `ExchangeCodeForTokenData`). */
 export interface ExchangeCodeForTokenData {
     accessToken: string
-    refreshToken: string
-    tokenType: string
-    expiresIn: number
-    idToken?: string | null
-    scope: string
-    sessionState: string
 }
 
 const mutation1 = gql`
@@ -34,12 +28,6 @@ const mutation1 = gql`
       error
       data {
         accessToken
-        refreshToken
-        tokenType
-        expiresIn
-        idToken
-        scope
-        sessionState
       }
     }
   }
@@ -56,7 +44,7 @@ const mutationMap: Record<MutationExchangeCodeForToken, DocumentNode> = {
 export interface ExchangeCodeForTokenRequest {
     code: string
     provider: KeycloakIdentityProvider
-    redirectUri: string
+    state: string
 }
 
 export type MutateExchangeCodeForTokenVariables = QueryVariables<ExchangeCodeForTokenRequest>
@@ -81,11 +69,11 @@ export const mutateExchangeCodeForToken = async ({
     debug,
     signal,
 }: MutateExchangeCodeForTokenParams) => {
-    const apollo = createApolloClient({
-        auth: false,
+    const apollo = createNoAuthApolloClient({
         cache: false,
         debug,
         signal,
+        withCredentials: true,
     })
     return apollo.mutate<MutateExchangeCodeForTokenResponse>({
         mutation: mutationMap[mutation],

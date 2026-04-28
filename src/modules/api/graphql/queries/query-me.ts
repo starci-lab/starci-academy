@@ -1,5 +1,5 @@
 import type { UserEntity } from "@/modules/types"
-import { createApolloClient } from "../clients"
+import { createAuthApolloClient } from "../clients"
 import { type GraphQLResponse, type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
@@ -34,30 +34,19 @@ export interface QueryMeResponse {
 /**
  * Fetches the current user via Apollo.
  *
- * @param params - Document key, GraphQL variables, and optional bearer token
+ * @param params - Document key, GraphQL variables
  * @returns Apollo query result; entity at `data.me.data.data`
  */
 export const queryMe = async ({
     query = QueryMe.Query1,
-    token,
-    getAccessToken,
-    refreshAccessToken,
-    minValiditySeconds,
     debug,
     signal,
 }: QueryParams<QueryMe, undefined>) => {
-    const hasAuth = Boolean(token) || Boolean(getAccessToken)
-    const apollo = createApolloClient({
-        auth: hasAuth,
+    const apollo = createAuthApolloClient({
         cache: false,
-        token,
-        getAccessToken,
-        refreshAccessToken,
-        minValiditySeconds,
         debug,
         signal,
     })
-
     return apollo.query<QueryMeResponse>({
         query: queryMap[query],
     })

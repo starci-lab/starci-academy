@@ -10,15 +10,14 @@ import {
     DropdownPopover,
     DropdownSection,
     Separator,
-    Spinner,
 } from "@heroui/react"
 import React, { useMemo } from "react"
 import {
     useAccountMenuOverlayState,
     useAuthenticationOverlayState,
     useLanguageOverlayState,
+    useMutationSignOutSwr,
 } from "@/hooks/singleton"
-import { useKeycloakZustand } from "@/hooks/zustand"
 import { BellIcon, CaretRightIcon } from "@phosphor-icons/react"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import { languages } from "@/resources/constants"
@@ -28,7 +27,6 @@ import { setAuthenticationModalTab } from "@/redux/slices"
 import { AuthenticationModalTab } from "@/redux/slices/tabs"
 import { truncate } from "lodash"
 import { cn } from "@heroui/react"
-import { pathConfig } from "@/resources/path"
 import { WithClassNames } from "@/modules/types"
 import { UserIcon } from "@phosphor-icons/react"
 
@@ -56,13 +54,13 @@ export interface AccountActionItem {
 export const AccountMenuDropdown = (props: AccountMenuDropdownProps) => {
     const { classNames } = props
     const { isOpen, onOpenChange, onClose } = useAccountMenuOverlayState()
-    const { authenticated, isLoading, logout } = useKeycloakZustand()
     const user = useAppSelector((state) => state.user.user)
     const locale = useLocale()
     const t = useTranslations()
     const { onOpen: onLanguageOpen } = useLanguageOverlayState()
     const { onOpen: onAuthenticationOpen } = useAuthenticationOverlayState()
     const dispatch = useAppDispatch()
+    const mutateSignOutSwr = useMutationSignOutSwr()
     const currentLanguage = useMemo(
         () => languages.find((lang) => lang.code === locale),
         [locale]
@@ -81,8 +79,7 @@ export const AccountMenuDropdown = (props: AccountMenuDropdownProps) => {
             tab: AuthenticationModalTab.SignUp,
         },
     ]), [t])
-    const isAuthenticated = Boolean(authenticated)
-
+    const isAuthenticated = useAppSelector((state) => state.keycloak.authenticated)
     return (
         <Dropdown
             isOpen={isOpen}
@@ -91,11 +88,7 @@ export const AccountMenuDropdown = (props: AccountMenuDropdownProps) => {
         >
             {/** Dropdown trigger */}
             <>
-                {isLoading ? (
-                    <Button isIconOnly isDisabled className="rounded-full" variant="tertiary">
-                        <Spinner color="current" />
-                    </Button>
-                ) : isAuthenticated ? (
+                {!isAuthenticated ? (
                     <Button
                         onPress={() => onOpenChange(!isOpen)}
                         isIconOnly 
@@ -189,9 +182,9 @@ export const AccountMenuDropdown = (props: AccountMenuDropdownProps) => {
                         <DropdownItem
                             key="logout"
                             className="py-3 text-danger"
-                            onPress={() => logout({
-                                redirectUri: `${window.location.origin}${pathConfig().locale().authentication().google().logout().build()}`,
-                            })}
+                            onPress={async () => {
+                                await mutateSignOutSwr.trigger()
+                            }}
                         >
                             {t("nav.logout")}
                         </DropdownItem>

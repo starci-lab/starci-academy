@@ -1,5 +1,5 @@
 import type { SubmissionAttemptEntity } from "@/modules/types"
-import { createApolloClient } from "../clients"
+import { createAuthApolloClient } from "../clients"
 import {
     SortOrder,
     type GraphQLResponse,
@@ -82,21 +82,11 @@ export const querySubmissionAttempts = async ({
     query = QuerySubmissionAttempts.Query1,
     request,
     headers,
-    token,
-    getAccessToken,
-    refreshAccessToken,
-    minValiditySeconds,
     debug,
     signal,
 }: QueryParams<QuerySubmissionAttempts, SubmissionAttemptsListRequest>) => {
-    const hasAuth = Boolean(token) || Boolean(getAccessToken)
-    const apollo = createApolloClient({
-        auth: hasAuth,
+    const apollo = createAuthApolloClient({
         cache: false,
-        token,
-        getAccessToken,
-        refreshAccessToken,
-        minValiditySeconds,
         headers,
         debug,
         signal,

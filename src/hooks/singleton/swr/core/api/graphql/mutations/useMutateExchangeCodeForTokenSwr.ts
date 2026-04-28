@@ -3,6 +3,7 @@ import {
     mutateExchangeCodeForToken,
     type ExchangeCodeForTokenRequest,
 } from "@/modules/api"
+import { LocalStorage, LocalStorageId } from "@/modules/storage"
 import useSWRMutation from "swr/mutation"
 
 type MutateExchangeCodeForTokenResult = Awaited<
@@ -24,11 +25,19 @@ export const useMutateExchangeCodeForTokenSwrCore = () => {
             if (!arg.request) {
                 throw new Error("Request is required")
             }
-            return mutateExchangeCodeForToken(
+            const result = await mutateExchangeCodeForToken(
                 { 
                     request: arg.request,
                     signal: arg.signal,
-                })
+                }
+            )
+            if (result.data?.exchangeCodeForToken?.data?.accessToken) {
+                LocalStorage.setItem(
+                    LocalStorageId.KeycloakAccessToken,
+                    result.data.exchangeCodeForToken.data.accessToken
+                )
+            }
+            return result
         }
     )
     return swr

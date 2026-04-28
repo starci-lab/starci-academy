@@ -1,5 +1,4 @@
 import { GraphQLHeadersKey, queryModule } from "@/modules/api"
-import { useKeycloakZustand } from "@/hooks/zustand"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import useSWR from "swr"
 import { setModule } from "@/redux/slices"
@@ -10,11 +9,6 @@ import { setModule } from "@/redux/slices"
  * `useQueryLessonVideosSwr` / `useQueryChallengesSwr` (list queries under `ref/queries/...`).
  */
 export const useQueryModuleSwrCore = () => {
-    const keycloak = useKeycloakZustand()
-    const getAccessToken = () =>
-        keycloak.authenticated ? keycloak.token : undefined
-    const refreshAccessToken = async (minValiditySeconds = 30) =>
-        (await keycloak.updateToken(minValiditySeconds)) ?? false
     const enrolled = useAppSelector((state) => state.user.enrolled)
     const displayId = useAppSelector((state) => state.module.displayId)
     const id = useAppSelector((state) => state.module.id)
@@ -45,8 +39,6 @@ export const useQueryModuleSwrCore = () => {
                 headers: {
                     [GraphQLHeadersKey.XCourseId]: course?.id,
                 },
-                getAccessToken,
-                refreshAccessToken,
             })
             if (!data || !data.data) {
                 throw new Error("Module not found")

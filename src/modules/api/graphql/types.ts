@@ -1,9 +1,3 @@
-/**
- * Shared GraphQL client types: response envelope, optional auth headers, generic query params.
- */
-
-import { Locale } from "next-intl"
-
 /** Standard API wrapper around resolver payloads (`success`, `message`, optional `error`, nested `data`). */
 
 export interface GraphQLResponse<TData = undefined> {
@@ -17,6 +11,8 @@ export interface GraphQLResponse<TData = undefined> {
 export enum GraphQLHeadersKey {
     XCourseId = "X-Course-Id",
     XLocale = "X-Locale",
+    /** Same meaning as server refresh short-circuit (`src/refresh-token/refresh-token.resolver.ts`). */
+    XMinValiditySeconds = "X-Min-Validity-Seconds",
 }
 
 export type GraphQLHeaders = Partial<Record<GraphQLHeadersKey, string>>
@@ -38,15 +34,6 @@ export interface QueryParams<TQuery, TRequest = undefined> extends GraphQLOperat
     request?: TRequest
     /** Optional headers to pass to the query. */
     headers?: GraphQLHeaders
-    /** Optional bearer token to pass to the query. */
-    token?: string
-    /** Optional token getter (preferred over static `token` for refresh + retry flows). */
-    getAccessToken?: () => string | undefined
-    /** Optional refresh callback; should call `keycloak.updateToken(minValiditySeconds)`. */
-    refreshAccessToken?: (minValiditySeconds?: number) => Promise<boolean>
-    /** Default min-validity seconds for refresh, used by auth-refresh link. */
-    minValiditySeconds?: number
-    locale?: Locale
     /** When `true`, logs the Apollo link chain flow (DynamicAuthLink, AuthRefreshLink) to console. */
     debug?: boolean
 }
@@ -60,12 +47,6 @@ export interface MutateParams<TMutation, TRequest> extends GraphQLOperationConte
     headers?: GraphQLHeaders
     /** Optional bearer token to pass to the mutation. */
     token?: string
-    /** Optional token getter (preferred over static `token` for refresh + retry flows). */
-    getAccessToken?: () => string | undefined
-    /** Optional refresh callback; should call `keycloak.updateToken(minValiditySeconds)`. */
-    refreshAccessToken?: (minValiditySeconds?: number) => Promise<boolean>
-    /** Default min-validity seconds for refresh, used by auth-refresh link. */
-    minValiditySeconds?: number
     /** When `true`, logs the Apollo link chain flow (DynamicAuthLink, AuthRefreshLink) to console. */
     debug?: boolean
 }

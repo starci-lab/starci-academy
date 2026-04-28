@@ -17,10 +17,6 @@ type MutateSyncChallengeSubmissionsResult = Awaited<
 export const useMutateSyncChallengeSubmissionSwrCore = () => {
     const keycloak = useKeycloakZustand()
     const courseId = useAppSelector((state) => state.course.entity?.id)
-    const getAccessToken = () =>
-        keycloak.authenticated ? keycloak.token : undefined
-    const refreshAccessToken = async (minValiditySeconds = 30) =>
-        (await keycloak.updateToken(minValiditySeconds)) ?? false
     const swr = useSWRMutation<
         MutateSyncChallengeSubmissionsResult,
         Error,
@@ -37,8 +33,6 @@ export const useMutateSyncChallengeSubmissionSwrCore = () => {
             }
             return mutateSyncChallengeSubmissions({
                 request: arg,
-                getAccessToken,
-                refreshAccessToken,
                 headers: {
                     [GraphQLHeadersKey.XCourseId]: courseId,
                 },

@@ -1,5 +1,5 @@
-import { createApolloClient } from "../clients"
-import { type GraphQLOperationContext, type GraphQLResponse } from "../types"
+import { createAuthApolloClient } from "../clients"
+import { type GraphQLResponse, type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
 /** Payload inside `courseEnrollmentStatus.data` after the standard API wrapper. */
@@ -37,21 +37,7 @@ export interface QueryCourseEnrollmentStatusVariables {
     }
 }
 
-export interface QueryCourseEnrollmentStatusParams extends GraphQLOperationContext {
-    query?: QueryCourseEnrollmentStatus
-    variables: QueryCourseEnrollmentStatusVariables
-    /** When set, `isEnrolled` reflects the current user; omit for anonymous (count only). */
-    token?: string
-    /** Optional token getter (preferred over static `token` for refresh + retry flows). */
-    getAccessToken?: () => string | undefined
-    /** Optional refresh callback; should call `keycloak.updateToken(minValiditySeconds)`. */
-    refreshAccessToken?: (minValiditySeconds?: number) => Promise<boolean>
-    /** Default min-validity seconds for refresh, used by auth-refresh link. */
-    minValiditySeconds?: number
-    /** When `true`, logs the Apollo link chain flow to console. */
-    debug?: boolean
-}
-
+export type QueryCourseEnrollmentStatusParams = QueryParams<QueryCourseEnrollmentStatus, QueryCourseEnrollmentStatusVariables>
 export interface QueryCourseEnrollmentStatusResponse {
     courseEnrollmentStatus: GraphQLResponse<CourseEnrollmentStatusData>
 }
@@ -63,30 +49,21 @@ export interface QueryCourseEnrollmentStatusResponse {
  */
 export const queryCourseEnrollmentStatus = async ({
     query = QueryCourseEnrollmentStatus.Query1,
-    variables,
-    token,
-    getAccessToken,
-    refreshAccessToken,
-    minValiditySeconds,
+    request,
     debug,
     signal,
 }: QueryCourseEnrollmentStatusParams) => {
-    const hasAuth = Boolean(token) || Boolean(getAccessToken)
-    const apollo = createApolloClient(
-        {
-            auth: hasAuth,
-            cache: false,
-            token,
-            getAccessToken,
-            refreshAccessToken,
-            minValiditySeconds,
-            debug,
-            signal,
-        }
+    const apollo = createAuthApolloClient({
+        cache: false,
+        debug,
+        signal,
+    }
     )
 
     return apollo.query<QueryCourseEnrollmentStatusResponse>({
         query: queryMap[query],
-        variables,
+        variables: {
+            request,
+        },
     })
 }

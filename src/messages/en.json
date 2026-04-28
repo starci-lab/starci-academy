@@ -340,6 +340,17 @@
       "noAccount": "Don't have an account?",
       "signUp": "Sign Up",
       "success": "Signed in successfully"
+      ,
+      "otp": {
+        "title": "Enter OTP",
+        "desc": "Enter the 6-digit code sent to your email",
+        "label": "OTP code",
+        "placeholder": "Enter 6-digit OTP",
+        "required": "OTP is required",
+        "invalid": "OTP must be 6 digits",
+        "sent": "OTP sent successfully",
+        "submit": "Verify"
+      }
     },
     "signUp": {
       "title": "Sign Up",

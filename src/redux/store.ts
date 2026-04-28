@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit"
 import { 
     tabsReducer,
+    stateReducer,
     courseReducer,
     userReducer,
     modalReducer,
@@ -21,6 +22,7 @@ import {
 export const store = configureStore({
     reducer: {
         tabs: tabsReducer,
+        state: stateReducer,
         course: courseReducer,
         user: userReducer,
         modal: modalReducer,

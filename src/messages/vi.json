@@ -349,6 +349,17 @@
       "noAccount": "Chưa có tài khoản?",
       "signUp": "Đăng ký",
       "success": "Đăng nhập thành công"
+      ,
+      "otp": {
+        "title": "Nhập mã OTP",
+        "desc": "Nhập mã 6 chữ số được gửi về email của bạn",
+        "label": "Mã OTP",
+        "placeholder": "Nhập mã OTP 6 số",
+        "required": "Vui lòng nhập mã OTP",
+        "invalid": "Mã OTP phải gồm 6 chữ số",
+        "sent": "Gửi mã OTP thành công",
+        "submit": "Xác nhận"
+      }
     },
     "signUp": {
       "title": "Đăng ký",

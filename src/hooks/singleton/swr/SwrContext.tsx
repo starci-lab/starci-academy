@@ -28,6 +28,8 @@ import {
     useQueryCheckEmailExistsSwrCore,
     useMutateExchangeCodeForTokenSwrCore,
     useMutateSignOutSwrCore,
+    useMutateSignInInitSwrCore,
+    useMutateSignInVerifyOtpSwrCore,
 } from "./core"
 
 export interface SwrContextType {
@@ -57,6 +59,8 @@ export interface SwrContextType {
     queryCheckEmailExistsSwr: ReturnType<typeof useQueryCheckEmailExistsSwrCore>;
     mutateExchangeCodeForTokenSwr: ReturnType<typeof useMutateExchangeCodeForTokenSwrCore>;
     mutateSignOutSwr: ReturnType<typeof useMutateSignOutSwrCore>;
+    mutateSignInInitSwr: ReturnType<typeof useMutateSignInInitSwrCore>;
+    mutateSignInVerifyOtpSwr: ReturnType<typeof useMutateSignInVerifyOtpSwrCore>;
 }
 
 export const SwrContext = createContext<SwrContextType | null>(null)
@@ -91,6 +95,8 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
     const queryCheckEmailExistsSwr = useQueryCheckEmailExistsSwrCore()
     const mutateExchangeCodeForTokenSwr = useMutateExchangeCodeForTokenSwrCore()
     const mutateSignOutSwr = useMutateSignOutSwrCore()
+    const mutateSignInInitSwr = useMutateSignInInitSwrCore()
+    const mutateSignInVerifyOtpSwr = useMutateSignInVerifyOtpSwrCore()
     return (
         <SwrContext.Provider value={
             {
@@ -120,6 +126,8 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
                 queryCheckEmailExistsSwr,
                 mutateExchangeCodeForTokenSwr,
                 mutateSignOutSwr,
+                mutateSignInInitSwr,
+                mutateSignInVerifyOtpSwr,
             }
         }>
             {children}

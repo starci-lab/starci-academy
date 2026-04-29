@@ -34,7 +34,6 @@ import { SignInState } from "@/redux/slices"
 import { CredentialsState } from "./CredentialsState"
 import { OtpState } from "./OtpState"
 
-
 /**
  * Renders the sign-in flow step (`Credentials` or `OTP`) based on `signInState`.
  */

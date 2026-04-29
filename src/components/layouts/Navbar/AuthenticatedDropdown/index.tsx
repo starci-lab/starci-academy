@@ -26,13 +26,13 @@ export const AuthenticatedDropdown = () => {
     const user = useAppSelector((state) => state.user.user)
     const t = useTranslations()
     const router = useRouter()
-    const { isOpen, onOpenChange } = useLanguageOverlayState()
+    const { isOpen, setOpen } = useLanguageOverlayState()
     const mutateSignOutSwr = useMutationSignOutSwr()
     const dispatch = useAppDispatch()
     return (
         <Dropdown
             isOpen={isOpen}
-            onOpenChange={onOpenChange}
+            onOpenChange={setOpen}
         >
             <DropdownTrigger>
                 <Avatar className="cursor-pointer">
@@ -44,7 +44,7 @@ export const AuthenticatedDropdown = () => {
             </DropdownTrigger>
             <DropdownMenu>
                 <DropdownSection>
-                    <DropdownItem key="account" onPress={() => onOpenChange(false)}>
+                    <DropdownItem key="account" onPress={() => setOpen(false)}>
                         <div>
                             <div>{user?.username}</div>
                             <div className="text-xs text-foreground-500">{user?.email}</div>
@@ -56,7 +56,7 @@ export const AuthenticatedDropdown = () => {
                         key="profile" 
                         onPress={() => {
                             router.push(pathConfig().locale().profile().build())
-                            onOpenChange(false)
+                            setOpen(false)
                         }}>
                         <div className="flex items-center gap-2">
                             <UserIcon className="size-5" />

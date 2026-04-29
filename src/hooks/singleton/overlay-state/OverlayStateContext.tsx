@@ -15,6 +15,7 @@ import {
     useSubmissionAttemptsOverlayStateCore,
     useFeedbackDetailsOverlayStateCore,
     useSearchOverlayStateCore,
+    useLinkGithubOverlayStateCore,
 } from "./core"
 
 export interface OverlayStateContextType {
@@ -31,6 +32,7 @@ export interface OverlayStateContextType {
     submissionAttempts: ReturnType<typeof useSubmissionAttemptsOverlayStateCore>
     feedbackDetails: ReturnType<typeof useFeedbackDetailsOverlayStateCore>
     search: ReturnType<typeof useSearchOverlayStateCore>
+    linkGithub: ReturnType<typeof useLinkGithubOverlayStateCore>
 }
 
 export const OverlayStateContext = createContext<OverlayStateContextType | null>(null)
@@ -49,6 +51,7 @@ export const OverlayStateProvider = ({ children }: PropsWithChildren) => {
     const submissionAttempts = useSubmissionAttemptsOverlayStateCore()
     const feedbackDetails = useFeedbackDetailsOverlayStateCore()
     const search = useSearchOverlayStateCore()
+    const linkGithub = useLinkGithubOverlayStateCore()
     return (
         <OverlayStateContext.Provider value={{
             authentication,
@@ -64,6 +67,7 @@ export const OverlayStateProvider = ({ children }: PropsWithChildren) => {
             submissionAttempts,
             feedbackDetails,
             search,
+            linkGithub,
         }}>
             {children}
         </OverlayStateContext.Provider>

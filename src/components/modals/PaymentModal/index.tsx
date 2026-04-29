@@ -9,10 +9,9 @@ import { assetConfig } from "@/resources"
 import { runGraphQLWithToast } from "@/modules/toast"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
-import { AppModalHeader } from "../AppModalHeader"
 
 export const PaymentModal = () => {
-    const { isOpen, onOpenChange } = usePaymentOverlayState()
+    const { isOpen, setOpen } = usePaymentOverlayState()
     const swr = useMutateCourseEnrollSwr()
     const course = useAppSelector((state) => state.course.entity)
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentType | null>(null)
@@ -43,16 +42,15 @@ export const PaymentModal = () => {
     }, [t])
 
     return (
-        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <Modal isOpen={isOpen} onOpenChange={setOpen}>
             <Modal.Backdrop>
                 <Modal.Container size="xs">
                     <Modal.Dialog>
                         <Modal.CloseTrigger />
-                        <AppModalHeader
-                            description={t("payment.desc")}
-                            title={t("payment.title")}
-                        />
-                        <Modal.Body className="gap-0 p-4">
+                        <Modal.Header>
+                            <div className="text-2xl font-bold">{t("payment.title")}</div>
+                        </Modal.Header>
+                        <Modal.Body>
                             <div className="flex flex-col overflow-hidden rounded-medium">
                                 {paymentData.paymentMethods.map((paymentMethod, index) => (
                                     <React.Fragment key={paymentMethod.id}>

@@ -50,7 +50,7 @@ alwaysApply: true
 - Keep modal open/close state in singleton overlay hooks, not as local page state when the modal is part of global app UX.
 - Structure for each overlay:
   - `core/useXxxOverlayState.ts`: returns `useOverlayState()`.
-  - `impls/useXxxOverlayState.ts`: maps context state to `{ isOpen, onOpen, onClose, onOpenChange }`.
+  - `impls/useXxxOverlayState.ts`: maps context state to `{ isOpen, onOpen, onClose, setOpen }`.
   - register in `OverlayStateContext.tsx` and provider value.
   - export via `core/index.ts`, `impls/index.ts`, and `overlay-state/index.ts`.
 - Put modal UI under `src/components/modals/XxxModal/index.tsx` and mount in `ModalContainer`.

@@ -55,7 +55,7 @@ export const ChallengeCard = ({ challenge }: ChallengeCardProps) => {
                     <div className="flex gap-2">
                         <Button onPress={() => {
                             dispatch(setChallengeId(challenge.id))
-                            challengeOverlayState.onOpen()
+                            challengeOverlayState.open()
                         }}>
                             <SwordIcon className="size-5" />
                             {t("challenge.do")}

@@ -58,7 +58,7 @@ export const useSignInFormikCore = () => {
     const { trigger: mutateSignInInit } = useMutateSignInInitSwr()
     const { trigger: mutateSignInVerifyOtp } = useMutateSignInVerifyOtpSwr()
     const { trigger: queryCheckEmailExists } = useQueryCheckEmailExistsSwr()
-    const { onClose: onAuthenticationClose } = useAuthenticationOverlayState()
+    const { close: onAuthenticationClose } = useAuthenticationOverlayState()
     const dispatch = useAppDispatch()
     const signInState = useAppSelector((state) => state.state.signInState)
     const t = useTranslations()

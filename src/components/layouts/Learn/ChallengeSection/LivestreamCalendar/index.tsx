@@ -114,7 +114,7 @@ export const countdownParts = (totalSeconds: number): CountdownParts => {
 export const LivestreamCalendar = () => {
     const t = useTranslations()
     const format = useFormatter()
-    const { onOpen } = useLivestreamCalendarOverlayState()
+    const { open } = useLivestreamCalendarOverlayState()
     const { isLoading, data } = useQueryLivestreamSessionsSwr()
     const sessions = useAppSelector((state) => state.livestreamSession.entities)
     const [nowMs, setNowMs] = useState(() => Date.now())
@@ -165,7 +165,7 @@ export const LivestreamCalendar = () => {
                 </div>
                 <Button
                     variant="tertiary"
-                    onPress={onOpen}
+                    onPress={open}
                 >
                     <CalendarBlankIcon className="w-5 h-5" />
                     {t("livestream.calendar.button")}

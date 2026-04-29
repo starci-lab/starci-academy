@@ -6,7 +6,6 @@ import { useFeedbackDetailsOverlayState, useQuerySubmissionFeedbacksSwr } from "
 import { useAppSelector } from "@/redux"
 import { FeedbackCard } from "./FeedbackCard"
 import { useTranslations } from "next-intl"
-import { AppModalHeader } from "../AppModalHeader"
 import { FeedbackDetailsEmpty } from "./Empty"
 import { FeedbackCardSkeleton } from "./FeedbackCardSkeleton"
 
@@ -14,7 +13,7 @@ import { FeedbackCardSkeleton } from "./FeedbackCardSkeleton"
  * Modal listing feedback entries for the current submission attempt.
  */
 export const FeedbackDetailsModal = () => {
-    const { isOpen, onOpenChange } = useFeedbackDetailsOverlayState()
+    const { isOpen, setOpen } = useFeedbackDetailsOverlayState()
     const querySubmissionFeedbacksSwr = useQuerySubmissionFeedbacksSwr()
     const submissionFeedbacks = useAppSelector((state) => state.submissionFeedback.submissionFeedbacks)
     const t = useTranslations()
@@ -23,12 +22,14 @@ export const FeedbackDetailsModal = () => {
         && (querySubmissionFeedbacksSwr.isLoading || querySubmissionFeedbacksSwr.isValidating)
         && submissionFeedbacks.length === 0
     return (
-        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <Modal isOpen={isOpen} onOpenChange={setOpen}>
             <Modal.Backdrop>
                 <Modal.Container size="lg">
                     <Modal.Dialog>
                         <Modal.CloseTrigger />
-                        <AppModalHeader title={t("feedback.detailsTitle")} />
+                        <Modal.Header>
+                            <div className="text-2xl font-bold">{t("feedback.detailsTitle")}</div>
+                        </Modal.Header>
                         <Modal.Body>
                             {showSkeleton ? (
                                 <ScrollShadow className="max-h-[500px]" hideScrollBar>

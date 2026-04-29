@@ -22,7 +22,7 @@ import { GlobalSearchContent } from "./Content"
 export const GlobalSearchModal = () => {
     const t = useTranslations()
     const locale = useLocale()
-    const { isOpen, onOpenChange } = useSearchOverlayState()
+    const { isOpen, setOpen } = useSearchOverlayState()
     const formik = useGlobalSearchFormik()
     const socket = useAutocompleteSocketIo()
 
@@ -36,11 +36,11 @@ export const GlobalSearchModal = () => {
         const onKeyDown = (event: KeyboardEvent) => {
             if (event.key !== "Escape") return
             event.preventDefault()
-            onOpenChange(false)
+            setOpen(false)
         }
         window.addEventListener("keydown", onKeyDown)
         return () => window.removeEventListener("keydown", onKeyDown)
-    }, [isOpen, onOpenChange])
+    }, [isOpen, setOpen])
 
     useEffect(() => {
         if (!isOpen) return
@@ -61,7 +61,7 @@ export const GlobalSearchModal = () => {
     }, [entities, formik.values.query, isOpen, locale, socket])
 
     return (
-        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <Modal isOpen={isOpen} onOpenChange={setOpen}>
             <Modal.Backdrop>
                 <Modal.Container className="p-0" size="lg">
                     <Modal.Dialog className="p-0 rounded-2xl">

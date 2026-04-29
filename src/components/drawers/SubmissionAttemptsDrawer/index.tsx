@@ -21,8 +21,8 @@ import { Empty } from "./Empty"
 export const SubmissionAttemptsDrawer = () => {
     const dispatch = useAppDispatch()
     const t = useTranslations()
-    const { isOpen, onOpenChange } = useSubmissionAttemptsOverlayState()
-    const { onOpen: onOpenFeedbackDetails } = useFeedbackDetailsOverlayState()
+    const { isOpen, setOpen } = useSubmissionAttemptsOverlayState()
+    const { open: openFeedbackDetails } = useFeedbackDetailsOverlayState()
     const submissionAttempts = useAppSelector((state) => state.submissionAttempt.submissionAttempts)
     const count = useAppSelector((state) => state.submissionAttempt.count)
     const pageNumber = useAppSelector((state) => state.submissionAttempt.pageNumber)
@@ -59,7 +59,7 @@ export const SubmissionAttemptsDrawer = () => {
             <Drawer.Backdrop
                 isOpen={isOpen}
                 onOpenChange={(open) => {
-                    onOpenChange(open)
+                    setOpen(open)
                     if (!open) {
                         dispatch(setActiveChallengeSubmissionId(undefined))
                     }
@@ -99,7 +99,7 @@ export const SubmissionAttemptsDrawer = () => {
                                                                 submissionAttempt={submissionAttempt}
                                                                 onViewDetails={() => {
                                                                     dispatch(setSubmissionAttemptId(submissionAttempt.id))
-                                                                    onOpenFeedbackDetails()
+                                                                    openFeedbackDetails()
                                                                 }}
                                                                 onViewSubmission={() => {
                                                                     window.open(submissionAttempt.submissionUrl, "_blank")

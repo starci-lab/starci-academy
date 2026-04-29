@@ -13,7 +13,7 @@ import { Dropzone } from "@/components/reuseable"
 import { querySubmitCvPresignedUrl } from "@/modules/api"
 
 export const CvUpdateModal = () => {
-    const { isOpen, onOpenChange } = useCvUpdateOverlayState()
+    const { isOpen, setOpen } = useCvUpdateOverlayState()
     const formik = useCvApplyFormik()
     const keycloak = useKeycloakZustand()
     const t = useTranslations()
@@ -76,7 +76,7 @@ export const CvUpdateModal = () => {
             toast.success("Success", {
                 description: t("cv.form.modal.confirm"),
             })
-            onOpenChange(false)
+            setOpen(false)
         } catch (error) {
             const message =
         error instanceof Error ? error.message : "Failed to submit CV"
@@ -89,7 +89,7 @@ export const CvUpdateModal = () => {
     }
 
     return (
-        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <Modal isOpen={isOpen} onOpenChange={setOpen}>
             <Modal.Backdrop>
                 <Modal.Container size="sm">
                     <Modal.Dialog>
@@ -125,7 +125,7 @@ export const CvUpdateModal = () => {
                                             cvSubmissionId: null,
                                             cvSubmissionAttemptId: null,
                                         })
-                                        onOpenChange(false)
+                                        setOpen(false)
                                     }}
                                 >
                                     {t("cv.form.cancel")}

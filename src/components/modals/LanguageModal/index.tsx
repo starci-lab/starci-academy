@@ -9,13 +9,12 @@ import { usePathname } from "@/i18n/navigation"
 import { Spacer } from "@/components/reuseable"
 import { LanguageCard } from "./LanguageCard"
 import { languages } from "@/resources"
-import { AppModalHeader } from "../AppModalHeader"
 
 /**
  * LanguageModal is a modal component that is used to display the language selection.
  */
 export const LanguageModal = () => {
-    const { isOpen, onOpenChange } = useLanguageOverlayState()
+    const { isOpen, setOpen } = useLanguageOverlayState()
     const t = useTranslations()
     const locale = useLocale()
     const currentLanguage = languages.find((lang) => lang.code === locale)
@@ -25,12 +24,14 @@ export const LanguageModal = () => {
     const popularLanguages = languages.filter((lang) => popularLanguagesCodes.includes(lang.code)).sort((prev, next) => prev.code.localeCompare(next.code))
     const allLanguages = languages.sort((prev, next) => prev.code.localeCompare(next.code))
     return (
-        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <Modal isOpen={isOpen} onOpenChange={setOpen}>
             <Modal.Backdrop>
                 <Modal.Container>
                     <Modal.Dialog>
                         <Modal.CloseTrigger />
-                        <AppModalHeader title={t("settings.language.title")} />
+                        <Modal.Header>
+                            <div className="text-2xl font-bold">{t("settings.language.title")}</div>
+                        </Modal.Header>
                         <Modal.Body className="gap-0 p-4">
                             <div>
                                 <div className="text-sm text-foreground-500">{t("settings.language.popular")}</div>

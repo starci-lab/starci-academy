@@ -36,7 +36,7 @@ export const Navbar = () => {
     const router = useRouter()
     const pathname = usePathname()
     const locale = useLocale()
-    const { onOpen: onOpenSearch } = useSearchOverlayState()
+    const { open: openSearch } = useSearchOverlayState()
 
     useEffect(() => {
         const onKeyDown = (event: KeyboardEvent) => {
@@ -44,11 +44,11 @@ export const Navbar = () => {
             if (!isK) return
             if (!(event.ctrlKey || event.metaKey)) return
             event.preventDefault()
-            onOpenSearch()
+            openSearch()
         }
         window.addEventListener("keydown", onKeyDown)
         return () => window.removeEventListener("keydown", onKeyDown)
-    }, [onOpenSearch])
+    }, [openSearch])
 
     const items: Array<NavbarItem> = useMemo(
         () => [
@@ -95,7 +95,7 @@ export const Navbar = () => {
                 </div>
 
                 <div className="flex items-center justify-end gap-3">
-                    <Button className="w-[300px] justify-between px-3" variant="outline" onPress={onOpenSearch}>
+                    <Button className="w-[300px] justify-between px-3" variant="outline" onPress={openSearch}>
                         <span className="inline-flex items-center gap-2">
                             <MagnifyingGlassIcon className="h-5 w-5" />
                             <span className="text-sm">{t("search.label")}</span>

@@ -13,7 +13,7 @@ import { SignUpSection } from "./SignUpSection"
 import { Modal } from "@heroui/react"
 
 export const AuthenticationModal = () => {
-    const { isOpen, onOpenChange } = useAuthenticationOverlayState()
+    const { isOpen, setOpen } = useAuthenticationOverlayState()
     const dispatch = useAppDispatch()
     const authenticationModalTab = useAppSelector((state) => state.tabs.authenticationModalTab)
 
@@ -34,7 +34,7 @@ export const AuthenticationModal = () => {
     return (
         <Modal
             isOpen={isOpen}
-            onOpenChange={onOpenChange}
+            onOpenChange={setOpen}
         >
             <Modal.Backdrop>
                 <Modal.Container size="xs">

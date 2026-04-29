@@ -10,7 +10,7 @@ import { useAppSelector } from "@/redux"
 import { TrophyIcon } from "@phosphor-icons/react"
 
 export const ChallengeCard = () => {
-    const { onOpen } = useChallengeOverlayState()
+    const { open } = useChallengeOverlayState()
     const challenge = useAppSelector((state) => state.challenge.entity)
     const submissions = useAppSelector(
         (state) => state.challenge.challengeSubmissions,
@@ -40,7 +40,7 @@ export const ChallengeCard = () => {
                 </div>
                 <Spacer y={3} />
                 <Button
-                    onPress={onOpen}
+                    onPress={open}
                     variant="tertiary"
                 >
                     <span className="inline-flex items-center gap-2">

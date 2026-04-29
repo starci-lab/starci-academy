@@ -56,7 +56,7 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
     const { className } = props
     const formik = useEditSubmissionFormik()
     const { values, errors, touched, setFieldValue, setFieldTouched, isSubmitting } = formik
-    const { onOpen: onOpenSubmissionAttempts } = useSubmissionAttemptsOverlayState()
+    const { open: openSubmissionAttempts } = useSubmissionAttemptsOverlayState()
     const t = useTranslations()
     const iconMap: SubmissionIconMap = {
         [SubmissionType.GithubUrl]: SiGithub,
@@ -234,7 +234,7 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
                                     variant="secondary"
                                     onPress={() => {
                                         dispatch(setActiveChallengeSubmissionId(submission.id))
-                                        onOpenSubmissionAttempts()
+                                        openSubmissionAttempts()
                                     }}
                                 >
                                     {t("challenge.submissionModal.viewAttempts")}

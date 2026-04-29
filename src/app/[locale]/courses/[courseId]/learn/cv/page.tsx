@@ -50,8 +50,8 @@ const Page = () => {
     const keycloak = useKeycloakZustand()
     const token = keycloak.authenticated ? keycloak.token : undefined
     const [isReviewing, setIsReviewing] = useState(false)
-    const { onOpen: onOpenCvUpdateModal } = useCvUpdateOverlayState()
-    const { onOpen: onOpenCvPreviewModal } = useCvPreviewOverlayState()
+    const { open: openCvUpdateModal } = useCvUpdateOverlayState()
+    const { open: openCvPreviewModal } = useCvPreviewOverlayState()
     const selectedFileUrl = useMemo(() => {
         if (!formik.values.cvFile) return ""
         return URL.createObjectURL(formik.values.cvFile)
@@ -199,7 +199,7 @@ const Page = () => {
                                 <Button isDisabled={isReviewing || !cvSubmissionId} onPress={handleReviewCv}>
                                     {t("cv.submission.reviewAction")}
                                 </Button>
-                                <Button variant="secondary" onPress={onOpenCvUpdateModal}>
+                                <Button variant="secondary" onPress={openCvUpdateModal}>
                                     {t("cv.submission.updateAction")}
                                 </Button>
                             </div>
@@ -235,7 +235,7 @@ const Page = () => {
                         <Button
                             className="w-full"
                             size="lg"
-                            onPress={onOpenCvPreviewModal}
+                            onPress={openCvPreviewModal}
                         >
                             <MagnifyingGlassPlusIcon className="size-5" />
                             {t("cv.preview.fullscreen")}

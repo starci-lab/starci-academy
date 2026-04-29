@@ -54,7 +54,7 @@ export interface ChallengeCardProps {
  */
 export const ChallengeCard = ({ challenge }: ChallengeCardProps) => {
     const t = useTranslations()
-    const { onOpen } = useChallengeOverlayState()
+    const { open } = useChallengeOverlayState()
     const dispatch = useAppDispatch()
     const difficultyName = useMemo(() => {
         switch (challenge.difficulty) {
@@ -73,7 +73,7 @@ export const ChallengeCard = ({ challenge }: ChallengeCardProps) => {
             variant="tertiary"
             onPress={() => {
                 dispatch(setChallengeId(challenge.id))
-                onOpen()
+                open()
             }}
         >
             <div className="flex flex-col gap-3 w-full">

@@ -523,5 +523,10 @@
   },
   "markdown": {
     "tableAriaLabel": "Bảng nội dung"
+  },
+  "linkGithub": {
+    "title": "Liên kết GitHub",
+    "description": "Liên kết tài khoản GitHub của bạn để mở khóa toàn quyền truy cập vào kho mã nguồn của StarCi Academy.",
+    "button": "Liên kết tài khoản GitHub"
   }
 }

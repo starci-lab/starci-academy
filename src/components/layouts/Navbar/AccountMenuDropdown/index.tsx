@@ -53,12 +53,12 @@ export interface AccountActionItem {
  */
 export const AccountMenuDropdown = (props: AccountMenuDropdownProps) => {
     const { classNames } = props
-    const { isOpen, onOpenChange, onClose } = useAccountMenuOverlayState()
+    const { isOpen, setOpen, close } = useAccountMenuOverlayState()
     const user = useAppSelector((state) => state.user.user)
     const locale = useLocale()
     const t = useTranslations()
-    const { onOpen: onLanguageOpen } = useLanguageOverlayState()
-    const { onOpen: onAuthenticationOpen } = useAuthenticationOverlayState()
+    const { open: openLanguage } = useLanguageOverlayState()
+    const { open: openAuthentication } = useAuthenticationOverlayState()
     const dispatch = useAppDispatch()
     const mutateSignOutSwr = useMutationSignOutSwr()
     const currentLanguage = useMemo(
@@ -83,14 +83,14 @@ export const AccountMenuDropdown = (props: AccountMenuDropdownProps) => {
     return (
         <Dropdown
             isOpen={isOpen}
-            onOpenChange={onOpenChange}
+            onOpenChange={setOpen}
             className={cn(classNames?.menuContainer)}
         >
             {/** Dropdown trigger */}
             <>
                 {!isAuthenticated ? (
                     <Button
-                        onPress={() => onOpenChange(!isOpen)}
+                        onPress={() => setOpen(!isOpen)}
                         isIconOnly 
                         className="rounded-full" variant="tertiary">
                         <Badge size="sm" className="border-0" content="0" color="accent">
@@ -103,7 +103,7 @@ export const AccountMenuDropdown = (props: AccountMenuDropdownProps) => {
                     </Button>
                 ) : (
                     <Button 
-                        onPress={() => onOpenChange(!isOpen)}
+                        onPress={() => setOpen(!isOpen)}
                         isIconOnly className="rounded-full" variant="tertiary">
                         <UserIcon className="size-5" />
                     </Button>
@@ -139,8 +139,8 @@ export const AccountMenuDropdown = (props: AccountMenuDropdownProps) => {
                                     variant={item.variant}
                                     onPress={() => {
                                         dispatch(setAuthenticationModalTab(item.tab))
-                                        onClose()
-                                        onAuthenticationOpen()
+                                        close()
+                                        openAuthentication()
                                     }}
                                 >
                                     {item.label}
@@ -156,8 +156,8 @@ export const AccountMenuDropdown = (props: AccountMenuDropdownProps) => {
                         <DropdownItem
                             key="language"
                             onPress={() => {
-                                onClose()
-                                onLanguageOpen()
+                                close()
+                                openLanguage()
                             }}
                             className="py-3"
                         >

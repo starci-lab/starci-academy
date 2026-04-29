@@ -28,7 +28,7 @@ export interface UseGlobalSearchResult {
     /** Whether the search modal is open. */
     isOpen: boolean
     /** HeroUI-style open change handler. */
-    onOpenChange: (open: boolean) => void
+    setOpen: (open: boolean) => void
     /** Shared Formik instance (query string). */
     formik: ReturnType<typeof useGlobalSearchFormik>
 }
@@ -39,7 +39,7 @@ export interface UseGlobalSearchResult {
  * @returns Modal state, formik, and static entity list for rendering.
  */
 export const useGlobalSearch = (): UseGlobalSearchResult => {
-    const { isOpen, onOpenChange } = useSearchOverlayState()
+    const { isOpen, setOpen } = useSearchOverlayState()
     const formik = useGlobalSearchFormik()
     const socket = useAutocompleteSocketIo()
     const locale = useLocale()
@@ -55,13 +55,13 @@ export const useGlobalSearch = (): UseGlobalSearchResult => {
                 return
             }
             event.preventDefault()
-            onOpenChange(false)
+            setOpen(false)
         }
         window.addEventListener("keydown", onKeyDown)
         return () => {
             window.removeEventListener("keydown", onKeyDown)
         }
-    }, [isOpen, onOpenChange])
+    }, [isOpen, setOpen])
 
     useEffect(() => {
         if (!isOpen) {
@@ -83,5 +83,5 @@ export const useGlobalSearch = (): UseGlobalSearchResult => {
         }
     }, [entities, formik.values.query, isOpen, locale, socket])
 
-    return { isOpen, onOpenChange, formik }
+    return { isOpen, setOpen, formik }
 }

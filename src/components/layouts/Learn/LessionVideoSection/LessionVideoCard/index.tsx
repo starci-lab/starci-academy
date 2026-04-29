@@ -25,7 +25,7 @@ export interface VideoLessionCardProps {
  * @returns The card for the lesson video.
  */
 export const VideoLessionCard = ({ lessonVideo }: VideoLessionCardProps) => {
-    const { onOpen } = useLessonVideoOverlayState()
+    const { open } = useLessonVideoOverlayState()
     const dispatch = useAppDispatch()
     return (
         <Card
@@ -33,7 +33,7 @@ export const VideoLessionCard = ({ lessonVideo }: VideoLessionCardProps) => {
             onClick={() => {
                 dispatch(setLessonVideoId(lessonVideo.id))
                 dispatch(setLessonVideo(lessonVideo))
-                onOpen()
+                open()
             }}
         >
             <Card.Content>

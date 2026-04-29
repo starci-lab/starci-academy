@@ -13,7 +13,7 @@ import { difficultyPalette } from "@/components/pallettes"
 import { ChallengeDifficulty } from "@/modules/types"
 
 export const ChallengeModal = () => {
-    const { isOpen, onOpenChange } = useChallengeOverlayState()
+    const { isOpen, setOpen } = useChallengeOverlayState()
     const t = useTranslations()
     const challenge = useAppSelector((state) => state.challenge.entity)
     const submissions = useAppSelector((state) => state.challenge.challengeSubmissions)
@@ -51,7 +51,7 @@ export const ChallengeModal = () => {
         return submissions?.some((submission) => !!submission.userSubmission?.lastAttempt)
     }, [submissions])
     return (
-        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <Modal isOpen={isOpen} onOpenChange={setOpen}>
             <Modal.Backdrop>
                 <Modal.Container size="full">
                     <Modal.Dialog className="p-0">

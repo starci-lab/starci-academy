@@ -523,5 +523,10 @@
   "markdown": {
     "tableAriaLabel": "Content table",
     "mermaidRendering": "Rendering diagram..."
+  },
+  "linkGithub": {
+    "title": "Link GitHub",
+    "description": "Link your GitHub account to unlock full access to StarCi Academy repositories.",
+    "button": "Link GitHub Account"
   }
 }

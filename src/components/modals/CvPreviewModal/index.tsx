@@ -19,7 +19,7 @@ const REMOTE_TEST_PDF_URL = "https://mozilla.github.io/pdf.js/web/compressed.tra
 export const CvPreviewModal = () => {
     const t = useTranslations()
     const formik = useCvApplyFormik()
-    const { isOpen, onOpenChange } = useCvPreviewOverlayState()
+    const { isOpen, setOpen } = useCvPreviewOverlayState()
     const selectedFileUrl = useMemo(() => {
         if (!formik.values.cvFile) return ""
         return URL.createObjectURL(formik.values.cvFile)
@@ -33,7 +33,7 @@ export const CvPreviewModal = () => {
     }, [selectedFileUrl])
 
     return (
-        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <Modal isOpen={isOpen} onOpenChange={setOpen}>
             <Modal.Backdrop>
                 <Modal.Container className="h-[92vh] w-[96vw] max-w-[96vw]">
                     <Modal.Dialog>

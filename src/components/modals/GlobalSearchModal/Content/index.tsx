@@ -20,7 +20,7 @@ import { ScrollShadow } from "@heroui/react"
 export const GlobalSearchContent = () => {
     const t = useTranslations()
     const router = useRouter()
-    const { onOpenChange } = useSearchOverlayState()
+    const { setOpen } = useSearchOverlayState()
 
     const courses = useAppSelector((state) => state.socketIo.globalSearchResults?.data?.courses)
     const modules = useAppSelector((state) => state.socketIo.globalSearchResults?.data?.modules)
@@ -31,8 +31,8 @@ export const GlobalSearchContent = () => {
 
     const onItemPress = useCallback(
         () => {
-            onOpenChange(false)
-        }, [onOpenChange, router])
+            setOpen(false)
+        }, [setOpen, router])
 
     return (
         <ScrollShadow hideScrollBar className="max-h-[300px] p-3">

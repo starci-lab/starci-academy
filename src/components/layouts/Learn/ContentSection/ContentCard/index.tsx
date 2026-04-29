@@ -53,7 +53,7 @@ export interface ContentCardProps {
  */
 export const ContentCard = ({ content }: ContentCardProps) => {
     const t = useTranslations()
-    const { onOpen } = useContentOverlayState()
+    const { open } = useContentOverlayState()
     const dispatch = useAppDispatch()
 
     return (
@@ -62,7 +62,7 @@ export const ContentCard = ({ content }: ContentCardProps) => {
             variant="tertiary"
             onPress={() => {
                 dispatch(setContentId(content.id))
-                onOpen()
+                open()
             }
             }
         >

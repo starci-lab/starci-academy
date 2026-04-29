@@ -14,7 +14,6 @@ import { ClockIcon } from "@phosphor-icons/react"
 import { useFormatter, useTranslations } from "next-intl"
 import React, { useMemo } from "react"
 import dayjs from "dayjs"
-import { AppModalHeader } from "../AppModalHeader"
 
 /** JS `Date#getDay()` (0 = Sunday … 6 = Saturday). */
 export const dayOfWeekToNumber: Record<DayOfWeek, number> = {
@@ -71,7 +70,7 @@ const formatTime = (hhmmss: string) => hhmmss.slice(0, 5)
 export const LivestreamCalendarModal = () => {
     const t = useTranslations()
     const format = useFormatter()
-    const { isOpen, onOpenChange } = useLivestreamCalendarOverlayState()
+    const { isOpen, setOpen } = useLivestreamCalendarOverlayState()
     const sessions = useAppSelector((state) => state.livestreamSession.entities)
     const sessionDow = useSessionWeekdaySet(sessions)
     const visibleSessions = useMemo(() => {
@@ -104,15 +103,14 @@ export const LivestreamCalendarModal = () => {
     }
 
     return (
-        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <Modal isOpen={isOpen} onOpenChange={setOpen}>
             <Modal.Backdrop>
                 <Modal.Container className="max-w-lg" size="lg">
                     <Modal.Dialog>
                         <Modal.CloseTrigger />
-                        <AppModalHeader
-                            description={t("livestream.calendar.modalDescription")}
-                            title={t("livestream.calendar.modalTitle")}
-                        />
+                        <Modal.Header>
+                            <div className="text-2xl font-bold">{t("livestream.calendar.modalTitle")}</div>
+                        </Modal.Header>
                         <Modal.Body className="gap-0 p-4">
                             {
                                 visibleSessions.length === 0 ? (

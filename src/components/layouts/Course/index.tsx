@@ -19,7 +19,7 @@ import { useAppSelector } from "@/redux"
 import { pathConfig } from "@/resources"
 
 export const Course = () => {
-    const { onOpen } = usePaymentOverlayState()
+    const { open } = usePaymentOverlayState()
     const enrollmentSwr = useQueryCourseEnrollmentStatusSwr()
     const enrollmentPayload = enrollmentSwr.data?.courseEnrollmentStatus?.data
     const isEnrolled = enrollmentPayload?.isEnrolled === true
@@ -122,7 +122,7 @@ export const Course = () => {
                                         size="lg" 
                                         className="w-full"
                                         isDisabled={isEnrolled}
-                                        onPress={onOpen}
+                                        onPress={open}
                                     >
                                         <PencilSimpleLineIcon className="w-5 h-5" />
                                         {t("course.enroll")}

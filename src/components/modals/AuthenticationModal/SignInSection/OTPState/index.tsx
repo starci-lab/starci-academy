@@ -36,7 +36,7 @@ export const OtpState = () => {
         const challengeId = values.challengeId
         if (!challengeId) {
             return
-        }   
+        }
         await runGraphQLWithToast(
             async () => {
                 const apolloResult = await mutateSignInResendOtp({
@@ -80,7 +80,7 @@ export const OtpState = () => {
                 </div>
                 <div className="h-3" />
                 <TextField isInvalid={!!(touched.otp && errors.otp)}>
-                    <InputOTP 
+                    <InputOTP
                         id="sign-in-otp"
                         name="otp"
                         variant="secondary"
@@ -136,4 +136,3 @@ export const OtpState = () => {
         </>
     )
 }
-

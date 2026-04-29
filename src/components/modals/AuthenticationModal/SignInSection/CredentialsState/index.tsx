@@ -1,5 +1,15 @@
 "use client"
 
+/**
+ * **Sign-in step 1** — OAuth shortcuts, email/password, link to sign-up tab.
+ *
+ * Owns full modal chrome (`Modal.CloseTrigger`, `Header`, `Body`) for this step. Uses singleton
+ * `useSignInFormik()`. To build **SignUpSection** similarly: start with the same Modal shell,
+ * bind fields to `useSignUpFormik()`, and switch tab via `setAuthenticationModalTab(SignIn)`
+ * for “Already have an account?”.
+ *
+ * @see {@link SignInSection} for Redux step routing and folder conventions.
+ */
 import React, { useMemo, useState } from "react"
 import {
     Button,
@@ -8,8 +18,10 @@ import {
     Input,
     Label,
     Link,
+    Modal,
     Separator,
     TextField,
+    Spinner,
 } from "@heroui/react"
 import { 
     EyeClosedIcon, 
@@ -91,123 +103,148 @@ export const CredentialsState = () => {
 
     return (
         <>
-            {oauthButtons.map((item, idx) => (
-                <React.Fragment key={item.provider}>
-                    <Button
-                        type="button"
-                        variant="outline"
-                        className="w-full text-sm"
-                        onPress={() => onOauthPress(item.provider)}
-                    >
-                        <span className="inline-flex items-center justify-center gap-2">
-                            <item.icon className="w-5 h-5" />
-                            {t(item.labelKey)}
-                        </span>
-                    </Button>
-                    {idx === 0 && <div className="h-2" />}
-                </React.Fragment>
-            ))}
+            <Modal.CloseTrigger />
+            <Modal.Header>
+                <div className="text-center">
+                    <div className="font-semibold text-lg">{t("auth.signIn.title")}</div>
+                    <div className="text-xs text-muted">{t("auth.signIn.desc")}</div>
+                </div>
+            </Modal.Header>
+            <Modal.Body className="overflow-visible p-3">
+                {oauthButtons.map((item, idx) => (
+                    <React.Fragment key={item.provider}>
+                        <Button
+                            type="button"
+                            variant="outline"
+                            className="w-full text-sm"
+                            onPress={() => onOauthPress(item.provider)}
+                        >
+                            <span className="inline-flex items-center justify-center gap-2">
+                                <item.icon className="w-5 h-5" />
+                                {t(item.labelKey)}
+                            </span>
+                        </Button>
+                        {idx === 0 && <div className="h-2" />}
+                    </React.Fragment>
+                ))}
 
-            <div className="h-3" />
-            <div className="flex items-center justify-center">
-                <Separator className="flex-1" />
-                <div className="text-xs text-foreground-500">{t("auth.signIn.or")}</div>
-                <Separator className="flex-1" />
-            </div>
+                <div className="h-3" />
+                <div className="flex items-center justify-center">
+                    <Separator className="flex-1" />
+                    <div className="text-xs text-foreground-500">{t("auth.signIn.or")}</div>
+                    <Separator className="flex-1" />
+                </div>
 
-            <div className="h-3" />
-            <TextField isInvalid={!!(touched.email && errors.email)}>
-                <Label htmlFor="sign-in-email" className="text-sm">
-                    {t("auth.signIn.email.label")}
-                </Label>
-                <Input
-                    id="sign-in-email"
-                    required
-                    variant="secondary"
-                    type="email"
-                    placeholder={t("auth.signIn.email.placeholder")}
-                    name="email"
-                    value={values.email}
-                    onChange={(event) => setFieldValue("email", event.target.value)}
-                    onBlur={() => setFieldTouched("email", true)}
-                />
-                <FieldError>{errors.email}</FieldError>
-            </TextField>
-
-            <div className="h-3" />
-            <TextField isInvalid={!!(touched.password && errors.password)}>
-                <Label htmlFor="sign-in-password" className="text-sm">
-                    {t("auth.signIn.password.label")}
-                </Label>
-                <div className="relative">
-                    <Link
-                        className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center rounded-md p-1 text-foreground-500 outline-none transition-opacity hover:opacity-80"
-                        onPress={() => setShowPassword((s) => !s)}
-                    >
-                        {showPassword ? (
-                            <EyeIcon className="h-4 w-4" />
-                        ) : (
-                            <EyeClosedIcon className="h-4 w-4" />
-                        )}
-                    </Link>
+                <div className="h-3" />
+                <TextField isInvalid={!!(touched.email && errors.email)}>
+                    <Label htmlFor="sign-in-email" className="text-sm">
+                        {t("auth.signIn.email.label")}
+                    </Label>
                     <Input
-                        id="sign-in-password"
+                        id="sign-in-email"
                         required
                         variant="secondary"
-                        type={showPassword ? "text" : "password"}
-                        placeholder={t("auth.signIn.password.placeholder")}
-                        name="password"
-                        className="w-full"
-                        value={values.password}
-                        onChange={(e) => setFieldValue("password", e.target.value)}
-                        onBlur={() => setFieldTouched("password", true)}
+                        type="email"
+                        placeholder={t("auth.signIn.email.placeholder")}
+                        name="email"
+                        value={values.email}
+                        onChange={(event) => setFieldValue("email", event.target.value)}
+                        onBlur={() => setFieldTouched("email", true)}
                     />
-                </div>
-                <FieldError>{errors.password}</FieldError>
-            </TextField>
+                    <FieldError>{errors.email}</FieldError>
+                </TextField>
 
-            <div className="h-3" />
-            <div className="flex justify-between">
-                <div className="flex items-center gap-1.5">
-                    <Checkbox
-                        aria-label={t("auth.signIn.rememberMe")}
-                        isSelected={values.rememberMe}
-                        onChange={(isSelected) => setFieldValue("rememberMe", isSelected)}
-                    />
-                    <div className="text-xs text-foreground-500">
-                        {t("auth.signIn.rememberMe")}
+                <div className="h-3" />
+                <TextField isInvalid={!!(touched.password && errors.password)}>
+                    <Label htmlFor="sign-in-password" className="text-sm">
+                        {t("auth.signIn.password.label")}
+                    </Label>
+                    <div className="relative">
+                        <Link
+                            className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center rounded-md p-1 text-foreground-500 outline-none transition-opacity hover:opacity-80"
+                            onPress={() => setShowPassword((s) => !s)}
+                        >
+                            {showPassword ? (
+                                <EyeIcon className="h-4 w-4" />
+                            ) : (
+                                <EyeClosedIcon className="h-4 w-4" />
+                            )}
+                        </Link>
+                        <Input
+                            id="sign-in-password"
+                            required
+                            variant="secondary"
+                            type={showPassword ? "text" : "password"}
+                            placeholder={t("auth.signIn.password.placeholder")}
+                            name="password"
+                            className="w-full"
+                            value={values.password}
+                            onChange={(e) => setFieldValue("password", e.target.value)}
+                            onBlur={() => setFieldTouched("password", true)}
+                        />
                     </div>
-                </div>
-                <Link className="text-xs cursor-pointer hover:opacity-80">
-                    {t("auth.signIn.forgotPassword")}
-                </Link>
-            </div>
+                    <FieldError>{errors.password}</FieldError>
+                </TextField>
 
-            <div className="h-3" />
-            <Button
-                type="submit"
-                variant="primary"
-                fullWidth
-                isPending={isSubmitting}
-                onPress={() => submitForm()}
-            >
-                {t("auth.signIn.submit")}
-            </Button>
-
-            <div className="h-3" />
-            <div className="flex justify-center items-center gap-1">
-                <div className="text-xs text-foreground-500">
-                    {t("auth.signIn.noAccount")}
+                <div className="h-3" />
+                <div className="flex justify-between">
+                    <Checkbox
+                        id="sign-in-remember-me"
+                        variant="secondary"
+                        isSelected={values.rememberMe}
+                        onChange={(v) => {
+                            /** Third arg: run validation so `errors.agreeToTerms` clears when checked. */
+                            setFieldValue("rememberMe", Boolean(v), true)
+                            setFieldTouched("rememberMe", true, false)
+                        }}
+                    >
+                        <Checkbox.Control>
+                            <Checkbox.Indicator />
+                        </Checkbox.Control>
+                        <Checkbox.Content className="w-full">
+                            <Label htmlFor="sign-in-remember-me">
+                                <div className="text-xs text-muted">
+                                    <span>{t("auth.signIn.rememberMe")}{" "}</span>
+                                </div>
+                            </Label>
+                        </Checkbox.Content>
+                    </Checkbox>
+                    <Link className="text-xs cursor-pointer hover:opacity-80">
+                        {t("auth.signIn.forgotPassword")}
+                    </Link>
                 </div>
-                <Link
-                    className="text-xs"
-                    onPress={() =>
-                        dispatch(setAuthenticationModalTab(AuthenticationModalTab.SignUp))
-                    }
+
+                <div className="h-3" />
+                <Button
+                    type="submit"
+                    variant="primary"
+                    fullWidth
+                    isPending={isSubmitting}
+                    onPress={() => submitForm()}
                 >
-                    {t("auth.signIn.signUp")}
-                </Link>
-            </div>
+                    {({isPending}) => (
+                        <>
+                            {isPending ? <Spinner color="current" size="sm" /> : null}
+                            {t("auth.signIn.submit")}
+                        </>
+                    )}
+                </Button>
+
+                <div className="h-3" />
+                <div className="flex justify-center items-center gap-1">
+                    <div className="text-xs text-foreground-500">
+                        {t("auth.signIn.noAccount")}
+                    </div>
+                    <Link
+                        className="text-xs"
+                        onPress={() =>
+                            dispatch(setAuthenticationModalTab(AuthenticationModalTab.SignUp))
+                        }
+                    >
+                        {t("auth.signIn.signUp")}
+                    </Link>
+                </div>
+            </Modal.Body>
         </>
     )
 }

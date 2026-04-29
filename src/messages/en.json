@@ -343,12 +343,14 @@
       ,
       "otp": {
         "title": "Enter OTP",
-        "desc": "Enter the 6-digit code sent to your email",
+        "desc": "Please check <emailHighlight>{email}</emailHighlight> for an email and enter your code below.",
         "label": "OTP code",
         "placeholder": "Enter 6-digit OTP",
         "required": "OTP is required",
         "invalid": "OTP must be 6 digits",
         "sent": "OTP sent successfully",
+        "resend": "Didn't get an email?",
+        "resendLink": "Resend code",
         "submit": "Verify"
       }
     },
@@ -390,7 +392,19 @@
       "submit": "Sign Up",
       "haveAccount": "Already have an account?",
       "signIn": "Sign In",
-      "success": "Registration successful"
+      "success": "Registration successful",
+      "otp": {
+        "title": "Complete sign up",
+        "desc": "We sent a code to <emailHighlight>{email}</emailHighlight>. Enter it below to finish creating your account.",
+        "label": "Verification code",
+        "placeholder": "Enter 6-digit code",
+        "required": "Verification code is required",
+        "invalid": "Code must be 6 digits",
+        "sent": "A new code was sent",
+        "resend": "Didn't get an email?",
+        "resendLink": "Resend code",
+        "submit": "Verify & continue"
+      }
     },
     "oauth": {
       "authenticating": "Authenticating you…",

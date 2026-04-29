@@ -352,12 +352,14 @@
       ,
       "otp": {
         "title": "Nhập mã OTP",
-        "desc": "Nhập mã 6 chữ số được gửi về email của bạn",
+        "desc": "Vui lòng kiểm tra hộp thư <emailHighlight>{email}</emailHighlight>, sau đó nhập mã xác nhận bên dưới.",
         "label": "Mã OTP",
         "placeholder": "Nhập mã OTP 6 số",
         "required": "Vui lòng nhập mã OTP",
         "invalid": "Mã OTP phải gồm 6 chữ số",
         "sent": "Gửi mã OTP thành công",
+        "resend": "Không nhận được email?",
+        "resendLink": "Gửi lại mã",
         "submit": "Xác nhận"
       }
     },
@@ -399,7 +401,19 @@
       "submit": "Đăng ký",
       "haveAccount": "Đã có tài khoản?",
       "signIn": "Đăng nhập",
-      "success": "Đăng ký thành công"
+      "success": "Đăng ký thành công",
+      "otp": {
+        "title": "Hoàn tất đăng ký",
+        "desc": "Chúng tôi đã gửi mã tới <emailHighlight>{email}</emailHighlight>. Nhập mã bên dưới để hoàn tất tạo tài khoản.",
+        "label": "Mã xác nhận",
+        "placeholder": "Nhập mã 6 số",
+        "required": "Vui lòng nhập mã xác nhận",
+        "invalid": "Mã phải gồm 6 chữ số",
+        "sent": "Đã gửi mã mới",
+        "resend": "Không nhận được email?",
+        "resendLink": "Gửi lại mã",
+        "submit": "Xác nhận và tiếp tục"
+      }
     },
     "oauth": {
       "authenticating": "Đang xác thực…",

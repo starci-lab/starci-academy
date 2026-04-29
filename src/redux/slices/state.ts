@@ -9,10 +9,20 @@ export enum SignInState {
 }
 
 /**
+ * The state for the sign-up section (extend when adding verify-email / OTP steps).
+ */
+export enum SignUpState {
+    Registration = "registration",
+    /** After `signUpInit`; user enters OTP (`signUpVerifyOtp`). */
+    Otp = "otp",
+}
+
+/**
  * The slice for UI states.
  */
 export interface StateSlice {
     signInState: SignInState
+    signUpState: SignUpState
 }
 
 /**
@@ -20,6 +30,7 @@ export interface StateSlice {
  */
 const initialState: StateSlice = {
     signInState: SignInState.Credentials,
+    signUpState: SignUpState.Registration,
 }
 
 export const stateSlice = createSlice({
@@ -32,10 +43,21 @@ export const stateSlice = createSlice({
         resetSignInState: (state) => {
             state.signInState = SignInState.Credentials
         },
+        setSignUpState: (state, action: PayloadAction<SignUpState>) => {
+            state.signUpState = action.payload
+        },
+        resetSignUpState: (state) => {
+            state.signUpState = SignUpState.Registration
+        },
     },
 })
 
 export const stateReducer = stateSlice.reducer
 
-export const { setSignInState, resetSignInState } = stateSlice.actions
+export const {
+    setSignInState,
+    resetSignInState,
+    setSignUpState,
+    resetSignUpState,
+} = stateSlice.actions
 

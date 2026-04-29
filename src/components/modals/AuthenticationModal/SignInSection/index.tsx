@@ -1,49 +1,53 @@
 "use client"
+
+/**
+ * Sign-in section inside {@link AuthenticationModal}.
+ *
+ * **Blueprint for `SignUpSection`**: mirror this layout when sign-up becomes multi-step.
+ *
+ * ### Modal host
+ * - Parent `AuthenticationModal` picks the tab from Redux `tabs.authenticationModalTab`
+ *   (`AuthenticationModalTab.SignIn` | `SignUp`). This component only renders when the sign-in tab is active.
+ *
+ * ### Step machine (Redux, not `useState`)
+ * - Current screen comes from `state.state.signInState` (`SignInState` in `src/redux/slices/state.ts`):
+ *   `Credentials` → email/password (+ OAuth) → submit runs init → `setSignInState(OTP)`;
+ *   `OTP` → 6-digit code → verify → `resetSignInState()`.
+ * - Keeping the step in Redux keeps `useSignInFormik` submit logic and all child trees in sync.
+ *
+ * ### Folder layout
+ * - `index.tsx` — thin switch: which child state to mount.
+ * - `CredentialsState/` — step 1 UI (`Modal.CloseTrigger`, `Header`, `Body`).
+ * - `OTPState/` — step 2 UI (same Modal primitives).
+ * For sign-up, use the same pattern: e.g. `SignUpSection/index.tsx` + one folder per step.
+ *
+ * ### Formik
+ * - Singleton hook `useSignInFormik()` from `@/hooks/singleton` — child components call it
+ *   directly (no prop-drilling). Core: `hooks/singleton/formik/core/useSignInFormik.ts`.
+ *
+ * ### i18n
+ * - Keys under `auth.signIn.*` in `src/messages/en.json` and `vi.json`.
+ */
 import React from "react"
-import {
-    Modal,
-    cn,
-} from "@heroui/react"
-import { WithClassNames } from "@/modules/types"
 import { useAppSelector } from "@/redux"
 import { SignInState } from "@/redux/slices"
 import { CredentialsState } from "./CredentialsState"
-import { OTPState } from "./OTPState"
-
-/** 
- * Props for SignInSection component
- */
-export type SignInSectionProps = WithClassNames<{
-    /**
-     * Class name for the container
-     */
-    container?: string
-}>
+import { OtpState } from "./OtpState"
 
 /**
- * SignInSection component
+ * Renders the sign-in flow step (`Credentials` or `OTP`) based on `signInState`.
  */
-export const SignInSection = ({ className, classNames }: SignInSectionProps) => {
+export const SignInSection = () => {
     const signInState = useAppSelector((state) => state.state.signInState)
     const renderContent = () => {
         switch (signInState) {
         case SignInState.Credentials:
             return <CredentialsState />
         case SignInState.OTP:
-            return <OTPState />
+            return <OtpState />
         default:
             return null
         }
     }
-    return (
-        <Modal.Body className={
-            cn(
-                "overflow-visible p-3", 
-                className, 
-                classNames?.container
-            )
-        }>
-            {renderContent()}
-        </Modal.Body>
-    )
+    return renderContent()
 }

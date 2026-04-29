@@ -12,7 +12,7 @@ export interface SignInVerifyOtpData {
 }
 
 const mutation1 = gql`
-  mutation SignInVerifyOtp($request: SignInVerifyOtpInput!) {
+  mutation SignInVerifyOtp($request: SignInVerifyOtpRequest!) {
     signInVerifyOtp(request: $request) {
       success
       message

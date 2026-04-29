@@ -30,6 +30,10 @@ import {
     useMutateSignOutSwrCore,
     useMutateSignInInitSwrCore,
     useMutateSignInVerifyOtpSwrCore,
+    useMutateSignInResendOtpSwrCore,
+    useMutateSignUpSwrCore,
+    useMutateSignUpVerifyOtpSwrCore,
+    useMutateSignUpResendOtpSwrCore,
 } from "./core"
 
 export interface SwrContextType {
@@ -61,6 +65,10 @@ export interface SwrContextType {
     mutateSignOutSwr: ReturnType<typeof useMutateSignOutSwrCore>;
     mutateSignInInitSwr: ReturnType<typeof useMutateSignInInitSwrCore>;
     mutateSignInVerifyOtpSwr: ReturnType<typeof useMutateSignInVerifyOtpSwrCore>;
+    mutateSignInResendOtpSwr: ReturnType<typeof useMutateSignInResendOtpSwrCore>;
+    mutateSignUpSwr: ReturnType<typeof useMutateSignUpSwrCore>;
+    mutateSignUpVerifyOtpSwr: ReturnType<typeof useMutateSignUpVerifyOtpSwrCore>;
+    mutateSignUpResendOtpSwr: ReturnType<typeof useMutateSignUpResendOtpSwrCore>;
 }
 
 export const SwrContext = createContext<SwrContextType | null>(null)
@@ -97,6 +105,10 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
     const mutateSignOutSwr = useMutateSignOutSwrCore()
     const mutateSignInInitSwr = useMutateSignInInitSwrCore()
     const mutateSignInVerifyOtpSwr = useMutateSignInVerifyOtpSwrCore()
+    const mutateSignInResendOtpSwr = useMutateSignInResendOtpSwrCore()
+    const mutateSignUpSwr = useMutateSignUpSwrCore()
+    const mutateSignUpVerifyOtpSwr = useMutateSignUpVerifyOtpSwrCore()
+    const mutateSignUpResendOtpSwr = useMutateSignUpResendOtpSwrCore()
     return (
         <SwrContext.Provider value={
             {
@@ -128,6 +140,10 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
                 mutateSignOutSwr,
                 mutateSignInInitSwr,
                 mutateSignInVerifyOtpSwr,
+                mutateSignInResendOtpSwr,
+                mutateSignUpSwr,
+                mutateSignUpVerifyOtpSwr,
+                mutateSignUpResendOtpSwr,
             }
         }>
             {children}

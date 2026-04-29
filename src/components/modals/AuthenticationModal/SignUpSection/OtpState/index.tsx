@@ -1,27 +1,22 @@
 "use client"
 
 /**
- * **Sign-in step 2** — OTP entry after `signInInit` succeeds.
+ * **Sign-up step 2** — OTP after `signUpInit`; resend uses {@link useMutateSignUpResendOtpSwr}.
  *
- * Same singleton Formik as credentials step. Description uses `t.rich` so the email can be styled.
- * Submit runs the OTP verify branch in `useSignInFormik` while `signInState === OTP`.
- *
- * @see {@link SignInSection} for step routing; mirror this folder when sign-up adds a verify-email step.
+ * Submit runs `signUpVerifyOtp` via {@link useSignUpFormik} while `signUpState === Otp`.
  */
 import React from "react"
 import { Button, cn, FieldError, InputOTP, Link, Modal, Spinner, TextField } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { useMutateSignInResendOtpSwr, useSignInFormik } from "@/hooks/singleton"
+import { useMutateSignUpResendOtpSwr, useSignUpFormik } from "@/hooks/singleton"
 import { runGraphQLWithToast } from "@/modules/toast"
 
 /**
- * OTPState component.
- *
- * @param props Props for OTPState component.
+ * OTP entry for completing GraphQL sign-up (mirrors sign-in `OTPState`).
  */
 export const OtpState = () => {
     const t = useTranslations()
-    const { trigger: mutateSignInResendOtp, isMutating: isResending } = useMutateSignInResendOtpSwr()
+    const { trigger: mutateSignUpResendOtp, isMutating: isResending } = useMutateSignUpResendOtpSwr()
     const {
         values,
         errors,
@@ -30,24 +25,25 @@ export const OtpState = () => {
         setFieldValue,
         setFieldTouched,
         isSubmitting,
-    } = useSignInFormik()
+        isValid,
+    } = useSignUpFormik()
 
     const onResend = async () => {
         const challengeId = values.challengeId
         if (!challengeId) {
             return
-        }   
+        }
         await runGraphQLWithToast(
             async () => {
-                const apolloResult = await mutateSignInResendOtp({
+                const apolloResult = await mutateSignUpResendOtp({
                     request: {
                         challengeId,
                     },
                 })
-                const env = apolloResult.data?.signInResendOtp
+                const env = apolloResult.data?.signUpResendOtp
                 if (!env?.success || !env.data?.challengeId) {
                     throw new Error(
-                        env?.error ?? env?.message ?? "signInResendOtp failed"
+                        env?.error ?? env?.message ?? "signUpResendOtp failed"
                     )
                 }
                 await setFieldValue("challengeId", env.data.challengeId)
@@ -66,22 +62,25 @@ export const OtpState = () => {
             <Modal.CloseTrigger />
             <Modal.Header>
                 <div className="text-center">
-                    <div className="font-semibold text-lg">{t("auth.signIn.otp.title")}</div>
+                    <div className="font-semibold text-lg">{t("auth.signUp.otp.title")}</div>
                 </div>
             </Modal.Header>
             <Modal.Body className="overflow-visible p-3">
                 <div className="text-xs text-muted text-center">
-                    {t.rich("auth.signIn.otp.desc", {
-                        emailHighlight: (chunks) => (
-                            <span className="text-accent">{chunks}</span>
-                        ),
-                        email: values.email,
-                    })}
+                    {
+                        t.rich("auth.signUp.otp.desc", {
+                            emailHighlight: (chunks) => (
+                                <span className="text-accent">{chunks}</span>
+                            ),
+                            email: values.email,
+                        }
+                        )
+                    }
                 </div>
                 <div className="h-3" />
                 <TextField isInvalid={!!(touched.otp && errors.otp)}>
-                    <InputOTP 
-                        id="sign-in-otp"
+                    <InputOTP
+                        id="sign-up-otp"
                         name="otp"
                         variant="secondary"
                         maxLength={6}
@@ -105,16 +104,16 @@ export const OtpState = () => {
                 </TextField>
                 <div className="h-3" />
                 <div className="flex flex-wrap items-center justify-center gap-1 text-center">
-                    <span className="text-xs text-muted">{t("auth.signIn.otp.resend")}</span>
+                    <span className="text-xs text-muted">{t("auth.signUp.otp.resend")}</span>
                     <Link
                         className={cn("text-xs text-accent", isResending ? "text-muted" : "")}
                         data-disabled={isResending ? true : undefined}
                         onPress={() => {
                             if (isResending) return
-                            void onResend()
+                            onResend()
                         }}
                     >
-                        {t("auth.signIn.otp.resendLink")}
+                        {t("auth.signUp.otp.resendLink")}
                     </Link>
                 </div>
                 <div className="h-3" />
@@ -122,13 +121,14 @@ export const OtpState = () => {
                     type="submit"
                     variant="primary"
                     fullWidth
+                    isDisabled={!isValid}
                     isPending={isSubmitting}
                     onPress={() => submitForm()}
                 >
-                    {({isPending}) => (
+                    {({ isPending }) => (
                         <>
                             {isPending ? <Spinner color="current" size="sm" /> : null}
-                            {t("auth.signIn.otp.submit")}
+                            {t("auth.signUp.otp.submit")}
                         </>
                     )}
                 </Button>
@@ -136,4 +136,3 @@ export const OtpState = () => {
         </>
     )
 }
-

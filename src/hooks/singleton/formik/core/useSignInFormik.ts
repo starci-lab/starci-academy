@@ -1,6 +1,7 @@
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import {
+    useAuthenticationOverlayState,
     useMutateSignInInitSwr,
     useMutateSignInVerifyOtpSwr,
     useQueryCheckEmailExistsSwr,
@@ -19,6 +20,8 @@ import { resetSignInState, setSignInState, SignInState } from "@/redux/slices"
  * Formik values for the sign in form
  */
 export interface SignInFormikValues {
+    /** Synced with Redux sign-in step for Yup (`credentials` vs `otp`). */
+    state: SignInState
     /** User email address. */
     email: string
     /** Whether the email exists in the database. */
@@ -37,6 +40,7 @@ export interface SignInFormikValues {
  * Initial values for the sign in form
  */
 const initialValues: SignInFormikValues = {
+    state: SignInState.Credentials,
     email: "",
     emailExists: true,
     password: "",
@@ -54,12 +58,17 @@ export const useSignInFormikCore = () => {
     const { trigger: mutateSignInInit } = useMutateSignInInitSwr()
     const { trigger: mutateSignInVerifyOtp } = useMutateSignInVerifyOtpSwr()
     const { trigger: queryCheckEmailExists } = useQueryCheckEmailExistsSwr()
+    const { onClose: onAuthenticationClose } = useAuthenticationOverlayState()
     const dispatch = useAppDispatch()
     const signInState = useAppSelector((state) => state.state.signInState)
     const t = useTranslations()
     const validationSchema = useMemo(
         () => Yup.object(
             {
+                state: Yup.mixed<SignInState>().oneOf([
+                    SignInState.Credentials,
+                    SignInState.OTP,
+                ]),
                 email: Yup.string()
                     .test(
                         "is-email", 
@@ -80,16 +89,16 @@ export const useSignInFormikCore = () => {
                         }
                     )
                     .required(t("auth.signIn.email.required")),
-                password: Yup.string().when("step", {
-                    is: "credentials",
+                password: Yup.string().when("state", {
+                    is: SignInState.Credentials,
                     then: (schema) =>
                         schema
                             .required(t("auth.signIn.password.required"))
                             .min(8, t("auth.signIn.password.minLength")),
                     otherwise: (schema) => schema.optional(),
                 }),
-                otp: Yup.string().when("step", {
-                    is: "otp",
+                otp: Yup.string().when("state", {
+                    is: SignInState.OTP,
                     then: (schema) =>
                         schema
                             .required(t("auth.signIn.otp.required"))
@@ -104,6 +113,8 @@ export const useSignInFormikCore = () => {
         initialValues,
         validationSchema,
         enableReinitialize: true,
+        validateOnChange: true,
+        validateOnBlur: true,
         onSubmit: async (values) => {
             switch (signInState) {
             case SignInState.Credentials:
@@ -139,6 +150,7 @@ export const useSignInFormikCore = () => {
                     challengeId
                 )
                 await formik.setFieldValue("otp", "")
+                await formik.setFieldValue("state", SignInState.OTP)
                 dispatch(setSignInState(SignInState.OTP))
                 return
             }
@@ -169,6 +181,7 @@ export const useSignInFormikCore = () => {
                 if (!ok) return
                 formik.resetForm()
                 dispatch(resetSignInState())
+                onAuthenticationClose()
                 return
             }
             default:

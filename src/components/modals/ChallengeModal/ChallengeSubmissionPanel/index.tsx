@@ -10,9 +10,7 @@ import {
     TextField,
 } from "@heroui/react"
 import {
-    PublicationEvent,
     useEditSubmissionFormik,
-    useJobNotificationsSocketIo,
     useMutateSubmitChallengeSubmissionSwr,
     useSubmissionAttemptsOverlayState,
 } from "@/hooks/singleton"
@@ -38,6 +36,10 @@ import {
 } from "@phosphor-icons/react"
 import _ from "lodash"
 import { cn } from "@heroui/react"
+import { 
+    PublicationEvent, 
+    jobNotificationsSocket 
+} from "@/hooks/zustand"
 
 /** Props for {@link ChallengeSubmissionPanel} — state comes from Formik and Redux. */
 type ChallengeSubmissionPanelProps = WithClassNames<undefined>
@@ -70,7 +72,6 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
     const sortedSubmissions = useMemo(() => {
         return _.cloneDeep(values.submissions ?? []).sort((prev, next) => prev.orderIndex - next.orderIndex)
     }, [values.submissions])
-    const socket = useJobNotificationsSocketIo()
     const locale = useLocale()
     const jobStatusByJobId = useAppSelector((state) => state.socketIo.jobStatusByJobId)
     const renderJobNotification = useCallback(
@@ -208,7 +209,7 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
                                                 }
                                                 const newJobId = result.data?.jobId
                                                 if (newJobId) {
-                                                    socket.emit(
+                                                    jobNotificationsSocket.emit(
                                                         PublicationEvent.SubscribeJobNotification,
                                                         {
                                                             data: {

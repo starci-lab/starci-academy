@@ -4,7 +4,6 @@ import { DocumentNode, gql } from "@apollo/client"
 
 /** Payload inside `courseEnrollmentStatus.data` after the standard API wrapper. */
 export interface CourseEnrollmentStatusData {
-    enrollmentCount: number
     isEnrolled: boolean
 }
 
@@ -15,7 +14,6 @@ const query1 = gql`
       message
       error
       data {
-        enrollmentCount
         isEnrolled
       }
     }
@@ -30,14 +28,11 @@ const queryMap: Record<QueryCourseEnrollmentStatus, DocumentNode> = {
     [QueryCourseEnrollmentStatus.Query1]: query1,
 }
 
-/** Variables for {@link CourseEnrollmentStatusRequest} on the schema. */
-export interface QueryCourseEnrollmentStatusVariables {
-    request: {
-        courseId: string
-    }
+export interface QueryCourseEnrollmentStatusRequest {
+    courseId: string
 }
 
-export type QueryCourseEnrollmentStatusParams = QueryParams<QueryCourseEnrollmentStatus, QueryCourseEnrollmentStatusVariables>
+export type QueryCourseEnrollmentStatusParams = QueryParams<QueryCourseEnrollmentStatus, QueryCourseEnrollmentStatusRequest>
 export interface QueryCourseEnrollmentStatusResponse {
     courseEnrollmentStatus: GraphQLResponse<CourseEnrollmentStatusData>
 }
@@ -59,11 +54,12 @@ export const queryCourseEnrollmentStatus = async ({
         signal,
     }
     )
-
-    return apollo.query<QueryCourseEnrollmentStatusResponse>({
-        query: queryMap[query],
-        variables: {
-            request,
-        },
-    })
+    return apollo.query<QueryCourseEnrollmentStatusResponse>(
+        {
+            query: queryMap[query],
+            variables: {
+                request,
+            },
+        }
+    )
 }

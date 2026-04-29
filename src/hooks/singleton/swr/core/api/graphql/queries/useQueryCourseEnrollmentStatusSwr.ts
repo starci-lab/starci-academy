@@ -1,5 +1,4 @@
 import { queryCourseEnrollmentStatus } from "@/modules/api"
-import { useKeycloakZustand } from "@/hooks/zustand"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import { setEnrolled } from "@/redux/slices"
 import useSWR from "swr"
@@ -9,9 +8,8 @@ import useSWR from "swr"
  */
 export const useQueryCourseEnrollmentStatusSwrCore = () => {
     const dispatch = useAppDispatch()
-    const keycloak = useKeycloakZustand()
     const course = useAppSelector((state) => state.course.entity)
-    const authenticated = Boolean(keycloak.authenticated)
+    const authenticated = useAppSelector((state) => state.keycloak.authenticated)
     /** The SWR. */
     const swr = useSWR(
         course?.id && authenticated
@@ -26,9 +24,7 @@ export const useQueryCourseEnrollmentStatusSwrCore = () => {
                 throw new Error("Course id not found")
             }
             const data = await queryCourseEnrollmentStatus({
-                request: {
-                    request: { courseId: course?.id },
-                },
+                request: { courseId: course?.id },
             })
             if (!data || !data.data) {
                 throw new Error("Course enrollment status not found")

@@ -34,6 +34,7 @@ import {
     useMutateSignUpSwrCore,
     useMutateSignUpVerifyOtpSwrCore,
     useMutateSignUpResendOtpSwrCore,
+    useAutocompleteGlobalSearchSwrCore,
 } from "./core"
 
 export interface SwrContextType {
@@ -61,6 +62,7 @@ export interface SwrContextType {
     postKeycloakLoginSwr: ReturnType<typeof usePostKeycloakLoginSwrCore>;
     postKeycloakRegisterSwr: ReturnType<typeof usePostKeycloakRegisterSwrCore>;
     queryCheckEmailExistsSwr: ReturnType<typeof useQueryCheckEmailExistsSwrCore>;
+    autocompleteGlobalSearchSwr: ReturnType<typeof useAutocompleteGlobalSearchSwrCore>;
     mutateExchangeCodeForTokenSwr: ReturnType<typeof useMutateExchangeCodeForTokenSwrCore>;
     mutateSignOutSwr: ReturnType<typeof useMutateSignOutSwrCore>;
     mutateSignInInitSwr: ReturnType<typeof useMutateSignInInitSwrCore>;
@@ -101,6 +103,7 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
     const postKeycloakLoginSwr = usePostKeycloakLoginSwrCore()
     const postKeycloakRegisterSwr = usePostKeycloakRegisterSwrCore()
     const queryCheckEmailExistsSwr = useQueryCheckEmailExistsSwrCore()
+    const autocompleteGlobalSearchSwr = useAutocompleteGlobalSearchSwrCore()
     const mutateExchangeCodeForTokenSwr = useMutateExchangeCodeForTokenSwrCore()
     const mutateSignOutSwr = useMutateSignOutSwrCore()
     const mutateSignInInitSwr = useMutateSignInInitSwrCore()
@@ -136,6 +139,7 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
                 postKeycloakLoginSwr,
                 postKeycloakRegisterSwr,
                 queryCheckEmailExistsSwr,
+                autocompleteGlobalSearchSwr,
                 mutateExchangeCodeForTokenSwr,
                 mutateSignOutSwr,
                 mutateSignInInitSwr,

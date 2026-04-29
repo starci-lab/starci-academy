@@ -1,35 +1,26 @@
 "use client"
 
-import React, { useEffect, useMemo } from "react"
+import React, { useEffect } from "react"
 import { Input, Kbd, Modal, TextField } from "@heroui/react"
-import { useLocale, useTranslations } from "next-intl"
+import { useTranslations } from "next-intl"
 import { 
     useSearchOverlayState, 
     useGlobalSearchFormik, 
 } from "@/hooks/singleton"
 import { MagnifyingGlassIcon } from "@phosphor-icons/react"
-import { 
-    useAutocompleteSocketIo,
-    PublicationEvent,
-    SearchableEntity
-} from "@/hooks/singleton"
 import debounce from "lodash/debounce"
 import { GlobalSearchContent } from "./Content"
+import { setSearchQuery } from "@/redux/slices"
+import { useAppDispatch } from "@/redux"
 
 /**
  * Global search modal opened by Navbar (Ctrl/Cmd+K).
  */
 export const GlobalSearchModal = () => {
     const t = useTranslations()
-    const locale = useLocale()
     const { isOpen, setOpen } = useSearchOverlayState()
     const formik = useGlobalSearchFormik()
-    const socket = useAutocompleteSocketIo()
-
-    const entities = useMemo<Array<SearchableEntity>>(
-        () => ["CourseEntity", "ModuleEntity", "ContentEntity", "LessonVideoEntity", "ChallengeEntity"],
-        [],
-    )
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         if (!isOpen) return
@@ -45,20 +36,11 @@ export const GlobalSearchModal = () => {
     useEffect(() => {
         if (!isOpen) return
         const emitSearch = debounce((query: string) => {
-            socket.emit(
-                PublicationEvent.GlobalSearch, {
-                    locale,
-                    data: {
-                        query,
-                        entities,
-                        size: 8,
-                    },
-                }
-            )
+            dispatch(setSearchQuery(query))
         }, 200)
         emitSearch(formik.values.query.trim())
         return () => emitSearch.cancel()
-    }, [entities, formik.values.query, isOpen, locale, socket])
+    }, [dispatch, formik.values.query, isOpen])
 
     return (
         <Modal isOpen={isOpen} onOpenChange={setOpen}>

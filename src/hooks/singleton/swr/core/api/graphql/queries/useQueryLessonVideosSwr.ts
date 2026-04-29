@@ -3,7 +3,6 @@ import {
     defaultLessonVideosListSorts,
     queryLessonVideos,
 } from "@/modules/api"
-import { useKeycloakZustand } from "@/hooks/zustand"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import useSWR from "swr"
 import { ContentTab, setLessonVideoCount, setLessonVideos } from "@/redux/slices"
@@ -12,7 +11,6 @@ import { ContentTab, setLessonVideoCount, setLessonVideos } from "@/redux/slices
  * Lists module lesson videos via `lessonVideos` and merges into `course.module.lessonVideos`.
  */
 export const useQueryLessonVideosSwrCore = () => {
-    const keycloak = useKeycloakZustand()
     const enrolled = useAppSelector((state) => state.user.enrolled)
     const course = useAppSelector((state) => state.course.entity)
     const content = useAppSelector((state) => state.content.entity)

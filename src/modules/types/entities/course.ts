@@ -41,4 +41,6 @@ export interface CourseEntity extends AbstractEntity {
     modules?: Array<ModuleEntity>
     /** The enrollments of the course. */
     enrollments?: Array<EnrollmentEntity>
+    /** The number of enrollments of the course. */
+    enrollmentCount: number
 }

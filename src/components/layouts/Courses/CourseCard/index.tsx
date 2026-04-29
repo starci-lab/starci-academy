@@ -20,7 +20,7 @@ export const CourseCard = ({ course }: CourseCardProps) => {
     return (
         <Card>
             <CardContent>
-                <img src={course.coverImageUrl ?? ""} alt={course.title} />
+                <img src={course.coverImageUrl ?? undefined} alt={course.title} />
                 <Spacer y={4} />
                 <div className="font-bold">{course.title}</div>
                 <Spacer y={4} />

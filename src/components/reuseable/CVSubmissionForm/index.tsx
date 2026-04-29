@@ -1,10 +1,10 @@
 "use client"
 
-import { useKeycloakZustand } from "@/hooks/zustand"
 import {
     mutateGetCVPresignedUrl,
     mutateProcessCV,
 } from "@/modules/api/graphql/mutations"
+import { useAppSelector } from "@/redux"
 import { Button, Card, ProgressBar, Spinner } from "@heroui/react"
 import { Form, Formik } from "formik"
 import React, { useState } from "react"
@@ -34,7 +34,7 @@ export const CVSubmissionForm: React.FC<CVSubmissionFormProps> = ({
     onSuccess,
     onError,
 }) => {
-    const keycloak = useKeycloakZustand()
+    const token = useAppSelector((state) => state.keycloak.accessToken)
     const [isUploading, setIsUploading] = useState(false)
     const [isProcessing, setIsProcessing] = useState(false)
     const [uploadProgress, setUploadProgress] = useState(0)
@@ -45,7 +45,6 @@ export const CVSubmissionForm: React.FC<CVSubmissionFormProps> = ({
         values: { cv: File | null },
         { resetForm }: { resetForm: () => void }
     ) => {
-        const token = keycloak.token
         if (!token) {
             onError?.("Authentication token not found")
             return
@@ -113,7 +112,6 @@ export const CVSubmissionForm: React.FC<CVSubmissionFormProps> = ({
     }
 
     const handleProcess = async () => {
-        const token = keycloak.token
         if (!token) {
             onError?.("Authentication token not found")
             return

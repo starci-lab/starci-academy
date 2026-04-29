@@ -1,5 +1,4 @@
 import { GraphQLHeadersKey, queryLessonVideo } from "@/modules/api"
-import { useKeycloakZustand } from "@/hooks/zustand"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import useSWR from "swr"
 import { setLessonVideo } from "@/redux/slices"
@@ -7,7 +6,6 @@ import { setLessonVideo } from "@/redux/slices"
  * Singleton SWR for `lessonVideo(request: { id })` — id from `lessonVideo.id` (`setLessonVideoId`).
  */
 export const useQueryLessonVideoSwrCore = () => {
-    const keycloak = useKeycloakZustand()
     const lessonVideoId = useAppSelector((state) => state.lessonVideo.id)
     const courseId = useAppSelector((state) => state.course.id)
     const dispatch = useAppDispatch()

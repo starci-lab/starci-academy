@@ -1,4 +1,3 @@
-import { useKeycloakZustand } from "@/hooks/zustand"
 import {
     GraphQLHeadersKey,
     mutateSyncChallengeSubmissions,
@@ -15,7 +14,7 @@ type MutateSyncChallengeSubmissionsResult = Awaited<
  * SWR mutation for {@link mutateSyncChallengeSubmissions} (`X-Course-Id` from Redux).
  */
 export const useMutateSyncChallengeSubmissionSwrCore = () => {
-    const keycloak = useKeycloakZustand()
+    const authenticated = useAppSelector((state) => state.keycloak.authenticated)
     const courseId = useAppSelector((state) => state.course.entity?.id)
     const swr = useSWRMutation<
         MutateSyncChallengeSubmissionsResult,
@@ -25,7 +24,7 @@ export const useMutateSyncChallengeSubmissionSwrCore = () => {
     >(
         "MUTATE_SYNC_CHALLENGE_SUBMISSIONS_SWR",
         async (_key, { arg }) => {
-            if (!keycloak.authenticated) {
+            if (!authenticated) {
                 throw new Error("Not authenticated")
             }
             if (!courseId) {

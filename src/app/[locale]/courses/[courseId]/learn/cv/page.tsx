@@ -15,7 +15,6 @@ import { useRouter } from "next/navigation"
 import { pathConfig } from "@/resources"
 import { useAppSelector } from "@/redux"
 import { useCvApplyFormik, useCvPreviewOverlayState, useCvUpdateOverlayState, useQueryCvReviewHistorySwr } from "@/hooks/singleton"
-import { useKeycloakZustand } from "@/hooks/zustand"
 import { MarkdownContent } from "@/components/reuseable"
 import { PDFView } from "@/components/reuseable/PDFView"
 import { CvReviewHistory } from "@/components/layouts/Learn/CvReviewHistory"
@@ -47,8 +46,9 @@ const Page = () => {
     const course = useAppSelector((state) => state.course.entity)
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
     const formik = useCvApplyFormik()
-    const keycloak = useKeycloakZustand()
-    const token = keycloak.authenticated ? keycloak.token : undefined
+    const authenticated = useAppSelector((state) => state.keycloak.authenticated)
+    const accessToken = useAppSelector((state) => state.keycloak.accessToken)
+    const token = authenticated ? accessToken : undefined
     const [isReviewing, setIsReviewing] = useState(false)
     const { open: openCvUpdateModal } = useCvUpdateOverlayState()
     const { open: openCvPreviewModal } = useCvPreviewOverlayState()

@@ -7,7 +7,7 @@ import {
     useCvApplyFormik,
     useCvUpdateOverlayState,
 } from "@/hooks/singleton"
-import { useKeycloakZustand } from "@/hooks/zustand"
+import { useAppSelector } from "@/redux"
 import { useTranslations } from "next-intl"
 import { Dropzone } from "@/components/reuseable"
 import { querySubmitCvPresignedUrl } from "@/modules/api"
@@ -15,7 +15,7 @@ import { querySubmitCvPresignedUrl } from "@/modules/api"
 export const CvUpdateModal = () => {
     const { isOpen, setOpen } = useCvUpdateOverlayState()
     const formik = useCvApplyFormik()
-    const keycloak = useKeycloakZustand()
+    const token = useAppSelector((state) => state.keycloak.accessToken)
     const t = useTranslations()
     const { mutate } = useSWRConfig()
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -28,7 +28,6 @@ export const CvUpdateModal = () => {
             return
         }
 
-        const token = keycloak.token
         if (!token) {
             toast.danger("Error", {
                 description: "Authentication token not found",
@@ -42,7 +41,6 @@ export const CvUpdateModal = () => {
                 request: {
                     fileName: file.name,
                 },
-                token,
             })
 
             const presignedPayload = response.data?.SubmitCvPresignedUrl

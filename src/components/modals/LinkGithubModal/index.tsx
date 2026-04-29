@@ -11,13 +11,9 @@ export const LinkGithubModal = () => {
     const t = useTranslations()
     const router = useRouter()
     return (
-        <Modal 
-            isOpen={
-                isOpen
-            } 
-            onOpenChange={
-                setOpen
-            }>
+        <Modal
+            isOpen={isOpen} 
+            onOpenChange={setOpen}>
             <Modal.Backdrop>
                 <Modal.Container size="xs">
                     <Modal.Dialog>
@@ -42,7 +38,10 @@ export const LinkGithubModal = () => {
                                 onPress={
                                     () => {
                                         const url = githubRedirect.redirect
-                                        url.searchParams.set("redirectUri", window.location.href)
+                                        url.searchParams.set(
+                                            "redirectUri", 
+                                            window.location.href
+                                        )
                                         router.push(url.toString())
                                     }
                                 }

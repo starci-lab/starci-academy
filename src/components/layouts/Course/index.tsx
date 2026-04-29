@@ -12,7 +12,11 @@ import { Modules } from "./Modules"
 import { Stepper } from "./Stepper"
 import { ValuePropositions } from "./ValuePropositions"
 import { QnA } from "./QnA"
-import { useQueryCourseEnrollmentStatusSwr, usePaymentOverlayState, useQueryCourseSwr } from "@/hooks/singleton"
+import { 
+    usePaymentOverlayState, 
+    useQueryCourseEnrollmentStatusSwr,
+    useQueryCourseSwr
+} from "@/hooks/singleton"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { useAppSelector } from "@/redux"
@@ -21,10 +25,9 @@ import { pathConfig } from "@/resources"
 export const Course = () => {
     const { open } = usePaymentOverlayState()
     const enrollmentSwr = useQueryCourseEnrollmentStatusSwr()
-    const enrollmentPayload = enrollmentSwr.data?.courseEnrollmentStatus?.data
-    const isEnrolled = enrollmentPayload?.isEnrolled === true
-    const enrollmentCount = enrollmentPayload?.enrollmentCount ?? 0
+    const isEnrolled = enrollmentSwr.data?.courseEnrollmentStatus?.data?.isEnrolled === true
     const course = useAppSelector((state) => state.course.entity)
+    const enrollmentCount = course?.enrollmentCount ?? 0
     const t = useTranslations()
     const router = useRouter()
     const { isLoading } = useQueryCourseSwr()
@@ -105,7 +108,7 @@ export const Course = () => {
                             className="w-full h-full object-cover"
                             alt={course?.title ?? ""}
                             loading="lazy"
-                            src={course?.coverImageUrl ?? ""}
+                            src={course?.coverImageUrl ?? undefined}
                         />
                         <div className="p-3">
                             <Stepper />

@@ -1,6 +1,6 @@
 "use client"
 
-import type { GlobalSearchItem } from "@/hooks/singleton"
+import { AutocompleteGlobalSearchItem } from "@/modules/api"
 import { ListBox } from "@heroui/react"
 import type { IconProps } from "@phosphor-icons/react"
 import React from "react"
@@ -14,9 +14,9 @@ interface GlobalSearchContentBlockProps {
     /** Leading icon for the section header. */
     icon: PhosphorIcon
     /** Result rows. */
-    items: Array<GlobalSearchItem>
+    items: Array<AutocompleteGlobalSearchItem>
     /** Called when the user activates a row; parent resolves href and navigation. */
-    onItemPress: (item: GlobalSearchItem) => void
+    onItemPress: (item: AutocompleteGlobalSearchItem) => void
 }
 
 /**

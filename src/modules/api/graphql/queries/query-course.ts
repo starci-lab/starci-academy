@@ -20,6 +20,7 @@ const query1 = gql`
         coverImageUrl
         originalPrice
         currentPhase
+        enrollmentCount
         pricingPhases {
           id
           price

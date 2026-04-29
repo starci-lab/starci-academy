@@ -2,7 +2,6 @@ import {
     GraphQLHeadersKey,
     queryIncompleteChallengeSubmissionJobs,
 } from "@/modules/api"
-import { useKeycloakZustand } from "@/hooks/zustand"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import { setIncompleteChallengeSubmissionJobs } from "@/redux/slices"
 import useSWR from "swr"
@@ -12,7 +11,6 @@ import useSWR from "swr"
  * then hydrates `state.job.incompleteChallengeSubmissionJobs`.
  */
 export const useQueryIncompleteChallengeSubmissionJobsSwrCore = () => {
-    const keycloak = useKeycloakZustand()
     const enrolled = useAppSelector((state) => state.user.enrolled)
     const course = useAppSelector((state) => state.course.entity)
     const dispatch = useAppDispatch()

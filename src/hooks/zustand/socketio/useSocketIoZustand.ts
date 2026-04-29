@@ -7,9 +7,9 @@ import { createManager } from "./utils"
 /**
  * One {@link Manager} and two namespace sockets for the app (module scope), same idea as `keycloakRef` in Keycloak zustand.
  */
-const manager = createManager()
-const autocompleteSocket: Socket = manager.socket("/autocomplete")
-const jobNotificationsSocket: Socket = manager.socket("/job_notifications")
+export const manager = createManager()
+export const autocompleteSocket: Socket = manager.socket("/autocomplete")
+export const jobNotificationsSocket: Socket = manager.socket("/job_notifications")
 
 /**
  * Shared Socket.IO zustand slice: disconnect counters + getters for namespace sockets.

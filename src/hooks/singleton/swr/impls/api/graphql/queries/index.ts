@@ -1,4 +1,5 @@
 export * from "./useQueryCheckEmailExistsSwr"
+export * from "./useAutocompleteGlobalSearchSwr"
 export * from "./useQueryChallengeSwr"
 export * from "./useQueryChallengesSwr"
 export * from "./useQueryCvReviewHistorySwr"

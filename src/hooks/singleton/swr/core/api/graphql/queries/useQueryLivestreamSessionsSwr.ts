@@ -3,7 +3,6 @@ import {
     defaultLivestreamSessionsListSorts,
     queryLivestreamSessions,
 } from "@/modules/api"
-import { useKeycloakZustand } from "@/hooks/zustand"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import useSWR from "swr"
 import {
@@ -15,7 +14,6 @@ import {
  * Lists course livestream sessions via `livestreamSessions` (enrolled + course id).
  */
 export const useQueryLivestreamSessionsSwrCore = () => {
-    const keycloak = useKeycloakZustand()
     const enrolled = useAppSelector((state) => state.user.enrolled)
     const courseId = useAppSelector((state) => state.course.entity?.id)
     const pageNumber = useAppSelector((state) => state.livestreamSession.pageNumber)

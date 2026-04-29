@@ -1,5 +1,6 @@
 // Course-related GraphQL operations (document + runner per query).
 export * from "./query-check-email-exists"
+export * from "./query-autocomplete-global-search"
 export * from "./query-challenge"
 export * from "./query-challenge-submission"
 export * from "./query-challenge-submissions"

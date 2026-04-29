@@ -1,6 +1,5 @@
 import { useEffect } from "react"
 import EventEmitter2 from "eventemitter2"
-import { useKeycloakZustand } from "@/hooks/zustand/keycloak"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import { useLocale } from "next-intl"
 import { setJobStatusMessageForJob } from "@/redux/slices"
@@ -18,20 +17,21 @@ export const jobNotificationsSocketIoEventEmitter = new EventEmitter2()
  * Client for `/job_notifications`: Keycloak `auth`, `SubscriptionEvent.JobStatusUpdated`, Redux merge.
  */
 export const useJobNotificationsSocketIo = () => {
-    const keycloak = useKeycloakZustand()
+    const authenticated = useAppSelector((state) => state.keycloak.authenticated)
+    const accessToken = useAppSelector((state) => state.keycloak.accessToken)
     const dispatch = useAppDispatch()
     const incompleteChallengeSubmissionJobs = useAppSelector(
         (state) => state.job.incompleteChallengeSubmissionJobs,
     )
     const locale = useLocale()
     const disconnectCount = useSocketIoZustand(
-        (s: SocketIoStoreState) => s.disconnectCountJob,
+        (socketIoStoreState: SocketIoStoreState) => socketIoStoreState.disconnectCountJob,
     )
     const incDisconnect = useSocketIoZustand(
-        (s: SocketIoStoreState) => s.incrementDisconnectJob,
+        (socketIoStoreState: SocketIoStoreState) => socketIoStoreState.incrementDisconnectJob,
     )
     const getSocket = useSocketIoZustand(
-        (s: SocketIoStoreState) => s.getJobNotificationsSocket,
+        (socketIoStoreState: SocketIoStoreState) => socketIoStoreState.getJobNotificationsSocket,
     )
 
     useEffect(() => {
@@ -59,7 +59,7 @@ export const useJobNotificationsSocketIo = () => {
     }, [disconnectCount, getSocket, incDisconnect])
 
     useEffect(() => {
-        if (!keycloak.authenticated) {
+        if (!authenticated || !accessToken) {
             return
         }
         const run = async () => {
@@ -67,11 +67,11 @@ export const useJobNotificationsSocketIo = () => {
             if (socket.connected) {
                 socket.disconnect()
             }
-            socket.auth = { token: keycloak.token as string }
+            socket.auth = { token: accessToken }
             socket.connect()
         }
         void run()
-    }, [keycloak.authenticated, keycloak.token, disconnectCount, getSocket])
+    }, [authenticated, accessToken, disconnectCount, getSocket])
 
     useEffect(() => {
         if (incompleteChallengeSubmissionJobs.length === 0) {

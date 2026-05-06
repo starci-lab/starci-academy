@@ -2,6 +2,9 @@ import type { AbstractEntity } from "./abstract"
 import type { ChallengeStepEntity } from "./challenge-step"
 import type { ChallengeReferenceEntity } from "./challenge-reference"
 import type { ChallengeTranslationEntity } from "./challenge-translation"
+import type { ChallengeOutputEntity } from "./challenge-output"
+import type { ChallengeRequirementEntity } from "./challenge-requirement"
+import type { ChallengePrerequisiteEntity } from "./challenge-prerequisite"
 import type { ChallengeDifficulty } from "../enums/challenge-difficulty"
 import type { ModuleEntity } from "./module"
 
@@ -13,6 +16,10 @@ export interface ChallengeEntity extends AbstractEntity {
     title: string
     /** Short summary before full description. */
     requirements: string
+    /** Optional rendered output checklist/expectations (markdown/text). */
+    outputs?: string
+    /** Rendered prerequisites list for this challenge (markdown/text). */
+    prerequisites: string
     /** Full instructions (e.g. markdown). */
     description: string
     /** Points / score when completed. */
@@ -31,6 +38,12 @@ export interface ChallengeEntity extends AbstractEntity {
     steps?: Array<ChallengeStepEntity>
     /** External URL references. */
     references?: Array<ChallengeReferenceEntity>
+    /** Structured requirement rows tied to this challenge. */
+    challengeRequirements?: Array<ChallengeRequirementEntity>
+    /** Structured expected output rows tied to this challenge. */
+    challengeOutputs?: Array<ChallengeOutputEntity>
+    /** Structured prerequisite rows tied to this challenge. */
+    challengePrerequisites?: Array<ChallengePrerequisiteEntity>
     /** Localized overrides for title, brief, description. */
     translations?: Array<ChallengeTranslationEntity>
 }

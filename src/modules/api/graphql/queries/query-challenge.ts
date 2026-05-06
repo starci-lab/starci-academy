@@ -12,7 +12,24 @@ const query1 = gql`
       data {
         id
         title
-        requirements
+        challengeRequirements {
+          id
+          purpose
+          technicalConstraints
+          proTipsHints
+          forbidden
+          orderIndex
+        }
+        challengeOutputs {
+          id
+          text
+          orderIndex
+        }
+        challengePrerequisites {
+          id
+          text
+          orderIndex
+        }
         description
         score
         difficulty

@@ -5,6 +5,9 @@ import { Accordion, cn, Chip, Modal, Surface } from "@heroui/react"
 import { MarkdownContent, ReferenceLinks } from "@/components/reuseable"
 import { useChallengeOverlayState } from "@/hooks/singleton"
 import { ChallengeSubmissionPanel } from "./ChallengeSubmissionPanel"
+import { ChallengeOutputs } from "./ChallengeOutputs"
+import { ChallengePrerequisites } from "./ChallengePrerequisites"
+import { ChallengeRequirements } from "./ChallengeRequirements"
 import { SwordIcon, TrophyIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { useAppSelector } from "@/redux"
@@ -19,6 +22,18 @@ export const ChallengeModal = () => {
     const submissions = useAppSelector((state) => state.challenge.challengeSubmissions)
     const config = useAppSelector((state) => state.system.config)
     const steps = useMemo(() => _.cloneDeep(challenge?.steps ?? []), [challenge?.steps])
+    const challengeRequirements = useMemo(
+        () => _.cloneDeep(challenge?.challengeRequirements ?? []).sort((prev, next) => prev.orderIndex - next.orderIndex),
+        [challenge?.challengeRequirements],
+    )
+    const challengeOutputs = useMemo(
+        () => _.cloneDeep(challenge?.challengeOutputs ?? []).sort((prev, next) => prev.orderIndex - next.orderIndex),
+        [challenge?.challengeOutputs],
+    )
+    const challengePrerequisites = useMemo(
+        () => _.cloneDeep(challenge?.challengePrerequisites ?? []).sort((prev, next) => prev.orderIndex - next.orderIndex),
+        [challenge?.challengePrerequisites],
+    )
     const passThreshold = config?.challenge?.passThreshold ?? 0
     const earnedScore = useMemo(
         () => submissions?.reduce((acc, submission) => acc + (submission.userSubmission?.lastAttempt?.score ?? 0), 0) ?? 0,
@@ -97,6 +112,12 @@ export const ChallengeModal = () => {
                                                 <div className="text-sm text-muted">
                                                     <MarkdownContent markdown={challenge?.requirements?.trim() || t("challenge.empty")} />
                                                 </div>
+                                                <div className="h-4.5" />
+                                                <ChallengeRequirements challengeRequirements={challengeRequirements} />
+                                                <div className="h-4.5" />
+                                                <ChallengeOutputs challengeOutputs={challengeOutputs} />
+                                                <div className="h-4.5" />
+                                                <ChallengePrerequisites challengePrerequisites={challengePrerequisites} />
                                                 <div className="h-4.5" />
                                                 <div className="text-base font-semibold text-foreground">{t("challenge.yourScore")}</div>  
                                                 <div className="h-3" />

@@ -242,6 +242,9 @@
       "label": "Bước {index}"
     },
     "tasks": "Các bước thực hiện",
+    "requirements": "Yêu cầu",
+    "outputs": "Đầu ra mong đợi",
+    "prerequisites": "Điều kiện tiên quyết",
     "yourScore": "Kết quả của bạn",
     "score": "{score} điểm",
     "battle": {

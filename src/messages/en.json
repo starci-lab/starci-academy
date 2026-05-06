@@ -233,6 +233,9 @@
       "label": "Step {index}"
     },
     "tasks": "Tasks",
+    "requirements": "Requirements",
+    "outputs": "Outputs",
+    "prerequisites": "Prerequisites",
     "yourScore": "Your result",
     "score": "{score} pts",
     "battle": {

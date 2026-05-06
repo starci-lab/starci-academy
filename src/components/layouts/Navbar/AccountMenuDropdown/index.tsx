@@ -53,7 +53,7 @@ export interface AccountActionItem {
  */
 export const AccountMenuDropdown = (props: AccountMenuDropdownProps) => {
     const { classNames } = props
-    const { isOpen, setOpen, close } = useAccountMenuOverlayState()
+    const { isOpen, open, close, setOpen } = useAccountMenuOverlayState()
     const user = useAppSelector((state) => state.user.user)
     const locale = useLocale()
     const t = useTranslations()
@@ -89,23 +89,24 @@ export const AccountMenuDropdown = (props: AccountMenuDropdownProps) => {
             {/** Dropdown trigger */}
             <>
                 {!isAuthenticated ? (
-                    <Button
-                        onPress={() => setOpen(!isOpen)}
-                        isIconOnly 
-                        className="rounded-full" variant="tertiary">
-                        <Badge size="sm" className="border-0" content="0" color="accent">
-                            <Avatar size="sm" className="cursor-pointer">
-                                <AvatarFallback>
-                                    {truncate(user?.username, { length: 1 })}
-                                </AvatarFallback>
-                            </Avatar>
-                        </Badge>
-                    </Button>
-                ) : (
                     <Button 
-                        onPress={() => setOpen(!isOpen)}
+                        onPress={() => open()}
                         isIconOnly className="rounded-full" variant="tertiary">
                         <UserIcon className="size-5" />
+                    </Button>         
+                ) : (
+                    <Button
+                        onPress={() => open()}
+                        isIconOnly 
+                        className="rounded-full" variant="tertiary">
+                        <Badge.Anchor>
+                            <Avatar size="sm" className="cursor-pointer">
+                                <AvatarFallback>
+                                    {user?.username?.slice(0, 2).toUpperCase()}
+                                </AvatarFallback>
+                            </Avatar>
+                            <Badge size="sm" color="accent">5</Badge>
+                        </Badge.Anchor>
                     </Button>
                 )}
             </>

@@ -12,7 +12,7 @@ const query1 = gql`
       data {
         id
         title
-        challengeRequirements {
+        requirements {
           id
           purpose
           technicalConstraints
@@ -20,12 +20,12 @@ const query1 = gql`
           forbidden
           orderIndex
         }
-        challengeOutputs {
+        outputs {
           id
           text
           orderIndex
         }
-        challengePrerequisites {
+        prerequisites {
           id
           text
           orderIndex

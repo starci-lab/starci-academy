@@ -35,6 +35,8 @@ import {
     useMutateSignUpVerifyOtpSwrCore,
     useMutateSignUpResendOtpSwrCore,
     useAutocompleteGlobalSearchSwrCore,
+    usePostAdminPresignedUrlSwrCore,
+    usePostAdminProcessVideoSwrCore,
 } from "./core"
 
 export interface SwrContextType {
@@ -71,6 +73,8 @@ export interface SwrContextType {
     mutateSignUpSwr: ReturnType<typeof useMutateSignUpSwrCore>;
     mutateSignUpVerifyOtpSwr: ReturnType<typeof useMutateSignUpVerifyOtpSwrCore>;
     mutateSignUpResendOtpSwr: ReturnType<typeof useMutateSignUpResendOtpSwrCore>;
+    postAdminPresignedUrlSwr: ReturnType<typeof usePostAdminPresignedUrlSwrCore>;
+    postAdminProcessVideoSwr: ReturnType<typeof usePostAdminProcessVideoSwrCore>;
 }
 
 export const SwrContext = createContext<SwrContextType | null>(null)
@@ -112,6 +116,8 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
     const mutateSignUpSwr = useMutateSignUpSwrCore()
     const mutateSignUpVerifyOtpSwr = useMutateSignUpVerifyOtpSwrCore()
     const mutateSignUpResendOtpSwr = useMutateSignUpResendOtpSwrCore()
+    const postAdminPresignedUrlSwr = usePostAdminPresignedUrlSwrCore()
+    const postAdminProcessVideoSwr = usePostAdminProcessVideoSwrCore()
     return (
         <SwrContext.Provider value={
             {
@@ -148,6 +154,8 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
                 mutateSignUpSwr,
                 mutateSignUpVerifyOtpSwr,
                 mutateSignUpResendOtpSwr,
+                postAdminPresignedUrlSwr,
+                postAdminProcessVideoSwr,
             }
         }>
             {children}

@@ -23,16 +23,16 @@ export const ChallengeModal = () => {
     const config = useAppSelector((state) => state.system.config)
     const steps = useMemo(() => _.cloneDeep(challenge?.steps ?? []), [challenge?.steps])
     const challengeRequirements = useMemo(
-        () => _.cloneDeep(challenge?.challengeRequirements ?? []).sort((prev, next) => prev.orderIndex - next.orderIndex),
-        [challenge?.challengeRequirements],
+        () => _.cloneDeep(challenge?.requirements ?? []).sort((prev, next) => prev.orderIndex - next.orderIndex),
+        [challenge?.requirements],
     )
     const challengeOutputs = useMemo(
-        () => _.cloneDeep(challenge?.challengeOutputs ?? []).sort((prev, next) => prev.orderIndex - next.orderIndex),
-        [challenge?.challengeOutputs],
+        () => _.cloneDeep(challenge?.outputs ?? []).sort((prev, next) => prev.orderIndex - next.orderIndex),
+        [challenge?.outputs],
     )
     const challengePrerequisites = useMemo(
-        () => _.cloneDeep(challenge?.challengePrerequisites ?? []).sort((prev, next) => prev.orderIndex - next.orderIndex),
-        [challenge?.challengePrerequisites],
+        () => _.cloneDeep(challenge?.prerequisites ?? []).sort((prev, next) => prev.orderIndex - next.orderIndex),
+        [challenge?.prerequisites],
     )
     const passThreshold = config?.challenge?.passThreshold ?? 0
     const earnedScore = useMemo(
@@ -108,10 +108,6 @@ export const ChallengeModal = () => {
                                         <div className="min-h-0 flex-1 overflow-y-auto">
                                             <div className="p-3">
                                                 <div className="text-base font-semibold text-foreground">{t("challenge.tasks")}</div>
-                                                <div className="h-1.5" />
-                                                <div className="text-sm text-muted">
-                                                    <MarkdownContent markdown={challenge?.requirements?.trim() || t("challenge.empty")} />
-                                                </div>
                                                 <div className="h-4.5" />
                                                 <ChallengeRequirements challengeRequirements={challengeRequirements} />
                                                 <div className="h-4.5" />

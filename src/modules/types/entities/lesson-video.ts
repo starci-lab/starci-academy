@@ -1,5 +1,5 @@
 import type { AbstractEntity } from "./abstract"
-import type { LessonVideoKind, VideoHostPlatform } from "../enums"
+import type { LessonVideoKind, LessonVideoType, VideoHostPlatform } from "../enums"
 import type { LessonVideoTranslationEntity } from "./lesson-video-translation"
 import type { ModuleEntity } from "./module"
 
@@ -17,6 +17,10 @@ export interface LessonVideoEntity extends AbstractEntity {
     description: string | null
     /** Production type (raw stream, edited, premium recording). */
     kind: LessonVideoKind
+    /** Video delivery format (standard mp4 or MPEG-DASH). */
+    videoType: LessonVideoType
+    /** Video container format string (e.g. "mp4", "mpd"). */
+    format: string | null
     /** Optional short caption or note (default locale column; localized via translations). */
     caption: string | null
     /** Host or delivery platform for {@link LessonVideoEntity.url}. */

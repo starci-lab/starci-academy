@@ -21,6 +21,7 @@
     "axios": "^1.15.2",
     "bn.js": "^5.2.3",
     "country-flag-icons": "^1.6.15",
+    "dashjs": "^5.1.1",
     "dayjs": "^1.11.20",
     "decimal.js": "^10.6.0",
     "eventemitter2": "^6.4.9",

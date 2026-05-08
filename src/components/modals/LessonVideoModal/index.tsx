@@ -40,6 +40,7 @@ export const LessonVideoModal = () => {
                             <div className="flex flex-col items-center">
                                 <VideoRenderer
                                     hostPlatform={lessonVideo?.hostPlatform ?? VideoHostPlatform.Youtube}
+                                    videoType={lessonVideo?.videoType}
                                     title={lessonVideo?.title}
                                     url={lessonVideo?.url ?? ""}
                                 />

@@ -18,6 +18,7 @@ import {
     jobReducer,
     keycloakReducer,
     searchReducer,
+    adminReducer,
 } from "./slices"
 
 export const store = configureStore({
@@ -40,6 +41,7 @@ export const store = configureStore({
         job: jobReducer,
         keycloak: keycloakReducer,
         search: searchReducer,
+        admin: adminReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false,

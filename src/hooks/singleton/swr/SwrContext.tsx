@@ -34,9 +34,12 @@ import {
     useMutateSignUpSwrCore,
     useMutateSignUpVerifyOtpSwrCore,
     useMutateSignUpResendOtpSwrCore,
+    useMutateSubmitPersonalProjectIdealSwrCore,
+    useMutateSubmitPersonalGithubUrlSwrCore,
     useAutocompleteGlobalSearchSwrCore,
     usePostAdminPresignedUrlSwrCore,
     usePostAdminProcessVideoSwrCore,
+    useQueryMilestonesSwrCore,
 } from "./core"
 
 export interface SwrContextType {
@@ -73,8 +76,11 @@ export interface SwrContextType {
     mutateSignUpSwr: ReturnType<typeof useMutateSignUpSwrCore>;
     mutateSignUpVerifyOtpSwr: ReturnType<typeof useMutateSignUpVerifyOtpSwrCore>;
     mutateSignUpResendOtpSwr: ReturnType<typeof useMutateSignUpResendOtpSwrCore>;
+    mutateSubmitPersonalProjectIdealSwr: ReturnType<typeof useMutateSubmitPersonalProjectIdealSwrCore>;
+    mutateSubmitPersonalGithubUrlSwr: ReturnType<typeof useMutateSubmitPersonalGithubUrlSwrCore>;
     postAdminPresignedUrlSwr: ReturnType<typeof usePostAdminPresignedUrlSwrCore>;
     postAdminProcessVideoSwr: ReturnType<typeof usePostAdminProcessVideoSwrCore>;
+    queryMilestonesSwr: ReturnType<typeof useQueryMilestonesSwrCore>;
 }
 
 export const SwrContext = createContext<SwrContextType | null>(null)
@@ -116,8 +122,11 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
     const mutateSignUpSwr = useMutateSignUpSwrCore()
     const mutateSignUpVerifyOtpSwr = useMutateSignUpVerifyOtpSwrCore()
     const mutateSignUpResendOtpSwr = useMutateSignUpResendOtpSwrCore()
+    const mutateSubmitPersonalProjectIdealSwr = useMutateSubmitPersonalProjectIdealSwrCore()
+    const mutateSubmitPersonalGithubUrlSwr = useMutateSubmitPersonalGithubUrlSwrCore()
     const postAdminPresignedUrlSwr = usePostAdminPresignedUrlSwrCore()
     const postAdminProcessVideoSwr = usePostAdminProcessVideoSwrCore()
+    const queryMilestonesSwr = useQueryMilestonesSwrCore()
     return (
         <SwrContext.Provider value={
             {
@@ -154,8 +163,11 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
                 mutateSignUpSwr,
                 mutateSignUpVerifyOtpSwr,
                 mutateSignUpResendOtpSwr,
+                mutateSubmitPersonalProjectIdealSwr,
+                mutateSubmitPersonalGithubUrlSwr,
                 postAdminPresignedUrlSwr,
                 postAdminProcessVideoSwr,
+                queryMilestonesSwr,
             }
         }>
             {children}

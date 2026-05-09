@@ -8,6 +8,8 @@ import {
     useCvApplyFormikCore,
     useGlobalSearchFormikCore,
     useAdminApiKeyFormikCore,
+    usePersonalProjectIdeaFormikCore,
+    usePersonalProjectGithubUrlFormikCore,
 } from "./core"
 
 export interface FormikContextType {
@@ -17,6 +19,8 @@ export interface FormikContextType {
     cvApplyFormik: ReturnType<typeof useCvApplyFormikCore>
     globalSearchFormik: ReturnType<typeof useGlobalSearchFormikCore>
     adminApiKeyFormik: ReturnType<typeof useAdminApiKeyFormikCore>
+    personalProjectIdeaFormik: ReturnType<typeof usePersonalProjectIdeaFormikCore>
+    personalProjectGithubUrlFormik: ReturnType<typeof usePersonalProjectGithubUrlFormikCore>
 }
 
 export const FormikContext = createContext<FormikContextType | null>(null)
@@ -29,6 +33,8 @@ export const FormikProvider = ({ children }: PropsWithChildren) => {
     const cvApplyFormik = useCvApplyFormikCore()
     const globalSearchFormik = useGlobalSearchFormikCore()
     const adminApiKeyFormik = useAdminApiKeyFormikCore()
+    const personalProjectIdeaFormik = usePersonalProjectIdeaFormikCore()
+    const personalProjectGithubUrlFormik = usePersonalProjectGithubUrlFormikCore()
     return (
         <FormikContext.Provider value={{
             signInFormik,
@@ -37,6 +43,8 @@ export const FormikProvider = ({ children }: PropsWithChildren) => {
             cvApplyFormik,
             globalSearchFormik,
             adminApiKeyFormik,
+            personalProjectIdeaFormik,
+            personalProjectGithubUrlFormik,
         }}>
             {children}
         </FormikContext.Provider>

@@ -113,10 +113,24 @@
     "title": "Dự án cá nhân",
     "page": {
       "submit": {
-        "title": "Nộp link GitHub dự án cá nhân",
+        "title": "Nộp ý tưởng dự án",
         "placeholder": "Dán link repository GitHub của bạn",
+        "ideaPlaceholder": "Mô tả ý tưởng dự án cá nhân của bạn...",
+        "ideaRequired": "Vui lòng nhập ý tưởng trước khi nộp.",
+        "ideaTooShort": "Ý tưởng phải có ít nhất 10 ký tự.",
+        "milestoneMissing": "Không tìm thấy milestone để nộp ý tưởng.",
+        "submitFailed": "Nộp ý tưởng thất bại. Vui lòng thử lại.",
+        "submitOnceNote": "Lưu ý: chỉ được nộp ý tưởng 1 lần.",
+        "submittedOnce": "Bạn đã nộp ý tưởng, không thể nộp lại.",
         "lastSubmission": "Lần nộp gần nhất: 21/04/2026 20:45",
-        "cta": "Nộp dự án"
+        "cta": "Nộp"
+      },
+      "submitGithub": {
+        "title": "Nộp link GitHub dự án",
+        "placeholder": "https://github.com/your-account/personal-project",
+        "urlRequired": "Vui lòng nhập link GitHub của dự án.",
+        "urlInvalid": "Vui lòng nhập URL hợp lệ.",
+        "cta": "Nộp"
       },
       "feedback": {
         "title": "AI feedback",
@@ -143,6 +157,7 @@
       },
       "milestones": {
         "title": "Milestone dự án cá nhân",
+        "week": "Tuần",
         "items": {
           "scope": {
             "title": "Milestone 1 - Scope & Design",

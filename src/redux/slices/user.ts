@@ -1,4 +1,5 @@
 import { 
+    EnrollmentEntity,
     UserEntity 
 } from "@/modules/types"
 import { 
@@ -14,6 +15,8 @@ export interface UserSlice {
     user: UserEntity | null
     /** Whether the user is enrolled in the course. */
     enrolled: boolean
+    /** The user's enrollment. */
+    enrollment?: EnrollmentEntity
 }
 
 /**
@@ -24,6 +27,8 @@ const initialState: UserSlice = {
     user: null,
     /** Whether the user is enrolled in the course. */
     enrolled: false,
+    /** The user's enrollment. */
+    enrollment: undefined,
 }
 
 /**
@@ -51,6 +56,13 @@ export const userSlice = createSlice(
             ) => {
                 state.enrolled = action.payload
             },
+            /** The action to set the enrollment. */
+            setEnrollment: (
+                state, 
+                action: PayloadAction<EnrollmentEntity | undefined>
+            ) => {
+                state.enrollment = action.payload
+            },
         },
     },
 )
@@ -62,4 +74,5 @@ export const userReducer = userSlice.reducer
 export const { 
     setUser,
     setEnrolled,
+    setEnrollment,
 } = userSlice.actions

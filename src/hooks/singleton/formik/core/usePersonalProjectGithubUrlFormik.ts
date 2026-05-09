@@ -1,4 +1,5 @@
-import { useMutateSubmitPersonalGithubUrlSwr } from "../../swr"
+"use client"
+import { useMutateSubmitPersonalGithubUrlSwr, useQueryCourseEnrollmentStatusSwr } from "../../swr"
 import { useAppSelector } from "@/redux"
 import { runGraphQLWithToast } from "@/modules/toast"
 import { useFormik } from "formik"
@@ -16,11 +17,14 @@ export interface PersonalProjectGithubUrlFormikValues {
 
 /**
  * Singleton Formik core for personal project GitHub URL submission.
+ * Uses `runGraphQLWithToast` for submit feedback; Formik stays aligned with Redux via `enableReinitialize`.
  */
 export const usePersonalProjectGithubUrlFormikCore = () => {
     const t = useTranslations()
-    const { trigger: submitGithubUrl } = useMutateSubmitPersonalGithubUrlSwr()
+    const submitPersonalGithubUrlSwr = useMutateSubmitPersonalGithubUrlSwr()
+    const queryCourseEnrollmentStatusSwr = useQueryCourseEnrollmentStatusSwr()
     const courseId = useAppSelector((state) => state.course.entity?.id)
+    const enrollment = useAppSelector((state) => state.user.enrollment)
     const validationSchema = useMemo(
         () => Yup.object({
             githubUrl: Yup.string()
@@ -29,18 +33,28 @@ export const usePersonalProjectGithubUrlFormikCore = () => {
                 .url(t("finalProject.page.submitGithub.urlInvalid")),
         }), [t],
     )
-    return useFormik<PersonalProjectGithubUrlFormikValues>({
-        initialValues: {
-            githubUrl: "",
-        },
+
+    const initialValues = useMemo<PersonalProjectGithubUrlFormikValues>(
+        () => ({
+            githubUrl: enrollment?.personalProjectGithubUrl ?? "",
+        }),
+        [enrollment?.personalProjectGithubUrl],
+    )
+
+    const formik = useFormik<PersonalProjectGithubUrlFormikValues>({
+        initialValues,
+        enableReinitialize: true,
         validationSchema,
-        onSubmit: async (values) => {
+        initialStatus: {
+            error: "",
+        },
+        onSubmit: async (values, helpers) => {
             if (!courseId) {
                 return
             }
             await runGraphQLWithToast(
                 async () => {
-                    const result = await submitGithubUrl({
+                    const result = await submitPersonalGithubUrlSwr.trigger({
                         courseId,
                         githubUrl: values.githubUrl.trim(),
                     })
@@ -51,6 +65,10 @@ export const usePersonalProjectGithubUrlFormikCore = () => {
                     if (!env.success) {
                         throw new Error(env.error ?? env.message ?? "Submit failed")
                     }
+                    await queryCourseEnrollmentStatusSwr.mutate()
+                    helpers.setStatus({
+                        error: "",
+                    })
                     return env
                 },
                 {
@@ -60,4 +78,7 @@ export const usePersonalProjectGithubUrlFormikCore = () => {
             )
         },
     })
+
+    return formik
 }
+

@@ -36,6 +36,8 @@ import {
     useMutateSignUpResendOtpSwrCore,
     useMutateSubmitPersonalProjectIdealSwrCore,
     useMutateSubmitPersonalGithubUrlSwrCore,
+    useMutateSyncIdealTextSwrCore,
+    useMutateSyncPersonalProjectGithubSwrCore,
     useAutocompleteGlobalSearchSwrCore,
     usePostAdminPresignedUrlSwrCore,
     usePostAdminProcessVideoSwrCore,
@@ -78,6 +80,8 @@ export interface SwrContextType {
     mutateSignUpResendOtpSwr: ReturnType<typeof useMutateSignUpResendOtpSwrCore>;
     mutateSubmitPersonalProjectIdealSwr: ReturnType<typeof useMutateSubmitPersonalProjectIdealSwrCore>;
     mutateSubmitPersonalGithubUrlSwr: ReturnType<typeof useMutateSubmitPersonalGithubUrlSwrCore>;
+    mutateSyncIdealTextSwr: ReturnType<typeof useMutateSyncIdealTextSwrCore>;
+    mutateSyncPersonalProjectGithubSwr: ReturnType<typeof useMutateSyncPersonalProjectGithubSwrCore>;
     postAdminPresignedUrlSwr: ReturnType<typeof usePostAdminPresignedUrlSwrCore>;
     postAdminProcessVideoSwr: ReturnType<typeof usePostAdminProcessVideoSwrCore>;
     queryMilestonesSwr: ReturnType<typeof useQueryMilestonesSwrCore>;
@@ -124,6 +128,8 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
     const mutateSignUpResendOtpSwr = useMutateSignUpResendOtpSwrCore()
     const mutateSubmitPersonalProjectIdealSwr = useMutateSubmitPersonalProjectIdealSwrCore()
     const mutateSubmitPersonalGithubUrlSwr = useMutateSubmitPersonalGithubUrlSwrCore()
+    const mutateSyncIdealTextSwr = useMutateSyncIdealTextSwrCore()
+    const mutateSyncPersonalProjectGithubSwr = useMutateSyncPersonalProjectGithubSwrCore()
     const postAdminPresignedUrlSwr = usePostAdminPresignedUrlSwrCore()
     const postAdminProcessVideoSwr = usePostAdminProcessVideoSwrCore()
     const queryMilestonesSwr = useQueryMilestonesSwrCore()
@@ -165,6 +171,8 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
                 mutateSignUpResendOtpSwr,
                 mutateSubmitPersonalProjectIdealSwr,
                 mutateSubmitPersonalGithubUrlSwr,
+                mutateSyncIdealTextSwr,
+                mutateSyncPersonalProjectGithubSwr,
                 postAdminPresignedUrlSwr,
                 postAdminProcessVideoSwr,
                 queryMilestonesSwr,

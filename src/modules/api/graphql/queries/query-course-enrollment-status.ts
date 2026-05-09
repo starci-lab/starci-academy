@@ -1,3 +1,4 @@
+import { EnrollmentEntity } from "@/modules/types"
 import { createAuthApolloClient } from "../clients"
 import { type GraphQLResponse, type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
@@ -5,6 +6,7 @@ import { DocumentNode, gql } from "@apollo/client"
 /** Payload inside `courseEnrollmentStatus.data` after the standard API wrapper. */
 export interface CourseEnrollmentStatusData {
     isEnrolled: boolean
+    enrollment?: EnrollmentEntity
 }
 
 const query1 = gql`
@@ -15,6 +17,11 @@ const query1 = gql`
       error
       data {
         isEnrolled
+        enrollment {
+          ideaText
+          personalProjectGithubUrl
+          milestoneStatus
+        }
       }
     }
   }

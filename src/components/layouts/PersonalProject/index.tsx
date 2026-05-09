@@ -30,6 +30,7 @@ export const PersonalProject = () => {
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
     const ideaFormik = usePersonalProjectIdeaFormik()
     const githubUrlFormik = usePersonalProjectGithubUrlFormik()
+    const isIdeaSubmitted = Boolean(ideaFormik.status?.submitted)
     const feedbackHistory = useMemo<Array<PersonalProjectFeedbackHistoryItem>>(() => [
         {
             id: "1",
@@ -77,16 +78,16 @@ export const PersonalProject = () => {
                                     placeholder={t("finalProject.page.submit.ideaPlaceholder")}
                                     name="ideaText"
                                     value={ideaFormik.values.ideaText}
-                                    disabled={ideaFormik.submitCount > 0}
+                                    disabled={isIdeaSubmitted}
                                     onChange={(event) => ideaFormik.setFieldValue("ideaText", event.target.value)}
                                     onBlur={() => ideaFormik.setFieldTouched("ideaText", true)}
                                 />
-                                <FieldError>{ideaFormik.errors.ideaText}</FieldError>
+                                <FieldError>{ideaFormik.errors.ideaText || ideaFormik.status?.error}</FieldError>
                             </TextField>
                             <div className="flex items-center gap-2 mt-3">
                                 <Button
                                     isPending={ideaFormik.isSubmitting}
-                                    isDisabled={!ideaFormik.isValid || ideaFormik.submitCount > 0}
+                                    isDisabled={!ideaFormik.isValid || isIdeaSubmitted}
                                     onPress={() => ideaFormik.submitForm()}
                                 >
                                     {t("finalProject.page.submit.cta")}
@@ -104,7 +105,7 @@ export const PersonalProject = () => {
                                     onChange={(event) => githubUrlFormik.setFieldValue("githubUrl", event.target.value)}
                                     onBlur={() => githubUrlFormik.setFieldTouched("githubUrl", true)}
                                 />
-                                <FieldError>{githubUrlFormik.errors.githubUrl}</FieldError>
+                                <FieldError>{githubUrlFormik.errors.githubUrl || githubUrlFormik.status?.error}</FieldError>
                             </TextField>
                             <div className="flex items-center gap-2 mt-3">
                                 <Button

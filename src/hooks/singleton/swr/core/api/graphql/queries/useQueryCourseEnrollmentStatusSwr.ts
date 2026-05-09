@@ -1,6 +1,6 @@
 import { queryCourseEnrollmentStatus } from "@/modules/api"
 import { useAppDispatch, useAppSelector } from "@/redux"
-import { setEnrolled } from "@/redux/slices"
+import { setEnrolled, setEnrollment } from "@/redux/slices"
 import useSWR from "swr"
 
 /**
@@ -29,6 +29,7 @@ export const useQueryCourseEnrollmentStatusSwrCore = () => {
             if (!data || !data.data) {
                 throw new Error("Course enrollment status not found")
             }
+            dispatch(setEnrollment(data.data.courseEnrollmentStatus.data?.enrollment))
             dispatch(setEnrolled(Boolean(data.data.courseEnrollmentStatus.data?.isEnrolled)))
             return data.data
         }

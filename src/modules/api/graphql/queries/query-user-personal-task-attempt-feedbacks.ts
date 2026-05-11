@@ -1,5 +1,3 @@
-
-import type { PersonalFeedbackItem } from "./query-personal-feedbacks"
 import { createAuthApolloClient } from "../clients"
 import {
     SortOrder,
@@ -9,6 +7,7 @@ import {
     type SortInput,
 } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import { UserMilestoneTaskAttemptEntity } from "@/modules/types"
 
 /** Sort keys for `userPersonalTaskAttemptFeedbacks` list. */
 export enum UserPersonalTaskAttemptFeedbacksSortBy {
@@ -20,7 +19,7 @@ export enum UserPersonalTaskAttemptFeedbacksSortBy {
 
 export interface QueryUserPersonalTaskAttemptFeedbacksPayload {
     count: number
-    data: Array<PersonalFeedbackItem>
+    data: Array<UserMilestoneTaskAttemptEntity>
 }
 
 const query1 = gql`
@@ -34,7 +33,6 @@ const query1 = gql`
         data {
           id
           message
-          detail
           severity
           orderIndex
           location

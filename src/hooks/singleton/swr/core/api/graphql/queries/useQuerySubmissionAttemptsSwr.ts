@@ -53,7 +53,7 @@ export const useQuerySubmissionAttemptsSwrCore = () => {
                     [GraphQLHeadersKey.XCourseId]: course.id,
                 },
             })
-            const payload = data.data?.submissionAttempts?.data
+            const payload = data.data?.userChallengeSubmissionAttempts?.data
             if (!payload) {
                 throw new Error("Submission attempts not found")
             }   

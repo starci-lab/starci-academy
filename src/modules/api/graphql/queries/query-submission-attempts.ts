@@ -9,7 +9,7 @@ import {
 } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
-/** Sort keys for `lessonVideos` list (`LessonVideosSortBy`). */
+/** Sort keys for `userChallengeSubmissionAttempts` list (`UserChallengeSubmissionAttemptsSortBy`). */
 export enum SubmissionAttemptsSortBy {
     // The attempt number.
     AttemptNumber = "attemptNumber",
@@ -29,8 +29,8 @@ export interface QuerySubmissionAttemptsPayload {
 }
 
 const query1 = gql`
-  query SubmissionAttempts($request: SubmissionAttemptsRequest!) {
-    submissionAttempts(request: $request) {
+  query UserChallengeSubmissionAttempts($request: UserChallengeSubmissionAttemptsRequest!) {
+    userChallengeSubmissionAttempts(request: $request) {
       success
       message
       error
@@ -65,7 +65,7 @@ export interface SubmissionAttemptsListRequest {
 }
 
 export interface QuerySubmissionAttemptsResponse {
-    submissionAttempts: GraphQLResponse<QuerySubmissionAttemptsPayload>
+    userChallengeSubmissionAttempts: GraphQLResponse<QuerySubmissionAttemptsPayload>
 }
 
 export const defaultSubmissionAttemptsListSorts: Array<SortInput<SubmissionAttemptsSortBy>> = [
@@ -76,7 +76,7 @@ export const defaultSubmissionAttemptsListSorts: Array<SortInput<SubmissionAttem
 ]
 
 /**
- * Paginated submission attempts (`ref/queries/submission-attempts/submission-attempts`).
+ * Paginated submission attempts (`ref/queries/user-challenge-submission-attempts`).
  */
 export const querySubmissionAttempts = async ({
     query = QuerySubmissionAttempts.Query1,

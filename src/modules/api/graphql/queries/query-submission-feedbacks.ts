@@ -9,7 +9,7 @@ import {
 } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 
-/** Sort keys for `submissionFeedbacks` list (`SubmissionFeedbacksSortBy`). */
+/** Sort keys for `userChallengeSubmissionFeedbacks` list (`UserChallengeSubmissionFeedbacksSortBy`). */
 export enum SubmissionFeedbacksSortBy {
     // The date and time the submission feedback was created.
     CreatedAt = "createdAt",
@@ -27,8 +27,8 @@ export interface QuerySubmissionFeedbacksPayload {
 }
 
 const query1 = gql`
-  query SubmissionFeedbacks($request: SubmissionFeedbacksRequest!) {
-    submissionFeedbacks(request: $request) {
+  query UserChallengeSubmissionFeedbacks($request: UserChallengeSubmissionFeedbacksRequest!) {
+    userChallengeSubmissionFeedbacks(request: $request) {
       success
       message
       error
@@ -64,7 +64,7 @@ export interface SubmissionFeedbacksListRequest {
 }
 
 export interface QuerySubmissionFeedbacksResponse {
-    submissionFeedbacks: GraphQLResponse<QuerySubmissionFeedbacksPayload>
+    userChallengeSubmissionFeedbacks: GraphQLResponse<QuerySubmissionFeedbacksPayload>
 }
 
 export const defaultSubmissionFeedbacksListSorts: Array<SortInput<SubmissionFeedbacksSortBy>> = [
@@ -75,7 +75,7 @@ export const defaultSubmissionFeedbacksListSorts: Array<SortInput<SubmissionFeed
 ]
 
 /**
- * Paginated submission feedbacks (`ref/queries/submission-feedbacks/submission-feedbacks`).
+ * Paginated submission feedbacks (`ref/queries/user-challenge-submission-feedbacks`).
  */
 export const querySubmissionFeedbacks = async ({
     query = QuerySubmissionFeedbacks.Query1,

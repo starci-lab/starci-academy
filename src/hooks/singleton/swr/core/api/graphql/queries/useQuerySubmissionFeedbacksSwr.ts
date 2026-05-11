@@ -47,7 +47,7 @@ export const useQuerySubmissionFeedbacksSwrCore = () => {
                     [GraphQLHeadersKey.XCourseId]: course.id,
                 },
             })
-            const payload = data.data?.submissionFeedbacks?.data
+            const payload = data.data?.userChallengeSubmissionFeedbacks?.data
             if (!payload) {
                 throw new Error("Submission feedbacks not found")
             }   

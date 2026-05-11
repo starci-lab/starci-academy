@@ -1,5 +1,5 @@
 
-import type { PersonalFeedbackAttempt } from "./query-personal-feedbacks"
+import { UserMilestoneTaskAttemptEntity } from "@/modules/types"
 import { createAuthApolloClient } from "../clients"
 import {
     SortOrder,
@@ -21,7 +21,7 @@ export enum UserPersonalTaskAttemptsSortBy {
 
 export interface QueryUserPersonalTaskAttemptsPayload {
     count: number
-    data: Array<PersonalFeedbackAttempt>
+    data: Array<UserMilestoneTaskAttemptEntity>
 }
 
 const query1 = gql`
@@ -37,7 +37,6 @@ const query1 = gql`
           attemptNumber
           score
           shortFeedback
-          submissionUrl
           processedAt
         }
       }

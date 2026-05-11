@@ -11,6 +11,7 @@ import { CvPreviewModal } from "./CvPreviewModal"
 import { CvUpdateModal } from "./CvUpdateModal"
 import { GlobalSearchModal } from "./GlobalSearchModal"
 import { LinkGithubModal } from "./LinkGithubModal"
+import { ShareModal } from "./ShareModal"
 
 export const ModalContainer = () => {
     return (
@@ -27,6 +28,7 @@ export const ModalContainer = () => {
             <CvUpdateModal />
             <GlobalSearchModal />
             <LinkGithubModal />
+            <ShareModal />
         </>
     )
 }

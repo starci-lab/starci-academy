@@ -1,53 +1,64 @@
-import type {
-    MilestoneEntity,
-} from "@/modules/types"
-import { 
-    createSlice, 
-    PayloadAction 
-} from "@reduxjs/toolkit"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import type { MilestoneEntity } from "@/modules/types"
+import { JobStatus } from "@/modules/types"
 
-/**
- * The slice for milestones.
- */
-export interface MilestoneSlice {
-    /** The milestone entities for the current course. */
+export interface MilestoneState {
     entities: Array<MilestoneEntity>
+    selectedTaskId?: string
+    selectedAttemptId?: string
+    selectedMilestoneId?: string
+    /** Job ID of the currently running review job for the selected task. */
+    reviewJobId?: string
+    /** Current status of the review job. */
+    reviewJobStatus?: JobStatus
 }
 
-/**
- * The initial state of the milestone slice.
- */
-const initialState: MilestoneSlice = {
-    /** The milestone entities. */
+const initialState: MilestoneState = {
     entities: [],
+    selectedTaskId: undefined,
+    selectedAttemptId: undefined,
+    selectedMilestoneId: undefined,
+    reviewJobId: undefined,
+    reviewJobStatus: undefined,
 }
 
-/**
- * The slice for milestones.
- */
-export const milestoneSlice = createSlice(
-    {
-        /** The name of the slice. */
-        name: "milestone",
-        /** The initial state of the slice. */
-        initialState,
-        /** The reducers of the slice. */
-        reducers: {
-            /** The action to set the milestones. */
-            setMilestones: (
-                state, 
-                action: PayloadAction<Array<MilestoneEntity>>
-            ) => {
-                state.entities = action.payload
-            },
+const slice = createSlice({
+    name: "milestone",
+    initialState,
+    reducers: {
+        setMilestones: (state, action: PayloadAction<Array<MilestoneEntity>>) => {
+            state.entities = action.payload
         },
-    }
-)
+        resetMilestones: (state) => {
+            state.entities = []
+        },
+        setSelectedTaskId: (state, action: PayloadAction<string | undefined>) => {
+            state.selectedTaskId = action.payload
+        },
+        setSelectedAttemptId: (state, action: PayloadAction<string | undefined>) => {
+            state.selectedAttemptId = action.payload
+        },
+        setSelectedMilestoneId: (state, action: PayloadAction<string | undefined>) => {
+            state.selectedMilestoneId = action.payload
+        },
+        setReviewJob: (state, action: PayloadAction<{ jobId: string; status: JobStatus }>) => {
+            state.reviewJobId = action.payload.jobId
+            state.reviewJobStatus = action.payload.status
+        },
+        clearReviewJob: (state) => {
+            state.reviewJobId = undefined
+            state.reviewJobStatus = undefined
+        },
+    },
+})
 
-/**
- * The reducer for the milestone slice.
- */
-export const milestoneReducer = milestoneSlice.reducer
-export const { 
+export const {
     setMilestones,
-} = milestoneSlice.actions
+    resetMilestones,
+    setSelectedTaskId,
+    setSelectedAttemptId,
+    setSelectedMilestoneId,
+    setReviewJob,
+    clearReviewJob,
+} = slice.actions
+export const milestoneReducer = slice.reducer

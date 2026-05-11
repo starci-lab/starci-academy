@@ -28,4 +28,6 @@ export interface ContentEntity extends AbstractEntity {
     numChallenges: number
     /** The number of lessons for the content. */
     numLessons: number
+    /** Whether this content requires enrollment (premium). */
+    isPremium: boolean
 }

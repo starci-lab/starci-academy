@@ -10,7 +10,6 @@ export const useQueryCourseEnrollmentStatusSwrCore = () => {
     const dispatch = useAppDispatch()
     const course = useAppSelector((state) => state.course.entity)
     const authenticated = useAppSelector((state) => state.keycloak.authenticated)
-    /** The SWR. */
     const swr = useSWR(
         course?.id && authenticated
             ? [
@@ -34,6 +33,5 @@ export const useQueryCourseEnrollmentStatusSwrCore = () => {
             return data.data
         }
     )
-    /** Return the SWR. */
     return swr
 }

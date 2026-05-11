@@ -6,6 +6,9 @@ import { useSidebar } from "./useSidebar"
 import { useSyncReduxContentId } from "./useSyncReduxContentId"
 import { useDefaultRedirect } from "./useDefaultRedirect"
 import { useExchangeCodeForToken } from "./useExchangeCodeForToken"
+import { useSyncReduxTaskId } from "./useSyncReduxTaskId"
+import { useSyncReduxMilestoneId } from "./useSyncReduxMilestoneId"
+import { useSyncReduxPublicContentId } from "./useSyncReduxPublicContentId"
 
 export const UseEffects = () => {
     /** The useEffect to sync the redux course id. */
@@ -22,6 +25,12 @@ export const UseEffects = () => {
     useDefaultRedirect()
     /** OIDC: exchange `code` from Keycloak redirect for app tokens. */
     useExchangeCodeForToken()
+    /** The useEffect to sync the redux task id from URL. */
+    useSyncReduxTaskId()
+    /** The useEffect to sync the redux milestone id from URL. */
+    useSyncReduxMilestoneId()
+    /** The useEffect to sync the redux public content id from URL. */
+    useSyncReduxPublicContentId()
     return (
         <></>
     )

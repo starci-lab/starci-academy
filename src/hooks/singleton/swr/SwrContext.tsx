@@ -38,10 +38,20 @@ import {
     useMutateSubmitPersonalGithubUrlSwrCore,
     useMutateSyncIdealTextSwrCore,
     useMutateSyncPersonalProjectGithubSwrCore,
+    useMutateReviewPersonalProjectTaskSwrCore,
     useAutocompleteGlobalSearchSwrCore,
     usePostAdminPresignedUrlSwrCore,
     usePostAdminProcessVideoSwrCore,
     useQueryMilestonesSwrCore,
+    useQueryModulesSwrCore,
+    useQueryUserPersonalTaskAttemptsSwrCore,
+    useQueryUserPersonalTaskAttemptFeedbacksSwrCore,
+    useQueryMilestoneTaskProgressSwrCore,
+    useQueryAiModelsSwrCore,
+    useQueryContentStatusSwrCore,
+    useQueryPublicContentSwrCore,
+    useQuerySavedContentsSwrCore,
+    useMutateToggleFavoriteSwrCore,
 } from "./core"
 
 export interface SwrContextType {
@@ -82,9 +92,19 @@ export interface SwrContextType {
     mutateSubmitPersonalGithubUrlSwr: ReturnType<typeof useMutateSubmitPersonalGithubUrlSwrCore>;
     mutateSyncIdealTextSwr: ReturnType<typeof useMutateSyncIdealTextSwrCore>;
     mutateSyncPersonalProjectGithubSwr: ReturnType<typeof useMutateSyncPersonalProjectGithubSwrCore>;
+    mutateReviewPersonalProjectTaskSwr: ReturnType<typeof useMutateReviewPersonalProjectTaskSwrCore>;
     postAdminPresignedUrlSwr: ReturnType<typeof usePostAdminPresignedUrlSwrCore>;
     postAdminProcessVideoSwr: ReturnType<typeof usePostAdminProcessVideoSwrCore>;
     queryMilestonesSwr: ReturnType<typeof useQueryMilestonesSwrCore>;
+    queryModulesSwr: ReturnType<typeof useQueryModulesSwrCore>;
+    queryUserPersonalTaskAttemptsSwr: ReturnType<typeof useQueryUserPersonalTaskAttemptsSwrCore>;
+    queryUserPersonalTaskAttemptFeedbacksSwr: ReturnType<typeof useQueryUserPersonalTaskAttemptFeedbacksSwrCore>;
+    queryMilestoneTaskProgressSwr: ReturnType<typeof useQueryMilestoneTaskProgressSwrCore>;
+    queryAiModelsSwr: ReturnType<typeof useQueryAiModelsSwrCore>;
+    queryContentStatusSwr: ReturnType<typeof useQueryContentStatusSwrCore>;
+    queryPublicContentSwr: ReturnType<typeof useQueryPublicContentSwrCore>;
+    querySavedContentsSwr: ReturnType<typeof useQuerySavedContentsSwrCore>;
+    mutateToggleFavoriteSwr: ReturnType<typeof useMutateToggleFavoriteSwrCore>;
 }
 
 export const SwrContext = createContext<SwrContextType | null>(null)
@@ -130,9 +150,19 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
     const mutateSubmitPersonalGithubUrlSwr = useMutateSubmitPersonalGithubUrlSwrCore()
     const mutateSyncIdealTextSwr = useMutateSyncIdealTextSwrCore()
     const mutateSyncPersonalProjectGithubSwr = useMutateSyncPersonalProjectGithubSwrCore()
+    const mutateReviewPersonalProjectTaskSwr = useMutateReviewPersonalProjectTaskSwrCore()
     const postAdminPresignedUrlSwr = usePostAdminPresignedUrlSwrCore()
     const postAdminProcessVideoSwr = usePostAdminProcessVideoSwrCore()
     const queryMilestonesSwr = useQueryMilestonesSwrCore()
+    const queryModulesSwr = useQueryModulesSwrCore()
+    const queryUserPersonalTaskAttemptsSwr = useQueryUserPersonalTaskAttemptsSwrCore()
+    const queryUserPersonalTaskAttemptFeedbacksSwr = useQueryUserPersonalTaskAttemptFeedbacksSwrCore()
+    const queryMilestoneTaskProgressSwr = useQueryMilestoneTaskProgressSwrCore()
+    const queryAiModelsSwr = useQueryAiModelsSwrCore()
+    const queryContentStatusSwr = useQueryContentStatusSwrCore()
+    const queryPublicContentSwr = useQueryPublicContentSwrCore()
+    const querySavedContentsSwr = useQuerySavedContentsSwrCore()
+    const mutateToggleFavoriteSwr = useMutateToggleFavoriteSwrCore()
     return (
         <SwrContext.Provider value={
             {
@@ -173,9 +203,19 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
                 mutateSubmitPersonalGithubUrlSwr,
                 mutateSyncIdealTextSwr,
                 mutateSyncPersonalProjectGithubSwr,
+                mutateReviewPersonalProjectTaskSwr,
                 postAdminPresignedUrlSwr,
                 postAdminProcessVideoSwr,
                 queryMilestonesSwr,
+                queryModulesSwr,
+                queryUserPersonalTaskAttemptsSwr,
+                queryUserPersonalTaskAttemptFeedbacksSwr,
+                queryMilestoneTaskProgressSwr,
+                queryAiModelsSwr,
+                queryContentStatusSwr,
+                queryPublicContentSwr,
+                querySavedContentsSwr,
+                mutateToggleFavoriteSwr,
             }
         }>
             {children}

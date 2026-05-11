@@ -24,6 +24,10 @@ export interface ContentSlice {
     limit?: number
     /** The contents count. */
     count?: number
+    /** Whether the current content is read by the user. */
+    isRead?: boolean
+    /** Whether the current content is favorited by the user. */
+    isFavorite?: boolean
 }
 
 /**
@@ -44,6 +48,10 @@ const initialState: ContentSlice = {
     limit: undefined,
     /** The contents count. */
     count: undefined,
+    /** Whether the current content is read. */
+    isRead: undefined,
+    /** Whether the current content is favorited. */
+    isFavorite: undefined,
 }
 
 /**
@@ -106,6 +114,20 @@ export const contentSlice = createSlice(
             ) => {
                 state.count = action.payload
             },
+            /** The action to set the content read status. */
+            setContentIsRead: (
+                state,
+                action: PayloadAction<boolean | undefined>,
+            ) => {
+                state.isRead = action.payload
+            },
+            /** The action to set the content favorite status. */
+            setContentIsFavorite: (
+                state,
+                action: PayloadAction<boolean | undefined>,
+            ) => {
+                state.isFavorite = action.payload
+            },
         },
     }
 )
@@ -122,4 +144,6 @@ export const {
     setContentPageNumber,
     setContentLimit,
     setContentsCount,
+    setContentIsRead,
+    setContentIsFavorite,
 } = contentSlice.actions

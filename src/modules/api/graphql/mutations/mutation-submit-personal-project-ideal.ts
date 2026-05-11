@@ -51,7 +51,7 @@ export interface MutateSubmitPersonalProjectIdealResponse {
 }
 
 /**
- * Saves project idea text for a specific enrollment milestone.
+ * Saves project idea text for a specific enrollment.
  */
 export const mutateSubmitPersonalProjectIdeal = async ({
     mutation = MutationSubmitPersonalProjectIdeal.Mutation1,

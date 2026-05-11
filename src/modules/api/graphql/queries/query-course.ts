@@ -49,6 +49,16 @@ const query1 = gql`
             orderIndex
             text
           }
+          contents {
+            id
+            displayId
+            title
+            description
+            orderIndex
+            minutesRead
+            numLessons
+            numChallenges
+          }
         }
         qnas {
           id

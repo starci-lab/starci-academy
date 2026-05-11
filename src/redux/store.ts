@@ -19,7 +19,10 @@ import {
     keycloakReducer,
     searchReducer,
     adminReducer,
+    personalProjectTaskReducer,
     milestoneReducer,
+    aiModelsReducer,
+    publicContentReducer,
 } from "./slices"
 
 export const store = configureStore({
@@ -43,7 +46,10 @@ export const store = configureStore({
         keycloak: keycloakReducer,
         search: searchReducer,
         admin: adminReducer,
+        personalProjectTask: personalProjectTaskReducer,
         milestone: milestoneReducer,
+        aiModels: aiModelsReducer,
+        publicContent: publicContentReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false,

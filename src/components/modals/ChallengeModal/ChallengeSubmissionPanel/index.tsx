@@ -38,8 +38,8 @@ import _ from "lodash"
 import { cn } from "@heroui/react"
 import { 
     PublicationEvent, 
-    jobNotificationsSocket 
-} from "@/hooks/zustand"
+    useJobNotificationsSocketIo,
+} from "@/hooks/singleton/socketio"
 
 /** Props for {@link ChallengeSubmissionPanel} — state comes from Formik and Redux. */
 type ChallengeSubmissionPanelProps = WithClassNames<undefined>
@@ -73,6 +73,7 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
         return _.cloneDeep(values.submissions ?? []).sort((prev, next) => prev.orderIndex - next.orderIndex)
     }, [values.submissions])
     const locale = useLocale()
+    const jobNotificationsSocket = useJobNotificationsSocketIo()
     const jobStatusByJobId = useAppSelector((state) => state.socketIo.jobStatusByJobId)
     const renderJobNotification = useCallback(
         (challengeSubmissionId: string) => {

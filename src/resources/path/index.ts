@@ -12,8 +12,18 @@ export const pathConfig = () => {
             const build = () => {
                 return profilePath
             }
+            const bookmarks = () => {
+                const bookmarksPath = `${profilePath}/bookmarks`
+                const build = () => {
+                    return bookmarksPath
+                }
+                return {
+                    build,
+                }
+            }
             return {
                 build,
+                bookmarks,
             }
         }
         const authentication = () => {
@@ -107,8 +117,10 @@ export const pathConfig = () => {
                         build,
                     }
                 }
-                const personalProject = () => {
-                    const personalProjectPath = `${learnPath}/personal-project`
+                const personalProject = (taskId?: string) => {
+                    const personalProjectPath = taskId
+                        ? `${learnPath}/personal-project/tasks/${taskId}`
+                        : `${learnPath}/personal-project`
                     const build = () => {
                         return personalProjectPath
                     }
@@ -134,13 +146,13 @@ export const pathConfig = () => {
                         build,
                     }
                 }
-                const module = (displayId?: string) => {
-                    const modulePath = displayId ? `${learnPath}/modules/${displayId}` : `${learnPath}/modules`
+                const module = (moduleId?: string) => {
+                    const modulePath = moduleId ? `${learnPath}/modules/${moduleId}` : `${learnPath}/modules`
                     const build = () => {
                         return modulePath
                     }
-                    const content = (displayId?: string) => {
-                        const contentPath = displayId ? `${modulePath}/contents/${displayId}` : `${modulePath}/contents`
+                    const content = (contentId?: string) => {
+                        const contentPath = contentId ? `${modulePath}/contents/${contentId}` : `${modulePath}/contents`
                         const build = () => {
                             return contentPath
                         }
@@ -178,12 +190,22 @@ export const pathConfig = () => {
                 build,
             }
         }
+        const publicContent = (contentId?: string) => {
+            const publicContentPath = contentId ? `${localePath}/contents/${contentId}` : `${localePath}/content`
+            const build = () => {
+                return publicContentPath
+            }
+            return {
+                build,
+            }
+        }
         return {
             build,
             course,
             profile,
             authentication,
             contact,
+            publicContent,
         }
     }
     return {

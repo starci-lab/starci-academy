@@ -20,6 +20,8 @@ export interface ModuleSlice {
     pageNumber?: number
     /** The contents limit. */
     limit?: number
+    /** The modules list (from ES query). */
+    modules?: Array<ModuleEntity>
 }
 
 /**
@@ -36,6 +38,8 @@ const initialState: ModuleSlice = {
     pageNumber: undefined,
     /** The modules limit. */
     limit: undefined,
+    /** The modules list. */
+    modules: undefined,
 }
 
 /**
@@ -84,6 +88,13 @@ export const moduleSlice = createSlice(
             ) => {
                 state.limit = action.payload
             },
+            /** The action to set the modules list. */
+            setModules: (
+                state,
+                action: PayloadAction<Array<ModuleEntity> | undefined>,
+            ) => {
+                state.modules = action.payload
+            },
         },
     }
 )
@@ -98,4 +109,5 @@ export const {
     setModuleId,
     setModulePageNumber,
     setModuleLimit,
+    setModules,
 } = moduleSlice.actions

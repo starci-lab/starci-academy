@@ -22,7 +22,7 @@ export const Module = () => {
     const locale = useLocale()
     const module = useAppSelector((state) => state.module.entity)
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
-    const moduleDisplayId = useAppSelector((state) => state.module.displayId)
+    const moduleId = useAppSelector((state) => state.module.id)
     const { isLoading: isModuleLoading } = useQueryModuleSwr()
     const isLoading = isModuleLoading || !module
     const contents = useAppSelector((state) => state.content.entities)
@@ -117,7 +117,7 @@ export const Module = () => {
                         <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                             {_.cloneDeep(contents)?.sort((prev, next) => prev.orderIndex - next.orderIndex).map((content) => (
                                 <ContentCard key={content.id} content={content} onPress={
-                                    () => router.push(pathConfig().locale(locale).course(courseDisplayId).learn().module(moduleDisplayId).content(content.displayId).build())
+                                    () => router.push(pathConfig().locale(locale).course(courseDisplayId).learn().module(moduleId).content(content.id).build())
                                 } />
                             ))}
                         </div>

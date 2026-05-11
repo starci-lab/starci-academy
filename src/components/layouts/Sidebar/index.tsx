@@ -34,7 +34,7 @@ export const Sidebar = () => {
     const dispatch = useAppDispatch()
     const course = useAppSelector((state) => state.course.entity)
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
-    const moduleDisplayId = useAppSelector((state) => state.module.displayId)
+    const moduleId = useAppSelector((state) => state.module.id)
     const selectedSidebar = useAppSelector((state) => state.sidebar.sidebar)
     const onSelectSidebarTab = (tab: SidebarTab, extraId?: string) => {
         dispatch(setSidebar({ tab, extraId }))
@@ -44,7 +44,7 @@ export const Sidebar = () => {
             router.push(pathConfig().locale(locale).course(courseDisplayId).learn().mindMap().build())
             return
         case SidebarTab.Modules:
-            router.push(pathConfig().locale(locale).course(courseDisplayId).learn().module(moduleDisplayId).build())
+            router.push(pathConfig().locale(locale).course(courseDisplayId).learn().module(moduleId).build())
             return
         case SidebarTab.Cv:
             router.push(pathConfig().locale(locale).course(courseDisplayId).learn().cv().build())
@@ -74,7 +74,7 @@ export const Sidebar = () => {
             tab: SidebarTab.Modules,
             icon: BracketsCurlyIcon,
             isAccordion: false,
-            url: pathConfig().locale(locale).course(courseDisplayId).learn().module(moduleDisplayId).build(),
+            url: pathConfig().locale(locale).course(courseDisplayId).learn().module(moduleId).build(),
         },
         {
             label: t("cv.title"),
@@ -105,15 +105,7 @@ export const Sidebar = () => {
             value: "starci-ai",
             tab: SidebarTab.StarciAi,
             icon: SparkleIcon,
-            isAccordion: true,
-            items: [
-                {
-                    key: "starci-ai-1",
-                    label: t("starciAi.title"),
-                    orderIndex: 0,
-                    url: pathConfig().locale(locale).course(courseDisplayId).learn().starciAi().build(),
-                },
-            ],
+            isAccordion: false,
             url: pathConfig().locale(locale).course(courseDisplayId).learn().starciAi().build(),
         },
     ], [t, courseDisplayId, locale])
@@ -131,7 +123,7 @@ export const Sidebar = () => {
                                 key={item.value}
                                 label={item.label}
                                 icon={item.icon}
-                                items={item.items ?? []}
+                                items={[]}
                                 onSelectSubItem={(extraId) => onSelectSidebarTab(item.tab, extraId)}
                                 extraId={selectedSidebar.extraId}
                             />

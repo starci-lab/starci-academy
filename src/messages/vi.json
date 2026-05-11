@@ -231,7 +231,17 @@
     },
     "unread": "Chưa đọc",
     "hasLecture": "Có bài giảng",
-    "advancedKnowledge": "Kiến thức nâng cao"
+    "advancedKnowledge": "Kiến thức nâng cao",
+    "read": "Đã đọc",
+    "save": "Lưu",
+    "saved": "Đã lưu",
+    "unsave": "Bỏ lưu",
+    "share": "Chia sẻ",
+    "shareTooltip": "Chia sẻ nội dung này",
+    "linkCopied": "Đã sao chép link!",
+    "fullscreen": "Xem toàn màn hình",
+    "scanQr": "Quét mã QR để mở trên điện thoại",
+    "copyLink": "Sao chép link"
   },
   "challenge": {
     "title": "Thử thách",

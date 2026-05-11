@@ -28,7 +28,9 @@ import { AuthenticationModalTab } from "@/redux/slices/tabs"
 import { truncate } from "lodash"
 import { cn } from "@heroui/react"
 import { WithClassNames } from "@/modules/types"
-import { UserIcon } from "@phosphor-icons/react"
+import { UserIcon, BookmarkSimpleIcon } from "@phosphor-icons/react"
+import { useRouter } from "next/navigation"
+import { pathConfig } from "@/resources/path"
 
 /**
  * Props for AccountMenuDropdown component.
@@ -57,6 +59,7 @@ export const AccountMenuDropdown = (props: AccountMenuDropdownProps) => {
     const user = useAppSelector((state) => state.user.user)
     const locale = useLocale()
     const t = useTranslations()
+    const router = useRouter()
     const { open: openLanguage } = useLanguageOverlayState()
     const { open: openAuthentication } = useAuthenticationOverlayState()
     const dispatch = useAppDispatch()
@@ -153,6 +156,23 @@ export const AccountMenuDropdown = (props: AccountMenuDropdownProps) => {
                 <Separator />
                 <DropdownMenu>
                     {/** Settings block */}
+                    {user && (
+                        <DropdownSection showDivider>
+                            <DropdownItem
+                                key="bookmarks"
+                                onPress={() => {
+                                    close()
+                                    router.push(pathConfig().locale().profile().bookmarks().build())
+                                }}
+                                className="py-3"
+                            >
+                                <div className="flex items-center gap-3 w-full">
+                                    <BookmarkSimpleIcon className="size-5" />
+                                    <div className="text-sm">{t("content.saved")}</div>
+                                </div>
+                            </DropdownItem>
+                        </DropdownSection>
+                    )}
                     <DropdownSection>
                         <DropdownItem
                             key="language"

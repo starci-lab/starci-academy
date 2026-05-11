@@ -1,37 +1,39 @@
 import { GraphQLHeadersKey, queryMilestones } from "@/modules/api"
-import { useAppDispatch, useAppSelector } from "@/redux"
+import { useAppSelector, useAppDispatch } from "@/redux"
 import { setMilestones } from "@/redux/slices"
 import useSWR from "swr"
 
-/**
- * Core SWR hook to fetch milestones for the current course.
- */
 export const useQueryMilestonesSwrCore = () => {
-    const dispatch = useAppDispatch()
     const course = useAppSelector((state) => state.course.entity)
+    const dispatch = useAppDispatch()
+
     const swr = useSWR(
-        course?.id ? [
-            "QUERY_MILESTONES_SWR",
-            course?.id,
-        ] : null,
+        course?.id ? ["QUERY_MILESTONES_SWR", course.id] : null,
         async () => {
             if (!course?.id) {
-                throw new Error("Course id not found")
+                throw new Error("Course ID not found")
             }
+
             const data = await queryMilestones({
                 request: {
-                    courseId: course?.id,
+                    courseId: course.id,
                 },
                 headers: {
-                    [GraphQLHeadersKey.XCourseId]: course?.id,
+                    [GraphQLHeadersKey.XCourseId]: course.id,
                 },
             })
+
             if (!data || !data.data) {
-                throw new Error("Milestones not found")
+                throw new Error("Failed to fetch milestones")
             }
-            /** Store milestones in Redux. */
-            dispatch(setMilestones(data.data.milestones.data ?? []))
+
+            if (data.data.milestones?.data?.data) {
+                dispatch(setMilestones(data.data.milestones.data.data))
+            }
+
             return data.data
-        })
+        },
+    )
+
     return swr
 }

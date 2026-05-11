@@ -7,61 +7,65 @@ import {
 import { DocumentNode, gql } from "@apollo/client"
 
 const mutation1 = gql`
-  mutation ReviewPersonalProjectForTask($request: ReviewPersonalProjectForTaskRequest!) {
-    reviewPersonalProjectForTask(request: $request) {
+  mutation ReviewPersonalProjectTask($request: ReviewPersonalProjectTaskRequest!) {
+    reviewPersonalProjectTask(request: $request) {
       success
       message
       error
       data {
-        attemptId
         jobId
       }
     }
   }
 `
 
-export enum MutationReviewPersonalProjectForTask {
+export enum MutationReviewPersonalProjectTask {
     Mutation1 = "mutation1",
 }
 
-const mutationMap: Record<MutationReviewPersonalProjectForTask, DocumentNode> = {
-    [MutationReviewPersonalProjectForTask.Mutation1]: mutation1,
+const mutationMap: Record<MutationReviewPersonalProjectTask, DocumentNode> = {
+    [MutationReviewPersonalProjectTask.Mutation1]: mutation1,
 }
 
-/** GraphQL `ReviewPersonalProjectForTaskRequest` body. */
-export interface ReviewPersonalProjectForTaskRequest {
-    enrollmentMilestoneId: string
+/** GraphQL `ReviewPersonalProjectTaskRequest` body. */
+export interface ReviewPersonalProjectTaskRequest {
+    /** Course ID. */
+    courseId: string
+    /** Task ID to review (defaults to first task if omitted). */
+    taskId?: string
+    /** GitHub repository URL. */
     githubUrl: string
+    /** Branch name (defaults to main). */
     branch?: string
 }
 
-export interface ReviewPersonalProjectForTaskData {
+export interface ReviewPersonalProjectTaskData {
     attemptId: string
     jobId: string
 }
 
-export type MutateReviewPersonalProjectForTaskVariables =
-    QueryVariables<ReviewPersonalProjectForTaskRequest>
+export type MutateReviewPersonalProjectTaskVariables =
+    QueryVariables<ReviewPersonalProjectTaskRequest>
 
-export type MutateReviewPersonalProjectForTaskParams = MutateParams<
-    MutationReviewPersonalProjectForTask,
-    ReviewPersonalProjectForTaskRequest
+export type MutateReviewPersonalProjectTaskParams = MutateParams<
+    MutationReviewPersonalProjectTask,
+    ReviewPersonalProjectTaskRequest
 >
 
-export interface MutateReviewPersonalProjectForTaskResponse {
-    reviewPersonalProjectForTask: GraphQLResponse<ReviewPersonalProjectForTaskData>
+export interface MutateReviewPersonalProjectTaskResponse {
+    reviewPersonalProjectTask: GraphQLResponse<ReviewPersonalProjectTaskData>
 }
 
 /**
- * Queues AI review for a personal project repository of one milestone.
+ * Queues AI review for a personal project repository of one task.
  */
-export const mutateReviewPersonalProjectForTask = async ({
-    mutation = MutationReviewPersonalProjectForTask.Mutation1,
+export const mutateReviewPersonalProjectTask = async ({
+    mutation = MutationReviewPersonalProjectTask.Mutation1,
     request,
     headers,
     debug,
     signal,
-}: MutateReviewPersonalProjectForTaskParams) => {
+}: MutateReviewPersonalProjectTaskParams) => {
     const apollo = createAuthApolloClient({
         cache: false,
         headers,
@@ -69,7 +73,7 @@ export const mutateReviewPersonalProjectForTask = async ({
         signal,
     })
 
-    return apollo.mutate<MutateReviewPersonalProjectForTaskResponse>({
+    return apollo.mutate<MutateReviewPersonalProjectTaskResponse>({
         mutation: mutationMap[mutation],
         variables: { request },
     })

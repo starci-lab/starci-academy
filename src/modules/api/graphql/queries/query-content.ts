@@ -15,6 +15,7 @@ const query1 = gql`
         description
         orderIndex
         minutesRead
+        isPremium
         title
         body
         numChallenges

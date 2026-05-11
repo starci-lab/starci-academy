@@ -1,4 +1,3 @@
-
 import type { MilestoneEntity } from "@/modules/types"
 import { createAuthApolloClient } from "../clients"
 import { type GraphQLResponse, type QueryParams } from "../types"
@@ -11,18 +10,24 @@ const query1 = gql`
       message
       error
       data {
-        id
-        title
-        orderIndex
-        tasks {
+        data {
           id
           title
-          description
           orderIndex
-          passCriteria {
+          courseId
+          tasks {
             id
-            text
+            title
+            description
+            hint
             orderIndex
+            criterias {
+              id
+              text
+              hint
+              score
+              orderIndex
+            }
           }
         }
       }
@@ -38,22 +43,18 @@ const queryMap: Record<QueryMilestones, DocumentNode> = {
     [QueryMilestones.Query1]: query1,
 }
 
-/** Apollo variables for `milestones(request: MilestonesRequest!)`. */
 export interface QueryMilestonesRequest {
-    /** The course id. */
     courseId: string
 }
 
-export interface QueryMilestonesResponse {
-    milestones: GraphQLResponse<Array<MilestoneEntity>>
+export interface QueryMilestonesResponseData {
+    data: Array<MilestoneEntity>
 }
 
-/**
- * Fetches all milestones for a course via Apollo.
- *
- * @param params - Document key, GraphQL variables
- * @returns Apollo query result; milestones at `data.milestones.data`
- */
+export interface QueryMilestonesResponse {
+    milestones: GraphQLResponse<QueryMilestonesResponseData>
+}
+
 export const queryMilestones = async ({
     query = QueryMilestones.Query1,
     request,

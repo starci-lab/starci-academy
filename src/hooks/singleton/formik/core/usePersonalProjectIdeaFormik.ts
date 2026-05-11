@@ -28,7 +28,6 @@ export const usePersonalProjectIdeaFormikCore = () => {
     const queryCourseEnrollmentStatusSwr = useQueryCourseEnrollmentStatusSwr()
     const enrollment = useAppSelector((state) => state.user.enrollment)
     const course = useAppSelector((state) => state.course.entity)
-    const initialSubmitted = Boolean(enrollment?.ideaText?.trim())
     const validationSchema = useMemo(
         () => Yup.object({
             ideaText: Yup.string()
@@ -49,11 +48,8 @@ export const usePersonalProjectIdeaFormikCore = () => {
         initialValues,
         enableReinitialize: true,
         validationSchema,
-        initialStatus: {
-            submitted: initialSubmitted,
-            error: "",
-        },
         onSubmit: async (value) => {
+            console.log(value)
             const normalizedIdeaText = value.ideaText.trim()
             await runGraphQLWithToast(
                 async () => {

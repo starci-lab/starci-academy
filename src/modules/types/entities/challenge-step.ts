@@ -21,8 +21,4 @@ export interface ChallengeStepEntity extends AbstractEntity {
      * Nest exposes a non-empty array when loaded; optional when not selected.
      */
     translations?: Array<ChallengeStepTranslationEntity>
-    /**
-     * Parent challenge when the resolver loads the relation (omit in module query if unused).
-     */
-    challenge?: { id: string }
 }

@@ -10,6 +10,7 @@ import { pathConfig } from "@/resources/path"
 import { useLocale, useTranslations } from "next-intl"
 import { ClockIcon, SwordIcon, VideoIcon } from "@phosphor-icons/react"
 import { motion } from "framer-motion"
+import { useQueryModulesSwr } from "@/hooks"
 
 type ModuleSidebarProps = WithClassNames<undefined>
 
@@ -18,10 +19,10 @@ type ModuleSidebarProps = WithClassNames<undefined>
  * @param {ModuleSidebarProps} props Sidebar props.
  */
 export const ModuleSidebar = (props: ModuleSidebarProps) => {
-    const course = useAppSelector((state) => state.course.entity)
-    const moduleDisplayId = useAppSelector((state) => state.module.displayId)
-    const modules = useMemo(() => _.cloneDeep(course?.modules ?? []), [course?.modules])
-    const contents = useAppSelector((state) => state.content.entities)
+    useQueryModulesSwr()
+    const moduleId = useAppSelector((state) => state.module.id)
+    const modules = useAppSelector((state) => state.module.modules)
+    const sortedModules = useMemo(() => _.cloneDeep(modules ?? []).sort((a, b) => a.orderIndex - b.orderIndex), [modules])
     const router = useRouter()
     const locale = useLocale()
     const t = useTranslations()
@@ -32,7 +33,7 @@ export const ModuleSidebar = (props: ModuleSidebarProps) => {
             <Accordion
                 variant="default"
                 className="rounded-none border-none px-0 shadow-none"
-                expandedKeys={new Set(moduleDisplayId ? [String(moduleDisplayId)] : [])}
+                expandedKeys={new Set(moduleId ? [String(moduleId)] : [])}
                 onExpandedChange={
                     (selection) => {
                         const key = Array.from(selection)[0]
@@ -41,10 +42,10 @@ export const ModuleSidebar = (props: ModuleSidebarProps) => {
                 }
             >
                 {
-                    modules.map((module) => (
+                    sortedModules.map((module) => (
                         <Accordion.Item
-                            key={String(module.displayId)}
-                            id={String(module.displayId)}
+                            key={String(module.id)}
+                            id={String(module.id)}
                         >
                             <Accordion.Heading>
                                 <Accordion.Trigger className="w-full">
@@ -53,7 +54,7 @@ export const ModuleSidebar = (props: ModuleSidebarProps) => {
                                             className={
                                                 cn(
                                                     "min-w-0 flex-1 cursor-pointer text-start text-base font-semibold",
-                                                    module.displayId === moduleDisplayId ? "text-accent" : ""
+                                                    module.id === moduleId ? "text-accent" : ""
                                                 )
                                             }
                                         >
@@ -66,13 +67,13 @@ export const ModuleSidebar = (props: ModuleSidebarProps) => {
                             <Accordion.Panel>
                                 <Accordion.Body className="p-3">
                                     <div className="flex flex-col gap-3">
-                                        {_.cloneDeep(contents ?? [])
+                                        {module.contents
                                             ?.sort((prev, next) => prev.orderIndex - next.orderIndex)
                                             ?.map((content, index) => (
                                                 <div key={content.id}>
                                                     <div>
                                                         <Link onPress={
-                                                            () => router.push(pathConfig().locale(locale).course(courseDisplayId).learn().module(moduleDisplayId).content(content.displayId).build()) 
+                                                            () => router.push(pathConfig().locale(locale).course(courseDisplayId).learn().module(moduleId).content(content.id).build()) 
                                                         } 
                                                         className={
                                                             cn(
@@ -123,7 +124,7 @@ export const ModuleSidebar = (props: ModuleSidebarProps) => {
                                                         </div>
                                                     </div>
                                                     <div className="h-3" />
-                                                    {index !== (contents?.length ?? 0) - 1 && <div className="border-t " />}
+                                                    {index !== (module.contents?.length ?? 0) - 1 && <div className="border-t " />}
                                                 </div>
                                             ))}
                                     </div>

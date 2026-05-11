@@ -222,7 +222,17 @@
     },
     "unread": "Unread",
     "hasLecture": "Includes lecture",
-    "advancedKnowledge": "Advanced"
+    "advancedKnowledge": "Advanced",
+    "read": "Read",
+    "save": "Save",
+    "saved": "Saved",
+    "unsave": "Remove from saved",
+    "share": "Share",
+    "shareTooltip": "Share this content",
+    "linkCopied": "Link copied to clipboard!",
+    "fullscreen": "View fullscreen",
+    "scanQr": "Scan QR code to open on mobile",
+    "copyLink": "Copy link"
   },
   "challenge": {
     "title": "Challenges",

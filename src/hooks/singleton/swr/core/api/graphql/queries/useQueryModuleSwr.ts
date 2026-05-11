@@ -10,31 +10,25 @@ import { setModule } from "@/redux/slices"
  */
 export const useQueryModuleSwrCore = () => {
     const enrolled = useAppSelector((state) => state.user.enrolled)
-    const displayId = useAppSelector((state) => state.module.displayId)
     const id = useAppSelector((state) => state.module.id)
     const course = useAppSelector((state) => state.course.entity)
     const dispatch = useAppDispatch()
     const swr = useSWR(
-        enrolled && (id || displayId)
+        enrolled && id && course?.id
             ? [
                 "QUERY_MODULE_SWR",
                 id,
-                displayId,
                 course?.id,
                 enrolled,
             ]
             : null,
         async () => {
-            if (!id && !displayId) {
+            if (!id) {
                 throw new Error("Module id not found")
-            }
-            if (!course?.id) {
-                throw new Error("Course id not found")
             }
             const data = await queryModule({
                 request: {
                     id,
-                    displayId,
                 },
                 headers: {
                     [GraphQLHeadersKey.XCourseId]: course?.id,

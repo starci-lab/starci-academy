@@ -18,9 +18,8 @@ const query1 = gql`
       data {
         isEnrolled
         enrollment {
-          ideaText
+          id
           personalProjectGithubUrl
-          milestoneStatus
         }
       }
     }

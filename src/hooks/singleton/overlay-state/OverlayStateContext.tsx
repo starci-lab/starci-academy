@@ -16,6 +16,7 @@ import {
     useFeedbackDetailsOverlayStateCore,
     useSearchOverlayStateCore,
     useLinkGithubOverlayStateCore,
+    useShareOverlayStateCore,
 } from "./core"
 
 export interface OverlayStateContextType {
@@ -33,6 +34,7 @@ export interface OverlayStateContextType {
     feedbackDetails: ReturnType<typeof useFeedbackDetailsOverlayStateCore>
     search: ReturnType<typeof useSearchOverlayStateCore>
     linkGithub: ReturnType<typeof useLinkGithubOverlayStateCore>
+    share: ReturnType<typeof useShareOverlayStateCore>
 }
 
 export const OverlayStateContext = createContext<OverlayStateContextType | null>(null)
@@ -52,6 +54,7 @@ export const OverlayStateProvider = ({ children }: PropsWithChildren) => {
     const feedbackDetails = useFeedbackDetailsOverlayStateCore()
     const search = useSearchOverlayStateCore()
     const linkGithub = useLinkGithubOverlayStateCore()
+    const share = useShareOverlayStateCore()
     return (
         <OverlayStateContext.Provider value={{
             authentication,
@@ -68,6 +71,7 @@ export const OverlayStateProvider = ({ children }: PropsWithChildren) => {
             feedbackDetails,
             search,
             linkGithub,
+            share,
         }}>
             {children}
         </OverlayStateContext.Provider>

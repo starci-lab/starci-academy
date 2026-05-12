@@ -157,7 +157,7 @@ export const AccountMenuDropdown = (props: AccountMenuDropdownProps) => {
                 <DropdownMenu>
                     {/** Settings block */}
                     {user && (
-                        <DropdownSection showDivider>
+                        <DropdownSection className="border-b border-divider pb-2 mb-2">
                             <DropdownItem
                                 key="bookmarks"
                                 onPress={() => {

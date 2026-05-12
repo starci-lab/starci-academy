@@ -5,9 +5,12 @@ import {
     Card,
     CardContent,
     Chip,
+    FieldError,
     Input,
+    Label,
     ProgressBar,
     Spinner,
+    TextField,
 } from "@heroui/react"
 import { toast } from "@heroui/react"
 import {
@@ -309,10 +312,10 @@ export const AdminUploadVideo = () => {
                         id="admin-back-button"
                         variant="ghost"
                         size="sm"
-                        startContent={<ArrowLeft className="h-4 w-4" />}
                         className="text-slate-400 hover:text-white"
                         onPress={() => router.push("../../admin")}
                     >
+                        <ArrowLeft className="h-4 w-4" />
                         Back
                     </Button>
                 </div>
@@ -371,14 +374,14 @@ export const AdminUploadVideo = () => {
                                     <div className="flex items-center gap-2">
                                         <Chip
                                             size="sm"
-                                            variant="flat"
+                                            variant="secondary"
                                             className="bg-white/5 text-slate-300"
                                         >
                                             {file.type || "unknown"}
                                         </Chip>
                                         <Chip
                                             size="sm"
-                                            variant="flat"
+                                            variant="secondary"
                                             className="bg-white/5 text-slate-300"
                                         >
                                             {formatSize(file.size)}
@@ -414,22 +417,21 @@ export const AdminUploadVideo = () => {
                         </div>
 
                         {/* Object Key Input */}
-                        <Input
-                            id="admin-object-key-input"
-                            label="Object Key (S3 Path)"
-                            placeholder="videos/my-lecture.mp4"
-                            value={objectKey}
-                            onValueChange={setObjectKey}
-                            startContent={
-                                <Link2 className="h-4 w-4 text-slate-400" />
-                            }
-                            classNames={{
-                                inputWrapper:
-                                    "bg-white/5 border-white/10 hover:border-indigo-400/40 group-data-[focus=true]:border-indigo-400",
-                                label: "text-slate-300",
-                                input: "text-white placeholder:text-slate-500",
-                            }}
-                        />
+                        <TextField>
+                            <Label htmlFor="admin-object-key-input" className="text-sm text-slate-300">
+                                Object Key (S3 Path)
+                            </Label>
+                            <div className="relative">
+                                <Link2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
+                                <Input
+                                    id="admin-object-key-input"
+                                    placeholder="videos/my-lecture.mp4"
+                                    className="pl-9 bg-white/5 border-white/10 hover:border-indigo-400/40 text-white placeholder:text-slate-500"
+                                    value={objectKey}
+                                    onChange={(e) => setObjectKey(e.target.value)}
+                                />
+                            </div>
+                        </TextField>
 
                         {/* Action Buttons */}
                         <div className="flex gap-3">
@@ -442,18 +444,18 @@ export const AdminUploadVideo = () => {
                                 isDisabled={
                                     !file || !objectKey || isUploading
                                 }
-                                isLoading={isRequesting}
-                                startContent={
-                                    !isRequesting && (
-                                        <Upload className="h-4 w-4" />
-                                    )
-                                }
+                                isPending={isRequesting}
                             >
-                                {isRequesting
-                                    ? "Getting URLs…"
-                                    : isUploading
-                                        ? "Uploading…"
-                                        : "Upload"}
+                                {({isPending}) => (
+                                    <>
+                                        {!isPending && <Upload className="h-4 w-4" />}
+                                        {isPending
+                                            ? "Getting URLs…"
+                                            : isUploading
+                                                ? "Uploading…"
+                                                : "Upload"}
+                                    </>
+                                )}
                             </Button>
                             <Button
                                 id="admin-process-button"
@@ -462,18 +464,18 @@ export const AdminUploadVideo = () => {
                                 className="flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 font-semibold shadow-lg shadow-emerald-500/25 transition-all hover:shadow-emerald-500/40 hover:scale-[1.01]"
                                 onPress={handleProcess}
                                 isDisabled={!uploadDone || isProcessing}
-                                isLoading={isProcessing}
-                                startContent={
-                                    !isProcessing && (
-                                        <Cog className="h-4 w-4" />
-                                    )
-                                }
+                                isPending={isProcessing}
                             >
-                                {isProcessing
-                                    ? "Processing…"
-                                    : processResult
-                                        ? "Re-process"
-                                        : "Process Video"}
+                                {({isPending}) => (
+                                    <>
+                                        {!isPending && <Cog className="h-4 w-4" />}
+                                        {isPending
+                                            ? "Processing…"
+                                            : processResult
+                                                ? "Re-process"
+                                                : "Process Video"}
+                                    </>
+                                )}
                             </Button>
                         </div>
 
@@ -517,12 +519,10 @@ export const AdminUploadVideo = () => {
                                     <Chip
                                         size="sm"
                                         color="success"
-                                        variant="flat"
-                                        startContent={
-                                            <CheckCircle2 className="h-3 w-3" />
-                                        }
+                                        variant="secondary"
                                     >
-                                        Done
+                                        <CheckCircle2 className="h-3 w-3" />
+                                        <Chip.Label>Done</Chip.Label>
                                     </Chip>
                                 )}
                             </div>
@@ -536,7 +536,7 @@ export const AdminUploadVideo = () => {
                                         <div className="flex items-center gap-2">
                                             <Chip
                                                 size="sm"
-                                                variant="flat"
+                                                variant="secondary"
                                                 className="bg-indigo-500/10 text-indigo-300 capitalize"
                                             >
                                                 {u.provider}

@@ -4,7 +4,10 @@ import {
     Button,
     Card,
     CardContent,
+    FieldError,
     Input,
+    Label,
+    TextField,
 } from "@heroui/react"
 import {
     KeyRound,
@@ -65,52 +68,49 @@ export const AdminLogin = () => {
                             }}
                             className="space-y-4"
                         >
-                            <Input
-                                id="admin-api-key-input"
-                                label="API Key"
-                                placeholder="Enter your admin API key"
-                                type="password"
-                                name="apiKey"
-                                value={formik.values.apiKey}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
+                            <TextField
                                 isInvalid={
                                     formik.touched.apiKey &&
                                     Boolean(formik.errors.apiKey)
                                 }
-                                errorMessage={
-                                    formik.touched.apiKey
-                                        ? formik.errors.apiKey
-                                        : undefined
-                                }
-                                startContent={
-                                    <Lock className="h-4 w-4 text-slate-400" />
-                                }
-                                classNames={{
-                                    inputWrapper:
-                                        "bg-white/5 border-white/10 hover:border-indigo-400/40 group-data-[focus=true]:border-indigo-400",
-                                    label: "text-slate-300",
-                                    input: "text-white placeholder:text-slate-500",
-                                }}
-                            />
+                            >
+                                <Label htmlFor="admin-api-key-input" className="text-sm text-slate-300">
+                                    API Key
+                                </Label>
+                                <div className="relative">
+                                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
+                                    <Input
+                                        id="admin-api-key-input"
+                                        placeholder="Enter your admin API key"
+                                        type="password"
+                                        name="apiKey"
+                                        className="pl-9 bg-white/5 border-white/10 hover:border-indigo-400/40 text-white placeholder:text-slate-500"
+                                        value={formik.values.apiKey}
+                                        onChange={(e) => formik.setFieldValue("apiKey", e.target.value)}
+                                        onBlur={() => formik.setFieldTouched("apiKey", true)}
+                                    />
+                                </div>
+                                <FieldError>{formik.errors.apiKey}</FieldError>
+                            </TextField>
 
                             <Button
                                 id="admin-submit-button"
                                 type="submit"
                                 variant="primary"
                                 size="lg"
-                                className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 font-semibold shadow-lg shadow-indigo-500/25 transition-all hover:shadow-indigo-500/40 hover:scale-[1.01]"
+                                fullWidth
+                                className="bg-gradient-to-r from-indigo-600 to-purple-600 font-semibold shadow-lg shadow-indigo-500/25 transition-all hover:shadow-indigo-500/40 hover:scale-[1.01]"
                                 isDisabled={
                                     !formik.values.apiKey || formik.isSubmitting
                                 }
-                                isLoading={formik.isSubmitting}
-                                endContent={
-                                    !formik.isSubmitting && (
-                                        <ArrowRight className="h-4 w-4" />
-                                    )
-                                }
+                                isPending={formik.isSubmitting}
                             >
-                                Continue to Admin Tools
+                                {({isPending}) => (
+                                    <>
+                                        Continue to Admin Tools
+                                        {!isPending && <ArrowRight className="h-4 w-4" />}
+                                    </>
+                                )}
                             </Button>
                         </form>
                     </CardContent>

@@ -3,13 +3,14 @@
 import React, { useMemo, useRef, useEffect, useCallback } from "react"
 import { MarkdownContent, ReferenceLinks } from "@/components/reuseable"
 import { useTranslations } from "next-intl"
-import { useAppDispatch, useAppSelector } from "@/redux"
-import { Skeleton, cn } from "@heroui/react"
+import { useAppSelector } from "@/redux"
+import { Skeleton, cn, Button, Spinner } from "@heroui/react"
 import { WithClassNames } from "@/modules/types"
 import _ from "lodash"
-import { useQueryContentSwr } from "@/hooks/singleton"
+import { useQueryContentSwr, useMutateToggleFavoriteSwr, useContentOverlayState, useShareOverlayState, useQueryContentStatusSwr } from "@/hooks/singleton"
 import { mutateMarkContentAsReaded } from "@/modules/api"
-import { setContentIsRead } from "@/redux/slices"
+import { BookmarkSimpleIcon, ShareNetworkIcon, ArrowsOutIcon } from "@phosphor-icons/react"
+import { runGraphQLWithToast } from "@/modules/toast"
 
 export type ContentBodyProps = WithClassNames<undefined>
 
@@ -17,17 +18,19 @@ export const ContentBody = ({ className }: ContentBodyProps) => {
     const t = useTranslations()
     const queryContentSwr = useQueryContentSwr()
     const content = useAppSelector((state) => state.content.entity)
-    const isRead = useAppSelector((state) => state.content.isRead)
+    const queryContentStatusSwr = useQueryContentStatusSwr()
+    const mutateToggleFavoriteSwr = useMutateToggleFavoriteSwr()
+    const contentOverlay = useContentOverlayState()
+    const shareOverlay = useShareOverlayState()
     const isLoading = queryContentSwr.isLoading || !content
     const references = useMemo(() => _.cloneDeep(content?.references ?? []).sort((prev, next) => prev.orderIndex - next.orderIndex), [content?.references])
-    const dispatch = useAppDispatch()
 
     // Sentinel ref at bottom of content
     const sentinelRef = useRef<HTMLDivElement>(null)
     const hasMarkedRef = useRef(false)
 
     const markAsRead = useCallback(async () => {
-        if (!content?.id || hasMarkedRef.current || isRead) return
+        if (!content?.id || hasMarkedRef.current || queryContentStatusSwr.data?.isRead) return
         hasMarkedRef.current = true
         try {
             await mutateMarkContentAsReaded({
@@ -36,11 +39,10 @@ export const ContentBody = ({ className }: ContentBodyProps) => {
                     readed: true,
                 },
             })
-            dispatch(setContentIsRead(true))
         } catch {
             hasMarkedRef.current = false
         }
-    }, [content?.id, isRead, dispatch])
+    }, [content?.id, queryContentStatusSwr.data?.isRead])
 
     // Reset when content changes
     useEffect(() => {
@@ -49,7 +51,7 @@ export const ContentBody = ({ className }: ContentBodyProps) => {
 
     // IntersectionObserver: mark as read when user scrolls to bottom
     useEffect(() => {
-        if (isLoading || !sentinelRef.current || isRead) return
+        if (isLoading || !sentinelRef.current || queryContentStatusSwr.data?.isRead) return
 
         const observer = new IntersectionObserver(
             (entries) => {
@@ -62,7 +64,7 @@ export const ContentBody = ({ className }: ContentBodyProps) => {
 
         observer.observe(sentinelRef.current)
         return () => observer.disconnect()
-    }, [isLoading, isRead, markAsRead])
+    }, [isLoading, queryContentStatusSwr.data?.isRead, markAsRead])
 
     if (isLoading) {
         return (
@@ -77,6 +79,73 @@ export const ContentBody = ({ className }: ContentBodyProps) => {
 
     return (
         <div className={cn("text-sm text-muted overflow-x-auto", className)}>
+            <div className="flex items-center gap-2">
+                <Button
+                    isIconOnly
+                    variant="secondary"
+                    onPress={
+                        async () => {
+                            if (!content?.id) return
+                            await runGraphQLWithToast(
+                                async () => {
+                                    const env = await mutateToggleFavoriteSwr.trigger({
+                                        contentId: content.id,
+                                        isFavorite: !queryContentStatusSwr.data?.isFavorite,
+                                    })
+                                    if (!env?.success) {
+                                        throw new Error("Toggle favorite failed")
+                                    }
+                                    //re-fetch the content status
+                                    queryContentStatusSwr.mutate()
+                                    return env
+                                },
+                                { 
+                                    showSuccessToast: true, 
+                                    showErrorToast: true 
+                                },
+                            )
+                        }
+                    }
+                    isPending={mutateToggleFavoriteSwr.isMutating}
+                    id="content-save-btn"
+                >
+                    {
+                        ({isPending}) => {
+                            return (
+                                <>
+                                    {isPending ? (
+                                        <Spinner className="size-5" />
+                                    ) : (
+                                        <BookmarkSimpleIcon
+                                            className="size-5"
+                                            weight={queryContentStatusSwr.data?.isFavorite ? "fill" : "regular"}
+                                        />
+                                    )}
+                                </>
+                            )
+                        }
+                    }
+                </Button>
+                {!content?.isPremium && (
+                    <Button
+                        isIconOnly
+                        variant="secondary"
+                        onPress={() => shareOverlay.setOpen(true)}
+                        id="content-share-btn"
+                    >
+                        <ShareNetworkIcon className="size-5" />
+                    </Button>
+                )}
+                <Button
+                    isIconOnly
+                    variant="secondary"
+                    onPress={() => contentOverlay.setOpen(true)}
+                    id="content-fullscreen-btn"
+                >
+                    <ArrowsOutIcon className="size-5" />
+                </Button>
+            </div>
+            <div className="h-3" />
             <MarkdownContent markdown={content?.body || t("content.empty")} />
             <div className="h-6" />
             <ReferenceLinks

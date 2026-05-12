@@ -1,20 +1,21 @@
 "use client"
 
 import React, { useMemo } from "react"
-import { Modal, Button, Tooltip } from "@heroui/react"
+import { Modal, Surface } from "@heroui/react"
 import { useShareOverlayState } from "@/hooks/singleton"
 import { useAppSelector } from "@/redux"
 import { QRCode } from "@/components/reuseable"
 import { pathConfig } from "@/resources/path"
-import { toast } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import {
-    CopyIcon,
     FacebookLogoIcon,
     TwitterLogoIcon,
     TelegramLogoIcon,
     LinkedinLogoIcon,
 } from "@phosphor-icons/react"
+import { 
+    SnippetIcon 
+} from "@/components/reuseable"
 
 export const ShareModal = () => {
     const t = useTranslations()
@@ -58,61 +59,31 @@ export const ShareModal = () => {
                     <Modal.Dialog>
                         <Modal.CloseTrigger />
                         <Modal.Header>
-                            <div className="text-lg font-bold">
+                            <div className="text-2xl font-bold text-center">
                                 {t("content.share")}
                             </div>
                         </Modal.Header>
                         <Modal.Body>
-                            <div className="flex flex-col items-center gap-6 pb-4">
-                                {/* QR Code */}
+                            <div className="flex flex-col items-center gap-4 pb-4">
                                 {shareUrl && (
-                                    <div className="flex flex-col items-center gap-2">
-                                        <QRCode size={160} data={shareUrl} />
-                                        <span className="text-xs text-muted">
+                                    <div className="flex flex-col items-center gap-3">
+                                        <Surface variant="secondary" className="rounded-xl p-2">
+                                            <QRCode size={160} data={shareUrl} />
+                                        </Surface>
+                                        <div className="text-xs text-muted">
                                             {t("content.scanQr")}
-                                        </span>
+                                        </div>
                                     </div>
                                 )}
-
-                                {/* Copy link */}
-                                <div className="flex w-full items-center gap-2 rounded-xl border bg-default-100 px-3 py-2">
-                                    <span className="flex-1 truncate text-sm text-muted">
+                                <div className="flex gap-2 items-center">
+                                    <div className="text-sm text-muted">
                                         {shareUrl}
-                                    </span>
-                                    <Tooltip content={t("content.copyLink")}>
-                                        <Button
-                                            size="sm"
-                                            variant="soft"
-                                            color="accent"
-                                            onPress={async () => {
-                                                try {
-                                                    await navigator.clipboard.writeText(shareUrl)
-                                                    toast.success(t("content.linkCopied"))
-                                                } catch {
-                                                    toast.danger("Failed to copy")
-                                                }
-                                            }}
-                                            id="share-copy-btn"
-                                        >
-                                            <CopyIcon className="size-4" />
-                                        </Button>
-                                    </Tooltip>
+                                    </div>
+                                    <SnippetIcon copyString={shareUrl} />
                                 </div>
-
-                                {/* Social share buttons */}
-                                <div className="flex items-center gap-4">
-                                    {socialLinks.map((s) => (
-                                        <Tooltip key={s.label} content={s.label}>
-                                            <Button
-                                                size="sm"
-                                                variant="soft"
-                                                color="default"
-                                                onPress={() => window.open(s.url, "_blank", "noopener,noreferrer")}
-                                                id={`share-${s.label.toLowerCase()}-btn`}
-                                            >
-                                                {s.icon}
-                                            </Button>
-                                        </Tooltip>
+                                <div className="flex items-center gap-3">
+                                    {socialLinks.map((socialLink) => (
+                                        <SnippetIcon key={socialLink.label} copyString={socialLink.url} />
                                     ))}
                                 </div>
                             </div>

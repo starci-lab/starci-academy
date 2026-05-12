@@ -1,3 +1,4 @@
+export * from "./useAIProcessingOverlayState"
 export * from "./useAuthenticationOverlayState"
 export * from "./useChallengeOverlayState"
 export * from "./useCvUpdateOverlayState"

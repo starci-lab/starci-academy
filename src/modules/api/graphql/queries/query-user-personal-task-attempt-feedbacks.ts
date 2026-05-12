@@ -7,7 +7,7 @@ import {
     type SortInput,
 } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
-import { UserMilestoneTaskAttemptEntity } from "@/modules/types"
+import { UserMilestoneTaskAttemptFeedbackEntity } from "@/modules/types"
 
 /** Sort keys for `userPersonalTaskAttemptFeedbacks` list. */
 export enum UserPersonalTaskAttemptFeedbacksSortBy {
@@ -19,7 +19,7 @@ export enum UserPersonalTaskAttemptFeedbacksSortBy {
 
 export interface QueryUserPersonalTaskAttemptFeedbacksPayload {
     count: number
-    data: Array<UserMilestoneTaskAttemptEntity>
+    data: Array<UserMilestoneTaskAttemptFeedbackEntity>
 }
 
 const query1 = gql`

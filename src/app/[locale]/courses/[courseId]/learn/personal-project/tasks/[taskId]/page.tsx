@@ -1,6 +1,6 @@
 "use client"
-
-import { Task } from "@/components/layouts/Task"
+import React from "react"
+import { Task } from "@/components"
 
 const Page = () => {
     return <Task />

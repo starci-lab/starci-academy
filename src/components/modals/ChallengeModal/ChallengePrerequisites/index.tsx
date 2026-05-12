@@ -1,10 +1,9 @@
 "use client"
 
 import React from "react"
-import { Surface } from "@heroui/react"
-import { MarkdownContent } from "@/components/reuseable"
 import { useTranslations } from "next-intl"
 import type { ChallengePrerequisiteEntity } from "@/modules/types"
+import { MarkdownContent } from "@/components/reuseable"
 
 interface ChallengePrerequisitesProps {
     /** Ordered prerequisite rows of the challenge. */
@@ -23,14 +22,14 @@ export const ChallengePrerequisites = (props: ChallengePrerequisitesProps) => {
     return (
         <>
             <div className="text-base font-semibold text-foreground">{t("challenge.prerequisites")}</div>
-            <div className="h-2" />
-            <div className="flex flex-col gap-2">
+            <div className="h-0.5" />
+            <div className="flex flex-col pl-3 gap-0.5">
                 {
                     challengePrerequisites.length
                         ? challengePrerequisites.map((prerequisite) => (
-                            <Surface key={prerequisite.id} className="rounded-2xl bg-background px-3 py-2">
+                            <div key={prerequisite.id}>
                                 <MarkdownContent markdown={prerequisite.text || t("challenge.empty")} />
-                            </Surface>
+                            </div>
                         ))
                         : (
                             <div className="text-sm text-muted">{t("challenge.empty")}</div>

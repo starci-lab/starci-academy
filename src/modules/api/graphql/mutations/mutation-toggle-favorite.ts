@@ -1,72 +1,55 @@
 import { createAuthApolloClient } from "../clients"
-import { type GraphQLResponse, type MutateParams, type QueryVariables } from "../types"
-import { DocumentNode, gql } from "@apollo/client"
+import { MutateParams, type GraphQLResponse } from "../types"
+import { gql } from "@apollo/client"
 
-const addMutation = gql`
-  mutation AddToFavorites($request: AddToFavoritesRequest!) {
-    addToFavorites(request: $request) {
+const mutation = gql`
+  mutation ToggleFavourite($request: ToggleFavouriteRequest!) {
+    toggleFavourite(request: $request) {
       success
       message
       error
-      data {
-        id
-        isFavorite
-      }
-    }
-  }
-`
-
-const removeMutation = gql`
-  mutation RemoveFromFavorites($request: RemoveFromFavoritesRequest!) {
-    removeFromFavorites(request: $request) {
-      success
-      message
-      error
-      data {
-        id
-        isFavorite
-      }
     }
   }
 `
 
 export interface ToggleFavoriteRequest {
+    /** Content ID to toggle favourite for. */
     contentId: string
-    /** true = add to favorites, false = remove */
+    /** true = add to favorites, false = remove. */
     isFavorite: boolean
 }
 
+export type MutateToggleFavoriteParams = MutateParams<
+    MutateToggleFavoriteResponse,
+    ToggleFavoriteRequest
+>
+
 export interface ToggleFavoriteData {
+    /** User content record ID. */
     id: string
+    /** Current favourite state after toggle. */
     isFavorite: boolean
 }
 
 export interface MutateToggleFavoriteResponse {
-    addToFavorites?: GraphQLResponse<ToggleFavoriteData>
-    removeFromFavorites?: GraphQLResponse<ToggleFavoriteData>
+    toggleFavourite: GraphQLResponse<ToggleFavoriteData>
 }
 
 export const mutateToggleFavorite = async ({
     request,
     debug,
+    headers,
     signal,
-}: {
-    request: ToggleFavoriteRequest
-    debug?: boolean
-    signal?: AbortSignal
-}) => {
+}: MutateToggleFavoriteParams) => {
     const apollo = createAuthApolloClient({
         cache: false,
         debug,
+        headers,
         signal,
     })
-    const { contentId, isFavorite } = request
     const result = await apollo.mutate<MutateToggleFavoriteResponse>({
-        mutation: isFavorite ? addMutation : removeMutation,
-        variables: { request: { contentId } },
+        mutation,
+        variables: { request },
     })
-    const env = isFavorite
-        ? result.data?.addToFavorites
-        : result.data?.removeFromFavorites
-    return env
+    return result.data?.toggleFavourite
 }

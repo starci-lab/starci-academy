@@ -1,4 +1,5 @@
 import type { AbstractEntity } from "./abstract"
+import type { MilestoneSeverity } from "../enums"
 
 /**
  * Links a user's enrollment to a specific milestone task.
@@ -41,7 +42,7 @@ export interface UserMilestoneTaskAttemptFeedbackEntity extends AbstractEntity {
     /** Short summary message for this feedback item. */
     message: string
     /** Severity of the feedback item. */
-    severity: string
+    severity: MilestoneSeverity
     /** Ordering index within the feedback list. */
     orderIndex: number
     /** Source location hint, e.g. file:line. */

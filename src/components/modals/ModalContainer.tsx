@@ -1,4 +1,5 @@
 import React from "react"
+import { AIProcessingModal } from "./AIProcessingModal"
 import { AuthenticationModal } from "./AuthenticationModal"
 import { ChallengeModal } from "./ChallengeModal"
 import { ContentModal } from "./ContentModal"
@@ -29,6 +30,7 @@ export const ModalContainer = () => {
             <GlobalSearchModal />
             <LinkGithubModal />
             <ShareModal />
+            <AIProcessingModal />
         </>
     )
 }

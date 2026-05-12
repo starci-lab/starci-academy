@@ -103,6 +103,8 @@
   "finalProject": {
     "title": "Personal project",
     "page": {
+      "title": "Personal project",
+      "description": "Bring your personal project to life through a structured Milestone roadmap. With StarCI AI by your side, every line of code and solution is deeply evaluated, helping you optimize product quality throughout the process.",
       "submit": {
         "title": "Submit project idea",
         "placeholder": "Paste your GitHub repository link",
@@ -117,11 +119,11 @@
         "cta": "Submit"
       },
       "submitGithub": {
-        "title": "Submit project GitHub link",
+        "title": "Project GitHub link",
         "placeholder": "https://github.com/your-account/personal-project",
         "urlRequired": "Please enter your GitHub repository URL.",
         "urlInvalid": "Please enter a valid URL.",
-        "cta": "Submit"
+        "cta": "Review"
       },
       "feedback": {
         "title": "AI feedback",
@@ -196,6 +198,24 @@
       }
     }
   },
+  "task": {
+    "criteriaTitle": "Grading criteria",
+    "criteriaScore": "{score} pts",
+    "criteriaNoHint": "No guidance available for this criterion.",
+    "loadingResults": "Loading grading results...",
+    "resultsTitle": "Grading results",
+    "attemptNumber": "Attempt #{number}",
+    "attemptScore": "{score} pts",
+    "loadingFeedback": "Loading detailed feedback...",
+    "noFeedback": "No detailed feedback available.",
+    "suggestionLabel": "Suggestion",
+    "jobStatus": {
+      "queued": "Waiting for grading...",
+      "processing": "Grading with AI...",
+      "completed": "Grading complete!",
+      "failed": "Grading failed."
+    }
+  },
   "lesson": {
     "videos": "Videos",
     "videosCount": "{count} videos",
@@ -259,6 +279,13 @@
     },
     "tasks": "Tasks",
     "requirements": "Requirements",
+    "requirement": {
+      "label": "Requirement {index}",
+      "purpose": "Purpose",
+      "technicalConstraints": "Technical Constraints",
+      "proTipsHints": "Pro Tips & Hints",
+      "forbidden": "Forbidden"
+    },
     "outputs": "Outputs",
     "prerequisites": "Prerequisites",
     "yourScore": "Your result",
@@ -459,6 +486,44 @@
       "success": "Payment Successful!",
       "redirecting": "Redirecting to your course...",
       "checkStatus": "Check Status"
+    }
+  },
+  "aiProcessing": {
+    "challenge": {
+      "queued": {
+        "title": "In Queue",
+        "description": "Your submission is queued and will be processed shortly."
+      },
+      "processing": {
+        "title": "StarCI AI is Reviewing",
+        "description": "StarCI AI is analyzing your submission. This may take a moment."
+      },
+      "completed": {
+        "title": "Review Complete",
+        "description": "Your submission has been reviewed. You can now view the results."
+      },
+      "failed": {
+        "title": "Review Failed",
+        "description": "Something went wrong while reviewing your submission. Please try again."
+      }
+    },
+    "task": {
+      "queued": {
+        "title": "Queued for Review",
+        "description": "Your project is queued. StarCI AI will start reviewing shortly."
+      },
+      "processing": {
+        "title": "Reviewing Your Project",
+        "description": "StarCI AI is reviewing your project code, architecture, and quality. This may take a few minutes."
+      },
+      "completed": {
+        "title": "Project Review Complete",
+        "description": "Your project has been reviewed. Check the grading results below for detailed feedback."
+      },
+      "failed": {
+        "title": "Project Review Failed",
+        "description": "Something went wrong while reviewing your project. Please try again."
+      }
     }
   },
   "common": {

@@ -112,6 +112,8 @@
   "finalProject": {
     "title": "Dự án cá nhân",
     "page": {
+      "title": "Dự án cá nhân",
+      "description": "Hiện thực hóa dự án cá nhân qua lộ trình Milestone bài bản. Với sự đồng hành của StarCI AI, mọi dòng code và giải pháp của bạn đều được đánh giá chuyên sâu, giúp tối ưu chất lượng sản phẩm ngay trong quá trình thực hiện.",
       "submit": {
         "title": "Nộp ý tưởng dự án",
         "placeholder": "Dán link repository GitHub của bạn",
@@ -126,11 +128,11 @@
         "cta": "Nộp"
       },
       "submitGithub": {
-        "title": "Nộp link GitHub dự án",
+        "title": "Link GitHub dự án",
         "placeholder": "https://github.com/your-account/personal-project",
         "urlRequired": "Vui lòng nhập link GitHub của dự án.",
         "urlInvalid": "Vui lòng nhập URL hợp lệ.",
-        "cta": "Nộp"
+        "cta": "Review"
       },
       "feedback": {
         "title": "AI feedback",
@@ -205,6 +207,24 @@
       }
     }
   },
+  "task": {
+    "criteriaTitle": "Tiêu chí chấm điểm",
+    "criteriaScore": "{score} điểm",
+    "criteriaNoHint": "Chưa có hướng dẫn cho tiêu chí này.",
+    "loadingResults": "Đang tải kết quả chấm điểm...",
+    "resultsTitle": "Kết quả chấm điểm",
+    "attemptNumber": "Lần #{number}",
+    "attemptScore": "{score} điểm",
+    "loadingFeedback": "Đang tải feedback chi tiết...",
+    "noFeedback": "Chưa có feedback chi tiết.",
+    "suggestionLabel": "Gợi ý",
+    "jobStatus": {
+      "queued": "Đang chờ chấm điểm...",
+      "processing": "Đang chấm điểm bằng AI...",
+      "completed": "Chấm điểm hoàn tất!",
+      "failed": "Chấm điểm thất bại."
+    }
+  },
   "lesson": {
     "videos": "Bài giảng",
     "videosCount": "{count} bài giảng trong học phần này",
@@ -268,6 +288,13 @@
     },
     "tasks": "Các bước thực hiện",
     "requirements": "Yêu cầu",
+    "requirement": {
+      "label": "Yêu cầu {index}",
+      "purpose": "Mục tiêu",
+      "technicalConstraints": "Ràng buộc kỹ thuật",
+      "proTipsHints": "Gợi ý & Mẹo",
+      "forbidden": "Không được phép"
+    },
     "outputs": "Đầu ra mong đợi",
     "prerequisites": "Điều kiện tiên quyết",
     "yourScore": "Kết quả của bạn",
@@ -468,6 +495,44 @@
       "success": "Thanh toán thành công!",
       "redirecting": "Đang chuyển hướng đến khóa học của bạn...",
       "checkStatus": "Kiểm tra trạng thái"
+    }
+  },
+  "aiProcessing": {
+    "challenge": {
+      "queued": {
+        "title": "Đang chờ xử lý",
+        "description": "Bài nộp của bạn đang trong hàng đợi và sẽ được xử lý ngay."
+      },
+      "processing": {
+        "title": "StarCI AI đang chấm bài",
+        "description": "StarCI AI đang phân tích bài nộp của bạn. Vui lòng chờ trong giây lát."
+      },
+      "completed": {
+        "title": "Chấm bài hoàn tất",
+        "description": "Bài nộp đã được chấm xong. Bạn có thể xem kết quả ngay."
+      },
+      "failed": {
+        "title": "Chấm bài thất bại",
+        "description": "Đã xảy ra lỗi khi chấm bài. Vui lòng thử lại."
+      }
+    },
+    "task": {
+      "queued": {
+        "title": "Đang chờ review",
+        "description": "Dự án của bạn đang trong hàng đợi. StarCI AI sẽ bắt đầu review ngay."
+      },
+      "processing": {
+        "title": "Đang review dự án",
+        "description": "StarCI AI đang review code, kiến trúc và chất lượng dự án của bạn. Quá trình này có thể mất vài phút."
+      },
+      "completed": {
+        "title": "Review dự án hoàn tất",
+        "description": "Dự án đã được review xong. Xem kết quả chấm điểm bên dưới để nhận phản hồi chi tiết."
+      },
+      "failed": {
+        "title": "Review dự án thất bại",
+        "description": "Đã xảy ra lỗi khi review dự án. Vui lòng thử lại."
+      }
     }
   },
   "common": {

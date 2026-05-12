@@ -1,6 +1,15 @@
 import { ChallengeEntity, ContentEntity } from "@/modules/types"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
+export enum AIProcessingModalKind {
+    Task = "task",
+    Challenge = "challenge",
+}
+
+export interface AIProcessingModalData {
+    kind: AIProcessingModalKind
+}
+
 /**
  * The data for the content modal.
  */
@@ -23,11 +32,13 @@ export interface ChallengeModalData {
 export interface ModalSlice {
     data?: ContentModalData
     challengeData?: ChallengeModalData
+    aiProcessingData?: AIProcessingModalData
 }
 
 const initialState: ModalSlice = {
     data: undefined,
     challengeData: undefined,
+    aiProcessingData: undefined,
 }
 
 export const modalSlice = createSlice({
@@ -46,6 +57,12 @@ export const modalSlice = createSlice({
         ) => {
             state.challengeData = action.payload
         },
+        setAIProcessingModalData: (
+            state,
+            action: PayloadAction<AIProcessingModalData>
+        ) => {
+            state.aiProcessingData = action.payload
+        },
     },
 })
 
@@ -54,4 +71,5 @@ export const modalReducer = modalSlice.reducer
 export const {
     setContentModalData,
     setChallengeModalData,
+    setAIProcessingModalData,
 } = modalSlice.actions

@@ -1,10 +1,10 @@
 "use client"
 
-import React, { useCallback, useEffect, useMemo } from "react"
+import React, { useEffect, useMemo } from "react"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import { setSelectedAttemptId, setReviewJob, clearReviewJob } from "@/redux/slices"
 import { MarkdownContent } from "@/components/reuseable"
-import { Accordion, Chip, Spinner } from "@heroui/react"
+import { Accordion, Chip, Separator, Spinner } from "@heroui/react"
 import {
     useQueryUserPersonalTaskAttemptsSwr,
     useQueryUserPersonalTaskAttemptFeedbacksSwr,
@@ -23,13 +23,16 @@ import {
     SubscriptionEvent,
 } from "@/hooks/singleton/socketio"
 import type { JobStatusUpdatedSocketIoMessage } from "@/hooks/singleton/socketio"
+import { useTranslations } from "next-intl"
 
 export const Task = () => {
+    const t = useTranslations()
     const dispatch = useAppDispatch()
     const milestoneEntities = useAppSelector((state) => state.milestone.entities)
     const selectedTaskId = useAppSelector((state) => state.milestone.selectedTaskId)
     const selectedAttemptId = useAppSelector((state) => state.milestone.selectedAttemptId)
     const reviewJobStatus = useAppSelector((state) => state.milestone.reviewJobStatus)
+    const reviewJobError = useAppSelector((state) => state.milestone.reviewJobError)
     const reviewJobId = useAppSelector((state) => state.milestone.reviewJobId)
     const attemptsSwr = useQueryUserPersonalTaskAttemptsSwr()
     const progressSwr = useQueryMilestoneTaskProgressSwr()
@@ -81,53 +84,43 @@ export const Task = () => {
         return attemptsSwr.data.data
     }, [attemptsSwr.data])
 
-    const handleAttemptToggle = useCallback(
-        (attemptId: string) => {
-            if (selectedAttemptId === attemptId) {
-                dispatch(setSelectedAttemptId(undefined))
-            } else {
-                dispatch(setSelectedAttemptId(attemptId))
-            }
-        },
-        [dispatch, selectedAttemptId],
-    )
-
     if (!selectedTask) {
         return null
     }
 
     return (
         <div>
-            {/* Task Header */}
-            <div className="text-2xl font-bold">{selectedTask.title}</div>
-            {selectedTask.description && (
-                <div className="text-muted mt-2 text-sm">{selectedTask.description}</div>
-            )}
-
-            {/* Criteria Accordion */}
-            {sortedCriterias.length > 0 && (
-                <>
-                    <div className="h-4" />
-                    <div className="rounded-3xl border p-4">
-                        <div className="mb-3 text-sm font-semibold text-muted">
-                            Tiêu chí chấm điểm
-                        </div>
+            <Separator />
+            <div className="p-3">
+                <div className="text-2xl font-bold">{selectedTask.title}</div>
+                {selectedTask.description && (
+                    <div className="text-muted mt-2 text-sm">{selectedTask.description}</div>
+                )}
+                <div className="h-6" />
+                <div className="font-semibold text-sm">
+                    {t("task.criteriaTitle")}
+                </div>
+                {/* Criteria Accordion */}
+                {sortedCriterias.length > 0 && (
+                    <>
+                        <div className="h-3" />
                         <Accordion>
                             {sortedCriterias.map((criteria, index) => (
                                 <Accordion.Item key={criteria.id}>
                                     <Accordion.Heading>
                                         <Accordion.Trigger className="w-full">
                                             <div className="flex w-full items-center gap-3">
-                                                <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent/10 text-xs font-bold text-accent">
-                                                    {index + 1}
-                                                </div>
                                                 <div className="min-w-0 flex-1 text-left">
-                                                    <div className="text-sm font-medium">
-                                                        {criteria.text}
+                                                    <div className="text-sm">
+                                                        {index + 1}. {criteria.text}
                                                     </div>
                                                 </div>
-                                                <Chip size="sm" variant="primary">
-                                                    {criteria.score} điểm
+                                                <Chip size="sm" variant="secondary" color="accent">
+                                                    {
+                                                        t("task.criteriaScore", 
+                                                            { score: criteria.score }
+                                                        )
+                                                    }
                                                 </Chip>
                                                 <Accordion.Indicator />
                                             </div>
@@ -141,7 +134,7 @@ export const Task = () => {
                                                 </div>
                                             ) : (
                                                 <div className="pl-9 text-sm text-muted italic">
-                                                    Chưa có hướng dẫn cho tiêu chí này.
+                                                    {t("task.criteriaNoHint")}
                                                 </div>
                                             )}
                                         </Accordion.Body>
@@ -149,85 +142,106 @@ export const Task = () => {
                                 </Accordion.Item>
                             ))}
                         </Accordion>
-                    </div>
-                </>
-            )}
+                    </>
+                )}
 
-            {/* Review Job Status */}
-            {reviewJobStatus && (
-                <>
-                    <div className="h-4" />
-                    <ReviewJobStatusBanner status={reviewJobStatus} />
-                </>
-            )}
-
-            {/* Attempts Loading */}
-            {attemptsSwr.isLoading && !reviewJobStatus && (
-                <div className="mt-6 flex items-center justify-center gap-2 text-sm text-muted">
-                    <Spinner size="sm" />
-                    Đang tải kết quả chấm điểm...
-                </div>
-            )}
-
-            {/* Attempts List */}
-            {attempts.length > 0 && (
-                <>
-                    <div className="h-6" />
-                    <div className="text-lg font-bold">Kết quả chấm điểm</div>
-                    <div className="mt-3 flex flex-col gap-4">
-                        {attempts.map((attempt) => (
-                            <div
-                                key={attempt.id}
-                                className="rounded-3xl border p-4"
-                            >
-                                {/* Attempt Brief Header — clickable */}
-                                <button
-                                    type="button"
-                                    className="flex w-full items-center justify-between gap-3"
-                                    onClick={() => handleAttemptToggle(attempt.id)}
-                                >
-                                    <div className="flex items-center gap-2">
-                                        <Chip size="sm" variant="secondary">
-                                            Lần #{attempt.attemptNumber}
-                                        </Chip>
-                                        {attempt.score !== null && (
-                                            <Chip
-                                                size="sm"
-                                                variant="primary"
-                                                color={attempt.score >= 7 ? "success" : attempt.score >= 4 ? "warning" : "danger"}
-                                            >
-                                                {attempt.score} điểm
-                                            </Chip>
-                                        )}
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                        {attempt.processedAt && (
-                                            <div className="text-xs text-muted">
-                                                {new Date(attempt.processedAt).toLocaleString("vi-VN")}
-                                            </div>
-                                        )}
-                                        <span className={`text-muted transition-transform ${selectedAttemptId === attempt.id ? "rotate-180" : ""}`}>
-                                            ▼
-                                        </span>
-                                    </div>
-                                </button>
-
-                                {/* Short Feedback */}
-                                {attempt.shortFeedback && (
-                                    <div className="mt-3 text-sm">
-                                        <MarkdownContent markdown={attempt.shortFeedback} />
-                                    </div>
-                                )}
-
-                                {/* Expanded: Detailed Feedbacks (loaded on demand) */}
-                                {selectedAttemptId === attempt.id && (
-                                    <AttemptFeedbacksPanel />
-                                )}
+                {/* Review Job Status */}
+                {reviewJobStatus && (
+                    <>
+                        <div className="h-4" />
+                        <div className="flex items-center gap-2">
+                            {reviewJobStatus === JobStatus.Queued && (
+                                <QueueIcon className="size-5 min-w-5 min-h-5 text-muted animate-pulse" />
+                            )}
+                            {reviewJobStatus === JobStatus.Processing && (
+                                <SparkleIcon className="size-5 min-w-5 min-h-5 text-warning animate-pulse" />
+                            )}
+                            {reviewJobStatus === JobStatus.Completed && (
+                                <CheckCircleIcon className="size-5 min-w-5 min-h-5 text-success" />
+                            )}
+                            {reviewJobStatus === JobStatus.Failed && (
+                                <WarningOctagonIcon className="size-5 min-w-5 min-h-5 text-danger" />
+                            )}
+                            <div className="text-sm text-muted">
+                                {reviewJobStatus === JobStatus.Queued && t("task.jobStatus.queued")}
+                                {reviewJobStatus === JobStatus.Processing && t("task.jobStatus.processing")}
+                                {reviewJobStatus === JobStatus.Completed && t("task.jobStatus.completed")}
+                                {reviewJobStatus === JobStatus.Failed && (reviewJobError || t("task.jobStatus.failed"))}
                             </div>
-                        ))}
+                        </div>
+                    </>
+                )}
+
+                {/* Attempts Loading */}
+                {attemptsSwr.isLoading && !reviewJobStatus && (
+                    <div className="mt-6 flex items-center justify-center gap-2 text-sm text-muted">
+                        <Spinner size="sm" />
+                        {t("task.loadingResults")}
                     </div>
-                </>
-            )}
+                )}
+
+                {/* Attempts List */}
+                {attempts.length > 0 && (
+                    <>
+                        <div className="h-6" />
+                        <div className="text-lg font-bold">{t("task.resultsTitle")}</div>
+                        <div className="h-3" />
+                        <Accordion
+                            expandedKeys={new Set(selectedAttemptId ? [selectedAttemptId] : [])}
+                            onExpandedChange={(selection) => {
+                                const key = Array.from(selection)[0]
+                                dispatch(setSelectedAttemptId(key ? String(key) : undefined))
+                            }}
+                        >
+                            {attempts.map((attempt) => (
+                                <Accordion.Item key={attempt.id} id={attempt.id}>
+                                    <Accordion.Heading>
+                                        <Accordion.Trigger className="w-full">
+                                            <div className="flex w-full items-center gap-3">
+                                                <div className="flex items-center gap-3 justify-between w-full">
+                                                    <div className="flex flex-col gap-2">
+                                                        <div className="flex items-center gap-2 min-w-0 flex-1">
+                                                            {t("task.attemptNumber", { number: attempt.attemptNumber })}
+                                                            {attempt.score !== null && (
+                                                                <Chip
+                                                                    size="sm"
+                                                                    variant="secondary"
+                                                                    color={attempt.score >= 7 ? "success" : attempt.score >= 4 ? "warning" : "danger"}
+                                                                >
+                                                                    {t("task.attemptScore", { score: attempt.score })}
+                                                                </Chip>
+                                                            )}
+                                                        </div>
+                                                        {
+                                                            attempt.shortFeedback && (
+                                                                <div className="text-xs text-muted">
+                                                                    {attempt.shortFeedback}
+                                                                </div>
+                                                            )
+                                                        }
+                                                    </div>
+                                                    {attempt.processedAt && (
+                                                        <div className="text-xs text-muted">
+                                                            {new Date(attempt.processedAt).toLocaleString("vi-VN")}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                                
+                                                <Accordion.Indicator />
+                                            </div>
+                                        </Accordion.Trigger>
+                                    </Accordion.Heading>
+                                    <Accordion.Panel>
+                                        <Accordion.Body>
+                                            <AttemptFeedbacksPanel />
+                                        </Accordion.Body>
+                                    </Accordion.Panel>
+                                </Accordion.Item>
+                            ))}
+                        </Accordion>
+                    </>
+                )}
+            </div>
         </div>
     )
 }
@@ -238,119 +252,62 @@ export const Task = () => {
  * (driven by `selectedAttemptId` in Redux).
  */
 const AttemptFeedbacksPanel = () => {
+    const t = useTranslations()
     const feedbacksSwr = useQueryUserPersonalTaskAttemptFeedbacksSwr()
-
     if (feedbacksSwr.isLoading) {
         return (
             <div className="mt-4 flex items-center justify-center gap-2 text-sm text-muted">
                 <Spinner size="sm" />
-                Đang tải feedback chi tiết...
+                {t("task.loadingFeedback")}
             </div>
         )
     }
-
     const feedbacks = feedbacksSwr.data?.data ?? []
-
     if (feedbacks.length === 0) {
         return (
             <div className="mt-4 text-sm text-muted italic">
-                Chưa có feedback chi tiết.
+                {t("task.noFeedback")}
             </div>
         )
     }
-
     return (
-        <div className="mt-3">
-            <Accordion>
-                {feedbacks.map((fb) => (
-                    <Accordion.Item key={fb.id}>
-                        <Accordion.Heading>
-                            <Accordion.Trigger className="w-full">
-                                <div className="flex w-full items-center gap-3">
-                                    <SeverityDot severity={fb.severity} />
-                                    <div className="min-w-0 flex-1 text-left text-sm">
-                                        {fb.message}
-                                    </div>
-                                    <Accordion.Indicator />
+        <div className="mt-3 flex flex-col gap-3">
+            {
+                feedbacks.map((feedback) => (
+                    <div key={feedback.id} className="flex w-full items-center">
+                        <div className="flex flex-col gap-2">
+                            <div className="min-w-0 flex-1 text-foreground text-left text-sm">
+                                {feedback.message}
+                            </div>
+                            <div className="text-xs text-muted">
+                                {feedback.suggestion}
+                            </div>
+                            {
+                                feedback.location && <div className="text-xs text-accent">
+                                    {feedback.location}
                                 </div>
-                            </Accordion.Trigger>
-                        </Accordion.Heading>
-                        <Accordion.Panel>
-                            <Accordion.Body>
-                                <div className="flex flex-col gap-2 pl-6">
-                                    {fb.detail && (
-                                        <div className="text-sm">
-                                            <MarkdownContent markdown={fb.detail} />
-                                        </div>
-                                    )}
-                                    {fb.location && (
-                                        <div className="text-xs text-muted">
-                                            📍 {fb.location}
-                                        </div>
-                                    )}
-                                    {fb.suggestion && (
-                                        <div className="rounded-xl bg-muted/20 p-3">
-                                            <div className="mb-1 text-xs font-semibold text-muted">
-                                                💡 Gợi ý
-                                            </div>
-                                            <div className="text-sm">
-                                                <MarkdownContent markdown={fb.suggestion} />
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
-                            </Accordion.Body>
-                        </Accordion.Panel>
-                    </Accordion.Item>
-                ))}
-            </Accordion>
-        </div>
-    )
-}
-
-/** Live grading status banner */
-const ReviewJobStatusBanner = ({ status }: { status: JobStatus }) => {
-    const config = {
-        [JobStatus.Queued]: {
-            icon: <QueueIcon className="size-5 text-muted animate-pulse" />,
-            label: "Đang chờ chấm điểm...",
-            bg: "bg-muted/10 border-muted/30",
-        },
-        [JobStatus.Processing]: {
-            icon: <SparkleIcon className="size-5 text-warning animate-pulse" />,
-            label: "Đang chấm điểm bằng AI...",
-            bg: "bg-warning/10 border-warning/30",
-        },
-        [JobStatus.Completed]: {
-            icon: <CheckCircleIcon className="size-5 text-success" />,
-            label: "Chấm điểm hoàn tất!",
-            bg: "bg-success/10 border-success/30",
-        },
-        [JobStatus.Failed]: {
-            icon: <WarningOctagonIcon className="size-5 text-danger" />,
-            label: "Chấm điểm thất bại.",
-            bg: "bg-danger/10 border-danger/30",
-        },
-    }
-    const { icon, label, bg } = config[status] ?? config[JobStatus.Queued]
-    return (
-        <div className={`flex items-center gap-3 rounded-2xl border p-4 ${bg}`}>
-            {icon}
-            <div className="text-sm font-medium">{label}</div>
+                            }
+                        </div>
+                    </div>        
+                )
+                )
+            }
         </div>
     )
 }
 
 /** Colored dot based on feedback severity */
-const SeverityDot = ({ severity }: { severity: string }) => {
-    const colorMap: Record<string, string> = {
-        low: "bg-green-500",
-        medium: "bg-yellow-500",
-        high: "bg-orange-500",
-        critical: "bg-red-500",
-    }
-    const color = colorMap[severity?.toLowerCase()] ?? "bg-gray-400"
-    return (
-        <div className={`h-2.5 w-2.5 shrink-0 rounded-full ${color}`} />
-    )
-}
+// export interface SeverityIconProps {
+//     severity: MilestoneSeverity
+// }
+// const SeverityIcon = ({ severity }: SeverityIconProps) => {
+//     const colorMap: Record<MilestoneSeverity, string> = {
+//         [MilestoneSeverity.Low]: "text-green-500",
+//         [MilestoneSeverity.Medium]: "text-yellow-500",
+//         [MilestoneSeverity.High]: "text-danger-500",
+//     }
+//     const color = colorMap[severity ?? MilestoneSeverity.Low]
+//     return (
+//         <RadioactiveIcon className={`size-5 shrink-0 ${color}`} />
+//     )
+// }

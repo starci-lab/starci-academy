@@ -13,6 +13,7 @@ import {
     useEditSubmissionFormik,
     useMutateSubmitChallengeSubmissionSwr,
     useSubmissionAttemptsOverlayState,
+    useAIProcessingOverlayState,
 } from "@/hooks/singleton"
 import { useLocale, useTranslations } from "next-intl"
 import {
@@ -24,7 +25,7 @@ import {
 } from "@/modules/types"
 import { FormikErrors, FormikTouched } from "formik"
 import { SiGithub, SiGoogledrive } from "@icons-pack/react-simple-icons"
-import { setActiveChallengeSubmissionId } from "@/redux/slices"
+import { setActiveChallengeSubmissionId, setAIProcessingModalData, AIProcessingModalKind } from "@/redux/slices"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import { runGraphQLWithToast } from "@/modules/toast"
 import {
@@ -59,6 +60,7 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
     const formik = useEditSubmissionFormik()
     const { values, errors, touched, setFieldValue, setFieldTouched, isSubmitting } = formik
     const { open: openSubmissionAttempts } = useSubmissionAttemptsOverlayState()
+    const { open: openAIProcessing } = useAIProcessingOverlayState()
     const t = useTranslations()
     const iconMap: SubmissionIconMap = {
         [SubmissionType.GithubUrl]: SiGithub,
@@ -75,6 +77,7 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
     const locale = useLocale()
     const jobNotificationsSocket = useJobNotificationsSocketIo()
     const jobStatusByJobId = useAppSelector((state) => state.socketIo.jobStatusByJobId)
+
     const renderJobNotification = useCallback(
         (challengeSubmissionId: string) => {
             const envelope = jobStatusByJobId[challengeSubmissionId]
@@ -189,6 +192,18 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
                                 </FieldError>
                             </TextField>
                             <div className="h-3" />
+                            {
+                                jobStatusByJobId[submission.id] ? (
+                                    renderJobNotification(submission.id)
+                                ) : loadingChallengeSubmissionIds.includes(submission.id) ? (
+                                    <div className="mt-3 flex items-center gap-2">
+                                        <Spinner />
+                                        <div className="text-sm text-muted">
+                                            {t("challenge.submissionModal.loading")}
+                                        </div>
+                                    </div>
+                                ) : null
+                            }
                             <div className="flex gap-2">
                                 <Button
                                     isDisabled={isSubmitting
@@ -219,6 +234,9 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
                                                             locale,
                                                         },
                                                     )
+                                                    /** Open AI processing modal with Challenge kind */
+                                                    dispatch(setAIProcessingModalData({ kind: AIProcessingModalKind.Challenge }))
+                                                    openAIProcessing()
                                                 }
                                                 return result
                                             },
@@ -242,17 +260,6 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
                                     {t("challenge.submissionModal.viewAttempts")}
                                 </Button>
                             </div>
-                            <div className="h-3" />
-                            {jobStatusByJobId[submission.id] ? (
-                                renderJobNotification(submission.id)
-                            ) : loadingChallengeSubmissionIds.includes(submission.id) ? (
-                                <div className="mt-3 flex items-center gap-2">
-                                    <Spinner />
-                                    <div className="text-sm text-muted">
-                                        {t("challenge.submissionModal.loading")}
-                                    </div>
-                                </div>
-                            ) : null}
                         </div>
                         {submission.userSubmission?.lastAttempt ? (
                             <div>

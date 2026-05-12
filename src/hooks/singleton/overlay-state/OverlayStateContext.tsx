@@ -2,6 +2,7 @@
 import React, { PropsWithChildren } from "react"
 import { createContext } from "react"
 import {
+    useAIProcessingOverlayStateCore,
     useAuthenticationOverlayStateCore,
     useChallengeOverlayStateCore,
     useCvPreviewOverlayStateCore,
@@ -20,6 +21,7 @@ import {
 } from "./core"
 
 export interface OverlayStateContextType {
+    aiProcessing: ReturnType<typeof useAIProcessingOverlayStateCore>
     authentication: ReturnType<typeof useAuthenticationOverlayStateCore>
     payment: ReturnType<typeof usePaymentOverlayStateCore>
     content: ReturnType<typeof useContentOverlayStateCore>
@@ -40,6 +42,7 @@ export interface OverlayStateContextType {
 export const OverlayStateContext = createContext<OverlayStateContextType | null>(null)
 
 export const OverlayStateProvider = ({ children }: PropsWithChildren) => {
+    const aiProcessing = useAIProcessingOverlayStateCore()
     const authentication = useAuthenticationOverlayStateCore()
     const payment = usePaymentOverlayStateCore()
     const content = useContentOverlayStateCore()
@@ -57,6 +60,7 @@ export const OverlayStateProvider = ({ children }: PropsWithChildren) => {
     const share = useShareOverlayStateCore()
     return (
         <OverlayStateContext.Provider value={{
+            aiProcessing,
             authentication,
             payment,
             content,

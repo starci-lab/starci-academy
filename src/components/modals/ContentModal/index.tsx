@@ -19,7 +19,7 @@ export const ContentModal = () => {
                     <Modal.Dialog>
                         <Modal.CloseTrigger />
                         <Modal.Header>
-                            <div className="text-2xl font-bold">
+                            <div className="text-2xl font-bold text-center">
                                 {content?.title ?? ""}
                             </div>
                         </Modal.Header>

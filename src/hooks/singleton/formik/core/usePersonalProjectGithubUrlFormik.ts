@@ -6,7 +6,8 @@ import {
     useQueryUserPersonalTaskAttemptsSwr,
 } from "../../swr"
 import { useAppDispatch, useAppSelector } from "@/redux"
-import { setReviewJob } from "@/redux/slices"
+import { setReviewJob, setAIProcessingModalData, AIProcessingModalKind } from "@/redux/slices"
+import { useAIProcessingOverlayState } from "../../overlay-state"
 import { runGraphQLWithToast } from "@/modules/toast"
 import { useFormik } from "formik"
 import { useMemo } from "react"
@@ -47,6 +48,7 @@ export const usePersonalProjectGithubUrlFormikCore = () => {
     const enrollment = useAppSelector((state) => state.user.enrollment)
     const selectedTaskId = useAppSelector((state) => state.milestone.selectedTaskId)
     const jobNotificationsSocket = useJobNotificationsSocketIo()
+    const { open: openAIProcessing, close: closeAIProcessing } = useAIProcessingOverlayState()
     const validationSchema = useMemo(
         () => Yup.object({
             githubUrl: Yup.string()
@@ -92,6 +94,10 @@ export const usePersonalProjectGithubUrlFormikCore = () => {
                         /** Set initial job status in Redux */
                         dispatch(setReviewJob({ jobId, status: JobStatus.Processing }))
 
+                        /** Set the modal kind and open the AI processing modal */
+                        dispatch(setAIProcessingModalData({ kind: AIProcessingModalKind.Task }))
+                        openAIProcessing()
+
                         jobNotificationsSocket.emit(PublicationEvent.SubscribeJobNotification, {
                             data: { jobId },
                             locale,
@@ -101,8 +107,9 @@ export const usePersonalProjectGithubUrlFormikCore = () => {
                         const onJobUpdate = (message: JobStatusUpdatedSocketIoMessage) => {
                             if (message.data?.jobId !== jobId) return
                             const status = message.data?.status
+                            const error = message.data?.error
                             if (status) {
-                                dispatch(setReviewJob({ jobId, status }))
+                                dispatch(setReviewJob({ jobId, status, error }))
                             }
                             if (status === JobStatus.Completed || status === JobStatus.Failed) {
                                 jobNotificationsSocketIoEventEmitter.off(
@@ -111,6 +118,10 @@ export const usePersonalProjectGithubUrlFormikCore = () => {
                                 )
                                 /** Revalidate attempts SWR to show new results */
                                 void queryUserPersonalTaskAttemptsSwr.mutate()
+                                /** Close the AI processing modal after a short delay */
+                                setTimeout(() => {
+                                    closeAIProcessing()
+                                }, 2000)
                             }
                         }
                         jobNotificationsSocketIoEventEmitter.on(

@@ -107,7 +107,13 @@ export const ChallengeModal = () => {
                                     <div className="flex h-full min-h-0 flex-col">
                                         <div className="min-h-0 flex-1 overflow-y-auto">
                                             <div className="p-3">
+                                                <div className="text-base font-semibold text-foreground">{t("challenge.tasks")}</div>
+                                                <div className="h-4.5" />
                                                 <ChallengePrerequisites challengePrerequisites={challengePrerequisites} />
+                                                <div className="h-4.5" />
+                                                <ChallengeRequirements challengeRequirements={challengeRequirements} />
+                                                <div className="h-4.5" />
+                                                <ChallengeOutputs challengeOutputs={challengeOutputs} />
                                                 <div className="h-6" />
                                                 <ChallengeRequirements challengeRequirements={challengeRequirements} />
                                                 <div className="h-6" />

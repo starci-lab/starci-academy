@@ -9,6 +9,7 @@ import { PaymentModal } from "./PaymentModal"
 import { LanguageModal } from "./LanguageModal"
 import { FeedbackDetailsModal } from "./FeedbackDetailsModal"
 import { CvPreviewModal } from "./CvPreviewModal"
+import { CvReviewLevelDetailsModal } from "./CvReviewLevelDetailsModal"
 import { CvUpdateModal } from "./CvUpdateModal"
 import { GlobalSearchModal } from "./GlobalSearchModal"
 import { LinkGithubModal } from "./LinkGithubModal"
@@ -26,6 +27,7 @@ export const ModalContainer = () => {
             <LanguageModal />
             <FeedbackDetailsModal />
             <CvPreviewModal />
+            <CvReviewLevelDetailsModal />
             <CvUpdateModal />
             <GlobalSearchModal />
             <LinkGithubModal />

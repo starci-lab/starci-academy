@@ -69,10 +69,31 @@
       "submittedAt": "Submitted on 21/04/2026",
       "download": "Download",
       "reviewAction": "Review",
+      "reviewLevelLabel": "Review level",
+      "reviewLevelPlaceholder": "Select a rubric level",
+      "reviewLevelDetails": {
+        "titleFallback": "Review level details",
+        "selectionTitle": "Choose review level",
+        "subtitle": "This rubric will be used to review your CV.",
+        "emptyDescription": "This review level does not have a detailed description yet.",
+        "selected": "Selected",
+        "close": "Close"
+      },
+      "reviewPlanTitle": "AI review plan",
       "feedbackTitle": "CV feedback",
       "feedbackSummary": "Your CV has been received. Mentor feedback will be provided in the next review session.",
       "updateAction": "Update CV",
       "historyTitle": "Review history",
+      "defaultCvFileName": "document.pdf",
+      "aiBrand": "StarCi AI",
+      "toast": {
+        "errorTitle": "Something went wrong",
+        "successTitle": "Done",
+        "authTokenMissing": "You need to be signed in to continue.",
+        "submissionNotFound": "No CV submission was found for your account.",
+        "reviewFailed": "We could not start CV review. Please try again.",
+        "reviewLevelRequired": "Please choose a review level before starting."
+      },
       "history": {
         "file": "CV file",
         "submittedAt": "Submitted at",
@@ -523,6 +544,24 @@
       "failed": {
         "title": "Project Review Failed",
         "description": "Something went wrong while reviewing your project. Please try again."
+      }
+    },
+    "cv": {
+      "queued": {
+        "title": "Queued for CV Review",
+        "description": "Your CV is queued. StarCI AI will start reviewing shortly."
+      },
+      "processing": {
+        "title": "StarCI AI is Reviewing Your CV",
+        "description": "StarCI AI is reading your CV and comparing it with the selected rubric. This may take a few minutes."
+      },
+      "completed": {
+        "title": "CV Review Complete",
+        "description": "Your CV has been reviewed. Detailed feedback will be updated below."
+      },
+      "failed": {
+        "title": "CV Review Failed",
+        "description": "Something went wrong while reviewing your CV. Please try again."
       }
     }
   },

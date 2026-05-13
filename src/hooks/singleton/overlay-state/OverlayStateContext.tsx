@@ -6,6 +6,7 @@ import {
     useAuthenticationOverlayStateCore,
     useChallengeOverlayStateCore,
     useCvPreviewOverlayStateCore,
+    useCvReviewLevelDetailsOverlayStateCore,
     useCvUpdateOverlayStateCore,
     useContentOverlayStateCore,
     useLivestreamCalendarOverlayStateCore,
@@ -29,6 +30,7 @@ export interface OverlayStateContextType {
     lessonVideo: ReturnType<typeof useLessonVideoOverlayStateCore>
     challenge: ReturnType<typeof useChallengeOverlayStateCore>
     cvPreview: ReturnType<typeof useCvPreviewOverlayStateCore>
+    cvReviewLevelDetails: ReturnType<typeof useCvReviewLevelDetailsOverlayStateCore>
     cvUpdate: ReturnType<typeof useCvUpdateOverlayStateCore>
     accountMenu: ReturnType<typeof useAccountMenuOverlayStateCore>
     language: ReturnType<typeof useLanguageOverlayStateCore>
@@ -50,6 +52,7 @@ export const OverlayStateProvider = ({ children }: PropsWithChildren) => {
     const lessonVideo = useLessonVideoOverlayStateCore()
     const challenge = useChallengeOverlayStateCore()
     const cvPreview = useCvPreviewOverlayStateCore()
+    const cvReviewLevelDetails = useCvReviewLevelDetailsOverlayStateCore()
     const cvUpdate = useCvUpdateOverlayStateCore()
     const accountMenu = useAccountMenuOverlayStateCore()
     const language = useLanguageOverlayStateCore()
@@ -68,6 +71,7 @@ export const OverlayStateProvider = ({ children }: PropsWithChildren) => {
             lessonVideo,
             challenge,
             cvPreview,
+            cvReviewLevelDetails,
             cvUpdate,
             accountMenu,
             language,

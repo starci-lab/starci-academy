@@ -23,6 +23,8 @@ import {
     milestoneReducer,
     aiModelsReducer,
     publicContentReducer,
+    cvUrlReducer,
+    cvReviewLevelReducer,
 } from "./slices"
 
 export const store = configureStore({
@@ -50,6 +52,8 @@ export const store = configureStore({
         milestone: milestoneReducer,
         aiModels: aiModelsReducer,
         publicContent: publicContentReducer,
+        cvUrl: cvUrlReducer,
+        cvReviewLevel: cvReviewLevelReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false,

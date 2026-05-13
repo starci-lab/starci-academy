@@ -22,6 +22,16 @@ export interface ProcessCVResponse {
   status: string;
 }
 
+/** Mirrors `CvUrlViewData` from the `cvUrl` GraphQL query. */
+export interface CvUrlPayload {
+  id: string
+  status: string
+  cvUrl: string
+  cvUrlExpiresInSeconds: number
+  /** Full AI review (markdown) on latest attempt after analyze. */
+  detailFeedback?: string | null
+}
+
 export interface CVUploadJob {
   jobId: string;
   status: "processing" | "completed" | "failed" | "pending";

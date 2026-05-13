@@ -21,6 +21,12 @@ export const publicEnv = () => {
             /** The timeout for GraphQL operations. */
             timeout: Number(process.env.NEXT_PUBLIC_GRAPHQL_TIMEOUT || 300000),
         },
+        minio: {
+            /** The URL of the Minio server. */
+            url: process.env.NEXT_PUBLIC_MINIO_URL || "http://localhost:9000",
+            /** The bucket of the Minio server. */
+            bucket: process.env.NEXT_PUBLIC_MINIO_BUCKET || "starci-academy",
+        },
         computation: {
             /** The amount of fraction digits for computation. */
             amount: {

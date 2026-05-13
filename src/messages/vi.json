@@ -78,10 +78,31 @@
       "submittedAt": "Đã nộp vào 21/04/2026",
       "download": "Tải xuống",
       "reviewAction": "Review",
+      "reviewLevelLabel": "Mức đánh giá",
+      "reviewLevelPlaceholder": "Chọn mức rubric",
+      "reviewLevelDetails": {
+        "titleFallback": "Chi tiết mức đánh giá",
+        "selectionTitle": "Chọn mức đánh giá",
+        "subtitle": "Nội dung rubric sẽ được dùng để đánh giá CV của bạn.",
+        "emptyDescription": "Mức đánh giá này chưa có mô tả chi tiết.",
+        "selected": "Đang chọn",
+        "close": "Đóng"
+      },
+      "reviewPlanTitle": "Kế hoạch review (AI)",
       "feedbackTitle": "Đánh giá CV",
       "feedbackSummary": "CV của bạn đã được ghi nhận. Mentor sẽ phản hồi chi tiết trong phiên review tiếp theo.",
       "updateAction": "Cập nhật CV mới",
       "historyTitle": "Lịch sử đánh giá",
+      "defaultCvFileName": "tai-lieu.pdf",
+      "aiBrand": "StarCi AI",
+      "toast": {
+        "errorTitle": "Có lỗi xảy ra",
+        "successTitle": "Thành công",
+        "authTokenMissing": "Bạn cần đăng nhập để tiếp tục.",
+        "submissionNotFound": "Không tìm thấy bản nộp CV cho tài khoản của bạn.",
+        "reviewFailed": "Không thể bắt đầu review CV. Vui lòng thử lại.",
+        "reviewLevelRequired": "Vui lòng chọn mức review trước khi bắt đầu."
+      },
       "history": {
         "file": "File CV",
         "submittedAt": "Thời gian nộp",
@@ -532,6 +553,24 @@
       "failed": {
         "title": "Review dự án thất bại",
         "description": "Đã xảy ra lỗi khi review dự án. Vui lòng thử lại."
+      }
+    },
+    "cv": {
+      "queued": {
+        "title": "Đang chờ đánh giá CV",
+        "description": "CV của bạn đang trong hàng đợi. StarCI AI sẽ bắt đầu đánh giá ngay."
+      },
+      "processing": {
+        "title": "StarCI AI đang đánh giá CV",
+        "description": "StarCI AI đang đọc CV và so sánh với rubric đã chọn. Quá trình này có thể mất vài phút."
+      },
+      "completed": {
+        "title": "Đánh giá CV hoàn tất",
+        "description": "CV đã được đánh giá xong. Phản hồi chi tiết sẽ được cập nhật bên dưới."
+      },
+      "failed": {
+        "title": "Đánh giá CV thất bại",
+        "description": "Đã xảy ra lỗi khi đánh giá CV. Vui lòng thử lại."
       }
     }
   },

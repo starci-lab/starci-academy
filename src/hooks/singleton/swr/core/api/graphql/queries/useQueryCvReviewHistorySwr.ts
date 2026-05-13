@@ -26,6 +26,19 @@ export const useQueryCvReviewHistorySwrCore = () => {
 
             return payload
         },
+        {
+            refreshInterval: (data) => {
+                const latest = data?.data?.[0]
+                if (
+                    latest?.status === "Pending" || 
+                    latest?.status === "Uploaded" || 
+                    latest?.status === "Analysing"
+                ) {
+                    return 3000
+                }
+                return 0
+            },
+        }
     )
 
     return swr

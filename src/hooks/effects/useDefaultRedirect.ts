@@ -18,9 +18,14 @@ export const useDefaultRedirect = () => {
         if (!course || !courseDisplayId) return
         if (pathname === pathConfig().locale(locale).course(courseDisplayId).learn().module().build()) {
             router.push(
-                pathConfig().locale(locale).course(courseDisplayId).learn().module(
-                    _.cloneDeep(course?.modules ?? []).sort((prev, next) => prev.orderIndex - next.orderIndex)[0].displayId
-                ).build()
+                pathConfig()
+                    .locale(locale)
+                    .course(courseDisplayId)
+                    .learn()
+                    .module(
+                        _.cloneDeep(course?.modules ?? [])
+                            .sort((prev, next) => prev.orderIndex - next.orderIndex)[0].id
+                    ).build()
             )
         }
     }, [pathname, locale, course, courseDisplayId])

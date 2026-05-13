@@ -52,6 +52,10 @@ import {
     useQueryPublicContentSwrCore,
     useQuerySavedContentsSwrCore,
     useMutateToggleFavoriteSwrCore,
+    useMutateGenerateSubmitCvPresignUrlSwrCore,
+    useMutateVerifySubmitCvPresignUrlSwrCore,
+    useQueryTemplateCvsSwrCore,
+    useQueryCvUrlSwrCore,
 } from "./core"
 
 export interface SwrContextType {
@@ -105,6 +109,10 @@ export interface SwrContextType {
     queryPublicContentSwr: ReturnType<typeof useQueryPublicContentSwrCore>;
     querySavedContentsSwr: ReturnType<typeof useQuerySavedContentsSwrCore>;
     mutateToggleFavoriteSwr: ReturnType<typeof useMutateToggleFavoriteSwrCore>;
+    mutateGenerateSubmitCvPresignUrlSwr: ReturnType<typeof useMutateGenerateSubmitCvPresignUrlSwrCore>;
+    mutateVerifySubmitCvPresignUrlSwr: ReturnType<typeof useMutateVerifySubmitCvPresignUrlSwrCore>;
+    queryTemplateCvsSwr: ReturnType<typeof useQueryTemplateCvsSwrCore>;
+    queryCvUrlSwr: ReturnType<typeof useQueryCvUrlSwrCore>;
 }
 
 export const SwrContext = createContext<SwrContextType | null>(null)
@@ -163,6 +171,10 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
     const queryPublicContentSwr = useQueryPublicContentSwrCore()
     const querySavedContentsSwr = useQuerySavedContentsSwrCore()
     const mutateToggleFavoriteSwr = useMutateToggleFavoriteSwrCore()
+    const mutateGenerateSubmitCvPresignUrlSwr = useMutateGenerateSubmitCvPresignUrlSwrCore()
+    const mutateVerifySubmitCvPresignUrlSwr = useMutateVerifySubmitCvPresignUrlSwrCore()
+    const queryTemplateCvsSwr = useQueryTemplateCvsSwrCore()
+    const queryCvUrlSwr = useQueryCvUrlSwrCore()
     return (
         <SwrContext.Provider value={
             {
@@ -216,6 +228,10 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
                 queryPublicContentSwr,
                 querySavedContentsSwr,
                 mutateToggleFavoriteSwr,
+                mutateGenerateSubmitCvPresignUrlSwr,
+                mutateVerifySubmitCvPresignUrlSwr,
+                queryTemplateCvsSwr,
+                queryCvUrlSwr,
             }
         }>
             {children}

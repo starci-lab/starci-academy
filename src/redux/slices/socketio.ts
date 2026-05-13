@@ -45,8 +45,8 @@ export const socketIoSlice = createSlice(
                 state,
                 action: PayloadAction<SetJobStatusMessageForJobPayload>,
             ) => {
-                const { challengeSubmissionId, message } = action.payload
-                state.jobStatusByJobId[challengeSubmissionId] = message
+                const { key, message } = action.payload
+                state.jobStatusByJobId[key] = message
             },
         },
     },
@@ -54,8 +54,8 @@ export const socketIoSlice = createSlice(
 
 /** The payload for the set job status message for job action. */
 export interface SetJobStatusMessageForJobPayload {
-    /** The challenge submission id. */
-    challengeSubmissionId: string
+    /** Map key, usually `challengeSubmissionId` for challenge jobs or `jobId` for generic jobs. */
+    key: string
     /** The message. */
     message: JobStatusUpdatedSocketIoMessage
 }

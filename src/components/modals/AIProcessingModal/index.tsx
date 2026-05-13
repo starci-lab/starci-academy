@@ -3,7 +3,10 @@
 import React, { useMemo } from "react"
 import { Modal } from "@heroui/react"
 import { useAppSelector } from "@/redux"
-import { JobStatus } from "@/modules/types"
+import {
+    JobStatus,
+    JobType,
+} from "@/modules/types"
 import { AIProcessingModalKind } from "@/redux/slices"
 import {
     CheckCircleIcon,
@@ -24,6 +27,7 @@ export const AIProcessingModal = () => {
     const { isOpen, setOpen } = useAIProcessingOverlayState()
     const aiProcessingData = useAppSelector((state) => state.modal.aiProcessingData)
     const kind = aiProcessingData?.kind ?? AIProcessingModalKind.Challenge
+    const trackedJobId = aiProcessingData?.jobId
 
     const taskJobStatus = useAppSelector((state) => state.milestone.reviewJobStatus)
     const taskJobError = useAppSelector((state) => state.milestone.reviewJobError)
@@ -35,26 +39,42 @@ export const AIProcessingModal = () => {
             return { status: taskJobStatus, error: taskJobError }
         case AIProcessingModalKind.Challenge: {
             const entries = Object.values(jobStatusByJobId)
-            const active = entries.find(
+            const challengeEntries = entries.filter(
+                (entry) =>
+                    entry.data?.jobType === JobType.SubmitChallenge ||
+                    entry.data?.jobType === undefined,
+            )
+            const active = challengeEntries.find(
                 (entry) =>
                     entry.data?.status === JobStatus.Queued ||
                         entry.data?.status === JobStatus.Processing,
             )
-            const latest = entries[entries.length - 1]
+            const latest = challengeEntries[challengeEntries.length - 1]
             return {
                 status: active?.data?.status ?? latest?.data?.status,
                 error: active?.data?.error ?? latest?.data?.error,
             }
         }
+        case AIProcessingModalKind.Cv: {
+            const entry = trackedJobId ? jobStatusByJobId[trackedJobId] : undefined
+            return {
+                status: entry?.data?.status,
+                error: entry?.data?.error,
+            }
+        }
         default:
             return { status: undefined, error: undefined }
         }
-    }, [kind, taskJobStatus, taskJobError, jobStatusByJobId])
+    }, [kind, taskJobStatus, taskJobError, jobStatusByJobId, trackedJobId])
 
-    const jobStatus = statusObj.status
+    const jobStatus = statusObj.status ?? (kind === AIProcessingModalKind.Cv ? JobStatus.Queued : undefined)
     const jobError = statusObj.error
 
-    const prefix = kind === AIProcessingModalKind.Task ? "aiProcessing.task" : "aiProcessing.challenge"
+    const prefix = kind === AIProcessingModalKind.Task
+        ? "aiProcessing.task"
+        : kind === AIProcessingModalKind.Cv
+            ? "aiProcessing.cv"
+            : "aiProcessing.challenge"
 
     const config = useMemo(() => {
         switch (jobStatus) {

@@ -109,15 +109,24 @@ export const useJobNotificationsSocketIoCore = () => {
                 const challengeSubmissionId = message.data?.challengeSubmissionId
                 const jobId = message.data?.jobId
                 const status = message.data?.status
-                if (!challengeSubmissionId || !jobId || !status) {
+                const key = challengeSubmissionId || jobId
+                if (!key || !jobId || !status) {
                     return
                 }
                 dispatch(
                     setJobStatusMessageForJob({
-                        challengeSubmissionId,
+                        key,
                         message,
                     }),
                 )
+                if (key !== jobId) {
+                    dispatch(
+                        setJobStatusMessageForJob({
+                            key: jobId,
+                            message,
+                        }),
+                    )
+                }
             }
             jobNotificationsSocketIoEventEmitter.on(SubscriptionEvent.JobStatusUpdated, onMessage)
             return () => {

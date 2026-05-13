@@ -4,10 +4,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 export enum AIProcessingModalKind {
     Task = "task",
     Challenge = "challenge",
+    Cv = "cv",
 }
 
 export interface AIProcessingModalData {
     kind: AIProcessingModalKind
+    /** Optional `jobs.id` for flows that track a single async job. */
+    jobId?: string
 }
 
 /**

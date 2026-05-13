@@ -13,8 +13,7 @@ const query1 = gql`
           fileUrl
           submittedAt
           status
-          feedback
-          score
+          detailFeedback
         }
       }
     }
@@ -35,8 +34,7 @@ export interface CvReviewHistoryItemPayload {
     fileUrl: string
     submittedAt: string
     status: string
-    feedback: string | null
-    score: number | null
+    detailFeedback: string | null
 }
 
 export interface CvReviewHistoryDataPayload {

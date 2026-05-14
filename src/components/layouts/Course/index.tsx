@@ -141,9 +141,7 @@ export const Course = () => {
                                                 .locale(locale)
                                                 .course(courseDisplayId)
                                                 .learn()
-                                                .module(
-                                                    course?.modules?.[0]?.displayId ?? ""
-                                                ).build()
+                                                .build()
                                         )
                                         }
                                     >

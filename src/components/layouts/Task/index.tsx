@@ -14,6 +14,7 @@ import {
     Skeleton,
     Spinner,
     Surface,
+    cn,
 } from "@heroui/react"
 import _ from "lodash"
 import { useTranslations, useLocale } from "next-intl"
@@ -63,6 +64,7 @@ export const Task = () => {
     )
     const hasReviewAttempts = attemptRows.length > 0
     const latestAttempt = attemptRows[0]
+    const showResultsBlock = hasReviewAttempts && Boolean(latestAttempt)
     const shortFeedbackDisplay = useMemo(() => {
         const raw = latestAttempt?.shortFeedback?.trim() ?? ""
         return raw || t("finalProject.page.attemptsDrawer.feedbackEmpty")
@@ -274,7 +276,7 @@ export const Task = () => {
                     </>
                 )}
                 {
-                    hasReviewAttempts && latestAttempt && (
+                    showResultsBlock && (
                         <>
                             <div className="h-6" />
                             <div className="mt-3 flex items-center gap-2  mb-3">
@@ -283,80 +285,88 @@ export const Task = () => {
                             </div>
                             <Surface className="p-3 rounded-3xl">
                                 <div className="text-4xl font-bold text-foreground">
-                                    <Score current={latestAttempt.score ?? 0} max={20} />
+                                    <Score current={latestAttempt?.score ?? 0} max={20} />
                                 </div>
                                 <div className="mt-3 text-sm text-muted">
                                     {shortFeedbackDisplay}
                                 </div>
                             </Surface>
-                            <div className="mt-3 flex flex-wrap items-center gap-2">
-                                <Button
-                                    size="lg"
-                                    isDisabled={
-                                        !isActionUnlocked
-                                        || reviewGithubFormik.isSubmitting
-                                        || attemptsSwr.isLoading
-                                        || syncGithubSwr.isMutating
-                                        || syncBranchSwr.isMutating
-                                    }
-                                    isPending={
-                                        reviewGithubFormik.isSubmitting
-                                        || (
-                                            Boolean(reviewJobId)
-                                            && (
-                                                reviewJobStatus === JobStatus.Processing
-                                                || reviewJobStatus === JobStatus.Queued
-                                            )
-                                        )
-                                    }
-                                    onPress={() => {
-                                        void reviewGithubFormik.submitForm()
-                                    }}
-                                >
-                                    {
-                                        (
-                                            {
-                                                isPending,
-                                            }
-                                        ) => {
-                                            return (
-                                                <>
-                                                    {isPending ? <Spinner color="current" size="sm" /> : <ScanIcon className="size-4" />}
-                                                    {t("finalProject.page.submitGithub.ctaReEvaluate")}
-                                                </>
-                                            )
-                                        }
-                                    }
-                                </Button>
-                                <Button
-                                    size="lg"
-                                    variant="secondary"
-                                    isDisabled={!isActionUnlocked}
-                                    onPress={() => milestoneTaskFeedbacksModal.setOpen(true)}
-                                >
-                                    {t("task.openFeedbackDetailsButton")}
-                                </Button>
-                                <Button
-                                    size="lg"
-                                    variant="secondary"
-                                    isDisabled={!isActionUnlocked}
-                                    onPress={() => personalProjectAttemptsDrawer.setOpen(true)}
-                                >
-                                    {t("finalProject.page.attemptsDrawer.openListButton")}
-                                </Button>
-                            </div>
-                            {
-                                showAiProcessing && (
+                        </>
+                    )
+                }
+                <div
+                    className={
+                        cn(
+                            "mt-3 flex flex-wrap items-center gap-2",
+                        )
+                    }
+                >
+                    <Button
+                        size="lg"
+                        isDisabled={
+                            !isActionUnlocked
+                            || reviewGithubFormik.isSubmitting
+                            || attemptsSwr.isLoading
+                            || syncGithubSwr.isMutating
+                            || syncBranchSwr.isMutating
+                        }
+                        isPending={
+                            reviewGithubFormik.isSubmitting
+                            || (
+                                Boolean(reviewJobId)
+                                && (
+                                    reviewJobStatus === JobStatus.Processing
+                                    || reviewJobStatus === JobStatus.Queued
+                                )
+                            )
+                        }
+                        onPress={() => {
+                            void reviewGithubFormik.submitForm()
+                        }}
+                    >
+                        {
+                            (
+                                {
+                                    isPending,
+                                }
+                            ) => {
+                                return (
                                     <>
-                                        <div className="h-3" />
-                                        <AIProcessingText
-                                            jobCategory={JobCategory.ReviewTask}
-                                            jobStatus={aiJobStatus}
-                                            error={reviewJobError}
-                                        />
+                                        {isPending ? <Spinner color="current" size="sm" /> : <ScanIcon className="size-4" />}
+                                        {hasReviewAttempts
+                                            ? t("finalProject.page.submitGithub.ctaReEvaluate")
+                                            : t("finalProject.page.submitGithub.ctaEvaluate")}
                                     </>
                                 )
                             }
+                        }
+                    </Button>
+                    <Button
+                        size="lg"
+                        variant="secondary"
+                        isDisabled={!isActionUnlocked || !hasReviewAttempts}
+                        onPress={() => milestoneTaskFeedbacksModal.setOpen(true)}
+                    >
+                        {t("task.openFeedbackDetailsButton")}
+                    </Button>
+                    <Button
+                        size="lg"
+                        variant="secondary"
+                        isDisabled={!isActionUnlocked || !hasReviewAttempts}
+                        onPress={() => personalProjectAttemptsDrawer.setOpen(true)}
+                    >
+                        {t("finalProject.page.attemptsDrawer.openListButton")}
+                    </Button>
+                </div>
+                {
+                    showAiProcessing && (
+                        <>
+                            <div className="h-3" />
+                            <AIProcessingText
+                                jobCategory={JobCategory.ReviewTask}
+                                jobStatus={aiJobStatus}
+                                error={reviewJobError}
+                            />
                         </>
                     )
                 }

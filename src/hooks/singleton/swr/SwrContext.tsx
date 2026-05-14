@@ -21,7 +21,7 @@ import {
     useQueryModuleSwrCore,
     useQueryChallengeSubmissionsSwrCore,
     useQuerySystemConfigSwrCore,
-    useQueryIncompleteChallengeSubmissionJobsSwrCore,
+    useQueryIncompleteJobsSwrCore,
     useQuerySubmissionAttemptsSwrCore,
     useQuerySubmissionFeedbacksSwrCore,
     useQueryUserCvSubmissionAttemptsSwrCore,
@@ -79,7 +79,7 @@ export interface SwrContextType {
     queryChallengesSwr: ReturnType<typeof useQueryChallengesSwrCore>;
     queryChallengeSubmissionsSwr: ReturnType<typeof useQueryChallengeSubmissionsSwrCore>;
     querySystemConfigSwr: ReturnType<typeof useQuerySystemConfigSwrCore>;
-    queryIncompleteChallengeSubmissionJobsSwr: ReturnType<typeof useQueryIncompleteChallengeSubmissionJobsSwrCore>;
+    queryIncompleteJobsSwr: ReturnType<typeof useQueryIncompleteJobsSwrCore>;
     querySubmissionAttemptsSwr: ReturnType<typeof useQuerySubmissionAttemptsSwrCore>;
     querySubmissionFeedbacksSwr: ReturnType<typeof useQuerySubmissionFeedbacksSwrCore>;
     queryUserCvSubmissionAttemptsSwr: ReturnType<typeof useQueryUserCvSubmissionAttemptsSwrCore>;
@@ -143,8 +143,7 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
     const queryChallengesSwr = useQueryChallengesSwrCore()
     const queryChallengeSubmissionsSwr = useQueryChallengeSubmissionsSwrCore()
     const querySystemConfigSwr = useQuerySystemConfigSwrCore()
-    const queryIncompleteChallengeSubmissionJobsSwr =
-        useQueryIncompleteChallengeSubmissionJobsSwrCore()
+    const queryIncompleteJobsSwr = useQueryIncompleteJobsSwrCore()
     const querySubmissionAttemptsSwr = useQuerySubmissionAttemptsSwrCore()
     const querySubmissionFeedbacksSwr = useQuerySubmissionFeedbacksSwrCore()
     const queryUserCvSubmissionAttemptsSwr = useQueryUserCvSubmissionAttemptsSwrCore()
@@ -204,7 +203,7 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
                 queryChallengesSwr,
                 queryChallengeSubmissionsSwr,
                 querySystemConfigSwr,
-                queryIncompleteChallengeSubmissionJobsSwr,
+                queryIncompleteJobsSwr,
                 querySubmissionAttemptsSwr,
                 querySubmissionFeedbacksSwr,
                 queryUserCvSubmissionAttemptsSwr,

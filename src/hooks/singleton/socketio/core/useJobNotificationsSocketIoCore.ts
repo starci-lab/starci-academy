@@ -3,6 +3,7 @@ import EventEmitter2 from "eventemitter2"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import { useLocale } from "next-intl"
 import {
+    applyIncompleteJobStatus,
     setAiProcessingModalData,
     setJobStatusMessageForJob,
 } from "@/redux/slices"
@@ -27,9 +28,7 @@ export const jobNotificationsSocketIoEventEmitter = new EventEmitter2()
 export const useJobNotificationsSocketIoCore = () => {
     const authenticated = useAppSelector((state) => state.keycloak.authenticated)
     const dispatch = useAppDispatch()
-    const incompleteChallengeSubmissionJobs = useAppSelector(
-        (state) => state.job.incompleteChallengeSubmissionJobs,
-    )
+    const incompleteJobs = useAppSelector((state) => state.job.incompleteJobs)
     const locale = useLocale()
     const [numReconnect, setNumReconnect] = useState(0)
 
@@ -96,13 +95,13 @@ export const useJobNotificationsSocketIoCore = () => {
         numReconnect,
     ])
 
-    /** Re-subscribe incomplete challenge jobs when the list changes. */
+    /** Emit `SubscribeJobNotification` for each row in `incompleteJobs` (from GraphQL + Redux). */
     useEffect(() => {
-        if (incompleteChallengeSubmissionJobs.length === 0) {
+        if (incompleteJobs.length === 0) {
             return
         }
         const socket = getSocket()
-        for (const item of incompleteChallengeSubmissionJobs) {
+        for (const item of incompleteJobs) {
             const payload: SubscribeJobNotificationSocketIoPayload = {
                 data: {
                     jobId: item.jobId,
@@ -115,7 +114,7 @@ export const useJobNotificationsSocketIoCore = () => {
             )
         }
     }, [
-        incompleteChallengeSubmissionJobs,
+        incompleteJobs,
         locale,
         getSocket,
     ])
@@ -133,6 +132,10 @@ export const useJobNotificationsSocketIoCore = () => {
                     message,
                 }),
             )
+            const status = message.data?.status
+            if (status !== undefined) {
+                dispatch(applyIncompleteJobStatus({ jobId, status }))
+            }
             const category = message.data?.category
             if (category) {
                 dispatch(

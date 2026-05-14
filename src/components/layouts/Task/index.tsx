@@ -297,7 +297,8 @@ export const Task = () => {
                 <div
                     className={
                         cn(
-                            "mt-3 flex flex-wrap items-center gap-2",
+                            "mt-3",
+                            "flex flex-wrap items-center gap-2",
                         )
                     }
                 >

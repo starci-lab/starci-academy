@@ -11,7 +11,7 @@ const paths = [
     "src/modules/api/graphql/queries/query-challenge-submission.ts",
     "src/modules/api/graphql/queries/query-lesson-video.ts",
     "src/modules/api/graphql/queries/query-content.ts",
-    "src/modules/api/graphql/queries/query-incomplete-challenge-submission-jobs.ts",
+    "src/modules/api/graphql/queries/query-incomplete-jobs.ts",
     "src/modules/api/graphql/queries/query-user-cv-submission-attempts.ts",
     "src/modules/api/graphql/queries/query-challenges.ts",
     "src/modules/api/graphql/queries/query-contents.ts",

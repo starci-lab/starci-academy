@@ -1,4 +1,4 @@
-import type { IncompleteChallengeSubmissionJobsItem } from "@/modules/api"
+import type { IncompleteJobsItem } from "@/modules/api"
 import { JobStatus } from "@/modules/types"
 import {
     createSlice,
@@ -10,49 +10,49 @@ import {
  */
 export interface JobSlice {
     /**
-     * Last successful `incompleteChallengeSubmissionJobs` rows for the current course
-     * (`jobId` + `status` per line item).
+     * Incomplete jobs for the current course (`jobId` + `status`), filled from GraphQL
+     * and trimmed/updated via {@link applyIncompleteJobStatus} when Socket.IO pushes status.
      */
-    incompleteChallengeSubmissionJobs: Array<IncompleteChallengeSubmissionJobsItem>
+    incompleteJobs: Array<IncompleteJobsItem>
 }
 
 const initialState: JobSlice = {
-    incompleteChallengeSubmissionJobs: [],
-}
+    incompleteJobs: [],
+}   
 
 export const jobSlice = createSlice(
     {
         name: "job",
         initialState,
         reducers: {
-            setIncompleteChallengeSubmissionJobs: (
+            setIncompleteJobs: (
                 state,
-                action: PayloadAction<Array<IncompleteChallengeSubmissionJobsItem>>,
+                action: PayloadAction<Array<IncompleteJobsItem>>,
             ) => {
-                state.incompleteChallengeSubmissionJobs = action.payload
+                state.incompleteJobs = action.payload
             },
             /**
              * Merge a socket `JobStatusUpdated` into the list: update `status` while queued/processing;
              * drop the row when the job is terminal (no longer "incomplete").
              */
-            applyIncompleteJobStatusFromSocket: (
+            applyIncompleteJobStatus: (
                 state,
-                action: PayloadAction<ApplyIncompleteJobStatusFromSocketPayload>,
+                action: PayloadAction<ApplyIncompleteJobStatusPayload>,
             ) => {
                 const { jobId, status } = action.payload
-                const i = state.incompleteChallengeSubmissionJobs.findIndex(
-                    (row) => row.jobId === jobId,
+                const i = state.incompleteJobs.findIndex(
+                    (incompleteJob) => incompleteJob.jobId === jobId,
                 )
                 if (i === -1) {
                     return
                 }
                 if (status === JobStatus.Completed || status === JobStatus.Failed) {
-                    state.incompleteChallengeSubmissionJobs.splice(
+                    state.incompleteJobs.splice(
                         i,
                         1,
                     )
                 } else {
-                    state.incompleteChallengeSubmissionJobs[i] = {
+                    state.incompleteJobs[i] = {
                         jobId,
                         status,
                     }
@@ -62,7 +62,7 @@ export const jobSlice = createSlice(
     },
 )
 
-export interface ApplyIncompleteJobStatusFromSocketPayload {
+export interface ApplyIncompleteJobStatusPayload {
     /** `JobStatusUpdated.data.jobId` */
     jobId: string
     /** `JobStatusUpdated.data.status` */
@@ -71,6 +71,6 @@ export interface ApplyIncompleteJobStatusFromSocketPayload {
 
 export const jobReducer = jobSlice.reducer
 export const {
-    setIncompleteChallengeSubmissionJobs,
-    applyIncompleteJobStatusFromSocket,
+    setIncompleteJobs,
+    applyIncompleteJobStatus,
 } = jobSlice.actions

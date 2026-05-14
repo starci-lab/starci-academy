@@ -1,15 +1,15 @@
 "use client"
 
-import React, { PropsWithChildren } from "react"
+import React from "react"
 import { Breadcrumbs } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { pathConfig } from "@/resources"
 import { useAppSelector } from "@/redux"
 import { MilestoneSidebar } from "@/components/layouts/MilestoneSidebar"
-import { PersonalProjectSubmission } from "@/components/layouts/PersonalProjectSubmission"
+import { PersonalProjectSubmission, Task } from "@/components/layouts"
 
-const Layout = ({ children }: PropsWithChildren) => {
+const Layout = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -36,7 +36,7 @@ const Layout = ({ children }: PropsWithChildren) => {
                     </Breadcrumbs>
                 </div>
                 <PersonalProjectSubmission />
-                {children}
+                <Task />
             </div>
             <MilestoneSidebar className="col-span-2" />
         </div>

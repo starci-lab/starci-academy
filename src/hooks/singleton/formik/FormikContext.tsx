@@ -6,10 +6,11 @@ import {
     useSignUpFormikCore,
     useEditSubmissionFormikCore,
     useCvApplyFormikCore,
+    useCvReviewFormikCore,
     useGlobalSearchFormikCore,
     useAdminApiKeyFormikCore,
     usePersonalProjectIdeaFormikCore,
-    usePersonalProjectGithubUrlFormikCore,
+    usePersonalProjectGithubFormikCore,
 } from "./core"
 
 export interface FormikContextType {
@@ -17,10 +18,11 @@ export interface FormikContextType {
     signUpFormik: ReturnType<typeof useSignUpFormikCore>
     editSubmissionFormik: ReturnType<typeof useEditSubmissionFormikCore>
     cvApplyFormik: ReturnType<typeof useCvApplyFormikCore>
+    cvReviewFormik: ReturnType<typeof useCvReviewFormikCore>
     globalSearchFormik: ReturnType<typeof useGlobalSearchFormikCore>
     adminApiKeyFormik: ReturnType<typeof useAdminApiKeyFormikCore>
     personalProjectIdeaFormik: ReturnType<typeof usePersonalProjectIdeaFormikCore>
-    personalProjectGithubUrlFormik: ReturnType<typeof usePersonalProjectGithubUrlFormikCore>
+    personalProjectGithubFormik: ReturnType<typeof usePersonalProjectGithubFormikCore>
 }
 
 export const FormikContext = createContext<FormikContextType | null>(null)
@@ -31,20 +33,22 @@ export const FormikProvider = ({ children }: PropsWithChildren) => {
     const signUpFormik = useSignUpFormikCore()
     const editSubmissionFormik = useEditSubmissionFormikCore()
     const cvApplyFormik = useCvApplyFormikCore()
+    const cvReviewFormik = useCvReviewFormikCore()
     const globalSearchFormik = useGlobalSearchFormikCore()
     const adminApiKeyFormik = useAdminApiKeyFormikCore()
     const personalProjectIdeaFormik = usePersonalProjectIdeaFormikCore()
-    const personalProjectGithubUrlFormik = usePersonalProjectGithubUrlFormikCore()
+    const personalProjectGithubFormik = usePersonalProjectGithubFormikCore()
     return (
         <FormikContext.Provider value={{
             signInFormik,
             signUpFormik,
             editSubmissionFormik,
             cvApplyFormik,
+            cvReviewFormik,
             globalSearchFormik,
             adminApiKeyFormik,
             personalProjectIdeaFormik,
-            personalProjectGithubUrlFormik,
+            personalProjectGithubFormik,
         }}>
             {children}
         </FormikContext.Provider>

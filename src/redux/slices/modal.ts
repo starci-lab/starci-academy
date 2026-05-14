@@ -1,16 +1,11 @@
-import { ChallengeEntity, ContentEntity } from "@/modules/types"
+import { ChallengeEntity, ContentEntity, JobCategory } from "@/modules/types"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-export enum AIProcessingModalKind {
-    Task = "task",
-    Challenge = "challenge",
-    Cv = "cv",
-}
-
 export interface AIProcessingModalData {
-    kind: AIProcessingModalKind
     /** Optional `jobs.id` for flows that track a single async job. */
     jobId?: string
+    /** Optional `jobs.category` for flows that track a single async job. */
+    category?: JobCategory
 }
 
 /**
@@ -60,7 +55,7 @@ export const modalSlice = createSlice({
         ) => {
             state.challengeData = action.payload
         },
-        setAIProcessingModalData: (
+        setAiProcessingModalData: (
             state,
             action: PayloadAction<AIProcessingModalData>
         ) => {
@@ -74,5 +69,5 @@ export const modalReducer = modalSlice.reducer
 export const {
     setContentModalData,
     setChallengeModalData,
-    setAIProcessingModalData,
+    setAiProcessingModalData,
 } = modalSlice.actions

@@ -6,38 +6,40 @@ import { useTranslations } from "next-intl"
 
 const isPublicUrl = (value: string) => value.startsWith("http://") || value.startsWith("https://") || value.startsWith("blob:") || value.startsWith("data:")
 
-export interface CvReviewHistoryItem {
-    /** Unique id for table row. */
+/** One row in the CV submission attempts table. */
+export interface UserCvSubmissionAttemptRow {
+    /** Stable row id (e.g. attempt id). */
     id: string
-    /** Submitted CV filename shown to user. */
+    /** CV filename shown in the file column. */
     fileName: string
-    /** Submitted CV file URL. */
+    /** Link or path used to open/download the CV. */
     fileUrl: string
-    /** Submitted datetime text. */
+    /** Submitted time as formatted text. */
     submittedAt: string
-    /** Feedback summary text. */
+    /** Short feedback or status text for this attempt. */
     feedback: string
 }
 
-export interface CvReviewHistoryProps {
-    /** Rows shown in the review history table. */
-    items: Array<CvReviewHistoryItem>
+export interface UserCvSubmissionAttemptsProps {
+    /** Attempt rows to render. */
+    items: Array<UserCvSubmissionAttemptRow>
 }
 
 /**
- * Render CV review history table with latest rows.
- * @param {CvReviewHistoryProps} props Review history rows.
+ * Renders a table of the learner's CV submission attempts (file, time, feedback).
+ * @param props.items Rows supplied by the parent after mapping API data.
  */
-export const CvReviewHistory = ({ items }: CvReviewHistoryProps) => {
+export const UserCvSubmissionAttempts = (props: UserCvSubmissionAttemptsProps) => {
+    const { items } = props
     const t = useTranslations()
     return (
         <div>
             <Table variant="primary">
-                <Table.Content aria-label={t("cv.submission.historyTitle")}>
+                <Table.Content aria-label={t("cv.submission.attemptsTitle")}>
                     <Table.Header>
-                        <Table.Column>{t("cv.submission.history.file")}</Table.Column>
-                        <Table.Column>{t("cv.submission.history.submittedAt")}</Table.Column>
-                        <Table.Column>{t("cv.submission.history.feedback")}</Table.Column>
+                        <Table.Column>{t("cv.submission.attempts.file")}</Table.Column>
+                        <Table.Column>{t("cv.submission.attempts.submittedAt")}</Table.Column>
+                        <Table.Column>{t("cv.submission.attempts.feedback")}</Table.Column>
                     </Table.Header>
                     <Table.Body>
                         {items.map((item) => (
@@ -58,7 +60,7 @@ export const CvReviewHistory = ({ items }: CvReviewHistoryProps) => {
             </Table>
             <div className="h-3" />
             <Button variant="secondary">
-                Xem chi tiết
+                {t("cv.submission.attempts.viewDetails")}
             </Button>
         </div>
     )

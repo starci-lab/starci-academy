@@ -2,7 +2,10 @@ import type {
     GlobalSearchSocketIoMessage,
     JobStatusUpdatedSocketIoMessage,
 } from "@/hooks"
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
+import { 
+    createSlice, 
+    type PayloadAction 
+} from "@reduxjs/toolkit"
 
 /**
  * The slice for the content.
@@ -45,8 +48,11 @@ export const socketIoSlice = createSlice(
                 state,
                 action: PayloadAction<SetJobStatusMessageForJobPayload>,
             ) => {
-                const { key, message } = action.payload
-                state.jobStatusByJobId[key] = message
+                const { 
+                    jobId, 
+                    message 
+                } = action.payload
+                state.jobStatusByJobId[jobId] = message
             },
         },
     },
@@ -54,8 +60,8 @@ export const socketIoSlice = createSlice(
 
 /** The payload for the set job status message for job action. */
 export interface SetJobStatusMessageForJobPayload {
-    /** Map key, usually `challengeSubmissionId` for challenge jobs or `jobId` for generic jobs. */
-    key: string
+    /** The job id. */
+    jobId: string
     /** The message. */
     message: JobStatusUpdatedSocketIoMessage
 }

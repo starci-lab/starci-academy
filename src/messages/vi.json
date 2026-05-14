@@ -75,11 +75,15 @@
     },
     "submission": {
       "fileCardTitle": "Thông tin CV đã nộp",
-      "submittedAt": "Đã nộp vào 21/04/2026",
+      "submittedAtPending": "Chưa có thời gian nộp từ hệ thống.",
       "download": "Tải xuống",
-      "reviewAction": "Review",
+      "aiReviewSectionTitle": "Đánh giá bằng AI",
+      "reviewAction": "Chạy đánh giá CV",
+      "reviewActionRerun": "Đánh giá lại CV",
       "reviewLevelLabel": "Mức đánh giá",
       "reviewLevelPlaceholder": "Chọn mức rubric",
+      "reviewLevelSectionDescription": "Mức rubric hiện tại: {level}. Bấm Cập nhật để mở danh sách và chọn mức khác.",
+      "reviewLevelUpdate": "Cập nhật",
       "reviewLevelDetails": {
         "titleFallback": "Chi tiết mức đánh giá",
         "selectionTitle": "Chọn mức đánh giá",
@@ -92,7 +96,7 @@
       "feedbackTitle": "Đánh giá CV",
       "feedbackSummary": "CV của bạn đã được ghi nhận. Mentor sẽ phản hồi chi tiết trong phiên review tiếp theo.",
       "updateAction": "Cập nhật CV mới",
-      "historyTitle": "Lịch sử đánh giá",
+      "attemptsTitle": "Các phiên bản CV đã nộp",
       "defaultCvFileName": "tai-lieu.pdf",
       "aiBrand": "StarCi AI",
       "toast": {
@@ -103,12 +107,29 @@
         "reviewFailed": "Không thể bắt đầu review CV. Vui lòng thử lại.",
         "reviewLevelRequired": "Vui lòng chọn mức review trước khi bắt đầu."
       },
-      "history": {
+      "attempts": {
         "file": "File CV",
         "submittedAt": "Thời gian nộp",
         "feedback": "Feedback",
         "actions": "Hành động",
         "viewDetails": "Xem chi tiết"
+      },
+      "attemptsDrawer": {
+        "title": "Các bản CV đã tải lên",
+        "openButton": "Xem các bản đã nộp",
+        "empty": "Chưa có phiên bản CV nào.",
+        "loadError": "Không tải được danh sách bản CV. Vui lòng thử lại.",
+        "ariaTable": "Bảng các lần tải CV",
+        "columnVersion": "Phiên bản",
+        "columnStatus": "Trạng thái",
+        "attemptLine": "Lần thử {number}",
+        "feedbackEmpty": "—"
+      },
+      "attemptAnalysis": {
+        "title": "Chi tiết phân tích CV",
+        "titleWithAttempt": "Chi tiết phân tích CV - lần thử {number}",
+        "empty": "Chưa có phân tích chi tiết cho lần thử này.",
+        "openFile": "Mở file CV"
       }
     },
     "form": {
@@ -149,11 +170,33 @@
         "cta": "Nộp"
       },
       "submitGithub": {
-        "title": "Link GitHub dự án",
+        "title": "Github dự án",
+        "repoFieldTitle": "URL GitHub",
+        "branchFieldTitle": "Nhánh cần đánh giá",
+        "branchPlaceholder": "main",
+        "branchInvalid": "Chỉ dùng chữ, số và các ký tự . _ / -",
+        "branchTooLong": "Tên nhánh quá dài.",
+        "missingRepoForReview": "Nhập và lưu URL GitHub hợp lệ trước.",
         "placeholder": "https://github.com/your-account/personal-project",
         "urlRequired": "Vui lòng nhập link GitHub của dự án.",
         "urlInvalid": "Vui lòng nhập URL hợp lệ.",
-        "cta": "Review"
+        "urlInvalidGithub": "Vui lòng nhập URL GitHub hợp lệ.",
+        "syncing": "Đang lưu…",
+        "resetButton": "Đặt lại",
+        "ctaEvaluate": "Đánh giá tiến độ",
+        "ctaReEvaluate": "Đánh giá lại tiến độ"
+      },
+      "reviewPreview": {
+        "title": "Kết quả mới nhất",
+        "scoreLabel": "Điểm: {score}",
+        "scorePending": "Chưa có điểm"
+      },
+      "attemptsDrawer": {
+        "title": "Lịch sử đánh giá dự án",
+        "openListButton": "Xem thêm",
+        "feedbackEmpty": "Chưa có feedback tóm tắt.",
+        "loadError": "Không tải được danh sách. Vui lòng thử lại.",
+        "empty": "Chưa có lượt đánh giá nào."
       },
       "feedback": {
         "title": "AI feedback",
@@ -232,12 +275,22 @@
     "criteriaTitle": "Tiêu chí chấm điểm",
     "criteriaScore": "{score} điểm",
     "criteriaNoHint": "Chưa có hướng dẫn cho tiêu chí này.",
+    "loadErrorTitle": "Không tải được bài tập này",
+    "loadErrorDescription": "Vui lòng kiểm tra kết nối và thử lại.",
+    "loadErrorRetry": "Thử lại",
     "loadingResults": "Đang tải kết quả chấm điểm...",
     "resultsTitle": "Kết quả chấm điểm",
+    "previewLockedAlertTitle": "Hoàn thành bài trước trước",
+        "previewLockedAlertDescription": "Bạn vẫn xem được tiêu chí của bài này. Đánh giá AI, xem phản hồi/lịch sử và chỉnh GitHub chỉ bật sau khi hoàn thành bước trước.",
+        "previewLockedGoToCurrentTaskButton": "Về bài hiện tại",
+        "personalProjectDockerMultiStageIntro": "Đóng gói ứng dụng NestJS của bạn bằng Dockerfile multi-stage để tối ưu hóa dung lượng image. Build image và push lên một container registry như Docker Hub.",
     "attemptNumber": "Lần #{number}",
     "attemptScore": "{score} điểm",
     "loadingFeedback": "Đang tải feedback chi tiết...",
     "noFeedback": "Chưa có feedback chi tiết.",
+    "openFeedbackDetailsButton": "Xem chi tiết phản hồi",
+    "feedbackDetailsModalTitle": "Chi tiết phản hồi",
+    "feedbackDetailsLoadError": "Không tải được chi tiết phản hồi. Vui lòng thử lại.",
     "suggestionLabel": "Gợi ý",
     "jobStatus": {
       "queued": "Đang chờ chấm điểm...",
@@ -519,7 +572,7 @@
     }
   },
   "aiProcessing": {
-    "challenge": {
+    "submitChallenge": {
       "queued": {
         "title": "Đang chờ xử lý",
         "description": "Bài nộp của bạn đang trong hàng đợi và sẽ được xử lý ngay."
@@ -537,7 +590,7 @@
         "description": "Đã xảy ra lỗi khi chấm bài. Vui lòng thử lại."
       }
     },
-    "task": {
+    "reviewTask": {
       "queued": {
         "title": "Đang chờ review",
         "description": "Dự án của bạn đang trong hàng đợi. StarCI AI sẽ bắt đầu review ngay."
@@ -551,11 +604,11 @@
         "description": "Dự án đã được review xong. Xem kết quả chấm điểm bên dưới để nhận phản hồi chi tiết."
       },
       "failed": {
-        "title": "Review dự án thất bại",
-        "description": "Đã xảy ra lỗi khi review dự án. Vui lòng thử lại."
+        "title": "Đánh giá tiến độ thất bại",
+        "description": "Đã xảy ra lỗi khi đánh giá tiến độ. Vui lòng thử lại."
       }
     },
-    "cv": {
+    "reviewCv": {
       "queued": {
         "title": "Đang chờ đánh giá CV",
         "description": "CV của bạn đang trong hàng đợi. StarCI AI sẽ bắt đầu đánh giá ngay."
@@ -566,7 +619,7 @@
       },
       "completed": {
         "title": "Đánh giá CV hoàn tất",
-        "description": "CV đã được đánh giá xong. Phản hồi chi tiết sẽ được cập nhật bên dưới."
+        "description": "Phản hồi chi tiết đã được hiển thị."
       },
       "failed": {
         "title": "Đánh giá CV thất bại",
@@ -654,7 +707,12 @@
     }
   },
   "markdown": {
-    "tableAriaLabel": "Bảng nội dung"
+    "tableAriaLabel": "Bảng nội dung",
+    "mermaidRendering": "Đang vẽ sơ đồ..."
+  },
+  "score": {
+    "fraction": "{current}/{max}",
+    "aria": "Điểm {current} trên {max}"
   },
   "linkGithub": {
     "title": "Liên kết GitHub",

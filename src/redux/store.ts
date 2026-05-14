@@ -25,6 +25,8 @@ import {
     publicContentReducer,
     cvUrlReducer,
     cvReviewLevelReducer,
+    templateCvsReducer,
+    cvSubmissionAttemptAnalysisReducer,
 } from "./slices"
 
 export const store = configureStore({
@@ -54,6 +56,8 @@ export const store = configureStore({
         publicContent: publicContentReducer,
         cvUrl: cvUrlReducer,
         cvReviewLevel: cvReviewLevelReducer,
+        templateCvs: templateCvsReducer,
+        cvSubmissionAttemptAnalysis: cvSubmissionAttemptAnalysisReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false,

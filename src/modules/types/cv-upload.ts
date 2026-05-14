@@ -28,8 +28,12 @@ export interface CvUrlPayload {
   status: string
   cvUrl: string
   cvUrlExpiresInSeconds: number
-  /** Full AI review (markdown) on latest attempt after analyze. */
-  detailFeedback?: string | null
+    /** Full AI review (markdown) on latest attempt after analyze. */
+    detailFeedback?: string | null
+    /** Holistic score 0–100 on latest attempt when analyze returned `score`. */
+    score?: number | null
+    /** ISO timestamp from API (latest attempt or submission created time). */
+  submittedAt?: string | null
 }
 
 export interface CVUploadJob {

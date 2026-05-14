@@ -1,28 +1,27 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import type { MilestoneEntity } from "@/modules/types"
-import { JobStatus } from "@/modules/types"
+import type { MilestoneEntity, MilestoneTaskEntity } from "@/modules/types"
 
 export interface MilestoneState {
     entities: Array<MilestoneEntity>
+    /** Task payload for the current `selectedTaskId` (from `task` GraphQL, hydrated by SWR). */
+    selectedTaskDetail?: MilestoneTaskEntity
     selectedTaskId?: string
     selectedAttemptId?: string
     selectedMilestoneId?: string
-    /** Job ID of the currently running review job for the selected task. */
-    reviewJobId?: string
-    /** Current status of the review job. */
-    reviewJobStatus?: JobStatus
-    /** Error message if the review job failed. */
-    reviewJobError?: string
+    /**
+     * Maps `milestone_tasks.id` → async grading `jobs.id` after submit succeeds.
+     * Used with `socketIo.jobStatusByJobId[jobId]`.
+     */
+    milestoneTaskIdToJobId: Record<string, string>
 }
 
 const initialState: MilestoneState = {
     entities: [],
+    selectedTaskDetail: undefined,
     selectedTaskId: undefined,
     selectedAttemptId: undefined,
     selectedMilestoneId: undefined,
-    reviewJobId: undefined,
-    reviewJobStatus: undefined,
-    reviewJobError: undefined,
+    milestoneTaskIdToJobId: {},
 }
 
 const slice = createSlice({
@@ -34,8 +33,15 @@ const slice = createSlice({
         },
         resetMilestones: (state) => {
             state.entities = []
+            state.selectedTaskDetail = undefined
+        },
+        setSelectedTaskDetail: (state, action: PayloadAction<MilestoneTaskEntity | undefined>) => {
+            state.selectedTaskDetail = action.payload
         },
         setSelectedTaskId: (state, action: PayloadAction<string | undefined>) => {
+            if (state.selectedTaskId !== action.payload) {
+                state.selectedTaskDetail = undefined
+            }
             state.selectedTaskId = action.payload
         },
         setSelectedAttemptId: (state, action: PayloadAction<string | undefined>) => {
@@ -44,15 +50,11 @@ const slice = createSlice({
         setSelectedMilestoneId: (state, action: PayloadAction<string | undefined>) => {
             state.selectedMilestoneId = action.payload
         },
-        setReviewJob: (state, action: PayloadAction<{ jobId: string; status: JobStatus; error?: string }>) => {
-            state.reviewJobId = action.payload.jobId
-            state.reviewJobStatus = action.payload.status
-            state.reviewJobError = action.payload.error
+        addMilestoneTaskIdToJobId: (state, action: PayloadAction<AddMilestoneTaskIdToJobIdPayload>) => {
+            state.milestoneTaskIdToJobId[action.payload.milestoneTaskId] = action.payload.jobId
         },
-        clearReviewJob: (state) => {
-            state.reviewJobId = undefined
-            state.reviewJobStatus = undefined
-            state.reviewJobError = undefined
+        removeMilestoneTaskIdToJobId: (state, action: PayloadAction<string>) => {
+            delete state.milestoneTaskIdToJobId[action.payload]
         },
     },
 })
@@ -60,10 +62,19 @@ const slice = createSlice({
 export const {
     setMilestones,
     resetMilestones,
+    setSelectedTaskDetail,
     setSelectedTaskId,
     setSelectedAttemptId,
     setSelectedMilestoneId,
-    setReviewJob,
-    clearReviewJob,
+    addMilestoneTaskIdToJobId,
+    removeMilestoneTaskIdToJobId,
 } = slice.actions
 export const milestoneReducer = slice.reducer
+
+/** Payload for adding a milestone task ID to job ID mapping. */
+export interface AddMilestoneTaskIdToJobIdPayload {
+    /** Milestone task ID. */
+    milestoneTaskId: string
+    /** Job ID. */
+    jobId: string
+}

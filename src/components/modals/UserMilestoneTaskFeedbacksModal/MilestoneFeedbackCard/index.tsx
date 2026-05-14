@@ -1,0 +1,100 @@
+"use client"
+
+import type { UserMilestoneTaskAttemptFeedbackEntity } from "@/modules/types"
+import { MilestoneSeverity } from "@/modules/types"
+import { Card, Chip } from "@heroui/react"
+import { MapPinLineIcon, RadioactiveIcon } from "@phosphor-icons/react"
+import React from "react"
+import { useTranslations } from "next-intl"
+
+/**
+ * Props for {@link MilestoneFeedbackCard}.
+ */
+interface MilestoneFeedbackCardProps {
+    /** One structured feedback row from the latest milestone-task attempt. */
+    feedback: UserMilestoneTaskAttemptFeedbackEntity
+}
+
+/**
+ * Card showing message, severity, optional location, and suggestion for a milestone task feedback row.
+ *
+ * @param props - Feedback entity from the grader.
+ */
+export const MilestoneFeedbackCard = (props: MilestoneFeedbackCardProps) => {
+    const { feedback } = props
+    const {
+        message,
+        severity,
+        location,
+        suggestion,
+    } = feedback
+    const t = useTranslations()
+
+    const getSeverityChip = () => {
+        switch (severity) {
+        case MilestoneSeverity.High:
+            return (
+                <Chip color="danger" size="sm" variant="primary">
+                    <RadioactiveIcon className="size-4 min-w-4 min-h-4" />
+                    <Chip.Label>{t("feedback.severity.high")}</Chip.Label>
+                </Chip>
+            )
+        case MilestoneSeverity.Medium:
+            return (
+                <Chip color="warning" size="sm" variant="primary">
+                    <RadioactiveIcon className="size-4 min-w-4 min-h-4" />
+                    <Chip.Label>{t("feedback.severity.medium")}</Chip.Label>
+                </Chip>
+            )
+        case MilestoneSeverity.Low:
+            return (
+                <Chip color="success" size="sm" variant="primary">
+                    <RadioactiveIcon className="size-4 min-w-4 min-h-4" />
+                    <Chip.Label>{t("feedback.severity.low")}</Chip.Label>
+                </Chip>
+            )
+        default:
+            return (
+                <Chip color="default" size="sm" variant="primary">
+                    <RadioactiveIcon className="size-4 min-w-4 min-h-4" />
+                    <Chip.Label>{t("feedback.severity.unknown")}</Chip.Label>
+                </Chip>
+            )
+        }
+    }
+
+    return (
+        <Card className="bg-background p-0">
+            <Card.Content>
+                <div>
+                    <div className="p-3">
+                        <div className="flex items-center justify-between gap-2">
+                            <div className="min-w-0 flex-1 text-sm font-medium text-foreground">
+                                {message}
+                            </div>
+                            {getSeverityChip()}
+                        </div>
+                        <div className="h-3" />
+                        {location ? (
+                            <div className="flex items-center gap-2 text-xs text-foreground-500">
+                                <MapPinLineIcon className="size-4 min-w-4 min-h-4 shrink-0" />
+                                <span className="min-w-0 break-words">{location}</span>
+                            </div>
+                        ) : null}
+                    </div>
+                    {suggestion ? (
+                        <>
+                            <div className="border-b border-divider" />
+                            <div className="flex flex-col gap-3 p-3">
+                                <div>
+                                    <span className="font-semibold text-accent">{t("task.suggestionLabel")}: </span>
+                                    <span className="text-muted">{suggestion}</span>
+                                </div>
+                            </div>
+                        </>
+                    ) : null}
+                </div>
+            </Card.Content>
+        </Card>
+    )
+}

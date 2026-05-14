@@ -2,11 +2,14 @@ import {
     GraphQLHeadersKey,
     queryTemplateCvs,
 } from "@/modules/api"
+import { useAppDispatch } from "@/redux"
+import { setTemplateCvs } from "@/redux/slices"
 import { useLocale } from "next-intl"
 import useSWR from "swr"
 
 export const useQueryTemplateCvsSwrCore = () => {
     const locale = useLocale()
+    const dispatch = useAppDispatch()
     const swr = useSWR(
         [
             "QUERY_TEMPLATE_CVS_SWR",
@@ -20,11 +23,15 @@ export const useQueryTemplateCvsSwrCore = () => {
                 },
             })
 
-            const payload = response.data?.templateCvs?.data
-            if (!payload) {
-                throw new Error(response.data?.templateCvs?.error || "Template CVs not found")
+            const wrapped = response.data?.templateCvs
+            if (!wrapped) {
+                throw new Error("Template CVs not found")
             }
-
+            if (!wrapped.success) {
+                throw new Error(wrapped.error || wrapped.message || "Template CVs not found")
+            }
+            const payload = wrapped.data ?? []
+            dispatch(setTemplateCvs(payload))
             return payload
         },
     )

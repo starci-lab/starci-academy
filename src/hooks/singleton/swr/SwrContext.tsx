@@ -24,7 +24,7 @@ import {
     useQueryIncompleteChallengeSubmissionJobsSwrCore,
     useQuerySubmissionAttemptsSwrCore,
     useQuerySubmissionFeedbacksSwrCore,
-    useQueryCvReviewHistorySwrCore,
+    useQueryUserCvSubmissionAttemptsSwrCore,
     useQueryCheckEmailExistsSwrCore,
     useMutateExchangeCodeForTokenSwrCore,
     useMutateSignOutSwrCore,
@@ -38,11 +38,14 @@ import {
     useMutateSubmitPersonalGithubUrlSwrCore,
     useMutateSyncIdealTextSwrCore,
     useMutateSyncPersonalProjectGithubSwrCore,
+    useMutateSyncPersonalProjectGithubBranchSwrCore,
     useMutateReviewPersonalProjectTaskSwrCore,
+    useMutateReviewCvSwrCore,
     useAutocompleteGlobalSearchSwrCore,
     usePostAdminPresignedUrlSwrCore,
     usePostAdminProcessVideoSwrCore,
     useQueryMilestonesSwrCore,
+    useQueryMilestoneTaskSwrCore,
     useQueryModulesSwrCore,
     useQueryUserPersonalTaskAttemptsSwrCore,
     useQueryUserPersonalTaskAttemptFeedbacksSwrCore,
@@ -79,7 +82,7 @@ export interface SwrContextType {
     queryIncompleteChallengeSubmissionJobsSwr: ReturnType<typeof useQueryIncompleteChallengeSubmissionJobsSwrCore>;
     querySubmissionAttemptsSwr: ReturnType<typeof useQuerySubmissionAttemptsSwrCore>;
     querySubmissionFeedbacksSwr: ReturnType<typeof useQuerySubmissionFeedbacksSwrCore>;
-    queryCvReviewHistorySwr: ReturnType<typeof useQueryCvReviewHistorySwrCore>;
+    queryUserCvSubmissionAttemptsSwr: ReturnType<typeof useQueryUserCvSubmissionAttemptsSwrCore>;
     postKeycloakLoginSwr: ReturnType<typeof usePostKeycloakLoginSwrCore>;
     postKeycloakRegisterSwr: ReturnType<typeof usePostKeycloakRegisterSwrCore>;
     queryCheckEmailExistsSwr: ReturnType<typeof useQueryCheckEmailExistsSwrCore>;
@@ -96,10 +99,13 @@ export interface SwrContextType {
     mutateSubmitPersonalGithubUrlSwr: ReturnType<typeof useMutateSubmitPersonalGithubUrlSwrCore>;
     mutateSyncIdealTextSwr: ReturnType<typeof useMutateSyncIdealTextSwrCore>;
     mutateSyncPersonalProjectGithubSwr: ReturnType<typeof useMutateSyncPersonalProjectGithubSwrCore>;
+    mutateSyncPersonalProjectGithubBranchSwr: ReturnType<typeof useMutateSyncPersonalProjectGithubBranchSwrCore>;
     mutateReviewPersonalProjectTaskSwr: ReturnType<typeof useMutateReviewPersonalProjectTaskSwrCore>;
+    mutateReviewCvSwr: ReturnType<typeof useMutateReviewCvSwrCore>;
     postAdminPresignedUrlSwr: ReturnType<typeof usePostAdminPresignedUrlSwrCore>;
     postAdminProcessVideoSwr: ReturnType<typeof usePostAdminProcessVideoSwrCore>;
     queryMilestonesSwr: ReturnType<typeof useQueryMilestonesSwrCore>;
+    queryMilestoneTaskSwr: ReturnType<typeof useQueryMilestoneTaskSwrCore>;
     queryModulesSwr: ReturnType<typeof useQueryModulesSwrCore>;
     queryUserPersonalTaskAttemptsSwr: ReturnType<typeof useQueryUserPersonalTaskAttemptsSwrCore>;
     queryUserPersonalTaskAttemptFeedbacksSwr: ReturnType<typeof useQueryUserPersonalTaskAttemptFeedbacksSwrCore>;
@@ -141,7 +147,7 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
         useQueryIncompleteChallengeSubmissionJobsSwrCore()
     const querySubmissionAttemptsSwr = useQuerySubmissionAttemptsSwrCore()
     const querySubmissionFeedbacksSwr = useQuerySubmissionFeedbacksSwrCore()
-    const queryCvReviewHistorySwr = useQueryCvReviewHistorySwrCore()
+    const queryUserCvSubmissionAttemptsSwr = useQueryUserCvSubmissionAttemptsSwrCore()
     const postKeycloakLoginSwr = usePostKeycloakLoginSwrCore()
     const postKeycloakRegisterSwr = usePostKeycloakRegisterSwrCore()
     const queryCheckEmailExistsSwr = useQueryCheckEmailExistsSwrCore()
@@ -158,10 +164,13 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
     const mutateSubmitPersonalGithubUrlSwr = useMutateSubmitPersonalGithubUrlSwrCore()
     const mutateSyncIdealTextSwr = useMutateSyncIdealTextSwrCore()
     const mutateSyncPersonalProjectGithubSwr = useMutateSyncPersonalProjectGithubSwrCore()
+    const mutateSyncPersonalProjectGithubBranchSwr = useMutateSyncPersonalProjectGithubBranchSwrCore()
     const mutateReviewPersonalProjectTaskSwr = useMutateReviewPersonalProjectTaskSwrCore()
+    const mutateReviewCvSwr = useMutateReviewCvSwrCore()
     const postAdminPresignedUrlSwr = usePostAdminPresignedUrlSwrCore()
     const postAdminProcessVideoSwr = usePostAdminProcessVideoSwrCore()
     const queryMilestonesSwr = useQueryMilestonesSwrCore()
+    const queryMilestoneTaskSwr = useQueryMilestoneTaskSwrCore()
     const queryModulesSwr = useQueryModulesSwrCore()
     const queryUserPersonalTaskAttemptsSwr = useQueryUserPersonalTaskAttemptsSwrCore()
     const queryUserPersonalTaskAttemptFeedbacksSwr = useQueryUserPersonalTaskAttemptFeedbacksSwrCore()
@@ -198,7 +207,7 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
                 queryIncompleteChallengeSubmissionJobsSwr,
                 querySubmissionAttemptsSwr,
                 querySubmissionFeedbacksSwr,
-                queryCvReviewHistorySwr,
+                queryUserCvSubmissionAttemptsSwr,
                 postKeycloakLoginSwr,
                 postKeycloakRegisterSwr,
                 queryCheckEmailExistsSwr,
@@ -215,10 +224,13 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
                 mutateSubmitPersonalGithubUrlSwr,
                 mutateSyncIdealTextSwr,
                 mutateSyncPersonalProjectGithubSwr,
+                mutateSyncPersonalProjectGithubBranchSwr,
                 mutateReviewPersonalProjectTaskSwr,
+                mutateReviewCvSwr,
                 postAdminPresignedUrlSwr,
                 postAdminProcessVideoSwr,
                 queryMilestonesSwr,
+                queryMilestoneTaskSwr,
                 queryModulesSwr,
                 queryUserPersonalTaskAttemptsSwr,
                 queryUserPersonalTaskAttemptFeedbacksSwr,

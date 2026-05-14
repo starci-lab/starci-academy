@@ -12,7 +12,6 @@ import {
 } from "next-intl"
 import {
     useCvReviewLevelDetailsOverlayState,
-    useQueryTemplateCvsSwr,
 } from "@/hooks/singleton"
 import {
     useAppDispatch,
@@ -44,17 +43,18 @@ export const CvReviewLevelDetailsModal = () => {
     } = useCvReviewLevelDetailsOverlayState()
     const dispatch = useAppDispatch()
     const selectedTemplateId = useAppSelector((state) => state.cvReviewLevel.selectedTemplateId)
-    const templateCvsSwr = useQueryTemplateCvsSwr()
+    const templateCvsRows = useAppSelector((state) => state.templateCvs.rows)
     const t = useTranslations()
 
     const reviewLevelOptions = useMemo<Array<CvReviewLevelOption>>(
-        () => (templateCvsSwr.data ?? []).map((row) => ({
-            id: row.id,
-            title: row.title,
-            description: row.description,
-        })),
+        () =>
+            templateCvsRows.map((row) => ({
+                id: row.id,
+                title: row.title,
+                description: row.description,
+            })),
         [
-            templateCvsSwr.data,
+            templateCvsRows,
         ],
     )
 

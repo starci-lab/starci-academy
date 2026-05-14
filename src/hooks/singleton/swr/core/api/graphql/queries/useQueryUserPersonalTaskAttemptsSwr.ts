@@ -17,7 +17,7 @@ export const useQueryUserPersonalTaskAttemptsSwrCore = () => {
 
     const swr = useSWR(
         authenticated && course?.id && selectedTaskId
-            ? ["QUERY_USER_PERSONAL_TASK_ATTEMPTS_SWR", course.id, selectedTaskId]
+            ? ["QUERY_USER_PERSONAL_TASK_ATTEMPTS_SWR", course.id, selectedTaskId, 50]
             : null,
         async () => {
             if (!course?.id || !selectedTaskId) {
@@ -29,6 +29,8 @@ export const useQueryUserPersonalTaskAttemptsSwrCore = () => {
                     courseId: course.id,
                     taskId: selectedTaskId,
                     filters: {
+                        limit: 50,
+                        pageNumber: 0,
                         sorts: defaultUserPersonalTaskAttemptsListSorts,
                     },
                 },

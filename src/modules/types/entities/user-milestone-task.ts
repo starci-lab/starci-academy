@@ -23,8 +23,8 @@ export interface UserMilestoneTaskAttemptEntity extends AbstractEntity {
     attemptNumber: number
     /** Whether the attempt passed. */
     passed: boolean
-    /** Score achieved in this attempt. */
-    score: number
+    /** Score achieved in this attempt (null when not yet graded). */
+    score: number | null
     /** Feedback summary for this attempt. */
     shortFeedback: string | null
     /** When the attempt was finished processing. */

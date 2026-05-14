@@ -1,4 +1,3 @@
-import { EnrollmentEntity } from "@/modules/types"
 import { createAuthApolloClient } from "../clients"
 import {
     type GraphQLResponse,
@@ -12,9 +11,6 @@ const mutation1 = gql`
       success
       message
       error
-      data {
-        personalProjectGithubUrl
-      }
     }
   }
 `
@@ -31,8 +27,10 @@ const mutationMap: Record<MutationSyncPersonalProjectGithub, DocumentNode> = {
 export interface SyncPersonalProjectGithubRequest {
     /** Course ID. */
     courseId: string
-    /** GitHub repository URL. */
-    githubUrl: string
+    /** GitHub repository URL (omit when only syncing branch). */
+    githubUrl?: string
+    /** Git branch (omit when only syncing URL). */
+    branch?: string
 }
 
 export type MutateSyncPersonalProjectGithubParams = MutateParams<
@@ -41,7 +39,7 @@ export type MutateSyncPersonalProjectGithubParams = MutateParams<
 >
 
 export interface MutateSyncPersonalProjectGithubResponse {
-    syncPersonalProjectGithub: GraphQLResponse<EnrollmentEntity>
+    syncPersonalProjectGithub: GraphQLResponse
 }
 
 /**

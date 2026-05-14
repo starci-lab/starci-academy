@@ -1,6 +1,8 @@
 import dayjs from "dayjs"
 import utc from "dayjs/plugin/utc"
 import duration from "dayjs/plugin/duration"
+import "dayjs/locale/vi"
+
 dayjs.extend(utc)
 dayjs.extend(duration)
 export { dayjs }

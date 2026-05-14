@@ -1,6 +1,6 @@
 import type {
+    JobCategory,
     JobStatus,
-    JobType,
 } from "@/modules/types"
 
 /**
@@ -10,7 +10,10 @@ export interface JobStatusUpdatedSocketIoMessage {
     data?: {
         challengeSubmissionId?: string
         jobId?: string
-        jobType?: JobType
+        /** Present on subscribe ack and some pushes. */
+        category?: JobCategory
+        /** Room broadcast from `JobStatusUpdated` events uses `jobType` (same values as `JobCategory`). */
+        jobType?: JobCategory
         status?: JobStatus
         /** Error detail when `status` indicates failure. */
         error?: string

@@ -1,114 +1,243 @@
 "use client"
 
-import React, { useEffect, useMemo } from "react"
+import React, { useMemo } from "react"
+import { useRouter } from "next/navigation"
 import { useAppDispatch, useAppSelector } from "@/redux"
-import { setSelectedAttemptId, setReviewJob, clearReviewJob } from "@/redux/slices"
-import { MarkdownContent } from "@/components/reuseable"
-import { Accordion, Chip, Separator, Spinner } from "@heroui/react"
+import { setSelectedTaskId } from "@/redux/slices"
+import { AIProcessingText, MarkdownContent, Score, StarCiAIBadge } from "@/components/reuseable"
 import {
-    useQueryUserPersonalTaskAttemptsSwr,
-    useQueryUserPersonalTaskAttemptFeedbacksSwr,
-    useQueryMilestoneTaskProgressSwr,
-} from "@/hooks/singleton"
-import { JobStatus } from "@/modules/types"
-import {
-    CheckCircleIcon,
-    QueueIcon,
-    SparkleIcon,
-    WarningOctagonIcon,
-} from "@phosphor-icons/react"
+    Accordion,
+    Alert,
+    Button,
+    Chip,
+    Separator,
+    Skeleton,
+    Spinner,
+    Surface,
+} from "@heroui/react"
 import _ from "lodash"
+import { useTranslations, useLocale } from "next-intl"
 import {
-    jobNotificationsSocketIoEventEmitter,
-    SubscriptionEvent,
-} from "@/hooks/singleton/socketio"
-import type { JobStatusUpdatedSocketIoMessage } from "@/hooks/singleton/socketio"
-import { useTranslations } from "next-intl"
-
+    useMutateSyncPersonalProjectGithubBranchSwr,
+    useMutateSyncPersonalProjectGithubSwr,
+    usePersonalProjectGithubFormik,
+    usePersonalProjectTaskAttemptsDrawerOverlayState,
+    useQueryMilestoneTaskProgressSwr,
+    useQueryMilestoneTaskSwr,
+    useQueryUserPersonalTaskAttemptsSwr,
+    useUserMilestoneTaskFeedbacksModalOverlayState,
+} from "@/hooks/singleton"
+import {
+    buildMilestoneTaskProgressLookup,
+    isPersonalProjectTaskActionUnlocked,
+} from "@/components/utils"
+import { pathConfig } from "@/resources/path"
+import { JobCategory, JobStatus } from "@/modules/types"
+import { ScanIcon } from "@phosphor-icons/react"
+/**
+ * Milestone task detail: criteria, latest review summary under “grading results”, and drawer entry.
+ */
 export const Task = () => {
     const t = useTranslations()
+    const locale = useLocale()
+    const router = useRouter()
     const dispatch = useAppDispatch()
-    const milestoneEntities = useAppSelector((state) => state.milestone.entities)
-    const selectedTaskId = useAppSelector((state) => state.milestone.selectedTaskId)
-    const selectedAttemptId = useAppSelector((state) => state.milestone.selectedAttemptId)
-    const reviewJobStatus = useAppSelector((state) => state.milestone.reviewJobStatus)
-    const reviewJobError = useAppSelector((state) => state.milestone.reviewJobError)
-    const reviewJobId = useAppSelector((state) => state.milestone.reviewJobId)
-    const attemptsSwr = useQueryUserPersonalTaskAttemptsSwr()
+    const reviewGithubFormik = usePersonalProjectGithubFormik()
+    const syncGithubSwr = useMutateSyncPersonalProjectGithubSwr()
+    const syncBranchSwr = useMutateSyncPersonalProjectGithubBranchSwr()
     const progressSwr = useQueryMilestoneTaskProgressSwr()
+    const personalProjectAttemptsDrawer = usePersonalProjectTaskAttemptsDrawerOverlayState()
+    const milestoneTaskFeedbacksModal = useUserMilestoneTaskFeedbacksModalOverlayState()
+    const attemptsSwr = useQueryUserPersonalTaskAttemptsSwr()
+    const milestoneTaskQuery = useQueryMilestoneTaskSwr()
+    const milestoneEntities = useAppSelector((state) => state.milestone.entities)
+    const selectedTaskDetail = useAppSelector((state) => state.milestone.selectedTaskDetail)
+    const selectedTaskId = useAppSelector((state) => state.milestone.selectedTaskId)
+    const courseDisplayId = useAppSelector((state) => state.course.displayId)
+    const milestoneTaskIdToJobId = useAppSelector((state) => state.milestone.milestoneTaskIdToJobId)
+    const jobStatusByJobId = useAppSelector((state) => state.socketIo.jobStatusByJobId)
 
-    /** Listen for real-time job status updates via Socket.IO */
-    useEffect(() => {
-        if (!reviewJobId) return
+    const attemptRows = useMemo(
+        () => attemptsSwr.data?.data ?? [],
+        [attemptsSwr.data?.data],
+    )
+    const hasReviewAttempts = attemptRows.length > 0
+    const latestAttempt = attemptRows[0]
+    const shortFeedbackDisplay = useMemo(() => {
+        const raw = latestAttempt?.shortFeedback?.trim() ?? ""
+        return raw || t("finalProject.page.attemptsDrawer.feedbackEmpty")
+    }, [
+        latestAttempt?.shortFeedback,
+        t,
+    ])
 
-        const onJobUpdate = (message: JobStatusUpdatedSocketIoMessage) => {
-            if (message.data?.jobId !== reviewJobId) return
-            const status = message.data?.status
-            if (!status) return
-
-            dispatch(setReviewJob({ jobId: reviewJobId, status }))
-
-            if (status === JobStatus.Completed || status === JobStatus.Failed) {
-                /** Auto-refresh attempts list & progress */
-                void attemptsSwr.mutate()
-                void progressSwr.mutate()
-                /** Clear the job banner after a short delay */
-                setTimeout(() => {
-                    dispatch(clearReviewJob())
-                }, 5000)
-            }
-        }
-
-        jobNotificationsSocketIoEventEmitter.on(SubscriptionEvent.JobStatusUpdated, onJobUpdate)
-        return () => {
-            jobNotificationsSocketIoEventEmitter.off(SubscriptionEvent.JobStatusUpdated, onJobUpdate)
-        }
-    }, [reviewJobId, dispatch, attemptsSwr, progressSwr])
-
-    const selectedTask = useMemo(() => {
+    const taskFromMilestones = useMemo(() => {
         if (!selectedTaskId) return undefined
         for (const milestone of milestoneEntities) {
-            const found = milestone.tasks?.find((t) => t.id === selectedTaskId)
+            const found = milestone.tasks?.find((task) => task.id === selectedTaskId)
             if (found) return found
         }
         return undefined
     }, [milestoneEntities, selectedTaskId])
 
+    const displayTask = useMemo(() => {
+        if (!selectedTaskId) return undefined
+        if (selectedTaskDetail?.id === selectedTaskId) {
+            return selectedTaskDetail
+        }
+        return taskFromMilestones
+    }, [selectedTaskId, selectedTaskDetail, taskFromMilestones])
+
     const sortedCriterias = useMemo(() => {
-        if (!selectedTask?.criterias) return []
-        return _.cloneDeep(selectedTask.criterias).sort((a, b) => a.orderIndex - b.orderIndex)
-    }, [selectedTask?.criterias])
+        if (!displayTask?.criterias) return []
+        return _.cloneDeep(displayTask.criterias)
+            .sort((prev, next) => prev.orderIndex - next.orderIndex)
+    }, [displayTask?.criterias])
 
-    const attempts = useMemo(() => {
-        if (!attemptsSwr.data) return []
-        return attemptsSwr.data.data
-    }, [attemptsSwr.data])
+    const reviewJobId = selectedTaskId ? milestoneTaskIdToJobId[selectedTaskId] : undefined
+    const reviewJobEnvelope = reviewJobId ? jobStatusByJobId[reviewJobId] : undefined
+    const reviewJobStatus = reviewJobEnvelope?.data?.status
+    const reviewJobError = reviewJobEnvelope?.data?.error
 
-    if (!selectedTask) {
-        return null
+    const showAiProcessing =
+        reviewGithubFormik.isSubmitting
+        || (
+            Boolean(reviewJobId)
+        )
+    const aiJobStatus: JobStatus = reviewGithubFormik.isSubmitting
+        ? JobStatus.Processing
+        : (reviewJobStatus ?? JobStatus.Processing)
+
+    const progressLookup = useMemo(
+        () => buildMilestoneTaskProgressLookup(
+            progressSwr.data?.milestoneTaskProgress?.data?.completionTasks,
+        ),
+        [progressSwr.data],
+    )
+    const currentTaskId = progressSwr.data?.milestoneTaskProgress?.data?.currentTask?.id
+
+    const isActionUnlocked = useMemo(
+        () => {
+            if (!selectedTaskId) {
+                return true
+            }
+            if (progressSwr.isLoading) {
+                return true
+            }
+            return isPersonalProjectTaskActionUnlocked(
+                selectedTaskId,
+                progressLookup,
+                currentTaskId,
+            )
+        },
+        [
+            selectedTaskId,
+            progressLookup,
+            currentTaskId,
+            progressSwr.isLoading,
+        ],
+    )
+
+    const isActionLocked = Boolean(selectedTaskId) && !isActionUnlocked
+    const canGoToCurrentTask = Boolean(
+        currentTaskId
+        && selectedTaskId
+        && currentTaskId !== selectedTaskId,
+    )
+
+    if (!displayTask || milestoneTaskQuery.isLoading || !selectedTaskId) {
+        return (
+            <>
+                <Separator />
+                <div className="p-3">
+                    <Skeleton className="h-[18px] w-2/3 rounded-full my-[5px]" />
+                    <div className="flex flex-col mt-2">
+                        <Skeleton className="h-[14px] w-full rounded-full my-[3px]" />
+                        <Skeleton className="h-[14px] w-2/3 rounded-full my-[3px]" />
+                        <Skeleton className="h-[14px] w-1/2 rounded-full my-[3px]" />
+                    </div>
+                    <div className="h-3" />
+                    <Skeleton className="h-4 my-1 rounded-full w-1/2" />
+                    <div className="rounded-3xl p-3 bg-surface">
+                        {
+                            Array.from(
+                                {
+                                    length: 3,
+                                },
+                                (_, index) => (
+                                    <React.Fragment key={`task-criteria-skeleton-${index}`}>
+                                        <div className="p-3">
+                                            <Skeleton className="h-[14px] w-2/3 my-[3px]" />
+                                        </div>
+                                        <Separator className="last:hidden" />
+                                    </React.Fragment>
+                                ),
+                            )
+                        }
+                    </div>
+                </div>
+            </>
+        )
     }
 
     return (
         <div>
             <Separator />
             <div className="p-3">
-                <div className="text-2xl font-bold">{selectedTask.title}</div>
-                {selectedTask.description && (
-                    <div className="text-muted mt-2 text-sm">{selectedTask.description}</div>
+                <div className="text-lg font-semibold">{displayTask.title}</div>
+                {displayTask.description && (
+                    <div className="text-muted mt-2 text-sm">{displayTask.description}</div>
                 )}
-                <div className="h-6" />
-                <div className="font-semibold text-sm">
+                <div className="h-3" />
+                {
+                    isActionLocked ? (
+                        <>
+                            <Alert status="warning" className="shadow-none bg-warning/10">
+                                <Alert.Indicator />
+                                <Alert.Content className="gap-2">
+                                    <Alert.Title>{t("task.previewLockedAlertTitle")}</Alert.Title>
+                                    <Alert.Description>
+                                        {t("task.previewLockedAlertDescription")}
+                                    </Alert.Description>
+                                    {
+                                        canGoToCurrentTask ? (
+                                            <Button
+                                                size="sm"
+                                                variant="secondary"
+                                                className="w-fit shrink-0 bg-background text-warning"
+                                                onPress={() => {
+                                                    if (!currentTaskId || !courseDisplayId) {
+                                                        return
+                                                    }
+                                                    dispatch(setSelectedTaskId(currentTaskId))
+                                                    router.push(
+                                                        pathConfig().locale(locale).course(courseDisplayId).learn().personalProject(currentTaskId).build(),
+                                                    )
+                                                }}
+                                            >
+                                                {t("task.previewLockedGoToCurrentTaskButton")}
+                                            </Button>
+                                        )
+                                            : null
+                                    }
+                                </Alert.Content>
+                            </Alert>
+                            <div className="h-3" />
+                        </>
+                    )
+                        : null
+                }
+                <div className="font-semibold">
                     {t("task.criteriaTitle")}
                 </div>
-                {/* Criteria Accordion */}
                 {sortedCriterias.length > 0 && (
                     <>
                         <div className="h-3" />
-                        <Accordion>
+                        <Accordion allowsMultipleExpanded variant="surface">
                             {sortedCriterias.map((criteria, index) => (
                                 <Accordion.Item key={criteria.id}>
                                     <Accordion.Heading>
-                                        <Accordion.Trigger className="w-full">
+                                        <Accordion.Trigger className="w-full p-3">
                                             <div className="flex w-full items-center gap-3">
                                                 <div className="min-w-0 flex-1 text-left">
                                                     <div className="text-sm">
@@ -117,8 +246,8 @@ export const Task = () => {
                                                 </div>
                                                 <Chip size="sm" variant="secondary" color="accent">
                                                     {
-                                                        t("task.criteriaScore", 
-                                                            { score: criteria.score }
+                                                        t("task.criteriaScore",
+                                                            { score: criteria.score },
                                                         )
                                                     }
                                                 </Chip>
@@ -144,170 +273,94 @@ export const Task = () => {
                         </Accordion>
                     </>
                 )}
-
-                {/* Review Job Status */}
-                {reviewJobStatus && (
-                    <>
-                        <div className="h-4" />
-                        <div className="flex items-center gap-2">
-                            {reviewJobStatus === JobStatus.Queued && (
-                                <QueueIcon className="size-5 min-w-5 min-h-5 text-muted animate-pulse" />
-                            )}
-                            {reviewJobStatus === JobStatus.Processing && (
-                                <SparkleIcon className="size-5 min-w-5 min-h-5 text-warning animate-pulse" />
-                            )}
-                            {reviewJobStatus === JobStatus.Completed && (
-                                <CheckCircleIcon className="size-5 min-w-5 min-h-5 text-success" />
-                            )}
-                            {reviewJobStatus === JobStatus.Failed && (
-                                <WarningOctagonIcon className="size-5 min-w-5 min-h-5 text-danger" />
-                            )}
-                            <div className="text-sm text-muted">
-                                {reviewJobStatus === JobStatus.Queued && t("task.jobStatus.queued")}
-                                {reviewJobStatus === JobStatus.Processing && t("task.jobStatus.processing")}
-                                {reviewJobStatus === JobStatus.Completed && t("task.jobStatus.completed")}
-                                {reviewJobStatus === JobStatus.Failed && (reviewJobError || t("task.jobStatus.failed"))}
+                {
+                    hasReviewAttempts && latestAttempt && (
+                        <>
+                            <div className="h-6" />
+                            <div className="mt-3 flex items-center gap-2  mb-3">
+                                <div className="font-semibold">{t("task.resultsTitle")}</div>
+                                <StarCiAIBadge />
                             </div>
-                        </div>
-                    </>
-                )}
-
-                {/* Attempts Loading */}
-                {attemptsSwr.isLoading && !reviewJobStatus && (
-                    <div className="mt-6 flex items-center justify-center gap-2 text-sm text-muted">
-                        <Spinner size="sm" />
-                        {t("task.loadingResults")}
-                    </div>
-                )}
-
-                {/* Attempts List */}
-                {attempts.length > 0 && (
-                    <>
-                        <div className="h-6" />
-                        <div className="text-lg font-bold">{t("task.resultsTitle")}</div>
-                        <div className="h-3" />
-                        <Accordion
-                            expandedKeys={new Set(selectedAttemptId ? [selectedAttemptId] : [])}
-                            onExpandedChange={(selection) => {
-                                const key = Array.from(selection)[0]
-                                dispatch(setSelectedAttemptId(key ? String(key) : undefined))
-                            }}
-                        >
-                            {attempts.map((attempt) => (
-                                <Accordion.Item key={attempt.id} id={attempt.id}>
-                                    <Accordion.Heading>
-                                        <Accordion.Trigger className="w-full">
-                                            <div className="flex w-full items-center gap-3">
-                                                <div className="flex items-center gap-3 justify-between w-full">
-                                                    <div className="flex flex-col gap-2">
-                                                        <div className="flex items-center gap-2 min-w-0 flex-1">
-                                                            {t("task.attemptNumber", { number: attempt.attemptNumber })}
-                                                            {attempt.score !== null && (
-                                                                <Chip
-                                                                    size="sm"
-                                                                    variant="secondary"
-                                                                    color={attempt.score >= 7 ? "success" : attempt.score >= 4 ? "warning" : "danger"}
-                                                                >
-                                                                    {t("task.attemptScore", { score: attempt.score })}
-                                                                </Chip>
-                                                            )}
-                                                        </div>
-                                                        {
-                                                            attempt.shortFeedback && (
-                                                                <div className="text-xs text-muted">
-                                                                    {attempt.shortFeedback}
-                                                                </div>
-                                                            )
-                                                        }
-                                                    </div>
-                                                    {attempt.processedAt && (
-                                                        <div className="text-xs text-muted">
-                                                            {new Date(attempt.processedAt).toLocaleString("vi-VN")}
-                                                        </div>
-                                                    )}
-                                                </div>
-                                                
-                                                <Accordion.Indicator />
-                                            </div>
-                                        </Accordion.Trigger>
-                                    </Accordion.Heading>
-                                    <Accordion.Panel>
-                                        <Accordion.Body>
-                                            <AttemptFeedbacksPanel />
-                                        </Accordion.Body>
-                                    </Accordion.Panel>
-                                </Accordion.Item>
-                            ))}
-                        </Accordion>
-                    </>
-                )}
-            </div>
-        </div>
-    )
-}
-
-/**
- * Panel that renders inside an expanded attempt.
- * Automatically fetches feedbacks via the SWR hook
- * (driven by `selectedAttemptId` in Redux).
- */
-const AttemptFeedbacksPanel = () => {
-    const t = useTranslations()
-    const feedbacksSwr = useQueryUserPersonalTaskAttemptFeedbacksSwr()
-    if (feedbacksSwr.isLoading) {
-        return (
-            <div className="mt-4 flex items-center justify-center gap-2 text-sm text-muted">
-                <Spinner size="sm" />
-                {t("task.loadingFeedback")}
-            </div>
-        )
-    }
-    const feedbacks = feedbacksSwr.data?.data ?? []
-    if (feedbacks.length === 0) {
-        return (
-            <div className="mt-4 text-sm text-muted italic">
-                {t("task.noFeedback")}
-            </div>
-        )
-    }
-    return (
-        <div className="mt-3 flex flex-col gap-3">
-            {
-                feedbacks.map((feedback) => (
-                    <div key={feedback.id} className="flex w-full items-center">
-                        <div className="flex flex-col gap-2">
-                            <div className="min-w-0 flex-1 text-foreground text-left text-sm">
-                                {feedback.message}
-                            </div>
-                            <div className="text-xs text-muted">
-                                {feedback.suggestion}
+                            <Surface className="p-3 rounded-3xl">
+                                <div className="text-4xl font-bold text-foreground">
+                                    <Score current={latestAttempt.score ?? 0} max={20} />
+                                </div>
+                                <div className="mt-3 text-sm text-muted">
+                                    {shortFeedbackDisplay}
+                                </div>
+                            </Surface>
+                            <div className="mt-3 flex flex-wrap items-center gap-2">
+                                <Button
+                                    size="lg"
+                                    isDisabled={
+                                        !isActionUnlocked
+                                        || reviewGithubFormik.isSubmitting
+                                        || attemptsSwr.isLoading
+                                        || syncGithubSwr.isMutating
+                                        || syncBranchSwr.isMutating
+                                    }
+                                    isPending={
+                                        reviewGithubFormik.isSubmitting
+                                        || (
+                                            Boolean(reviewJobId)
+                                            && (
+                                                reviewJobStatus === JobStatus.Processing
+                                                || reviewJobStatus === JobStatus.Queued
+                                            )
+                                        )
+                                    }
+                                    onPress={() => {
+                                        void reviewGithubFormik.submitForm()
+                                    }}
+                                >
+                                    {
+                                        (
+                                            {
+                                                isPending,
+                                            }
+                                        ) => {
+                                            return (
+                                                <>
+                                                    {isPending ? <Spinner color="current" size="sm" /> : <ScanIcon className="size-4" />}
+                                                    {t("finalProject.page.submitGithub.ctaReEvaluate")}
+                                                </>
+                                            )
+                                        }
+                                    }
+                                </Button>
+                                <Button
+                                    size="lg"
+                                    variant="secondary"
+                                    isDisabled={!isActionUnlocked}
+                                    onPress={() => milestoneTaskFeedbacksModal.setOpen(true)}
+                                >
+                                    {t("task.openFeedbackDetailsButton")}
+                                </Button>
+                                <Button
+                                    size="lg"
+                                    variant="secondary"
+                                    isDisabled={!isActionUnlocked}
+                                    onPress={() => personalProjectAttemptsDrawer.setOpen(true)}
+                                >
+                                    {t("finalProject.page.attemptsDrawer.openListButton")}
+                                </Button>
                             </div>
                             {
-                                feedback.location && <div className="text-xs text-accent">
-                                    {feedback.location}
-                                </div>
+                                showAiProcessing && (
+                                    <>
+                                        <div className="h-3" />
+                                        <AIProcessingText
+                                            jobCategory={JobCategory.ReviewTask}
+                                            jobStatus={aiJobStatus}
+                                            error={reviewJobError}
+                                        />
+                                    </>
+                                )
                             }
-                        </div>
-                    </div>        
-                )
-                )
-            }
+                        </>
+                    )
+                }
+            </div>
         </div>
     )
 }
-
-/** Colored dot based on feedback severity */
-// export interface SeverityIconProps {
-//     severity: MilestoneSeverity
-// }
-// const SeverityIcon = ({ severity }: SeverityIconProps) => {
-//     const colorMap: Record<MilestoneSeverity, string> = {
-//         [MilestoneSeverity.Low]: "text-green-500",
-//         [MilestoneSeverity.Medium]: "text-yellow-500",
-//         [MilestoneSeverity.High]: "text-danger-500",
-//     }
-//     const color = colorMap[severity ?? MilestoneSeverity.Low]
-//     return (
-//         <RadioactiveIcon className={`size-5 shrink-0 ${color}`} />
-//     )
-// }

@@ -1,5 +1,5 @@
 import React from "react"
-import { AIProcessingModal } from "./AIProcessingModal"
+// import { AIProcessingModal } from "./AIProcessingModal"
 import { AuthenticationModal } from "./AuthenticationModal"
 import { ChallengeModal } from "./ChallengeModal"
 import { ContentModal } from "./ContentModal"
@@ -10,10 +10,12 @@ import { LanguageModal } from "./LanguageModal"
 import { FeedbackDetailsModal } from "./FeedbackDetailsModal"
 import { CvPreviewModal } from "./CvPreviewModal"
 import { CvReviewLevelDetailsModal } from "./CvReviewLevelDetailsModal"
+import { CvSubmissionAttemptAnalysisModal } from "./CvSubmissionAttemptAnalysisModal"
 import { CvUpdateModal } from "./CvUpdateModal"
 import { GlobalSearchModal } from "./GlobalSearchModal"
 import { LinkGithubModal } from "./LinkGithubModal"
 import { ShareModal } from "./ShareModal"
+import { UserMilestoneTaskFeedbacksModal } from "./UserMilestoneTaskFeedbacksModal"
 
 export const ModalContainer = () => {
     return (
@@ -28,11 +30,13 @@ export const ModalContainer = () => {
             <FeedbackDetailsModal />
             <CvPreviewModal />
             <CvReviewLevelDetailsModal />
+            <CvSubmissionAttemptAnalysisModal />
             <CvUpdateModal />
             <GlobalSearchModal />
             <LinkGithubModal />
             <ShareModal />
-            <AIProcessingModal />
+            <UserMilestoneTaskFeedbacksModal />
+            {/* <AIProcessingModal /> */}
         </>
     )
 }

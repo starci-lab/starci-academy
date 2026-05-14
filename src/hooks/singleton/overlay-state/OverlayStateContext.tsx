@@ -19,6 +19,10 @@ import {
     useSearchOverlayStateCore,
     useLinkGithubOverlayStateCore,
     useShareOverlayStateCore,
+    useCvSubmissionAttemptsDrawerOverlayStateCore,
+    useCvSubmissionAttemptAnalysisOverlayStateCore,
+    usePersonalProjectTaskAttemptsDrawerOverlayStateCore,
+    useUserMilestoneTaskFeedbacksModalOverlayStateCore,
 } from "./core"
 
 export interface OverlayStateContextType {
@@ -39,6 +43,10 @@ export interface OverlayStateContextType {
     search: ReturnType<typeof useSearchOverlayStateCore>
     linkGithub: ReturnType<typeof useLinkGithubOverlayStateCore>
     share: ReturnType<typeof useShareOverlayStateCore>
+    cvSubmissionAttemptsDrawer: ReturnType<typeof useCvSubmissionAttemptsDrawerOverlayStateCore>
+    cvSubmissionAttemptAnalysis: ReturnType<typeof useCvSubmissionAttemptAnalysisOverlayStateCore>
+    personalProjectTaskAttemptsDrawer: ReturnType<typeof usePersonalProjectTaskAttemptsDrawerOverlayStateCore>
+    userMilestoneTaskFeedbacksModal: ReturnType<typeof useUserMilestoneTaskFeedbacksModalOverlayStateCore>
 }
 
 export const OverlayStateContext = createContext<OverlayStateContextType | null>(null)
@@ -61,6 +69,10 @@ export const OverlayStateProvider = ({ children }: PropsWithChildren) => {
     const search = useSearchOverlayStateCore()
     const linkGithub = useLinkGithubOverlayStateCore()
     const share = useShareOverlayStateCore()
+    const cvSubmissionAttemptsDrawer = useCvSubmissionAttemptsDrawerOverlayStateCore()
+    const cvSubmissionAttemptAnalysis = useCvSubmissionAttemptAnalysisOverlayStateCore()
+    const personalProjectTaskAttemptsDrawer = usePersonalProjectTaskAttemptsDrawerOverlayStateCore()
+    const userMilestoneTaskFeedbacksModal = useUserMilestoneTaskFeedbacksModalOverlayStateCore()
     return (
         <OverlayStateContext.Provider value={{
             aiProcessing,
@@ -80,6 +92,10 @@ export const OverlayStateProvider = ({ children }: PropsWithChildren) => {
             search,
             linkGithub,
             share,
+            cvSubmissionAttemptsDrawer,
+            cvSubmissionAttemptAnalysis,
+            personalProjectTaskAttemptsDrawer,
+            userMilestoneTaskFeedbacksModal,
         }}>
             {children}
         </OverlayStateContext.Provider>

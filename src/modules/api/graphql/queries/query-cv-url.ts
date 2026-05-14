@@ -19,6 +19,10 @@ export interface CvUrlViewData {
     cvUrlExpiresInSeconds: number
     /** Full AI review (markdown) on the latest attempt after analyze. */
     detailFeedback?: string | null
+    /** Holistic score 0–100 when the server stored it on the latest attempt. */
+    score?: number | null
+    /** ISO timestamp: latest attempt `created_at`, else submission `created_at` (server UTC). */
+    submittedAt?: string | null
 }
 
 const query1 = gql`
@@ -33,6 +37,8 @@ const query1 = gql`
         cvUrl
         cvUrlExpiresInSeconds
         detailFeedback
+        score
+        submittedAt
       }
     }
   }

@@ -3,6 +3,9 @@ import { useEffect } from "react"
 import { useParams, usePathname } from "next/navigation"
 import { setSelectedTaskId } from "@/redux/slices"
 
+/**
+ * Syncs `milestone.selectedTaskId` from the URL `tasks/[taskId]` segment.
+ */
 export const useSyncReduxTaskId = () => {
     const dispatch = useAppDispatch()
     const pathname = usePathname()
@@ -10,9 +13,15 @@ export const useSyncReduxTaskId = () => {
 
     useEffect(
         () => {
-            if (params.taskId) {
-                dispatch(setSelectedTaskId(params.taskId as string))
+            const taskId = typeof params.taskId === "string"
+                ? params.taskId
+                : Array.isArray(params.taskId)
+                    ? params.taskId[0]
+                    : undefined
+            if (taskId) {
+                dispatch(setSelectedTaskId(taskId))
             }
-        }, [pathname, params.taskId]
+        },
+        [dispatch, pathname, params.taskId],
     )
 }

@@ -66,11 +66,15 @@
     },
     "submission": {
       "fileCardTitle": "Submitted CV information",
-      "submittedAt": "Submitted on 21/04/2026",
+      "submittedAtPending": "Submission time not available yet.",
       "download": "Download",
-      "reviewAction": "Review",
+      "aiReviewSectionTitle": "AI review",
+      "reviewAction": "Run AI review",
+      "reviewActionRerun": "Re-run AI review",
       "reviewLevelLabel": "Review level",
       "reviewLevelPlaceholder": "Select a rubric level",
+      "reviewLevelSectionDescription": "Current rubric: {level}. Use Update to open the list and pick another level.",
+      "reviewLevelUpdate": "Update",
       "reviewLevelDetails": {
         "titleFallback": "Review level details",
         "selectionTitle": "Choose review level",
@@ -83,7 +87,7 @@
       "feedbackTitle": "CV feedback",
       "feedbackSummary": "Your CV has been received. Mentor feedback will be provided in the next review session.",
       "updateAction": "Update CV",
-      "historyTitle": "Review history",
+      "attemptsTitle": "Submitted CV versions",
       "defaultCvFileName": "document.pdf",
       "aiBrand": "StarCi AI",
       "toast": {
@@ -94,12 +98,29 @@
         "reviewFailed": "We could not start CV review. Please try again.",
         "reviewLevelRequired": "Please choose a review level before starting."
       },
-      "history": {
+      "attempts": {
         "file": "CV file",
         "submittedAt": "Submitted at",
         "feedback": "Feedback",
         "actions": "Actions",
         "viewDetails": "View details"
+      },
+      "attemptsDrawer": {
+        "title": "Your CV uploads",
+        "openButton": "View uploads",
+        "empty": "No uploaded versions yet.",
+        "loadError": "We could not load your CV versions. Please try again.",
+        "ariaTable": "Table of your CV upload attempts",
+        "columnVersion": "Version",
+        "columnStatus": "Status",
+        "attemptLine": "Attempt {number}",
+        "feedbackEmpty": "—"
+      },
+      "attemptAnalysis": {
+        "title": "CV analysis details",
+        "titleWithAttempt": "CV analysis details - attempt {number}",
+        "empty": "No detailed analysis is available for this attempt yet.",
+        "openFile": "Open CV file"
       }
     },
     "form": {
@@ -140,11 +161,33 @@
         "cta": "Submit"
       },
       "submitGithub": {
-        "title": "Project GitHub link",
+        "title": "Project GitHub",
+        "repoFieldTitle": "GitHub URL",
+        "branchFieldTitle": "Branch to review",
+        "branchPlaceholder": "main",
+        "branchInvalid": "Use only letters, numbers, and . _ / -",
+        "branchTooLong": "Branch name is too long.",
+        "missingRepoForReview": "Enter and save a valid GitHub URL first.",
         "placeholder": "https://github.com/your-account/personal-project",
-        "urlRequired": "Please enter your GitHub repository URL.",
+        "urlRequired": "Please enter your GitHub URL.",
         "urlInvalid": "Please enter a valid URL.",
-        "cta": "Review"
+        "urlInvalidGithub": "Please enter a valid GitHub URL.",
+        "syncing": "Saving…",
+        "resetButton": "Reset",
+        "ctaEvaluate": "Evaluate progress",
+        "ctaReEvaluate": "Re-evaluate progress"
+      },
+      "reviewPreview": {
+        "title": "Latest result",
+        "scoreLabel": "Score: {score}",
+        "scorePending": "No score yet"
+      },
+      "attemptsDrawer": {
+        "title": "Project review history",
+        "openListButton": "See more",
+        "feedbackEmpty": "No summary feedback yet.",
+        "loadError": "Could not load the list. Please try again.",
+        "empty": "No review attempts yet."
       },
       "feedback": {
         "title": "AI feedback",
@@ -223,12 +266,22 @@
     "criteriaTitle": "Grading criteria",
     "criteriaScore": "{score} pts",
     "criteriaNoHint": "No guidance available for this criterion.",
+    "loadErrorTitle": "Could not load this task",
+    "loadErrorDescription": "Please check your connection and try again.",
+    "loadErrorRetry": "Retry",
     "loadingResults": "Loading grading results...",
     "resultsTitle": "Grading results",
+    "previewLockedAlertTitle": "Finish the previous task first",
+        "previewLockedAlertDescription": "You can read this task’s criteria. Grading, feedback history, and GitHub fields stay disabled until you complete the step before this one.",
+        "previewLockedGoToCurrentTaskButton": "Go to current task",
+        "personalProjectDockerMultiStageIntro": "Package your NestJS application with a multi-stage Dockerfile to keep image size small. Build the image and push it to a container registry such as Docker Hub.",
     "attemptNumber": "Attempt #{number}",
     "attemptScore": "{score} pts",
     "loadingFeedback": "Loading detailed feedback...",
     "noFeedback": "No detailed feedback available.",
+    "openFeedbackDetailsButton": "View feedback details",
+    "feedbackDetailsModalTitle": "Feedback details",
+    "feedbackDetailsLoadError": "Could not load feedback details. Please try again.",
     "suggestionLabel": "Suggestion",
     "jobStatus": {
       "queued": "Waiting for grading...",
@@ -510,7 +563,7 @@
     }
   },
   "aiProcessing": {
-    "challenge": {
+    "submitChallenge": {
       "queued": {
         "title": "In Queue",
         "description": "Your submission is queued and will be processed shortly."
@@ -528,7 +581,7 @@
         "description": "Something went wrong while reviewing your submission. Please try again."
       }
     },
-    "task": {
+    "reviewTask": {
       "queued": {
         "title": "Queued for Review",
         "description": "Your project is queued. StarCI AI will start reviewing shortly."
@@ -542,11 +595,11 @@
         "description": "Your project has been reviewed. Check the grading results below for detailed feedback."
       },
       "failed": {
-        "title": "Project Review Failed",
-        "description": "Something went wrong while reviewing your project. Please try again."
+        "title": "Progress Assessment Failed",
+        "description": "Something went wrong while assessing your progress. Please try again."
       }
     },
-    "cv": {
+    "reviewCv": {
       "queued": {
         "title": "Queued for CV Review",
         "description": "Your CV is queued. StarCI AI will start reviewing shortly."
@@ -557,7 +610,7 @@
       },
       "completed": {
         "title": "CV Review Complete",
-        "description": "Your CV has been reviewed. Detailed feedback will be updated below."
+        "description": "Detailed feedback is displayed."
       },
       "failed": {
         "title": "CV Review Failed",
@@ -655,6 +708,10 @@
   "markdown": {
     "tableAriaLabel": "Content table",
     "mermaidRendering": "Rendering diagram..."
+  },
+  "score": {
+    "fraction": "{current}/{max}",
+    "aria": "Score {current} out of {max}"
   },
   "linkGithub": {
     "title": "Link GitHub",

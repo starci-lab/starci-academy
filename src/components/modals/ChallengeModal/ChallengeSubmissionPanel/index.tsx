@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useCallback, useMemo } from "react"
+import React, { useMemo } from "react"
 import {
     Button,
     Chip,
@@ -13,11 +13,11 @@ import {
     useEditSubmissionFormik,
     useMutateSubmitChallengeSubmissionSwr,
     useSubmissionAttemptsOverlayState,
-    useAIProcessingOverlayState,
 } from "@/hooks/singleton"
 import { useLocale, useTranslations } from "next-intl"
 import {
     ChallengeSubmissionEntity,
+    JobCategory,
     JobStatus,
     SubmissionType,
     UserChallengeSubmissionEntity,
@@ -25,22 +25,18 @@ import {
 } from "@/modules/types"
 import { FormikErrors, FormikTouched } from "formik"
 import { SiGithub, SiGoogledrive } from "@icons-pack/react-simple-icons"
-import { setActiveChallengeSubmissionId, setAIProcessingModalData, AIProcessingModalKind } from "@/redux/slices"
+import { setActiveChallengeSubmissionId, setChallengeSubmissionJobId } from "@/redux/slices"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import { runGraphQLWithToast } from "@/modules/toast"
-import {
-    CheckCircleIcon,
-    Icon,
-    QueueIcon,
-    SparkleIcon,
-    WarningOctagonIcon,
-} from "@phosphor-icons/react"
+import { Icon, PencilLineIcon } from "@phosphor-icons/react"
 import _ from "lodash"
 import { cn } from "@heroui/react"
-import { 
-    PublicationEvent, 
+import {
+    PublicationEvent,
     useJobNotificationsSocketIo,
-} from "@/hooks/singleton/socketio"
+} from "@/hooks/singleton"
+import { AIProcessingText } from "@/components/reuseable"
+import { resolveChallengeSubmissionJobEnvelope } from "@/components/utils"
 
 /** Props for {@link ChallengeSubmissionPanel} — state comes from Formik and Redux. */
 type ChallengeSubmissionPanelProps = WithClassNames<undefined>
@@ -60,7 +56,6 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
     const formik = useEditSubmissionFormik()
     const { values, errors, touched, setFieldValue, setFieldTouched, isSubmitting } = formik
     const { open: openSubmissionAttempts } = useSubmissionAttemptsOverlayState()
-    const { open: openAIProcessing } = useAIProcessingOverlayState()
     const t = useTranslations()
     const iconMap: SubmissionIconMap = {
         [SubmissionType.GithubUrl]: SiGithub,
@@ -71,6 +66,8 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
     const loadingChallengeSubmissionIds = useAppSelector(
         (state) => state.challenge.loadingChallengeSubmissionIds,
     )
+    const submissionIdToJobId = useAppSelector((state) => state.challenge.submissionIdToJobId)
+    const aiProcessingData = useAppSelector((state) => state.modal.aiProcessingData)
     const sortedSubmissions = useMemo(() => {
         return _.cloneDeep(values.submissions ?? []).sort((prev, next) => prev.orderIndex - next.orderIndex)
     }, [values.submissions])
@@ -78,58 +75,6 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
     const jobNotificationsSocket = useJobNotificationsSocketIo()
     const jobStatusByJobId = useAppSelector((state) => state.socketIo.jobStatusByJobId)
 
-    const renderJobNotification = useCallback(
-        (challengeSubmissionId: string) => {
-            const envelope = jobStatusByJobId[challengeSubmissionId]
-            if (!envelope) {
-                return null
-            }
-            const status = envelope.data?.status
-            if (!status) {
-                return null
-            }
-            const errorDetail = envelope.data?.error
-            const data = (() => {
-                switch (status) {
-                case JobStatus.Queued:
-                    return {
-                        icon: <QueueIcon className="size-5 min-w-5 min-h-5 text-muted animate-pulse" />,
-                        label: t("challenge.submissionModal.jobStatus.queued"),
-                    }
-                case JobStatus.Processing:
-                    return {
-                        icon: <SparkleIcon className="size-5 min-w-5 min-h-5 text-warning animate-pulse" />,
-                        label: t("challenge.submissionModal.jobStatus.processing"),
-                    }
-                case JobStatus.Completed:
-                    return {
-                        icon: <CheckCircleIcon className="size-5 min-w-5 min-h-5 text-success" />,
-                        label: t("challenge.submissionModal.jobStatus.completed"),
-                    }
-                case JobStatus.Failed:
-                    return {
-                        icon: <WarningOctagonIcon className="size-5 min-w-5 min-h-5 text-danger" />,
-                        label: errorDetail ? errorDetail : t("challenge.submissionModal.jobStatus.failed"),
-                    }
-                default:
-                    return {
-                        icon: null,
-                        label: null,
-                    }
-                }
-            })()
-            if (!data.icon) {
-                return null
-            }
-            return (
-                <div className="mt-3 flex items-center gap-2">
-                    {data.icon}
-                    <div className="text-sm text-muted">{data.label}</div>
-                </div>
-            )
-        },
-        [jobStatusByJobId, t],
-    )
     const config = useAppSelector((state) => state.system.config)
     const passThreshold = config?.challenge?.passThreshold ?? 0
 
@@ -152,6 +97,27 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
                 const fieldName = `submissions.${index}.userSubmission.submissionUrl` as const
                 const inputId = `challenge-submission-url-${submission.id}`
                 const IconComponent = iconMap[submission.type]
+                const jobEnvelope = resolveChallengeSubmissionJobEnvelope(
+                    submission.id,
+                    submissionIdToJobId,
+                    jobStatusByJobId,
+                )
+                const rowJobStatus = jobEnvelope?.data?.status
+                const modalJobId =
+                    aiProcessingData?.category === JobCategory.SubmitChallenge
+                        ? aiProcessingData.jobId
+                        : undefined
+                const rowSubmitJobId = submissionIdToJobId[submission.id]
+                const activeChallengeSubmitJobId =
+                    modalJobId && rowSubmitJobId && modalJobId === rowSubmitJobId
+                        ? modalJobId
+                        : undefined
+                const activeChallengeSubmitJobStatus = activeChallengeSubmitJobId
+                    ? jobStatusByJobId[activeChallengeSubmitJobId]?.data?.status
+                    : undefined
+                const activeChallengeSubmitJobError = activeChallengeSubmitJobId
+                    ? jobStatusByJobId[activeChallengeSubmitJobId]?.data?.error
+                    : undefined
                 return (
                     <div key={submission.id} className="border-b last:border-b-0 p-3">
                         <div className="flex flex-col">
@@ -177,8 +143,8 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
                                     variant="secondary"
                                     id={inputId}
                                     name={fieldName}
-                                    disabled={jobStatusByJobId[submission.id]?.data?.status === JobStatus.Queued
-                                                    || jobStatusByJobId[submission.id]?.data?.status === JobStatus.Processing
+                                    disabled={rowJobStatus === JobStatus.Queued
+                                                    || rowJobStatus === JobStatus.Processing
                                     }
                                     placeholder={t("challenge.submissionModal.urlPlaceholder")}
                                     value={values.submissions?.[index]?.userSubmission?.submissionUrl ?? ""}
@@ -193,38 +159,58 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
                             </TextField>
                             <div className="h-3" />
                             {
-                                jobStatusByJobId[submission.id] ? (
-                                    renderJobNotification(submission.id)
-                                ) : loadingChallengeSubmissionIds.includes(submission.id) ? (
-                                    <div className="mt-3 flex items-center gap-2">
-                                        <Spinner />
-                                        <div className="text-sm text-muted">
-                                            {t("challenge.submissionModal.loading")}
-                                        </div>
-                                    </div>
-                                ) : null
+                                activeChallengeSubmitJobId !== undefined
+                                && activeChallengeSubmitJobStatus !== undefined
+                                    ? (
+                                        <AIProcessingText
+                                            className="mb-3"
+                                            classNames={{
+                                                innerPanel: "bg-overlay",
+                                            }}
+                                            jobCategory={JobCategory.SubmitChallenge}
+                                            jobStatus={activeChallengeSubmitJobStatus}
+                                            error={activeChallengeSubmitJobError}
+                                        />
+                                    )
+                                    : loadingChallengeSubmissionIds.includes(submission.id)
+                                        ? (
+                                            <div className="mt-3 flex items-center gap-2">
+                                                <Spinner />
+                                                <div className="text-sm text-muted">
+                                                    {t("challenge.submissionModal.loading")}
+                                                </div>
+                                            </div>
+                                        )
+                                        : null
                             }
                             <div className="flex gap-2">
                                 <Button
                                     isDisabled={isSubmitting
-                                                    || jobStatusByJobId[submission.id]?.data?.status === JobStatus.Queued
-                                                    || jobStatusByJobId[submission.id]?.data?.status
-                                                        === JobStatus.Processing
+                                                    || rowJobStatus === JobStatus.Queued
+                                                    || rowJobStatus === JobStatus.Processing
                                     }
                                     size="lg"
                                     variant="primary"
                                     onPress={async () => {
                                         await runGraphQLWithToast(
                                             async () => {
-                                                const response = await submitChallengeSubmissionSwr.trigger({
-                                                    challengeSubmissionId: submission.id,
-                                                })
+                                                const response = await submitChallengeSubmissionSwr.trigger(
+                                                    {
+                                                        challengeSubmissionId: submission.id,
+                                                        githubUrl: values.submissions?.[index]?.userSubmission?.submissionUrl?.trim()
+                                                        || undefined,
+                                                    }
+                                                )
                                                 const result = response.data?.submitChallengeSubmission
                                                 if (!result) {
                                                     throw new Error(response.error?.message)
                                                 }
                                                 const newJobId = result.data?.jobId
                                                 if (newJobId) {
+                                                    dispatch(setChallengeSubmissionJobId({
+                                                        submissionId: submission.id,
+                                                        jobId: newJobId,
+                                                    }))
                                                     jobNotificationsSocket.emit(
                                                         PublicationEvent.SubscribeJobNotification,
                                                         {
@@ -234,9 +220,6 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
                                                             locale,
                                                         },
                                                     )
-                                                    /** Open AI processing modal with Challenge kind */
-                                                    dispatch(setAIProcessingModalData({ kind: AIProcessingModalKind.Challenge }))
-                                                    openAIProcessing()
                                                 }
                                                 return result
                                             },
@@ -247,7 +230,17 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
                                         )
                                     }}
                                 >
-                                    {t("challenge.submissionModal.submit")}
+                                    {({
+                                        isPending
+                                    }) => (<>
+                                        {
+                                            isPending ? <Spinner color="current"/> : <PencilLineIcon className="size-5" />}
+                                        {
+                                            t("challenge.submissionModal.submit")
+                                        }
+                                    </>
+                                    )
+                                    }
                                 </Button>
                                 <Button
                                     size="lg"

@@ -33,10 +33,16 @@ export interface ReviewPersonalProjectTaskRequest {
     courseId: string
     /** Task ID to review (defaults to first task if omitted). */
     taskId?: string
-    /** GitHub repository URL. */
-    githubUrl: string
-    /** Branch name (defaults to main). */
-    branch?: string
+    /**
+     * GitHub repository URL.
+     * If omitted or empty, the URL stored on the user's enrollment for this course is used.
+     */
+    githubUrl?: string | null
+    /**
+     * Branch name for review.
+     * If omitted, the branch stored on enrollment is used (worker defaults to main when unset).
+     */
+    branch?: string | null
 }
 
 export interface ReviewPersonalProjectTaskData {

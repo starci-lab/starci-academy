@@ -20,6 +20,7 @@ const query1 = gql`
         enrollment {
           id
           personalProjectGithubUrl
+          personalProjectGithubBranch
         }
       }
     }

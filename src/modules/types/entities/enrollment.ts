@@ -19,6 +19,8 @@ export interface EnrollmentEntity extends AbstractEntity {
     pricingPhase?: PricingPhase
     /** User's submitted personal project GitHub URL at enrollment level. */
     personalProjectGithubUrl?: string | null
+    /** Git branch for personal project review (null = default in UI, e.g. main). */
+    personalProjectGithubBranch?: string | null
     /** User's submitted personal project idea text. */
     ideaText?: string | null
 }

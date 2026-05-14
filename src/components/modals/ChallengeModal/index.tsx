@@ -2,7 +2,7 @@
 
 import React, { useMemo } from "react"
 import { Accordion, cn, Chip, Modal, Surface } from "@heroui/react"
-import { MarkdownContent, ReferenceLinks } from "@/components/reuseable"
+import { MarkdownContent, ReferenceLinks, Score } from "@/components/reuseable"
 import { useChallengeOverlayState } from "@/hooks/singleton"
 import { ChallengeSubmissionPanel } from "./ChallengeSubmissionPanel"
 import { ChallengeOutputs } from "./ChallengeOutputs"
@@ -65,6 +65,7 @@ export const ChallengeModal = () => {
     const hasAttempts = useMemo(() => {
         return submissions?.some((submission) => !!submission.userSubmission?.lastAttempt)
     }, [submissions])
+
     return (
         <Modal isOpen={isOpen} onOpenChange={setOpen}>
             <Modal.Backdrop>
@@ -121,12 +122,11 @@ export const ChallengeModal = () => {
                                                 <div className="h-6" />
                                                 <div className="text-base font-semibold text-foreground">{t("challenge.yourScore")}</div>  
                                                 <div className="h-3" />
-                                                <div className={cn("text-4xl font-bold", isPassed ? "text-success" : "text-danger")}>
-                                                    {t("challenge.submissionModal.scoreFraction", {
-                                                        earned: earnedScore,
-                                                        max: maxScore,
-                                                    })}
-                                                </div>
+                                                <Score
+                                                    current={earnedScore}
+                                                    max={maxScore}
+                                                    threshold={passThreshold}
+                                                />
                                                 <div className="h-3" />
                                                 <div className="flex items-center gap-2">
                                                     <div className="text-xs text-muted">

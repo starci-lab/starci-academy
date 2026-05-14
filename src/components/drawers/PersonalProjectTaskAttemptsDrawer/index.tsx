@@ -1,0 +1,152 @@
+"use client"
+
+import React, {
+    useEffect,
+    useMemo,
+} from "react"
+import {
+    Drawer,
+    ScrollShadow,
+} from "@heroui/react"
+import {
+    usePersonalProjectTaskAttemptsDrawerOverlayState,
+    useQueryUserPersonalTaskAttemptsSwr,
+} from "@/hooks/singleton"
+import { dayjs } from "@/modules/dayjs"
+import type { UserMilestoneTaskAttemptEntity } from "@/modules/types"
+import {
+    useLocale,
+    useTranslations,
+} from "next-intl"
+import { PersonalProjectAttemptCard } from "./PersonalProjectAttemptCard"
+
+type AttemptRow = {
+    /** Stable row key. */
+    key: string
+    /** Attempt entity fields used by the card. */
+    attempt: UserMilestoneTaskAttemptEntity
+    /** Formatted processed time. */
+    processedAtLabel: string
+}
+
+/**
+ * Drawer listing AI review attempts for the selected personal-project milestone task.
+ * Mirrors {@link UserCvSubmissionAttemptsDrawer} layout without server pagination.
+ */
+export const PersonalProjectTaskAttemptsDrawer = () => {
+    const t = useTranslations()
+    const locale = useLocale()
+    const {
+        isOpen,
+        setOpen,
+    } = usePersonalProjectTaskAttemptsDrawerOverlayState()
+    const swr = useQueryUserPersonalTaskAttemptsSwr()
+    const attemptList = swr.data?.data
+    const dayjsLocale = locale.startsWith("vi") ? "vi" : "en"
+
+    const rows: Array<AttemptRow> = useMemo(
+        () => (attemptList ?? []).map((attempt) => {
+            const raw = attempt.processedAt
+            const d = raw ? dayjs(raw) : null
+            const processedAtLabel = d?.isValid()
+                ? d.locale(dayjsLocale).format("HH:mm, D MMMM YYYY")
+                : t("cv.submission.submittedAtPending")
+            return {
+                key: attempt.id,
+                attempt,
+                processedAtLabel,
+            }
+        }),
+        [
+            attemptList,
+            dayjsLocale,
+            t,
+        ],
+    )
+
+    useEffect(
+        () => {
+            if (!isOpen) {
+                return
+            }
+            void swr.mutate()
+        },
+        [
+            isOpen,
+            swr,
+        ],
+    )
+
+    const showSkeleton = isOpen && (swr.isLoading || swr.isValidating) && !(attemptList?.length) && !swr.error
+
+    if (!isOpen) {
+        return null
+    }
+
+    return (
+        <Drawer>
+            <Drawer.Backdrop
+                isOpen
+                onOpenChange={setOpen}
+            >
+                <Drawer.Content placement="right">
+                    <Drawer.Dialog className="flex h-full flex-col p-0">
+                        <div className="shrink-0 p-3">
+                            <Drawer.CloseTrigger />
+                            <Drawer.Header>
+                                <Drawer.Heading>
+                                    {t("finalProject.page.attemptsDrawer.title")}
+                                </Drawer.Heading>
+                            </Drawer.Header>
+                        </div>
+                        <div className="border-b" />
+                        <Drawer.Body className="flex min-h-0 flex-1 flex-col">
+                            {
+                                swr.error ? (
+                                    <div className="p-3 text-sm text-danger">
+                                        {t("finalProject.page.attemptsDrawer.loadError")}
+                                    </div>
+                                ) : showSkeleton ? (
+                                    <ScrollShadow
+                                        className="min-h-0 flex-1 overflow-x-hidden p-3"
+                                        hideScrollBar
+                                    >
+                                        <div className="flex flex-col gap-2">
+                                            {Array.from({ length: 5 }).map((_, index) => (
+                                                <div
+                                                    key={index}
+                                                    className="h-12 animate-pulse rounded-lg bg-default-100"
+                                                />
+                                            ))}
+                                        </div>
+                                    </ScrollShadow>
+                                ) : rows.length ? (
+                                    <ScrollShadow
+                                        className="min-h-0 flex-1 overflow-x-hidden p-3"
+                                        hideScrollBar
+                                    >
+                                        <div className="flex flex-col gap-3">
+                                            {rows.map((row) => (
+                                                <PersonalProjectAttemptCard
+                                                    key={row.key}
+                                                    attemptNumber={row.attempt.attemptNumber}
+                                                    score={row.attempt.score ?? null}
+                                                    shortFeedback={row.attempt.shortFeedback}
+                                                    processedAtLabel={row.processedAtLabel}
+                                                />
+                                            ))}
+                                        </div>
+                                    </ScrollShadow>
+                                ) : (
+                                    <div className="p-6 text-center text-sm text-muted">
+                                        {t("finalProject.page.attemptsDrawer.empty")}
+                                    </div>
+                                )
+                            }
+                        </Drawer.Body>
+                    </Drawer.Dialog>
+                </Drawer.Content>
+            </Drawer.Backdrop>
+        </Drawer>
+    )
+}

@@ -2,7 +2,10 @@ import { useEffect, useRef, useCallback, useState } from "react"
 import EventEmitter2 from "eventemitter2"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import { useLocale } from "next-intl"
-import { setJobStatusMessageForJob } from "@/redux/slices"
+import {
+    setAiProcessingModalData,
+    setJobStatusMessageForJob,
+} from "@/redux/slices"
 import {
     JobStatusUpdatedSocketIoMessage,
     SubscribeJobNotificationSocketIoPayload,
@@ -15,6 +18,29 @@ import { sleep } from "@/modules/utils"
 
 /** Fan-out for listeners that are not couched in Redux. */
 export const jobNotificationsSocketIoEventEmitter = new EventEmitter2()
+
+/**
+ * Some server paths send `jobType` instead of `category`. Normalize so Redux/UI only use `category`.
+ */
+const normalizeJobStatusMessage = (
+    message: JobStatusUpdatedSocketIoMessage,
+): JobStatusUpdatedSocketIoMessage => {
+    const d = message.data
+    if (!d) {
+        return message
+    }
+    const category = d.category ?? d.jobType
+    if (category === d.category && d.jobType === undefined) {
+        return message
+    }
+    return {
+        ...message,
+        data: {
+            ...d,
+            category,
+        },
+    }
+}
 
 /**
  * Core Socket.IO hook for `/job_notifications` namespace.
@@ -47,11 +73,13 @@ export const useJobNotificationsSocketIoCore = () => {
             console.log("[Job notifications Socket] Connected.")
         }
         const onMessage = (message: JobStatusUpdatedSocketIoMessage) => {
-            jobNotificationsSocketIoEventEmitter.emit(SubscriptionEvent.JobStatusUpdated, message)
+            jobNotificationsSocketIoEventEmitter.emit(
+                SubscriptionEvent.JobStatusUpdated,
+                normalizeJobStatusMessage(message),
+            )
         }
         const onDisconnect = async (reason: string) => {
             console.log(`[Job notifications Socket] Disconnected — reason: ${reason}`)
-            // Wait a bit before reconnecting to avoid rapid reconnects
             await sleep(3000)
             setNumReconnect((prev) => prev + 1)
         }
@@ -79,13 +107,17 @@ export const useJobNotificationsSocketIoCore = () => {
         if (socket.connected) {
             socket.disconnect()
         }
-        socket.auth = { 
+        socket.auth = {
             token: LocalStorage.getItemAsString(
-                LocalStorageId.KeycloakAccessToken
-            ) 
+                LocalStorageId.KeycloakAccessToken,
+            ),
         }
         socket.connect()
-    }, [authenticated, getSocket, numReconnect])
+    }, [
+        authenticated,
+        getSocket,
+        numReconnect,
+    ])
 
     /** Re-subscribe incomplete challenge jobs when the list changes. */
     useEffect(() => {
@@ -95,46 +127,51 @@ export const useJobNotificationsSocketIoCore = () => {
         const socket = getSocket()
         for (const item of incompleteChallengeSubmissionJobs) {
             const payload: SubscribeJobNotificationSocketIoPayload = {
-                data: { jobId: item.jobId },
+                data: {
+                    jobId: item.jobId,
+                },
                 locale,
             }
-            socket.emit(PublicationEvent.SubscribeJobNotification, payload)
+            socket.emit(
+                PublicationEvent.SubscribeJobNotification,
+                payload,
+            )
         }
-    }, [incompleteChallengeSubmissionJobs, locale, getSocket])
+    }, [
+        incompleteChallengeSubmissionJobs,
+        locale,
+        getSocket,
+    ])
 
-    /** Merge challenge submission job status updates into Redux. */
-    useEffect(
-        () => {
-            const onMessage = (message: JobStatusUpdatedSocketIoMessage) => {
-                const challengeSubmissionId = message.data?.challengeSubmissionId
-                const jobId = message.data?.jobId
-                const status = message.data?.status
-                const key = challengeSubmissionId || jobId
-                if (!key || !jobId || !status) {
-                    return
-                }
+    /** Merge job status into Redux, mirror personal-project review state, and keep AI modal metadata in sync. */
+    useEffect(() => {
+        const onMessage = (message: JobStatusUpdatedSocketIoMessage) => {
+            const normalized = normalizeJobStatusMessage(message)
+            const jobId = normalized.data?.jobId
+            if (!jobId) {
+                return
+            }
+            dispatch(
+                setJobStatusMessageForJob({
+                    jobId,
+                    message: normalized,
+                }),
+            )
+            const category = normalized.data?.category
+            if (category) {
                 dispatch(
-                    setJobStatusMessageForJob({
-                        key,
-                        message,
+                    setAiProcessingModalData({
+                        category,
+                        jobId,
                     }),
                 )
-                if (key !== jobId) {
-                    dispatch(
-                        setJobStatusMessageForJob({
-                            key: jobId,
-                            message,
-                        }),
-                    )
-                }
             }
-            jobNotificationsSocketIoEventEmitter.on(SubscriptionEvent.JobStatusUpdated, onMessage)
-            return () => {
-                jobNotificationsSocketIoEventEmitter.off(SubscriptionEvent.JobStatusUpdated, onMessage)
-            }
-        },
-        [dispatch],
-    )
+        }
+        jobNotificationsSocketIoEventEmitter.on(SubscriptionEvent.JobStatusUpdated, onMessage)
+        return () => {
+            jobNotificationsSocketIoEventEmitter.off(SubscriptionEvent.JobStatusUpdated, onMessage)
+        }
+    }, [dispatch])
 
     return getSocket()
 }

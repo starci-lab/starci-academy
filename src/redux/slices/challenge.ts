@@ -27,6 +27,11 @@ export interface ChallengeSlice {
     challengeSubmissions: Array<ChallengeSubmissionEntity>
     /** The loading challenge submissions. */
     loadingChallengeSubmissionIds: Array<string>
+    /**
+     * Maps `challenge_submissions.id` → async grading `jobs.id` after submit succeeds.
+     * Used with `socketIo.jobStatusByJobId[jobId]`.
+     */
+    submissionIdToJobId: Record<string, string>
 }
 
 /**
@@ -49,6 +54,7 @@ const initialState: ChallengeSlice = {
     challengeSubmissions: [],
     /** The loading challenge submissions. */
     loadingChallengeSubmissionIds: [],
+    submissionIdToJobId: {},
 }
 
 /**
@@ -67,7 +73,12 @@ export const challengeSlice = createSlice(
                 state, 
                 action: PayloadAction<ChallengeEntity | undefined>
             ) => {
+                const prevId = state.entity?.id
+                const nextId = action.payload?.id
                 state.entity = action.payload
+                if (nextId !== prevId) {
+                    state.submissionIdToJobId = {}
+                }
             },
             /** The action to set the challenges. */
             setChallenges: (
@@ -110,6 +121,18 @@ export const challengeSlice = createSlice(
                 action: PayloadAction<Array<ChallengeSubmissionEntity>>,
             ) => {
                 state.challengeSubmissions = action.payload
+                const nextIds = new Set(action.payload.map((row) => row.id))
+                for (const sid of Object.keys(state.submissionIdToJobId)) {
+                    if (!nextIds.has(sid)) {
+                        delete state.submissionIdToJobId[sid]
+                    }
+                }
+            },
+            setChallengeSubmissionJobId: (
+                state,
+                action: PayloadAction<{ submissionId: string; jobId: string }>,
+            ) => {
+                state.submissionIdToJobId[action.payload.submissionId] = action.payload.jobId
             },
             /** The action to set the loading challenge submission ids. */
             setLoadingChallengeSubmissionIds: (
@@ -134,5 +157,6 @@ export const {
     setChallengeLimit,
     setChallengeCount,
     setChallengeSubmissions,
+    setChallengeSubmissionJobId,
     setLoadingChallengeSubmissionIds,
 } = challengeSlice.actions

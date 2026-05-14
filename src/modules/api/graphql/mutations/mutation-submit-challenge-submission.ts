@@ -31,6 +31,11 @@ const mutationMap: Record<MutationSubmitChallengeSubmission, DocumentNode> = {
 export interface SubmitChallengeSubmissionRequest {
     /** `challenge_submissions.id` to enqueue grading for. */
     challengeSubmissionId: string
+    /**
+     * Submission URL (GitHub / Google Docs link).
+     * Send on first submit so the backend can create `user_challenge_submissions`; optional otherwise to overwrite.
+     */
+    githubUrl?: string
 }
 
 export type MutateSubmitChallengeSubmissionVariables =

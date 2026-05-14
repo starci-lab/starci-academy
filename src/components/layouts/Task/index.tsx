@@ -332,7 +332,7 @@ export const Task = () => {
                             ) => {
                                 return (
                                     <>
-                                        {isPending ? <Spinner color="current" size="sm" /> : <ScanIcon className="size-4" />}
+                                        {isPending ? <Spinner color="current"/> : <ScanIcon className="size-5" />}
                                         {hasReviewAttempts
                                             ? t("finalProject.page.submitGithub.ctaReEvaluate")
                                             : t("finalProject.page.submitGithub.ctaEvaluate")}

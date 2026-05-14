@@ -116,10 +116,6 @@ export const ChallengeModal = () => {
                                                 <div className="h-4.5" />
                                                 <ChallengeOutputs challengeOutputs={challengeOutputs} />
                                                 <div className="h-6" />
-                                                <ChallengeRequirements challengeRequirements={challengeRequirements} />
-                                                <div className="h-6" />
-                                                <ChallengeOutputs challengeOutputs={challengeOutputs} />
-                                                <div className="h-6" />
                                                 <div className="text-base font-semibold text-foreground">{t("challenge.yourScore")}</div>  
                                                 <div className="h-3" />
                                                 <Score

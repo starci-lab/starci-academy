@@ -20,29 +20,6 @@ import { sleep } from "@/modules/utils"
 export const jobNotificationsSocketIoEventEmitter = new EventEmitter2()
 
 /**
- * Some server paths send `jobType` instead of `category`. Normalize so Redux/UI only use `category`.
- */
-const normalizeJobStatusMessage = (
-    message: JobStatusUpdatedSocketIoMessage,
-): JobStatusUpdatedSocketIoMessage => {
-    const d = message.data
-    if (!d) {
-        return message
-    }
-    const category = d.category ?? d.jobType
-    if (category === d.category && d.jobType === undefined) {
-        return message
-    }
-    return {
-        ...message,
-        data: {
-            ...d,
-            category,
-        },
-    }
-}
-
-/**
  * Core Socket.IO hook for `/job_notifications` namespace.
  * Creates the manager + socket once via ref, auto-connects on auth,
  * subscribes incomplete jobs, and fans out job status updates.
@@ -75,7 +52,7 @@ export const useJobNotificationsSocketIoCore = () => {
         const onMessage = (message: JobStatusUpdatedSocketIoMessage) => {
             jobNotificationsSocketIoEventEmitter.emit(
                 SubscriptionEvent.JobStatusUpdated,
-                normalizeJobStatusMessage(message),
+                message,
             )
         }
         const onDisconnect = async (reason: string) => {
@@ -146,18 +123,17 @@ export const useJobNotificationsSocketIoCore = () => {
     /** Merge job status into Redux, mirror personal-project review state, and keep AI modal metadata in sync. */
     useEffect(() => {
         const onMessage = (message: JobStatusUpdatedSocketIoMessage) => {
-            const normalized = normalizeJobStatusMessage(message)
-            const jobId = normalized.data?.jobId
+            const jobId = message.data?.jobId
             if (!jobId) {
                 return
             }
             dispatch(
                 setJobStatusMessageForJob({
                     jobId,
-                    message: normalized,
+                    message,
                 }),
             )
-            const category = normalized.data?.category
+            const category = message.data?.category
             if (category) {
                 dispatch(
                     setAiProcessingModalData({

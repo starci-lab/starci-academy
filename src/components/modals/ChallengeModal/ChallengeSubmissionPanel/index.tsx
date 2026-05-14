@@ -185,9 +185,10 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
                             }
                             <div className="flex gap-2">
                                 <Button
-                                    isDisabled={isSubmitting
-                                                    || rowJobStatus === JobStatus.Queued
-                                                    || rowJobStatus === JobStatus.Processing
+                                    isPending={
+                                        isSubmitting
+                                        || rowJobStatus === JobStatus.Queued
+                                        || rowJobStatus === JobStatus.Processing
                                     }
                                     size="lg"
                                     variant="primary"

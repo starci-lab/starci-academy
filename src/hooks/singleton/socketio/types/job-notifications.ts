@@ -10,10 +10,8 @@ export interface JobStatusUpdatedSocketIoMessage {
     data?: {
         challengeSubmissionId?: string
         jobId?: string
-        /** Present on subscribe ack and some pushes. */
+        /** Present when the server knows the UI bucket for this job. */
         category?: JobCategory
-        /** Room broadcast from `JobStatusUpdated` events uses `jobType` (same values as `JobCategory`). */
-        jobType?: JobCategory
         status?: JobStatus
         /** Error detail when `status` indicates failure. */
         error?: string

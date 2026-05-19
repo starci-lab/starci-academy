@@ -86,15 +86,32 @@ export const HeadhunterModal = () => {
                                                 {t("headhuntings.linkedin")}
                                             </Link>
                                         ) : null}
-                                        {headhunter.zaloPhone ? (
+                                        {headhunter.phoneNumber ? (
                                             <Link
-                                                href={`https://zalo.me/${headhunter.zaloPhone.replace(/\D/g, "")}`}
+                                                href={`tel:${headhunter.phoneNumber.replace(/\D/g, "")}`}
+                                                className="inline-flex items-center gap-1 text-sm text-accent"
+                                            >
+                                                <PhoneIcon className="size-4" aria-hidden />
+                                                {t("headhuntings.phone")}: {headhunter.phoneNumber}
+                                            </Link>
+                                        ) : null}
+                                        {headhunter.zaloNumber ? (
+                                            <Link
+                                                href={`https://zalo.me/${headhunter.zaloNumber.replace(/\D/g, "")}`}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="inline-flex items-center gap-1 text-sm text-accent"
                                             >
                                                 <PhoneIcon className="size-4" aria-hidden />
-                                                {t("headhuntings.zalo")}: {headhunter.zaloPhone}
+                                                {t("headhuntings.zalo")}: {headhunter.zaloNumber}
+                                            </Link>
+                                        ) : null}
+                                        {headhunter.email ? (
+                                            <Link
+                                                href={`mailto:${headhunter.email}`}
+                                                className="inline-flex items-center gap-1 text-sm text-accent"
+                                            >
+                                                {t("headhuntings.email")}: {headhunter.email}
                                             </Link>
                                         ) : null}
                                     </div>

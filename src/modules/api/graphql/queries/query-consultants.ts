@@ -34,7 +34,9 @@ const query1 = gql`
           jobTitle
           description
           linkedinUrl
-          zaloPhone
+          email
+          phoneNumber
+          zaloNumber
           avatarUrl
           orderIndex
           companyId

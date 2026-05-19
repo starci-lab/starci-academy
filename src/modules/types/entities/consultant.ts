@@ -8,7 +8,9 @@ export interface ConsultantEntity extends AbstractEntity {
     jobTitle?: string | null
     description?: string | null
     linkedinUrl?: string | null
-    zaloPhone?: string | null
+    email?: string | null
+    phoneNumber?: string | null
+    zaloNumber?: string | null
     avatarUrl?: string | null
     orderIndex: number
     companyId: string

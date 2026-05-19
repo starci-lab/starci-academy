@@ -9,6 +9,10 @@ import { useExchangeCodeForToken } from "./useExchangeCodeForToken"
 import { useSyncReduxTaskId } from "./useSyncReduxTaskId"
 import { useSyncReduxMilestoneId } from "./useSyncReduxMilestoneId"
 import { useSyncReduxPublicContentId } from "./useSyncReduxPublicContentId"
+import { useSyncReduxFoundationCategoryDisplayId } from "./useSyncReduxFoundationCategoryDisplayId"
+import { useSyncFoundationCategory } from "./useSyncFoundationCategory"
+import { useSyncReduxFoundationId } from "./useSyncReduxFoundationId"
+import { useSyncFoundationEntity } from "./useSyncFoundationEntity"
 
 export const UseEffects = () => {
     /** The useEffect to sync the redux course id. */
@@ -31,6 +35,10 @@ export const UseEffects = () => {
     useSyncReduxMilestoneId()
     /** The useEffect to sync the redux public content id from URL. */
     useSyncReduxPublicContentId()
+    useSyncReduxFoundationCategoryDisplayId()
+    useSyncFoundationCategory()
+    useSyncReduxFoundationId()
+    useSyncFoundationEntity()
     return (
         <></>
     )

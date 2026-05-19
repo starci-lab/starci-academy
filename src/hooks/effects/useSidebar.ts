@@ -38,5 +38,9 @@ export const useSidebar = () => {
             dispatch(setSidebar({ tab: SidebarTab.Leaderboard, extraId: undefined }))
             return
         }
+        if (pathname.includes("/foundations")) {
+            dispatch(setSidebar({ tab: SidebarTab.Foundations, extraId: undefined }))
+            return
+        }
     }, [dispatch, locale, pathname])
 }

@@ -58,6 +58,28 @@
   "mindMap": {
     "title": "Mind map"
   },
+  "foundations": {
+    "title": "Foundations",
+    "description": "Technical foundations and reference materials for the course.",
+    "gridDescription": "Choose a topic to explore reference materials and learning resources.",
+    "emptyCategories": "No foundation topics are available yet.",
+    "count": "{count, plural, =0 {No resources} one {# resource} other {# resources}}",
+    "empty": "No resources in this category yet.",
+    "viewDetail": "View details",
+    "selectPrompt": "Select a resource from the list to view its content.",
+    "detailTitle": "Resource",
+    "notFound": "This resource could not be found.",
+    "openLink": "Open link",
+    "openDocument": "Read article",
+    "openVideo": "Watch video",
+    "recommended": "Recommended",
+    "authorBy": "By {author}",
+    "kind": {
+      "external_link": "External link",
+      "video": "Video",
+      "document": "Article"
+    }
+  },
   "cv": {
     "title": "CV",
     "preview": {

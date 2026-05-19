@@ -146,6 +146,29 @@ export const pathConfig = () => {
                         build,
                     }
                 }
+                const foundations = (categoryDisplayId?: string) => {
+                    const foundationsPath = categoryDisplayId
+                        ? `${learnPath}/foundations/${categoryDisplayId}`
+                        : `${learnPath}/foundations`
+                    const build = () => {
+                        return foundationsPath
+                    }
+                    const item = (foundationId?: string) => {
+                        const itemPath = foundationId
+                            ? `${foundationsPath}/${foundationId}`
+                            : foundationsPath
+                        const buildItem = () => {
+                            return itemPath
+                        }
+                        return {
+                            build: buildItem,
+                        }
+                    }
+                    return {
+                        build,
+                        item,
+                    }
+                }
                 const module = (moduleId?: string) => {
                     const modulePath = moduleId ? `${learnPath}/modules/${moduleId}` : `${learnPath}/modules`
                     const build = () => {
@@ -172,6 +195,7 @@ export const pathConfig = () => {
                     personalProject,
                     leaderboard,
                     starciAi,
+                    foundations,
                     module,
                 }
             }

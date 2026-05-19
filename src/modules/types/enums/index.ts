@@ -1,4 +1,5 @@
 export * from "./day-of-week"
+export * from "./foundation-kind"
 export * from "./challenge-difficulty"
 export * from "./submission-type"
 export * from "./resource-type"

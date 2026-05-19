@@ -67,6 +67,28 @@
   "mindMap": {
     "title": "Sơ đồ tư duy"
   },
+  "foundations": {
+    "title": "Nền tảng",
+    "description": "Tài liệu và nguồn tham khảo nền tảng kỹ thuật cho khóa học.",
+    "gridDescription": "Chọn chủ đề để xem tài liệu và nguồn học tập.",
+    "emptyCategories": "Chưa có chủ đề nền tảng nào.",
+    "count": "{count, plural, =0 {Chưa có tài liệu} one {# tài liệu} other {# tài liệu}}",
+    "empty": "Danh mục này chưa có tài liệu.",
+    "viewDetail": "Xem chi tiết",
+    "selectPrompt": "Chọn một tài liệu trong danh sách để xem nội dung.",
+    "detailTitle": "Tài liệu",
+    "notFound": "Không tìm thấy tài liệu này.",
+    "openLink": "Mở liên kết",
+    "openDocument": "Đọc bài viết",
+    "openVideo": "Xem video",
+    "recommended": "Nên xem",
+    "authorBy": "Tác giả: {author}",
+    "kind": {
+      "external_link": "Liên kết ngoài",
+      "video": "Video",
+      "document": "Bài viết"
+    }
+  },
   "cv": {
     "title": "CV",
     "preview": {

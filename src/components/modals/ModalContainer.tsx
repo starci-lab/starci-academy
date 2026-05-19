@@ -16,6 +16,7 @@ import { GlobalSearchModal } from "./GlobalSearchModal"
 import { LinkGithubModal } from "./LinkGithubModal"
 import { ShareModal } from "./ShareModal"
 import { UserMilestoneTaskFeedbacksModal } from "./UserMilestoneTaskFeedbacksModal"
+import { FoundationModal } from "./FoundationModal"
 
 export const ModalContainer = () => {
     return (
@@ -36,6 +37,7 @@ export const ModalContainer = () => {
             <LinkGithubModal />
             <ShareModal />
             <UserMilestoneTaskFeedbacksModal />
+            <FoundationModal />
             {/* <AIProcessingModal /> */}
         </>
     )

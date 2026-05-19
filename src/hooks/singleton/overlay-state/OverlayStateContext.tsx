@@ -23,6 +23,7 @@ import {
     useCvSubmissionAttemptAnalysisOverlayStateCore,
     usePersonalProjectTaskAttemptsDrawerOverlayStateCore,
     useUserMilestoneTaskFeedbacksModalOverlayStateCore,
+    useFoundationOverlayStateCore,
 } from "./core"
 
 export interface OverlayStateContextType {
@@ -47,6 +48,7 @@ export interface OverlayStateContextType {
     cvSubmissionAttemptAnalysis: ReturnType<typeof useCvSubmissionAttemptAnalysisOverlayStateCore>
     personalProjectTaskAttemptsDrawer: ReturnType<typeof usePersonalProjectTaskAttemptsDrawerOverlayStateCore>
     userMilestoneTaskFeedbacksModal: ReturnType<typeof useUserMilestoneTaskFeedbacksModalOverlayStateCore>
+    foundation: ReturnType<typeof useFoundationOverlayStateCore>
 }
 
 export const OverlayStateContext = createContext<OverlayStateContextType | null>(null)
@@ -73,6 +75,7 @@ export const OverlayStateProvider = ({ children }: PropsWithChildren) => {
     const cvSubmissionAttemptAnalysis = useCvSubmissionAttemptAnalysisOverlayStateCore()
     const personalProjectTaskAttemptsDrawer = usePersonalProjectTaskAttemptsDrawerOverlayStateCore()
     const userMilestoneTaskFeedbacksModal = useUserMilestoneTaskFeedbacksModalOverlayStateCore()
+    const foundation = useFoundationOverlayStateCore()
     return (
         <OverlayStateContext.Provider value={{
             aiProcessing,
@@ -96,6 +99,7 @@ export const OverlayStateProvider = ({ children }: PropsWithChildren) => {
             cvSubmissionAttemptAnalysis,
             personalProjectTaskAttemptsDrawer,
             userMilestoneTaskFeedbacksModal,
+            foundation,
         }}>
             {children}
         </OverlayStateContext.Provider>

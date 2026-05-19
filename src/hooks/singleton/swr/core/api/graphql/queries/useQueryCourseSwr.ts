@@ -4,35 +4,34 @@ import { setCourse } from "@/redux/slices"
 import useSWR from "swr"
 
 /**
- * The core function to query courses with SWR.
+ * Loads course by URL `displayId` slug; hydrates Redux with entity including internal `id`.
  */
 export const useQueryCourseSwrCore = () => {
     const dispatch = useAppDispatch()
-    const id = useAppSelector((state) => state.course.id)
     const displayId = useAppSelector((state) => state.course.displayId)
     const swr = useSWR(
-        (id || displayId) ? [
-            "QUERY_COURSE_SWR",
-            id,
-            displayId,
-        ] : null, 
+        displayId
+            ? [
+                "QUERY_COURSE_SWR",
+                displayId,
+            ]
+            : null,
         async () => {
-            if (!id && !displayId) {
-                throw new Error("Course id not found")
+            if (!displayId) {
+                throw new Error("Course displayId not found")
             }
-            const data = await queryCourse(
-                { 
-                    request: {
-                        id,
-                        displayId,
-                    }
-                }
-            )
-            if (!data || !data.data) {
+            const data = await queryCourse({
+                request: {
+                    displayId,
+                },
+            })
+            if (!data?.data?.course?.data) {
                 throw new Error("Course not found")
             }
-            dispatch(setCourse(data.data.course.data))
+            const course = data.data.course.data
+            dispatch(setCourse(course))
             return data.data
-        })
+        },
+    )
     return swr
 }

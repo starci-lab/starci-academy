@@ -59,6 +59,8 @@ import {
     useMutateVerifySubmitCvPresignUrlSwrCore,
     useQueryTemplateCvsSwrCore,
     useQueryCvUrlSwrCore,
+    useQueryFoundationCategoriesSwrCore,
+    useQueryFoundationsSwrCore,
 } from "./core"
 
 export interface SwrContextType {
@@ -119,6 +121,8 @@ export interface SwrContextType {
     mutateVerifySubmitCvPresignUrlSwr: ReturnType<typeof useMutateVerifySubmitCvPresignUrlSwrCore>;
     queryTemplateCvsSwr: ReturnType<typeof useQueryTemplateCvsSwrCore>;
     queryCvUrlSwr: ReturnType<typeof useQueryCvUrlSwrCore>;
+    queryFoundationCategoriesSwr: ReturnType<typeof useQueryFoundationCategoriesSwrCore>;
+    queryFoundationsSwr: ReturnType<typeof useQueryFoundationsSwrCore>;
 }
 
 export const SwrContext = createContext<SwrContextType | null>(null)
@@ -183,6 +187,8 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
     const mutateVerifySubmitCvPresignUrlSwr = useMutateVerifySubmitCvPresignUrlSwrCore()
     const queryTemplateCvsSwr = useQueryTemplateCvsSwrCore()
     const queryCvUrlSwr = useQueryCvUrlSwrCore()
+    const queryFoundationCategoriesSwr = useQueryFoundationCategoriesSwrCore()
+    const queryFoundationsSwr = useQueryFoundationsSwrCore()
     return (
         <SwrContext.Provider value={
             {
@@ -243,6 +249,8 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
                 mutateVerifySubmitCvPresignUrlSwr,
                 queryTemplateCvsSwr,
                 queryCvUrlSwr,
+                queryFoundationCategoriesSwr,
+                queryFoundationsSwr,
             }
         }>
             {children}

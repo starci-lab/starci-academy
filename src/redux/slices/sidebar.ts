@@ -10,6 +10,7 @@ export enum SidebarTab {
     PersonalProject = "personalProject",
     Leaderboard = "leaderboard",
     StarciAi = "starciAi",
+    Foundations = "foundations",
 }
 
 /**

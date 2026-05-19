@@ -51,6 +51,8 @@ export const courseSlice = createSlice(
                 action: PayloadAction<CourseEntity | undefined>
             ) => {
                 state.entity = action.payload
+                state.id = action.payload?.id
+                state.displayId = action.payload?.displayId
             },
             /** The action to set the courses. */
             setCourses: (

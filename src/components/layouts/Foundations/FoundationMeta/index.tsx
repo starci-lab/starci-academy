@@ -1,0 +1,69 @@
+"use client"
+
+import { Chip } from "@heroui/react"
+import type { FoundationEntity } from "@/modules/types"
+import { useTranslations } from "next-intl"
+import React, { useMemo } from "react"
+
+export interface FoundationMetaProps {
+    /** Foundation row to render metadata chips for. */
+    foundation: FoundationEntity
+    /** When true, shows the kind chip (external link, video, article). */
+    showKind?: boolean
+}
+
+/**
+ * Shared metadata row: kind, recommended badge, tags, and author attribution.
+ * @param props.foundation - Foundation entity from API.
+ * @param props.showKind - Whether to render the resource kind chip.
+ */
+export const FoundationMeta = ({
+    foundation,
+    showKind = true,
+}: FoundationMetaProps) => {
+    const t = useTranslations()
+
+    const kindLabel = useMemo(
+        () => t(`foundations.kind.${foundation.kind}`),
+        [foundation.kind, t],
+    )
+
+    const tagChips = useMemo(() => {
+        if (!foundation.tags?.length) {
+            return []
+        }
+        return [...foundation.tags].sort((a, b) => a.orderIndex - b.orderIndex)
+    }, [foundation.tags])
+
+    const authorLabel = useMemo(() => {
+        if (!foundation.author?.trim()) {
+            return ""
+        }
+        return t("foundations.authorBy", { author: foundation.author })
+    }, [foundation.author, t])
+
+    return (
+        <div className="flex flex-col gap-2">
+            <div className="flex flex-wrap items-center gap-2">
+                {showKind ? (
+                    <Chip size="sm" variant="secondary" color="accent">
+                        <Chip.Label>{kindLabel}</Chip.Label>
+                    </Chip>
+                ) : null}
+                {foundation.isRecommended ? (
+                    <Chip size="sm" variant="primary" color="warning">
+                        <Chip.Label>{t("foundations.recommended")}</Chip.Label>
+                    </Chip>
+                ) : null}
+                {tagChips.map((tag) => (
+                    <Chip key={tag.id} size="sm" variant="tertiary">
+                        <Chip.Label>{tag.value}</Chip.Label>
+                    </Chip>
+                ))}
+            </div>
+            {authorLabel ? (
+                <p className="text-muted text-xs">{authorLabel}</p>
+            ) : null}
+        </div>
+    )
+}

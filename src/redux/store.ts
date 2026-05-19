@@ -28,6 +28,7 @@ import {
     templateCvsReducer,
     cvSubmissionAttemptAnalysisReducer,
     foundationReducer,
+    headhunterReducer,
 } from "./slices"
 
 export const store = configureStore({
@@ -60,6 +61,7 @@ export const store = configureStore({
         templateCvs: templateCvsReducer,
         cvSubmissionAttemptAnalysis: cvSubmissionAttemptAnalysisReducer,
         foundation: foundationReducer,
+        headhunter: headhunterReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false,

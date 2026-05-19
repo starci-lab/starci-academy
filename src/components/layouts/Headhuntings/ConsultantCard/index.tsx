@@ -1,0 +1,93 @@
+"use client"
+
+import { cn } from "@heroui/react"
+import { BuildingsIcon } from "@phosphor-icons/react"
+import type { ConsultantEntity } from "@/modules/types"
+import { useLocale } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useMemo } from "react"
+import { pathConfig } from "@/resources"
+import { useAppSelector } from "@/redux"
+import { ConsultantAvatar } from "../ConsultantAvatar"
+import { useOpenHeadhunterDetail } from "../hooks"
+import React from "react"
+
+export interface ConsultantCardProps {
+    /** Consultant row from API / Redux. */
+    consultant: ConsultantEntity
+}
+
+/**
+ * Card for one consultant: opens profile modal; company name navigates to company page.
+ * @param props.consultant - Consultant entity to display.
+ */
+export const ConsultantCard = ({ consultant }: ConsultantCardProps) => {
+    const locale = useLocale()
+    const router = useRouter()
+    const courseDisplayId = useAppSelector((state) => state.course.displayId)
+    const openHeadhunterDetail = useOpenHeadhunterDetail()
+
+    const companyTitle = useMemo(
+        () => consultant.company?.title ?? "",
+        [consultant.company?.title],
+    )
+
+    const onOpenCompany = (event: React.MouseEvent) => {
+        event.stopPropagation()
+        const companyId = consultant.company?.id ?? consultant.companyId
+        if (!companyId || !courseDisplayId) {
+            return
+        }
+        router.push(
+            pathConfig()
+                .locale(locale)
+                .course(courseDisplayId)
+                .headhuntingCompanies(companyId)
+                .build(),
+        )
+    }
+
+    const onCardKeyDown = (event: React.KeyboardEvent) => {
+        if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault()
+            openHeadhunterDetail(consultant)
+        }
+    }
+
+    return (
+        <div
+            role="button"
+            tabIndex={0}
+            className={cn(
+                "card card--default flex h-full w-full cursor-pointer flex-col overflow-hidden rounded-xl border border-divider/60 text-left transition-colors hover:border-accent/40 hover:bg-accent/5",
+            )}
+            onClick={() => openHeadhunterDetail(consultant)}
+            onKeyDown={onCardKeyDown}
+        >
+            <ConsultantAvatar
+                avatarUrl={consultant.avatarUrl}
+                fullName={consultant.fullName}
+                size="card"
+            />
+            <div className="flex flex-1 flex-col p-4">
+                <span className="text-lg font-semibold">{consultant.fullName}</span>
+                {consultant.jobTitle ? (
+                    <p className="text-muted mt-1 text-sm">{consultant.jobTitle}</p>
+                ) : null}
+                {companyTitle ? (
+                    <button
+                        type="button"
+                        className="mt-3 inline-flex items-center gap-1.5 text-left text-sm font-medium text-accent hover:underline"
+                        onClick={onOpenCompany}
+                    >
+                        <BuildingsIcon className="size-4 shrink-0" aria-hidden />
+                        {companyTitle}
+                    </button>
+                ) : null}
+                {consultant.description ? (
+                    <p className="text-muted mt-2 line-clamp-3 text-sm">{consultant.description}</p>
+                ) : null}
+            </div>
+        </div>
+    )
+}

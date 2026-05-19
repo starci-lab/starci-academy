@@ -8,8 +8,8 @@ import {
 } from "@reduxjs/toolkit"
 
 export interface FoundationSlice {
-    /** Selected category display id (from URL / sidebar). */
-    categoryDisplayId?: string
+    /** Selected category id (from URL). */
+    categoryId?: string
     /** Selected foundation id (detail route). */
     foundationId?: string
     /** Selected category entity. */
@@ -29,7 +29,7 @@ export interface FoundationSlice {
 }
 
 const initialState: FoundationSlice = {
-    categoryDisplayId: undefined,
+    categoryId: undefined,
     foundationId: undefined,
     category: undefined,
     entity: undefined,
@@ -44,11 +44,11 @@ export const foundationSlice = createSlice({
     name: "foundation",
     initialState,
     reducers: {
-        setFoundationCategoryDisplayId: (
+        setFoundationCategoryId: (
             state,
             action: PayloadAction<string | undefined>,
         ) => {
-            state.categoryDisplayId = action.payload
+            state.categoryId = action.payload
         },
         setFoundationId: (
             state,
@@ -103,7 +103,7 @@ export const foundationSlice = createSlice({
 
 export const foundationReducer = foundationSlice.reducer
 export const {
-    setFoundationCategoryDisplayId,
+    setFoundationCategoryId,
     setFoundationId,
     setFoundation,
     setFoundationCategory,

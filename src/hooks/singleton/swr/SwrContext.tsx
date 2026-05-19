@@ -61,6 +61,8 @@ import {
     useQueryCvUrlSwrCore,
     useQueryFoundationCategoriesSwrCore,
     useQueryFoundationsSwrCore,
+    useQueryHeadhunterCompaniesSwrCore,
+    useQueryHeadhuntersSwrCore,
 } from "./core"
 
 export interface SwrContextType {
@@ -123,6 +125,8 @@ export interface SwrContextType {
     queryCvUrlSwr: ReturnType<typeof useQueryCvUrlSwrCore>;
     queryFoundationCategoriesSwr: ReturnType<typeof useQueryFoundationCategoriesSwrCore>;
     queryFoundationsSwr: ReturnType<typeof useQueryFoundationsSwrCore>;
+    queryHeadhunterCompaniesSwr: ReturnType<typeof useQueryHeadhunterCompaniesSwrCore>;
+    queryHeadhuntersSwr: ReturnType<typeof useQueryHeadhuntersSwrCore>;
 }
 
 export const SwrContext = createContext<SwrContextType | null>(null)
@@ -189,6 +193,8 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
     const queryCvUrlSwr = useQueryCvUrlSwrCore()
     const queryFoundationCategoriesSwr = useQueryFoundationCategoriesSwrCore()
     const queryFoundationsSwr = useQueryFoundationsSwrCore()
+    const queryHeadhunterCompaniesSwr = useQueryHeadhunterCompaniesSwrCore()
+    const queryHeadhuntersSwr = useQueryHeadhuntersSwrCore()
     return (
         <SwrContext.Provider value={
             {
@@ -251,6 +257,8 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
                 queryCvUrlSwr,
                 queryFoundationCategoriesSwr,
                 queryFoundationsSwr,
+                queryHeadhunterCompaniesSwr,
+                queryHeadhuntersSwr,
             }
         }>
             {children}

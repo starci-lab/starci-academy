@@ -146,9 +146,18 @@ export const pathConfig = () => {
                         build,
                     }
                 }
-                const foundations = (categoryDisplayId?: string) => {
-                    const foundationsPath = categoryDisplayId
-                        ? `${learnPath}/foundations/${categoryDisplayId}`
+                const headhuntings = () => {
+                    const headhuntingsPath = `${learnPath}/headhuntings`
+                    const build = () => {
+                        return headhuntingsPath
+                    }
+                    return {
+                        build,
+                    }
+                }
+                const foundations = (categoryId?: string) => {
+                    const foundationsPath = categoryId
+                        ? `${learnPath}/foundations/${categoryId}`
                         : `${learnPath}/foundations`
                     const build = () => {
                         return foundationsPath
@@ -195,14 +204,27 @@ export const pathConfig = () => {
                     personalProject,
                     leaderboard,
                     starciAi,
+                    headhuntings,
                     foundations,
                     module,
                 }
             }
-            
+            const headhuntingCompanies = (companyId?: string) => {
+                const headhuntingCompaniesPath = companyId
+                    ? `${coursePath}/headhunting-companies/${companyId}`
+                    : `${coursePath}/headhunting-companies`
+                const build = () => {
+                    return headhuntingCompaniesPath
+                }
+                return {
+                    build,
+                }
+            }
+
             return {
                 build,
                 learn,
+                headhuntingCompanies,
             }
         }
         const contact = () => {

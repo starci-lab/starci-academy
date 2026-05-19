@@ -56,7 +56,7 @@ export const FoundationsLearnLayout = () => {
     const course = useAppSelector((state) => state.course.entity)
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
     const category = useAppSelector((state) => state.foundation.category)
-    const categoryDisplayId = useAppSelector((state) => state.foundation.categoryDisplayId)
+    const categoryId = useAppSelector((state) => state.foundation.categoryId)
     const foundations = useAppSelector((state) => state.foundation.entities)
     const count = useAppSelector((state) => state.foundation.count)
     const foundationId = useAppSelector((state) => state.foundation.foundationId)
@@ -112,13 +112,13 @@ export const FoundationsLearnLayout = () => {
         dispatch(setFoundation(foundation))
         dispatch(setFoundationId(foundation.id))
 
-        if (courseDisplayId && categoryDisplayId) {
+        if (courseDisplayId && categoryId) {
             router.push(
                 pathConfig()
                     .locale(locale)
                     .course(courseDisplayId)
                     .learn()
-                    .foundations(categoryDisplayId)
+                    .foundations(categoryId)
                     .item(foundation.id)
                     .build(),
             )

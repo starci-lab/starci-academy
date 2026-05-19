@@ -89,6 +89,24 @@
       "document": "Bài viết"
     }
   },
+  "headhuntings": {
+    "title": "Headhunting",
+    "description": "Đối tác tuyển dụng IT đồng hành cùng học viên StarCI Academy.",
+    "count": "{count, plural, =0 {Chưa có tư vấn viên} one {# tư vấn viên} other {# tư vấn viên}}",
+    "empty": "Chưa có tư vấn viên nào.",
+    "viewProfile": "Xem hồ sơ",
+    "companyLabel": "Công ty",
+    "openCompany": "Xem công ty",
+    "modalTitle": "Hồ sơ headhunter",
+    "linkedin": "LinkedIn",
+    "zalo": "Zalo",
+    "companyNotFound": "Không tìm thấy công ty.",
+    "companyDetailTitle": "Công ty tuyển dụng",
+    "website": "Website",
+    "address": "Địa chỉ",
+    "phone": "Điện thoại",
+    "email": "Email"
+  },
   "cv": {
     "title": "CV",
     "preview": {

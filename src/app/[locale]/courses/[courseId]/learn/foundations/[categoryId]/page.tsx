@@ -4,7 +4,7 @@ import React from "react"
 import { FoundationsLearnLayout } from "@/components/layouts"
 
 /**
- * Learn / foundations / [category] route.
+ * Learn / foundations / [categoryId] route.
  */
 const Page = () => {
     return <FoundationsLearnLayout />

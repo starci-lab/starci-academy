@@ -46,7 +46,7 @@ export const FoundationDetailLayout = () => {
     const course = useAppSelector((state) => state.course.entity)
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
     const category = useAppSelector((state) => state.foundation.category)
-    const categoryDisplayId = useAppSelector((state) => state.foundation.categoryDisplayId)
+    const categoryId = useAppSelector((state) => state.foundation.categoryId)
     const foundation = useAppSelector((state) => state.foundation.entity)
     const foundations = useAppSelector((state) => state.foundation.entities)
     const foundationId = useAppSelector((state) => state.foundation.foundationId)
@@ -55,16 +55,16 @@ export const FoundationDetailLayout = () => {
     useQueryFoundationsSwr()
 
     const categoryListHref = useMemo(() => {
-        if (!courseDisplayId || !categoryDisplayId) {
+        if (!courseDisplayId || !categoryId) {
             return undefined
         }
         return pathConfig()
             .locale(locale)
             .course(courseDisplayId)
             .learn()
-            .foundations(categoryDisplayId)
+            .foundations(categoryId)
             .build()
-    }, [categoryDisplayId, courseDisplayId, locale])
+    }, [categoryId, courseDisplayId, locale])
 
     const breadcrumbItems = useMemo((): Array<FoundationDetailBreadcrumbItem> => [
         {

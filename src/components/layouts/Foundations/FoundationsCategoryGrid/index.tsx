@@ -22,7 +22,7 @@ import {
 import {
     setFoundation,
     setFoundationCategory,
-    setFoundationCategoryDisplayId,
+    setFoundationCategoryId,
     setFoundationId,
     setFoundations,
 } from "@/redux/slices"
@@ -91,7 +91,7 @@ export const FoundationsCategoryGridLayout = () => {
     ])
 
     const onSelectCategory = (category: typeof sortedCategories[number]) => {
-        dispatch(setFoundationCategoryDisplayId(category.displayId))
+        dispatch(setFoundationCategoryId(category.id))
         dispatch(setFoundationCategory(category))
         dispatch(setFoundationId(undefined))
         dispatch(setFoundation(undefined))
@@ -105,7 +105,7 @@ export const FoundationsCategoryGridLayout = () => {
                 .locale(locale)
                 .course(courseDisplayId)
                 .learn()
-                .foundations(category.displayId)
+                .foundations(category.id)
                 .build(),
         )
     }

@@ -15,7 +15,8 @@ export const useSidebar = () => {
 
     useEffect(() => {
         if (hasSyncedFromUrlRef.current) return
-        if (!pathname.includes(`/${locale}/courses/`) || !pathname.includes("/learn")) return
+        if (!pathname.includes(`/${locale}/courses/`)) return
+        if (!pathname.includes("/learn") && !pathname.includes("/headhunting-companies")) return
         hasSyncedFromUrlRef.current = true
 
         if (pathname.includes("/mind-map")) {
@@ -40,6 +41,10 @@ export const useSidebar = () => {
         }
         if (pathname.includes("/foundations")) {
             dispatch(setSidebar({ tab: SidebarTab.Foundations, extraId: undefined }))
+            return
+        }
+        if (pathname.includes("/headhuntings") || pathname.includes("/headhunting-companies")) {
+            dispatch(setSidebar({ tab: SidebarTab.Headhuntings, extraId: undefined }))
             return
         }
     }, [dispatch, locale, pathname])

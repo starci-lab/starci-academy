@@ -11,6 +11,7 @@ import {
     UsersIcon,
     SparkleIcon,
     StackIcon,
+    HandshakeIcon,
 } from "@phosphor-icons/react"
 import type { Icon } from "@phosphor-icons/react"
 import { useAppDispatch, useAppSelector } from "@/redux"
@@ -67,6 +68,9 @@ export const Sidebar = () => {
         case SidebarTab.Foundations:
             router.push(learn.foundations().build())
             return
+        case SidebarTab.Headhuntings:
+            router.push(learn.headhuntings().build())
+            return
         default:
             return
         }
@@ -93,6 +97,13 @@ export const Sidebar = () => {
             tab: SidebarTab.Foundations,
             icon: StackIcon,
             url: pathConfig().locale(locale).course(courseDisplayId).learn().foundations().build(),
+        },
+        {
+            label: t("headhuntings.title"),
+            value: "headhuntings",
+            tab: SidebarTab.Headhuntings,
+            icon: HandshakeIcon,
+            url: pathConfig().locale(locale).course(courseDisplayId).learn().headhuntings().build(),
         },
         {
             label: t("cv.title"),

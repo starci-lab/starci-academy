@@ -24,6 +24,7 @@ import {
     usePersonalProjectTaskAttemptsDrawerOverlayStateCore,
     useUserMilestoneTaskFeedbacksModalOverlayStateCore,
     useFoundationOverlayStateCore,
+    useHeadhunterOverlayStateCore,
 } from "./core"
 
 export interface OverlayStateContextType {
@@ -49,6 +50,7 @@ export interface OverlayStateContextType {
     personalProjectTaskAttemptsDrawer: ReturnType<typeof usePersonalProjectTaskAttemptsDrawerOverlayStateCore>
     userMilestoneTaskFeedbacksModal: ReturnType<typeof useUserMilestoneTaskFeedbacksModalOverlayStateCore>
     foundation: ReturnType<typeof useFoundationOverlayStateCore>
+    headhunter: ReturnType<typeof useHeadhunterOverlayStateCore>
 }
 
 export const OverlayStateContext = createContext<OverlayStateContextType | null>(null)
@@ -76,6 +78,7 @@ export const OverlayStateProvider = ({ children }: PropsWithChildren) => {
     const personalProjectTaskAttemptsDrawer = usePersonalProjectTaskAttemptsDrawerOverlayStateCore()
     const userMilestoneTaskFeedbacksModal = useUserMilestoneTaskFeedbacksModalOverlayStateCore()
     const foundation = useFoundationOverlayStateCore()
+    const headhunter = useHeadhunterOverlayStateCore()
     return (
         <OverlayStateContext.Provider value={{
             aiProcessing,
@@ -100,6 +103,7 @@ export const OverlayStateProvider = ({ children }: PropsWithChildren) => {
             personalProjectTaskAttemptsDrawer,
             userMilestoneTaskFeedbacksModal,
             foundation,
+            headhunter,
         }}>
             {children}
         </OverlayStateContext.Provider>

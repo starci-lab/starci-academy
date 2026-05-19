@@ -20,7 +20,7 @@ export const useQueryFoundationCategoriesSwrCore = () => {
     const locale = useLocale()
     const authenticated = useAppSelector((state) => state.keycloak.authenticated)
     const enrolled = useAppSelector((state) => state.user.enrolled)
-    const categoryDisplayId = useAppSelector((state) => state.foundation.categoryDisplayId)
+    const categoryId = useAppSelector((state) => state.foundation.categoryId)
     const dispatch = useAppDispatch()
 
     return useSWR(
@@ -50,8 +50,8 @@ export const useQueryFoundationCategoriesSwrCore = () => {
             const payload = wrapped.data ?? []
             dispatch(setFoundationCategories(payload))
 
-            if (categoryDisplayId) {
-                const selected = payload.find((item) => item.displayId === categoryDisplayId)
+            if (categoryId) {
+                const selected = payload.find((item) => item.id === categoryId)
                 dispatch(setFoundationCategory(selected))
             }
 

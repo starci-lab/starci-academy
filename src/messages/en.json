@@ -80,6 +80,24 @@
       "document": "Article"
     }
   },
+  "headhuntings": {
+    "title": "Headhuntings",
+    "description": "IT recruitment partners who support StarCI Academy learners with job opportunities.",
+    "count": "{count, plural, =0 {No consultants} one {# consultant} other {# consultants}}",
+    "empty": "No consultants are listed yet.",
+    "viewProfile": "View profile",
+    "companyLabel": "Company",
+    "openCompany": "View company",
+    "modalTitle": "Headhunter profile",
+    "linkedin": "LinkedIn",
+    "zalo": "Zalo",
+    "companyNotFound": "Company not found.",
+    "companyDetailTitle": "Recruitment company",
+    "website": "Website",
+    "address": "Address",
+    "phone": "Phone",
+    "email": "Email"
+  },
   "cv": {
     "title": "CV",
     "preview": {

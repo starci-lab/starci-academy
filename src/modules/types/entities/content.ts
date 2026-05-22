@@ -1,4 +1,5 @@
 import type { AbstractEntity } from "./abstract"
+import type { ChallengeEntity } from "./challenge"
 import type { ContentReferenceEntity } from "./content-reference"
 import type { ModuleEntity } from "./module"
 
@@ -24,10 +25,17 @@ export interface ContentEntity extends AbstractEntity {
     minutesRead: number
     /** External URL references for this content. */
     references?: Array<ContentReferenceEntity>
-    /** The number of challenges for the content. */
-    numChallenges: number
+    /** Challenges linked to this content (id-only when loaded from list queries). */
+    challenges?: Array<Pick<ChallengeEntity, "id">>
     /** The number of lessons for the content. */
     numLessons: number
     /** Whether this content requires enrollment (premium). */
     isPremium: boolean
+}
+
+/** Challenge count from GraphQL `challenges` relation. */
+export function getContentChallengeCount(
+    content: Pick<ContentEntity, "challenges">,
+): number {
+    return content.challenges?.length ?? 0
 }

@@ -25,7 +25,9 @@ const query1 = gql`
             orderIndex
             minutesRead
             numLessons
-            numChallenges
+            challenges {
+              id
+            }
           }
         }
       }

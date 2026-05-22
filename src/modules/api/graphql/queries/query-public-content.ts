@@ -18,7 +18,9 @@ const query1 = gql`
         isPremium
         title
         body
-        numChallenges
+        challenges {
+          id
+        }
         numLessons
         references {
           id

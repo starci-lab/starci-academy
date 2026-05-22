@@ -4,7 +4,7 @@ import React, { useMemo } from "react"
 import { useAppSelector } from "@/redux"
 import { Accordion, Chip, cn, Link } from "@heroui/react"
 import _ from "lodash"
-import { WithClassNames } from "@/modules/types"
+import { getContentChallengeCount, WithClassNames } from "@/modules/types"
 import { useRouter } from "next/navigation"
 import { pathConfig } from "@/resources/path"
 import { useLocale, useTranslations } from "next-intl"
@@ -116,7 +116,7 @@ export const ModuleSidebar = (props: ModuleSidebarProps) => {
                                                                     <SwordIcon className="size-4" />
                                                                     <Chip.Label>
                                                                         {t("content.challengeCount", {
-                                                                            count: content?.numChallenges ?? 0,
+                                                                            count: getContentChallengeCount(content ?? {}),
                                                                         })}
                                                                     </Chip.Label>
                                                                 </Chip>

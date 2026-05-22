@@ -17,7 +17,9 @@ const query1 = gql`
           description
           minutesRead
           isPremium
-          numChallenges
+          challenges {
+            id
+          }
           numLessons
         }
         count

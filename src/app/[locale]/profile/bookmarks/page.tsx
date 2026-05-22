@@ -6,6 +6,7 @@ import { Skeleton, Card, Button } from "@heroui/react"
 import { ClockIcon, VideoIcon, SwordIcon, ArrowRightIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
+import { getContentChallengeCount } from "@/modules/types"
 import { pathConfig } from "@/resources/path"
 
 const BookmarksPage = () => {
@@ -65,10 +66,10 @@ const BookmarksPage = () => {
                                                 <span>{content.numLessons} lessons</span>
                                             </div>
                                         )}
-                                        {content.numChallenges > 0 && (
+                                        {getContentChallengeCount(content) > 0 && (
                                             <div className="flex items-center gap-1">
                                                 <SwordIcon className="size-4" />
-                                                <span>{content.numChallenges} challenges</span>
+                                                <span>{getContentChallengeCount(content)} challenges</span>
                                             </div>
                                         )}
                                     </div>

@@ -4,7 +4,7 @@ import React, { useMemo } from "react"
 import { Chip, Skeleton, Tabs, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { useAppDispatch, useAppSelector } from "@/redux"
-import { WithClassNames } from "@/modules/types"
+import { getContentChallengeCount, WithClassNames } from "@/modules/types"
 import { useQueryContentSwr, useQueryContentStatusSwr } from "@/hooks/singleton"
 import { SwordIcon, ClockIcon, VideoIcon, BookOpenIcon, CheckCircleIcon } from "@phosphor-icons/react"
 import { LessonBody } from "./LessonBody"
@@ -125,7 +125,7 @@ export const Content = ({ className }: ContentProps) => {
                                 <SwordIcon className="size-5" />
                                 <Chip.Label>
                                     {t("content.challengeCount", {
-                                        count: content?.numChallenges ?? 0,
+                                        count: getContentChallengeCount(content ?? {}),
                                     })}
                                 </Chip.Label>
                             </Chip>

@@ -35,7 +35,9 @@ const query1 = gql`
           id
           displayId
           numLessons
-          numChallenges
+          challenges {
+            id
+          }
           description
           orderIndex
           minutesRead

@@ -348,10 +348,29 @@
     "minutesRead": "{minutes} min read",
     "lessonCount": "{count} lessons",
     "challengeCount": "{count} challenges",
+    "codeLessonCount": "{count} code sections",
     "lessonVideosEmpty": "No lesson videos available for this content.",
+    "codeLesson": {
+      "empty": "No code explaining or implementation for this lesson yet.",
+      "explainingsHeading": "Code explaining",
+      "implementationsHeading": "Code implementation",
+      "sectionsTabsAria": "Code lesson sections",
+      "explainingsTabsAria": "Code explaining snippets",
+      "implementationsTabsAria": "Implementation languages"
+    },
+    "codeExplainings": {
+      "empty": "No critical code snippets for this lesson yet.",
+      "indexLabel": "Snippet {index}"
+    },
+    "codeImplementation": {
+      "empty": "No implementation guides for this lesson yet.",
+      "guideHeading": "Guide",
+      "exampleHeading": "Example"
+    },
     "tabs": {
       "content": "Content",
       "lessonVideos": "Lesson videos",
+      "codeExplainings": "Code lesson",
       "challenges": "Challenges"
     },
     "unread": "Unread",

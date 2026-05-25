@@ -357,10 +357,29 @@
     "minutesRead": "{minutes} phút đọc",
     "lessonCount": "{count} bài giảng",
     "challengeCount": "{count} thử thách",
+    "codeLessonCount": "{count} mục code",
     "lessonVideosEmpty": "Chưa có bài giảng cho nội dung này.",
+    "codeLesson": {
+      "empty": "Chưa có giải thích code hoặc triển khai cho bài học này.",
+      "explainingsHeading": "Giải thích code",
+      "implementationsHeading": "Triển khai code",
+      "sectionsTabsAria": "Phần bài giảng code",
+      "explainingsTabsAria": "Các đoạn giải thích code",
+      "implementationsTabsAria": "Ngôn ngữ triển khai"
+    },
+    "codeExplainings": {
+      "empty": "Chưa có đoạn code giải thích cho bài học này.",
+      "indexLabel": "Đoạn {index}"
+    },
+    "codeImplementation": {
+      "empty": "Chưa có hướng dẫn triển khai cho bài học này.",
+      "guideHeading": "Hướng dẫn",
+      "exampleHeading": "Ví dụ"
+    },
     "tabs": {
       "content": "Nội dung",
       "lessonVideos": "Bài giảng",
+      "codeExplainings": "Bài giảng",
       "challenges": "Thử thách"
     },
     "unread": "Chưa đọc",

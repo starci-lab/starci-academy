@@ -14,8 +14,14 @@ export const useSetTabQuery = () => {
 
     // URL Redux (allow on mount)
     useEffect(() => {
-        const tabFromUrl = searchParams.get("tab") as ContentTab | null
-        if (!tabFromUrl) return
+        const rawTab = searchParams.get("tab")
+        if (!rawTab) return
+        const tabFromUrl =
+            rawTab === ContentTab.LessonVideos
+            || rawTab === "codeExplaining"
+            || rawTab === ContentTab.CodeImplementation
+                ? ContentTab.CodeExplainings
+                : (rawTab as ContentTab)
         if (tabFromUrl === tab) return
         isSyncingFromUrlRef.current = true
         dispatch(setContentTab(tabFromUrl))

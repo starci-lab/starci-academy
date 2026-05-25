@@ -1,5 +1,7 @@
 import type { AbstractEntity } from "./abstract"
 import type { ChallengeEntity } from "./challenge"
+import type { CodeExplainingEntity } from "./code-explaining"
+import type { CodeImplementationEntity } from "./code-implementation"
 import type { ContentReferenceEntity } from "./content-reference"
 import type { ModuleEntity } from "./module"
 
@@ -29,8 +31,26 @@ export interface ContentEntity extends AbstractEntity {
     challenges?: Array<Pick<ChallengeEntity, "id">>
     /** The number of lessons for the content. */
     numLessons: number
+    /** Critical code snippets with explanations. */
+    codeExplainings?: Array<CodeExplainingEntity>
+    /** Multi-language implementation guides. */
+    codeImplementations?: Array<CodeImplementationEntity>
     /** Whether this content requires enrollment (premium). */
     isPremium: boolean
+}
+
+/** Code explaining rows from `content` payload. */
+export function getContentCodeExplainings(
+    content: Pick<ContentEntity, "codeExplainings"> | undefined,
+): Array<CodeExplainingEntity> {
+    return content?.codeExplainings ?? []
+}
+
+/** Normalized implementation rows from `content` payload. */
+export function getContentCodeImplementations(
+    content: Pick<ContentEntity, "codeImplementations"> | undefined,
+): Array<CodeImplementationEntity> {
+    return content?.codeImplementations ?? []
 }
 
 /** Challenge count from GraphQL `challenges` relation. */

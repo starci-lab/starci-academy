@@ -28,6 +28,20 @@ const query1 = gql`
           url
           orderIndex
         }
+        codeExplainings {
+          id
+          orderIndex
+          lang
+          code
+          explain
+        }
+        codeImplementations {
+          id
+          orderIndex
+          lang
+          guide
+          example
+        }
       }
     }
   }

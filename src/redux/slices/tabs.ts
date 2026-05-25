@@ -20,7 +20,12 @@ export enum LearnTab {
 
 export enum ContentTab {
     Content = "content",
+    /** Code explaining + implementations (replaces legacy lesson videos tab). */
+    CodeExplainings = "codeExplainings",
+    /** @deprecated Use `CodeExplainings`. */
     LessonVideos = "lessonVideos",
+    /** @deprecated Merged into `CodeExplainings`. */
+    CodeImplementation = "codeImplementation",
     Challenges = "challenges",
 }
 

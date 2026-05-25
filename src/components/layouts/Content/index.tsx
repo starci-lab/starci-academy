@@ -4,11 +4,25 @@ import React, { useMemo } from "react"
 import { Chip, Skeleton, Tabs, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { useAppDispatch, useAppSelector } from "@/redux"
-import { getContentChallengeCount, WithClassNames } from "@/modules/types"
-import { useQueryContentSwr, useQueryContentStatusSwr } from "@/hooks/singleton"
-import { SwordIcon, ClockIcon, VideoIcon, BookOpenIcon, CheckCircleIcon } from "@phosphor-icons/react"
-import { LessonBody } from "./LessonBody"
+import {
+    getContentChallengeCount,
+    getContentCodeExplainings,
+    getContentCodeImplementations,
+    WithClassNames,
+} from "@/modules/types"
+import { 
+    useQueryContentSwr, 
+    useQueryContentStatusSwr 
+} from "@/hooks/singleton"
+import {
+    SwordIcon,
+    ClockIcon,
+    BookOpenIcon,
+    CheckCircleIcon,
+    CodeIcon,
+} from "@phosphor-icons/react"
 import { ContentBody } from "./ContentBody"
+import { CodeLessonBody } from "./CodeLessonBody"
 import { ChallengeBody } from "./ChallengeBody"
 import { ContentTab, setContentTab } from "@/redux/slices"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
@@ -27,31 +41,38 @@ export const Content = ({ className }: ContentProps) => {
     useQueryContentStatusSwr()
     const dispatch = useAppDispatch()
 
-    const tabItems = [
+    const codeLessonCount =
+        getContentCodeExplainings(content).length
+        + getContentCodeImplementations(content).length
+
+    const tabItems = useMemo(() => [
         {
             icon: BookOpenIcon,
-            key: "content",
+            key: ContentTab.Content,
             label: t("content.tabs.content"),
-            component: <ContentBody />
+            component: <ContentBody />,
         },
         {
-            icon: VideoIcon,
-            key: "lessonVideos",
-            label: t("content.tabs.lessonVideos"),
-            component: <LessonBody />
+            icon: CodeIcon,
+            key: ContentTab.CodeExplainings,
+            label: t("content.tabs.codeExplainings"),
+            component: <CodeLessonBody />,
         },
         {
             icon: SwordIcon,
-            key: "challenges",
+            key: ContentTab.Challenges,
             label: t("content.tabs.challenges"),
-            component: <ChallengeBody />
-        }
-    ]
+            component: <ChallengeBody />,
+        },
+    ], [t])
     const router = useRouter()
     const pathname = usePathname()
     const searchParams = useSearchParams()
     const contentTab = useAppSelector((state) => state.tabs.contentTab)
-    const bodyComponent = useMemo(() => tabItems.find((item) => item.key === contentTab)?.component, [contentTab])
+    const bodyComponent = useMemo(
+        () => tabItems.find((item) => item.key === contentTab)?.component,
+        [contentTab, tabItems],
+    )
     const onTabChange = (key: React.Key) => {
         const nextTab = key as ContentTab
         dispatch(setContentTab(nextTab))
@@ -114,10 +135,10 @@ export const Content = ({ className }: ContentProps) => {
                                 </Chip.Label>
                             </Chip>
                             <Chip variant="secondary" color="accent">
-                                <VideoIcon className="size-5" />
+                                <CodeIcon className="size-5" />
                                 <Chip.Label>
-                                    {t("content.lessonCount", {
-                                        count: content?.numLessons ?? 0,
+                                    {t("content.codeLessonCount", {
+                                        count: codeLessonCount,
                                     })}
                                 </Chip.Label>
                             </Chip>

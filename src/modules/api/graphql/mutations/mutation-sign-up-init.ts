@@ -1,22 +1,7 @@
+﻿import type { MutateParams } from "../types"
 import { createNoAuthApolloClient } from "../clients"
-import type { GraphQLResponse, MutateParams, MutateVariables } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
-
-/**
- * Input for `signUpInit` (matches server `SignUpInitRequest`).
- */
-export interface SignUpInitRequest {
-    email: string
-    password: string
-    username?: string
-    firstName?: string
-    lastName?: string
-}
-
-export interface SignUpInitData {
-    challengeId: string
-    expiresInSeconds: number
-}
+import type { SignUpInitRequest, MutateSignUpInitResponse } from "./types/sign-up-init"
 
 const mutation1 = gql`
   mutation SignUpInit($request: SignUpInitRequest!) {
@@ -40,13 +25,8 @@ const mutationMap: Record<MutationSignUpInit, DocumentNode> = {
     [MutationSignUpInit.Mutation1]: mutation1,
 }
 
-export type MutateSignUpInitVariables = MutateVariables<SignUpInitRequest>
-
+/** Apollo params for {@link mutateSignUpInit}. */
 export type MutateSignUpInitParams = MutateParams<MutationSignUpInit, SignUpInitRequest>
-
-export interface MutateSignUpInitResponse {
-    signUpInit: GraphQLResponse<SignUpInitData>
-}
 
 /**
  * Sign-up init: creates Keycloak user and sends OTP to email (`signUpInit` mutation).

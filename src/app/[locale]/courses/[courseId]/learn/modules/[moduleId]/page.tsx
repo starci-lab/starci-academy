@@ -1,6 +1,6 @@
 "use client"
 import React from "react"
-import { Module } from "@/components/layouts"
+import { Module } from "@/components/layouts/Module"
 
 const Page = () => {
     return (

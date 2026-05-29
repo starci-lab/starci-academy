@@ -83,7 +83,7 @@ export const FeedbackCard = (props: FeedbackCardProps) => {
                         ) : null}
                         <div className="h-3" />
                         {location ? (
-                            <div className="flex items-center gap-2 text-xs text-foreground-500">
+                            <div className="flex items-center gap-2 text-xs text-muted">
                                 <MapPinLineIcon className="size-4 min-w-4 min-h-4" />
                                 {location}
                             </div>

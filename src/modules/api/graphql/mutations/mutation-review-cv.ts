@@ -1,10 +1,7 @@
+﻿import type { MutateParams } from "../types"
 import { createAuthApolloClient } from "../clients"
-import {
-    type GraphQLResponse,
-    type MutateParams,
-    type QueryVariables,
-} from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type { ReviewCvRequest, MutateReviewCvResponse } from "./types/review-cv"
 
 const mutation1 = gql`
   mutation ReviewCv($request: ReviewCvRequest!) {
@@ -27,28 +24,11 @@ const mutationMap: Record<MutationReviewCv, DocumentNode> = {
     [MutationReviewCv.Mutation1]: mutation1,
 }
 
-export interface ReviewCvRequest {
-    cvSubmissionId: string
-    cvSubmissionAttemptId?: string
-    /** Required rubric level (`template_cvs.id`). */
-    templateCvId: string
-}
-
-export interface ReviewCvResponseData {
-    /** `jobs.id` enqueued for CV review. */
-    jobId: string
-}
-
-export type MutateReviewCvVariables = QueryVariables<ReviewCvRequest>
-
+/** Apollo params for {@link mutateReviewCv}. */
 export type MutateReviewCvParams = MutateParams<
     MutationReviewCv,
     ReviewCvRequest
 >
-
-export interface MutateReviewCvResponse {
-    reviewCv: GraphQLResponse<ReviewCvResponseData>
-}
 
 export const mutateReviewCv = async ({
     mutation = MutationReviewCv.Mutation1,

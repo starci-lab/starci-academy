@@ -8,11 +8,13 @@ import type { ChallengeStepTranslationEntity } from "./challenge-step-translatio
  * (`ref/sql/challenge-step.entity copy.ts`).
  */
 export interface ChallengeStepEntity extends AbstractEntity {
+    /** Step title (default locale). */
     title: string
     /** Short step summary (plain text); use `body` for Markdown. */
     description: string
     /** Main step content as Markdown. */
     body: string
+    /** Display order within the challenge step list. */
     orderIndex: number
     /** Default locale for this row (Nest `Locale` / GraphQL `GraphQLTypeLocale`). */
     defaultLocale: string

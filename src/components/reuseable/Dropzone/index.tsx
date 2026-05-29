@@ -65,7 +65,7 @@ export const Dropzone = ({
             >
                 <input {...getInputProps({ onBlur })} />
                 <div className="flex flex-col items-center gap-2 text-center">
-                    <CloudArrowUpIcon className="size-6 text-foreground-500" />
+                    <CloudArrowUpIcon className="size-6 text-muted" />
                     <div className="text-sm">
                         {file?.name ?? hint}
                     </div>

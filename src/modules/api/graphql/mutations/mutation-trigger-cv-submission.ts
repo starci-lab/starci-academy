@@ -1,10 +1,7 @@
+﻿import type { MutateParams } from "../types"
 import { createAuthApolloClient } from "../clients"
-import {
-    type GraphQLResponse,
-    type MutateParams,
-    type QueryVariables,
-} from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type { TriggerCvSubmissionRequest, MutateTriggerCvSubmissionResponse } from "./types/trigger-cv-submission"
 
 const mutation1 = gql`
   mutation TriggerCvSubmission($request: TriggerCvSubmissionRequest!) {
@@ -24,21 +21,11 @@ const mutationMap: Record<MutationTriggerCvSubmission, DocumentNode> = {
     [MutationTriggerCvSubmission.Mutation1]: mutation1,
 }
 
-export interface TriggerCvSubmissionRequest {
-    cvSubmissionId: string
-    cvSubmissionAttemptId?: string
-}
-
-export type MutateTriggerCvSubmissionVariables = QueryVariables<TriggerCvSubmissionRequest>
-
+/** Apollo params for {@link mutateTriggerCvSubmission}. */
 export type MutateTriggerCvSubmissionParams = MutateParams<
     MutationTriggerCvSubmission,
     TriggerCvSubmissionRequest
 >
-
-export interface MutateTriggerCvSubmissionResponse {
-    triggerCvSubmission: GraphQLResponse
-}
 
 export const mutateTriggerCvSubmission = async ({
     mutation = MutationTriggerCvSubmission.Mutation1,

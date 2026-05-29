@@ -1,16 +1,7 @@
 import { createNoAuthApolloClient } from "../clients/clients"
-import { type GraphQLResponse, type QueryParams } from "../types"
+import { type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
-
-/**
- * Mounted `systemConfig` payload (GraphQL: `systemChallengeConfig.data`).
- */
-export interface SystemConfigData {
-    challenge: {
-        /** Minimum score (0–1) required to pass a challenge. */
-        passThreshold: number
-    }
-}
+import type { QuerySystemConfigResponse } from "./types"
 
 const query1 = gql`
   query SystemConfig {
@@ -33,10 +24,6 @@ export enum QuerySystemConfig {
 
 const queryMap: Record<QuerySystemConfig, DocumentNode> = {
     [QuerySystemConfig.Query1]: query1,
-}
-
-export interface QuerySystemConfigResponse {
-    systemConfig: GraphQLResponse<SystemConfigData>
 }
 
 /**

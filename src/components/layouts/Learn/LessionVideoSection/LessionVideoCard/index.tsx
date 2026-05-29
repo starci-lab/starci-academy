@@ -41,7 +41,7 @@ export const VideoLessionCard = ({ lessonVideo }: VideoLessionCardProps) => {
                     <img src={lessonVideo.thumbnailUrl ?? undefined} alt={lessonVideo.title} className="aspect-video h-full object-cover rounded-md" />
                     <div className="flex flex-col gap-3 col-span-2">
                         <div className="line-clamp-1">{lessonVideo.title}</div>
-                        <div className="text-sm text-foreground-500 text-justify italic line-clamp-3">{lessonVideo.description}</div>
+                        <div className="text-sm text-muted text-justify italic line-clamp-3">{lessonVideo.description}</div>
                         <div className="flex items-center gap-2">
                             <Chip
                                 color="accent"

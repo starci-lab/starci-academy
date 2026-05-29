@@ -1,4 +1,4 @@
-import type { SystemConfigData } from "@/modules/api/graphql/queries/query-system-config"
+import type { SystemConfigData } from "@/modules/types"
 import {
     createSlice,
     type PayloadAction,
@@ -14,13 +14,18 @@ export interface SystemSlice {
     config?: SystemConfigData
 }
 
+/** Initial state for the system slice. */
 const initialState: SystemSlice = {}
 
+/**
+ * Slice caching the system configuration fetched from the API.
+ */
 export const systemSlice = createSlice(
     {
         name: "system",
         initialState,
         reducers: {
+            /** Store (or clear) the system configuration payload from the API. */
             setSystemConfig: (
                 state,
                 action: PayloadAction<SystemConfigData | undefined>,
@@ -31,5 +36,7 @@ export const systemSlice = createSlice(
     },
 )
 
+/** Root reducer for the system slice. */
 export const systemReducer = systemSlice.reducer
+/** Actions exported from the system slice. */
 export const { setSystemConfig } = systemSlice.actions

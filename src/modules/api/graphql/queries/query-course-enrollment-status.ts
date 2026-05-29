@@ -1,13 +1,10 @@
-import { EnrollmentEntity } from "@/modules/types"
 import { createAuthApolloClient } from "../clients"
-import { type GraphQLResponse, type QueryParams } from "../types"
+import { type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
-
-/** Payload inside `courseEnrollmentStatus.data` after the standard API wrapper. */
-export interface CourseEnrollmentStatusData {
-    isEnrolled: boolean
-    enrollment?: EnrollmentEntity
-}
+import type {
+    QueryCourseEnrollmentStatusRequest,
+    QueryCourseEnrollmentStatusResponse,
+} from "./types"
 
 const query1 = gql`
   query CourseEnrollmentStatus($request: CourseEnrollmentStatusRequest!) {
@@ -35,14 +32,7 @@ const queryMap: Record<QueryCourseEnrollmentStatus, DocumentNode> = {
     [QueryCourseEnrollmentStatus.Query1]: query1,
 }
 
-export interface QueryCourseEnrollmentStatusRequest {
-    courseId: string
-}
-
 export type QueryCourseEnrollmentStatusParams = QueryParams<QueryCourseEnrollmentStatus, QueryCourseEnrollmentStatusRequest>
-export interface QueryCourseEnrollmentStatusResponse {
-    courseEnrollmentStatus: GraphQLResponse<CourseEnrollmentStatusData>
-}
 
 /**
  * Enrollment summary for a course: total count and optional `isEnrolled` when a Bearer token is sent.

@@ -1,28 +1,47 @@
+"use client"
+
+import React, {
+    useCallback,
+} from "react"
 import {
     cn,
     Link,
 } from "@heroui/react"
-import { pathConfig } from "@/resources/path"
-import { useRouter } from "@/i18n/navigation"
-import React from "react"
-import { WithClassNames } from "@/modules/types"
+import {
+    pathConfig,
+} from "@/resources/path"
+import {
+    useRouter,
+} from "@/i18n/navigation"
 import Image from "next/image"
+import type {
+    WithClassNames,
+} from "@/modules/types"
 
 /**
- * Logo props interface
+ * Props for {@link Logo}.
  */
 export type LogoProps = WithClassNames<undefined>
+
 /**
- * Logo is the logo component for the application.
+ * Logo — application brand mark that routes home when pressed.
+ *
+ * `"use client"` for the router press handler.
+ * @param props - optional container class name
  */
 export const Logo = ({ className }: LogoProps) => {
-    /**
-     * Router hook
-     */
     const router = useRouter()
+
+    /** Navigate to the localized home route. */
+    const onPress = useCallback(
+        () => router.push(pathConfig().locale().build()),
+        [
+            router,
+        ],
+    )
     return (
         <Link
-            onPress={() => router.push(pathConfig().locale().build())} 
+            onPress={onPress}
             className={cn(className)}
         >
             <Image src="/logo.svg" alt="Logo" width={80} height={100} />

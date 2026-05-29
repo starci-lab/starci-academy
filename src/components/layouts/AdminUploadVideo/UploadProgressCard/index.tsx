@@ -1,0 +1,83 @@
+"use client"
+
+import React from "react"
+import {
+    Card,
+    CardContent,
+    Chip,
+} from "@heroui/react"
+import {
+    UploadIcon,
+    CheckCircleIcon,
+} from "@phosphor-icons/react"
+import type {
+    ProviderUploadStatus,
+} from "../types"
+import {
+    ProviderUploadRow,
+} from "./ProviderUploadRow"
+
+/** Props for {@link UploadProgressCard}. */
+export interface UploadProgressCardProps {
+    /** Per-provider upload statuses to render. */
+    uploads: Array<ProviderUploadStatus>
+    /** Whether all uploads have finished (drives the header copy + Done chip). */
+    uploadDone: boolean
+    /** Fired with the presigned URL when a row's copy button is pressed. */
+    onCopyUrl: (url: string) => void
+}
+
+/**
+ * Card listing per-provider upload progress rows.
+ *
+ * Presentational: maps uploads → {@link ProviderUploadRow}. "use client" only
+ * to stay within the upload tool's client boundary.
+ * @param props - uploads, completion flag, and copy callback
+ */
+export const UploadProgressCard = ({
+    uploads,
+    uploadDone,
+    onCopyUrl,
+}: UploadProgressCardProps) => {
+    return (
+        <Card className="bg-white/5 border border-white/10 backdrop-blur-xl shadow-2xl shadow-indigo-500/5">
+            <CardContent className="space-y-4 p-6">
+                {/* Section header */}
+                <div className="flex items-center gap-3 pb-2">
+                    <div className="rounded-lg bg-purple-500/10 p-2">
+                        <UploadIcon className="h-5 w-5 text-purple-400" />
+                    </div>
+                    <div className="flex-1">
+                        <h2 className="text-base font-semibold text-white">
+                            Upload Progress
+                        </h2>
+                        <p className="text-xs text-slate-400">
+                            {uploadDone
+                                ? "All uploads completed"
+                                : "Uploading to storage providers…"}
+                        </p>
+                    </div>
+                    {uploadDone && (
+                        <Chip
+                            size="sm"
+                            color="success"
+                            variant="secondary"
+                        >
+                            <CheckCircleIcon className="h-3 w-3" />
+                            <Chip.Label>Done</Chip.Label>
+                        </Chip>
+                    )}
+                </div>
+
+                {uploads.map((upload, idx) => (
+                    <ProviderUploadRow
+                        key={upload.provider}
+                        upload={upload}
+                        index={idx}
+                        onCopyUrl={onCopyUrl}
+                    />
+                ))}
+            </CardContent>
+        </Card>
+    )
+}

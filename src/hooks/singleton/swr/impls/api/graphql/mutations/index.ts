@@ -1,4 +1,6 @@
 export * from "./useMutateCourseEnrollSwr"
+export * from "./useMutateUpdateMyAiSettingsSwr"
+export * from "./useMutatePurchaseAiSubscriptionSwr"
 export * from "./useMutateSubmitChallengeSubmissionSwr"
 export * from "./useMutateSyncChallengeSubmissionSwr"
 export * from "./useMutateExchangeCodeForTokenSwr"

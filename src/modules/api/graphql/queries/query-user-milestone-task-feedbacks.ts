@@ -1,13 +1,14 @@
 import { createAuthApolloClient } from "../clients"
 import {
     SortOrder,
-    type GraphQLResponse,
-    type PaginationFilters,
     type QueryParams,
     type SortInput,
 } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
-import { UserMilestoneTaskAttemptFeedbackEntity } from "@/modules/types"
+import type {
+    UserMilestoneTaskFeedbacksListRequest,
+    QueryUserMilestoneTaskFeedbacksResponse,
+} from "./types"
 
 /** Sort keys for `userMilestoneTaskFeedbacks` list. */
 export enum UserMilestoneTaskFeedbacksSortBy {
@@ -15,11 +16,6 @@ export enum UserMilestoneTaskFeedbacksSortBy {
     Severity = "severity",
     CreatedAt = "createdAt",
     UpdatedAt = "updatedAt",
-}
-
-export interface QueryUserMilestoneTaskFeedbacksPayload {
-    count: number
-    data: Array<UserMilestoneTaskAttemptFeedbackEntity>
 }
 
 const query1 = gql`
@@ -49,18 +45,6 @@ export enum QueryUserMilestoneTaskFeedbacks {
 
 const queryMap: Record<QueryUserMilestoneTaskFeedbacks, DocumentNode> = {
     [QueryUserMilestoneTaskFeedbacks.Query1]: query1,
-}
-
-export type UserMilestoneTaskFeedbacksListFilters = PaginationFilters<UserMilestoneTaskFeedbacksSortBy>
-
-export interface UserMilestoneTaskFeedbacksListRequest {
-    courseId: string
-    taskId: string
-    filters: UserMilestoneTaskFeedbacksListFilters
-}
-
-export interface QueryUserMilestoneTaskFeedbacksResponse {
-    userMilestoneTaskFeedbacks: GraphQLResponse<QueryUserMilestoneTaskFeedbacksPayload>
 }
 
 export const defaultUserMilestoneTaskFeedbacksListSorts: Array<SortInput<UserMilestoneTaskFeedbacksSortBy>> = [

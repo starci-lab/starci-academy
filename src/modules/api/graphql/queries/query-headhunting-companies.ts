@@ -1,7 +1,7 @@
-import type { HeadhuntingCompanyEntity } from "@/modules/types"
 import { createAuthApolloClient } from "../clients"
-import type { GraphQLResponse, QueryParams } from "../types"
+import type { QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type { QueryHeadhuntingCompaniesResponse } from "./types"
 
 const query1 = gql`
   query HeadhuntingCompanies {
@@ -33,10 +33,6 @@ export enum QueryHeadhuntingCompanies {
 
 const queryMap: Record<QueryHeadhuntingCompanies, DocumentNode> = {
     [QueryHeadhuntingCompanies.Query1]: query1,
-}
-
-export interface QueryHeadhuntingCompaniesResponse {
-    headhuntingCompanies: GraphQLResponse<Array<HeadhuntingCompanyEntity>>
 }
 
 export const queryHeadhuntingCompanies = async ({

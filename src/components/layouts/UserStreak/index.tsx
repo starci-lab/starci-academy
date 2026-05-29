@@ -1,4 +1,5 @@
 "use client"
+import React from "react"
 
 import {
     Dropdown,
@@ -7,11 +8,15 @@ import {
     DropdownSection,
     DropdownItem,
 } from "@heroui/react"
-import { Flame } from "lucide-react"
+import { FireIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 
-
-
+/**
+ * UserStreak — navbar streak widget.
+ *
+ * Self-contained section (single-use): reads its own i18n and renders the
+ * streak dropdown with no props. `"use client"` for the dropdown interactivity.
+ */
 export const UserStreak = () => {
     const t = useTranslations("common")
 
@@ -19,7 +24,7 @@ export const UserStreak = () => {
         <Dropdown>
             <DropdownTrigger>
                 <div className="group relative flex size-10 cursor-pointer items-center justify-center rounded-full border-4 border-dashed border-pink-400 bg-pink-50/50 transition-all hover:scale-110 active:scale-95 dark:border-pink-500/50 dark:bg-pink-950/20">
-                    <Flame className="size-6 fill-pink-500 text-pink-500 dark:fill-pink-400 dark:text-pink-400" />
+                    <FireIcon className="size-6 fill-pink-500 text-pink-500 dark:fill-pink-400 dark:text-pink-400" />
                 </div>
             </DropdownTrigger>
             <DropdownMenu aria-label="User streak information" className="min-w-64">
@@ -31,7 +36,7 @@ export const UserStreak = () => {
                                     {t("streak.current")}
                                 </p>
                                 <div className="flex items-center justify-center gap-1">
-                                    <Flame className="size-4 fill-pink-500 text-pink-500" />
+                                    <FireIcon className="size-4 fill-pink-500 text-pink-500" />
                                     <span className="text-lg font-bold">0</span>
                                 </div>
                             </div>
@@ -40,7 +45,7 @@ export const UserStreak = () => {
                                     {t("streak.longest")}
                                 </p>
                                 <div className="flex items-center justify-center gap-1">
-                                    <Flame className="size-4 fill-pink-500 text-pink-500" />
+                                    <FireIcon className="size-4 fill-pink-500 text-pink-500" />
                                     <span className="text-lg font-bold">0</span>
                                 </div>
                             </div>

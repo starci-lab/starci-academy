@@ -1,9 +1,8 @@
-
-import type { PersonalProjectTaskEntity } from "@/modules/types"
 import { PersonalProjectTaskState } from "@/modules/types"
 import { createAuthApolloClient } from "../clients"
-import { type GraphQLResponse, type QueryParams } from "../types"
+import { type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type { QueryTasksRequest, QueryTasksResponse } from "./types"
 
 const query1 = gql`
   query Tasks($request: TasksRequest!) {
@@ -42,33 +41,6 @@ export enum QueryTasks {
 
 const queryMap: Record<QueryTasks, DocumentNode> = {
     [QueryTasks.Query1]: query1,
-}
-
-/** Apollo variables for `tasks(request: TasksRequest!)`. */
-export interface QueryTasksRequest {
-    /** The course id. */
-    courseId: string
-    /** Filter by task state (todo, inProgress, completed). */
-    state: PersonalProjectTaskState
-    /** Pagination cursor filters. */
-    filters: {
-        /** Cursor for pagination. */
-        cursor?: string
-        /** Limit for pagination. */
-        limit?: number
-    }
-}
-
-/** Response shape for the tasks query (cursor-paginated). */
-export interface QueryTasksResponseData {
-    /** The list of tasks for the current page. */
-    data: Array<PersonalProjectTaskEntity>
-    /** The cursor for the next page. */
-    cursor?: string
-}
-
-export interface QueryTasksResponse {
-    tasks: GraphQLResponse<QueryTasksResponseData>
 }
 
 /**

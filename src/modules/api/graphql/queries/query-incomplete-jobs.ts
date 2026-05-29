@@ -1,22 +1,7 @@
 import { createAuthApolloClient } from "../clients"
-import { type GraphQLResponse, type QueryParams } from "../types"
+import { type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
-import type { JobStatus } from "@/modules/types"
-
-/**
- * One row in `data.items` (`jobs.id` + current status).
- */
-export interface IncompleteJobsItem {
-    jobId: string
-    status: JobStatus
-}
-
-/**
- * Payload of `incompletedJobs` when successful.
- */
-export interface IncompleteJobsData {
-    items: Array<IncompleteJobsItem>
-}
+import type { QueryIncompleteJobsResponse } from "./types"
 
 const query1 = gql`
   query IncompletedJobs {
@@ -40,10 +25,6 @@ export enum QueryIncompleteJobs {
 
 const queryMap: Record<QueryIncompleteJobs, DocumentNode> = {
     [QueryIncompleteJobs.IncompletedJobs]: query1,
-}
-
-export interface QueryIncompleteJobsResponse {
-    incompletedJobs: GraphQLResponse<IncompleteJobsData>
 }
 
 /**

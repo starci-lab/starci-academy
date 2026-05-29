@@ -1,183 +1,144 @@
 "use client"
 
-import React, { useMemo } from "react"
-import { Chip, Skeleton, Tabs, cn } from "@heroui/react"
-import { useTranslations } from "next-intl"
-import { useAppDispatch, useAppSelector } from "@/redux"
+import React, {
+    useCallback,
+    useMemo,
+    type Key,
+} from "react"
 import {
-    getContentChallengeCount,
-    getContentCodeExplainings,
-    getContentCodeImplementations,
-    WithClassNames,
+    cn,
+} from "@heroui/react"
+import {
+    useTranslations,
+} from "next-intl"
+import {
+    usePathname,
+    useRouter,
+    useSearchParams,
+} from "next/navigation"
+import {
+    useAppDispatch,
+    useAppSelector,
+} from "@/redux"
+import {
+    type WithClassNames,
 } from "@/modules/types"
-import { 
-    useQueryContentSwr, 
-    useQueryContentStatusSwr 
+import {
+    useQueryContentSwr,
+    useQueryContentStatusSwr,
 } from "@/hooks/singleton"
 import {
-    SwordIcon,
-    ClockIcon,
-    BookOpenIcon,
-    CheckCircleIcon,
-    CodeIcon,
-} from "@phosphor-icons/react"
-import { ContentBody } from "./ContentBody"
-import { CodeLessonBody } from "./CodeLessonBody"
-import { ChallengeBody } from "./ChallengeBody"
-import { ContentTab, setContentTab } from "@/redux/slices"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
+    ContentTab,
+    setContentTab,
+} from "@/redux/slices"
+import type {
+    ContentTabItem,
+} from "./types"
+import {
+    ContentBody,
+} from "./ContentBody"
+import {
+    CodeLessonBody,
+} from "./CodeLessonBody"
+import {
+    ChallengeBody,
+} from "./ChallengeBody"
+import {
+    ContentTabBar,
+} from "./ContentTabBar"
+import {
+    ContentHeader,
+} from "./ContentHeader"
+import {
+    ContentHeaderSkeleton,
+} from "./ContentHeaderSkeleton"
 
 export type ContentProps = WithClassNames<undefined>
 
 /**
  * Learn content page layout for `/modules/[moduleId]/contents/[contentId]`.
+ *
+ * Owns data (content + status SWR, redux snapshot) and tab navigation, then
+ * delegates the header, tab bar and active body to presentational children.
  * @param {ContentProps} props Optional wrapper styling props.
  */
 export const Content = ({ className }: ContentProps) => {
     const t = useTranslations()
     const content = useAppSelector((state) => state.content.entity)
-    const isRead = useAppSelector((state) => state.content.isRead)
+    const contentTab = useAppSelector((state) => state.tabs.contentTab)
     const queryContentSwr = useQueryContentSwr()
     useQueryContentStatusSwr()
     const dispatch = useAppDispatch()
-
-    const codeLessonCount =
-        getContentCodeExplainings(content).length
-        + getContentCodeImplementations(content).length
-
-    const tabItems = useMemo(() => [
-        {
-            icon: BookOpenIcon,
-            key: ContentTab.Content,
-            label: t("content.tabs.content"),
-            component: <ContentBody />,
-        },
-        {
-            icon: CodeIcon,
-            key: ContentTab.CodeExplainings,
-            label: t("content.tabs.codeExplainings"),
-            component: <CodeLessonBody />,
-        },
-        {
-            icon: SwordIcon,
-            key: ContentTab.Challenges,
-            label: t("content.tabs.challenges"),
-            component: <ChallengeBody />,
-        },
-    ], [t])
     const router = useRouter()
     const pathname = usePathname()
     const searchParams = useSearchParams()
-    const contentTab = useAppSelector((state) => state.tabs.contentTab)
+
+    /** Tab entries (key + label + body) rendered in the tab bar. */
+    const tabItems = useMemo<Array<ContentTabItem>>(
+        () => [
+            {
+                key: ContentTab.Content,
+                label: t("content.tabs.content"),
+                component: <ContentBody />,
+            },
+            {
+                key: ContentTab.CodeExplainings,
+                label: t("content.tabs.codeExplainings"),
+                component: <CodeLessonBody />,
+            },
+            {
+                key: ContentTab.Challenges,
+                label: t("content.tabs.challenges"),
+                component: <ChallengeBody />,
+            },
+        ],
+        [t],
+    )
+
+    /** Body of the currently selected tab. */
     const bodyComponent = useMemo(
         () => tabItems.find((item) => item.key === contentTab)?.component,
         [contentTab, tabItems],
     )
-    const onTabChange = (key: React.Key) => {
-        const nextTab = key as ContentTab
-        dispatch(setContentTab(nextTab))
-        const params = new URLSearchParams(searchParams.toString())
-        params.set("tab", nextTab)
-        router.replace(`${pathname}?${params.toString()}`)
-    }
+
+    const isLoading = queryContentSwr.isLoading || !content
+
+    /** Persist the selected tab to redux and reflect it in the URL query. */
+    const onTabChange = useCallback(
+        (key: Key) => {
+            const nextTab = key as ContentTab
+            dispatch(setContentTab(nextTab))
+            const params = new URLSearchParams(searchParams.toString())
+            params.set("tab", nextTab)
+            router.replace(`${pathname}?${params.toString()}`)
+        },
+        [dispatch, searchParams, router, pathname],
+    )
 
     return (
         <div className={cn("", className)}>
             <div className="h-3" />
-            {queryContentSwr.isLoading || !content ? (
+            {isLoading ? (
                 <div>
-                    <div className="p-3">
-                        <Skeleton className="h-6 py-1 rounded-full" />
-                        <div className="h-3" />
-                        <Skeleton className="h-[14px] my-[3px] w-full rounded-full" />
-                        <Skeleton className="h-[14px] my-[3px] w-5/6 rounded-full" />
-                        <div className="h-3" />
-                        <Skeleton className="h-6 w-[100px] rounded-full" />
-                    </div>
-                    <Tabs selectedKey={contentTab} 
-                        variant="secondary" 
+                    <ContentHeaderSkeleton />
+                    <ContentTabBar
+                        tabItems={tabItems}
+                        selectedKey={contentTab}
+                        ariaLabel={t("module.tabListAria")}
                         onSelectionChange={onTabChange}
-                    >
-                        <Tabs.ListContainer>
-                            <Tabs.List aria-label={t("module.tabListAria")}>
-                                {tabItems.map((item) => (
-                                    <Tabs.Tab
-                                        key={item.key}
-                                        id={item.key}
-                                        className="rounded-none data-[selected=true]:border-b-2 data-[selected=true]:border-accent data-[selected=true]:text-accent"
-                                    >
-                                        <div className="flex items-center gap-2">
-                                            <item.icon className="size-5" />
-                                            <span>{item.label}</span>
-                                        </div>
-                                    </Tabs.Tab>
-                                ))}
-                            </Tabs.List>
-                        </Tabs.ListContainer>
-                    </Tabs>
+                    />
                     <div className="h-6" />
-                    <div/>
+                    <div />
                 </div>
             ) : (
                 <div>
-                    <div className="p-3">
-                        <div className="text-2xl font-bold">{content?.title}</div>
-                        <div className="h-3" />
-                        <div className="text-sm text-muted">{content?.description}</div>
-                        <div className="h-3" />
-                        <div className="flex items-center gap-2 flex-wrap">
-                            <Chip variant="secondary" color="accent">
-                                <ClockIcon className="size-5" />
-                                <Chip.Label>
-                                    {t("content.minutesRead", {
-                                        minutes: content?.minutesRead ?? 0,
-                                    })}
-                                </Chip.Label>
-                            </Chip>
-                            <Chip variant="secondary" color="accent">
-                                <CodeIcon className="size-5" />
-                                <Chip.Label>
-                                    {t("content.codeLessonCount", {
-                                        count: codeLessonCount,
-                                    })}
-                                </Chip.Label>
-                            </Chip>
-                            <Chip variant="secondary" color="accent">
-                                <SwordIcon className="size-5" />
-                                <Chip.Label>
-                                    {t("content.challengeCount", {
-                                        count: getContentChallengeCount(content ?? {}),
-                                    })}
-                                </Chip.Label>
-                            </Chip>
-                            {isRead && (
-                                <Chip variant="secondary" color="success">
-                                    <CheckCircleIcon className="size-5" weight="fill" />
-                                    <Chip.Label>
-                                        {t("content.read")}
-                                    </Chip.Label>
-                                </Chip>
-                            )}
-                        </div>
-                    </div>
-                    <Tabs selectedKey={contentTab} variant="secondary" onSelectionChange={onTabChange}>
-                        <Tabs.ListContainer>
-                            <Tabs.List aria-label={t("module.tabListAria")}>
-                                {tabItems.map((item) => (
-                                    <Tabs.Tab
-                                        key={item.key}
-                                        id={item.key}
-                                        className="rounded-none data-[selected=true]:border-b-2 data-[selected=true]:border-accent data-[selected=true]:text-accent"
-                                    >
-                                        <div className="flex items-center gap-2">
-                                            <item.icon className="size-5" />
-                                            <span>{item.label}</span>
-                                        </div>
-                                    </Tabs.Tab>
-                                ))}
-                            </Tabs.List>
-                        </Tabs.ListContainer>
-                    </Tabs>
+                    <ContentHeader />
+                    <ContentTabBar
+                        tabItems={tabItems}
+                        selectedKey={contentTab}
+                        ariaLabel={t("module.tabListAria")}
+                        onSelectionChange={onTabChange}
+                    />
                     <div className="h-3" />
                     <div className="p-3">
                         {bodyComponent}

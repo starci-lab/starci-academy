@@ -1,15 +1,7 @@
+﻿import type { MutateParams } from "../types"
 import { createNoAuthApolloClient } from "../clients"
-import type { GraphQLResponse, MutateParams, MutateVariables } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
-
-export interface SignInVerifyOtpRequest {
-    challengeId: string
-    otp: string
-}
-
-export interface SignInVerifyOtpData {
-    accessToken: string
-}
+import type { SignInVerifyOtpRequest, MutateSignInVerifyOtpResponse } from "./types/sign-in-verify-otp"
 
 const mutation1 = gql`
   mutation SignInVerifyOtp($request: SignInVerifyOtpRequest!) {
@@ -32,16 +24,11 @@ const mutationMap: Record<MutationSignInVerifyOtp, DocumentNode> = {
     [MutationSignInVerifyOtp.Mutation1]: mutation1,
 }
 
-export type MutateSignInVerifyOtpVariables = MutateVariables<SignInVerifyOtpRequest>
-
+/** Apollo params for {@link mutateSignInVerifyOtp}. */
 export type MutateSignInVerifyOtpParams = MutateParams<
     MutationSignInVerifyOtp,
     SignInVerifyOtpRequest
 >
-
-export interface MutateSignInVerifyOtpResponse {
-    signInVerifyOtp: GraphQLResponse<SignInVerifyOtpData>
-}
 
 /**
  * Verifies OTP and completes sign-in.
@@ -64,4 +51,3 @@ export const mutateSignInVerifyOtp = async ({
         variables: { request },
     })
 }
-

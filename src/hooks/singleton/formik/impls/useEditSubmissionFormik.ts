@@ -3,7 +3,8 @@ import { useContext } from "react"
 import { FormikContext } from "../FormikContext"
 
 /**
- * Hook to use the edit submission formik
+ * Access the singleton edit-submission Formik instance from {@link FormikContext}.
+ * @returns the edit-submission formik handle.
  */
 export const useEditSubmissionFormik = () => {
     const { editSubmissionFormik } = useContext(FormikContext)!

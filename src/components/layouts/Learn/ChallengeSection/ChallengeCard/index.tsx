@@ -7,42 +7,9 @@ import { setChallengeId } from "@/redux/slices"
 import { ListNumbersIcon, SwordIcon, TrophyIcon } from "@phosphor-icons/react"
 import { TagChips } from "@/components/reuseable"
 import { useTranslations } from "next-intl"
-import React, { useMemo } from "react"
+import React, { useCallback, useMemo } from "react"
 import { difficultyPalette } from "@/components/pallettes"
-
-
-
-/** Demo tags until `ChallengeEntity` exposes a `tags` field from the API. */
-const CHALLENGE_DEMO_TAGS: Array<string> = [
-    "#NodeJS",
-    "#React",
-    "#NextJS",
-    "#TailwindCSS",
-    "#TypeScript",
-    "#JavaScript",
-    "#HTML",
-    "#CSS",
-    "#Python",
-    "#Java",
-    "#C++",
-    "#C#",
-    "#PHP",
-    "#Ruby",
-    "#Swift",
-    "#Kotlin",
-    "#Go",
-    "#Rust",
-    "#Scala",
-    "#Haskell",
-    "#OCaml",
-    "#Erlang",
-    "#Elixir",
-    "#F#",
-    "#Dart",
-    "#Flutter",
-    "#React Native",
-    "#React Native",
-]
+import { CHALLENGE_DEMO_TAGS } from "./constants"
 
 export interface ChallengeCardProps {
     /** One module challenge block from API. */
@@ -67,14 +34,17 @@ export const ChallengeCard = ({ challenge }: ChallengeCardProps) => {
         }
     }, [challenge.difficulty])
 
+    /** Select this challenge and open its detail modal. */
+    const onPress = useCallback(() => {
+        dispatch(setChallengeId(challenge.id))
+        open()
+    }, [dispatch, challenge.id, open])
+
     return (
         <Button
             className="w-full h-fit p-3 card card--default cursor-pointer flex flex-col items-start text-left"
             variant="tertiary"
-            onPress={() => {
-                dispatch(setChallengeId(challenge.id))
-                open()
-            }}
+            onPress={onPress}
         >
             <div className="flex flex-col gap-3 w-full">
                 <div className="font-semibold text-lg overflow-hidden whitespace-normal">

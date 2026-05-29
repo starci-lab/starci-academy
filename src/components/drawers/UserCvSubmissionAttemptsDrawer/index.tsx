@@ -1,13 +1,12 @@
 "use client"
 
 import React, {
+    useCallback,
     useEffect,
     useMemo,
 } from "react"
 import {
     Drawer,
-    Pagination,
-    ScrollShadow,
 } from "@heroui/react"
 import {
     useCvSubmissionAttemptAnalysisOverlayState,
@@ -26,9 +25,25 @@ import {
     useLocale,
     useTranslations,
 } from "next-intl"
-import { CVCard } from "./CVCard"
-
-const isPublicUrl = (value: string) => value.startsWith("http://") || value.startsWith("https://") || value.startsWith("blob:") || value.startsWith("data:")
+import type {
+    AttemptRow,
+} from "./types"
+import {
+    FEEDBACK_PREVIEW_MAX,
+    MAX_VISIBLE_PAGES,
+} from "./constants"
+import {
+    isPublicUrl,
+} from "./utils"
+import {
+    AttemptsSkeleton,
+} from "./AttemptsSkeleton"
+import {
+    AttemptsList,
+} from "./AttemptsList"
+import {
+    AttemptsPagination,
+} from "./AttemptsPagination"
 
 /** No caller props; the drawer reads singleton overlay + SWR. */
 export interface UserCvSubmissionAttemptsDrawerProps {
@@ -36,32 +51,13 @@ export interface UserCvSubmissionAttemptsDrawerProps {
     readonly _reserved?: undefined
 }
 
-type AttemptRow = {
-    /** Table row key. */
-    key: string
-    /** Attempt version number from API. */
-    attemptNumber: number
-    /** Display file label. */
-    fileLabel: string
-    /** URL to open the CV file. */
-    fileUrl: string
-    /** Whether `fileUrl` can be opened in a new tab. */
-    fileUrlIsPublic: boolean
-    /** Formatted submitted time. */
-    submittedAtLabel: string
-    /** Raw processing status from API. */
-    status: string
-    /** Truncated feedback preview. */
-    feedbackPreview: string
-    /** Full feedback markdown for details modal. */
-    detailFeedback: string
-}
-
-const FEEDBACK_PREVIEW_MAX = 120
-const MAX_VISIBLE_PAGES = 10
-
-export const UserCvSubmissionAttemptsDrawer = (
-) => {
+/**
+ * Drawer listing a user's CV submission attempts with server pagination.
+ *
+ * Container: owns SWR/redux/overlay state and derives display rows; renders
+ * presentational children (skeleton / list / pagination).
+ */
+export const UserCvSubmissionAttemptsDrawer = () => {
     const t = useTranslations()
     const locale = useLocale()
     const dispatch = useAppDispatch()
@@ -77,7 +73,8 @@ export const UserCvSubmissionAttemptsDrawer = (
     const attemptList = payload?.data
     const dayjsLocale = locale.startsWith("vi") ? "vi" : "en"
 
-    const rows: Array<AttemptRow> = useMemo(
+    /** API attempts mapped into display-ready rows. */
+    const rows = useMemo<Array<AttemptRow>>(
         () => (attemptList ?? []).map((attempt) => {
             const raw = attempt.submittedAt
             const d = dayjs(raw)
@@ -108,6 +105,7 @@ export const UserCvSubmissionAttemptsDrawer = (
         ],
     )
 
+    /** Number of page buttons to render, capped at {@link MAX_VISIBLE_PAGES}. */
     const totalPages = useMemo(
         () => Math.min(
             Math.max(1, Math.ceil((payload?.totalCount ?? 0) / swr.pageSize)),
@@ -119,8 +117,10 @@ export const UserCvSubmissionAttemptsDrawer = (
         ],
     )
 
+    /** 1-based current page, clamped to the visible range. */
     const currentPage = Math.min(swr.pageNumber + 1, totalPages)
 
+    /** 1-based page numbers rendered as pagination links. */
     const pageNumbers = useMemo<Array<number>>(
         () => Array.from({ length: totalPages }, (_, index) => index + 1),
         [
@@ -128,23 +128,57 @@ export const UserCvSubmissionAttemptsDrawer = (
         ],
     )
 
-    const handleOpenAnalysis = (attemptId: string) => {
-        const selectedAttempt = rows.find((row) => row.key === attemptId)
-        if (!selectedAttempt) {
-            return
-        }
-        dispatch(setSelectedCvSubmissionAttemptAnalysis({
-            attemptId: selectedAttempt.key,
-            attemptNumber: selectedAttempt.attemptNumber,
-            fileLabel: selectedAttempt.fileLabel,
-            fileUrl: selectedAttempt.fileUrl,
-            fileUrlIsPublic: selectedAttempt.fileUrlIsPublic,
-            submittedAtLabel: selectedAttempt.submittedAtLabel,
-            status: selectedAttempt.status,
-            detailFeedback: selectedAttempt.detailFeedback,
-        }))
-        setAnalysisModalOpen(true)
-    }
+    /** Open the analysis modal for the chosen attempt. */
+    const onOpenAnalysis = useCallback(
+        (attemptId: string) => {
+            const selectedAttempt = rows.find((row) => row.key === attemptId)
+            if (!selectedAttempt) {
+                return
+            }
+            dispatch(setSelectedCvSubmissionAttemptAnalysis({
+                attemptId: selectedAttempt.key,
+                attemptNumber: selectedAttempt.attemptNumber,
+                fileLabel: selectedAttempt.fileLabel,
+                fileUrl: selectedAttempt.fileUrl,
+                fileUrlIsPublic: selectedAttempt.fileUrlIsPublic,
+                submittedAtLabel: selectedAttempt.submittedAtLabel,
+                status: selectedAttempt.status,
+                detailFeedback: selectedAttempt.detailFeedback,
+            }))
+            setAnalysisModalOpen(true)
+        },
+        [
+            rows,
+            dispatch,
+            setAnalysisModalOpen,
+        ],
+    )
+
+    /** Navigate to a specific 1-based page. */
+    const onPageChange = useCallback(
+        (pageNumber: number) => swr.setPageNumber(pageNumber - 1),
+        [
+            swr,
+        ],
+    )
+
+    /** Navigate to the previous page. */
+    const onPreviousPage = useCallback(
+        () => swr.setPageNumber(currentPage - 2),
+        [
+            swr,
+            currentPage,
+        ],
+    )
+
+    /** Navigate to the next page. */
+    const onNextPage = useCallback(
+        () => swr.setPageNumber(currentPage),
+        [
+            swr,
+            currentPage,
+        ],
+    )
 
     useEffect(
         () => {
@@ -159,6 +193,7 @@ export const UserCvSubmissionAttemptsDrawer = (
         ],
     )
 
+    /** Whether to show the loading skeleton instead of content. */
     const showSkeleton = isOpen && (swr.isLoading || swr.isValidating) && !(attemptList?.length) && !swr.error
 
     /** Avoid mounting a closed drawer (backdrop / scroll-lock layers) on every page. */
@@ -190,80 +225,21 @@ export const UserCvSubmissionAttemptsDrawer = (
                                         {t("cv.submission.attemptsDrawer.loadError")}
                                     </div>
                                 ) : showSkeleton ? (
-                                    <ScrollShadow
-                                        className="min-h-0 flex-1 overflow-x-hidden p-3"
-                                        hideScrollBar
-                                    >
-                                        <div className="flex flex-col gap-2">
-                                            {Array.from({ length: 5 }).map((_, index) => (
-                                                <div
-                                                    key={index}
-                                                    className="h-12 animate-pulse rounded-lg bg-default-100"
-                                                />
-                                            ))}
-                                        </div>
-                                    </ScrollShadow>
+                                    <AttemptsSkeleton />
                                 ) : rows.length ? (
                                     <>
-                                        <ScrollShadow
-                                            className="min-h-0 flex-1 overflow-x-hidden p-3"
-                                            hideScrollBar
-                                        >
-                                            <div className="flex flex-col gap-3">
-                                                {rows.map((row) => (
-                                                    <CVCard
-                                                        key={row.key}
-                                                        attemptId={row.key}
-                                                        attemptNumber={row.attemptNumber}
-                                                        fileLabel={row.fileLabel}
-                                                        fileUrl={row.fileUrl}
-                                                        fileUrlIsPublic={row.fileUrlIsPublic}
-                                                        submittedAtLabel={row.submittedAtLabel}
-                                                        status={row.status}
-                                                        feedbackPreview={row.feedbackPreview}
-                                                        onOpenAnalysis={handleOpenAnalysis}
-                                                    />
-                                                ))}
-                                            </div>
-                                        </ScrollShadow>
-                                        <div className="shrink-0 border-t bg-content1 px-3 py-3">
-                                            <Pagination
-                                                aria-label={t("common.pagination.navAria")}
-                                                className="w-full justify-center"
-                                                size="sm"
-                                            >
-                                                <Pagination.Content className="flex flex-wrap justify-center gap-1">
-                                                    <Pagination.Item>
-                                                        <Pagination.Previous
-                                                            aria-label={t("common.pagination.previous")}
-                                                            isDisabled={currentPage <= 1}
-                                                            onPress={() => swr.setPageNumber(currentPage - 2)}
-                                                        >
-                                                            <Pagination.PreviousIcon />
-                                                        </Pagination.Previous>
-                                                    </Pagination.Item>
-                                                    {pageNumbers.map((pageNumber) => (
-                                                        <Pagination.Item key={pageNumber}>
-                                                            <Pagination.Link
-                                                                isActive={pageNumber === currentPage}
-                                                                onPress={() => swr.setPageNumber(pageNumber - 1)}
-                                                            >
-                                                                {pageNumber}
-                                                            </Pagination.Link>
-                                                        </Pagination.Item>
-                                                    ))}
-                                                    <Pagination.Item>
-                                                        <Pagination.Next
-                                                            aria-label={t("common.pagination.next")}
-                                                            isDisabled={currentPage >= totalPages}
-                                                            onPress={() => swr.setPageNumber(currentPage)}
-                                                        >
-                                                            <Pagination.NextIcon />
-                                                        </Pagination.Next>
-                                                    </Pagination.Item>
-                                                </Pagination.Content>
-                                            </Pagination>
-                                        </div>
+                                        <AttemptsList
+                                            rows={rows}
+                                            onOpenAnalysis={onOpenAnalysis}
+                                        />
+                                        <AttemptsPagination
+                                            currentPage={currentPage}
+                                            totalPages={totalPages}
+                                            pageNumbers={pageNumbers}
+                                            onPageChange={onPageChange}
+                                            onPrevious={onPreviousPage}
+                                            onNext={onNextPage}
+                                        />
                                     </>
                                 ) : (
                                     <div className="p-6 text-center text-sm text-muted">

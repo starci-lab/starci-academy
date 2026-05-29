@@ -1,6 +1,7 @@
+﻿import type { MutateParams } from "../types"
 import { createAuthApolloClient } from "../clients"
-import { type GraphQLResponse, type MutateParams, type QueryVariables } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type { MarkContentAsReadedRequest, MutateMarkContentAsReadedResponse } from "./types/mark-content-as-readed"
 
 const mutation1 = gql`
   mutation MarkContentAsReaded($request: MarkAsReadedRequest!) {
@@ -24,23 +25,8 @@ const mutationMap: Record<MutationMarkContentAsReaded, DocumentNode> = {
     [MutationMarkContentAsReaded.Mutation1]: mutation1,
 }
 
-export interface MarkContentAsReadedRequest {
-    contentId: string
-    readed: boolean
-}
-
-export interface MarkContentAsReadedData {
-    id: string
-    isRead: boolean
-}
-
-export type MutateMarkContentAsReadedVariables = QueryVariables<MarkContentAsReadedRequest>
-
+/** Apollo params for {@link mutateMarkContentAsReaded}. */
 export type MutateMarkContentAsReadedParams = MutateParams<MutationMarkContentAsReaded, MarkContentAsReadedRequest>
-
-export interface MutateMarkContentAsReadedResponse {
-    markContentAsReaded: GraphQLResponse<MarkContentAsReadedData>
-}
 
 export const mutateMarkContentAsReaded = async ({
     mutation = MutationMarkContentAsReaded.Mutation1,

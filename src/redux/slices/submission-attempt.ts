@@ -1,11 +1,11 @@
-import { 
-    createSlice, 
-    PayloadAction 
+import {
+    createSlice,
+    type PayloadAction,
 } from "@reduxjs/toolkit"
-import { SubmissionAttemptEntity } from "@/modules/types"
+import type { SubmissionAttemptEntity } from "@/modules/types"
 
 /**
- * The slice for the submission attempt.
+ * Client state for paginated submission attempts scoped to a challenge submission.
  */
 export interface SubmissionAttemptSlice {
     /** The submission attempt id (selected row for feedback details). */
@@ -45,7 +45,7 @@ const initialState: SubmissionAttemptSlice = {
 }
 
 /**
- * The slice for the submission attempt.
+ * Slice managing submission attempts for the currently focused challenge submission.
  */
 export const submissionAttemptSlice = createSlice(
     {
@@ -111,11 +111,10 @@ export const submissionAttemptSlice = createSlice(
     }
 )
 
-/**
- * The reducer for the challenge submission slice.
- */
+/** Root reducer for the submission-attempt slice. */
 export const submissionAttemptReducer = submissionAttemptSlice.reducer
-export const { 
+/** Actions exported from the submission-attempt slice. */
+export const {
     setSubmissionAttemptId,
     setSubmissionAttempt,
     setSubmissionAttempts,

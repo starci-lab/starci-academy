@@ -32,7 +32,7 @@ export const LessonVideoSection = () => {
                 isLoading || !lessionVideos ? (
                     <Skeleton className="h-[14px] w-[150px] my-[3px]" />
                 ) : (
-                    <div className="text-sm text-foreground-500">
+                    <div className="text-sm text-muted">
                         {t("content.count", { count: lessionVideos?.length ?? 0 })}
                     </div>
                 )

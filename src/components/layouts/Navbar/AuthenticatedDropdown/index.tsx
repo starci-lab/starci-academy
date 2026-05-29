@@ -1,8 +1,25 @@
-import { useRouter } from "@/i18n/navigation"
-import { useAppDispatch, useAppSelector } from "@/redux"
-import { pathConfig } from "@/resources/path"
-import { SignOutIcon, UserIcon } from "@phosphor-icons/react"
-import { useTranslations } from "next-intl"
+"use client"
+
+import React, {
+    useCallback,
+} from "react"
+import {
+    useRouter,
+} from "@/i18n/navigation"
+import {
+    useAppDispatch,
+    useAppSelector,
+} from "@/redux"
+import {
+    pathConfig,
+} from "@/resources/path"
+import {
+    SignOutIcon,
+    UserIcon,
+} from "@phosphor-icons/react"
+import {
+    useTranslations,
+} from "next-intl"
 import {
     Avatar,
     Dropdown,
@@ -11,16 +28,24 @@ import {
     DropdownSection,
     DropdownTrigger,
 } from "@heroui/react"
-import React from "react"
-import { 
-    useLanguageOverlayState, 
-    useMutationSignOutSwr 
+import {
+    useLanguageOverlayState,
+    useMutationSignOutSwr,
 } from "@/hooks/singleton"
-import { LocalStorage, LocalStorageId } from "@/modules/storage"
-import { setAuthenticated } from "@/redux/slices"
+import {
+    LocalStorage,
+    LocalStorageId,
+} from "@/modules/storage"
+import {
+    setAuthenticated,
+} from "@/redux/slices"
 
 /**
- * AuthenticatedDropdown is a dropdown component that is used to display the authenticated user's information.
+ * AuthenticatedDropdown — avatar menu showing the signed-in user's account,
+ * a profile link, and sign-out.
+ *
+ * Container: reads user/auth redux state, owns the sign-out mutation, and
+ * exposes `onXXX` handlers. `"use client"` for hooks + interactivity.
  */
 export const AuthenticatedDropdown = () => {
     const user = useAppSelector((state) => state.user.user)
@@ -29,6 +54,40 @@ export const AuthenticatedDropdown = () => {
     const { isOpen, setOpen } = useLanguageOverlayState()
     const mutateSignOutSwr = useMutationSignOutSwr()
     const dispatch = useAppDispatch()
+
+    /** Close the dropdown without navigating (account header item). */
+    const onCloseAccount = useCallback(
+        () => setOpen(false),
+        [
+            setOpen,
+        ],
+    )
+
+    /** Navigate to the profile page and close the dropdown. */
+    const onOpenProfile = useCallback(
+        () => {
+            router.push(pathConfig().locale().profile().build())
+            setOpen(false)
+        },
+        [
+            router,
+            setOpen,
+        ],
+    )
+
+    /** Clear the stored token, run the sign-out mutation, and reset auth state. */
+    const onLogout = useCallback(
+        async () => {
+            LocalStorage.removeItem(LocalStorageId.KeycloakAccessToken)
+            await mutateSignOutSwr.trigger()
+            dispatch(setAuthenticated(false))
+        },
+        [
+            mutateSignOutSwr,
+            dispatch,
+        ],
+    )
+
     return (
         <Dropdown
             isOpen={isOpen}
@@ -44,37 +103,27 @@ export const AuthenticatedDropdown = () => {
             </DropdownTrigger>
             <DropdownMenu>
                 <DropdownSection>
-                    <DropdownItem key="account" onPress={() => setOpen(false)}>
+                    <DropdownItem key="account" onPress={onCloseAccount}>
                         <div>
                             <div>{user?.username}</div>
-                            <div className="text-xs text-foreground-500">{user?.email}</div>
+                            <div className="text-xs text-muted">{user?.email}</div>
                         </div>
                     </DropdownItem>
                 </DropdownSection>
                 <DropdownSection className="gap-1.5 flex flex-col">
                     <DropdownItem
-                        key="profile" 
-                        onPress={() => {
-                            router.push(pathConfig().locale().profile().build())
-                            setOpen(false)
-                        }}>
+                        key="profile"
+                        onPress={onOpenProfile}
+                    >
                         <div className="flex items-center gap-2">
                             <UserIcon className="size-5" />
                             {t("nav.profile")}
                         </div>
                     </DropdownItem>
                     <DropdownItem
-                        key="logout" 
+                        key="logout"
                         className="text-danger"
-                        onPress={
-                            async () => {
-                                LocalStorage.removeItem(
-                                    LocalStorageId.KeycloakAccessToken
-                                )
-                                await mutateSignOutSwr.trigger()
-                                dispatch(setAuthenticated(false))
-                            }
-                        }
+                        onPress={onLogout}
                     >
                         <div className="flex items-center gap-2">
                             <SignOutIcon className="size-5 text-danger" />

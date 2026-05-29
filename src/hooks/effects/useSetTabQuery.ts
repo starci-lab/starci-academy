@@ -4,7 +4,9 @@ import { useSearchParams } from "next/navigation"
 import { useEffect, useRef } from "react"
 
 /**
- * Sync tab between Redux and URL (?tab=...)
+ * On mount, reads the `?tab=` search param and syncs the active content tab into Redux.
+ * Normalises legacy `codeExplaining`/`CodeImplementation` values to `CodeExplainings`.
+ * @returns void
  */
 export const useSetTabQuery = () => {
     const dispatch = useAppDispatch()

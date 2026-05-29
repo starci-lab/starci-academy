@@ -7,8 +7,8 @@ import {
     setAiProcessingModalData,
     setJobStatusMessageForJob,
 } from "@/redux/slices"
+import type { JobStatusUpdatedSocketIoMessage } from "@/modules/types"
 import {
-    JobStatusUpdatedSocketIoMessage,
     SubscribeJobNotificationSocketIoPayload,
 } from "../types"
 import { PublicationEvent, SubscriptionEvent } from "../enums"

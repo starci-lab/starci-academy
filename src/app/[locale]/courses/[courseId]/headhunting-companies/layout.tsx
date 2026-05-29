@@ -1,7 +1,8 @@
 "use client"
 
+import React from "react"
 import type { PropsWithChildren } from "react"
-import { Sidebar } from "@/components/layouts"
+import { Sidebar } from "@/components/layouts/Sidebar"
 
 /**
  * Course shell with sidebar for headhunting company routes (outside `/learn`).

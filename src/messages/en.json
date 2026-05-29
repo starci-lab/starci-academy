@@ -3,6 +3,7 @@
     "brand": "StarCi Academy",
     "home": "Home",
     "courses": "Courses",
+    "practice": "Practice",
     "contact": "Contact",
     "logout": "Logout",
     "profile": "Profile",
@@ -33,6 +34,7 @@
   "course": {
     "enroll": "Enroll",
     "enrolled": "Enrolled",
+    "priceUsdHint": "≈ {amount} for international payments",
     "continueLearning": "Continue Learning",
     "prerequisites": "Prerequisites",
     "usersEnrolled": "{count} users have enrolled",
@@ -304,6 +306,8 @@
   },
   "task": {
     "criteriaTitle": "Grading criteria",
+    "codeImplementationsTitle": "Implementation guides",
+    "codeImplementationsTabsAria": "Implementation guides by language",
     "criteriaScore": "{score} pts",
     "criteriaNoHint": "No guidance available for this criterion.",
     "loadErrorTitle": "Could not load this task",
@@ -492,6 +496,152 @@
   "starciAi": {
     "title": "StarCi AI"
   },
+  "codingPractice": {
+    "title": "Coding Practice",
+    "subtitle": "Solve problems and get your code judged instantly",
+    "allDifficulties": "All",
+    "empty": "No problems yet.",
+    "solved": "Solved",
+    "samples": "Examples",
+    "example": "Example",
+    "input": "Input",
+    "output": "Output",
+    "submit": "Submit",
+    "judging": "Judging…",
+    "result": "Result",
+    "passed": "Passed",
+    "history": "Submissions",
+    "difficulty": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard"
+    },
+    "language": {
+      "python": "Python",
+      "javascript": "JavaScript",
+      "typescript": "TypeScript",
+      "java": "Java",
+      "cpp": "C++"
+    },
+    "verdict": {
+      "pending": "Pending",
+      "judging": "Judging",
+      "accepted": "Accepted",
+      "wrongAnswer": "Wrong Answer",
+      "timeLimitExceeded": "Time Limit Exceeded",
+      "memoryLimitExceeded": "Memory Limit Exceeded",
+      "runtimeError": "Runtime Error",
+      "compileError": "Compile Error",
+      "internalError": "Internal Error"
+    }
+  },
+  "quiz": {
+    "title": "Interview prep",
+    "subtitle": "Test yourself with multiple-choice quiz decks for this course.",
+    "empty": "No quiz decks for this course yet.",
+    "study": "Study",
+    "cardCount": "{count} cards",
+    "backToDecks": "← Decks",
+    "questionProgress": "Question {current}/{total}",
+    "next": "Next",
+    "seeResults": "See results",
+    "correct": "Correct",
+    "incorrect": "Incorrect",
+    "restart": "Restart",
+    "testScore": "Your score",
+    "testScoreValue": "{correct}/{total} ({percent}%)",
+    "difficulty": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard",
+      "insane": "Insane"
+    }
+  },
+  "aiSettings": {
+    "title": "AI Settings",
+    "subtitle": "Choose your AI source and manage your own API key",
+    "effectiveNow": "Currently using",
+    "gradeWith": "Grade with AI",
+    "pickModel": "Pick a model",
+    "categories": {
+      "economy": "Economy",
+      "balanced": "Balanced",
+      "premium": "Premium"
+    },
+    "premiumLocked": "Paid plan required",
+    "save": "Save changes",
+    "saved": "AI settings saved",
+    "keyRemoved": "API key removed",
+    "error": "Could not update AI settings",
+    "lanes": {
+      "auto": {
+        "title": "Auto (free)",
+        "desc": "Use the free allowance bundled with your course — basic models only."
+      },
+      "premium": {
+        "title": "Premium",
+        "desc": "Spend your paid-plan credits on any model category for higher quality."
+      },
+      "byok": {
+        "title": "Bring your own key (BYOK)",
+        "desc": "Supply your own API key — no system quota is consumed."
+      }
+    },
+    "byok": {
+      "heading": "Your API key",
+      "provider": "Provider",
+      "apiKey": "API key",
+      "apiKeyPlaceholder": "Paste your API key",
+      "apiKeyPlaceholderReplace": "Enter a new key to replace the current one",
+      "keyOnFile": "An API key is on file",
+      "removeKey": "Remove key",
+      "keyHint": "Enter an API key to use BYOK mode."
+    }
+  },
+  "aiSubscription": {
+    "title": "AI Plans",
+    "subtitle": "Upgrade for more weekly AI credits",
+    "perMonth": "/month",
+    "priceUsdHint": "≈ {amount} for international payments",
+    "popular": "Popular",
+    "currentPlan": "Current plan",
+    "buy": "Buy now",
+    "creditsPer5h": "{credits} credits / 5 hours",
+    "creditsPerWeek": "{credits} credits / week",
+    "free": {
+      "title": "Free",
+      "price": "₫0",
+      "desc": "Basic AI allowance bundled with your course",
+      "cta": "Default plan"
+    }
+  },
+  "aiQuota": {
+    "title": "AI quota",
+    "subtitle": "Your usage across the 5-hour and weekly windows",
+    "cardTitle": "AI quota",
+    "viewDetails": "View details",
+    "remainingSummary": "{remaining} {unit} left in the next 5 hours",
+    "currentLane": "Current",
+    "window5h": "Next 5 hours",
+    "windowWeek": "This week",
+    "usesUnit": "uses",
+    "creditsUnit": "credits",
+    "resets5h": "5-hour window resets",
+    "resetsWeek": "Weekly window resets",
+    "noPremium": "No active subscription — upgrade to unlock Premium credits."
+  },
+  "profile": {
+    "signedOut": {
+      "title": "You are not signed in",
+      "desc": "Sign in to view your profile and AI quota."
+    },
+    "nav": {
+      "aiSettingsDesc": "Choose your AI lane and manage your own API key",
+      "aiSubscriptionDesc": "Upgrade for more weekly AI credits",
+      "bookmarks": "Bookmarks",
+      "bookmarksDesc": "Your saved content"
+    }
+  },
   "reference": {
     "title": "References"
   },
@@ -601,10 +751,23 @@
     }
   },
   "payment": {
-    "title": "Choose Payment Method",
+    "title": "Payment",
     "desc": "Choose a payment method to continue",
+    "group": {
+      "domestic": "Domestic",
+      "international": "International"
+    },
     "payos": {
       "desc": "Pay with PayOS"
+    },
+    "stripe": {
+      "desc": "Pay with cards worldwide via Stripe"
+    },
+    "paypal": {
+      "desc": "Pay with your PayPal balance or linked cards"
+    },
+    "crypto": {
+      "desc": "Pay with stablecoins (USDT/USDC)"
     },
     "sepay": {
       "desc": "Pay with Sepay",
@@ -686,6 +849,7 @@
       "next": "Next page"
     },
     "disabled": "Disabled",
+    "back": "Back",
     "streak": {
       "current": "Current Streak",
       "longest": "Longest Streak",

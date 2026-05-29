@@ -2,6 +2,10 @@ import { GraphQLHeadersKey, queryMilestoneTaskProgress } from "@/modules/api"
 import { useAppSelector } from "@/redux"
 import useSWR from "swr"
 
+/**
+ * SWR query core for the milestone task progress query.
+ * @returns the SWR query handle.
+ */
 export const useQueryMilestoneTaskProgressSwrCore = () => {
     const course = useAppSelector((state) => state.course.entity)
 

@@ -1,9 +1,9 @@
 import type {
     ContentEntity,
 } from "@/modules/types"
-import { 
-    createSlice, 
-    PayloadAction 
+import {
+    createSlice,
+    type PayloadAction,
 } from "@reduxjs/toolkit"
 
 /**
@@ -55,11 +55,10 @@ export const publicContentSlice = createSlice(
     }
 )
 
-/**
- * The reducer for the public content slice.
- */
+/** Root reducer for the public-content slice. */
 export const publicContentReducer = publicContentSlice.reducer
-export const { 
+/** Actions exported from the public-content slice. */
+export const {
     setPublicContentDisplayId,
     setPublicContent,
 } = publicContentSlice.actions

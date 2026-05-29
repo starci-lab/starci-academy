@@ -3,6 +3,9 @@ import {
     type PayloadAction,
 } from "@reduxjs/toolkit"
 
+/**
+ * Client state for the global search feature.
+ */
 export interface SearchSlice {
     /** Current global search query. */
     query: string

@@ -114,7 +114,7 @@ export const LivestreamCalendarModal = () => {
                         <Modal.Body className="gap-0 p-4">
                             {
                                 visibleSessions.length === 0 ? (
-                                    <div className="text-center text-sm text-foreground-500">
+                                    <div className="text-center text-sm text-muted">
                                         {t("livestream.calendar.empty")}
                                     </div>
                                 ) : (
@@ -168,7 +168,7 @@ export const LivestreamCalendarModal = () => {
 
                                                                 </div>
                                                                 {session.note?.trim() ? (
-                                                                    <div className="text-sm text-foreground-600">
+                                                                    <div className="text-sm text-muted">
                                                                         {session.note}
                                                                     </div>
                                                                 ) : null}

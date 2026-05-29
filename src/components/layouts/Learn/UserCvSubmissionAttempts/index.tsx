@@ -48,7 +48,7 @@ export const UserCvSubmissionAttempts = (props: UserCvSubmissionAttemptsProps) =
                                     {isPublicUrl(item.fileUrl) ? (
                                         <Link className="text-sm font-medium text-accent underline" href={item.fileUrl} target="_blank">{item.fileName}</Link>
                                     ) : (
-                                        <span className="text-sm font-medium text-foreground-500">{item.fileName}</span>
+                                        <span className="text-sm font-medium text-muted">{item.fileName}</span>
                                     )}
                                 </Table.Cell>
                                 <Table.Cell>{item.submittedAt}</Table.Cell>

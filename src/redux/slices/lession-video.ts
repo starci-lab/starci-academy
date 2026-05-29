@@ -1,13 +1,13 @@
 import type {
     LessonVideoEntity,
 } from "@/modules/types"
-import { 
-    createSlice, 
-    PayloadAction 
+import {
+    createSlice,
+    type PayloadAction,
 } from "@reduxjs/toolkit"
 
 /**
- * The slice for the lesson video.
+ * Client state for the active lesson video entity and the paginated lesson video list.
  */
 export interface LessonVideoSlice {
     /** The lesson video display id. */
@@ -47,7 +47,7 @@ const initialState: LessonVideoSlice = {
 }
 
 /**
- * The slice for the lesson video.
+ * Slice tracking the active lesson video entity and the paginated lesson video list.
  */
 export const lessonVideoSlice = createSlice(
     {
@@ -110,11 +110,10 @@ export const lessonVideoSlice = createSlice(
     }
 )
 
-/**
- * The reducer for the lesson video slice.
- */
+/** Root reducer for the lesson video slice. */
 export const lessonVideoReducer = lessonVideoSlice.reducer
-export const { 
+/** Actions exported from the lesson video slice. */
+export const {
     setLessonVideo,
     setLessonVideos,
     setLessonVideoDisplayId,

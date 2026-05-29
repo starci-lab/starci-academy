@@ -40,7 +40,7 @@ export const Module = () => {
                     <div className="h-3" />
                     <Skeleton className="h-6 w-20 rounded-full" />
                     <div className="h-6" />
-                    <div className="font-semibold text-base">{t("module.pathIntroduction")}</div>
+                    <div className="text-lg font-semibold">{t("module.pathIntroduction")}</div>
                     <div className="h-3" />
                     <div className="text-sm text-start w-full gap-3 flex flex-col text-muted">
                         <div className="flex flex-col gap-3">
@@ -59,7 +59,7 @@ export const Module = () => {
                         </div>
                     </div>
                     <div className="h-6" />
-                    <div className="font-semibold text-base">{t("content.tabs.content")}</div>
+                    <div className="text-lg font-semibold">{t("content.tabs.content")}</div>
                     <div className="h-3" />
                     <div className="grid grid-cols-1 gap-3 md:grid-cols-2"> 
                         {

@@ -1,6 +1,7 @@
-import { createAuthApolloClient } from "../clients"
-import { MutateParams, type GraphQLResponse } from "../types"
+﻿import { createAuthApolloClient } from "../clients"
+import { MutateParams } from "../types"
 import { gql } from "@apollo/client"
+import type { ToggleFavoriteRequest, MutateToggleFavoriteResponse } from "./types/toggle-favorite"
 
 const mutation = gql`
   mutation ToggleFavourite($request: ToggleFavouriteRequest!) {
@@ -12,28 +13,11 @@ const mutation = gql`
   }
 `
 
-export interface ToggleFavoriteRequest {
-    /** Content ID to toggle favourite for. */
-    contentId: string
-    /** true = add to favorites, false = remove. */
-    isFavorite: boolean
-}
-
+/** Apollo params for {@link mutateToggleFavorite}. */
 export type MutateToggleFavoriteParams = MutateParams<
     MutateToggleFavoriteResponse,
     ToggleFavoriteRequest
 >
-
-export interface ToggleFavoriteData {
-    /** User content record ID. */
-    id: string
-    /** Current favourite state after toggle. */
-    isFavorite: boolean
-}
-
-export interface MutateToggleFavoriteResponse {
-    toggleFavourite: GraphQLResponse<ToggleFavoriteData>
-}
 
 export const mutateToggleFavorite = async ({
     request,

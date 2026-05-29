@@ -2,7 +2,7 @@
 
 import React from "react"
 import { Breadcrumbs, Skeleton } from "@heroui/react"
-import { ModuleSidebar } from "@/components/layouts"
+import { ModuleSidebar } from "@/components/layouts/ModuleSidebar"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { pathConfig } from "@/resources"

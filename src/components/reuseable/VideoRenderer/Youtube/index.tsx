@@ -64,7 +64,7 @@ export const YoutubePlayer = ({
 
     if (!embedSrc) {
         return (
-            <div className="text-foreground-500 flex min-h-[12rem] items-center justify-center rounded-medium border border-dashed p-4 text-center text-sm">
+            <div className="text-muted flex min-h-[12rem] items-center justify-center rounded-medium border border-dashed p-4 text-center text-sm">
                 Invalid or unsupported YouTube URL.
             </div>
         )

@@ -1,4 +1,4 @@
-import type { TemplateCVEntity } from "@/modules/api"
+import type { TemplateCVEntity } from "@/modules/types"
 import {
     createSlice,
     type PayloadAction,
@@ -12,14 +12,19 @@ export interface TemplateCvsSlice {
     rows: Array<TemplateCVEntity>
 }
 
+/** Initial state for the template-cvs slice. */
 const initialState: TemplateCvsSlice = {
     rows: [],
 }
 
+/**
+ * Slice caching the CV review rubric template list from the API.
+ */
 export const templateCvsSlice = createSlice({
     name: "templateCvs",
     initialState,
     reducers: {
+        /** Replace the template CV rows with the latest API response. */
         setTemplateCvs: (
             state,
             action: PayloadAction<Array<TemplateCVEntity>>,
@@ -29,5 +34,7 @@ export const templateCvsSlice = createSlice({
     },
 })
 
+/** Root reducer for the template-cvs slice. */
 export const templateCvsReducer = templateCvsSlice.reducer
+/** Actions exported from the template-cvs slice. */
 export const { setTemplateCvs } = templateCvsSlice.actions

@@ -1,8 +1,7 @@
-
-import { CourseEntity } from "@/modules/types"
 import { createNoAuthApolloClient } from "../clients"
-import { type GraphQLResponse, type QueryParams } from "../types"
+import { type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type { QueryCourseRequest, QueryCourseResponse } from "./types"
 
 const query1 = gql`
   query Course($request: CourseRequest!) {
@@ -19,11 +18,13 @@ const query1 = gql`
         cdnUrl
         coverImageUrl
         originalPrice
+        originalPriceUsd
         currentPhase
         enrollmentCount
         pricingPhases {
           id
           price
+          priceUsd
           phase
           slotAvailable
           orderIndex
@@ -79,19 +80,6 @@ export enum QueryCourse {
 
 const queryMap: Record<QueryCourse, DocumentNode> = {
     [QueryCourse.Query1]: query1,
-}
-
-/** Apollo variables for `course(input: CourseInput!)`. */
-export interface QueryCourseRequest {
-    /** The display id. */
-    displayId?: string
-    /** The id. */
-    id?: string
-}
-
-
-export interface QueryCourseResponse {
-    course: GraphQLResponse<CourseEntity>
 }
 
 /**

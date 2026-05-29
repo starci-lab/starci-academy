@@ -6,6 +6,7 @@ import { useAppSelector } from "@/redux"
 import type { WithClassNames } from "@/modules/types"
 import { getContentCodeExplainings } from "@/modules/types"
 import { useQueryContentSwr } from "@/hooks/singleton"
+import { CodeBodySkeleton } from "../CodeBodySkeleton"
 import { ExplainingCard } from "./ExplainingCard"
 import { CodeExplainingEmpty } from "./Empty"
 
@@ -26,8 +27,15 @@ export const CodeExplainingBody = ({ className }: CodeExplainingBodyProps) => {
         [content],
     )
 
-    if (queryContentSwr.isLoading) {
-        return <div className={cn("animate-pulse h-24 rounded-xl bg-default-100", className)} />
+    // loading gate: render content only when the content query has settled with
+    // data and no error; otherwise show the code-shaped skeleton.
+    const ready = !queryContentSwr.isLoading
+        && !queryContentSwr.isValidating
+        && !!queryContentSwr.data
+        && !queryContentSwr.error
+
+    if (!ready) {
+        return <CodeBodySkeleton className={className} />
     }
 
     if (!items.length) {

@@ -1,11 +1,14 @@
 import { createAuthApolloClient } from "../clients"
 import {
     SortOrder,
-    type GraphQLResponse,
     type QueryParams,
     type SortInput,
 } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type {
+    QueryUserCvSubmissionAttemptsResponse,
+    UserCvSubmissionAttemptsListRequest,
+} from "./types"
 
 /** Sort keys for `userCvSubmissionAttempts`. */
 export enum UserCvSubmissionAttemptsSortBy {
@@ -42,38 +45,6 @@ export enum QueryUserCvSubmissionAttempts {
 
 const queryMap: Record<QueryUserCvSubmissionAttempts, DocumentNode> = {
     [QueryUserCvSubmissionAttempts.Query1]: query1,
-}
-
-export interface UserCvSubmissionAttemptItemPayload {
-    attemptId: string
-    attemptNumber: number
-    fileKey: string
-    fileUrl: string
-    submittedAt: string
-    status: string
-    detailFeedback: string | null
-    score?: number | null
-}
-
-export interface UserCvSubmissionAttemptsDataPayload {
-    cvSubmissionId: string
-    totalCount: number
-    data: Array<UserCvSubmissionAttemptItemPayload>
-}
-
-export interface QueryUserCvSubmissionAttemptsResponse {
-    userCvSubmissionAttempts: GraphQLResponse<UserCvSubmissionAttemptsDataPayload>
-}
-
-export interface UserCvSubmissionAttemptsListFilters {
-    /** 0-based page index (matches API). */
-    pageNumber?: number
-    limit?: number
-    sorts?: Array<SortInput<UserCvSubmissionAttemptsSortBy>>
-}
-
-export interface UserCvSubmissionAttemptsListRequest {
-    filters?: UserCvSubmissionAttemptsListFilters
 }
 
 export const defaultUserCvSubmissionAttemptsSorts: Array<SortInput<UserCvSubmissionAttemptsSortBy>> = [

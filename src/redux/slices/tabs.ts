@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
 
 /**
  * The tabs for the authentication modal.
@@ -18,6 +18,9 @@ export enum LearnTab {
     TopAchievers = "topAchievers",
 }
 
+/**
+ * The tabs for the content detail view.
+ */
 export enum ContentTab {
     Content = "content",
     /** Code explaining + implementations (replaces legacy lesson videos tab). */
@@ -30,11 +33,14 @@ export enum ContentTab {
 }
 
 /**
- * The slice for the authentication modal.
+ * UI tab selection state (authentication modal, learn page, content detail).
  */
 export interface TabsSlice {
+    /** Currently active tab in the authentication modal. */
     authenticationModalTab: AuthenticationModalTab
+    /** Currently active tab on the Learn page. */
     learnTab: LearnTab
+    /** Currently active tab in the content detail view. */
     contentTab: ContentTab
 }
 
@@ -48,50 +54,52 @@ const initialState: TabsSlice = {
 }
 
 /**
- * The slice for the tabs.
+ * Slice managing which tab is active in the auth modal, learn page, and content detail view.
  */
 export const tabsSlice = createSlice({
     name: "tabs",
     initialState,
     reducers: {
+        /** Set the active tab in the authentication modal. */
         setAuthenticationModalTab: (
             state,
             action: PayloadAction<AuthenticationModalTab>
         ) => {
             state.authenticationModalTab = action.payload
         },
+        /** Reset the authentication modal tab to Sign In. */
         resetAuthenticationModalTab: (state) => {
             state.authenticationModalTab = AuthenticationModalTab.SignIn
         },
+        /** Set the active tab on the Learn page. */
         setLearnTab: (
             state,
             action: PayloadAction<LearnTab>
         ) => {
             state.learnTab = action.payload
         },
+        /** Reset the Learn page tab to Lesson Videos. */
         resetLearnTab: (state) => {
             state.learnTab = LearnTab.LessonVideos
         },
+        /** Set the active tab in the content detail view. */
         setContentTab: (
             state,
             action: PayloadAction<ContentTab>
         ) => {
             state.contentTab = action.payload
         },
+        /** Reset the content detail tab to Content. */
         resetContentTab: (state) => {
             state.contentTab = ContentTab.Content
         },
     },
 })
 
-/**
- * The reducer for the tabs.
- */
+/** Root reducer for the tabs slice. */
 export const tabsReducer = tabsSlice.reducer
 
-/**
- * The actions for the tabs.
- */
+/** Actions exported from the tabs slice. */
 export const {
     setAuthenticationModalTab,
     resetAuthenticationModalTab,

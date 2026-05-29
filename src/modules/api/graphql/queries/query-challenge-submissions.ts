@@ -1,23 +1,20 @@
-import type { ChallengeSubmissionEntity } from "@/modules/types"
 import { createAuthApolloClient } from "../clients"
 import {
     SortOrder,
-    type GraphQLResponse,
     type QueryParams,
     type SortInput,
 } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type {
+    ChallengeSubmissionsListRequest,
+    QueryChallengeSubmissionsResponse,
+} from "./types"
 
 /** Sort keys for `challengeSubmissions` (`ChallengeSubmissionsSortBy`). */
 export enum ChallengeSubmissionsSortBy {
     Name = "name",
     CreatedAt = "createdAt",
     UpdatedAt = "updatedAt",
-}
-
-/** Inner payload: list of submission rows for one challenge. */
-export interface ChallengeSubmissionsPayload {
-    data: Array<ChallengeSubmissionEntity>
 }
 
 const query1 = gql`
@@ -36,6 +33,9 @@ const query1 = gql`
           description
           userSubmission {
             submissionUrl
+            selectedMode
+            selectedModel
+            selectedModelProvider
             lastAttempt {
                 score
             }
@@ -52,17 +52,6 @@ export enum QueryChallengeSubmissions {
 
 const queryMap: Record<QueryChallengeSubmissions, DocumentNode> = {
     [QueryChallengeSubmissions.Query1]: query1,
-}
-
-export interface ChallengeSubmissionsListRequest {
-    challengeId: string
-    filters: {
-        sorts: Array<SortInput<ChallengeSubmissionsSortBy>>
-    }
-}
-
-export interface QueryChallengeSubmissionsResponse {
-    challengeSubmissions: GraphQLResponse<ChallengeSubmissionsPayload>
 }
 
 export const defaultChallengeSubmissionsSorts: Array<

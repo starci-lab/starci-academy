@@ -32,7 +32,7 @@ export const LanguageCard = ({ code, label, isSelected, onPress }: LanguageCardP
             <div className="flex items-center justify-center gap-3">
                 <div className="flex flex-col items-start justify-start gap-1">
                     <div className="text-sm">{label}</div>
-                    <div className="text-xs uppercase tracking-widest text-foreground-500">{code}</div>
+                    <div className="text-xs font-semibold uppercase tracking-wide text-muted">{code}</div>
                 </div>
                 {isSelected ? <CheckCircleIcon className="size-5 text-primary" /> : null}
             </div>

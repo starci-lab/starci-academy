@@ -57,3 +57,6 @@ export const Learn = () => {
         </div>
     )
 }
+
+export * from "./StarciAi"
+export * from "./MindMap"

@@ -1,10 +1,7 @@
+﻿import type { MutateParams } from "../types"
 import { createAuthApolloClient } from "../clients"
-import {
-    type GraphQLResponse,
-    type MutateParams,
-    type QueryVariables,
-} from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type { ReviewPersonalProjectTaskRequest, MutateReviewPersonalProjectTaskResponse } from "./types/review-personal-project-for-task"
 
 const mutation1 = gql`
   mutation ReviewPersonalProjectTask($request: ReviewPersonalProjectTaskRequest!) {
@@ -27,40 +24,11 @@ const mutationMap: Record<MutationReviewPersonalProjectTask, DocumentNode> = {
     [MutationReviewPersonalProjectTask.Mutation1]: mutation1,
 }
 
-/** GraphQL `ReviewPersonalProjectTaskRequest` body. */
-export interface ReviewPersonalProjectTaskRequest {
-    /** Course ID. */
-    courseId: string
-    /** Task ID to review (defaults to first task if omitted). */
-    taskId?: string
-    /**
-     * GitHub repository URL.
-     * If omitted or empty, the URL stored on the user's enrollment for this course is used.
-     */
-    githubUrl?: string | null
-    /**
-     * Branch name for review.
-     * If omitted, the branch stored on enrollment is used (worker defaults to main when unset).
-     */
-    branch?: string | null
-}
-
-export interface ReviewPersonalProjectTaskData {
-    attemptId: string
-    jobId: string
-}
-
-export type MutateReviewPersonalProjectTaskVariables =
-    QueryVariables<ReviewPersonalProjectTaskRequest>
-
+/** Apollo params for {@link mutateReviewPersonalProjectTask}. */
 export type MutateReviewPersonalProjectTaskParams = MutateParams<
     MutationReviewPersonalProjectTask,
     ReviewPersonalProjectTaskRequest
 >
-
-export interface MutateReviewPersonalProjectTaskResponse {
-    reviewPersonalProjectTask: GraphQLResponse<ReviewPersonalProjectTaskData>
-}
 
 /**
  * Queues AI review for a personal project repository of one task.

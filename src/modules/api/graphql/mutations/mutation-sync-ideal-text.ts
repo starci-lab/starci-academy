@@ -1,10 +1,7 @@
-import { EnrollmentEntity } from "@/modules/types"
+﻿import type { MutateParams } from "../types"
 import { createAuthApolloClient } from "../clients"
-import {
-    type GraphQLResponse,
-    type MutateParams,
-} from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type { SyncIdealTextRequest, MutateSyncIdealTextResponse } from "./types/sync-ideal-text"
 
 const mutation1 = gql`
   mutation SyncIdealText($request: SyncIdealTextRequest!) {
@@ -27,22 +24,11 @@ const mutationMap: Record<MutationSyncIdealText, DocumentNode> = {
     [MutationSyncIdealText.Mutation1]: mutation1,
 }
 
-/** Request for `syncIdealText`. */
-export interface SyncIdealTextRequest {
-    /** Course ID. */
-    courseId: string
-    /** The project idea text. */
-    ideaText: string
-}
-
+/** Apollo params for {@link mutateSyncIdealText}. */
 export type MutateSyncIdealTextParams = MutateParams<
     MutationSyncIdealText,
     SyncIdealTextRequest
 >
-
-export interface MutateSyncIdealTextResponse {
-    syncIdealText: GraphQLResponse<EnrollmentEntity>
-}
 
 /**
  * Syncs (upserts) the user's personal project idea text.

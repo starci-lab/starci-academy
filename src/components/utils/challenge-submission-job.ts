@@ -1,4 +1,4 @@
-import type { JobStatusUpdatedSocketIoMessage } from "@/hooks/singleton/socketio/types"
+import type { JobStatusUpdatedSocketIoMessage } from "@/modules/types"
 
 /**
  * Resolves the latest job-status envelope for a challenge submission row.

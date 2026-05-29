@@ -1,4 +1,11 @@
 import { ReactNode } from "react"
+
+/** Form values for the CV submission form (presentational form + its container). */
+export interface CvSubmissionFormValues {
+    /** The selected CV file, or `null` before a file is chosen. */
+    cv: File | null
+}
+
 export interface Module {
     id: string
     name: string

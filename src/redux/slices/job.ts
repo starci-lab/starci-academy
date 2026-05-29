@@ -1,4 +1,4 @@
-import type { IncompleteJobsItem } from "@/modules/api"
+import type { IncompleteJobsItem } from "@/modules/types"
 import { JobStatus } from "@/modules/types"
 import {
     createSlice,
@@ -16,15 +16,20 @@ export interface JobSlice {
     incompleteJobs: Array<IncompleteJobsItem>
 }
 
+/** Initial state for the job slice. */
 const initialState: JobSlice = {
     incompleteJobs: [],
-}   
+}
 
+/**
+ * Slice tracking in-flight background jobs for the current course (grading, CV review, etc.).
+ */
 export const jobSlice = createSlice(
     {
         name: "job",
         initialState,
         reducers: {
+            /** Replace the entire incomplete-jobs list (called on first GraphQL fetch). */
             setIncompleteJobs: (
                 state,
                 action: PayloadAction<Array<IncompleteJobsItem>>,
@@ -62,6 +67,7 @@ export const jobSlice = createSlice(
     },
 )
 
+/** Payload for updating a single job's status from a Socket.IO event. */
 export interface ApplyIncompleteJobStatusPayload {
     /** `JobStatusUpdated.data.jobId` */
     jobId: string
@@ -69,7 +75,9 @@ export interface ApplyIncompleteJobStatusPayload {
     status: JobStatus
 }
 
+/** Root reducer for the job slice. */
 export const jobReducer = jobSlice.reducer
+/** Actions exported from the job slice. */
 export const {
     setIncompleteJobs,
     applyIncompleteJobStatus,

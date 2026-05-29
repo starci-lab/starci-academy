@@ -1,11 +1,12 @@
-import type { MilestoneTaskEntity } from "@/modules/types"
 import { createAuthApolloClient } from "../clients"
 import {
-    type GraphQLResponse,
     type QueryParams,
-    type QueryVariables,
 } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type {
+    MilestoneTaskQueryRequest,
+    QueryMilestoneTaskResponse,
+} from "./types"
 
 const query1 = gql`
   query MilestoneTask($request: TaskRequest!) {
@@ -26,6 +27,13 @@ const query1 = gql`
           score
           orderIndex
         }
+        codeImplementations {
+          id
+          lang
+          guide
+          example
+          orderIndex
+        }
       }
     }
   }
@@ -38,18 +46,6 @@ export enum QueryMilestoneTask {
 const queryMap: Record<QueryMilestoneTask, DocumentNode> = {
     [QueryMilestoneTask.Query1]: query1,
 }
-
-/** Request for the `task` GraphQL query (milestone task by id). */
-export interface MilestoneTaskQueryRequest {
-    /** Milestone task primary id. */
-    id: string
-}
-
-export interface QueryMilestoneTaskResponse {
-    task: GraphQLResponse<MilestoneTaskEntity>
-}
-
-export type QueryMilestoneTaskVariables = QueryVariables<MilestoneTaskQueryRequest>
 
 export type QueryMilestoneTaskParams = QueryParams<
     QueryMilestoneTask,

@@ -51,6 +51,11 @@ import {
     useQueryUserPersonalTaskAttemptFeedbacksSwrCore,
     useQueryMilestoneTaskProgressSwrCore,
     useQueryAiModelsSwrCore,
+    useQueryMyAiSettingsSwrCore,
+    useQueryMyAiQuotaSwrCore,
+    useMutateUpdateMyAiSettingsSwrCore,
+    useQueryAiSubscriptionTiersSwrCore,
+    useMutatePurchaseAiSubscriptionSwrCore,
     useQueryContentStatusSwrCore,
     useQueryPublicContentSwrCore,
     useQuerySavedContentsSwrCore,
@@ -65,6 +70,10 @@ import {
     useQueryHeadhuntersSwrCore,
 } from "./core"
 
+/**
+ * Shape of the singleton SWR context; each field is a live SWR (query or mutation) handle
+ * created once in {@link SwrProvider} and consumed via the accessor hooks.
+ */
 export interface SwrContextType {
     queryCourseSwr: ReturnType<typeof useQueryCourseSwrCore>;
     queryCourseEnrollmentStatusSwr: ReturnType<typeof useQueryCourseEnrollmentStatusSwrCore>;
@@ -115,6 +124,11 @@ export interface SwrContextType {
     queryUserPersonalTaskAttemptFeedbacksSwr: ReturnType<typeof useQueryUserPersonalTaskAttemptFeedbacksSwrCore>;
     queryMilestoneTaskProgressSwr: ReturnType<typeof useQueryMilestoneTaskProgressSwrCore>;
     queryAiModelsSwr: ReturnType<typeof useQueryAiModelsSwrCore>;
+    queryMyAiSettingsSwr: ReturnType<typeof useQueryMyAiSettingsSwrCore>;
+    queryMyAiQuotaSwr: ReturnType<typeof useQueryMyAiQuotaSwrCore>;
+    mutateUpdateMyAiSettingsSwr: ReturnType<typeof useMutateUpdateMyAiSettingsSwrCore>;
+    queryAiSubscriptionTiersSwr: ReturnType<typeof useQueryAiSubscriptionTiersSwrCore>;
+    mutatePurchaseAiSubscriptionSwr: ReturnType<typeof useMutatePurchaseAiSubscriptionSwrCore>;
     queryContentStatusSwr: ReturnType<typeof useQueryContentStatusSwrCore>;
     queryPublicContentSwr: ReturnType<typeof useQueryPublicContentSwrCore>;
     querySavedContentsSwr: ReturnType<typeof useQuerySavedContentsSwrCore>;
@@ -131,6 +145,10 @@ export interface SwrContextType {
 
 export const SwrContext = createContext<SwrContextType | null>(null)
 
+/**
+ * Mounts all singleton SWR query and mutation hooks once at the top of the app tree.
+ * @param props.children - app content
+ */
 export const SwrProvider = ({ children }: PropsWithChildren) => {
     const queryCourseSwr = useQueryCourseSwrCore()
     const queryCourseEnrollmentStatusSwr = useQueryCourseEnrollmentStatusSwrCore()
@@ -183,6 +201,11 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
     const queryUserPersonalTaskAttemptFeedbacksSwr = useQueryUserPersonalTaskAttemptFeedbacksSwrCore()
     const queryMilestoneTaskProgressSwr = useQueryMilestoneTaskProgressSwrCore()
     const queryAiModelsSwr = useQueryAiModelsSwrCore()
+    const queryMyAiSettingsSwr = useQueryMyAiSettingsSwrCore()
+    const queryMyAiQuotaSwr = useQueryMyAiQuotaSwrCore()
+    const mutateUpdateMyAiSettingsSwr = useMutateUpdateMyAiSettingsSwrCore()
+    const queryAiSubscriptionTiersSwr = useQueryAiSubscriptionTiersSwrCore()
+    const mutatePurchaseAiSubscriptionSwr = useMutatePurchaseAiSubscriptionSwrCore()
     const queryContentStatusSwr = useQueryContentStatusSwrCore()
     const queryPublicContentSwr = useQueryPublicContentSwrCore()
     const querySavedContentsSwr = useQuerySavedContentsSwrCore()
@@ -247,6 +270,11 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
                 queryUserPersonalTaskAttemptFeedbacksSwr,
                 queryMilestoneTaskProgressSwr,
                 queryAiModelsSwr,
+                queryMyAiSettingsSwr,
+                queryMyAiQuotaSwr,
+                mutateUpdateMyAiSettingsSwr,
+                queryAiSubscriptionTiersSwr,
+                mutatePurchaseAiSubscriptionSwr,
                 queryContentStatusSwr,
                 queryPublicContentSwr,
                 querySavedContentsSwr,

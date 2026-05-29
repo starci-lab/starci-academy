@@ -1,19 +1,58 @@
 "use client"
 
-import React, { useMemo, useRef, useEffect, useCallback } from "react"
-import { MarkdownContent, ReferenceLinks } from "@/components/reuseable"
-import { useTranslations } from "next-intl"
-import { useAppSelector } from "@/redux"
-import { Skeleton, cn, Button, Spinner } from "@heroui/react"
-import { WithClassNames } from "@/modules/types"
+import React, {
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+} from "react"
+import {
+    MarkdownContent,
+    ReferenceLinks,
+    SkeletonText,
+    SkeletonParagraph,
+} from "@/components/reuseable"
+import {
+    useTranslations,
+} from "next-intl"
+import {
+    useAppSelector,
+} from "@/redux"
+import {
+    cn,
+} from "@heroui/react"
+import type {
+    WithClassNames,
+} from "@/modules/types"
 import _ from "lodash"
-import { useQueryContentSwr, useMutateToggleFavoriteSwr, useContentOverlayState, useShareOverlayState, useQueryContentStatusSwr } from "@/hooks/singleton"
-import { mutateMarkContentAsReaded } from "@/modules/api"
-import { BookmarkSimpleIcon, ShareNetworkIcon, ArrowsOutIcon } from "@phosphor-icons/react"
-import { runGraphQLWithToast } from "@/modules/toast"
+import {
+    useContentOverlayState,
+    useMutateToggleFavoriteSwr,
+    useQueryContentStatusSwr,
+    useQueryContentSwr,
+    useShareOverlayState,
+} from "@/hooks/singleton"
+import {
+    mutateMarkContentAsReaded,
+} from "@/modules/api"
+import {
+    runGraphQLWithToast,
+} from "@/modules/toast"
+import {
+    ActionToolbar,
+} from "./ActionToolbar"
 
 export type ContentBodyProps = WithClassNames<undefined>
 
+/**
+ * Content tab body: action toolbar, markdown article, references and an
+ * intersection sentinel that marks the content as read once scrolled into view.
+ *
+ * Owns the favorite mutation, overlay state and the mark-as-read effect, then
+ * delegates the action row to a presentational child. `"use client"` for the
+ * SWR/redux hooks, refs and `IntersectionObserver`.
+ * @param props.className - Optional wrapper class.
+ */
 export const ContentBody = ({ className }: ContentBodyProps) => {
     const t = useTranslations()
     const queryContentSwr = useQueryContentSwr()
@@ -23,7 +62,12 @@ export const ContentBody = ({ className }: ContentBodyProps) => {
     const contentOverlay = useContentOverlayState()
     const shareOverlay = useShareOverlayState()
     const isLoading = queryContentSwr.isLoading || !content
-    const references = useMemo(() => _.cloneDeep(content?.references ?? []).sort((prev, next) => prev.orderIndex - next.orderIndex), [content?.references])
+    const references = useMemo(
+        () => _.cloneDeep(content?.references ?? []).sort(
+            (prev, next) => prev.orderIndex - next.orderIndex,
+        ),
+        [content?.references],
+    )
 
     // Sentinel ref at bottom of content
     const sentinelRef = useRef<HTMLDivElement>(null)
@@ -66,85 +110,61 @@ export const ContentBody = ({ className }: ContentBodyProps) => {
         return () => observer.disconnect()
     }, [isLoading, queryContentStatusSwr.data?.isRead, markAsRead])
 
+    /** Toggle the favorite flag, then re-fetch the content status on success. */
+    const onToggleFavorite = useCallback(async () => {
+        if (!content?.id) return
+        await runGraphQLWithToast(
+            async () => {
+                const env = await mutateToggleFavoriteSwr.trigger({
+                    contentId: content.id,
+                    isFavorite: !queryContentStatusSwr.data?.isFavorite,
+                })
+                if (!env?.success) {
+                    throw new Error("Toggle favorite failed")
+                }
+                // re-fetch the content status
+                queryContentStatusSwr.mutate()
+                return env
+            },
+            {
+                showSuccessToast: true,
+                showErrorToast: true,
+            },
+        )
+    }, [content?.id, mutateToggleFavoriteSwr, queryContentStatusSwr])
+
+    /** Open the share overlay. */
+    const onShare = useCallback(
+        () => shareOverlay.setOpen(true),
+        [shareOverlay],
+    )
+
+    /** Open the fullscreen content overlay. */
+    const onFullscreen = useCallback(
+        () => contentOverlay.setOpen(true),
+        [contentOverlay],
+    )
+
     if (isLoading) {
         return (
             <>
-                <Skeleton className="h-[18px] my-[17px]"/>
+                <SkeletonText size="lg" width="w-2/3" />
                 <div className="my-3" />
-                <Skeleton className="h-[14px] my-[3px] w-full rounded-full" />
-                <Skeleton className="h-[14px] my-[3px] w-5/6 rounded-full" />
+                <SkeletonParagraph size="sm" lines={2} />
             </>
         )
     }
 
     return (
         <div className={cn("text-sm text-muted overflow-x-auto", className)}>
-            <div className="flex items-center gap-2">
-                <Button
-                    isIconOnly
-                    variant="secondary"
-                    onPress={
-                        async () => {
-                            if (!content?.id) return
-                            await runGraphQLWithToast(
-                                async () => {
-                                    const env = await mutateToggleFavoriteSwr.trigger({
-                                        contentId: content.id,
-                                        isFavorite: !queryContentStatusSwr.data?.isFavorite,
-                                    })
-                                    if (!env?.success) {
-                                        throw new Error("Toggle favorite failed")
-                                    }
-                                    //re-fetch the content status
-                                    queryContentStatusSwr.mutate()
-                                    return env
-                                },
-                                { 
-                                    showSuccessToast: true, 
-                                    showErrorToast: true 
-                                },
-                            )
-                        }
-                    }
-                    isPending={mutateToggleFavoriteSwr.isMutating}
-                    id="content-save-btn"
-                >
-                    {
-                        ({isPending}) => {
-                            return (
-                                <>
-                                    {isPending ? (
-                                        <Spinner className="size-5" />
-                                    ) : (
-                                        <BookmarkSimpleIcon
-                                            className="size-5"
-                                            weight={queryContentStatusSwr.data?.isFavorite ? "fill" : "regular"}
-                                        />
-                                    )}
-                                </>
-                            )
-                        }
-                    }
-                </Button>
-                {!content?.isPremium && (
-                    <Button
-                        isIconOnly
-                        variant="secondary"
-                        onPress={() => shareOverlay.setOpen(true)}
-                        id="content-share-btn"
-                    >
-                        <ShareNetworkIcon className="size-5" />
-                    </Button>
-                )}
-                <Button
-                    isIconOnly
-                    variant="secondary"
-                    onPress={() => contentOverlay.setOpen(true)}
-                    id="content-fullscreen-btn"
-                >
-                    <ArrowsOutIcon className="size-5" />
-                </Button>
-            </div>
+            <ActionToolbar
+                isFavorite={Boolean(queryContentStatusSwr.data?.isFavorite)}
+                isShareVisible={!content?.isPremium}
+                isFavoritePending={mutateToggleFavoriteSwr.isMutating}
+                onToggleFavorite={onToggleFavorite}
+                onShare={onShare}
+                onFullscreen={onFullscreen}
+            />
             <div className="h-3" />
             <MarkdownContent markdown={content?.body || t("content.empty")} />
             <div className="h-6" />

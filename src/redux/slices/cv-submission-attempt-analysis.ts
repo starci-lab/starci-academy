@@ -22,34 +22,45 @@ export interface CvSubmissionAttemptAnalysisItem {
     detailFeedback: string
 }
 
+/**
+ * Redux state for the CV submission attempt analysis modal.
+ */
 export interface CvSubmissionAttemptAnalysisSlice {
     /** Attempt currently selected for the analysis modal. */
     selectedAttempt: CvSubmissionAttemptAnalysisItem | null
 }
 
+/** Initial state for the cv-submission-attempt-analysis slice. */
 const initialState: CvSubmissionAttemptAnalysisSlice = {
     selectedAttempt: null,
 }
 
+/**
+ * Slice tracking which CV submission attempt is open in the analysis modal.
+ */
 export const cvSubmissionAttemptAnalysisSlice = createSlice({
     name: "cvSubmissionAttemptAnalysis",
     initialState,
     reducers: {
+        /** Set the attempt to display in the analysis modal. */
         setSelectedCvSubmissionAttemptAnalysis: (
             state,
             action: PayloadAction<CvSubmissionAttemptAnalysisItem>,
         ) => {
             state.selectedAttempt = action.payload
         },
+        /** Clear the selected attempt (e.g. when the modal is closed). */
         clearSelectedCvSubmissionAttemptAnalysis: (state) => {
             state.selectedAttempt = null
         },
     },
 })
 
+/** Actions exported from the cv-submission-attempt-analysis slice. */
 export const {
     setSelectedCvSubmissionAttemptAnalysis,
     clearSelectedCvSubmissionAttemptAnalysis,
 } = cvSubmissionAttemptAnalysisSlice.actions
 
+/** Root reducer for the cv-submission-attempt-analysis slice. */
 export const cvSubmissionAttemptAnalysisReducer = cvSubmissionAttemptAnalysisSlice.reducer

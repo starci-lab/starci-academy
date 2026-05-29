@@ -17,7 +17,7 @@ const Layout = async ({
     const messages = await getMessages()
     return (
         <html lang={locale}>
-            <body className={`${font.className} antialiased  bg-background`}>
+            <body className={`${font.className} ${font.variable} antialiased  bg-background`}>
                 <NextIntlClientProvider locale={locale} messages={messages}>
                     <InnerLayout>
                         <div>

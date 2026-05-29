@@ -1,23 +1,7 @@
 import { createNoAuthApolloClient } from "../clients"
-import { type GraphQLResponse, type QueryParams, type QueryVariables } from "../types"
+import { type QueryParams, type QueryVariables } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
-
-/** Request body for `checkEmailExists` (mirrors GraphQL `CheckEmailExistsRequest`). */
-export interface CheckEmailExistsRequest {
-    /** Email to probe against the bloom filter. */
-    email: string
-}
-
-/** Data returned when the bloom filter answers (see backend `CheckEmailExistsData`). */
-export interface CheckEmailExistsData {
-    /**
-     * True when the filter may contain this email; false means it is definitely absent
-     * (no false negatives; false positives are possible when true).
-     */
-    exists: boolean
-    /** False until the server-side filter is warmed in cache. */
-    isBloomFilterReady: boolean
-}
+import type { CheckEmailExistsRequest, QueryCheckEmailExistsResponse } from "./types"
 
 const query1 = gql`
   query CheckEmailExists($request: CheckEmailExistsRequest!) {
@@ -39,10 +23,6 @@ export enum QueryCheckEmailExists {
 
 const queryMap: Record<QueryCheckEmailExists, DocumentNode> = {
     [QueryCheckEmailExists.Query1]: query1,
-}
-
-export interface QueryCheckEmailExistsResponse {
-    checkEmailExists: GraphQLResponse<CheckEmailExistsData>
 }
 
 /**

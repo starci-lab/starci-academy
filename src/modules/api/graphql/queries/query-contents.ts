@@ -1,13 +1,14 @@
-import type { ContentEntity } from "@/modules/types"
 import { createAuthApolloClient } from "../clients"
 import type {
-    GraphQLResponse,
-    PaginationFilters,
     QueryParams,
     SortInput,
 } from "../types"
 import { SortOrder } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type {
+    ContentsListRequest,
+    QueryContentsResponse,
+} from "./types"
 
 /** Sort keys for `contents` list (`ContentsSortBy` on the API). */
 export enum ContentsSortBy {
@@ -15,12 +16,6 @@ export enum ContentsSortBy {
     OrderIndex = "orderIndex",
     CreatedAt = "createdAt",
     UpdatedAt = "updatedAt",
-}
-
-/** Paginated payload inside `contents.data`. */
-export interface QueryContentsPayload {
-    count: number
-    data: Array<ContentEntity>
 }
 
 const query1 = gql`
@@ -61,17 +56,6 @@ export enum QueryContents {
 
 const queryMap: Record<QueryContents, DocumentNode> = {
     [QueryContents.Query1]: query1,
-}
-
-export type ContentsListFilters = PaginationFilters<ContentsSortBy>
-
-export interface ContentsListRequest {
-    filters: ContentsListFilters
-    moduleId: string
-}
-
-export interface QueryContentsResponse {
-    contents: GraphQLResponse<QueryContentsPayload>
 }
 
 /** Default sort order for module contents list (`orderIndex` asc). */

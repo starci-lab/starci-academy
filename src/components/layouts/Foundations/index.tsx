@@ -1,10 +1,11 @@
 "use client"
 
-import React, { useEffect, useMemo, useRef } from "react"
-import {
-    Breadcrumbs,
-    Skeleton,
-} from "@heroui/react"
+import React, {
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+} from "react"
 import {
     useLocale,
     useTranslations,
@@ -23,29 +24,44 @@ import {
     setFoundation,
     setFoundationId,
 } from "@/redux/slices"
+import type {
+    FoundationEntity,
+} from "@/modules/types"
 import {
     useQueryFoundationCategoriesSwr,
     useQueryFoundationsSwr,
 } from "@/hooks/singleton"
-import { FoundationCard } from "./FoundationCard"
-import { FoundationCardSkeleton } from "./FoundationCardSkeleton"
-import { useOpenFoundationResource } from "./hooks"
-import { compareFoundations } from "./utils"
-
-/** One breadcrumb row for the learn foundations page. */
-type FoundationsLearnBreadcrumbItem = {
-    /** Stable React key. */
-    key: string
-    /** Visible label. */
-    label: string
-    /** Optional navigation handler. */
-    onPress?: () => void
-}
+import type {
+    FoundationsBreadcrumbItem,
+} from "./types"
+import {
+    useOpenFoundationResource,
+} from "./hooks"
+import {
+    compareFoundations,
+} from "./utils"
+import {
+    FoundationsBreadcrumbs,
+} from "./FoundationsBreadcrumbs"
+import {
+    FoundationsLearnHeader,
+} from "./FoundationsLearnHeader"
+import {
+    FoundationsList,
+} from "./FoundationsList"
 
 export { FoundationsCategoryGridLayout } from "./FoundationsCategoryGrid"
 
 /**
- * Learn foundations page: list of resources; click opens modal or external link.
+ * Learn foundations page container.
+ *
+ * Owns the cross-cutting concerns: SWR data loading, the shared breadcrumb trail
+ * (the breadcrumb component is reused across the hub/category/detail pages, so it
+ * stays prop-driven), the foundations sort, the select action and the deep-link
+ * auto-open effect. The header is a self-contained section that reads its own
+ * Redux/i18n; the list stays prop-driven because it shares the sorted list with
+ * the auto-open effect. `"use client"` for routing, redux and the open-resource
+ * side effect.
  */
 export const FoundationsLearnLayout = () => {
     const t = useTranslations()
@@ -58,14 +74,14 @@ export const FoundationsLearnLayout = () => {
     const category = useAppSelector((state) => state.foundation.category)
     const categoryId = useAppSelector((state) => state.foundation.categoryId)
     const foundations = useAppSelector((state) => state.foundation.entities)
-    const count = useAppSelector((state) => state.foundation.count)
     const foundationId = useAppSelector((state) => state.foundation.foundationId)
     const openedFromUrlRef = useRef<string | null>(null)
 
     useQueryFoundationCategoriesSwr()
     useQueryFoundationsSwr()
 
-    const breadcrumbItems = useMemo((): Array<FoundationsLearnBreadcrumbItem> => [
+    /** Breadcrumb trail from home → courses → course → foundations hub → category. */
+    const breadcrumbItems = useMemo((): Array<FoundationsBreadcrumbItem> => [
         {
             key: "home",
             label: t("nav.home"),
@@ -101,6 +117,7 @@ export const FoundationsLearnLayout = () => {
         t,
     ])
 
+    /** Foundations sorted into display order (StarCi video → roadmap → cheatsheet → rest). */
     const sortedFoundations = useMemo(() => {
         if (!foundations?.length) {
             return []
@@ -108,25 +125,37 @@ export const FoundationsLearnLayout = () => {
         return [...foundations].sort(compareFoundations)
     }, [foundations])
 
-    const onSelectFoundation = (foundation: typeof sortedFoundations[number]) => {
-        dispatch(setFoundation(foundation))
-        dispatch(setFoundationId(foundation.id))
+    /** Select a foundation: persist it, deep-link the URL, then open its viewer. */
+    const onSelectFoundation = useCallback(
+        (foundation: FoundationEntity) => {
+            dispatch(setFoundation(foundation))
+            dispatch(setFoundationId(foundation.id))
 
-        if (courseDisplayId && categoryId) {
-            router.push(
-                pathConfig()
-                    .locale(locale)
-                    .course(courseDisplayId)
-                    .learn()
-                    .foundations(categoryId)
-                    .item(foundation.id)
-                    .build(),
-            )
-        }
+            if (courseDisplayId && categoryId) {
+                router.push(
+                    pathConfig()
+                        .locale(locale)
+                        .course(courseDisplayId)
+                        .learn()
+                        .foundations(categoryId)
+                        .item(foundation.id)
+                        .build(),
+                )
+            }
 
-        openFoundationResource(foundation)
-    }
+            openFoundationResource(foundation)
+        },
+        [
+            dispatch,
+            courseDisplayId,
+            categoryId,
+            locale,
+            router,
+            openFoundationResource,
+        ],
+    )
 
+    // auto-open a deep-linked foundation once the list is available
     useEffect(() => {
         if (!foundationId || !sortedFoundations.length) {
             return
@@ -154,54 +183,15 @@ export const FoundationsLearnLayout = () => {
 
     return (
         <div className="p-3">
-            <Breadcrumbs>
-                {breadcrumbItems.map((item) => (
-                    <Breadcrumbs.Item
-                        key={item.key}
-                        onPress={item.onPress}
-                    >
-                        {item.label}
-                    </Breadcrumbs.Item>
-                ))}
-            </Breadcrumbs>
+            <FoundationsBreadcrumbs items={breadcrumbItems} />
             <div className="h-6" />
-            <div>
-                <div className="text-2xl font-bold">{category?.title || t("foundations.title")}</div>
-                {category?.description ? (
-                    <p className="text-muted mt-2 text-sm">{category.description}</p>
-                ) : (
-                    <p className="text-muted mt-2 text-sm">{t("foundations.description")}</p>
-                )}
-            </div>
+            <FoundationsLearnHeader />
             <div className="h-6" />
-            {!foundations ? (
-                <Skeleton className="h-[14px] w-[150px] my-[3px]" />
-            ) : (
-                <p className="text-muted text-sm">
-                    {t("foundations.count", { count: count ?? 0 })}
-                </p>
-            )}
-            <div className="h-6" />
-            {!foundations ? (
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {Array.from({ length: 6 }).map((_, index) => (
-                        <FoundationCardSkeleton key={index} />
-                    ))}
-                </div>
-            ) : sortedFoundations.length === 0 ? (
-                <p className="text-muted text-sm">{t("foundations.empty")}</p>
-            ) : (
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {sortedFoundations.map((foundation, index) => (
-                        <FoundationCard
-                            key={foundation.id}
-                            foundation={foundation}
-                            displayIndex={index}
-                            onSelect={onSelectFoundation}
-                        />
-                    ))}
-                </div>
-            )}
+            <FoundationsList
+                foundations={foundations}
+                sortedFoundations={sortedFoundations}
+                onSelect={onSelectFoundation}
+            />
         </div>
     )
 }

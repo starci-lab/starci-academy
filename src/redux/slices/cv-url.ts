@@ -12,14 +12,19 @@ export interface CvUrlSlice {
     entity: CvUrlPayload | null
 }
 
+/** Initial state for the cv-url slice. */
 const initialState: CvUrlSlice = {
     entity: null,
 }
 
+/**
+ * Slice caching the presigned CV view URL returned by the `cvUrl` GraphQL query.
+ */
 export const cvUrlSlice = createSlice({
     name: "cvUrl",
     initialState,
     reducers: {
+        /** Store (or clear) the latest CV presigned URL payload. */
         setCvUrl: (
             state,
             action: PayloadAction<CvUrlPayload | null>,
@@ -29,7 +34,9 @@ export const cvUrlSlice = createSlice({
     },
 })
 
+/** Root reducer for the cv-url slice. */
 export const cvUrlReducer = cvUrlSlice.reducer
+/** Actions exported from the cv-url slice. */
 export const {
     setCvUrl,
 } = cvUrlSlice.actions

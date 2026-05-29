@@ -1,15 +1,7 @@
+﻿import type { MutateParams } from "../types"
 import { createAuthApolloClient } from "../clients"
-import {
-    GraphQLResponse,
-    type MutateParams,
-    type QueryVariables,
-} from "../types"
 import { DocumentNode, gql } from "@apollo/client"
-
-export interface GenerateSubmitCvPresignUrlData {
-    url: string
-    cvSubmissionId: string
-}
+import type { GenerateSubmitCvPresignUrlRequest, MutateGenerateSubmitCvPresignUrlResponse } from "./types/generate-submit-cv-presign-url"
 
 const mutation1 = gql`
   mutation GenerateSubmitCvPresignUrl($request: GenerateSubmitCvPresignUrlRequest!) {
@@ -33,22 +25,8 @@ const mutationMap: Record<MutationGenerateSubmitCvPresignUrl, DocumentNode> = {
     [MutationGenerateSubmitCvPresignUrl.Mutation1]: mutation1,
 }
 
-export interface GenerateSubmitCvPresignUrlRequest {
-    fileName: string
-    /** Set when a template is chosen; omit during upload-only flow. */
-    templateCvId?: string
-}
-
-export type MutateGenerateSubmitCvPresignUrlVariables = QueryVariables<GenerateSubmitCvPresignUrlRequest>
-
+/** Apollo params for {@link mutateGenerateSubmitCvPresignUrl}. */
 export type MutateGenerateSubmitCvPresignUrlParams = MutateParams<MutationGenerateSubmitCvPresignUrl, GenerateSubmitCvPresignUrlRequest>
-
-export interface MutateGenerateSubmitCvPresignUrlResponse {
-    generateSubmitCvPresignUrl: GraphQLResponse<{
-        url: string
-        cvSubmissionId: string
-    }>
-}
 
 export const mutateGenerateSubmitCvPresignUrl = async ({
     mutation = MutationGenerateSubmitCvPresignUrl.Mutation1,

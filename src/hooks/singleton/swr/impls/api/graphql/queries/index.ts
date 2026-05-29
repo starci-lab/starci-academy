@@ -1,4 +1,7 @@
 export * from "./useQueryCheckEmailExistsSwr"
+export * from "./useQueryMyAiSettingsSwr"
+export * from "./useQueryMyAiQuotaSwr"
+export * from "./useQueryAiSubscriptionTiersSwr"
 export * from "./useAutocompleteGlobalSearchSwr"
 export * from "./useQueryChallengeSwr"
 export * from "./useQueryChallengesSwr"

@@ -1,19 +1,7 @@
-import type { PaymentType } from "@/modules/types"
+﻿import type { MutateParams } from "../types"
 import { createAuthApolloClient } from "../clients"
-import {
-    type GraphQLResponse,
-    type MutateParams,
-    type QueryVariables,
-} from "../types"
 import { DocumentNode, gql } from "@apollo/client"
-
-/** Payload inside `courseEnroll.data` after the standard API wrapper. */
-export interface CourseEnrollData {
-    checkoutUrl: string
-    transactionId: string
-    referenceId: string
-    amount: number
-}
+import type { CourseEnrollRequest, MutateCourseEnrollResponse } from "./types/course-enroll"
 
 const mutation1 = gql`
   mutation CourseEnroll($request: CourseEnrollRequest!) {
@@ -26,6 +14,7 @@ const mutation1 = gql`
         transactionId
         referenceId
         amount
+        checkoutFields
       }
     }
   }
@@ -39,22 +28,8 @@ const mutationMap: Record<MutationCourseEnroll, DocumentNode> = {
     [MutationCourseEnroll.Mutation1]: mutation1,
 }
 
-/** GraphQL `CourseEnrollRequest` body. */
-export interface CourseEnrollRequest {
-    courseId: string
-    paymentType: PaymentType
-    payosReturnUrl?: string
-    payosCancelUrl?: string
-}
-
-/** Apollo variables bag for {@link courseEnroll}. */
-export type MutateCourseEnrollVariables = QueryVariables<CourseEnrollRequest>
-
+/** Apollo params for {@link mutateCourseEnroll}. */
 export type MutateCourseEnrollParams = MutateParams<MutationCourseEnroll, CourseEnrollRequest>
-
-export interface MutateCourseEnrollResponse {
-    courseEnroll: GraphQLResponse<CourseEnrollData>
-}
 
 /**
  * Starts course checkout (PayOS or Sepay): creates preflight row and returns checkout URL / ids.

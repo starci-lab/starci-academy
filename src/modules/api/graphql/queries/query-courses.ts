@@ -1,19 +1,11 @@
-import type { CourseEntity } from "@/modules/types"
 import { createNoAuthApolloClient } from "../clients"
 import {
     SortBy,
     SortOrder,
-    type GraphQLResponse,
     type QueryParams,
-    type PaginationFilters,
 } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
-
-/** Inner `data` field for the paginated `courses` query. */
-export interface QueryCoursesPayload {
-    count: number
-    data: Array<CourseEntity>
-}
+import type { QueryCoursesRequest, QueryCoursesResponse } from "./types"
 
 const query1 = gql`
   query Courses($request: CoursesRequest!) {
@@ -32,6 +24,7 @@ const query1 = gql`
           cdnUrl
           coverImageUrl
           originalPrice
+          originalPriceUsd
         }
       }
     }
@@ -53,15 +46,6 @@ export const defaultCoursesSorts = [
         order: SortOrder.Asc,
     },
 ] as const
-
-/** Apollo variables for `courses(input: CoursesInput!)`. */
-export interface QueryCoursesRequest {
-    filters: PaginationFilters<SortBy>
-}
-
-export interface QueryCoursesResponse {
-    courses: GraphQLResponse<QueryCoursesPayload>
-}
 
 /**
  * Fetches a paginated course list via Apollo.

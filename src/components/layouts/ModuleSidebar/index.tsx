@@ -1,140 +1,120 @@
 "use client"
 
-import React, { useMemo } from "react"
-import { useAppSelector } from "@/redux"
-import { Accordion, Chip, cn, Link } from "@heroui/react"
+import React, {
+    useCallback,
+    useMemo,
+} from "react"
+import {
+    cn,
+} from "@heroui/react"
 import _ from "lodash"
-import { getContentChallengeCount, WithClassNames } from "@/modules/types"
-import { useRouter } from "next/navigation"
-import { pathConfig } from "@/resources/path"
-import { useLocale, useTranslations } from "next-intl"
-import { ClockIcon, SwordIcon, VideoIcon } from "@phosphor-icons/react"
-import { motion } from "framer-motion"
-import { useQueryModulesSwr } from "@/hooks"
+import {
+    useRouter,
+} from "next/navigation"
+import {
+    useLocale,
+} from "next-intl"
+import {
+    useAppSelector,
+} from "@/redux"
+import type {
+    WithClassNames,
+} from "@/modules/types"
+import {
+    pathConfig,
+} from "@/resources/path"
+import {
+    useQueryModulesSwr,
+} from "@/hooks"
+import {
+    ModulesSkeleton,
+} from "@/components/layouts/Course/Modules/ModulesSkeleton"
+import {
+    ModuleAccordion,
+} from "./ModuleAccordion"
 
+/**
+ * Props for {@link ModuleSidebar}.
+ */
 type ModuleSidebarProps = WithClassNames<undefined>
 
 /**
- * Right sidebar accordion for module navigation and content list.
- * @param {ModuleSidebarProps} props Sidebar props.
+ * Module navigation sidebar with a content list per module.
+ *
+ * Container: owns the modules SWR singleton, redux selectors, derived sorted
+ * modules, and routing on expand/select; renders the presentational
+ * {@link ModuleAccordion}. `"use client"` for hooks + navigation.
+ * @param props - optional container class name
  */
 export const ModuleSidebar = (props: ModuleSidebarProps) => {
-    useQueryModulesSwr()
+    const modulesSwr = useQueryModulesSwr()
     const moduleId = useAppSelector((state) => state.module.id)
     const modules = useAppSelector((state) => state.module.modules)
-    const sortedModules = useMemo(() => _.cloneDeep(modules ?? []).sort((a, b) => a.orderIndex - b.orderIndex), [modules])
     const router = useRouter()
     const locale = useLocale()
-    const t = useTranslations()
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
     const activeContent = useAppSelector((state) => state.content.entity)
+
+    /** Modules cloned + sorted by their display order. */
+    const sortedModules = useMemo(
+        () => _.cloneDeep(modules ?? []).sort((a, b) => a.orderIndex - b.orderIndex),
+        [
+            modules,
+        ],
+    )
+
+    /** Route to the newly expanded module (or the collapsed state). */
+    const onExpandedChange = useCallback(
+        (nextModuleId?: string) => {
+            router.push(
+                pathConfig().locale(locale).course(courseDisplayId).learn().module(nextModuleId).build(),
+            )
+        },
+        [
+            router,
+            locale,
+            courseDisplayId,
+        ],
+    )
+
+    /** Route to the chosen content within the active module. */
+    const onSelectContent = useCallback(
+        (contentId: string) => {
+            router.push(
+                pathConfig().locale(locale).course(courseDisplayId).learn().module(moduleId).content(contentId).build(),
+            )
+        },
+        [
+            router,
+            locale,
+            courseDisplayId,
+            moduleId,
+        ],
+    )
+
+    /**
+     * Loading gate: show content only when the modules query has settled with
+     * data and no error; otherwise mirror the accordion via {@link ModulesSkeleton}.
+     */
+    const ready = !modulesSwr.isLoading && !modulesSwr.isValidating && !!modulesSwr.data && !modulesSwr.error
+
+    if (!ready) {
+        return (
+            <div className={cn("lg:sticky lg:top-16 lg:self-start lg:h-[calc(100vh-64px)] lg:overflow-y-auto", props.className)}>
+                <ModulesSkeleton count={5} />
+            </div>
+        )
+    }
+
     return (
         <div className={cn("lg:sticky lg:top-16 lg:self-start lg:h-[calc(100vh-64px)] lg:overflow-y-auto", props.className)}>
-            <Accordion
-                variant="default"
-                className="rounded-none border-none px-0 shadow-none"
-                expandedKeys={new Set(moduleId ? [String(moduleId)] : [])}
-                onExpandedChange={
-                    (selection) => {
-                        const key = Array.from(selection)[0]
-                        router.push(pathConfig().locale(locale).course(courseDisplayId).learn().module(key ? String(key) : undefined).build())
-                    }
-                }
-            >
-                {
-                    sortedModules.map((module) => (
-                        <Accordion.Item
-                            key={String(module.id)}
-                            id={String(module.id)}
-                        >
-                            <Accordion.Heading>
-                                <Accordion.Trigger className="w-full">
-                                    <div className="flex w-full items-center justify-between gap-2">
-                                        <span
-                                            className={
-                                                cn(
-                                                    "min-w-0 flex-1 cursor-pointer text-start text-base font-semibold",
-                                                    module.id === moduleId ? "text-accent" : ""
-                                                )
-                                            }
-                                        >
-                                            {`${module.orderIndex + 1}. ${module.title}`}
-                                        </span>
-                                        <Accordion.Indicator />
-                                    </div>
-                                </Accordion.Trigger>
-                            </Accordion.Heading>
-                            <Accordion.Panel>
-                                <Accordion.Body className="p-3">
-                                    <div className="flex flex-col gap-3">
-                                        {module.contents
-                                            ?.sort((prev, next) => prev.orderIndex - next.orderIndex)
-                                            ?.map((content, index) => (
-                                                <div key={content.id}>
-                                                    <div>
-                                                        <Link onPress={
-                                                            () => router.push(pathConfig().locale(locale).course(courseDisplayId).learn().module(moduleId).content(content.id).build()) 
-                                                        } 
-                                                        className={
-                                                            cn(
-                                                                "font-medium text-foreground",
-                                                                content.id === activeContent?.id ? "text-accent" : ""
-                                                            )
-                                                        }
-                                                        >
-                                                            {`${content.orderIndex + 1}. ${content.title}`}
-                                                        </Link>
-                                                        <div className="h-2" />
-                                                        <div className="line-clamp-3 text-xs text-muted">
-                                                            {content.description}
-                                                        </div>
-                                                        <div className="h-3" />
-                                                        <div className="overflow-hidden">
-                                                            <motion.div
-                                                                className="flex w-max items-center gap-2"
-                                                                drag="x"
-                                                                dragConstraints={{ left: -100, right: 0 }}
-                                                                whileTap={{ cursor: "grabbing" }}
-                                                            >
-                                                                <Chip variant="tertiary" color="default" className="text-muted" size="sm">
-                                                                    <ClockIcon className="size-4" />
-                                                                    <Chip.Label>
-                                                                        {t("content.minutesRead", {
-                                                                            minutes: content?.minutesRead ?? 0,
-                                                                        })}
-                                                                    </Chip.Label>
-                                                                </Chip>
-                                                                <Chip variant="tertiary" color="default" className="text-muted" size="sm">
-                                                                    <VideoIcon className="size-4" />
-                                                                    <Chip.Label>
-                                                                        {t("content.lessonCount", {
-                                                                            count: content?.numLessons ?? 0,
-                                                                        })}
-                                                                    </Chip.Label>
-                                                                </Chip>
-                                                                <Chip variant="tertiary" color="default" className="text-muted" size="sm">
-                                                                    <SwordIcon className="size-4" />
-                                                                    <Chip.Label>
-                                                                        {t("content.challengeCount", {
-                                                                            count: getContentChallengeCount(content ?? {}),
-                                                                        })}
-                                                                    </Chip.Label>
-                                                                </Chip>
-                                                            </motion.div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="h-3" />
-                                                    {index !== (module.contents?.length ?? 0) - 1 && <div className="border-t " />}
-                                                </div>
-                                            ))}
-                                    </div>
-                                </Accordion.Body>
-                            </Accordion.Panel>
-                        </Accordion.Item>
-                    )
-                    )
-                }
-            </Accordion>
+            <ModuleAccordion
+                modules={sortedModules}
+                activeModuleId={moduleId}
+                activeContentId={activeContent?.id}
+                onExpandedChange={onExpandedChange}
+                onSelectContent={onSelectContent}
+            />
         </div>
     )
 }

@@ -1,13 +1,13 @@
 import type {
     ContentEntity,
 } from "@/modules/types"
-import { 
-    createSlice, 
-    PayloadAction 
+import {
+    createSlice,
+    type PayloadAction,
 } from "@reduxjs/toolkit"
 
 /**
- * The slice for the content.
+ * Client state for the active content entity and the paginated content list.
  */
 export interface ContentSlice {
     /** When set, `useQueryContentSwr` fetches this row (`content` query). */
@@ -55,7 +55,7 @@ const initialState: ContentSlice = {
 }
 
 /**
- * The slice for the content.
+ * Slice tracking the active content entity, content list, pagination, and read/favorite flags.
  */
 export const contentSlice = createSlice(
     {
@@ -132,11 +132,10 @@ export const contentSlice = createSlice(
     }
 )
 
-/**
- * The reducer for the content slice.
- */
+/** Root reducer for the content slice. */
 export const contentReducer = contentSlice.reducer
-export const { 
+/** Actions exported from the content slice. */
+export const {
     setContent,
     setContents,
     setContentId,

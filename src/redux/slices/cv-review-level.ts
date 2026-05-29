@@ -11,14 +11,19 @@ export interface CvReviewLevelSlice {
     selectedTemplateId: string
 }
 
+/** Initial state for the cv-review-level slice. */
 const initialState: CvReviewLevelSlice = {
     selectedTemplateId: "",
 }
 
+/**
+ * Slice tracking which CV review rubric template the user has selected.
+ */
 export const cvReviewLevelSlice = createSlice({
     name: "cvReviewLevel",
     initialState,
     reducers: {
+        /** Set the selected CV review rubric template id. */
         setSelectedCvReviewTemplateId: (
             state,
             action: PayloadAction<string>,
@@ -28,7 +33,9 @@ export const cvReviewLevelSlice = createSlice({
     },
 })
 
+/** Root reducer for the cv-review-level slice. */
 export const cvReviewLevelReducer = cvReviewLevelSlice.reducer
+/** Actions exported from the cv-review-level slice. */
 export const {
     setSelectedCvReviewTemplateId,
 } = cvReviewLevelSlice.actions

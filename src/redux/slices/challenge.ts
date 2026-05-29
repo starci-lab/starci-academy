@@ -2,13 +2,13 @@ import type {
     ChallengeEntity,
     ChallengeSubmissionEntity,
 } from "@/modules/types"
-import { 
-    createSlice, 
-    PayloadAction 
+import {
+    createSlice,
+    type PayloadAction,
 } from "@reduxjs/toolkit"
 
 /**
- * The slice for the challenge.
+ * Client state for the active challenge, challenge list, submissions, and async grading jobs.
  */
 export interface ChallengeSlice {
     /** When set, `useQueryChallengeSwr` fetches this row (`challenge` query). */
@@ -58,7 +58,7 @@ const initialState: ChallengeSlice = {
 }
 
 /**
- * The slice for the challenge.
+ * Slice tracking the active challenge entity, challenge list, submission rows, and grading job ids.
  */
 export const challengeSlice = createSlice(
     {
@@ -128,9 +128,10 @@ export const challengeSlice = createSlice(
                     }
                 }
             },
+            /** Record the grading job id for a submitted challenge submission. */
             setChallengeSubmissionJobId: (
                 state,
-                action: PayloadAction<{ submissionId: string; jobId: string }>,
+                action: PayloadAction<SetChallengeSubmissionJobIdPayload>,
             ) => {
                 state.submissionIdToJobId[action.payload.submissionId] = action.payload.jobId
             },
@@ -145,11 +146,18 @@ export const challengeSlice = createSlice(
     }
 )
 
-/**
- * The reducer for the challenge slice.
- */
+/** Payload for associating a grading job id with a challenge submission. */
+export interface SetChallengeSubmissionJobIdPayload {
+    /** The `challenge_submissions.id` that was submitted. */
+    submissionId: string
+    /** The async grading `jobs.id` returned after a successful submit. */
+    jobId: string
+}
+
+/** Root reducer for the challenge slice. */
 export const challengeReducer = challengeSlice.reducer
-export const { 
+/** Actions exported from the challenge slice. */
+export const {
     setChallenge,
     setChallenges,
     setChallengeId,

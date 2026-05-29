@@ -1,15 +1,7 @@
+﻿import type { MutateParams } from "../types"
 import { createNoAuthApolloClient } from "../clients"
-import type { GraphQLResponse, MutateParams, MutateVariables } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
-
-export interface SignUpVerifyOtpRequest {
-    challengeId: string
-    otp: string
-}
-
-export interface SignUpVerifyOtpData {
-    accessToken: string
-}
+import type { SignUpVerifyOtpRequest, MutateSignUpVerifyOtpResponse } from "./types/sign-up-verify-otp"
 
 const mutation1 = gql`
   mutation SignUpVerifyOtp($request: SignUpVerifyOtpInput!) {
@@ -32,16 +24,11 @@ const mutationMap: Record<MutationSignUpVerifyOtp, DocumentNode> = {
     [MutationSignUpVerifyOtp.Mutation1]: mutation1,
 }
 
-export type MutateSignUpVerifyOtpVariables = MutateVariables<SignUpVerifyOtpRequest>
-
+/** Apollo params for {@link mutateSignUpVerifyOtp}. */
 export type MutateSignUpVerifyOtpParams = MutateParams<
     MutationSignUpVerifyOtp,
     SignUpVerifyOtpRequest
 >
-
-export interface MutateSignUpVerifyOtpResponse {
-    signUpVerifyOtp: GraphQLResponse<SignUpVerifyOtpData>
-}
 
 /**
  * Verifies OTP and completes sign-up. Refresh token is set as HttpOnly cookie.

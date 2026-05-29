@@ -27,6 +27,10 @@ export interface CourseEntity extends AbstractEntity {
      * List / Regular (niêm yết) price. Tier Regular in `pricingPhases` has `regular: null` — use this.
      */
     originalPrice: number | null
+    /**
+     * List / Regular price in USD (charged by international gateways). `null` when the course has no USD price.
+     */
+    originalPriceUsd: number | null
     /** Exactly three tiers when backend seeds them: Pioneer, EarlyBird, Regular. */
     pricingPhases?: Array<PricingPhaseEntity>
     /** Active tier for marketing stepper (optional; defaults to Pioneer in UI). */

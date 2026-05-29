@@ -1,9 +1,18 @@
 "use client"
 
-import { Accordion, cn, ListBox } from "@heroui/react"
-import { Icon } from "@phosphor-icons/react"
 import React from "react"
+import {
+    Accordion,
+    cn,
+    ListBox,
+} from "@heroui/react"
+import type {
+    Icon,
+} from "@phosphor-icons/react"
 
+/**
+ * One nested module item rendered inside {@link SidebarAccordion}.
+ */
 interface SidebarAccordionSubItem {
     /** Unique key for each sub item. */
     key: string
@@ -13,6 +22,9 @@ interface SidebarAccordionSubItem {
     orderIndex: number
 }
 
+/**
+ * Props for {@link SidebarAccordion}.
+ */
 export interface SidebarAccordionProps {
     /** Title shown in accordion trigger. */
     label: string
@@ -20,15 +32,18 @@ export interface SidebarAccordionProps {
     icon: Icon
     /** Nested items rendered inside accordion body. */
     items: Array<SidebarAccordionSubItem>
-    /** Callback when selecting a nested item. */
+    /** Fired with the sub-item key when a nested item is selected. */
     onSelectSubItem: (extraId: string) => void
     /** Selected nested item id. */
     extraId?: string
 }
 
 /**
- * Render sidebar item with nested modules inside accordion.
- * @param {SidebarAccordionProps} props Accordion data and display config.
+ * SidebarAccordion — a sidebar row with nested modules inside an accordion.
+ *
+ * Presentational: renders the passed items and forwards selection via
+ * `onSelectSubItem`. `"use client"` for the press handlers.
+ * @param props - accordion data and display config
  */
 export const SidebarAccordion = ({
     label,

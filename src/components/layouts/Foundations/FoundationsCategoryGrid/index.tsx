@@ -1,10 +1,9 @@
 "use client"
 
-import React, { useMemo } from "react"
-import {
-    Breadcrumbs,
-    Skeleton,
-} from "@heroui/react"
+import React, {
+    useCallback,
+    useMemo,
+} from "react"
 import {
     useLocale,
     useTranslations,
@@ -26,23 +25,31 @@ import {
     setFoundationId,
     setFoundations,
 } from "@/redux/slices"
+import type {
+    FoundationCategoryEntity,
+} from "@/modules/types"
 import {
     useQueryFoundationCategoriesSwr,
 } from "@/hooks/singleton"
-import { FoundationCategoryCard } from "../FoundationCategoryCard"
-
-/** One breadcrumb row for the foundations overview page. */
-type FoundationsGridBreadcrumbItem = {
-    /** Stable React key. */
-    key: string
-    /** Visible label. */
-    label: string
-    /** Optional navigation handler. */
-    onPress?: () => void
-}
+import type {
+    FoundationsBreadcrumbItem,
+} from "../types"
+import {
+    FoundationsBreadcrumbs,
+} from "../FoundationsBreadcrumbs"
+import {
+    FoundationsCategoryGridHeader,
+} from "./FoundationsCategoryGridHeader"
+import {
+    FoundationsCategoryGridBody,
+} from "./FoundationsCategoryGridBody"
 
 /**
- * Foundations hub: grid of category cards; click opens the category learn page.
+ * Foundations hub container: grid of category cards; selecting one opens the
+ * category learn page.
+ *
+ * Owns data (SWR + redux), breadcrumb/sort derivations and the select action;
+ * renders presentational children. `"use client"` for routing and redux.
  */
 export const FoundationsCategoryGridLayout = () => {
     const t = useTranslations()
@@ -55,6 +62,7 @@ export const FoundationsCategoryGridLayout = () => {
 
     const { isLoading } = useQueryFoundationCategoriesSwr()
 
+    /** Categories sorted ascending by their order index. */
     const sortedCategories = useMemo(() => {
         if (!categories?.length) {
             return []
@@ -62,21 +70,37 @@ export const FoundationsCategoryGridLayout = () => {
         return [...categories].sort((a, b) => a.orderIndex - b.orderIndex)
     }, [categories])
 
-    const breadcrumbItems = useMemo((): Array<FoundationsGridBreadcrumbItem> => [
+    /** Navigate to the localized home page. */
+    const onPressHome = useCallback(() => {
+        router.push(pathConfig().locale().build())
+    }, [router])
+
+    /** Navigate to the courses listing. */
+    const onPressCourses = useCallback(() => {
+        router.push(pathConfig().locale(locale).course().build())
+    }, [locale, router])
+
+    /** Navigate to the current course overview. */
+    const onPressCourse = useCallback(() => {
+        router.push(pathConfig().locale(locale).course(courseDisplayId).build())
+    }, [courseDisplayId, locale, router])
+
+    /** Breadcrumb trail from home → courses → course → foundations hub. */
+    const breadcrumbItems = useMemo((): Array<FoundationsBreadcrumbItem> => [
         {
             key: "home",
             label: t("nav.home"),
-            onPress: () => router.push(pathConfig().locale().build()),
+            onPress: onPressHome,
         },
         {
             key: "courses",
             label: t("nav.courses"),
-            onPress: () => router.push(pathConfig().locale(locale).course().build()),
+            onPress: onPressCourses,
         },
         {
             key: "course",
             label: course?.title || t("nav.courses"),
-            onPress: () => router.push(pathConfig().locale(locale).course(courseDisplayId).build()),
+            onPress: onPressCourse,
         },
         {
             key: "foundations",
@@ -84,69 +108,53 @@ export const FoundationsCategoryGridLayout = () => {
         },
     ], [
         course?.title,
-        courseDisplayId,
-        locale,
-        router,
+        onPressCourse,
+        onPressCourses,
+        onPressHome,
         t,
     ])
 
-    const onSelectCategory = (category: typeof sortedCategories[number]) => {
-        dispatch(setFoundationCategoryId(category.id))
-        dispatch(setFoundationCategory(category))
-        dispatch(setFoundationId(undefined))
-        dispatch(setFoundation(undefined))
-        dispatch(setFoundations(undefined))
+    /** Select a category: persist it, reset the foundation selection, deep-link the URL. */
+    const onSelectCategory = useCallback(
+        (category: FoundationCategoryEntity) => {
+            dispatch(setFoundationCategoryId(category.id))
+            dispatch(setFoundationCategory(category))
+            dispatch(setFoundationId(undefined))
+            dispatch(setFoundation(undefined))
+            dispatch(setFoundations(undefined))
 
-        if (!courseDisplayId) {
-            return
-        }
-        router.push(
-            pathConfig()
-                .locale(locale)
-                .course(courseDisplayId)
-                .learn()
-                .foundations(category.id)
-                .build(),
-        )
-    }
+            if (!courseDisplayId) {
+                return
+            }
+            router.push(
+                pathConfig()
+                    .locale(locale)
+                    .course(courseDisplayId)
+                    .learn()
+                    .foundations(category.id)
+                    .build(),
+            )
+        },
+        [
+            courseDisplayId,
+            dispatch,
+            locale,
+            router,
+        ],
+    )
 
     return (
         <div className="p-3">
-            <Breadcrumbs>
-                {breadcrumbItems.map((item) => (
-                    <Breadcrumbs.Item
-                        key={item.key}
-                        onPress={item.onPress}
-                    >
-                        {item.label}
-                    </Breadcrumbs.Item>
-                ))}
-            </Breadcrumbs>
+            <FoundationsBreadcrumbs items={breadcrumbItems} />
             <div className="h-6" />
-            <div>
-                <h1 className="text-2xl font-bold">{t("foundations.title")}</h1>
-                <p className="text-muted mt-2 text-sm">{t("foundations.gridDescription")}</p>
-            </div>
+            <FoundationsCategoryGridHeader />
             <div className="h-6" />
-            {isLoading || categories === undefined ? (
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {Array.from({ length: 6 }).map((_, index) => (
-                        <Skeleton key={index} className="h-48 rounded-xl" />
-                    ))}
-                </div>
-            ) : sortedCategories.length === 0 ? (
-                <p className="text-muted text-sm">{t("foundations.emptyCategories")}</p>
-            ) : (
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {sortedCategories.map((category) => (
-                        <FoundationCategoryCard
-                            key={category.id}
-                            category={category}
-                            onPress={onSelectCategory}
-                        />
-                    ))}
-                </div>
-            )}
+            <FoundationsCategoryGridBody
+                categories={categories}
+                sortedCategories={sortedCategories}
+                isLoading={isLoading}
+                onSelect={onSelectCategory}
+            />
         </div>
     )
 }

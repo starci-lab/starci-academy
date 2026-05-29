@@ -1,11 +1,14 @@
 import React from "react"
+import {
+    Profile,
+} from "@/components/layouts/profile"
 
+/**
+ * Route `/[locale]/profile` — renders the profile hub.
+ * Thin route file: only mounts the component, no logic/UI here.
+ */
 const Page = () => {
-    return (
-        <div>
-            <h1>Profile</h1>
-        </div>
-    )
+    return <Profile />
 }
 
 export default Page

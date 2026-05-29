@@ -38,7 +38,7 @@ export const ChallengeRequirements = (props: ChallengeRequirementsProps) => {
 
     return (
         <>
-            <div className="text-base font-semibold text-foreground">{t("challenge.requirements")}</div>
+            <div className="text-lg font-semibold text-foreground">{t("challenge.requirements")}</div>
             <div className="h-2" />
             {challengeRequirements.length ? (
                 <Accordion                   

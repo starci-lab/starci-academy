@@ -1,13 +1,13 @@
 import type {
     ModuleEntity,
 } from "@/modules/types"
-import { 
-    createSlice, 
-    PayloadAction 
+import {
+    createSlice,
+    type PayloadAction,
 } from "@reduxjs/toolkit"
 
 /**
- * The slice for the content.
+ * Client state for the active course module and paginated module list.
  */
 export interface ModuleSlice {
     /** When set, `useQueryModuleSwr` fetches this row (`module` query). */
@@ -24,9 +24,7 @@ export interface ModuleSlice {
     modules?: Array<ModuleEntity>
 }
 
-/**
- * The initial state of the content slice.
- */
+/** Initial state for the module slice. */
 const initialState: ModuleSlice = {
     /** When set, `useQueryModuleSwr` fetches this row (`module` query). */
     id: undefined,
@@ -43,7 +41,7 @@ const initialState: ModuleSlice = {
 }
 
 /**
- * The slice for the module.
+ * Slice tracking the active module entity and the paginated module list for the current course.
  */
 export const moduleSlice = createSlice(
     {
@@ -99,11 +97,10 @@ export const moduleSlice = createSlice(
     }
 )
 
-/**
- * The reducer for the module slice.
- */
+/** Root reducer for the module slice. */
 export const moduleReducer = moduleSlice.reducer
-export const { 
+/** Actions exported from the module slice. */
+export const {
     setModule,
     setModuleDisplayId,
     setModuleId,

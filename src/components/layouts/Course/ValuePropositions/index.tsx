@@ -6,6 +6,14 @@ import { Skeleton } from "@heroui/react"
 import { useAppSelector } from "@/redux"
 import { useQueryCourseSwr } from "@/hooks/singleton"
 import _ from "lodash"
+
+/**
+ * Course value propositions list container.
+ *
+ * Pulls the value proposition lines from redux + the load flag from SWR, sorts
+ * them by display order, and renders a skeleton while loading. `"use client"`
+ * for the redux selector and the interactive HeroUI `Skeleton`.
+ */
 export const ValuePropositions = () => {
     const course = useAppSelector((state) => state.course.entity)
     const { isLoading } = useQueryCourseSwr()
@@ -16,7 +24,7 @@ export const ValuePropositions = () => {
 
     if (isLoading) {
         return (
-            <div className="flex flex-col gap-2 text-foreground-500">
+            <div className="flex flex-col gap-2 text-muted">
                 <div className="flex items-center gap-2">
                     <Skeleton className="h-5 w-5 shrink-0" />
                     <Skeleton className="h-4 flex-1 max-w-[90%]" />
@@ -34,12 +42,12 @@ export const ValuePropositions = () => {
     }
 
     return (
-        <div className="flex flex-col gap-2 text-foreground-500">
+        <div className="flex flex-col gap-2 text-muted">
             {valuePropositions.map((valueProposition) => (
                 <div key={valueProposition.id} className="flex items-start gap-2">
                     <SealCheckIcon
                         size={20}
-                        className="mt-0.5 shrink-0 text-foreground-500"
+                        className="mt-0.5 shrink-0 text-muted"
                     />
                     <div
                         className="text-sm"

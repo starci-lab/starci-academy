@@ -8,6 +8,9 @@ export const assetConfig = () => {
             return {
                 payos: `${paymentPath}/payos.svg`,
                 sepay: `${paymentPath}/sepay.svg`,
+                stripe: `${paymentPath}/stripe.svg`,
+                paypal: `${paymentPath}/paypal.svg`,
+                crypto: `${paymentPath}/crypto.svg`,
             }
         }
         const submissions = () => {

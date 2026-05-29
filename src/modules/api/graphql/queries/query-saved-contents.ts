@@ -1,7 +1,7 @@
-import type { ContentEntity } from "@/modules/types"
 import { createAuthApolloClient } from "../clients"
-import { type GraphQLResponse, type QueryParams } from "../types"
+import { type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type { QuerySavedContentsResponse, SavedContentsRequest } from "./types"
 
 const query1 = gql`
   query SavedContents($request: SavedContentsRequest!) {
@@ -34,20 +34,6 @@ export enum QuerySavedContents {
 
 const queryMap: Record<QuerySavedContents, DocumentNode> = {
     [QuerySavedContents.Query1]: query1,
-}
-
-export interface SavedContentsData {
-    contents: ContentEntity[]
-    count: number
-}
-
-export interface QuerySavedContentsResponse {
-    savedContents: GraphQLResponse<SavedContentsData>
-}
-
-export interface SavedContentsRequest {
-    skip?: number
-    take?: number
 }
 
 export const querySavedContents = async ({

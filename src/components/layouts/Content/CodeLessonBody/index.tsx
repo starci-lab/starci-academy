@@ -14,6 +14,7 @@ import {
     getContentCodeImplementations,
 } from "@/modules/types"
 import { useQueryContentSwr } from "@/hooks/singleton"
+import { CodeBodySkeleton } from "../CodeBodySkeleton"
 import { ExplainingCard } from "../CodeExplainingBody/ExplainingCard"
 import { ImplementationCard } from "../CodeImplementationBody/ImplementationCard"
 import { CodeItemTabs } from "./CodeItemTabs"
@@ -63,8 +64,15 @@ export const CodeLessonBody = ({ className }: CodeLessonBodyProps) => {
         }
     }, [hasExplainings, hasImplementations, sectionTab])
 
-    if (queryContentSwr.isLoading) {
-        return <div className={cn("animate-pulse h-32 rounded-xl bg-default-100", className)} />
+    // loading gate: render content only when the content query has settled with
+    // data and no error; otherwise show the code-shaped skeleton.
+    const ready = !queryContentSwr.isLoading
+        && !queryContentSwr.isValidating
+        && !!queryContentSwr.data
+        && !queryContentSwr.error
+
+    if (!ready) {
+        return <CodeBodySkeleton className={className} />
     }
 
     if (!hasExplainings && !hasImplementations) {

@@ -1,14 +1,14 @@
-import { 
+import type {
     EnrollmentEntity,
-    UserEntity 
+    UserEntity,
 } from "@/modules/types"
-import { 
-    createSlice, 
-    PayloadAction 
+import {
+    createSlice,
+    type PayloadAction,
 } from "@reduxjs/toolkit"
 
 /**
- * The slice for the user.
+ * Client state for the authenticated user and their course enrollment.
  */
 export interface UserSlice {
     /** The user. */
@@ -32,7 +32,7 @@ const initialState: UserSlice = {
 }
 
 /**
- * The slice for the user.
+ * Slice tracking the signed-in user entity, enrollment flag, and enrollment detail.
  */
 export const userSlice = createSlice(
     {
@@ -67,11 +67,10 @@ export const userSlice = createSlice(
     },
 )
 
-/**
- * The reducer for the user slice.
- */
+/** Root reducer for the user slice. */
 export const userReducer = userSlice.reducer
-export const { 
+/** Actions exported from the user slice. */
+export const {
     setUser,
     setEnrolled,
     setEnrollment,

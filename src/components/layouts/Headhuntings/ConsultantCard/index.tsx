@@ -5,7 +5,7 @@ import { BuildingsIcon } from "@phosphor-icons/react"
 import type { ConsultantEntity } from "@/modules/types"
 import { useLocale } from "next-intl"
 import { useRouter } from "next/navigation"
-import { useMemo } from "react"
+import { useCallback, useMemo } from "react"
 import { pathConfig } from "@/resources"
 import { useAppSelector } from "@/redux"
 import { ConsultantAvatar } from "../ConsultantAvatar"
@@ -32,27 +32,47 @@ export const ConsultantCard = ({ consultant }: ConsultantCardProps) => {
         [consultant.company?.title],
     )
 
-    const onOpenCompany = (event: React.MouseEvent) => {
-        event.stopPropagation()
-        const companyId = consultant.company?.id ?? consultant.companyId
-        if (!companyId || !courseDisplayId) {
-            return
-        }
-        router.push(
-            pathConfig()
-                .locale(locale)
-                .course(courseDisplayId)
-                .headhuntingCompanies(companyId)
-                .build(),
-        )
-    }
+    /** Open this consultant's profile modal. */
+    const onOpenDetail = useCallback(
+        () => openHeadhunterDetail(consultant),
+        [openHeadhunterDetail, consultant],
+    )
 
-    const onCardKeyDown = (event: React.KeyboardEvent) => {
-        if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault()
-            openHeadhunterDetail(consultant)
-        }
-    }
+    /** Navigate to the consultant's company page, stopping card activation. */
+    const onOpenCompany = useCallback(
+        (event: React.MouseEvent) => {
+            event.stopPropagation()
+            const companyId = consultant.company?.id ?? consultant.companyId
+            if (!companyId || !courseDisplayId) {
+                return
+            }
+            router.push(
+                pathConfig()
+                    .locale(locale)
+                    .course(courseDisplayId)
+                    .headhuntingCompanies(companyId)
+                    .build(),
+            )
+        },
+        [
+            consultant.company?.id,
+            consultant.companyId,
+            courseDisplayId,
+            locale,
+            router,
+        ],
+    )
+
+    /** Activate the card via keyboard (Enter / Space). */
+    const onCardKeyDown = useCallback(
+        (event: React.KeyboardEvent) => {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault()
+                openHeadhunterDetail(consultant)
+            }
+        },
+        [openHeadhunterDetail, consultant],
+    )
 
     return (
         <div
@@ -61,7 +81,7 @@ export const ConsultantCard = ({ consultant }: ConsultantCardProps) => {
             className={cn(
                 "card card--default flex h-full w-full cursor-pointer flex-col overflow-hidden rounded-xl border border-divider/60 text-left transition-colors hover:border-accent/40 hover:bg-accent/5",
             )}
-            onClick={() => openHeadhunterDetail(consultant)}
+            onClick={onOpenDetail}
             onKeyDown={onCardKeyDown}
         >
             <ConsultantAvatar

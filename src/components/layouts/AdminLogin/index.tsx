@@ -10,11 +10,11 @@ import {
     TextField,
 } from "@heroui/react"
 import {
-    KeyRound,
-    ShieldCheck,
-    ArrowRight,
-    Lock,
-} from "lucide-react"
+    KeyIcon,
+    ShieldCheckIcon,
+    ArrowRightIcon,
+    LockIcon,
+} from "@phosphor-icons/react"
 import { useAdminApiKeyFormik } from "@/hooks/singleton/formik"
 
 export const AdminLogin = () => {
@@ -33,7 +33,7 @@ export const AdminLogin = () => {
                 {/* Header */}
                 <div className="text-center space-y-3">
                     <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 border border-indigo-500/20 mx-auto mb-2">
-                        <ShieldCheck className="h-8 w-8 text-indigo-400" />
+                        <ShieldCheckIcon className="h-8 w-8 text-indigo-400" />
                     </div>
                     <h1 className="text-3xl font-bold bg-gradient-to-r from-white via-indigo-200 to-purple-300 bg-clip-text text-transparent">
                         Admin Access
@@ -49,7 +49,7 @@ export const AdminLogin = () => {
                         {/* Section header */}
                         <div className="flex items-center gap-3 pb-1">
                             <div className="rounded-lg bg-amber-500/10 p-2">
-                                <KeyRound className="h-5 w-5 text-amber-400" />
+                                <KeyIcon className="h-5 w-5 text-amber-400" />
                             </div>
                             <div>
                                 <h2 className="text-base font-semibold text-white">
@@ -78,7 +78,7 @@ export const AdminLogin = () => {
                                     API Key
                                 </Label>
                                 <div className="relative">
-                                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
+                                    <LockIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
                                     <Input
                                         id="admin-api-key-input"
                                         placeholder="Enter your admin API key"
@@ -108,7 +108,7 @@ export const AdminLogin = () => {
                                 {({isPending}) => (
                                     <>
                                         Continue to Admin Tools
-                                        {!isPending && <ArrowRight className="h-4 w-4" />}
+                                        {!isPending && <ArrowRightIcon className="h-4 w-4" />}
                                     </>
                                 )}
                             </Button>

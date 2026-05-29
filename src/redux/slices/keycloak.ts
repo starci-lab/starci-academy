@@ -1,22 +1,22 @@
-import { 
-    createSlice, 
-    PayloadAction 
+import {
+    createSlice,
+    type PayloadAction,
 } from "@reduxjs/toolkit"
 
 /**
- * The slice for the keycloak.
+ * Redux state for Keycloak authentication session.
  */
 export interface KeycloakSlice {
     /** The access token. */
     accessToken?: string
     /** Whether the user is authenticated. */
     authenticated: boolean
-    /** Whether the keycloak is initialized. */
+    /** Whether the Keycloak adapter has finished initialising. */
     initialized: boolean
 }
 
 /**
- * The initial state of the lesson video slice.
+ * The initial state of the keycloak slice.
  */
 const initialState: KeycloakSlice = {
     /** The access token. */
@@ -28,7 +28,7 @@ const initialState: KeycloakSlice = {
 }
 
 /**
- * The slice for the keycloak.
+ * Slice tracking Keycloak authentication state (token, auth flag, init flag).
  */
 export const keycloakSlice = createSlice(
     {
@@ -38,23 +38,23 @@ export const keycloakSlice = createSlice(
         initialState,
         /** The reducers of the slice. */
         reducers: {
-            /** The action to set the lesson video. */
+            /** Store the latest Keycloak access token (or clear it on sign-out). */
             setAccessToken: (
-                state, 
+                state,
                 action: PayloadAction<string | undefined>
             ) => {
                 state.accessToken = action.payload
             },
             /** The action to set the authenticated state. */
             setAuthenticated: (
-                state, 
+                state,
                 action: PayloadAction<boolean>
             ) => {
                 state.authenticated = action.payload
             },
             /** The action to set the initialized state. */
             setInitialized: (
-                state, 
+                state,
                 action: PayloadAction<boolean>
             ) => {
                 state.initialized = action.payload
@@ -63,11 +63,10 @@ export const keycloakSlice = createSlice(
     }
 )
 
-/**
- * The reducer for the keycloak slice.
- */
+/** Root reducer for the keycloak slice. */
 export const keycloakReducer = keycloakSlice.reducer
-export const { 
+/** Actions exported from the keycloak slice. */
+export const {
     setAccessToken,
     setAuthenticated,
     setInitialized,

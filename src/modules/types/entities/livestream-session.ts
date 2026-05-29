@@ -6,6 +6,7 @@ import type { LivestreamSessionTranslationEntity } from "./livestream-session-tr
  * Minimal course fields returned with a livestream session list item.
  */
 export interface LivestreamSessionCourseRef {
+    /** Course entity id. */
     id: string
     /** Present when API loads `course` relation (Nest `defaultLocale`). */
     defaultLocale?: string
@@ -19,17 +20,22 @@ export interface LivestreamSessionCourseRef {
 export interface LivestreamSessionEntity extends AbstractEntity {
     /** Parent course id (`RelationId` / GraphQL). */
     courseId: string
+    /** Day of the week this slot recurs on. */
     dayOfWeek: DayOfWeek
-    /** Wall-clock start (`HH:mm:ss`). */
+    /** Wall-clock start time (`HH:mm:ss`). */
     startTime: string
-    /** Wall-clock expected end (`HH:mm:ss`). */
+    /** Wall-clock expected end time (`HH:mm:ss`). */
     expectedEndTime: string
+    /** Optional note or annotation for this slot. */
     note: string | null
     /**
      * When true, UI may hide this row (superseded / overridable slot); backend may still return it.
      */
     isOverridable?: boolean
+    /** Display order within the course's livestream schedule. */
     orderIndex: number
+    /** Minimal parent course reference when loaded. */
     course?: LivestreamSessionCourseRef
+    /** Localized overrides (e.g. `note` field). */
     translations?: Array<LivestreamSessionTranslationEntity>
 }

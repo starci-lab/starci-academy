@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { Content } from "@/components/layouts"
+import { Content } from "@/components/layouts/Content"
 
 const Page = () => {
     return (

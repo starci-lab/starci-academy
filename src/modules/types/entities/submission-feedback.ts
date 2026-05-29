@@ -1,6 +1,7 @@
-import { SubmissionFeedbackSeverity } from "../enums"
-import { AbstractEntity } from "./abstract"
-import { SubmissionAttemptEntity } from "./submission-attempt"
+import type { SubmissionFeedbackSeverity } from "../enums"
+import type { AbstractEntity } from "./abstract"
+import type { SubmissionAttemptEntity } from "./submission-attempt"
+
 /**
  * A single feedback item for a submission attempt.
  */
@@ -20,4 +21,3 @@ export interface SubmissionFeedbackEntity extends AbstractEntity {
     /** The attempt that the feedback belongs to. */
     attempt: SubmissionAttemptEntity
 }
-

@@ -3,6 +3,10 @@ import { useEffect } from "react"
 import { useParams, usePathname } from "next/navigation"
 import { setCourseDisplayId } from "@/redux/slices"
 
+/**
+ * Syncs `course.displayId` from the `[courseId]` route param into Redux on navigation.
+ * @returns void
+ */
 export const useSyncReduxCourseId = () => {
     const dispatch = useAppDispatch()
     const pathname = usePathname()

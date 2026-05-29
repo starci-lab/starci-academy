@@ -1,9 +1,7 @@
+﻿import type { MutateParams } from "../types"
 import { createAuthApolloClient } from "../clients"
-import {
-    type GraphQLResponse,
-    type MutateParams,
-} from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type { SyncPersonalProjectGithubRequest, MutateSyncPersonalProjectGithubResponse } from "./types/sync-personal-project-github"
 
 const mutation1 = gql`
   mutation SyncPersonalProjectGithub($request: SyncPersonalProjectGithubRequest!) {
@@ -23,24 +21,11 @@ const mutationMap: Record<MutationSyncPersonalProjectGithub, DocumentNode> = {
     [MutationSyncPersonalProjectGithub.Mutation1]: mutation1,
 }
 
-/** Request for `syncPersonalProjectGithub`. */
-export interface SyncPersonalProjectGithubRequest {
-    /** Course ID. */
-    courseId: string
-    /** GitHub repository URL (omit when only syncing branch). */
-    githubUrl?: string
-    /** Git branch (omit when only syncing URL). */
-    branch?: string
-}
-
+/** Apollo params for {@link mutateSyncPersonalProjectGithub}. */
 export type MutateSyncPersonalProjectGithubParams = MutateParams<
     MutationSyncPersonalProjectGithub,
     SyncPersonalProjectGithubRequest
 >
-
-export interface MutateSyncPersonalProjectGithubResponse {
-    syncPersonalProjectGithub: GraphQLResponse
-}
 
 /**
  * Syncs (upserts) the user's personal project GitHub URL.

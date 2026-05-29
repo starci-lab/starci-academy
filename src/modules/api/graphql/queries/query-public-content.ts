@@ -1,7 +1,7 @@
-import type { ContentEntity } from "@/modules/types"
 import { createNoAuthApolloClient } from "../clients"
-import { type GraphQLResponse, type QueryParams } from "../types"
+import { type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type { QueryPublicContentResponse, PublicContentRequest } from "./types"
 
 const query1 = gql`
   query PublicContent($request: PublicContentRequest!) {
@@ -39,17 +39,6 @@ export enum QueryPublicContent {
 
 const queryMap: Record<QueryPublicContent, DocumentNode> = {
     [QueryPublicContent.Query1]: query1,
-}
-
-export interface QueryPublicContentResponse {
-    publicContent: GraphQLResponse<ContentEntity>
-}
-
-export interface PublicContentRequest {
-    /** The display id. */
-    displayId?: string
-    /** The id. */
-    id?: string
 }
 
 /**

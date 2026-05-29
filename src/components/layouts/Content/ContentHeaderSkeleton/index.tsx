@@ -1,0 +1,31 @@
+"use client"
+
+import React from "react"
+import {
+    Skeleton,
+} from "@heroui/react"
+import {
+    SkeletonText,
+    SkeletonParagraph,
+} from "@/components/reuseable"
+
+/**
+ * Placeholder for the content header (title, description, meta chips) shown
+ * while the content entity is loading.
+ *
+ * Presentational: static skeleton, no props or logic. The title mirrors the
+ * real `text-2xl` heading and the description mirrors the `text-sm` body, so
+ * the layout does not shift when data arrives. The meta chip is a non-text
+ * block, so it keeps a raw `Skeleton`.
+ */
+export const ContentHeaderSkeleton = () => {
+    return (
+        <div className="p-3">
+            <SkeletonText size="2xl" width="w-1/2" />
+            <div className="h-3" />
+            <SkeletonParagraph size="sm" lines={2} />
+            <div className="h-3" />
+            <Skeleton className="h-6 w-[100px] rounded-full" />
+        </div>
+    )
+}

@@ -1,13 +1,14 @@
-import type { LessonVideoEntity } from "@/modules/types"
 import { createAuthApolloClient } from "../clients"
 import {
     SortOrder,
-    type GraphQLResponse,
-    type PaginationFilters,
     type QueryParams,
     type SortInput,
 } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type {
+    LessonVideosListRequest,
+    QueryLessonVideosResponse,
+} from "./types"
 
 /** Sort keys for `lessonVideos` list (`LessonVideosSortBy`). */
 export enum LessonVideosSortBy {
@@ -15,11 +16,6 @@ export enum LessonVideosSortBy {
     OrderIndex = "orderIndex",
     CreatedAt = "createdAt",
     UpdatedAt = "updatedAt",
-}
-
-export interface QueryLessonVideosPayload {
-    count: number
-    data: Array<LessonVideoEntity>
 }
 
 const query1 = gql`
@@ -50,17 +46,6 @@ export enum QueryLessonVideos {
 
 const queryMap: Record<QueryLessonVideos, DocumentNode> = {
     [QueryLessonVideos.Query1]: query1,
-}
-
-export type LessonVideosListFilters = PaginationFilters<LessonVideosSortBy>
-
-export interface LessonVideosListRequest {
-    contentId: string
-    filters: LessonVideosListFilters
-}
-
-export interface QueryLessonVideosResponse {
-    lessonVideos: GraphQLResponse<QueryLessonVideosPayload>
 }
 
 export const defaultLessonVideosListSorts: Array<SortInput<LessonVideosSortBy>> = [

@@ -1,14 +1,7 @@
+﻿import type { MutateParams } from "../types"
 import { createNoAuthApolloClient } from "../clients"
-import type { GraphQLResponse, MutateParams, MutateVariables } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
-import type { SignUpInitData } from "./mutation-sign-up-init"
-
-/**
- * Input for `signUpResendOtp` (matches server `SignUpResendOtpRequest`).
- */
-export interface SignUpResendOtpRequest {
-    challengeId: string
-}
+import type { SignUpResendOtpRequest, MutateSignUpResendOtpResponse } from "./types/sign-up-resend-otp"
 
 const mutation1 = gql`
   mutation SignUpResendOtp($request: SignUpResendOtpRequest!) {
@@ -32,16 +25,11 @@ const mutationMap: Record<MutationSignUpResendOtp, DocumentNode> = {
     [MutationSignUpResendOtp.Mutation1]: mutation1,
 }
 
-export type MutateSignUpResendOtpVariables = MutateVariables<SignUpResendOtpRequest>
-
+/** Apollo params for {@link mutateSignUpResendOtp}. */
 export type MutateSignUpResendOtpParams = MutateParams<
     MutationSignUpResendOtp,
     SignUpResendOtpRequest
 >
-
-export interface MutateSignUpResendOtpResponse {
-    signUpResendOtp: GraphQLResponse<SignUpInitData>
-}
 
 /**
  * Resend sign-up OTP for an existing challenge (same `challengeId` from `signUpInit`).

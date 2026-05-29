@@ -1,6 +1,10 @@
 import { createAuthApolloClient } from "../clients"
 import { type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type {
+    QuerySubmitCvPresignedUrlRequest,
+    QuerySubmitCvPresignedUrlResponse,
+} from "./types"
 
 const query1 = gql`
   query SubmitCvPresignedUrl($request: SubmitCvPresignedUrlRequest!) {
@@ -18,20 +22,6 @@ export enum QuerySubmitCvPresignedUrl {
 
 const queryMap: Record<QuerySubmitCvPresignedUrl, DocumentNode> = {
     [QuerySubmitCvPresignedUrl.Query1]: query1,
-}
-
-export interface QuerySubmitCvPresignedUrlRequest {
-  fileName: string;
-}
-
-export interface SubmitCvPresignedUrlPayload {
-  url: string;
-  cvSubmissionId: string;
-  cvSubmissionAttemptId: string;
-}
-
-export interface QuerySubmitCvPresignedUrlResponse {
-  SubmitCvPresignedUrl: SubmitCvPresignedUrlPayload;
 }
 
 export const querySubmitCvPresignedUrl = async ({

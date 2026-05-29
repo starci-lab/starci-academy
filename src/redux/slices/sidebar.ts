@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
 
 /**
  * The tabs of the sidebar.
@@ -12,35 +12,28 @@ export enum SidebarTab {
     StarciAi = "starciAi",
     Foundations = "foundations",
     Headhuntings = "headhuntings",
+    Quizlet = "quizlet",
 }
 
 /**
- * @interface SidebarSlice
- * @property {SidebarItem} sidebar - The sidebar item
+ * The shape of the active sidebar selection stored in Redux.
  */
 export interface SidebarSlice {
-    sidebar: {
-        tab: SidebarTab
-        extraId?: string
-    }
+    /** The currently active sidebar tab and optional sub-item id. */
+    sidebar: SidebarItem
 }
 
 /**
- * @interface SidebarItem
- * @property {SidebarTab} tab - The tab of the sidebar
- * @property {string} id - The id of the sidebar item
+ * Payload for a sidebar selection action.
  */
 export interface SidebarItem {
-    /**
-     * The tab of the sidebar item
-     */
+    /** The tab of the sidebar item. */
     tab: SidebarTab
-    /**
-     * The extra id of the sidebar item
-     */
+    /** Optional sub-item id (e.g. module id for accordion child highlight). */
     extraId?: string
 }
 
+/** Initial state for the sidebar slice (defaults to MindMap tab, no sub-item). */
 export const initialState: SidebarSlice = {
     sidebar: {
         tab: SidebarTab.MindMap,
@@ -49,17 +42,20 @@ export const initialState: SidebarSlice = {
 }
 
 /**
- * The slice for the sidebar.
+ * Slice managing which sidebar tab (and optional sub-item) is active.
  */
 export const sidebarSlice = createSlice({
     name: "sidebar",
     initialState,
     reducers: {
+        /** Set the active sidebar tab and optional sub-item id. */
         setSidebar: (state, action: PayloadAction<SidebarItem>) => {
             state.sidebar = action.payload
         },
     },
 })
 
+/** Actions exported from the sidebar slice. */
 export const { setSidebar } = sidebarSlice.actions
+/** Root reducer for the sidebar slice. */
 export const sidebarReducer = sidebarSlice.reducer

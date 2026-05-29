@@ -1,23 +1,15 @@
 "use client"
 
-import React, { useMemo } from "react"
-import { useRouter } from "next/navigation"
-import { useAppDispatch, useAppSelector } from "@/redux"
-import { setSelectedTaskId } from "@/redux/slices"
-import { AIProcessingText, MarkdownContent, Score, StarCiAIBadge } from "@/components/reuseable"
+import React, {
+    useCallback,
+    useMemo,
+} from "react"
+import { useAppSelector } from "@/redux"
 import {
-    Accordion,
-    Alert,
-    Button,
-    Chip,
     Separator,
-    Skeleton,
-    Spinner,
-    Surface,
-    cn,
 } from "@heroui/react"
 import _ from "lodash"
-import { useTranslations, useLocale } from "next-intl"
+import { useTranslations } from "next-intl"
 import {
     useMutateSyncPersonalProjectGithubBranchSwr,
     useMutateSyncPersonalProjectGithubSwr,
@@ -32,17 +24,37 @@ import {
     buildMilestoneTaskProgressLookup,
     isPersonalProjectTaskActionUnlocked,
 } from "@/components/utils"
-import { pathConfig } from "@/resources/path"
-import { JobCategory, JobStatus } from "@/modules/types"
-import { ScanIcon } from "@phosphor-icons/react"
+import { JobStatus } from "@/modules/types"
+import {
+    TaskSkeleton,
+} from "./TaskSkeleton"
+import {
+    TaskLockedAlert,
+} from "./TaskLockedAlert"
+import {
+    TaskCriteriaList,
+} from "./TaskCriteriaList"
+import {
+    TaskCodeImplementations,
+} from "./TaskCodeImplementations"
+import {
+    TaskResults,
+} from "./TaskResults"
+import {
+    TaskActions,
+} from "./TaskActions"
+
 /**
- * Milestone task detail: criteria, latest review summary under “grading results”, and drawer entry.
+ * Milestone task detail container.
+ *
+ * Owns SWR/redux data, the review actions and the AI job/progress derivations
+ * they depend on, then renders its children (criteria, results, actions). The
+ * locked-preview alert is a self-contained section that reads its own progress
+ * SWR/redux and owns its navigation. `"use client"` for redux, the formik
+ * review submit and overlay state.
  */
 export const Task = () => {
     const t = useTranslations()
-    const locale = useLocale()
-    const router = useRouter()
-    const dispatch = useAppDispatch()
     const reviewGithubFormik = usePersonalProjectGithubFormik()
     const syncGithubSwr = useMutateSyncPersonalProjectGithubSwr()
     const syncBranchSwr = useMutateSyncPersonalProjectGithubBranchSwr()
@@ -54,7 +66,6 @@ export const Task = () => {
     const milestoneEntities = useAppSelector((state) => state.milestone.entities)
     const selectedTaskDetail = useAppSelector((state) => state.milestone.selectedTaskDetail)
     const selectedTaskId = useAppSelector((state) => state.milestone.selectedTaskId)
-    const courseDisplayId = useAppSelector((state) => state.course.displayId)
     const milestoneTaskIdToJobId = useAppSelector((state) => state.milestone.milestoneTaskIdToJobId)
     const jobStatusByJobId = useAppSelector((state) => state.socketIo.jobStatusByJobId)
 
@@ -140,46 +151,64 @@ export const Task = () => {
         ],
     )
 
-    const isActionLocked = Boolean(selectedTaskId) && !isActionUnlocked
-    const canGoToCurrentTask = Boolean(
-        currentTaskId
-        && selectedTaskId
-        && currentTaskId !== selectedTaskId,
+    /** Whether the evaluate / re-evaluate button should be disabled. */
+    const isEvaluateDisabled = useMemo(
+        () => !isActionUnlocked
+            || reviewGithubFormik.isSubmitting
+            || attemptsSwr.isLoading
+            || syncGithubSwr.isMutating
+            || syncBranchSwr.isMutating,
+        [
+            isActionUnlocked,
+            reviewGithubFormik.isSubmitting,
+            attemptsSwr.isLoading,
+            syncGithubSwr.isMutating,
+            syncBranchSwr.isMutating,
+        ],
+    )
+
+    /** Whether the evaluate button is in its pending (in-flight) state. */
+    const isEvaluatePending = useMemo(
+        () => reviewGithubFormik.isSubmitting
+            || (
+                Boolean(reviewJobId)
+                && (
+                    reviewJobStatus === JobStatus.Processing
+                    || reviewJobStatus === JobStatus.Queued
+                )
+            ),
+        [
+            reviewGithubFormik.isSubmitting,
+            reviewJobId,
+            reviewJobStatus,
+        ],
+    )
+
+    /** Whether the feedback / attempts buttons are disabled. */
+    const areSecondaryDisabled = !isActionUnlocked || !hasReviewAttempts
+
+    /** Submit the GitHub review form (triggers AI evaluation). */
+    const onEvaluate = useCallback(
+        () => {
+            void reviewGithubFormik.submitForm()
+        },
+        [reviewGithubFormik],
+    )
+
+    /** Open the milestone task feedback details modal. */
+    const onOpenFeedbacks = useCallback(
+        () => milestoneTaskFeedbacksModal.setOpen(true),
+        [milestoneTaskFeedbacksModal],
+    )
+
+    /** Open the personal project attempts drawer. */
+    const onOpenAttempts = useCallback(
+        () => personalProjectAttemptsDrawer.setOpen(true),
+        [personalProjectAttemptsDrawer],
     )
 
     if (!displayTask || milestoneTaskQuery.isLoading || !selectedTaskId) {
-        return (
-            <>
-                <Separator />
-                <div className="p-3">
-                    <Skeleton className="h-[18px] w-2/3 rounded-full my-[5px]" />
-                    <div className="flex flex-col mt-2">
-                        <Skeleton className="h-[14px] w-full rounded-full my-[3px]" />
-                        <Skeleton className="h-[14px] w-2/3 rounded-full my-[3px]" />
-                        <Skeleton className="h-[14px] w-1/2 rounded-full my-[3px]" />
-                    </div>
-                    <div className="h-3" />
-                    <Skeleton className="h-4 my-1 rounded-full w-1/2" />
-                    <div className="rounded-3xl p-3 bg-surface">
-                        {
-                            Array.from(
-                                {
-                                    length: 3,
-                                },
-                                (_, index) => (
-                                    <React.Fragment key={`task-criteria-skeleton-${index}`}>
-                                        <div className="p-3">
-                                            <Skeleton className="h-[14px] w-2/3 my-[3px]" />
-                                        </div>
-                                        <Separator className="last:hidden" />
-                                    </React.Fragment>
-                                ),
-                            )
-                        }
-                    </div>
-                </div>
-            </>
-        )
+        return <TaskSkeleton />
     }
 
     return (
@@ -191,186 +220,36 @@ export const Task = () => {
                     <div className="text-muted mt-2 text-sm">{displayTask.description}</div>
                 )}
                 <div className="h-3" />
-                {
-                    isActionLocked ? (
-                        <>
-                            <Alert status="warning" className="shadow-none bg-warning/10">
-                                <Alert.Indicator />
-                                <Alert.Content className="gap-2">
-                                    <Alert.Title>{t("task.previewLockedAlertTitle")}</Alert.Title>
-                                    <Alert.Description>
-                                        {t("task.previewLockedAlertDescription")}
-                                    </Alert.Description>
-                                    {
-                                        canGoToCurrentTask ? (
-                                            <Button
-                                                size="sm"
-                                                variant="secondary"
-                                                className="w-fit shrink-0 bg-background text-warning"
-                                                onPress={() => {
-                                                    if (!currentTaskId || !courseDisplayId) {
-                                                        return
-                                                    }
-                                                    dispatch(setSelectedTaskId(currentTaskId))
-                                                    router.push(
-                                                        pathConfig().locale(locale).course(courseDisplayId).learn().personalProject(currentTaskId).build(),
-                                                    )
-                                                }}
-                                            >
-                                                {t("task.previewLockedGoToCurrentTaskButton")}
-                                            </Button>
-                                        )
-                                            : null
-                                    }
-                                </Alert.Content>
-                            </Alert>
-                            <div className="h-3" />
-                        </>
-                    )
-                        : null
-                }
+                <TaskLockedAlert />
                 <div className="font-semibold">
                     {t("task.criteriaTitle")}
                 </div>
                 {sortedCriterias.length > 0 && (
-                    <>
-                        <div className="h-3" />
-                        <Accordion allowsMultipleExpanded variant="surface">
-                            {sortedCriterias.map((criteria, index) => (
-                                <Accordion.Item key={criteria.id}>
-                                    <Accordion.Heading>
-                                        <Accordion.Trigger className="w-full p-3">
-                                            <div className="flex w-full items-center gap-3">
-                                                <div className="min-w-0 flex-1 text-left">
-                                                    <div className="text-sm">
-                                                        {index + 1}. {criteria.text}
-                                                    </div>
-                                                </div>
-                                                <Chip size="sm" variant="secondary" color="accent">
-                                                    {
-                                                        t("task.criteriaScore",
-                                                            { score: criteria.score },
-                                                        )
-                                                    }
-                                                </Chip>
-                                                <Accordion.Indicator />
-                                            </div>
-                                        </Accordion.Trigger>
-                                    </Accordion.Heading>
-                                    <Accordion.Panel>
-                                        <Accordion.Body>
-                                            {criteria.hint ? (
-                                                <div className="pl-9">
-                                                    <MarkdownContent markdown={criteria.hint} />
-                                                </div>
-                                            ) : (
-                                                <div className="pl-9 text-sm text-muted italic">
-                                                    {t("task.criteriaNoHint")}
-                                                </div>
-                                            )}
-                                        </Accordion.Body>
-                                    </Accordion.Panel>
-                                </Accordion.Item>
-                            ))}
-                        </Accordion>
-                    </>
+                    <TaskCriteriaList criterias={sortedCriterias} />
                 )}
-                {
-                    showResultsBlock && (
-                        <>
-                            <div className="h-6" />
-                            <div className="mt-3 flex items-center gap-2  mb-3">
-                                <div className="font-semibold">{t("task.resultsTitle")}</div>
-                                <StarCiAIBadge />
-                            </div>
-                            <Surface className="p-3 rounded-3xl">
-                                <div className="text-4xl font-bold text-foreground">
-                                    <Score current={latestAttempt?.score ?? 0} max={20} />
-                                </div>
-                                <div className="mt-3 text-sm text-muted">
-                                    {shortFeedbackDisplay}
-                                </div>
-                            </Surface>
-                        </>
-                    )
-                }
-                <div
-                    className={
-                        cn(
-                            "mt-3",
-                            "flex flex-wrap items-center gap-2",
-                        )
-                    }
-                >
-                    <Button
-                        size="lg"
-                        isDisabled={
-                            !isActionUnlocked
-                            || reviewGithubFormik.isSubmitting
-                            || attemptsSwr.isLoading
-                            || syncGithubSwr.isMutating
-                            || syncBranchSwr.isMutating
-                        }
-                        isPending={
-                            reviewGithubFormik.isSubmitting
-                            || (
-                                Boolean(reviewJobId)
-                                && (
-                                    reviewJobStatus === JobStatus.Processing
-                                    || reviewJobStatus === JobStatus.Queued
-                                )
-                            )
-                        }
-                        onPress={() => {
-                            void reviewGithubFormik.submitForm()
-                        }}
-                    >
-                        {
-                            (
-                                {
-                                    isPending,
-                                }
-                            ) => {
-                                return (
-                                    <>
-                                        {isPending ? <Spinner color="current"/> : <ScanIcon className="size-5" />}
-                                        {hasReviewAttempts
-                                            ? t("finalProject.page.submitGithub.ctaReEvaluate")
-                                            : t("finalProject.page.submitGithub.ctaEvaluate")}
-                                    </>
-                                )
-                            }
-                        }
-                    </Button>
-                    <Button
-                        size="lg"
-                        variant="secondary"
-                        isDisabled={!isActionUnlocked || !hasReviewAttempts}
-                        onPress={() => milestoneTaskFeedbacksModal.setOpen(true)}
-                    >
-                        {t("task.openFeedbackDetailsButton")}
-                    </Button>
-                    <Button
-                        size="lg"
-                        variant="secondary"
-                        isDisabled={!isActionUnlocked || !hasReviewAttempts}
-                        onPress={() => personalProjectAttemptsDrawer.setOpen(true)}
-                    >
-                        {t("finalProject.page.attemptsDrawer.openListButton")}
-                    </Button>
-                </div>
-                {
-                    showAiProcessing && (
-                        <>
-                            <div className="h-3" />
-                            <AIProcessingText
-                                jobCategory={JobCategory.ReviewTask}
-                                jobStatus={aiJobStatus}
-                                error={reviewJobError}
-                            />
-                        </>
-                    )
-                }
+                {displayTask.codeImplementations && displayTask.codeImplementations.length > 0 && (
+                    <TaskCodeImplementations
+                        codeImplementations={displayTask.codeImplementations}
+                    />
+                )}
+                {showResultsBlock && (
+                    <TaskResults
+                        score={latestAttempt?.score ?? 0}
+                        shortFeedback={shortFeedbackDisplay}
+                    />
+                )}
+                <TaskActions
+                    hasReviewAttempts={hasReviewAttempts}
+                    isEvaluateDisabled={isEvaluateDisabled}
+                    isEvaluatePending={isEvaluatePending}
+                    areSecondaryDisabled={areSecondaryDisabled}
+                    showAiProcessing={showAiProcessing}
+                    aiJobStatus={aiJobStatus}
+                    reviewJobError={reviewJobError}
+                    onEvaluate={onEvaluate}
+                    onOpenFeedbacks={onOpenFeedbacks}
+                    onOpenAttempts={onOpenAttempts}
+                />
             </div>
         </div>
     )

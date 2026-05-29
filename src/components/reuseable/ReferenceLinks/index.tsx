@@ -35,7 +35,7 @@ export const ReferenceLinks = ({ references, titleKey }: ReferenceLinksProps) =>
                 {references?.sort((prev, next) => prev.orderIndex - next.orderIndex).map((reference) => {
                     return (
                         <li key={reference.id} className="flex flex-wrap items-center gap-2">
-                            <span className="text-sm text-foreground-500">{reference.alias}</span>
+                            <span className="text-sm text-muted">{reference.alias}</span>
                             <span className="text-sm text-foreground">•</span>
                             <Link
                                 href={reference.url}

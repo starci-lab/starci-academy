@@ -1,24 +1,7 @@
+﻿import type { MutateParams } from "../types"
 import { createNoAuthApolloClient } from "../clients/clients"
-import {
-    type GraphQLResponse,
-    type MutateParams,
-    type QueryVariables,
-} from "../types"
 import { DocumentNode, gql } from "@apollo/client"
-
-/**
- * Identity broker passed to {@link exchangeCodeForToken} (mirrors Nest `KeycloakIdentityProvider`).
- * Must match GraphQL enum values on the API.
- */
-export enum KeycloakIdentityProvider {
-    Google = "google",
-    Github = "github",
-}
-
-/** Token payload inside `exchangeCodeForToken.data` (mirrors `ExchangeCodeForTokenData`). */
-export interface ExchangeCodeForTokenData {
-    accessToken: string
-}
+import type { ExchangeCodeForTokenRequest, MutateExchangeCodeForTokenResponse } from "./types/exchange-code-for-token"
 
 const mutation1 = gql`
   mutation ExchangeCodeForToken($request: ExchangeCodeForTokenRequest!) {
@@ -41,22 +24,11 @@ const mutationMap: Record<MutationExchangeCodeForToken, DocumentNode> = {
     [MutationExchangeCodeForToken.Mutation1]: mutation1,
 }
 
-export interface ExchangeCodeForTokenRequest {
-    code: string
-    provider: KeycloakIdentityProvider
-    state: string
-}
-
-export type MutateExchangeCodeForTokenVariables = QueryVariables<ExchangeCodeForTokenRequest>
-
+/** Apollo params for {@link mutateExchangeCodeForToken}. */
 export type MutateExchangeCodeForTokenParams = MutateParams<
     MutationExchangeCodeForToken,
     ExchangeCodeForTokenRequest
 >
-
-export interface MutateExchangeCodeForTokenResponse {
-    exchangeCodeForToken: GraphQLResponse<ExchangeCodeForTokenData>
-}
 
 /**
  * Exchanges an OIDC authorization code for Keycloak tokens (public; used after IdP redirect).

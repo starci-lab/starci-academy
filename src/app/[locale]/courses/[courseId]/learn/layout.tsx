@@ -1,6 +1,6 @@
 "use client"
 import React, { PropsWithChildren } from "react"
-import { Sidebar } from "@/components/layouts"
+import { Sidebar } from "@/components/layouts/Sidebar"
 
 export const Layout = ({ children }: PropsWithChildren) => {
     return (

@@ -67,7 +67,7 @@ export const VideoRenderer = ({
     const renderContent = () => {
         if (!url?.trim()) {
             return (
-                <div className="text-foreground-500 flex min-h-[12rem] items-center justify-center rounded-medium border border-dashed p-4 text-center text-sm">
+                <div className="text-muted flex min-h-[12rem] items-center justify-center rounded-medium border border-dashed p-4 text-center text-sm">
                     No video URL.
                 </div>
             )

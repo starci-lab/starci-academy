@@ -1,6 +1,6 @@
 "use client"
 import { motion } from "framer-motion"
-import { Courses } from "@/components/layouts"
+import { Courses } from "@/components/layouts/Courses"
 import { Spacer } from "@/components/reuseable"
 import { useTranslations } from "next-intl"
 import React from "react"

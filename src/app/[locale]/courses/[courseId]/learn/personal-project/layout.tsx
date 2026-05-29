@@ -7,7 +7,8 @@ import { useRouter } from "next/navigation"
 import { pathConfig } from "@/resources"
 import { useAppSelector } from "@/redux"
 import { MilestoneSidebar } from "@/components/layouts/MilestoneSidebar"
-import { PersonalProjectSubmission, Task } from "@/components/layouts"
+import { PersonalProjectSubmission } from "@/components/layouts/PersonalProjectSubmission"
+import { Task } from "@/components/layouts/Task"
 
 const Layout = () => {
     const t = useTranslations()

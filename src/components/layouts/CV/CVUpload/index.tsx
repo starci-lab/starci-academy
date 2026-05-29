@@ -1,16 +1,10 @@
 "use client"
 
 import React, {
+    useCallback,
     useEffect,
     useMemo,
 } from "react"
-import {
-    Button,
-    Card,
-    CardContent,
-    Link,
-    Spinner,
-} from "@heroui/react"
 import {
     useLocale,
     useTranslations,
@@ -27,30 +21,32 @@ import {
     useQueryCvUrlSwr,
     useQueryTemplateCvsSwr,
 } from "@/hooks/singleton"
-import { 
-    AIProcessingText, 
-    MarkdownContent, 
-    StarCiAIBadge
-} from "@/components/reuseable"
-import {
-    ClockIcon,
-    DownloadSimpleIcon,
-    FilePdfIcon,
-} from "@phosphor-icons/react"
 import {
     JobCategory,
     JobStatus,
 } from "@/modules/types"
 import { dayjs } from "@/modules/dayjs"
 import { getFileNameFromUrl } from "@/utils"
-import { ScanIcon } from "@phosphor-icons/react"
+import {
+    CvFileCard,
+} from "./CvFileCard"
+import {
+    ReviewLevelCard,
+} from "./ReviewLevelCard"
+import {
+    FeedbackSection,
+} from "./FeedbackSection"
 
+/** Props for {@link CVUpload}. */
 export interface CVUploadProps {
     /** Optional wrapper classes on the root fragment wrapper (outer div). */
     className?: string
 }
 /**
  * CV submission block: stored file card, rubric level, review/update actions, and inline job status.
+ *
+ * Container: owns SWR/redux/formik/derived state and the open/review actions;
+ * renders presentational children.
  * @param props - {@link CVUploadProps}
  */
 export const CVUpload = ({ className }: CVUploadProps) => {
@@ -190,6 +186,9 @@ export const CVUpload = ({ className }: CVUploadProps) => {
         ]
     )
 
+    /**
+     * Currently selected rubric template (matched by id).
+     */
     const templateCv = useMemo(
         () =>
             templateCvs.find((templateCv) => templateCv.id === cvReviewFormik.values.templateCvId),
@@ -199,6 +198,9 @@ export const CVUpload = ({ className }: CVUploadProps) => {
         ],
     )
 
+    /**
+     * Markdown feedback body: persisted detail when present, otherwise a summary fallback.
+     */
     const feedbackMarkdown = useMemo(() => {
         const detail = cvUrlPayload?.detailFeedback?.trim()
         if (detail) {
@@ -219,135 +221,69 @@ export const CVUpload = ({ className }: CVUploadProps) => {
         ],
     )
 
+    /**
+     * Whether the rubric/review actions should be disabled (submitting/loading).
+     */
+    const isReviewDisabled = useMemo(
+        () => formik.isSubmitting || templateCvsSwr.isLoading,
+        [
+            formik.isSubmitting,
+            templateCvsSwr.isLoading,
+        ],
+    )
+
+    /**
+     * Whether the review action is pending (form submitting or job in flight).
+     */
+    const isReviewPending = useMemo(
+        () => cvReviewFormik.isSubmitting
+            || activeCvReviewJobStatus === JobStatus.Processing
+            || activeCvReviewJobStatus === JobStatus.Queued,
+        [
+            cvReviewFormik.isSubmitting,
+            activeCvReviewJobStatus,
+        ],
+    )
+
+    /**
+     * Queue (or re-run) the AI CV review.
+     */
+    const onReview = useCallback(
+        () => {
+            void cvReviewFormik.submitForm()
+        },
+        [
+            cvReviewFormik,
+        ],
+    )
+
     return (
         <div className={className}>
-            <div>
-                <div className="mb-3 text-base font-semibold">{t("cv.submission.fileCardTitle")}</div>
-                <Card className="w-full shadow-none">
-                    <CardContent className="flex items-center">
-                        <div className="flex w-full items-center justify-between gap-3">
-                            <div className="flex min-w-0 flex-1 items-center gap-2">
-                                <FilePdfIcon className="size-10 text-muted" />
-                                <div className="min-w-0 flex-1" title={currentCvLinkLabel}>
-                                    {
-                                        currentCvLink ? (
-                                            <Link
-                                                href={currentCvLink}
-                                                target="_blank"
-                                                className="block w-full truncate text-sm text-accent underline"
-                                            >
-                                                {currentCvLinkLabel}
-                                            </Link>
-                                        ) : (
-                                            <span className="block w-full truncate text-sm text-muted">
-                                                {currentCvLinkLabel}
-                                            </span>
-                                        )}
-                                    <div className="mt-1 flex items-center gap-1 text-xs text-muted">
-                                        <ClockIcon className="size-4" />
-                                        {submittedAtLabel}
-                                    </div>
-                                </div>
-                            </div>
-                            {
-                                currentCvLink && (
-                                    <Link
-                                        href={currentCvLink}
-                                        target="_blank"
-                                    >
-                                        <DownloadSimpleIcon className="size-5 text-muted" />
-                                    </Link>
-                                )
-                            }
-                        </div>
-                    </CardContent>
-                </Card>
-                <div className="h-3" />
-                <Button variant="secondary" onPress={openCvUpdateModal}>
-                    {t("cv.submission.updateAction")}
-                </Button>
-            </div>
+            <CvFileCard
+                currentCvLink={currentCvLink}
+                currentCvLinkLabel={currentCvLinkLabel}
+                submittedAtLabel={submittedAtLabel}
+                onOpenUpdate={openCvUpdateModal}
+            />
             <div className="h-6" />
-            <div>
-                <div className="mb-3 text-base font-semibold">{t("cv.submission.reviewLevelLabel")}</div>
-                <Card className="w-full shadow-none">
-                    <CardContent>
-                        <div className="mb-2">{templateCv?.title}</div>
-                        <div className="text-sm text-muted">
-                            {templateCv?.description}
-                        </div>
-                    </CardContent>
-                </Card>
-                <div className="h-3" />
-                <Button
-                    variant="secondary"
-                    isDisabled={formik.isSubmitting || templateCvsSwr.isLoading}
-                    onPress={openReviewLevelDetailsModal}
-                >
-                    {t("cv.submission.reviewLevelUpdate")}
-                </Button>
-            </div>
+            <ReviewLevelCard
+                templateTitle={templateCv?.title}
+                templateDescription={templateCv?.description}
+                isUpdateDisabled={isReviewDisabled}
+                onOpenReviewLevelDetails={openReviewLevelDetailsModal}
+            />
             <div className="h-6" />
-            <div>  
-                <div className="flex items-center gap-2 text-base font-semibold">
-                    {t("cv.submission.feedbackTitle")}
-                    <StarCiAIBadge />
-                </div>
-                <div className="h-3" />
-                <div className="rounded-3xl mb-3 bg-surface p-3 text-muted text-sm">
-                    <MarkdownContent markdown={feedbackMarkdown} />
-                </div>
-                <div className="flex items-center gap-2">
-                    <Button
-                        size="lg"
-                        isDisabled={formik.isSubmitting || templateCvsSwr.isLoading}
-                        isPending={
-                            cvReviewFormik.isSubmitting
-                        || activeCvReviewJobStatus === JobStatus.Processing
-                        || activeCvReviewJobStatus === JobStatus.Queued
-                        }
-                        onPress={cvReviewFormik.submitForm}
-                    >
-                        {
-                            (
-                                {
-                                    isPending,
-                                }
-                            ) => {
-                                return (
-                                    <>
-                                        {isPending ? <Spinner color="current" /> : <ScanIcon className="size-5" />}
-                                        <span>
-                                            {t(
-                                                hasPersistedAiFeedback
-                                                    ? "cv.submission.reviewActionRerun"
-                                                    : "cv.submission.reviewAction",
-                                            )}
-                                        </span>
-                                    </>
-                                )
-                            }
-                        }
-                    </Button>
-                    <Button
-                        size="lg"
-                        variant="secondary"
-                        onPress={openCvSubmissionAttemptsDrawer}
-                    >
-                        {t("cv.submission.attemptsDrawer.openButton")}
-                    </Button>
-                </div>
-                {
-                    activeCvReviewJobId !== undefined && activeCvReviewJobStatus !== undefined ? (
-                        <AIProcessingText
-                            className="mt-3"
-                            jobCategory={JobCategory.ReviewCv}
-                            jobStatus={activeCvReviewJobStatus}
-                            error={activeCvReviewJobError}
-                        />
-                    ) : null
-                }
-            </div>
+            <FeedbackSection
+                feedbackMarkdown={feedbackMarkdown}
+                hasPersistedAiFeedback={hasPersistedAiFeedback}
+                isReviewDisabled={isReviewDisabled}
+                isReviewPending={isReviewPending}
+                activeCvReviewJobId={activeCvReviewJobId}
+                activeCvReviewJobStatus={activeCvReviewJobStatus}
+                activeCvReviewJobError={activeCvReviewJobError}
+                onReview={onReview}
+                onOpenAttempts={openCvSubmissionAttemptsDrawer}
+            />
         </div>
     )
 }

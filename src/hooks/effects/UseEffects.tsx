@@ -14,6 +14,12 @@ import { useSyncFoundationCategory } from "./useSyncFoundationCategory"
 import { useSyncReduxFoundationId } from "./useSyncReduxFoundationId"
 import { useSyncFoundationEntity } from "./useSyncFoundationEntity"
 
+/**
+ * Mounts all global side-effect hooks once at the top of the app tree.
+ * Renders nothing — returns an empty fragment. Each hook drives a `useEffect`
+ * or `useLayoutEffect` that syncs Redux state with URL params, auth tokens, etc.
+ * @returns an empty React fragment.
+ */
 export const UseEffects = () => {
     /** The useEffect to sync the redux course id. */
     useSyncReduxCourseId()

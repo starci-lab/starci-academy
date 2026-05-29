@@ -1,6 +1,7 @@
 import { createAuthApolloClient } from "../clients"
-import { type GraphQLResponse, type QueryParams } from "../types"
+import { type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type { ContentStatusRequest, QueryContentStatusResponse } from "./types"
 
 const query1 = gql`
   query ContentStatus($request: ContentStatusRequest!) {
@@ -22,19 +23,6 @@ export enum QueryContentStatus {
 
 const queryMap: Record<QueryContentStatus, DocumentNode> = {
     [QueryContentStatus.Query1]: query1,
-}
-
-export interface ContentStatusData {
-    isRead: boolean
-    isFavorite: boolean
-}
-
-export interface ContentStatusRequest {
-    contentId: string
-}
-
-export interface QueryContentStatusResponse {
-    contentStatus: GraphQLResponse<ContentStatusData>
 }
 
 export const queryContentStatus = async ({

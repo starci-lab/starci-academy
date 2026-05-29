@@ -1,13 +1,14 @@
 import { createAuthApolloClient } from "../clients"
 import {
     SortOrder,
-    type GraphQLResponse,
-    type PaginationFilters,
     type QueryParams,
     type SortInput,
 } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
-import { UserMilestoneTaskAttemptFeedbackEntity } from "@/modules/types"
+import type {
+    UserPersonalTaskAttemptFeedbacksListRequest,
+    QueryUserPersonalTaskAttemptFeedbacksResponse,
+} from "./types"
 
 /** Sort keys for `userPersonalTaskAttemptFeedbacks` list. */
 export enum UserPersonalTaskAttemptFeedbacksSortBy {
@@ -15,11 +16,6 @@ export enum UserPersonalTaskAttemptFeedbacksSortBy {
     Severity = "severity",
     CreatedAt = "createdAt",
     UpdatedAt = "updatedAt",
-}
-
-export interface QueryUserPersonalTaskAttemptFeedbacksPayload {
-    count: number
-    data: Array<UserMilestoneTaskAttemptFeedbackEntity>
 }
 
 const query1 = gql`
@@ -49,17 +45,6 @@ export enum QueryUserPersonalTaskAttemptFeedbacks {
 
 const queryMap: Record<QueryUserPersonalTaskAttemptFeedbacks, DocumentNode> = {
     [QueryUserPersonalTaskAttemptFeedbacks.Query1]: query1,
-}
-
-export type UserPersonalTaskAttemptFeedbacksListFilters = PaginationFilters<UserPersonalTaskAttemptFeedbacksSortBy>
-
-export interface UserPersonalTaskAttemptFeedbacksListRequest {
-    attemptId: string
-    filters: UserPersonalTaskAttemptFeedbacksListFilters
-}
-
-export interface QueryUserPersonalTaskAttemptFeedbacksResponse {
-    userPersonalTaskAttemptFeedbacks: GraphQLResponse<QueryUserPersonalTaskAttemptFeedbacksPayload>
 }
 
 export const defaultUserPersonalTaskAttemptFeedbacksListSorts: Array<SortInput<UserPersonalTaskAttemptFeedbacksSortBy>> = [

@@ -1,22 +1,17 @@
-import type { ConsultantEntity } from "@/modules/types"
 import { createAuthApolloClient } from "../clients"
-import type { GraphQLResponse, QueryParams, SortInput } from "../types"
-import type {
-    PaginationFilters,
-} from "../types"
+import type { QueryParams, SortInput } from "../types"
 import { SortOrder } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type {
+    ConsultantsListRequest,
+    QueryConsultantsResponse,
+} from "./types"
 
 export enum ConsultantsSortBy {
     FullName = "fullName",
     OrderIndex = "orderIndex",
     CreatedAt = "createdAt",
     UpdatedAt = "updatedAt",
-}
-
-export interface QueryConsultantsPayload {
-    count: number
-    data: Array<ConsultantEntity>
 }
 
 const query1 = gql`
@@ -59,17 +54,6 @@ export enum QueryConsultants {
 
 const queryMap: Record<QueryConsultants, DocumentNode> = {
     [QueryConsultants.Query1]: query1,
-}
-
-export type ConsultantsListFilters = PaginationFilters<ConsultantsSortBy>
-
-export interface ConsultantsListRequest {
-    companyId: string
-    filters?: ConsultantsListFilters
-}
-
-export interface QueryConsultantsResponse {
-    consultants: GraphQLResponse<QueryConsultantsPayload>
 }
 
 export const defaultConsultantsListSorts: Array<SortInput<ConsultantsSortBy>> = [

@@ -1,7 +1,9 @@
 import type { AbstractEntity } from "./abstract"
 import type { GeneralContentEntity } from "./general-content"
 
-// Section (heading + markdown) inside general module content.
+/**
+ * Section (heading + markdown body) inside general module content.
+ */
 export interface GeneralContentSectionEntity extends AbstractEntity {
     /** The title of the section. */
     title: string | null

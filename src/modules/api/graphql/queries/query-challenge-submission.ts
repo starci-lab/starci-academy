@@ -1,7 +1,7 @@
-import type { ChallengeSubmissionEntity } from "@/modules/types"
-import { type GraphQLResponse, type QueryParams } from "../types"
+import { type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 import { createAuthApolloClient } from "../clients"
+import type { QueryChallengeSubmissionResponse, ChallengeSubmissionRequest } from "./types"
 
 const query1 = gql`
   query ChallengeSubmission($request: ChallengeSubmissionRequest!) {
@@ -29,15 +29,6 @@ export enum QueryChallengeSubmission {
 
 const queryMap: Record<QueryChallengeSubmission, DocumentNode> = {
     [QueryChallengeSubmission.Query1]: query1,
-}
-
-export interface QueryChallengeSubmissionResponse {
-    challengeSubmission: GraphQLResponse<ChallengeSubmissionEntity>
-}
-
-/** Matches `ChallengeSubmissionRequest` (`ref/challenge-submissions`). */
-export interface ChallengeSubmissionRequest {
-    challengeSubmissionId: string
 }
 
 /**

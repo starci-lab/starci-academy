@@ -7,6 +7,10 @@ import { setTemplateCvs } from "@/redux/slices"
 import { useLocale } from "next-intl"
 import useSWR from "swr"
 
+/**
+ * SWR query core for the template CVs query.
+ * @returns the SWR query handle.
+ */
 export const useQueryTemplateCvsSwrCore = () => {
     const locale = useLocale()
     const dispatch = useAppDispatch()

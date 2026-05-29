@@ -3,59 +3,52 @@
 /**
  * **Sign-in step 1** — OAuth shortcuts, email/password, link to sign-up tab.
  *
- * Owns full modal chrome (`Modal.CloseTrigger`, `Header`, `Body`) for this step. Uses singleton
- * `useSignInFormik()`. To build **SignUpSection** similarly: start with the same Modal shell,
- * bind fields to `useSignUpFormik()`, and switch tab via `setAuthenticationModalTab(SignIn)`
- * for “Already have an account?”.
+ * Container: owns the sign-in formik (singleton `useSignInFormik()`), the
+ * router/dispatch wiring, and the OAuth redirect action; renders presentational
+ * children inside the modal chrome (`Modal.CloseTrigger`, `Header`, `Body`).
  *
  * @see {@link SignInSection} for Redux step routing and folder conventions.
  */
-import React, { useMemo, useState } from "react"
+import React, {
+    useCallback,
+    useMemo,
+} from "react"
 import {
     Button,
-    Checkbox,
-    FieldError,
-    Input,
-    Label,
-    Link,
     Modal,
     Separator,
-    TextField,
     Spinner,
 } from "@heroui/react"
-import { 
-    EyeClosedIcon, 
-    EyeIcon 
-} from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import { useAppDispatch } from "@/redux"
-import { AuthenticationModalTab, setAuthenticationModalTab } from "@/redux/slices"
-import { useSignInFormik } from "@/hooks/singleton"
-import { GoogleIcon, GithubIcon } from "../../../../svg"
 import { useRouter } from "next/navigation"
-import { KeycloakIdentityProvider, keycloakRedirect } from "@/modules/api"
+import { useAppDispatch } from "@/redux"
+import {
+    AuthenticationModalTab,
+    setAuthenticationModalTab,
+} from "@/redux/slices"
+import { useSignInFormik } from "@/hooks/singleton"
+import {
+    KeycloakIdentityProvider,
+    keycloakRedirect,
+} from "@/modules/api"
 import {
     SessionStorage,
     SessionStorageId,
-    SessionStorageOauthIdpHint,
+    type SessionStorageOauthIdpHint,
 } from "@/modules/storage"
-import { WithClassNames } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types"
+import { OAUTH_BUTTON_ITEMS } from "./map"
+import { OauthButtons } from "./OauthButtons"
+import { EmailField } from "./EmailField"
+import { PasswordField } from "./PasswordField"
+import { RememberMeRow } from "./RememberMeRow"
+import { SignUpPrompt } from "./SignUpPrompt"
 
+/** Props for {@link CredentialsState}; no own props (singleton-driven). */
 export type CredentialsStateProps = WithClassNames<undefined>
 
-interface OauthButtonItem {
-    /** OAuth identity provider. */
-    provider: KeycloakIdentityProvider
-    /** Icon component for the provider button. */
-    icon: React.ComponentType<WithClassNames<undefined>>
-    /** Translation key for the button label. */
-    labelKey: string
-}
-
 /**
- * CredentialsState component.
- *
- * @param props Props for CredentialsState component.
+ * Credentials step container for the sign-in tab.
  */
 export const CredentialsState = () => {
     const t = useTranslations()
@@ -69,37 +62,97 @@ export const CredentialsState = () => {
         isSubmitting,
     } = useSignInFormik()
 
-    const [showPassword, setShowPassword] = useState(false)
     const router = useRouter()
     const dispatch = useAppDispatch()
 
-    const oauthButtons = useMemo<Array<OauthButtonItem>>(
-        () => [
-            {
-                provider: KeycloakIdentityProvider.Google,
-                icon: GoogleIcon,
-                labelKey: "auth.signIn.google",
-            },
-            {
-                provider: KeycloakIdentityProvider.Github,
-                icon: GithubIcon,
-                labelKey: "auth.signIn.github",
-            },
-        ],
-        []
+    /** Stable reference to the static OAuth button catalog. */
+    const oauthButtons = useMemo(
+        () => OAUTH_BUTTON_ITEMS,
+        [],
     )
 
-    const onOauthPress = (provider: KeycloakIdentityProvider) => {
-        SessionStorage.setItem<SessionStorageOauthIdpHint>(
-            SessionStorageId.OauthIdpHint,
-            { provider }
-        )
-        const url = provider === KeycloakIdentityProvider.Google
-            ? keycloakRedirect.google
-            : keycloakRedirect.github
-        url.searchParams.set("redirect_uri", window.location.href)
-        router.push(url.toString())
-    }
+    /** Start the Keycloak OAuth redirect for the chosen provider. */
+    const onOauthPress = useCallback(
+        (provider: KeycloakIdentityProvider) => {
+            // remember which IdP was used so the callback can resume the flow
+            SessionStorage.setItem<SessionStorageOauthIdpHint>(
+                SessionStorageId.OauthIdpHint,
+                { provider },
+            )
+            const url = provider === KeycloakIdentityProvider.Google
+                ? keycloakRedirect.google
+                : keycloakRedirect.github
+            url.searchParams.set("redirect_uri", window.location.href)
+            router.push(url.toString())
+        },
+        [
+            router,
+        ],
+    )
+
+    const onChangeEmail = useCallback(
+        (value: string) => {
+            setFieldValue("email", value)
+        },
+        [
+            setFieldValue,
+        ],
+    )
+    const onBlurEmail = useCallback(
+        () => {
+            setFieldTouched("email", true)
+        },
+        [
+            setFieldTouched,
+        ],
+    )
+
+    const onChangePassword = useCallback(
+        (value: string) => {
+            setFieldValue("password", value)
+        },
+        [
+            setFieldValue,
+        ],
+    )
+    const onBlurPassword = useCallback(
+        () => {
+            setFieldTouched("password", true)
+        },
+        [
+            setFieldTouched,
+        ],
+    )
+
+    const onChangeRememberMe = useCallback(
+        (selected: boolean) => {
+            // third arg true: run validation so dependent errors clear
+            setFieldValue("rememberMe", selected, true)
+            setFieldTouched("rememberMe", true, false)
+        },
+        [
+            setFieldValue,
+            setFieldTouched,
+        ],
+    )
+
+    const onSubmit = useCallback(
+        () => {
+            submitForm()
+        },
+        [
+            submitForm,
+        ],
+    )
+
+    const onSwitchToSignUp = useCallback(
+        () => {
+            dispatch(setAuthenticationModalTab(AuthenticationModalTab.SignUp))
+        },
+        [
+            dispatch,
+        ],
+    )
 
     return (
         <>
@@ -111,108 +164,41 @@ export const CredentialsState = () => {
                 </div>
             </Modal.Header>
             <Modal.Body className="overflow-visible p-3">
-                {oauthButtons.map((item, idx) => (
-                    <React.Fragment key={item.provider}>
-                        <Button
-                            type="button"
-                            variant="outline"
-                            className="w-full text-sm"
-                            onPress={() => onOauthPress(item.provider)}
-                        >
-                            <span className="inline-flex items-center justify-center gap-2">
-                                <item.icon className="w-5 h-5" />
-                                {t(item.labelKey)}
-                            </span>
-                        </Button>
-                        {idx === 0 && <div className="h-2" />}
-                    </React.Fragment>
-                ))}
+                <OauthButtons
+                    items={oauthButtons}
+                    onOauthPress={onOauthPress}
+                />
 
                 <div className="h-3" />
                 <div className="flex items-center justify-center">
                     <Separator className="flex-1" />
-                    <div className="text-xs text-foreground-500">{t("auth.signIn.or")}</div>
+                    <div className="text-xs text-muted">{t("auth.signIn.or")}</div>
                     <Separator className="flex-1" />
                 </div>
 
                 <div className="h-3" />
-                <TextField isInvalid={!!(touched.email && errors.email)}>
-                    <Label htmlFor="sign-in-email" className="text-sm">
-                        {t("auth.signIn.email.label")}
-                    </Label>
-                    <Input
-                        id="sign-in-email"
-                        required
-                        variant="secondary"
-                        type="email"
-                        placeholder={t("auth.signIn.email.placeholder")}
-                        name="email"
-                        value={values.email}
-                        onChange={(event) => setFieldValue("email", event.target.value)}
-                        onBlur={() => setFieldTouched("email", true)}
-                    />
-                    <FieldError>{errors.email}</FieldError>
-                </TextField>
+                <EmailField
+                    value={values.email}
+                    error={errors.email}
+                    touched={touched.email}
+                    onChangeValue={onChangeEmail}
+                    onBlurField={onBlurEmail}
+                />
 
                 <div className="h-3" />
-                <TextField isInvalid={!!(touched.password && errors.password)}>
-                    <Label htmlFor="sign-in-password" className="text-sm">
-                        {t("auth.signIn.password.label")}
-                    </Label>
-                    <div className="relative">
-                        <Link
-                            className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center rounded-md p-1 text-foreground-500 outline-none transition-opacity hover:opacity-80"
-                            onPress={() => setShowPassword((s) => !s)}
-                        >
-                            {showPassword ? (
-                                <EyeIcon className="h-4 w-4" />
-                            ) : (
-                                <EyeClosedIcon className="h-4 w-4" />
-                            )}
-                        </Link>
-                        <Input
-                            id="sign-in-password"
-                            required
-                            variant="secondary"
-                            type={showPassword ? "text" : "password"}
-                            placeholder={t("auth.signIn.password.placeholder")}
-                            name="password"
-                            className="w-full"
-                            value={values.password}
-                            onChange={(e) => setFieldValue("password", e.target.value)}
-                            onBlur={() => setFieldTouched("password", true)}
-                        />
-                    </div>
-                    <FieldError>{errors.password}</FieldError>
-                </TextField>
+                <PasswordField
+                    value={values.password}
+                    error={errors.password}
+                    touched={touched.password}
+                    onChangeValue={onChangePassword}
+                    onBlurField={onBlurPassword}
+                />
 
                 <div className="h-3" />
-                <div className="flex justify-between">
-                    <Checkbox
-                        id="sign-in-remember-me"
-                        variant="secondary"
-                        isSelected={values.rememberMe}
-                        onChange={(v) => {
-                            /** Third arg: run validation so `errors.agreeToTerms` clears when checked. */
-                            setFieldValue("rememberMe", Boolean(v), true)
-                            setFieldTouched("rememberMe", true, false)
-                        }}
-                    >
-                        <Checkbox.Control>
-                            <Checkbox.Indicator />
-                        </Checkbox.Control>
-                        <Checkbox.Content className="w-full">
-                            <Label htmlFor="sign-in-remember-me">
-                                <div className="text-xs text-muted">
-                                    <span>{t("auth.signIn.rememberMe")}{" "}</span>
-                                </div>
-                            </Label>
-                        </Checkbox.Content>
-                    </Checkbox>
-                    <Link className="text-xs cursor-pointer hover:opacity-80">
-                        {t("auth.signIn.forgotPassword")}
-                    </Link>
-                </div>
+                <RememberMeRow
+                    isSelected={values.rememberMe}
+                    onChangeSelected={onChangeRememberMe}
+                />
 
                 <div className="h-3" />
                 <Button
@@ -220,9 +206,9 @@ export const CredentialsState = () => {
                     variant="primary"
                     fullWidth
                     isPending={isSubmitting}
-                    onPress={() => submitForm()}
+                    onPress={onSubmit}
                 >
-                    {({isPending}) => (
+                    {({ isPending }) => (
                         <>
                             {isPending ? <Spinner color="current" size="sm" /> : null}
                             {t("auth.signIn.submit")}
@@ -231,21 +217,8 @@ export const CredentialsState = () => {
                 </Button>
 
                 <div className="h-3" />
-                <div className="flex justify-center items-center gap-1">
-                    <div className="text-xs text-foreground-500">
-                        {t("auth.signIn.noAccount")}
-                    </div>
-                    <Link
-                        className="text-xs"
-                        onPress={() =>
-                            dispatch(setAuthenticationModalTab(AuthenticationModalTab.SignUp))
-                        }
-                    >
-                        {t("auth.signIn.signUp")}
-                    </Link>
-                </div>
+                <SignUpPrompt onSwitchToSignUp={onSwitchToSignUp} />
             </Modal.Body>
         </>
     )
 }
-

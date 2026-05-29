@@ -1,23 +1,23 @@
 "use client"
 
+import React from "react"
 import { Link } from "@heroui/react"
-import type { HeadhuntingCompanyEntity } from "@/modules/types"
 import { useTranslations } from "next-intl"
 import { useMemo } from "react"
+import { useAppSelector } from "@/redux"
 import type { HeadhuntingCompanyContactLink } from "../types"
 import { buildHeadhuntingCompanyContactLinks } from "../utils"
 
-export interface HeadhuntingCompanyProfileProps {
-    /** Headhunting company from Redux. */
-    company: HeadhuntingCompanyEntity | undefined
-}
-
 /**
  * Company profile block: logo, title, description, and contact links.
- * @param props.company - Headhunting company entity to display.
+ *
+ * Self-contained section (single-use): reads the active company from the Redux
+ * singleton itself and derives its contact links, so the container just renders
+ * `<HeadhuntingCompanyProfile />`.
  */
-export const HeadhuntingCompanyProfile = ({ company }: HeadhuntingCompanyProfileProps) => {
+export const HeadhuntingCompanyProfile = () => {
     const t = useTranslations()
+    const company = useAppSelector((state) => state.headhunter.company)
 
     const contactLinks = useMemo(
         (): Array<HeadhuntingCompanyContactLink> => buildHeadhuntingCompanyContactLinks(company),

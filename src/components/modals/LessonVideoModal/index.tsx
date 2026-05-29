@@ -59,12 +59,12 @@ export const LessonVideoModal = () => {
                             </div>
                             <Spacer y={6} />
                             {lessonVideo?.description?.trim() ? (
-                                <div className="w-full whitespace-pre-wrap text-justify text-sm text-foreground-500">
+                                <div className="w-full whitespace-pre-wrap text-justify text-sm text-muted">
                                     {lessonVideo.description}
                                 </div>
                             ) : null}
                             {lessonVideo?.caption?.trim() ? (
-                                <div className="w-full text-sm italic text-foreground-500">
+                                <div className="w-full text-sm italic text-muted">
                                     {lessonVideo.caption}
                                 </div>
                             ) : null}

@@ -1,10 +1,7 @@
+﻿import type { MutateParams } from "../types"
 import { createAuthApolloClient } from "../clients"
-import {
-    type GraphQLResponse,
-    type MutateParams,
-    type QueryVariables,
-} from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type { SyncSubmissionRequest, MutateSyncChallengeSubmissionsResponse } from "./types/sync-challenge-submission"
 
 const mutation1 = gql`
   mutation SyncSubmission($request: SyncSubmissionRequest!) {
@@ -24,24 +21,11 @@ const mutationMap: Record<MutationSyncChallengeSubmissions, DocumentNode> = {
     [MutationSyncChallengeSubmissions.Mutation1]: mutation1,
 }
 
-/** Request for `syncSubmission` (`challenge-submissions/sync-submission`). */
-export interface SyncSubmissionRequest {
-    /** Challenge submission id. */
-    id: string
-    /** Submission URL (GitHub/Google Docs per submission type). */
-    url: string
-}
-
-export type MutateSyncChallengeSubmissionsVariables = QueryVariables<SyncSubmissionRequest>
-
+/** Apollo params for {@link mutateSyncChallengeSubmissions}. */
 export type MutateSyncChallengeSubmissionsParams = MutateParams<
     MutationSyncChallengeSubmissions,
     SyncSubmissionRequest
 >
-
-export interface MutateSyncChallengeSubmissionsResponse {
-    syncSubmission: GraphQLResponse
-}
 
 /**
  * Upserts one submission URL for the current user (`syncSubmission`).

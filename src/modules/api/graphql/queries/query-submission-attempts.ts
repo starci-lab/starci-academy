@@ -1,13 +1,14 @@
-import type { SubmissionAttemptEntity } from "@/modules/types"
 import { createAuthApolloClient } from "../clients"
 import {
     SortOrder,
-    type GraphQLResponse,
-    type PaginationFilters,
     type QueryParams,
     type SortInput,
 } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type {
+    SubmissionAttemptsListRequest,
+    QuerySubmissionAttemptsResponse,
+} from "./types"
 
 /** Sort keys for `userChallengeSubmissionAttempts` list (`UserChallengeSubmissionAttemptsSortBy`). */
 export enum SubmissionAttemptsSortBy {
@@ -21,11 +22,6 @@ export enum SubmissionAttemptsSortBy {
     CreatedAt = "createdAt",
     // The date and time the attempt was updated.
     UpdatedAt = "updatedAt",
-}
-
-export interface QuerySubmissionAttemptsPayload {
-    count: number
-    data: Array<SubmissionAttemptEntity>
 }
 
 const query1 = gql`
@@ -55,17 +51,6 @@ export enum QuerySubmissionAttempts {
 
 const queryMap: Record<QuerySubmissionAttempts, DocumentNode> = {
     [QuerySubmissionAttempts.Query1]: query1,
-}
-
-export type SubmissionAttemptsListFilters = PaginationFilters<SubmissionAttemptsSortBy>
-
-export interface SubmissionAttemptsListRequest {
-    challengeSubmissionId: string
-    filters: SubmissionAttemptsListFilters
-}
-
-export interface QuerySubmissionAttemptsResponse {
-    userChallengeSubmissionAttempts: GraphQLResponse<QuerySubmissionAttemptsPayload>
 }
 
 export const defaultSubmissionAttemptsListSorts: Array<SortInput<SubmissionAttemptsSortBy>> = [

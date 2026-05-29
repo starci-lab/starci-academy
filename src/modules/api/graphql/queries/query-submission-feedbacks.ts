@@ -1,13 +1,14 @@
-import type { SubmissionFeedbackEntity } from "@/modules/types"
 import { createAuthApolloClient } from "../clients"
 import {
     SortOrder,
-    type GraphQLResponse,
-    type PaginationFilters,
     type QueryParams,
     type SortInput,
 } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type {
+    SubmissionFeedbacksListRequest,
+    QuerySubmissionFeedbacksResponse,
+} from "./types"
 
 /** Sort keys for `userChallengeSubmissionFeedbacks` list (`UserChallengeSubmissionFeedbacksSortBy`). */
 export enum SubmissionFeedbacksSortBy {
@@ -19,11 +20,6 @@ export enum SubmissionFeedbacksSortBy {
     Severity = "severity",
     // The order index of the submission feedback.
     OrderIndex = "orderIndex",
-}
-
-export interface QuerySubmissionFeedbacksPayload {
-    count: number
-    data: Array<SubmissionFeedbackEntity>
 }
 
 const query1 = gql`
@@ -54,17 +50,6 @@ export enum QuerySubmissionFeedbacks {
 
 const queryMap: Record<QuerySubmissionFeedbacks, DocumentNode> = {
     [QuerySubmissionFeedbacks.Query1]: query1,
-}
-
-export type SubmissionFeedbacksListFilters = PaginationFilters<SubmissionFeedbacksSortBy>
-
-export interface SubmissionFeedbacksListRequest {
-    submissionAttemptId: string
-    filters: SubmissionFeedbacksListFilters
-}
-
-export interface QuerySubmissionFeedbacksResponse {
-    userChallengeSubmissionFeedbacks: GraphQLResponse<QuerySubmissionFeedbacksPayload>
 }
 
 export const defaultSubmissionFeedbacksListSorts: Array<SortInput<SubmissionFeedbacksSortBy>> = [

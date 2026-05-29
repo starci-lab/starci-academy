@@ -1,11 +1,11 @@
-import { 
-    createSlice, 
-    PayloadAction 
+import {
+    createSlice,
+    type PayloadAction,
 } from "@reduxjs/toolkit"
-import { SubmissionFeedbackEntity } from "@/modules/types"
+import type { SubmissionFeedbackEntity } from "@/modules/types"
 
 /**
- * The slice for the submission feedback.
+ * Client state for the submission feedback list scoped to a submission attempt.
  */
 export interface SubmissionFeedbackSlice {
     /** The submission feedback id. */
@@ -33,7 +33,7 @@ const initialState: SubmissionFeedbackSlice = {
 }
 
 /**
- * The slice for the submission attempt.
+ * Slice managing submission feedback rows for a given submission attempt.
  */
 export const submissionFeedbackSlice = createSlice(
     {
@@ -75,11 +75,10 @@ export const submissionFeedbackSlice = createSlice(
     }
 )
 
-/**
- * The reducer for the submission feedback slice.
- */
+/** Root reducer for the submission-feedback slice. */
 export const submissionFeedbackReducer = submissionFeedbackSlice.reducer
-export const { 
+/** Actions exported from the submission-feedback slice. */
+export const {
     setSubmissionFeedbackId,
     setSubmissionFeedback,
     setSubmissionFeedbacks,

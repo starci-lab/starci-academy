@@ -7,6 +7,10 @@ import useSWRMutation from "swr/mutation"
 
 type MutateVerifySubmitCvPresignUrlResult = Awaited<ReturnType<typeof mutateVerifySubmitCvPresignUrl>>
 
+/**
+ * SWR mutation core for verifying the CV pre-signed upload URL.
+ * @returns the SWR mutation handle.
+ */
 export const useMutateVerifySubmitCvPresignUrlSwrCore = () => {
     return useSWRMutation<
         MutateVerifySubmitCvPresignUrlResult,

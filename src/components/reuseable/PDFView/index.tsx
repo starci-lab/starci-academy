@@ -8,15 +8,13 @@ import React, {
     useRef,
     useState,
 } from "react"
-import { Document, Page, pdfjs } from "react-pdf"
+import { Document, pdfjs } from "react-pdf"
+import { RESIZE_DEBOUNCE_MS } from "./constants"
+import { PdfViewportPage } from "./PdfViewportPage"
 
 pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`
 
-/** Fallback A4-ish height/width for placeholder before a page canvas mounts. */
-const PAGE_ASPECT_FALLBACK = 1.414
-
-const RESIZE_DEBOUNCE_MS = 120
-
+/** Props for {@link PDFView}. */
 export interface PDFViewProps {
     /** Source URL of the PDF file to preview. */
     src: string
@@ -34,98 +32,13 @@ export interface PDFViewProps {
     fitToContainer?: boolean
 }
 
-type PdfViewportPageProps = {
-    /** 1-based page index. */
-    pageNumber: number
-    /** Scroll container ref for IntersectionObserver root. */
-    scrollRootRef: React.RefObject<HTMLDivElement | null>
-    /** Rendered page width (deferred during resize). */
-    width: number
-    /** When true, mount canvas immediately (no IO). */
-    eager: boolean
-}
-
 /**
- * Renders one PDF page once it nears the viewport to avoid painting every page at once.
- * @param props - {@link PdfViewportPageProps}
- */
-const PdfViewportPage = (props: PdfViewportPageProps) => {
-    const {
-        pageNumber,
-        scrollRootRef,
-        width,
-        eager,
-    } = props
-    const wrapRef = useRef<HTMLDivElement | null>(null)
-    const [showCanvas, setShowCanvas] = useState(eager)
-    const placeholderMinH = Math.max(
-        160,
-        Math.round(width * PAGE_ASPECT_FALLBACK),
-    )
-
-    useEffect(() => {
-        if (eager) {
-            setShowCanvas(true)
-            return
-        }
-        if (showCanvas) {
-            return
-        }
-        const el = wrapRef.current
-        if (!el) {
-            return
-        }
-        const root = scrollRootRef.current ?? undefined
-        const io = new IntersectionObserver(
-            (entries) => {
-                const entry = entries[0]
-                if (entry?.isIntersecting) {
-                    setShowCanvas(true)
-                }
-            },
-            {
-                root,
-                rootMargin: "100% 0px 120% 0px",
-                threshold: 0.01,
-            },
-        )
-        io.observe(el)
-        return () => io.disconnect()
-    }, [
-        eager,
-        scrollRootRef,
-        showCanvas,
-        pageNumber,
-    ])
-
-    return (
-        <div
-            ref={wrapRef}
-            className="flex justify-center"
-        >
-            {
-                showCanvas ? (
-                    <Page
-                        pageNumber={pageNumber}
-                        width={width}
-                        renderTextLayer={false}
-                        renderAnnotationLayer={false}
-                    />
-                ) : (
-                    <div
-                        className="w-full max-w-full rounded-medium bg-default-100/30"
-                        style={{ minHeight: placeholderMinH }}
-                        aria-hidden
-                    />
-                )
-            }
-        </div>
-    )
-}
-
-/**
- * Reusable PDF preview viewer with react-pdf.
- * @param {PDFViewProps} props PDF preview configuration.
+ * Reusable PDF preview viewer built on react-pdf.
+ *
+ * Presentational: uses only UI-local hooks (refs, resize/layout effects, deferred width)
+ * to size pages to the container; no business logic. Marked `"use client"` for the DOM
+ * observers and react-pdf canvas rendering.
+ * @param props - {@link PDFViewProps}
  */
 export const PDFView = ({
     src,
@@ -209,9 +122,9 @@ export const PDFView = ({
                 <Document
                     key={src}
                     file={file}
-                    loading={<div className="text-sm text-foreground-500">{title}</div>}
+                    loading={<div className="text-sm text-muted">{title}</div>}
                     error={<div className="text-sm text-danger">Failed to render PDF.</div>}
-                    noData={<div className="text-sm text-foreground-500">No PDF selected.</div>}
+                    noData={<div className="text-sm text-muted">No PDF selected.</div>}
                     onLoadSuccess={(pdf) => setNumPages(pdf.numPages)}
                 >
                     <div className="flex flex-col gap-3">
@@ -231,7 +144,7 @@ export const PDFView = ({
                     </div>
                 </Document>
             ) : (
-                <div className="text-sm text-foreground-500">No PDF selected.</div>
+                <div className="text-sm text-muted">No PDF selected.</div>
             )}
         </div>
     )

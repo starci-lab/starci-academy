@@ -1,13 +1,13 @@
 import type {
     CourseEntity,
 } from "@/modules/types"
-import { 
-    createSlice, 
-    PayloadAction 
+import {
+    createSlice,
+    type PayloadAction,
 } from "@reduxjs/toolkit"
 
 /**
- * The slice for the course.
+ * Client state for the currently active course and the full course catalogue.
  */
 export interface CourseSlice {
     /** The course display id. */
@@ -35,7 +35,7 @@ const initialState: CourseSlice = {
 }
 
 /**
- * The slice for the course.
+ * Slice tracking the active course (entity, id, displayId) and the course catalogue list.
  */
 export const courseSlice = createSlice(
     {
@@ -79,11 +79,10 @@ export const courseSlice = createSlice(
     }
 )
 
-/**
- * The reducer for the course slice.
- */
+/** Root reducer for the course slice. */
 export const courseReducer = courseSlice.reducer
-export const { 
+/** Actions exported from the course slice. */
+export const {
     setCourse,
     setCourses,
     setCourseDisplayId,

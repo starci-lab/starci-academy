@@ -1,9 +1,7 @@
 import { createAuthApolloClient } from "../clients"
-import { TemplateCVEntity, type QueryParams } from "../types"
+import { type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
-import {
-    GraphQLResponse,
-} from "../types"
+import type { QueryTemplateCvsResponse } from "./types"
 
 const query1 = gql`
   query TemplateCvs {
@@ -26,10 +24,6 @@ export enum QueryTemplateCvs {
 
 const queryMap: Record<QueryTemplateCvs, DocumentNode> = {
     [QueryTemplateCvs.Query1]: query1,
-}
-
-export interface QueryTemplateCvsResponse {
-  templateCvs: GraphQLResponse<Array<TemplateCVEntity>>;
 }
 
 export const queryTemplateCvs = async ({

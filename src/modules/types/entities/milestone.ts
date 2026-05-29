@@ -1,5 +1,6 @@
 import type { PersonalProjectTaskType } from "../enums"
 import type { AbstractEntity } from "./abstract"
+import type { CodeImplementationEntity } from "./code-implementation"
 
 /**
  * A pass criterion for a milestone task.
@@ -41,6 +42,8 @@ export interface MilestoneTaskEntity extends AbstractEntity {
     milestoneId: string
     /** Criteria belonging to this task. */
     criterias?: Array<MilestoneTaskCriteriaEntity>
+    /** Multi-language implementation guides for this task. */
+    codeImplementations?: Array<CodeImplementationEntity>
 }
 
 /**

@@ -1,7 +1,7 @@
-import type { FoundationCategoryEntity } from "@/modules/types"
 import { createAuthApolloClient } from "../clients"
-import type { GraphQLResponse, QueryParams } from "../types"
+import type { QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type { QueryFoundationCategoriesResponse } from "./types"
 
 const query1 = gql`
   query FoundationCategories {
@@ -28,10 +28,6 @@ export enum QueryFoundationCategories {
 
 const queryMap: Record<QueryFoundationCategories, DocumentNode> = {
     [QueryFoundationCategories.Query1]: query1,
-}
-
-export interface QueryFoundationCategoriesResponse {
-    foundationCategories: GraphQLResponse<Array<FoundationCategoryEntity>>
 }
 
 export const queryFoundationCategories = async ({

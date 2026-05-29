@@ -12,8 +12,8 @@ export interface LessonVideoTranslationEntity {
     field: string
     /** Translated value. */
     value: string
-    /** The duration of the exclusive lesson video in milliseconds. */
+    /** Audit timestamp — when this translation row was created. */
     createdAt?: Date
-    /** The updated at date of the exclusive lesson video. */
+    /** Audit timestamp — when this translation row was last updated. */
     updatedAt?: Date
 }

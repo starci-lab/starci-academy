@@ -3,6 +3,10 @@ import { useAppSelector, useAppDispatch } from "@/redux"
 import { setMilestones } from "@/redux/slices"
 import useSWR from "swr"
 
+/**
+ * SWR query core for the milestones list query.
+ * @returns the SWR query handle.
+ */
 export const useQueryMilestonesSwrCore = () => {
     const course = useAppSelector((state) => state.course.entity)
     const dispatch = useAppDispatch()

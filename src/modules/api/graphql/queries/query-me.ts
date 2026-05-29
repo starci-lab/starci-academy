@@ -1,7 +1,7 @@
-import type { UserEntity } from "@/modules/types"
 import { createAuthApolloClient } from "../clients"
-import { type GraphQLResponse, type QueryParams } from "../types"
+import { type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type { QueryMeResponse } from "./types"
 
 const query1 = gql`
   query Me {
@@ -25,10 +25,6 @@ export enum QueryMe {
 
 const queryMap: Record<QueryMe, DocumentNode> = {
     [QueryMe.Query1]: query1,
-}
-
-export interface QueryMeResponse {
-    me: GraphQLResponse<UserEntity>
 }
 
 /**

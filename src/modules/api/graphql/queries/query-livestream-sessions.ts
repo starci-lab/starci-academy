@@ -1,13 +1,14 @@
-import type { LivestreamSessionEntity } from "@/modules/types"
 import { createAuthApolloClient } from "../clients"
 import {
     SortOrder,
-    type GraphQLResponse,
-    type PaginationFilters,
     type QueryParams,
     type SortInput,
 } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type {
+    LivestreamSessionsListRequest,
+    QueryLivestreamSessionsResponse,
+} from "./types"
 
 /** Sort keys for `livestreamSessions` (`LivestreamSessionsSortBy`). */
 export enum LivestreamSessionsSortBy {
@@ -16,11 +17,6 @@ export enum LivestreamSessionsSortBy {
     StartTime = "startTime",
     CreatedAt = "createdAt",
     UpdatedAt = "updatedAt",
-}
-
-export interface QueryLivestreamSessionsPayload {
-    count: number
-    data: Array<LivestreamSessionEntity>
 }
 
 const query1 = gql`
@@ -50,17 +46,6 @@ export enum QueryLivestreamSessions {
 
 const queryMap: Record<QueryLivestreamSessions, DocumentNode> = {
     [QueryLivestreamSessions.Query1]: query1,
-}
-
-export type LivestreamSessionsListFilters = PaginationFilters<LivestreamSessionsSortBy>
-
-export interface LivestreamSessionsListRequest {
-    courseId: string
-    filters: LivestreamSessionsListFilters
-}
-
-export interface QueryLivestreamSessionsResponse {
-    livestreamSessions: GraphQLResponse<QueryLivestreamSessionsPayload>
 }
 
 export const defaultLivestreamSessionsListSorts: Array<SortInput<LivestreamSessionsSortBy>> = [

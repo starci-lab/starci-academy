@@ -1,0 +1,37 @@
+﻿import type { GraphQLResponse, QueryVariables } from "../../types"
+
+/** GraphQL `ReviewPersonalProjectTaskRequest` body. */
+export interface ReviewPersonalProjectTaskRequest {
+    /** Course ID. */
+    courseId: string
+    /** Task ID to review (defaults to first task if omitted). */
+    taskId?: string
+    /**
+     * GitHub repository URL.
+     * If omitted or empty, the URL stored on the user's enrollment for this course is used.
+     */
+    githubUrl?: string | null
+    /**
+     * Branch name for review.
+     * If omitted, the branch stored on enrollment is used (worker defaults to main when unset).
+     */
+    branch?: string | null
+}
+
+/** Payload inside `reviewPersonalProjectTask.data` after the standard API wrapper. */
+export interface ReviewPersonalProjectTaskData {
+    /** Attempt row ID created for this review run. */
+    attemptId: string
+    /** Background job ID enqueued for the review. */
+    jobId: string
+}
+
+/** Apollo variables bag for the `reviewPersonalProjectTask` mutation. */
+export type MutateReviewPersonalProjectTaskVariables =
+    QueryVariables<ReviewPersonalProjectTaskRequest>
+
+/** Apollo response shape for `reviewPersonalProjectTask`. */
+export interface MutateReviewPersonalProjectTaskResponse {
+    /** Top-level `reviewPersonalProjectTask` field wrapping the standard API response. */
+    reviewPersonalProjectTask: GraphQLResponse<ReviewPersonalProjectTaskData>
+}

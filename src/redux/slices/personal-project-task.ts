@@ -1,9 +1,9 @@
 import type {
     PersonalProjectTaskEntity,
 } from "@/modules/types"
-import { 
-    createSlice, 
-    PayloadAction 
+import {
+    createSlice,
+    type PayloadAction,
 } from "@reduxjs/toolkit"
 
 /**
@@ -114,11 +114,10 @@ export const personalProjectTaskSlice = createSlice(
     }
 )
 
-/**
- * The reducer for the personal project task slice.
- */
+/** Root reducer for the personal-project-task slice. */
 export const personalProjectTaskReducer = personalProjectTaskSlice.reducer
-export const { 
+/** Actions exported from the personal-project-task slice. */
+export const {
     setTodoTasks,
     appendTodoTasks,
     setTodoCursor,

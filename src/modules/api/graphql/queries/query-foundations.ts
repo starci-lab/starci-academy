@@ -1,12 +1,14 @@
-import type { FoundationEntity } from "@/modules/types"
 import { createAuthApolloClient } from "../clients"
 import type {
-    PaginationFilters,
     QueryParams,
     SortInput,
 } from "../types"
 import { SortOrder } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type {
+    FoundationsListRequest,
+    QueryFoundationsResponse,
+} from "./types"
 
 /** Sort keys for `foundations` list (`FoundationsSortBy` on the API). */
 export enum FoundationsSortBy {
@@ -14,12 +16,6 @@ export enum FoundationsSortBy {
     OrderIndex = "orderIndex",
     CreatedAt = "createdAt",
     UpdatedAt = "updatedAt",
-}
-
-/** Paginated payload inside `foundations.data`. */
-export interface QueryFoundationsPayload {
-    count: number
-    data: Array<FoundationEntity>
 }
 
 const query1 = gql`
@@ -56,19 +52,6 @@ export enum QueryFoundations {
 
 const queryMap: Record<QueryFoundations, DocumentNode> = {
     [QueryFoundations.Query1]: query1,
-}
-
-export type FoundationsListFilters = PaginationFilters<FoundationsSortBy>
-
-export interface FoundationsListRequest {
-    categoryId: string
-    filters?: FoundationsListFilters
-}
-
-export interface QueryFoundationsResponse {
-    foundations: {
-        data: QueryFoundationsPayload
-    }
 }
 
 /** Default sort order for foundations list (`orderIndex` asc). */

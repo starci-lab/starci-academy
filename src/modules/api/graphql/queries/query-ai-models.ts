@@ -1,6 +1,14 @@
 import { createAuthApolloClient } from "../clients"
-import { type GraphQLResponse, type QueryParams } from "../types"
+import { type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type { QueryAiModelsResponse } from "./types"
+
+/** Cost/quality category of a model (mirrors backend `AiModelCategory`). */
+export enum AiModelCategory {
+    Economy = "economy",
+    Balanced = "balanced",
+    Premium = "premium",
+}
 
 const query1 = gql`
   query AiModels {
@@ -23,6 +31,12 @@ const query1 = gql`
             provider
           }
         }
+        gradableModels {
+          model
+          provider
+          category
+          complimentary
+        }
       }
     }
   }
@@ -34,28 +48,6 @@ export enum QueryAiModels {
 
 const queryMap: Record<QueryAiModels, DocumentNode> = {
     [QueryAiModels.Query1]: query1,
-}
-
-export interface AiModelChoice {
-    model: string
-    provider: string
-}
-
-export interface AiActiveModel {
-    taskKind: string
-    label: string
-    description: string
-    activeModel: AiModelChoice
-    fallbackChain: Array<AiModelChoice>
-}
-
-export interface QueryAiModelsResponseData {
-    tier: string
-    models: Array<AiActiveModel>
-}
-
-export interface QueryAiModelsResponse {
-    aiModels: GraphQLResponse<QueryAiModelsResponseData>
 }
 
 export const queryAiModels = async ({

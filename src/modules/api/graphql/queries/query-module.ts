@@ -1,7 +1,7 @@
-import { ModuleEntity } from "@/modules/types"
 import { createAuthApolloClient } from "../clients"
-import { type GraphQLResponse, type QueryParams } from "../types"
+import { type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type { QueryModuleResponse, ModuleRequest } from "./types"
 
 /**
  * Module shell only — matches `ref/queries/module/module.service.ts`
@@ -37,17 +37,6 @@ export enum QueryModule {
 
 const queryMap: Record<QueryModule, DocumentNode> = {
     [QueryModule.Query1]: query1,
-}
-
-export interface QueryModuleResponse {
-    module: GraphQLResponse<ModuleEntity>
-}
-
-export interface ModuleRequest {
-    /** The display id. */
-    displayId?: string
-    /** The id. */
-    id?: string
 }
 
 /**

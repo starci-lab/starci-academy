@@ -1,28 +1,10 @@
 import { createAuthApolloClient } from "../clients"
-import type { GraphQLResponse, QueryParams } from "../types"
+import type { QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
-
-export type SearchableEntity =
-    | "CourseEntity"
-    | "ModuleEntity"
-    | "ContentEntity"
-    | "LessonVideoEntity"
-    | "ChallengeEntity"
-
-export interface AutocompleteGlobalSearchItem {
-    id: string
-    displayId?: string
-    title?: string
-    texts?: Array<string>
-}
-
-export interface AutocompleteGlobalSearchData {
-    courses?: Array<AutocompleteGlobalSearchItem>
-    modules?: Array<AutocompleteGlobalSearchItem>
-    challenges?: Array<AutocompleteGlobalSearchItem>
-    contents?: Array<AutocompleteGlobalSearchItem>
-    lessonVideos?: Array<AutocompleteGlobalSearchItem>
-}
+import type {
+    QueryAutocompleteGlobalSearchRequest,
+    QueryAutocompleteGlobalSearchResponse,
+} from "./types"
 
 const query1 = gql`
   query AutocompleteGlobalSearch($request: AutocompleteGlobalSearchRequest!) {
@@ -72,16 +54,6 @@ export enum QueryAutocompleteGlobalSearch {
 
 const queryMap: Record<QueryAutocompleteGlobalSearch, DocumentNode> = {
     [QueryAutocompleteGlobalSearch.Query1]: query1,
-}
-
-export interface QueryAutocompleteGlobalSearchRequest {
-    query: string
-    entities?: Array<SearchableEntity>
-    size?: number
-}
-
-export interface QueryAutocompleteGlobalSearchResponse {
-    autocompleteGlobalSearch: GraphQLResponse<AutocompleteGlobalSearchData>
 }
 
 export const queryAutocompleteGlobalSearch = async ({

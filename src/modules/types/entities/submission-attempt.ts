@@ -1,6 +1,7 @@
-import { AbstractEntity } from "./abstract"
-import { SubmissionFeedbackEntity } from "./submission-feedback"
-import { UserChallengeSubmissionEntity } from "./user-challenge-submission"
+import type { AbstractEntity } from "./abstract"
+import type { SubmissionFeedbackEntity } from "./submission-feedback"
+import type { UserChallengeSubmissionEntity } from "./user-challenge-submission"
+
 /**
  * A single attempt of a user challenge submission.
  */

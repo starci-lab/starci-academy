@@ -1,50 +1,48 @@
 "use client"
 
-import React, { useCallback, useMemo } from "react"
+import React, {
+    useCallback,
+    useMemo,
+} from "react"
 import {
     PricingPhase,
-    PricingPhaseEntity,
+    type PricingPhaseEntity,
 } from "@/modules/types"
-import { motion } from "framer-motion"
 import numeral from "numeral"
-import { Spacer } from "@/components/reuseable"
 import Decimal from "decimal.js"
-import {
-    Chip,
-    Separator,
-    Tooltip,
-    TooltipTrigger,
-    TooltipContent,
-} from "@heroui/react"
+import { Spacer } from "@/components/reuseable"
 import { computePercentage } from "@/modules/utils"
 import { useAppSelector } from "@/redux"
 import _ from "lodash"
+import type {
+    PricingPhasePriceRow,
+} from "./types"
+import {
+    PhaseTrack,
+} from "./PhaseTrack"
+import {
+    PhaseLabels,
+} from "./PhaseLabels"
+import {
+    PhasePrices,
+} from "./PhasePrices"
 
 /**
- * The data for a pricing phase.
- */
-export interface PricingPhaseData {
-    /** The name of the pricing phase. */
-    name: string
-    /** The description of the pricing phase. */
-    description: string
-}
-
-/**
- * The Stepper component.
+ * Pricing phases stepper container.
+ *
+ * Owns the course-derived phase ordering and price/discount computations, then
+ * renders the presentational track, labels and price rows. `"use client"` for
+ * redux selectors and Framer Motion children.
  */
 export const Stepper = () => {
-    /**
-     * The course entity.
-     */
+    /** The course entity. */
     const course = useAppSelector((state) => state.course.entity)
+
     /**
-    * Display price for a tier: `regular` when set; Regular tier falls back to course list price.
-    */
+     * Display price for a tier: `regular` when set; Regular tier falls back to course list price.
+     */
     const pricingPhaseDisplayPrice = useCallback(
-        (
-            pricingPhase: PricingPhaseEntity,
-        ): number => {
+        (pricingPhase: PricingPhaseEntity): number => {
             if (pricingPhase.price != null) {
                 return pricingPhase.price
             }
@@ -52,27 +50,37 @@ export const Stepper = () => {
                 return course?.originalPrice ?? 0
             }
             return course?.originalPrice ?? 0
-        }, []
+        },
+        [course],
     )
+
     /**
-     * The pricing phases.
+     * USD display price for a tier, mirroring {@link pricingPhaseDisplayPrice}:
+     * phase USD price when set, else the course list USD price. Returns `null`
+     * when neither is present so the secondary USD line stays hidden.
      */
+    const pricingPhaseDisplayPriceUsd = useCallback(
+        (pricingPhase: PricingPhaseEntity): number | null => {
+            // phase carries its own USD price → use it directly
+            if (pricingPhase.priceUsd != null) {
+                return pricingPhase.priceUsd
+            }
+            // otherwise fall back to the course list USD price (may be null)
+            return course?.originalPriceUsd ?? null
+        },
+        [course],
+    )
+
+    /** The pricing phases, sorted by display order. */
     const pricingPhases = useMemo(() => {
         return _.cloneDeep(course?.pricingPhases ?? []).sort(
             (prev, next) => prev.orderIndex - next.orderIndex)
     }, [course])
 
+    /** Course list price used as the discount reference. */
     const listPrice = course?.originalPrice ?? 0
 
-    const phaseData: Record<PricingPhase, PricingPhaseData> = React.useMemo(
-        () => {
-            return {
-                [PricingPhase.Pioneer]: { name: "Pioneer", description: "Pioneer" },
-                [PricingPhase.EarlyBird]: { name: "Early Bird", description: "Early Bird" },
-                [PricingPhase.Regular]: { name: "Regular", description: "Regular" },
-            }
-        }, [])
-
+    /** The currently active pricing phase, defaults to Pioneer. */
     const currentPhase = course?.currentPhase ?? PricingPhase.Pioneer
 
     /**
@@ -86,146 +94,74 @@ export const Stepper = () => {
                 .dividedBy(refPrice)
                 .times(100)
             return discount.toNumber()
-        }, []
+        },
+        [],
     )
 
-    /**
-     * The segment count.
-     */
+    /** The segment count (at least 1). */
     const segmentCount = useMemo(() => {
         return Math.max(1, pricingPhases.length - 1)
     }, [pricingPhases])
 
-    /**
-     * The current phase data.
-     */
+    /** The current phase entity (for its order index). */
     const currentPhaseData = useMemo(() => {
         return course?.pricingPhases?.find(phase => phase.phase === currentPhase)
     }, [course, currentPhase])
 
+    /** Order index of the active phase (0 when unknown). */
+    const currentOrderIndex = currentPhaseData?.orderIndex ?? 0
+
+    /**
+     * Progress-bar width as a CSS percentage. Mirrors the original expression
+     * (`?? 0 / segmentCount` binds the division to the fallback only).
+     */
+    const progressWidth = useMemo(
+        () => `${(currentPhaseData?.orderIndex ?? 0 / segmentCount) * 100}%`,
+        [currentPhaseData?.orderIndex, segmentCount],
+    )
+
+    /** Pre-computed price rows (formatted price + optional save percentage). */
+    const priceRows = useMemo<Array<PricingPhasePriceRow>>(
+        () => pricingPhases.map((pricingPhase) => {
+            const displayPrice = pricingPhaseDisplayPrice(pricingPhase)
+            // USD price is optional — only format when the backend supplies one
+            const displayPriceUsd = pricingPhaseDisplayPriceUsd(pricingPhase)
+            return {
+                id: pricingPhase.id,
+                formattedPrice: numeral(displayPrice).format("0,0"),
+                // guard null so courses without a USD price render no USD line
+                formattedPriceUsd: displayPriceUsd != null
+                    ? numeral(displayPriceUsd).format("$0,0.00")
+                    : null,
+                savePercent: pricingPhase.price != null
+                    ? computePercentage({
+                        numerator: new Decimal(calculateDiscount(displayPrice, listPrice)),
+                        denominator: new Decimal(100),
+                        fractionDigits: 2,
+                    }).toNumber()
+                    : null,
+            }
+        }),
+        [
+            pricingPhases,
+            pricingPhaseDisplayPrice,
+            pricingPhaseDisplayPriceUsd,
+            calculateDiscount,
+            listPrice,
+        ],
+    )
+
     return (
         <div>
-            <div className="relative flex items-center justify-between w-full">
-                <Separator className="absolute top-6 left-0 right-0 z-0" />
-                <motion.div
-                    className="absolute top-6 left-0  z-0 w-full"
-                    initial={false}
-                    animate={{
-                        width: `${(currentPhaseData?.orderIndex ?? 0 / segmentCount) * 100}%`,
-                    }}
-                    transition={{ type: "spring", stiffness: 120 }}
-                />
-                {
-                    pricingPhases.map(
-                        (pricingPhase: PricingPhaseEntity, index: number) => {
-                            const isPast = index < (currentPhaseData?.orderIndex ?? 0)
-                            const isCurrent = index === (currentPhaseData?.orderIndex ?? 0)
-                            return (
-                                <div key={pricingPhase.id} className="flex-1">
-                                    <div
-                                        className="relative flex flex-col items-center z-10"
-                                    >
-                                        <div className="w-12 h-12 flex items-center justify-center">
-                                            <div className="relative flex items-center justify-center">
-                                                {isCurrent && (
-                                                    <motion.div
-                                                        initial={false}
-                                                        className="absolute rounded-full border-2 border-primary pointer-events-none"
-                                                        animate={{
-                                                            scale: [1, 1.5, 2],
-                                                            opacity: [0.8, 0.4, 0],
-                                                        }}
-                                                        transition={{
-                                                            duration: 2,
-                                                            repeat: Infinity,
-                                                            ease: "easeOut",
-                                                        }}
-                                                        style={{
-                                                            width: 32,
-                                                            height: 32,
-                                                        }}
-                                                    />
-                                                )}
-
-                                                <motion.div
-                                                    initial={false}
-                                                    className={`cursor-pointer rounded-full relative z-10 ${isPast || isCurrent
-                                                        ? "bg-primary"
-                                                        : "bg-foreground-500"
-                                                    }`}
-                                                    animate={
-                                                        isCurrent
-                                                            ? { width: 32, height: 32 }
-                                                            : { width: 24, height: 24 }
-                                                    }
-                                                    transition={
-                                                        isPast
-                                                            ? {}
-                                                            : { type: "spring", stiffness: 300 }
-                                                    }
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            )
-                        }
-                    )
-                }
-            </div>
+            <PhaseTrack
+                pricingPhases={pricingPhases}
+                progressWidth={progressWidth}
+                currentOrderIndex={currentOrderIndex}
+            />
             <Spacer y={2} />
-            <div className="relative flex items-center justify-between">
-                {
-                    pricingPhases.map(
-                        (pricingPhase: PricingPhaseEntity) => {
-                            return (
-                                <div key={pricingPhase.id} className="flex-1">
-                                    <Tooltip>
-                                        <TooltipTrigger>
-                                            <div className="text-center text-sm font-medium">
-                                                {phaseData[pricingPhase.phase].name}
-                                            </div>
-                                        </TooltipTrigger>
-                                        <TooltipContent>{phaseData[pricingPhase.phase].description}</TooltipContent>
-                                    </Tooltip>
-                                </div>
-                            )
-                        }
-                    )
-                }
-            </div>
+            <PhaseLabels pricingPhases={pricingPhases} />
             <Spacer y={2} />
-            <div className="relative flex items-start justify-between">
-                {
-                    pricingPhases.map(
-                        (pricingPhase: PricingPhaseEntity) => {
-                            return (
-                                <div key={pricingPhase.id} className="flex-1 flex flex-col items-center">
-                                    <div className="text-center text-sm font-medium text-foreground-500">
-                                        {numeral(pricingPhaseDisplayPrice(pricingPhase)).format("0,0")}
-                                    </div>
-                                    <Spacer y={1} />
-                                    {
-                                        pricingPhase.price != null && (
-                                            <Chip color="accent" size="sm" variant="soft">
-                                                {`Save ${computePercentage(
-                                                    {
-                                                        numerator: new Decimal(calculateDiscount(pricingPhaseDisplayPrice(pricingPhase), listPrice)),
-                                                        denominator: new Decimal(100),
-                                                        fractionDigits: 2
-                                                    }
-                                                ).toNumber()
-                                                }%`
-                                                }
-                                            </Chip>
-                                        )
-                                    }
-                                </div>
-                            )
-                        }
-                    )
-                }
-            </div>
+            <PhasePrices rows={priceRows} />
         </div>
     )
 }

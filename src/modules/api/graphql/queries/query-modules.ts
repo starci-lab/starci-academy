@@ -1,7 +1,7 @@
-import type { ModuleEntity } from "@/modules/types"
 import { createAuthApolloClient } from "../clients"
-import type { GraphQLResponse, QueryParams } from "../types"
+import type { QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type { QueryModulesRequest, QueryModulesResponse } from "./types"
 
 const query1 = gql`
   query Modules($request: ModulesRequest!) {
@@ -41,18 +41,6 @@ export enum QueryModules {
 
 const queryMap: Record<QueryModules, DocumentNode> = {
     [QueryModules.Query1]: query1,
-}
-
-export interface QueryModulesRequest {
-    courseId: string
-}
-
-export interface QueryModulesResponseData {
-    data: Array<ModuleEntity>
-}
-
-export interface QueryModulesResponse {
-    modules: GraphQLResponse<QueryModulesResponseData>
 }
 
 export const queryModules = async ({

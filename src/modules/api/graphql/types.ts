@@ -95,10 +95,3 @@ export interface AbortableRequest<TRequest = undefined> {
     /** Optional abort signal. */
     signal?: AbortSignal
 }
-
-/** Represents a template CV entity. */
-export interface TemplateCVEntity {
-    id: string
-    title: string
-    description?: string | null
-}

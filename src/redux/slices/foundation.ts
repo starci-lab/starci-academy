@@ -4,9 +4,12 @@ import type {
 } from "@/modules/types"
 import {
     createSlice,
-    PayloadAction,
+    type PayloadAction,
 } from "@reduxjs/toolkit"
 
+/**
+ * Redux state for the Foundations section (categories + paginated foundation list).
+ */
 export interface FoundationSlice {
     /** Selected category id (from URL). */
     categoryId?: string
@@ -28,6 +31,7 @@ export interface FoundationSlice {
     limit?: number
 }
 
+/** Initial state for the foundation slice. */
 const initialState: FoundationSlice = {
     categoryId: undefined,
     foundationId: undefined,
@@ -40,58 +44,70 @@ const initialState: FoundationSlice = {
     limit: 100,
 }
 
+/**
+ * Slice managing foundation category selection, foundation list, and pagination.
+ */
 export const foundationSlice = createSlice({
     name: "foundation",
     initialState,
     reducers: {
+        /** Set the active foundation category id (drives filtered list fetch). */
         setFoundationCategoryId: (
             state,
             action: PayloadAction<string | undefined>,
         ) => {
             state.categoryId = action.payload
         },
+        /** Set the active foundation id (drives detail view fetch). */
         setFoundationId: (
             state,
             action: PayloadAction<string | undefined>,
         ) => {
             state.foundationId = action.payload
         },
+        /** Store the foundation detail entity. */
         setFoundation: (
             state,
             action: PayloadAction<FoundationEntity | undefined>,
         ) => {
             state.entity = action.payload
         },
+        /** Store the active category entity. */
         setFoundationCategory: (
             state,
             action: PayloadAction<FoundationCategoryEntity | undefined>,
         ) => {
             state.category = action.payload
         },
+        /** Replace the full list of foundation categories. */
         setFoundationCategories: (
             state,
             action: PayloadAction<Array<FoundationCategoryEntity> | undefined>,
         ) => {
             state.categories = action.payload
         },
+        /** Replace the current page of foundation entities. */
         setFoundations: (
             state,
             action: PayloadAction<Array<FoundationEntity> | undefined>,
         ) => {
             state.entities = action.payload
         },
+        /** Set the total count of foundations (for pagination controls). */
         setFoundationsCount: (
             state,
             action: PayloadAction<number | undefined>,
         ) => {
             state.count = action.payload
         },
+        /** Set the current page number for the foundation list. */
         setFoundationPageNumber: (
             state,
             action: PayloadAction<number | undefined>,
         ) => {
             state.pageNumber = action.payload
         },
+        /** Set the page size for the foundation list query. */
         setFoundationLimit: (
             state,
             action: PayloadAction<number | undefined>,
@@ -101,7 +117,9 @@ export const foundationSlice = createSlice({
     },
 })
 
+/** Root reducer for the foundation slice. */
 export const foundationReducer = foundationSlice.reducer
+/** Actions exported from the foundation slice. */
 export const {
     setFoundationCategoryId,
     setFoundationId,

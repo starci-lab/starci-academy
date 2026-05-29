@@ -1,10 +1,9 @@
 "use client"
 
-import React, { useMemo } from "react"
-import {
-    Breadcrumbs,
-    Skeleton,
-} from "@heroui/react"
+import React, {
+    useCallback,
+    useMemo,
+} from "react"
 import {
     useLocale,
     useTranslations,
@@ -22,22 +21,27 @@ import {
     useQueryFoundationCategoriesSwr,
     useQueryFoundationsSwr,
 } from "@/hooks/singleton"
-import { FoundationCardBody } from "../FoundationCardBody"
-import { FoundationItemThumbnail } from "../FoundationItemThumbnail"
-import { FoundationMeta } from "../FoundationMeta"
-
-/** One breadcrumb row for foundation detail. */
-type FoundationDetailBreadcrumbItem = {
-    /** Stable React key. */
-    key: string
-    /** Visible label. */
-    label: string
-    /** Optional navigation handler. */
-    onPress?: () => void
-}
+import type {
+    FoundationsBreadcrumbItem,
+} from "../types"
+import {
+    FoundationsBreadcrumbs,
+} from "../FoundationsBreadcrumbs"
+import {
+    FoundationDetailSkeleton,
+} from "./FoundationDetailSkeleton"
+import {
+    FoundationDetailNotFound,
+} from "./FoundationDetailNotFound"
+import {
+    FoundationDetailCard,
+} from "./FoundationDetailCard"
 
 /**
- * Learn foundations item detail: full content for one resource.
+ * Learn foundations item detail container: full content for one resource.
+ *
+ * Owns data (SWR + redux) and breadcrumb derivation; renders presentational
+ * children. `"use client"` for routing and redux state.
  */
 export const FoundationDetailLayout = () => {
     const t = useTranslations()
@@ -54,6 +58,7 @@ export const FoundationDetailLayout = () => {
     useQueryFoundationCategoriesSwr()
     useQueryFoundationsSwr()
 
+    /** Deep link back to the category foundations list, when ids are known. */
     const categoryListHref = useMemo(() => {
         if (!courseDisplayId || !categoryId) {
             return undefined
@@ -66,28 +71,50 @@ export const FoundationDetailLayout = () => {
             .build()
     }, [categoryId, courseDisplayId, locale])
 
-    const breadcrumbItems = useMemo((): Array<FoundationDetailBreadcrumbItem> => [
+    /** Navigate to the localized home page. */
+    const onPressHome = useCallback(() => {
+        router.push(pathConfig().locale().build())
+    }, [router])
+
+    /** Navigate to the courses listing. */
+    const onPressCourses = useCallback(() => {
+        router.push(pathConfig().locale(locale).course().build())
+    }, [locale, router])
+
+    /** Navigate to the current course overview. */
+    const onPressCourse = useCallback(() => {
+        router.push(pathConfig().locale(locale).course(courseDisplayId).build())
+    }, [courseDisplayId, locale, router])
+
+    /** Navigate back to the category foundations list, when available. */
+    const onPressCategory = useCallback(() => {
+        if (!categoryListHref) {
+            return
+        }
+        router.push(categoryListHref)
+    }, [categoryListHref, router])
+
+    /** Breadcrumb trail from home → courses → course → category → item. */
+    const breadcrumbItems = useMemo((): Array<FoundationsBreadcrumbItem> => [
         {
             key: "home",
             label: t("nav.home"),
-            onPress: () => router.push(pathConfig().locale().build()),
+            onPress: onPressHome,
         },
         {
             key: "courses",
             label: t("nav.courses"),
-            onPress: () => router.push(pathConfig().locale(locale).course().build()),
+            onPress: onPressCourses,
         },
         {
             key: "course",
             label: course?.title || t("nav.courses"),
-            onPress: () => router.push(pathConfig().locale(locale).course(courseDisplayId).build()),
+            onPress: onPressCourse,
         },
         {
             key: "category",
             label: category?.title || t("foundations.title"),
-            onPress: categoryListHref
-                ? () => router.push(categoryListHref)
-                : undefined,
+            onPress: categoryListHref ? onPressCategory : undefined,
         },
         {
             key: "item",
@@ -97,10 +124,11 @@ export const FoundationDetailLayout = () => {
         category?.title,
         categoryListHref,
         course?.title,
-        courseDisplayId,
         foundation?.title,
-        locale,
-        router,
+        onPressCategory,
+        onPressCourse,
+        onPressCourses,
+        onPressHome,
         t,
     ])
 
@@ -108,56 +136,18 @@ export const FoundationDetailLayout = () => {
     const isNotFound = foundations !== undefined && foundationId && !foundation
 
     if (isLoading) {
-        return (
-            <div className="p-3">
-                <Skeleton className="mb-4 h-6 w-2/3 rounded-lg" />
-                <Skeleton className="mb-2 h-8 w-full rounded-lg" />
-                <Skeleton className="h-48 w-full rounded-lg" />
-            </div>
-        )
+        return <FoundationDetailSkeleton />
     }
 
     if (isNotFound || !foundation) {
-        return (
-            <div className="p-3">
-                <p className="text-muted text-sm">{t("foundations.notFound")}</p>
-            </div>
-        )
+        return <FoundationDetailNotFound />
     }
 
     return (
         <div className="p-3">
-            <Breadcrumbs>
-                {breadcrumbItems.map((item) => (
-                    <Breadcrumbs.Item
-                        key={item.key}
-                        onPress={item.onPress}
-                    >
-                        {item.label}
-                    </Breadcrumbs.Item>
-                ))}
-            </Breadcrumbs>
+            <FoundationsBreadcrumbs items={breadcrumbItems} />
             <div className="h-6" />
-            <div className="card card--default max-w-2xl overflow-hidden rounded-xl border border-divider/60">
-                <FoundationItemThumbnail
-                    thumbnailUrl={foundation.thumbnailUrl}
-                    title={foundation.title}
-                    size="detail"
-                />
-                <div className="p-4 pt-2">
-                    <h1 className="text-2xl font-bold">{foundation.title}</h1>
-                    <div className="mt-2">
-                        <FoundationMeta foundation={foundation} />
-                    </div>
-                    {
-                        foundation.description ? (
-                            <div className="text-muted mt-2 text-sm">{foundation.description}</div>
-                        ) : null
-                    }
-                    <div className="h-6" />
-                    <FoundationCardBody foundation={foundation} />
-                </div>
-            </div>
+            <FoundationDetailCard foundation={foundation} />
         </div>
     )
 }

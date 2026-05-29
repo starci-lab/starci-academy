@@ -1,16 +1,7 @@
+﻿import type { MutateParams } from "../types"
 import { createAuthApolloClient } from "../clients"
-import {
-    type GraphQLResponse,
-    type MutateParams,
-    type QueryVariables,
-} from "../types"
 import { DocumentNode, gql } from "@apollo/client"
-
-/** Payload inside `processCV.data` after the standard API wrapper. */
-export interface ProcessCVData {
-    jobId: string
-    status: string
-}
+import type { ProcessCVRequest, MutateProcessCVResponse } from "./types/process-cv"
 
 const mutation1 = gql`
   mutation ProcessCV($request: ProcessCVRequest!) {
@@ -34,19 +25,8 @@ const mutationMap: Record<MutationProcessCV, DocumentNode> = {
     [MutationProcessCV.Mutation1]: mutation1,
 }
 
-/** GraphQL `ProcessCVRequest` body. */
-export type ProcessCVRequest = {
-    s3Key: string
-    fileName: string
-}
-
-export type MutateProcessCVVariables = QueryVariables<ProcessCVRequest>
-
+/** Apollo params for {@link mutateProcessCV}. */
 export type MutateProcessCVParams = MutateParams<MutationProcessCV, ProcessCVRequest>
-
-export interface MutateProcessCVResponse {
-    processCV: GraphQLResponse<ProcessCVData>
-}
 
 /**
  * Processes the uploaded CV file (parsing, extraction, etc.).

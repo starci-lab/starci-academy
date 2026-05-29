@@ -1,7 +1,7 @@
-import type { ContentEntity } from "@/modules/types"
 import { createAuthApolloClient } from "../clients"
-import { type GraphQLResponse, type QueryParams } from "../types"
+import { type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type { QueryContentResponse, ContentRequest } from "./types"
 
 const query1 = gql`
   query Content($request: ContentRequest!) {
@@ -53,18 +53,6 @@ export enum QueryContent {
 
 const queryMap: Record<QueryContent, DocumentNode> = {
     [QueryContent.Query1]: query1,
-}
-
-export interface QueryContentResponse {
-    content: GraphQLResponse<ContentEntity>
-}
-
-export interface ContentRequest {
-    /** The display id. */
-    displayId?: string
-    /** The id. */
-    id?: string
-
 }
 
 /**

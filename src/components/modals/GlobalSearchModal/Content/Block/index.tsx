@@ -93,7 +93,7 @@ export const GlobalSearchContentBlock = (props: GlobalSearchContentBlockProps) =
                                     <ul className="mt-1 list-none space-y-0.5 pl-0">
                                         {textLines.map((line: string) => (
                                             <li key={line}>
-                                                <div className="text-xs text-default-500">{renderEmText(line)}</div>
+                                                <div className="text-xs text-muted">{renderEmText(line)}</div>
                                             </li>
                                         ))}
                                     </ul>

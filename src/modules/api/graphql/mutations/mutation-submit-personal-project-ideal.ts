@@ -1,10 +1,7 @@
+﻿import type { MutateParams } from "../types"
 import { createAuthApolloClient } from "../clients"
-import {
-    type GraphQLResponse,
-    type MutateParams,
-    type QueryVariables,
-} from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type { SubmitPersonalProjectIdealRequest, MutateSubmitPersonalProjectIdealResponse } from "./types/submit-personal-project-ideal"
 
 const mutation1 = gql`
   mutation SubmitPersonalProjectIdeal($request: SubmitPersonalProjectIdealRequest!) {
@@ -27,28 +24,11 @@ const mutationMap: Record<MutationSubmitPersonalProjectIdeal, DocumentNode> = {
     [MutationSubmitPersonalProjectIdeal.Mutation1]: mutation1,
 }
 
-/** GraphQL `SubmitPersonalProjectIdealRequest` body. */
-export interface SubmitPersonalProjectIdealRequest {
-    courseId: string
-    ideaText: string
-}
-
-/** Minimal payload needed on FE after successful idea submission. */
-export interface SubmitPersonalProjectIdealData {
-    id: string
-}
-
-export type MutateSubmitPersonalProjectIdealVariables =
-    QueryVariables<SubmitPersonalProjectIdealRequest>
-
+/** Apollo params for {@link mutateSubmitPersonalProjectIdeal}. */
 export type MutateSubmitPersonalProjectIdealParams = MutateParams<
     MutationSubmitPersonalProjectIdeal,
     SubmitPersonalProjectIdealRequest
 >
-
-export interface MutateSubmitPersonalProjectIdealResponse {
-    submitPersonalProjectIdeal: GraphQLResponse<SubmitPersonalProjectIdealData>
-}
 
 /**
  * Saves project idea text for a specific enrollment.

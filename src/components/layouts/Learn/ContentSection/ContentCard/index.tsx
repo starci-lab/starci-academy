@@ -8,40 +8,9 @@ import { setContentId } from "@/redux/slices"
 import { ClockIcon, StarIcon, VideoIcon } from "@phosphor-icons/react"
 import { TagChips } from "@/components/reuseable"
 import { useTranslations } from "next-intl"
-import React from "react"
+import React, { useCallback } from "react"
 import { advancedPalette } from "@/components/pallettes"
-
-/** Demo tags until `ContentEntity` exposes a `tags` field from the API. */
-const CONTENT_DEMO_TAGS: Array<string> = [
-    "#NodeJS",
-    "#React",
-    "#NextJS",
-    "#TailwindCSS",
-    "#TypeScript",
-    "#JavaScript",
-    "#HTML",
-    "#CSS",
-    "#Python",
-    "#Java",
-    "#C++",
-    "#C#",
-    "#PHP",
-    "#Ruby",
-    "#Swift",
-    "#Kotlin",
-    "#Go",
-    "#Rust",
-    "#Scala",
-    "#Haskell",
-    "#OCaml",
-    "#Erlang",
-    "#Elixir",
-    "#F#",
-    "#Dart",
-    "#Flutter",
-    "#React Native",
-    "#React Native",
-]
+import { CONTENT_DEMO_TAGS } from "./constants"
 
 export interface ContentCardProps {
     /** One module content block from API. */
@@ -56,18 +25,20 @@ export const ContentCard = ({ content }: ContentCardProps) => {
     const { open } = useContentOverlayState()
     const dispatch = useAppDispatch()
 
+    /** Select this content and open its detail modal. */
+    const onPress = useCallback(() => {
+        dispatch(setContentId(content.id))
+        open()
+    }, [dispatch, content.id, open])
+
     return (
         <Button
             className="w-full h-fit p-3 card card--default cursor-pointer flex flex-col items-start text-left"
             variant="tertiary"
-            onPress={() => {
-                dispatch(setContentId(content.id))
-                open()
-            }
-            }
+            onPress={onPress}
         >
             <div className="flex flex-col gap-3 w-full">
-                <div className="font-semibold text-lg overflow-hidden whitespace-normal">
+                <div className="text-base font-semibold text-foreground overflow-hidden whitespace-normal">
                     {content.orderIndex + 1}{". "} {content.title} <span>(Chưa đọc)</span>
                 </div>
                 <div className="flex items-center gap-2">

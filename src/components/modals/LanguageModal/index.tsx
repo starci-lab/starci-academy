@@ -34,7 +34,7 @@ export const LanguageModal = () => {
                         </Modal.Header>
                         <Modal.Body className="gap-0 p-4">
                             <div>
-                                <div className="text-sm text-foreground-500">{t("settings.language.popular")}</div>
+                                <div className="text-sm text-muted">{t("settings.language.popular")}</div>
                                 <Spacer y={2} />
                                 <div className="grid grid-cols-3 gap-3">
                                     {popularLanguages.map((lang) => (
@@ -44,7 +44,7 @@ export const LanguageModal = () => {
                             </div>
                             <Spacer y={3} />
                             <div>
-                                <div className="text-sm text-foreground-500">{t("settings.language.all")}</div>
+                                <div className="text-sm text-muted">{t("settings.language.all")}</div>
                                 <Spacer y={2} />
                                 <div className="grid grid-cols-3 gap-3">
                                     {allLanguages.map((lang) => (

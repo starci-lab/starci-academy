@@ -10,6 +10,13 @@ import {
 } from "@heroui/react"
 import _ from "lodash"
 
+/**
+ * Course Q&A accordion container.
+ *
+ * Pulls the Q&A entries from redux + the load flag from SWR, sorts them by
+ * display order, and renders a skeleton while loading. `"use client"` for the
+ * redux selector and the interactive HeroUI `Accordion`.
+ */
 export const QnA = () => {
     const course = useAppSelector((state) => state.course.entity)
     const { isLoading } = useQueryCourseSwr()
@@ -20,7 +27,7 @@ export const QnA = () => {
     }, [course])
     return (
         <div>
-            <div className="text-lg font-medium text-start text-foreground-500">{t("qna.title")}</div>
+            <div className="text-lg font-semibold text-start">{t("qna.title")}</div>
             <div className="h-3" />
             {
                 isLoading ? (

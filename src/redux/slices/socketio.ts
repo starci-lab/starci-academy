@@ -1,14 +1,14 @@
 import type {
     GlobalSearchSocketIoMessage,
     JobStatusUpdatedSocketIoMessage,
-} from "@/hooks"
-import { 
-    createSlice, 
-    type PayloadAction 
+} from "@/modules/types"
+import {
+    createSlice,
+    type PayloadAction
 } from "@reduxjs/toolkit"
 
 /**
- * The slice for the content.
+ * Redux state for data pushed over Socket.IO connections.
  */
 export interface SocketIOSlice {
     /** The global search results. */
@@ -18,7 +18,7 @@ export interface SocketIOSlice {
 }
 
 /**
- * The initial state of the content slice.
+ * The initial state of the socketio slice.
  */
 const initialState: SocketIOSlice = {
     /** The global search results. */
@@ -27,7 +27,7 @@ const initialState: SocketIOSlice = {
 }
 
 /**
- * The slice for the socketio.
+ * Slice storing real-time Socket.IO messages (search results and job status updates).
  */
 export const socketIoSlice = createSlice(
     {
@@ -44,13 +44,14 @@ export const socketIoSlice = createSlice(
             ) => {
                 state.globalSearchResults = action.payload
             },
+            /** Store (or overwrite) the latest status message for a specific job id. */
             setJobStatusMessageForJob: (
                 state,
                 action: PayloadAction<SetJobStatusMessageForJobPayload>,
             ) => {
-                const { 
-                    jobId, 
-                    message 
+                const {
+                    jobId,
+                    message
                 } = action.payload
                 state.jobStatusByJobId[jobId] = message
             },
@@ -66,11 +67,10 @@ export interface SetJobStatusMessageForJobPayload {
     message: JobStatusUpdatedSocketIoMessage
 }
 
-/**
- * The reducer for the socketio slice.
- */
+/** Root reducer for the socketio slice. */
 export const socketIoReducer = socketIoSlice.reducer
-export const { 
-    setGlobalSearchResults, 
-    setJobStatusMessageForJob 
+/** Actions exported from the socketio slice. */
+export const {
+    setGlobalSearchResults,
+    setJobStatusMessageForJob,
 } = socketIoSlice.actions

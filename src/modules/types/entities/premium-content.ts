@@ -3,7 +3,9 @@ import type { AdvancedContentEntity } from "./advanced-content"
 import type { CourseEntity } from "./course"
 import type { GeneralContentEntity } from "./general-content"
 
-// Bundles general + advanced premium items for a course.
+/**
+ * Bundles general and advanced premium content items for a course.
+ */
 export interface PremiumContentEntity extends AbstractEntity {
     /** The course that the premium content belongs to. */
     course?: CourseEntity

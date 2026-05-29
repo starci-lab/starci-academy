@@ -1,35 +1,46 @@
 "use client"
 
-import React, { useEffect, useMemo } from "react"
-import { useLocale, useTranslations } from "next-intl"
-import { usePathname, useRouter } from "@/i18n/navigation"
-import { pathConfig } from "@/resources/path"
-import { Logo } from "./Logo"
-import { AccountMenuDropdown } from "./AccountMenuDropdown"
-import { Button, Kbd, Link, cn } from "@heroui/react"
-import { MagnifyingGlassIcon } from "@phosphor-icons/react"
-import { useSearchOverlayState } from "@/hooks/singleton"
+import React, {
+    useCallback,
+    useEffect,
+    useMemo,
+} from "react"
+import {
+    useLocale,
+    useTranslations,
+} from "next-intl"
+import {
+    usePathname,
+    useRouter,
+} from "@/i18n/navigation"
+import {
+    pathConfig,
+} from "@/resources/path"
+import {
+    useSearchOverlayState,
+} from "@/hooks/singleton"
+import type {
+    NavbarItem,
+} from "./types"
+import {
+    Logo,
+} from "./Logo"
+import {
+    AccountMenuDropdown,
+} from "./AccountMenuDropdown"
+import {
+    NavLinks,
+} from "./NavLinks"
+import {
+    SearchButton,
+} from "./SearchButton"
 
 /**
- * Navbar item interface
- */
-export interface NavbarItem {
-    /**
-     * Label of the navbar item
-     */
-    label: string
-    /**
-     * Path of the navbar item
-     */
-    path: string
-    /**
-     * Whether the navbar item is active
-     */
-    isActive: boolean
-}
-
-/**
- * Navbar is the main navigation component for the application.
+ * Navbar — top application navigation bar.
+ *
+ * Container: owns the active-route derivation, the Ctrl/Cmd+K search shortcut,
+ * and navigation; renders the logo, presentational links, search trigger, and
+ * the account dropdown. `"use client"` for hooks + keyboard handling.
  */
 export const Navbar = () => {
     const t = useTranslations()
@@ -38,6 +49,7 @@ export const Navbar = () => {
     const locale = useLocale()
     const { open: openSearch } = useSearchOverlayState()
 
+    // register the global Ctrl/Cmd+K shortcut to open the search overlay
     useEffect(() => {
         const onKeyDown = (event: KeyboardEvent) => {
             const isK = event.key.toLowerCase() === "k"
@@ -50,7 +62,7 @@ export const Navbar = () => {
         return () => window.removeEventListener("keydown", onKeyDown)
     }, [openSearch])
 
-    const items: Array<NavbarItem> = useMemo(
+    const items = useMemo<Array<NavbarItem>>(
         () => [
             {
                 label: t("nav.home"),
@@ -63,12 +75,29 @@ export const Navbar = () => {
                 isActive: pathname.startsWith(pathConfig().locale(locale).course().build()),
             },
             {
+                label: t("nav.practice"),
+                path: "/practice",
+                isActive: pathname.startsWith("/practice"),
+            },
+            {
                 label: t("nav.contact"),
                 path: pathConfig().locale().contact().build(),
                 isActive: pathname.startsWith(pathConfig().locale(locale).contact().build()),
             },
         ],
-        [locale, pathname, t],
+        [
+            locale,
+            pathname,
+            t,
+        ],
+    )
+
+    /** Navigate to the chosen nav entry path. */
+    const onSelectItem = useCallback(
+        (path: string) => router.push(path),
+        [
+            router,
+        ],
     )
 
     return (
@@ -76,39 +105,14 @@ export const Navbar = () => {
             <div className="mx-auto flex h-full w-full items-center justify-between px-3">
                 <div className="flex items-center gap-6">
                     <Logo className="flex-1 justify-start" />
-                    <div className="hidden flex-1 items-center justify-center gap-1 md:flex">
-                        {items.map((item) => (
-                            <Link key={item.path} onPress={() => router.push(item.path)}>
-                                <span
-                                    className={cn(
-                                        "whitespace-nowrap rounded-full px-3 py-2 text-sm transition-colors",
-                                        item.isActive
-                                            ? "bg-accent/10 text-accent"
-                                            : "text-foreground-500 hover:text-foreground",
-                                    )}
-                                >
-                                    {item.label}
-                                </span>
-                            </Link>
-                        ))}
-                    </div>
+                    <NavLinks
+                        items={items}
+                        onSelectItem={onSelectItem}
+                    />
                 </div>
 
                 <div className="flex items-center justify-end gap-3">
-                    <Button className="w-[300px] justify-between px-3" variant="outline" onPress={openSearch}>
-                        <span className="inline-flex items-center gap-2">
-                            <MagnifyingGlassIcon className="h-5 w-5" />
-                            <span className="text-sm">{t("search.label")}</span>
-                        </span>
-                        <div className="flex items-center gap-1 hidden md:inline-flex">
-                            <Kbd>
-                                <Kbd.Content>Ctrl</Kbd.Content>
-                            </Kbd>
-                            <Kbd>
-                                <Kbd.Content>K</Kbd.Content>
-                            </Kbd>
-                        </div>
-                    </Button>
+                    <SearchButton />
                     <AccountMenuDropdown />
                 </div>
             </div>

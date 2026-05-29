@@ -1,9 +1,7 @@
+﻿import type { MutateParams } from "../types"
 import { createAuthApolloClient } from "../clients"
-import {
-    type GraphQLResponse,
-    type MutateParams,
-} from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type { MutateSignOutResponse } from "./types/sign-out"
 
 const mutation1 = gql`
   mutation SignOut {
@@ -23,11 +21,8 @@ const mutationMap: Record<MutationSignOut, DocumentNode> = {
     [MutationSignOut.Mutation1]: mutation1,
 }
 
+/** Apollo params for {@link mutateSignOut}. */
 export type MutateSignOutParams = MutateParams<MutationSignOut, void>
-
-export interface MutateSignOutResponse {
-    signOut: GraphQLResponse<void>
-}
 
 export const mutateSignOut = async ({
     mutation = MutationSignOut.Mutation1,

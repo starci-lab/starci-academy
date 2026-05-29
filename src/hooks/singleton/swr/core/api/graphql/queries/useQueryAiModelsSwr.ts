@@ -3,6 +3,10 @@ import { useAppDispatch } from "@/redux"
 import { setAiModels } from "@/redux/slices"
 import useSWR from "swr"
 
+/**
+ * SWR query core for the AI models query.
+ * @returns the SWR query handle.
+ */
 export const useQueryAiModelsSwrCore = () => {
     const dispatch = useAppDispatch()
 

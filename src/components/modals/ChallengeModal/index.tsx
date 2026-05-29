@@ -73,8 +73,8 @@ export const ChallengeModal = () => {
                     <Modal.Dialog className="p-0">
                         <Modal.CloseTrigger />
                         <Modal.Header className="border-b max-w-full w-full">
-                            <div className="w-ful h-14 flex flex-col items-center justify-center">
-                                <div className="text-center text-base font-semibold text-foreground">
+                            <div className="w-full h-14 flex flex-col items-center justify-center">
+                                <div className="text-center text-2xl font-bold text-foreground">
                                     <span className={cn("font-bold", isPassed ? "text-success" : "text-danger")}>{hasAttempts ? 
                                         isPassed ? 
                                             `[${t("challenge.pass")}]`
@@ -108,7 +108,7 @@ export const ChallengeModal = () => {
                                     <div className="flex h-full min-h-0 flex-col">
                                         <div className="min-h-0 flex-1 overflow-y-auto">
                                             <div className="p-3">
-                                                <div className="text-base font-semibold text-foreground">{t("challenge.tasks")}</div>
+                                                <div className="text-lg font-semibold text-foreground">{t("challenge.tasks")}</div>
                                                 <div className="h-4.5" />
                                                 <ChallengePrerequisites challengePrerequisites={challengePrerequisites} />
                                                 <div className="h-4.5" />
@@ -116,7 +116,7 @@ export const ChallengeModal = () => {
                                                 <div className="h-4.5" />
                                                 <ChallengeOutputs challengeOutputs={challengeOutputs} />
                                                 <div className="h-6" />
-                                                <div className="text-base font-semibold text-foreground">{t("challenge.yourScore")}</div>  
+                                                <div className="text-lg font-semibold text-foreground">{t("challenge.yourScore")}</div>
                                                 <div className="h-3" />
                                                 <Score
                                                     current={earnedScore}

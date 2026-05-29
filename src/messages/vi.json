@@ -3,6 +3,7 @@
     "brand": "StarCi Academy",
     "home": "Trang chủ",
     "courses": "Khóa học",
+    "practice": "Luyện Code",
     "contact": "Liên hệ",
     "logout": "Đăng xuất",
     "profile": "Hồ sơ",
@@ -33,6 +34,7 @@
   "course": {
     "enroll": "Đăng ký",
     "enrolled": "Đã đăng ký",
+    "priceUsdHint": "≈ {amount} khi thanh toán quốc tế",
     "continueLearning": "Tiếp tục học",
     "prerequisites": "Yêu cầu đầu vào",
     "usersEnrolled": "{count} người đã đăng ký",
@@ -313,6 +315,8 @@
   },
   "task": {
     "criteriaTitle": "Tiêu chí chấm điểm",
+    "codeImplementationsTitle": "Hướng dẫn triển khai",
+    "codeImplementationsTabsAria": "Hướng dẫn triển khai theo ngôn ngữ",
     "criteriaScore": "{score} điểm",
     "criteriaNoHint": "Chưa có hướng dẫn cho tiêu chí này.",
     "loadErrorTitle": "Không tải được bài tập này",
@@ -501,6 +505,152 @@
   "starciAi": {
     "title": "StarCi AI"
   },
+  "codingPractice": {
+    "title": "Luyện Code",
+    "subtitle": "Giải bài tập và được chấm code ngay lập tức",
+    "allDifficulties": "Tất cả",
+    "empty": "Chưa có bài tập nào.",
+    "solved": "Đã giải",
+    "samples": "Ví dụ",
+    "example": "Ví dụ",
+    "input": "Đầu vào",
+    "output": "Đầu ra",
+    "submit": "Nộp bài",
+    "judging": "Đang chấm…",
+    "result": "Kết quả",
+    "passed": "Đạt",
+    "history": "Lịch sử nộp",
+    "difficulty": {
+      "easy": "Dễ",
+      "medium": "Trung bình",
+      "hard": "Khó"
+    },
+    "language": {
+      "python": "Python",
+      "javascript": "JavaScript",
+      "typescript": "TypeScript",
+      "java": "Java",
+      "cpp": "C++"
+    },
+    "verdict": {
+      "pending": "Chờ chấm",
+      "judging": "Đang chấm",
+      "accepted": "Chính xác",
+      "wrongAnswer": "Sai kết quả",
+      "timeLimitExceeded": "Quá thời gian",
+      "memoryLimitExceeded": "Quá bộ nhớ",
+      "runtimeError": "Lỗi thực thi",
+      "compileError": "Lỗi biên dịch",
+      "internalError": "Lỗi hệ thống"
+    }
+  },
+  "quiz": {
+    "title": "Luyện phỏng vấn",
+    "subtitle": "Tự kiểm tra với các bộ thẻ trắc nghiệm của khoá học này.",
+    "empty": "Khoá học này chưa có bộ thẻ nào.",
+    "study": "Học",
+    "cardCount": "{count} thẻ",
+    "backToDecks": "← Bộ thẻ",
+    "questionProgress": "Câu {current}/{total}",
+    "next": "Tiếp",
+    "seeResults": "Xem kết quả",
+    "correct": "Chính xác",
+    "incorrect": "Chưa đúng",
+    "restart": "Làm lại",
+    "testScore": "Điểm của bạn",
+    "testScoreValue": "{correct}/{total} ({percent}%)",
+    "difficulty": {
+      "easy": "Dễ",
+      "medium": "Trung bình",
+      "hard": "Khó",
+      "insane": "Cực khó"
+    }
+  },
+  "aiSettings": {
+    "title": "Cài đặt AI",
+    "subtitle": "Chọn nguồn AI và quản lý khoá API của riêng bạn",
+    "effectiveNow": "Đang dùng",
+    "gradeWith": "Chấm bằng AI",
+    "pickModel": "Chọn mô hình",
+    "categories": {
+      "economy": "Tiết kiệm",
+      "balanced": "Cân bằng",
+      "premium": "Premium"
+    },
+    "premiumLocked": "Cần gói trả phí",
+    "save": "Lưu thay đổi",
+    "saved": "Đã lưu cài đặt AI",
+    "keyRemoved": "Đã xoá khoá API",
+    "error": "Không thể cập nhật cài đặt AI",
+    "lanes": {
+      "auto": {
+        "title": "Tự động (miễn phí)",
+        "desc": "Dùng lượt miễn phí kèm theo khoá học, chỉ với các mô hình cơ bản."
+      },
+      "premium": {
+        "title": "Premium",
+        "desc": "Dùng credit của gói trả phí cho mọi loại mô hình, chất lượng cao hơn."
+      },
+      "byok": {
+        "title": "Dùng khoá riêng (BYOK)",
+        "desc": "Tự cung cấp khoá API của bạn — không bị trừ hạn mức hệ thống."
+      }
+    },
+    "byok": {
+      "heading": "Khoá API của bạn",
+      "provider": "Nhà cung cấp",
+      "apiKey": "Khoá API",
+      "apiKeyPlaceholder": "Dán khoá API của bạn",
+      "apiKeyPlaceholderReplace": "Nhập khoá mới để thay thế khoá hiện tại",
+      "keyOnFile": "Đã lưu một khoá API",
+      "removeKey": "Xoá khoá",
+      "keyHint": "Hãy nhập khoá API để dùng chế độ BYOK."
+    }
+  },
+  "aiSubscription": {
+    "title": "Gói AI",
+    "subtitle": "Nâng cấp để có thêm credit AI mỗi tuần",
+    "perMonth": "/tháng",
+    "priceUsdHint": "≈ {amount} khi thanh toán quốc tế",
+    "popular": "Phổ biến",
+    "currentPlan": "Đang dùng",
+    "buy": "Mua ngay",
+    "creditsPer5h": "{credits} credit / 5 giờ",
+    "creditsPerWeek": "{credits} credit / tuần",
+    "free": {
+      "title": "Miễn phí",
+      "price": "0₫",
+      "desc": "Lượt AI cơ bản kèm theo khoá học",
+      "cta": "Gói mặc định"
+    }
+  },
+  "aiQuota": {
+    "title": "Hạn mức AI",
+    "subtitle": "Mức sử dụng của bạn trong cửa sổ 5 giờ và theo tuần",
+    "cardTitle": "Hạn mức AI",
+    "viewDetails": "Xem chi tiết",
+    "remainingSummary": "Còn {remaining} {unit} trong 5 giờ tới",
+    "currentLane": "Đang dùng",
+    "window5h": "5 giờ tới",
+    "windowWeek": "Tuần này",
+    "usesUnit": "lượt",
+    "creditsUnit": "credit",
+    "resets5h": "Cửa sổ 5 giờ reset lúc",
+    "resetsWeek": "Cửa sổ tuần reset lúc",
+    "noPremium": "Chưa có gói trả phí — nâng cấp để mở khoá credit Premium."
+  },
+  "profile": {
+    "signedOut": {
+      "title": "Bạn chưa đăng nhập",
+      "desc": "Đăng nhập để xem hồ sơ và hạn mức AI của bạn."
+    },
+    "nav": {
+      "aiSettingsDesc": "Chọn nguồn AI và quản lý API key của riêng bạn",
+      "aiSubscriptionDesc": "Nâng cấp để có thêm credit AI mỗi tuần",
+      "bookmarks": "Đã lưu",
+      "bookmarksDesc": "Nội dung bạn đã lưu"
+    }
+  },
   "reference": {
     "title": "Tài liệu tham khảo"
   },
@@ -610,10 +760,23 @@
     }
   },
   "payment": {
-    "title": "Chọn phương thức thanh toán",
+    "title": "Thanh toán",
     "desc": "Chọn một phương thức để tiếp tục",
+    "group": {
+      "domestic": "Thanh toán trong nước",
+      "international": "Thanh toán quốc tế"
+    },
     "payos": {
       "desc": "Thanh toán qua PayOS"
+    },
+    "stripe": {
+      "desc": "Thanh toán bằng thẻ quốc tế qua Stripe"
+    },
+    "paypal": {
+      "desc": "Thanh toán bằng số dư PayPal hoặc thẻ liên kết"
+    },
+    "crypto": {
+      "desc": "Thanh toán bằng stablecoin (USDT/USDC)"
     },
     "sepay": {
       "desc": "Thanh toán qua Sepay",
@@ -695,6 +858,7 @@
       "next": "Trang sau"
     },
     "disabled": "Tạm tắt",
+    "back": "Quay lại",
     "streak": {
       "current": "Chuỗi hiện tại",
       "longest": "Chuỗi dài nhất",

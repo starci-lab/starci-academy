@@ -1,4 +1,5 @@
 "use client"
+import React from "react"
 
 import type { ConsultantEntity } from "@/modules/types"
 import { useTranslations } from "next-intl"

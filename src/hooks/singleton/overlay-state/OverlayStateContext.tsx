@@ -25,8 +25,13 @@ import {
     useUserMilestoneTaskFeedbacksModalOverlayStateCore,
     useFoundationOverlayStateCore,
     useHeadhunterOverlayStateCore,
+    useAiQuotaOverlayStateCore,
 } from "./core"
 
+/**
+ * Shape of the singleton overlay-state context; each field is a HeroUI overlay-state
+ * handle created once in {@link OverlayStateProvider} and consumed via the accessor hooks.
+ */
 export interface OverlayStateContextType {
     aiProcessing: ReturnType<typeof useAIProcessingOverlayStateCore>
     authentication: ReturnType<typeof useAuthenticationOverlayStateCore>
@@ -51,10 +56,15 @@ export interface OverlayStateContextType {
     userMilestoneTaskFeedbacksModal: ReturnType<typeof useUserMilestoneTaskFeedbacksModalOverlayStateCore>
     foundation: ReturnType<typeof useFoundationOverlayStateCore>
     headhunter: ReturnType<typeof useHeadhunterOverlayStateCore>
+    aiQuota: ReturnType<typeof useAiQuotaOverlayStateCore>
 }
 
 export const OverlayStateContext = createContext<OverlayStateContextType | null>(null)
 
+/**
+ * Mounts all singleton overlay-state instances once at the top of the app tree.
+ * @param props.children - app content
+ */
 export const OverlayStateProvider = ({ children }: PropsWithChildren) => {
     const aiProcessing = useAIProcessingOverlayStateCore()
     const authentication = useAuthenticationOverlayStateCore()
@@ -79,6 +89,7 @@ export const OverlayStateProvider = ({ children }: PropsWithChildren) => {
     const userMilestoneTaskFeedbacksModal = useUserMilestoneTaskFeedbacksModalOverlayStateCore()
     const foundation = useFoundationOverlayStateCore()
     const headhunter = useHeadhunterOverlayStateCore()
+    const aiQuota = useAiQuotaOverlayStateCore()
     return (
         <OverlayStateContext.Provider value={{
             aiProcessing,
@@ -104,6 +115,7 @@ export const OverlayStateProvider = ({ children }: PropsWithChildren) => {
             userMilestoneTaskFeedbacksModal,
             foundation,
             headhunter,
+            aiQuota,
         }}>
             {children}
         </OverlayStateContext.Provider>

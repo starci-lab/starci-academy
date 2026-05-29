@@ -1,4 +1,5 @@
 "use client"
+import React from "react"
 
 import { HeadhuntingsLearnLayout } from "@/components/layouts/Headhuntings"
 

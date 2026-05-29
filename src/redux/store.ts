@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit"
-import { 
+import {
     tabsReducer,
     stateReducer,
     courseReducer,
@@ -31,6 +31,10 @@ import {
     headhunterReducer,
 } from "./slices"
 
+/**
+ * The central Redux store. Registers all feature slice reducers.
+ * `serializableCheck` is disabled to allow non-serializable values where needed.
+ */
 export const store = configureStore({
     reducer: {
         tabs: tabsReducer,
@@ -68,6 +72,9 @@ export const store = configureStore({
     }),
 })
 
+/** Inferred root state type — use with `useAppSelector`. */
 export type RootState = ReturnType<typeof store.getState>;
+/** Inferred dispatch type — use with `useAppDispatch`. */
 export type AppDispatch = typeof store.dispatch;
+/** The configured store type. */
 export type AppStore = typeof store;

@@ -1,14 +1,7 @@
+﻿import type { MutateParams } from "../types"
 import { createAuthApolloClient } from "../clients"
-import {
-    type GraphQLResponse,
-    type MutateParams,
-    type QueryVariables,
-} from "../types"
 import { DocumentNode, gql } from "@apollo/client"
-
-export interface VerifySubmitCvPresignUrlData {
-    uploaded: boolean
-}
+import type { VerifySubmitCvPresignUrlRequest, MutateVerifySubmitCvPresignUrlResponse } from "./types/verify-submit-cv-presign-url"
 
 const mutation1 = gql`
   mutation VerifySubmitCvPresignUrl($request: VerifySubmitCvPresignUrlRequest!) {
@@ -31,17 +24,8 @@ const mutationMap: Record<MutationVerifySubmitCvPresignUrl, DocumentNode> = {
     [MutationVerifySubmitCvPresignUrl.Mutation1]: mutation1,
 }
 
-export interface VerifySubmitCvPresignUrlRequest {
-    cvSubmissionId: string
-}
-
-export type MutateVerifySubmitCvPresignUrlVariables = QueryVariables<VerifySubmitCvPresignUrlRequest>
-
+/** Apollo params for {@link mutateVerifySubmitCvPresignUrl}. */
 export type MutateVerifySubmitCvPresignUrlParams = MutateParams<MutationVerifySubmitCvPresignUrl, VerifySubmitCvPresignUrlRequest>
-
-export interface MutateVerifySubmitCvPresignUrlResponse {
-    verifySubmitCvPresignUrl: GraphQLResponse<VerifySubmitCvPresignUrlData>
-}
 
 export const mutateVerifySubmitCvPresignUrl = async ({
     mutation = MutationVerifySubmitCvPresignUrl.Mutation1,

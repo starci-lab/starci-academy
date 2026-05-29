@@ -1,16 +1,7 @@
+﻿import type { MutateParams } from "../types"
 import { createAuthApolloClient } from "../clients"
-import {
-    type GraphQLResponse,
-    type MutateParams,
-    type QueryVariables,
-} from "../types"
 import { DocumentNode, gql } from "@apollo/client"
-
-/** Payload inside `getCVPresignedUrl.data` after the standard API wrapper. */
-export interface GetCVPresignedUrlData {
-    url: string
-    key: string
-}
+import type { GetCVPresignedUrlRequest, MutateGetCVPresignedUrlResponse } from "./types/get-cv-presigned-url"
 
 const mutation1 = gql`
   mutation GetCVPresignedUrl($request: GetCVPresignedUrlRequest!) {
@@ -34,19 +25,8 @@ const mutationMap: Record<MutationGetCVPresignedUrl, DocumentNode> = {
     [MutationGetCVPresignedUrl.Mutation1]: mutation1,
 }
 
-/** GraphQL `GetCVPresignedUrlRequest` body. */
-export type GetCVPresignedUrlRequest = {
-    fileName: string
-    fileType: string
-}
-
-export type MutateGetCVPresignedUrlVariables = QueryVariables<GetCVPresignedUrlRequest>
-
+/** Apollo params for {@link mutateGetCVPresignedUrl}. */
 export type MutateGetCVPresignedUrlParams = MutateParams<MutationGetCVPresignedUrl, GetCVPresignedUrlRequest>
-
-export interface MutateGetCVPresignedUrlResponse {
-    getCVPresignedUrl: GraphQLResponse<GetCVPresignedUrlData>
-}
 
 /**
  * Gets a presigned URL for uploading CV to S3.

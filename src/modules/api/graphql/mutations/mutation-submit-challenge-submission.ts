@@ -1,10 +1,7 @@
+﻿import type { MutateParams } from "../types"
 import { createAuthApolloClient } from "../clients"
-import {
-    type GraphQLResponse,
-    type MutateParams,
-    type QueryVariables,
-} from "../types"
 import { DocumentNode, gql } from "@apollo/client"
+import type { SubmitChallengeSubmissionRequest, MutateSubmitChallengeSubmissionResponse } from "./types/submit-challenge-submission"
 
 const mutation1 = gql`
   mutation SubmitChallengeSubmission($request: SubmitChallengeSubmissionRequest!) {
@@ -27,30 +24,11 @@ const mutationMap: Record<MutationSubmitChallengeSubmission, DocumentNode> = {
     [MutationSubmitChallengeSubmission.Mutation1]: mutation1,
 }
 
-/** Request for `submitChallengeSubmission` (`challenge-submissions/submit-challenge-submission`). */
-export interface SubmitChallengeSubmissionRequest {
-    /** `challenge_submissions.id` to enqueue grading for. */
-    challengeSubmissionId: string
-    /**
-     * Submission URL (GitHub / Google Docs link).
-     * Send on first submit so the backend can create `user_challenge_submissions`; optional otherwise to overwrite.
-     */
-    githubUrl?: string
-}
-
-export type MutateSubmitChallengeSubmissionVariables =
-    QueryVariables<SubmitChallengeSubmissionRequest>
-
+/** Apollo params for {@link mutateSubmitChallengeSubmission}. */
 export type MutateSubmitChallengeSubmissionParams = MutateParams<
     MutationSubmitChallengeSubmission,
     SubmitChallengeSubmissionRequest
 >
-
-export interface MutateSubmitChallengeSubmissionResponse {
-    submitChallengeSubmission: GraphQLResponse<{
-        jobId: string
-    }>
-}
 
 /**
  * Queues grading for one challenge submission row for the authenticated user.

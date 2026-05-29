@@ -1,12 +1,11 @@
 "use client"
 import {
-    DrawerContainer,
     HeroUIProvider,
-    Navbar,
     NextThemesProvider,
     SwrProvider,
-    // Navbar,
-} from "../components"
+} from "@/components/providers"
+import { DrawerContainer } from "@/components/drawers"
+import { Navbar } from "@/components/layouts/Navbar"
 import { ToastProvider } from "@heroui/react"
 import React, { PropsWithChildren, Suspense } from "react"
 import { SingletonHookProvider } from "@/hooks/singleton"

@@ -3,7 +3,8 @@ import { useContext } from "react"
 import { FormikContext } from "../FormikContext"
 
 /**
- * Hook to use the sign up formik
+ * Access the singleton sign-up Formik instance from {@link FormikContext}.
+ * @returns the sign-up formik handle.
  */
 export const useSignUpFormik = () => {
     const { signUpFormik } = useContext(FormikContext)!

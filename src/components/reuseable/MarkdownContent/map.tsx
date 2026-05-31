@@ -1,11 +1,13 @@
 import React from "react"
 import type { Components } from "react-markdown"
 import { isInlineCode } from "react-shiki"
-import { Chip, cn, Link, Table } from "@heroui/react"
+import { Link, Table, Text } from "@heroui/react"
 import {
-    flattenMarkdownTableHeaderChildren,
-    isMarkdownHeaderTableRowNode,
-} from "./utils"
+    MarkdownTableBody,
+    MarkdownTableColumn,
+    MarkdownTableHead,
+    MarkdownTableRow,
+} from "./MarkdownTableParts"
 import { CodeToHtml } from "./CodeToHtml"
 import { MermaidDiagram } from "./MermaidDiagram"
 import type { MarkdownRenderersParams } from "./types"
@@ -13,24 +15,45 @@ import type { MarkdownRenderersParams } from "./types"
 /**
  * Builds the element-renderer map handed to `ReactMarkdown` so headings, tables, code
  * blocks, mermaid diagrams and inline elements use the app's HeroUI typography.
- * @param params - {@link MarkdownRenderersParams} theme flag + translator.
+ *
+ * Vertical rhythm is owned by the single `space-y` wrapper in {@link MarkdownContent}; block
+ * renderers here stay margin-free and only carry size/weight/colour tokens.
+ * @param params - {@link MarkdownRenderersParams} theme flag + translator + mermaid captions.
  * @returns A `Components` map keyed by markdown element name.
  */
 export const buildMarkdownRenderers = ({
     isDark,
     t,
+    mermaidCaptions,
 }: MarkdownRenderersParams): Components => ({
     h1: ({ children }) => (
-        <div className="my-3 text-xl font-semibold text-foreground">{children}</div>
+        <Text elementType="div" size="xl" className="font-semibold">{children}</Text>
     ),
     h2: ({ children }) => (
-        <div className="my-3 text-lg font-semibold text-foreground">{children}</div>
+        <Text elementType="div" size="lg" className="font-semibold">{children}</Text>
     ),
     h3: ({ children }) => (
-        <div className="my-3 text-base font-semibold text-foreground">{children}</div>
+        <Text elementType="div" size="base" className="font-semibold">{children}</Text>
+    ),
+    h4: ({ children }) => (
+        <Text elementType="div" size="sm" className="font-semibold text-muted">{children}</Text>
+    ),
+    h5: ({ children }) => (
+        <Text elementType="div" size="sm" className="font-semibold text-muted">{children}</Text>
+    ),
+    h6: ({ children }) => (
+        <Text elementType="div" size="xs" className="font-semibold text-muted">{children}</Text>
+    ),
+    // Custom `:::muted` directive tags (see remarkMuted in ./index): small, muted label text.
+    // `[&_*]:text-muted` forces the muted colour onto any inner `<p>` the container wraps.
+    mutedblock: ({ children }: { children?: React.ReactNode }) => (
+        <Text elementType="div" size="sm" className="font-semibold text-muted [&_*]:text-muted">{children}</Text>
+    ),
+    mutedtext: ({ children }: { children?: React.ReactNode }) => (
+        <Text elementType="span" size="sm" className="font-semibold text-muted">{children}</Text>
     ),
     table: ({ children }) => (
-        <Table className="my-2 bg-background" variant="primary">
+        <Table variant="primary">
             <Table.ScrollContainer>
                 <Table.Content aria-label={t("markdown.tableAriaLabel")}>
                     {children}
@@ -38,25 +61,16 @@ export const buildMarkdownRenderers = ({
             </Table.ScrollContainer>
         </Table>
     ),
-    thead: ({ children }) => (
-        <Table.Header className="bg-background">
-            {flattenMarkdownTableHeaderChildren(children)}
-        </Table.Header>
-    ),
+    thead: MarkdownTableHead,
     img: ({ src, alt }) => (
-        <img src={src} alt={alt} className="my-2 bg-inherit rounded-3xl p-3" />
+        <img src={src} alt={alt} className="w-full rounded-xl border border-default" />
     ),
-    tbody: ({ children }) => <Table.Body>{children}</Table.Body>,
-    th: ({ children }) => <Table.Column>{children}</Table.Column>,
+    tbody: MarkdownTableBody,
+    th: MarkdownTableColumn,
     td: ({ children }) => <Table.Cell>{children}</Table.Cell>,
-    tr: ({ children, node }) =>
-        isMarkdownHeaderTableRowNode(node) ? (
-            <>{children}</>
-        ) : (
-            <Table.Row>{children}</Table.Row>
-        ),
+    tr: MarkdownTableRow,
     code: (
-        { children, className, node }
+        { children, node }
     ) => {
         const code = String(children).trim()
         const isInline = node ? isInlineCode(node) : undefined
@@ -64,14 +78,9 @@ export const buildMarkdownRenderers = ({
             return children
         }
         return (
-            <Chip
-                size="sm"
-                variant="secondary"
-                color="accent"
-                className={cn("font-mono text-sm", className)}
-            >
+            <code className="rounded-md bg-default px-1.5 py-0.5 font-mono text-sm text-accent">
                 {code}
-            </Chip>
+            </code>
         )
     },
     pre: ({ children }) => {
@@ -86,6 +95,9 @@ export const buildMarkdownRenderers = ({
                     code={code}
                     theme={isDark ? "dark" : "default"}
                     loadingLabel={t("markdown.mermaidRendering")}
+                    expandLabel={t("markdown.mermaidExpand")}
+                    caption={mermaidCaptions[code.trim()]}
+                    fallbackLabel={t("markdown.mermaidFigureLabel")}
                 />
             )
         }
@@ -99,15 +111,25 @@ export const buildMarkdownRenderers = ({
             />
         )
     },
-    strong: ({ children }) => <strong className="font-semibold text-sm text-foreground">{children}</strong>,
-    hr: () => <hr className="h-px my-3 " />,
-    ol: ({ children }) => <ol className="list-decimal pl-5 my-2">{children}</ol>,
-    p: ({ children }) => <div className="text-sm my-2 gap-1 leading-relaxed">{children}</div>,
-    ul: ({ children }) => <ul className="list-disc pl-5 my-2">{children}</ul>,
-    li: ({ children }) => <li className="my-2 leading-relaxed">{children}</li>,
+    blockquote: ({ children }) => (
+        <blockquote className="space-y-2 rounded-r-xl border-l-2 border-accent bg-default/40 px-4 py-3 text-muted">
+            {children}
+        </blockquote>
+    ),
+    strong: ({ children }) => <strong className="font-semibold text-foreground">{children}</strong>,
+    em: ({ children }) => <em className="italic">{children}</em>,
+    hr: () => <hr className="border-default" />,
+    ol: ({ children }) => <ol className="list-decimal space-y-1 pl-5 marker:text-muted">{children}</ol>,
+    ul: ({ children }) => <ul className="list-disc space-y-1 pl-5 marker:text-muted">{children}</ul>,
+    li: ({ children }) => (
+        <Text elementType="li" size="sm" className="space-y-2 leading-loose">{children}</Text>
+    ),
+    p: ({ children }) => (
+        <Text elementType="div" size="sm" className="leading-loose">{children}</Text>
+    ),
     a: ({ href, children }) => (
-        <Link href={href} target="_blank" className="text-sm text-accent inline my-2">
+        <Link href={href} target="_blank" className="!inline text-accent underline underline-offset-2">
             {children}
         </Link>
     ),
-})
+} as Components)

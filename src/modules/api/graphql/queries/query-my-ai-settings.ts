@@ -15,6 +15,7 @@ export enum ModelProvider {
     Gemini = "gemini",
     OpenAI = "openai",
     Claude = "claude",
+    OpenRouter = "openrouter",
 }
 
 /** Paid subscription tier (mirrors backend `AiSubTier`). */

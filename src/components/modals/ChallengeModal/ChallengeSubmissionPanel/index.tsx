@@ -9,16 +9,19 @@ import React, {
 import { cn } from "@heroui/react"
 import {
     PublicationEvent,
+    useAiQuotaOverlayState,
     useEditSubmissionFormik,
     useJobNotificationsSocketIo,
     useMutateSubmitChallengeSubmissionSwr,
     useMutateSyncChallengeSubmissionSwr,
     useQueryAiModelsSwr,
     useQueryMyAiSettingsSwr,
+    useQueryMyCreditUsageSwr,
     useSubmissionAttemptsOverlayState,
 } from "@/hooks/singleton"
 import type { AiGradableModel } from "@/modules/api"
 import { useLocale } from "next-intl"
+import { useRouter } from "next/navigation"
 import {
     ChallengeSubmissionEntity,
     JobCategory,
@@ -44,7 +47,10 @@ import { AUTO_GRADE_SELECTION, resolveInitialGradeSelection } from "./utils"
 import { SubmissionRow } from "./SubmissionRow"
 
 /** Props for {@link ChallengeSubmissionPanel} — state comes from Formik and Redux. */
-type ChallengeSubmissionPanelProps = WithClassNames<undefined>
+type ChallengeSubmissionPanelProps = WithClassNames<undefined> & {
+    /** SCHEMA V2: active programming language to submit with (selects the approach-criteria bucket). */
+    lang?: string
+}
 
 /**
  * Left-column container of {@link ChallengeModal}: a grading-lane selector plus an inline
@@ -56,7 +62,7 @@ type ChallengeSubmissionPanelProps = WithClassNames<undefined>
  * @param props - Class names for the component.
  */
 export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) => {
-    const { className } = props
+    const { className, lang } = props
     const formik = useEditSubmissionFormik()
     const {
         values,
@@ -76,6 +82,22 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
     const submissionIdToJobId = useAppSelector((state) => state.challenge.submissionIdToJobId)
     const aiProcessingData = useAppSelector((state) => state.modal.aiProcessingData)
     const locale = useLocale()
+    const router = useRouter()
+    // Credit usage snapshot (source of truth: credit_usage_histories), Redis-cached.
+    const creditUsageSwr = useQueryMyCreditUsageSwr()
+    const creditUsage = creditUsageSwr.data
+    // AI usage details live in the AiQuota modal; the panel only links into it.
+    const { open: openAiQuota } = useAiQuotaOverlayState()
+    // Route to the AI subscription page so the user can top up their quota.
+    const onAddQuota = useCallback(
+        () => {
+            router.push(`/${locale}/profile/ai-subscription`)
+        },
+        [
+            router,
+            locale,
+        ],
+    )
     const jobNotificationsSocket = useJobNotificationsSocketIo()
     const jobStatusByJobId = useAppSelector((state) => state.socketIo.jobStatusByJobId)
 
@@ -286,6 +308,8 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
                         mode: selection?.mode,
                         selectedModel: selection?.model ?? undefined,
                         selectedModelProvider: selection?.provider ?? undefined,
+                        // SCHEMA V2: send the active language tab; backend falls back to the stored one if absent
+                        lang,
                     })
                     const result = response.data?.submitChallengeSubmission
                     if (!result) {
@@ -323,6 +347,7 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
             dispatch,
             jobNotificationsSocket,
             locale,
+            lang,
         ],
     )
 
@@ -350,10 +375,13 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
                         selectionBySubmissionId[row.submission.id] ?? AUTO_GRADE_SELECTION
                     }
                     canPremium={canPremium}
+                    creditUsage={creditUsage ?? undefined}
+                    onOpenAiQuota={openAiQuota}
                     onChangeUrl={onChangeUrl}
                     onBlurUrl={onBlurUrl}
                     onSubmit={onSubmit}
                     onSelectGrade={onSelectGrade}
+                    onUpgrade={onAddQuota}
                     onViewAttempts={onViewAttempts}
                 />
             ))}

@@ -26,6 +26,7 @@ import {
     useFoundationOverlayStateCore,
     useHeadhunterOverlayStateCore,
     useAiQuotaOverlayStateCore,
+    usePremiumGateOverlayStateCore,
 } from "./core"
 
 /**
@@ -57,6 +58,7 @@ export interface OverlayStateContextType {
     foundation: ReturnType<typeof useFoundationOverlayStateCore>
     headhunter: ReturnType<typeof useHeadhunterOverlayStateCore>
     aiQuota: ReturnType<typeof useAiQuotaOverlayStateCore>
+    premiumGate: ReturnType<typeof usePremiumGateOverlayStateCore>
 }
 
 export const OverlayStateContext = createContext<OverlayStateContextType | null>(null)
@@ -90,6 +92,7 @@ export const OverlayStateProvider = ({ children }: PropsWithChildren) => {
     const foundation = useFoundationOverlayStateCore()
     const headhunter = useHeadhunterOverlayStateCore()
     const aiQuota = useAiQuotaOverlayStateCore()
+    const premiumGate = usePremiumGateOverlayStateCore()
     return (
         <OverlayStateContext.Provider value={{
             aiProcessing,
@@ -116,6 +119,7 @@ export const OverlayStateProvider = ({ children }: PropsWithChildren) => {
             foundation,
             headhunter,
             aiQuota,
+            premiumGate,
         }}>
             {children}
         </OverlayStateContext.Provider>

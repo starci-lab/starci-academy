@@ -1,14 +1,16 @@
 "use client"
 
-import React, { useEffect, useMemo, useRef } from "react"
+import React, { useCallback, useEffect, useMemo, useRef } from "react"
 import {
     Background,
     BackgroundVariant,
     Controls,
     type Node,
+    type NodeMouseHandler,
     ReactFlow,
     useEdgesState,
     useNodesState,
+    useReactFlow,
 } from "@xyflow/react"
 import { useTranslations } from "next-intl"
 import { useTheme } from "next-themes"
@@ -80,6 +82,37 @@ export const Canvas = () => {
         [],
     )
 
+    const { setCenter, fitView } = useReactFlow()
+
+    /** Smoothly frames the clicked node: root → full overview, anything else → zoom to its center. */
+    const onNodeClick = useCallback<NodeMouseHandler>(
+        (_event, node) => {
+            // clicking the course root pulls the camera back to the whole graph
+            if (node.type === COURSE_ROOT_NODE_TYPE) {
+                void fitView({
+                    padding: 0.2,
+                    duration: 600,
+                })
+                return
+            }
+            // otherwise animate the viewport to the node's measured center with a gentle zoom-in
+            const width = node.measured?.width ?? 300
+            const height = node.measured?.height ?? 100
+            void setCenter(
+                node.position.x + width / 2,
+                node.position.y + height / 2,
+                {
+                    zoom: 1.4,
+                    duration: 600,
+                },
+            )
+        },
+        [
+            setCenter,
+            fitView,
+        ],
+    )
+
     useMindMapFitView()
 
     if (!course) {
@@ -95,11 +128,14 @@ export const Canvas = () => {
                 edges={edges}
                 fitView
                 fitViewOptions={{ padding: 0.2 }}
+                maxZoom={2}
+                minZoom={0.2}
                 nodeTypes={nodeTypes}
                 nodes={nodes}
                 nodesConnectable={false}
                 nodesDraggable={false}
                 onEdgesChange={onEdgesChange}
+                onNodeClick={onNodeClick}
                 onNodesChange={onNodesChange}
                 panOnScroll
                 proOptions={{ hideAttribution: true }}

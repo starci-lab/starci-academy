@@ -25,6 +25,8 @@ export interface UserChallengeSubmissionEntity extends AbstractEntity {
     selectedModel?: string | null
     /** Provider serving the chosen model; null when no model chosen. */
     selectedModelProvider?: ModelProvider | null
+    /** SCHEMA V2: programming language last chosen for this submission; null until picked. */
+    selectedLang?: string | null
     /** Total number of attempts made by the user. */
     attempts: number
     /** Best score achieved across all attempts. */

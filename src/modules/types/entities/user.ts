@@ -16,6 +16,8 @@ export interface UserEntity extends AbstractEntity {
     isDeleted: boolean
     /** The avatar of the user. */
     avatar?: string
+    /** Linked GitHub username (null/undefined when the user has not linked GitHub yet). */
+    githubUsername?: string | null
     /** The submissions of the user. */
     submissions?: Array<SubmissionEntity>
     /** The enrollments of the user. */

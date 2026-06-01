@@ -1,4 +1,5 @@
-﻿import type { GraphQLResponse, QueryVariables } from "../../types"
+﻿import type { AiMode, ModelProvider } from "../../queries/query-my-ai-settings"
+import type { GraphQLResponse, QueryVariables } from "../../types"
 
 /** GraphQL `ReviewPersonalProjectTaskRequest` body. */
 export interface ReviewPersonalProjectTaskRequest {
@@ -16,6 +17,14 @@ export interface ReviewPersonalProjectTaskRequest {
      * If omitted, the branch stored on enrollment is used (worker defaults to main when unset).
      */
     branch?: string | null
+    /** AI lane for grading (auto / premium / byok). */
+    mode?: AiMode
+    /** Concrete model for premium/BYOK (required for those lanes). */
+    selectedModel?: string
+    /** Provider for {@link selectedModel}. */
+    selectedModelProvider?: ModelProvider
+    /** One-shot BYOK key when `mode` is byok and no key is on file. */
+    byokApiKey?: string
 }
 
 /** Payload inside `reviewPersonalProjectTask.data` after the standard API wrapper. */

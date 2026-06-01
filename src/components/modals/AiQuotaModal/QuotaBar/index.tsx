@@ -1,9 +1,14 @@
 "use client"
 
-import React from "react"
+import React, {
+    useMemo,
+} from "react"
 import {
-    cn,
+    ProgressBar,
 } from "@heroui/react"
+import {
+    resolveQuotaBarFillTone,
+} from "../utils"
 
 /** Props for {@link QuotaBar}. */
 export interface QuotaBarProps {
@@ -13,48 +18,77 @@ export interface QuotaBarProps {
     used: number
     /** Cap for the window (0 means "no allowance"). */
     limit: number
-    /** Unit suffix shown next to the counts (e.g. "uses", "credits"). */
-    unit: string
-    /** Tailwind class for the fill colour (defaults to accent). */
-    fillClassName?: string
+    /** Unit suffix when {@link QuotaBarProps.showUnit} is true. */
+    unit?: string
+    /** When true, append {@link QuotaBarProps.unit} after the counts. */
+    showUnit?: boolean
+    /** Optional reset time shown under the bar (e.g. "Reset lúc 18:50 01/06"). */
+    resetLabel?: string | null
 }
 
 /**
- * A single labelled usage bar: "label — used/limit unit" + a filled track.
- *
- * Presentational (render-only). The fill width is the consumed ratio, so a
- * fuller bar means less remaining quota.
- * @param props - label, counts, unit, optional fill colour
+ * Labelled quota usage bar (HeroUI {@link ProgressBar}) with 3 color tiers:
+ * accent ≤75%, warning >75%, danger >90% consumed.
+ * @param props - label, used/limit counts, optional unit and reset copy
  */
 export const QuotaBar = ({
     label,
     used,
     limit,
-    unit,
-    fillClassName = "bg-accent",
+    unit = "",
+    showUnit = false,
+    resetLabel,
 }: QuotaBarProps) => {
-    // guard divide-by-zero; with no allowance the bar reads as full
-    const ratio = limit > 0
-        ? Math.min(1, Math.max(0, used / limit))
-        : (used > 0 ? 1 : 0)
+    const fillTone = useMemo(
+        () => resolveQuotaBarFillTone(used, limit),
+        [
+            used,
+            limit,
+        ],
+    )
+    const value = useMemo(() => {
+        if (limit <= 0) {
+            return used > 0 ? 100 : 0
+        }
+        return Math.min(100, Math.max(0, (used / limit) * 100))
+    }, [
+        used,
+        limit,
+    ])
+
     return (
-        <div className="flex flex-col gap-1.5">
-            <div className="flex items-center justify-between text-sm">
+        <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between gap-2 text-sm">
                 <span className="text-muted">{label}</span>
                 <span className="font-medium text-foreground">
                     {used}
                     {" / "}
                     {limit}
-                    {" "}
-                    <span className="text-muted">{unit}</span>
+                    {showUnit && unit ? (
+                        <>
+                            {" "}
+                            <span className="text-muted">{unit}</span>
+                        </>
+                    ) : null}
                 </span>
             </div>
-            <div className="h-2 w-full overflow-hidden rounded-full bg-default/60">
-                <div
-                    className={cn("h-full rounded-full transition-all", fillClassName)}
-                    style={{ width: `${ratio * 100}%` }}
-                />
-            </div>
+
+            <ProgressBar
+                aria-label={label}
+                className="w-full"
+                color={fillTone}
+                maxValue={100}
+                minValue={0}
+                size="sm"
+                value={value}
+            >
+                <ProgressBar.Track>
+                    <ProgressBar.Fill />
+                </ProgressBar.Track>
+            </ProgressBar>
+            {resetLabel ? (
+                <div className="text-xs text-muted">{resetLabel}</div>
+            ) : null}
         </div>
     )
 }

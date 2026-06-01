@@ -5,20 +5,28 @@ import {
     BracketsCurlyIcon,
     GraduationCapIcon,
     SwordIcon,
-    VideoIcon,
 } from "@phosphor-icons/react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import React, { useCallback } from "react"
 import { GlobalSearchContentBlock } from "./Block"
 import { useAppSelector } from "@/redux"
 import { ScrollShadow } from "@heroui/react"
+import { pathConfig } from "@/resources/path"
+import type { AutocompleteGlobalSearchItem } from "@/modules/api"
+
+/** Entity bucket a pressed search item belongs to — drives how its href is built. */
+type GlobalSearchKind = "course" | "module" | "content" | "challenge"
 
 /**
- * Grouped command-palette style results for global search (courses, modules, contents, challenges, lesson videos).
+ * Grouped command-palette style results for global search (courses, modules, contents, challenges).
+ *
+ * Each result carries a `parentPath` (resolved from the indexer parent-index cache) holding the
+ * course slug + module/content UUIDs needed to build the deep-link learn URL.
  */
 export const GlobalSearchContent = () => {
     const t = useTranslations()
+    const locale = useLocale()
     const router = useRouter()
     const { setOpen } = useSearchOverlayState()
 
@@ -26,13 +34,54 @@ export const GlobalSearchContent = () => {
     const modules = useAppSelector((state) => state.socketIo.globalSearchResults?.data?.modules)
     const challenges = useAppSelector((state) => state.socketIo.globalSearchResults?.data?.challenges)
     const contents = useAppSelector((state) => state.socketIo.globalSearchResults?.data?.contents)
-    const lessonVideos = useAppSelector((state) => state.socketIo.globalSearchResults?.data?.lessonVideos)
 
+    // Build the deep-link URL for a pressed hit from its kind + resolved ancestor chain.
+    // Returns null when the data needed for that kind is missing so we can no-op safely.
+    const buildHref = useCallback(
+        (kind: GlobalSearchKind, item: AutocompleteGlobalSearchItem): string | null => {
+            const parent = item.parentPath
+            const root = pathConfig().locale(locale)
+            switch (kind) {
+            // a course links to its own public course page (slug = the item's displayId)
+            case "course": {
+                if (!item.displayId) return null
+                return root.course(item.displayId).build()
+            }
+            // a module needs the owning course slug; the module segment uses its UUID
+            case "module": {
+                const courseSlug = parent?.course?.displayId
+                if (!courseSlug) return null
+                return root.course(courseSlug).learn().module(item.id).build()
+            }
+            // a content needs course slug + module UUID; the content segment uses its UUID
+            case "content": {
+                const courseSlug = parent?.course?.displayId
+                const moduleId = parent?.module?.id
+                if (!courseSlug || !moduleId) return null
+                return root.course(courseSlug).learn().module(moduleId).content(item.id).build()
+            }
+            // a challenge has no standalone route → land on its parent content page
+            case "challenge": {
+                const courseSlug = parent?.course?.displayId
+                const moduleId = parent?.module?.id
+                const contentId = parent?.content?.id
+                if (!courseSlug || !moduleId || !contentId) return null
+                return root.course(courseSlug).learn().module(moduleId).content(contentId).build()
+            }
+            default:
+                return null
+            }
+        }, [locale])
 
+    // Resolve the href for the pressed item, navigate to it, then close the palette.
     const onItemPress = useCallback(
-        () => {
+        (kind: GlobalSearchKind) => (item: AutocompleteGlobalSearchItem) => {
+            const href = buildHref(kind, item)
+            // ignore presses we cannot resolve a destination for (missing ancestors)
+            if (!href) return
+            router.push(href)
             setOpen(false)
-        }, [setOpen, router])
+        }, [buildHref, router, setOpen])
 
     return (
         <ScrollShadow hideScrollBar className="max-h-[300px] p-3">
@@ -40,31 +89,25 @@ export const GlobalSearchContent = () => {
                 icon={GraduationCapIcon}
                 label={t("search.suggestions.courses")}
                 items={courses ?? []}
-                onItemPress={onItemPress}
+                onItemPress={onItemPress("course")}
             />
             <GlobalSearchContentBlock
                 icon={BracketsCurlyIcon}
                 label={t("search.suggestions.modules")}
                 items={modules ?? []}
-                onItemPress={onItemPress}
+                onItemPress={onItemPress("module")}
             />
             <GlobalSearchContentBlock
                 icon={ArticleIcon}
                 label={t("search.suggestions.contents")}
                 items={contents ?? []}
-                onItemPress={onItemPress}
+                onItemPress={onItemPress("content")}
             />
             <GlobalSearchContentBlock
                 icon={SwordIcon}
                 label={t("search.suggestions.challenges")}
                 items={challenges ?? []}
-                onItemPress={onItemPress}
-            />
-            <GlobalSearchContentBlock
-                icon={VideoIcon}
-                label={t("search.suggestions.lessonVideos")}
-                items={lessonVideos ?? []}
-                onItemPress={onItemPress}
+                onItemPress={onItemPress("challenge")}
             />
         </ScrollShadow>
     )

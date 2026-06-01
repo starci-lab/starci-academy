@@ -91,6 +91,12 @@
 }
 
 @layer components {
+    .accordion__body-inner {
+        @apply p-3 pt-1.5;
+    }
+    .accordion__trigger {
+        @apply !p-3;
+    }
     .link {
       @apply flex items-center gap-2 no-underline cursor-pointer hover:opacity-80;
     }

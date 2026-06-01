@@ -2,7 +2,6 @@
 
 import React from "react"
 import {
-    Button,
     Chip,
     Dropdown,
     DropdownItem,
@@ -10,9 +9,12 @@ import {
     DropdownPopover,
     DropdownSection,
     DropdownTrigger,
+    Tooltip,
+    cn
 } from "@heroui/react"
 import {
     CaretDownIcon,
+    LockIcon,
     SparkleIcon,
 } from "@phosphor-icons/react"
 import {
@@ -49,6 +51,8 @@ export type GradeModelDropdownProps = WithClassNames<undefined> & {
     isDisabled?: boolean
     /** Fired with the new selection when the user picks an option. */
     onSelect: (selection: ChallengeGradeSelection) => void
+    /** Fired when a locked (subscription-required) model is pressed — route to the subscription page. */
+    onUpgrade: () => void
 }
 
 /**
@@ -65,6 +69,7 @@ export const GradeModelDropdown = ({
     canPremium,
     isDisabled = false,
     onSelect,
+    onUpgrade,
     className,
 }: GradeModelDropdownProps) => {
     const t = useTranslations()
@@ -73,24 +78,18 @@ export const GradeModelDropdown = ({
     const triggerLabel = isAuto
         ? t("aiSettings.lanes.auto.title")
         : selection.model
-    // lock every premium model when the user is not entitled to the Premium lane
-    const disabledKeys = canPremium
-        ? []
-        : models.map((model) => `${model.provider}:${model.model}`)
 
     return (
         <Dropdown>
-            <DropdownTrigger>
-                <Button
-                    size="sm"
-                    variant="secondary"
-                    isDisabled={isDisabled}
-                    className={className}
-                >
-                    <SparkleIcon className="size-4" />
+            <DropdownTrigger
+                isDisabled={isDisabled}
+                className={cn("cursor-pointer", className)}
+            >
+                <div className="flex items-center gap-2">
+                    <SparkleIcon className="size-5" />
                     <span className="max-w-40 truncate">{triggerLabel}</span>
-                    <CaretDownIcon className="size-4" />
-                </Button>
+                    <CaretDownIcon className="size-5" />
+                </div>
             </DropdownTrigger>
             <DropdownPopover
                 placement="bottom start"
@@ -98,7 +97,6 @@ export const GradeModelDropdown = ({
             >
                 <DropdownMenu
                     aria-label={t("aiSettings.pickModel")}
-                    disabledKeys={disabledKeys}
                 >
                     {/* Auto lane — balancer picks a complimentary model, free of charge */}
                     <DropdownSection>
@@ -115,29 +113,60 @@ export const GradeModelDropdown = ({
                             </div>
                         </DropdownItem>
                     </DropdownSection>
-                    {/* Premium lane — one entry per catalog model, with a category chip */}
+                    {/* Premium lane — one entry per catalog model, with a category chip.
+                        Without a subscription every model is locked: pressing routes to the
+                        subscription page and hovering explains why (Auto lane stays free). */}
                     <DropdownSection className="border-t border-divider pt-1 mt-1">
-                        {models.map((model) => (
-                            <DropdownItem
-                                key={`${model.provider}:${model.model}`}
-                                onPress={() => onSelect({
-                                    mode: AiMode.Premium,
-                                    model: model.model,
-                                    provider: model.provider,
-                                })}
-                            >
-                                <div className="flex items-center justify-between gap-2">
-                                    <span className="truncate">{model.model}</span>
-                                    <Chip
-                                        size="sm"
-                                        color={CATEGORY_CHIP_COLOR[model.category]}
-                                        variant="soft"
+                        {models.map((model) => {
+                            const key = `${model.provider}:${model.model}`
+                            const categoryChip = (
+                                <Chip
+                                    size="sm"
+                                    color={CATEGORY_CHIP_COLOR[model.category]}
+                                    variant="soft"
+                                >
+                                    {t(`aiSettings.categories.${model.category}`)}
+                                </Chip>
+                            )
+                            if (!canPremium) {
+                                return (
+                                    <DropdownItem
+                                        key={key}
+                                        textValue={model.model}
+                                        onPress={onUpgrade}
                                     >
-                                        {t(`aiSettings.categories.${model.category}`)}
-                                    </Chip>
-                                </div>
-                            </DropdownItem>
-                        ))}
+                                        <Tooltip>
+                                            <Tooltip.Trigger>
+                                                <div className="flex w-full items-center justify-between gap-2 text-muted">
+                                                    <span className="flex min-w-0 items-center gap-2">
+                                                        <LockIcon className="size-5 shrink-0" />
+                                                        <span className="truncate">{model.model}</span>
+                                                    </span>
+                                                    {categoryChip}
+                                                </div>
+                                            </Tooltip.Trigger>
+                                            <Tooltip.Content>{t("aiSettings.subscribeToGrade")}</Tooltip.Content>
+                                        </Tooltip>
+                                    </DropdownItem>
+                                )
+                            }
+                            return (
+                                <DropdownItem
+                                    key={key}
+                                    textValue={model.model}
+                                    onPress={() => onSelect({
+                                        mode: AiMode.Premium,
+                                        model: model.model,
+                                        provider: model.provider,
+                                    })}
+                                >
+                                    <div className="flex items-center justify-between gap-2">
+                                        <span className="truncate">{model.model}</span>
+                                        {categoryChip}
+                                    </div>
+                                </DropdownItem>
+                            )
+                        })}
                     </DropdownSection>
                 </DropdownMenu>
             </DropdownPopover>

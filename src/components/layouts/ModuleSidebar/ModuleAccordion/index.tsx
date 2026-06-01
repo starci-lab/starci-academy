@@ -52,48 +52,52 @@ export const ModuleAccordion = ({
                 onExpandedChange(key ? String(key) : undefined)
             }}
         >
-            {modules.map((module) => {
-                const contents = module.contents
-                    ?.slice()
-                    ?.sort((prev, next) => prev.orderIndex - next.orderIndex) ?? []
-                return (
-                    <Accordion.Item
-                        key={String(module.id)}
-                        id={String(module.id)}
-                    >
-                        <Accordion.Heading>
-                            <Accordion.Trigger className="w-full">
-                                <div className="flex w-full items-center justify-between gap-2">
-                                    <span
-                                        className={cn(
-                                            "min-w-0 flex-1 cursor-pointer text-start text-base font-semibold",
-                                            module.id === activeModuleId ? "text-accent" : "",
-                                        )}
-                                    >
-                                        {`${module.orderIndex + 1}. ${module.title}`}
-                                    </span>
-                                    <Accordion.Indicator />
-                                </div>
-                            </Accordion.Trigger>
-                        </Accordion.Heading>
-                        <Accordion.Panel>
-                            <Accordion.Body className="p-3">
-                                <div className="flex flex-col gap-3">
-                                    {contents.map((content, index) => (
-                                        <ModuleContentRow
-                                            key={content.id}
-                                            content={content}
-                                            isActive={content.id === activeContentId}
-                                            isLast={index === contents.length - 1}
-                                            onSelectContent={onSelectContent}
-                                        />
-                                    ))}
-                                </div>
-                            </Accordion.Body>
-                        </Accordion.Panel>
-                    </Accordion.Item>
+            {
+                modules.map(
+                    (module) => {
+                        const contents = module.contents
+                            ?.slice()
+                            ?.sort((prev, next) => prev.orderIndex - next.orderIndex) ?? []
+                        return (
+                            <Accordion.Item
+                                key={String(module.id)}
+                                id={String(module.id)}
+                            >
+                                <Accordion.Heading>
+                                    <Accordion.Trigger className="w-full">
+                                        <div className="flex w-full items-center justify-between gap-2">
+                                            <span
+                                                className={cn(
+                                                    "min-w-0 flex-1 cursor-pointer text-start text-base font-semibold",
+                                                    module.id === activeModuleId ? "text-accent" : "",
+                                                )}
+                                            >
+                                                {`${module.orderIndex + 1}. ${module.title}`}
+                                            </span>
+                                            <Accordion.Indicator />
+                                        </div>
+                                    </Accordion.Trigger>
+                                </Accordion.Heading>
+                                <Accordion.Panel>
+                                    <Accordion.Body>
+                                        <div className="flex flex-col gap-3">
+                                            {contents.map((content, index) => (
+                                                <ModuleContentRow
+                                                    key={content.id}
+                                                    content={content}
+                                                    isActive={content.id === activeContentId}
+                                                    isLast={index === contents.length - 1}
+                                                    onSelectContent={onSelectContent}
+                                                />
+                                            ))}
+                                        </div>
+                                    </Accordion.Body>
+                                </Accordion.Panel>
+                            </Accordion.Item>
+                        )
+                    }
                 )
-            })}
+            }
         </Accordion>
     )
 }

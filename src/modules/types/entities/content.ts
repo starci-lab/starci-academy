@@ -2,6 +2,7 @@ import type { AbstractEntity } from "./abstract"
 import type { ChallengeEntity } from "./challenge"
 import type { CodeExplainingEntity } from "./code-explaining"
 import type { CodeImplementationEntity } from "./code-implementation"
+import type { ContentBody } from "./content-body"
 import type { ContentReferenceEntity } from "./content-reference"
 import type { ModuleEntity } from "./module"
 
@@ -29,14 +30,19 @@ export interface ContentEntity extends AbstractEntity {
     references?: Array<ContentReferenceEntity>
     /** Challenges linked to this content (id-only when loaded from list queries). */
     challenges?: Array<Pick<ChallengeEntity, "id">>
-    /** The number of lessons for the content. */
-    numLessons: number
     /** Critical code snippets with explanations. */
     codeExplainings?: Array<CodeExplainingEntity>
     /** Multi-language implementation guides. */
     codeImplementations?: Array<CodeImplementationEntity>
     /** Whether this content requires enrollment (premium). */
     isPremium: boolean
+    /**
+     * Day this content was verified/audited. Non-null marks SCHEMA V2 content (drives the
+     * multi-language body tabs); legacy content leaves it null/undefined.
+     */
+    verified?: string | null
+    /** SCHEMA V2 per-language lesson bodies (mount `bodies/<N>-<lang>/`). */
+    bodies?: Array<ContentBody>
 }
 
 /** Code explaining rows from `content` payload. */

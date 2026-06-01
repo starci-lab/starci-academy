@@ -16,6 +16,16 @@ export interface SubmitChallengeSubmissionRequest {
     selectedModel?: string
     /** Provider serving {@link selectedModel}. */
     selectedModelProvider?: ModelProvider
+    /**
+     * SCHEMA V2 only: programming language (typescript | java | csharp | go).
+     * Required when submitting a verified (V2) Git challenge.
+     */
+    lang?: string
+    /**
+     * One-shot BYOK key for this run only (not saved to profile).
+     * Use when `mode` is `byok` and the user has no stored key.
+     */
+    byokApiKey?: string
 }
 
 /** Payload inside `submitChallengeSubmission.data` after the standard API wrapper. */

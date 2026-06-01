@@ -22,6 +22,8 @@ export interface SidebarNavListProps {
     items: Array<SidebarNavItem>
     /** Currently active sidebar tab. */
     selectedTab: SidebarTab
+    /** Icon-only mode forwarded to every row (collapsed rail). */
+    collapsed?: boolean
     /** Fired with the chosen entry when a row is pressed. */
     onSelect: (item: SidebarNavItem) => void
 }
@@ -35,6 +37,7 @@ export interface SidebarNavListProps {
 export const SidebarNavList = ({
     items,
     selectedTab,
+    collapsed = false,
     onSelect,
 }: SidebarNavListProps) => {
     return (
@@ -48,6 +51,7 @@ export const SidebarNavList = ({
                     key={item.value}
                     item={item}
                     selected={selectedTab === item.tab}
+                    collapsed={collapsed}
                     onSelect={onSelect}
                 />
             ))}

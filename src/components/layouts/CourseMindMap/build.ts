@@ -85,7 +85,8 @@ export const build = ({ course, activeModuleId, themeMode = "light" }: BuildPara
         type: COURSE_ROOT_NODE_TYPE,
         position: { x: -CARD_HALF_WIDTH, y: -CARD_HALF_HEIGHT },
         data: { label: title },
-        draggable: true,
+        // positions are locked — the layout is computed, never user-moved
+        draggable: false,
         selectable: false,
     }
 
@@ -106,6 +107,14 @@ export const build = ({ course, activeModuleId, themeMode = "light" }: BuildPara
 
         const isActive = Boolean(activeModuleId && module.id === activeModuleId)
 
+        // real lessons of this module (ordered) — expanded on click as child cards
+        const contents = [...(module.contents ?? [])]
+            .sort((prev, next) => prev.orderIndex - next.orderIndex)
+            .map((content) => ({
+                id: content.id,
+                title: `${content.orderIndex + 1}. ${content.title}`,
+            }))
+
         return {
             id: module.id,
             type: COURSE_MODULE_NODE_TYPE,
@@ -115,6 +124,9 @@ export const build = ({ course, activeModuleId, themeMode = "light" }: BuildPara
                 isLeft,
                 isActive,
                 pastelBackground: pastelBackgroundForIndex(index, themeMode),
+                moduleId: module.id,
+                courseDisplayId: course.displayId,
+                contents,
             },
             draggable: false,
             selectable: true,

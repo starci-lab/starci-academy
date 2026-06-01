@@ -20,7 +20,6 @@ const query1 = gql`
           challenges {
             id
           }
-          numLessons
         }
         count
       }

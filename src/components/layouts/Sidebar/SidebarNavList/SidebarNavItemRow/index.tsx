@@ -19,6 +19,8 @@ export interface SidebarNavItemRowProps {
     item: SidebarNavItem
     /** Whether this row's tab is the active one. */
     selected: boolean
+    /** Icon-only mode: hide the label and center the icon (collapsed rail). */
+    collapsed?: boolean
     /** Fired with the row's entry when pressed. */
     onSelect: (item: SidebarNavItem) => void
 }
@@ -33,6 +35,7 @@ export interface SidebarNavItemRowProps {
 export const SidebarNavItemRow = ({
     item,
     selected,
+    collapsed = false,
     onSelect,
 }: SidebarNavItemRowProps) => {
     const onPress = useCallback(
@@ -48,12 +51,16 @@ export const SidebarNavItemRow = ({
             selectionMode="single"
         >
             <ListBox.Item
-                className={cn(selected ? "text-accent bg-accent/10" : "")}
+                // in collapsed mode keep the label as the accessible name even though it is hidden
+                aria-label={collapsed ? item.label : undefined}
+                // center the lone icon when collapsed; otherwise the row keeps icon + label
+                className={cn(selected ? "text-accent bg-accent/10" : "", collapsed ? "justify-center" : "")}
                 onPress={onPress}
             >
-                <div className="flex items-center gap-2">
+                <div className={cn("flex items-center gap-2", collapsed ? "justify-center" : "")}>
                     <item.icon className="size-5 shrink-0" />
-                    <span className="hidden sm:inline">{item.label}</span>
+                    {/* hide the label entirely when collapsed; else show from the sm breakpoint up */}
+                    <span className={cn(collapsed ? "hidden" : "hidden sm:inline")}>{item.label}</span>
                 </div>
             </ListBox.Item>
         </ListBox>

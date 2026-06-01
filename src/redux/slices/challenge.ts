@@ -2,6 +2,7 @@ import type {
     ChallengeEntity,
     ChallengeSubmissionEntity,
 } from "@/modules/types"
+import type { ChallengeSubmissionProgressItem } from "@/modules/api"
 import {
     createSlice,
     type PayloadAction,
@@ -23,6 +24,8 @@ export interface ChallengeSlice {
     limit?: number
     /** The challenges count. */
     count?: number
+    /** Per-challenge submission progress for the active course (`challengeSubmissionProgress`). */
+    completionTasks: Array<ChallengeSubmissionProgressItem>
     /** Rows from `challengeSubmissions` for the focused challenge. */
     challengeSubmissions: Array<ChallengeSubmissionEntity>
     /** The loading challenge submissions. */
@@ -50,6 +53,8 @@ const initialState: ChallengeSlice = {
     limit: undefined,
     /** The challenges count. */
     count: undefined,
+    /** Per-challenge submission progress (see `challengeSubmissionProgress` query). */
+    completionTasks: [],
     /** Challenge submission rows (see `challengeSubmissions` query). */
     challengeSubmissions: [],
     /** The loading challenge submissions. */
@@ -115,6 +120,13 @@ export const challengeSlice = createSlice(
             ) => {
                 state.count = action.payload
             },
+            /** The action to set per-challenge submission progress for the active course. */
+            setChallengeCompletionTasks: (
+                state,
+                action: PayloadAction<Array<ChallengeSubmissionProgressItem>>,
+            ) => {
+                state.completionTasks = action.payload
+            },
             /** The action to set challenge submission rows for the current challenge. */
             setChallengeSubmissions: (
                 state,
@@ -164,6 +176,7 @@ export const {
     setChallengePageNumber,
     setChallengeLimit,
     setChallengeCount,
+    setChallengeCompletionTasks,
     setChallengeSubmissions,
     setChallengeSubmissionJobId,
     setLoadingChallengeSubmissionIds,

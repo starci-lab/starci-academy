@@ -56,6 +56,59 @@ const query1 = gql`
           url
           orderIndex
         }
+        verified
+        defaultLocale
+        requirementsV2 {
+          id
+          orderIndex
+          defaultLocale
+          langs {
+            id
+            lang
+            orderIndex
+            score
+            defaultLocale
+            title
+            body
+          }
+        }
+        stepsV2 {
+          id
+          orderIndex
+          defaultLocale
+          langs {
+            id
+            lang
+            orderIndex
+            defaultLocale
+            title
+            body
+          }
+        }
+        outputsV2 {
+          id
+          orderIndex
+          defaultLocale
+          langs {
+            id
+            lang
+            orderIndex
+            defaultLocale
+            text
+          }
+        }
+        prerequisitesV2 {
+          id
+          orderIndex
+          defaultLocale
+          langs {
+            id
+            lang
+            orderIndex
+            defaultLocale
+            text
+          }
+        }
       }
     }
   }

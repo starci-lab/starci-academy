@@ -29,7 +29,6 @@ const query1 = gql`
         data {
           id
           displayId
-          numLessons
           challenges {
             id
           }

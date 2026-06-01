@@ -21,7 +21,6 @@ const query1 = gql`
         challenges {
           id
         }
-        numLessons
         references {
           id
           alias
@@ -42,6 +41,19 @@ const query1 = gql`
           guide
           example
         }
+        bodies {
+          id
+          lang
+          orderIndex
+          body
+          defaultLocale
+          translations {
+            locale
+            body
+          }
+        }
+        verified
+        defaultLocale
       }
     }
   }

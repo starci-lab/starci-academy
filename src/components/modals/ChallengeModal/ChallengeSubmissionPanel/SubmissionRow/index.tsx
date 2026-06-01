@@ -1,8 +1,12 @@
 "use client"
 
-import React from "react"
+import React, {
+    useCallback,
+    useMemo,
+} from "react"
 import {
     Button,
+    cn,
     FieldError,
     Input,
     Spinner,
@@ -15,8 +19,15 @@ import {
     JobCategory,
 } from "@/modules/types"
 import {
+    AiMode,
+} from "@/modules/api"
+import {
     PencilLineIcon,
+    WarningCircleIcon,
 } from "@phosphor-icons/react"
+import {
+    useSystemAiAutoConfig,
+} from "@/hooks/useSystemAiAutoConfig"
 import {
     AIProcessingText,
 } from "@/components/reuseable"
@@ -27,6 +38,13 @@ import type {
     ChallengeGradeSelection,
     ChallengeSubmissionRowViewModel,
 } from "../types"
+import type { QueryMyCreditUsageResponseData } from "@/modules/api/graphql/queries/types/my-credit-usage"
+import {
+    GradeCreditDisplayKind,
+} from "../types"
+import {
+    resolveGradeCreditDisplay,
+} from "../utils"
 import {
     GradeModelDropdown,
 } from "../GradeModelDropdown"
@@ -46,6 +64,10 @@ export interface SubmissionRowProps {
     gradeSelection: ChallengeGradeSelection
     /** Whether the Premium lane is unlocked for this user. */
     canPremium: boolean
+    /** Credit usage snapshot for the lane label beside the picker. */
+    creditUsage: QueryMyCreditUsageResponseData | undefined
+    /** Opens the AI quota details modal. */
+    onOpenAiQuota: () => void
     /** Fired with the new URL value when the input changes. */
     onChangeUrl: (fieldName: string, value: string) => void
     /** Fired when the URL input is blurred (marks it touched). */
@@ -54,6 +76,8 @@ export interface SubmissionRowProps {
     onSubmit: (submissionId: string, index: number) => void
     /** Fired with this row's new grading selection. */
     onSelectGrade: (submissionId: string, selection: ChallengeGradeSelection) => void
+    /** Fired when a locked model is pressed — route to the subscription page. */
+    onUpgrade: () => void
     /** Fired to open the attempt history for this submission. */
     onViewAttempts: (submissionId: string) => void
 }
@@ -72,13 +96,17 @@ export const SubmissionRow = ({
     gradeModels,
     gradeSelection,
     canPremium,
+    creditUsage,
+    onOpenAiQuota,
     onChangeUrl,
     onBlurUrl,
     onSubmit,
     onSelectGrade,
+    onUpgrade,
     onViewAttempts,
 }: SubmissionRowProps) => {
     const t = useTranslations()
+    const aiAutoConfig = useSystemAiAutoConfig()
     const {
         submission,
         fieldName,
@@ -96,6 +124,43 @@ export const SubmissionRow = ({
         lastAttemptScore,
         maxScore,
     } = row
+
+    const creditDisplay = useMemo(
+        () => resolveGradeCreditDisplay({
+            mode: gradeSelection.mode,
+            creditUsage,
+            autoCreditCost: aiAutoConfig?.creditCost,
+            t,
+        }),
+        [
+            gradeSelection.mode,
+            creditUsage,
+            aiAutoConfig?.creditCost,
+            t,
+        ],
+    )
+
+    const isQuotaReached = creditDisplay.kind === GradeCreditDisplayKind.QuotaReached
+
+    const onPressCreditLabel = useCallback(() => {
+        if (gradeSelection.mode === AiMode.Byok) {
+            return
+        }
+        onOpenAiQuota()
+    }, [
+        gradeSelection.mode,
+        onOpenAiQuota,
+    ])
+
+    const creditLabelClassName = useMemo(
+        () => cn(
+            "inline-flex shrink-0 items-center gap-1 text-sm transition-colors",
+            isQuotaReached
+                ? "cursor-pointer font-semibold text-danger hover:opacity-90"
+                : "cursor-pointer text-muted hover:text-foreground",
+        ),
+        [isQuotaReached],
+    )
 
     return (
         <div className="border-b last:border-b-0 p-3">
@@ -159,15 +224,37 @@ export const SubmissionRow = ({
                             )
                             : null
                 }
-                <div className="flex flex-col items-start gap-2">
-                    {/* grading lane + model picker — small dropdown above the actions */}
-                    <GradeModelDropdown
-                        models={gradeModels}
-                        selection={gradeSelection}
-                        canPremium={canPremium}
-                        isDisabled={isPending}
-                        onSelect={(selection) => onSelectGrade(submission.id, selection)}
-                    />
+                <div className="flex flex-col items-start gap-4.5">
+                    <div className="flex w-full items-center justify-between gap-2">
+                        <GradeModelDropdown
+                            models={gradeModels}
+                            selection={gradeSelection}
+                            canPremium={canPremium}
+                            isDisabled={isPending}
+                            onSelect={(selection) => onSelectGrade(submission.id, selection)}
+                            onUpgrade={onUpgrade}
+                        />
+                        {creditDisplay.kind !== GradeCreditDisplayKind.Hidden ? (
+                            gradeSelection.mode === AiMode.Byok ? (
+                                <span className="shrink-0 text-sm text-muted">
+                                    {creditDisplay.text}
+                                </span>
+                            ) : (
+                                <button
+                                    type="button"
+                                    onClick={onPressCreditLabel}
+                                    className={creditLabelClassName}
+                                >
+                                    {isQuotaReached ? (
+                                        <WarningCircleIcon
+                                            className="size-5"
+                                        />
+                                    ) : null}
+                                    <span className="text-sm font-base">{creditDisplay.text}</span>
+                                </button>
+                            )
+                        ) : null}
+                    </div>
                     <div className="flex flex-wrap items-center gap-2">
                         <Button
                             isPending={isPending}

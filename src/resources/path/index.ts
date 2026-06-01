@@ -21,9 +21,19 @@ export const pathConfig = () => {
                     build,
                 }
             }
+            const aiUsage = () => {
+                const aiUsagePath = `${profilePath}/ai-usage`
+                const build = () => {
+                    return aiUsagePath
+                }
+                return {
+                    build,
+                }
+            }
             return {
                 build,
                 bookmarks,
+                aiUsage,
             }
         }
         const authentication = () => {

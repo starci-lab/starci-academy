@@ -1,11 +1,13 @@
 "use client"
 
-import { SubmissionFeedbackEntity } from "@/modules/types"
-import React from "react"
+import { MarkdownContent } from "@/components/reuseable"
+import type { SubmissionFeedbackEntity } from "@/modules/types"
 import { SubmissionFeedbackSeverity } from "@/modules/types"
-import { Card, Chip } from "@heroui/react"
-import { MapPinLineIcon, RadioactiveIcon } from "@phosphor-icons/react"
+import { buildGithubFileUrl } from "@/modules/utils"
+import { Card, Chip, Link } from "@heroui/react"
+import { CheckIcon, LightbulbIcon, MapPinLineIcon, RadioactiveIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
+import React, { useMemo } from "react"
 
 /**
  * Props for {@link FeedbackCard}.
@@ -13,6 +15,8 @@ import { useTranslations } from "next-intl"
 interface FeedbackCardProps {
     /** One feedback row from the grader. */
     submissionFeedback: SubmissionFeedbackEntity
+    /** GitHub repo URL for the selected submission attempt (used for file links). */
+    repositoryUrl?: string
 }
 
 /**
@@ -21,7 +25,7 @@ interface FeedbackCardProps {
  * @param props - Feedback row.
  */
 export const FeedbackCard = (props: FeedbackCardProps) => {
-    const { submissionFeedback } = props
+    const { submissionFeedback, repositoryUrl } = props
     const {
         message,
         detail,
@@ -31,74 +35,115 @@ export const FeedbackCard = (props: FeedbackCardProps) => {
     } = submissionFeedback
     const t = useTranslations()
 
-    const getSeverityChip = () => {
+    const statusChip = useMemo(() => {
+        if (!suggestion) {
+            return (
+                <Chip color="success" size="sm" variant="soft" className="shrink-0">
+                    <CheckIcon className="size-4 min-h-4 min-w-4" />
+                    <Chip.Label>{t("feedback.perfect")}</Chip.Label>
+                </Chip>
+            )
+        }
         switch (severity) {
         case SubmissionFeedbackSeverity.High:
             return (
-                <Chip color="danger" size="sm" variant="primary">
-                    <RadioactiveIcon className="size-4 min-w-4 min-h-4" />
+                <Chip color="danger" size="sm" variant="soft" className="shrink-0">
+                    <RadioactiveIcon className="size-4 min-h-4 min-w-4" />
                     <Chip.Label>{t("feedback.severity.high")}</Chip.Label>
                 </Chip>
             )
         case SubmissionFeedbackSeverity.Medium:
             return (
-                <Chip color="warning" size="sm" variant="primary">
-                    <RadioactiveIcon className="size-4 min-w-4 min-h-4" />
+                <Chip color="warning" size="sm" variant="soft" className="shrink-0">
+                    <RadioactiveIcon className="size-4 min-h-4 min-w-4" />
                     <Chip.Label>{t("feedback.severity.medium")}</Chip.Label>
                 </Chip>
             )
         case SubmissionFeedbackSeverity.Low:
             return (
-                <Chip color="success" size="sm" variant="primary">
-                    <RadioactiveIcon className="size-4 min-w-4 min-h-4" />
+                <Chip color="default" size="sm" variant="soft" className="shrink-0">
+                    <RadioactiveIcon className="size-4 min-h-4 min-w-4" />
                     <Chip.Label>{t("feedback.severity.low")}</Chip.Label>
                 </Chip>
             )
         default:
             return (
-                <Chip color="default" size="sm" variant="primary">
-                    <RadioactiveIcon className="size-4 min-w-4 min-h-4" />
+                <Chip color="warning" size="sm" variant="soft" className="shrink-0">
+                    <RadioactiveIcon className="size-4 min-h-4 min-w-4" />
                     <Chip.Label>{t("feedback.severity.unknown")}</Chip.Label>
                 </Chip>
             )
         }
-    }
+    }, [severity, suggestion, t])
+
+    const locationLabel = useMemo(() => {
+        if (location == null) {
+            return null
+        }
+        const trimmed = location.trim()
+        if (trimmed.length === 0 || trimmed.toLowerCase() === "null") {
+            return null
+        }
+        return trimmed
+    }, [location])
+
+    const locationHref = useMemo(() => {
+        if (!locationLabel || !repositoryUrl) {
+            return null
+        }
+        return buildGithubFileUrl({
+            repositoryUrl,
+            location: locationLabel,
+        })
+    }, [locationLabel, repositoryUrl])
+
+    const showFooter = Boolean(locationLabel || suggestion)
 
     return (
-        <Card className="bg-background p-0">
+        <Card className="border border-divider bg-transparent p-0 shadow-none">
             <Card.Content>
-                <div>
-                    <div className="p-3">
-                        <div className="flex items-center justify-between">
-                            <div className="text-sm font-medium text-foreground">
-                                {message}
-                            </div>
-                            {getSeverityChip()}
+                <div className="flex flex-col gap-3 p-3">
+                    <div>
+                        {statusChip}
+                    </div>
+                    <div className="flex items-start justify-between gap-3">
+                        <div className="min-w-0 flex-1 space-y-2">
+                            <MarkdownContent markdown={message} className="text-sm font-medium" />
+                            {detail ? (
+                                <MarkdownContent markdown={detail} className="text-xs text-muted" />
+                            ) : null}
                         </div>
-                        <div className="h-3" />
-                        {detail ? (
-                            <div className="text-xs text-muted">
-                                {detail}
-                            </div>
-                        ) : null}
-                        <div className="h-3" />
-                        {location ? (
-                            <div className="flex items-center gap-2 text-xs text-muted">
-                                <MapPinLineIcon className="size-4 min-w-4 min-h-4" />
-                                {location}
-                            </div>
-                        ) : null}
                     </div>
-                    <div className="border-b border-divider" />
-                    <div className="flex flex-col gap-3 p-3">
-                        {suggestion ? (
-                            <div>
-                                <span className="font-semibold text-accent">{t("feedback.suggestion")}: </span>
-                                <span className="text-muted">{suggestion}</span>
-                            </div>
-                        ) : null}
-                       
-                    </div>
+                    {showFooter ? (
+                        <div
+                            className="-mx-3 border-t border-divider"
+                            role="separator"
+                        />
+                    ) : null}
+                    {locationLabel ? (
+                        <div className="flex items-center gap-2 text-xs text-muted">
+                            <MapPinLineIcon className="size-5 min-h-5 min-w-5 shrink-0" />
+                            {locationHref ? (
+                                <Link
+                                    href={locationHref}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={t("feedback.openFileOnGithub")}
+                                    className="min-w-0 break-words text-accent hover:underline"
+                                >
+                                    {locationLabel}
+                                </Link>
+                            ) : (
+                                <span className="min-w-0 break-words">{locationLabel}</span>
+                            )}
+                        </div>
+                    ) : null}
+                    {suggestion ? (
+                        <div className="flex items-center gap-2">
+                            <LightbulbIcon className="size-5 h-5 w-5 shrink-0 text-muted" />
+                            <MarkdownContent markdown={suggestion} className="text-sm text-muted" />
+                        </div>
+                    ) : null}
                 </div>
             </Card.Content>
         </Card>

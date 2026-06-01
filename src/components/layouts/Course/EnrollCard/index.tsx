@@ -98,16 +98,29 @@ export const EnrollCard = () => {
             <Card.Footer className="px-3 pb-3">
                 <div className="w-full">
                     {!isEnrolled ? (
-                        <Button
-                            variant="primary"
-                            size="lg"
-                            className="w-full"
-                            isDisabled={isEnrolled}
-                            onPress={onEnroll}
-                        >
-                            <PencilSimpleLineIcon className="w-5 h-5" />
-                            {t("course.enroll")}
-                        </Button>
+                        <>
+                            <Button
+                                variant="primary"
+                                size="lg"
+                                className="w-full"
+                                isDisabled={isEnrolled}
+                                onPress={onEnroll}
+                            >
+                                <PencilSimpleLineIcon className="w-5 h-5" />
+                                {t("course.enroll")}
+                            </Button>
+                            <div className="h-2" />
+                            {/* trial: enter the learning experience; premium lessons stay blurred behind the paywall */}
+                            <Button
+                                variant="secondary"
+                                size="lg"
+                                className="w-full"
+                                onPress={onContinueLearning}
+                            >
+                                <BookOpenIcon className="w-5 h-5" />
+                                {t("course.tryLearning")}
+                            </Button>
+                        </>
                     ) : (
                         <Button
                             variant="primary"

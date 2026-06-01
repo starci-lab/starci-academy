@@ -18,30 +18,28 @@ const query1 = gql`
           displayId
           title
           texts
+          parentPath { course { id displayId } module { id displayId } content { id displayId } challenge { id displayId } }
         }
         modules {
           id
           displayId
           title
           texts
+          parentPath { course { id displayId } module { id displayId } content { id displayId } challenge { id displayId } }
         }
         challenges {
           id
           displayId
           title
           texts
+          parentPath { course { id displayId } module { id displayId } content { id displayId } challenge { id displayId } }
         }
         contents {
           id
           displayId
           title
           texts
-        }
-        lessonVideos {
-          id
-          displayId
-          title
-          texts
+          parentPath { course { id displayId } module { id displayId } content { id displayId } challenge { id displayId } }
         }
       }
     }

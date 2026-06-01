@@ -6,17 +6,28 @@ import { cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 
 import {
+    CONTENT_OUTWARD_GAP,
     COURSE_MODULE_SLOT_NODE_TYPE,
     MODULE_CARD_BODY_HEIGHT,
+    MODULE_CARD_WIDTH,
     MODULE_CHILD_SOURCE_HANDLE,
-    SLOT_FIRST_OFFSET_Y,
+    MODULE_CONTENT_PREFIX,
+    SLOT_NODE_HEIGHT,
     SLOT_NODE_WIDTH,
     SLOT_VERTICAL_STEP,
-    moduleSlotNodeId,
+    moduleContentNodeId,
 } from "../moduleExpansion"
 
-/** React Flow node type id for course modules (card + invisible target handle). */
+/** React Flow node type id for course modules (card + invisible handles). */
 export const COURSE_MODULE_NODE_TYPE = "courseModule" as const
+
+/** One lesson summary carried on a module node for on-click expansion. */
+export type CourseModuleContentItem = {
+    /** Lesson (content) id. */
+    id: string
+    /** Lesson label (order + title). */
+    title: string
+}
 
 export type CourseModuleNodeData = {
     /** Module title line (order + title). */
@@ -27,14 +38,19 @@ export type CourseModuleNodeData = {
     isActive: boolean
     /** Inline pastel fill from {@link pastelBackgroundForIndex}. */
     pastelBackground: string
+    /** This module's id (parent for the expanded lesson cards). */
+    moduleId: string
+    /** Course mount slug — threaded onto lesson cards for URL building. */
+    courseDisplayId: string
+    /** Real lessons of this module, expanded as child cards on click. */
+    contents: Array<CourseModuleContentItem>
 }
 
 export type CourseModuleFlowNode = Node<CourseModuleNodeData, typeof COURSE_MODULE_NODE_TYPE>
 
-const SLOT_COUNT = 5
-
 /**
- * Module node: click the title area to add/remove five real child nodes (React Flow slots).
+ * Module node: click to reveal this module's real lessons as cards in the outer column.
+ * Accordion — opening one module collapses any other module's expanded lessons.
  * @param props — React Flow `NodeProps` for `courseModule` nodes.
  */
 export const CourseModuleNode = (props: NodeProps<CourseModuleFlowNode>) => {
@@ -42,43 +58,66 @@ export const CourseModuleNode = (props: NodeProps<CourseModuleFlowNode>) => {
     const t = useTranslations()
     const { getNode, setNodes, setEdges } = useReactFlow()
 
+    /** This module's lesson-card id prefix — used to detect/strip its expanded nodes. */
+    const contentPrefix = `${id}${MODULE_CONTENT_PREFIX}`
+
+    // true when this module currently has its lessons expanded
     const expanded = useStore(
-        useCallback((state) => state.nodes.some((node) => node.id === moduleSlotNodeId(id, 0)), [id]),
+        useCallback(
+            (state) => state.nodes.some((node) => node.id.startsWith(contentPrefix)),
+            [contentPrefix],
+        ),
     )
 
-    const toggleSlots = useCallback(() => {
+    const toggleContents = useCallback(() => {
         const self = getNode(id)
         if (!self) {
             return
         }
 
-        const slot0Id = moduleSlotNodeId(id, 0)
-        const hasSlots = getNode(slot0Id)
-
-        if (hasSlots) {
-            const slotPrefix = `${id}__slot__`
-            setNodes((nodes) => nodes.filter((node) => !node.id.startsWith(slotPrefix)))
-            setEdges((edges) => edges.filter((edge) => !edge.target.startsWith(slotPrefix)))
+        // already open → collapse just this module's lessons
+        if (getNode(moduleContentNodeId(id, data.contents[0]?.id ?? ""))) {
+            setNodes((nodes) => nodes.filter((node) => !node.id.startsWith(contentPrefix)))
+            setEdges((edges) => edges.filter((edge) => !edge.target.startsWith(contentPrefix)))
             return
         }
 
-        const slotX = self.position.x + (300 - SLOT_NODE_WIDTH) / 2
-        const baseY = self.position.y + MODULE_CARD_BODY_HEIGHT + SLOT_FIRST_OFFSET_Y
+        if (data.contents.length === 0) {
+            return
+        }
 
-        const slotNodes: Array<Node> = Array.from({ length: SLOT_COUNT }, (_, index) => ({
-            id: moduleSlotNodeId(id, index),
-            type: COURSE_MODULE_SLOT_NODE_TYPE,
-            position: { x: slotX, y: baseY + index * SLOT_VERTICAL_STEP },
-            data: { parentModuleId: id },
-            draggable: false,
-            selectable: false,
-        }))
+        // lessons sit in the empty outer column (left module → further left, right → further right)
+        const outerX = data.isLeft
+            ? self.position.x - CONTENT_OUTWARD_GAP - SLOT_NODE_WIDTH
+            : self.position.x + MODULE_CARD_WIDTH + CONTENT_OUTWARD_GAP
+        // stack the lessons vertically centered on the module's center
+        const moduleCenterY = self.position.y + MODULE_CARD_BODY_HEIGHT / 2
+        const count = data.contents.length
 
-        const slotEdges: Array<Edge> = Array.from({ length: SLOT_COUNT }, (_, index) => ({
-            id: `e-${id}__slot__${index}`,
+        const contentNodes: Array<Node> = data.contents.map((content, index) => {
+            const centerY = moduleCenterY + (index - (count - 1) / 2) * SLOT_VERTICAL_STEP
+            return {
+                id: moduleContentNodeId(id, content.id),
+                type: COURSE_MODULE_SLOT_NODE_TYPE,
+                position: { x: outerX, y: centerY - SLOT_NODE_HEIGHT / 2 },
+                data: {
+                    parentModuleId: id,
+                    courseDisplayId: data.courseDisplayId,
+                    moduleId: data.moduleId,
+                    contentId: content.id,
+                    label: content.title,
+                    isLeft: data.isLeft,
+                },
+                draggable: false,
+                selectable: false,
+            }
+        })
+
+        const contentEdges: Array<Edge> = data.contents.map((content) => ({
+            id: `e-${moduleContentNodeId(id, content.id)}`,
             source: id,
             sourceHandle: MODULE_CHILD_SOURCE_HANDLE,
-            target: moduleSlotNodeId(id, index),
+            target: moduleContentNodeId(id, content.id),
             type: "default",
             animated: false,
             style: {
@@ -88,18 +127,25 @@ export const CourseModuleNode = (props: NodeProps<CourseModuleFlowNode>) => {
             },
         }))
 
-        setNodes((nodes) => [...nodes, ...slotNodes])
-        setEdges((edges) => [...edges, ...slotEdges])
-    }, [getNode, id, setEdges, setNodes])
+        // accordion: drop every module's lesson nodes/edges, then add this module's
+        setNodes((nodes) => [
+            ...nodes.filter((node) => node.type !== COURSE_MODULE_SLOT_NODE_TYPE),
+            ...contentNodes,
+        ])
+        setEdges((edges) => [
+            ...edges.filter((edge) => !edge.target.includes(MODULE_CONTENT_PREFIX)),
+            ...contentEdges,
+        ])
+    }, [getNode, id, data, contentPrefix, setEdges, setNodes])
 
     const onToggleKeyDown = useCallback(
         (event: React.KeyboardEvent<HTMLButtonElement>) => {
             if (event.key === "Enter" || event.key === " ") {
                 event.preventDefault()
-                toggleSlots()
+                toggleContents()
             }
         },
-        [toggleSlots],
+        [toggleContents],
     )
 
     return (
@@ -122,7 +168,7 @@ export const CourseModuleNode = (props: NodeProps<CourseModuleFlowNode>) => {
                 id={MODULE_CHILD_SOURCE_HANDLE}
                 isConnectable={false}
                 className="!h-px !w-px !min-h-0 !min-w-0 !border-0 !bg-transparent !opacity-0"
-                position={Position.Bottom}
+                position={data.isLeft ? Position.Left : Position.Right}
                 type="source"
             />
             <button
@@ -134,9 +180,9 @@ export const CourseModuleNode = (props: NodeProps<CourseModuleFlowNode>) => {
                     "hover:bg-black/5 focus-visible:ring-2 focus-visible:ring-accent/40 dark:hover:bg-white/10",
                     "flex min-h-0 flex-1 items-center justify-center",
                 )}
-                onClick={(event) => {
-                    event.stopPropagation()
-                    toggleSlots()
+                onClick={() => {
+                    // toggle lessons; the click also bubbles to ReactFlow `onNodeClick` to zoom-to-center
+                    toggleContents()
                 }}
                 onKeyDown={onToggleKeyDown}
             >

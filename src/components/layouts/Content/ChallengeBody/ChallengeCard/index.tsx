@@ -3,12 +3,12 @@
 import React, { useMemo } from "react"
 import { Button, Card, CardContent, Chip } from "@heroui/react"
 import { ChallengeDifficulty, type ChallengeEntity } from "@/modules/types"
-import { SwordIcon, TrophyIcon } from "@phosphor-icons/react"
+import { CheckCircleIcon, SwordIcon, TrophyIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { difficultyPalette } from "../../../../pallettes"
 import { useChallengeOverlayState } from "@/hooks"
 import { setChallengeId } from "@/redux/slices"
-import { useAppDispatch } from "@/redux"
+import { useAppDispatch, useAppSelector } from "@/redux"
 
 export interface ChallengeCardProps {
     /** Challenge row displayed in content tab. */
@@ -35,6 +35,29 @@ export const ChallengeCard = ({ challenge }: ChallengeCardProps) => {
     }, [challenge.difficulty])
     const challengeOverlayState = useChallengeOverlayState()
     const dispatch = useAppDispatch()
+    // Per-challenge progress, populated by `useQueryChallengeSubmissionProgressSwrCore`.
+    const completionTasks = useAppSelector((state) => state.challenge.completionTasks)
+    const challengeProgress = useMemo(
+        () => completionTasks.find((completionTask) => completionTask.id === challenge.id) ?? null,
+        [completionTasks, challenge.id],
+    )
+    // Map the challenge status to a chip (color + label); "notStarted" shows no chip.
+    const progressChip = useMemo(() => {
+        if (!challengeProgress || challengeProgress.status === "notStarted") {
+            return null
+        }
+        const score = challengeProgress.lastScore
+        const maxScore = challengeProgress.maxScore
+        switch (challengeProgress.status) {
+        case "completed":
+            return { color: "success" as const, withIcon: true, label: t("challenge.progress.completed", { score, maxScore }) }
+        case "failed":
+            return { color: "danger" as const, withIcon: false, label: t("challenge.progress.failed", { score, maxScore }) }
+        case "inProgress":
+        default:
+            return { color: "warning" as const, withIcon: false, label: t("challenge.progress.inProgress", { score, maxScore }) }
+        }
+    }, [challengeProgress, t])
     return (
         <Card>
             <CardContent>
@@ -49,6 +72,12 @@ export const ChallengeCard = ({ challenge }: ChallengeCardProps) => {
                             <SwordIcon className="size-4" />
                             <Chip.Label>{t(difficultyName)}</Chip.Label>
                         </Chip>
+                        {progressChip ? (
+                            <Chip variant="secondary" color={progressChip.color}>
+                                {progressChip.withIcon ? <CheckCircleIcon className="size-4" weight="fill" /> : null}
+                                <Chip.Label>{progressChip.label}</Chip.Label>
+                            </Chip>
+                        ) : null}
                     </div>
                     <div className="text-xs text-muted mt-3">{challenge.description}</div>
                     <div className="h-3"/>

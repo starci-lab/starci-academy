@@ -17,4 +17,9 @@ export interface ContentTabItem {
     label: string
     /** Body component rendered when this tab is active. */
     component: ReactNode
+    /**
+     * When true the tab is a locked premium feature: rendered muted and, on
+     * click, opens the register modal instead of switching to its body.
+     */
+    locked?: boolean
 }

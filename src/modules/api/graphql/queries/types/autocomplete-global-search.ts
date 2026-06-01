@@ -8,6 +8,26 @@ export type SearchableEntity =
     | "LessonVideoEntity"
     | "ChallengeEntity"
 
+/** One resolved ancestor (course/module/content/challenge) of a search hit. */
+export interface AutocompleteGlobalSearchParentRef {
+    /** Primary key (UUID) — used for the module/content URL segments. */
+    id: string
+    /** Human-facing slug — used for the course URL segment. */
+    displayId: string
+}
+
+/** Ancestor chain of a search hit, used to build the deep-link URL. */
+export interface AutocompleteGlobalSearchParentPath {
+    /** Owning course (present for every entity kind). */
+    course?: AutocompleteGlobalSearchParentRef
+    /** Owning module (present for module/content/challenge hits). */
+    module?: AutocompleteGlobalSearchParentRef
+    /** Owning content (present for content/challenge hits). */
+    content?: AutocompleteGlobalSearchParentRef
+    /** The challenge itself (present for challenge hits). */
+    challenge?: AutocompleteGlobalSearchParentRef
+}
+
 /** One result item returned from the autocomplete global search endpoint. */
 export interface AutocompleteGlobalSearchItem {
     /** Primary identifier of the entity. */
@@ -18,6 +38,8 @@ export interface AutocompleteGlobalSearchItem {
     title?: string
     /** Array of additional matched text snippets. */
     texts?: Array<string>
+    /** Resolved ancestor chain used to build a navigation URL (absent if uncached). */
+    parentPath?: AutocompleteGlobalSearchParentPath
 }
 
 /** Payload inside `autocompleteGlobalSearch.data` after the standard API wrapper. */

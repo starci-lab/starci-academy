@@ -1,89 +1,126 @@
 "use client"
 
-import React from "react"
+import React, {
+    useMemo,
+} from "react"
 import {
-    Chip,
+    Skeleton,
 } from "@heroui/react"
 import {
     useTranslations,
 } from "next-intl"
 import {
+    useQueryMyAiQuotaSwr,
+    useQueryMyCreditUsageSwr,
+} from "@/hooks/singleton"
+import {
     QuotaBar,
 } from "../QuotaBar"
-
-/** Per-window pair of counts handed to a {@link QuotaLane}. */
-export interface QuotaLaneWindow {
-    /** Consumed amount in the window. */
-    used: number
-    /** Cap for the window. */
-    limit: number
-}
+import {
+    useWindowResetLabel,
+} from "../hooks"
+import type {
+    QuotaLaneWindow,
+} from "../types"
+import {
+    QuotaLaneVariant,
+} from "../types"
 
 /** Props for {@link QuotaLane}. */
 export interface QuotaLaneProps {
-    /** Lane heading (e.g. "Free (Auto)"). */
-    title: string
-    /** Unit shown next to counts ("uses" / "credits"). */
-    unit: string
-    /** 5-hour window counts. */
-    window5h: QuotaLaneWindow
-    /** Weekly window counts. */
-    windowWeek: QuotaLaneWindow
-    /** Tailwind fill colour for both bars. */
-    fillClassName: string
-    /** True to render the "active" chip on this lane. */
-    isActive?: boolean
-    /** Optional note shown under the title (e.g. "No active subscription"). */
-    note?: string
+    /** Which lane to load from SWR (`myCreditUsage` vs `myAiQuota`). */
+    variant: QuotaLaneVariant
 }
 
 /**
- * One AI lane block — title (+ active chip), an optional note, and the two
- * usage bars (5h + weekly).
- *
- * Presentational (render-only): all values arrive via props.
- * @param props - lane title, unit, both windows, colour, active flag, note
+ * One AI lane — title, status chips, and 5h / 7-day bars.
+ * Fetches quota data internally; only {@link QuotaLaneProps.variant} is passed in.
+ * @param props - {@link QuotaLaneProps}
  */
 export const QuotaLane = ({
-    title,
-    unit,
-    window5h,
-    windowWeek,
-    fillClassName,
-    isActive = false,
-    note,
+    variant,
 }: QuotaLaneProps) => {
     const t = useTranslations()
+    const buildResetLabel = useWindowResetLabel()
+    const { data: quota } = useQueryMyAiQuotaSwr()
+    const {
+        data: creditUsage,
+        isLoading: isCreditUsageLoading,
+    } = useQueryMyCreditUsageSwr()
+
+    const window5h = useMemo((): QuotaLaneWindow | null => {
+        if (variant === QuotaLaneVariant.Auto) {
+            if (!creditUsage) {
+                return null
+            }
+            return {
+                used: creditUsage.window5h.usedCredits,
+                limit: creditUsage.window5h.quota,
+                resetLabel: buildResetLabel(creditUsage.window5h.resetAt),
+            }
+        }
+        if (!quota) {
+            return null
+        }
+        return {
+            used: quota.premium.used5h,
+            limit: quota.premium.limit5h,
+            resetLabel: buildResetLabel(quota.window5hResetAt),
+        }
+    }, [
+        variant,
+        creditUsage,
+        quota,
+        buildResetLabel,
+    ])
+
+    const windowWeek = useMemo((): QuotaLaneWindow | null => {
+        if (variant === QuotaLaneVariant.Auto) {
+            if (!creditUsage) {
+                return null
+            }
+            return {
+                used: creditUsage.windowWeek.usedCredits,
+                limit: creditUsage.windowWeek.quota,
+                resetLabel: buildResetLabel(creditUsage.windowWeek.resetAt),
+            }
+        }
+        if (!quota) {
+            return null
+        }
+        return {
+            used: quota.premium.usedWeek,
+            limit: quota.premium.limitWeek,
+            resetLabel: buildResetLabel(quota.windowWeekResetAt),
+        }
+    }, [
+        variant,
+        creditUsage,
+        quota,
+        buildResetLabel,
+    ])
+
+    if (variant === QuotaLaneVariant.Auto && (isCreditUsageLoading || !window5h || !windowWeek)) {
+        return <Skeleton className="h-40 w-full rounded-xl" />
+    }
+
+    if (variant === QuotaLaneVariant.Premium && (!window5h || !windowWeek)) {
+        return <Skeleton className="h-40 w-full rounded-xl" />
+    }
+
     return (
-        <div className="flex flex-col gap-3 rounded-large bg-default/40 p-4">
-            <div className="flex items-center justify-between gap-2">
-                <span className="font-semibold text-foreground">{title}</span>
-                {isActive ? (
-                    <Chip
-                        size="sm"
-                        color="accent"
-                        variant="primary"
-                    >
-                        {t("aiQuota.currentLane")}
-                    </Chip>
-                ) : null}
-            </div>
-            {note ? (
-                <div className="text-xs text-muted">{note}</div>
-            ) : null}
+        <div className="flex flex-col gap-4">
             <QuotaBar
                 label={t("aiQuota.window5h")}
-                used={window5h.used}
-                limit={window5h.limit}
-                unit={unit}
-                fillClassName={fillClassName}
+                used={window5h!.used}
+                limit={window5h!.limit}
+                resetLabel={window5h!.resetLabel}
             />
             <QuotaBar
                 label={t("aiQuota.windowWeek")}
-                used={windowWeek.used}
-                limit={windowWeek.limit}
-                unit={unit}
-                fillClassName={fillClassName}
+                used={windowWeek!.used}
+                limit={windowWeek!.limit}
+                resetLabel={windowWeek!.resetLabel}
             />
         </div>
     )

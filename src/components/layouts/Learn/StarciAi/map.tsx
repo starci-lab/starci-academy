@@ -42,6 +42,8 @@ export const TASK_ICON_MAP: Record<string, React.ReactNode> = {
 export const PROVIDER_COLOR_MAP: Record<string, StarciAiChipColor> = {
     openai: "success",
     gemini: "accent",
+    claude: "warning",
+    openrouter: "default",
 }
 
 /** Human-readable provider label, keyed by provider string. */

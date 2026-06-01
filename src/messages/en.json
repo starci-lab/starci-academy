@@ -11,7 +11,13 @@
     "learn": "Learn",
     "toggleLanguage": "Toggle Language",
     "appearance": "Appearance",
-    "mobileMenu": "Mobile navigation"
+    "mobileMenu": "Mobile navigation",
+    "courseMenu": "Course menu",
+    "contentOutline": "Lesson outline",
+    "collapseLeftRail": "Collapse left rail",
+    "expandLeftRail": "Expand left rail",
+    "collapseRightRail": "Hide right rail",
+    "expandRightRail": "Show right rail"
   },
   "search": {
     "label": "Search",
@@ -36,6 +42,13 @@
     "enrolled": "Enrolled",
     "priceUsdHint": "≈ {amount} for international payments",
     "continueLearning": "Continue Learning",
+    "tryLearning": "Try for free",
+    "paywall": {
+      "title": "Premium content",
+      "description": "This lesson is for enrolled learners. Purchase the course to unlock the full content.",
+      "buy": "Buy now",
+      "back": "Go back"
+    },
     "prerequisites": "Prerequisites",
     "usersEnrolled": "{count} users have enrolled",
     "cvTitle": "CV track",
@@ -44,6 +57,12 @@
     "finalProjectTitle": "Personal project",
     "finalProjectDescription": "Requirements, milestones, and submission details for your personal project in this course.",
     "finalProjectPlaceholder": "Project brief and workspace will appear here."
+  },
+  "programmingLanguage": {
+    "typescript": "TypeScript",
+    "java": "Java",
+    "csharp": "C#",
+    "go": "Go"
   },
   "module": {
     "aria": "Module {index}",
@@ -342,15 +361,19 @@
   },
   "content": {
     "title": "Content",
+    "language": "Language",
     "mindMapAria": "Course and modules overview",
     "mindMapEmpty": "No modules to show yet.",
     "mindMapHelloWorld": "Hello world",
-    "mindMapModuleToggleAria": "Show or hide sample cards for this module",
+    "mindMapModuleToggleAria": "Show or hide this module's lessons",
+    "mindMapStartLesson": "Start lesson",
+    "mindMapPremium": "Premium",
+    "mindMapClose": "Close",
+    "mindMapDetailsEmpty": "No description for this lesson yet.",
     "count": "{count} items",
     "empty": "No content yet.",
     "number": "Content {index}",
     "minutesRead": "{minutes} min read",
-    "lessonCount": "{count} lessons",
     "challengeCount": "{count} challenges",
     "codeLessonCount": "{count} code sections",
     "lessonVideosEmpty": "No lesson videos available for this content.",
@@ -394,6 +417,26 @@
   "challenge": {
     "title": "Challenges",
     "do": "Do",
+    "inProgress": "In progress",
+    "progress": {
+      "completed": "Completed · {score}/{maxScore} pts",
+      "inProgress": "In progress · {score}/{maxScore} pts",
+      "failed": "Not passed · {score}/{maxScore} pts"
+    },
+    "quota": {
+      "overQuota": "You've run out of AI quota ({used}/{quota} credits). Upgrade to keep grading.",
+      "addQuota": "Add quota",
+      "resetAt": "Quota recovers at {time}",
+      "aiUsage": "AI Usage",
+      "usage": "{used}/{quota} credits",
+      "remaining": "{remaining} credits left",
+      "quotaReached": "Quota reached",
+      "laneUsage": {
+        "auto": "Auto • {used}/{quota} credits",
+        "premium": "Premium • {used}/{quota} credits",
+        "byok": "BYOK"
+      }
+    },
     "viewAttempts": "View previous attempts",
     "pass": "Pass",
     "fail": "Fail",
@@ -414,6 +457,10 @@
       "count": "{count} steps",
       "label": "Step {index}"
     },
+    "tabs": {
+      "work": "Submission",
+      "steps": "Steps"
+    },
     "tasks": "Tasks",
     "requirements": "Requirements",
     "requirement": {
@@ -425,6 +472,7 @@
     },
     "outputs": "Outputs",
     "prerequisites": "Prerequisites",
+    "language": "Language",
     "yourScore": "Your result",
     "score": "{score} pts",
     "battle": {
@@ -481,11 +529,13 @@
   "feedback": {
     "detailsTitle": "Feedback details",
     "empty": "No feedback yet.",
+    "openFileOnGithub": "Open file on GitHub",
+    "perfect": "Perfect",
     "suggestion": "Suggestion",
     "severity": {
-      "high": "High",
-      "medium": "Medium",
-      "low": "Low",
+      "high": "High priority",
+      "medium": "Medium priority",
+      "low": "Low priority",
       "unknown": "Unknown"
     }
   },
@@ -494,7 +544,28 @@
     "topAchievers": "Top Achievers"
   },
   "starciAi": {
-    "title": "StarCi AI"
+    "title": "StarCi AI",
+    "subtitle": "AI models currently used across the platform",
+    "keyPool": {
+      "title": "API key pool status",
+      "subtitle": "Live health from ping cache — disabled keys are skipped on the next request.",
+      "refreshing": "Refreshing…",
+      "error": "Could not load key pool status.",
+      "empty": "No provider pools configured.",
+      "activeSummary": "{active} / {total} keys active",
+      "lastPing": "Last ping",
+      "providers": {
+        "gemini": "Google Gemini",
+        "openai": "OpenAI",
+        "claude": "Anthropic Claude",
+        "openrouter": "OpenRouter"
+      },
+      "status": {
+        "active": "Active",
+        "disabled": "Disabled",
+        "probing": "Probing"
+      }
+    }
   },
   "codingPractice": {
     "title": "Coding Practice",
@@ -563,6 +634,7 @@
     "effectiveNow": "Currently using",
     "gradeWith": "Grade with AI",
     "pickModel": "Pick a model",
+    "subscribeToGrade": "Subscribe to a paid plan to grade with this model",
     "categories": {
       "economy": "Economy",
       "balanced": "Balanced",
@@ -615,20 +687,83 @@
       "cta": "Default plan"
     }
   },
+  "admin": {
+    "aiBalancer": {
+      "title": "AI Balancer Health",
+      "subtitle": "Live API key status from the ping cache — keys marked disabled are skipped on the next call.",
+      "backToAdmin": "Back to admin",
+      "uploadVideoTool": "Upload video",
+      "refreshing": "Refreshing…",
+      "refreshNow": "Refresh now",
+      "empty": "No provider pools loaded.",
+      "error": "Could not load balancer health. Check that you are signed in.",
+      "providers": {
+        "gemini": "Gemini",
+        "openai": "OpenAI",
+        "claude": "Claude",
+        "openrouter": "OpenRouter"
+      },
+      "status": {
+        "active": "Active",
+        "disabled": "Disabled",
+        "probing": "Probing"
+      },
+      "columns": {
+        "suffix": "Key suffix",
+        "status": "Status",
+        "failCount": "Fails",
+        "lastPing": "Last ping",
+        "lastUsed": "Last used"
+      },
+      "summary": {
+        "active": "Active",
+        "disabled": "Disabled",
+        "total": "Total"
+      }
+    }
+  },
   "aiQuota": {
     "title": "AI quota",
-    "subtitle": "Your usage across the 5-hour and weekly windows",
+    "subtitle": "Grading credits within 5 hours and within the week",
+    "creditWindows": {
+      "title": "Grading credits (Auto)",
+      "caption": "Same as the Auto label on the submit form — counted in credits, not runs."
+    },
+    "rollingPool": {
+      "overQuota": "Out of credits"
+    },
+    "premiumLimits": {
+      "caption": "Premium credits — both windows below share this pool."
+    },
     "cardTitle": "AI quota",
     "viewDetails": "View details",
-    "remainingSummary": "{remaining} {unit} left in the next 5 hours",
+    "fullPageTitle": "AI quota & usage",
+    "fullPageDescription": "Auto credits, Premium plan limits, and grading history.",
+    "remainingSummary": "{remaining} credits left within the week",
     "currentLane": "Current",
-    "window5h": "Next 5 hours",
-    "windowWeek": "This week",
-    "usesUnit": "uses",
+    "window5h": "Within 5 hours",
+    "windowWeek": "Within 7 days",
+    "windowResetAt": "Resets at {time}",
     "creditsUnit": "credits",
-    "resets5h": "5-hour window resets",
-    "resetsWeek": "Weekly window resets",
-    "noPremium": "No active subscription — upgrade to unlock Premium credits."
+    "noPremium": "No active subscription — upgrade to unlock Premium credits.",
+    "tabsAria": "AI quota sections",
+    "tabs": {
+      "auto": "Auto",
+      "subscription": "Subscription",
+      "history": "History"
+    },
+    "subscribeCta": "Subscribe to a plan",
+    "subscriptionActive": "You are on the {tier} plan.",
+    "subscriptionNone": "You don't have a paid plan yet. Upgrade to unlock Premium credits and grade with high-end models.",
+    "history": {
+      "title": "AI usage history",
+      "chartTitle": "Credits spent per day (last 14 days)",
+      "empty": "No AI usage yet.",
+      "loading": "Loading history…",
+      "purposeGrade": "Challenge grading",
+      "autoModel": "Auto model (free)",
+      "creditsUnit": "credits"
+    }
   },
   "profile": {
     "signedOut": {
@@ -850,6 +985,10 @@
     },
     "disabled": "Disabled",
     "back": "Back",
+    "cancel": "Cancel",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
     "streak": {
       "current": "Current Streak",
       "longest": "Longest Streak",
@@ -930,7 +1069,31 @@
   },
   "markdown": {
     "tableAriaLabel": "Content table",
-    "mermaidRendering": "Rendering diagram..."
+    "mermaidRendering": "Rendering diagram...",
+    "mermaidExpand": "Expand diagram",
+    "mermaidFigureLabel": "Figure"
+  },
+  "discussion": {
+    "title": "Comments ({count})",
+    "react": "React",
+    "post": "Post",
+    "reply": "Reply",
+    "edited": "(edited)",
+    "placeholder": "Write a comment...",
+    "replyPlaceholder": "Write a reply...",
+    "empty": "No comments yet. Be the first!",
+    "deletedPlaceholder": "[Comment deleted]",
+    "viewReplies": "View {count} replies",
+    "hideReplies": "Hide replies",
+    "loadMore": "Load more comments",
+    "reactions": {
+      "like": "Like",
+      "love": "Love",
+      "haha": "Haha",
+      "wow": "Wow",
+      "sad": "Sad",
+      "angry": "Angry"
+    }
   },
   "score": {
     "fraction": "{current}/{max}",

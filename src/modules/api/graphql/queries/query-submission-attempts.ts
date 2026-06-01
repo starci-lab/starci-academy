@@ -56,7 +56,7 @@ const queryMap: Record<QuerySubmissionAttempts, DocumentNode> = {
 export const defaultSubmissionAttemptsListSorts: Array<SortInput<SubmissionAttemptsSortBy>> = [
     {
         by: SubmissionAttemptsSortBy.AttemptNumber,
-        order: SortOrder.Asc,
+        order: SortOrder.Desc,
     },
 ]
 

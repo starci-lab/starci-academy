@@ -14,6 +14,7 @@ const query1 = gql`
         email
         avatar
         username
+        githubUsername
       }
     }
   }

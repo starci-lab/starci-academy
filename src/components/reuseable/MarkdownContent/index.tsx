@@ -100,7 +100,7 @@ export const MarkdownContent = ({ markdown, className }: MarkdownContentProps) =
         ],
     )
     return (
-        <div className={cn("min-w-0 space-y-3 text-sm leading-loose text-foreground", className)}>
+        <div className={cn("min-w-0 space-y-2 text-sm leading-relaxed text-foreground", className)}>
             <ReactMarkdown
                 remarkPlugins={[remarkGfm, remarkDirective, remarkMuted]}
                 components={components}

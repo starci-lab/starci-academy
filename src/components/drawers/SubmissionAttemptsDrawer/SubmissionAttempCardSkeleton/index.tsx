@@ -9,7 +9,7 @@ export type SubmissionAttemptCardSkeletonProps = WithClassNames<undefined>
 export const SubmissionAttemptCardSkeleton = (props: SubmissionAttemptCardSkeletonProps) => {
     const { className } = props
     return (
-        <Card className={cn("bg-background", className)}>
+        <Card className={cn("border border-divider bg-transparent shadow-none", className)}>
             <Card.Content>
                 <div>
                     <div className="flex items-center justify-between gap-3">

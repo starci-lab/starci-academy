@@ -20,6 +20,7 @@ import {
     useQueryUserSwrCore,
     useQueryModuleSwrCore,
     useQueryChallengeSubmissionsSwrCore,
+    useQueryChallengeSubmissionProgressSwrCore,
     useQuerySystemConfigSwrCore,
     useQueryIncompleteJobsSwrCore,
     useQuerySubmissionAttemptsSwrCore,
@@ -53,6 +54,7 @@ import {
     useQueryAiModelsSwrCore,
     useQueryMyAiSettingsSwrCore,
     useQueryMyAiQuotaSwrCore,
+    useQueryMyCreditUsageSwrCore,
     useMutateUpdateMyAiSettingsSwrCore,
     useQueryAiSubscriptionTiersSwrCore,
     useMutatePurchaseAiSubscriptionSwrCore,
@@ -68,6 +70,7 @@ import {
     useQueryFoundationsSwrCore,
     useQueryHeadhunterCompaniesSwrCore,
     useQueryHeadhuntersSwrCore,
+    useQueryAiBalancerHealthSwrCore,
 } from "./core"
 
 /**
@@ -91,6 +94,7 @@ export interface SwrContextType {
     queryLivestreamSessionsSwr: ReturnType<typeof useQueryLivestreamSessionsSwrCore>;
     queryChallengesSwr: ReturnType<typeof useQueryChallengesSwrCore>;
     queryChallengeSubmissionsSwr: ReturnType<typeof useQueryChallengeSubmissionsSwrCore>;
+    queryChallengeSubmissionProgressSwr: ReturnType<typeof useQueryChallengeSubmissionProgressSwrCore>;
     querySystemConfigSwr: ReturnType<typeof useQuerySystemConfigSwrCore>;
     queryIncompleteJobsSwr: ReturnType<typeof useQueryIncompleteJobsSwrCore>;
     querySubmissionAttemptsSwr: ReturnType<typeof useQuerySubmissionAttemptsSwrCore>;
@@ -126,6 +130,7 @@ export interface SwrContextType {
     queryAiModelsSwr: ReturnType<typeof useQueryAiModelsSwrCore>;
     queryMyAiSettingsSwr: ReturnType<typeof useQueryMyAiSettingsSwrCore>;
     queryMyAiQuotaSwr: ReturnType<typeof useQueryMyAiQuotaSwrCore>;
+    queryMyCreditUsageSwr: ReturnType<typeof useQueryMyCreditUsageSwrCore>;
     mutateUpdateMyAiSettingsSwr: ReturnType<typeof useMutateUpdateMyAiSettingsSwrCore>;
     queryAiSubscriptionTiersSwr: ReturnType<typeof useQueryAiSubscriptionTiersSwrCore>;
     mutatePurchaseAiSubscriptionSwr: ReturnType<typeof useMutatePurchaseAiSubscriptionSwrCore>;
@@ -141,6 +146,7 @@ export interface SwrContextType {
     queryFoundationsSwr: ReturnType<typeof useQueryFoundationsSwrCore>;
     queryHeadhunterCompaniesSwr: ReturnType<typeof useQueryHeadhunterCompaniesSwrCore>;
     queryHeadhuntersSwr: ReturnType<typeof useQueryHeadhuntersSwrCore>;
+    queryAiBalancerHealthSwr: ReturnType<typeof useQueryAiBalancerHealthSwrCore>;
 }
 
 export const SwrContext = createContext<SwrContextType | null>(null)
@@ -168,6 +174,7 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
     const queryLivestreamSessionsSwr = useQueryLivestreamSessionsSwrCore()
     const queryChallengesSwr = useQueryChallengesSwrCore()
     const queryChallengeSubmissionsSwr = useQueryChallengeSubmissionsSwrCore()
+    const queryChallengeSubmissionProgressSwr = useQueryChallengeSubmissionProgressSwrCore()
     const querySystemConfigSwr = useQuerySystemConfigSwrCore()
     const queryIncompleteJobsSwr = useQueryIncompleteJobsSwrCore()
     const querySubmissionAttemptsSwr = useQuerySubmissionAttemptsSwrCore()
@@ -203,6 +210,7 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
     const queryAiModelsSwr = useQueryAiModelsSwrCore()
     const queryMyAiSettingsSwr = useQueryMyAiSettingsSwrCore()
     const queryMyAiQuotaSwr = useQueryMyAiQuotaSwrCore()
+    const queryMyCreditUsageSwr = useQueryMyCreditUsageSwrCore()
     const mutateUpdateMyAiSettingsSwr = useMutateUpdateMyAiSettingsSwrCore()
     const queryAiSubscriptionTiersSwr = useQueryAiSubscriptionTiersSwrCore()
     const mutatePurchaseAiSubscriptionSwr = useMutatePurchaseAiSubscriptionSwrCore()
@@ -218,6 +226,7 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
     const queryFoundationsSwr = useQueryFoundationsSwrCore()
     const queryHeadhunterCompaniesSwr = useQueryHeadhunterCompaniesSwrCore()
     const queryHeadhuntersSwr = useQueryHeadhuntersSwrCore()
+    const queryAiBalancerHealthSwr = useQueryAiBalancerHealthSwrCore()
     return (
         <SwrContext.Provider value={
             {
@@ -237,6 +246,7 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
                 queryLivestreamSessionsSwr,
                 queryChallengesSwr,
                 queryChallengeSubmissionsSwr,
+                queryChallengeSubmissionProgressSwr,
                 querySystemConfigSwr,
                 queryIncompleteJobsSwr,
                 querySubmissionAttemptsSwr,
@@ -272,6 +282,7 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
                 queryAiModelsSwr,
                 queryMyAiSettingsSwr,
                 queryMyAiQuotaSwr,
+                queryMyCreditUsageSwr,
                 mutateUpdateMyAiSettingsSwr,
                 queryAiSubscriptionTiersSwr,
                 mutatePurchaseAiSubscriptionSwr,
@@ -287,6 +298,7 @@ export const SwrProvider = ({ children }: PropsWithChildren) => {
                 queryFoundationsSwr,
                 queryHeadhunterCompaniesSwr,
                 queryHeadhuntersSwr,
+                queryAiBalancerHealthSwr,
             }
         }>
             {children}

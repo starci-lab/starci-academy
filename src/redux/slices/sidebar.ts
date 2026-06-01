@@ -21,6 +21,10 @@ export enum SidebarTab {
 export interface SidebarSlice {
     /** The currently active sidebar tab and optional sub-item id. */
     sidebar: SidebarItem
+    /** Desktop: when true the left course-nav rail shows icons only. */
+    leftCollapsed: boolean
+    /** Desktop: when true the right module-outline rail is hidden. */
+    rightCollapsed: boolean
 }
 
 /**
@@ -39,6 +43,9 @@ export const initialState: SidebarSlice = {
         tab: SidebarTab.MindMap,
         extraId: undefined,
     },
+    // both rails start expanded/visible on desktop
+    leftCollapsed: false,
+    rightCollapsed: false,
 }
 
 /**
@@ -52,10 +59,22 @@ export const sidebarSlice = createSlice({
         setSidebar: (state, action: PayloadAction<SidebarItem>) => {
             state.sidebar = action.payload
         },
+        /** Toggle the left rail between full (label + icon) and icon-only. */
+        toggleLeftCollapsed: (state) => {
+            state.leftCollapsed = !state.leftCollapsed
+        },
+        /** Toggle the right rail between visible and hidden. */
+        toggleRightCollapsed: (state) => {
+            state.rightCollapsed = !state.rightCollapsed
+        },
     },
 })
 
 /** Actions exported from the sidebar slice. */
-export const { setSidebar } = sidebarSlice.actions
+export const {
+    setSidebar,
+    toggleLeftCollapsed,
+    toggleRightCollapsed,
+} = sidebarSlice.actions
 /** Root reducer for the sidebar slice. */
 export const sidebarReducer = sidebarSlice.reducer

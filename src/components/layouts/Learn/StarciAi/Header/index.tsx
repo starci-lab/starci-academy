@@ -1,14 +1,19 @@
+"use client"
+
 import React from "react"
+import {
+    useTranslations,
+} from "next-intl"
 import {
     RobotIcon,
 } from "@phosphor-icons/react"
 
 /**
  * StarCI AI screen header — robot icon + title + subtitle.
- *
- * Presentational (render-only); no business logic, so no `"use client"` needed.
  */
 export const StarciAiHeader = () => {
+    const t = useTranslations("starciAi")
+
     return (
         <div className="flex items-center gap-3">
             <RobotIcon
@@ -16,9 +21,11 @@ export const StarciAiHeader = () => {
                 className="size-8 text-accent"
             />
             <div>
-                <div className="text-2xl font-bold">StarCI AI</div>
+                <div className="text-2xl font-bold">
+                    {t("title")}
+                </div>
                 <div className="text-sm text-muted">
-                    Các mô hình AI đang được sử dụng trong hệ thống
+                    {t("subtitle")}
                 </div>
             </div>
         </div>

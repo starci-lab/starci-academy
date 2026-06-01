@@ -8,10 +8,14 @@ import {
 } from "@heroui/react"
 import {
     ArrowLeftIcon,
+    CpuIcon,
 } from "@phosphor-icons/react"
 import {
     useRouter,
 } from "next/navigation"
+import {
+    useTranslations,
+} from "next-intl"
 
 /**
  * Top navigation bar holding the "Back to admin" button.
@@ -22,6 +26,7 @@ import {
  */
 export const TopBar = () => {
     const router = useRouter()
+    const t = useTranslations("admin.aiBalancer")
 
     /** Navigate back to the admin page. */
     const onBack = useCallback(
@@ -31,8 +36,18 @@ export const TopBar = () => {
         [router],
     )
 
+    /** Open the AI balancer health dashboard. */
+    const onOpenAiBalancer = useCallback(
+        () => {
+            router.push("../ai-balancer")
+        },
+        [
+            router,
+        ],
+    )
+
     return (
-        <div className="flex items-center gap-3 pt-4">
+        <div className="flex flex-wrap items-center gap-3 pt-4">
             <Button
                 id="admin-back-button"
                 variant="ghost"
@@ -41,7 +56,16 @@ export const TopBar = () => {
                 onPress={onBack}
             >
                 <ArrowLeftIcon className="h-4 w-4" />
-                Back
+                {t("backToAdmin")}
+            </Button>
+            <Button
+                variant="ghost"
+                size="sm"
+                className="text-slate-400 hover:text-white"
+                onPress={onOpenAiBalancer}
+            >
+                <CpuIcon className="h-4 w-4" />
+                {t("title")}
             </Button>
         </div>
     )

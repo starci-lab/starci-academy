@@ -11,7 +11,13 @@
     "learn": "Học",
     "toggleLanguage": "Chuyển đổi ngôn ngữ",
     "appearance": "Giao diện",
-    "mobileMenu": "Điều hướng mobile"
+    "mobileMenu": "Điều hướng mobile",
+    "courseMenu": "Mục lục khoá học",
+    "contentOutline": "Nội dung học phần",
+    "collapseLeftRail": "Thu gọn thanh bên trái",
+    "expandLeftRail": "Mở rộng thanh bên trái",
+    "collapseRightRail": "Ẩn thanh bên phải",
+    "expandRightRail": "Hiện thanh bên phải"
   },
   "search": {
     "label": "Tìm kiếm",
@@ -36,6 +42,13 @@
     "enrolled": "Đã đăng ký",
     "priceUsdHint": "≈ {amount} khi thanh toán quốc tế",
     "continueLearning": "Tiếp tục học",
+    "tryLearning": "Học thử",
+    "paywall": {
+      "title": "Nội dung trả phí",
+      "description": "Đây là bài học dành cho học viên đã đăng ký. Mua khóa học để mở khóa toàn bộ nội dung.",
+      "buy": "Mua ngay",
+      "back": "Quay lại"
+    },
     "prerequisites": "Yêu cầu đầu vào",
     "usersEnrolled": "{count} người đã đăng ký",
     "cvTitle": "Lộ trình CV",
@@ -53,6 +66,12 @@
       "popular": "Ngôn ngữ phổ biến",
       "all": "Tất cả ngôn ngữ"
     }
+  },
+  "programmingLanguage": {
+    "typescript": "TypeScript",
+    "java": "Java",
+    "csharp": "C#",
+    "go": "Go"
   },
   "module": {
     "aria": "Học phần {index}",
@@ -351,15 +370,19 @@
   },
   "content": {
     "title": "Nội dung",
+    "language": "Ngôn ngữ",
     "mindMapAria": "Sơ đồ khóa học và các học phần",
     "mindMapEmpty": "Chưa có học phần để hiển thị.",
     "mindMapHelloWorld": "Xin chào thế giới",
-    "mindMapModuleToggleAria": "Hiện hoặc ẩn các thẻ ví dụ của học phần này",
+    "mindMapModuleToggleAria": "Hiện hoặc ẩn các bài học của học phần này",
+    "mindMapStartLesson": "Vào học",
+    "mindMapPremium": "Premium",
+    "mindMapClose": "Đóng",
+    "mindMapDetailsEmpty": "Chưa có mô tả cho bài học này.",
     "count": "{count} nội dung trong học phần này",
     "empty": "Chưa có nội dung cho học phần này.",
     "number": "Nội dung {index}",
     "minutesRead": "{minutes} phút đọc",
-    "lessonCount": "{count} bài giảng",
     "challengeCount": "{count} thử thách",
     "codeLessonCount": "{count} mục code",
     "lessonVideosEmpty": "Chưa có bài giảng cho nội dung này.",
@@ -403,6 +426,26 @@
   "challenge": {
     "title": "Thử thách",
     "do": "Làm",
+    "inProgress": "Đang làm",
+    "progress": {
+      "completed": "Đã hoàn thành · {score}/{maxScore} điểm",
+      "inProgress": "Đang làm · {score}/{maxScore} điểm",
+      "failed": "Chưa đạt · {score}/{maxScore} điểm"
+    },
+    "quota": {
+      "overQuota": "Bạn đã hết quota AI ({used}/{quota} credit). Nâng cấp để tiếp tục chấm bài.",
+      "addQuota": "Thêm quota",
+      "resetAt": "Quota hồi lại lúc {time}",
+      "aiUsage": "AI Usage",
+      "usage": "{used}/{quota} credit",
+      "remaining": "Còn {remaining} credit",
+      "quotaReached": "Hết quota",
+      "laneUsage": {
+        "auto": "Auto • {used}/{quota} credit",
+        "premium": "Premium • {used}/{quota} credit",
+        "byok": "BYOK"
+      }
+    },
     "viewAttempts": "Xem những lần thử trước",
     "pass": "Đạt",
     "fail": "Trượt",
@@ -423,6 +466,10 @@
       "count": "{count} bước",
       "label": "Bước {index}"
     },
+    "tabs": {
+      "work": "Bài làm",
+      "steps": "Các bước"
+    },
     "tasks": "Các bước thực hiện",
     "requirements": "Yêu cầu",
     "requirement": {
@@ -434,6 +481,7 @@
     },
     "outputs": "Đầu ra mong đợi",
     "prerequisites": "Điều kiện tiên quyết",
+    "language": "Ngôn ngữ",
     "yourScore": "Kết quả của bạn",
     "score": "{score} điểm",
     "battle": {
@@ -490,11 +538,13 @@
   "feedback": {
     "detailsTitle": "Chi tiết phản hồi",
     "empty": "Chưa có phản hồi nào.",
+    "openFileOnGithub": "Mở file trên GitHub",
+    "perfect": "Hoàn hảo",
     "suggestion": "Gợi ý",
     "severity": {
-      "high": "Cao",
-      "medium": "Trung bình",
-      "low": "Thấp",
+      "high": "Ưu tiên cao",
+      "medium": "Ưu tiên TB",
+      "low": "Ưu tiên thấp",
       "unknown": "Không rõ"
     }
   },
@@ -503,7 +553,28 @@
     "topAchievers": "Top người học"
   },
   "starciAi": {
-    "title": "StarCi AI"
+    "title": "StarCi AI",
+    "subtitle": "Các mô hình AI đang được sử dụng trong hệ thống",
+    "keyPool": {
+      "title": "Trạng thái pool API key",
+      "subtitle": "Health realtime từ cache ping — key disabled sẽ bị bỏ qua ở lần gọi tiếp theo.",
+      "refreshing": "Đang làm mới…",
+      "error": "Không tải được trạng thái pool key.",
+      "empty": "Chưa cấu hình pool provider nào.",
+      "activeSummary": "{active} / {total} key đang hoạt động",
+      "lastPing": "Ping cuối",
+      "providers": {
+        "gemini": "Google Gemini",
+        "openai": "OpenAI",
+        "claude": "Anthropic Claude",
+        "openrouter": "OpenRouter"
+      },
+      "status": {
+        "active": "Hoạt động",
+        "disabled": "Tắt",
+        "probing": "Thử lại"
+      }
+    }
   },
   "codingPractice": {
     "title": "Luyện Code",
@@ -572,6 +643,7 @@
     "effectiveNow": "Đang dùng",
     "gradeWith": "Chấm bằng AI",
     "pickModel": "Chọn mô hình",
+    "subscribeToGrade": "Đăng ký gói trả phí để chấm bài bằng model này",
     "categories": {
       "economy": "Tiết kiệm",
       "balanced": "Cân bằng",
@@ -624,20 +696,83 @@
       "cta": "Gói mặc định"
     }
   },
+  "admin": {
+    "aiBalancer": {
+      "title": "Trạng thái AI Balancer",
+      "subtitle": "Trạng thái key API từ cache ping — key disabled sẽ bị bỏ qua ở lần gọi tiếp theo.",
+      "backToAdmin": "Về trang admin",
+      "uploadVideoTool": "Upload video",
+      "refreshing": "Đang làm mới…",
+      "refreshNow": "Làm mới ngay",
+      "empty": "Chưa có pool provider nào.",
+      "error": "Không tải được trạng thái balancer. Hãy đăng nhập.",
+      "providers": {
+        "gemini": "Gemini",
+        "openai": "OpenAI",
+        "claude": "Claude",
+        "openrouter": "OpenRouter"
+      },
+      "status": {
+        "active": "Hoạt động",
+        "disabled": "Tắt",
+        "probing": "Thử lại"
+      },
+      "columns": {
+        "suffix": "Hậu tố key",
+        "status": "Trạng thái",
+        "failCount": "Lỗi",
+        "lastPing": "Ping cuối",
+        "lastUsed": "Dùng cuối"
+      },
+      "summary": {
+        "active": "Hoạt động",
+        "disabled": "Tắt",
+        "total": "Tổng"
+      }
+    }
+  },
   "aiQuota": {
     "title": "Hạn mức AI",
-    "subtitle": "Mức sử dụng của bạn trong cửa sổ 5 giờ và theo tuần",
+    "subtitle": "Credit chấm bài trong 5 giờ và trong tuần",
+    "creditWindows": {
+      "title": "Credit chấm bài (Auto)",
+      "caption": "Giống nhãn Auto trên form nộp bài — tính theo credit, không phải lượt."
+    },
+    "rollingPool": {
+      "overQuota": "Hết credit"
+    },
+    "premiumLimits": {
+      "caption": "Credit Premium — áp dụng cho cả hai cửa sổ bên dưới."
+    },
     "cardTitle": "Hạn mức AI",
     "viewDetails": "Xem chi tiết",
-    "remainingSummary": "Còn {remaining} {unit} trong 5 giờ tới",
+    "fullPageTitle": "Hạn mức & lịch sử AI",
+    "fullPageDescription": "Credit Auto, gói Premium và lịch sử chấm bài.",
+    "remainingSummary": "Còn {remaining} credit trong tuần",
     "currentLane": "Đang dùng",
-    "window5h": "5 giờ tới",
-    "windowWeek": "Tuần này",
-    "usesUnit": "lượt",
+    "window5h": "Trong 5 giờ",
+    "windowWeek": "Trong 7 ngày",
+    "windowResetAt": "Reset lúc {time}",
     "creditsUnit": "credit",
-    "resets5h": "Cửa sổ 5 giờ reset lúc",
-    "resetsWeek": "Cửa sổ tuần reset lúc",
-    "noPremium": "Chưa có gói trả phí — nâng cấp để mở khoá credit Premium."
+    "noPremium": "Chưa có gói trả phí — nâng cấp để mở khoá credit Premium.",
+    "tabsAria": "Phần hạn mức AI",
+    "tabs": {
+      "auto": "Tự động",
+      "subscription": "Gói trả phí",
+      "history": "Lịch sử"
+    },
+    "subscribeCta": "Đăng ký gói trả phí",
+    "subscriptionActive": "Bạn đang dùng gói {tier}.",
+    "subscriptionNone": "Bạn chưa có gói trả phí. Nâng cấp để mở khoá credit Premium và chấm bài bằng model cao cấp.",
+    "history": {
+      "title": "Lịch sử dùng AI",
+      "chartTitle": "Credit tiêu mỗi ngày (14 ngày gần nhất)",
+      "empty": "Chưa có lượt dùng AI nào.",
+      "loading": "Đang tải lịch sử…",
+      "purposeGrade": "Chấm challenge",
+      "autoModel": "Model tự động (miễn phí)",
+      "creditsUnit": "credit"
+    }
   },
   "profile": {
     "signedOut": {
@@ -859,6 +994,10 @@
     },
     "disabled": "Tạm tắt",
     "back": "Quay lại",
+    "cancel": "Hủy",
+    "save": "Lưu",
+    "edit": "Sửa",
+    "delete": "Xóa",
     "streak": {
       "current": "Chuỗi hiện tại",
       "longest": "Chuỗi dài nhất",
@@ -931,7 +1070,31 @@
   },
   "markdown": {
     "tableAriaLabel": "Bảng nội dung",
-    "mermaidRendering": "Đang vẽ sơ đồ..."
+    "mermaidRendering": "Đang vẽ sơ đồ...",
+    "mermaidExpand": "Phóng to sơ đồ",
+    "mermaidFigureLabel": "Hình"
+  },
+  "discussion": {
+    "title": "Bình luận ({count})",
+    "react": "Bày tỏ cảm xúc",
+    "post": "Đăng",
+    "reply": "Trả lời",
+    "edited": "(đã sửa)",
+    "placeholder": "Viết bình luận...",
+    "replyPlaceholder": "Viết câu trả lời...",
+    "empty": "Chưa có bình luận nào. Hãy là người đầu tiên!",
+    "deletedPlaceholder": "[Bình luận đã bị xóa]",
+    "viewReplies": "Xem {count} câu trả lời",
+    "hideReplies": "Ẩn câu trả lời",
+    "loadMore": "Xem thêm bình luận",
+    "reactions": {
+      "like": "Thích",
+      "love": "Yêu thích",
+      "haha": "Haha",
+      "wow": "Wow",
+      "sad": "Buồn",
+      "angry": "Phẫn nộ"
+    }
   },
   "score": {
     "fraction": "{current}/{max}",

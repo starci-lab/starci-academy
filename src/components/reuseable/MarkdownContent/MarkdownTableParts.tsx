@@ -30,13 +30,14 @@ export const MarkdownTableRow = ({ children, node }: MarkdownTablePartProps) => 
  * First column is cloned with `isRowHeader` (required by React Aria Table).
  */
 export const MarkdownTableHead = ({ children }: MarkdownTablePartProps) => (
-    <Table.Header className="bg-background">
-        {flattenMarkdownTableHeaderChildren(children).map((column, index) =>
-            React.isValidElement<{ isRowHeader?: boolean }>(column)
-                ? React.cloneElement(column, {
-                    isRowHeader: index === 0,
-                })
-                : column,
+    <Table.Header>
+        {flattenMarkdownTableHeaderChildren(children).map(
+            (column, index) =>
+                React.isValidElement<{ isRowHeader?: boolean }>(column)
+                    ? React.cloneElement(column, {
+                        isRowHeader: index === 0,
+                    })
+                    : column,
         )}
     </Table.Header>
 )

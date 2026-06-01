@@ -13,6 +13,10 @@ export interface SyncSubmissionRequest {
     selectedModel?: string
     /** Provider serving the persisted model. */
     selectedModelProvider?: ModelProvider
+    /**
+     * One-shot BYOK key when syncing BYOK lane (not persisted on the row).
+     */
+    byokApiKey?: string
 }
 
 /** Apollo variables bag for the `syncSubmission` mutation. */

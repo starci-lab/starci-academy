@@ -11,4 +11,6 @@ export interface MarkdownRenderersParams {
     isDark: boolean
     /** Translator for table aria labels and diagram loading text. */
     t: MarkdownTranslator
+    /** Figure captions keyed by trimmed mermaid source, paired from the following paragraph. */
+    mermaidCaptions: Record<string, string>
 }

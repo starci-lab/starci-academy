@@ -17,6 +17,9 @@ import {
     ModelCard,
 } from "./ModelCard"
 import {
+    KeyPoolStatus,
+} from "./KeyPoolStatus"
+import {
     StarciAiSkeleton,
 } from "./StarciAiSkeleton"
 
@@ -45,6 +48,10 @@ export const StarciAi = () => {
             <TierBadge />
 
             <div className="h-6" />
+
+            <KeyPoolStatus />
+
+            <div className="h-8" />
 
             <div className="flex flex-col gap-5">
                 {models.map((model) => (

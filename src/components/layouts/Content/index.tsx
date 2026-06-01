@@ -26,6 +26,7 @@ import {
 import {
     useQueryContentSwr,
     useQueryContentStatusSwr,
+    usePremiumGateOverlayState,
 } from "@/hooks/singleton"
 import {
     ContentTab,
@@ -52,6 +53,9 @@ import {
 import {
     ContentHeaderSkeleton,
 } from "./ContentHeaderSkeleton"
+import {
+    PremiumPaywall,
+} from "./PremiumPaywall"
 
 export type ContentProps = WithClassNames<undefined>
 
@@ -72,6 +76,15 @@ export const Content = ({ className }: ContentProps) => {
     const router = useRouter()
     const pathname = usePathname()
     const searchParams = useSearchParams()
+    const { open: openPremiumGate } = usePremiumGateOverlayState()
+
+    /**
+     * Locked premium lesson ("đọc thử"): the backend returns a truncated body
+     * with `isPremium=true` when the viewer is not entitled, so we fade the body
+     * behind an inline paywall and gate the premium-only tabs (lesson/challenges)
+     * behind the register modal.
+     */
+    const isLocked = content?.isPremium === true
 
     /** Tab entries (key + label + body) rendered in the tab bar. */
     const tabItems = useMemo<Array<ContentTabItem>>(
@@ -85,14 +98,18 @@ export const Content = ({ className }: ContentProps) => {
                 key: ContentTab.CodeExplainings,
                 label: t("content.tabs.codeExplainings"),
                 component: <CodeLessonBody />,
+                // premium-only on a locked lesson → muted + gated behind the modal
+                locked: isLocked,
             },
             {
                 key: ContentTab.Challenges,
                 label: t("content.tabs.challenges"),
                 component: <ChallengeBody />,
+                // premium-only on a locked lesson → muted + gated behind the modal
+                locked: isLocked,
             },
         ],
-        [t],
+        [t, isLocked],
     )
 
     /** Body of the currently selected tab. */
@@ -103,16 +120,23 @@ export const Content = ({ className }: ContentProps) => {
 
     const isLoading = queryContentSwr.isLoading || !content
 
-    /** Persist the selected tab to redux and reflect it in the URL query. */
+    /**
+     * Switch tabs, but intercept locked premium tabs: open the register modal
+     * and keep the current tab selected instead of revealing the gated body.
+     */
     const onTabChange = useCallback(
         (key: Key) => {
             const nextTab = key as ContentTab
+            if (tabItems.find((item) => item.key === nextTab)?.locked) {
+                openPremiumGate()
+                return
+            }
             dispatch(setContentTab(nextTab))
             const params = new URLSearchParams(searchParams.toString())
             params.set("tab", nextTab)
             router.replace(`${pathname}?${params.toString()}`)
         },
-        [dispatch, searchParams, router, pathname],
+        [tabItems, openPremiumGate, dispatch, searchParams, router, pathname],
     )
 
     return (
@@ -120,7 +144,10 @@ export const Content = ({ className }: ContentProps) => {
             <div className="h-3" />
             {isLoading ? (
                 <div>
-                    <ContentHeaderSkeleton />
+                    {/* header capped to the reading width; only the tab bar below spans full width */}
+                    <div className="mx-auto w-full max-w-[1024px]">
+                        <ContentHeaderSkeleton />
+                    </div>
                     <ContentTabBar
                         tabItems={tabItems}
                         selectedKey={contentTab}
@@ -132,7 +159,10 @@ export const Content = ({ className }: ContentProps) => {
                 </div>
             ) : (
                 <div>
-                    <ContentHeader />
+                    {/* header capped to the reading width; only the tab bar below spans full width */}
+                    <div className="mx-auto w-full max-w-[1024px]">
+                        <ContentHeader />
+                    </div>
                     <ContentTabBar
                         tabItems={tabItems}
                         selectedKey={contentTab}
@@ -140,9 +170,17 @@ export const Content = ({ className }: ContentProps) => {
                         onSelectionChange={onTabChange}
                     />
                     <div className="h-3" />
-                    <div className="p-3">
-                        {bodyComponent}
+                    {/* article body capped + centered for readable line length; the frame stays full width */}
+                    <div className="relative mx-auto w-full max-w-[1024px]">
+                        <div className={cn("p-3", isLocked && "select-none")}>
+                            {bodyComponent}
+                        </div>
+                        {/* Medium-style teaser: fade + blur the last lines into the page background */}
+                        {isLocked ? (
+                            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-background backdrop-blur-[2px]" />
+                        ) : null}
                     </div>
+                    {isLocked ? <PremiumPaywall /> : null}
                 </div>
             )}
         </div>

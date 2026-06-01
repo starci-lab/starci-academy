@@ -1,0 +1,98 @@
+"use client"
+
+import React, { useState } from "react"
+import { Button, Drawer, ScrollShadow } from "@heroui/react"
+import { ListIcon, ListBulletsIcon } from "@phosphor-icons/react"
+import { useTranslations } from "next-intl"
+import { SidebarNavList } from "@/components/layouts/Sidebar/SidebarNavList"
+import { useSidebarNavItems } from "@/components/layouts/Sidebar/useSidebarNavItems"
+import { ModuleSidebar } from "@/components/layouts/ModuleSidebar"
+import type { SidebarNavItem } from "@/components/layouts/Sidebar/types"
+
+/**
+ * Mobile toolbar for the course-learn pages (hidden from `lg` up).
+ *
+ * Container: surfaces the two sidebars that are hidden on small screens as
+ * slide-in drawers — the course nav (left) and the module outline (right).
+ * Each drawer is controlled by local open state. `"use client"` for the
+ * interactive triggers + shared nav hook.
+ */
+export const LearnMobileBar = () => {
+    const t = useTranslations()
+    // shared course-nav entries (same list the desktop sidebar renders)
+    const { items, selectedTab, onSelect } = useSidebarNavItems()
+    // open state for the left (course menu) drawer
+    const [isMenuOpen, setMenuOpen] = useState(false)
+    // open state for the right (module outline) drawer
+    const [isOutlineOpen, setOutlineOpen] = useState(false)
+
+    /** Route to the chosen entry, then close the drawer so content is visible. */
+    const onSelectItem = (item: SidebarNavItem) => {
+        // perform the normal tab switch + navigation
+        onSelect(item)
+        // collapse the drawer so the user lands back on the content
+        setMenuOpen(false)
+    }
+
+    return (
+        // sticky bar sitting directly under the 64px navbar; mobile/tablet only
+        <div className="sticky top-16 z-40 flex items-center gap-2 border-b bg-background/80 px-3 py-2 backdrop-blur-xl lg:hidden">
+            {/* trigger: open the course navigation drawer */}
+            <Button variant="ghost" size="sm" onPress={() => setMenuOpen(true)}>
+                <ListIcon className="size-4" />
+                {t("nav.courseMenu")}
+            </Button>
+            {/* trigger: open the module outline drawer */}
+            <Button variant="ghost" size="sm" onPress={() => setOutlineOpen(true)}>
+                <ListBulletsIcon className="size-4" />
+                {t("nav.contentOutline")}
+            </Button>
+
+            {/* left drawer — course-learn navigation list */}
+            <Drawer>
+                <Drawer.Backdrop isOpen={isMenuOpen} onOpenChange={setMenuOpen}>
+                    <Drawer.Content placement="left">
+                        <Drawer.Dialog className="p-0">
+                            <div className="p-3">
+                                <Drawer.CloseTrigger />
+                                <Drawer.Header>
+                                    <Drawer.Heading>{t("nav.courseMenu")}</Drawer.Heading>
+                                </Drawer.Header>
+                            </div>
+                            <div className="border-b" />
+                            <Drawer.Body className="p-0">
+                                <SidebarNavList
+                                    items={items}
+                                    selectedTab={selectedTab}
+                                    onSelect={onSelectItem}
+                                />
+                            </Drawer.Body>
+                        </Drawer.Dialog>
+                    </Drawer.Content>
+                </Drawer.Backdrop>
+            </Drawer>
+
+            {/* right drawer — module + content outline */}
+            <Drawer>
+                <Drawer.Backdrop isOpen={isOutlineOpen} onOpenChange={setOutlineOpen}>
+                    <Drawer.Content placement="right">
+                        <Drawer.Dialog className="p-0">
+                            <div className="p-3">
+                                <Drawer.CloseTrigger />
+                                <Drawer.Header>
+                                    <Drawer.Heading>{t("nav.contentOutline")}</Drawer.Heading>
+                                </Drawer.Header>
+                            </div>
+                            <div className="border-b" />
+                            <Drawer.Body className="p-0">
+                                <ScrollShadow hideScrollBar className="h-full overflow-y-auto p-3">
+                                    <ModuleSidebar />
+                                </ScrollShadow>
+                            </Drawer.Body>
+                        </Drawer.Dialog>
+                    </Drawer.Content>
+                </Drawer.Backdrop>
+            </Drawer>
+        </div>
+    )
+}

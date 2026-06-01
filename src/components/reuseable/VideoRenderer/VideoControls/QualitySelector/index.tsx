@@ -2,7 +2,6 @@
 
 import React from "react"
 import {
-    Button,
     Dropdown,
     DropdownItem,
     DropdownMenu,
@@ -85,15 +84,13 @@ export const QualitySelector = ({
 
     return (
         <Dropdown>
-            <DropdownTrigger>
-                <Button
-                    isIconOnly
-                    variant="ghost"
-                    aria-label="Quality"
-                    className="text-white hover:bg-white/20 border-none min-w-8 h-8"
-                >
-                    <GearSixIcon className="h-4 w-4" />
-                </Button>
+            <DropdownTrigger
+                isIconOnly
+                variant="ghost"
+                aria-label="Quality"
+                className="text-white hover:bg-white/20 border-none min-w-8 h-8"
+            >
+                <GearSixIcon className="h-4 w-4" />
             </DropdownTrigger>
             <DropdownMenu
                 aria-label="Quality levels"

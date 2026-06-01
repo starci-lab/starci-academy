@@ -32,11 +32,14 @@ export const CodeToHtml = ({ code, language, theme }: CodeToHtmlProps) => {
         }
     )
     return (
-        <div className="p-3 bg-default rounded-xl relative my-1.5">
-            <div className="absolute top-3 right-3">
+        <div className="relative w-full max-w-full overflow-hidden rounded-xl bg-default">
+            <div className="absolute right-3 top-3 z-10">
                 <SnippetIcon copyString={code} />
             </div>
-            <div className="[&_pre]:!bg-transparent [&_pre]:!p-0 text-sm" dangerouslySetInnerHTML={{ __html: data || "" }} />
+            <div
+                className="p-3 pr-10 text-sm [&_code]:!whitespace-pre-wrap [&_pre]:!whitespace-pre-wrap [&_pre]:!break-words [&_pre]:!bg-transparent [&_pre]:!p-0"
+                dangerouslySetInnerHTML={{ __html: data || "" }}
+            />
         </div>
     )
 }

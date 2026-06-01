@@ -36,6 +36,7 @@ const query1 = gql`
             selectedMode
             selectedModel
             selectedModelProvider
+            selectedLang
             lastAttempt {
                 score
             }

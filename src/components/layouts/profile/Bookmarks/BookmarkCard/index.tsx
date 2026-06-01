@@ -9,7 +9,6 @@ import {
 } from "@heroui/react"
 import {
     ClockIcon,
-    VideoIcon,
     SwordIcon,
     ArrowRightIcon,
 } from "@phosphor-icons/react"
@@ -63,12 +62,6 @@ export const BookmarkCard = ({
                             <ClockIcon className="size-4" />
                             <span>{content.minutesRead} min read</span>
                         </div>
-                        {content.numLessons > 0 && (
-                            <div className="flex items-center gap-1">
-                                <VideoIcon className="size-4" />
-                                <span>{content.numLessons} lessons</span>
-                            </div>
-                        )}
                         {challengeCount > 0 && (
                             <div className="flex items-center gap-1">
                                 <SwordIcon className="size-4" />

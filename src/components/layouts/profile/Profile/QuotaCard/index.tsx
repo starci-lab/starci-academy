@@ -18,6 +18,7 @@ import {
 import {
     useAiQuotaOverlayState,
     useQueryMyAiQuotaSwr,
+    useQueryMyCreditUsageSwr,
 } from "@/hooks/singleton"
 import {
     AiMode,
@@ -33,7 +34,8 @@ import {
 export const QuotaCard = () => {
     const t = useTranslations()
     const { open } = useAiQuotaOverlayState()
-    const { data: quota, isLoading } = useQueryMyAiQuotaSwr()
+    const { data: quota, isLoading: isQuotaLoading } = useQueryMyAiQuotaSwr()
+    const { data: creditUsage, isLoading: isCreditLoading } = useQueryMyCreditUsageSwr()
 
     /** Open the detailed AI quota modal. */
     const onView = useCallback(
@@ -43,14 +45,11 @@ export const QuotaCard = () => {
         ],
     )
 
-    // remaining in the lane the user is naturally on right now
     const isPremium = quota?.mode === AiMode.Premium
-    const remaining5h = isPremium
-        ? quota?.premium.remaining5h
-        : quota?.auto.remaining5h
-    const unit = isPremium
-        ? t("aiQuota.creditsUnit")
-        : t("aiQuota.usesUnit")
+    const remainingCredits = isPremium
+        ? quota?.premium.remainingWeek
+        : creditUsage?.windowWeek.remainingCredits
+    const isLoading = isQuotaLoading || (!isPremium && isCreditLoading)
 
     return (
         <div className="flex flex-col gap-4 rounded-large bg-default/40 p-5">
@@ -80,8 +79,7 @@ export const QuotaCard = () => {
             ) : (
                 <div className="text-sm text-muted">
                     {t("aiQuota.remainingSummary", {
-                        remaining: remaining5h ?? 0,
-                        unit,
+                        remaining: remainingCredits ?? 0,
                     })}
                 </div>
             )}

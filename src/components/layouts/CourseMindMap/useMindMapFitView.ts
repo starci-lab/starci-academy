@@ -18,7 +18,8 @@ export const useMindMapFitView = () => {
         }
         /** The request animation frame to fit the mind map view. */
         const id = requestAnimationFrame(() => {
-            fitView({ padding: 0.2 })
+            // animate the initial fit so the map eases into view instead of snapping
+            fitView({ padding: 0.2, duration: 500 })
         })
         /** The cleanup function to cancel the request animation frame. */
         return () => cancelAnimationFrame(id)

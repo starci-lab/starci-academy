@@ -1,7 +1,7 @@
 "use client"
 import React, { type PropsWithChildren } from "react"
 import { createContext } from "react"
-import { useJobNotificationsSocketIoCore } from "./core"
+import { useContentDiscussionSocketIoCore, useJobNotificationsSocketIoCore } from "./core"
 
 /**
  * @public
@@ -9,6 +9,8 @@ import { useJobNotificationsSocketIoCore } from "./core"
 export interface SocketIoContextType {
     /** The `/job_notifications` namespace socket. */
     jobNotificationsSocketIo: ReturnType<typeof useJobNotificationsSocketIoCore>
+    /** The `/content_discussion` namespace socket. */
+    contentDiscussionSocketIo: ReturnType<typeof useContentDiscussionSocketIoCore>
 }
 
 export const SocketIoContext = createContext<SocketIoContextType | null>(null)
@@ -19,9 +21,10 @@ export const SocketIoContext = createContext<SocketIoContextType | null>(null)
  */
 export const SocketIoProvider = ({ children }: PropsWithChildren) => {
     const jobNotificationsSocketIo = useJobNotificationsSocketIoCore()
+    const contentDiscussionSocketIo = useContentDiscussionSocketIoCore()
     return (
         <SocketIoContext.Provider
-            value={{ jobNotificationsSocketIo }}
+            value={{ jobNotificationsSocketIo, contentDiscussionSocketIo }}
         >
             {children}
         </SocketIoContext.Provider>

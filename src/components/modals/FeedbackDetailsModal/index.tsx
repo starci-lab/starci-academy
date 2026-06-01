@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useMemo } from "react"
 import { Modal, ScrollShadow } from "@heroui/react"
 import { useFeedbackDetailsOverlayState, useQuerySubmissionFeedbacksSwr } from "@/hooks/singleton"
 import { useAppSelector } from "@/redux"
@@ -16,10 +16,16 @@ export const FeedbackDetailsModal = () => {
     const { isOpen, setOpen } = useFeedbackDetailsOverlayState()
     const querySubmissionFeedbacksSwr = useQuerySubmissionFeedbacksSwr()
     const submissionFeedbacks = useAppSelector((state) => state.submissionFeedback.submissionFeedbacks)
+    const submissionAttemptId = useAppSelector((state) => state.submissionAttempt.id)
+    const submissionAttempts = useAppSelector((state) => state.submissionAttempt.submissionAttempts)
+    const repositoryUrl = useMemo(
+        () => submissionAttempts.find((attempt) => attempt.id === submissionAttemptId)?.submissionUrl,
+        [submissionAttempts, submissionAttemptId],
+    )
     const t = useTranslations()
     const showSkeleton =
         isOpen
-        && (querySubmissionFeedbacksSwr.isLoading || querySubmissionFeedbacksSwr.isValidating)
+        && (querySubmissionFeedbacksSwr.isLoading)
         && submissionFeedbacks.length === 0
     return (
         <Modal isOpen={isOpen} onOpenChange={setOpen}>
@@ -28,7 +34,7 @@ export const FeedbackDetailsModal = () => {
                     <Modal.Dialog>
                         <Modal.CloseTrigger />
                         <Modal.Header>
-                            <div className="text-2xl font-bold">{t("feedback.detailsTitle")}</div>
+                            <div className="text-lg font-bold">{t("feedback.detailsTitle")}</div>
                         </Modal.Header>
                         <Modal.Body>
                             {showSkeleton ? (
@@ -43,10 +49,11 @@ export const FeedbackDetailsModal = () => {
                                 </ScrollShadow>
                             ) : submissionFeedbacks.length ? (
                                 <ScrollShadow className="max-h-[500px]" hideScrollBar>
-                                    <div className="flex flex-col gap-3 p-3">
+                                    <div className="flex flex-col gap-3">
                                         {submissionFeedbacks.map((submissionFeedback) => (
                                             <FeedbackCard
                                                 key={submissionFeedback.id}
+                                                repositoryUrl={repositoryUrl}
                                                 submissionFeedback={submissionFeedback}
                                             />
                                         ))}

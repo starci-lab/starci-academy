@@ -19,6 +19,7 @@ import { UserMilestoneTaskFeedbacksModal } from "./UserMilestoneTaskFeedbacksMod
 import { FoundationModal } from "./FoundationModal"
 import { HeadhunterModal } from "./HeadhunterModal"
 import { AiQuotaModal } from "./AiQuotaModal"
+import { PremiumGateModal } from "./PremiumGateModal"
 
 export const ModalContainer = () => {
     return (
@@ -42,6 +43,7 @@ export const ModalContainer = () => {
             <FoundationModal />
             <HeadhunterModal />
             <AiQuotaModal />
+            <PremiumGateModal />
             {/* <AIProcessingModal /> */}
         </>
     )

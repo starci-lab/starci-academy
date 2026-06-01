@@ -13,6 +13,18 @@ const query1 = gql`
         challenge {
           passThreshold
         }
+        task {
+          passThreshold
+        }
+        ai {
+          auto {
+            usesPer5h
+            usesPerWeek
+            creditsPer5h
+            creditsPerWeek
+            creditCost
+          }
+        }
       }
     }
   }

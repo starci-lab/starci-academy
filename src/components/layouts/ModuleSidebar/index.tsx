@@ -27,16 +27,22 @@ import {
     useQueryModulesSwr,
 } from "@/hooks"
 import {
-    ModulesSkeleton,
-} from "@/components/layouts/Course/Modules/ModulesSkeleton"
-import {
     ModuleAccordion,
 } from "./ModuleAccordion"
+import {
+    ModuleIndexStrip,
+} from "./ModuleIndexStrip"
+import {
+    ModuleSidebarSkeleton,
+} from "./ModuleSidebarSkeleton"
 
 /**
  * Props for {@link ModuleSidebar}.
  */
-type ModuleSidebarProps = WithClassNames<undefined>
+type ModuleSidebarProps = WithClassNames<undefined> & {
+    /** Collapsed mode: render a slim numbered index instead of the full accordion. */
+    collapsed?: boolean
+}
 
 /**
  * Module navigation sidebar with a content list per module.
@@ -46,7 +52,7 @@ type ModuleSidebarProps = WithClassNames<undefined>
  * {@link ModuleAccordion}. `"use client"` for hooks + navigation.
  * @param props - optional container class name
  */
-export const ModuleSidebar = (props: ModuleSidebarProps) => {
+export const ModuleSidebar = ({ className, collapsed = false }: ModuleSidebarProps) => {
     const modulesSwr = useQueryModulesSwr()
     const moduleId = useAppSelector((state) => state.module.id)
     const modules = useAppSelector((state) => state.module.modules)
@@ -94,20 +100,38 @@ export const ModuleSidebar = (props: ModuleSidebarProps) => {
 
     /**
      * Loading gate: show content only when the modules query has settled with
-     * data and no error; otherwise mirror the accordion via {@link ModulesSkeleton}.
+     * data and no error; otherwise mirror the accordion via {@link ModuleSidebarSkeleton}.
      */
-    const ready = !modulesSwr.isLoading && !modulesSwr.isValidating && !!modulesSwr.data && !modulesSwr.error
+    const ready = !modulesSwr.isLoading
+        && !!modulesSwr.data
+        && !modulesSwr.error
+
+    // shared sticky/scroll shell so every render branch lines up under the navbar
+    const shellClass = cn("lg:sticky lg:top-16 lg:self-start lg:h-[calc(100vh-64px)] lg:overflow-y-auto", className)
+
+    // collapsed rail: show only the slim numbered index (clicking a number routes to that module)
+    if (collapsed) {
+        return (
+            <div className={shellClass}>
+                <ModuleIndexStrip
+                    modules={sortedModules}
+                    activeModuleId={moduleId}
+                    onSelectModule={onExpandedChange}
+                />
+            </div>
+        )
+    }
 
     if (!ready) {
         return (
-            <div className={cn("lg:sticky lg:top-16 lg:self-start lg:h-[calc(100vh-64px)] lg:overflow-y-auto", props.className)}>
-                <ModulesSkeleton count={5} />
+            <div className={shellClass}>
+                <ModuleSidebarSkeleton count={5} />
             </div>
         )
     }
 
     return (
-        <div className={cn("lg:sticky lg:top-16 lg:self-start lg:h-[calc(100vh-64px)] lg:overflow-y-auto", props.className)}>
+        <div className={shellClass}>
             <ModuleAccordion
                 modules={sortedModules}
                 activeModuleId={moduleId}

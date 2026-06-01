@@ -21,6 +21,15 @@ export enum LearnTab {
 /**
  * The tabs for the content detail view.
  */
+/**
+ * Tabs inside the AI quota modal.
+ */
+export enum AiQuotaTab {
+    Auto = "auto",
+    Subscription = "subscription",
+    History = "history",
+}
+
 export enum ContentTab {
     Content = "content",
     /** Code explaining + implementations (replaces legacy lesson videos tab). */
@@ -42,6 +51,8 @@ export interface TabsSlice {
     learnTab: LearnTab
     /** Currently active tab in the content detail view. */
     contentTab: ContentTab
+    /** Currently active tab in the AI quota modal. */
+    aiQuotaTab: AiQuotaTab
 }
 
 /**
@@ -51,6 +62,7 @@ const initialState: TabsSlice = {
     authenticationModalTab: AuthenticationModalTab.SignIn,
     learnTab: LearnTab.LessonVideos,
     contentTab: ContentTab.Content,
+    aiQuotaTab: AiQuotaTab.Auto,
 }
 
 /**
@@ -93,6 +105,17 @@ export const tabsSlice = createSlice({
         resetContentTab: (state) => {
             state.contentTab = ContentTab.Content
         },
+        /** Set the active tab in the AI quota modal. */
+        setAiQuotaTab: (
+            state,
+            action: PayloadAction<AiQuotaTab>,
+        ) => {
+            state.aiQuotaTab = action.payload
+        },
+        /** Reset the AI quota modal tab to Auto. */
+        resetAiQuotaTab: (state) => {
+            state.aiQuotaTab = AiQuotaTab.Auto
+        },
     },
 })
 
@@ -107,4 +130,6 @@ export const {
     resetLearnTab,
     setContentTab,
     resetContentTab,
+    setAiQuotaTab,
+    resetAiQuotaTab,
 } = tabsSlice.actions

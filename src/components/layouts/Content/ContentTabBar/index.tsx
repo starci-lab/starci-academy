@@ -4,6 +4,7 @@ import React, {
     type Key,
 } from "react"
 import {
+    cn,
     Tabs,
 } from "@heroui/react"
 import type {
@@ -45,27 +46,40 @@ export const ContentTabBar = ({
     onSelectionChange,
 }: ContentTabBarProps) => {
     return (
-        <Tabs
-            selectedKey={selectedKey}
-            variant="secondary"
-            onSelectionChange={onSelectionChange}
-        >
-            <Tabs.ListContainer>
-                <Tabs.List aria-label={ariaLabel}>
-                    {tabItems.map((item) => (
-                        <Tabs.Tab
-                            key={item.key}
-                            id={item.key}
-                            className="rounded-none data-[selected=true]:border-b-2 data-[selected=true]:border-accent data-[selected=true]:text-accent"
-                        >
-                            <TabTrigger
-                                icon={CONTENT_TAB_ICON_MAP[item.key]}
-                                label={item.label}
-                            />
-                        </Tabs.Tab>
-                    ))}
-                </Tabs.List>
-            </Tabs.ListContainer>
-        </Tabs>
+        // outermost: full-width underline edge-to-edge (the only divider under the tab row)
+        <div className="w-full border-b">
+            {/* capped + centered wrapper so the tabs line up with the 1024 reading column */}
+            <div className="mx-auto w-full max-w-[1024px] px-3">
+                <Tabs
+                    selectedKey={selectedKey}
+                    variant="secondary"
+                    onSelectionChange={onSelectionChange}
+                    className="w-full"
+                >
+                    <Tabs.ListContainer className="w-full">
+                        {/* kill HeroUI secondary's own list border so only the full-width line above shows */}
+                        <Tabs.List aria-label={ariaLabel} className="w-full border-b-0!">
+                            {tabItems.map((item) => (
+                                <Tabs.Tab
+                                    key={item.key}
+                                    id={item.key}
+                                    className={cn(
+                                        "rounded-none data-[selected=true]:border-b-2 data-[selected=true]:border-accent data-[selected=true]:text-accent",
+                                        // locked premium tab: muted but still clickable (opens the register modal)
+                                        item.locked && "text-muted",
+                                    )}
+                                >
+                                    <TabTrigger
+                                        icon={CONTENT_TAB_ICON_MAP[item.key]}
+                                        label={item.label}
+                                        locked={item.locked}
+                                    />
+                                </Tabs.Tab>
+                            ))}
+                        </Tabs.List>
+                    </Tabs.ListContainer>
+                </Tabs>
+            </div>
+        </div>
     )
 }

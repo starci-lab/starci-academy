@@ -37,6 +37,7 @@ Nguồn: `src/app/globals.css` (CSS vars, oklch) + HeroUI theme. **Luôn dùng t
 - **Block chính ↔ block chính: `gap-6`** (giữa 2 nhóm/section lớn, vd 2 nhóm thanh toán).
 - **UI phụ trong 1 section: `gap-3`** (label↔list, các phần tử phụ cùng cụm).
 - **Label ↔ input/control: `gap-2`** (field + label, cụm sát nhau).
+- **Page shell padding mặc định: `p-3`** (KHÔNG `p-6`). Shell trang/section: `min-h-screen bg-background p-3` — `bg-background` để nền theo theme, `p-3` là padding chuẩn (vd Sandbox lesson shell).
 - globals.css set padding mặc định: `.card` p-3, `.chip` gap-1 px-2. Container trang `max-w-[1280px]` + grid (xem [03](03-layout-archetypes.md)).
 
 ## Difficulty palette (`src/components/pallettes/difficulty.ts`)

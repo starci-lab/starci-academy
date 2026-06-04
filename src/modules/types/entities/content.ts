@@ -36,6 +36,14 @@ export interface ContentEntity extends AbstractEntity {
     codeImplementations?: Array<CodeImplementationEntity>
     /** Whether this content requires enrollment (premium). */
     isPremium: boolean
+    /** When true, the lecture tab renders a live Sandpack sandbox for React/TSX lessons. */
+    isSandbox?: boolean
+    /** Base GitHub repo URL (e.g. https://github.com/StarCi-Academy/fullstack-mastery-module-5-...). */
+    githubBaseUrl?: string | null
+    /** Subdirectory within the repo for this lesson's frontend source (e.g. 1-mutations/frontend). */
+    githubDir?: string | null
+    /** Relative path to the hosted mock API (e.g. /mocks/4-server-state-with-tanstack-query/0-usequery-and-cache-lifecycle). */
+    backendUrl?: string | null
     /**
      * Day this content was verified/audited. Non-null marks SCHEMA V2 content (drives the
      * multi-language body tabs); legacy content leaves it null/undefined.

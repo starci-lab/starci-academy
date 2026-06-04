@@ -4,6 +4,7 @@ import type {
 import {
     BookOpenIcon,
     CodeIcon,
+    PlayIcon,
     SwordIcon,
 } from "@phosphor-icons/react"
 import {
@@ -23,6 +24,8 @@ export const CONTENT_TAB_ICON_MAP: Record<ContentTab, Icon> = {
     [ContentTab.CodeExplainings]: CodeIcon,
     /** Challenges tab. */
     [ContentTab.Challenges]: SwordIcon,
+    /** Live Sandpack sandbox tab. */
+    [ContentTab.Sandbox]: PlayIcon,
     /** @deprecated Legacy lesson-videos tab, kept for a total lookup. */
     [ContentTab.LessonVideos]: BookOpenIcon,
     /** @deprecated Merged into code explainings; kept for a total lookup. */

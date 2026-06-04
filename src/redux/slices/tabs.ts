@@ -39,6 +39,8 @@ export enum ContentTab {
     /** @deprecated Merged into `CodeExplainings`. */
     CodeImplementation = "codeImplementation",
     Challenges = "challenges",
+    /** Live Sandpack sandbox — shown when content.isSandbox is true. */
+    Sandbox = "sandbox",
 }
 
 /**

@@ -13,18 +13,20 @@ import {
     getContentCodeExplainings,
     getContentCodeImplementations,
 } from "@/modules/types"
-import { useQueryContentSwr } from "@/hooks/singleton"
+import { useQueryContentSwr } from "@/hooks"
+import { buildSandpackFiles } from "@/utils"
+import { SandpackPanel } from "@/components/reuseable/SandpackPanel"
 import { CodeBodySkeleton } from "../CodeBodySkeleton"
 import { ExplainingCard } from "../CodeExplainingBody/ExplainingCard"
 import { ImplementationCard } from "../CodeImplementationBody/ImplementationCard"
 import { CodeItemTabs } from "./CodeItemTabs"
 
-type CodeLessonSection = "explainings" | "implementations"
+type CodeLessonSection = "explainings" | "implementations" | "sandbox"
 
 export type CodeLessonBodyProps = WithClassNames<undefined>
 
 /**
- * Tab Bài giảng: giải thích code + triển khai đa ngôn ngữ (mỗi ngôn ngữ / đoạn một tab).
+ * Lecture tab: code explanation + multi-language implementations (one tab per language / snippet).
  * @param props.className - Optional wrapper class.
  */
 export const CodeLessonBody = ({ className }: CodeLessonBodyProps) => {
@@ -48,6 +50,12 @@ export const CodeLessonBody = ({ className }: CodeLessonBodyProps) => {
 
     const hasExplainings = explainings.length > 0
     const hasImplementations = implementations.length > 0
+    const hasSandbox = !!content?.isSandbox
+
+    const sandpackFiles = useMemo(
+        () => (hasSandbox ? buildSandpackFiles(explainings) : {}),
+        [hasSandbox, explainings],
+    )
 
     const defaultSection: CodeLessonSection = hasExplainings
         ? "explainings"
@@ -67,7 +75,6 @@ export const CodeLessonBody = ({ className }: CodeLessonBodyProps) => {
     // loading gate: render content only when the content query has settled with
     // data and no error; otherwise show the code-shaped skeleton.
     const ready = !queryContentSwr.isLoading
-        && !queryContentSwr.isValidating
         && !!queryContentSwr.data
         && !queryContentSwr.error
 
@@ -105,40 +112,54 @@ export const CodeLessonBody = ({ className }: CodeLessonBodyProps) => {
         />
     )
 
-    if (hasExplainings && hasImplementations) {
-        return (
-            <div className={cn("flex flex-col", className)}>
-                <Tabs
-                    selectedKey={sectionTab}
-                    variant="secondary"
-                    onSelectionChange={(key) => setSectionTab(key as CodeLessonSection)}
-                >
-                    <Tabs.ListContainer>
-                        <Tabs.List aria-label={t("content.codeLesson.sectionsTabsAria")}>
-                            <Tabs.Tab
-                                id="explainings"
-                                className="rounded-none data-[selected=true]:border-b-2 data-[selected=true]:border-accent data-[selected=true]:text-accent"
-                            >
-                                {t("content.codeLesson.explainingsHeading")}
-                            </Tabs.Tab>
-                            <Tabs.Tab
-                                id="implementations"
-                                className="rounded-none data-[selected=true]:border-b-2 data-[selected=true]:border-accent data-[selected=true]:text-accent"
-                            >
-                                {t("content.codeLesson.implementationsHeading")}
-                            </Tabs.Tab>
-                        </Tabs.List>
-                    </Tabs.ListContainer>
-                </Tabs>
-                <div className="h-4" />
-                {sectionTab === "explainings" ? explainingsPanel : implementationsPanel}
-            </div>
-        )
+    const sectionTabBar = (hasExplainings && hasImplementations) || hasSandbox ? (
+        <Tabs
+            selectedKey={sectionTab}
+            variant="secondary"
+            onSelectionChange={(key) => setSectionTab(key as CodeLessonSection)}
+        >
+            <Tabs.ListContainer>
+                <Tabs.List aria-label={t("content.codeLesson.sectionsTabsAria")}>
+                    {hasExplainings && (
+                        <Tabs.Tab
+                            id="explainings"
+                            className="rounded-none data-[selected=true]:border-b-2 data-[selected=true]:border-accent data-[selected=true]:text-accent"
+                        >
+                            {t("content.codeLesson.explainingsHeading")}
+                        </Tabs.Tab>
+                    )}
+                    {hasImplementations && (
+                        <Tabs.Tab
+                            id="implementations"
+                            className="rounded-none data-[selected=true]:border-b-2 data-[selected=true]:border-accent data-[selected=true]:text-accent"
+                        >
+                            {t("content.codeLesson.implementationsHeading")}
+                        </Tabs.Tab>
+                    )}
+                    {hasSandbox && (
+                        <Tabs.Tab
+                            id="sandbox"
+                            className="rounded-none data-[selected=true]:border-b-2 data-[selected=true]:border-accent data-[selected=true]:text-accent"
+                        >
+                            {"Sandbox"}
+                        </Tabs.Tab>
+                    )}
+                </Tabs.List>
+            </Tabs.ListContainer>
+        </Tabs>
+    ) : null
+
+    const activePanel = () => {
+        if (sectionTab === "sandbox") return <SandpackPanel files={sandpackFiles} />
+        if (sectionTab === "explainings") return explainingsPanel
+        return implementationsPanel
     }
 
     return (
         <div className={cn("flex flex-col", className)}>
-            {hasExplainings ? explainingsPanel : implementationsPanel}
+            {sectionTabBar}
+            {sectionTabBar && <div className="h-4" />}
+            {activePanel()}
         </div>
     )
 }

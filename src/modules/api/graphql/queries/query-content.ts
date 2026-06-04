@@ -16,6 +16,10 @@ const query1 = gql`
         orderIndex
         minutesRead
         isPremium
+        isSandbox
+        githubBaseUrl
+        githubDir
+        backendUrl
         title
         body
         challenges {

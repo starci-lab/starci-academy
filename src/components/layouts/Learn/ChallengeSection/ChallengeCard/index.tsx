@@ -1,15 +1,16 @@
 "use client"
+import { Cup as TrophyIcon, Flag as SwordIcon, ListOl as ListNumbersIcon } from "@gravity-ui/icons"
 import { Button, Chip } from "@heroui/react"
-import { useChallengeOverlayState } from "@/hooks/singleton"
+import { useChallengeOverlayState } from "@/hooks"
 import { ChallengeDifficulty, ChallengeEntity } from "@/modules/types"
 import { useAppDispatch } from "@/redux"
 import { setChallengeId } from "@/redux/slices"
-import { ListNumbersIcon, SwordIcon, TrophyIcon } from "@phosphor-icons/react"
 import { TagChips } from "@/components/reuseable"
 import { useTranslations } from "next-intl"
 import React, { useCallback, useMemo } from "react"
 import { difficultyPalette } from "@/components/pallettes"
 import { CHALLENGE_DEMO_TAGS } from "./constants"
+
 
 export interface ChallengeCardProps {
     /** One module challenge block from API. */

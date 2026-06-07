@@ -1,5 +1,6 @@
 "use client"
 
+import { ChevronDown as CaretDownIcon, Lock as LockIcon, Sparkles as SparkleIcon } from "@gravity-ui/icons"
 import React from "react"
 import {
     Chip,
@@ -13,11 +14,6 @@ import {
     cn
 } from "@heroui/react"
 import {
-    CaretDownIcon,
-    LockIcon,
-    SparkleIcon,
-} from "@phosphor-icons/react"
-import {
     useTranslations,
 } from "next-intl"
 import {
@@ -29,6 +25,7 @@ import type {
     WithClassNames,
 } from "@/modules/types"
 import type {
+
     ChallengeGradeSelection,
 } from "../types"
 

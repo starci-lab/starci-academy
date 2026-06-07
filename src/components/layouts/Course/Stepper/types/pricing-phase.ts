@@ -16,4 +16,6 @@ export interface PricingPhasePriceRow {
     formattedPriceUsd: string | null
     /** Save-percentage label (already formatted), or `null` when no discount chip. */
     savePercent: number | null
+    /** True when this phase is before the active phase (its slots are sold out). */
+    soldOut: boolean
 }

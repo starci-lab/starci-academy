@@ -43,6 +43,10 @@ export const useSidebar = () => {
             dispatch(setSidebar({ tab: SidebarTab.Foundations, extraId: undefined }))
             return
         }
+        if (pathname.includes("/practice")) {
+            dispatch(setSidebar({ tab: SidebarTab.Practice, extraId: undefined }))
+            return
+        }
         if (pathname.includes("/headhuntings") || pathname.includes("/headhunting-companies")) {
             dispatch(setSidebar({ tab: SidebarTab.Headhuntings, extraId: undefined }))
             return

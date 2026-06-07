@@ -1,10 +1,12 @@
 "use client"
 
+import { Person as UserCircleIcon } from "@gravity-ui/icons"
 import React from "react"
 import { cn } from "@heroui/react"
-import { UserCircleIcon } from "@phosphor-icons/react"
+
 import { useEffect, useMemo, useState } from "react"
 import {
+
     DEFAULT_CONSULTANT_AVATAR_URL,
     resolveConsultantAvatarUrl,
 } from "../utils"
@@ -75,7 +77,6 @@ export const ConsultantAvatar = ({
                             "text-accent/60",
                             size === "detail" ? "size-24" : "size-20",
                         )}
-                        weight="duotone"
                         aria-hidden
                     />
                 </div>

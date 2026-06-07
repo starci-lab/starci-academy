@@ -1,9 +1,7 @@
 "use client"
 
+import { Clock as ClockIcon } from "@gravity-ui/icons"
 import React from "react"
-import {
-    ClockIcon,
-} from "@phosphor-icons/react"
 import {
     SUPPORT_HOURS,
 } from "../constants"

@@ -1,13 +1,14 @@
 "use client"
 
+import { Clock as ClockIcon, Link as LinkIcon } from "@gravity-ui/icons"
 import React from "react"
 import { Chip, Link, Modal } from "@heroui/react"
-import { useLessonVideoOverlayState } from "@/hooks/singleton"
+import { useLessonVideoOverlayState } from "@/hooks"
 import { useAppSelector } from "@/redux"
-import { ClockIcon, LinkIcon } from "@phosphor-icons/react"
 import { dayjs } from "@/modules/dayjs"
 import { HostPlatformChip, LessonVideoKindChip, Spacer, VideoRenderer } from "@/components/reuseable"
 import { LessonVideoKind, VideoHostPlatform } from "@/modules/types"
+
 
 /**
  * Full-screen lesson video dialog with metadata and external link.

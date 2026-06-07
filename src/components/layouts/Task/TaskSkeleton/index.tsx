@@ -16,14 +16,14 @@ export const TaskSkeleton = () => {
         <>
             <Separator />
             <div className="p-3">
-                <Skeleton className="h-[18px] w-2/3 rounded-full my-[5px]" />
+                <Skeleton className="h-[18px] w-2/3 rounded my-[5px]" />
                 <div className="flex flex-col mt-2">
-                    <Skeleton className="h-[14px] w-full rounded-full my-[3px]" />
-                    <Skeleton className="h-[14px] w-2/3 rounded-full my-[3px]" />
-                    <Skeleton className="h-[14px] w-1/2 rounded-full my-[3px]" />
+                    <Skeleton className="h-[14px] w-full rounded-sm my-[3px]" />
+                    <Skeleton className="h-[14px] w-2/3 rounded-sm my-[3px]" />
+                    <Skeleton className="h-[14px] w-1/2 rounded-sm my-[3px]" />
                 </div>
                 <div className="h-3" />
-                <Skeleton className="h-4 my-1 rounded-full w-1/2" />
+                <Skeleton className="h-4 my-1 rounded w-1/2" />
                 <div className="rounded-3xl p-3 bg-surface">
                     {Array.from({ length: 3 }, (_, index) => (
                         <React.Fragment key={`task-criteria-skeleton-${index}`}>

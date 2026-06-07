@@ -1,9 +1,8 @@
 "use client"
 
+import { Video as VideoIcon } from "@gravity-ui/icons"
 import React from "react"
-import {
-    VideoIcon,
-} from "@phosphor-icons/react"
+
 
 /**
  * Page header for the admin video upload tool — badge + title + subtitle.

@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect } from "react"
+import { useEffect } from "react"
 import { useReactFlow } from "@xyflow/react"
 
 /** Props for {@link MindMapFitView}. */

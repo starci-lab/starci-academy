@@ -1,13 +1,11 @@
 "use client"
 
+import { ChevronsLeft as CaretDoubleLeftIcon, ChevronsRight as CaretDoubleRightIcon } from "@gravity-ui/icons"
 import React from "react"
-import {
-    CaretDoubleLeftIcon,
-    CaretDoubleRightIcon,
-} from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import { toggleLeftCollapsed, toggleRightCollapsed } from "@/redux/slices"
+
 
 /**
  * Desktop collapse handles styled as short accent bars on the content borders.

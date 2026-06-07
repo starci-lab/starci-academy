@@ -1,14 +1,15 @@
 "use client"
 
+import { CircleCheck as CheckCircleIcon, Cup as TrophyIcon, Flag as SwordIcon } from "@gravity-ui/icons"
 import React, { useMemo } from "react"
 import { Button, Card, CardContent, Chip } from "@heroui/react"
 import { ChallengeDifficulty, type ChallengeEntity } from "@/modules/types"
-import { CheckCircleIcon, SwordIcon, TrophyIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { difficultyPalette } from "../../../../pallettes"
 import { useChallengeOverlayState } from "@/hooks"
 import { setChallengeId } from "@/redux/slices"
 import { useAppDispatch, useAppSelector } from "@/redux"
+
 
 export interface ChallengeCardProps {
     /** Challenge row displayed in content tab. */
@@ -35,7 +36,7 @@ export const ChallengeCard = ({ challenge }: ChallengeCardProps) => {
     }, [challenge.difficulty])
     const challengeOverlayState = useChallengeOverlayState()
     const dispatch = useAppDispatch()
-    // Per-challenge progress, populated by `useQueryChallengeSubmissionProgressSwrCore`.
+    // Per-challenge progress, populated by `useQueryChallengeSubmissionProgressSwr`.
     const completionTasks = useAppSelector((state) => state.challenge.completionTasks)
     const challengeProgress = useMemo(
         () => completionTasks.find((completionTask) => completionTask.id === challenge.id) ?? null,
@@ -74,7 +75,7 @@ export const ChallengeCard = ({ challenge }: ChallengeCardProps) => {
                         </Chip>
                         {progressChip ? (
                             <Chip variant="secondary" color={progressChip.color}>
-                                {progressChip.withIcon ? <CheckCircleIcon className="size-4" weight="fill" /> : null}
+                                {progressChip.withIcon ? <CheckCircleIcon className="size-4" /> : null}
                                 <Chip.Label>{progressChip.label}</Chip.Label>
                             </Chip>
                         ) : null}

@@ -1,17 +1,18 @@
 "use client"
 
+import { BookOpen as BookOpenIcon, CurlyBrackets as BracketsCurlyIcon } from "@gravity-ui/icons"
 import React from "react"
 import { Chip, Skeleton } from "@heroui/react"
-import { BookOpenIcon, BracketsCurlyIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import _ from "lodash"
 import { useAppSelector } from "@/redux"
-import { useQueryModuleSwr } from "@/hooks/singleton"
+import { useQueryModuleSwr } from "@/hooks"
 import { pathConfig } from "@/resources/path"
 import { useRouter } from "next/navigation"
 import { ContentCard } from "./ContentCard"
 import { ContentCardSkeleton } from "./ContentCardSkeleton"
 import { Empty } from "./Empty"
+
 
 /**
  * Render module overview with preview bullets and content cards.
@@ -25,17 +26,18 @@ export const Module = () => {
     const moduleId = useAppSelector((state) => state.module.id)
     const { isLoading: isModuleLoading } = useQueryModuleSwr()
     const isLoading = isModuleLoading || !module
-    const contents = useAppSelector((state) => state.content.entities)
+    const contentsFromRedux = useAppSelector((state) => state.content.entities)
+    const contents = (contentsFromRedux?.length ?? 0) > 0 ? contentsFromRedux : module?.contents
     if (isLoading) {
         return (
             <div>
                 <div className="h-3" />
                 <div className="p-3">
-                    <Skeleton className="h-6 my-1 w-3/4 rounded-full" />
+                    <Skeleton className="h-6 my-1 w-3/4 rounded" />
                     <div className="h-2" />
                     <div className="flex flex-col">
-                        <Skeleton className="h-[14px] my-[3px] w-full rounded-full" />
-                        <Skeleton className="h-[14px] my-[3px] w-5/6 rounded-full" />
+                        <Skeleton className="h-[14px] my-[3px] w-full rounded-sm" />
+                        <Skeleton className="h-[14px] my-[3px] w-5/6 rounded-sm" />
                     </div>
                     <div className="h-3" />
                     <Skeleton className="h-6 w-20 rounded-full" />
@@ -46,15 +48,15 @@ export const Module = () => {
                         <div className="flex flex-col gap-3">
                             <div className="flex items-center gap-3">
                                 <Skeleton className="size-5 rounded-full" />
-                                <Skeleton className="h-[14px] my-[3px] w-2/3 rounded-full" />
+                                <Skeleton className="h-[14px] my-[3px] w-2/3 rounded-sm" />
                             </div>
                             <div className="flex items-center gap-3">
                                 <Skeleton className="size-5 rounded-full" />
-                                <Skeleton className="h-[14px] my-[3px] w-2/3 rounded-full" />
+                                <Skeleton className="h-[14px] my-[3px] w-2/3 rounded-sm" />
                             </div>
                             <div className="flex items-center gap-3">
                                 <Skeleton className="size-5 rounded-full" />
-                                <Skeleton className="h-[14px] my-[3px] w-2/3 rounded-full" />
+                                <Skeleton className="h-[14px] my-[3px] w-2/3 rounded-sm" />
                             </div>
                         </div>
                     </div>

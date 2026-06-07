@@ -1,13 +1,14 @@
 "use client"
 
+import { Bars as ListIcon, ListUl as ListBulletsIcon } from "@gravity-ui/icons"
 import React, { useState } from "react"
 import { Button, Drawer, ScrollShadow } from "@heroui/react"
-import { ListIcon, ListBulletsIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { SidebarNavList } from "@/components/layouts/Sidebar/SidebarNavList"
 import { useSidebarNavItems } from "@/components/layouts/Sidebar/useSidebarNavItems"
 import { ModuleSidebar } from "@/components/layouts/ModuleSidebar"
 import type { SidebarNavItem } from "@/components/layouts/Sidebar/types"
+
 
 /**
  * Mobile toolbar for the course-learn pages (hidden from `lg` up).

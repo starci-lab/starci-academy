@@ -1,5 +1,6 @@
 "use client"
 
+import { Code as CodeIcon, CurlyBrackets as BracketsCurlyIcon, FileText as ReadCvLogoIcon, GraduationCap as GraduationCapIcon, HandOk as HandshakeIcon, Layers as StackIcon, LayoutCells as CardsIcon, MapPin as MapPinLineIcon, Persons as UsersIcon, Sparkles as SparkleIcon } from "@gravity-ui/icons"
 import {
     useCallback,
     useMemo,
@@ -8,17 +9,6 @@ import {
     useLocale,
     useTranslations,
 } from "next-intl"
-import {
-    BracketsCurlyIcon,
-    ReadCvLogoIcon,
-    GraduationCapIcon,
-    MapPinLineIcon,
-    UsersIcon,
-    SparkleIcon,
-    StackIcon,
-    HandshakeIcon,
-    CardsIcon,
-} from "@phosphor-icons/react"
 import {
     useRouter,
 } from "next/navigation"
@@ -34,6 +24,7 @@ import {
     pathConfig,
 } from "@/resources/path"
 import type {
+
     SidebarNavItem,
 } from "./types"
 
@@ -70,52 +61,12 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
     // active tab from redux highlights the matching row
     const selectedSidebar = useAppSelector((state) => state.sidebar.sidebar)
 
-    /** Dispatch the active tab and route to the matching learn sub-page. */
+    /** Record the active sidebar tab in Redux (routing is handled in {@link onSelect}). */
     const onSelectSidebarTab = useCallback(
         (tab: SidebarTab) => {
-            // record the active tab so the row highlight survives navigation
             dispatch(setSidebar({ tab, extraId: undefined }))
-            // without a course slug there is no route to build — bail out
-            if (!courseDisplayId) return
-            // shared base builder for every learn destination
-            const learn = pathConfig().locale(locale).course(courseDisplayId).learn()
-            // map each tab to its concrete sub-route
-            switch (tab) {
-            case SidebarTab.MindMap:
-                router.push(learn.mindMap().build())
-                return
-            case SidebarTab.Modules:
-                router.push(learn.module(moduleId).build())
-                return
-            case SidebarTab.Cv:
-                router.push(learn.cv().build())
-                return
-            case SidebarTab.PersonalProject:
-                router.push(learn.personalProject().build())
-                return
-            case SidebarTab.Leaderboard:
-                router.push(learn.leaderboard().build())
-                return
-            case SidebarTab.Foundations:
-                router.push(learn.foundations().build())
-                return
-            case SidebarTab.Headhuntings:
-                router.push(learn.headhuntings().build())
-                return
-            case SidebarTab.Quizlet:
-                router.push(learn.quiz().build())
-                return
-            default:
-                return
-            }
         },
-        [
-            dispatch,
-            courseDisplayId,
-            locale,
-            moduleId,
-            router,
-        ],
+        [dispatch],
     )
 
     // build the ordered nav entries; memoized so rows keep stable identity
@@ -157,6 +108,13 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
                 url: pathConfig().locale(locale).course(courseDisplayId).learn().quiz().build(),
             },
             {
+                label: t("codingPractice.title"),
+                value: "practice",
+                tab: SidebarTab.Practice,
+                icon: CodeIcon,
+                url: pathConfig().locale(locale).course(courseDisplayId).learn().practice().build(),
+            },
+            {
                 label: t("cv.title"),
                 value: "cv",
                 tab: SidebarTab.Cv,
@@ -194,15 +152,14 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
         ],
     )
 
-    /** Route on selection: switch tabs, then replace with the row's URL. */
+    /** Route on selection: update Redux tab, then navigate once to the row URL. */
     const onSelect = useCallback(
         (item: SidebarNavItem) => {
-            // flip the active tab (also routes via the tab switch)
             onSelectSidebarTab(item.tab)
-            // replace (not push) so the sidebar nav does not stack history entries
-            if (item.url) {
-                router.replace(item.url)
+            if (!item.url) {
+                return
             }
+            router.push(item.url)
         },
         [
             onSelectSidebarTab,

@@ -7,9 +7,9 @@
  * Flow: **Registration** (`signUpInit`) → **Otp** (`signUpVerifyOtp`).
  *
  * ### Data layer
- * - {@link useMutateSignUpInitSwr} — GraphQL `signUpInit` (SWR singleton).
+ * - {@link useMutateSignUpSwr} — GraphQL `signUpInit` (SWR singleton).
  * - {@link useMutateSignUpVerifyOtpSwr} — GraphQL `signUpVerifyOtp`.
- * - {@link useSignUpFormik} — submit branches + `challengeId` / `otp` values.
+ * - {@link useSignUpForm} — submit branches + `challengeId` / `otp` values.
  */
 import React from "react"
 import { useAppSelector } from "@/redux"

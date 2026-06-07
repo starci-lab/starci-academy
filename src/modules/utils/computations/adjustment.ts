@@ -1,6 +1,5 @@
-import {
-    bnMulDecimal 
-} from "."
+// Import the definition file directly (NOT `from "."` — self-barrel: index.ts re-exports this file → cycle).
+import { bnMulDecimal } from "./operation"
 import BN from "bn.js"
 import Decimal from "decimal.js"
 

@@ -250,9 +250,14 @@ export const Content = ({ className }: ContentProps) => {
                         ariaLabel={t("module.tabListAria")}
                         onSelectionChange={onTabChange}
                     />
-                    {/* article body capped + centered for readable line length; the frame stays full width */}
-                    <div className="relative mx-auto w-full max-w-[1024px]">
-                        <div className={cn("p-3", isLocked && "select-none")}>
+                    {/* article body capped for readable line length; the sandbox spans full width */}
+                    <div
+                        className={cn(
+                            "relative w-full",
+                            selectedTabKey !== ContentTab.Sandbox && "mx-auto max-w-[1024px]",
+                        )}
+                    >
+                        <div className={cn(selectedTabKey !== ContentTab.Sandbox && "p-3", isLocked && "select-none")}>
                             {bodyComponent}
                         </div>
                         {/* Medium-style teaser: a tall, smooth gradient fades the tail of the body

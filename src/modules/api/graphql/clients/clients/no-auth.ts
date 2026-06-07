@@ -1,8 +1,13 @@
 import { ApolloClient, ApolloLink, InMemoryCache } from "@apollo/client"
-import { createRetryLink, defaultOptions } from "../links"
-import { createErrorLink } from "../links"
-import { createTimeoutLink } from "../links"
-import { createHttpLink } from "../links"
+import { 
+    createRetryLink, 
+    defaultOptions,
+    createErrorLink,
+    createTimeoutLink,
+    createHttpLink,
+    createAttachDeviceFingerprintLink,
+} from "../links"
+import { type GraphQLHeaders } from "../../types"
 
 /**
  * Anonymous (no-auth) Apollo client factory (GraphQL).
@@ -44,7 +49,7 @@ export interface CreateNoAuthApolloClientOptions {
     /** When `false`, does not apply {@link defaultOptions} (caller may pass custom `defaultOptions`). */   
     cache?: boolean
     /** Additional headers passed to the {@link https://www.apollographql.com/docs/react/api/link/apollo-link-http | HttpLink}. */
-    headers?: Record<string, string>
+    headers?: GraphQLHeaders
     /** When `true`, logs GraphQL / network / protocol errors. */
     debug?: boolean
     /** Optional {@link https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal | AbortSignal} for all operations on this client; merged into {@link https://www.apollographql.com/docs/react/api/link/apollo-link-http | HttpLink} `fetchOptions`. */
@@ -66,6 +71,7 @@ export const createNoAuthApolloClient = ({
             createRetryLink(),
             createErrorLink(debug),
             createTimeoutLink(),
+            createAttachDeviceFingerprintLink(debug),
             createHttpLink({
                 uri,
                 withCredentials,

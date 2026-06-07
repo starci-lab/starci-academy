@@ -16,7 +16,7 @@ import {
 import {
     useQueryMilestonesSwr,
     useQueryMilestoneTaskProgressSwr,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import {
     useAppSelector,
     useAppDispatch,

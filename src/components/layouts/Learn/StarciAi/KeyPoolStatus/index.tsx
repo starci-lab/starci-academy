@@ -1,22 +1,17 @@
 "use client"
 
+import { Pulse as PulseIcon } from "@gravity-ui/icons"
 import React, {
     useCallback,
     useMemo,
 } from "react"
-import {
-    Spinner,
-} from "@heroui/react"
-import {
-    PulseIcon,
-} from "@phosphor-icons/react"
 import {
     useLocale,
     useTranslations,
 } from "next-intl"
 import {
     useQueryAiBalancerHealthSwr,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import {
     AiBalancerKeyStatus,
     ModelProvider,
@@ -24,6 +19,9 @@ import {
 import {
     ProviderCard,
 } from "./ProviderCard"
+import {
+    KeyPoolStatusSkeleton,
+} from "./KeyPoolStatusSkeleton"
 
 /**
  * Live API key pool status for StarCi AI (Redis ping cache + balancer pool).
@@ -89,18 +87,8 @@ export const KeyPoolStatus = () => {
         ],
     )
 
-    if (isLoading) {
-        return (
-            <div className="flex justify-center rounded-3xl border bg-background py-10">
-                <Spinner
-                    color="current"
-                    size="md"
-                />
-            </div>
-        )
-    }
-
-    if (error || !data) {
+    // error takes priority so a failed load never sticks on the skeleton
+    if (error) {
         return (
             <div className="rounded-3xl border border-danger/30 bg-danger/5 p-5 text-sm text-danger">
                 {t("error")}
@@ -108,11 +96,15 @@ export const KeyPoolStatus = () => {
         )
     }
 
+    // loading gate: skeleton while loading or before the data has settled
+    if (isLoading || !data) {
+        return <KeyPoolStatusSkeleton />
+    }
+
     return (
         <section className="flex flex-col gap-4">
             <div className="flex flex-wrap items-center gap-2">
                 <PulseIcon
-                    weight="duotone"
                     className="size-5 text-accent"
                 />
                 <div>

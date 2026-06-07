@@ -51,11 +51,13 @@ export type MutateCreateCommentParams = MutateParams<MutationCreateComment, Crea
 export const mutateCreateComment = async ({
     mutation = MutationCreateComment.Mutation1,
     request,
+    headers,
     debug,
     signal,
 }: MutateCreateCommentParams) => {
     const apollo = createAuthApolloClient({
         cache: false,
+        headers,
         debug,
         signal,
     })

@@ -1,7 +1,8 @@
+import { ArrowUpRightFromSquare as ArrowUpRightIcon } from "@gravity-ui/icons"
 import { Link } from "@heroui/react"
-import { ArrowUpRightIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import React from "react"
+
 
 /** Minimal shape for content or challenge reference rows. */
 export interface ReferenceLinkItem {

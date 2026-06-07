@@ -1,6 +1,8 @@
+import { QuoteOpen as QuotesIcon } from "@gravity-ui/icons"
 import { motion } from "framer-motion"
-import { QuotesIcon } from "@phosphor-icons/react"
+
 import React from "react"
+
 
 export const TrapSection = () => {
     return (
@@ -35,7 +37,7 @@ export const TrapSection = () => {
                     }}
                     className="absolute -left-[10px] top-0 bg-background p-1"
                 >
-                    <QuotesIcon size={20} className="text-muted" />
+                    <QuotesIcon width={20} height={20} className="text-muted" />
                 </motion.div>
                 <motion.blockquote 
                     variants={{

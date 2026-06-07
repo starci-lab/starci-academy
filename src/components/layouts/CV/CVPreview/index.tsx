@@ -1,5 +1,6 @@
 "use client"
 
+import { MagnifierPlus as MagnifyingGlassPlusIcon } from "@gravity-ui/icons"
 import React, {
     useEffect,
     useMemo,
@@ -12,11 +13,11 @@ import { useTranslations } from "next-intl"
 import dynamic from "next/dynamic"
 import { useAppSelector } from "@/redux"
 import {
-    useCvApplyFormik,
     useCvPreviewOverlayState,
     useQueryCvUrlSwr,
-} from "@/hooks/singleton"
-import { MagnifyingGlassPlusIcon } from "@phosphor-icons/react"
+} from "@/hooks"
+import { useCvApplyStore } from "@/hooks/zustand"
+
 
 const PDFView = dynamic(
     () => import("@/components/reuseable/PDFView").then((module) => module.PDFView),
@@ -35,17 +36,17 @@ export interface CVPreviewProps {
 export const CVPreview = (props: CVPreviewProps) => {
     const { className } = props
     const t = useTranslations()
-    const formik = useCvApplyFormik()
+    const cvFile = useCvApplyStore((state) => state.cvFile)
     const {
         open: openCvPreviewModal,
     } = useCvPreviewOverlayState()
     useQueryCvUrlSwr()
     const cvUrlPayload = useAppSelector((state) => state.cvUrl.entity)
     const selectedFileUrl = useMemo(() => {
-        if (!formik.values.cvFile) return ""
-        return URL.createObjectURL(formik.values.cvFile)
+        if (!cvFile) return ""
+        return URL.createObjectURL(cvFile)
     }, [
-        formik.values.cvFile,
+        cvFile,
     ])
     const previewPdfUrl = useMemo(
         () => selectedFileUrl || (cvUrlPayload?.cvUrl ?? ""), [

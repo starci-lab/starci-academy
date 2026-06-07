@@ -6,7 +6,7 @@ import {
 } from "@/redux"
 import {
     useQueryPublicContentSwr,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import {
     ContentDetailSkeleton,
 } from "./ContentDetailSkeleton"

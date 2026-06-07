@@ -8,7 +8,7 @@ import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { pathConfig } from "@/resources"
 import { useAppSelector } from "@/redux"
-import { useQueryCourseSwr, useQueryModuleSwr } from "@/hooks/singleton"
+import { useQueryCourseSwr, useQueryModuleSwr } from "@/hooks"
 
 interface LayoutProps {
     children: React.ReactNode

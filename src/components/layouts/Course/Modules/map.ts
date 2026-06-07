@@ -1,9 +1,6 @@
-import {
-    BookOpenIcon,
-    SwordIcon,
-    VideoIcon,
-} from "@phosphor-icons/react"
+import { BookOpen as BookOpenIcon, Flag as SwordIcon, Video as VideoIcon } from "@gravity-ui/icons"
 import type {
+
     ModuleSummaryItem,
 } from "./types"
 

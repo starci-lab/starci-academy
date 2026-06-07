@@ -1,4 +1,5 @@
 "use client"
+import { ArrowRight as ArrowRightIcon, Key as KeyIcon, Lock as LockIcon, ShieldCheck as ShieldCheckIcon } from "@gravity-ui/icons"
 import React from "react"
 import {
     Button,
@@ -9,16 +10,13 @@ import {
     Label,
     TextField,
 } from "@heroui/react"
-import {
-    KeyIcon,
-    ShieldCheckIcon,
-    ArrowRightIcon,
-    LockIcon,
-} from "@phosphor-icons/react"
-import { useAdminApiKeyFormik } from "@/hooks/singleton/formik"
+
+import { Controller } from "react-hook-form"
+import { useAdminApiKeyForm } from "@/hooks/rhf"
+
 
 export const AdminLogin = () => {
-    const formik = useAdminApiKeyFormik()
+    const { control, watch, formState, onSubmit } = useAdminApiKeyForm()
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 flex items-center justify-center p-4">
@@ -62,36 +60,35 @@ export const AdminLogin = () => {
                         </div>
 
                         <form
-                            onSubmit={(e) => {
-                                e.preventDefault()
-                                formik.handleSubmit()
-                            }}
+                            onSubmit={onSubmit}
                             className="space-y-4"
                         >
-                            <TextField
-                                isInvalid={
-                                    formik.touched.apiKey &&
-                                    Boolean(formik.errors.apiKey)
-                                }
-                            >
-                                <Label htmlFor="admin-api-key-input" className="text-sm text-slate-300">
-                                    API Key
-                                </Label>
-                                <div className="relative">
-                                    <LockIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
-                                    <Input
-                                        id="admin-api-key-input"
-                                        placeholder="Enter your admin API key"
-                                        type="password"
-                                        name="apiKey"
-                                        className="pl-9 bg-white/5 border-white/10 hover:border-indigo-400/40 text-white placeholder:text-slate-500"
-                                        value={formik.values.apiKey}
-                                        onChange={(e) => formik.setFieldValue("apiKey", e.target.value)}
-                                        onBlur={() => formik.setFieldTouched("apiKey", true)}
-                                    />
-                                </div>
-                                <FieldError>{formik.errors.apiKey}</FieldError>
-                            </TextField>
+                            <Controller
+                                control={control}
+                                name="apiKey"
+                                render={({ field, fieldState }) => (
+                                    <TextField isInvalid={fieldState.invalid && fieldState.isTouched}>
+                                        <Label htmlFor="admin-api-key-input" className="text-sm text-slate-300">
+                                            API Key
+                                        </Label>
+                                        <div className="relative">
+                                            <LockIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
+                                            <Input
+                                                id="admin-api-key-input"
+                                                placeholder="Enter your admin API key"
+                                                type="password"
+                                                name={field.name}
+                                                ref={field.ref}
+                                                className="pl-9 bg-white/5 border-white/10 hover:border-indigo-400/40 text-white placeholder:text-slate-500"
+                                                value={field.value}
+                                                onChange={(e) => field.onChange(e.target.value)}
+                                                onBlur={field.onBlur}
+                                            />
+                                        </div>
+                                        <FieldError>{fieldState.error?.message}</FieldError>
+                                    </TextField>
+                                )}
+                            />
 
                             <Button
                                 id="admin-submit-button"
@@ -101,9 +98,9 @@ export const AdminLogin = () => {
                                 fullWidth
                                 className="bg-gradient-to-r from-indigo-600 to-purple-600 font-semibold shadow-lg shadow-indigo-500/25 transition-all hover:shadow-indigo-500/40 hover:scale-[1.01]"
                                 isDisabled={
-                                    !formik.values.apiKey || formik.isSubmitting
+                                    !watch("apiKey") || formState.isSubmitting
                                 }
-                                isPending={formik.isSubmitting}
+                                isPending={formState.isSubmitting}
                             >
                                 {({isPending}) => (
                                     <>

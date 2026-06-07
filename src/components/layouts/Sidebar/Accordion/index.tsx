@@ -1,14 +1,12 @@
 "use client"
 
+import type { IconComponent } from "@/types"
 import React from "react"
 import {
     Accordion,
     cn,
     ListBox,
 } from "@heroui/react"
-import type {
-    Icon,
-} from "@phosphor-icons/react"
 
 /**
  * One nested module item rendered inside {@link SidebarAccordion}.
@@ -28,8 +26,8 @@ interface SidebarAccordionSubItem {
 export interface SidebarAccordionProps {
     /** Title shown in accordion trigger. */
     label: string
-    /** Icon rendered for parent and sub items. */
-    icon: Icon
+    /** IconComponent rendered for parent and sub items. */
+    icon: IconComponent
     /** Nested items rendered inside accordion body. */
     items: Array<SidebarAccordionSubItem>
     /** Fired with the sub-item key when a nested item is selected. */
@@ -47,7 +45,7 @@ export interface SidebarAccordionProps {
  */
 export const SidebarAccordion = ({
     label,
-    icon: Icon,
+    icon: IconComponent,
     items,
     onSelectSubItem,
     extraId,
@@ -58,7 +56,7 @@ export const SidebarAccordion = ({
                 <Accordion.Heading>
                     <Accordion.Trigger>
                         <div className="flex w-full items-center gap-2">
-                            <Icon className="size-5 shrink-0" />
+                            <IconComponent className="size-5 shrink-0" />
                             <span className={cn("hidden sm:inline text-base font-normal")}>{label}</span>
                         </div>
                         <Accordion.Indicator />

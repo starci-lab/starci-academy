@@ -13,13 +13,13 @@ import { useTranslations } from "next-intl"
 import {
     useMutateSyncPersonalProjectGithubBranchSwr,
     useMutateSyncPersonalProjectGithubSwr,
-    usePersonalProjectGithubFormik,
+    usePersonalProjectGithubForm,
     usePersonalProjectTaskAttemptsDrawerOverlayState,
     useQueryMilestoneTaskProgressSwr,
     useQueryMilestoneTaskSwr,
     useQueryUserPersonalTaskAttemptsSwr,
     useUserMilestoneTaskFeedbacksModalOverlayState,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import {
     buildMilestoneTaskProgressLookup,
     isPersonalProjectTaskActionUnlocked,
@@ -55,7 +55,7 @@ import {
  */
 export const Task = () => {
     const t = useTranslations()
-    const reviewGithubFormik = usePersonalProjectGithubFormik()
+    const reviewGithubForm = usePersonalProjectGithubForm()
     const syncGithubSwr = useMutateSyncPersonalProjectGithubSwr()
     const syncBranchSwr = useMutateSyncPersonalProjectGithubBranchSwr()
     const progressSwr = useQueryMilestoneTaskProgressSwr()
@@ -113,11 +113,11 @@ export const Task = () => {
     const reviewJobError = reviewJobEnvelope?.data?.error
 
     const showAiProcessing =
-        reviewGithubFormik.isSubmitting
+        reviewGithubForm.isSubmitting
         || (
             Boolean(reviewJobId)
         )
-    const aiJobStatus: JobStatus = reviewGithubFormik.isSubmitting
+    const aiJobStatus: JobStatus = reviewGithubForm.isSubmitting
         ? JobStatus.Processing
         : (reviewJobStatus ?? JobStatus.Processing)
 
@@ -154,13 +154,13 @@ export const Task = () => {
     /** Whether the evaluate / re-evaluate button should be disabled. */
     const isEvaluateDisabled = useMemo(
         () => !isActionUnlocked
-            || reviewGithubFormik.isSubmitting
+            || reviewGithubForm.isSubmitting
             || attemptsSwr.isLoading
             || syncGithubSwr.isMutating
             || syncBranchSwr.isMutating,
         [
             isActionUnlocked,
-            reviewGithubFormik.isSubmitting,
+            reviewGithubForm.isSubmitting,
             attemptsSwr.isLoading,
             syncGithubSwr.isMutating,
             syncBranchSwr.isMutating,
@@ -169,7 +169,7 @@ export const Task = () => {
 
     /** Whether the evaluate button is in its pending (in-flight) state. */
     const isEvaluatePending = useMemo(
-        () => reviewGithubFormik.isSubmitting
+        () => reviewGithubForm.isSubmitting
             || (
                 Boolean(reviewJobId)
                 && (
@@ -178,7 +178,7 @@ export const Task = () => {
                 )
             ),
         [
-            reviewGithubFormik.isSubmitting,
+            reviewGithubForm.isSubmitting,
             reviewJobId,
             reviewJobStatus,
         ],
@@ -190,9 +190,9 @@ export const Task = () => {
     /** Submit the GitHub review form (triggers AI evaluation). */
     const onEvaluate = useCallback(
         () => {
-            void reviewGithubFormik.submitForm()
+            void reviewGithubForm.submit()
         },
-        [reviewGithubFormik],
+        [reviewGithubForm],
     )
 
     /** Open the milestone task feedback details modal. */

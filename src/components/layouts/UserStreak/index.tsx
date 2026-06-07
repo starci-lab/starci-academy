@@ -1,4 +1,5 @@
 "use client"
+import { Flame as FireIcon } from "@gravity-ui/icons"
 import React from "react"
 
 import {
@@ -8,8 +9,9 @@ import {
     DropdownSection,
     DropdownItem,
 } from "@heroui/react"
-import { FireIcon } from "@phosphor-icons/react"
+
 import { useTranslations } from "next-intl"
+
 
 /**
  * UserStreak — navbar streak widget.

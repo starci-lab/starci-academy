@@ -15,7 +15,7 @@ export enum GraphQLHeadersKey {
     XMinValiditySeconds = "X-Min-Validity-Seconds",
 }
 
-export type GraphQLHeaders = Partial<Record<GraphQLHeadersKey, string>>
+export type GraphQLHeaders = Partial<Record<GraphQLHeadersKey, string>> & Record<string, string | undefined>
 
 /**
  * Per-operation options: optional `signal` is forwarded to `createApolloClient({ signal })`

@@ -32,6 +32,11 @@ export interface ReactionSummary {
     total: number
     /** The viewing user's own reaction, or null if none. */
     myReaction: ReactionType | null
+    /**
+     * Number of distinct users who have read this content (view count).
+     * Only present on content-level summaries; always 0 for comment summaries.
+     */
+    viewCount: number
 }
 
 /** Minimal author shape attached to a comment node. */

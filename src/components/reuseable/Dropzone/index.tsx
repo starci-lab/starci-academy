@@ -1,9 +1,10 @@
 "use client"
 
+import { CloudArrowUpIn as CloudArrowUpIcon } from "@gravity-ui/icons"
 import React, { useCallback } from "react"
-import { CloudArrowUpIcon } from "@phosphor-icons/react"
 import { cn } from "@heroui/react"
 import { useDropzone } from "react-dropzone"
+
 
 /**
  * Props for Dropzone component.

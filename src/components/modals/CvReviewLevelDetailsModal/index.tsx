@@ -12,7 +12,7 @@ import {
 } from "next-intl"
 import {
     useCvReviewLevelDetailsOverlayState,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import {
     useAppDispatch,
     useAppSelector,

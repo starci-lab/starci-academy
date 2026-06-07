@@ -1,7 +1,7 @@
 "use client"
 
 import { resolveFoundationMountFileUrl } from "../utils"
-import { useFoundationOverlayState } from "@/hooks/singleton"
+import { useFoundationOverlayState } from "@/hooks"
 import type { FoundationEntity } from "@/modules/types"
 import { FoundationKind } from "@/modules/types"
 import { useCallback } from "react"

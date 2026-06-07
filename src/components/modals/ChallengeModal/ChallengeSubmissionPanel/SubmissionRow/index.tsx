@@ -1,5 +1,6 @@
 "use client"
 
+import { CircleExclamation as WarningCircleIcon, Pencil as PencilLineIcon } from "@gravity-ui/icons"
 import React, {
     useCallback,
     useMemo,
@@ -21,10 +22,6 @@ import {
 import {
     AiMode,
 } from "@/modules/api"
-import {
-    PencilLineIcon,
-    WarningCircleIcon,
-} from "@phosphor-icons/react"
 import {
     useSystemAiAutoConfig,
 } from "@/hooks/useSystemAiAutoConfig"
@@ -171,7 +168,7 @@ export const SubmissionRow = ({
                         {". "}
                         {submission.title}
                     </div>
-                    {IconComponent ? <IconComponent size={16} /> : null}
+                    {IconComponent ? <IconComponent width={16} height={16} /> : null}
                 </div>
                 <div className="h-2" />
                 <div className="text-xs text-muted">

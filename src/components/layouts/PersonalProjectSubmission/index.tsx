@@ -12,20 +12,31 @@ import { useTranslations } from "next-intl"
 import {
     useMutateSyncPersonalProjectGithubBranchSwr,
     useMutateSyncPersonalProjectGithubSwr,
-    usePersonalProjectGithubFormik,
-} from "@/hooks/singleton"
+} from "@/hooks"
+import { usePersonalProjectGithubForm } from "@/hooks/zustand"
 /**
  * GitHub URL (debounced sync) + branch field for the personal project.
  */
 export const PersonalProjectSubmission = () => {
     const t = useTranslations()
-    const formik = usePersonalProjectGithubFormik()
+    // Component CHỦ → enableSync: true (chạy debounced sync url/branch).
+    const {
+        githubUrl,
+        branch,
+        errors,
+        touched,
+        setGithubUrl,
+        setBranch,
+        setTouchedGithubUrl,
+        setTouchedBranch,
+        setBranchError,
+    } = usePersonalProjectGithubForm({ enableSync: true })
     const syncGithubSwr = useMutateSyncPersonalProjectGithubSwr()
     const syncBranchSwr = useMutateSyncPersonalProjectGithubBranchSwr()
     const urlInvalid =
-        Boolean(formik.touched.githubUrl && formik.errors.githubUrl)
+        Boolean(touched.githubUrl && errors.githubUrl)
     const branchInvalid =
-        Boolean(formik.touched.branch && formik.errors.branch)
+        Boolean(touched.branch && errors.branch)
 
     return (
         <div className="p-3">
@@ -43,9 +54,9 @@ export const PersonalProjectSubmission = () => {
                         variant="secondary"
                         placeholder={t("finalProject.page.submitGithub.placeholder")}
                         name="githubUrl"
-                        value={formik.values.githubUrl}
-                        onChange={(event) => formik.setFieldValue("githubUrl", event.target.value)}
-                        onBlur={() => formik.setFieldTouched("githubUrl", true)}
+                        value={githubUrl}
+                        onChange={(event) => setGithubUrl(event.target.value)}
+                        onBlur={() => setTouchedGithubUrl(true)}
                     />
                     {
                         syncGithubSwr.isMutating
@@ -58,7 +69,7 @@ export const PersonalProjectSubmission = () => {
                             : null
                     }
                 </div>
-                <FieldError>{formik.errors.githubUrl}</FieldError>
+                <FieldError>{errors.githubUrl}</FieldError>
             </TextField>
             <div className="h-6" />
             <div className="mb-2 text-base font-semibold">
@@ -70,9 +81,9 @@ export const PersonalProjectSubmission = () => {
                         variant="secondary"
                         placeholder={t("finalProject.page.submitGithub.branchPlaceholder")}
                         name="branch"
-                        value={formik.values.branch}
-                        onChange={(event) => formik.setFieldValue("branch", event.target.value)}
-                        onBlur={() => formik.setFieldTouched("branch", true)}
+                        value={branch}
+                        onChange={(event) => setBranch(event.target.value)}
+                        onBlur={() => setTouchedBranch(true)}
                     />
                     {
                         syncBranchSwr.isMutating
@@ -85,15 +96,15 @@ export const PersonalProjectSubmission = () => {
                             : null
                     }
                 </div>
-                <FieldError>{formik.errors.branch}</FieldError>
+                <FieldError>{errors.branch}</FieldError>
             </TextField>
             <div className="h-3" />
             <Button
                 variant="secondary"
                 isDisabled={syncBranchSwr.isMutating}
                 onPress={() => {
-                    void formik.setFieldValue("branch", "main")
-                    formik.setFieldError("branch", undefined)
+                    setBranch("main")
+                    setBranchError(null)
                 }}
             >
                 {t("finalProject.page.submitGithub.resetButton")}

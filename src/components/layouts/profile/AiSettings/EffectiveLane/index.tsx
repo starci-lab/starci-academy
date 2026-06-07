@@ -9,7 +9,7 @@ import {
 } from "next-intl"
 import {
     useQueryMyAiSettingsSwr,
-} from "@/hooks/singleton"
+} from "@/hooks"
 
 /**
  * Shows the lane the user is on right now + their tier chip.

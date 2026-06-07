@@ -12,6 +12,7 @@ const query1 = gql`
       data {
         total
         myReaction
+        viewCount
         counts {
           type
           count

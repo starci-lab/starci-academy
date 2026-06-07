@@ -1,19 +1,20 @@
 "use client"
 
+import { Clock as ClockIcon } from "@gravity-ui/icons"
 import { Calendar, Chip, Modal } from "@heroui/react"
 import {
     useLivestreamCalendarOverlayState,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import type { LivestreamSessionEntity } from "@/modules/types"
 import { DayOfWeek } from "@/modules/types"
 import { useAppSelector } from "@/redux"
 import { CalendarDate, getLocalTimeZone, today } from "@internationalized/date"
 import type { DateValue } from "@heroui/react/rac"
 import { Spacer } from "@/components/reuseable"
-import { ClockIcon } from "@phosphor-icons/react"
 import { useFormatter, useTranslations } from "next-intl"
 import React, { useMemo } from "react"
 import dayjs from "dayjs"
+
 
 /** JS `Date#getDay()` (0 = Sunday … 6 = Saturday). */
 export const dayOfWeekToNumber: Record<DayOfWeek, number> = {

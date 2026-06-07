@@ -21,7 +21,7 @@ import {
 } from "@/redux"
 import {
     useQueryCvUrlSwr,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import { CVUpload } from "./CVUpload"
 import { CVPreview } from "./CVPreview"
 

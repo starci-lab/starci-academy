@@ -5,7 +5,7 @@ import { cn } from "@heroui/react"
 import { useAppSelector } from "@/redux"
 import type { WithClassNames } from "@/modules/types"
 import { getContentCodeImplementations } from "@/modules/types"
-import { useQueryContentSwr } from "@/hooks/singleton"
+import { useQueryContentSwr } from "@/hooks"
 import { CodeBodySkeleton } from "../CodeBodySkeleton"
 import { ImplementationCard } from "./ImplementationCard"
 import { CodeImplementationEmpty } from "./Empty"
@@ -30,7 +30,6 @@ export const CodeImplementationBody = ({ className }: CodeImplementationBodyProp
     // loading gate: render content only when the content query has settled with
     // data and no error; otherwise show the code-shaped skeleton.
     const ready = !queryContentSwr.isLoading
-        && !queryContentSwr.isValidating
         && !!queryContentSwr.data
         && !queryContentSwr.error
 

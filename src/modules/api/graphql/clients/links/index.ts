@@ -1,5 +1,7 @@
 export * from "./http"
 export * from "./attach-access-token"
+export * from "./attach-csrf-token"
+export * from "./attach-device-fingerprint"
 export * from "./options"
 export * from "./error"
 export * from "./timeout"

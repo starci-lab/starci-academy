@@ -4,7 +4,7 @@ import React from "react"
 import { Modal, ScrollShadow } from "@heroui/react"
 import { MarkdownContent } from "@/components/reuseable"
 import { VideoRenderer } from "@/components/reuseable/VideoRenderer"
-import { useFoundationOverlayState } from "@/hooks/singleton"
+import { useFoundationOverlayState } from "@/hooks"
 import { FoundationKind, LessonVideoType, VideoHostPlatform } from "@/modules/types"
 import { useAppSelector } from "@/redux"
 

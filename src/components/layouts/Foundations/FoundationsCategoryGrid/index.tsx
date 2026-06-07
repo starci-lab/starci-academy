@@ -30,7 +30,7 @@ import type {
 } from "@/modules/types"
 import {
     useQueryFoundationCategoriesSwr,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import type {
     FoundationsBreadcrumbItem,
 } from "../types"

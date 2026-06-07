@@ -1,5 +1,6 @@
 "use client"
 
+import { BookOpen as BookOpenIcon, Pencil as PencilSimpleLineIcon } from "@gravity-ui/icons"
 import React, {
     useCallback,
 } from "react"
@@ -7,10 +8,6 @@ import {
     Button,
     Card,
 } from "@heroui/react"
-import {
-    BookOpenIcon,
-    PencilSimpleLineIcon,
-} from "@phosphor-icons/react"
 import {
     useLocale,
     useTranslations,
@@ -21,7 +18,7 @@ import {
 import {
     usePaymentOverlayState,
     useQueryCourseEnrollmentStatusSwr,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import {
     PaymentFlow,
 } from "@/modules/types"

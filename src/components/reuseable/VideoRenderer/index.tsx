@@ -102,7 +102,6 @@ export const VideoRenderer = ({
 
     const content = useMemo(
         () => renderContent(),
-        // eslint-disable-next-line react-hooks/exhaustive-deps
         [url, type, title, classNames?.content],
     )
 

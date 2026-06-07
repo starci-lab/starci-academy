@@ -6,7 +6,7 @@ import {
 } from "@/redux"
 import {
     useQueryAiModelsSwr,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import {
     StarciAiHeader,
 } from "./Header"
@@ -37,7 +37,9 @@ export const StarciAi = () => {
     const aiModelsSwr = useQueryAiModelsSwr()
     const models = useAppSelector((state) => state.aiModels.models)
 
-    if (aiModelsSwr.isLoading) {
+    // loading gate (per .claude/design/06-skeleton.md): skeleton while loading, or
+    // before the query settles with data, or on error — never flash an empty list.
+    if (aiModelsSwr.isLoading || !aiModelsSwr.data || !!aiModelsSwr.error) {
         return <StarciAiSkeleton />
     }
 

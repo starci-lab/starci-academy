@@ -1,11 +1,6 @@
 "use client"
-import { useSearchOverlayState } from "@/hooks/singleton"
-import {
-    ArticleIcon,
-    BracketsCurlyIcon,
-    GraduationCapIcon,
-    SwordIcon,
-} from "@phosphor-icons/react"
+import { CurlyBrackets as BracketsCurlyIcon, FileText as ArticleIcon, Flag as SwordIcon, GraduationCap as GraduationCapIcon } from "@gravity-ui/icons"
+import { useSearchOverlayState } from "@/hooks"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import React, { useCallback } from "react"
@@ -14,6 +9,7 @@ import { useAppSelector } from "@/redux"
 import { ScrollShadow } from "@heroui/react"
 import { pathConfig } from "@/resources/path"
 import type { AutocompleteGlobalSearchItem } from "@/modules/api"
+
 
 /** Entity bucket a pressed search item belongs to — drives how its href is built. */
 type GlobalSearchKind = "course" | "module" | "content" | "challenge"

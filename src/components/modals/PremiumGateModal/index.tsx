@@ -1,5 +1,6 @@
 "use client"
 
+import { Lock as LockKeyIcon, ShoppingCart as ShoppingCartSimpleIcon } from "@gravity-ui/icons"
 import React, {
     useCallback,
 } from "react"
@@ -8,52 +9,39 @@ import {
     Modal,
 } from "@heroui/react"
 import {
-    LockKeyIcon,
-    ShoppingCartSimpleIcon,
-} from "@phosphor-icons/react"
-import {
-    useLocale,
     useTranslations,
 } from "next-intl"
 import {
-    useParams,
-    useRouter,
-} from "next/navigation"
-import {
+    usePaymentOverlayState,
     usePremiumGateOverlayState,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import {
-    pathConfig,
-} from "@/resources"
+    PaymentFlow,
+} from "@/modules/types"
 
 /**
  * Premium-gate modal: register/buy prompt shown when a viewer clicks a locked
- * premium feature (challenge tab, lesson tab, …) on an "đọc thử" lesson they
+ * premium feature (challenge tab, lesson tab, …) on a "trial read" lesson they
  * have not unlocked.
  *
  * Container: owns the premium-gate overlay state; dismissable so the user can
- * keep browsing the teaser. Reads the locale + `courseId` route segment and
- * owns the buy navigation handler. Opened via {@link usePremiumGateOverlayState}.
+ * keep browsing the teaser. "Buy" closes this modal and opens the shared payment
+ * modal (course-enroll flow). Opened via {@link usePremiumGateOverlayState}.
  */
 export const PremiumGateModal = () => {
     const t = useTranslations()
-    const locale = useLocale()
-    const router = useRouter()
-    const params = useParams<{ courseId: string }>()
     const { isOpen, setOpen, close } = usePremiumGateOverlayState()
+    const { open: openPayment } = usePaymentOverlayState()
 
-    /** Go to the course detail page where the user can enroll/buy. */
+    /** Close the gate, then open the shared payment modal in the course-enroll flow. */
     const onBuy = useCallback(
         () => {
             close()
-            router.push(
-                pathConfig()
-                    .locale(locale)
-                    .course(params.courseId)
-                    .build(),
-            )
+            openPayment({
+                flow: PaymentFlow.CourseEnroll,
+            })
         },
-        [close, router, locale, params.courseId],
+        [close, openPayment],
     )
 
     return (

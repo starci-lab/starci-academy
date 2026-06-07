@@ -1,14 +1,16 @@
 "use client"
 
+import { ArrowUpRightFromSquare as ArrowSquareOutIcon } from "@gravity-ui/icons"
 import { Button } from "@heroui/react"
 import { MarkdownContent } from "@/components/reuseable"
 import { VideoRenderer } from "@/components/reuseable"
 import type { FoundationEntity } from "@/modules/types"
 import { FoundationKind, LessonVideoType, VideoHostPlatform } from "@/modules/types"
-import { ArrowSquareOutIcon } from "@phosphor-icons/react"
+
 import { useTranslations } from "next-intl"
 import React, { useMemo } from "react"
 import { resolveFoundationMountFileUrl } from "../utils"
+
 
 export interface FoundationCardBodyProps {
     /** Foundation entity to render. */

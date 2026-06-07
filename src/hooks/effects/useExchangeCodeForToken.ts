@@ -10,7 +10,7 @@ import {
 import { useAppDispatch } from "@/redux"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useLayoutEffect, useRef } from "react"
-import { useMutateExchangeCodeForTokenSwr } from "../singleton"
+import { useMutateExchangeCodeForTokenSwr } from "../swr"
 import {
     LocalStorage,
     LocalStorageAccessToken,
@@ -63,15 +63,22 @@ export const useExchangeCodeForToken = () => {
     const pathname = usePathname()
     const router = useRouter()
     const swr = useMutateExchangeCodeForTokenSwr()
-    const mountRef = useRef(false)
+    /** Processed code — idempotent guard BY VALUE (not a one-shot boolean flag). */
+    const processedCodeRef = useRef<string | null>(null)
     useLayoutEffect(() => {
-        if (mountRef.current) return
-        mountRef.current = true
         const code = searchParams.get("code")
         const state = searchParams.get("state")
         if (!code || !state) {
             return
         }
+        /**
+         * Each `code` is exchanged exactly once: survives StrictMode (double mount) and STILL reruns
+         * if a new `?code=` appears after the first render (a hard boolean flag would miss this).
+         */
+        if (processedCodeRef.current === code) {
+            return
+        }
+        processedCodeRef.current = code
         const handleEffect = async () => {
             const cleanUrl = stripOauthSearchParams(pathname, searchParams)
             const provider = resolveProvider()

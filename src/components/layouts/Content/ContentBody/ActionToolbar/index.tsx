@@ -1,15 +1,11 @@
 "use client"
 
+import { Bookmark as BookmarkSimpleIcon, BookmarkFill, NodesRight as ShareNetworkIcon, SquareDashedText as ArrowsOutIcon } from "@gravity-ui/icons"
 import React from "react"
 import {
     Button,
     Spinner,
 } from "@heroui/react"
-import {
-    ArrowsOutIcon,
-    BookmarkSimpleIcon,
-    ShareNetworkIcon,
-} from "@phosphor-icons/react"
 
 /** Props for {@link ActionToolbar}. */
 export interface ActionToolbarProps {
@@ -55,11 +51,10 @@ export const ActionToolbar = ({
                     <>
                         {isPending ? (
                             <Spinner className="size-5" />
+                        ) : isFavorite ? (
+                            <BookmarkFill className="size-5" />
                         ) : (
-                            <BookmarkSimpleIcon
-                                className="size-5"
-                                weight={isFavorite ? "fill" : "regular"}
-                            />
+                            <BookmarkSimpleIcon className="size-5" />
                         )}
                     </>
                 )}

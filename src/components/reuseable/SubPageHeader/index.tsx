@@ -1,9 +1,8 @@
 "use client"
 
+import { ArrowLeft as ArrowLeftIcon } from "@gravity-ui/icons"
 import React from "react"
-import {
-    ArrowLeftIcon,
-} from "@phosphor-icons/react"
+
 import {
     useTranslations,
 } from "next-intl"
@@ -11,6 +10,7 @@ import {
     Button,
 } from "@heroui/react"
 import type {
+
     WithClassNames,
 } from "@/modules/types"
 

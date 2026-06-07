@@ -1,30 +1,26 @@
 "use client"
 
 import React from "react"
-import { cn } from "@heroui/react"
-import { twemojiUrl } from "./constants"
+import { FacebookEmoji } from "./FacebookEmoji"
+import type { FacebookEmojiSize } from "./FacebookEmoji"
+import type { ReactionDescriptor } from "./constants"
 
 /** Props for {@link ReactionEmoji}. */
 export interface ReactionEmojiProps {
-    /** Twemoji codepoint (filename without extension). */
-    codepoint: string
-    /** Native emoji used as the image alt text / fallback. */
-    emoji: string
-    /** Size + spacing classes (default `size-5`). */
-    className?: string
+    /** Descriptor for the reaction (provides `fbType` for the emoji and `emoji` for a11y). */
+    descriptor: ReactionDescriptor
+    /**
+     * Visual size passed to {@link FacebookEmoji}.
+     * Defaults to `"xs"` for compact inline use; use `"sm"` for the picker.
+     */
+    size?: FacebookEmojiSize
 }
 
 /**
- * Renders a single reaction as a Twemoji SVG image so it looks identical (and Facebook-like)
- * on every OS, instead of the platform's native emoji font.
+ * Renders a single Facebook-style animated reaction emoji.
+ * Uses the self-contained {@link FacebookEmoji} component (pure CSS, no external assets).
  * @param props - {@link ReactionEmojiProps}
  */
-export const ReactionEmoji = ({ codepoint, emoji, className }: ReactionEmojiProps) => (
-    <img
-        src={twemojiUrl(codepoint)}
-        alt={emoji}
-        loading="lazy"
-        draggable={false}
-        className={cn("inline-block size-5 align-middle", className)}
-    />
+export const ReactionEmoji = ({ descriptor, size = "xs" }: ReactionEmojiProps) => (
+    <FacebookEmoji type={descriptor.fbType} size={size} />
 )

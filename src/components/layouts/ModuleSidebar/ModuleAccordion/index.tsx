@@ -18,14 +18,14 @@ import {
 export interface ModuleAccordionProps {
     /** Modules to render, already ordered. */
     modules: Array<ModuleEntity>
-    /** Currently expanded module id. */
+    /** Currently expanded module id (controlled from URL / Redux). */
     activeModuleId?: string
     /** Currently active content id (highlights its link). */
     activeContentId?: string
-    /** Fired with the next expanded module id (or undefined when collapsed). */
-    onExpandedChange: (moduleId?: string) => void
-    /** Fired with the content id when a content link is pressed. */
-    onSelectContent: (contentId: string) => void
+    /** Fired when a content link is pressed. */
+    onSelectContent: (moduleId: string, contentId: string) => void
+    /** Fired with the module id when a (different) module header is expanded — routes to it. */
+    onExpandModule: (moduleId: string) => void
 }
 
 /**
@@ -39,17 +39,20 @@ export const ModuleAccordion = ({
     modules,
     activeModuleId,
     activeContentId,
-    onExpandedChange,
     onSelectContent,
+    onExpandModule,
 }: ModuleAccordionProps) => {
     return (
         <Accordion
             variant="default"
             className="rounded-none border-none px-0 shadow-none"
             expandedKeys={new Set(activeModuleId ? [String(activeModuleId)] : [])}
-            onExpandedChange={(selection) => {
-                const key = Array.from(selection)[0]
-                onExpandedChange(key ? String(key) : undefined)
+            onExpandedChange={(keys) => {
+                // single-expand: route to the newly-expanded module (the key that isn't the active one).
+                const nextModuleId = Array.from(keys).find((key) => String(key) !== String(activeModuleId))
+                if (nextModuleId) {
+                    onExpandModule(String(nextModuleId))
+                }
             }}
         >
             {
@@ -87,7 +90,7 @@ export const ModuleAccordion = ({
                                                     content={content}
                                                     isActive={content.id === activeContentId}
                                                     isLast={index === contents.length - 1}
-                                                    onSelectContent={onSelectContent}
+                                                    onSelectContent={(contentId) => onSelectContent(String(module.id), contentId)}
                                                 />
                                             ))}
                                         </div>

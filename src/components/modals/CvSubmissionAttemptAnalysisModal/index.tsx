@@ -9,7 +9,7 @@ import {
 import { MarkdownContent } from "@/components/reuseable"
 import {
     useCvSubmissionAttemptAnalysisOverlayState,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import {
     useAppDispatch,
     useAppSelector,

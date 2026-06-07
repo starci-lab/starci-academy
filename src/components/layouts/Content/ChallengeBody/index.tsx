@@ -5,13 +5,12 @@ import { Pagination, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import { WithClassNames } from "@/modules/types"
-import { useQueryChallengesSwr } from "@/hooks/singleton"
+import { useQueryChallengesSwr } from "@/hooks"
 import { setChallengePageNumber } from "@/redux/slices"
 import { ChallengeCard } from "./ChallengeCard"
 import { ChallengeCardSkeleton } from "./ChallengeCardSkeleton"
 import { ChallengeBodyEmpty } from "./Empty"
 import _ from "lodash"
-import { SearchBar } from "../../../reuseable"
 
 export type ChallengeBodyProps = WithClassNames<undefined>
 
@@ -23,7 +22,13 @@ export const ChallengeBody = ({ className }: ChallengeBodyProps) => {
     const count = useAppSelector((state) => state.challenge.count)
     const limit = useAppSelector((state) => state.challenge.limit)
     const pageNumber = useAppSelector((state) => state.challenge.pageNumber)
-    const isLoading = useMemo(() => queryChallengesSwr.isLoading || !challenges, [queryChallengesSwr.isLoading, challenges])
+    const isLoading = useMemo(
+        () => queryChallengesSwr.isLoading || queryChallengesSwr.isValidating,
+        [
+            queryChallengesSwr.isLoading,
+            queryChallengesSwr.isValidating,
+        ],
+    )
     const pageSize = limit ?? 10
     const totalPages = useMemo(() => {
         if (count == null || count <= 0) {
@@ -55,8 +60,6 @@ export const ChallengeBody = ({ className }: ChallengeBodyProps) => {
 
     return (
         <div>
-            <SearchBar />
-            <div className="h-6" />
             <div className="text-sm text-muted">
                 {t("challenge.count", { count: count ?? 0 })}
             </div>

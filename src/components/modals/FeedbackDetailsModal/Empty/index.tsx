@@ -8,8 +8,7 @@ import type { WithClassNames } from "@/modules/types"
 /**
  * Props for {@link FeedbackDetailsEmpty}.
  */
-export interface FeedbackDetailsEmptyProps extends WithClassNames<undefined> {
-}
+export type FeedbackDetailsEmptyProps = WithClassNames<undefined>
 
 /**
  * Empty state for feedback details list.

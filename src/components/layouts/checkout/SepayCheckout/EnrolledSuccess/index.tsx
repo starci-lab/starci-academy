@@ -1,13 +1,11 @@
 "use client"
 
+import { CircleCheck as CheckCircle } from "@gravity-ui/icons"
 import React from "react"
 import {
     Card,
     Spinner,
 } from "@heroui/react"
-import {
-    CheckCircle,
-} from "@phosphor-icons/react"
 import {
     useTranslations,
 } from "next-intl"
@@ -27,7 +25,7 @@ export const EnrolledSuccess = () => {
                 <Card.Content>
                     <div className="mb-6 flex justify-center">
                         <div className="flex h-20 w-20 items-center justify-center rounded-full bg-success/20">
-                            <CheckCircle weight="fill" className="h-10 w-10 text-success" />
+                            <CheckCircle className="h-10 w-10 text-success" />
                         </div>
                     </div>
                     <h1 className="mb-2 text-2xl font-bold">{t("payment.sepay.success")}</h1>

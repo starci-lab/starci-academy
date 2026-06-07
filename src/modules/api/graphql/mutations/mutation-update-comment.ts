@@ -51,11 +51,13 @@ export type MutateUpdateCommentParams = MutateParams<MutationUpdateComment, Upda
 export const mutateUpdateComment = async ({
     mutation = MutationUpdateComment.Mutation1,
     request,
+    headers,
     debug,
     signal,
 }: MutateUpdateCommentParams) => {
     const apollo = createAuthApolloClient({
         cache: false,
+        headers,
         debug,
         signal,
     })

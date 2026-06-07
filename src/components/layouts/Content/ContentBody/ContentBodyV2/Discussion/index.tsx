@@ -30,7 +30,8 @@ import {
     SubscriptionEvent,
     useContentDiscussionSocketIo,
     type SubscribeContentDiscussionSocketIoPayload,
-} from "@/hooks/singleton"
+} from "@/hooks"
+import type { ActionBarProps } from "@/components/reuseable"
 
 /** Page size for a parent's replies (loaded in one shot per parent). */
 const REPLIES_LIMIT = 50
@@ -53,8 +54,18 @@ const DISCUSSION_EVENTS: ReadonlyArray<SubscriptionEvent> = [
  * Owns the data hooks (local SWR), the realtime socket subscription, and all persistence
  * callbacks; renders the presentational {@link Discussion}. Mounted at the bottom of
  * {@link ContentBodyV2}. `"use client"` for hooks + socket.
+ *
+ * Accepts {@link ActionBarProps} so the bookmark/share/fullscreen actions that used to live
+ * in a separate ActionToolbar can be merged into the Discussion's InteractionBar.
  */
-export const ContentDiscussion = () => {
+export const ContentDiscussion = ({
+    isFavorite,
+    isShareVisible,
+    isFavoritePending,
+    onToggleFavorite,
+    onShare,
+    onFullscreen,
+}: ActionBarProps) => {
     const locale = useLocale()
     const contentId = useAppSelector((state) => state.content.entity?.id)
     const currentUserId = useAppSelector((state) => state.user.user?.id ?? null)
@@ -128,7 +139,7 @@ export const ContentDiscussion = () => {
 
     // fetch a parent's replies and cache them in state
     const loadReplies = useCallback(async (parentId: string) => {
-        if (!contentId) {
+        if (!contentId || !courseId) {
             return
         }
         const response = await queryContentComments({
@@ -146,7 +157,7 @@ export const ContentDiscussion = () => {
             ...prev,
             [parentId]: replies,
         }))
-    }, [contentId])
+    }, [contentId, courseId, courseHeaders])
 
     // re-fetch every already-loaded reply subtree (used after a realtime event)
     const reloadLoadedReplies = useCallback(() => {
@@ -164,7 +175,7 @@ export const ContentDiscussion = () => {
 
     // join the content's discussion room (and re-join on reconnect)
     useEffect(() => {
-        if (!contentId) {
+        if (!contentId || !courseId) {
             return
         }
         const subscribe = () => {
@@ -184,11 +195,11 @@ export const ContentDiscussion = () => {
         return () => {
             socket.off("connect", subscribe)
         }
-    }, [socket, contentId, locale])
+    }, [socket, contentId, courseId, locale])
 
     // refetch affected data whenever a realtime event arrives for this content
     useEffect(() => {
-        if (!contentId) {
+        if (!contentId || !courseId) {
             return
         }
         const handler = (message: { data?: { contentId?: string } }) => {
@@ -202,12 +213,12 @@ export const ContentDiscussion = () => {
         return () => {
             DISCUSSION_EVENTS.forEach((event) => contentDiscussionSocketIoEventEmitter.off(event, handler))
         }
-    }, [contentId, revalidateAll])
+    }, [contentId, courseId, revalidateAll])
 
     // --- persistence callbacks (optimistic-free: mutate then revalidate) ---
 
     const onReactContent = useCallback(async (type: ReactionType | null) => {
-        if (!contentId) {
+        if (!contentId || !courseId) {
             return
         }
         await mutateReactToContent({
@@ -218,10 +229,10 @@ export const ContentDiscussion = () => {
             headers: courseHeaders,
         })
         void reactionsSwr.mutate()
-    }, [contentId, courseHeaders, reactionsSwr])
+    }, [contentId, courseId, courseHeaders, reactionsSwr])
 
     const onSubmitComment = useCallback(async (body: string) => {
-        if (!contentId) {
+        if (!contentId || !courseId) {
             return
         }
         await mutateCreateComment({
@@ -232,10 +243,10 @@ export const ContentDiscussion = () => {
             headers: courseHeaders,
         })
         void commentsSwr.mutate()
-    }, [contentId, courseHeaders, commentsSwr])
+    }, [contentId, courseId, courseHeaders, commentsSwr])
 
     const onReply = useCallback(async (parentId: string, body: string) => {
-        if (!contentId) {
+        if (!contentId || !courseId) {
             return
         }
         await mutateCreateComment({
@@ -249,9 +260,12 @@ export const ContentDiscussion = () => {
         // reply count + the subtree both changed
         void commentsSwr.mutate()
         void loadReplies(parentId)
-    }, [contentId, courseHeaders, commentsSwr, loadReplies])
+    }, [contentId, courseId, courseHeaders, commentsSwr, loadReplies])
 
     const onEdit = useCallback(async (commentId: string, body: string) => {
+        if (!courseId) {
+            return
+        }
         await mutateUpdateComment({
             request: {
                 commentId,
@@ -260,9 +274,12 @@ export const ContentDiscussion = () => {
             headers: courseHeaders,
         })
         revalidateAll()
-    }, [courseHeaders, revalidateAll])
+    }, [courseId, courseHeaders, revalidateAll])
 
     const onDelete = useCallback(async (commentId: string) => {
+        if (!courseId) {
+            return
+        }
         await mutateDeleteComment({
             request: {
                 commentId,
@@ -270,9 +287,12 @@ export const ContentDiscussion = () => {
             headers: courseHeaders,
         })
         revalidateAll()
-    }, [courseHeaders, revalidateAll])
+    }, [courseId, courseHeaders, revalidateAll])
 
     const onReactComment = useCallback(async (commentId: string, type: ReactionType | null) => {
+        if (!courseId) {
+            return
+        }
         await mutateReactToComment({
             request: {
                 commentId,
@@ -281,19 +301,28 @@ export const ContentDiscussion = () => {
             headers: courseHeaders,
         })
         revalidateAll()
-    }, [courseHeaders, revalidateAll])
+    }, [courseId, courseHeaders, revalidateAll])
 
     const onLoadReplies = useCallback((parentId: string) => {
         void loadReplies(parentId)
     }, [loadReplies])
 
-    // hide the whole section until we know which content we're on
-    if (!contentId) {
+    // hide the whole section until both content id and course id are available —
+    // course id is required by the GraphQLMustEnrolledGuard on every discussion resolver
+    if (!contentId || !courseId) {
         return null
     }
 
     return (
         <Discussion
+            // action bar (merged from the old separate ActionToolbar)
+            isFavorite={isFavorite}
+            isShareVisible={isShareVisible}
+            isFavoritePending={isFavoritePending}
+            onToggleFavorite={onToggleFavorite}
+            onShare={onShare}
+            onFullscreen={onFullscreen}
+            // discussion data
             currentUserId={currentUserId}
             contentReactions={reactionsSwr.data ?? undefined}
             onReactContent={onReactContent}

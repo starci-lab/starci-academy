@@ -3,6 +3,7 @@ import type { Components } from "react-markdown"
 import { isInlineCode } from "react-shiki"
 import { Link, Table, Text } from "@heroui/react"
 import {
+    MarkdownTable,
     MarkdownTableBody,
     MarkdownTableColumn,
     MarkdownTableHead,
@@ -53,13 +54,9 @@ export const buildMarkdownRenderers = ({
         <Text elementType="span" size="sm" className="font-semibold text-muted">{children}</Text>
     ),
     table: ({ children }) => (
-        <Table variant="primary">
-            <Table.ScrollContainer>
-                <Table.Content aria-label={t("markdown.tableAriaLabel")}>
-                    {children}
-                </Table.Content>
-            </Table.ScrollContainer>
-        </Table>
+        <MarkdownTable ariaLabel={t("markdown.tableAriaLabel")}>
+            {children}
+        </MarkdownTable>
     ),
     thead: MarkdownTableHead,
     img: ({ src, alt }) => (

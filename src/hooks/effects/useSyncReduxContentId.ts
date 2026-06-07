@@ -1,21 +1,44 @@
 import { useAppDispatch } from "@/redux"
-import { useEffect } from "react"
+import { useLayoutEffect, useRef } from "react"
 import { useParams, usePathname } from "next/navigation"
-import { setContentId } from "@/redux/slices"
+import {
+    setChallengeCount,
+    setChallengePageNumber,
+    setChallenges,
+    setContent,
+    setContentId,
+} from "@/redux/slices"
 
 /**
- * Syncs `content.contentId` from the `[contentId]` route param into Redux on navigation.
+ * Syncs `content.id` from the `[contentId]` route param into Redux on navigation.
+ * Clears the active content when the param is absent so singleton SWR does not keep a stale key.
  * @returns void
  */
 export const useSyncReduxContentId = () => {
     const dispatch = useAppDispatch()
     const pathname = usePathname()
     const params = useParams()
-    useEffect(
+    const prevContentIdRef = useRef<string | undefined>(undefined)
+    useLayoutEffect(
         () => {
-            if (params.contentId) {
-                dispatch(setContentId(params.contentId as string))
+            const contentId = params.contentId as string | undefined
+            const prevContentId = prevContentIdRef.current
+            dispatch(setContentId(contentId))
+            if (!contentId) {
+                dispatch(setContent(undefined))
             }
-        }, [pathname, params.contentId]
+            if (contentId !== prevContentId) {
+                // Drop stale challenge list so the Challenges tab cannot show the previous lesson.
+                dispatch(setChallenges([]))
+                dispatch(setChallengeCount(undefined))
+                dispatch(setChallengePageNumber(0))
+            }
+            prevContentIdRef.current = contentId
+        },
+        [
+            dispatch,
+            pathname,
+            params.contentId,
+        ],
     )
 }

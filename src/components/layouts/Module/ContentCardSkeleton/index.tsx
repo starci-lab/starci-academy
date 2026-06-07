@@ -16,11 +16,11 @@ export const ContentCardSkeleton = ({ className }: ContentCardSkeletonProps) => 
         <Card className={cn(className)}>
             <Card.Content>
                 <div>
-                    <Skeleton className="h-4 my-1 w-2/3 rounded-full" />
+                    <Skeleton className="h-4 my-1 w-2/3 rounded" />
                     <div className="h-2" />
                     <div className="flex flex-col">
-                        <Skeleton className="h-[14px] my-[3px] w-full rounded-full" />
-                        <Skeleton className="h-[14px] my-[3px] w-5/6 rounded-full" />
+                        <Skeleton className="h-[14px] my-[3px] w-full rounded-sm" />
+                        <Skeleton className="h-[14px] my-[3px] w-5/6 rounded-sm" />
                     </div>
                 </div>
             </Card.Content>

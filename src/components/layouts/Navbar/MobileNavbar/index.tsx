@@ -1,17 +1,12 @@
 "use client"
 
+import type { IconComponent } from "@/types"
+import { Globe as TranslateIcon, Paintbrush as PaintBrushIcon } from "@gravity-ui/icons"
 import React from "react"
 import {
     Link,
     cn,
 } from "@heroui/react"
-import {
-    PaintBrushIcon,
-    TranslateIcon,
-} from "@phosphor-icons/react"
-import type {
-    Icon,
-} from "@phosphor-icons/react"
 import {
     useTranslations,
 } from "next-intl"
@@ -29,8 +24,8 @@ export interface MobileNavItem {
     path: string
     /** Whether this entry matches the active route. */
     isActive: boolean
-    /** Phosphor icon component rendered next to the label. */
-    icon: Icon
+    /** Icon component rendered next to the label. */
+    icon: IconComponent
 }
 
 /**
@@ -85,7 +80,6 @@ export const MobileNavbar = ({
                             }}
                         >
                             <item.icon
-                                weight={item.isActive ? "fill" : "regular"}
                                 className="size-6"
                             />
                             <span className="font-bold tracking-tight">{item.label}</span>

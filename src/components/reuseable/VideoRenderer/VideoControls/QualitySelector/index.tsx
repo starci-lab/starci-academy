@@ -1,5 +1,6 @@
 "use client"
 
+import { Gear as GearSixIcon } from "@gravity-ui/icons"
 import React from "react"
 import {
     Dropdown,
@@ -7,10 +8,10 @@ import {
     DropdownMenu,
     DropdownTrigger,
 } from "@heroui/react"
-import { GearSixIcon } from "@phosphor-icons/react"
 import { useCallback, useMemo } from "react"
 import { AUTO_QUALITY_INDEX } from "../constants"
 import type { QualityLevel } from "../types"
+
 
 /** Props for {@link QualitySelector}. */
 export interface QualitySelectorProps {
@@ -84,13 +85,10 @@ export const QualitySelector = ({
 
     return (
         <Dropdown>
-            <DropdownTrigger
-                isIconOnly
-                variant="ghost"
-                aria-label="Quality"
-                className="text-white hover:bg-white/20 border-none min-w-8 h-8"
-            >
-                <GearSixIcon className="h-4 w-4" />
+            <DropdownTrigger aria-label="Quality">
+                <div className="flex h-8 min-w-8 cursor-pointer items-center justify-center rounded-medium border-none text-white hover:bg-white/20">
+                    <GearSixIcon className="h-4 w-4" />
+                </div>
             </DropdownTrigger>
             <DropdownMenu
                 aria-label="Quality levels"

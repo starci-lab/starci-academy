@@ -18,7 +18,7 @@ import {
 } from "@/resources/path"
 import {
     useSearchOverlayState,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import type {
     NavbarItem,
 } from "./types"
@@ -73,11 +73,6 @@ export const Navbar = () => {
                 label: t("nav.courses"),
                 path: pathConfig().locale().course().build(),
                 isActive: pathname.startsWith(pathConfig().locale(locale).course().build()),
-            },
-            {
-                label: t("nav.practice"),
-                path: "/practice",
-                isActive: pathname.startsWith("/practice"),
             },
             {
                 label: t("nav.contact"),

@@ -14,8 +14,8 @@ import {
     useSearchParams,
 } from "next/navigation"
 import {
-    useQueryCourseEnrollmentStatusSwrCore,
-} from "@/hooks/singleton/swr/core/api/graphql/queries/useQueryCourseEnrollmentStatusSwr"
+    useQueryCourseEnrollmentStatusSwr,
+} from "@/hooks/swr/api/graphql/queries/useQueryCourseEnrollmentStatusSwr"
 import {
     useRouter,
 } from "@/i18n/navigation"
@@ -56,7 +56,7 @@ const SepayCheckoutContent = () => {
     const {
         data: statusData,
         mutate: refreshStatus,
-    } = useQueryCourseEnrollmentStatusSwrCore()
+    } = useQueryCourseEnrollmentStatusSwr()
     const isEnrolled = statusData?.courseEnrollmentStatus?.data?.isEnrolled
 
     // poll the enrollment status on a fixed interval while waiting for payment

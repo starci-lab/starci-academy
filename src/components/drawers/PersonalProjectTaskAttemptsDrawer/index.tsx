@@ -11,7 +11,7 @@ import {
 import {
     usePersonalProjectTaskAttemptsDrawerOverlayState,
     useQueryUserPersonalTaskAttemptsSwr,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import { dayjs } from "@/modules/dayjs"
 import type { UserMilestoneTaskAttemptEntity } from "@/modules/types"
 import {
@@ -19,6 +19,7 @@ import {
     useTranslations,
 } from "next-intl"
 import { PersonalProjectAttemptCard } from "./PersonalProjectAttemptCard"
+import { PersonalProjectAttemptsSkeleton } from "./PersonalProjectAttemptsSkeleton"
 
 type AttemptRow = {
     /** Stable row key. */
@@ -77,7 +78,7 @@ export const PersonalProjectTaskAttemptsDrawer = () => {
         ],
     )
 
-    const showSkeleton = isOpen && (swr.isLoading || swr.isValidating) && !(attemptList?.length) && !swr.error
+    const showSkeleton = isOpen && swr.isLoading && !(attemptList?.length) && !swr.error
 
     if (!isOpen) {
         return null
@@ -107,19 +108,7 @@ export const PersonalProjectTaskAttemptsDrawer = () => {
                                         {t("finalProject.page.attemptsDrawer.loadError")}
                                     </div>
                                 ) : showSkeleton ? (
-                                    <ScrollShadow
-                                        className="min-h-0 flex-1 overflow-x-hidden p-3"
-                                        hideScrollBar
-                                    >
-                                        <div className="flex flex-col gap-2">
-                                            {Array.from({ length: 5 }).map((_, index) => (
-                                                <div
-                                                    key={index}
-                                                    className="h-12 animate-pulse rounded-lg bg-default-100"
-                                                />
-                                            ))}
-                                        </div>
-                                    </ScrollShadow>
+                                    <PersonalProjectAttemptsSkeleton />
                                 ) : rows.length ? (
                                     <ScrollShadow
                                         className="min-h-0 flex-1 overflow-x-hidden p-3"

@@ -1,9 +1,7 @@
 "use client"
 
+import { PaperPlane as PaperPlaneTiltIcon } from "@gravity-ui/icons"
 import React from "react"
-import {
-    PaperPlaneTiltIcon,
-} from "@phosphor-icons/react"
 import {
     CONTACT_SUBJECTS,
 } from "../constants"

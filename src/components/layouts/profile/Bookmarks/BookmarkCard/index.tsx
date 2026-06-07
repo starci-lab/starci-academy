@@ -1,5 +1,6 @@
 "use client"
 
+import { ArrowRight as ArrowRightIcon, Clock as ClockIcon, Flag as SwordIcon } from "@gravity-ui/icons"
 import React, {
     useCallback,
 } from "react"
@@ -7,11 +8,6 @@ import {
     Card,
     Button,
 } from "@heroui/react"
-import {
-    ClockIcon,
-    SwordIcon,
-    ArrowRightIcon,
-} from "@phosphor-icons/react"
 import {
     type ContentEntity,
     getContentChallengeCount,

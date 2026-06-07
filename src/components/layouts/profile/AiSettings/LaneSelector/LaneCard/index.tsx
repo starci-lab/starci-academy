@@ -1,5 +1,6 @@
 "use client"
 
+import { CircleCheck as CheckCircleIcon } from "@gravity-ui/icons"
 import React, {
     useCallback,
 } from "react"
@@ -7,14 +8,11 @@ import {
     Chip,
 } from "@heroui/react"
 import {
-    CheckCircleIcon,
-} from "@phosphor-icons/react"
-import {
     useTranslations,
 } from "next-intl"
 import {
-    useAiSettingsFormik,
-} from "@/hooks/singleton"
+    useAiSettingsForm,
+} from "@/hooks/zustand"
 import type {
     AiMode,
 } from "@/modules/api"
@@ -43,14 +41,14 @@ export const LaneCard = ({
     disabled,
 }: LaneCardProps) => {
     const t = useTranslations()
-    const formik = useAiSettingsFormik()
-    const selected = formik.values.mode === mode
+    const { mode: selectedMode, setMode } = useAiSettingsForm()
+    const selected = selectedMode === mode
     const onPress = useCallback(
         () => {
-            formik.setFieldValue("mode", mode)
+            setMode(mode)
         },
         [
-            formik,
+            setMode,
             mode,
         ],
     )
@@ -89,7 +87,6 @@ export const LaneCard = ({
             </div>
             {selected ? (
                 <CheckCircleIcon
-                    weight="fill"
                     className="size-5 text-accent"
                 />
             ) : null}

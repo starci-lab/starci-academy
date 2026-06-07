@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useRef, useState } from "react"
 import { Button, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { ReactionType, type ReactionSummary } from "@/modules/api"
@@ -28,6 +28,7 @@ export const ReactionBar = ({ summary, onReact, disabled }: ReactionBarProps) =>
     const t = useTranslations()
     // local visibility of the emoji picker panel
     const [pickerOpen, setPickerOpen] = useState(false)
+    const containerRef = useRef<HTMLDivElement>(null)
     const myReaction = summary?.myReaction ?? null
     const total = summary?.total ?? 0
     // emotions present on the target, busiest first, capped to the top 3 descriptors
@@ -38,6 +39,8 @@ export const ReactionBar = ({ summary, onReact, disabled }: ReactionBarProps) =>
         .map((count) => REACTION_BY_TYPE[count.type])
         .filter(Boolean)
 
+    const myDescriptor = myReaction ? REACTION_BY_TYPE[myReaction] : REACTION_BY_TYPE[ReactionType.Like]
+
     // picking an emotion toggles it off when it's already the user's pick
     const handlePick = (type: ReactionType) => {
         setPickerOpen(false)
@@ -45,7 +48,17 @@ export const ReactionBar = ({ summary, onReact, disabled }: ReactionBarProps) =>
     }
 
     return (
-        <div className="relative flex items-center gap-2">
+        <div
+            ref={containerRef}
+            className="relative flex items-center gap-2"
+            onBlur={(e) => {
+                // close picker when focus leaves the entire reaction bar
+                if (!containerRef.current?.contains(e.relatedTarget as Node)) {
+                    setPickerOpen(false)
+                }
+            }}
+        >
+            {/* trigger button: shows current reaction or default "Like" */}
             <Button
                 size="sm"
                 variant={myReaction ? "secondary" : "tertiary"}
@@ -53,11 +66,7 @@ export const ReactionBar = ({ summary, onReact, disabled }: ReactionBarProps) =>
                 onPress={() => setPickerOpen((prev) => !prev)}
                 className="rounded-full"
             >
-                <ReactionEmoji
-                    codepoint={myReaction ? REACTION_BY_TYPE[myReaction].codepoint : REACTION_BY_TYPE[ReactionType.Like].codepoint}
-                    emoji={myReaction ? REACTION_BY_TYPE[myReaction].emoji : "👍"}
-                    className="size-4"
-                />
+                <ReactionEmoji descriptor={myDescriptor} size="xs" />
                 <span className="text-xs">
                     {myReaction
                         ? t(REACTION_BY_TYPE[myReaction].labelKey)
@@ -70,12 +79,7 @@ export const ReactionBar = ({ summary, onReact, disabled }: ReactionBarProps) =>
                 <div className="flex items-center gap-1 text-xs text-muted">
                     <span className="flex items-center -space-x-1">
                         {topReactions.map((reaction) => (
-                            <ReactionEmoji
-                                key={reaction.type}
-                                codepoint={reaction.codepoint}
-                                emoji={reaction.emoji}
-                                className="size-4"
-                            />
+                            <ReactionEmoji key={reaction.type} descriptor={reaction} size="xs" />
                         ))}
                     </span>
                     <span>{total}</span>
@@ -97,11 +101,7 @@ export const ReactionBar = ({ summary, onReact, disabled }: ReactionBarProps) =>
                                 myReaction === reaction.type ? "bg-accent/10" : undefined,
                             )}
                         >
-                            <ReactionEmoji
-                                codepoint={reaction.codepoint}
-                                emoji={reaction.emoji}
-                                className="size-6"
-                            />
+                            <ReactionEmoji descriptor={reaction} size="sm" />
                         </button>
                     ))}
                 </div>

@@ -44,7 +44,7 @@ export const QuizTest = ({ deckId }: QuizTestProps) => {
     const [submitting, setSubmitting] = useState(false)
 
     // load the full deck graph (cards + options)
-    const { data, isLoading, isValidating, error } = useSWR(
+    const { data, isLoading, error } = useSWR(
         ["quiz-deck", deckId],
         async () => {
             const response = await queryQuizDeck({
@@ -89,7 +89,7 @@ export const QuizTest = ({ deckId }: QuizTestProps) => {
 
     // loading gate: show content only once the deck has settled with data and no
     // error; otherwise mirror the test question list with a content-shaped skeleton.
-    const ready = !isLoading && !isValidating && !!data && !error
+    const ready = !isLoading && !!data && !error
 
     if (!ready) {
         return <QuizTestSkeleton />

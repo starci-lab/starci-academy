@@ -4,6 +4,6 @@
 export enum ProgrammingLanguageTabsVariant {
     /** Compact pill tabs with accent fill indicator (HeroUI primary custom tabs). */
     Pill = "pill",
-    /** Full-width underline tabs matching {@link ContentTabBar} (Nội dung / Bài giảng / Thử thách). */
+    /** Full-width underline tabs matching {@link ContentTabBar} (Content / Lecture / Challenges). */
     Secondary = "secondary",
 }

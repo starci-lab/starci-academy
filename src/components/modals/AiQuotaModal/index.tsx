@@ -8,7 +8,7 @@ import {
 } from "@heroui/react"
 import {
     useAiQuotaOverlayState,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import {
     useAppDispatch,
 } from "@/redux"

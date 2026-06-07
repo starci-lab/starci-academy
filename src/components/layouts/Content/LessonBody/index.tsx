@@ -4,7 +4,7 @@ import React from "react"
 import { useAppSelector } from "@/redux"
 import { WithClassNames } from "@/modules/types"
 import { cn } from "@heroui/react"
-import { useQueryLessonVideosSwr } from "@/hooks/singleton"
+import { useQueryLessonVideosSwr } from "@/hooks"
 import { LessonCard } from "./LessonCard"
 import { LessonCardSkeleton } from "./LessonCardSkeleton"
 import { LessonBodyEmpty } from "./Empty"
@@ -16,7 +16,9 @@ export const LessonBody = ({ className }: LessonBodyProps) => {
     const queryLessonVideosSwr = useQueryLessonVideosSwr()
     const lessonVideos = useAppSelector((state) => state.lessonVideo.entities)
 
-    if (queryLessonVideosSwr.isLoading) {
+    // loading gate: skeleton until the query settles AND redux has hydrated the
+    // list (undefined = not yet hydrated → skeleton; [] = settled-but-empty → empty state)
+    if (queryLessonVideosSwr.isLoading || !lessonVideos) {
         return (
             <div className={cn("", className)}>
                 <LessonCardSkeleton />

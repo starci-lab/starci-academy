@@ -16,7 +16,7 @@ import {
 } from "next/navigation"
 import {
     useAiQuotaOverlayState,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import {
     pathConfig,
 } from "@/resources"

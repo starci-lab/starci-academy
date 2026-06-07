@@ -140,6 +140,8 @@ export const Stepper = () => {
                         fractionDigits: 2,
                     }).toNumber()
                     : null,
+                // phases before the active one have already filled their slots → sold out
+                soldOut: pricingPhase.orderIndex < currentOrderIndex,
             }
         }),
         [
@@ -148,6 +150,7 @@ export const Stepper = () => {
             pricingPhaseDisplayPriceUsd,
             calculateDiscount,
             listPrice,
+            currentOrderIndex,
         ],
     )
 
@@ -159,7 +162,7 @@ export const Stepper = () => {
                 currentOrderIndex={currentOrderIndex}
             />
             <Spacer y={2} />
-            <PhaseLabels pricingPhases={pricingPhases} />
+            <PhaseLabels pricingPhases={pricingPhases} currentOrderIndex={currentOrderIndex} />
             <Spacer y={2} />
             <PhasePrices rows={priceRows} />
         </div>

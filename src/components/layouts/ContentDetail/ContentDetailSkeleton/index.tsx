@@ -16,8 +16,8 @@ export const ContentDetailSkeleton = () => {
         <div className="mx-auto max-w-4xl p-6">
             <Skeleton className="h-8 w-3/4 rounded-2xl" />
             <div className="h-4" />
-            <Skeleton className="h-4 w-full rounded-full" />
-            <Skeleton className="h-4 w-5/6 rounded-full mt-2" />
+            <Skeleton className="h-4 w-full rounded" />
+            <Skeleton className="h-4 w-5/6 rounded mt-2" />
             <div className="h-6" />
             <Skeleton className="h-64 w-full rounded-2xl" />
         </div>

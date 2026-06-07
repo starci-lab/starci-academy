@@ -8,7 +8,7 @@ import { useAppSelector } from "@/redux"
 import {
     useQueryHeadhunterCompaniesSwr,
     useQueryHeadhuntersSwr,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import { ConsultantGrid } from "./ConsultantGrid"
 import { HeadhuntingsBreadcrumbs } from "./HeadhuntingsBreadcrumbs"
 

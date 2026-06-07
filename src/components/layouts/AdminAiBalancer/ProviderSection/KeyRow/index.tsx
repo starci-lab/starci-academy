@@ -6,7 +6,6 @@ import type {
 } from "@/modules/api"
 import {
     KeyStatusChip,
-    KeyStatusChipVariant,
     formatBalancerTimestamp,
 } from "@/components/reuseable/AiBalancer"
 

@@ -3,16 +3,19 @@ import {
     ApolloLink, 
     InMemoryCache 
 } from "@apollo/client"
-import { 
-    createRetryLink, 
-    createErrorLink, 
-    createTimeoutLink, 
-    createAttachAccessTokenLink, 
-    createHttpLink, 
-    defaultOptions, 
+import {
+    createRetryLink,
+    createErrorLink,
+    createTimeoutLink,
+    createAttachAccessTokenLink,
+    createAttachCsrfTokenLink,
+    createAttachDeviceFingerprintLink,
+    createHttpLink,
+    defaultOptions,
     createProactiveAccessTokenRefreshLink
 } from "../links"
 import { LocalStorage, LocalStorageId } from "@/modules/storage"
+import { type GraphQLHeaders } from "../../types"
 /**
  * Authenticated Apollo client for GraphQL operations.
  *
@@ -69,7 +72,7 @@ export interface CreateAuthApolloClientOptions {
     /** Forward cookies on same-origin or cross-site requests. */
     withCredentials?: boolean
     /** Additional headers passed to the {@link https://www.apollographql.com/docs/react/api/link/apollo-link-http | HttpLink}. */
-    headers?: Record<string, string>
+    headers?: GraphQLHeaders
     /** Optional {@link https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal | AbortSignal} for all operations on this client; merged into {@link https://www.apollographql.com/docs/react/api/link/apollo-link-http | HttpLink} `fetchOptions`. */
     signal?: AbortSignal
     /** When `true`, logs the flow through the link chain (DynamicAuthLink, AuthRefreshLink, ErrorLink, HttpLink). */
@@ -133,6 +136,8 @@ export const createAuthApolloClient = ({
                 debug,
                 getAccessToken: resolveAccessToken,
             }),
+            createAttachCsrfTokenLink(debug),
+            createAttachDeviceFingerprintLink(debug),
             createHttpLink({
                 uri,
                 withCredentials,

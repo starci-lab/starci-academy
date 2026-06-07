@@ -3,12 +3,12 @@
 /**
  * **Sign-up step 2** — OTP after `signUpInit`; resend uses {@link useMutateSignUpResendOtpSwr}.
  *
- * Submit runs `signUpVerifyOtp` via {@link useSignUpFormik} while `signUpState === Otp`.
+ * Submit runs `signUpVerifyOtp` via {@link useSignUpForm} while `signUpState === Otp`.
  */
 import React from "react"
 import { Button, cn, FieldError, InputOTP, Link, Modal, Spinner, TextField } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { useMutateSignUpResendOtpSwr, useSignUpFormik } from "@/hooks/singleton"
+import { useMutateSignUpResendOtpSwr, useSignUpForm } from "@/hooks"
 import { runGraphQLWithToast } from "@/modules/toast"
 
 /**
@@ -26,7 +26,7 @@ export const OtpState = () => {
         setFieldTouched,
         isSubmitting,
         isValid,
-    } = useSignUpFormik()
+    } = useSignUpForm()
 
     const onResend = async () => {
         const challengeId = values.challengeId

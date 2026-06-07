@@ -3,6 +3,7 @@
 import React from "react"
 import {
     ScrollShadow,
+    Skeleton,
 } from "@heroui/react"
 
 /** Number of placeholder rows shown while attempts load. */
@@ -21,9 +22,9 @@ export const AttemptsSkeleton = () => {
         >
             <div className="flex flex-col gap-2">
                 {Array.from({ length: SKELETON_ROW_COUNT }).map((_, index) => (
-                    <div
+                    <Skeleton
                         key={index}
-                        className="h-12 animate-pulse rounded-lg bg-default-100"
+                        className="h-12 rounded-lg"
                     />
                 ))}
             </div>

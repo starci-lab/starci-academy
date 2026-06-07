@@ -7,6 +7,54 @@ export enum CodingDifficulty {
     Hard = "hard",
 }
 
+/** Primary interview topic domain of a coding problem (mirrors backend `CodingDomain`). */
+export enum CodingDomain {
+    Arrays = "arrays",
+    Strings = "strings",
+    Hashing = "hashing",
+    TwoPointers = "twoPointers",
+    SlidingWindow = "slidingWindow",
+    Stack = "stack",
+    Queue = "queue",
+    LinkedList = "linkedList",
+    Trees = "trees",
+    Heap = "heap",
+    Graph = "graph",
+    BinarySearch = "binarySearch",
+    Sorting = "sorting",
+    Recursion = "recursion",
+    Backtracking = "backtracking",
+    DynamicProgramming = "dynamicProgramming",
+    Greedy = "greedy",
+    Math = "math",
+    BitManipulation = "bitManipulation",
+    Matrix = "matrix",
+}
+
+/** Stable display order for domain sections in the practice list. */
+export const CODING_DOMAIN_ORDER: Array<CodingDomain> = [
+    CodingDomain.Arrays,
+    CodingDomain.Strings,
+    CodingDomain.Hashing,
+    CodingDomain.TwoPointers,
+    CodingDomain.SlidingWindow,
+    CodingDomain.Stack,
+    CodingDomain.Queue,
+    CodingDomain.LinkedList,
+    CodingDomain.Trees,
+    CodingDomain.Heap,
+    CodingDomain.Graph,
+    CodingDomain.BinarySearch,
+    CodingDomain.Sorting,
+    CodingDomain.Recursion,
+    CodingDomain.Backtracking,
+    CodingDomain.DynamicProgramming,
+    CodingDomain.Greedy,
+    CodingDomain.Math,
+    CodingDomain.BitManipulation,
+    CodingDomain.Matrix,
+]
+
 /** Submission language (mirrors backend `CodingLanguage`). */
 export enum CodingLanguage {
     Python = "python",
@@ -65,6 +113,8 @@ export interface CodingProblem {
     statement?: string
     /** Difficulty tier. */
     difficulty: CodingDifficulty
+    /** Primary interview topic domain (drives list grouping). */
+    domain: CodingDomain
     /** Topic tags. */
     tags: Array<string>
     /** Per-run CPU time limit (ms) — present on detail. */
@@ -157,6 +207,28 @@ export interface CodingProblemRequest {
 export interface QueryCodingProblemResponse {
     /** Top-level `codingProblem` field. */
     codingProblem: GraphQLResponse<CodingProblem>
+}
+
+/* ───────────────────────── codingProblemHint ───────────────────────────── */
+
+/** Variables for `codingProblemHint(request)`. */
+export interface CodingProblemHintRequest {
+    /** Slug of the problem to load the approach hint for. */
+    slug: string
+}
+
+/** A problem's approach-hint markdown (sourced from Elasticsearch). */
+export interface CodingProblemHint {
+    /** Stable URL slug of the problem. */
+    slug: string
+    /** Approach-hint content in Markdown (localized). */
+    hint: string
+}
+
+/** Response for the `codingProblemHint` query. */
+export interface QueryCodingProblemHintResponse {
+    /** Top-level `codingProblemHint` field (null when no hint authored). */
+    codingProblemHint: GraphQLResponse<CodingProblemHint | null>
 }
 
 /* ────────────────────── myCodingSubmissions (history) ───────────────────── */

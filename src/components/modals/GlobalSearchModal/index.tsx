@@ -1,17 +1,17 @@
 "use client"
 
-import React, { useEffect } from "react"
+import { Magnifier as MagnifyingGlassIcon } from "@gravity-ui/icons"
+import React, { useEffect, useState } from "react"
 import { Input, Kbd, Modal, TextField } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { 
-    useSearchOverlayState, 
-    useGlobalSearchFormik, 
-} from "@/hooks/singleton"
-import { MagnifyingGlassIcon } from "@phosphor-icons/react"
+import {
+    useSearchOverlayState,
+} from "@/hooks"
 import debounce from "lodash/debounce"
 import { GlobalSearchContent } from "./Content"
 import { setSearchQuery } from "@/redux/slices"
-import { useAppDispatch } from "@/redux"
+import { useAppDispatch, useAppSelector } from "@/redux"
+
 
 /**
  * Global search modal opened by Navbar (Ctrl/Cmd+K).
@@ -19,8 +19,10 @@ import { useAppDispatch } from "@/redux"
 export const GlobalSearchModal = () => {
     const t = useTranslations()
     const { isOpen, setOpen } = useSearchOverlayState()
-    const formik = useGlobalSearchFormik()
     const dispatch = useAppDispatch()
+    // The search box is just an input synced to Redux search.query — no form lib needed.
+    // Initialized from redux; dispatch (debounced) on type; GlobalSearchContent reads from redux.
+    const [query, setQuery] = useState(useAppSelector((state) => state.search.query))
 
     useEffect(() => {
         if (!isOpen) return
@@ -35,12 +37,12 @@ export const GlobalSearchModal = () => {
 
     useEffect(() => {
         if (!isOpen) return
-        const emitSearch = debounce((query: string) => {
-            dispatch(setSearchQuery(query))
+        const emitSearch = debounce((next: string) => {
+            dispatch(setSearchQuery(next))
         }, 200)
-        emitSearch(formik.values.query.trim())
+        emitSearch(query.trim())
         return () => emitSearch.cancel()
-    }, [dispatch, formik.values.query, isOpen])
+    }, [dispatch, query, isOpen])
 
     return (
         <Modal isOpen={isOpen} onOpenChange={setOpen}>
@@ -53,8 +55,8 @@ export const GlobalSearchModal = () => {
                                 <Input
                                     className="w-full max-w-full pl-9 pr-16 rounded-full ring-0 focus:ring-0 shadow-none"
                                     placeholder={t("search.placeholder")}
-                                    value={formik.values.query}
-                                    onChange={(event) => formik.setFieldValue("query", event.target.value)}
+                                    value={query}
+                                    onChange={(event) => setQuery(event.target.value)}
                                 />
                                 <Kbd className="absolute right-2 top-1/2 -translate-y-1/2">
                                     <Kbd.Content>ESC</Kbd.Content>

@@ -2,7 +2,7 @@
 
 import React, { useMemo } from "react"
 import { Modal, ScrollShadow } from "@heroui/react"
-import { useFeedbackDetailsOverlayState, useQuerySubmissionFeedbacksSwr } from "@/hooks/singleton"
+import { useFeedbackDetailsOverlayState, useQuerySubmissionFeedbacksSwr } from "@/hooks"
 import { useAppSelector } from "@/redux"
 import { FeedbackCard } from "./FeedbackCard"
 import { useTranslations } from "next-intl"

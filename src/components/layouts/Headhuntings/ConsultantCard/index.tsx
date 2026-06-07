@@ -1,7 +1,8 @@
 "use client"
 
+import { House as BuildingsIcon } from "@gravity-ui/icons"
 import { cn } from "@heroui/react"
-import { BuildingsIcon } from "@phosphor-icons/react"
+
 import type { ConsultantEntity } from "@/modules/types"
 import { useLocale } from "next-intl"
 import { useRouter } from "next/navigation"
@@ -11,6 +12,7 @@ import { useAppSelector } from "@/redux"
 import { ConsultantAvatar } from "../ConsultantAvatar"
 import { useOpenHeadhunterDetail } from "../hooks"
 import React from "react"
+
 
 export interface ConsultantCardProps {
     /** Consultant row from API / Redux. */

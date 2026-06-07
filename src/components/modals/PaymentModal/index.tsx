@@ -6,7 +6,7 @@ import {
     useMutateCourseEnrollSwr,
     useMutatePurchaseAiSubscriptionSwr,
     usePaymentOverlayState,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import { useAppSelector } from "@/redux"
 import { PaymentFlow, PaymentType } from "@/modules/types"
 import { assetConfig } from "@/resources"
@@ -173,7 +173,7 @@ export const PaymentModal = () => {
                             <div className="flex flex-col gap-6">
                                 {paymentGroups.map((group) => (
                                     <div key={group.id} className="flex flex-col gap-3">
-                                        {/* labeled divider (song song) — normal case, không uppercase */}
+                                        {/* labeled divider — normal case, not uppercase */}
                                         <div className="flex gap-2">
                                             <div className="text-start text-xs text-muted">{group.label}</div>
                                         </div>

@@ -1,6 +1,4 @@
-import type {
-    Icon,
-} from "@phosphor-icons/react"
+import type { IconComponent } from "@/types"
 import type {
     SidebarTab,
 } from "@/redux/slices"
@@ -15,8 +13,8 @@ export interface SidebarNavItem {
     value: string
     /** Sidebar tab enum value this row activates. */
     tab: SidebarTab
-    /** Phosphor icon component rendered before the label. */
-    icon: Icon
+    /** Icon component rendered before the label. */
+    icon: IconComponent
     /** Navigation target the row routes to when pressed. */
     url?: string
 }

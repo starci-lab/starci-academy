@@ -5,7 +5,7 @@ import {
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { useAppSelector } from "@/redux"
-import { useQueryCourseSwr, useQueryModuleSwr } from "@/hooks/singleton"
+import { useQueryCourseSwr, useQueryModuleSwr } from "@/hooks"
 import { MarkdownContent } from "@/components/reuseable"
 
 export const Learn = () => {

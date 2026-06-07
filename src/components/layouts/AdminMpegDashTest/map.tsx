@@ -1,7 +1,8 @@
+import { BroadcastSignal as BroadcastIcon, Play as PlayIcon } from "@gravity-ui/icons"
 import React from "react"
-import { PlayIcon, BroadcastIcon } from "@phosphor-icons/react"
 import { VideoRendererType } from "@/modules/types"
 import type { RendererTypeOption } from "./types"
+
 
 /**
  * Selector option metadata keyed by renderer type.

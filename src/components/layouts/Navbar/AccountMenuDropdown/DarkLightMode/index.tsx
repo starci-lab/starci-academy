@@ -1,8 +1,10 @@
 "use client"
+import { Moon as MoonIcon, Sun as SunIcon } from "@gravity-ui/icons"
 import { Switch, cn } from "@heroui/react"
-import { MoonIcon, SunIcon } from "@phosphor-icons/react"
+
 import { useTheme } from "next-themes"
 import React from "react"
+
 
 /**
  * DarkLightModeSwitch is a toggle component to switch between dark and light mode.

@@ -5,21 +5,20 @@ import React, {
     useEffect,
     useMemo,
     useState,
+    useRef,
 } from "react"
 import useSWR from "swr"
 import Editor from "@monaco-editor/react"
 import {
     Button,
-    Card,
-    CardContent,
     Chip,
-    Spinner,
 } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useTheme } from "next-themes"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import {
     queryCodingProblem,
+    queryCodingProblemHint,
     queryMyCodingSubmissions,
     mutateSubmitCodingSolution,
     CodingLanguage,
@@ -32,8 +31,9 @@ import {
     jobNotificationsSocketIoEventEmitter,
     PublicationEvent,
     SubscriptionEvent,
-} from "@/hooks/singleton/socketio"
+} from "@/hooks/socketio"
 import { JobStatus, type JobStatusUpdatedSocketIoMessage } from "@/modules/types"
+import { PracticeProblemSkeleton } from "./PracticeProblemSkeleton"
 
 /** Props for {@link PracticeProblem}. */
 export interface PracticeProblemProps {
@@ -50,7 +50,7 @@ const MONACO_LANGUAGE: Record<CodingLanguage, string> = {
     [CodingLanguage.Cpp]: "cpp",
 }
 
-/** HeroUI Chip color per verdict (Accepted green, errors red, in-flight default). */
+/** Chip color per verdict. */
 const VERDICT_COLOR: Record<CodingVerdict, "success" | "danger" | "warning" | "default"> = {
     [CodingVerdict.Accepted]: "success",
     [CodingVerdict.WrongAnswer]: "danger",
@@ -68,27 +68,51 @@ const isTerminalStatus = (status: JobStatus | undefined): boolean =>
     status === JobStatus.Completed || status === JobStatus.Failed
 
 /**
- * Coding-problem detail + editor. Loads the problem (statement, samples, starter
- * code), lets the user pick a language and edit code in Monaco, submits for
- * judging, and shows the verdict in realtime by subscribing to the judging job
- * over the `job_notifications` Socket.IO channel.
+ * Coding-problem detail + editor. Two-pane layout separated by a single border
+ * line (matching the course-learn page pattern): left = statement + samples +
+ * hint; right = language selector + Monaco editor + submit + result + history.
  */
 export const PracticeProblem = ({ slug }: PracticeProblemProps) => {
     const t = useTranslations()
     const locale = useLocale()
-    const theme = useTheme()
-    // shared job-notifications socket (auto-connects on auth)
+    const { theme } = useTheme()
     const socket = useJobNotificationsSocketIo()
 
-    // editor + submission UI state
     const [language, setLanguage] = useState<CodingLanguage>(CodingLanguage.Python)
     const [code, setCode] = useState<string>("")
     const [pendingJobId, setPendingJobId] = useState<string | null>(null)
     const [submitting, setSubmitting] = useState(false)
-    // tracks whether the user has manually edited so we don't clobber their code
+    const [showHint, setShowHint] = useState(false)
     const [touchedLanguages, setTouchedLanguages] = useState<Set<CodingLanguage>>(new Set())
 
-    // load the problem detail (statement, samples, starter code)
+    const telemetryRef = useRef({
+        pasteCount: 0,
+        pasteSizeMax: 0,
+        keystrokeCount: 0,
+        tabBlurCount: 0,
+        timeOpen: Date.now(),
+    })
+
+    // Reset telemetry when the slug changes (user selects a new problem)
+    useEffect(() => {
+        telemetryRef.current = {
+            pasteCount: 0,
+            pasteSizeMax: 0,
+            keystrokeCount: 0,
+            tabBlurCount: 0,
+            timeOpen: Date.now(),
+        }
+    }, [slug])
+
+    // Track when window loses focus (user switching browser tabs/windows)
+    useEffect(() => {
+        const handleBlur = () => {
+            telemetryRef.current.tabBlurCount += 1
+        }
+        window.addEventListener("blur", handleBlur)
+        return () => window.removeEventListener("blur", handleBlur)
+    }, [])
+
     const { data: problem, isLoading } = useSWR<CodingProblem | null>(
         ["coding-problem", slug],
         async () => {
@@ -97,7 +121,14 @@ export const PracticeProblem = ({ slug }: PracticeProblemProps) => {
         },
     )
 
-    // load the user's submission history for this problem (mutate after judging)
+    const { data: hint } = useSWR<string | null>(
+        ["coding-problem-hint", slug],
+        async () => {
+            const response = await queryCodingProblemHint({ request: { slug } })
+            return response.data?.codingProblemHint.data?.hint ?? null
+        },
+    )
+
     const { data: submissionsData, mutate: mutateSubmissions } = useSWR(
         ["my-coding-submissions", slug],
         async () => {
@@ -108,55 +139,55 @@ export const PracticeProblem = ({ slug }: PracticeProblemProps) => {
         },
     )
 
-    // starter code map (language → code) from the loaded problem
     const starterByLanguage = useMemo(() => {
         const map = new Map<CodingLanguage, string>()
         problem?.starterCodes?.forEach((starter) => map.set(starter.language, starter.code))
         return map
     }, [problem?.starterCodes])
 
-    // available languages = those with starter code, else the full set
     const languages = useMemo<Array<CodingLanguage>>(() => {
         const withStarter = problem?.starterCodes?.map((starter) => starter.language) ?? []
         return withStarter.length > 0 ? withStarter : Object.values(CodingLanguage)
     }, [problem?.starterCodes])
 
-    // when the problem loads, default the language to the first available one
     useEffect(() => {
         if (languages.length > 0 && !languages.includes(language)) {
             setLanguage(languages[0])
         }
     }, [languages, language])
 
-    // seed the editor with starter code for the active language (unless edited)
     useEffect(() => {
         if (!touchedLanguages.has(language)) {
             setCode(starterByLanguage.get(language) ?? "")
         }
     }, [language, starterByLanguage, touchedLanguages])
 
-    // latest submission drives the result panel
     const latestSubmission = useMemo<CodingSubmission | undefined>(
         () => submissionsData?.submissions[0],
         [submissionsData?.submissions],
     )
 
-    // submit handler: persist + enqueue judging, then subscribe to the job
     const onSubmit = useCallback(async () => {
-        // guard against double-submits
         setSubmitting(true)
         try {
-            // create the submission + judging job on the backend
+            const timeOpenToSubmitMs = Date.now() - telemetryRef.current.timeOpen
             const response = await mutateSubmitCodingSolution({
-                request: { slug, language, sourceCode: code },
+                request: {
+                    slug,
+                    language,
+                    sourceCode: code,
+                    telemetry: {
+                        pasteCount: telemetryRef.current.pasteCount,
+                        pasteSizeMax: telemetryRef.current.pasteSizeMax,
+                        keystrokeCount: telemetryRef.current.keystrokeCount,
+                        tabBlurCount: telemetryRef.current.tabBlurCount,
+                        timeOpenToSubmitMs,
+                    },
+                },
             })
             const jobId = response.data?.submitCodingSolution.data?.jobId
-            if (!jobId) {
-                return
-            }
-            // refetch history so the new pending row appears immediately
+            if (!jobId) return
             await mutateSubmissions()
-            // subscribe to the judging job for the realtime verdict push
             setPendingJobId(jobId)
             socket.emit(PublicationEvent.SubscribeJobNotification, {
                 data: { jobId },
@@ -167,17 +198,10 @@ export const PracticeProblem = ({ slug }: PracticeProblemProps) => {
         }
     }, [slug, language, code, mutateSubmissions, socket, locale])
 
-    // listen for the judging job to finish, then refetch the verdict
     useEffect(() => {
-        if (!pendingJobId) {
-            return
-        }
+        if (!pendingJobId) return
         const onMessage = (message: JobStatusUpdatedSocketIoMessage) => {
-            // ignore updates for other jobs
-            if (message.data?.jobId !== pendingJobId) {
-                return
-            }
-            // once terminal, refresh history (the row now carries the verdict)
+            if (message.data?.jobId !== pendingJobId) return
             if (isTerminalStatus(message.data?.status)) {
                 void mutateSubmissions()
                 setPendingJobId(null)
@@ -189,35 +213,35 @@ export const PracticeProblem = ({ slug }: PracticeProblemProps) => {
         }
     }, [pendingJobId, mutateSubmissions])
 
-    // judging is in-flight while we have a pending job
     const judging = pendingJobId !== null
 
     if (isLoading || !problem) {
-        return (
-            <div className="flex justify-center py-20">
-                <Spinner />
-            </div>
-        )
+        return <PracticeProblemSkeleton />
     }
 
     return (
-        <div className="mx-auto grid max-w-7xl gap-4 p-4 lg:grid-cols-2">
-            {/* ── left: statement + samples ── */}
-            <Card>
-                <CardContent className="flex flex-col gap-4">
-                    <div className="flex items-center justify-between gap-2">
-                        <h1 className="text-xl font-bold">{problem.title}</h1>
-                        <Chip size="sm" variant="soft" color="default">
-                            {t(`codingPractice.difficulty.${problem.difficulty}`)}
-                        </Chip>
-                    </div>
+        // two-pane split matching the learn/modules layout: left | right divided by border-r
+        <div className="grid h-[calc(100vh-4rem)] grid-cols-1 lg:grid-cols-2">
+
+            {/* ── LEFT: statement + samples + hint ── */}
+            <div className="flex flex-col overflow-y-auto border-r">
+                {/* problem header */}
+                <div className="flex items-center justify-between gap-3 border-b px-6 py-4">
+                    <h1 className="text-xl font-bold">{problem.title}</h1>
+                    <Chip size="sm" variant="soft" color="default">
+                        {t(`codingPractice.difficulty.${problem.difficulty}`)}
+                    </Chip>
+                </div>
+
+                {/* statement body */}
+                <div className="flex flex-col gap-6 px-6 py-5">
                     <MarkdownContent markdown={problem.statement ?? ""} />
 
                     {/* sample testcases */}
                     {(problem.testcases?.length ?? 0) > 0 && (
                         <div className="flex flex-col gap-3">
-                            <div className="border-t border-default-200" />
-                            <h2 className="font-semibold">{t("codingPractice.samples")}</h2>
+                            <div className="border-t" />
+                            <p className="font-semibold">{t("codingPractice.samples")}</p>
                             {problem.testcases?.map((testcase, index) => (
                                 <div key={testcase.id} className="rounded-medium bg-default-100 p-3">
                                     <p className="text-sm font-medium">
@@ -235,114 +259,144 @@ export const PracticeProblem = ({ slug }: PracticeProblemProps) => {
                             ))}
                         </div>
                     )}
-                </CardContent>
-            </Card>
 
-            {/* ── right: editor + result + history ── */}
-            <div className="flex flex-col gap-4">
-                <Card>
-                    <CardContent className="flex flex-col gap-3">
-                        {/* language selector */}
-                        <div className="flex flex-wrap items-center gap-2">
-                            {languages.map((option) => (
+                    {/* approach hint — toggled, sourced from Elasticsearch */}
+                    {hint && (
+                        <div className="flex flex-col gap-3">
+                            <div className="border-t" />
+                            <div className="flex items-center justify-between gap-2">
+                                <p className="font-semibold">{t("codingPractice.hintTitle")}</p>
                                 <Button
-                                    key={option}
                                     size="sm"
-                                    variant={language === option ? "primary" : "secondary"}
-                                    onPress={() => setLanguage(option)}
+                                    variant="secondary"
+                                    onPress={() => setShowHint((prev) => !prev)}
                                 >
-                                    {t(`codingPractice.language.${option}`)}
+                                    {showHint ? t("codingPractice.hideHint") : t("codingPractice.showHint")}
                                 </Button>
-                            ))}
-                        </div>
-
-                        {/* code editor */}
-                        <div className="overflow-hidden rounded-medium border border-default-200">
-                            <Editor
-                                height="420px"
-                                language={MONACO_LANGUAGE[language]}
-                                theme={theme.theme === "dark" ? "vs-dark" : "light"}
-                                value={code}
-                                onChange={(value) => {
-                                    setCode(value ?? "")
-                                    // mark this language touched so language switches don't reset it
-                                    setTouchedLanguages((prev) => new Set(prev).add(language))
-                                }}
-                                options={{
-                                    minimap: { enabled: false },
-                                    fontSize: 14,
-                                    scrollBeyondLastLine: false,
-                                }}
-                            />
-                        </div>
-
-                        {/* submit */}
-                        <Button
-                            variant="primary"
-                            isPending={submitting || judging}
-                            isDisabled={code.trim().length === 0}
-                            onPress={onSubmit}
-                        >
-                            {judging ? t("codingPractice.judging") : t("codingPractice.submit")}
-                        </Button>
-                    </CardContent>
-                </Card>
-
-                {/* result panel — latest submission verdict */}
-                {latestSubmission && (
-                    <Card>
-                        <CardContent className="flex flex-col gap-2">
-                            <div className="flex items-center justify-between">
-                                <h2 className="font-semibold">{t("codingPractice.result")}</h2>
-                                <Chip variant="soft" color={VERDICT_COLOR[latestSubmission.verdict]}>
-                                    {t(`codingPractice.verdict.${latestSubmission.verdict}`)}
-                                </Chip>
                             </div>
-                            <p className="text-sm text-muted">
-                                {t("codingPractice.passed")}: {latestSubmission.passedCount}/{latestSubmission.totalCount}
-                                {latestSubmission.runtimeMs !== null && (
-                                    <> · {latestSubmission.runtimeMs} ms</>
-                                )}
-                                {latestSubmission.memoryKb !== null && (
-                                    <> · {latestSubmission.memoryKb} KB</>
-                                )}
-                            </p>
-                            {latestSubmission.compileOutput && (
-                                <pre className="whitespace-pre-wrap rounded-medium bg-danger-50 p-2 text-xs text-danger">
-                                    {latestSubmission.compileOutput}
-                                </pre>
+                            {showHint && <MarkdownContent markdown={hint} />}
+                        </div>
+                    )}
+                </div>
+            </div>
+
+            {/* ── RIGHT: editor + submit + result + history ── */}
+            <div className="flex flex-col overflow-y-auto">
+                {/* language selector */}
+                <div className="flex flex-wrap items-center gap-2 border-b px-6 py-3">
+                    {languages.map((option) => (
+                        <Button
+                            key={option}
+                            size="sm"
+                            variant={language === option ? "primary" : "secondary"}
+                            onPress={() => setLanguage(option)}
+                        >
+                            {t(`codingPractice.language.${option}`)}
+                        </Button>
+                    ))}
+                </div>
+
+                {/* Monaco editor — fills remaining vertical space */}
+                <div className="flex-1 border-b">
+                    <Editor
+                        height="100%"
+                        language={MONACO_LANGUAGE[language]}
+                        theme={theme === "dark" ? "vs-dark" : "light"}
+                        value={code}
+                        onChange={(value) => {
+                            setCode(value ?? "")
+                            setTouchedLanguages((prev) => new Set(prev).add(language))
+                        }}
+                        onMount={(editor) => {
+                            editor.onDidPaste((e) => {
+                                const model = editor.getModel()
+                                const pastedText = model ? model.getValueInRange(e.range) : ""
+                                const size = pastedText.length
+                                telemetryRef.current.pasteCount += 1
+                                telemetryRef.current.pasteSizeMax = Math.max(
+                                    telemetryRef.current.pasteSizeMax,
+                                    size
+                                )
+                            })
+                            editor.onKeyDown(() => {
+                                telemetryRef.current.keystrokeCount += 1
+                            })
+                            editor.onDidBlurEditorText(() => {
+                                telemetryRef.current.tabBlurCount += 1
+                            })
+                        }}
+                        options={{
+                            minimap: { enabled: false },
+                            fontSize: 14,
+                            scrollBeyondLastLine: false,
+                            padding: { top: 12, bottom: 12 },
+                        }}
+                    />
+                </div>
+
+                {/* submit bar */}
+                <div className="flex items-center justify-end border-b px-6 py-3">
+                    <Button
+                        variant="primary"
+                        isPending={submitting || judging}
+                        isDisabled={code.trim().length === 0}
+                        onPress={onSubmit}
+                    >
+                        {judging ? t("codingPractice.judging") : t("codingPractice.submit")}
+                    </Button>
+                </div>
+
+                {/* result panel */}
+                {latestSubmission && (
+                    <div className="flex flex-col gap-2 border-b px-6 py-4">
+                        <div className="flex items-center justify-between">
+                            <p className="font-semibold">{t("codingPractice.result")}</p>
+                            <Chip variant="soft" color={VERDICT_COLOR[latestSubmission.verdict]}>
+                                {t(`codingPractice.verdict.${latestSubmission.verdict}`)}
+                            </Chip>
+                        </div>
+                        <p className="text-sm text-muted">
+                            {t("codingPractice.passed")}: {latestSubmission.passedCount}/{latestSubmission.totalCount}
+                            {latestSubmission.runtimeMs !== null && (
+                                <> · {latestSubmission.runtimeMs} ms</>
                             )}
-                        </CardContent>
-                    </Card>
+                            {latestSubmission.memoryKb !== null && (
+                                <> · {latestSubmission.memoryKb} KB</>
+                            )}
+                        </p>
+                        {latestSubmission.compileOutput && (
+                            <pre className="whitespace-pre-wrap rounded-medium bg-danger-50 p-2 text-xs text-danger">
+                                {latestSubmission.compileOutput}
+                            </pre>
+                        )}
+                    </div>
                 )}
 
                 {/* submission history */}
                 {(submissionsData?.submissions.length ?? 0) > 0 && (
-                    <Card>
-                        <CardContent className="flex flex-col gap-2">
-                            <h2 className="font-semibold">{t("codingPractice.history")}</h2>
-                            <div className="flex flex-col gap-1">
-                                {submissionsData?.submissions.map((submission) => (
-                                    <div
-                                        key={submission.id}
-                                        className="flex items-center justify-between text-sm"
-                                    >
-                                        <span className="text-muted">
-                                            {new Date(submission.createdAt).toLocaleString()}
-                                        </span>
-                                        <span className="flex items-center gap-2">
-                                            <Chip size="sm" variant="soft" color="default">
-                                                {t(`codingPractice.language.${submission.language}`)}
-                                            </Chip>
-                                            <Chip size="sm" variant="soft" color={VERDICT_COLOR[submission.verdict]}>
-                                                {t(`codingPractice.verdict.${submission.verdict}`)}
-                                            </Chip>
-                                        </span>
-                                    </div>
-                                ))}
-                            </div>
-                        </CardContent>
-                    </Card>
+                    <div className="flex flex-col gap-2 px-6 py-4">
+                        <p className="font-semibold">{t("codingPractice.history")}</p>
+                        <div className="flex flex-col gap-1">
+                            {submissionsData?.submissions.map((submission: CodingSubmission) => (
+                                <div
+                                    key={submission.id}
+                                    className="flex items-center justify-between py-1 text-sm"
+                                >
+                                    <span className="text-muted">
+                                        {new Date(submission.createdAt).toLocaleString()}
+                                    </span>
+                                    <span className="flex items-center gap-2">
+                                        <Chip size="sm" variant="soft" color="default">
+                                            {t(`codingPractice.language.${submission.language}`)}
+                                        </Chip>
+                                        <Chip size="sm" variant="soft" color={VERDICT_COLOR[submission.verdict]}>
+                                            {t(`codingPractice.verdict.${submission.verdict}`)}
+                                        </Chip>
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 )}
             </div>
         </div>

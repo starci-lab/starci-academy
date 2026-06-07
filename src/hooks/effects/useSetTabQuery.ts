@@ -1,31 +1,51 @@
 import { useAppDispatch, useAppSelector } from "@/redux"
 import { ContentTab, setContentTab } from "@/redux/slices"
 import { useSearchParams } from "next/navigation"
-import { useEffect, useRef } from "react"
+import { useEffect } from "react"
 
 /**
- * On mount, reads the `?tab=` search param and syncs the active content tab into Redux.
+ * URL → Redux for the content tab (deep link + browser back/forward).
  * Normalises legacy `codeExplaining`/`CodeImplementation` values to `CodeExplainings`.
+ *
+ * IMPORTANT: reacts only to the **URL** (`searchParams`), NOT to redux `tab`.
+ * Clicking a tab (onTabChange in Content) sets both redux + url; `router.replace` is async, so
+ * if this hook kept `tab` in deps, between dispatch and the url change there would be a moment
+ * where `redux=Challenges` but the url has no `?tab` → the `!rawTab` branch resets to Content.
+ * Removing `tab` from deps breaks that loop; Redux dedupes so a duplicate dispatch is harmless.
  * @returns void
  */
 export const useSetTabQuery = () => {
     const dispatch = useAppDispatch()
     const searchParams = useSearchParams()
-    const tab = useAppSelector((state) => state.tabs.contentTab)
-    const isSyncingFromUrlRef = useRef(false)
+    const isSchemaV2 = useAppSelector((state) => Boolean(state.content.entity?.verified))
 
-    // URL Redux (allow on mount)
     useEffect(() => {
         const rawTab = searchParams.get("tab")
-        if (!rawTab) return
-        const tabFromUrl =
+        // No ?tab= (fresh load / back to empty url) → default to Content.
+        if (!rawTab) {
+            dispatch(setContentTab(ContentTab.Content))
+            return
+        }
+        let tabFromUrl =
             rawTab === ContentTab.LessonVideos
             || rawTab === "codeExplaining"
             || rawTab === ContentTab.CodeImplementation
                 ? ContentTab.CodeExplainings
                 : (rawTab as ContentTab)
-        if (tabFromUrl === tab) return
-        isSyncingFromUrlRef.current = true
+        if (
+            isSchemaV2
+            && (
+                tabFromUrl === ContentTab.CodeExplainings
+                || tabFromUrl === ContentTab.LessonVideos
+                || tabFromUrl === ContentTab.CodeImplementation
+            )
+        ) {
+            tabFromUrl = ContentTab.Content
+        }
         dispatch(setContentTab(tabFromUrl))
-    }, [searchParams])
+    }, [
+        dispatch,
+        isSchemaV2,
+        searchParams,
+    ])
 }

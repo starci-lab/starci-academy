@@ -1,5 +1,6 @@
 "use client"
 
+import { Clock as ClockIcon, FileText as FilePdfIcon } from "@gravity-ui/icons"
 import React, {
     useCallback,
 } from "react"
@@ -7,11 +8,8 @@ import {
     Button,
     Link,
 } from "@heroui/react"
-import {
-    ClockIcon,
-    FilePdfIcon,
-} from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
+
 
 /** Props for {@link CVCard}. */
 export interface CVCardProps {
@@ -75,8 +73,7 @@ export const CVCard = (props: CVCardProps) => {
                     <div className="mt-2 flex items-center gap-2">
                         <FilePdfIcon
                             className="shrink-0 text-danger"
-                            size={20}
-                            weight="duotone"
+                            width={20} height={20}
                         />
                         {
                             fileUrlIsPublic ? (
@@ -100,7 +97,7 @@ export const CVCard = (props: CVCardProps) => {
                 </span>
             </div>
             <div className="mt-3 flex items-center gap-1.5 text-xs text-muted">
-                <ClockIcon size={14} />
+                <ClockIcon width={14} height={14} />
                 <span>{submittedAtLabel}</span>
             </div>
             <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-muted">

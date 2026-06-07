@@ -1,19 +1,20 @@
 "use client"
 
+import { Cup as TrophyIcon, Flag as SwordIcon } from "@gravity-ui/icons"
 import React, { useMemo } from "react"
 import { Accordion, cn, Chip, Modal, Surface } from "@heroui/react"
 import { MarkdownContent, ReferenceLinks, Score } from "@/components/reuseable"
-import { useChallengeOverlayState } from "@/hooks/singleton"
+import { useChallengeOverlayState } from "@/hooks"
 import { ChallengeSubmissionPanel } from "../ChallengeSubmissionPanel"
 import { ChallengeOutputs } from "../ChallengeOutputs"
 import { ChallengePrerequisites } from "../ChallengePrerequisites"
 import { ChallengeRequirements } from "../ChallengeRequirements"
-import { SwordIcon, TrophyIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { useAppSelector } from "@/redux"
 import _ from "lodash"
 import { difficultyPalette } from "@/components/pallettes"
 import { ChallengeDifficulty } from "@/modules/types"
+
 
 /**
  * Legacy (V1) challenge modal — renders the relational requirements/steps/outputs/prerequisites.
@@ -47,7 +48,7 @@ export const ChallengeModalLegacy = () => {
     // Total score for the whole challenge comes from progress, not from a single submission's last attempt.
     const earnedScore = challengeProgress?.lastScore ?? 0
     const maxScore = challengeProgress?.maxScore ?? challenge?.score ?? 0
-    // Title badge ([Đạt]/[Trượt]/[Đang làm]) derived from the challenge progress status.
+    // Title badge ([Pass]/[Fail]/[In progress]) derived from the challenge progress status.
     const statusBadge = useMemo(() => {
         switch (challengeProgress?.status) {
         case "completed":

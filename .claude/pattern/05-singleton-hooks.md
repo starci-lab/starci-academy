@@ -32,6 +32,43 @@ export const useQueryCourseEnrollmentStatusSwrCore = () => {
 ```
 - SWR key = mảng `[NAME, ...deps]`; trả `null` để **skip** khi chưa đủ điều kiện (chưa login / chưa có id).
 
+## SWR fetch discipline (RULE — fetch ÍT NHẤT có thể)
+
+Mục tiêu: mỗi key chỉ fetch **đúng 1 lần** cho 1 bộ điều kiện, **không** refetch thừa. 4 quy tắc bắt buộc:
+
+### 1. Cache key — luôn `[NAME, ...primitiveDeps]`, KHÔNG bao giờ object/template
+- Phần tử đầu = **hằng tên** viết HOA (`"QUERY_..._SWR"`) — định danh duy nhất toàn app.
+- Các phần tử sau = **primitive ổn định** (string/number/boolean): id, locale, page, flag redux. SWR so key bằng so sánh nông từng phần tử.
+- ❌ TUYỆT ĐỐI KHÔNG bỏ object/array/`{...}`/template literal `` `x-${id}` `` làm phần tử key → mỗi render là một reference/string mới → SWR coi là key khác → **refetch liên tục** (cache-miss storm). Tách thành các primitive: `[NAME, id, page]`, không phải `[NAME, { id, page }]`.
+- Deps phải **minimal**: chỉ đưa vào key những biến **thực sự đổi response**. Thừa 1 dep đổi-mỗi-render = fetch storm; thiếu 1 dep response-changing = data cũ sai ngữ cảnh.
+
+### 2. Key-gating — chỉ fetch khi đủ điều kiện (`cond ? [...] : null`)
+Đây là cách "hạn chế fetch" mạnh nhất: **chưa đủ điều kiện thì key = `null` → SWR KHÔNG gọi API**. Gộp mọi tiền-đề bằng `&&`:
+```ts
+// chỉ fetch khi: đã login  VÀ  redux có courseId  VÀ  đang ở đúng trang
+const authenticated = useAppSelector((s) => s.keycloak.authenticated)
+const courseId      = useAppSelector((s) => s.course.entity?.id)
+const pathname      = usePathname()
+const onLearnPage   = pathname.includes("/learn")
+return useSWR(
+    authenticated && courseId && onLearnPage
+        ? ["QUERY_X_SWR", courseId]          // key chỉ chứa dep đổi-response
+        : null,                              // thiếu 1 điều kiện → skip hẳn
+    async () => { ... },
+)
+```
+- "API này phải vào web A mới fetch" → thêm `pathname.includes("/A")` (hoặc cờ redux của trang) vào điều kiện gate.
+- "biến B trong redux phải có value mới fetch" → `b && [...]`. Dùng optional-chain (`s.x.entity?.id`) để gate luôn ra `undefined` khi chưa có.
+- Điều kiện gate **không** cần nằm trong key nếu nó không đổi response (vd `authenticated`, `onLearnPage` chỉ để bật/tắt) — nhưng nếu giá trị nó đổi response thì PHẢI có trong key. Nguyên tắc: **gate = điều kiện bật fetch; key = thứ làm response khác đi.**
+
+### 3. KHÔNG tự bật refetch — kế thừa default "fetch tối thiểu" từ provider
+`SwrProvider` đã set global: `revalidateOnFocus:false`, `revalidateOnReconnect:false`, `dedupingInterval:60s`. Core hook **mặc định KHÔNG override** → data chỉ fetch **on-mount (1 lần)**, không fetch lại khi chuyển tab/đổi focus hay reconnect mạng.
+- ❌ KHÔNG thêm `revalidateOnFocus:true` / `revalidateOnReconnect:true` / `refreshInterval` trừ khi data **thật sự realtime** (job polling, health check). Nếu bật, phải có lý do ghi trong JSDoc và **gate** interval theo điều kiện (vd chỉ poll khi status `PENDING`).
+- Cần làm tươi sau hành động (submit form…) → gọi `mutate()` thủ công đúng key đó, KHÔNG bật auto-revalidate toàn cục.
+
+### 4. `keepPreviousData` — default `false`, opt-in cho phân trang
+Global default = **`keepPreviousData:false`** (khớp loading-gate rule: key đổi → `data` undefined → skeleton, KHÔNG hiện data bài cũ khi đổi id ngữ cảnh). Chỉ hook **phân trang THUẦN** (cùng ngữ cảnh, đổi theo `page`) mới **opt-in `keepPreviousData:true`** ở core hook để mượt khi lật trang. KHÔNG bật `true` cho query đổi theo id ngữ cảnh (content/challenge/module/course).
+
 ### SwrContext.tsx
 `"use client"` provider gọi TẤT CẢ `useXxxSwrCore()` một lần, gom thành object, đưa qua `createContext`. → mỗi SWR key chỉ có **1 instance** toàn app (singleton, tránh refetch trùng).
 

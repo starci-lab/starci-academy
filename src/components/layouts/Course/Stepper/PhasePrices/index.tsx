@@ -30,17 +30,30 @@ export const PhasePrices = ({
         <div className="relative flex items-start justify-between">
             {rows.map((row) => (
                 <div key={row.id} className="flex-1 flex flex-col items-center">
-                    <div className="text-center text-sm font-medium text-muted">
+                    <div
+                        className={`text-center text-sm font-medium text-muted${
+                            row.soldOut ? " line-through opacity-50" : ""
+                        }`}
+                    >
                         {row.formattedPrice}
                     </div>
                     {/* secondary USD line — only when the course exposes a USD price */}
                     {row.formattedPriceUsd != null && (
-                        <div className="text-center text-xs text-muted">
+                        <div
+                            className={`text-center text-xs text-muted${
+                                row.soldOut ? " line-through opacity-50" : ""
+                            }`}
+                        >
                             {row.formattedPriceUsd}
                         </div>
                     )}
                     <Spacer y={1} />
-                    {row.savePercent != null && (
+                    {/* sold-out phases show a "sold out" chip instead of the save chip */}
+                    {row.soldOut ? (
+                        <Chip color="default" size="sm" variant="soft">
+                            Hết chỗ
+                        </Chip>
+                    ) : row.savePercent != null && (
                         <Chip color="accent" size="sm" variant="soft">
                             {`Save ${row.savePercent}%`}
                         </Chip>

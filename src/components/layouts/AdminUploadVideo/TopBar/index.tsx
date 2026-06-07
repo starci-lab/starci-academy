@@ -1,15 +1,12 @@
 "use client"
 
+import { ArrowLeft as ArrowLeftIcon, Cpu as CpuIcon } from "@gravity-ui/icons"
 import React, {
     useCallback,
 } from "react"
 import {
     Button,
 } from "@heroui/react"
-import {
-    ArrowLeftIcon,
-    CpuIcon,
-} from "@phosphor-icons/react"
 import {
     useRouter,
 } from "next/navigation"

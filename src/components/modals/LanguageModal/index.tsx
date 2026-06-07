@@ -3,7 +3,7 @@
 import React from "react"
 import { Modal } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
-import { useLanguageOverlayState } from "@/hooks/singleton"
+import { useLanguageOverlayState } from "@/hooks"
 import { useRouter } from "@/i18n/navigation"
 import { usePathname } from "@/i18n/navigation"
 import { Spacer } from "@/components/reuseable"

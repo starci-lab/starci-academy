@@ -1,8 +1,10 @@
 "use client"
 
+import { Layers as StackIcon } from "@gravity-ui/icons"
 import { cn } from "@heroui/react"
-import { StackIcon } from "@phosphor-icons/react"
+
 import React from "react"
+
 
 export interface FoundationCategoryThumbnailProps {
     /** Public thumbnail URL from API; when missing shows fallback icon. */
@@ -48,7 +50,6 @@ export const FoundationCategoryThumbnail = ({
                             "text-accent/60 size-14",
                             thumbnailMaskClass,
                         )}
-                        weight="duotone"
                         aria-hidden
                     />
                 </div>

@@ -1,16 +1,17 @@
 "use client"
 
+import { Clock as ClockIcon, Star as StarIcon, Video as VideoIcon } from "@gravity-ui/icons"
 import { Button, Chip } from "@heroui/react"
-import { useContentOverlayState } from "@/hooks/singleton"
+import { useContentOverlayState } from "@/hooks"
 import type { ContentEntity } from "@/modules/types"
 import { useAppDispatch } from "@/redux"
 import { setContentId } from "@/redux/slices"
-import { ClockIcon, StarIcon, VideoIcon } from "@phosphor-icons/react"
 import { TagChips } from "@/components/reuseable"
 import { useTranslations } from "next-intl"
 import React, { useCallback } from "react"
 import { advancedPalette } from "@/components/pallettes"
 import { CONTENT_DEMO_TAGS } from "./constants"
+
 
 export interface ContentCardProps {
     /** One module content block from API. */

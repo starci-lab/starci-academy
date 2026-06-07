@@ -2,9 +2,6 @@
 
 import React from "react"
 import {
-    Skeleton,
-} from "@heroui/react"
-import {
     useTranslations,
 } from "next-intl"
 import type {

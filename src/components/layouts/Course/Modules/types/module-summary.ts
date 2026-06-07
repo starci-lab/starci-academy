@@ -1,10 +1,7 @@
-import type {
-    IconProps,
-} from "@phosphor-icons/react"
-import type React from "react"
+import type { IconComponent } from "@/types"
 
-/** A Phosphor icon component accepting standard icon props. */
-export type ModuleSummaryIcon = React.ComponentType<IconProps>
+/** An icon component accepting standard SVG props. */
+export type ModuleSummaryIcon = IconComponent
 
 /**
  * Metadata for a module summary chip (content/video/challenge counters).
@@ -14,7 +11,7 @@ export type ModuleSummaryIcon = React.ComponentType<IconProps>
 export interface ModuleSummaryItem {
     /** Stable id used for list keys. */
     id: string
-    /** Phosphor icon component rendered inside the chip. */
+    /** Icon component rendered inside the chip. */
     icon: ModuleSummaryIcon
     /** next-intl key for the tooltip body. */
     tooltipKey: string

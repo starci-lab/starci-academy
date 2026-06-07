@@ -12,7 +12,7 @@ import {
     useCvSubmissionAttemptAnalysisOverlayState,
     useCvSubmissionAttemptsDrawerOverlayState,
     useQueryUserCvSubmissionAttemptsSwr,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import {
     useAppDispatch,
 } from "@/redux"
@@ -194,7 +194,7 @@ export const UserCvSubmissionAttemptsDrawer = () => {
     )
 
     /** Whether to show the loading skeleton instead of content. */
-    const showSkeleton = isOpen && (swr.isLoading || swr.isValidating) && !(attemptList?.length) && !swr.error
+    const showSkeleton = isOpen && swr.isLoading && !(attemptList?.length) && !swr.error
 
     /** Avoid mounting a closed drawer (backdrop / scroll-lock layers) on every page. */
     if (!isOpen) {

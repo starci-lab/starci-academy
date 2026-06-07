@@ -41,6 +41,12 @@ const remarkMuted = () => (tree: unknown): void => {
     applyMutedDirective(tree as Parameters<typeof applyMutedDirective>[0])
 }
 
+/**
+ * Module-level constant — NOT recreated every render. If `remarkPlugins={[...]}` were inline, each
+ * MarkdownContent re-render would hand ReactMarkdown a new array → re-parse the whole markdown.
+ */
+const REMARK_PLUGINS = [remarkGfm, remarkDirective, remarkMuted]
+
 // Matches each ```mermaid fence and the figure caption paragraph that follows it.
 // Group 1 = diagram source; group 2 = the first non-blank line after the fence.
 const MERMAID_CAPTION_REGEX = /```mermaid[ \t]*\r?\n([\s\S]*?)\r?\n```[ \t]*\r?\n+[ \t]*([^\r\n]+)/g
@@ -102,7 +108,7 @@ export const MarkdownContent = ({ markdown, className }: MarkdownContentProps) =
     return (
         <div className={cn("min-w-0 space-y-2 text-sm leading-relaxed text-foreground", className)}>
             <ReactMarkdown
-                remarkPlugins={[remarkGfm, remarkDirective, remarkMuted]}
+                remarkPlugins={REMARK_PLUGINS}
                 components={components}
             >
                 {markdown}

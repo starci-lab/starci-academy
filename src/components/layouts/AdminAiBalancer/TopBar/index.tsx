@@ -1,19 +1,18 @@
 "use client"
 
+import { ArrowLeft as ArrowLeftIcon, Filmstrip as FilmStripIcon } from "@gravity-ui/icons"
 import React, {
     useCallback,
 } from "react"
 import {
     Button,
 } from "@heroui/react"
-import {
-    ArrowLeftIcon,
-    FilmStripIcon,
-} from "@phosphor-icons/react"
+
 import {
     useRouter,
 } from "next/navigation"
 import {
+
     useTranslations,
 } from "next-intl"
 

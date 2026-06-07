@@ -13,7 +13,7 @@ import {
 import {
     usePostAdminPresignedUrlSwr,
     usePostAdminProcessVideoSwr,
-} from "@/hooks/singleton/swr"
+} from "@/hooks/swr"
 import {
     useAppSelector,
 } from "@/redux"

@@ -1,13 +1,10 @@
 "use client"
 
+import { ArrowUpFromLine as UploadIcon, Video as VideoIcon } from "@gravity-ui/icons"
 import React from "react"
 import {
     Chip,
 } from "@heroui/react"
-import {
-    UploadIcon,
-    VideoIcon,
-} from "@phosphor-icons/react"
 import {
     formatSize,
 } from "../../utils"

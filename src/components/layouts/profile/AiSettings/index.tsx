@@ -18,8 +18,10 @@ import {
 import {
     useQueryMyAiSettingsSwr,
     useMutateUpdateMyAiSettingsSwr,
-    useAiSettingsFormik,
-} from "@/hooks/singleton"
+} from "@/hooks"
+import {
+    useAiSettingsForm,
+} from "@/hooks/zustand"
 import {
     AiMode,
 } from "@/modules/api"
@@ -62,7 +64,7 @@ export const AiSettings = () => {
         error,
     } = useQueryMyAiSettingsSwr()
     const { isMutating } = useMutateUpdateMyAiSettingsSwr()
-    const formik = useAiSettingsFormik()
+    const { mode, byokApiKey, submit } = useAiSettingsForm()
 
     /** Navigate to the home page (breadcrumb root). */
     const onNavigateHome = useCallback(
@@ -88,9 +90,9 @@ export const AiSettings = () => {
 
     // BYOK lane can only be saved with a stored key or a freshly typed one
     const byokNeedsKey =
-        formik.values.mode === AiMode.Byok
+        mode === AiMode.Byok
         && !settings?.hasByokKey
-        && !formik.values.byokApiKey.trim()
+        && !byokApiKey.trim()
     const saveDisabled = isMutating || byokNeedsKey
 
     return (
@@ -115,14 +117,14 @@ export const AiSettings = () => {
                 <>
                     <EffectiveLane />
                     <LaneSelector />
-                    {formik.values.mode === AiMode.Byok ? <ByokForm /> : null}
+                    {mode === AiMode.Byok ? <ByokForm /> : null}
                     <StatusLine />
                     <Button
                         variant="primary"
                         fullWidth
                         isDisabled={saveDisabled}
                         isPending={isMutating}
-                        onPress={formik.submitForm}
+                        onPress={submit}
                     >
                         {({ isPending }) => (
                             <>

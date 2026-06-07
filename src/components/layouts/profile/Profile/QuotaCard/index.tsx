@@ -1,5 +1,6 @@
 "use client"
 
+import { Speedometer as GaugeIcon } from "@gravity-ui/icons"
 import React, {
     useCallback,
 } from "react"
@@ -10,16 +11,13 @@ import {
     cn,
 } from "@heroui/react"
 import {
-    GaugeIcon,
-} from "@phosphor-icons/react"
-import {
     useTranslations,
 } from "next-intl"
 import {
     useAiQuotaOverlayState,
     useQueryMyAiQuotaSwr,
     useQueryMyCreditUsageSwr,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import {
     AiMode,
 } from "@/modules/api"
@@ -56,7 +54,6 @@ export const QuotaCard = () => {
             <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
                     <GaugeIcon
-                        weight="duotone"
                         className="size-5 text-accent"
                     />
                     <span className="font-semibold text-foreground">{t("aiQuota.cardTitle")}</span>

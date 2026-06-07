@@ -1,20 +1,16 @@
 "use client"
 
+import { SiFacebook as FacebookLogoIcon, SiTelegram as TelegramLogoIcon, SiX as TwitterLogoIcon } from "@icons-pack/react-simple-icons"
+import { FaLinkedin as LinkedinLogoIcon } from "react-icons/fa6"
 import React, { useMemo } from "react"
 import { Modal, Surface } from "@heroui/react"
-import { useShareOverlayState } from "@/hooks/singleton"
+import { useShareOverlayState } from "@/hooks"
 import { useAppSelector } from "@/redux"
 import { QRCode } from "@/components/reuseable"
 import { pathConfig } from "@/resources/path"
 import { useTranslations } from "next-intl"
 import {
-    FacebookLogoIcon,
-    TwitterLogoIcon,
-    TelegramLogoIcon,
-    LinkedinLogoIcon,
-} from "@phosphor-icons/react"
-import { 
-    SnippetIcon 
+    SnippetIcon
 } from "@/components/reuseable"
 
 export const ShareModal = () => {
@@ -32,22 +28,22 @@ export const ShareModal = () => {
     const socialLinks = useMemo(() => [
         {
             label: "Facebook",
-            icon: <FacebookLogoIcon weight="fill" className="size-6 text-[#1877F2]" />,
+            icon: <FacebookLogoIcon className="size-6 text-[#1877F2]" />,
             url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
         },
         {
             label: "Twitter",
-            icon: <TwitterLogoIcon weight="fill" className="size-6 text-[#1DA1F2]" />,
+            icon: <TwitterLogoIcon className="size-6 text-[#1DA1F2]" />,
             url: `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareTitle)}`,
         },
         {
             label: "Telegram",
-            icon: <TelegramLogoIcon weight="fill" className="size-6 text-[#0088cc]" />,
+            icon: <TelegramLogoIcon className="size-6 text-[#0088cc]" />,
             url: `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareTitle)}`,
         },
         {
             label: "LinkedIn",
-            icon: <LinkedinLogoIcon weight="fill" className="size-6 text-[#0A66C2]" />,
+            icon: <LinkedinLogoIcon className="size-6 text-[#0A66C2]" />,
             url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`,
         },
     ], [shareUrl, shareTitle])

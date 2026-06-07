@@ -9,7 +9,7 @@ import {
 } from "next/navigation"
 import {
     useQuerySavedContentsSwr,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import {
     pathConfig,
 } from "@/resources/path"

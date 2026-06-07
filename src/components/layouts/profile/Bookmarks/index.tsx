@@ -6,7 +6,7 @@ import {
 } from "next-intl"
 import {
     useQuerySavedContentsSwr,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import {
     BookmarksSkeleton,
 } from "./BookmarksSkeleton"

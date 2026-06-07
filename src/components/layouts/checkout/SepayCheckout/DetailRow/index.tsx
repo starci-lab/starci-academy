@@ -1,12 +1,10 @@
 "use client"
 
+import { Copy } from "@gravity-ui/icons"
 import React from "react"
 import {
     Button,
 } from "@heroui/react"
-import {
-    Copy,
-} from "@phosphor-icons/react"
 
 /** Props for {@link DetailRow}. */
 export interface DetailRowProps {

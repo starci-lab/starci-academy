@@ -1,6 +1,8 @@
 import { HttpLink } from "@apollo/client"
 import { publicEnv } from "@/resources/env"
 
+import { type GraphQLHeaders } from "../../types"
+
 /**
  * Parameters for creating an HTTP link.
  * @param withCredentials - When `true`, sends cookies on cross-site requests (`credentials: "include"`).
@@ -10,7 +12,7 @@ export interface CreateHttpLinkParams {
     /** When `true`, sends cookies on cross-site requests (`credentials: "include"`). */
     withCredentials?: boolean
     /** Extra static headers merged into each request. */
-    headers?: Record<string, string>
+    headers?: GraphQLHeaders
     /** The URI of the GraphQL endpoint. */
     uri?: string
     /** Optional {@link AbortSignal} for all operations on this client; merged into `fetchOptions`. */
@@ -37,7 +39,9 @@ export const createHttpLink = (
     return new HttpLink({
         uri: uri ?? `${publicEnv().api.graphql}`,
         credentials: withCredentials ? "include" : "same-origin",
-        headers,
+        headers: Object.fromEntries(
+            Object.entries(headers).filter(([, v]) => v !== undefined)
+        ) as Record<string, string>,
         fetchOptions: {
             signal,
         },

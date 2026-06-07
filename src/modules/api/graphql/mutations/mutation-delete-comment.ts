@@ -32,11 +32,13 @@ export type MutateDeleteCommentParams = MutateParams<MutationDeleteComment, Dele
 export const mutateDeleteComment = async ({
     mutation = MutationDeleteComment.Mutation1,
     request,
+    headers,
     debug,
     signal,
 }: MutateDeleteCommentParams) => {
     const apollo = createAuthApolloClient({
         cache: false,
+        headers,
         debug,
         signal,
     })

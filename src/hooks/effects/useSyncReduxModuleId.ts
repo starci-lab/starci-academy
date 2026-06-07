@@ -1,21 +1,25 @@
 import { useAppDispatch } from "@/redux"
-import { useEffect } from "react"
+import { useLayoutEffect } from "react"
 import { useParams, usePathname } from "next/navigation"
 import { setModuleId } from "@/redux/slices"
 
 /**
- * Syncs `module.moduleId` from the `[moduleId]` route param into Redux on navigation.
+ * Syncs `module.id` from the `[moduleId]` route param into Redux on navigation.
  * @returns void
  */
 export const useSyncReduxModuleId = () => {
     const dispatch = useAppDispatch()
     const pathname = usePathname()
     const params = useParams()
-    useEffect(
+    useLayoutEffect(
         () => {
-            if (params.moduleId) {
-                dispatch(setModuleId(params.moduleId as string))
-            }
-        }, [pathname, params.moduleId]
+            const moduleId = params.moduleId as string | undefined
+            dispatch(setModuleId(moduleId))
+        },
+        [
+            dispatch,
+            pathname,
+            params.moduleId,
+        ],
     )
 }

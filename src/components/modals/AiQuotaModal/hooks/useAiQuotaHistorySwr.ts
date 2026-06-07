@@ -10,7 +10,7 @@ import {
 } from "@/modules/api"
 import {
     useAiQuotaOverlayState,
-} from "@/hooks/singleton"
+} from "@/hooks"
 
 /** Params for {@link useAiQuotaHistorySwr}. */
 export interface UseAiQuotaHistorySwrParams {

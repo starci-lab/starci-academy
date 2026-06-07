@@ -174,6 +174,15 @@ export const pathConfig = () => {
                         build,
                     }
                 }
+                const practice = () => {
+                    const practicePath = `${learnPath}/practice`
+                    const build = () => {
+                        return practicePath
+                    }
+                    return {
+                        build,
+                    }
+                }
                 const foundations = (categoryId?: string) => {
                     const foundationsPath = categoryId
                         ? `${learnPath}/foundations/${categoryId}`
@@ -225,6 +234,7 @@ export const pathConfig = () => {
                     starciAi,
                     headhuntings,
                     quiz,
+                    practice,
                     foundations,
                     module,
                 }

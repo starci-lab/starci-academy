@@ -56,5 +56,11 @@ export const publicEnv = () => {
             /** The redirect URI of the Keycloak server. */
             redirectUri: process.env.NEXT_PUBLIC_KEYCLOAK_REDIRECT_URI || "http://localhost:3001/api/v1/keycloak/google/callback",
         },
+        captcha: {
+            /** Whether captcha is enabled. */
+            enabled: process.env.NEXT_PUBLIC_CAPTCHA_ENABLED === "true",
+            /** The Turnstile site key. Defaults to Cloudflare's always-pass testing key. */
+            siteKey: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "1x00000000000000000000AA",
+        },
     }
 }

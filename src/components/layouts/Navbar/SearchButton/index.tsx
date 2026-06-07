@@ -1,19 +1,17 @@
 "use client"
 
+import { Magnifier as MagnifyingGlassIcon } from "@gravity-ui/icons"
 import React from "react"
 import {
     Button,
     Kbd,
 } from "@heroui/react"
 import {
-    MagnifyingGlassIcon,
-} from "@phosphor-icons/react"
-import {
     useTranslations,
 } from "next-intl"
 import {
     useSearchOverlayState,
-} from "@/hooks/singleton"
+} from "@/hooks"
 
 /**
  * Navbar search trigger showing the label and the Ctrl/Cmd+K shortcut hint.

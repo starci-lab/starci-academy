@@ -193,6 +193,7 @@ Tách type / enum / constant ra **folder riêng**, đúng tinh thần backend. �
 
 ## Comments — STRICT (mirror backend)
 
+- **ENGLISH ONLY — no Vietnamese in code.** Every comment, JSDoc, inline note, `TODO`/`FIXME`, and identifier (variable/function/type/file name) MUST be in English. The product is going international; reviewers and contributors may not read Vietnamese. This applies to ALL `.ts`/`.tsx` under `src/`. (User-facing copy stays in i18n message files `src/messages/*.json` — never hardcode Vietnamese strings in components; do not "translate" the `vi.json` content.)
 - **JSDoc cho TẤT CẢ:** mọi component, hook, util, function (kể cả nội bộ không export nếu logic không hiển nhiên), type, interface, field, enum + member, constant, map, config object, GraphQL op. KHÔNG còn "chỉ khi non-obvious".
 - **Hook / util / op:** JSDoc kèm `@param` (mô tả từng param) + `@returns`.
 - **Component:** JSDoc trên export mô tả vai trò + lý do `"use client"`/a11y nếu có.

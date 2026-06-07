@@ -1,14 +1,10 @@
 "use client"
 
+import { CircleCheck as CheckCircleIcon, CircleExclamation as WarningCircleIcon } from "@gravity-ui/icons"
 import React from "react"
 import {
-    CheckCircleIcon,
-    WarningCircleIcon,
-} from "@phosphor-icons/react"
-import {
-    useAiSettingsFormik,
-    type AiSettingsSaveStatus,
-} from "@/hooks/singleton"
+    useAiSettingsForm,
+} from "@/hooks/zustand"
 
 /**
  * Inline success/error line shown after a save/remove action.
@@ -17,8 +13,7 @@ import {
  * nothing until an action sets one.
  */
 export const StatusLine = () => {
-    const formik = useAiSettingsFormik()
-    const status = formik.status as AiSettingsSaveStatus | undefined
+    const { status } = useAiSettingsForm()
     if (!status) {
         return null
     }
@@ -32,12 +27,10 @@ export const StatusLine = () => {
         >
             {isSuccess ? (
                 <CheckCircleIcon
-                    weight="fill"
                     className="size-4"
                 />
             ) : (
                 <WarningCircleIcon
-                    weight="fill"
                     className="size-4"
                 />
             )}

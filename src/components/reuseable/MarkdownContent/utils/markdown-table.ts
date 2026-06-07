@@ -4,17 +4,31 @@ import React from "react"
  * Flattens thead row output (e.g. a fragment wrapping columns) so the columns can be
  * passed directly as children of HeroUI `Table.Header`.
  * @param children - Rendered children of the markdown `thead` element.
- * @returns A flat array of column nodes.
+ * @returns A flat array of column or cell nodes.
  */
 export function flattenMarkdownTableHeaderChildren(children: React.ReactNode): Array<React.ReactNode> {
     const flattened: Array<React.ReactNode> = []
+
+    const pushRowCells = (rowChildren: React.ReactNode): void => {
+        React.Children.forEach(rowChildren, (column) => {
+            flattened.push(column)
+        })
+    }
+
     React.Children.forEach(children, (row) => {
         if (!React.isValidElement<{ children?: React.ReactNode }>(row)) {
             return
         }
-        React.Children.forEach(row.props.children, (column) => {
-            flattened.push(column)
-        })
+        if (row.type === React.Fragment) {
+            React.Children.forEach(row.props.children, (nestedRow) => {
+                if (!React.isValidElement<{ children?: React.ReactNode }>(nestedRow)) {
+                    return
+                }
+                pushRowCells(nestedRow.props.children)
+            })
+            return
+        }
+        pushRowCells(row.props.children)
     })
     return flattened
 }
@@ -45,4 +59,3 @@ export function isMarkdownHeaderTableRowNode(node: unknown): boolean {
             child.tagName.toLowerCase() === "th",
     )
 }
-

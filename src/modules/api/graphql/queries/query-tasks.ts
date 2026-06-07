@@ -1,4 +1,3 @@
-import { PersonalProjectTaskState } from "@/modules/types"
 import { createAuthApolloClient } from "../clients"
 import { type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"

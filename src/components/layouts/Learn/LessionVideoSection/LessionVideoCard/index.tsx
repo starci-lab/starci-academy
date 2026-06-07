@@ -1,14 +1,15 @@
 "use client"
 
+import { Clock as ClockIcon } from "@gravity-ui/icons"
 import { Card, Chip } from "@heroui/react"
 import { HostPlatformChip, LessonVideoKindChip } from "@/components/reuseable"
-import { useLessonVideoOverlayState } from "@/hooks/singleton"
+import { useLessonVideoOverlayState } from "@/hooks"
 import { dayjs } from "@/modules/dayjs"
 import { LessonVideoEntity, LessonVideoKind, VideoHostPlatform } from "@/modules/types"
 import { useAppDispatch } from "@/redux"
 import { setLessonVideo, setLessonVideoId } from "@/redux/slices"
-import { ClockIcon } from "@phosphor-icons/react"
 import React from "react"
+
 
 /**
  * The props for the VideoLessionCard component.

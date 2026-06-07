@@ -1,10 +1,11 @@
 "use client"
 
+import { MagnifierPlus as MagnifyingGlassPlusIcon } from "@gravity-ui/icons"
 import React, { useId, useState } from "react"
 import mermaid from "mermaid"
 import useSWR from "swr"
 import { Modal } from "@heroui/react"
-import { MagnifyingGlassPlusIcon } from "@phosphor-icons/react"
+
 
 /** Props for {@link MermaidDiagram}. */
 export interface MermaidDiagramProps {

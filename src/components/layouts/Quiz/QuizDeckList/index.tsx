@@ -37,7 +37,7 @@ export const QuizDeckList = ({ courseId, onSelectDeck }: QuizDeckListProps) => {
     const t = useTranslations()
 
     // fetch the decks for this course; re-keys if the course changes
-    const { data, isLoading, isValidating, error } = useSWR(
+    const { data, isLoading, error } = useSWR(
         ["quiz-decks-by-course", courseId],
         async () => {
             const response = await queryQuizDecksByCourse({
@@ -49,7 +49,7 @@ export const QuizDeckList = ({ courseId, onSelectDeck }: QuizDeckListProps) => {
 
     // loading gate: show the content only once the query has settled with data
     // and no error; otherwise mirror the deck list with a content-shaped skeleton.
-    const ready = !isLoading && !isValidating && !!data && !error
+    const ready = !isLoading && !!data && !error
 
     if (!ready) {
         return <QuizDeckListSkeleton />

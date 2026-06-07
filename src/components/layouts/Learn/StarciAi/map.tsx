@@ -1,13 +1,10 @@
+import { Sparkles as BrainIcon, Sparkles as SparkleIcon, Thunderbolt as LightningIcon } from "@gravity-ui/icons"
 import React from "react"
-import {
-    SparkleIcon,
-    BrainIcon,
-    LightningIcon,
-} from "@phosphor-icons/react"
 import {
     StarciAiTier,
 } from "./enums"
 import type {
+
     StarciAiChipColor,
     StarciAiTierInfo,
 } from "./types"
@@ -20,19 +17,16 @@ import type {
 export const TASK_ICON_MAP: Record<string, React.ReactNode> = {
     grade: (
         <LightningIcon
-            weight="duotone"
             className="size-6 text-warning"
         />
     ),
     reviewPersonalProject: (
         <BrainIcon
-            weight="duotone"
             className="size-6 text-accent"
         />
     ),
     generateMilestone: (
         <SparkleIcon
-            weight="duotone"
             className="size-6 text-success"
         />
     ),

@@ -1,9 +1,11 @@
 "use client"
 
+import { Clock as ClockIcon, Sparkles as SparkleIcon } from "@gravity-ui/icons"
 import React from "react"
 import { Chip } from "@heroui/react"
-import { ClockIcon, SparkleIcon } from "@phosphor-icons/react"
+
 import { useTranslations } from "next-intl"
+
 
 export interface PersonalProjectAttemptCardProps {
     /** Attempt sequence from API. */
@@ -49,7 +51,7 @@ export const PersonalProjectAttemptCard = (props: PersonalProjectAttemptCardProp
                         {t("task.attemptNumber", { number: attemptNumber })}
                     </div>
                     <div className="mt-2 flex items-center gap-2">
-                        <SparkleIcon className="size-5 shrink-0 text-warning" weight="duotone" />
+                        <SparkleIcon className="size-5 shrink-0 text-warning" />
                         {scoreChip}
                     </div>
                     <p className="mt-2 text-sm text-foreground">

@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect } from "react"
-import { useAuthenticationOverlayState } from "@/hooks/singleton"
+import { useAuthenticationOverlayState } from "@/hooks"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import {
     AuthenticationModalTab,

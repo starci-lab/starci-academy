@@ -1,0 +1,172 @@
+"use client"
+
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { debounce } from "lodash"
+import { ChallengeSubmissionEntity, SubmissionType } from "@/modules/types"
+import { useAppDispatch, useAppSelector } from "@/redux"
+import { setLoadingChallengeSubmissionIds } from "@/redux/slices"
+import {
+    useChallengeOverlayState,
+    useMutateSyncChallengeSubmissionSwr,
+    useQueryChallengeSubmissionsSwr,
+} from "@/hooks"
+
+/** GitHub URL regex. */
+const GITHUB_REGEX = /^https:\/\/(www\.)?github\.com\/[A-Za-z0-9_.-]+(\/[A-Za-z0-9_.-]+)?(\/)?$/
+/** Google Docs URL regex. */
+const GOOGLE_DOCS_REGEX = /^https:\/\/docs\.google\.com\/(document|spreadsheets|presentation)\/d\/[A-Za-z0-9_-]+/
+const MSG_URL_REQUIRED = "challenge.submissionModal.errors.urlRequired"
+const MSG_INVALID_GITHUB = "challenge.submissionModal.errors.invalidGithubUrl"
+const MSG_INVALID_GOOGLE = "challenge.submissionModal.errors.invalidGoogleDocsUrl"
+
+/** Error for one submission row (nested shape like the old formik so consumers need no changes). */
+interface RowError {
+    /** Error for userSubmission. */
+    userSubmission?: { submissionUrl?: string }
+}
+/** Touched state for one submission row. */
+interface RowTouched {
+    /** Touched state for userSubmission. */
+    userSubmission?: { submissionUrl?: boolean }
+}
+
+/** Validate a URL by submission type; returns an i18n message or undefined. */
+const validateUrl = (type: SubmissionType, url: string): string | undefined => {
+    const trimmed = url.trim()
+    if (!trimmed) {
+        return MSG_URL_REQUIRED
+    }
+    if (type === SubmissionType.GithubUrl) {
+        return GITHUB_REGEX.test(trimmed) ? undefined : MSG_INVALID_GITHUB
+    }
+    if (type === SubmissionType.GoogleDocsUrl) {
+        return GOOGLE_DOCS_REGEX.test(trimmed) ? undefined : MSG_INVALID_GOOGLE
+    }
+    return undefined
+}
+
+/** Extract the row index from a field path like `submissions.{i}.userSubmission.submissionUrl`. */
+const parseIndex = (fieldName: string): number => {
+    const match = /^submissions\.(\d+)\./.exec(fieldName)
+    return match ? Number(match[1]) : -1
+}
+
+/**
+ * Submission-URL edit form (replaces the old formik) — NOT react-hook-form because it needs a nested
+ * field-array + per-row debounced auto-sync; returns a formik-compatible shape (`values/errors/touched/...`)
+ * so {@link ChallengeSubmissionPanel} keeps reading it the same way. Seeded from redux `challenge.challengeSubmissions`.
+ * @returns a formik-like object: values/errors/touched/setFieldValue/setFieldTouched/isSubmitting.
+ */
+export const useEditSubmissionForm = () => {
+    const challengeSubmissions = useAppSelector((state) => state.challenge.challengeSubmissions)
+    const syncChallengeSubmissionsSwr = useMutateSyncChallengeSubmissionSwr()
+    const queryChallengeSubmissionsSwr = useQueryChallengeSubmissionsSwr()
+    const { isOpen } = useChallengeOverlayState()
+    const dispatch = useAppDispatch()
+
+    /** User-typed URLs overriding the redux value, keyed by submission id. */
+    const [urlOverrides, setUrlOverrides] = useState<Record<string, string>>({})
+    /** Which fields are touched, keyed by submission id. */
+    const [touchedMap, setTouchedMap] = useState<Record<string, boolean>>({})
+
+    const baseSubmissions = useMemo(() => challengeSubmissions ?? [], [challengeSubmissions])
+
+    /** Displayed submissions = redux + URL overrides. */
+    const submissions = useMemo<Array<ChallengeSubmissionEntity>>(
+        () => baseSubmissions.map((submission) => {
+            const overridden = urlOverrides[submission.id]
+            if (overridden === undefined) {
+                return submission
+            }
+            return {
+                ...submission,
+                userSubmission: {
+                    ...submission.userSubmission,
+                    submissionUrl: overridden,
+                },
+            } as ChallengeSubmissionEntity
+        }),
+        [baseSubmissions, urlOverrides],
+    )
+
+    /** errors.submissions[i].userSubmission.submissionUrl (aligned with the submissions order). */
+    const errorSubmissions = useMemo<Array<RowError | undefined>>(
+        () => submissions.map((submission) => {
+            const message = validateUrl(submission.type, submission.userSubmission?.submissionUrl ?? "")
+            return message ? { userSubmission: { submissionUrl: message } } : undefined
+        }),
+        [submissions],
+    )
+
+    const touchedSubmissions = useMemo<Array<RowTouched | undefined>>(
+        () => submissions.map((submission) =>
+            touchedMap[submission.id] ? { userSubmission: { submissionUrl: true } } : undefined),
+        [submissions, touchedMap],
+    )
+
+    const hasErrors = useMemo(
+        () => errorSubmissions.some((rowError) => rowError?.userSubmission?.submissionUrl),
+        [errorSubmissions],
+    )
+
+    const setFieldValue = useCallback((fieldName: string, value: string) => {
+        const index = parseIndex(fieldName)
+        const submissionId = baseSubmissions[index]?.id
+        if (!submissionId) {
+            return
+        }
+        setUrlOverrides((prev) => ({ ...prev, [submissionId]: value }))
+    }, [baseSubmissions])
+
+    const setFieldTouched = useCallback((fieldName: string, _touched = true) => {
+        const index = parseIndex(fieldName)
+        const submissionId = baseSubmissions[index]?.id
+        if (!submissionId) {
+            return
+        }
+        setTouchedMap((prev) => ({ ...prev, [submissionId]: _touched }))
+    }, [baseSubmissions])
+
+    // Debounced auto-sync of changed URLs (replaces the formik core's syncRef logic). Skip the first mount.
+    const mountedRef = useRef(false)
+    const syncRef = useRef<() => void>(() => undefined)
+    syncRef.current = () => {
+        if (!isOpen || hasErrors) {
+            return
+        }
+        const changed = submissions.filter((submission) => {
+            const initial = baseSubmissions.find((candidate) => candidate.id === submission.id)
+            return submission.userSubmission?.submissionUrl !== initial?.userSubmission?.submissionUrl
+        })
+        if (changed.length === 0) {
+            return
+        }
+        const items = changed.map((submission) => ({
+            id: submission.id,
+            url: submission.userSubmission?.submissionUrl ?? "",
+        }))
+        dispatch(setLoadingChallengeSubmissionIds(items.map((item) => item.id)))
+        Promise.allSettled(items.map((item) => syncChallengeSubmissionsSwr.trigger(item)))
+            .then(() => queryChallengeSubmissionsSwr.mutate())
+            .finally(() => dispatch(setLoadingChallengeSubmissionIds([])))
+    }
+
+    const debouncedSync = useMemo(() => debounce(() => syncRef.current(), 300), [])
+    useEffect(() => () => debouncedSync.cancel(), [debouncedSync])
+    useEffect(() => {
+        if (!mountedRef.current) {
+            mountedRef.current = true
+            return
+        }
+        debouncedSync()
+    }, [urlOverrides, debouncedSync])
+
+    return {
+        values: { submissions },
+        errors: { submissions: errorSubmissions },
+        touched: { submissions: touchedSubmissions },
+        setFieldValue,
+        setFieldTouched,
+        isSubmitting: false,
+    }
+}

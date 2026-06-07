@@ -1,9 +1,10 @@
 "use client"
 
+import { Volume as SpeakerHighIcon, VolumeSlash as SpeakerSlashIcon } from "@gravity-ui/icons"
 import React from "react"
 import { Button, Popover, Slider } from "@heroui/react"
-import { SpeakerHighIcon, SpeakerSlashIcon } from "@phosphor-icons/react"
 import { useCallback, useMemo } from "react"
+
 
 /** Props for {@link VolumeControl}. */
 export interface VolumeControlProps {

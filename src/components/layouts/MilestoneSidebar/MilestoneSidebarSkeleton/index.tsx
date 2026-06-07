@@ -36,11 +36,11 @@ export const MilestoneSidebarSkeleton = ({
                         <div className="flex gap-2">
                             <Skeleton className="h-5 w-5 min-w-5 min-h-5 rounded-full" />
                             <div className="flex flex-col w-full">
-                                <Skeleton className="h-[14px] w-2/3 rounded-full my-[3px] mb-2" />
+                                <Skeleton className="h-[14px] w-2/3 rounded-sm my-[3px] mb-2" />
                                 <div className="flex flex-col">
-                                    <Skeleton className="h-3 w-full rounded-full my-0.5" />
-                                    <Skeleton className="h-3 w-2/3 rounded-full my-0.5" />
-                                    <Skeleton className="h-3 w-1/2 rounded-full my-0.5" />
+                                    <Skeleton className="h-3 w-full rounded-sm my-0.5" />
+                                    <Skeleton className="h-3 w-2/3 rounded-sm my-0.5" />
+                                    <Skeleton className="h-3 w-1/2 rounded-sm my-0.5" />
                                 </div>
                             </div>
                         </div>

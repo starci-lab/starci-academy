@@ -1,5 +1,6 @@
 "use client"
 
+import { Aperture as ScanIcon } from "@gravity-ui/icons"
 import React from "react"
 import {
     Button,
@@ -16,9 +17,6 @@ import {
     JobCategory,
     type JobStatus,
 } from "@/modules/types"
-import {
-    ScanIcon,
-} from "@phosphor-icons/react"
 
 /** Props for {@link TaskActions}. */
 export interface TaskActionsProps {

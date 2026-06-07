@@ -1,13 +1,14 @@
 "use client"
 
+import { Bulb as LightbulbIcon, Check as CheckIcon, DiamondExclamation as RadioactiveIcon, MapPin as MapPinLineIcon } from "@gravity-ui/icons"
 import { MarkdownContent } from "@/components/reuseable"
 import type { SubmissionFeedbackEntity } from "@/modules/types"
 import { SubmissionFeedbackSeverity } from "@/modules/types"
 import { buildGithubFileUrl } from "@/modules/utils"
 import { Card, Chip, Link } from "@heroui/react"
-import { CheckIcon, LightbulbIcon, MapPinLineIcon, RadioactiveIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import React, { useMemo } from "react"
+
 
 /**
  * Props for {@link FeedbackCard}.

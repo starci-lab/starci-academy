@@ -3,7 +3,7 @@
 import React, { useMemo } from "react"
 import { useTranslations } from "next-intl"
 import { useAppSelector } from "@/redux"
-import { useQueryCourseSwr } from "@/hooks/singleton"
+import { useQueryCourseSwr } from "@/hooks"
 import {
     Accordion,
     Skeleton,

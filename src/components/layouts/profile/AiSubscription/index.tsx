@@ -18,7 +18,7 @@ import {
     useQueryAiSubscriptionTiersSwr,
     useQueryMyAiSettingsSwr,
     usePaymentOverlayState,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import {
     PaymentFlow,
 } from "@/modules/types"

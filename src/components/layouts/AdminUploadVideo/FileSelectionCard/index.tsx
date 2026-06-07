@@ -1,5 +1,6 @@
 "use client"
 
+import { ArrowUpFromLine as UploadIcon, Filmstrip as FilmSlateIcon, Gear as GearIcon, Link as LinkIcon } from "@gravity-ui/icons"
 import React, {
     useCallback,
 } from "react"
@@ -11,12 +12,6 @@ import {
     Label,
     TextField,
 } from "@heroui/react"
-import {
-    UploadIcon,
-    FilmSlateIcon,
-    GearIcon,
-    LinkIcon,
-} from "@phosphor-icons/react"
 import type {
     ProcessResult,
 } from "../types"

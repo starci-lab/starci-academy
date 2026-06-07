@@ -12,7 +12,7 @@ import {
 import {
     useQueryMyAiQuotaSwr,
     useQueryMyCreditUsageSwr,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import {
     QuotaBar,
 } from "../QuotaBar"

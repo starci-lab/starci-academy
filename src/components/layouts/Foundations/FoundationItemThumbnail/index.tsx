@@ -1,8 +1,10 @@
 "use client"
 
+import { Layers as StackIcon } from "@gravity-ui/icons"
 import { cn } from "@heroui/react"
-import { StackIcon } from "@phosphor-icons/react"
+
 import React, { useMemo } from "react"
+
 
 export interface FoundationItemThumbnailProps {
     /** Foundation-specific cover image URL (full-bleed when set). */
@@ -46,7 +48,6 @@ export const FoundationItemThumbnail = ({
                 <div className="flex h-full w-full items-center justify-center">
                     <StackIcon
                         className="text-accent/60 size-14"
-                        weight="duotone"
                         aria-hidden
                     />
                 </div>

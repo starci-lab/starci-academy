@@ -20,6 +20,7 @@ const query1 = gql`
           slug
           title
           difficulty
+          domain
           tags
           orderIndex
         }

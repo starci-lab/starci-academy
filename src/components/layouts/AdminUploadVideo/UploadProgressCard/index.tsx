@@ -1,15 +1,12 @@
 "use client"
 
+import { ArrowUpFromLine as UploadIcon, CircleCheck as CheckCircleIcon } from "@gravity-ui/icons"
 import React from "react"
 import {
     Card,
     CardContent,
     Chip,
 } from "@heroui/react"
-import {
-    UploadIcon,
-    CheckCircleIcon,
-} from "@phosphor-icons/react"
 import type {
     ProviderUploadStatus,
 } from "../types"

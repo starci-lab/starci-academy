@@ -1,5 +1,6 @@
 "use client"
 
+import { CircleCheck as CheckCircleIcon, LayoutList as QueueIcon, OctagonXmark as WarningOctagonIcon, Sparkles as SparkleIcon } from "@gravity-ui/icons"
 import React, {
     useEffect,
     useMemo,
@@ -9,15 +10,10 @@ import { useAppSelector } from "@/redux"
 import {
     JobStatus,
 } from "@/modules/types"
-import {
-    CheckCircleIcon,
-    QueueIcon,
-    SparkleIcon,
-    WarningOctagonIcon,
-} from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import { useAIProcessingOverlayState } from "@/hooks/singleton"
+import { useAIProcessingOverlayState } from "@/hooks"
 import { resolveAiProcessingCopy } from "@/components/utils"
+
 
 /**
  * Modal overlay shown while an AI review job is processing.

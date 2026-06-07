@@ -1,5 +1,6 @@
 "use client"
 
+import { Lock as LockKeyIcon, ShoppingCart as ShoppingCartSimpleIcon } from "@gravity-ui/icons"
 import React, {
     useCallback,
 } from "react"
@@ -7,42 +8,32 @@ import {
     Button,
 } from "@heroui/react"
 import {
-    LockKeyIcon,
-    ShoppingCartSimpleIcon,
-} from "@phosphor-icons/react"
-import {
-    useLocale,
     useTranslations,
 } from "next-intl"
 import {
-    useParams,
-    useRouter,
-} from "next/navigation"
+    usePaymentOverlayState,
+} from "@/hooks"
 import {
-    pathConfig,
-} from "@/resources"
+    PaymentFlow,
+} from "@/modules/types"
 
 /**
- * Medium-style inline paywall for a premium ("đọc thử") lesson the viewer has
- * not unlocked. Sits directly under the faded-out teaser body and invites the
- * user to buy the course to keep reading. Self-contained: reads the locale +
- * `courseId` route segment and owns its navigation handler.
+ * Medium-style inline paywall for a premium ("trial read") lesson the viewer has
+ * not unlocked. Sits directly under the faded-out teaser body and opens the
+ * shared payment modal (course-enroll flow) so the user can buy without leaving
+ * the lesson. Course context comes from redux (`state.course`, loaded by the
+ * learn layout), which the payment modal reads.
  */
 export const PremiumPaywall = () => {
     const t = useTranslations()
-    const locale = useLocale()
-    const router = useRouter()
-    const params = useParams<{ courseId: string }>()
+    const { open } = usePaymentOverlayState()
 
-    /** Go to the course detail page where the user can enroll/buy. */
+    /** Open the shared payment modal in the course-enroll flow. */
     const onBuy = useCallback(
-        () => router.push(
-            pathConfig()
-                .locale(locale)
-                .course(params.courseId)
-                .build(),
-        ),
-        [router, locale, params.courseId],
+        () => open({
+            flow: PaymentFlow.CourseEnroll,
+        }),
+        [open],
     )
 
     return (

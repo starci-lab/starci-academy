@@ -17,7 +17,7 @@ import {
 } from "next/navigation"
 import {
     useQueryMyAiQuotaSwr,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import {
     pathConfig,
 } from "@/resources"

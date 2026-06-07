@@ -1,11 +1,11 @@
 "use client"
 
+import { Cup as TrophyIcon, Flag as SwordIcon } from "@gravity-ui/icons"
 import React, { useEffect, useMemo, useState } from "react"
 import { Accordion, Chip, cn, Modal } from "@heroui/react"
 import { DragScrollArea, MarkdownContent, ProgrammingLanguageTabs, ProgrammingLanguageTabsVariant, ReferenceLinks, Score } from "@/components/reuseable"
-import { useChallengeOverlayState } from "@/hooks/singleton"
+import { useChallengeOverlayState } from "@/hooks"
 import { ChallengeSubmissionPanel } from "../ChallengeSubmissionPanel"
-import { SwordIcon, TrophyIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { useAppSelector } from "@/redux"
 import _ from "lodash"

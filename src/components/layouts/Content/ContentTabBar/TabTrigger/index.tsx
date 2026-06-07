@@ -1,17 +1,14 @@
 "use client"
 
+import type { IconComponent } from "@/types"
+import { Lock as LockSimpleIcon } from "@gravity-ui/icons"
 import React from "react"
-import type {
-    Icon,
-} from "@phosphor-icons/react"
-import {
-    LockSimpleIcon,
-} from "@phosphor-icons/react"
+
 
 /** Props for {@link TabTrigger}. */
 export interface TabTriggerProps {
-    /** Phosphor icon rendered before the label. */
-    icon: Icon
+    /** Icon rendered before the label. */
+    icon: IconComponent
     /** Translated tab label. */
     label: string
     /** When true, append a lock glyph marking the tab as a gated premium feature. */
@@ -19,7 +16,7 @@ export interface TabTriggerProps {
 }
 
 /**
- * Icon + label content for a single content tab trigger.
+ * IconComponent + label content for a single content tab trigger.
  *
  * Presentational: renders the icon/label pair (and a trailing lock glyph for
  * gated tabs); the surrounding `Tabs.Tab` wrapper lives in {@link ContentTabBar}.

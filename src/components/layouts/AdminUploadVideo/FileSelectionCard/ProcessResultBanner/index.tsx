@@ -1,10 +1,9 @@
 "use client"
 
+import { CircleCheck as CheckCircleIcon } from "@gravity-ui/icons"
 import React from "react"
-import {
-    CheckCircleIcon,
-} from "@phosphor-icons/react"
 import type {
+
     ProcessResult,
 } from "../../types"
 

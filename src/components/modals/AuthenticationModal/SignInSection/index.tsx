@@ -13,7 +13,7 @@
  * - Current screen comes from `state.state.signInState` (`SignInState` in `src/redux/slices/state.ts`):
  *   `Credentials` → email/password (+ OAuth) → submit runs init → `setSignInState(OTP)`;
  *   `OTP` → 6-digit code → verify → `resetSignInState()`.
- * - Keeping the step in Redux keeps `useSignInFormik` submit logic and all child trees in sync.
+ * - Keeping the step in Redux keeps `useSignInForm` submit logic and all child trees in sync.
  *
  * ### Folder layout
  * - `index.tsx` — thin switch: which child state to mount.
@@ -22,8 +22,8 @@
  * For sign-up, use the same pattern: e.g. `SignUpSection/index.tsx` + one folder per step.
  *
  * ### Formik
- * - Singleton hook `useSignInFormik()` from `@/hooks/singleton` — child components call it
- *   directly (no prop-drilling). Core: `hooks/singleton/formik/core/useSignInFormik.ts`.
+ * - Singleton hook `useSignInForm()` from `@/hooks/singleton` — child components call it
+ *   directly (no prop-drilling). Core: `hooks/singleton/formik/core/useSignInForm.ts`.
  *
  * ### i18n
  * - Keys under `auth.signIn.*` in `src/messages/en.json` and `vi.json`.

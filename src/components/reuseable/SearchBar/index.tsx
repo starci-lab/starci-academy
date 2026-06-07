@@ -1,5 +1,6 @@
 "use client"
 
+import { Sliders as SlidersHorizontalIcon } from "@gravity-ui/icons"
 import React, { useMemo } from "react"
 import {
     Autocomplete,
@@ -11,8 +12,9 @@ import {
     SearchField,
     TextField,
 } from "@heroui/react"
-import { SlidersHorizontalIcon } from "@phosphor-icons/react"
+
 import { useTranslations } from "next-intl"
+
 
 /** One selectable row in the autocomplete list (demo data until search is API-driven). */
 interface SearchSuggestionItem {

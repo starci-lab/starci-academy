@@ -2,14 +2,17 @@
 
 import React, { useMemo, useState } from "react"
 import useSWR from "swr"
-import { Button, Card, CardContent, Chip, Spinner } from "@heroui/react"
+import { Button, Card, CardContent, Chip } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { Link } from "@/i18n/navigation"
 import {
     queryCodingProblems,
     CodingDifficulty,
+    CODING_DOMAIN_ORDER,
+    type CodingDomain,
     type CodingProblem,
 } from "@/modules/api/graphql"
+import { PracticeListSkeleton } from "./PracticeListSkeleton"
 
 /** Difficulty filter options (null = all). */
 const DIFFICULTY_FILTERS: Array<CodingDifficulty | null> = [
@@ -57,6 +60,20 @@ export const PracticeList = () => {
         [data?.solvedProblemIds],
     )
 
+    // group the problems by domain, in the canonical domain order, keeping only
+    // domains that actually have problems so empty sections never render
+    const groups = useMemo<Array<{ domain: CodingDomain; problems: Array<CodingProblem> }>>(() => {
+        const byDomain = new Map<CodingDomain, Array<CodingProblem>>()
+        data?.problems.forEach((problem) => {
+            const bucket = byDomain.get(problem.domain) ?? []
+            bucket.push(problem)
+            byDomain.set(problem.domain, bucket)
+        })
+        return CODING_DOMAIN_ORDER
+            .filter((domain) => byDomain.has(domain))
+            .map((domain) => ({ domain, problems: byDomain.get(domain) ?? [] }))
+    }, [data?.problems])
+
     return (
         <div className="mx-auto max-w-4xl p-6">
             {/* page heading */}
@@ -77,48 +94,59 @@ export const PracticeList = () => {
                 ))}
             </div>
 
-            {/* loading / empty / list states */}
-            <div className="mt-6 flex flex-col gap-3">
-                {isLoading && (
-                    <div className="flex justify-center py-10">
-                        <Spinner />
-                    </div>
-                )}
+            {/* loading / empty / grouped list states */}
+            <div className="mt-6 flex flex-col gap-8">
+                {(isLoading || !data) && <PracticeListSkeleton />}
 
-                {!isLoading && (data?.problems.length ?? 0) === 0 && (
+                {!isLoading && !!data && (data?.problems.length ?? 0) === 0 && (
                     <p className="py-10 text-center text-muted">
                         {t("codingPractice.empty")}
                     </p>
                 )}
 
-                {data?.problems.map((problem: CodingProblem) => (
-                    <Link key={problem.id} href={`/practice/${problem.slug}`}>
-                        <Card className="w-full transition-colors hover:bg-default-50">
-                            <CardContent className="flex flex-row items-center justify-between gap-3">
-                                <div className="flex items-center gap-3">
-                                    {/* solved badge */}
-                                    {solvedIds.has(problem.id) && (
-                                        <span className="text-success" aria-label={t("codingPractice.solved")}>
-                                            ✓
-                                        </span>
-                                    )}
-                                    <span className="font-medium">{problem.title}</span>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    {/* topic tags */}
-                                    {problem.tags.slice(0, 3).map((tag) => (
-                                        <Chip key={tag} size="sm" variant="soft" color="default">
-                                            {tag}
-                                        </Chip>
-                                    ))}
-                                    {/* difficulty */}
-                                    <Chip size="sm" variant="soft" color={DIFFICULTY_COLOR[problem.difficulty]}>
-                                        {t(`codingPractice.difficulty.${problem.difficulty}`)}
-                                    </Chip>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    </Link>
+                {/* one section per domain, in canonical order */}
+                {groups.map((group) => (
+                    <section key={group.domain} className="flex flex-col gap-3">
+                        {/* domain header + count */}
+                        <div className="flex items-center gap-2">
+                            <h2 className="text-lg font-semibold">
+                                {t(`codingPractice.domain.${group.domain}`)}
+                            </h2>
+                            <Chip size="sm" variant="soft" color="default">
+                                {group.problems.length}
+                            </Chip>
+                        </div>
+
+                        {group.problems.map((problem: CodingProblem) => (
+                            <Link key={problem.id} href={`/practice/${problem.slug}`}>
+                                <Card className="w-full transition-colors hover:bg-default-50">
+                                    <CardContent className="flex flex-row items-center justify-between gap-3">
+                                        <div className="flex items-center gap-3">
+                                            {/* solved badge */}
+                                            {solvedIds.has(problem.id) && (
+                                                <span className="text-success" aria-label={t("codingPractice.solved")}>
+                                                    ✓
+                                                </span>
+                                            )}
+                                            <span className="font-medium">{problem.title}</span>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            {/* topic tags */}
+                                            {problem.tags.slice(0, 3).map((tag) => (
+                                                <Chip key={tag} size="sm" variant="soft" color="default">
+                                                    {tag}
+                                                </Chip>
+                                            ))}
+                                            {/* difficulty */}
+                                            <Chip size="sm" variant="soft" color={DIFFICULTY_COLOR[problem.difficulty]}>
+                                                {t(`codingPractice.difficulty.${problem.difficulty}`)}
+                                            </Chip>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </Link>
+                        ))}
+                    </section>
                 ))}
             </div>
         </div>

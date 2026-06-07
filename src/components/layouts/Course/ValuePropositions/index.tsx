@@ -1,11 +1,12 @@
 "use client"
 
+import { SealCheck as SealCheckIcon } from "@gravity-ui/icons"
 import React, { useMemo } from "react"
-import { SealCheckIcon } from "@phosphor-icons/react"
 import { Skeleton } from "@heroui/react"
 import { useAppSelector } from "@/redux"
-import { useQueryCourseSwr } from "@/hooks/singleton"
+import { useQueryCourseSwr } from "@/hooks"
 import _ from "lodash"
+
 
 /**
  * Course value propositions list container.
@@ -46,7 +47,7 @@ export const ValuePropositions = () => {
             {valuePropositions.map((valueProposition) => (
                 <div key={valueProposition.id} className="flex items-start gap-2">
                     <SealCheckIcon
-                        size={20}
+                        width={20} height={20}
                         className="mt-0.5 shrink-0 text-muted"
                     />
                     <div

@@ -47,12 +47,14 @@ import {
     ApolloLink, 
     InMemoryCache 
 } from "@apollo/client"
-import { 
-    createErrorLink, 
-    createTimeoutLink, 
-    createRetryLink, 
-    createAttachAccessTokenLink, 
-    defaultOptions, 
+import {
+    createErrorLink,
+    createTimeoutLink,
+    createRetryLink,
+    createAttachAccessTokenLink,
+    createAttachCsrfTokenLink,
+    createAttachDeviceFingerprintLink,
+    defaultOptions,
     createHttpLink
 } from "../../links"
 
@@ -80,6 +82,8 @@ export const createRefreshTokenApolloClient = ({
             createErrorLink(debug),
             createTimeoutLink(),
             createAttachAccessTokenLink(debug),
+            createAttachCsrfTokenLink(debug),
+            createAttachDeviceFingerprintLink(debug),
             createHttpLink({
                 withCredentials: true,
                 headers: {},

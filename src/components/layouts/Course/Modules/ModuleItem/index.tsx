@@ -1,14 +1,12 @@
 "use client"
 
+import { CurlyBrackets as BracketsCurlyIcon } from "@gravity-ui/icons"
 import React, {
     useMemo,
 } from "react"
 import {
     Accordion,
 } from "@heroui/react"
-import {
-    BracketsCurlyIcon,
-} from "@phosphor-icons/react"
 import _ from "lodash"
 import type {
     ModuleEntity,

@@ -1,5 +1,6 @@
 "use client"
 
+import { ArrowDownToLine as DownloadSimpleIcon, Clock as ClockIcon, FileText as FilePdfIcon } from "@gravity-ui/icons"
 import React from "react"
 import {
     Button,
@@ -7,11 +8,6 @@ import {
     CardContent,
     Link,
 } from "@heroui/react"
-import {
-    ClockIcon,
-    DownloadSimpleIcon,
-    FilePdfIcon,
-} from "@phosphor-icons/react"
 import {
     useTranslations,
 } from "next-intl"

@@ -1,5 +1,7 @@
 import { ApolloLink } from "@apollo/client"
-import { LocalStorage, LocalStorageId } from "@/modules/storage"
+// Import from the `local` barrel (NOT via `@/modules/storage` — that barrel pulls in `session` →
+// `@/modules/api` → api↔storage cycle). `local` does not depend on api, so it breaks the cycle.
+import { LocalStorage, LocalStorageId } from "@/modules/storage/local"
 
 export interface CreateAttachAccessTokenLinkParams {
     /** When `true`, logs the resolved token (masked). */

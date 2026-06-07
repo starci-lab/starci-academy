@@ -1,8 +1,10 @@
 "use client"
 
+import { CircleCheck as CheckCircleIcon } from "@gravity-ui/icons"
 import { Button } from "@heroui/react"
-import { CheckCircleIcon } from "@phosphor-icons/react"
+
 import React from "react"
+
 
 /**
  * LanguageCard is a card component that is used to display a language.

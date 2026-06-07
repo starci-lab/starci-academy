@@ -1,5 +1,6 @@
 "use client"
 
+import { Person as UserIcon } from "@gravity-ui/icons"
 import React from "react"
 import {
     Avatar,
@@ -7,10 +8,8 @@ import {
     Badge,
     Button,
 } from "@heroui/react"
-import {
-    UserIcon,
-} from "@phosphor-icons/react"
 import type {
+
     UserEntity,
 } from "@/modules/types"
 

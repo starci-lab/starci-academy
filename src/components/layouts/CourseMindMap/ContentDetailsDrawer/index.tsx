@@ -1,15 +1,16 @@
 "use client"
 
+import { Clock as ClockIcon, Flag as SwordIcon, Star as StarIcon, Xmark as XIcon } from "@gravity-ui/icons"
 import React, { useCallback, useMemo } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { Chip, cn } from "@heroui/react"
-import { ClockIcon, StarIcon, SwordIcon, XIcon } from "@phosphor-icons/react"
 import { useRouter } from "next/navigation"
 import { useLocale, useTranslations } from "next-intl"
 import { useAppSelector } from "@/redux"
 import { pathConfig } from "@/resources/path"
 import { getContentChallengeCount } from "@/modules/types"
 import type { MindMapDetailsSelection } from "../context"
+
 
 /** Props for {@link ContentDetailsDrawer}. */
 export interface ContentDetailsDrawerProps {
@@ -90,7 +91,7 @@ export const ContentDetailsDrawer = ({ selection, onClose }: ContentDetailsDrawe
                             <div className="min-w-0">
                                 {content?.isPremium && (
                                     <Chip color="warning" variant="soft" size="sm" className="mb-2">
-                                        <StarIcon className="size-4" weight="fill" />
+                                        <StarIcon className="size-4" />
                                         <Chip.Label>{t("content.mindMapPremium")}</Chip.Label>
                                     </Chip>
                                 )}

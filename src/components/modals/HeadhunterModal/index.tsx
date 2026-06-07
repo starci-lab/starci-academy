@@ -1,14 +1,16 @@
 "use client"
 
+import { House as BuildingsIcon, Smartphone as PhoneIcon } from "@gravity-ui/icons"
+import { FaLinkedin as LinkedinLogoIcon } from "react-icons/fa6"
 import { Button, Link, Modal } from "@heroui/react"
-import { BuildingsIcon, LinkedinLogoIcon, PhoneIcon } from "@phosphor-icons/react"
 import { ConsultantAvatar } from "@/components/layouts/Headhuntings/ConsultantAvatar"
-import { useHeadhunterOverlayState } from "@/hooks/singleton"
+import { useHeadhunterOverlayState } from "@/hooks"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { pathConfig } from "@/resources"
 import { useAppSelector } from "@/redux"
 import React from "react"
+
 /**
  * Headhunter profile modal with bio and links to company, LinkedIn, and Zalo.
  */

@@ -1,14 +1,13 @@
 "use client"
 
+import { Filmstrip as FilmReelIcon, Sparkles as SparkleIcon } from "@gravity-ui/icons"
 import React, { useMemo } from "react"
 import { Chip, Tooltip } from "@heroui/react"
 import { LessonVideoKind } from "@/modules/types"
 import { useTranslations } from "next-intl"
-import {
-    TwitchLogoIcon,
-    SparkleIcon,
-    FilmReelIcon,
-} from "@phosphor-icons/react"
+import { SiTwitch as TwitchLogoIcon } from "@icons-pack/react-simple-icons"
+
+
 
 /**
  * The props for the LessonVideoKindChip component.

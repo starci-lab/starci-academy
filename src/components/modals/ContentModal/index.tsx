@@ -5,7 +5,7 @@ import _ from "lodash"
 import { Modal, ScrollShadow } from "@heroui/react"
 import { MarkdownContent } from "@/components/reuseable"
 import { ContentReferences } from "./ContentReferences"
-import { useContentOverlayState } from "@/hooks/singleton"
+import { useContentOverlayState } from "@/hooks"
 import { useAppSelector } from "@/redux"
 
 export const ContentModal = () => {

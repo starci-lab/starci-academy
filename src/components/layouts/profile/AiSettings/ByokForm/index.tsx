@@ -1,5 +1,6 @@
 "use client"
 
+import { Key as KeyIcon } from "@gravity-ui/icons"
 import React, {
     useCallback,
 } from "react"
@@ -11,20 +12,19 @@ import {
     TextField,
 } from "@heroui/react"
 import {
-    KeyIcon,
-} from "@phosphor-icons/react"
-import {
     useTranslations,
 } from "next-intl"
 import {
     AiMode,
 } from "@/modules/api"
 import {
-    useAiSettingsFormik,
     useQueryMyAiSettingsSwr,
     useMutateUpdateMyAiSettingsSwr,
+} from "@/hooks"
+import {
+    useAiSettingsForm,
     type AiSettingsSaveStatus,
-} from "@/hooks/singleton"
+} from "@/hooks/zustand"
 import {
     BYOK_PROVIDERS,
 } from "../constants"
@@ -38,7 +38,14 @@ import {
  */
 export const ByokForm = () => {
     const t = useTranslations()
-    const formik = useAiSettingsFormik()
+    const {
+        byokApiKey,
+        byokProvider,
+        setByokApiKey,
+        setByokProvider,
+        setMode,
+        setStatus,
+    } = useAiSettingsForm()
     const {
         data: settings,
         mutate,
@@ -51,14 +58,14 @@ export const ByokForm = () => {
     const hasByokKey = settings?.hasByokKey ?? false
     const byokProviderOnFile = settings?.byokProvider ?? null
     // the BYOK lane needs a stored key or a freshly typed one
-    const byokNeedsKey = !hasByokKey && !formik.values.byokApiKey.trim()
+    const byokNeedsKey = !hasByokKey && !byokApiKey.trim()
 
     const onApiKeyChange = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
-            formik.setFieldValue("byokApiKey", event.target.value)
+            setByokApiKey(event.target.value)
         },
         [
-            formik,
+            setByokApiKey,
         ],
     )
 
@@ -72,21 +79,21 @@ export const ByokForm = () => {
                 })
                 const payload = result?.data?.updateMyAiSettings
                 if (payload?.success) {
-                    formik.setFieldValue("mode", AiMode.Auto)
-                    formik.setFieldValue("byokApiKey", "")
+                    setMode(AiMode.Auto)
+                    setByokApiKey("")
                     await mutate()
-                    formik.setStatus({
+                    setStatus({
                         kind: "success",
                         text: t("aiSettings.keyRemoved"),
                     } satisfies AiSettingsSaveStatus)
                 } else {
-                    formik.setStatus({
+                    setStatus({
                         kind: "error",
                         text: payload?.message ?? t("aiSettings.error"),
                     } satisfies AiSettingsSaveStatus)
                 }
             } catch (error) {
-                formik.setStatus({
+                setStatus({
                     kind: "error",
                     text: (error as Error)?.message ?? t("aiSettings.error"),
                 } satisfies AiSettingsSaveStatus)
@@ -95,7 +102,9 @@ export const ByokForm = () => {
         [
             trigger,
             mutate,
-            formik,
+            setMode,
+            setByokApiKey,
+            setStatus,
             t,
         ],
     )
@@ -127,9 +136,9 @@ export const ByokForm = () => {
                 {BYOK_PROVIDERS.map((provider) => (
                     <Button
                         key={provider.value}
-                        variant={formik.values.byokProvider === provider.value ? "primary" : "secondary"}
+                        variant={byokProvider === provider.value ? "primary" : "secondary"}
                         size="sm"
-                        onPress={() => formik.setFieldValue("byokProvider", provider.value)}
+                        onPress={() => setByokProvider(provider.value)}
                     >
                         {provider.label}
                     </Button>
@@ -154,7 +163,7 @@ export const ByokForm = () => {
                             ? t("aiSettings.byok.apiKeyPlaceholderReplace")
                             : t("aiSettings.byok.apiKeyPlaceholder")
                     }
-                    value={formik.values.byokApiKey}
+                    value={byokApiKey}
                     onChange={onApiKeyChange}
                 />
                 <FieldError>{byokNeedsKey ? t("aiSettings.byok.keyHint") : ""}</FieldError>

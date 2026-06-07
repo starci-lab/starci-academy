@@ -3,7 +3,7 @@
 import React, { useMemo } from "react"
 import { useTheme } from "next-themes"
 import { useAppSelector } from "@/redux"
-import { useQueryContentSwr, useGithubSandpackFiles } from "@/hooks"
+import { useQueryContentSwr, useRepoSandpackFiles } from "@/hooks"
 import { SandpackPanel } from "@/components/reuseable/SandpackPanel"
 import { CodeBodySkeleton } from "../CodeBodySkeleton"
 import type { SandpackFiles } from "@codesandbox/sandpack-react"
@@ -17,6 +17,7 @@ import type { SandpackFiles } from "@codesandbox/sandpack-react"
  */
 const THEME_TAILWINDCSS = `@custom-variant dark (&:where(.dark, .dark *));
 @theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --color-background: var(--sb-bg);
   --color-foreground: var(--sb-fg);
   --color-muted: var(--sb-muted);
@@ -29,12 +30,12 @@ const THEME_TAILWINDCSS = `@custom-variant dark (&:where(.dark, .dark *));
   --color-accent: var(--sb-accent);
 }
 :root {
-  --sb-bg: #ffffff; --sb-fg: #18181b; --sb-muted: #71717a; --sb-border: #e4e4e7;
+  --sb-bg: oklch(97.02% 0.0033 185.90); --sb-fg: #18181b; --sb-muted: #71717a; --sb-border: #e4e4e7;
   --sb-d50: #fafafa; --sb-d100: #f4f4f5; --sb-d200: #e4e4e7; --sb-accent: #0d9488;
 }
 .dark {
-  --sb-bg: #0a0a0a; --sb-fg: #fafafa; --sb-muted: #a1a1aa; --sb-border: #27272a;
-  --sb-d50: #18181b; --sb-d100: #27272a; --sb-d200: #3f3f46; --sb-accent: #2dd4bf;
+  --sb-bg: oklch(12.00% 0.0033 185.90); --sb-fg: #fafafa; --sb-muted: #a1a1aa; --sb-border: #27272a;
+  --sb-d50: oklch(16.00% 0.0033 185.90); --sb-d100: oklch(20.00% 0.0033 185.90); --sb-d200: #3f3f46; --sb-accent: #2dd4bf;
 }`
 
 /**
@@ -48,6 +49,14 @@ import App from "./src/App"
 export default function SandboxRoot() {
     useEffect(() => {
         document.documentElement.classList.toggle("dark", ${isDark})
+        // load Inter (the font heroui.com uses) so the preview matches the docs
+        if (!document.getElementById("sb-font")) {
+            const link = document.createElement("link")
+            link.id = "sb-font"
+            link.rel = "stylesheet"
+            link.href = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+            document.head.appendChild(link)
+        }
         if (!document.getElementById("sb-theme")) {
             const style = document.createElement("style")
             style.id = "sb-theme"
@@ -70,7 +79,7 @@ export default function SandboxRoot() {
 const rewriteForSandpack = (code: string, mockApiBase: string): string =>
     code
         .replace(/import\.meta\.env\.VITE_API_BASE/g, JSON.stringify(mockApiBase))
-        .replace(/import\.meta\.env\.\w+/g, '""')
+        .replace(/import\.meta\.env\.\w+/g, "\"\"")
         .replace(/import\.meta\.env/g, "({})")
         .replace(/import\.meta\.hot[^\n]*/g, "undefined")
         .replace(/@import\s+["']tailwindcss["'];?/g, "")
@@ -107,9 +116,11 @@ export const SandboxBody = () => {
         [content?.id],
     )
 
-    const { files: githubFiles, dependencies, isLoading: githubLoading } = useGithubSandpackFiles(
+    const { files: githubFiles, dependencies, isLoading: githubLoading } = useRepoSandpackFiles(
+        content?.id,
         content?.githubBaseUrl,
         content?.githubDir,
+        content?.isPremium,
     )
 
     const contentReady = !queryContentSwr.isLoading && !!queryContentSwr.data && !queryContentSwr.error
@@ -137,11 +148,21 @@ export const SandboxBody = () => {
 
     const files: SandpackFiles = { ...stubs, ...rewrittenFiles }
 
-    // reset action → wipe the session back to the lesson's seed data
-    const handleReset = async () => {
-        if (!mockApiBase) return
-        await fetch(mockApiBase, { method: "DELETE" }).catch(() => null)
-    }
+    // thin, rounded, theme-aware scrollbars for the editor/file-tree (default ones look crude)
+    const thumb = isDark ? "rgba(255,255,255,0.16)" : "rgba(0,0,0,0.16)"
+    const thumbHover = isDark ? "rgba(255,255,255,0.28)" : "rgba(0,0,0,0.28)"
 
-    return <SandpackPanel files={files} dependencies={dependencies} onReset={handleReset} isDark={isDark} />
+    return (
+        <div className="sb-scroll mt-3">
+            <style>{`
+                .sb-scroll *::-webkit-scrollbar { width: 8px; height: 8px; }
+                .sb-scroll *::-webkit-scrollbar-track { background: transparent; }
+                .sb-scroll *::-webkit-scrollbar-thumb { background: ${thumb}; border-radius: 9999px; border: 2px solid transparent; background-clip: content-box; }
+                .sb-scroll *::-webkit-scrollbar-thumb:hover { background: ${thumbHover}; background-clip: content-box; }
+                .sb-scroll *::-webkit-scrollbar-corner { background: transparent; }
+                .sb-scroll * { scrollbar-width: thin; scrollbar-color: ${thumb} transparent; }
+            `}</style>
+            <SandpackPanel files={files} dependencies={dependencies} isDark={isDark} />
+        </div>
+    )
 }

@@ -1,16 +1,16 @@
 "use client"
 
+import { Sparkles as SparkleIcon } from "@gravity-ui/icons"
 import React from "react"
 import {
     Chip,
     cn,
 } from "@heroui/react"
 import {
+
     useTranslations,
 } from "next-intl"
-import {
-    SparkleIcon,
-} from "@phosphor-icons/react"
+
 
 export interface StarCiAIBadgeProps {
     /** Extra classes on the root {@link Chip}. */

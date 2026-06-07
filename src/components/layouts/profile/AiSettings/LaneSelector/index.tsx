@@ -8,7 +8,7 @@ import {
 } from "@/modules/api"
 import {
     useQueryMyAiSettingsSwr,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import type {
     AiLaneChoice,
 } from "../types"

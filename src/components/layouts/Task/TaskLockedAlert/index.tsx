@@ -24,7 +24,7 @@ import {
 } from "@/redux/slices"
 import {
     useQueryMilestoneTaskProgressSwr,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import {
     buildMilestoneTaskProgressLookup,
     isPersonalProjectTaskActionUnlocked,

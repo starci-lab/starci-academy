@@ -1,10 +1,8 @@
+import { Sparkles as SparkleIcon } from "@gravity-ui/icons"
 import React from "react"
 import {
     Chip,
 } from "@heroui/react"
-import {
-    SparkleIcon,
-} from "@phosphor-icons/react"
 import type {
     AiActiveModel,
 } from "@/modules/types"
@@ -37,7 +35,6 @@ export const ModelCard = ({
             <div className="flex items-center gap-3">
                 {TASK_ICON_MAP[model.taskKind] ?? (
                     <SparkleIcon
-                        weight="duotone"
                         className="size-6 text-muted"
                     />
                 )}

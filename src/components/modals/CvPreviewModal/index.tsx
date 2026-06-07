@@ -4,7 +4,8 @@ import React, { useEffect, useMemo } from "react"
 import { Modal } from "@heroui/react"
 import dynamic from "next/dynamic"
 import { useTranslations } from "next-intl"
-import { useCvApplyFormik, useCvPreviewOverlayState } from "@/hooks/singleton"
+import { useCvPreviewOverlayState } from "@/hooks"
+import { useCvApplyStore } from "@/hooks/zustand"
 
 const PDFView = dynamic(
     () => import("@/components/reuseable/PDFView").then((module) => module.PDFView),
@@ -18,12 +19,12 @@ const REMOTE_TEST_PDF_URL = "https://mozilla.github.io/pdf.js/web/compressed.tra
  */
 export const CvPreviewModal = () => {
     const t = useTranslations()
-    const formik = useCvApplyFormik()
+    const cvFile = useCvApplyStore((state) => state.cvFile)
     const { isOpen, setOpen } = useCvPreviewOverlayState()
     const selectedFileUrl = useMemo(() => {
-        if (!formik.values.cvFile) return ""
-        return URL.createObjectURL(formik.values.cvFile)
-    }, [formik.values.cvFile])
+        if (!cvFile) return ""
+        return URL.createObjectURL(cvFile)
+    }, [cvFile])
     const previewPdfUrl = selectedFileUrl || REMOTE_TEST_PDF_URL
 
     useEffect(() => {

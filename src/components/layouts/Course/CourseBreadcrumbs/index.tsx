@@ -16,7 +16,7 @@ import {
 } from "next/navigation"
 import {
     useQueryCourseSwr,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import {
     useAppSelector,
 } from "@/redux"

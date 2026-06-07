@@ -13,14 +13,14 @@ import {
     useAppSelector,
 } from "@/redux"
 import {
-    useCvApplyFormik,
-    useCvReviewFormik,
     useCvReviewLevelDetailsOverlayState,
     useCvSubmissionAttemptsDrawerOverlayState,
     useCvUpdateOverlayState,
     useQueryCvUrlSwr,
     useQueryTemplateCvsSwr,
-} from "@/hooks/singleton"
+} from "@/hooks"
+import { useCvApplyStore } from "@/hooks/zustand"
+import { useCvReviewForm } from "@/hooks/rhf"
 import {
     JobCategory,
     JobStatus,
@@ -59,13 +59,15 @@ export const CVUpload = ({ className }: CVUploadProps) => {
      */
     const locale = useLocale()
     /**
-     * Formik instance for CV file upload (update modal).
+     * Selected CV file — shared via zustand store (set by CvUpdateModal).
      */
-    const formik = useCvApplyFormik()
+    const cvFile = useCvApplyStore((state) => state.cvFile)
     /**
-     * Formik for queuing CV AI review (`reviewCv`).
+     * RHF form for queuing CV AI review (`reviewCv`).
      */
-    const cvReviewFormik = useCvReviewFormik()
+    const cvReviewForm = useCvReviewForm()
+    /** Watched rubric id for the selected-template lookup. */
+    const cvReviewTemplateId = cvReviewForm.watch("templateCvId")
     /**
      * Opens the CV update upload modal.
      */
@@ -82,10 +84,10 @@ export const CVUpload = ({ className }: CVUploadProps) => {
      * Selected file URL.
      */
     const selectedFileUrl = useMemo(() => {
-        if (!formik.values.cvFile) return ""
-        return URL.createObjectURL(formik.values.cvFile)
+        if (!cvFile) return ""
+        return URL.createObjectURL(cvFile)
     }, [
-        formik.values.cvFile,
+        cvFile,
     ])
     /**
      * CV URL SWR.
@@ -129,7 +131,7 @@ export const CVUpload = ({ className }: CVUploadProps) => {
      * Current CV link label.
      */
     const currentCvLinkLabel =
-        formik.values.cvFile?.name ||
+        cvFile?.name ||
         (
             cvUrlPayload?.cvUrl ?
                 getFileNameFromUrl(cvUrlPayload.cvUrl)
@@ -191,10 +193,10 @@ export const CVUpload = ({ className }: CVUploadProps) => {
      */
     const templateCv = useMemo(
         () =>
-            templateCvs.find((templateCv) => templateCv.id === cvReviewFormik.values.templateCvId),
+            templateCvs.find((templateCv) => templateCv.id === cvReviewTemplateId),
         [
             templateCvs,
-            cvReviewFormik.values.templateCvId,
+            cvReviewTemplateId,
         ],
     )
 
@@ -225,9 +227,8 @@ export const CVUpload = ({ className }: CVUploadProps) => {
      * Whether the rubric/review actions should be disabled (submitting/loading).
      */
     const isReviewDisabled = useMemo(
-        () => formik.isSubmitting || templateCvsSwr.isLoading,
+        () => templateCvsSwr.isLoading,
         [
-            formik.isSubmitting,
             templateCvsSwr.isLoading,
         ],
     )
@@ -236,11 +237,11 @@ export const CVUpload = ({ className }: CVUploadProps) => {
      * Whether the review action is pending (form submitting or job in flight).
      */
     const isReviewPending = useMemo(
-        () => cvReviewFormik.isSubmitting
+        () => cvReviewForm.formState.isSubmitting
             || activeCvReviewJobStatus === JobStatus.Processing
             || activeCvReviewJobStatus === JobStatus.Queued,
         [
-            cvReviewFormik.isSubmitting,
+            cvReviewForm.formState.isSubmitting,
             activeCvReviewJobStatus,
         ],
     )
@@ -250,10 +251,10 @@ export const CVUpload = ({ className }: CVUploadProps) => {
      */
     const onReview = useCallback(
         () => {
-            void cvReviewFormik.submitForm()
+            void cvReviewForm.onSubmit()
         },
         [
-            cvReviewFormik,
+            cvReviewForm,
         ],
     )
 

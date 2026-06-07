@@ -1,8 +1,9 @@
 "use client"
 
+import { Pause as PauseIcon, Play as PlayIcon } from "@gravity-ui/icons"
 import React from "react"
 import { Button } from "@heroui/react"
-import { PauseIcon, PlayIcon } from "@phosphor-icons/react"
+
 
 /** Props for {@link PlayPauseButton}. */
 export interface PlayPauseButtonProps {

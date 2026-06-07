@@ -37,11 +37,13 @@ export type MutateReactToContentParams = MutateParams<MutationReactToContent, Re
 export const mutateReactToContent = async ({
     mutation = MutationReactToContent.Mutation1,
     request,
+    headers,
     debug,
     signal,
 }: MutateReactToContentParams) => {
     const apollo = createAuthApolloClient({
         cache: false,
+        headers,
         debug,
         signal,
     })

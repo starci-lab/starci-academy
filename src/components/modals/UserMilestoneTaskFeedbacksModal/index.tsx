@@ -6,7 +6,7 @@ import {
     GraphQLHeadersKey,
     queryUserMilestoneTaskFeedbacks,
 } from "@/modules/api"
-import { useUserMilestoneTaskFeedbacksModalOverlayState } from "@/hooks/singleton"
+import { useUserMilestoneTaskFeedbacksModalOverlayState } from "@/hooks"
 import { useAppSelector } from "@/redux"
 import { Modal, ScrollShadow } from "@heroui/react"
 import React, { useMemo } from "react"
@@ -68,7 +68,7 @@ export const UserMilestoneTaskFeedbacksModal = () => {
 
     const showSkeleton =
         isOpen
-        && (swr.isLoading || swr.isValidating)
+        && swr.isLoading
         && feedbackRows.length === 0
         && !swr.error
 

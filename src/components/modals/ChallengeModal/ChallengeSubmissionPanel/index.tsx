@@ -10,7 +10,7 @@ import { cn } from "@heroui/react"
 import {
     PublicationEvent,
     useAiQuotaOverlayState,
-    useEditSubmissionFormik,
+    useEditSubmissionForm,
     useJobNotificationsSocketIo,
     useMutateSubmitChallengeSubmissionSwr,
     useMutateSyncChallengeSubmissionSwr,
@@ -18,7 +18,7 @@ import {
     useQueryMyAiSettingsSwr,
     useQueryMyCreditUsageSwr,
     useSubmissionAttemptsOverlayState,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import type { AiGradableModel } from "@/modules/api"
 import { useLocale } from "next-intl"
 import { useRouter } from "next/navigation"
@@ -63,7 +63,7 @@ type ChallengeSubmissionPanelProps = WithClassNames<undefined> & {
  */
 export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) => {
     const { className, lang } = props
-    const formik = useEditSubmissionFormik()
+    const formik = useEditSubmissionForm()
     const {
         values,
         errors,

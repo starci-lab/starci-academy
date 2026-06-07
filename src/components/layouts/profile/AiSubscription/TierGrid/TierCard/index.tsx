@@ -1,5 +1,6 @@
 "use client"
 
+import { SealCheck as SealCheckIcon } from "@gravity-ui/icons"
 import React, {
     useCallback,
 } from "react"
@@ -9,9 +10,6 @@ import {
     Chip,
     Spinner,
 } from "@heroui/react"
-import {
-    SealCheckIcon,
-} from "@phosphor-icons/react"
 import {
     useTranslations,
 } from "next-intl"

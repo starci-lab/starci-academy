@@ -10,7 +10,7 @@ import {
 import {
     useQueryHeadhunterCompaniesSwr,
     useQueryHeadhuntersSwr,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import type {
     ConsultantEntity,
     HeadhuntingCompanyEntity,

@@ -57,7 +57,6 @@ export const KeyStatusChip = ({
         >
             <StatusIcon
                 className="h-3.5 w-3.5"
-                weight="fill"
             />
             {label}
         </span>

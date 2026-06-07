@@ -24,7 +24,7 @@ export interface CourseEntity extends AbstractEntity {
     /** The cover image URL of the course. */
     coverImageUrl: string | null
     /**
-     * List / Regular (niêm yết) price. Tier Regular in `pricingPhases` has `regular: null` — use this.
+     * List / Regular (listed) price. Tier Regular in `pricingPhases` has `regular: null` — use this.
      */
     originalPrice: number | null
     /**

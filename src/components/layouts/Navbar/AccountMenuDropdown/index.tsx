@@ -12,8 +12,8 @@ import {
     useAccountMenuOverlayState,
     useAuthenticationOverlayState,
     useLanguageOverlayState,
-    useMutationSignOutSwr,
-} from "@/hooks/singleton"
+    useMutateSignOutSwr,
+} from "@/hooks"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import { languages } from "@/resources/constants"
 import { useLocale, useTranslations } from "next-intl"
@@ -58,7 +58,7 @@ export const AccountMenuDropdown = (props: AccountMenuDropdownProps) => {
     const { open: openLanguage } = useLanguageOverlayState()
     const { open: openAuthentication } = useAuthenticationOverlayState()
     const dispatch = useAppDispatch()
-    const mutateSignOutSwr = useMutationSignOutSwr()
+    const mutateSignOutSwr = useMutateSignOutSwr()
     const isAuthenticated = useAppSelector((state) => state.keycloak.authenticated)
 
     /** Language entry matching the active locale (for the label). */

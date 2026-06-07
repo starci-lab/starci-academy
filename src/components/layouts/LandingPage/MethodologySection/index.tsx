@@ -1,14 +1,9 @@
+import { ArrowRight, FaceRobot as Robot, FileText as Article, ShieldCheck, Terminal as TerminalWindow } from "@gravity-ui/icons"
 import { motion } from "framer-motion"
-import { 
-    Article, 
-    TerminalWindow, 
-    Robot, 
-    ArrowRight,
-    ShieldCheck
-} from "@phosphor-icons/react"
 import React from "react"
 
-// Định nghĩa các hiệu ứng chuyển động (Variants)
+
+// Define the motion variants.
 const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -35,10 +30,10 @@ export const MethodologySection = () => {
             viewport={{ once: true, margin: "-100px" }}
             className="col-span-3 mt-24 space-y-20 w-full max-w-6xl mx-auto"
         >
-            {/* Header của Section */}
+            {/* Section header */}
             <motion.div variants={itemVariants} className="max-w-2xl">
                 <div className="flex items-center gap-2 text-accent mb-4">
-                    <ShieldCheck size={24} weight="fill" />
+                    <ShieldCheck width={24} height={24} />
                     <span className="font-mono uppercase tracking-widest text-sm">Commitment</span>
                 </div>
                 <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white">
@@ -57,7 +52,7 @@ export const MethodologySection = () => {
                     variants={itemVariants} 
                     className="group p-8 rounded-2xl bg-secondary/10 border border-white/5 hover:border-accent/30 transition-all duration-300"
                 >
-                    <Article size={40} weight="duotone" className="text-accent mb-6" />
+                    <Article width={40} height={40} className="text-accent mb-6" />
                     <h3 className="text-2xl font-semibold text-white">Tuyến nội dung chuẩn Solution Architect</h3>
                     <p className="mt-4 text-muted leading-relaxed">
             Mọi bài học tại StarCi không dừng lại ở &quot;chạy được&quot;. Chúng tôi mổ xẻ hệ thống dưới góc nhìn SA: Khả năng mở rộng, tính sẵn sàng cao và tối ưu chi phí.
@@ -73,7 +68,7 @@ export const MethodologySection = () => {
                         </li>
                     </ul>
                     <button className="mt-8 flex items-center gap-2 font-medium text-accent group-hover:gap-4 transition-all">
-            Đọc thử nội dung <ArrowRight weight="bold" />
+            Đọc thử nội dung <ArrowRight />
                     </button>
                 </motion.div>
 
@@ -82,7 +77,7 @@ export const MethodologySection = () => {
                     variants={itemVariants} 
                     className="group p-8 rounded-2xl bg-secondary/10 border border-white/5 hover:border-accent/30 transition-all duration-300"
                 >
-                    <TerminalWindow size={40} weight="duotone" className="text-accent mb-6" />
+                    <TerminalWindow width={40} height={40} className="text-accent mb-6" />
                     <h3 className="text-2xl font-semibold text-white">Học qua Challenge, không qua Slide</h3>
                     <p className="mt-4 text-muted leading-relaxed">
             Thay vì xem video thụ động, bạn được ném vào một hệ thống Challenges phân cấp từ **Easy** đến **Production Ready**. 
@@ -98,7 +93,7 @@ export const MethodologySection = () => {
                         </li>
                     </ul>
                     <button className="mt-8 flex items-center gap-2 font-medium text-accent group-hover:gap-4 transition-all">
-            Làm thử Challenge <ArrowRight weight="bold" />
+            Làm thử Challenge <ArrowRight />
                     </button>
                 </motion.div>
 
@@ -109,7 +104,7 @@ export const MethodologySection = () => {
                 >
                     <div className="flex flex-col md:flex-row gap-8 items-center">
                         <div className="flex-1">
-                            <Robot size={40} weight="duotone" className="text-accent mb-6" />
+                            <Robot width={40} height={40} className="text-accent mb-6" />
                             <h3 className="text-2xl font-semibold text-white text-balance">StarCi AI: Người cộng sự 24/7</h3>
                             <p className="mt-4 text-muted leading-relaxed max-w-xl">
                 Không chỉ là khóa học, chúng tôi cung cấp bộ công cụ AI chuyên dụng để **Review CV**, tối ưu hóa Profile và hướng dẫn bạn hoàn thiện **Final Project** ở mức độ tinh xảo nhất.

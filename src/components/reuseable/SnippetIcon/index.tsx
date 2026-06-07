@@ -1,10 +1,12 @@
 "use client"
 
+import { Check as CheckIcon, Copy as CopyIcon } from "@gravity-ui/icons"
 import React, { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { CopyIcon, CheckIcon } from "@phosphor-icons/react"
+
 import { cn } from "@heroui/react"
 import { WithClassNames } from "@/modules/types"
+
 
 export interface SnippetIconProps extends WithClassNames<{
   copyIcon?: string

@@ -17,7 +17,7 @@ import {
 import {
     useAiQuotaOverlayState,
     useQueryMyAiQuotaSwr,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import {
     pathConfig,
 } from "@/resources"

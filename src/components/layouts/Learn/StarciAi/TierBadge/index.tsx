@@ -20,7 +20,7 @@ import {
 } from "../map"
 
 /**
- * Recommended-tier badge: a "Mức khuyến nghị:" label followed by a colored chip.
+ * Recommended-tier badge: a "Recommended tier:" label followed by a colored chip.
  *
  * Self-contained section (single-use): reads the cached AI tier from redux and
  * resolves its badge info from the static tier map, defaulting to the low tier.

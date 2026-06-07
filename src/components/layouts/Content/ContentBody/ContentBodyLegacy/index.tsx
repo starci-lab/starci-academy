@@ -9,8 +9,6 @@ import React, {
 import {
     MarkdownContent,
     ReferenceLinks,
-    SkeletonText,
-    SkeletonParagraph,
 } from "@/components/reuseable"
 import {
     useTranslations,
@@ -31,7 +29,7 @@ import {
     useQueryContentStatusSwr,
     useQueryContentSwr,
     useShareOverlayState,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import {
     mutateMarkContentAsReaded,
 } from "@/modules/api"
@@ -41,6 +39,9 @@ import {
 import {
     ActionToolbar,
 } from "../ActionToolbar"
+import {
+    ContentBodySkeleton,
+} from "../../ContentBodySkeleton"
 
 export type ContentBodyLegacyProps = WithClassNames<undefined>
 
@@ -54,12 +55,13 @@ export type ContentBodyLegacyProps = WithClassNames<undefined>
 export const ContentBodyLegacy = ({ className }: ContentBodyLegacyProps) => {
     const t = useTranslations()
     const queryContentSwr = useQueryContentSwr()
-    const content = useAppSelector((state) => state.content.entity)
+    const contentFromRedux = useAppSelector((state) => state.content.entity)
+    const content = contentFromRedux ?? queryContentSwr.data
     const queryContentStatusSwr = useQueryContentStatusSwr()
     const mutateToggleFavoriteSwr = useMutateToggleFavoriteSwr()
     const contentOverlay = useContentOverlayState()
     const shareOverlay = useShareOverlayState()
-    const isLoading = queryContentSwr.isLoading || !content
+    const isLoading = queryContentSwr.isLoading && !content
     const references = useMemo(
         () => _.cloneDeep(content?.references ?? []).sort(
             (prev, next) => prev.orderIndex - next.orderIndex,
@@ -144,13 +146,7 @@ export const ContentBodyLegacy = ({ className }: ContentBodyLegacyProps) => {
     )
 
     if (isLoading) {
-        return (
-            <>
-                <SkeletonText size="lg" width="w-2/3" />
-                <div className="my-3" />
-                <SkeletonParagraph size="sm" lines={2} />
-            </>
-        )
+        return <ContentBodySkeleton className={className} variant="legacy" />
     }
 
     return (

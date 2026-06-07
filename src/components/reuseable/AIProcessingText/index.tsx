@@ -1,5 +1,6 @@
 "use client"
 
+import { CircleCheck as CheckCircleIcon, LayoutList as QueueIcon, OctagonXmark as WarningOctagonIcon, Sparkles as SparkleIcon } from "@gravity-ui/icons"
 import React, { useMemo } from "react"
 import {
     motion,
@@ -11,16 +12,12 @@ import {
     JobStatus,
     WithClassNames,
 } from "@/modules/types"
-import {
-    CheckCircleIcon,
-    QueueIcon,
-    SparkleIcon,
-    WarningOctagonIcon,
-} from "@phosphor-icons/react"
+
 import {
     resolveAiProcessingCopy,
 } from "@/components/utils"
 import { cn } from "@heroui/react"
+
 
 export interface AIProcessingTextProps extends WithClassNames<{
     innerPanel?: string

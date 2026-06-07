@@ -1,16 +1,15 @@
 "use client"
 
+import { Bell as BellIcon } from "@gravity-ui/icons"
 import React from "react"
 import {
     Avatar,
     AvatarFallback,
     Badge,
 } from "@heroui/react"
-import {
-    BellIcon,
-} from "@phosphor-icons/react"
 import { truncate } from "lodash"
 import type {
+
     UserEntity,
 } from "@/modules/types"
 

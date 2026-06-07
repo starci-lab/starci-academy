@@ -1,4 +1,10 @@
-import { ReactNode } from "react"
+import { ComponentType, ReactNode, SVGProps } from "react"
+
+/**
+ * Renderable icon component. Replaces phosphor's `Icon`/`IconProps` types after the
+ * migration to `@gravity-ui/icons`, whose icons are `(props: SVGProps<SVGSVGElement>) => JSX`.
+ */
+export type IconComponent = ComponentType<SVGProps<SVGSVGElement>>
 
 /** Form values for the CV submission form (presentational form + its container). */
 export interface CvSubmissionFormValues {

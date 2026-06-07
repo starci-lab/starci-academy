@@ -17,12 +17,12 @@ const sharedFont = {
     lineHeight: "1.6",
 }
 
-/** Editor dark theme matching the app palette (dark background, teal accent). */
+/** Editor dark theme — surface1 matches the platform page background to blend in. */
 const darkTheme: SandpackTheme = {
     colors: {
-        surface1: "#0f0f0f",
-        surface2: "#1a1a1a",
-        surface3: "#242424",
+        surface1: "oklch(12.00% 0.0033 185.90)",
+        surface2: "oklch(16.00% 0.0033 185.90)",
+        surface3: "oklch(22.00% 0.0033 185.90)",
         clickable: "#6b7280",
         base: "#d1d5db",
         disabled: "#4b5563",
@@ -45,12 +45,12 @@ const darkTheme: SandpackTheme = {
     font: sharedFont,
 }
 
-/** Editor light theme for the platform's light mode. */
+/** Editor light theme — surface1 matches the platform page background to blend in. */
 const lightTheme: SandpackTheme = {
     colors: {
-        surface1: "#ffffff",
-        surface2: "#f4f4f5",
-        surface3: "#e4e4e7",
+        surface1: "oklch(97.02% 0.0033 185.90)",
+        surface2: "oklch(94.00% 0.0033 185.90)",
+        surface3: "oklch(90.00% 0.0033 185.90)",
         clickable: "#71717a",
         base: "#27272a",
         disabled: "#a1a1aa",
@@ -78,8 +78,6 @@ export interface SandpackPanelProps {
     files: SandpackFiles
     /** Extra npm dependencies merged from the lesson's package.json. */
     dependencies?: Record<string, string>
-    /** Called when the user clicks the Reset button. */
-    onReset?: () => Promise<void>
     /** When true, use the dark editor theme (follows the platform theme). */
     isDark?: boolean
 }
@@ -94,7 +92,7 @@ const EXTERNAL_RESOURCES = [
     "https://cdn.jsdelivr.net/npm/@heroui/styles@3/dist/heroui.min.css",
 ]
 
-export const SandpackPanel = ({ files, dependencies = {}, onReset, isDark = true }: SandpackPanelProps) => (
+export const SandpackPanel = ({ files, dependencies = {}, isDark = true }: SandpackPanelProps) => (
     <SandpackProvider
         template="react-ts"
         theme={isDark ? darkTheme : lightTheme}
@@ -104,25 +102,18 @@ export const SandpackPanel = ({ files, dependencies = {}, onReset, isDark = true
             recompileMode: "delayed",
             recompileDelay: 600,
             externalResources: EXTERNAL_RESOURCES,
+            // load the embedded preview at /?sandbox=1 so lesson frontends that
+            // split into Local/Sandbox render the multi-client Sandbox content;
+            // frontends without the split simply ignore the query param.
+            startRoute: "/?sandbox=1",
         }}
     >
-        <SandpackLayout style={{ borderRadius: "12px", border: `1px solid ${isDark ? "#242424" : "#e4e4e7"}`, minHeight: 520 }}>
+        <SandpackLayout style={{ border: "none", borderRadius: 0, minHeight: 520, width: "100%" }}>
             {/* left half — source: file tree + code editor */}
             <SandpackFileExplorer style={{ width: 190, height: 520 }} />
             <SandpackCodeEditor showLineNumbers showTabs={false} showReadOnly={false} style={{ flex: 1, height: 520 }} />
             {/* right half — live UI preview */}
             <SandpackPreview showNavigator={false} showOpenInCodeSandbox style={{ flex: 1, height: 520 }} />
         </SandpackLayout>
-        {onReset && (
-            <div className="flex justify-end pt-1">
-                <button
-                    onClick={() => { void onReset() }}
-                    className="text-xs text-muted hover:text-accent underline"
-                    type="button"
-                >
-                    {"Reset data"}
-                </button>
-            </div>
-        )}
     </SandpackProvider>
 )

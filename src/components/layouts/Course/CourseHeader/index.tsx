@@ -6,7 +6,7 @@ import {
 } from "@heroui/react"
 import {
     useQueryCourseSwr,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import {
     useAppSelector,
 } from "@/redux"

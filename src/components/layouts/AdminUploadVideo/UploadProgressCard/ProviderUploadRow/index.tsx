@@ -1,5 +1,6 @@
 "use client"
 
+import { Copy as CopyIcon } from "@gravity-ui/icons"
 import React, {
     useCallback,
 } from "react"
@@ -8,9 +9,6 @@ import {
     Chip,
     ProgressBar,
 } from "@heroui/react"
-import {
-    CopyIcon,
-} from "@phosphor-icons/react"
 import type {
     ProviderUploadStatus,
 } from "../../types"

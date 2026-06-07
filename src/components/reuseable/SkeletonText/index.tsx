@@ -48,7 +48,8 @@ export interface SkeletonTextProps {
 
 /**
  * A single-line text skeleton that occupies the exact line-box of the real text
- * it replaces. Always rendered as a pill (`rounded-full`).
+ * it replaces. Corner radius is derived from `size` via {@link skeletonTextSizeMap}
+ * (xs/sm → `rounded-sm`; base and above → `rounded`).
  * @param props - {@link SkeletonTextProps}
  */
 export const SkeletonText = (props: SkeletonTextProps) => {
@@ -62,7 +63,6 @@ export const SkeletonText = (props: SkeletonTextProps) => {
             className={
                 cn(
                     skeletonTextSizeMap[size],
-                    "rounded-full",
                     width,
                     className,
                 )

@@ -1,16 +1,11 @@
-import {
-    EnvelopeIcon,
-    PhoneIcon,
-} from "@phosphor-icons/react"
-import type {
-    Icon,
-} from "@phosphor-icons/react"
+import type { IconComponent } from "@/types"
+import { Envelope as EnvelopeIcon, Smartphone as PhoneIcon } from "@gravity-ui/icons"
 import {
     ContactChannelKind,
 } from "./enums"
 
-/** Phosphor icon component rendered inside each contact-channel card. */
-export const CONTACT_CHANNEL_ICON_MAP: Record<ContactChannelKind, Icon> = {
+/** Icon component rendered inside each contact-channel card. */
+export const CONTACT_CHANNEL_ICON_MAP: Record<ContactChannelKind, IconComponent> = {
     [ContactChannelKind.Email]: EnvelopeIcon,
     [ContactChannelKind.Phone]: PhoneIcon,
 }

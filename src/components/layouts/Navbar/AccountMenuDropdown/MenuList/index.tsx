@@ -1,15 +1,12 @@
 "use client"
 
+import { Bookmark as BookmarkSimpleIcon, ChevronRight as CaretRightIcon } from "@gravity-ui/icons"
 import React from "react"
 import {
     DropdownItem,
     DropdownMenu,
     DropdownSection,
 } from "@heroui/react"
-import {
-    BookmarkSimpleIcon,
-    CaretRightIcon,
-} from "@phosphor-icons/react"
 import {
     useTranslations,
 } from "next-intl"

@@ -26,6 +26,12 @@ const query1 = gql`
           orderIndex
           text
         }
+        contents {
+          id
+          title
+          description
+          orderIndex
+        }
       }
     }
   }

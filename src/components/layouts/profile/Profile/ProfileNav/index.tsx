@@ -1,5 +1,6 @@
 "use client"
 
+import { Bookmark as BookmarkSimpleIcon, ChevronRight as CaretRightIcon, CrownDiamond as CrownIcon, Sliders as SlidersHorizontalIcon } from "@gravity-ui/icons"
 import React, {
     useCallback,
     useMemo,
@@ -9,12 +10,6 @@ import {
     Separator,
     cn,
 } from "@heroui/react"
-import {
-    SlidersHorizontalIcon,
-    CrownIcon,
-    BookmarkSimpleIcon,
-    CaretRightIcon,
-} from "@phosphor-icons/react"
 import {
     useLocale,
     useTranslations,
@@ -64,21 +59,21 @@ export const ProfileNav = () => {
         () => [
             {
                 key: "ai-settings",
-                icon: <SlidersHorizontalIcon weight="duotone" className="size-5 text-accent" />,
+                icon: <SlidersHorizontalIcon className="size-5 text-accent" />,
                 label: t("aiSettings.title"),
                 description: t("profile.nav.aiSettingsDesc"),
                 href: `${profileBase}/ai-settings`,
             },
             {
                 key: "ai-subscription",
-                icon: <CrownIcon weight="duotone" className="size-5 text-warning" />,
+                icon: <CrownIcon className="size-5 text-warning" />,
                 label: t("aiSubscription.title"),
                 description: t("profile.nav.aiSubscriptionDesc"),
                 href: `${profileBase}/ai-subscription`,
             },
             {
                 key: "bookmarks",
-                icon: <BookmarkSimpleIcon weight="duotone" className="size-5 text-accent" />,
+                icon: <BookmarkSimpleIcon className="size-5 text-accent" />,
                 label: t("profile.nav.bookmarks"),
                 description: t("profile.nav.bookmarksDesc"),
                 href: pathConfig().locale(locale).profile().bookmarks().build(),

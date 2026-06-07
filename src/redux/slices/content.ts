@@ -28,6 +28,11 @@ export interface ContentSlice {
     isRead?: boolean
     /** Whether the current content is favorited by the user. */
     isFavorite?: boolean
+    /**
+     * User-selected programming language for SCHEMA V2 `bodies`.
+     * `null` lets {@link resolveActiveProgrammingLang} pick the first available lang.
+     */
+    selectedProgrammingLang: string | null
 }
 
 /**
@@ -52,6 +57,8 @@ const initialState: ContentSlice = {
     isRead: undefined,
     /** Whether the current content is favorited. */
     isFavorite: undefined,
+    /** No explicit language tab until the user selects one. */
+    selectedProgrammingLang: null,
 }
 
 /**
@@ -91,7 +98,19 @@ export const contentSlice = createSlice(
                 state, 
                 action: PayloadAction<string | undefined>
             ) => {
-                state.id = action.payload
+                const nextId = action.payload
+                if (state.entity?.id !== nextId) {
+                    state.entity = undefined
+                }
+                state.id = nextId
+                state.selectedProgrammingLang = null
+            },
+            /** Sets the active SCHEMA V2 programming-language tab. */
+            setContentSelectedProgrammingLang: (
+                state,
+                action: PayloadAction<string | null>,
+            ) => {
+                state.selectedProgrammingLang = action.payload
             },
             /** The action to set the content page number. */
             setContentPageNumber: (
@@ -145,4 +164,5 @@ export const {
     setContentsCount,
     setContentIsRead,
     setContentIsFavorite,
+    setContentSelectedProgrammingLang,
 } = contentSlice.actions

@@ -1,13 +1,11 @@
 "use client"
 
+import { Aperture as ScanIcon } from "@gravity-ui/icons"
 import React from "react"
 import {
     Button,
     Spinner,
 } from "@heroui/react"
-import {
-    ScanIcon,
-} from "@phosphor-icons/react"
 import {
     useTranslations,
 } from "next-intl"

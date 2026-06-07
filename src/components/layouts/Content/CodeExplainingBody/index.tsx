@@ -5,7 +5,7 @@ import { cn } from "@heroui/react"
 import { useAppSelector } from "@/redux"
 import type { WithClassNames } from "@/modules/types"
 import { getContentCodeExplainings } from "@/modules/types"
-import { useQueryContentSwr } from "@/hooks/singleton"
+import { useQueryContentSwr } from "@/hooks"
 import { CodeBodySkeleton } from "../CodeBodySkeleton"
 import { ExplainingCard } from "./ExplainingCard"
 import { CodeExplainingEmpty } from "./Empty"
@@ -30,7 +30,6 @@ export const CodeExplainingBody = ({ className }: CodeExplainingBodyProps) => {
     // loading gate: render content only when the content query has settled with
     // data and no error; otherwise show the code-shaped skeleton.
     const ready = !queryContentSwr.isLoading
-        && !queryContentSwr.isValidating
         && !!queryContentSwr.data
         && !queryContentSwr.error
 

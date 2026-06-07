@@ -13,13 +13,13 @@ export const SubmissionAttemptCardSkeleton = (props: SubmissionAttemptCardSkelet
             <Card.Content>
                 <div>
                     <div className="flex items-center justify-between gap-3">
-                        <Skeleton className="h-[14px] w-32 my-[3px] rounded-full" />
+                        <Skeleton className="h-[14px] w-32 my-[3px] rounded-sm" />
                         <Skeleton className="h-5 w-14 rounded-full" />
                     </div>
                     <div className="h-3" />
                     <div className="flex flex-col">
-                        <Skeleton className="h-[14px] my-[3px] w-full rounded-full" />
-                        <Skeleton className="h-[14px] my-[3px] w-3/4 rounded-full" />
+                        <Skeleton className="h-[14px] my-[3px] w-full rounded-sm" />
+                        <Skeleton className="h-[14px] my-[3px] w-3/4 rounded-sm" />
                     </div>
                     <div className="h-3" />
                     <div className="flex gap-2">

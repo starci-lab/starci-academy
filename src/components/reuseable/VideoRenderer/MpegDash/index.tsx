@@ -11,6 +11,17 @@ export interface MpegDashPlayerProps {
 }
 
 /**
+ * Legacy dashjs quality APIs that exist at runtime but were dropped from the
+ * v5 `MediaPlayerClass` typings — narrowed here so we can call them without `any`.
+ */
+interface DashLegacyQualityApi {
+    /** Returns the available bitrate renditions for a media type (`"video"`). */
+    getBitrateInfoListFor: (type: string) => Array<{ qualityIndex: number; height: number; bitrate: number }>
+    /** Pins playback to a specific quality index for a media type. */
+    setQualityFor: (type: string, qualityIndex: number) => void
+}
+
+/**
  * MPEG-DASH adaptive video player using `dashjs`.
  * Custom HeroUI controls with quality / bitrate selector.
  *
@@ -48,7 +59,7 @@ export const MpegDashPlayer = ({ src, className }: MpegDashPlayerProps) => {
             player.initialize(video, src, false)
 
             player.on("streamInitialized", () => {
-                const bitrates = (player as any).getBitrateInfoListFor("video") as Array<{ qualityIndex: number; height: number; bitrate: number }>
+                const bitrates = (player as unknown as DashLegacyQualityApi).getBitrateInfoListFor("video")
                 setQualityLevels(
                     bitrates.map((b: { qualityIndex: number; height: number; bitrate: number }) => ({
                         index: b.qualityIndex,
@@ -98,7 +109,7 @@ export const MpegDashPlayer = ({ src, className }: MpegDashPlayerProps) => {
                     },
                 },
             })
-            ;(player as any).setQualityFor("video", selectedQuality)
+            ;(player as unknown as DashLegacyQualityApi).setQualityFor("video", selectedQuality)
         }
     }, [selectedQuality])
 

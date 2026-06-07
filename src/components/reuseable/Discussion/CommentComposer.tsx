@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Button } from "@heroui/react"
 import { useTranslations } from "next-intl"
 
@@ -37,6 +37,10 @@ export const CommentComposer = ({
     const t = useTranslations()
     // draft body kept local until submit
     const [body, setBody] = useState(initialValue ?? "")
+    // sync when the parent passes a new initialValue (e.g. editing a different comment)
+    useEffect(() => {
+        setBody(initialValue ?? "")
+    }, [initialValue])
     const trimmed = body.trim()
 
     // submit only non-empty drafts, then clear the field

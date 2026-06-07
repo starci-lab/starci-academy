@@ -8,7 +8,8 @@ import { DrawerContainer } from "@/components/drawers"
 import { Navbar } from "@/components/layouts/Navbar"
 import { ToastProvider } from "@heroui/react"
 import React, { PropsWithChildren, Suspense } from "react"
-import { SingletonHookProvider } from "@/hooks/singleton"
+import { SocketIoSideEffects } from "@/hooks/socketio"
+import { SwrSideEffects } from "@/hooks/swr"
 import { ReduxProvider } from "@/redux"
 import { ModalContainer } from "@/components/modals"
 import { UseEffects } from "@/hooks"
@@ -25,16 +26,13 @@ export const InnerLayout = ({ children }: PropsWithChildren) => {
                 <HeroUIProvider>
                     <ReduxProvider>
                         <SwrProvider>
-                            <SingletonHookProvider>
-                                <UseEffects />
-                                <Navbar />
-                                <ModalContainer />
-                                <DrawerContainer />
-                                {/*
-                                <Navbar />  
-                                 */}
-                                {children}
-                            </SingletonHookProvider>
+                            <SwrSideEffects />
+                            <SocketIoSideEffects />
+                            <UseEffects />
+                            <Navbar />
+                            <ModalContainer />
+                            <DrawerContainer />
+                            {children}
                             <ToastProvider />
                         </SwrProvider>
                     </ReduxProvider>

@@ -1,5 +1,6 @@
 "use client"
 
+import { ArrowRightFromSquare as SignOutIcon, Person as UserIcon } from "@gravity-ui/icons"
 import React, {
     useCallback,
 } from "react"
@@ -14,10 +15,6 @@ import {
     pathConfig,
 } from "@/resources/path"
 import {
-    SignOutIcon,
-    UserIcon,
-} from "@phosphor-icons/react"
-import {
     useTranslations,
 } from "next-intl"
 import {
@@ -30,8 +27,8 @@ import {
 } from "@heroui/react"
 import {
     useLanguageOverlayState,
-    useMutationSignOutSwr,
-} from "@/hooks/singleton"
+    useMutateSignOutSwr,
+} from "@/hooks"
 import {
     LocalStorage,
     LocalStorageId,
@@ -52,7 +49,7 @@ export const AuthenticatedDropdown = () => {
     const t = useTranslations()
     const router = useRouter()
     const { isOpen, setOpen } = useLanguageOverlayState()
-    const mutateSignOutSwr = useMutationSignOutSwr()
+    const mutateSignOutSwr = useMutateSignOutSwr()
     const dispatch = useAppDispatch()
 
     /** Close the dropdown without navigating (account header item). */

@@ -1,23 +1,16 @@
-import type {
-    Icon,
-} from "@phosphor-icons/react"
-import {
-    BookOpenIcon,
-    CodeIcon,
-    PlayIcon,
-    SwordIcon,
-} from "@phosphor-icons/react"
+import type { IconComponent } from "@/types"
+import { BookOpen as BookOpenIcon, Code as CodeIcon, Flag as SwordIcon, Play as PlayIcon } from "@gravity-ui/icons"
 import {
     ContentTab,
 } from "@/redux/slices"
 
 /**
- * Phosphor icon component rendered on each {@link ContentTab} trigger.
+ * Icon component rendered on each {@link ContentTab} trigger.
  *
  * Keyed by the tabs surfaced in the {@link Content} bar; deprecated/unused tabs
  * fall back to the content icon so the lookup is total.
  */
-export const CONTENT_TAB_ICON_MAP: Record<ContentTab, Icon> = {
+export const CONTENT_TAB_ICON_MAP: Record<ContentTab, IconComponent> = {
     /** Article / markdown body tab. */
     [ContentTab.Content]: BookOpenIcon,
     /** Code explainings + implementations tab. */

@@ -4,14 +4,14 @@
  * **Sign-in step 2** — OTP entry after `signInInit` succeeds.
  *
  * Same singleton Formik as credentials step. Description uses `t.rich` so the email can be styled.
- * Submit runs the OTP verify branch in `useSignInFormik` while `signInState === OTP`.
+ * Submit runs the OTP verify branch in `useSignInForm` while `signInState === OTP`.
  *
  * @see {@link SignInSection} for step routing; mirror this folder when sign-up adds a verify-email step.
  */
 import React from "react"
 import { Button, cn, FieldError, InputOTP, Link, Modal, Spinner, TextField } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { useMutateSignInResendOtpSwr, useSignInFormik } from "@/hooks/singleton"
+import { useMutateSignInResendOtpSwr, useSignInForm } from "@/hooks"
 import { runGraphQLWithToast } from "@/modules/toast"
 
 /**
@@ -30,7 +30,7 @@ export const OtpState = () => {
         setFieldValue,
         setFieldTouched,
         isSubmitting,
-    } = useSignInFormik()
+    } = useSignInForm()
 
     const onResend = async () => {
         const challengeId = values.challengeId

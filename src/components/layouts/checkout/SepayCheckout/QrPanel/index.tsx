@@ -1,5 +1,6 @@
 "use client"
 
+import { ArrowsRotateLeft as ArrowsClockwise } from "@gravity-ui/icons"
 import React, {
     useCallback,
 } from "react"
@@ -9,17 +10,14 @@ import {
     Spinner,
 } from "@heroui/react"
 import {
-    ArrowsClockwise,
-} from "@phosphor-icons/react"
-import {
     useTranslations,
 } from "next-intl"
 import {
     useSearchParams,
 } from "next/navigation"
 import {
-    useQueryCourseEnrollmentStatusSwrCore,
-} from "@/hooks/singleton/swr/core/api/graphql/queries/useQueryCourseEnrollmentStatusSwr"
+    useQueryCourseEnrollmentStatusSwr,
+} from "@/hooks/swr/api/graphql/queries/useQueryCourseEnrollmentStatusSwr"
 
 /**
  * Left-hand panel: the SePay QR code + "waiting for payment" status + a manual
@@ -37,7 +35,7 @@ export const QrPanel = () => {
 
     const {
         mutate: refreshStatus,
-    } = useQueryCourseEnrollmentStatusSwrCore()
+    } = useQueryCourseEnrollmentStatusSwr()
 
     /** Manually re-check the enrollment/payment status. */
     const onRefresh = useCallback(

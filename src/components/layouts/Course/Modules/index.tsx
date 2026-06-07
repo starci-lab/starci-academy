@@ -15,7 +15,7 @@ import {
 } from "@/redux"
 import {
     useQueryCourseSwr,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import type {
     WithClassNames,
 } from "@/modules/types"

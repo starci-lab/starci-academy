@@ -20,7 +20,7 @@ import {
 import {
     useQueryFoundationCategoriesSwr,
     useQueryFoundationsSwr,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import type {
     FoundationsBreadcrumbItem,
 } from "../types"

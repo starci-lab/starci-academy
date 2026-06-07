@@ -10,7 +10,7 @@ import {
 } from "next-intl"
 import {
     useQueryCourseSwr,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import {
     useAppSelector,
 } from "@/redux"

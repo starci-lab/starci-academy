@@ -3,7 +3,7 @@
 /**
  * Sign-up step: registration form (email, passwords, terms).
  *
- * Container: owns the sign-up formik (singleton `useSignUpFormik()`) and the
+ * Container: owns the sign-up formik (singleton `useSignUpForm()`) and the
  * switch-to-sign-in action; renders presentational field children inside the
  * modal chrome. Modal shell matches {@link SignInSection} `CredentialsState`.
  */
@@ -22,12 +22,14 @@ import {
     resetSignUpState,
     setAuthenticationModalTab,
 } from "@/redux/slices"
-import { useSignUpFormik } from "@/hooks/singleton"
+import { useSignUpForm } from "@/hooks"
 import type { WithClassNames } from "@/modules/types"
 import { EmailField } from "./EmailField"
 import { PasswordField } from "./PasswordField"
 import { AgreeToTermsRow } from "./AgreeToTermsRow"
 import { SignInPrompt } from "./SignInPrompt"
+import { Turnstile } from "@/components/reuseable"
+import { publicEnv } from "@/resources"
 
 /** Props for {@link RegistrationState}; no own props (singleton-driven). */
 export type RegistrationStateProps = WithClassNames<undefined>
@@ -48,7 +50,7 @@ export const RegistrationState = () => {
         isSubmitting,
         resetForm,
         isValid,
-    } = useSignUpFormik()
+    } = useSignUpForm()
 
     const onChangeEmail = useCallback(
         (value: string) => {
@@ -135,6 +137,8 @@ export const RegistrationState = () => {
         ],
     )
 
+    const isSubmitDisabled = !isValid || (publicEnv().captcha.enabled && !values.captchaToken)
+
     return (
         <>
             <Modal.CloseTrigger />
@@ -183,12 +187,21 @@ export const RegistrationState = () => {
                     touched={touched.agreeToTerms}
                     onChangeSelected={onChangeAgreeToTerms}
                 />
+
+                {publicEnv().captcha.enabled && (
+                    <Turnstile
+                        onVerify={(token) => setFieldValue("captchaToken", token)}
+                        onExpire={() => setFieldValue("captchaToken", undefined)}
+                        onError={() => setFieldValue("captchaToken", undefined)}
+                    />
+                )}
+
                 <div className="h-3" />
                 <Button
                     type="submit"
                     variant="primary"
                     fullWidth
-                    isDisabled={!isValid}
+                    isDisabled={isSubmitDisabled}
                     isPending={isSubmitting}
                     onPress={onSubmit}
                 >

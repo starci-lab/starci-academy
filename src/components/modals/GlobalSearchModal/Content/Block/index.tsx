@@ -1,18 +1,16 @@
 "use client"
 
+import type { IconComponent } from "@/types"
 import { AutocompleteGlobalSearchItem } from "@/modules/api"
 import { ListBox } from "@heroui/react"
-import type { IconProps } from "@phosphor-icons/react"
 import React from "react"
-
-type PhosphorIcon = React.ComponentType<IconProps>
 
 /** Props for {@link GlobalSearchContentBlock}. */
 interface GlobalSearchContentBlockProps {
     /** Section heading (translated). */
     label: string
     /** Leading icon for the section header. */
-    icon: PhosphorIcon
+    icon: IconComponent
     /** Result rows. */
     items: Array<AutocompleteGlobalSearchItem>
     /** Called when the user activates a row; parent resolves href and navigation. */

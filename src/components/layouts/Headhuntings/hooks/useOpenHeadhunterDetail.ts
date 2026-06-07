@@ -1,6 +1,6 @@
 "use client"
 
-import { useHeadhunterOverlayState } from "@/hooks/singleton"
+import { useHeadhunterOverlayState } from "@/hooks"
 import type { ConsultantEntity } from "@/modules/types"
 import { useAppDispatch } from "@/redux"
 import {

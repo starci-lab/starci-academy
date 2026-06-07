@@ -7,7 +7,6 @@ import React, {
 } from "react"
 import {
     Button,
-    Spinner,
 } from "@heroui/react"
 import {
     useLocale,
@@ -18,7 +17,7 @@ import {
 } from "next/navigation"
 import {
     useQueryAiBalancerHealthSwr,
-} from "@/hooks/singleton"
+} from "@/hooks"
 import {
     useAppSelector,
 } from "@/redux"
@@ -32,6 +31,9 @@ import {
 import {
     ProviderSection,
 } from "./ProviderSection"
+import {
+    AdminAiBalancerSkeleton,
+} from "./AdminAiBalancerSkeleton"
 
 /**
  * Admin dashboard for live AI balancer API key health (Redis ping cache + pool).
@@ -153,13 +155,7 @@ export const AdminAiBalancer = () => {
                     ) : null}
                 </div>
                 {!ready ? (
-                    <div className="flex justify-center py-16">
-                        <Spinner
-                            color="current"
-                            size="lg"
-                            className="text-indigo-300"
-                        />
-                    </div>
+                    <AdminAiBalancerSkeleton />
                 ) : (
                     <div className="flex flex-col gap-6">
                         {sortedProviders.map((providerHealth) => (

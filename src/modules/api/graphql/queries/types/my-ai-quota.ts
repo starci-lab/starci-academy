@@ -4,7 +4,7 @@ import type {
     AiSubTier,
 } from "../query-my-ai-settings"
 
-/** Per-window quota for the free Auto lane — counted in "uses" (lượt). */
+/** Per-window quota for the free Auto lane — counted in "uses". */
 export interface QueryMyAiAutoQuotaData {
     /** Max Auto uses allowed in the 5h window. */
     limit5h: number

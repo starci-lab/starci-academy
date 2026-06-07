@@ -10,7 +10,7 @@ import {
 } from "next-intl"
 import {
     useQueryMyAiQuotaSwr,
-} from "@/hooks/singleton"
+} from "@/hooks"
 
 /**
  * AI quota modal title row — tier chip from `myAiQuota` when subscribed.

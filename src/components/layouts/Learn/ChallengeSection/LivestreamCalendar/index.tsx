@@ -1,13 +1,14 @@
 "use client"
 
+import { Calendar as CalendarBlankIcon, Calendar as CalendarIcon } from "@gravity-ui/icons"
 import React, { useEffect, useMemo, useState } from "react"
 import { useFormatter, useTranslations } from "next-intl"
-import { CalendarIcon, CalendarBlankIcon } from "@phosphor-icons/react"
 import { Button, Skeleton } from "@heroui/react"
-import { useLivestreamCalendarOverlayState, useQueryLivestreamSessionsSwr } from "@/hooks/singleton"
+import { useLivestreamCalendarOverlayState, useQueryLivestreamSessionsSwr } from "@/hooks"
 import { useAppSelector } from "@/redux"
 import { DayOfWeek } from "@/modules/types"
 import { countdownParts, nearestUpcomingLivestream } from "./utils"
+
 
 /**
  * Promo card + button opening the livestream schedule modal (HeroUI calendar).
@@ -39,7 +40,6 @@ export const LivestreamCalendar = () => {
     return (
         <div className="relative overflow-hidden rounded-large bg-gradient-to-br from-secondary-500/20 to-secondary-100/20 p-3">
             <CalendarIcon
-                weight="thin"
                 className="pointer-events-none select-none absolute -right-16 -bottom-20 rotate-[-15deg] text-white/5 blur-[0.5px] z-0 w-[240px] h-[240px]"
             />
             <div className="relative z-10 space-y-3">

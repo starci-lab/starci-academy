@@ -1,4 +1,4 @@
-﻿import type { MutateParams } from "../types"
+import type { MutateParams } from "../types"
 import { createNoAuthApolloClient } from "../clients"
 import { DocumentNode, gql } from "@apollo/client"
 import type { SignUpInitRequest, MutateSignUpInitResponse } from "./types/sign-up-init"
@@ -34,11 +34,13 @@ export type MutateSignUpInitParams = MutateParams<MutationSignUpInit, SignUpInit
 export const mutateSignUpInit = async ({
     mutation = MutationSignUpInit.Mutation1,
     request,
+    headers,
     debug,
     signal,
 }: MutateSignUpInitParams) => {
     const apollo = createNoAuthApolloClient({
         cache: false,
+        headers,
         debug,
         signal,
         withCredentials: true,

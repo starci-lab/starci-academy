@@ -4,7 +4,7 @@ import React from "react"
 import { Button, Separator, Spinner } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { ReactionType, type CommentNode, type ReactionSummary } from "@/modules/api"
-import { ReactionBar } from "./ReactionBar"
+import { InteractionBar, type ActionBarProps } from "./InteractionBar"
 import { CommentComposer } from "./CommentComposer"
 import { CommentItem } from "./CommentItem"
 
@@ -12,10 +12,11 @@ export * from "./ReactionBar"
 export * from "./ReactionEmoji"
 export * from "./CommentComposer"
 export * from "./CommentItem"
+export * from "./InteractionBar"
 export * from "./constants"
 
 /** Props for {@link Discussion}. */
-export interface DiscussionProps {
+export interface DiscussionProps extends ActionBarProps {
     /** Current viewer id (drives owner-only actions); null when unknown. */
     currentUserId: string | null
     /** Aggregate reactions on the content itself. */
@@ -51,15 +52,28 @@ export interface DiscussionProps {
 }
 
 /**
- * Bottom-of-article discussion: content reactions, a composer, and a threaded comment list.
+ * Bottom-of-article discussion: Facebook-style interaction bar, a composer, and a threaded
+ * comment list.
+ *
+ * The {@link InteractionBar} merges the old separate ActionToolbar + ReactionBar into one row:
+ * LEFT = stacked emoji reactions + total, RIGHT = bookmark/share/fullscreen + reaction picker.
  *
  * Presentational: receives all data + callbacks from a container; holds no data hooks.
  * @param props - {@link DiscussionProps}
  */
 export const Discussion = ({
+    // action bar
+    isFavorite,
+    isShareVisible,
+    isFavoritePending,
+    onToggleFavorite,
+    onShare,
+    onFullscreen,
+    // reactions
     currentUserId,
     contentReactions,
     onReactContent,
+    // comments
     comments,
     total,
     isLoading,
@@ -77,21 +91,33 @@ export const Discussion = ({
     const t = useTranslations()
 
     return (
-        <section className="flex flex-col gap-6">
+        <section className="flex flex-col gap-4">
             <Separator />
 
-            {/* header + content-level reactions */}
-            <div className="flex flex-wrap items-center justify-between gap-3">
-                <h2 className="text-lg font-semibold text-foreground">
-                    {t("discussion.title", { count: total })}
-                </h2>
-                <ReactionBar summary={contentReactions} onReact={onReactContent} />
-            </div>
+            {/* ── Facebook-style two-row interaction bar ── */}
+            <InteractionBar
+                summary={contentReactions}
+                onReact={onReactContent}
+                isFavorite={isFavorite}
+                isShareVisible={isShareVisible}
+                isFavoritePending={isFavoritePending}
+                onToggleFavorite={onToggleFavorite}
+                onShare={onShare}
+                onFullscreen={onFullscreen}
+                viewCount={contentReactions?.viewCount}
+            />
 
-            {/* new comment composer */}
+            <Separator />
+
+            {/* ── comment count heading ── */}
+            <h2 className="text-base font-semibold text-foreground">
+                {t("discussion.title", { count: total })}
+            </h2>
+
+            {/* ── new comment composer ── */}
             <CommentComposer onSubmit={onSubmitComment} />
 
-            {/* comment list / loading / empty states */}
+            {/* ── comment list / loading / empty states ── */}
             {isLoading ? (
                 <div className="flex justify-center py-6">
                     <Spinner />
@@ -116,7 +142,6 @@ export const Discussion = ({
                             onLoadReplies={onLoadReplies}
                         />
                     ))}
-                    {/* paginate older top-level comments on demand */}
                     {hasMore ? (
                         <Button
                             variant="tertiary"

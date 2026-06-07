@@ -1,3 +1,4 @@
+import type { IconComponent } from "@/types"
 import type {
     AiMode,
     ModelProvider,
@@ -7,12 +8,9 @@ import type {
     JobStatus,
     SubmissionType,
 } from "@/modules/types"
-import type {
-    Icon,
-} from "@phosphor-icons/react"
 
 /** Lookup from a submission link type to the brand icon shown beside its title. */
-export type SubmissionIconMap = Record<SubmissionType, Icon>
+export type SubmissionIconMap = Record<SubmissionType, IconComponent>
 
 /** A grading lane + concrete model the user picked for one submission row. */
 export interface ChallengeGradeSelection {
@@ -43,7 +41,7 @@ export interface ChallengeSubmissionRowViewModel {
     /** Current URL value typed into the input. */
     urlValue: string
     /** Brand icon for the submission link type, if any. */
-    iconComponent: Icon | undefined
+    iconComponent: IconComponent | undefined
     /** Resolved validation message for the URL field, if shown. */
     errorMessage: string | undefined
     /** True when the URL field has been touched (controls error visibility). */

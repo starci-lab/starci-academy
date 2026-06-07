@@ -15,8 +15,13 @@ import {
     useLocale,
 } from "next-intl"
 import {
+    useAppDispatch,
     useAppSelector,
 } from "@/redux"
+import {
+    ContentTab,
+    setContentTab,
+} from "@/redux/slices"
 import type {
     WithClassNames,
 } from "@/modules/types"
@@ -53,6 +58,7 @@ type ModuleSidebarProps = WithClassNames<undefined> & {
  * @param props - optional container class name
  */
 export const ModuleSidebar = ({ className, collapsed = false }: ModuleSidebarProps) => {
+    const dispatch = useAppDispatch()
     const modulesSwr = useQueryModulesSwr()
     const moduleId = useAppSelector((state) => state.module.id)
     const modules = useAppSelector((state) => state.module.modules)
@@ -83,28 +89,36 @@ export const ModuleSidebar = ({ className, collapsed = false }: ModuleSidebarPro
         ],
     )
 
-    /** Route to the chosen content within the active module. */
+    /** Route to the chosen content within its module. */
     const onSelectContent = useCallback(
-        (contentId: string) => {
-            router.push(
-                pathConfig().locale(locale).course(courseDisplayId).learn().module(moduleId).content(contentId).build(),
-            )
+        (targetModuleId: string, contentId: string) => {
+            if (!courseDisplayId || !targetModuleId || !contentId) {
+                return
+            }
+            dispatch(setContentTab(ContentTab.Content))
+            const path = pathConfig()
+                .locale(locale)
+                .course(courseDisplayId)
+                .learn()
+                .module(targetModuleId)
+                .content(contentId)
+                .build()
+            router.push(`${path}?tab=${ContentTab.Content}`)
         },
         [
+            dispatch,
             router,
             locale,
             courseDisplayId,
-            moduleId,
         ],
     )
 
     /**
-     * Loading gate: show content only when the modules query has settled with
-     * data and no error; otherwise mirror the accordion via {@link ModuleSidebarSkeleton}.
+     * Loading gate: prefer cached redux modules (SWR hydrates into `module.modules`);
+     * otherwise wait for the singleton query to settle.
      */
-    const ready = !modulesSwr.isLoading
-        && !!modulesSwr.data
-        && !modulesSwr.error
+    const ready = sortedModules.length > 0
+        || (!modulesSwr.isLoading && !!modulesSwr.data && !modulesSwr.error)
 
     // shared sticky/scroll shell so every render branch lines up under the navbar
     const shellClass = cn("lg:sticky lg:top-16 lg:self-start lg:h-[calc(100vh-64px)] lg:overflow-y-auto", className)
@@ -136,8 +150,8 @@ export const ModuleSidebar = ({ className, collapsed = false }: ModuleSidebarPro
                 modules={sortedModules}
                 activeModuleId={moduleId}
                 activeContentId={activeContent?.id}
-                onExpandedChange={onExpandedChange}
                 onSelectContent={onSelectContent}
+                onExpandModule={onExpandedChange}
             />
         </div>
     )

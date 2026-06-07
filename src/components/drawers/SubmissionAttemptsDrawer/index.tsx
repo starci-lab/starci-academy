@@ -2,7 +2,7 @@
 
 import React, { useMemo } from "react"
 import { Drawer, Pagination, ScrollShadow } from "@heroui/react"
-import { useFeedbackDetailsOverlayState, useSubmissionAttemptsOverlayState } from "@/hooks/singleton"
+import { useFeedbackDetailsOverlayState, useSubmissionAttemptsOverlayState } from "@/hooks"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import {
     setActiveChallengeSubmissionId,
@@ -11,7 +11,7 @@ import {
 } from "@/redux/slices"
 import { useTranslations } from "next-intl"
 import { SubmissionAttemptCard } from "./SubmissionAttemptCard"
-import { useQuerySubmissionAttemptsSwr } from "@/hooks/singleton"
+import { useQuerySubmissionAttemptsSwr } from "@/hooks"
 import { SubmissionAttemptCardSkeleton } from "./SubmissionAttempCardSkeleton"
 import { Empty } from "./Empty"
 
@@ -52,7 +52,7 @@ export const SubmissionAttemptsDrawer = () => {
     const swr = useQuerySubmissionAttemptsSwr()
     const showSkeleton =
         isOpen
-        && (swr.isLoading || swr.isValidating)
+        && swr.isLoading
         && submissionAttempts.length === 0
     return (
         <Drawer>

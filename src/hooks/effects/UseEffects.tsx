@@ -4,6 +4,7 @@ import { useSyncReduxModuleId } from "./useSyncReduxModuleId"
 import { useSetTabQuery } from "./useSetTabQuery"
 import { useSidebar } from "./useSidebar"
 import { useSyncReduxContentId } from "./useSyncReduxContentId"
+import { useSyncReduxContent } from "./useSyncReduxContent"
 import { useDefaultRedirect } from "./useDefaultRedirect"
 import { useExchangeCodeForToken } from "./useExchangeCodeForToken"
 import { useSyncReduxTaskId } from "./useSyncReduxTaskId"
@@ -13,6 +14,8 @@ import { useSyncReduxFoundationCategoryId } from "./useSyncReduxFoundationCatego
 import { useSyncFoundationCategory } from "./useSyncFoundationCategory"
 import { useSyncReduxFoundationId } from "./useSyncReduxFoundationId"
 import { useSyncFoundationEntity } from "./useSyncFoundationEntity"
+import { useSessionSuperseded } from "./useSessionSuperseded"
+import { useInitializeFingerprint } from "./useInitializeFingerprint"
 
 /**
  * Mounts all global side-effect hooks once at the top of the app tree.
@@ -21,12 +24,18 @@ import { useSyncFoundationEntity } from "./useSyncFoundationEntity"
  * @returns an empty React fragment.
  */
 export const UseEffects = () => {
+    /** Initialize FingerprintJS device fingerprint on app mount. */
+    useInitializeFingerprint()
+    /** Show warning toast if user session was superseded on another device. */
+    useSessionSuperseded()
     /** The useEffect to sync the redux course id. */
     useSyncReduxCourseId()
     /** The useEffect to sync the redux module id. */
     useSyncReduxModuleId()
     /** The useEffect to sync the redux content id. */
     useSyncReduxContentId()
+    /** Mirror content SWR result into Redux (covers cache hits / back-navigation). */
+    useSyncReduxContent()
     /** The useEffect to set the tab query. */
     useSetTabQuery()
     /** The useEffect to sync sidebar selection and route. */

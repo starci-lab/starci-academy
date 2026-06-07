@@ -1,8 +1,9 @@
 "use client"
 
+import { SquareDashedText as ArrowsOutIcon } from "@gravity-ui/icons"
 import React from "react"
 import { Button } from "@heroui/react"
-import { ArrowsOutIcon } from "@phosphor-icons/react"
+
 
 /** Props for {@link FullscreenButton}. */
 export interface FullscreenButtonProps {

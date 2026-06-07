@@ -1,5 +1,6 @@
 "use client"
 
+import { Eye as EyeIcon, EyeSlash as EyeClosedIcon } from "@gravity-ui/icons"
 import React, {
     useCallback,
     useState,
@@ -11,10 +12,6 @@ import {
     Link,
     TextField,
 } from "@heroui/react"
-import {
-    EyeClosedIcon,
-    EyeIcon,
-} from "@phosphor-icons/react"
 import {
     useTranslations,
 } from "next-intl"

@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useMemo, useState } from "react"
+import { Accordion } from "@heroui/react"
 import { useAppSelector } from "@/redux"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import {
@@ -69,35 +70,38 @@ export const E2eBody = (): React.JSX.Element => {
                 />
             )}
 
-            <div className="flex flex-col gap-3">
-                {visible.map((flow, index) => {
+            <Accordion variant="surface">
+                {visible.map((flow) => {
                     const ok = flow.status === "passed"
                     return (
-                        <details
+                        <Accordion.Item
                             key={`${flow.lang ?? "agnostic"}-${flow.id}`}
-                            className="group rounded-large border border-default-200 p-3"
-                            open={index === 0}
+                            aria-label={flow.title}
                         >
-                            <summary className="flex cursor-pointer select-none items-center gap-2">
-                                <span
-                                    className={[
-                                        "inline-flex h-5 shrink-0 items-center rounded-full px-2 text-[11px] font-semibold",
-                                        ok ? "bg-success/15 text-success" : "bg-danger/15 text-danger",
-                                    ].join(" ")}
-                                >
-                                    {ok ? "PASS" : "FAIL"}
-                                </span>
-                                <span className="min-w-0 flex-1 truncate text-sm font-medium">{flow.title}</span>
-                            </summary>
-                            {flow.markdown && (
-                                <div className="mt-3 border-t border-default-200 pt-3">
-                                    <MarkdownContent markdown={flow.markdown} />
-                                </div>
-                            )}
-                        </details>
+                            <Accordion.Heading>
+                                <Accordion.Trigger>
+                                    <span className="flex items-center gap-2 text-start">
+                                        <span
+                                            className={[
+                                                "inline-flex h-5 shrink-0 items-center rounded-full px-2 text-[11px] font-semibold",
+                                                ok ? "bg-success/15 text-success" : "bg-danger/15 text-danger",
+                                            ].join(" ")}
+                                        >
+                                            {ok ? "PASS" : "FAIL"}
+                                        </span>
+                                        <span className="text-sm font-medium">{flow.title}</span>
+                                    </span>
+                                </Accordion.Trigger>
+                            </Accordion.Heading>
+                            <Accordion.Panel>
+                                <Accordion.Body>
+                                    {flow.markdown && <MarkdownContent markdown={flow.markdown} />}
+                                </Accordion.Body>
+                            </Accordion.Panel>
+                        </Accordion.Item>
                     )
                 })}
-            </div>
+            </Accordion>
         </div>
     )
 }

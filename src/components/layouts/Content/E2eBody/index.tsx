@@ -3,6 +3,10 @@
 import React, { useMemo, useState } from "react"
 import { useAppSelector } from "@/redux"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import {
+    ProgrammingLanguageTabs,
+    ProgrammingLanguageTabsVariant,
+} from "@/components/reuseable/ProgrammingLanguageTabs"
 
 /** One captured E2E flow (shape mirrors the seeded content.e2eFlows jsonb). */
 interface E2eFlow {
@@ -55,23 +59,14 @@ export const E2eBody = (): React.JSX.Element => {
             </div>
 
             {hasLangFilter && (
-                <div className="flex flex-wrap gap-2">
-                    {langs.map((lang) => (
-                        <button
-                            key={lang}
-                            type="button"
-                            onClick={() => setActiveLang(lang)}
-                            className={[
-                                "rounded-full border px-3 py-1 text-xs font-medium transition-colors",
-                                lang === activeLang
-                                    ? "border-default-300 bg-default-100 text-foreground"
-                                    : "border-default-200 text-default-500 hover:bg-default-50",
-                            ].join(" ")}
-                        >
-                            {lang}
-                        </button>
-                    ))}
-                </div>
+                <ProgrammingLanguageTabs
+                    variant={ProgrammingLanguageTabsVariant.Secondary}
+                    availableLangs={langs}
+                    selectedLang={activeLang}
+                    onSelectLang={setActiveLang}
+                    ariaLabel="E2E languages"
+                    surfaceBorder={false}
+                />
             )}
 
             <div className="flex flex-col gap-3">

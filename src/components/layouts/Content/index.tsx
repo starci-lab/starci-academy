@@ -50,8 +50,8 @@ import {
     SandboxBody,
 } from "./SandboxBody"
 import {
-    E2eBody,
-} from "./E2eBody"
+    E2eResultDrawer,
+} from "./E2eResultDrawer"
 import {
     ContentTabBar,
 } from "./ContentTabBar"
@@ -138,13 +138,6 @@ export const Content = ({ className }: ContentProps) => {
                     component: <SandboxBody />,
                 })
             }
-            if (hasE2e) {
-                items.push({
-                    key: ContentTab.E2e,
-                    label: "E2E",
-                    component: <E2eBody />,
-                })
-            }
             items.push({
                 key: ContentTab.Challenges,
                 label: t("content.tabs.challenges"),
@@ -158,7 +151,6 @@ export const Content = ({ className }: ContentProps) => {
             isLocked,
             isSchemaV2,
             isSandbox,
-            hasE2e,
         ],
     )
 
@@ -278,6 +270,13 @@ export const Content = ({ className }: ContentProps) => {
                             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-72 bg-gradient-to-b from-transparent via-background/70 to-background" />
                         ) : null}
                     </div>
+                    {/* E2E proof: a quiet link at the bottom of the lesson that opens a
+                        right-side drawer with the recorded per-language test results. */}
+                    {hasE2e && !isLocked && selectedTabKey !== ContentTab.Sandbox ? (
+                        <div className="mx-auto w-full max-w-[1024px] px-3 pb-6">
+                            <E2eResultDrawer />
+                        </div>
+                    ) : null}
                     {/* paywall sits directly under the faded teaser */}
                     {isLocked ? <PremiumPaywall /> : null}
                 </div>

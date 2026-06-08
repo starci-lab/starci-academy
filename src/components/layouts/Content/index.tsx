@@ -50,6 +50,9 @@ import {
     SandboxBody,
 } from "./SandboxBody"
 import {
+    E2eBody,
+} from "./E2eBody"
+import {
     ContentTabBar,
 } from "./ContentTabBar"
 import {
@@ -108,6 +111,7 @@ export const Content = ({ className }: ContentProps) => {
     /** SCHEMA V2 (`verified`) — code lessons live in the markdown body; hide the Bài giảng tab. */
     const isSchemaV2 = Boolean(content?.verified)
     const isSandbox = Boolean(content?.isSandbox) && Boolean(content?.githubBaseUrl) && Boolean(content?.githubDir)
+    const hasE2e = Array.isArray(content?.e2eFlows) && content.e2eFlows.length > 0
 
     /** Tab entries (key + label + body) rendered in the tab bar. */
     const tabItems = useMemo<Array<ContentTabItem>>(
@@ -134,6 +138,13 @@ export const Content = ({ className }: ContentProps) => {
                     component: <SandboxBody />,
                 })
             }
+            if (hasE2e) {
+                items.push({
+                    key: ContentTab.E2e,
+                    label: "E2E",
+                    component: <E2eBody />,
+                })
+            }
             items.push({
                 key: ContentTab.Challenges,
                 label: t("content.tabs.challenges"),
@@ -147,6 +158,7 @@ export const Content = ({ className }: ContentProps) => {
             isLocked,
             isSchemaV2,
             isSandbox,
+            hasE2e,
         ],
     )
 

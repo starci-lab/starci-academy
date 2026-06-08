@@ -41,6 +41,8 @@ export enum ContentTab {
     Challenges = "challenges",
     /** Live Sandpack sandbox — shown when content.isSandbox is true. */
     Sandbox = "sandbox",
+    /** E2E test proof — shown when content.e2eFlows has captured flows. */
+    E2e = "e2e",
 }
 
 /**

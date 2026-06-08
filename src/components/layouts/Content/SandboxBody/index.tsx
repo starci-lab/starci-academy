@@ -22,20 +22,34 @@ const THEME_TAILWINDCSS = `@custom-variant dark (&:where(.dark, .dark *));
   --color-foreground: var(--sb-fg);
   --color-muted: var(--sb-muted);
   --color-border: var(--sb-border);
+  --color-content1: var(--sb-content1);
   --color-default-50: var(--sb-d50);
   --color-default-100: var(--sb-d100);
   --color-default-200: var(--sb-d200);
+  --color-default-300: var(--sb-d300);
   --color-default-400: var(--sb-muted);
   --color-default-500: var(--sb-muted);
+  --color-default-600: var(--sb-d600);
+  --color-default-700: var(--sb-d700);
   --color-accent: var(--sb-accent);
+  --color-primary: var(--sb-primary);
+  --color-focus: var(--sb-primary);
+  --color-danger: var(--sb-danger);
+  --color-success: var(--sb-success);
+  --color-warning: var(--sb-warning);
 }
 :root {
   --sb-bg: oklch(97.02% 0.0033 185.90); --sb-fg: #18181b; --sb-muted: #71717a; --sb-border: #e4e4e7;
-  --sb-d50: #fafafa; --sb-d100: #f4f4f5; --sb-d200: #e4e4e7; --sb-accent: #0d9488;
+  --sb-d50: #fafafa; --sb-d100: #f4f4f5; --sb-d200: #e4e4e7; --sb-d300: #d4d4d8; --sb-d600: #52525b; --sb-d700: #3f3f46;
+  --sb-content1: #ffffff; --sb-accent: #0d9488; --sb-primary: #006fee; --sb-danger: #f31260; --sb-success: #17c964; --sb-warning: #f5a524;
+  /* raw semantic vars (no color- prefix) so the lesson's globals.css var(--border)/var(--background) resolve */
+  --background: var(--sb-bg); --foreground: var(--sb-fg); --border: var(--sb-border); --muted: var(--sb-muted);
+  --default-100: var(--sb-d100); --default-200: var(--sb-d200); --content1: var(--sb-content1);
 }
 .dark {
   --sb-bg: oklch(12.00% 0.0033 185.90); --sb-fg: #fafafa; --sb-muted: #a1a1aa; --sb-border: #27272a;
-  --sb-d50: oklch(16.00% 0.0033 185.90); --sb-d100: oklch(20.00% 0.0033 185.90); --sb-d200: #3f3f46; --sb-accent: #2dd4bf;
+  --sb-d50: oklch(16.00% 0.0033 185.90); --sb-d100: oklch(20.00% 0.0033 185.90); --sb-d200: #3f3f46; --sb-d300: #52525b; --sb-d600: #a1a1aa; --sb-d700: #d4d4d8;
+  --sb-content1: oklch(20.00% 0.0033 185.90); --sb-accent: #2dd4bf; --sb-primary: #006fee; --sb-danger: #f31260; --sb-success: #17c964; --sb-warning: #f5a524;
 }`
 
 /**
@@ -43,8 +57,18 @@ const THEME_TAILWINDCSS = `@custom-variant dark (&:where(.dark, .dark *));
  * /src/App. Injects the Tailwind theme + toggles the platform light/dark mode on
  * the preview iframe's <html>.
  */
-const buildAppBridge = (isDark: boolean): string => `import { useEffect } from "react"
+const buildAppBridge = (isDark: boolean, globalsCssImport: string): string => `import { useEffect } from "react"
 import App from "./src/App"
+${globalsCssImport}
+
+// Force ?sandbox=1 into the URL before App's first render. Sandpack's startRoute
+// query does not reliably reach window.location.search inside the preview iframe,
+// so multi-client lessons (websocket: chat/presence/reconnection) would otherwise
+// fall back to the single-client Local view and lose their User A / User B tabs.
+// This runs at module eval — before App's useState reads window.location.search.
+if (typeof window !== "undefined" && !new URLSearchParams(window.location.search).has("sandbox")) {
+    window.history.replaceState(null, "", window.location.pathname + "?sandbox=1" + window.location.hash)
+}
 
 export default function SandboxRoot() {
     useEffect(() => {
@@ -141,8 +165,15 @@ export const SandboxBody = () => {
     // synthetic stubs: bridge the template entry (+ theme sync) and no-op the
     // vite config the bundler can't run. Tailwind v4 + HeroUI load via
     // SandpackProvider externalResources (not index.html — Sandpack ignores tags there).
+    // The bridge imports App directly (bypassing main.tsx), so the lesson's
+    // globals.css — normally imported by main.tsx — would never load, dropping
+    // its body reset and custom rules (e.g. the `.input` border). Re-import it
+    // from the bridge when present (path-safe: only if the lesson ships one).
+    const globalsKey = Object.keys(rewrittenFiles).find((p) => p.endsWith("/globals.css"))
+    const globalsCssImport = globalsKey ? `import ".${globalsKey}"` : ""
+
     const stubs: SandpackFiles = {
-        "/App.tsx": { code: buildAppBridge(isDark) },
+        "/App.tsx": { code: buildAppBridge(isDark, globalsCssImport) },
         "/vite.config.ts": { code: "// vite config omitted in sandbox" },
     }
 
@@ -162,7 +193,15 @@ export const SandboxBody = () => {
                 .sb-scroll *::-webkit-scrollbar-corner { background: transparent; }
                 .sb-scroll * { scrollbar-width: thin; scrollbar-color: ${thumb} transparent; }
             `}</style>
-            <SandpackPanel files={files} dependencies={dependencies} isDark={isDark} />
+            {/* key on theme forces a full re-mount (fresh preview iframe) when the
+                platform light/dark toggles, so the bridge re-runs and the sandbox UI
+                reloads with the new theme instead of keeping the stale dark class. */}
+            <SandpackPanel
+                key={isDark ? "sandbox-dark" : "sandbox-light"}
+                files={files}
+                dependencies={dependencies}
+                isDark={isDark}
+            />
         </div>
     )
 }

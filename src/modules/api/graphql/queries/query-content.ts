@@ -20,6 +20,7 @@ const query1 = gql`
         githubBaseUrl
         githubDir
         backendUrl
+        e2eFlows
         title
         body
         challenges {

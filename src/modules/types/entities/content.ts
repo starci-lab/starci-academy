@@ -44,6 +44,15 @@ export interface ContentEntity extends AbstractEntity {
     githubDir?: string | null
     /** Relative path to the hosted mock API (e.g. /mocks/4-server-state-with-tanstack-query/0-usequery-and-cache-lifecycle). */
     backendUrl?: string | null
+    /** Recorded E2E proofs (read-only) for the "E2E" tab; null when none. Each flow
+     * carries the full `.e2e/<lang>/flow-*.md` proof markdown (commands + real output). */
+    e2eFlows?: Array<{
+        id: string
+        title: string
+        lang?: string
+        status: string
+        markdown?: string
+    }> | null
     /**
      * Day this content was verified/audited. Non-null marks SCHEMA V2 content (drives the
      * multi-language body tabs); legacy content leaves it null/undefined.

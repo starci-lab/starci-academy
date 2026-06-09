@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import React, { useCallback } from "react"
 import { GlobalSearchContentBlock } from "./Block"
+import { GlobalSearchEmpty } from "./Empty"
 import { useAppSelector } from "@/redux"
 import { ScrollShadow } from "@heroui/react"
 import { pathConfig } from "@/resources/path"
@@ -30,6 +31,14 @@ export const GlobalSearchContent = () => {
     const modules = useAppSelector((state) => state.socketIo.globalSearchResults?.data?.modules)
     const challenges = useAppSelector((state) => state.socketIo.globalSearchResults?.data?.challenges)
     const contents = useAppSelector((state) => state.socketIo.globalSearchResults?.data?.contents)
+    const query = useAppSelector((state) => state.search.query).trim()
+
+    // No group has any hit → show the idle hint (blank query) or the no-match message.
+    const isEmpty =
+        (courses?.length ?? 0) === 0 &&
+        (modules?.length ?? 0) === 0 &&
+        (contents?.length ?? 0) === 0 &&
+        (challenges?.length ?? 0) === 0
 
     // Build the deep-link URL for a pressed hit from its kind + resolved ancestor chain.
     // Returns null when the data needed for that kind is missing so we can no-op safely.
@@ -81,6 +90,7 @@ export const GlobalSearchContent = () => {
 
     return (
         <ScrollShadow hideScrollBar className="max-h-[300px] p-3">
+            {isEmpty ? <GlobalSearchEmpty hasQuery={query.length > 0} /> : null}
             <GlobalSearchContentBlock
                 icon={GraduationCapIcon}
                 label={t("search.suggestions.courses")}

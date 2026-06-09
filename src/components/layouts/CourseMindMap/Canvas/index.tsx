@@ -23,6 +23,7 @@ import type { CourseModuleSlotNodeData } from "../ModuleSlotNode"
 import { CourseModuleSlotNode } from "../ModuleSlotNode"
 import { COURSE_MODULE_SLOT_NODE_TYPE } from "../moduleExpansion"
 import { COURSE_ROOT_NODE_TYPE, CourseRootNode } from "../RootNode"
+import { MindMapFullscreenButton } from "../MindMapFullscreenButton"
 
 /**
  * Inner canvas: syncs graph from Redux course + highlights active module; follows app light/dark theme.
@@ -45,6 +46,8 @@ export const Canvas = () => {
 
     /** Holds slot nodes computed in `setNodes` so `setEdges` can keep matching edges in the same tick. */
     const preservedSlotsRef = useRef<Array<Node>>([])
+    /** Canvas container — target for the floating fullscreen button. */
+    const containerRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         setNodes((prev) => {
@@ -120,7 +123,7 @@ export const Canvas = () => {
     }
 
     return (
-        <div className="h-full w-full overflow-hidden rounded-2xl border  bg-background/50 dark:bg-background/70">
+        <div ref={containerRef} className="relative h-full w-full overflow-hidden bg-background/50 dark:bg-background/70">
             <ReactFlow
                 aria-label={t("content.mindMapAria")}
                 className="text-foreground"
@@ -144,6 +147,7 @@ export const Canvas = () => {
                 <Background gap={16} variant={BackgroundVariant.Dots} />
                 <Controls className=" bg-surface shadow-sm dark:border-zinc-600 dark:bg-zinc-900/90" showInteractive={false} />
             </ReactFlow>
+            <MindMapFullscreenButton targetRef={containerRef} />
         </div>
     )
 }

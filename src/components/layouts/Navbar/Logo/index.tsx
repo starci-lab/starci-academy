@@ -13,7 +13,7 @@ import {
 import {
     useRouter,
 } from "@/i18n/navigation"
-import Image from "next/image"
+import { LogoMark } from "@/components/svg"
 import type {
     WithClassNames,
 } from "@/modules/types"
@@ -44,7 +44,7 @@ export const Logo = ({ className }: LogoProps) => {
             onPress={onPress}
             className={cn(className)}
         >
-            <Image src="/logo.svg" alt="Logo" width={80} height={100} />
+            <LogoMark className="size-10" />
         </Link>
     )
 }

@@ -5,7 +5,7 @@ import { Handle, type Node, type NodeProps, Position } from "@xyflow/react"
 import { cn } from "@heroui/react"
 
 import { COURSE_MODULE_SLOT_NODE_TYPE, SLOT_NODE_HEIGHT, SLOT_NODE_WIDTH } from "../moduleExpansion"
-import { useMindMapDetails } from "../context"
+import { useMindMapContentDetailsOverlayState } from "@/hooks"
 
 export type CourseModuleSlotNodeData = {
     /** Parent `courseModule` node id this lesson belongs to. */
@@ -30,10 +30,10 @@ export type CourseModuleSlotFlowNode = Node<CourseModuleSlotNodeData, typeof COU
  */
 export const CourseModuleSlotNode = (props: NodeProps<CourseModuleSlotFlowNode>) => {
     const { data, selected } = props
-    const { openDetails } = useMindMapDetails()
+    const { open: openDetails } = useMindMapContentDetailsOverlayState()
 
     const onOpen = useCallback(() => {
-        // open the side details drawer for this lesson — stay on the mind-map
+        // open the global details drawer for this lesson — stay on the mind-map
         openDetails({
             contentId: data.contentId,
             moduleId: data.moduleId,

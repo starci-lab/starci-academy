@@ -1,7 +1,7 @@
 "use client"
 
 import { create } from "zustand"
-import type { PaymentContext } from "@/modules/types"
+import type { MindMapDetailsSelection, PaymentContext } from "@/modules/types"
 
 /**
  * Identifier for each overlay (modal/drawer/popover) in the app. Each key holds an independent
@@ -26,6 +26,7 @@ export type OverlayKey =
     | "lessonVideo"
     | "linkGithub"
     | "livestreamCalendar"
+    | "mindMapContentDetails"
     | "payment"
     | "personalProjectTaskAttemptsDrawer"
     | "premiumGate"
@@ -54,6 +55,7 @@ const OVERLAY_KEYS: ReadonlyArray<OverlayKey> = [
     "lessonVideo",
     "linkGithub",
     "livestreamCalendar",
+    "mindMapContentDetails",
     "payment",
     "personalProjectTaskAttemptsDrawer",
     "premiumGate",
@@ -69,6 +71,8 @@ interface OverlayStoreState {
     openMap: Record<OverlayKey, boolean>
     /** Payment overlay payload (flow + tier) — the modal reads it to pick the mutation. */
     paymentContext: PaymentContext | null
+    /** Mind-map content-details drawer payload (selected lesson) — the drawer reads it. */
+    mindMapContentDetailsContext: MindMapDetailsSelection | null
     /** Set the open state of an overlay (used by `onOpenChange`). */
     setOpenFor: (key: OverlayKey, isOpen: boolean) => void
     /** Open an overlay. */
@@ -79,6 +83,8 @@ interface OverlayStoreState {
     toggleOverlay: (key: OverlayKey) => void
     /** Stash the payment overlay payload. */
     setPaymentContext: (context: PaymentContext | null) => void
+    /** Stash the mind-map content-details drawer payload. */
+    setMindMapContentDetailsContext: (context: MindMapDetailsSelection | null) => void
 }
 
 /** Initial open map — every overlay closed. */
@@ -102,6 +108,7 @@ const buildInitialOpenMap = (): Record<OverlayKey, boolean> =>
 export const useOverlayStore = create<OverlayStoreState>((set) => ({
     openMap: buildInitialOpenMap(),
     paymentContext: null,
+    mindMapContentDetailsContext: null,
     setOpenFor: (key, isOpen) =>
         set((state) => ({ openMap: { ...state.openMap, [key]: isOpen } })),
     openOverlay: (key) =>
@@ -111,4 +118,5 @@ export const useOverlayStore = create<OverlayStoreState>((set) => ({
     toggleOverlay: (key) =>
         set((state) => ({ openMap: { ...state.openMap, [key]: !state.openMap[key] } })),
     setPaymentContext: (context) => set({ paymentContext: context }),
+    setMindMapContentDetailsContext: (context) => set({ mindMapContentDetailsContext: context }),
 }))

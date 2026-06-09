@@ -81,7 +81,7 @@ export const MindMapBreadcrumbs = ({
                 {courseTitle || t("nav.courses")}
             </Breadcrumbs.Item>
             <Breadcrumbs.Item>
-                <span>{t("content.mindMapAria")}</span>
+                <span>{t("mindMap.title")}</span>
             </Breadcrumbs.Item>
         </Breadcrumbs>
     )

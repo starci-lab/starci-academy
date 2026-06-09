@@ -83,7 +83,7 @@ export const GlobalSearchContentBlock = (props: GlobalSearchContentBlockProps) =
                             className="rounded-lg py-1 data-[hovered=true]:bg-default-100 data-[pressed=true]:bg-default-200"
                             id={item.id}
                             textValue={textValue}
-                            onPress={() => onItemPress(item)}
+                            onAction={() => onItemPress(item)}
                         >
                             <div className="py-1">
                                 <div className="text-sm text-foreground">{titleLine}</div>

@@ -1,7 +1,7 @@
 "use client"
 
 import { useCallback } from "react"
-import type { PaymentContext } from "@/modules/types"
+import type { MindMapDetailsSelection, PaymentContext } from "@/modules/types"
 import { useOverlayStore, type OverlayKey } from "./store"
 
 /**
@@ -98,6 +98,28 @@ export const usePaymentOverlayState = () => {
     )
     return { ...base, open, context }
 }
+/**
+ * Mind-map content-details drawer overlay state.
+ *
+ * Like {@link usePaymentOverlayState}, this overrides `open` to accept the selected lesson and
+ * stashes it so the global drawer (mounted in `DrawerContainer`) can resolve and render it.
+ * @returns the overlay handle plus `context` (selected lesson) and `open(selection)`.
+ */
+export const useMindMapContentDetailsOverlayState = () => {
+    const base = useOverlayHandle("mindMapContentDetails")
+    const context = useOverlayStore((state) => state.mindMapContentDetailsContext)
+    const setContext = useOverlayStore((state) => state.setMindMapContentDetailsContext)
+    const openOverlay = useOverlayStore((state) => state.openOverlay)
+    const open = useCallback(
+        (next: MindMapDetailsSelection) => {
+            setContext(next)
+            openOverlay("mindMapContentDetails")
+        },
+        [setContext, openOverlay],
+    )
+    return { ...base, open, context }
+}
+
 /** Personal project task attempts drawer overlay state. */
 export const usePersonalProjectTaskAttemptsDrawerOverlayState = () => useOverlayHandle("personalProjectTaskAttemptsDrawer")
 /** Premium gate overlay state. */

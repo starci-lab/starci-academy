@@ -1,12 +1,13 @@
 "use client"
 
 import React from "react"
-import {
-    useTranslations,
-} from "next-intl"
+import { Skeleton } from "@heroui/react"
 import {
     useAppSelector,
 } from "@/redux"
+import {
+    useQueryCourseSwr,
+} from "@/hooks"
 import {
     CourseMindMap,
 } from "@/components/layouts/CourseMindMap"
@@ -25,26 +26,28 @@ import {
  * Client component: relies on redux selectors and the i18n hook.
  */
 export const MindMap = () => {
-    const t = useTranslations()
     const course = useAppSelector((state) => state.course.entity)
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
+    // Trigger the course fetch on this route (the /modules layout does it elsewhere, but a hard
+    // refresh straight into /mind-map has no other loader, so the canvas would stay empty).
+    const { isLoading } = useQueryCourseSwr()
 
     return (
-        <div>
-            <MindMapBreadcrumbs
-                courseTitle={course?.title}
-                courseDisplayId={courseDisplayId}
-            />
-
-            <div className="h-12" />
-
-            <div className="flex flex-col gap-6">
-                <div>
-                    <h1 className="text-3xl font-bold">{course?.title}</h1>
-                    <p className="text-muted mt-2">{t("content.mindMapAria")}</p>
-                </div>
-
-                <CourseMindMap />
+        // fill the viewport below the sticky h-16 navbar; breadcrumb is fixed, canvas takes the rest
+        <div className="flex h-[calc(100dvh-4rem)] flex-col">
+            <div className="shrink-0 p-3">
+                <MindMapBreadcrumbs
+                    courseTitle={course?.title}
+                    courseDisplayId={courseDisplayId}
+                />
+            </div>
+            {/* full-bleed canvas: only a top border separates it from the breadcrumb, no side/bottom gaps */}
+            <div className="min-h-0 flex-1 border-t">
+                {!course && isLoading ? (
+                    <Skeleton className="h-full w-full" />
+                ) : (
+                    <CourseMindMap />
+                )}
             </div>
         </div>
     )

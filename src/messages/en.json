@@ -31,7 +31,8 @@
             "challenges": "Challenges",
             "contents": "Contents",
             "lessonVideos": "Lesson videos"
-        }
+        },
+        "idleHint": "Type to search courses, modules, lessons…"
     },
     "courses": {
         "featuredTitle": "Featured courses",
@@ -77,7 +78,8 @@
         "title": "Modules"
     },
     "mindMap": {
-        "title": "Mind map"
+        "title": "Mind map",
+        "fullscreen": "View fullscreen"
     },
     "foundations": {
         "title": "Foundations",
@@ -412,7 +414,8 @@
         "linkCopied": "Link copied to clipboard!",
         "fullscreen": "View fullscreen",
         "scanQr": "Scan QR code to open on mobile",
-        "copyLink": "Copy link"
+        "copyLink": "Copy link",
+        "mindMapReadDetails": "Read details"
     },
     "challenge": {
         "title": "Challenges",

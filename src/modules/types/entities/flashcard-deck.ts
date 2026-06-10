@@ -4,7 +4,7 @@ import type { FlashcardCardEntity } from "./flashcard-card"
 import type { ChallengeDifficulty } from "../enums/challenge-difficulty"
 
 /**
- * Interview-prep flashcard deck owned by a course. Mirrors table `quiz_decks`.
+ * Interview-prep flashcard deck owned by a course. Mirrors table `flashcard_decks`.
  */
 export interface FlashcardDeckEntity extends AbstractEntity {
     /** Deck title. */

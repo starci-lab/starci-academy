@@ -36,7 +36,8 @@
     },
     "courses": {
         "featuredTitle": "Featured courses",
-        "viewCourse": "View Course"
+        "viewCourse": "View Course",
+        "searchPlaceholder": "Search courses..."
     },
     "course": {
         "enroll": "Enroll",
@@ -72,7 +73,9 @@
         "chipContentsHint": "Reading items in this module.",
         "chipVideosHint": "Lesson videos in this module.",
         "chipChallengesHint": "Challenges in this module.",
-        "tabListAria": "Module learn sections"
+        "tabListAria": "Module learn sections",
+        "searchPlaceholder": "Search modules...",
+        "searchContentsPlaceholder": "Search lessons..."
     },
     "modules": {
         "title": "Modules"
@@ -116,6 +119,8 @@
         "description": "IT recruitment partners who support StarCI Academy learners with job opportunities.",
         "count": "{count, plural, =0 {No consultants} one {# consultant} other {# consultants}}",
         "empty": "No consultants are listed yet.",
+        "searchPlaceholder": "Search consultants",
+        "companySearchPlaceholder": "Search recruitment companies",
         "viewProfile": "View profile",
         "companyLabel": "Company",
         "openCompany": "View company",

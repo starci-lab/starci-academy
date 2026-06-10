@@ -36,7 +36,8 @@
     },
     "courses": {
         "featuredTitle": "Khóa học tiêu biểu",
-        "viewCourse": "Xem khóa học"
+        "viewCourse": "Xem khóa học",
+        "searchPlaceholder": "Tìm khóa học..."
     },
     "course": {
         "enroll": "Đăng ký",
@@ -81,7 +82,9 @@
         "chipContentsHint": "Số bài đọc trong học phần.",
         "chipVideosHint": "Số video bài học trong học phần.",
         "chipChallengesHint": "Số thử thách trong học phần.",
-        "tabListAria": "Các mục trong trang học"
+        "tabListAria": "Các mục trong trang học",
+        "searchPlaceholder": "Tìm học phần...",
+        "searchContentsPlaceholder": "Tìm bài học..."
     },
     "modules": {
         "title": "Học phần"
@@ -125,6 +128,8 @@
         "description": "Đối tác tuyển dụng IT đồng hành cùng học viên StarCI Academy.",
         "count": "{count, plural, =0 {Chưa có tư vấn viên} one {# tư vấn viên} other {# tư vấn viên}}",
         "empty": "Chưa có tư vấn viên nào.",
+        "searchPlaceholder": "Tìm tư vấn viên",
+        "companySearchPlaceholder": "Tìm công ty tuyển dụng",
         "viewProfile": "Xem hồ sơ",
         "companyLabel": "Công ty",
         "openCompany": "Xem công ty",

@@ -2,7 +2,9 @@
 
 import React, {
     useCallback,
+    useEffect,
     useMemo,
+    useState,
 } from "react"
 import {
     cn,
@@ -13,6 +15,7 @@ import {
 } from "next/navigation"
 import {
     useLocale,
+    useTranslations,
 } from "next-intl"
 import {
     useAppDispatch,
@@ -30,7 +33,11 @@ import {
 } from "@/resources/path"
 import {
     useQueryModulesSwr,
+    useQueryModuleSuggestionsSwr,
 } from "@/hooks"
+import {
+    SearchInput,
+} from "@/components/reuseable"
 import {
     ModuleAccordion,
 } from "./ModuleAccordion"
@@ -40,6 +47,9 @@ import {
 import {
     ModuleSidebarSkeleton,
 } from "./ModuleSidebarSkeleton"
+
+/** Debounce window (ms) before a typed search hits the suggestions backend. */
+const SEARCH_DEBOUNCE_MS = 350
 
 /**
  * Props for {@link ModuleSidebar}.
@@ -58,6 +68,7 @@ type ModuleSidebarProps = WithClassNames<undefined> & {
  * @param props - optional container class name
  */
 export const ModuleSidebar = ({ className, collapsed = false }: ModuleSidebarProps) => {
+    const t = useTranslations()
     const dispatch = useAppDispatch()
     const modulesSwr = useQueryModulesSwr()
     const moduleId = useAppSelector((state) => state.module.id)
@@ -66,6 +77,24 @@ export const ModuleSidebar = ({ className, collapsed = false }: ModuleSidebarPro
     const locale = useLocale()
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
     const activeContent = useAppSelector((state) => state.content.entity)
+
+    /** Immediate search input value (drives the field). */
+    const [query, setQuery] = useState("")
+    /** Debounced query that actually hits the suggestions backend. */
+    const [debouncedQuery, setDebouncedQuery] = useState("")
+
+    // debounce the typed input before it reaches the ES suggestions query
+    useEffect(() => {
+        const handle = setTimeout(() => {
+            setDebouncedQuery(query)
+        }, SEARCH_DEBOUNCE_MS)
+        return () => clearTimeout(handle)
+    }, [query])
+
+    // ES Completion Suggester (typeahead): clean { id, label } items from the BE,
+    // no client-side filtering or label munging.
+    const { data: suggestionItems } = useQueryModuleSuggestionsSwr(debouncedQuery)
+    const suggestions = suggestionItems ?? []
 
     /** Modules cloned + sorted by their display order. */
     const sortedModules = useMemo(
@@ -86,6 +115,17 @@ export const ModuleSidebar = ({ className, collapsed = false }: ModuleSidebarPro
             router,
             locale,
             courseDisplayId,
+        ],
+    )
+
+    /** Navigate to the module behind the chosen autocomplete suggestion (its id is the module id). */
+    const onSelectSuggestion = useCallback(
+        (suggestion: { id: string; label: string }) => {
+            setQuery("")
+            onExpandedChange(suggestion.id)
+        },
+        [
+            onExpandedChange,
         ],
     )
 
@@ -146,6 +186,16 @@ export const ModuleSidebar = ({ className, collapsed = false }: ModuleSidebarPro
 
     return (
         <div className={shellClass}>
+            {/* debounced search with ES-backed autocomplete dropdown; selecting a suggestion routes to that module */}
+            <div className="px-1 pb-3">
+                <SearchInput
+                    value={query}
+                    onValueChange={setQuery}
+                    placeholder={t("module.searchPlaceholder")}
+                    suggestions={suggestions}
+                    onSelectSuggestion={onSelectSuggestion}
+                />
+            </div>
             <ModuleAccordion
                 modules={sortedModules}
                 activeModuleId={moduleId}

@@ -1,7 +1,7 @@
 import type { AbstractEntity } from "./abstract"
 
 /**
- * A single open-ended interview flashcard within a deck. Mirrors table `quiz_cards`.
+ * A single open-ended interview flashcard within a deck. Mirrors table `flashcard_cards`.
  */
 export interface FlashcardCardEntity extends AbstractEntity {
     /** The question prompt shown on the front (Markdown). */

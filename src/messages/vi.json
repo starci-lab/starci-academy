@@ -232,6 +232,7 @@
         "title": "Dự án cá nhân",
         "page": {
             "title": "Dự án cá nhân",
+            "searchTaskPlaceholder": "Tìm task...",
             "description": "Hiện thực hóa dự án cá nhân qua lộ trình Milestone bài bản. Với sự đồng hành của StarCI AI, mọi dòng code và giải pháp của bạn đều được đánh giá chuyên sâu, giúp tối ưu chất lượng sản phẩm ngay trong quá trình thực hiện.",
             "submit": {
                 "title": "Nộp ý tưởng dự án",
@@ -707,6 +708,8 @@
         "next": "Tiếp",
         "relatedContents": "Bài học liên quan",
         "relatedModules": "Học phần liên quan",
+        "searchPlaceholder": "Tìm bộ flashcard...",
+        "searchEmpty": "Không có bộ nào khớp với \"{query}\".",
         "difficulty": {
             "easy": "Dễ",
             "medium": "Trung bình",

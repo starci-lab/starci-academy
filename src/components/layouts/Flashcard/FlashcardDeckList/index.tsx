@@ -1,12 +1,15 @@
 "use client"
 
-import React from "react"
+import { Magnifier as MagnifyingGlassIcon } from "@gravity-ui/icons"
+import React, { useMemo, useState } from "react"
 import useSWR from "swr"
 import {
     Button,
     Card,
     CardContent,
     Chip,
+    Input,
+    TextField,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { queryFlashcardDecksByCourse } from "@/modules/api/graphql"
@@ -35,6 +38,8 @@ export interface FlashcardDeckListProps {
  */
 export const FlashcardDeckList = ({ courseId, onSelectDeck }: FlashcardDeckListProps) => {
     const t = useTranslations()
+    // live search query filtering decks by title/description
+    const [query, setQuery] = useState("")
 
     // fetch the decks for this course; re-keys if the course changes
     const { data, isLoading, error } = useSWR(
@@ -46,6 +51,19 @@ export const FlashcardDeckList = ({ courseId, onSelectDeck }: FlashcardDeckListP
             return response.data?.flashcardDecksByCourse.data ?? null
         },
     )
+
+    // decks in display order, narrowed by the (case-insensitive) search query
+    const filteredDecks = useMemo(() => {
+        const sorted = [...(data ?? [])].sort((prev, next) => prev.orderIndex - next.orderIndex)
+        const normalized = query.trim().toLowerCase()
+        if (!normalized) {
+            return sorted
+        }
+        return sorted.filter((deck) => {
+            const haystack = `${deck.title ?? ""} ${deck.description ?? ""}`.toLowerCase()
+            return haystack.includes(normalized)
+        })
+    }, [data, query])
 
     // loading gate: show the content only once the query has settled with data
     // and no error; otherwise mirror the deck list with a content-shaped skeleton.
@@ -65,47 +83,65 @@ export const FlashcardDeckList = ({ courseId, onSelectDeck }: FlashcardDeckListP
     }
 
     return (
-        <div className="flex flex-col gap-3">
-            {/* decks sorted by their display order */}
-            {[...data]
-                .sort((prev, next) => prev.orderIndex - next.orderIndex)
-                .map((deck: FlashcardDeckEntity) => (
-                    <Card
-                        key={deck.id}
-                        className="w-full transition-colors hover:bg-default-50"
-                    >
-                        <CardContent className="flex flex-col gap-2">
-                            <div className="flex items-center justify-between gap-3">
-                                <span className="font-medium">{deck.title}</span>
-                                <Chip
-                                    size="sm"
-                                    variant="soft"
-                                    color={DIFFICULTY_COLOR[deck.difficulty]}
-                                >
-                                    {t(`flashcard.difficulty.${deck.difficulty}`)}
-                                </Chip>
-                            </div>
-                            {/* short description preview */}
-                            {deck.description && (
-                                <p className="line-clamp-2 text-sm text-muted">
-                                    {deck.description}
-                                </p>
-                            )}
-                            <div className="flex items-center justify-between gap-3">
-                                <span className="text-xs text-muted">
-                                    {t("flashcard.cardCount", { count: deck.cards?.length ?? 0 })}
-                                </span>
-                                <Button
-                                    size="sm"
-                                    variant="primary"
-                                    onPress={() => onSelectDeck(deck.id)}
-                                >
-                                    {t("flashcard.study")}
-                                </Button>
-                            </div>
-                        </CardContent>
-                    </Card>
-                ))}
+        <div className="flex flex-col gap-4">
+            {/* search box: filters the deck list client-side by title/description */}
+            <TextField aria-label={t("flashcard.searchPlaceholder")} className="w-full sm:max-w-sm">
+                <div className="relative">
+                    <MagnifyingGlassIcon className="text-muted pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2" />
+                    <Input
+                        type="search"
+                        placeholder={t("flashcard.searchPlaceholder")}
+                        className="pl-9"
+                        value={query}
+                        onChange={(event) => setQuery(event.target.value)}
+                    />
+                </div>
+            </TextField>
+
+            {filteredDecks.length === 0 ? (
+                <p className="text-muted text-sm">{t("flashcard.searchEmpty", { query: query.trim() })}</p>
+            ) : (
+                <div className="flex flex-col gap-3">
+                    {/* decks sorted by display order, filtered by the search query */}
+                    {filteredDecks.map((deck: FlashcardDeckEntity) => (
+                        <Card
+                            key={deck.id}
+                            className="w-full transition-colors hover:bg-default-50"
+                        >
+                            <CardContent className="flex flex-col gap-2">
+                                <div className="flex items-center justify-between gap-3">
+                                    <span className="font-medium">{deck.title}</span>
+                                    <Chip
+                                        size="sm"
+                                        variant="soft"
+                                        color={DIFFICULTY_COLOR[deck.difficulty]}
+                                    >
+                                        {t(`flashcard.difficulty.${deck.difficulty}`)}
+                                    </Chip>
+                                </div>
+                                {/* short description preview */}
+                                {deck.description && (
+                                    <p className="line-clamp-2 text-sm text-muted">
+                                        {deck.description}
+                                    </p>
+                                )}
+                                <div className="flex items-center justify-between gap-3">
+                                    <span className="text-xs text-muted">
+                                        {t("flashcard.cardCount", { count: deck.cards?.length ?? 0 })}
+                                    </span>
+                                    <Button
+                                        size="sm"
+                                        variant="primary"
+                                        onPress={() => onSelectDeck(deck.id)}
+                                    >
+                                        {t("flashcard.study")}
+                                    </Button>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    ))}
+                </div>
+            )}
         </div>
     )
 }

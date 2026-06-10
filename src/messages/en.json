@@ -223,6 +223,7 @@
         "title": "Personal project",
         "page": {
             "title": "Personal project",
+            "searchTaskPlaceholder": "Search tasks...",
             "description": "Bring your personal project to life through a structured Milestone roadmap. With StarCI AI by your side, every line of code and solution is deeply evaluated, helping you optimize product quality throughout the process.",
             "submit": {
                 "title": "Submit project idea",
@@ -698,6 +699,8 @@
         "next": "Next",
         "relatedContents": "Related lessons",
         "relatedModules": "Related modules",
+        "searchPlaceholder": "Search flashcard decks...",
+        "searchEmpty": "No decks match \"{query}\".",
         "difficulty": {
             "easy": "Easy",
             "medium": "Medium",

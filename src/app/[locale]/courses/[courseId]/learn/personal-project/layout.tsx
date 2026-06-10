@@ -6,7 +6,6 @@ import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { pathConfig } from "@/resources"
 import { useAppSelector } from "@/redux"
-import { MilestoneSidebar } from "@/components/layouts/MilestoneSidebar"
 import { PersonalProjectSubmission } from "@/components/layouts/PersonalProjectSubmission"
 import { Task } from "@/components/layouts/Task"
 
@@ -17,30 +16,30 @@ const Layout = () => {
     const course = useAppSelector((state) => state.course.entity)
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
 
+    // The right rail is now the shared module-outline rail provided by the learn layout
+    // (no longer the milestone-specific sidebar), so this layout only renders the
+    // breadcrumb + project submission + task body inside the content column.
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-5">
-            <div className="col-span-3 lg:border-r lg:/60">
-                <div className="p-3">
-                    <Breadcrumbs>
-                        <Breadcrumbs.Item onPress={() => router.push(pathConfig().locale().build())}>
-                            {t("nav.home")}
-                        </Breadcrumbs.Item>
-                        <Breadcrumbs.Item onPress={() => router.push(pathConfig().locale(locale).course().build())}>
-                            {t("nav.courses")}
-                        </Breadcrumbs.Item>
-                        <Breadcrumbs.Item onPress={() => router.push(pathConfig().locale(locale).course(courseDisplayId).build())}>
-                            {course?.title || t("nav.courses")}
-                        </Breadcrumbs.Item>
-                        <Breadcrumbs.Item>
-                            <span>{t("course.finalProjectTitle")}</span>
-                        </Breadcrumbs.Item>
-                    </Breadcrumbs>
-                </div>
-                <PersonalProjectSubmission />
-                <Task />
+        <>
+            <div className="p-3">
+                <Breadcrumbs>
+                    <Breadcrumbs.Item onPress={() => router.push(pathConfig().locale().build())}>
+                        {t("nav.home")}
+                    </Breadcrumbs.Item>
+                    <Breadcrumbs.Item onPress={() => router.push(pathConfig().locale(locale).course().build())}>
+                        {t("nav.courses")}
+                    </Breadcrumbs.Item>
+                    <Breadcrumbs.Item onPress={() => router.push(pathConfig().locale(locale).course(courseDisplayId).build())}>
+                        {course?.title || t("nav.courses")}
+                    </Breadcrumbs.Item>
+                    <Breadcrumbs.Item>
+                        <span>{t("course.finalProjectTitle")}</span>
+                    </Breadcrumbs.Item>
+                </Breadcrumbs>
             </div>
-            <MilestoneSidebar className="col-span-2" />
-        </div>
+            <PersonalProjectSubmission />
+            <Task />
+        </>
     )
 }
 

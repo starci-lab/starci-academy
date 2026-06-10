@@ -1,8 +1,8 @@
 "use client"
 
-import { ArrowRight as ArrowRightIcon, Clock as ClockIcon, Flag as SwordIcon, Lock as LockIcon, Star as StarIcon } from "@gravity-ui/icons"
+import { BookOpen as BookOpenIcon, Clock as ClockIcon, Flag as SwordIcon, Lock as LockIcon, Star as StarIcon } from "@gravity-ui/icons"
 import React, { useCallback, useMemo } from "react"
-import { Button, Chip, Drawer, ScrollShadow, cn } from "@heroui/react"
+import { Button, Chip, Drawer, ScrollShadow } from "@heroui/react"
 import { useRouter } from "next/navigation"
 import { useLocale, useTranslations } from "next-intl"
 import { useAppSelector } from "@/redux"
@@ -97,29 +97,26 @@ export const MindMapContentDetailsDrawer = () => {
                                 <Drawer.Heading className="text-pretty text-xl font-bold leading-snug">
                                     {content?.title ?? ""}
                                 </Drawer.Heading>
-                            </Drawer.Header>
-                        </div>
-                        <div className="border-b" />
-
-                        <Drawer.Body className="flex min-h-0 flex-1 flex-col p-0">
-                            <ScrollShadow className="min-h-0 flex-1 p-3" hideScrollBar>
                                 <div className="flex flex-wrap items-center gap-2">
-                                    <Chip variant="tertiary" color="default" size="sm" className="text-muted">
+                                    <Chip variant="secondary" color="accent" size="sm">
                                         <ClockIcon className="size-4" />
                                         <Chip.Label>
                                             {t("content.minutesRead", { minutes: content?.minutesRead ?? 0 })}
                                         </Chip.Label>
                                     </Chip>
-                                    <Chip variant="tertiary" color="default" size="sm" className="text-muted">
+                                    <Chip variant="secondary" color="accent" size="sm">
                                         <SwordIcon className="size-4" />
                                         <Chip.Label>
                                             {t("content.challengeCount", { count: challengeCount })}
                                         </Chip.Label>
                                     </Chip>
                                 </div>
+                            </Drawer.Header>
+                        </div>
+                        <div className="border-b" />
 
-                                <div className="h-3" />
-
+                        <Drawer.Body className="flex min-h-0 flex-1 flex-col p-0">
+                            <ScrollShadow className="min-h-0 flex-1 p-3" hideScrollBar>
                                 <p className="whitespace-pre-line text-sm leading-relaxed text-muted">
                                     {content?.description?.trim() || t("content.mindMapDetailsEmpty")}
                                 </p>
@@ -131,7 +128,11 @@ export const MindMapContentDetailsDrawer = () => {
                                 className="w-full"
                                 onPress={onStart}
                             >
-                                {!authenticated ? <LockIcon /> : <ArrowRightIcon /> }
+                                {!authenticated ? (
+                                    <LockIcon className="size-5" />
+                                ) : (
+                                    <BookOpenIcon className="size-5" />
+                                )}
                                 {t("content.mindMapReadDetails")}
                             </Button>
                         </div>

@@ -88,12 +88,18 @@
     },
     "mindMap": {
         "title": "Sơ đồ tư duy",
-        "fullscreen": "Xem toàn màn hình"
+        "fullscreen": "Xem toàn màn hình",
+        "exitFullscreen": "Thoát toàn màn hình",
+        "zoomIn": "Phóng to",
+        "zoomOut": "Thu nhỏ",
+        "fitView": "Vừa khung nhìn"
     },
     "foundations": {
         "title": "Nền tảng",
         "description": "Tài liệu và nguồn tham khảo nền tảng kỹ thuật cho khóa học.",
         "gridDescription": "Chọn chủ đề để xem tài liệu và nguồn học tập.",
+        "searchPlaceholder": "Tìm chủ đề...",
+        "searchEmpty": "Không có chủ đề nào khớp với \"{query}\".",
         "emptyCategories": "Chưa có chủ đề nền tảng nào.",
         "count": "{count, plural, =0 {Chưa có tài liệu} one {# tài liệu} other {# tài liệu}}",
         "empty": "Danh mục này chưa có tài liệu.",

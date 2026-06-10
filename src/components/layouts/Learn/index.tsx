@@ -59,4 +59,3 @@ export const Learn = () => {
 }
 
 export * from "./StarciAi"
-export * from "./MindMap"

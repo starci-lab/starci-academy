@@ -11,6 +11,7 @@ import { buildMarkdownRenderers } from "./map"
 
 // Re-export the colocated sub-renderers so the reuseable barrel surface stays identical.
 export * from "./CodeToHtml"
+export * from "./LayoutWidget"
 export * from "./MermaidDiagram"
 
 /**

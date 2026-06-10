@@ -3,6 +3,7 @@
 import React, {
     useCallback,
     useMemo,
+    useState,
 } from "react"
 import {
     useLocale,
@@ -41,6 +42,9 @@ import {
     FoundationsCategoryGridHeader,
 } from "./FoundationsCategoryGridHeader"
 import {
+    FoundationsCategoryGridSearch,
+} from "./FoundationsCategoryGridSearch"
+import {
     FoundationsCategoryGridBody,
 } from "./FoundationsCategoryGridBody"
 
@@ -62,6 +66,9 @@ export const FoundationsCategoryGridLayout = () => {
 
     const { isLoading } = useQueryFoundationCategoriesSwr()
 
+    /** Live search query for filtering the category cards by title/description. */
+    const [query, setQuery] = useState("")
+
     /** Categories sorted ascending by their order index. */
     const sortedCategories = useMemo(() => {
         if (!categories?.length) {
@@ -69,6 +76,24 @@ export const FoundationsCategoryGridLayout = () => {
         }
         return [...categories].sort((a, b) => a.orderIndex - b.orderIndex)
     }, [categories])
+
+    /** Sorted categories narrowed by the (case-insensitive) search query. */
+    const filteredCategories = useMemo(() => {
+        const normalized = query.trim().toLowerCase()
+        if (!normalized) {
+            return sortedCategories
+        }
+        return sortedCategories.filter((category) => {
+            const haystack = `${category.title ?? ""} ${category.description ?? ""}`.toLowerCase()
+            return haystack.includes(normalized)
+        })
+    }, [query, sortedCategories])
+
+    /** Categories exist but the current query matched none of them. */
+    const hasNoMatches = !isLoading
+        && categories !== undefined
+        && sortedCategories.length > 0
+        && filteredCategories.length === 0
 
     /** Navigate to the localized home page. */
     const onPressHome = useCallback(() => {
@@ -149,12 +174,23 @@ export const FoundationsCategoryGridLayout = () => {
             <div className="h-6" />
             <FoundationsCategoryGridHeader />
             <div className="h-6" />
-            <FoundationsCategoryGridBody
-                categories={categories}
-                sortedCategories={sortedCategories}
-                isLoading={isLoading}
-                onSelect={onSelectCategory}
-            />
+            {/* search box appears once categories have loaded; filters the grid client-side */}
+            {!isLoading && (categories?.length ?? 0) > 0 ? (
+                <>
+                    <FoundationsCategoryGridSearch value={query} onValueChange={setQuery} />
+                    <div className="h-6" />
+                </>
+            ) : null}
+            {hasNoMatches ? (
+                <p className="text-muted text-sm">{t("foundations.searchEmpty", { query: query.trim() })}</p>
+            ) : (
+                <FoundationsCategoryGridBody
+                    categories={categories}
+                    sortedCategories={filteredCategories}
+                    isLoading={isLoading}
+                    onSelect={onSelectCategory}
+                />
+            )}
         </div>
     )
 }

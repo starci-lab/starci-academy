@@ -10,6 +10,7 @@ import {
     MarkdownTableRow,
 } from "./MarkdownTableParts"
 import { CodeToHtml } from "./CodeToHtml"
+import { LayoutWidget } from "./LayoutWidget"
 import { MermaidDiagram } from "./MermaidDiagram"
 import type { MarkdownRenderersParams } from "./types"
 
@@ -97,6 +98,9 @@ export const buildMarkdownRenderers = ({
                     fallbackLabel={t("markdown.mermaidFigureLabel")}
                 />
             )
+        }
+        if (lang.toLowerCase() === "layout") {
+            return <LayoutWidget html={code} />
         }
         return (
             <CodeToHtml

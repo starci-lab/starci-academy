@@ -8,19 +8,16 @@ import {
 import {
     useQueryCourseSwr,
 } from "@/hooks"
-import {
-    CourseMindMap,
-} from "@/components/layouts/CourseMindMap"
+import { MindMapCanvas } from "../MindMapCanvas"
 import {
     MindMapBreadcrumbs,
-} from "./MindMapBreadcrumbs"
+} from "../MindMapBreadcrumbs"
 
 /**
- * Course mind-map feature container.
+ * Course mind-map feature container for the authenticated learn shell.
  *
  * Reads the active course (entity + display id) from redux, renders the
- * breadcrumb trail and the course title heading, then mounts the
- * {@link CourseMindMap} canvas. Mounted by the
+ * breadcrumb trail, then mounts the {@link MindMapCanvas}. Mounted by the
  * `/[locale]/courses/[courseId]/learn/mind-map` route.
  *
  * Client component: relies on redux selectors and the i18n hook.
@@ -46,7 +43,7 @@ export const MindMap = () => {
                 {!course && isLoading ? (
                     <Skeleton className="h-full w-full" />
                 ) : (
-                    <CourseMindMap />
+                    <MindMapCanvas />
                 )}
             </div>
         </div>

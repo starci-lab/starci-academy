@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useMemo, useRef } from "react"
 import {
     Background,
     BackgroundVariant,
+    ControlButton,
     Controls,
     type Node,
     type NodeMouseHandler,
@@ -12,6 +13,9 @@ import {
     useNodesState,
     useReactFlow,
 } from "@xyflow/react"
+import {
+    Frame as FitViewIcon,
+} from "@gravity-ui/icons"
 import { useTranslations } from "next-intl"
 import { useTheme } from "next-themes"
 import { useAppSelector } from "@/redux"
@@ -145,9 +149,22 @@ export const Canvas = () => {
                 zoomOnDoubleClick={false}
             >
                 <Background gap={16} variant={BackgroundVariant.Dots} />
-                <Controls className=" bg-surface shadow-sm dark:border-zinc-600 dark:bg-zinc-900/90" showInteractive={false} />
+                <Controls
+                    className="bg-surface shadow-sm dark:border-zinc-600 dark:bg-zinc-900/90"
+                    showFitView={false}
+                    showInteractive={false}
+                    showZoom={false}
+                >
+                    <ControlButton
+                        aria-label={t("mindMap.fitView")}
+                        onClick={() => void fitView({ duration: 400, padding: 0.2 })}
+                        title={t("mindMap.fitView")}
+                    >
+                        <FitViewIcon />
+                    </ControlButton>
+                </Controls>
+                <MindMapFullscreenButton targetRef={containerRef} />
             </ReactFlow>
-            <MindMapFullscreenButton targetRef={containerRef} />
         </div>
     )
 }

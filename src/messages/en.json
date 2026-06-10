@@ -79,12 +79,18 @@
     },
     "mindMap": {
         "title": "Mind map",
-        "fullscreen": "View fullscreen"
+        "fullscreen": "View fullscreen",
+        "exitFullscreen": "Exit fullscreen",
+        "zoomIn": "Zoom in",
+        "zoomOut": "Zoom out",
+        "fitView": "Fit to view"
     },
     "foundations": {
         "title": "Foundations",
         "description": "Technical foundations and reference materials for the course.",
         "gridDescription": "Choose a topic to explore reference materials and learning resources.",
+        "searchPlaceholder": "Search topics...",
+        "searchEmpty": "No topics match \"{query}\".",
         "emptyCategories": "No foundation topics are available yet.",
         "count": "{count, plural, =0 {No resources} one {# resource} other {# resources}}",
         "empty": "No resources in this category yet.",

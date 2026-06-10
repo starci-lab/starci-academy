@@ -1,0 +1,35 @@
+"use client"
+
+import React from "react"
+import { Skeleton } from "@heroui/react"
+import { useAppSelector } from "@/redux"
+import { useQueryCourseSwr } from "@/hooks"
+import { MindMapCanvas } from "../MindMapCanvas"
+
+/**
+ * Public, full-width mind-map screen mounted by the
+ * `/[locale]/courses/[courseId]/mind-map` route (outside the authenticated
+ * `learn` shell, so there is no left Sidebar and the canvas spans the full width).
+ *
+ * No authentication required: the course is loaded through the no-auth GraphQL
+ * query in {@link useQueryCourseSwr}. The `[courseId]` route param is mirrored
+ * into `course.displayId` by the global `useSyncReduxCourseId` effect, which is
+ * what triggers the fetch here.
+ *
+ * Fills the viewport below the sticky `h-16` (4rem) navbar.
+ */
+export const StandaloneMindMap = () => {
+    const course = useAppSelector((state) => state.course.entity)
+    // Hard refresh straight into this route has no other loader, so kick the fetch here.
+    const { isLoading } = useQueryCourseSwr()
+
+    return (
+        <div className="h-[calc(100dvh-4rem)] w-full">
+            {!course && isLoading ? (
+                <Skeleton className="h-full w-full" />
+            ) : (
+                <MindMapCanvas />
+            )}
+        </div>
+    )
+}

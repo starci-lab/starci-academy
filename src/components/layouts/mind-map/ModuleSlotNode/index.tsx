@@ -55,9 +55,9 @@ export const CourseModuleSlotNode = (props: NodeProps<CourseModuleSlotFlowNode>)
             className={cn(
                 "nodrag nopan relative flex items-center justify-center rounded-2xl px-3 py-2 text-center",
                 "border bg-background/90 text-sm font-medium text-foreground shadow-sm outline-none",
-                "transition-colors hover:border-accent hover:bg-accent/5",
+                "transition-all duration-200 hover:border-accent hover:bg-accent/5 hover:shadow-md hover:ring-2 hover:ring-accent/30",
                 "focus-visible:ring-2 focus-visible:ring-accent/40",
-                "dark:border-zinc-600/80 dark:bg-zinc-900/90 dark:hover:bg-accent/10",
+                "dark:border-zinc-600/80 dark:bg-zinc-900/90 dark:hover:bg-accent/10 dark:hover:ring-accent/40",
                 selected && "ring-2 ring-accent/25 dark:ring-accent/35",
             )}
             style={{ width: SLOT_NODE_WIDTH, minHeight: SLOT_NODE_HEIGHT }}

@@ -152,7 +152,8 @@ export const CourseModuleNode = (props: NodeProps<CourseModuleFlowNode>) => {
         <div
             className={cn(
                 "relative flex min-h-[100px] min-w-[300px] w-[300px] flex-col items-stretch rounded-3xl px-4 py-3 text-center",
-                "border /60 shadow-sm dark:border-zinc-500/50 dark:shadow-lg dark:shadow-black/30",
+                "border /60 shadow-sm transition-all duration-200 dark:border-zinc-500/50 dark:shadow-lg dark:shadow-black/30",
+                "hover:border-accent hover:shadow-md hover:ring-2 hover:ring-accent/30 dark:hover:ring-accent/40",
                 data.isActive && "border-accent ring-2 ring-accent/35 dark:ring-accent/45",
                 selected && "ring-2 ring-accent/25 dark:ring-accent/35",
             )}
@@ -176,9 +177,8 @@ export const CourseModuleNode = (props: NodeProps<CourseModuleFlowNode>) => {
                 aria-expanded={expanded}
                 aria-label={t("content.mindMapModuleToggleAria")}
                 className={cn(
-                    "nodrag nopan w-full cursor-pointer rounded-2xl px-1 py-2 text-center outline-none transition-colors",
-                    "hover:bg-black/5 focus-visible:ring-2 focus-visible:ring-accent/40 dark:hover:bg-white/10",
-                    "flex min-h-0 flex-1 items-center justify-center",
+                    "nodrag nopan flex min-h-0 flex-1 w-full cursor-pointer items-center justify-center rounded-2xl px-1 py-2 text-center outline-none",
+                    "focus-visible:ring-2 focus-visible:ring-accent/40",
                 )}
                 onClick={() => {
                     // toggle lessons; the click also bubbles to ReactFlow `onNodeClick` to zoom-to-center

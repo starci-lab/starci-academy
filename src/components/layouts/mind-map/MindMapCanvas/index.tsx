@@ -4,15 +4,16 @@ import React from "react"
 import { ReactFlowProvider } from "@xyflow/react"
 import { useTranslations } from "next-intl"
 import { useAppSelector } from "@/redux"
-import { Canvas } from "./Canvas"
+import { Canvas } from "../Canvas"
 
 /**
- * Course mind map layout: wraps the React Flow canvas with provider and empty-state handling.
+ * Shared React Flow mind-map canvas: provider wrapper and empty-state handling.
  *
+ * Used by both {@link MindMap} (learn shell) and {@link StandaloneMindMap} (public route).
  * Clicking a lesson opens the global {@link MindMapContentDetailsDrawer} (mounted in
  * `DrawerContainer`) via `useMindMapContentDetailsOverlayState` — no local state or context needed.
  */
-export const CourseMindMap = () => {
+export const MindMapCanvas = () => {
     const t = useTranslations()
     const course = useAppSelector((state) => state.course.entity)
     const hasModules = Boolean(course?.modules && course.modules.length > 0)

@@ -98,6 +98,7 @@
         "searchResourcesEmpty": "No resources match \"{query}\".",
         "emptyCategories": "No foundation topics are available yet.",
         "count": "{count, plural, =0 {No resources} one {# resource} other {# resources}}",
+        "categoryCount": "{count, plural, =0 {No topics} one {# topic} other {# topics}}",
         "empty": "No resources in this category yet.",
         "viewDetail": "View details",
         "selectPrompt": "Select a resource from the list to view its content.",
@@ -238,6 +239,8 @@
             },
             "submitGithub": {
                 "title": "Project GitHub",
+                "langFieldTitle": "Grading language",
+                "langFieldHint": "Your backend is graded against this language's approach criteria.",
                 "repoFieldTitle": "GitHub URL",
                 "branchFieldTitle": "Branch to review",
                 "branchPlaceholder": "main",
@@ -339,6 +342,7 @@
         }
     },
     "task": {
+        "briefTitle": "Task brief",
         "criteriaTitle": "Grading criteria",
         "codeImplementationsTitle": "Implementation guides",
         "codeImplementationsTabsAria": "Implementation guides by language",
@@ -692,6 +696,8 @@
         "noAnswer": "No answer yet.",
         "previous": "Previous",
         "next": "Next",
+        "relatedContents": "Related lessons",
+        "relatedModules": "Related modules",
         "difficulty": {
             "easy": "Easy",
             "medium": "Medium",

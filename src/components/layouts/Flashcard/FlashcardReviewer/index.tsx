@@ -4,10 +4,13 @@ import React, { useMemo, useState } from "react"
 import useSWR from "swr"
 import { Button } from "@heroui/react"
 import { motion } from "framer-motion"
-import { useTranslations } from "next-intl"
+import { useTranslations, useLocale } from "next-intl"
+import { useRouter } from "next/navigation"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { queryFlashcardDeck } from "@/modules/api/graphql"
 import { type FlashcardCardEntity } from "@/modules/types"
+import { useAppSelector } from "@/redux"
+import { pathConfig } from "@/resources"
 import { FlashcardReviewerSkeleton } from "../FlashcardReviewerSkeleton"
 
 /** Props for {@link FlashcardReviewer}. */
@@ -34,6 +37,10 @@ const FACE_STYLE: React.CSSProperties = {
  */
 export const FlashcardReviewer = ({ deckId }: FlashcardReviewerProps) => {
     const t = useTranslations()
+    const locale = useLocale()
+    const router = useRouter()
+    // owning course slug drives the deep-links to referenced lessons/modules
+    const courseDisplayId = useAppSelector((state) => state.course.displayId)
     // index of the card currently shown
     const [currentIndex, setCurrentIndex] = useState(0)
     // whether the current card is flipped to its answer side
@@ -186,6 +193,77 @@ export const FlashcardReviewer = ({ deckId }: FlashcardReviewerProps) => {
                     {t("flashcard.next")}
                 </Button>
             </div>
+
+            {/* lessons + modules this deck references (N:N), deep-linked to their pages */}
+            {(data?.contents?.length || data?.modules?.length) ? (
+                <div className="flex flex-col gap-4 border-t border-divider/60 pt-4">
+                    {data?.contents?.length ? (
+                        <div className="flex flex-col gap-2">
+                            <span className="text-xs font-medium uppercase tracking-wide text-muted">
+                                {t("flashcard.relatedContents")}
+                            </span>
+                            <div className="flex flex-wrap gap-2">
+                                {data.contents.map((content) => (
+                                    <button
+                                        key={content.id}
+                                        type="button"
+                                        disabled={!content.module?.id || !courseDisplayId}
+                                        onClick={() => {
+                                            if (!content.module?.id || !courseDisplayId) {
+                                                return
+                                            }
+                                            router.push(
+                                                pathConfig()
+                                                    .locale(locale)
+                                                    .course(courseDisplayId)
+                                                    .learn()
+                                                    .module(content.module.id)
+                                                    .content(content.id)
+                                                    .build(),
+                                            )
+                                        }}
+                                        className="rounded-full bg-default-100 px-3 py-1 text-sm transition-colors hover:bg-default-200 disabled:cursor-default disabled:opacity-60"
+                                    >
+                                        {content.title}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    ) : null}
+                    {data?.modules?.length ? (
+                        <div className="flex flex-col gap-2">
+                            <span className="text-xs font-medium uppercase tracking-wide text-muted">
+                                {t("flashcard.relatedModules")}
+                            </span>
+                            <div className="flex flex-wrap gap-2">
+                                {data.modules.map((module) => (
+                                    <button
+                                        key={module.id}
+                                        type="button"
+                                        disabled={!courseDisplayId}
+                                        onClick={() => {
+                                            if (!courseDisplayId) {
+                                                return
+                                            }
+                                            router.push(
+                                                pathConfig()
+                                                    .locale(locale)
+                                                    .course(courseDisplayId)
+                                                    .learn()
+                                                    .module(module.id)
+                                                    .build(),
+                                            )
+                                        }}
+                                        className="rounded-full bg-default-100 px-3 py-1 text-sm transition-colors hover:bg-default-200 disabled:cursor-default disabled:opacity-60"
+                                    >
+                                        {module.title}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    ) : null}
+                </div>
+            ) : null}
         </div>
     )
 }

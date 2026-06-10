@@ -107,6 +107,7 @@
         "searchResourcesEmpty": "Không có tài liệu nào khớp với \"{query}\".",
         "emptyCategories": "Chưa có chủ đề nền tảng nào.",
         "count": "{count, plural, =0 {Chưa có tài liệu} one {# tài liệu} other {# tài liệu}}",
+        "categoryCount": "{count, plural, =0 {Chưa có chủ đề} one {# chủ đề} other {# chủ đề}}",
         "empty": "Danh mục này chưa có tài liệu.",
         "viewDetail": "Xem chi tiết",
         "selectPrompt": "Chọn một tài liệu trong danh sách để xem nội dung.",
@@ -247,6 +248,8 @@
             },
             "submitGithub": {
                 "title": "Github dự án",
+                "langFieldTitle": "Ngôn ngữ chấm điểm",
+                "langFieldHint": "Backend của bạn được chấm theo tiêu chí approach của ngôn ngữ này.",
                 "repoFieldTitle": "URL GitHub",
                 "branchFieldTitle": "Nhánh cần đánh giá",
                 "branchPlaceholder": "main",
@@ -348,6 +351,7 @@
         }
     },
     "task": {
+        "briefTitle": "Đề bài",
         "criteriaTitle": "Tiêu chí chấm điểm",
         "codeImplementationsTitle": "Hướng dẫn triển khai",
         "codeImplementationsTabsAria": "Hướng dẫn triển khai theo ngôn ngữ",
@@ -701,6 +705,8 @@
         "noAnswer": "Chưa có đáp án.",
         "previous": "Trước",
         "next": "Tiếp",
+        "relatedContents": "Bài học liên quan",
+        "relatedModules": "Học phần liên quan",
         "difficulty": {
             "easy": "Dễ",
             "medium": "Trung bình",

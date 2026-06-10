@@ -25,6 +25,20 @@ const query1 = gql`
           orderIndex
           defaultLocale
         }
+        contents {
+          id
+          displayId
+          title
+          module {
+            id
+            displayId
+          }
+        }
+        modules {
+          id
+          displayId
+          title
+        }
       }
     }
   }

@@ -701,6 +701,12 @@
         "relatedModules": "Related modules",
         "searchPlaceholder": "Search flashcard decks...",
         "searchEmpty": "No decks match \"{query}\".",
+        "level": {
+            "junior": "Junior",
+            "middle": "Middle",
+            "senior": "Senior",
+            "staff": "Staff / SA"
+        },
         "difficulty": {
             "easy": "Easy",
             "medium": "Medium",

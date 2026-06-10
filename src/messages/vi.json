@@ -710,6 +710,12 @@
         "relatedModules": "Học phần liên quan",
         "searchPlaceholder": "Tìm bộ flashcard...",
         "searchEmpty": "Không có bộ nào khớp với \"{query}\".",
+        "level": {
+            "junior": "Junior",
+            "middle": "Middle",
+            "senior": "Senior",
+            "staff": "Staff / SA"
+        },
         "difficulty": {
             "easy": "Dễ",
             "medium": "Trung bình",

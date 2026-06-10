@@ -112,6 +112,25 @@ export const FlashcardReviewer = ({ deckId }: FlashcardReviewerProps) => {
                 </div>
             </div>
 
+            {/* current card meta: interview level + technology tags (always visible) */}
+            {(card.level || (card.tags?.length ?? 0) > 0) ? (
+                <div className="flex flex-wrap items-center gap-2">
+                    {card.level ? (
+                        <span className="rounded-full bg-primary-100 px-2.5 py-0.5 text-xs font-semibold text-primary">
+                            {t(`flashcard.level.${card.level}`)}
+                        </span>
+                    ) : null}
+                    {card.tags?.map((tag) => (
+                        <span
+                            key={tag}
+                            className="rounded-full bg-default-100 px-2.5 py-0.5 text-xs text-muted"
+                        >
+                            {tag}
+                        </span>
+                    ))}
+                </div>
+            ) : null}
+
             {/* the flashcard: click (or Enter/Space) to flip with a real 3D rotation.
                 A perspective wrapper gives depth; the inner layer rotates and both
                 faces are stacked in one grid cell so the card sizes to the tallest. */}

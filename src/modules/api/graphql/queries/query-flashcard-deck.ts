@@ -22,6 +22,8 @@ const query1 = gql`
           question
           answer
           explanation
+          level
+          tags
           orderIndex
           defaultLocale
         }

@@ -10,6 +10,10 @@ export interface FlashcardCardEntity extends AbstractEntity {
     answer: string | null
     /** Optional extra depth — follow-ups, gotchas (Markdown). */
     explanation: string | null
+    /** Interview seniority level (junior/middle/senior/staff); null when unset. */
+    level?: string | null
+    /** Technology tags for this card (e.g. ["NestJS", "Redis"]). */
+    tags?: Array<string>
     /** Display order within the deck card list. */
     orderIndex: number
     /** Default locale for this card row. */

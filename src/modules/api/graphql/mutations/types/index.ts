@@ -1,6 +1,5 @@
 ﻿export * from "./discussion"
 export * from "./course-enroll"
-export * from "./submit-quiz-test"
 export * from "./submit-coding-solution"
 export * from "./exchange-code-for-token"
 export * from "./generate-submit-cv-presign-url"

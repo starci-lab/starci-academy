@@ -29,7 +29,11 @@ export const useQueryFoundationsSwr = () => {
     const category = useAppSelector((state) => state.foundation.category)
     const pageNumber = useAppSelector((state) => state.foundation.pageNumber)
     const limit = useAppSelector((state) => state.foundation.limit)
+    const search = useAppSelector((state) => state.foundation.search)
     const dispatch = useAppDispatch()
+
+    // normalized search term included in the SWR key so each query caches independently
+    const normalizedSearch = search?.trim() ?? ""
 
     return useSWR(
         authenticated && enrolled && category?.id && onFoundationsPage
@@ -41,6 +45,7 @@ export const useQueryFoundationsSwr = () => {
                 authenticated,
                 pageNumber,
                 limit,
+                normalizedSearch,
             ]
             : null,
         async () => {
@@ -55,6 +60,7 @@ export const useQueryFoundationsSwr = () => {
                         pageNumber: (pageNumber ?? 1) - 1,
                         limit: limit ?? defaultFoundationsListLimit,
                         sorts: defaultFoundationsListSorts,
+                        search: normalizedSearch.length > 0 ? normalizedSearch : undefined,
                     },
                 },
                 headers: {
@@ -70,6 +76,10 @@ export const useQueryFoundationsSwr = () => {
             dispatch(setFoundations(payload.data))
             dispatch(setFoundationsCount(payload.count))
             return payload
+        },
+        {
+            // keep the current page visible while the next page/search loads (no skeleton flash)
+            keepPreviousData: true,
         },
     )
 }

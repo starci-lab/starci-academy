@@ -42,10 +42,10 @@ export const FoundationItemThumbnail = ({
                 <img
                     src={resolvedThumbnailUrl}
                     alt={title}
-                    className="h-full w-full object-cover"
+                    className="absolute inset-0 block h-full w-full object-cover"
                 />
             ) : (
-                <div className="flex h-full w-full items-center justify-center">
+                <div className="absolute inset-0 flex items-center justify-center">
                     <StackIcon
                         className="text-accent/60 size-14"
                         aria-hidden

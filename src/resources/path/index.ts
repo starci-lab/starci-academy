@@ -165,10 +165,10 @@ export const pathConfig = () => {
                         build,
                     }
                 }
-                const quiz = () => {
-                    const quizPath = `${learnPath}/quiz`
+                const flashcards = () => {
+                    const flashcardsPath = `${learnPath}/flashcards`
                     const build = () => {
-                        return quizPath
+                        return flashcardsPath
                     }
                     return {
                         build,
@@ -233,7 +233,7 @@ export const pathConfig = () => {
                     leaderboard,
                     starciAi,
                     headhuntings,
-                    quiz,
+                    flashcards,
                     practice,
                     foundations,
                     module,

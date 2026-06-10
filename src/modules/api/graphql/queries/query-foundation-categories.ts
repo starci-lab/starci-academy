@@ -1,22 +1,28 @@
 import { createAuthApolloClient } from "../clients"
 import type { QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
-import type { QueryFoundationCategoriesResponse } from "./types"
+import type {
+    QueryFoundationCategoriesRequest,
+    QueryFoundationCategoriesResponse,
+} from "./types"
 
 const query1 = gql`
-  query FoundationCategories {
-    foundationCategories {
+  query FoundationCategories($request: FoundationCategoriesRequest) {
+    foundationCategories(request: $request) {
       success
       message
       error
       data {
-        id
-        displayId
-        title
-        description
-        slug
-        thumbnailUrl
-        orderIndex
+        totalCount
+        data {
+          id
+          displayId
+          title
+          description
+          slug
+          thumbnailUrl
+          orderIndex
+        }
       }
     }
   }
@@ -32,10 +38,11 @@ const queryMap: Record<QueryFoundationCategories, DocumentNode> = {
 
 export const queryFoundationCategories = async ({
     query = QueryFoundationCategories.Query1,
+    request,
     debug,
     headers,
     signal,
-}: QueryParams<QueryFoundationCategories>) => {
+}: QueryParams<QueryFoundationCategories, QueryFoundationCategoriesRequest>) => {
     const apollo = createAuthApolloClient({
         cache: false,
         debug,
@@ -45,5 +52,8 @@ export const queryFoundationCategories = async ({
 
     return apollo.query<QueryFoundationCategoriesResponse>({
         query: queryMap[query],
+        variables: {
+            request,
+        },
     })
 }

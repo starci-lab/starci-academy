@@ -1,5 +1,4 @@
 ﻿export * from "./types"
-export * from "./mutation-submit-quiz-test"
 export * from "./mutation-submit-coding-solution"
 export * from "./mutation-course-enroll"
 export * from "./mutation-update-my-ai-settings"

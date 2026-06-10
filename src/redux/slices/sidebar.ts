@@ -12,7 +12,7 @@ export enum SidebarTab {
     StarciAi = "starciAi",
     Foundations = "foundations",
     Headhuntings = "headhuntings",
-    Quizlet = "quizlet",
+    Flashcards = "flashcards",
     Practice = "practice",
 }
 

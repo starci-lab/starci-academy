@@ -25,9 +25,8 @@ export const FoundationCategoryCard = ({
         <button
             type="button"
             className={cn(
-                "card card--default flex h-full flex-col overflow-hidden rounded-xl border",
-                "border-divider/60 text-left transition-colors",
-                "hover:border-accent/40 hover:bg-accent/5",
+                "card card--default !p-0 flex h-full flex-col overflow-hidden rounded-xl text-left transition-colors",
+                "hover:bg-accent/5",
             )}
             onClick={() => onPress(category)}
         >
@@ -35,7 +34,7 @@ export const FoundationCategoryCard = ({
                 thumbnailUrl={category.thumbnailUrl}
                 title={category.title}
             />
-            <div className="flex flex-1 flex-col gap-2 px-4 pb-4 pt-1">
+            <div className="flex flex-1 flex-col gap-2 p-3">
                 <span className="text-lg font-semibold">{category.title}</span>
                 {category.description ? (
                     <p className="text-muted line-clamp-3 text-sm">{category.description}</p>

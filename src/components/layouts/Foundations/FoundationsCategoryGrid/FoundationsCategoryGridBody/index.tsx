@@ -2,9 +2,6 @@
 
 import React from "react"
 import {
-    Skeleton,
-} from "@heroui/react"
-import {
     useTranslations,
 } from "next-intl"
 import type {
@@ -13,6 +10,9 @@ import type {
 import {
     FoundationCategoryCard,
 } from "../../FoundationCategoryCard"
+import {
+    FoundationCategoryCardSkeleton,
+} from "../../FoundationCategoryCard/FoundationCategoryCardSkeleton"
 
 /** Props for {@link FoundationsCategoryGridBody}. */
 export interface FoundationsCategoryGridBodyProps {
@@ -40,17 +40,17 @@ export const FoundationsCategoryGridBody = ({
 }: FoundationsCategoryGridBodyProps) => {
     const t = useTranslations()
 
-    if (isLoading || categories === undefined) {
+    if (isLoading) {
         return (
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {Array.from({ length: 6 }).map((_, index) => (
-                    <Skeleton key={index} className="h-48 rounded-xl" />
+                    <FoundationCategoryCardSkeleton key={index} />
                 ))}
             </div>
         )
     }
 
-    if (sortedCategories.length === 0) {
+    if (!categories?.length) {
         return <p className="text-muted text-sm">{t("foundations.emptyCategories")}</p>
     }
 

@@ -86,6 +86,8 @@ export interface PaginationFilters<T extends string> {
     pageNumber?: number
     limit?: number
     sorts: Array<SortInput<T>>
+    /** Optional server-side full-text search string. */
+    search?: string
 }
 
 /** Request object with optional abort signal. */

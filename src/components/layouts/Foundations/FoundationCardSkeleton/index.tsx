@@ -8,9 +8,9 @@ import React from "react"
  */
 export const FoundationCardSkeleton = () => {
     return (
-        <div className="card card--default flex h-full flex-col overflow-hidden">
+        <div className="card card--default !p-0 flex h-full flex-col overflow-hidden rounded-xl">
             <Skeleton className="aspect-video w-full rounded-none" />
-            <div className="flex flex-col gap-3 p-4 pt-2">
+            <div className="flex flex-col gap-3 p-3">
                 <Skeleton className="h-6 w-2/3 rounded-lg" />
                 <Skeleton className="h-4 w-full rounded-lg" />
                 <Skeleton className="h-16 w-full rounded-lg" />

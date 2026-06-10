@@ -2,6 +2,7 @@
 
 import React, {
     useCallback,
+    useEffect,
     useMemo,
     useState,
 } from "react"
@@ -31,6 +32,7 @@ import type {
 } from "@/modules/types"
 import {
     useQueryFoundationCategoriesSwr,
+    useQueryFoundationCategorySuggestionsSwr,
 } from "@/hooks"
 import type {
     FoundationsBreadcrumbItem,
@@ -42,18 +44,28 @@ import {
     FoundationsCategoryGridHeader,
 } from "./FoundationsCategoryGridHeader"
 import {
-    FoundationsCategoryGridSearch,
-} from "./FoundationsCategoryGridSearch"
+    SearchInput,
+} from "@/components/reuseable"
 import {
     FoundationsCategoryGridBody,
 } from "./FoundationsCategoryGridBody"
+import {
+    Pagination,
+    PaginationSkeleton,
+} from "@/components/reuseable"
+
+/** Max category cards shown per page. */
+const PAGE_SIZE = 10
+/** Debounce window (ms) before a typed search hits the backend. */
+const SEARCH_DEBOUNCE_MS = 350
 
 /**
  * Foundations hub container: grid of category cards; selecting one opens the
  * category learn page.
  *
- * Owns data (SWR + redux), breadcrumb/sort derivations and the select action;
- * renders presentational children. `"use client"` for routing and redux.
+ * Server-side search + pagination: the debounced query and page drive the SWR
+ * key, so the backend returns only the current page (no client-side filtering).
+ * `"use client"` for routing, redux, and the debounce effect.
  */
 export const FoundationsCategoryGridLayout = () => {
     const t = useTranslations()
@@ -62,38 +74,53 @@ export const FoundationsCategoryGridLayout = () => {
     const dispatch = useAppDispatch()
     const course = useAppSelector((state) => state.course.entity)
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
-    const categories = useAppSelector((state) => state.foundation.categories)
 
-    const { isLoading } = useQueryFoundationCategoriesSwr()
-
-    /** Live search query for filtering the category cards by title/description. */
+    /** Immediate input value (drives the field). */
     const [query, setQuery] = useState("")
+    /** Debounced query that actually hits the backend. */
+    const [debouncedQuery, setDebouncedQuery] = useState("")
+    /** 1-based current page. */
+    const [page, setPage] = useState(1)
 
-    /** Categories sorted ascending by their order index. */
-    const sortedCategories = useMemo(() => {
-        if (!categories?.length) {
-            return []
-        }
-        return [...categories].sort((a, b) => a.orderIndex - b.orderIndex)
-    }, [categories])
+    // debounce the search input; changing the query also resets to the first page
+    useEffect(() => {
+        const handle = setTimeout(() => {
+            setDebouncedQuery(query)
+            setPage(1)
+        }, SEARCH_DEBOUNCE_MS)
+        return () => clearTimeout(handle)
+    }, [query])
 
-    /** Sorted categories narrowed by the (case-insensitive) search query. */
-    const filteredCategories = useMemo(() => {
-        const normalized = query.trim().toLowerCase()
-        if (!normalized) {
-            return sortedCategories
-        }
-        return sortedCategories.filter((category) => {
-            const haystack = `${category.title ?? ""} ${category.description ?? ""}`.toLowerCase()
-            return haystack.includes(normalized)
-        })
-    }, [query, sortedCategories])
+    // server-side: the backend returns exactly this page for this search
+    const { data, isLoading } = useQueryFoundationCategoriesSwr({
+        search: debouncedQuery,
+        page,
+        limit: PAGE_SIZE,
+    })
 
-    /** Categories exist but the current query matched none of them. */
-    const hasNoMatches = !isLoading
-        && categories !== undefined
-        && sortedCategories.length > 0
-        && filteredCategories.length === 0
+    /** Categories for the current page (undefined while the first load is in flight). */
+    const pageCategories = data?.data
+    /** Total matching categories across all pages (from the server). */
+    const totalCount = data?.totalCount ?? 0
+    /** Total pages derived from the server total (at least 1). */
+    const totalPages = Math.max(1, Math.ceil(totalCount / PAGE_SIZE))
+    /** Page clamped to the available range for the pagination control. */
+    const currentPage = Math.min(page, totalPages)
+    /** A search is active but the server returned no matches. */
+    const hasNoMatches = !isLoading && debouncedQuery.trim().length > 0 && totalCount === 0
+
+    // ES Completion Suggester (typeahead): clean { id, label } items from the BE,
+    // no client-side filtering or label munging.
+    const { data: suggestionItems } = useQueryFoundationCategorySuggestionsSwr(debouncedQuery)
+    const suggestions = suggestionItems ?? []
+
+    /** Fill the search box with the chosen suggestion (the grid then filters to it). */
+    const onSelectSuggestion = useCallback(
+        (suggestion: { id: string; label: string }) => {
+            setQuery(suggestion.label)
+        },
+        [],
+    )
 
     /** Navigate to the localized home page. */
     const onPressHome = useCallback(() => {
@@ -174,22 +201,35 @@ export const FoundationsCategoryGridLayout = () => {
             <div className="h-6" />
             <FoundationsCategoryGridHeader />
             <div className="h-6" />
-            {/* search box appears once categories have loaded; filters the grid client-side */}
-            {!isLoading && (categories?.length ?? 0) > 0 ? (
-                <>
-                    <FoundationsCategoryGridSearch value={query} onValueChange={setQuery} />
-                    <div className="h-6" />
-                </>
-            ) : null}
+            {/* search box (server-side, debounced) with ES-backed autocomplete dropdown */}
+            <SearchInput
+                value={query}
+                onValueChange={setQuery}
+                placeholder={t("foundations.searchPlaceholder")}
+                suggestions={suggestions}
+                onSelectSuggestion={onSelectSuggestion}
+            />
+            <div className="h-6" />
             {hasNoMatches ? (
-                <p className="text-muted text-sm">{t("foundations.searchEmpty", { query: query.trim() })}</p>
+                <p className="text-muted text-sm">{t("foundations.searchEmpty", { query: debouncedQuery.trim() })}</p>
             ) : (
-                <FoundationsCategoryGridBody
-                    categories={categories}
-                    sortedCategories={filteredCategories}
-                    isLoading={isLoading}
-                    onSelect={onSelectCategory}
-                />
+                <>
+                    <FoundationsCategoryGridBody
+                        categories={pageCategories}
+                        sortedCategories={pageCategories ?? []}
+                        isLoading={isLoading && !data}
+                        onSelect={onSelectCategory}
+                    />
+                    {isLoading && !data ? (
+                        <PaginationSkeleton className="mt-6" />
+                    ) : totalCount > 0 ? (
+                        <Pagination
+                            currentPage={currentPage}
+                            totalPages={totalPages}
+                            onPageChange={setPage}
+                        />
+                    ) : null}
+                </>
             )}
         </div>
     )

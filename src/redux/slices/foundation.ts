@@ -29,6 +29,8 @@ export interface FoundationSlice {
     pageNumber?: number
     /** Page size. */
     limit?: number
+    /** Server-side search string for the foundations list (debounced). */
+    search?: string
 }
 
 /** Initial state for the foundation slice. */
@@ -42,6 +44,7 @@ const initialState: FoundationSlice = {
     count: undefined,
     pageNumber: 1,
     limit: 100,
+    search: undefined,
 }
 
 /**
@@ -114,6 +117,13 @@ export const foundationSlice = createSlice({
         ) => {
             state.limit = action.payload
         },
+        /** Set the (debounced) search string for the foundation list query. */
+        setFoundationSearch: (
+            state,
+            action: PayloadAction<string | undefined>,
+        ) => {
+            state.search = action.payload
+        },
     },
 })
 
@@ -130,4 +140,5 @@ export const {
     setFoundationsCount,
     setFoundationPageNumber,
     setFoundationLimit,
+    setFoundationSearch,
 } = foundationSlice.actions

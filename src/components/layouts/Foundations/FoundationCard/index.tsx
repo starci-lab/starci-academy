@@ -34,10 +34,10 @@ export const FoundationCard = ({
         <button
             type="button"
             className={cn(
-                "card flex h-full w-full cursor-pointer flex-col overflow-hidden rounded-xl border text-left transition-colors",
+                "card !p-0 flex h-full w-full cursor-pointer flex-col overflow-hidden rounded-xl text-left transition-colors",
                 selected
-                    ? "border-accent bg-accent/10 ring-1 ring-accent/30"
-                    : "card--default border-divider/60 hover:border-accent/40 hover:bg-accent/5",
+                    ? "bg-accent/10 ring-1 ring-accent/30"
+                    : "card--default hover:bg-accent/5",
             )}
             onClick={() => onSelect(foundation)}
         >
@@ -46,7 +46,7 @@ export const FoundationCard = ({
                 title={foundation.title}
                 size="card"
             />
-            <div className="flex flex-1 flex-col p-4 pt-2">
+            <div className="flex flex-1 flex-col p-3">
                 <span className="text-lg font-semibold">
                     {displayIndex + 1}. {foundation.title}
                 </span>

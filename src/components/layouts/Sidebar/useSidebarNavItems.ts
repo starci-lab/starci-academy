@@ -101,11 +101,11 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
                 url: pathConfig().locale(locale).course(courseDisplayId).learn().headhuntings().build(),
             },
             {
-                label: t("quiz.title"),
-                value: "quiz",
-                tab: SidebarTab.Quizlet,
+                label: t("flashcard.title"),
+                value: "flashcards",
+                tab: SidebarTab.Flashcards,
                 icon: CardsIcon,
-                url: pathConfig().locale(locale).course(courseDisplayId).learn().quiz().build(),
+                url: pathConfig().locale(locale).course(courseDisplayId).learn().flashcards().build(),
             },
             {
                 label: t("codingPractice.title"),

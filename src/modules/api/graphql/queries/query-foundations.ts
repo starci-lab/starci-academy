@@ -13,7 +13,7 @@ import type {
 /** Sort keys for `foundations` list (`FoundationsSortBy` on the API). */
 export enum FoundationsSortBy {
     Title = "title",
-    OrderIndex = "orderIndex",
+    SortIndex = "sortIndex",
     CreatedAt = "createdAt",
     UpdatedAt = "updatedAt",
 }
@@ -57,7 +57,7 @@ const queryMap: Record<QueryFoundations, DocumentNode> = {
 /** Default sort order for foundations list (`orderIndex` asc). */
 export const defaultFoundationsListSorts: Array<SortInput<FoundationsSortBy>> = [
     {
-        by: FoundationsSortBy.OrderIndex,
+        by: FoundationsSortBy.SortIndex,
         order: SortOrder.Asc,
     },
 ]

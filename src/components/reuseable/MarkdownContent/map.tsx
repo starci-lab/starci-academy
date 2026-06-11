@@ -1,7 +1,7 @@
 import React from "react"
 import type { Components } from "react-markdown"
 import { isInlineCode } from "react-shiki"
-import { Link, Table, Text } from "@heroui/react"
+import * as HeroUI from "@heroui/react"
 import {
     MarkdownTable,
     MarkdownTableBody,
@@ -11,8 +11,12 @@ import {
 } from "./MarkdownTableParts"
 import { CodeToHtml } from "./CodeToHtml"
 import { LayoutWidget } from "./LayoutWidget"
+import { MdxWidget } from "./MdxWidget"
 import { MermaidDiagram } from "./MermaidDiagram"
 import type { MarkdownRenderersParams } from "./types"
+
+// Named handles used by the markdown element renderers below.
+const { Link, Table, Text } = HeroUI
 
 /**
  * Builds the element-renderer map handed to `ReactMarkdown` so headings, tables, code
@@ -98,6 +102,10 @@ export const buildMarkdownRenderers = ({
                     fallbackLabel={t("markdown.mermaidFigureLabel")}
                 />
             )
+        }
+        // ```mdx fence → compile the isolated snippet to a real HeroUI React tree.
+        if (lang.toLowerCase() === "mdx") {
+            return <MdxWidget code={code} />
         }
         if (lang.toLowerCase() === "layout") {
             return <LayoutWidget html={code} />

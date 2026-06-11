@@ -19,7 +19,7 @@ export enum SubmissionFeedbacksSortBy {
     // The severity of the submission feedback.
     Severity = "severity",
     // The order index of the submission feedback.
-    OrderIndex = "orderIndex",
+    SortIndex = "sortIndex",
 }
 
 const query1 = gql`

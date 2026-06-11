@@ -13,7 +13,7 @@ import type {
 /** Sort keys for `lessonVideos` list (`LessonVideosSortBy`). */
 export enum LessonVideosSortBy {
     Title = "title",
-    OrderIndex = "orderIndex",
+    SortIndex = "sortIndex",
     CreatedAt = "createdAt",
     UpdatedAt = "updatedAt",
 }
@@ -50,7 +50,7 @@ const queryMap: Record<QueryLessonVideos, DocumentNode> = {
 
 export const defaultLessonVideosListSorts: Array<SortInput<LessonVideosSortBy>> = [
     {
-        by: LessonVideosSortBy.OrderIndex,
+        by: LessonVideosSortBy.SortIndex,
         order: SortOrder.Asc,
     },
 ]

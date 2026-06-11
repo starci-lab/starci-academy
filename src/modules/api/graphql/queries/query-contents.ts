@@ -13,7 +13,7 @@ import type {
 /** Sort keys for `contents` list (`ContentsSortBy` on the API). */
 export enum ContentsSortBy {
     Title = "title",
-    OrderIndex = "orderIndex",
+    SortIndex = "sortIndex",
     CreatedAt = "createdAt",
     UpdatedAt = "updatedAt",
 }
@@ -60,7 +60,7 @@ const queryMap: Record<QueryContents, DocumentNode> = {
 /** Default sort order for module contents list (`orderIndex` asc). */
 export const defaultContentsListSorts: Array<SortInput<ContentsSortBy>> = [
     {
-        by: ContentsSortBy.OrderIndex,
+        by: ContentsSortBy.SortIndex,
         order: SortOrder.Asc,
     },
 ]

@@ -13,7 +13,7 @@ import type {
 /** Sort keys for `challenges` list (`ChallengesSortBy`). */
 export enum ChallengesSortBy {
     Title = "title",
-    OrderIndex = "orderIndex",
+    SortIndex = "sortIndex",
     CreatedAt = "createdAt",
     UpdatedAt = "updatedAt",
 }
@@ -70,7 +70,7 @@ const queryMap: Record<QueryChallenges, DocumentNode> = {
 
 export const defaultChallengesListSorts: Array<SortInput<ChallengesSortBy>> = [
     {
-        by: ChallengesSortBy.OrderIndex,
+        by: ChallengesSortBy.SortIndex,
         order: SortOrder.Asc,
     },
 ]

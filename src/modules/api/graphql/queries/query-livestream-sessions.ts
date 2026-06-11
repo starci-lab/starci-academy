@@ -12,7 +12,7 @@ import type {
 
 /** Sort keys for `livestreamSessions` (`LivestreamSessionsSortBy`). */
 export enum LivestreamSessionsSortBy {
-    OrderIndex = "orderIndex",
+    SortIndex = "sortIndex",
     DayOfWeek = "dayOfWeek",
     StartTime = "startTime",
     CreatedAt = "createdAt",
@@ -50,7 +50,7 @@ const queryMap: Record<QueryLivestreamSessions, DocumentNode> = {
 
 export const defaultLivestreamSessionsListSorts: Array<SortInput<LivestreamSessionsSortBy>> = [
     {
-        by: LivestreamSessionsSortBy.OrderIndex,
+        by: LivestreamSessionsSortBy.SortIndex,
         order: SortOrder.Asc,
     },
 ]

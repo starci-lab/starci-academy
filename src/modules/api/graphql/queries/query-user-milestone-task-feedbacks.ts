@@ -12,7 +12,7 @@ import type {
 
 /** Sort keys for `userMilestoneTaskFeedbacks` list. */
 export enum UserMilestoneTaskFeedbacksSortBy {
-    OrderIndex = "orderIndex",
+    SortIndex = "sortIndex",
     Severity = "severity",
     CreatedAt = "createdAt",
     UpdatedAt = "updatedAt",
@@ -49,7 +49,7 @@ const queryMap: Record<QueryUserMilestoneTaskFeedbacks, DocumentNode> = {
 
 export const defaultUserMilestoneTaskFeedbacksListSorts: Array<SortInput<UserMilestoneTaskFeedbacksSortBy>> = [
     {
-        by: UserMilestoneTaskFeedbacksSortBy.OrderIndex,
+        by: UserMilestoneTaskFeedbacksSortBy.SortIndex,
         order: SortOrder.Asc,
     },
 ]

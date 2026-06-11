@@ -9,7 +9,7 @@ import type {
 
 export enum ConsultantsSortBy {
     FullName = "fullName",
-    OrderIndex = "orderIndex",
+    SortIndex = "sortIndex",
     CreatedAt = "createdAt",
     UpdatedAt = "updatedAt",
 }
@@ -58,7 +58,7 @@ const queryMap: Record<QueryConsultants, DocumentNode> = {
 
 export const defaultConsultantsListSorts: Array<SortInput<ConsultantsSortBy>> = [
     {
-        by: ConsultantsSortBy.OrderIndex,
+        by: ConsultantsSortBy.SortIndex,
         order: SortOrder.Asc,
     },
 ]

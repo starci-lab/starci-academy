@@ -12,7 +12,7 @@ import type {
 
 /** Sort keys for `userPersonalTaskAttemptFeedbacks` list. */
 export enum UserPersonalTaskAttemptFeedbacksSortBy {
-    OrderIndex = "orderIndex",
+    SortIndex = "sortIndex",
     Severity = "severity",
     CreatedAt = "createdAt",
     UpdatedAt = "updatedAt",
@@ -49,7 +49,7 @@ const queryMap: Record<QueryUserPersonalTaskAttemptFeedbacks, DocumentNode> = {
 
 export const defaultUserPersonalTaskAttemptFeedbacksListSorts: Array<SortInput<UserPersonalTaskAttemptFeedbacksSortBy>> = [
     {
-        by: UserPersonalTaskAttemptFeedbacksSortBy.OrderIndex,
+        by: UserPersonalTaskAttemptFeedbacksSortBy.SortIndex,
         order: SortOrder.Asc,
     },
 ]

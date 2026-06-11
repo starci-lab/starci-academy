@@ -6,9 +6,11 @@ import {
 } from "next-intl"
 
 /**
- * Title and description block for the foundations category hub.
+ * Title and description for the foundations category hub.
  *
- * Presentational: renders localized copy, no logic.
+ * Self-contained section (single-use). The topic count lives on the search row
+ * (right-aligned) in the layout, mirroring the resource count on the category
+ * learn page.
  */
 export const FoundationsCategoryGridHeader = () => {
     const t = useTranslations()

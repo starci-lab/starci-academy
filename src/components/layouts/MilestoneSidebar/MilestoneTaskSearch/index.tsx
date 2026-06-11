@@ -10,84 +10,71 @@ import {
 } from "@heroui/react"
 import { useFilter } from "react-aria-components"
 import { useTranslations } from "next-intl"
-import type { ModuleEntity } from "@/modules/types"
+import type { MilestoneEntity } from "@/modules/types"
 
-/** One flattened lesson fed into the autocomplete collection. */
-interface ContentSearchItem {
-    /** Content id — the autocomplete key + select payload. */
+/** One flattened milestone task fed into the autocomplete collection. */
+interface MilestoneTaskSearchItem {
+    /** Task id — the autocomplete key + select payload. */
     id: string
-    /** Owning module id, needed to build the route on select. */
-    moduleId: string
-    /** Ordinal prefix "<module#>.<content#>", rendered semibold. */
+    /** Ordinal prefix "<milestone#>.<task#>", rendered semibold. */
     prefix: string
-    /** Lesson title, rendered in the normal weight. */
+    /** Task title, rendered in the normal weight. */
     title: string
     /** Full "<prefix> <title>" string used as the filter/textValue. */
     label: string
 }
 
-/** Props for {@link ContentSearch}. */
-export interface ContentSearchProps {
-    /** Ordered modules whose contents populate the autocomplete collection. */
-    modules: Array<ModuleEntity>
-    /** Fired with (moduleId, contentId) when a lesson is chosen. */
-    onSelectContent: (moduleId: string, contentId: string) => void
+/** Props for {@link MilestoneTaskSearch}. */
+export interface MilestoneTaskSearchProps {
+    /** Ordered milestones whose tasks populate the autocomplete collection. */
+    milestones: Array<MilestoneEntity>
+    /** Fired with the task id when a task is chosen. */
+    onSelectTask: (taskId: string) => void
     /** Extra classes for the root field. */
     className?: string
 }
 
 /**
- * Content (lesson) search built on HeroUI's `Autocomplete`.
+ * Milestone-task search built on HeroUI's `Autocomplete` — mirrors the module
+ * lesson search. Flattens every milestone's tasks into one client-side collection
+ * and filters as the user types; choosing a row selects that task.
  *
- * Unlike the ES-backed typeahead, this loads the *entire* content collection
- * (flattened from the already-cached modules) into the Autocomplete and lets the
- * component filter it client-side as the user types — the native HeroUI pattern.
- * Choosing a row routes to that lesson via {@link ContentSearchProps.onSelectContent}.
- *
- * @param props - modules to index, the select callback, and optional classes
+ * @param props - milestones to index, the select callback, and optional classes
  */
-export const ContentSearch = ({ modules, onSelectContent, className }: ContentSearchProps) => {
+export const MilestoneTaskSearch = ({ milestones, onSelectTask, className }: MilestoneTaskSearchProps) => {
     const t = useTranslations()
 
-    // diacritic- + case-insensitive "contains" matcher; `Autocomplete.Filter` only
-    // filters its collection when handed a filter fn, otherwise it shows everything.
-    // `sensitivity: "base"` lets "phong thu" match "Phòng thủ" (handy for Vietnamese).
+    // diacritic- + case-insensitive "contains" matcher (handles Vietnamese accents).
     const { contains } = useFilter({ sensitivity: "base" })
 
-    // flatten every module's lessons into a single client-side collection;
-    // labels are prefixed with the "module.lesson" number for quick scanning
-    const items = useMemo<Array<ContentSearchItem>>(
+    const items = useMemo<Array<MilestoneTaskSearchItem>>(
         () =>
-            modules.flatMap((module) =>
-                (module.contents ?? [])
+            milestones.flatMap((milestone) =>
+                (milestone.tasks ?? [])
                     .slice()
                     .sort((prev, next) => prev.orderIndex - next.orderIndex)
-                    .map((content) => {
-                        const prefix = `${module.orderIndex + 1}.${content.orderIndex + 1}`
+                    .map((task) => {
+                        const prefix = `${milestone.orderIndex + 1}.${task.orderIndex + 1}`
                         return {
-                            id: String(content.id),
-                            moduleId: String(module.id),
+                            id: String(task.id),
                             prefix,
-                            title: content.title,
-                            label: `${prefix} ${content.title}`,
+                            title: task.title,
+                            label: `${prefix} ${task.title}`,
                         }
                     }),
             ),
-        [modules],
+        [milestones],
     )
 
-    // id -> item lookup so a selection can be routed without rescanning the list
     const byId = useMemo(() => new Map(items.map((item) => [item.id, item])), [items])
 
     return (
         <Autocomplete
-            aria-label={t("module.searchContentsPlaceholder")}
+            aria-label={t("finalProject.page.searchTaskPlaceholder")}
             className={cn("w-full", className)}
             fullWidth
-            placeholder={t("module.searchContentsPlaceholder")}
+            placeholder={t("finalProject.page.searchTaskPlaceholder")}
             variant="secondary"
-            // fully-controlled reset: we never keep a persistent selection — picking a
-            // lesson fires navigation and the trigger falls back to the placeholder
             selectedKey={null}
             onSelectionChange={(key) => {
                 if (key == null) {
@@ -95,7 +82,7 @@ export const ContentSearch = ({ modules, onSelectContent, className }: ContentSe
                 }
                 const item = byId.get(String(key))
                 if (item) {
-                    onSelectContent(item.moduleId, item.id)
+                    onSelectTask(item.id)
                 }
             }}
         >
@@ -110,7 +97,7 @@ export const ContentSearch = ({ modules, onSelectContent, className }: ContentSe
                     <SearchField className="px-2 pt-2">
                         <SearchField.Group>
                             <SearchField.SearchIcon />
-                            <SearchField.Input placeholder={t("module.searchContentsPlaceholder")} />
+                            <SearchField.Input placeholder={t("finalProject.page.searchTaskPlaceholder")} />
                         </SearchField.Group>
                     </SearchField>
                     <ListBox className="max-h-72 overflow-auto p-1">
@@ -121,7 +108,7 @@ export const ContentSearch = ({ modules, onSelectContent, className }: ContentSe
                                 textValue={item.label}
                             >
                                 {/* wrap up to 2 lines, then ellipsise; full label on hover.
-                                    popover is pinned to the trigger width so long lesson
+                                    popover is pinned to the trigger width so long task
                                     titles wrap instead of stretching the dropdown */}
                                 <span className="line-clamp-2 w-full" title={item.label}>
                                     <span className="font-semibold">{item.prefix}</span>

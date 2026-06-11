@@ -17,6 +17,8 @@ export interface ReviewPersonalProjectTaskRequest {
      * If omitted, the branch stored on enrollment is used (worker defaults to main when unset).
      */
     branch?: string | null
+    /** Chosen programming language for a SCHEMA V2 task (typescript/java/csharp/go). */
+    lang?: string
     /** AI lane for grading (auto / premium / byok). */
     mode?: AiMode
     /** Concrete model for premium/BYOK (required for those lanes). */

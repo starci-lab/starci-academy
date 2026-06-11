@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowRight as ArrowRightIcon, Clock as ClockIcon, Flag as SwordIcon } from "@gravity-ui/icons"
+import { ArrowRight as ArrowRightIcon, Clock as ClockIcon, Flame } from "@gravity-ui/icons"
 import React, {
     useCallback,
 } from "react"
@@ -60,7 +60,7 @@ export const BookmarkCard = ({
                         </div>
                         {challengeCount > 0 && (
                             <div className="flex items-center gap-1">
-                                <SwordIcon className="size-4" />
+                                <Flame className="size-4" />
                                 <span>{challengeCount} challenges</span>
                             </div>
                         )}

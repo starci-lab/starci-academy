@@ -1,6 +1,6 @@
 "use client"
 
-import { Cup as TrophyIcon, Flag as SwordIcon } from "@gravity-ui/icons"
+import { Cup as TrophyIcon, Flame } from "@gravity-ui/icons"
 import React, { useEffect, useMemo, useState } from "react"
 import { Accordion, Chip, cn, Modal } from "@heroui/react"
 import { DragScrollArea, MarkdownContent, ProgrammingLanguageTabs, ProgrammingLanguageTabsVariant, ReferenceLinks, Score } from "@/components/reuseable"
@@ -155,7 +155,7 @@ export const ChallengeV2Modal = () => {
                                         </Chip.Label>
                                     </Chip>
                                     <Chip className={difficultyPalette[challenge?.difficulty ?? ChallengeDifficulty.Easy].text} variant="soft">
-                                        <SwordIcon className="size-5" />
+                                        <Flame className="size-5" />
                                         <Chip.Label>{t(challengeDifficultyKey)}</Chip.Label>
                                     </Chip>
                                 </div>

@@ -1,29 +1,20 @@
 "use client"
 
 import { BookOpen as BookOpenIcon, CurlyBrackets as BracketsCurlyIcon } from "@gravity-ui/icons"
-import React, { useCallback, useEffect, useState } from "react"
+import React from "react"
 import { Chip, Skeleton } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import _ from "lodash"
 import { useAppSelector } from "@/redux"
-import { useQueryContentSuggestionsSwr, useQueryModuleSwr } from "@/hooks"
+import { useQueryModuleSwr } from "@/hooks"
 import { pathConfig } from "@/resources/path"
 import { useRouter } from "next/navigation"
-import { SearchInput } from "@/components/reuseable"
 import { ContentCard } from "./ContentCard"
 import { ContentCardSkeleton } from "./ContentCardSkeleton"
 import { Empty } from "./Empty"
 
-/** Debounce window (ms) before a typed search hits the suggestions backend. */
-const SEARCH_DEBOUNCE_MS = 350
-
 /**
  * Render module overview with preview bullets and content cards.
- *
- * A debounced, ES-backed autocomplete sits above the list: typing a prefix
- * surfaces lesson suggestions and selecting one deep-links to that content.
- * The list itself is unchanged — the `contents` GraphQL query is page/sort only
- * (no server-side search), so this stays autocomplete-only.
  */
 export const Module = () => {
     const t = useTranslations()
@@ -35,43 +26,11 @@ export const Module = () => {
     const { isLoading: isModuleLoading } = useQueryModuleSwr()
     const isLoading = isModuleLoading || !module
     const contentsFromRedux = useAppSelector((state) => state.content.entities)
+    const contentsCountFromRedux = useAppSelector((state) => state.content.count)
     const contents = (contentsFromRedux?.length ?? 0) > 0 ? contentsFromRedux : module?.contents
+    /** Prefer server total (paginated list), then the rendered list, then module shell fallback. */
+    const contentCount = contentsCountFromRedux ?? contents?.length ?? module?.numContents ?? 0
 
-    /** Immediate input value (drives the field). */
-    const [query, setQuery] = useState("")
-    /** Debounced query that actually hits the suggestions backend. */
-    const [debouncedQuery, setDebouncedQuery] = useState("")
-
-    // debounce the search input before it reaches the suggestions query
-    useEffect(() => {
-        const handle = setTimeout(() => {
-            setDebouncedQuery(query)
-        }, SEARCH_DEBOUNCE_MS)
-        return () => clearTimeout(handle)
-    }, [query])
-
-    // ES Completion Suggester (typeahead): clean { id, label } lesson items from
-    // the BE, gated on the module being loaded.
-    const { data: suggestionItems } = useQueryContentSuggestionsSwr(debouncedQuery, {
-        enabled: Boolean(moduleId),
-    })
-    const suggestions = suggestionItems ?? []
-
-    /** Deep-link to the chosen lesson (suggestion id is the content id). */
-    const onSelectSuggestion = useCallback(
-        (suggestion: { id: string; label: string }) => {
-            router.push(
-                pathConfig()
-                    .locale(locale)
-                    .course(courseDisplayId)
-                    .learn()
-                    .module(moduleId)
-                    .content(suggestion.id)
-                    .build(),
-            )
-        },
-        [courseDisplayId, locale, moduleId, router],
-    )
     if (isLoading) {
         return (
             <div>
@@ -130,11 +89,7 @@ export const Module = () => {
                     <Chip variant="secondary" color="accent">
                         <BookOpenIcon className="size-5" />
                         <Chip.Label>
-                            {t(
-                                "module.numContents", {
-                                    count: module?.numContents || 0,
-                                })
-                            }
+                            {t("module.numContents", { count: contentCount })}
                         </Chip.Label>
                     </Chip>
                 </div>
@@ -157,15 +112,6 @@ export const Module = () => {
                 </div>
                 <div className="h-6" />
                 <div className="font-semibold text-base">{t("content.tabs.content")}</div>
-                <div className="h-3" />
-                {/* debounced, ES-backed autocomplete; selecting a lesson deep-links to it */}
-                <SearchInput
-                    value={query}
-                    onValueChange={setQuery}
-                    placeholder={t("module.searchContentsPlaceholder")}
-                    suggestions={suggestions}
-                    onSelectSuggestion={onSelectSuggestion}
-                />
                 <div className="h-3" />
                 {
                     contents?.length && contents.length > 0 ? (

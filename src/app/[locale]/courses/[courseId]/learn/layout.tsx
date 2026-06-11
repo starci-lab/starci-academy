@@ -8,9 +8,14 @@ import { LearnPanelToggles } from "@/components/layouts/LearnPanelToggles"
 import { ModuleSidebar } from "@/components/layouts/ModuleSidebar"
 import { MilestoneSidebar } from "@/components/layouts/MilestoneSidebar"
 import { GithubLinkGate } from "@/components/layouts/GithubLinkGate"
+import { useQueryCourseSwr } from "@/hooks"
 import { useAppSelector } from "@/redux"
 
 export const Layout = ({ children }: PropsWithChildren) => {
+    // load the active course here so EVERY learn tab has `course.entity` on a cold refresh
+    // (the displayId is synced from the URL by a global effect). Tabs like personal-project
+    // have no other loader, and downstream queries (milestones, etc.) gate on `course.id`.
+    useQueryCourseSwr()
     // both rails are driven by their collapse flags: left (course nav) and right (lesson outline)
     const leftCollapsed = useAppSelector((state) => state.sidebar.leftCollapsed)
     const rightCollapsed = useAppSelector((state) => state.sidebar.rightCollapsed)

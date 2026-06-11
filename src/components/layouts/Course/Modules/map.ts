@@ -1,4 +1,4 @@
-import { BookOpen as BookOpenIcon, Flag as SwordIcon, Video as VideoIcon } from "@gravity-ui/icons"
+import { BookOpen as BookOpenIcon, Flame, Video as VideoIcon } from "@gravity-ui/icons"
 import type {
 
     ModuleSummaryItem,
@@ -27,7 +27,7 @@ export const MODULE_SUMMARY_ITEMS: Array<ModuleSummaryItem> = [
     /** Number of hands-on challenges in the module. */
     {
         id: "challenges",
-        icon: SwordIcon,
+        icon: Flame,
         tooltipKey: "module.chipChallengesHint",
         quantity: 3,
     },

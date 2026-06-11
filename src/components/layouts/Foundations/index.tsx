@@ -56,6 +56,7 @@ import {
 import {
     Pagination,
     SearchInput,
+    SkeletonText,
 } from "@/components/reuseable"
 
 export { FoundationsCategoryGridLayout } from "./FoundationsCategoryGrid"
@@ -91,7 +92,7 @@ export const FoundationsLearnLayout = () => {
     const openedFromUrlRef = useRef<string | null>(null)
 
     useQueryFoundationCategoriesSwr()
-    const { isLoading } = useQueryFoundationsSwr()
+    const { data: foundationsData, isLoading: isFoundationsLoading } = useQueryFoundationsSwr()
 
     /** Immediate search input value (drives the field). */
     const [query, setQuery] = useState("")
@@ -118,7 +119,8 @@ export const FoundationsLearnLayout = () => {
     /** Current page clamped to the available range. */
     const currentPage = Math.min(pageNumber ?? 1, totalPages)
     /** A search is active but the server returned no matches. */
-    const hasNoMatches = !isLoading
+    const hasNoMatches = !isFoundationsLoading
+        && foundations !== undefined
         && (search?.trim().length ?? 0) > 0
         && count === 0
 
@@ -191,6 +193,24 @@ export const FoundationsLearnLayout = () => {
         return [...foundations].sort(compareFoundations)
     }, [foundations])
 
+    // typeahead suggestions for the resource search — reuse the category-scoped server
+    // search results (titles) so the dropdown matches the grid without a separate endpoint
+    const resourceSuggestions = useMemo(
+        () => sortedFoundations.map((foundation) => ({
+            id: foundation.id,
+            label: foundation.title,
+        })),
+        [sortedFoundations],
+    )
+
+    /** Fill the search box with the chosen resource title (the grid then narrows to it). */
+    const onSelectResourceSuggestion = useCallback(
+        (suggestion: { id: string; label: string }) => {
+            setQuery(suggestion.label)
+        },
+        [],
+    )
+
     /** Select a foundation: persist it, deep-link the URL, then open its viewer. */
     const onSelectFoundation = useCallback(
         (foundation: FoundationEntity) => {
@@ -251,14 +271,28 @@ export const FoundationsLearnLayout = () => {
         <div className="p-3">
             <FoundationsBreadcrumbs items={breadcrumbItems} />
             <div className="h-6" />
-            <FoundationsLearnHeader onBack={onBack} />
-            <div className="h-6" />
-            {/* search box (server-side, debounced); always visible, even during the skeleton */}
-            <SearchInput
-                value={query}
-                onValueChange={setQuery}
-                placeholder={t("foundations.searchResourcesPlaceholder")}
+            <FoundationsLearnHeader
+                onBack={onBack}
             />
+            <div className="h-6" />
+            {/* search row: box (server-side, debounced) on the left, resource count right-aligned */}
+            <div className="flex items-center justify-between gap-3">
+                <SearchInput
+                    variant="secondary"
+                    value={query}
+                    onValueChange={setQuery}
+                    placeholder={t("foundations.searchResourcesPlaceholder")}
+                    suggestions={resourceSuggestions}
+                    onSelectSuggestion={onSelectResourceSuggestion}
+                />
+                {(isFoundationsLoading && !foundationsData) || foundations === undefined ? (
+                    <SkeletonText size="sm" width="w-[110px]" />
+                ) : (
+                    <p className="text-muted shrink-0 text-sm">
+                        {t("foundations.count", { count: count ?? 0 })}
+                    </p>
+                )}
+            </div>
             <div className="h-6" />
             {hasNoMatches ? (
                 <p className="text-muted text-sm">
@@ -268,6 +302,7 @@ export const FoundationsLearnLayout = () => {
                 <>
                     <FoundationsList
                         foundations={foundations}
+                        isLoading={isFoundationsLoading && !foundationsData}
                         sortedFoundations={sortedFoundations}
                         onSelect={onSelectFoundation}
                     />

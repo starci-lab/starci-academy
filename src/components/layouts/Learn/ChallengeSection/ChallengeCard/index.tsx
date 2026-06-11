@@ -1,5 +1,5 @@
 "use client"
-import { Cup as TrophyIcon, Flag as SwordIcon, ListOl as ListNumbersIcon } from "@gravity-ui/icons"
+import { Cup as TrophyIcon, Flame, ListOl as ListNumbersIcon } from "@gravity-ui/icons"
 import { Button, Chip } from "@heroui/react"
 import { useChallengeOverlayState } from "@/hooks"
 import { ChallengeDifficulty, ChallengeEntity } from "@/modules/types"
@@ -85,7 +85,7 @@ export const ChallengeCard = ({ challenge }: ChallengeCardProps) => {
                         color="accent"
                         className={difficultyPalette[challenge.difficulty].text}
                     >
-                        <SwordIcon className="size-4" />
+                        <Flame className="size-4" />
                         <Chip.Label>{t(difficultyName)}</Chip.Label>
                     </Chip>
                 </div>

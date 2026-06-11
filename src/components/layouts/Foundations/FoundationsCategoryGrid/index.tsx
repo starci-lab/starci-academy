@@ -52,6 +52,7 @@ import {
 import {
     Pagination,
     PaginationSkeleton,
+    SkeletonText,
 } from "@/components/reuseable"
 
 /** Max category cards shown per page. */
@@ -74,6 +75,7 @@ export const FoundationsCategoryGridLayout = () => {
     const dispatch = useAppDispatch()
     const course = useAppSelector((state) => state.course.entity)
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
+    const categories = useAppSelector((state) => state.foundation.categories)
 
     /** Immediate input value (drives the field). */
     const [query, setQuery] = useState("")
@@ -201,14 +203,24 @@ export const FoundationsCategoryGridLayout = () => {
             <div className="h-6" />
             <FoundationsCategoryGridHeader />
             <div className="h-6" />
-            {/* search box (server-side, debounced) with ES-backed autocomplete dropdown */}
-            <SearchInput
-                value={query}
-                onValueChange={setQuery}
-                placeholder={t("foundations.searchPlaceholder")}
-                suggestions={suggestions}
-                onSelectSuggestion={onSelectSuggestion}
-            />
+            {/* search row: box (server-side, debounced) on the left, topic count right-aligned */}
+            <div className="flex items-center justify-between gap-3">
+                <SearchInput
+                    variant="secondary"
+                    value={query}
+                    onValueChange={setQuery}
+                    placeholder={t("foundations.searchPlaceholder")}
+                    suggestions={suggestions}
+                    onSelectSuggestion={onSelectSuggestion}
+                />
+                {categories === undefined ? (
+                    <SkeletonText size="sm" width="w-[90px]" />
+                ) : (
+                    <p className="text-muted shrink-0 text-sm">
+                        {t("foundations.categoryCount", { count: categories.length })}
+                    </p>
+                )}
+            </div>
             <div className="h-6" />
             {hasNoMatches ? (
                 <p className="text-muted text-sm">{t("foundations.searchEmpty", { query: debouncedQuery.trim() })}</p>

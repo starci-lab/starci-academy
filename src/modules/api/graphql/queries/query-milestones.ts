@@ -21,6 +21,18 @@ const query1 = gql`
             description
             hint
             orderIndex
+            briefs {
+              id
+              lang
+              body
+              orderIndex
+              defaultLocale
+              translations {
+                locale
+                field
+                value
+              }
+            }
             criterias {
               id
               text

@@ -6,6 +6,7 @@ import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { pathConfig } from "@/resources"
 import { useAppSelector } from "@/redux"
+import { useQueryMilestonesSwr } from "@/hooks"
 import { PersonalProjectSubmission } from "@/components/layouts/PersonalProjectSubmission"
 import { Task } from "@/components/layouts/Task"
 
@@ -16,9 +17,12 @@ const Layout = () => {
     const course = useAppSelector((state) => state.course.entity)
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
 
-    // The right rail is now the shared module-outline rail provided by the learn layout
-    // (no longer the milestone-specific sidebar), so this layout only renders the
-    // breadcrumb + project submission + task body inside the content column.
+    // Load the milestones list here (not only inside MilestoneSidebar): the milestone
+    // rail now lives in the shared learn layout and is hidden when the right rail is
+    // collapsed, but the task body + default-task redirect still depend on
+    // `milestone.entities`, so the fetch must run regardless of the rail's visibility.
+    useQueryMilestonesSwr()
+
     return (
         <>
             <div className="p-3">

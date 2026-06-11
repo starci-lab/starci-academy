@@ -6,6 +6,7 @@ import {
     FieldError,
     Input,
     Spinner,
+    Tabs,
     TextField,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
@@ -23,14 +24,23 @@ export const PersonalProjectSubmission = () => {
     const {
         githubUrl,
         branch,
+        lang,
         errors,
         touched,
         setGithubUrl,
         setBranch,
+        setLang,
         setTouchedGithubUrl,
         setTouchedBranch,
         setBranchError,
     } = usePersonalProjectGithubForm({ enableSync: true })
+    /** Languages the submission can be graded against (V2 per-language approach criteria). */
+    const langOptions = [
+        { id: "typescript", label: t("programmingLanguage.typescript") },
+        { id: "java", label: t("programmingLanguage.java") },
+        { id: "csharp", label: t("programmingLanguage.csharp") },
+        { id: "go", label: t("programmingLanguage.go") },
+    ]
     const syncGithubSwr = useMutateSyncPersonalProjectGithubSwr()
     const syncBranchSwr = useMutateSyncPersonalProjectGithubBranchSwr()
     const urlInvalid =
@@ -43,6 +53,30 @@ export const PersonalProjectSubmission = () => {
             <div className="text-2xl font-bold">{t("finalProject.page.title")}</div>
             <div className="h-3" />
             <div className="text-sm text-muted">{t("finalProject.page.description")}</div>
+            <div className="h-6" />
+            <div className="mb-2 text-base font-semibold">
+                {t("finalProject.page.submitGithub.langFieldTitle")}
+            </div>
+            <Tabs
+                selectedKey={lang}
+                variant="primary"
+                className="w-fit"
+                onSelectionChange={(key) => setLang(String(key))}
+            >
+                <Tabs.ListContainer>
+                    <Tabs.List aria-label={t("finalProject.page.submitGithub.langFieldTitle")}>
+                        {langOptions.map((option) => (
+                            <Tabs.Tab key={option.id} id={option.id}>
+                                {option.label}
+                                <Tabs.Indicator />
+                            </Tabs.Tab>
+                        ))}
+                    </Tabs.List>
+                </Tabs.ListContainer>
+            </Tabs>
+            <div className="mt-2 text-sm text-muted">
+                {t("finalProject.page.submitGithub.langFieldHint")}
+            </div>
             <div className="h-6" />
             <div className="mb-2 text-base font-semibold">
                 {t("finalProject.page.submitGithub.repoFieldTitle")}

@@ -5,6 +5,7 @@ import type { FoundationEntity } from "@/modules/types"
 import React from "react"
 import { FoundationItemThumbnail } from "../FoundationItemThumbnail"
 import { FoundationMeta } from "../FoundationMeta"
+import { PressableCard } from "@/components/reuseable"
 
 export interface FoundationCardProps {
     /** Foundation resource row from API. */
@@ -31,15 +32,15 @@ export const FoundationCard = ({
     onSelect,
 }: FoundationCardProps) => {
     return (
-        <button
-            type="button"
+        <PressableCard
+            ariaLabel={foundation.title}
             className={cn(
-                "card !p-0 flex h-full w-full cursor-pointer flex-col overflow-hidden rounded-xl text-left transition-colors",
+                "card !p-0 flex h-full w-full cursor-pointer flex-col overflow-hidden rounded-xl transition-colors",
                 selected
                     ? "bg-accent/10 ring-1 ring-accent/30"
                     : "card--default hover:bg-accent/5",
             )}
-            onClick={() => onSelect(foundation)}
+            onPress={() => onSelect(foundation)}
         >
             <FoundationItemThumbnail
                 thumbnailUrl={foundation.thumbnailUrl}
@@ -57,6 +58,6 @@ export const FoundationCard = ({
                     <p className="text-muted mt-2 line-clamp-2 text-sm">{foundation.description}</p>
                 ) : null}
             </div>
-        </button>
+        </PressableCard>
     )
 }

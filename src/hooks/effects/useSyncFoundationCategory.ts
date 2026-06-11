@@ -16,10 +16,12 @@ export const useSyncFoundationCategory = () => {
             return
         }
         const selected = categories.find((item) => item.id === categoryId)
-        if (selected?.id !== category?.id) {
-            dispatch(setFoundations(undefined))
-            dispatch(setFoundation(undefined))
-            dispatch(setFoundationCategory(selected))
+        if (!selected || selected.id === category?.id) {
+            return
         }
+        // category id changed — drop stale resources before the new SWR key resolves
+        dispatch(setFoundations(undefined))
+        dispatch(setFoundation(undefined))
+        dispatch(setFoundationCategory(selected))
     }, [categories, category?.id, categoryId, dispatch])
 }

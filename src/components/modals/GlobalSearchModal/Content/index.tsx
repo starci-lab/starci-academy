@@ -1,5 +1,5 @@
 "use client"
-import { CurlyBrackets as BracketsCurlyIcon, FileText as ArticleIcon, Flag as SwordIcon, GraduationCap as GraduationCapIcon } from "@gravity-ui/icons"
+import { CurlyBrackets as BracketsCurlyIcon, FileText as ArticleIcon, Flame, GraduationCap as GraduationCapIcon } from "@gravity-ui/icons"
 import { useSearchOverlayState } from "@/hooks"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
@@ -110,7 +110,7 @@ export const GlobalSearchContent = () => {
                 onItemPress={onItemPress("content")}
             />
             <GlobalSearchContentBlock
-                icon={SwordIcon}
+                icon={Flame}
                 label={t("search.suggestions.challenges")}
                 items={challenges ?? []}
                 onItemPress={onItemPress("challenge")}

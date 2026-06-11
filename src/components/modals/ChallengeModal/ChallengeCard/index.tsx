@@ -1,6 +1,6 @@
 "use client"
 
-import { Cup as TrophyIcon, Flag as SwordIcon } from "@gravity-ui/icons"
+import { Cup as TrophyIcon, Flame } from "@gravity-ui/icons"
 import React from "react"
 import { Button } from "@heroui/react"
 import { Spacer } from "@/components/reuseable"
@@ -43,7 +43,7 @@ export const ChallengeCard = () => {
                     variant="tertiary"
                 >
                     <span className="inline-flex items-center gap-2">
-                        <SwordIcon className="size-5" />
+                        <Flame className="size-5" />
                         {t("challenge.battle.cta")}
                     </span>
                 </Button>

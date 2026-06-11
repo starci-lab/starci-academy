@@ -9,7 +9,6 @@ import {
 } from "@/redux"
 import {
     SubPageHeader,
-    SkeletonText,
 } from "@/components/reuseable"
 
 /** Props for {@link FoundationsLearnHeader}. */
@@ -31,28 +30,15 @@ export const FoundationsLearnHeader = ({
 }: FoundationsLearnHeaderProps) => {
     const t = useTranslations()
     const category = useAppSelector((state) => state.foundation.category)
-    const foundations = useAppSelector((state) => state.foundation.entities)
-    const count = useAppSelector((state) => state.foundation.count)
 
     const title = category?.title || t("foundations.title")
     const description = category?.description || t("foundations.description")
-    const hasLoaded = Boolean(foundations)
 
     return (
-        <>
-            <SubPageHeader
-                title={title}
-                description={description}
-                onBack={onBack}
-            />
-            <div className="h-6" />
-            {!hasLoaded ? (
-                <SkeletonText size="sm" width="w-[150px]" />
-            ) : (
-                <p className="text-muted text-sm">
-                    {t("foundations.count", { count: count ?? 0 })}
-                </p>
-            )}
-        </>
+        <SubPageHeader
+            title={title}
+            description={description}
+            onBack={onBack}
+        />
     )
 }

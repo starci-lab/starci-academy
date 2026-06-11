@@ -9,15 +9,17 @@ import useSWR from "swr"
  */
 export const useQueryMilestonesSwr = () => {
     const course = useAppSelector((state) => state.course.entity)
+    // the `milestones` query is auth-guarded, so gate the key on auth too — otherwise a hard
+    // refresh fires it before the Keycloak token is ready (course loads first via a public
+    // query) and the request 401s, leaving the rail + task page empty until a manual refresh
+    const authenticated = useAppSelector((state) => state.keycloak.authenticated)
     const dispatch = useAppDispatch()
-
     const swr = useSWR(
-        course?.id ? ["QUERY_MILESTONES_SWR", course.id] : null,
+        authenticated && course?.id ? ["QUERY_MILESTONES_SWR", course.id] : null,
         async () => {
             if (!course?.id) {
                 throw new Error("Course ID not found")
             }
-
             const data = await queryMilestones({
                 request: {
                     courseId: course.id,
@@ -26,7 +28,6 @@ export const useQueryMilestonesSwr = () => {
                     [GraphQLHeadersKey.XCourseId]: course.id,
                 },
             })
-
             if (!data || !data.data) {
                 throw new Error("Failed to fetch milestones")
             }

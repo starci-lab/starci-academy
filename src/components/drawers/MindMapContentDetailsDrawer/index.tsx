@@ -1,6 +1,6 @@
 "use client"
 
-import { BookOpen as BookOpenIcon, Clock as ClockIcon, Flag as SwordIcon, Lock as LockIcon, Star as StarIcon } from "@gravity-ui/icons"
+import { BookOpen as BookOpenIcon, Clock as ClockIcon, Flame, Lock as LockIcon, Star as StarIcon } from "@gravity-ui/icons"
 import React, { useCallback, useMemo } from "react"
 import { Button, Chip, Drawer, ScrollShadow } from "@heroui/react"
 import { useRouter } from "next/navigation"
@@ -105,7 +105,7 @@ export const MindMapContentDetailsDrawer = () => {
                                         </Chip.Label>
                                     </Chip>
                                     <Chip variant="secondary" color="accent" size="sm">
-                                        <SwordIcon className="size-4" />
+                                        <Flame className="size-4" />
                                         <Chip.Label>
                                             {t("content.challengeCount", { count: challengeCount })}
                                         </Chip.Label>

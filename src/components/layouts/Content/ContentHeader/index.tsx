@@ -1,6 +1,6 @@
 "use client"
 
-import { Clock as ClockIcon, Flag as SwordIcon } from "@gravity-ui/icons"
+import { Clock as ClockIcon, Flame } from "@gravity-ui/icons"
 import React, {
     useMemo,
 } from "react"
@@ -57,7 +57,7 @@ export const ContentHeader = () => {
                     </Chip.Label>
                 </Chip>
                 <Chip variant="secondary" color="accent">
-                    <SwordIcon className="size-5" />
+                    <Flame className="size-5" />
                     <Chip.Label>
                         {t("content.challengeCount", {
                             count: challengeCount,

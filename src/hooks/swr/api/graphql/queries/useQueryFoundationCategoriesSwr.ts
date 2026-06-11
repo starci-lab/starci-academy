@@ -93,7 +93,10 @@ export const useQueryFoundationCategoriesSwr = (
 
             if (categoryId) {
                 const selected = payload.data.find((item) => item.id === categoryId)
-                dispatch(setFoundationCategory(selected))
+                // only overwrite when resolved — avoid wiping the entity set on click/navigate
+                if (selected) {
+                    dispatch(setFoundationCategory(selected))
+                }
             }
 
             return payload

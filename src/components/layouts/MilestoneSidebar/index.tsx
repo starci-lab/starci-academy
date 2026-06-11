@@ -40,6 +40,9 @@ import {
 import {
     MilestoneAccordion,
 } from "./MilestoneAccordion"
+import {
+    MilestoneTaskSearch,
+} from "./MilestoneTaskSearch"
 
 /**
  * Props for {@link MilestoneSidebar}.
@@ -116,6 +119,12 @@ export const MilestoneSidebar = ({ className }: MilestoneSidebarProps) => {
 
     return (
         <div className={cn("lg:sticky lg:top-16 lg:self-start lg:h-[calc(100vh-64px)] lg:overflow-y-auto", className)}>
+            <div className="px-2 pb-2 pt-1">
+                <MilestoneTaskSearch
+                    milestones={milestones}
+                    onSelectTask={onSelectTask}
+                />
+            </div>
             <MilestoneAccordion
                 milestones={milestones}
                 progressMap={progressMap}

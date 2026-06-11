@@ -32,6 +32,9 @@ import {
     TaskLockedAlert,
 } from "./TaskLockedAlert"
 import {
+    TaskBrief,
+} from "./TaskBrief"
+import {
     TaskCriteriaList,
 } from "./TaskCriteriaList"
 import {
@@ -221,16 +224,26 @@ export const Task = () => {
                 )}
                 <div className="h-3" />
                 <TaskLockedAlert />
-                <div className="font-semibold">
-                    {t("task.criteriaTitle")}
-                </div>
-                {sortedCriterias.length > 0 && (
-                    <TaskCriteriaList criterias={sortedCriterias} />
-                )}
-                {displayTask.codeImplementations && displayTask.codeImplementations.length > 0 && (
-                    <TaskCodeImplementations
-                        codeImplementations={displayTask.codeImplementations}
-                    />
+                <TaskBrief
+                    briefs={displayTask.briefs ?? []}
+                    lang={reviewGithubForm.lang}
+                />
+                {/* SCHEMA V2 tasks (with briefs) keep their rubric internal — the legacy
+                    public criteria + codeImplementations are only shown for old tasks. */}
+                {(displayTask.briefs?.length ?? 0) === 0 && (
+                    <>
+                        <div className="font-semibold">
+                            {t("task.criteriaTitle")}
+                        </div>
+                        {sortedCriterias.length > 0 && (
+                            <TaskCriteriaList criterias={sortedCriterias} />
+                        )}
+                        {displayTask.codeImplementations && displayTask.codeImplementations.length > 0 && (
+                            <TaskCodeImplementations
+                                codeImplementations={displayTask.codeImplementations}
+                            />
+                        )}
+                    </>
                 )}
                 {showResultsBlock && (
                     <TaskResults

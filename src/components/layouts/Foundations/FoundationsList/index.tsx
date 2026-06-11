@@ -18,6 +18,8 @@ import {
 export interface FoundationsListProps {
     /** The raw foundations from the store; `undefined` while still loading. */
     foundations?: Array<FoundationEntity>
+    /** True only on the first load (no cached SWR data yet). */
+    isLoading?: boolean
     /** Foundations sorted for display (master list ordering). */
     sortedFoundations: Array<FoundationEntity>
     /** Fired with the chosen foundation row when a card is selected. */
@@ -32,12 +34,13 @@ export interface FoundationsListProps {
  */
 export const FoundationsList = ({
     foundations,
+    isLoading = false,
     sortedFoundations,
     onSelect,
 }: FoundationsListProps) => {
     const t = useTranslations()
 
-    if (!foundations) {
+    if (isLoading) {
         return (
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {Array.from({ length: 6 }).map((_, index) => (
@@ -47,7 +50,7 @@ export const FoundationsList = ({
         )
     }
 
-    if (sortedFoundations.length === 0) {
+    if (!foundations?.length || sortedFoundations.length === 0) {
         return <p className="text-muted text-sm">{t("foundations.empty")}</p>
     }
 

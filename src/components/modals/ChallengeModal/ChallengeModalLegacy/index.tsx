@@ -1,6 +1,6 @@
 "use client"
 
-import { Cup as TrophyIcon, Flag as SwordIcon } from "@gravity-ui/icons"
+import { Cup as TrophyIcon, Flame } from "@gravity-ui/icons"
 import React, { useMemo } from "react"
 import { Accordion, cn, Chip, Modal, Surface } from "@heroui/react"
 import { MarkdownContent, ReferenceLinks, Score } from "@/components/reuseable"
@@ -99,7 +99,7 @@ export const ChallengeModalLegacy = () => {
                                         </Chip.Label>
                                     </Chip>
                                     <Chip className={difficultyPalette[challenge?.difficulty ?? ChallengeDifficulty.Easy].text} variant="soft">
-                                        <SwordIcon className="size-5" />
+                                        <Flame className="size-5" />
                                         <Chip.Label>
                                             {t(challengeDifficultyKey)}
                                         </Chip.Label>

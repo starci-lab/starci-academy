@@ -1,6 +1,6 @@
 "use client"
 
-import { CircleCheck as CheckCircleIcon, Cup as TrophyIcon, Flag as SwordIcon } from "@gravity-ui/icons"
+import { CircleCheck as CheckCircleIcon, Cup as TrophyIcon, Flame } from "@gravity-ui/icons"
 import React, { useMemo } from "react"
 import { Button, Card, CardContent, Chip } from "@heroui/react"
 import { ChallengeDifficulty, type ChallengeEntity } from "@/modules/types"
@@ -70,7 +70,7 @@ export const ChallengeCard = ({ challenge }: ChallengeCardProps) => {
                             <Chip.Label>{challenge.score}</Chip.Label>
                         </Chip>
                         <Chip color="default" className={difficultyPalette[challenge.difficulty].text}>
-                            <SwordIcon className="size-4" />
+                            <Flame className="size-4" />
                             <Chip.Label>{t(difficultyName)}</Chip.Label>
                         </Chip>
                         {progressChip ? (
@@ -87,7 +87,7 @@ export const ChallengeCard = ({ challenge }: ChallengeCardProps) => {
                             dispatch(setChallengeId(challenge.id))
                             challengeOverlayState.open()
                         }}>
-                            <SwordIcon className="size-5" />
+                            <Flame className="size-5" />
                             {t("challenge.do")}
                         </Button>
                     </div>

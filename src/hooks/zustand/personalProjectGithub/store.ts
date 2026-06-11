@@ -12,6 +12,8 @@ interface PersonalProjectGithubStoreState {
     githubUrl: string
     /** Git branch. */
     branch: string
+    /** Chosen programming language to grade against (typescript/java/csharp/go). */
+    lang: string
     /** Whether githubUrl has been blurred/touched. */
     touchedGithubUrl: boolean
     /** Whether branch has been blurred/touched. */
@@ -26,6 +28,7 @@ interface PersonalProjectGithubStoreState {
     seeded: boolean
     setGithubUrl: (value: string) => void
     setBranch: (value: string) => void
+    setLang: (value: string) => void
     setTouchedGithubUrl: (value: boolean) => void
     setTouchedBranch: (value: boolean) => void
     setGithubUrlError: (value: string | null) => void
@@ -39,6 +42,7 @@ interface PersonalProjectGithubStoreState {
 export const usePersonalProjectGithubStore = create<PersonalProjectGithubStoreState>((set) => ({
     githubUrl: "",
     branch: "main",
+    lang: "typescript",
     touchedGithubUrl: false,
     touchedBranch: false,
     githubUrlError: null,
@@ -47,6 +51,7 @@ export const usePersonalProjectGithubStore = create<PersonalProjectGithubStoreSt
     seeded: false,
     setGithubUrl: (githubUrl) => set({ githubUrl, githubUrlError: null }),
     setBranch: (branch) => set({ branch, branchError: null }),
+    setLang: (lang) => set({ lang }),
     setTouchedGithubUrl: (touchedGithubUrl) => set({ touchedGithubUrl }),
     setTouchedBranch: (touchedBranch) => set({ touchedBranch }),
     setGithubUrlError: (githubUrlError) => set({ githubUrlError }),

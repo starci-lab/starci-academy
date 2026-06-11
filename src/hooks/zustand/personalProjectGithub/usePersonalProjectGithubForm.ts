@@ -53,6 +53,7 @@ export const usePersonalProjectGithubForm = (options: UsePersonalProjectGithubFo
 
     const githubUrl = usePersonalProjectGithubStore((state) => state.githubUrl)
     const branch = usePersonalProjectGithubStore((state) => state.branch)
+    const lang = usePersonalProjectGithubStore((state) => state.lang)
     const touchedGithubUrl = usePersonalProjectGithubStore((state) => state.touchedGithubUrl)
     const touchedBranch = usePersonalProjectGithubStore((state) => state.touchedBranch)
     const githubUrlError = usePersonalProjectGithubStore((state) => state.githubUrlError)
@@ -61,6 +62,7 @@ export const usePersonalProjectGithubForm = (options: UsePersonalProjectGithubFo
     const seeded = usePersonalProjectGithubStore((state) => state.seeded)
     const setGithubUrl = usePersonalProjectGithubStore((state) => state.setGithubUrl)
     const setBranch = usePersonalProjectGithubStore((state) => state.setBranch)
+    const setLang = usePersonalProjectGithubStore((state) => state.setLang)
     const setTouchedGithubUrl = usePersonalProjectGithubStore((state) => state.setTouchedGithubUrl)
     const setTouchedBranch = usePersonalProjectGithubStore((state) => state.setTouchedBranch)
     const setGithubUrlError = usePersonalProjectGithubStore((state) => state.setGithubUrlError)
@@ -180,6 +182,7 @@ export const usePersonalProjectGithubForm = (options: UsePersonalProjectGithubFo
                         taskId: selectedTaskId,
                         githubUrl: resolvedUrl,
                         branch: branchTrimmed || undefined,
+                        lang: lang || undefined,
                     })
                     const reviewEnv = reviewResult?.data?.reviewPersonalProjectTask
                     if (!reviewEnv) {
@@ -204,16 +207,18 @@ export const usePersonalProjectGithubForm = (options: UsePersonalProjectGithubFo
         } finally {
             setIsSubmitting(false)
         }
-    }, [course?.id, githubUrl, branch, enrollment?.personalProjectGithubUrl, selectedTaskId, reviewPersonalProjectTaskSwr, jobNotificationsSocket, locale, dispatch, queryCourseEnrollmentStatusSwr, setBranchError, setIsSubmitting, t])
+    }, [course?.id, githubUrl, branch, lang, enrollment?.personalProjectGithubUrl, selectedTaskId, reviewPersonalProjectTaskSwr, jobNotificationsSocket, locale, dispatch, queryCourseEnrollmentStatusSwr, setBranchError, setIsSubmitting, t])
 
     return {
         githubUrl,
         branch,
+        lang,
         errors,
         touched: { githubUrl: touchedGithubUrl, branch: touchedBranch },
         isSubmitting,
         setGithubUrl,
         setBranch,
+        setLang,
         setTouchedGithubUrl,
         setTouchedBranch,
         setGithubUrlError,

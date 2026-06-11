@@ -1,6 +1,6 @@
 "use client"
 
-import { Clock as ClockIcon, Flag as SwordIcon } from "@gravity-ui/icons"
+import { Clock as ClockIcon, Flame } from "@gravity-ui/icons"
 import React, {
     useCallback,
 } from "react"
@@ -161,7 +161,7 @@ export const ModuleContentRow = ({
                                     </Chip.Label>
                                 </Chip>
                                 <Chip variant="tertiary" color="default" className="text-muted" size="sm">
-                                    <SwordIcon className="size-4" />
+                                    <Flame className="size-4" />
                                     <Chip.Label>
                                         {t("content.challengeCount", {
                                             count: getContentChallengeCount(content ?? {}),

@@ -14,6 +14,7 @@ import {
 } from "@/redux/slices"
 import { useLocale } from "next-intl"
 import { usePathname } from "next/navigation"
+import { useEffect } from "react"
 import useSWR from "swr"
 
 /**
@@ -35,7 +36,7 @@ export const useQueryFoundationsSwr = () => {
     // normalized search term included in the SWR key so each query caches independently
     const normalizedSearch = search?.trim() ?? ""
 
-    return useSWR(
+    const swr = useSWR(
         authenticated && enrolled && category?.id && onFoundationsPage
             ? [
                 "QUERY_FOUNDATIONS_SWR",
@@ -82,4 +83,16 @@ export const useQueryFoundationsSwr = () => {
             keepPreviousData: true,
         },
     )
+
+    // cache hits skip the fetcher (so Redux would stay undefined after a stray clear);
+    // re-hydrate whenever SWR already has data for the active key
+    useEffect(() => {
+        if (!swr.data) {
+            return
+        }
+        dispatch(setFoundations(swr.data.data))
+        dispatch(setFoundationsCount(swr.data.count))
+    }, [swr.data, dispatch])
+
+    return swr
 }

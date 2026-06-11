@@ -21,6 +21,41 @@ export interface MilestoneTaskCriteriaEntity extends AbstractEntity {
 }
 
 /**
+ * A per-locale field override for a milestone task brief. Mirrors the generic i18n translation
+ * row used by the V2 content bodies, except the localized value lives in a generic `field`/`value`
+ * pair (e.g. `field === "body"`).
+ */
+export interface MilestoneTaskBriefTranslation {
+    /** Locale of this override (e.g. "vi", "en"). */
+    locale: string
+    /** Name of the localized field (e.g. "body"). */
+    field: string
+    /** Localized value for {@link field}. */
+    value: string
+}
+
+/**
+ * SCHEMA V2 per-programming-language learner-facing brief for a milestone task. One row per
+ * language (typescript / java / csharp / go) or a single `agnostic` row for FE/infra tasks; `body`
+ * holds the default-locale Markdown instructions and per-locale variants live in `translations`.
+ * Mirrors the backend `MilestoneTaskBriefEntity` and the V2 content-body pattern.
+ */
+export interface MilestoneTaskBrief {
+    /** Brief row id. */
+    id: string
+    /** Programming language for this brief (typescript / java / csharp / go / agnostic). */
+    lang: string
+    /** Default-locale brief body (Markdown). */
+    body: string
+    /** Display order (doubles as the language index). */
+    orderIndex: number
+    /** Default locale for this brief row. */
+    defaultLocale: string
+    /** Per-locale field overrides for this brief. */
+    translations?: Array<MilestoneTaskBriefTranslation>
+}
+
+/**
  * A task belonging to a milestone.
  */
 export interface MilestoneTaskEntity extends AbstractEntity {
@@ -40,9 +75,11 @@ export interface MilestoneTaskEntity extends AbstractEntity {
     maxScore: number
     /** Parent milestone ID. */
     milestoneId: string
-    /** Criteria belonging to this task. */
+    /** SCHEMA V2 per-language learner-facing briefs (task instructions). */
+    briefs?: Array<MilestoneTaskBrief>
+    /** Criteria belonging to this task (legacy fallback). */
     criterias?: Array<MilestoneTaskCriteriaEntity>
-    /** Multi-language implementation guides for this task. */
+    /** Multi-language implementation guides for this task (legacy fallback). */
     codeImplementations?: Array<CodeImplementationEntity>
 }
 

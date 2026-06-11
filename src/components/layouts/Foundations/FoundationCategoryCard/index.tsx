@@ -4,6 +4,7 @@ import { cn } from "@heroui/react"
 import type { FoundationCategoryEntity } from "@/modules/types"
 import React from "react"
 import { FoundationCategoryThumbnail } from "../FoundationCategoryThumbnail"
+import { PressableCard } from "@/components/reuseable"
 
 export interface FoundationCategoryCardProps {
     /** Foundation category from API. */
@@ -22,13 +23,13 @@ export const FoundationCategoryCard = ({
     onPress,
 }: FoundationCategoryCardProps) => {
     return (
-        <button
-            type="button"
+        <PressableCard
+            ariaLabel={category.title}
             className={cn(
-                "card card--default !p-0 flex h-full flex-col overflow-hidden rounded-xl text-left transition-colors",
+                "card card--default !p-0 flex h-full w-full flex-col overflow-hidden rounded-xl transition-colors",
                 "hover:bg-accent/5",
             )}
-            onClick={() => onPress(category)}
+            onPress={() => onPress(category)}
         >
             <FoundationCategoryThumbnail
                 thumbnailUrl={category.thumbnailUrl}
@@ -40,6 +41,6 @@ export const FoundationCategoryCard = ({
                     <p className="text-muted line-clamp-3 text-sm">{category.description}</p>
                 ) : null}
             </div>
-        </button>
+        </PressableCard>
     )
 }

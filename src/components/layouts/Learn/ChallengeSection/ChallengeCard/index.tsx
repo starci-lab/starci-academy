@@ -49,7 +49,7 @@ export const ChallengeCard = ({ challenge }: ChallengeCardProps) => {
         >
             <div className="flex flex-col gap-3 w-full">
                 <div className="font-semibold text-lg overflow-hidden whitespace-normal">
-                    {challenge.orderIndex + 1}
+                    {challenge.sortIndex}
                     {". "}
                     {challenge.title}{" "}
                     <span>(20/40)</span>

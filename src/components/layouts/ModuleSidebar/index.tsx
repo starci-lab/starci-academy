@@ -73,7 +73,7 @@ export const ModuleSidebar = ({ className, collapsed = false }: ModuleSidebarPro
 
     /** Modules cloned + sorted by their display order. */
     const sortedModules = useMemo(
-        () => _.cloneDeep(modules ?? []).sort((a, b) => a.orderIndex - b.orderIndex),
+        () => _.cloneDeep(modules ?? []).sort((a, b) => a.sortIndex - b.sortIndex),
         [
             modules,
         ],

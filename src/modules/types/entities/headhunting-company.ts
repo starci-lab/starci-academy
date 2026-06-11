@@ -22,6 +22,6 @@ export interface HeadhuntingCompanyEntity extends AbstractEntity {
     facebookUrl?: string | null
     /** LinkedIn company page URL. */
     linkedinUrl?: string | null
-    /** Display order in listings. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
 }

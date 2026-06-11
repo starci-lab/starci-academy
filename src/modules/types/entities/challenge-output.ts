@@ -7,8 +7,8 @@ import type { ChallengeOutputTranslationEntity } from "./challenge-output-transl
 export interface ChallengeOutputEntity extends AbstractEntity {
     /** Output text / statement. */
     text: string
-    /** Order within the challenge output list. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** Default locale for this row. */
     defaultLocale: string
     /** Localized field overrides. */

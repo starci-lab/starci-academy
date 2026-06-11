@@ -4,6 +4,6 @@ import type {
 
 /**
  * Reference rows shown beneath a public content article, pre-sorted by
- * {@link ContentReferenceEntity.orderIndex}.
+ * {@link ContentReferenceEntity.sortIndex}.
  */
 export type ContentDetailReferences = Array<ContentReferenceEntity>

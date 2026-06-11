@@ -20,8 +20,8 @@ export interface ContentEntity extends AbstractEntity {
     description: string
     /** Markdown / HTML body. */
     body: string
-    /** The order index of the content. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** The module that the content belongs to. */
     module?: ModuleEntity
     /** The minutes read of the content. */

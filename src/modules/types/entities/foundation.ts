@@ -16,8 +16,8 @@ export interface FoundationEntity extends AbstractEntity {
     kind: FoundationKind
     /** URL or markdown body depending on kind. */
     value?: string | null
-    /** Display order within the category. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** Highlight as recommended in the list UI. */
     isRecommended: boolean
     /** Author or source attribution. */

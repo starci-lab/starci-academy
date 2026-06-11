@@ -26,8 +26,8 @@ export interface ChallengeEntity extends AbstractEntity {
     difficulty: ChallengeDifficulty
     /** Optional card thumbnail. */
     thumbnailUrl: string | null
-    /** Order within the module challenge list. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** Default locale for this row. */
     defaultLocale: string
     /** Parent module when nested in a graph. */

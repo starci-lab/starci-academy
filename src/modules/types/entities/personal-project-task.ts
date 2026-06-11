@@ -6,8 +6,8 @@ import type { AbstractEntity } from "./abstract"
 export interface PersonalProjectTaskCriterionEntity extends AbstractEntity {
     /** The criterion text. */
     text: string
-    /** The display order index. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
 }
 
 /**
@@ -22,8 +22,8 @@ export interface PersonalProjectTaskEntity extends AbstractEntity {
     type: string
     /** The weight / priority of the task. */
     weight: number
-    /** The display order index. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** The evaluation criteria for this task. */
     criteria: Array<PersonalProjectTaskCriterionEntity>
 }

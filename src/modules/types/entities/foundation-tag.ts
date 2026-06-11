@@ -6,8 +6,8 @@ import type { AbstractEntity } from "./abstract"
 export interface FoundationTagEntity extends AbstractEntity {
     /** Display value (locale-resolved). */
     value: string
-    /** Display order within the foundation. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** Parent foundation id. */
     foundationId: string
 }

@@ -57,7 +57,7 @@ export const ChallengeSection = () => {
                 <div>
                     <div className="flex flex-col gap-3 w-full">
                         {_.cloneDeep(challenges)
-                            ?.sort((prev, next) => prev.orderIndex - next.orderIndex)
+                            ?.sort((prev, next) => prev.sortIndex - next.sortIndex)
                             .map((challenge) => (
                                 <ChallengeCard key={challenge.id} challenge={challenge} />
                             ))}

@@ -7,8 +7,8 @@ import type { ChallengePrerequisiteTranslationEntity } from "./challenge-prerequ
 export interface ChallengePrerequisiteEntity extends AbstractEntity {
     /** Prerequisite text. */
     text: string
-    /** Order within the challenge prerequisite list. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** Default locale for this row. */
     defaultLocale: string
     /** Localized field overrides. */

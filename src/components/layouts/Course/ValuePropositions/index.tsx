@@ -20,7 +20,7 @@ export const ValuePropositions = () => {
     const { isLoading } = useQueryCourseSwr()
     const valuePropositions = useMemo(() => {
         return _.cloneDeep(course?.valuePropositions ?? []).sort(
-            (prev, next) => prev.orderIndex - next.orderIndex)
+            (prev, next) => prev.sortIndex - next.sortIndex)
     }, [course])
 
     if (isLoading) {

@@ -59,7 +59,7 @@ export const FlashcardReviewer = ({ deckId }: FlashcardReviewerProps) => {
 
     // cards in display order
     const cards = useMemo<Array<FlashcardCardEntity>>(
-        () => [...(data?.cards ?? [])].sort((prev, next) => prev.orderIndex - next.orderIndex),
+        () => [...(data?.cards ?? [])].sort((prev, next) => prev.sortIndex - next.sortIndex),
         [data?.cards],
     )
 

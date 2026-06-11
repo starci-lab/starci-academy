@@ -8,7 +8,8 @@ import React from "react"
 export interface ReferenceLinkItem {
     id: string
     url: string
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     alias: string
 }
 
@@ -33,7 +34,7 @@ export const ReferenceLinks = ({ references, titleKey }: ReferenceLinksProps) =>
             </div>
             <div className="h-3" />
             <ul className="flex flex-col gap-3">
-                {references?.sort((prev, next) => prev.orderIndex - next.orderIndex).map((reference) => {
+                {references?.sort((prev, next) => prev.sortIndex - next.sortIndex).map((reference) => {
                     return (
                         <li key={reference.id} className="flex flex-wrap items-center gap-2">
                             <span className="text-sm text-muted">{reference.alias}</span>

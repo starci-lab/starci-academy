@@ -15,7 +15,7 @@ const query1 = gql`
         title
         description
         difficulty
-        orderIndex
+        sortIndex
         defaultLocale
         cards {
           id
@@ -24,7 +24,7 @@ const query1 = gql`
           explanation
           level
           tags
-          orderIndex
+          sortIndex
           defaultLocale
         }
         contents {

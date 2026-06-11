@@ -61,9 +61,9 @@ export const ContentSearch = ({ modules, onSelectContent, className }: ContentSe
             modules.flatMap((module) =>
                 (module.contents ?? [])
                     .slice()
-                    .sort((prev, next) => prev.orderIndex - next.orderIndex)
+                    .sort((prev, next) => prev.sortIndex - next.sortIndex)
                     .map((content) => {
-                        const prefix = `${module.orderIndex + 1}.${content.orderIndex + 1}`
+                        const prefix = `${module.sortIndex}.${content.sortIndex}`
                         return {
                             id: String(content.id),
                             moduleId: String(module.id),

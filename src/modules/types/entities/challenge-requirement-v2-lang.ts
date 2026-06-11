@@ -8,8 +8,8 @@ import type { AbstractEntity } from "./abstract"
 export interface ChallengeRequirementV2LangEntity extends AbstractEntity {
     /** Programming language (typescript, java, csharp, go, …). */
     lang: string
-    /** Display order within the parent requirement item's language list. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** Points / weight for this requirement in this language. */
     score: number
     /** Default locale for this language row. */

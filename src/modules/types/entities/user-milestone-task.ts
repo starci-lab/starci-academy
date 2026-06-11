@@ -5,8 +5,8 @@ import type { MilestoneSeverity } from "../enums"
  * Links a user's enrollment to a specific milestone task.
  */
 export interface UserMilestoneTaskEntity extends AbstractEntity {
-    /** Display order within the enrollment's task list. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** Parent enrollment ID. */
     enrollmentId: string
     /** Parent milestone task ID. */
@@ -43,8 +43,8 @@ export interface UserMilestoneTaskAttemptFeedbackEntity extends AbstractEntity {
     message: string
     /** Severity of the feedback item. */
     severity: MilestoneSeverity
-    /** Ordering index within the feedback list. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** Source location hint, e.g. file:line. */
     location: string | null
     /** Suggested change (code snippet or instruction). */

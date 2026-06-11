@@ -28,15 +28,15 @@ export const ChallengeModalLegacy = () => {
     const config = useAppSelector((state) => state.system.config)
     const steps = useMemo(() => _.cloneDeep(challenge?.steps ?? []), [challenge?.steps])
     const challengeRequirements = useMemo(
-        () => _.cloneDeep(challenge?.requirements ?? []).sort((prev, next) => prev.orderIndex - next.orderIndex),
+        () => _.cloneDeep(challenge?.requirements ?? []).sort((prev, next) => prev.sortIndex - next.sortIndex),
         [challenge?.requirements],
     )
     const challengeOutputs = useMemo(
-        () => _.cloneDeep(challenge?.outputs ?? []).sort((prev, next) => prev.orderIndex - next.orderIndex),
+        () => _.cloneDeep(challenge?.outputs ?? []).sort((prev, next) => prev.sortIndex - next.sortIndex),
         [challenge?.outputs],
     )
     const challengePrerequisites = useMemo(
-        () => _.cloneDeep(challenge?.prerequisites ?? []).sort((prev, next) => prev.orderIndex - next.orderIndex),
+        () => _.cloneDeep(challenge?.prerequisites ?? []).sort((prev, next) => prev.sortIndex - next.sortIndex),
         [challenge?.prerequisites],
     )
     const passThreshold = config?.challenge?.passThreshold ?? 0
@@ -144,7 +144,7 @@ export const ChallengeModalLegacy = () => {
                                     <Accordion className="px-0" allowsMultipleExpanded defaultExpandedKeys={steps.map(s => s.id)}>
                                         {
                                             _.cloneDeep(steps)
-                                                .sort((prev, next) => prev.orderIndex - next.orderIndex)
+                                                .sort((prev, next) => prev.sortIndex - next.sortIndex)
                                                 .map(
                                                     (step) => {
                                                         return (
@@ -153,7 +153,7 @@ export const ChallengeModalLegacy = () => {
                                                                     <Accordion.Trigger className="w-full">
                                                                         <div className="flex w-full items-center justify-between gap-2">
                                                                             <div className="font-semibold text-base text-foreground">
-                                                                                {`${step.orderIndex + 1}. ${step.title || t("challenge.steps.label", { index: step.orderIndex + 1 })}`}
+                                                                                {`${step.sortIndex}. ${step.title || t("challenge.steps.label", { index: step.sortIndex })}`}
                                                                             </div>
                                                                             <Accordion.Indicator />
                                                                         </div>
@@ -172,7 +172,7 @@ export const ChallengeModalLegacy = () => {
                                     </Accordion>
                                     <div className="border-t"/>
                                     <div className="p-3">
-                                        <ReferenceLinks references={_.cloneDeep(challenge?.references ?? []).sort((prev, next) => prev.orderIndex - next.orderIndex)} titleKey="reference.title" />
+                                        <ReferenceLinks references={_.cloneDeep(challenge?.references ?? []).sort((prev, next) => prev.sortIndex - next.sortIndex)} titleKey="reference.title" />
                                     </div>
                                 </div>
                             </div>

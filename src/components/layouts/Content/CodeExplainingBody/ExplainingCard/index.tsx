@@ -22,7 +22,7 @@ export const ExplainingCard = ({ item }: ExplainingCardProps) => {
         <article className="rounded-xl border border-default-200 p-4 flex flex-col gap-3">
             <div className="flex items-center gap-2">
                 <Chip variant="secondary" color="accent" size="sm">
-                    <Chip.Label>{t("content.codeExplainings.indexLabel", { index: item.orderIndex + 1 })}</Chip.Label>
+                    <Chip.Label>{t("content.codeExplainings.indexLabel", { index: item.sortIndex })}</Chip.Label>
                 </Chip>
                 {item.lang ? (
                     <Chip variant="secondary" size="sm">

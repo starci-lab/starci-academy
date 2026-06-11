@@ -21,7 +21,7 @@ const query1 = gql`
           description
           slug
           thumbnailUrl
-          orderIndex
+          sortIndex
         }
       }
     }

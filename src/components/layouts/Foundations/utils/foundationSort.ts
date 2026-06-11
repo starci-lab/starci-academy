@@ -54,5 +54,5 @@ export const compareFoundations = (
     if (tierDiff !== 0) {
         return tierDiff
     }
-    return a.orderIndex - b.orderIndex
+    return a.sortIndex - b.sortIndex
 }

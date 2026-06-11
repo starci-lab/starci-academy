@@ -52,9 +52,9 @@ export const MilestoneTaskSearch = ({ milestones, onSelectTask, className }: Mil
             milestones.flatMap((milestone) =>
                 (milestone.tasks ?? [])
                     .slice()
-                    .sort((prev, next) => prev.orderIndex - next.orderIndex)
+                    .sort((prev, next) => prev.sortIndex - next.sortIndex)
                     .map((task) => {
-                        const prefix = `${milestone.orderIndex + 1}.${task.orderIndex + 1}`
+                        const prefix = `${milestone.sortIndex}.${task.sortIndex}`
                         return {
                             id: String(task.id),
                             prefix,

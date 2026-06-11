@@ -9,8 +9,8 @@ export interface QnaEntity extends AbstractEntity {
     question: string
     /** The answer of the Q&A entry. */
     answer: string
-    /** The order index of the Q&A entry. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** The course that the Q&A entry belongs to. */
     course?: CourseEntity
 }

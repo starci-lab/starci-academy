@@ -124,7 +124,7 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
 
     /** Submissions sorted by their requirement order. */
     const sortedSubmissions = useMemo(
-        () => _.cloneDeep(values.submissions ?? []).sort((prev, next) => prev.orderIndex - next.orderIndex),
+        () => _.cloneDeep(values.submissions ?? []).sort((prev, next) => prev.sortIndex - next.sortIndex),
         [
             values.submissions,
         ],

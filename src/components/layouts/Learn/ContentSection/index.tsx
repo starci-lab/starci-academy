@@ -66,7 +66,7 @@ export const ContentSection = () => {
                             <div className="flex flex-col gap-3 w-full">
                                 {
                                     _.cloneDeep(contents)?.sort(
-                                        (prev, next) => prev.orderIndex - next.orderIndex
+                                        (prev, next) => prev.sortIndex - next.sortIndex
                                     ).map((content) => (
                                         <ContentCard key={content.id} content={content} />
                                     )

@@ -14,6 +14,6 @@ export interface FoundationCategoryEntity extends AbstractEntity {
     slug?: string | null
     /** Cover image URL. */
     thumbnailUrl?: string | null
-    /** Display order. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
 }

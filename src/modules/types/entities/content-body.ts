@@ -18,8 +18,8 @@ export interface ContentBodyTranslation {
 export interface ContentBody extends AbstractEntity {
     /** Programming language for this body (typescript / java / csharp / go). */
     lang: string
-    /** Display order (doubles as the language index). */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** Default-locale lesson body (Markdown). */
     body: string | null
     /** Default locale for this body row. */
@@ -55,7 +55,7 @@ export function listContentBodyLangs(
 ): Array<string> {
     const seen = new Map<string, number>()
     for (const bucket of bodies ?? []) {
-        if (!seen.has(bucket.lang)) seen.set(bucket.lang, bucket.orderIndex)
+        if (!seen.has(bucket.lang)) seen.set(bucket.lang, bucket.sortIndex)
     }
     return [...seen.entries()].sort((prev, next) => prev[1] - next[1]).map(([lang]) => lang)
 }

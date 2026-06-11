@@ -23,7 +23,7 @@ export const CodeExplainingBody = ({ className }: CodeExplainingBodyProps) => {
     const items = useMemo(
         () => getContentCodeExplainings(content)
             .slice()
-            .sort((prev, next) => prev.orderIndex - next.orderIndex),
+            .sort((prev, next) => prev.sortIndex - next.sortIndex),
         [content],
     )
 

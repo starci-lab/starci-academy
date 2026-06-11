@@ -98,7 +98,7 @@ export const Module = () => {
                 <div className="h-3" />
                 <div className="text-sm text-start w-full gap-3 flex flex-col text-muted">
                     {_.cloneDeep(module?.previewContents ?? [])
-                        .sort((previous, current) => previous.orderIndex - current.orderIndex)
+                        .sort((previous, current) => previous.sortIndex - current.sortIndex)
                         .map((content) => (
                             <div key={content.id} className="flex items-center gap-3">
                                 <BracketsCurlyIcon className="w-5 h-5 min-w-5 min-h-5" />
@@ -116,7 +116,7 @@ export const Module = () => {
                 {
                     contents?.length && contents.length > 0 ? (
                         <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                            {_.cloneDeep(contents)?.sort((prev, next) => prev.orderIndex - next.orderIndex).map((content) => (
+                            {_.cloneDeep(contents)?.sort((prev, next) => prev.sortIndex - next.sortIndex).map((content) => (
                                 <ContentCard key={content.id} content={content} onPress={
                                     () => router.push(pathConfig().locale(locale).course(courseDisplayId).learn().module(moduleId).content(content.id).build())
                                 } />

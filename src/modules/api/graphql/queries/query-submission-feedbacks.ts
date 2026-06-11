@@ -37,7 +37,7 @@ const query1 = gql`
           severity
           location
           suggestion
-          orderIndex
+          sortIndex
         }
       }
     }

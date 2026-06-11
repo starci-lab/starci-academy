@@ -8,8 +8,8 @@ import type { AbstractEntity } from "./abstract"
 export interface ChallengeStepV2LangEntity extends AbstractEntity {
     /** Programming language for this step content. */
     lang: string
-    /** Display order within the parent step item's language list. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** Default locale for this language row. */
     defaultLocale: string
     /** Localized body for the active request locale. */

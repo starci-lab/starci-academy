@@ -134,7 +134,7 @@ export const ModuleContentRow = ({
                             isActive ? "font-semibold text-accent" : "",
                         )}
                     >
-                        {`${content.orderIndex + 1}. ${content.title}`}
+                        {`${content.sortIndex}. ${content.title}`}
                     </div>
                     <div className="h-2" />
                     <div className="line-clamp-3 text-xs text-muted">

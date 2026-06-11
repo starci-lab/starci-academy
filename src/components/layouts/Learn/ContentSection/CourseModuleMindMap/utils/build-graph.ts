@@ -44,7 +44,7 @@ export function buildCourseModuleGraph(
         }
     }
 
-    const sorted = [...course.modules].sort((a, b) => a.orderIndex - b.orderIndex)
+    const sorted = [...course.modules].sort((a, b) => a.sortIndex - b.sortIndex)
     const n = sorted.length
     const rootNode: Node = {
         id: ROOT_ID,
@@ -66,7 +66,7 @@ export function buildCourseModuleGraph(
                 y: LEAF_RADIUS * Math.sin(angle) - 28,
             },
             data: {
-                label: `${mod.orderIndex + 1}. ${mod.title}`,
+                label: `${mod.sortIndex}. ${mod.title}`,
             },
             className: [
                 "rounded-xl border px-3 py-2 text-center text-xs text-foreground max-w-[200px] leading-snug shadow-sm",

@@ -12,8 +12,8 @@ export interface MilestoneTaskCriteriaEntity extends AbstractEntity {
     hint: string
     /** Prompt text for AI grading. */
     promptText: string
-    /** Display order within the task criteria list. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** Score awarded when this criterion passes. */
     score: number
     /** Parent milestone task ID. */
@@ -47,8 +47,8 @@ export interface MilestoneTaskBrief {
     lang: string
     /** Default-locale brief body (Markdown). */
     body: string
-    /** Display order (doubles as the language index). */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** Default locale for this brief row. */
     defaultLocale: string
     /** Per-locale field overrides for this brief. */
@@ -65,8 +65,8 @@ export interface MilestoneTaskEntity extends AbstractEntity {
     description: string
     /** Task hint. */
     hint: string
-    /** Display order within the milestone's task list. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** Priority weight — lower values are higher priority. */
     weight: number
     /** Task type classification. */
@@ -91,8 +91,8 @@ export interface MilestoneEntity extends AbstractEntity {
     title: string
     /** Milestone description. */
     description: string
-    /** Display order within the course's milestone list. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** Parent course ID. */
     courseId: string
     /** Tasks belonging to this milestone. */

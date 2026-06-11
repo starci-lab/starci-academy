@@ -7,8 +7,8 @@ import type { ChallengeRequirementV2LangEntity } from "./challenge-requirement-v
  * Title/body live on each {@link ChallengeRequirementV2LangEntity} row.
  */
 export interface ChallengeRequirementV2Entity extends AbstractEntity {
-    /** Display order within the challenge requirement list. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** Default locale for this requirement item. */
     defaultLocale: string
     /** Per-programming-language score + title + body rows. */

@@ -21,13 +21,13 @@ const query1 = gql`
         tags
         timeLimitMs
         memoryLimitKb
-        orderIndex
+        sortIndex
         testcases {
           id
           input
           expectedOutput
           isSample
-          orderIndex
+          sortIndex
         }
         starterCodes {
           id

@@ -16,8 +16,8 @@ export interface SubmissionFeedbackEntity extends AbstractEntity {
     location: string | null
     /** The suggestion of the feedback. */
     suggestion: string | null
-    /** The order index of the feedback. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** The attempt that the feedback belongs to. */
     attempt: SubmissionAttemptEntity
 }

@@ -68,7 +68,7 @@ export function listRequirementV2ProgrammingLangs(
                     continue
                 }
                 if (!seen.has(langRow.lang)) {
-                    seen.set(langRow.lang, langRow.orderIndex)
+                    seen.set(langRow.lang, langRow.sortIndex)
                 }
             }
         }
@@ -78,7 +78,7 @@ export function listRequirementV2ProgrammingLangs(
     }
     return items
         .slice()
-        .sort((prev, next) => prev.orderIndex - next.orderIndex)
+        .sort((prev, next) => prev.sortIndex - next.sortIndex)
         .map((_item, index) => STANDARD_PROGRAMMING_LANGS[index] ?? `lang-${index + 1}`)
 }
 
@@ -166,7 +166,7 @@ function resolvePositionModelRows(
 ): Array<ChallengeV2ResolvedRow> {
     return items
         .slice()
-        .sort((prev, next) => prev.orderIndex - next.orderIndex)
+        .sort((prev, next) => prev.sortIndex - next.sortIndex)
         .map((item) => {
             const langRow = item.langs?.find((row) => row.lang === programmingLang)
             const score = langRow && "score" in langRow
@@ -194,14 +194,14 @@ function resolveLangBucketModelRows(
 ): Array<ChallengeV2ResolvedRow> {
     const langIndex = STANDARD_PROGRAMMING_LANGS.indexOf(programmingLang)
     const bucket = langIndex >= 0
-        ? items.find((item) => item.orderIndex === langIndex)
+        ? items.find((item) => item.sortIndex === langIndex)
         : items.find((_item, index) => (STANDARD_PROGRAMMING_LANGS[index] ?? "") === programmingLang)
     if (!bucket?.langs?.length) {
         return []
     }
     return bucket.langs
         .slice()
-        .sort((prev, next) => prev.orderIndex - next.orderIndex)
+        .sort((prev, next) => prev.sortIndex - next.sortIndex)
         .map((langRow) => {
             const score = "score" in langRow
                 ? (langRow as ChallengeRequirementV2LangEntity).score

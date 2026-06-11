@@ -1,6 +1,7 @@
 export * from "./day-of-week"
 export * from "./foundation-kind"
 export * from "./challenge-difficulty"
+export * from "./course-content-tier"
 export * from "./submission-type"
 export * from "./resource-type"
 export * from "./job-status"

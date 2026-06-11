@@ -64,7 +64,7 @@ export const ContentBodyLegacy = ({ className }: ContentBodyLegacyProps) => {
     const isLoading = queryContentSwr.isLoading && !content
     const references = useMemo(
         () => _.cloneDeep(content?.references ?? []).sort(
-            (prev, next) => prev.orderIndex - next.orderIndex,
+            (prev, next) => prev.sortIndex - next.sortIndex,
         ),
         [content?.references],
     )

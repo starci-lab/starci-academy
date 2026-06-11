@@ -30,7 +30,7 @@ const query1 = gql`
           description
           kind
           value
-          orderIndex
+          sortIndex
           isRecommended
           author
           thumbnailUrl
@@ -38,7 +38,7 @@ const query1 = gql`
           tags {
             id
             value
-            orderIndex
+            sortIndex
           }
         }
       }

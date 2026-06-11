@@ -70,7 +70,7 @@ export const MilestoneSidebar = ({ className }: MilestoneSidebarProps) => {
 
     /** Milestones sorted by their display order. */
     const milestones = useMemo(
-        () => [...milestoneEntities].sort((prev, next) => prev.orderIndex - next.orderIndex),
+        () => [...milestoneEntities].sort((prev, next) => prev.sortIndex - next.sortIndex),
         [
             milestoneEntities,
         ],

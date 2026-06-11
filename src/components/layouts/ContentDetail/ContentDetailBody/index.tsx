@@ -29,7 +29,7 @@ export const ContentDetailBody = () => {
     /** References cloned + sorted ascending by order index for stable display. */
     const references = useMemo<ContentDetailReferences>(
         () => _.cloneDeep(rawReferences ?? []).sort(
-            (a, b) => a.orderIndex - b.orderIndex,
+            (a, b) => a.sortIndex - b.sortIndex,
         ),
         [
             rawReferences,

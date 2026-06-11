@@ -35,22 +35,22 @@ const query1 = gql`
             technicalConstraints
             proTipsHints
             forbidden
-            orderIndex
+            sortIndex
           }
           outputs {
             id
             text
-            orderIndex
+            sortIndex
           }
           prerequisites {
             id
             text
-            orderIndex
+            sortIndex
           }
           description
           score
           difficulty
-          orderIndex
+          sortIndex
           steps {
             id
           }

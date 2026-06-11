@@ -23,7 +23,7 @@ export const CodeImplementationBody = ({ className }: CodeImplementationBodyProp
     const items = useMemo(
         () => getContentCodeImplementations(content)
             .slice()
-            .sort((prev, next) => prev.orderIndex - next.orderIndex),
+            .sort((prev, next) => prev.sortIndex - next.sortIndex),
         [content],
     )
 

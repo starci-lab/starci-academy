@@ -30,7 +30,7 @@ const query1 = gql`
           id
           message
           severity
-          orderIndex
+          sortIndex
           location
           suggestion
         }

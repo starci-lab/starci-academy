@@ -21,8 +21,8 @@ export interface ConsultantEntity extends AbstractEntity {
     zaloNumber?: string | null
     /** Avatar / profile picture URL. */
     avatarUrl?: string | null
-    /** Display order in listings. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** Parent company id. */
     companyId: string
     /** Parent headhunting company when loaded. */

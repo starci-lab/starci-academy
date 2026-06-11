@@ -13,19 +13,19 @@ const query1 = gql`
         data {
           id
           title
-          orderIndex
+          sortIndex
           courseId
           tasks {
             id
             title
             description
             hint
-            orderIndex
+            sortIndex
             briefs {
               id
               lang
               body
-              orderIndex
+              sortIndex
               defaultLocale
               translations {
                 locale
@@ -38,14 +38,14 @@ const query1 = gql`
               text
               hint
               score
-              orderIndex
+              sortIndex
             }
             codeImplementations {
               id
               lang
               guide
               example
-              orderIndex
+              sortIndex
             }
           }
         }

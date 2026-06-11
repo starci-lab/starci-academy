@@ -36,7 +36,7 @@ export const PhaseLabels = ({
         <div className="relative flex items-center justify-between">
             {pricingPhases.map((pricingPhase: PricingPhaseEntity) => {
                 // phases before the active one have filled their slots → sold out
-                const soldOut = pricingPhase.orderIndex < currentOrderIndex
+                const soldOut = pricingPhase.sortIndex < currentOrderIndex
                 return (
                     <div key={pricingPhase.id} className="flex-1">
                         <Tooltip>

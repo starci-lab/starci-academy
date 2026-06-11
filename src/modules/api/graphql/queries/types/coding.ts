@@ -87,8 +87,8 @@ export interface CodingProblemTestcase {
     expectedOutput: string
     /** Whether this is a public sample. */
     isSample: boolean
-    /** Evaluation order. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
 }
 
 /** Per-language starter code for a problem. */
@@ -121,8 +121,8 @@ export interface CodingProblem {
     timeLimitMs?: number
     /** Per-run memory limit (kb) — present on detail. */
     memoryLimitKb?: number
-    /** Display order. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** Sample testcases — present on detail. */
     testcases?: Array<CodingProblemTestcase>
     /** Starter code per language — present on detail. */

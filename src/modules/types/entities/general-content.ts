@@ -10,8 +10,8 @@ export interface GeneralContentEntity extends AbstractEntity {
     title: string
     /** The body of the general content. */
     body: string | null
-    /** The order index of the general content. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** The module that the general content belongs to. */
     module?: ModuleEntity
     /** The sections of the general content. */

@@ -33,7 +33,7 @@ const query1 = gql`
           phoneNumber
           zaloNumber
           avatarUrl
-          orderIndex
+          sortIndex
           companyId
           company {
             id

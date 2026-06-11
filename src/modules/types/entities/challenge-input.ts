@@ -7,8 +7,8 @@ import type { ChallengeInputTranslationEntity } from "./challenge-input-translat
 export interface ChallengeInputEntity extends AbstractEntity {
     /** Prompt or description for this input (default locale). */
     description: string
-    /** Order within the challenge input list. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** Default locale for this row. */
     defaultLocale: string
     /** Localized field overrides. */

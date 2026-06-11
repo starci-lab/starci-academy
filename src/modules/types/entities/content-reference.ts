@@ -12,8 +12,8 @@ export interface ContentReferenceEntity extends AbstractEntity {
     alias: string
     /** Target URL for this reference. */
     url: string
-    /** Display order within the parent content. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** Default locale for this row (fallback when no translation matches). */
     defaultLocale: string
     /** Parent content when nested in a graph. */

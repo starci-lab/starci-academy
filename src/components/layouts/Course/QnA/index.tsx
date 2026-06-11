@@ -23,7 +23,7 @@ export const QnA = () => {
     const t = useTranslations()
     const qnas = useMemo(() => {
         return _.cloneDeep(course?.qnas ?? []).sort(
-            (prev, next) => prev.orderIndex - next.orderIndex)
+            (prev, next) => prev.sortIndex - next.sortIndex)
     }, [course])
     return (
         <div>

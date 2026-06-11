@@ -9,8 +9,8 @@ export interface GeneralContentSectionEntity extends AbstractEntity {
     title: string | null
     /** The body of the section. */
     body: string
-    /** The order index of the section. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** The general content that the section belongs to. */
     generalContent?: GeneralContentEntity
 }

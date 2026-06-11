@@ -77,7 +77,7 @@ export const build = ({ course, activeModuleId, themeMode = "light" }: BuildPara
         }
     }
 
-    const sorted = [...course.modules].sort((a, b) => a.orderIndex - b.orderIndex)
+    const sorted = [...course.modules].sort((a, b) => a.sortIndex - b.sortIndex)
 
     // Place root so its geometric center is at (0, 0) — keeps left/right columns visually balanced.
     const rootNode: Node = {
@@ -109,10 +109,10 @@ export const build = ({ course, activeModuleId, themeMode = "light" }: BuildPara
 
         // real lessons of this module (ordered) — expanded on click as child cards
         const contents = [...(module.contents ?? [])]
-            .sort((prev, next) => prev.orderIndex - next.orderIndex)
+            .sort((prev, next) => prev.sortIndex - next.sortIndex)
             .map((content) => ({
                 id: content.id,
-                title: `${content.orderIndex + 1}. ${content.title}`,
+                title: `${content.sortIndex}. ${content.title}`,
             }))
 
         return {
@@ -120,7 +120,7 @@ export const build = ({ course, activeModuleId, themeMode = "light" }: BuildPara
             type: COURSE_MODULE_NODE_TYPE,
             position: { x, y },
             data: {
-                label: `${module.orderIndex + 1}. ${module.title}`,
+                label: `${module.sortIndex}. ${module.title}`,
                 isLeft,
                 isActive,
                 pastelBackground: pastelBackgroundForIndex(index, themeMode),

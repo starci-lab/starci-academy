@@ -74,7 +74,7 @@ export const Stepper = () => {
     /** The pricing phases, sorted by display order. */
     const pricingPhases = useMemo(() => {
         return _.cloneDeep(course?.pricingPhases ?? []).sort(
-            (prev, next) => prev.orderIndex - next.orderIndex)
+            (prev, next) => prev.sortIndex - next.sortIndex)
     }, [course])
 
     /** Course list price used as the discount reference. */
@@ -109,15 +109,15 @@ export const Stepper = () => {
     }, [course, currentPhase])
 
     /** Order index of the active phase (0 when unknown). */
-    const currentOrderIndex = currentPhaseData?.orderIndex ?? 0
+    const currentOrderIndex = currentPhaseData?.sortIndex ?? 0
 
     /**
      * Progress-bar width as a CSS percentage. Mirrors the original expression
      * (`?? 0 / segmentCount` binds the division to the fallback only).
      */
     const progressWidth = useMemo(
-        () => `${(currentPhaseData?.orderIndex ?? 0 / segmentCount) * 100}%`,
-        [currentPhaseData?.orderIndex, segmentCount],
+        () => `${(currentPhaseData?.sortIndex ?? 0 / segmentCount) * 100}%`,
+        [currentPhaseData?.sortIndex, segmentCount],
     )
 
     /** Pre-computed price rows (formatted price + optional save percentage). */
@@ -141,7 +141,7 @@ export const Stepper = () => {
                     }).toNumber()
                     : null,
                 // phases before the active one have already filled their slots → sold out
-                soldOut: pricingPhase.orderIndex < currentOrderIndex,
+                soldOut: pricingPhase.sortIndex < currentOrderIndex,
             }
         }),
         [

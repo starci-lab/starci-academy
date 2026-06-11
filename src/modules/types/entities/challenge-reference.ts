@@ -9,8 +9,8 @@ export interface ChallengeReferenceEntity extends AbstractEntity {
     alias: string
     /** Target URL (not localized). */
     url: string
-    /** Display order within the parent challenge. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** Default locale for this row. */
     defaultLocale: string
     /** Localized field values (e.g. locale-specific `url`). */

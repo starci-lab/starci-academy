@@ -76,7 +76,7 @@ export const MilestoneTaskRow = ({
                         )}
                         onPress={onPress}
                     >
-                        {`${task.orderIndex + 1}. ${task.title}`}
+                        {`${task.sortIndex}. ${task.title}`}
                     </Link>
                     {task.description && (
                         <>

@@ -13,6 +13,6 @@ export interface PricingPhaseEntity extends AbstractEntity {
     priceUsd: number | null
     /** null = unlimited slots (FE may show “unlimited”). */
     slotAvailable: number | null
-    /** Display order (0 = first tier). */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
 }

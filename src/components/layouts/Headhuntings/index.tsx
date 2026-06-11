@@ -66,7 +66,7 @@ export const HeadhuntingsLearnLayout = () => {
         if (!consultants?.length) {
             return []
         }
-        return [...consultants].sort((a, b) => a.orderIndex - b.orderIndex)
+        return [...consultants].sort((a, b) => a.sortIndex - b.sortIndex)
     }, [consultants])
 
     /** Deep-link to the chosen company's page (the suggestion id is the company id). */

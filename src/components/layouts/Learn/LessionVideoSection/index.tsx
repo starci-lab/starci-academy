@@ -50,7 +50,7 @@ export const LessonVideoSection = () => {
                         <div className="flex flex-col gap-3 w-full">
                             {
                                 lessionVideos?.sort(
-                                    (prev, next) => prev.orderIndex - next.orderIndex
+                                    (prev, next) => prev.sortIndex - next.sortIndex
                                 ).map((lessonVideo) => (
                                     <VideoLessionCard key={lessonVideo.id} lessonVideo={lessonVideo} />
                                 )

@@ -17,14 +17,14 @@ const query1 = gql`
           type
           state
           weight
-          orderIndex
+          sortIndex
           maxScore
           passScore
           enrollmentId
           criteria {
             id
             text
-            orderIndex
+            sortIndex
             score
           }
         }

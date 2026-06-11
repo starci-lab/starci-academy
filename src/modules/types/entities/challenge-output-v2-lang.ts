@@ -20,7 +20,8 @@ export interface ChallengeOutputV2LangEntity extends AbstractEntity {
 
     /** Display order within the parent output item's language list. */
 
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
 
     /** Default locale for this language row. */
 

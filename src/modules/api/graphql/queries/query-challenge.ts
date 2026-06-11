@@ -18,34 +18,34 @@ const query1 = gql`
           technicalConstraints
           proTipsHints
           forbidden
-          orderIndex
+          sortIndex
         }
         outputs {
           id
           text
-          orderIndex
+          sortIndex
         }
         prerequisites {
           id
           text
-          orderIndex
+          sortIndex
         }
         description
         score
         difficulty
-        orderIndex
+        sortIndex
         steps {
           id
           title
           body
-          orderIndex
+          sortIndex
         }
         submissions {
           id
           type
           title
           description
-          orderIndex
+          sortIndex
           userSubmission {
             submissionUrl
           }
@@ -54,18 +54,18 @@ const query1 = gql`
           id
           alias
           url
-          orderIndex
+          sortIndex
         }
         verified
         defaultLocale
         requirementsV2 {
           id
-          orderIndex
+          sortIndex
           defaultLocale
           langs {
             id
             lang
-            orderIndex
+            sortIndex
             score
             defaultLocale
             title
@@ -74,12 +74,12 @@ const query1 = gql`
         }
         stepsV2 {
           id
-          orderIndex
+          sortIndex
           defaultLocale
           langs {
             id
             lang
-            orderIndex
+            sortIndex
             defaultLocale
             title
             body
@@ -87,24 +87,24 @@ const query1 = gql`
         }
         outputsV2 {
           id
-          orderIndex
+          sortIndex
           defaultLocale
           langs {
             id
             lang
-            orderIndex
+            sortIndex
             defaultLocale
             text
           }
         }
         prerequisitesV2 {
           id
-          orderIndex
+          sortIndex
           defaultLocale
           langs {
             id
             lang
-            orderIndex
+            sortIndex
             defaultLocale
             text
           }

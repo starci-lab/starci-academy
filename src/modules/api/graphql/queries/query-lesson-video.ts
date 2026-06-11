@@ -22,7 +22,7 @@ const query1 = gql`
         url
         thumbnailUrl
         durationMs
-        orderIndex
+        sortIndex
       }
     }
   }

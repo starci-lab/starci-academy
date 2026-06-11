@@ -15,14 +15,14 @@ const query1 = gql`
           displayId
           title
           description
-          orderIndex
+          sortIndex
           numContents
           contents {
             id
             displayId
             title
             description
-            orderIndex
+            sortIndex
             minutesRead
             isPremium
             challenges {

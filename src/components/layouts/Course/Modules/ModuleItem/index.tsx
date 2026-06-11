@@ -41,7 +41,7 @@ export const ModuleItem = ({
     /** Preview contents sorted by their display order (clone to avoid mutating redux state). */
     const previewContents = useMemo(
         () => _.cloneDeep(module.previewContents ?? []).sort(
-            (previous, current) => previous.orderIndex - current.orderIndex,
+            (previous, current) => previous.sortIndex - current.sortIndex,
         ),
         [module.previewContents],
     )

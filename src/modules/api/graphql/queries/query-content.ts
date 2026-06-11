@@ -13,7 +13,7 @@ const query1 = gql`
         id
         displayId
         description
-        orderIndex
+        sortIndex
         minutesRead
         isPremium
         isSandbox
@@ -30,18 +30,18 @@ const query1 = gql`
           id
           alias
           url
-          orderIndex
+          sortIndex
         }
         codeExplainings {
           id
-          orderIndex
+          sortIndex
           lang
           code
           explain
         }
         codeImplementations {
           id
-          orderIndex
+          sortIndex
           lang
           guide
           example
@@ -49,7 +49,7 @@ const query1 = gql`
         bodies {
           id
           lang
-          orderIndex
+          sortIndex
           body
           defaultLocale
           translations {

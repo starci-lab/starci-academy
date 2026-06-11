@@ -33,7 +33,7 @@ const query1 = gql`
             id
           }
           description
-          orderIndex
+          sortIndex
           minutesRead
           title
           body
@@ -41,7 +41,7 @@ const query1 = gql`
             id
             alias
             url
-            orderIndex
+            sortIndex
           }
         }
       }

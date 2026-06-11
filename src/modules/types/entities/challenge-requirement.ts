@@ -13,8 +13,8 @@ export interface ChallengeRequirementEntity extends AbstractEntity {
     proTipsHints: string
     /** Explicit forbidden practices. */
     forbidden: string
-    /** Order within the challenge requirement list. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** Default locale for this row. */
     defaultLocale: string
     /** Localized field overrides. */

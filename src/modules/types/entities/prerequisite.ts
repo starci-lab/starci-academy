@@ -7,8 +7,8 @@ import type { CourseEntity } from "./course"
 export interface PrerequisiteEntity extends AbstractEntity {
     /** The text of the prerequisite. */
     text: string
-    /** The order index of the prerequisite. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** The course that the prerequisite belongs to. */
     course?: CourseEntity
 }

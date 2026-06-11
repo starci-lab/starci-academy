@@ -29,7 +29,7 @@ const query1 = gql`
           type
           title
           score
-          orderIndex
+          sortIndex
           description
           userSubmission {
             submissionUrl

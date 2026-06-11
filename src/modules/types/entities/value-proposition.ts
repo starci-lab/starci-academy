@@ -7,8 +7,8 @@ import type { CourseEntity } from "./course"
 export interface ValuePropositionEntity extends AbstractEntity {
     /** Short HTML snippet safe for previews. */
     text: string
-    /** Display order (lower first). */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** Owning course when nested in a full graph. */
     course?: CourseEntity
 }

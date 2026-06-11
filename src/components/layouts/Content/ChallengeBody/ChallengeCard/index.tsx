@@ -63,7 +63,7 @@ export const ChallengeCard = ({ challenge }: ChallengeCardProps) => {
         <Card>
             <CardContent>
                 <div>
-                    <div className="font-medium mb-2">{challenge.orderIndex + 1}. {challenge.title}</div>
+                    <div className="font-medium mb-2">{challenge.sortIndex}. {challenge.title}</div>
                     <div className="flex items-center gap-2">
                         <Chip variant="secondary" color="accent">
                             <TrophyIcon className="size-4" />

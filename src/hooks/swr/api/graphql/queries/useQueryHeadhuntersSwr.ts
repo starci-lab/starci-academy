@@ -78,7 +78,7 @@ export const useQueryHeadhuntersSwr = () => {
                 merged.push(...payload.data)
             }
 
-            merged.sort((a, b) => a.orderIndex - b.orderIndex)
+            merged.sort((a, b) => a.sortIndex - b.sortIndex)
             dispatch(setHeadhunters(merged))
             dispatch(setHeadhuntersCount(total))
 

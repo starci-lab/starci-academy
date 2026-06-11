@@ -56,7 +56,7 @@ export const MilestoneAccordion = ({
             {milestones.map((milestone) => {
                 const tasks = milestone.tasks
                     ?.slice()
-                    ?.sort((prev, next) => prev.orderIndex - next.orderIndex) ?? []
+                    ?.sort((prev, next) => prev.sortIndex - next.sortIndex) ?? []
                 return (
                     <Accordion.Item
                         key={String(milestone.id)}
@@ -66,7 +66,7 @@ export const MilestoneAccordion = ({
                             <Accordion.Trigger className="w-full">
                                 <div className="flex w-full items-center justify-between gap-2">
                                     <span className="min-w-0 flex-1 cursor-pointer text-start text-base font-semibold">
-                                        {`${milestone.orderIndex + 1}. ${milestone.title || "Milestone"}`}
+                                        {`${milestone.sortIndex}. ${milestone.title || "Milestone"}`}
                                     </span>
                                     <Accordion.Indicator />
                                 </div>

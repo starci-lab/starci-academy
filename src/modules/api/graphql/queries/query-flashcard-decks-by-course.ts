@@ -15,11 +15,11 @@ const query1 = gql`
         title
         description
         difficulty
-        orderIndex
+        sortIndex
         defaultLocale
         cards {
           id
-          orderIndex
+          sortIndex
         }
       }
     }

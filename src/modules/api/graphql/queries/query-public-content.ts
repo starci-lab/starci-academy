@@ -13,7 +13,7 @@ const query1 = gql`
         id
         displayId
         description
-        orderIndex
+        sortIndex
         minutesRead
         isPremium
         title
@@ -25,7 +25,7 @@ const query1 = gql`
           id
           alias
           url
-          orderIndex
+          sortIndex
         }
       }
     }

@@ -17,7 +17,7 @@ export const Learn = () => {
     const [selectedContentId, setSelectedContentId] = useState<string | null>(null)
     const isLoading = isCourseLoading || isModuleLoading || !module || !course
     const sortedContents = useMemo(
-        () => [...(module?.contents ?? [])].sort((a, b) => a.orderIndex - b.orderIndex),
+        () => [...(module?.contents ?? [])].sort((a, b) => a.sortIndex - b.sortIndex),
         [module?.contents],
     )
     const selectedContent = useMemo(

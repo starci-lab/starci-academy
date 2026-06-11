@@ -31,8 +31,8 @@ export interface LessonVideoEntity extends AbstractEntity {
     thumbnailUrl?: string
     /** Video duration in milliseconds. */
     durationMs: number
-    /** Display order within the module lesson video list. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** Default locale for this row (Nest `Locale` / GraphQL `GraphQLTypeLocale`). */
     defaultLocale: string
     /** Parent module. */

@@ -16,8 +16,8 @@ interface SidebarAccordionSubItem {
     key: string
     /** Display label of each sub item. */
     label: string
-    /** Order index of each sub item. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
 }
 
 /**
@@ -76,7 +76,7 @@ export const SidebarAccordion = ({
                                         onPress={() => onSelectSubItem(subItem.key)}
                                         className={cn("", subItem.key === extraId ? "text-accent bg-accent/10" : "")}
                                     >
-                                        <span className="hidden sm:inline">{`${subItem.orderIndex + 1}. ${subItem.label}`}</span>
+                                        <span className="hidden sm:inline">{`${subItem.sortIndex}. ${subItem.label}`}</span>
                                     </ListBox.Item>
                                 ))}
                             </ListBox>

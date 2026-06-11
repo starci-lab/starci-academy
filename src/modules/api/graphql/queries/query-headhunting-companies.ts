@@ -21,7 +21,7 @@ const query1 = gql`
         email
         facebookUrl
         linkedinUrl
-        orderIndex
+        sortIndex
       }
     }
   }

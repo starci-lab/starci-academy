@@ -14,13 +14,13 @@ import _ from "lodash"
 const getFirstPersonalProjectTaskId = (
     milestones: Array<MilestoneEntity>,
 ): string | undefined => {
-    const orderedMilestones = [...milestones].sort((a, b) => a.orderIndex - b.orderIndex)
+    const orderedMilestones = [...milestones].sort((a, b) => a.sortIndex - b.sortIndex)
     for (const milestone of orderedMilestones) {
         const tasks = milestone.tasks
         if (!tasks?.length) {
             continue
         }
-        const orderedTasks = [...tasks].sort((a, b) => a.orderIndex - b.orderIndex)
+        const orderedTasks = [...tasks].sort((a, b) => a.sortIndex - b.sortIndex)
         const first = orderedTasks[0]
         if (first?.id) {
             return first.id
@@ -48,7 +48,7 @@ export const useDefaultRedirect = () => {
 
         const learnModuleBase = pathConfig().locale(locale).course(courseDisplayId).learn().module().build()
         if (pathname === learnModuleBase) {
-            const modules = _.cloneDeep(course.modules ?? []).sort((prev, next) => prev.orderIndex - next.orderIndex)
+            const modules = _.cloneDeep(course.modules ?? []).sort((prev, next) => prev.sortIndex - next.sortIndex)
             const firstModuleId = modules[0]?.id
             if (!firstModuleId) {
                 return

@@ -7,8 +7,8 @@ import type { ChallengePrerequisiteV2LangEntity } from "./challenge-prerequisite
  * CDN payload has no item-level title; only per-lang `text` rows.
  */
 export interface ChallengePrerequisiteV2Entity extends AbstractEntity {
-    /** Display order within the challenge prerequisite list. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** Default locale for this prerequisite item. */
     defaultLocale: string
     /** Per-programming-language text rows. */

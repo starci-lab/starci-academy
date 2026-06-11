@@ -305,7 +305,7 @@ export const ChallengeV2Modal = () => {
                                     </Accordion>
                                     <div className="border-t" />
                                     <div className="p-3">
-                                        <ReferenceLinks references={_.cloneDeep(challenge?.references ?? []).sort((prev, next) => prev.orderIndex - next.orderIndex)} titleKey="reference.title" />
+                                        <ReferenceLinks references={_.cloneDeep(challenge?.references ?? []).sort((prev, next) => prev.sortIndex - next.sortIndex)} titleKey="reference.title" />
                                     </div>
                                 </DragScrollArea>
                             </div>

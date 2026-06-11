@@ -107,7 +107,7 @@ export const Task = () => {
     const sortedCriterias = useMemo(() => {
         if (!displayTask?.criterias) return []
         return _.cloneDeep(displayTask.criterias)
-            .sort((prev, next) => prev.orderIndex - next.orderIndex)
+            .sort((prev, next) => prev.sortIndex - next.sortIndex)
     }, [displayTask?.criterias])
 
     const reviewJobId = selectedTaskId ? milestoneTaskIdToJobId[selectedTaskId] : undefined

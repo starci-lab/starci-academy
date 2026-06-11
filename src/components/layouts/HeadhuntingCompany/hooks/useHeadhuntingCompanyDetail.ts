@@ -68,7 +68,7 @@ export const useHeadhuntingCompanyDetail = (): UseHeadhuntingCompanyDetailResult
         }
         return consultants
             .filter((entry) => (entry.company?.id ?? entry.companyId) === companyId)
-            .sort((a, b) => a.orderIndex - b.orderIndex)
+            .sort((a, b) => a.sortIndex - b.sortIndex)
     }, [
         companyId,
         consultants,

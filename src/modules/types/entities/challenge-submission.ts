@@ -19,8 +19,8 @@ export interface ChallengeSubmissionEntity extends AbstractEntity {
     description: string | null
     /** The challenge of the challenge submission. */
     challenge?: ChallengeEntity
-    /** The order index of the challenge submission. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** The translations of the challenge submission. */
     translations?: Array<ChallengeSubmissionTranslationEntity>
     /** The user submissions of the challenge submission. */

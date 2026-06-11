@@ -32,7 +32,7 @@ const query1 = gql`
           description
           url
           durationMs
-          orderIndex
+          sortIndex
           thumbnailUrl
         }
       }

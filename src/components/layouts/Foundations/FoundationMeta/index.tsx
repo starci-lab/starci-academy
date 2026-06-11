@@ -32,7 +32,7 @@ export const FoundationMeta = ({
         if (!foundation.tags?.length) {
             return []
         }
-        return [...foundation.tags].sort((a, b) => a.orderIndex - b.orderIndex)
+        return [...foundation.tags].sort((a, b) => a.sortIndex - b.sortIndex)
     }, [foundation.tags])
 
     const authorLabel = useMemo(() => {

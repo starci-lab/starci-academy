@@ -14,8 +14,8 @@ export interface ChallengeStepEntity extends AbstractEntity {
     description: string
     /** Main step content as Markdown. */
     body: string
-    /** Display order within the challenge step list. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** Default locale for this row (Nest `Locale` / GraphQL `GraphQLTypeLocale`). */
     defaultLocale: string
     /**

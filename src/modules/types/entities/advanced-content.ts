@@ -8,8 +8,8 @@ import type { AdvancedContentSectionEntity } from "./advanced-content-section"
 export interface AdvancedContentEntity extends AbstractEntity {
     /** The title of the advanced content. */
     title: string
-    /** The order index of the advanced content. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** The course module that the advanced content belongs to. */
     module?: ModuleEntity
     /** The sections of the advanced content. */

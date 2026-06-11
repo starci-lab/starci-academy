@@ -22,7 +22,7 @@ const query1 = gql`
           difficulty
           domain
           tags
-          orderIndex
+          sortIndex
         }
       }
     }

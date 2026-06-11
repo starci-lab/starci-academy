@@ -18,7 +18,8 @@ export interface ChallengeOutputV2Entity extends AbstractEntity {
 
     /** Display order within the challenge output list. */
 
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
 
     /** Default locale for this output item. */
 

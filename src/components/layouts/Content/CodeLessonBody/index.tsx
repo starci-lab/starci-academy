@@ -37,14 +37,14 @@ export const CodeLessonBody = ({ className }: CodeLessonBodyProps) => {
     const explainings = useMemo(
         () => getContentCodeExplainings(content)
             .slice()
-            .sort((prev, next) => prev.orderIndex - next.orderIndex),
+            .sort((prev, next) => prev.sortIndex - next.sortIndex),
         [content],
     )
 
     const implementations = useMemo(
         () => getContentCodeImplementations(content)
             .slice()
-            .sort((prev, next) => prev.orderIndex - next.orderIndex),
+            .sort((prev, next) => prev.sortIndex - next.sortIndex),
         [content],
     )
 
@@ -97,7 +97,7 @@ export const CodeLessonBody = ({ className }: CodeLessonBodyProps) => {
             getTabLabel={(item) => (
                 item.lang
                     ? item.lang
-                    : t("content.codeExplainings.indexLabel", { index: item.orderIndex + 1 })
+                    : t("content.codeExplainings.indexLabel", { index: item.sortIndex })
             )}
             renderPanel={(item) => <ExplainingCard item={item} />}
         />

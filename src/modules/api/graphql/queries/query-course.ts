@@ -27,27 +27,27 @@ const query1 = gql`
           priceUsd
           phase
           slotAvailable
-          orderIndex
+          sortIndex
         }
         prerequisites {
           id
           text
-          orderIndex
+          sortIndex
         }
         valuePropositions {
           id
           text
-          orderIndex
+          sortIndex
         }
         modules {
           id
           displayId
           title
           description
-          orderIndex
+          sortIndex
           previewContents {
             id
-            orderIndex
+            sortIndex
             text
           }
           contents {
@@ -55,7 +55,7 @@ const query1 = gql`
             displayId
             title
             description
-            orderIndex
+            sortIndex
             minutesRead
             challenges {
               id
@@ -66,7 +66,7 @@ const query1 = gql`
           id
           question
           answer
-          orderIndex
+          sortIndex
         }
       }
     }

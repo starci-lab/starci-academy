@@ -16,8 +16,8 @@ export interface FlashcardDeckEntity extends AbstractEntity {
     description: string
     /** Relative difficulty of the deck. */
     difficulty: ChallengeDifficulty
-    /** Display order within the course deck list. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** Default locale for this deck row. */
     defaultLocale: string
     /** Owning course id. */

@@ -48,7 +48,7 @@ export const ModuleIndexStrip = ({
                                 () => onSelectModule(String(module.id))
                             }
                         >
-                            {module.orderIndex + 1}
+                            {module.sortIndex}
                         </div>
                         <Separator
                             className="w-full"

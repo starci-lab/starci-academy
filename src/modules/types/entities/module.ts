@@ -18,8 +18,8 @@ export interface ModuleEntity extends AbstractEntity {
     title: string
     /** The description of the module. */
     description: string | null
-    /** The order index of the module. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** The course that the module belongs to. */
     course?: CourseEntity
     /** The general content of the module. */

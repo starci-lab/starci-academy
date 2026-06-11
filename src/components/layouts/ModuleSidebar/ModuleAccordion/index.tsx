@@ -60,7 +60,7 @@ export const ModuleAccordion = ({
                     (module) => {
                         const contents = module.contents
                             ?.slice()
-                            ?.sort((prev, next) => prev.orderIndex - next.orderIndex) ?? []
+                            ?.sort((prev, next) => prev.sortIndex - next.sortIndex) ?? []
                         return (
                             <Accordion.Item
                                 key={String(module.id)}
@@ -75,7 +75,7 @@ export const ModuleAccordion = ({
                                                     module.id === activeModuleId ? "text-accent" : "",
                                                 )}
                                             >
-                                                {`${module.orderIndex + 1}. ${module.title}`}
+                                                {`${module.sortIndex}. ${module.title}`}
                                             </span>
                                             <Accordion.Indicator />
                                         </div>

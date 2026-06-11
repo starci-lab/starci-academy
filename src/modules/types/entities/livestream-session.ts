@@ -32,8 +32,8 @@ export interface LivestreamSessionEntity extends AbstractEntity {
      * When true, UI may hide this row (superseded / overridable slot); backend may still return it.
      */
     isOverridable?: boolean
-    /** Display order within the course's livestream schedule. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** Minimal parent course reference when loaded. */
     course?: LivestreamSessionCourseRef
     /** Localized overrides (e.g. `note` field). */

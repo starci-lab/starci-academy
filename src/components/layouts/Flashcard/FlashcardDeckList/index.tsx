@@ -54,7 +54,7 @@ export const FlashcardDeckList = ({ courseId, onSelectDeck }: FlashcardDeckListP
 
     // decks in display order, narrowed by the (case-insensitive) search query
     const filteredDecks = useMemo(() => {
-        const sorted = [...(data ?? [])].sort((prev, next) => prev.orderIndex - next.orderIndex)
+        const sorted = [...(data ?? [])].sort((prev, next) => prev.sortIndex - next.sortIndex)
         const normalized = query.trim().toLowerCase()
         if (!normalized) {
             return sorted

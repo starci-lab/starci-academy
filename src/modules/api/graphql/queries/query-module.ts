@@ -20,17 +20,17 @@ const query1 = gql`
         title
         description
         numContents
-        orderIndex
+        sortIndex
         previewContents {
           id
-          orderIndex
+          sortIndex
           text
         }
         contents {
           id
           title
           description
-          orderIndex
+          sortIndex
         }
       }
     }

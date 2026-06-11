@@ -33,7 +33,7 @@ const query1 = gql`
           startTime
           expectedEndTime
           note
-          orderIndex
+          sortIndex
         }
       }
     }

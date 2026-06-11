@@ -80,7 +80,7 @@ export const LivestreamCalendarModal = () => {
         }
         return [...sessions]
             .filter((session) => !session.isOverridable)
-            .sort((prev, next) => prev.orderIndex - next.orderIndex)
+            .sort((prev, next) => prev.sortIndex - next.sortIndex)
     }, [sessions])
 
     const defaultFocusedValue = useMemo(() => {

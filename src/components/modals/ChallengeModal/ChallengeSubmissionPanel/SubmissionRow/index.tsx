@@ -164,7 +164,7 @@ export const SubmissionRow = ({
             <div className="flex flex-col">
                 <div className="flex items-center gap-2 text-foreground text-base font-semibold">
                     <div>
-                        {submission.orderIndex + 1}
+                        {submission.sortIndex}
                         {". "}
                         {submission.title}
                     </div>

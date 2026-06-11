@@ -14,8 +14,8 @@ export interface FlashcardCardEntity extends AbstractEntity {
     level?: string | null
     /** Technology tags for this card (e.g. ["NestJS", "Redis"]). */
     tags?: Array<string>
-    /** Display order within the deck card list. */
-    orderIndex: number
+    /** Pure ordering index used to sort/reorder (1-based). */
+    sortIndex: number
     /** Default locale for this card row. */
     defaultLocale: string
     /** Parent deck id. */

@@ -1,4 +1,5 @@
 import type { GraphQLResponse } from "../../types"
+import type { CodingProblemSolution } from "../../queries/types/coding"
 
 /** Variables for `revealCodingSolution(request)`. */
 export interface RevealCodingSolutionRequest {
@@ -10,6 +11,11 @@ export interface RevealCodingSolutionRequest {
 export interface RevealCodingSolutionPayload {
     /** True when this call recorded a new reveal; false when already revealed. */
     revealed: boolean
+    /**
+     * The problem's full reference solutions (one per language). Served ONLY here —
+     * the gated reveal flow — never from the problem detail read.
+     */
+    solutions: Array<CodingProblemSolution>
 }
 
 /** Response for the `revealCodingSolution` mutation. */

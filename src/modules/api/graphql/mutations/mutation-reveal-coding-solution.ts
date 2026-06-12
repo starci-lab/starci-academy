@@ -14,6 +14,11 @@ const mutation1 = gql`
       error
       data {
         revealed
+        solutions {
+          id
+          language
+          code
+        }
       }
     }
   }

@@ -26,6 +26,7 @@ import {
     CodingLanguage,
     CodingVerdict,
     type CodingProblem,
+    type CodingProblemSolution,
     type CodingSubmission,
 } from "@/modules/api/graphql"
 import {
@@ -93,6 +94,9 @@ export const PracticeProblem = ({ slug }: PracticeProblemProps) => {
     const [submitting, setSubmitting] = useState(false)
     const [showHint, setShowHint] = useState(false)
     const [showSolution, setShowSolution] = useState(false)
+    // reference solutions arrive ONLY from the gated reveal mutation (never the
+    // problem detail read) — held here once the learner reveals them
+    const [revealedSolutions, setRevealedSolutions] = useState<Array<CodingProblemSolution>>([])
     const [solutionLanguage, setSolutionLanguage] = useState<CodingLanguage>(CodingLanguage.Python)
     const [touchedLanguages, setTouchedLanguages] = useState<Set<CodingLanguage>>(new Set())
 
@@ -181,14 +185,14 @@ export const PracticeProblem = ({ slug }: PracticeProblemProps) => {
     // reference solution code keyed by language (revealed in the "answer" panel)
     const solutionByLanguage = useMemo(() => {
         const map = new Map<CodingLanguage, string>()
-        problem?.solutions?.forEach((solution) => map.set(solution.language, solution.code))
+        revealedSolutions.forEach((solution) => map.set(solution.language, solution.code))
         return map
-    }, [problem?.solutions])
+    }, [revealedSolutions])
 
     // languages that actually ship a reference solution
     const solutionLanguages = useMemo<Array<CodingLanguage>>(
-        () => problem?.solutions?.map((solution) => solution.language) ?? [],
-        [problem?.solutions],
+        () => revealedSolutions.map((solution) => solution.language),
+        [revealedSolutions],
     )
 
     // keep the solution language switcher pinned to an available language
@@ -208,11 +212,14 @@ export const PracticeProblem = ({ slug }: PracticeProblemProps) => {
         if (!window.confirm(t("codingPractice.revealConfirm"))) {
             return
         }
-        setShowSolution(true)
         try {
-            await mutateRevealCodingSolution({ request: { slug } })
+            // the gated reveal mutation both records the forfeit AND returns the
+            // reference solutions — the only path by which they reach the client
+            const response = await mutateRevealCodingSolution({ request: { slug } })
+            setRevealedSolutions(response.data?.revealCodingSolution.data?.solutions ?? [])
+            setShowSolution(true)
         } catch {
-            // reveal recording is best-effort; the answer is already shown
+            // reveal failed (network/auth) — keep the answer panel closed
         }
     }, [showSolution, slug, t])
 

@@ -35,11 +35,6 @@ const query1 = gql`
           language
           code
         }
-        solutions {
-          id
-          language
-          code
-        }
       }
     }
   }

@@ -139,8 +139,6 @@ export interface CodingProblem {
     testcases?: Array<CodingProblemTestcase>
     /** Starter code per language — present on detail. */
     starterCodes?: Array<CodingProblemStarterCode>
-    /** Full reference solutions per language — present on detail (revealed answer). */
-    solutions?: Array<CodingProblemSolution>
 }
 
 /** A user's submission row. */

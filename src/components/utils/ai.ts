@@ -56,6 +56,11 @@ export const resolveAiProcessingCopy = (
                 title: t("aiProcessing.reviewCv.queued.title"),
                 description: t("aiProcessing.reviewCv.queued.description"),
             }
+        case JobCategory.JudgeCoding:
+            return {
+                title: t("aiProcessing.judgeCoding.queued.title"),
+                description: t("aiProcessing.judgeCoding.queued.description"),
+            }
         default:
             return null
         }
@@ -76,6 +81,11 @@ export const resolveAiProcessingCopy = (
                 title: t("aiProcessing.reviewCv.processing.title"),
                 description: t("aiProcessing.reviewCv.processing.description"),
             }
+        case JobCategory.JudgeCoding:
+            return {
+                title: t("aiProcessing.judgeCoding.processing.title"),
+                description: t("aiProcessing.judgeCoding.processing.description"),
+            }
         default:
             return null
         }
@@ -95,6 +105,11 @@ export const resolveAiProcessingCopy = (
             return {
                 title: t("aiProcessing.reviewCv.completed.title"),
                 description: t("aiProcessing.reviewCv.completed.description"),
+            }
+        case JobCategory.JudgeCoding:
+            return {
+                title: t("aiProcessing.judgeCoding.completed.title"),
+                description: t("aiProcessing.judgeCoding.completed.description"),
             }
         default:
             return null
@@ -118,6 +133,12 @@ export const resolveAiProcessingCopy = (
             base = {
                 title: t("aiProcessing.reviewCv.failed.title"),
                 description: t("aiProcessing.reviewCv.failed.description"),
+            }
+            break
+        case JobCategory.JudgeCoding:
+            base = {
+                title: t("aiProcessing.judgeCoding.failed.title"),
+                description: t("aiProcessing.judgeCoding.failed.description"),
             }
             break
         default:

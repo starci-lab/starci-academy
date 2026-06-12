@@ -35,7 +35,8 @@ import {
     PublicationEvent,
     SubscriptionEvent,
 } from "@/hooks/socketio"
-import { JobStatus, type JobStatusUpdatedSocketIoMessage } from "@/modules/types"
+import { JobCategory, JobStatus, type JobStatusUpdatedSocketIoMessage } from "@/modules/types"
+import { AIProcessingText } from "@/components/reuseable/AIProcessingText"
 import { PracticeProblemSkeleton } from "./PracticeProblemSkeleton"
 
 /** Props for {@link PracticeProblem}. */
@@ -91,6 +92,8 @@ export const PracticeProblem = ({ slug }: PracticeProblemProps) => {
     const [language, setLanguage] = useState<CodingLanguage>(CodingLanguage.Python)
     const [code, setCode] = useState<string>("")
     const [pendingJobId, setPendingJobId] = useState<string | null>(null)
+    const [pendingJobStatus, setPendingJobStatus] = useState<JobStatus | null>(null)
+    const [pendingJobError, setPendingJobError] = useState<string | undefined>(undefined)
     const [submitting, setSubmitting] = useState(false)
     const [showHint, setShowHint] = useState(false)
     const [showSolution, setShowSolution] = useState(false)
@@ -243,12 +246,16 @@ export const PracticeProblem = ({ slug }: PracticeProblemProps) => {
             })
             const jobId = response.data?.submitCodingSolution.data?.jobId
             if (!jobId) return
-            await mutateSubmissions()
+            // Subscribe to the job room + show the live "judging" indicator BEFORE the
+            // refetch so an early socket push is never missed (race-free, like challenge).
+            setPendingJobError(undefined)
+            setPendingJobStatus(JobStatus.Queued)
             setPendingJobId(jobId)
             socket.emit(PublicationEvent.SubscribeJobNotification, {
                 data: { jobId },
                 locale,
             })
+            void mutateSubmissions()
         } finally {
             setSubmitting(false)
         }
@@ -258,9 +265,13 @@ export const PracticeProblem = ({ slug }: PracticeProblemProps) => {
         if (!pendingJobId) return
         const onMessage = (message: JobStatusUpdatedSocketIoMessage) => {
             if (message.data?.jobId !== pendingJobId) return
+            // track live status so the indicator reflects queued → processing → done
+            setPendingJobStatus(message.data?.status ?? JobStatus.Processing)
+            setPendingJobError(message.data?.error)
             if (isTerminalStatus(message.data?.status)) {
                 void mutateSubmissions()
                 setPendingJobId(null)
+                setPendingJobStatus(null)
             }
         }
         jobNotificationsSocketIoEventEmitter.on(SubscriptionEvent.JobStatusUpdated, onMessage)
@@ -449,8 +460,19 @@ export const PracticeProblem = ({ slug }: PracticeProblemProps) => {
                     </Button>
                 </div>
 
+                {/* live judging indicator — realtime via /job_notifications socket */}
+                {pendingJobId && pendingJobStatus && (
+                    <div className="border-b px-6 py-4">
+                        <AIProcessingText
+                            jobCategory={JobCategory.JudgeCoding}
+                            jobStatus={pendingJobStatus}
+                            error={pendingJobError}
+                        />
+                    </div>
+                )}
+
                 {/* result panel */}
-                {latestSubmission && (
+                {!pendingJobId && latestSubmission && (
                     <div className="flex flex-col gap-1.5 border-b px-6 py-4">
                         <div className="flex items-center justify-between">
                             <p className="font-semibold">{t("codingPractice.result")}</p>

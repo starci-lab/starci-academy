@@ -8,4 +8,6 @@ export enum JobCategory {
     ReviewCv = "reviewCv",
     /** AI review job triggered when a personal project task is submitted. */
     ReviewTask = "reviewTask",
+    /** Judge0 grading job triggered when a coding-practice solution is submitted. */
+    JudgeCoding = "judgeCoding",
 }

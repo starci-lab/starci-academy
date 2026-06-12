@@ -1047,6 +1047,24 @@
                 "description": "Đã xảy ra lỗi khi chấm bài. Vui lòng thử lại."
             }
         },
+        "judgeCoding": {
+            "queued": {
+                "title": "Đang chờ chấm",
+                "description": "Bài giải của bạn đang trong hàng đợi và sẽ được chấm ngay."
+            },
+            "processing": {
+                "title": "Đang chấm bài giải",
+                "description": "Đang chạy code của bạn qua các test case. Vui lòng chờ trong giây lát."
+            },
+            "completed": {
+                "title": "Chấm xong",
+                "description": "Bài giải đã được chấm. Bạn có thể xem kết quả ngay."
+            },
+            "failed": {
+                "title": "Chấm bài thất bại",
+                "description": "Đã xảy ra lỗi khi chấm bài giải. Vui lòng thử lại."
+            }
+        },
         "reviewTask": {
             "queued": {
                 "title": "Đang chờ review",

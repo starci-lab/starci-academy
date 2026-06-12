@@ -1038,6 +1038,24 @@
                 "description": "Something went wrong while reviewing your submission. Please try again."
             }
         },
+        "judgeCoding": {
+            "queued": {
+                "title": "In Queue",
+                "description": "Your solution is queued for judging and will run shortly."
+            },
+            "processing": {
+                "title": "Judging Your Solution",
+                "description": "Running your code against the test cases. This may take a moment."
+            },
+            "completed": {
+                "title": "Judging Complete",
+                "description": "Your solution has been judged. You can now view the result."
+            },
+            "failed": {
+                "title": "Judging Failed",
+                "description": "Something went wrong while judging your solution. Please try again."
+            }
+        },
         "reviewTask": {
             "queued": {
                 "title": "Queued for Review",

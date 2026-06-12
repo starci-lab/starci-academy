@@ -31,19 +31,19 @@ export const KeyPoolStatusSkeleton = ({
                     className="rounded-3xl border bg-background p-5"
                 >
                     {/* provider chip + active summary */}
-                    <div className="flex flex-wrap items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-1.5">
                         <Skeleton className="h-6 w-20 rounded-full" />
                         <SkeletonText size="sm" width="w-24" />
                     </div>
                     <div className="h-4" />
                     {/* key rows */}
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-1.5">
                         {Array.from({ length: 2 }).map((_unusedKey, keyIndex) => (
                             <div
                                 key={keyIndex}
-                                className="flex items-center justify-between gap-2 rounded-2xl border border-default-200/60 bg-default-50/50 px-3 py-2"
+                                className="flex items-center justify-between gap-1.5 rounded-2xl border border-default-200/60 bg-default-50/50 px-3 py-2"
                             >
-                                <div className="flex items-center gap-2">
+                                <div className="flex items-center gap-1.5">
                                     <SkeletonText size="xs" width="w-16" />
                                     <Skeleton className="h-5 w-14 rounded-full" />
                                 </div>

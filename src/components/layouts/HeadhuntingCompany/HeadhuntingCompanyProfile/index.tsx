@@ -43,7 +43,7 @@ export const HeadhuntingCompanyProfile = () => {
                     <p className="text-muted mt-2 text-sm">{company.description}</p>
                 ) : null}
                 {contactLinks.length > 0 ? (
-                    <ul className="mt-4 space-y-2 text-sm">
+                    <ul className="mt-4 space-y-1.5 text-sm">
                         {contactLinks.map((link) => (
                             <li key={link.labelKey}>
                                 <span className="text-muted font-medium">{t(link.labelKey)}: </span>

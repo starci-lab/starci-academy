@@ -130,7 +130,7 @@ export const InteractionBar = ({
                         type="button"
                         onClick={() => setPickerOpen((p) => !p)}
                         className={cn(
-                            "flex flex-1 items-center justify-center gap-2 py-2.5 text-sm font-medium transition-colors hover:bg-default/50",
+                            "flex flex-1 items-center justify-center gap-1.5 py-2.5 text-sm font-medium transition-colors hover:bg-default/50",
                             myReaction ? "text-accent" : "text-muted",
                         )}
                     >
@@ -170,7 +170,7 @@ export const InteractionBar = ({
                     onClick={onToggleFavorite}
                     disabled={isFavoritePending}
                     className={cn(
-                        "flex flex-1 items-center justify-center gap-2 py-2.5 text-sm font-medium text-muted transition-colors hover:bg-default/50",
+                        "flex flex-1 items-center justify-center gap-1.5 py-2.5 text-sm font-medium text-muted transition-colors hover:bg-default/50",
                         isFavorite && "text-accent",
                     )}
                 >
@@ -189,7 +189,7 @@ export const InteractionBar = ({
                     <button
                         type="button"
                         onClick={onShare}
-                        className="flex flex-1 items-center justify-center gap-2 py-2.5 text-sm font-medium text-muted transition-colors hover:bg-default/50"
+                        className="flex flex-1 items-center justify-center gap-1.5 py-2.5 text-sm font-medium text-muted transition-colors hover:bg-default/50"
                     >
                         <ShareNetworkIcon className="size-4" />
                         <span>{t("content.share")}</span>
@@ -200,7 +200,7 @@ export const InteractionBar = ({
                 <button
                     type="button"
                     onClick={onFullscreen}
-                    className="flex flex-1 items-center justify-center gap-2 py-2.5 text-sm font-medium text-muted transition-colors hover:bg-default/50"
+                    className="flex flex-1 items-center justify-center gap-1.5 py-2.5 text-sm font-medium text-muted transition-colors hover:bg-default/50"
                 >
                     <ArrowsOutIcon className="size-4" />
                     <span>{t("content.fullscreen")}</span>

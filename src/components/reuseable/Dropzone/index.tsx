@@ -55,7 +55,7 @@ export const Dropzone = ({
     })
 
     return (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-1.5">
             <div
                 {...getRootProps()}
                 className={cn(
@@ -65,7 +65,7 @@ export const Dropzone = ({
                 )}
             >
                 <input {...getInputProps({ onBlur })} />
-                <div className="flex flex-col items-center gap-2 text-center">
+                <div className="flex flex-col items-center gap-1.5 text-center">
                     <CloudArrowUpIcon className="size-6 text-muted" />
                     <div className="text-sm">
                         {file?.name ?? hint}

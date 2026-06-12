@@ -62,7 +62,7 @@ export const FeedbackSection = ({
     const t = useTranslations()
     return (
         <div>
-            <div className="flex items-center gap-2 text-base font-semibold">
+            <div className="flex items-center gap-1.5 text-base font-semibold">
                 {t("cv.submission.feedbackTitle")}
                 <StarCiAIBadge />
             </div>
@@ -70,7 +70,7 @@ export const FeedbackSection = ({
             <div className="rounded-3xl mb-3 bg-surface p-3 text-muted text-sm">
                 <MarkdownContent markdown={feedbackMarkdown} />
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5">
                 <Button
                     size="lg"
                     isDisabled={isReviewDisabled}

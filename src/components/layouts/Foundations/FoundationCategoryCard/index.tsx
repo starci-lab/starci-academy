@@ -35,7 +35,7 @@ export const FoundationCategoryCard = ({
                 thumbnailUrl={category.thumbnailUrl}
                 title={category.title}
             />
-            <div className="flex flex-1 flex-col gap-2 p-3">
+            <div className="flex flex-1 flex-col gap-1.5 p-3">
                 <span className="text-lg font-semibold">{category.title}</span>
                 {category.description ? (
                     <p className="text-muted line-clamp-3 text-sm">{category.description}</p>

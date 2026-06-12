@@ -92,7 +92,7 @@ export const CourseCard = ({
                 <div className="w-full">
                     <Button variant="primary" size="lg" className="w-full" onPress={onView}>{t("courses.viewCourse")}</Button>
                     <Spacer y={2} />
-                    <div className="text-sm text-justify flex gap-2">
+                    <div className="text-sm text-justify flex gap-1.5">
                         <span className="line-through text-muted">{course.originalPrice} VND</span>
                         <span>{actualPrice} VND</span>
                     </div>

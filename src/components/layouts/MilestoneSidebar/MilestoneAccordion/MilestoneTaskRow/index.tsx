@@ -80,7 +80,7 @@ export const MilestoneTaskRow = ({
                     </Link>
                     {task.description && (
                         <>
-                            <div className="h-2" />
+                            <div className="h-1.5" />
                             <div className="line-clamp-3 text-xs text-muted">
                                 {task.description}
                             </div>

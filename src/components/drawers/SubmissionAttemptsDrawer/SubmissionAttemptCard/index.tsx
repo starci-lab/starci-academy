@@ -89,7 +89,7 @@ export const SubmissionAttemptCard = (props: SubmissionAttemptCardProps) => {
                         {submissionAttempt.shortFeedback ?? ""}
                     </div>
                     <Spacer y={3} />
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1.5">
                         <Button
                             onPress={onViewDetails}
                         >

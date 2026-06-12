@@ -49,7 +49,7 @@ export const CvUpdateModal = () => {
                                 maxSizeInBytes={10 * 1024 * 1024}
                                 onChange={(file) => setCvFile(file)}
                             />
-                            <div className="flex items-center justify-end gap-2">
+                            <div className="flex items-center justify-end gap-1.5">
                                 <Button
                                     variant="ghost"
                                     onPress={() => {

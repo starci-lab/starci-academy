@@ -33,7 +33,7 @@ export const FreeTierCard = ({
         <Card className="flex h-full flex-col">
             <Card.Content className="flex flex-1 flex-col gap-3">
                 {/* icon + tier name — tight pair */}
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5">
                     <TierLevelIcon
                         level={1}
                         className="size-6 shrink-0 text-accent"
@@ -43,7 +43,7 @@ export const FreeTierCard = ({
                 <div className="h-[2lh] text-sm leading-normal text-muted line-clamp-3 overflow-hidden whitespace-normal break-words">
                     {t("aiSubscription.free.desc")}
                 </div>
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-1.5">
                     <div className="text-3xl font-bold text-foreground">{t("aiSubscription.free.price")}</div>
                     {/* spacer — matches paid tiers' USD hint block so CTAs align */}
                     <div
@@ -68,7 +68,7 @@ export const FreeTierCard = ({
             <Card.Footer>
                 {/* invisible rows — same footer height as paid tier credit list */}
                 <div
-                    className="flex flex-col gap-2 text-sm invisible"
+                    className="flex flex-col gap-1.5 text-sm invisible"
                     aria-hidden
                 >
                     <div className="flex min-h-5 items-center gap-1">—</div>

@@ -43,7 +43,7 @@ export const CvFileCard = ({
             <Card className="w-full shadow-none">
                 <CardContent className="flex items-center">
                     <div className="flex w-full items-center justify-between gap-3">
-                        <div className="flex min-w-0 flex-1 items-center gap-2">
+                        <div className="flex min-w-0 flex-1 items-center gap-1.5">
                             <FilePdfIcon className="size-10 text-muted" />
                             <div className="min-w-0 flex-1" title={currentCvLinkLabel}>
                                 {

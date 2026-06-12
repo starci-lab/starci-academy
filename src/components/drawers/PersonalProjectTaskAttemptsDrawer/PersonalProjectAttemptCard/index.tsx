@@ -50,7 +50,7 @@ export const PersonalProjectAttemptCard = (props: PersonalProjectAttemptCardProp
                     <div className="text-xs font-semibold uppercase tracking-wide text-accent">
                         {t("task.attemptNumber", { number: attemptNumber })}
                     </div>
-                    <div className="mt-2 flex items-center gap-2">
+                    <div className="mt-2 flex items-center gap-1.5">
                         <SparkleIcon className="size-5 shrink-0 text-warning" />
                         {scoreChip}
                     </div>

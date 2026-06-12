@@ -36,7 +36,7 @@ export const ModulesSkeleton = ({
                     <Accordion.Heading>
                         <Accordion.Trigger className="w-full">
                             <div className="flex w-full items-start justify-between gap-3">
-                                <div className="flex min-w-0 flex-1 flex-col gap-2">
+                                <div className="flex min-w-0 flex-1 flex-col gap-1.5">
                                     <Skeleton className="h-4 w-[30%] my-[4px]" />
                                     <div>
                                         <Skeleton className="h-[14px] w-[60%] my-[3px]" />

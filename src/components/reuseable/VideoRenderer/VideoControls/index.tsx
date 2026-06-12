@@ -102,8 +102,8 @@ export const VideoControls = ({
                 onSeek={onSeek}
             />
 
-            <div className="flex items-center justify-between gap-2">
-                <div className="flex items-center gap-2">
+            <div className="flex items-center justify-between gap-1.5">
+                <div className="flex items-center gap-1.5">
                     <PlayPauseButton
                         isPlaying={isPlaying}
                         onPlayPause={onPlayPause}

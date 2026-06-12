@@ -40,7 +40,7 @@ export const TierBadge = () => {
     )
 
     return (
-        <div className="mt-4 flex items-center gap-2">
+        <div className="mt-4 flex items-center gap-1.5">
             <span className="text-sm text-muted">Mức khuyến nghị:</span>
             <Chip
                 size="sm"

@@ -64,7 +64,7 @@ export const OrderSummary = () => {
             <Card className="bg-default/40 p-6 backdrop-blur-md">
                 <Card.Content>
                     <h3 className="mb-4 text-lg font-medium">{courseTitle}</h3>
-                    <div className="flex items-baseline gap-2">
+                    <div className="flex items-baseline gap-1.5">
                         <span className="text-3xl font-bold text-primary">
                             {Number(amount).toLocaleString("vi-VN")}
                         </span>

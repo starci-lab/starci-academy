@@ -47,7 +47,7 @@ export const LeaderboardPodium = ({ entries, viewerUserId }: LeaderboardPodiumPr
                 return (
                     <div
                         key={entry.enrollmentId}
-                        className="flex flex-1 flex-col items-center gap-2"
+                        className="flex flex-1 flex-col items-center gap-1.5"
                     >
                         {/* crown only on the champion */}
                         {entry.rank === 1 && (

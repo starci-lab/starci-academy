@@ -30,7 +30,7 @@ export const Profile = () => {
 
     if (!user) {
         return (
-            <div className="mx-auto flex max-w-3xl flex-col items-center gap-2 p-12 text-center">
+            <div className="mx-auto flex max-w-3xl flex-col items-center gap-1.5 p-12 text-center">
                 <div className="text-lg font-semibold text-foreground">{t("profile.signedOut.title")}</div>
                 <div className="text-sm text-muted">{t("profile.signedOut.desc")}</div>
             </div>

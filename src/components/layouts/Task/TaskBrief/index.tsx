@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useMemo } from "react"
-import { useLocale, useTranslations } from "next-intl"
+import { useTranslations } from "next-intl"
 import { MarkdownContent } from "@/components/reuseable"
 import type { MilestoneTaskBrief } from "@/modules/types"
 
@@ -24,19 +24,12 @@ const pickBriefByLang = (
     briefs.find((brief) => brief.lang === lang) ?? briefs[0]
 
 /**
- * Resolve a brief's Markdown body for the active locale, falling back to the brief's default-locale
- * `body` when no matching `body` translation exists.
+ * The brief `body` is already resolved to the active locale by the backend resolver (one localized
+ * body per language, no per-locale translation variants), so we read it directly.
  */
 const resolveBriefBody = (
     brief: MilestoneTaskBrief | undefined,
-    locale: string,
-): string => {
-    if (!brief) return ""
-    const translation = brief.translations?.find(
-        (row) => row.locale === locale && row.field === "body",
-    )
-    return translation?.value ?? brief.body ?? ""
-}
+): string => brief?.body ?? ""
 
 /**
  * SCHEMA V2 learner-facing task brief. Renders the per-language Markdown instructions (with
@@ -47,11 +40,10 @@ const resolveBriefBody = (
  */
 export const TaskBrief = ({ briefs, lang }: TaskBriefProps) => {
     const t = useTranslations()
-    const locale = useLocale()
 
     const body = useMemo(
-        () => resolveBriefBody(pickBriefByLang(briefs, lang), locale),
-        [briefs, lang, locale],
+        () => resolveBriefBody(pickBriefByLang(briefs, lang)),
+        [briefs, lang],
     )
 
     if (briefs.length === 0) {

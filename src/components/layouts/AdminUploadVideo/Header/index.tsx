@@ -12,8 +12,8 @@ import React from "react"
  */
 export const AdminUploadVideoHeader = () => {
     return (
-        <div className="text-center space-y-2 pb-2">
-            <div className="inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-4 py-1.5 text-xs font-semibold tracking-wider text-indigo-300 uppercase">
+        <div className="text-center space-y-1.5 pb-2">
+            <div className="inline-flex items-center gap-1.5 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-4 py-1.5 text-xs font-semibold tracking-wider text-indigo-300 uppercase">
                 <VideoIcon className="h-3.5 w-3.5" />
                 Admin Tools
             </div>

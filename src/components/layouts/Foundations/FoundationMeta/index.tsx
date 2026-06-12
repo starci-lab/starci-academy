@@ -43,8 +43,8 @@ export const FoundationMeta = ({
     }, [foundation.author, t])
 
     return (
-        <div className="flex flex-col gap-2">
-            <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-col gap-1.5">
+            <div className="flex flex-wrap items-center gap-1.5">
                 {showKind ? (
                     <Chip size="sm" variant="secondary" color="accent">
                         <Chip.Label>{kindLabel}</Chip.Label>

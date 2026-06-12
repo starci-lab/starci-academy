@@ -25,16 +25,16 @@ export const ValuePropositions = () => {
 
     if (isLoading) {
         return (
-            <div className="flex flex-col gap-2 text-muted">
-                <div className="flex items-center gap-2">
+            <div className="flex flex-col gap-1.5 text-muted">
+                <div className="flex items-center gap-1.5">
                     <Skeleton className="h-5 w-5 shrink-0" />
                     <Skeleton className="h-4 flex-1 max-w-[90%]" />
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5">
                     <Skeleton className="h-5 w-5 shrink-0" />
                     <Skeleton className="h-4 flex-1 max-w-[75%]" />
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5">
                     <Skeleton className="h-5 w-5 shrink-0" />
                     <Skeleton className="h-4 flex-1 max-w-[85%]" />
                 </div>
@@ -43,9 +43,9 @@ export const ValuePropositions = () => {
     }
 
     return (
-        <div className="flex flex-col gap-2 text-muted">
+        <div className="flex flex-col gap-1.5 text-muted">
             {valuePropositions.map((valueProposition) => (
-                <div key={valueProposition.id} className="flex items-start gap-2">
+                <div key={valueProposition.id} className="flex items-start gap-1.5">
                     <SealCheckIcon
                         width={20} height={20}
                         className="mt-0.5 shrink-0 text-muted"

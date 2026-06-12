@@ -21,8 +21,8 @@ export const ChallengeOutputs = (props: ChallengeOutputsProps) => {
     return (
         <>
             <div className="text-base font-semibold text-foreground">{t("challenge.outputs")}</div>
-            <div className="h-2" />
-            <ul className="list-disc list-inside pl-3 flex flex-col gap-2">
+            <div className="h-1.5" />
+            <ul className="list-disc list-inside pl-3 flex flex-col gap-1.5">
                 {
                     challengeOutputs.length
                         ? challengeOutputs.map((output) => (

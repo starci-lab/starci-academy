@@ -75,7 +75,7 @@ export const CommentItem = ({
     return (
         <div
             className={cn(
-                "flex flex-col gap-2",
+                "flex flex-col gap-1.5",
                 // indent nested replies with a guide border, capped after a few levels
                 depth > 0 ? "border-l border-default pl-3 sm:pl-4" : undefined,
             )}
@@ -89,7 +89,7 @@ export const CommentItem = ({
                 />
                 <div className="flex min-w-0 flex-1 flex-col gap-1">
                     {/* author + timestamp header */}
-                    <div className="flex flex-wrap items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-1.5">
                         <span className="text-sm font-semibold text-foreground">
                             {comment.author.username}
                         </span>

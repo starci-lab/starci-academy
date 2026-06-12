@@ -1,5 +1,6 @@
 ﻿export * from "./types"
 export * from "./mutation-submit-coding-solution"
+export * from "./mutation-reveal-coding-solution"
 export * from "./mutation-course-enroll"
 export * from "./mutation-update-my-ai-settings"
 export * from "./mutation-purchase-ai-subscription"

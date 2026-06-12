@@ -6,6 +6,7 @@ import React, {
 } from "react"
 import {
     cn,
+    Separator,
 } from "@heroui/react"
 import {
     useRouter,
@@ -119,12 +120,16 @@ export const MilestoneSidebar = ({ className }: MilestoneSidebarProps) => {
 
     return (
         <div className={cn("lg:sticky lg:top-16 lg:self-start lg:h-[calc(100vh-64px)] lg:overflow-y-auto", className)}>
-            <div className="px-2 pb-2 pt-1">
+            <div>
                 <MilestoneTaskSearch
+                    className="p-3"
                     milestones={milestones}
+                    value={selectedTaskId ?? null}
                     onSelectTask={onSelectTask}
                 />
             </div>
+            {/* divider separating the search field from the milestone list */}
+            <Separator className="mb-2" />
             <MilestoneAccordion
                 milestones={milestones}
                 progressMap={progressMap}

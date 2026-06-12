@@ -141,7 +141,7 @@ export const FaqSection = () => {
         >
             {/* Header */}
             <motion.div variants={itemVariants} className="text-center mb-12">
-                <div className="flex items-center justify-center gap-2 text-accent mb-4">
+                <div className="flex items-center justify-center gap-1.5 text-accent mb-4">
                     <Question width={22} height={22} />
                     <span className="font-mono uppercase tracking-[0.2em] text-xs">
                         Hỏi thẳng — đáp thật

@@ -44,7 +44,7 @@ export const ConfigCard = ({
                 className="text-white"
             />
 
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5">
                 {RENDERER_TYPE_OPTIONS.map((option) => (
                     <RendererTypeButton
                         key={option.type}

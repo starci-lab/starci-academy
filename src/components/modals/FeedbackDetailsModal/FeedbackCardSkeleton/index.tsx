@@ -28,7 +28,7 @@ export const FeedbackCardSkeleton = ({ className }: FeedbackCardSkeletonProps) =
                         <Skeleton className="h-[14px] w-3/4 my-[3px] rounded-sm" />
                     </div>
                     <div className="h-3" />
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1.5">
                         <Skeleton className="h-4 w-4 rounded-full" />
                         <Skeleton className="h-[14px] w-1/5 my-[3px] rounded-sm" />
                     </div>

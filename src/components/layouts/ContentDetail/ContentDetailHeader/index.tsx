@@ -20,10 +20,10 @@ export const ContentDetailHeader = () => {
     return (
         <div className="mb-6">
             <h1 className="text-3xl font-bold">{title}</h1>
-            <div className="h-2" />
+            <div className="h-1.5" />
             <p className="text-sm text-muted">{description}</p>
             <div className="h-3" />
-            <div className="flex items-center gap-2 text-sm text-muted">
+            <div className="flex items-center gap-1.5 text-sm text-muted">
                 <ClockIcon className="size-4" />
                 <span>{minutesRead} min read</span>
             </div>

@@ -21,7 +21,7 @@ export const StatusLine = () => {
     return (
         <div
             className={[
-                "flex items-center gap-2 text-sm",
+                "flex items-center gap-1.5 text-sm",
                 isSuccess ? "text-success" : "text-danger",
             ].join(" ")}
         >

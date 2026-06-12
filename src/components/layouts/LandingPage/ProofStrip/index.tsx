@@ -75,7 +75,7 @@ export const ProofStrip = () => {
                     <motion.div
                         key={proof.stat}
                         variants={itemVariants}
-                        className="group flex flex-col gap-2 p-5 md:p-6 bg-background/40 hover:bg-accent/[0.04] transition-colors"
+                        className="group flex flex-col gap-1.5 p-5 md:p-6 bg-background/40 hover:bg-accent/[0.04] transition-colors"
                     >
                         <Icon width={22} height={22} className="text-accent" />
                         <div className="text-lg md:text-xl font-bold tracking-tight text-foreground">

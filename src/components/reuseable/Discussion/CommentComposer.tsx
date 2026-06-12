@@ -53,7 +53,7 @@ export const CommentComposer = ({
     }
 
     return (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-1.5">
             <textarea
                 rows={3}
                 value={body}
@@ -61,7 +61,7 @@ export const CommentComposer = ({
                 placeholder={placeholder ?? t("discussion.placeholder")}
                 className="w-full resize-none rounded-2xl border border-default bg-background px-4 py-3 text-sm text-foreground focus:border-accent focus:outline-none"
             />
-            <div className="flex items-center justify-end gap-2">
+            <div className="flex items-center justify-end gap-1.5">
                 {onCancel ? (
                     <Button size="sm" variant="tertiary" onPress={onCancel} isDisabled={busy}>
                         {t("common.cancel")}

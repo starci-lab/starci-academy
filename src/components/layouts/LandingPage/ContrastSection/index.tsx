@@ -71,7 +71,7 @@ export const ContrastSection = () => {
         >
             {/* Header */}
             <motion.div variants={itemVariants} className="max-w-2xl mb-12">
-                <div className="flex items-center gap-2 text-accent mb-4">
+                <div className="flex items-center gap-1.5 text-accent mb-4">
                     <Warning width={22} height={22} />
                     <span className="font-mono uppercase tracking-[0.2em] text-xs">
  * "The truth no one tells you" — a side-by-side that contrasts widespread

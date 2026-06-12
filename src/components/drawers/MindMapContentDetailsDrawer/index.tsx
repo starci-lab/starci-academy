@@ -87,7 +87,7 @@ export const MindMapContentDetailsDrawer = () => {
                     <Drawer.Dialog className="flex h-full flex-col p-0">
                         <div className="shrink-0 p-3">
                             <Drawer.CloseTrigger />
-                            <Drawer.Header className="flex flex-col gap-2">
+                            <Drawer.Header className="flex flex-col gap-1.5">
                                 {content?.isPremium && (
                                     <Chip color="warning" variant="soft" size="sm" className="w-fit">
                                         <StarIcon className="size-4" />
@@ -97,7 +97,7 @@ export const MindMapContentDetailsDrawer = () => {
                                 <Drawer.Heading className="text-pretty text-xl font-bold leading-snug">
                                     {content?.title ?? ""}
                                 </Drawer.Heading>
-                                <div className="flex flex-wrap items-center gap-2">
+                                <div className="flex flex-wrap items-center gap-1.5">
                                     <Chip variant="secondary" color="accent" size="sm">
                                         <ClockIcon className="size-4" />
                                         <Chip.Label>

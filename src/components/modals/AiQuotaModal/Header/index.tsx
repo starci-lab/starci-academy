@@ -22,7 +22,7 @@ export const AiQuotaHeader = () => {
     return (
         <Modal.Header>
             <div className="pr-8">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5">
                     <span className="text-lg font-semibold text-foreground">
                         {t("aiQuota.title")}
                     </span>

@@ -69,7 +69,7 @@ export const MilestoneFeedbackCard = (props: MilestoneFeedbackCardProps) => {
             <Card.Content>
                 <div>
                     <div className="p-3">
-                        <div className="flex items-center justify-between gap-2">
+                        <div className="flex items-center justify-between gap-1.5">
                             <div className="min-w-0 flex-1 text-sm font-medium text-foreground">
                                 {message}
                             </div>
@@ -77,7 +77,7 @@ export const MilestoneFeedbackCard = (props: MilestoneFeedbackCardProps) => {
                         </div>
                         <div className="h-3" />
                         {location ? (
-                            <div className="flex items-center gap-2 text-xs text-muted">
+                            <div className="flex items-center gap-1.5 text-xs text-muted">
                                 <MapPinLineIcon className="size-4 min-w-4 min-h-4 shrink-0" />
                                 <span className="min-w-0 break-words">{location}</span>
                             </div>

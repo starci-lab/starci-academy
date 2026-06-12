@@ -20,7 +20,7 @@ export const AttemptsSkeleton = () => {
             className="min-h-0 flex-1 overflow-x-hidden p-3"
             hideScrollBar
         >
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1.5">
                 {Array.from({ length: SKELETON_ROW_COUNT }).map((_, index) => (
                     <Skeleton
                         key={index}

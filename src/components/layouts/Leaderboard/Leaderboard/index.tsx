@@ -53,7 +53,7 @@ export const LeaderboardLayout = ({ className }: LeaderboardLayoutProps) => {
             <div className="mx-auto flex max-w-3xl flex-col gap-6">
                 {/* page heading + refresh */}
                 <div className="flex items-start justify-between gap-3">
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-1.5">
                         <h1 className="text-2xl font-bold text-foreground">
                             {t("leaderboard.title")}
                         </h1>

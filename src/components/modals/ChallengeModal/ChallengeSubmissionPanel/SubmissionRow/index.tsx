@@ -162,7 +162,7 @@ export const SubmissionRow = ({
     return (
         <div className="border-b last:border-b-0 p-3">
             <div className="flex flex-col">
-                <div className="flex items-center gap-2 text-foreground text-base font-semibold">
+                <div className="flex items-center gap-1.5 text-foreground text-base font-semibold">
                     <div>
                         {submission.sortIndex}
                         {". "}
@@ -170,7 +170,7 @@ export const SubmissionRow = ({
                     </div>
                     {IconComponent ? <IconComponent width={16} height={16} /> : null}
                 </div>
-                <div className="h-2" />
+                <div className="h-1.5" />
                 <div className="text-xs text-muted">
                     {submission.description}
                 </div>
@@ -212,7 +212,7 @@ export const SubmissionRow = ({
                         )
                         : isLoading
                             ? (
-                                <div className="mt-3 flex items-center gap-2">
+                                <div className="mt-3 flex items-center gap-1.5">
                                     <Spinner />
                                     <div className="text-sm text-muted">
                                         {t("challenge.submissionModal.loading")}
@@ -222,7 +222,7 @@ export const SubmissionRow = ({
                             : null
                 }
                 <div className="flex flex-col items-start gap-4.5">
-                    <div className="flex w-full items-center justify-between gap-2">
+                    <div className="flex w-full items-center justify-between gap-1.5">
                         <GradeModelDropdown
                             models={gradeModels}
                             selection={gradeSelection}
@@ -252,7 +252,7 @@ export const SubmissionRow = ({
                             )
                         ) : null}
                     </div>
-                    <div className="flex flex-wrap items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-1.5">
                         <Button
                             isPending={isPending}
                             size="lg"

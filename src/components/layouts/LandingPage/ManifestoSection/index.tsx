@@ -45,7 +45,7 @@ export const ManifestoSection = () => {
             {/* Eyebrow */}
             <motion.div
                 variants={itemVariants}
-                className="flex items-center gap-2 text-accent mb-6"
+                className="flex items-center gap-1.5 text-accent mb-6"
             >
                 <Lightning width={20} height={20} />
                 <span className="font-mono uppercase tracking-[0.2em] text-xs">

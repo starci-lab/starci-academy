@@ -31,7 +31,7 @@ export const ModuleIndexStrip = ({
 }: ModuleIndexStripProps) => {
     return (
         // centered vertical stack of number chips; padded to clear the collapse bar
-        <div className="flex flex-col items-center gap-2 px-0 py-3">
+        <div className="flex flex-col items-center gap-1.5 px-0 py-3">
             {modules.map((module) => {
                 return (
                     <React.Fragment key={String(module.id)}>

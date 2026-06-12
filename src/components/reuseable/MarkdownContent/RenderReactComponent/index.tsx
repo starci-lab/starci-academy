@@ -8,30 +8,30 @@ import remarkGfm from "remark-gfm"
 import { Spinner } from "@heroui/react"
 import { heroUiMdxComponents } from "../mdxComponents"
 
-/** Props for {@link MdxWidget}. */
-export interface MdxWidgetProps {
-    /** MDX/JSX snippet from a ` ```mdx ` fence; may reference any HeroUI component. */
-    code: string
-}
-
 /** Compiled MDX module exposes its content as the default export. */
 type MdxContentComponent = React.ComponentType<{
     components?: Record<string, React.ElementType>
 }>
 
+/** Props for {@link RenderReactComponent}. */
+export interface RenderReactComponentProps {
+    /** JSX/MDX source (a self-contained renderable expression, no imports/logic). */
+    code: string
+}
+
 /**
- * Renders a ` ```mdx ` fenced snippet as a REAL React tree.
+ * Renders a ` ```mdx ` snippet as a REAL React tree — render ONLY, no tabs.
  *
- * Only the isolated snippet is compiled with `@mdx-js/mdx` `evaluate()` (client-side,
- * cached per-source via SWR) and rendered with the full HeroUI component map. The rest
- * of the lesson stays plain markdown, so prose containing `<` / `{` never breaks — the
- * custom fence is the separator that "cuts out" the component block.
+ * Compiles the snippet with `@mdx-js/mdx` `evaluate()` (client-side, cached per-source via SWR)
+ * and renders it with the full HeroUI map ({@link heroUiMdxComponents}). Used standalone (a live
+ * preview) and as the `:::preview` pane of a `:::tab` block — so the surrounding {@link
+ * CodePreviewTabs} owns the tabs and this never nests a tab inside a tab. `"use client"` for the
+ * browser-side `evaluate()`.
  *
- * On a compile error the raw snippet is shown verbatim (safe fallback) instead of
- * crashing the page. `"use client"` for the browser-side `evaluate()`.
- * @param props - {@link MdxWidgetProps}
+ * On a compile error the raw snippet is shown verbatim (safe fallback) instead of crashing.
+ * @param props - {@link RenderReactComponentProps}
  */
-export const MdxWidget = ({ code }: MdxWidgetProps) => {
+export const RenderReactComponent = ({ code }: RenderReactComponentProps) => {
     const { data: Content, error } = useSWR(
         `mdx:${code}`,
         async () => {
@@ -48,7 +48,6 @@ export const MdxWidget = ({ code }: MdxWidgetProps) => {
     )
 
     if (error) {
-        // Compile failed → show the snippet verbatim so the author can spot + fix it.
         return (
             <pre className="not-prose overflow-auto rounded-xl border border-danger/40 bg-default/40 p-3 font-mono text-xs text-muted">
                 {code}
@@ -56,11 +55,7 @@ export const MdxWidget = ({ code }: MdxWidgetProps) => {
         )
     }
     if (!Content) {
-        return <Spinner size="sm" />
+        return <Spinner size="sm" aria-label="Rendering" />
     }
-    return (
-        <div className="not-prose rounded-xl border border-default bg-surface p-4">
-            <Content components={heroUiMdxComponents} />
-        </div>
-    )
+    return <Content components={heroUiMdxComponents} />
 }

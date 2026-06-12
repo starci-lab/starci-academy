@@ -57,7 +57,7 @@ export const SidebarNavItemRow = ({
                 className={cn(selected ? "text-accent bg-accent/10" : "", collapsed ? "justify-center" : "")}
                 onPress={onPress}
             >
-                <div className={cn("flex items-center gap-2", collapsed ? "justify-center" : "")}>
+                <div className={cn("flex items-center gap-1.5", collapsed ? "justify-center" : "")}>
                     <item.icon className="size-5 shrink-0" />
                     {/* hide the label entirely when collapsed; else show from the sm breakpoint up */}
                     <span className={cn(collapsed ? "hidden" : "hidden sm:inline")}>{item.label}</span>

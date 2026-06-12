@@ -28,7 +28,7 @@ export const TabTrigger = ({
     locked,
 }: TabTriggerProps) => {
     return (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
             <TabIcon className="size-5" />
             <span>{label}</span>
             {locked ? <LockSimpleIcon className="size-4" /> : null}

@@ -71,7 +71,7 @@ export const ShareModal = () => {
                                         </div>
                                     </div>
                                 )}
-                                <div className="flex gap-2 items-center">
+                                <div className="flex gap-1.5 items-center">
                                     <div className="text-sm text-muted">
                                         {shareUrl}
                                     </div>

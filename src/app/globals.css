@@ -3,6 +3,17 @@
 @import "@heroui/styles";
 
 /*
+ * `divider` is a NextUI-v2 era color token that HeroUI v3 dropped in favor of
+ * `separator`. The codebase still has ~35 `border-divider` / `text-divider`
+ * usages, which would otherwise generate no utility (invisible borders).
+ * Register `divider` here as an alias of HeroUI's separator color so every
+ * legacy usage resolves consistently and flips with light/dark mode.
+ */
+@theme {
+    --color-divider: var(--color-separator);
+}
+
+/*
  * Safelist for ```layout widget mockups embedded in seeded lesson/brief markdown.
  * Those classes never appear in source (they live in runtime content), so Tailwind
  * would purge them — force-generate the fixed mono palette the widgets are allowed to use.
@@ -55,11 +66,22 @@
  
    /* Border Radius */
    --radius: 0.5rem;
-   --field-radius: 0.75rem;
+   /* Rounder form controls — every input / autocomplete / select / search
+      field derives its corner radius from this token (`rounded-field`).
+      Matches the `rounded-3xl` (1.5rem) radius HeroUI buttons use, so fields
+      and buttons read as one consistent pill-rounded family. */
+   --field-radius: 1.5rem;
 
    /* Flat form fields — no drop shadow on inputs, selects, textareas, etc. */
    --field-shadow: 0 0 0 0 transparent;
- 
+
+   /* Bordered form fields — HeroUI's default theme zeroes these out
+      (transparent / 0px), which makes inputs, autocompletes, selects and
+      search fields look borderless. Re-enable a 1px border on the shared
+      separator color so every field reads as an outlined control. */
+   --field-border: var(--border);
+   --field-border-width: 1px;
+
    /* Font Family */
    --font-sans: var(--font-open-sans);
  }
@@ -100,6 +122,10 @@
    --warning-foreground: oklch(21.03% 0.0059 68.19);
 
    --field-shadow: 0 0 0 0 transparent;
+
+   /* Bordered form fields (see light-mode note above). */
+   --field-border: var(--border);
+   --field-border-width: 1px;
 }
 
 @layer components {
@@ -137,6 +163,10 @@
     }
     .card {
         @apply p-3 shadow-none;
+        /* Keep every card uniformly rounded — a handful of cards (Foundation,
+           Consultant, PressableCard…) hardcode a squarer `rounded-xl`; force the
+           design-system 3xl radius so they all match. */
+        border-radius: var(--radius-3xl) !important;
     }
     .card__content {
         @apply gap-0;

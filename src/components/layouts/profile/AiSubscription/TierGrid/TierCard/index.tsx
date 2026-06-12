@@ -76,7 +76,7 @@ export const TierCard = ({
         >
             <Card.Content className="flex flex-1 flex-col gap-3">
                 {/* icon + tier name (+ popular chip) — tight pair */}
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5">
                     <TierLevelIcon
                         level={tierLevel}
                         className="size-6 shrink-0 text-accent"
@@ -98,7 +98,7 @@ export const TierCard = ({
                     {tier.description ?? ""}
                 </div>
                 {/* price block — VND number prominent + "/tháng" + USD hint */}
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-1.5">
                     <div className="text-3xl font-bold text-foreground">
                         {formatVnd(tier.priceVnd)}
                         <span className="text-sm font-normal text-muted">
@@ -139,7 +139,7 @@ export const TierCard = ({
             </Card.Content>
             <Card.Footer>
                 {/* feature list — accent check icon + muted text */}
-                <div className="flex flex-col gap-2 text-sm text-muted">
+                <div className="flex flex-col gap-1.5 text-sm text-muted">
                     <div className="flex items-center gap-1">
                         <SealCheckIcon
                             className="size-5 shrink-0 text-muted"

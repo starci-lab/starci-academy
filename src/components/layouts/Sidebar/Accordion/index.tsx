@@ -55,7 +55,7 @@ export const SidebarAccordion = ({
             <Accordion.Item>
                 <Accordion.Heading>
                     <Accordion.Trigger>
-                        <div className="flex w-full items-center gap-2">
+                        <div className="flex w-full items-center gap-1.5">
                             <IconComponent className="size-5 shrink-0" />
                             <span className={cn("hidden sm:inline text-base font-normal")}>{label}</span>
                         </div>

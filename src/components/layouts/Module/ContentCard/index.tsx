@@ -22,7 +22,7 @@ export const ContentCard = ({ content, onPress }: ContentCardProps) => {
                 <Link className="text-base font-semibold text-foreground" onPress={onPress}>
                     {content.title}
                 </Link>
-                <div className="h-2" />
+                <div className="h-1.5" />
                 <div className="line-clamp-3 text-sm text-muted">{content.description}</div>
             </div>
         </Card>

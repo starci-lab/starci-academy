@@ -44,12 +44,12 @@ export const OauthButtons = ({
                         className="w-full text-sm"
                         onPress={() => onOauthPress(item.provider)}
                     >
-                        <span className="inline-flex items-center justify-center gap-2">
+                        <span className="inline-flex items-center justify-center gap-1.5">
                             <item.icon className="w-5 h-5" />
                             {t(item.labelKey)}
                         </span>
                     </Button>
-                    {idx === 0 && <div className="h-2" />}
+                    {idx === 0 && <div className="h-1.5" />}
                 </React.Fragment>
             ))}
         </>

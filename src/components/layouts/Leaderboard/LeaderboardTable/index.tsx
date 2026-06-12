@@ -51,7 +51,7 @@ export const LeaderboardTable = ({ entries, viewerUserId }: LeaderboardTableProp
                         />
                         {/* learner name + stat line */}
                         <div className="flex min-w-0 flex-1 flex-col">
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-1.5">
                                 <span className="line-clamp-1 text-sm font-medium text-foreground">
                                     {entry.username}
                                 </span>

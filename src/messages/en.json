@@ -343,7 +343,7 @@
         }
     },
     "task": {
-        "briefTitle": "Task brief",
+        "briefTitle": "Instructions",
         "criteriaTitle": "Grading criteria",
         "codeImplementationsTitle": "Implementation guides",
         "codeImplementationsTabsAria": "Implementation guides by language",
@@ -634,6 +634,20 @@
         "hintTitle": "Approach hints",
         "showHint": "Show hint",
         "hideHint": "Hide hint",
+        "solutionTitle": "Reference solution",
+        "showSolution": "Show answer",
+        "hideSolution": "Hide answer",
+        "revealConfirm": "Viewing the answer forfeits this problem's points. Continue?",
+        "points": "+{points} pts",
+        "totalPoints": "{points} pts",
+        "emptyHint": "New interview problems are being added — check back soon.",
+        "solvedOf": "Solved {solved}/{total}",
+        "allLevels": "All",
+        "level": {
+            "junior": "Junior",
+            "mid": "Mid",
+            "senior": "Senior"
+        },
         "difficulty": {
             "easy": "Basic",
             "medium": "Advanced",

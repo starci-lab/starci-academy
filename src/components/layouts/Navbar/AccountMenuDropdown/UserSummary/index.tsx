@@ -31,7 +31,7 @@ export const UserSummary = ({
 }: UserSummaryProps) => {
     return (
         <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5">
                 <Avatar className="cursor-pointer">
                     <AvatarFallback>
                         {truncate(user?.username, { length: 1 })}

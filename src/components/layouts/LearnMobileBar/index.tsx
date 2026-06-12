@@ -37,7 +37,7 @@ export const LearnMobileBar = () => {
 
     return (
         // sticky bar sitting directly under the 64px navbar; mobile/tablet only
-        <div className="sticky top-16 z-40 flex items-center gap-2 border-b bg-background/80 px-3 py-2 backdrop-blur-xl lg:hidden">
+        <div className="sticky top-16 z-40 flex items-center gap-1.5 border-b bg-background/80 px-3 py-2 backdrop-blur-xl lg:hidden">
             {/* trigger: open the course navigation drawer */}
             <Button variant="ghost" size="sm" onPress={() => setMenuOpen(true)}>
                 <ListIcon className="size-4" />

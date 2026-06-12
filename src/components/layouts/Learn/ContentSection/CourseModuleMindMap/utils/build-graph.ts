@@ -16,7 +16,7 @@ import type {
 
 /**
  * Build a star layout for the course mind map: course at center, modules on a
- * circle ordered by `orderIndex`.
+ * circle ordered by `sortIndex`.
  *
  * @param course - Active course entity (with its modules) or `undefined`.
  * @param activeModuleId - Id of the module to highlight, when any.

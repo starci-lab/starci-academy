@@ -32,7 +32,7 @@ export const MethodologySection = () => {
         >
             {/* Section header */}
             <motion.div variants={itemVariants} className="max-w-2xl">
-                <div className="flex items-center gap-2 text-accent mb-4">
+                <div className="flex items-center gap-1.5 text-accent mb-4">
                     <ShieldCheck width={24} height={24} />
                     <span className="font-mono uppercase tracking-widest text-sm">Commitment</span>
                 </div>
@@ -58,16 +58,16 @@ export const MethodologySection = () => {
             Mọi bài học tại StarCi không dừng lại ở &quot;chạy được&quot;. Chúng tôi mổ xẻ hệ thống dưới góc nhìn SA: Khả năng mở rộng, tính sẵn sàng cao và tối ưu chi phí.
                     </p>
                     <ul className="mt-6 space-y-3 text-sm text-muted">
-                        <li className="flex items-center gap-2">
+                        <li className="flex items-center gap-1.5">
                             <div className="w-1.5 h-1.5 rounded-full bg-accent" />
               Insights rút tỉa từ 3+ năm gồng gánh Production.
                         </li>
-                        <li className="flex items-center gap-2">
+                        <li className="flex items-center gap-1.5">
                             <div className="w-1.5 h-1.5 rounded-full bg-accent" />
               Thiết kế chuyên nghiệp, đầy đủ diagram và case study.
                         </li>
                     </ul>
-                    <button className="mt-8 flex items-center gap-2 font-medium text-accent group-hover:gap-4 transition-all">
+                    <button className="mt-8 flex items-center gap-1.5 font-medium text-accent group-hover:gap-4 transition-all">
             Đọc thử nội dung <ArrowRight />
                     </button>
                 </motion.div>
@@ -83,16 +83,16 @@ export const MethodologySection = () => {
             Thay vì xem video thụ động, bạn được ném vào một hệ thống Challenges phân cấp từ **Easy** đến **Production Ready**. 
                     </p>
                     <ul className="mt-6 space-y-3 text-sm text-muted">
-                        <li className="flex items-center gap-2">
+                        <li className="flex items-center gap-1.5">
                             <div className="w-1.5 h-1.5 rounded-full bg-accent" />
               Build hệ thống thật, handle lỗi thật.
                         </li>
-                        <li className="flex items-center gap-2">
+                        <li className="flex items-center gap-1.5">
                             <div className="w-1.5 h-1.5 rounded-full bg-accent" />
               Tư duy giải quyết vấn đề thay vì copy-paste.
                         </li>
                     </ul>
-                    <button className="mt-8 flex items-center gap-2 font-medium text-accent group-hover:gap-4 transition-all">
+                    <button className="mt-8 flex items-center gap-1.5 font-medium text-accent group-hover:gap-4 transition-all">
             Làm thử Challenge <ArrowRight />
                     </button>
                 </motion.div>
@@ -116,13 +116,13 @@ export const MethodologySection = () => {
             
                         {/* Visual AI Placeholder */}
                         <div className="w-full md:w-1/3 p-6 rounded-xl bg-black/40 border border-white/5 space-y-4 shadow-2xl backdrop-blur-sm">
-                            <div className="flex gap-2">
-                                <div className="h-2 w-8 bg-accent/40 rounded animate-pulse" />
-                                <div className="h-2 w-12 bg-white/10 rounded" />
+                            <div className="flex gap-1.5">
+                                <div className="h-1.5 w-8 bg-accent/40 rounded animate-pulse" />
+                                <div className="h-1.5 w-12 bg-white/10 rounded" />
                             </div>
-                            <div className="h-2 w-3/4 bg-white/10 rounded" />
-                            <div className="h-2 w-1/2 bg-white/10 rounded" />
-                            <div className="py-4 px-2 w-full border border-dashed border-accent/30 rounded flex flex-col items-center justify-center gap-2">
+                            <div className="h-1.5 w-3/4 bg-white/10 rounded" />
+                            <div className="h-1.5 w-1/2 bg-white/10 rounded" />
+                            <div className="py-4 px-2 w-full border border-dashed border-accent/30 rounded flex flex-col items-center justify-center gap-1.5">
                                 <div className="flex gap-1">
                                     {[1,2,3].map(i => <div key={i} className="w-1 h-4 bg-accent/60 rounded-full animate-bounce" style={{animationDelay: `${i*0.1}s`}} />)}
                                 </div>

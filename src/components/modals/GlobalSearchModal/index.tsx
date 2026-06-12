@@ -53,7 +53,7 @@ export const GlobalSearchModal = () => {
                             <TextField className="w-full relative">
                                 <MagnifyingGlassIcon className="size-5 absolute left-2 top-1/2 -translate-y-1/2" />
                                 <Input
-                                    className="w-full max-w-full pl-9 pr-16 rounded-full ring-0 focus:ring-0 shadow-none"
+                                    className="w-full max-w-full pl-9 pr-16 rounded-full border-0 ring-0 focus:ring-0 shadow-none"
                                     placeholder={t("search.placeholder")}
                                     value={query}
                                     onChange={(event) => setQuery(event.target.value)}

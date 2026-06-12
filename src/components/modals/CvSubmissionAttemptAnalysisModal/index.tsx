@@ -60,7 +60,7 @@ export const CvSubmissionAttemptAnalysisModal = () => {
                                     : t("cv.submission.attemptAnalysis.title")}
                             </div>
                             {selectedAttempt ? (
-                                <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-muted">
+                                <div className="mt-1 flex flex-wrap items-center gap-1.5 text-xs text-muted">
                                     <span>{selectedAttempt.submittedAtLabel}</span>
                                     <span>/</span>
                                     <span>{selectedAttempt.status}</span>

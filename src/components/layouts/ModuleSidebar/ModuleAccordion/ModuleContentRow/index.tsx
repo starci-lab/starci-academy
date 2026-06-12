@@ -136,18 +136,18 @@ export const ModuleContentRow = ({
                     >
                         {`${content.sortIndex}. ${content.title}`}
                     </div>
-                    <div className="h-2" />
+                    <div className="h-1.5" />
                     <div className="line-clamp-3 text-xs text-muted">
                         {content.description}
                     </div>
                     <div className="h-3" />
                     {/* Draggable meta strip: stop click bubbling so dragging/tapping the chips
                         doesn't trigger the row's navigation. */}
-                    <div className="flex items-center gap-2" onClick={(event) => event.stopPropagation()}>
+                    <div className="flex items-center gap-1.5" onClick={(event) => event.stopPropagation()}>
                         {isActive && <ReadBadge size="sm" />}
                         <div className="overflow-hidden flex-1">
                             <motion.div
-                                className="flex w-max items-center gap-2"
+                                className="flex w-max items-center gap-1.5"
                                 drag="x"
                                 dragConstraints={META_DRAG_CONSTRAINTS}
                                 whileTap={{ cursor: "grabbing" }}

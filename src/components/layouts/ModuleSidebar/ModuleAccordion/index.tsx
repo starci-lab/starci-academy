@@ -68,7 +68,7 @@ export const ModuleAccordion = ({
                             >
                                 <Accordion.Heading>
                                     <Accordion.Trigger className="w-full">
-                                        <div className="flex w-full items-center justify-between gap-2">
+                                        <div className="flex w-full items-center justify-between gap-1.5">
                                             <span
                                                 className={cn(
                                                     "min-w-0 flex-1 cursor-pointer text-start text-base font-semibold",

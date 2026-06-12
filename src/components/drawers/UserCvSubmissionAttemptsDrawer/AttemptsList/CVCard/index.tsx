@@ -70,7 +70,7 @@ export const CVCard = (props: CVCardProps) => {
                             number: attemptNumber,
                         })}
                     </div>
-                    <div className="mt-2 flex items-center gap-2">
+                    <div className="mt-2 flex items-center gap-1.5">
                         <FilePdfIcon
                             className="shrink-0 text-danger"
                             width={20} height={20}

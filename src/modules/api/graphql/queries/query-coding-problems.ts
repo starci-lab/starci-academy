@@ -14,12 +14,12 @@ const query1 = gql`
       error
       data {
         total
-        solvedProblemIds
         problems {
           id
           slug
           title
           difficulty
+          points
           domain
           tags
           sortIndex

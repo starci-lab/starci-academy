@@ -44,7 +44,7 @@ export const ModuleSidebarSkeleton = ({
         () => () => (
             <div>
                 <SkeletonText size="sm" className="w-3/4" />
-                <div className="h-2" />
+                <div className="h-1.5" />
                 <SkeletonText size="xs" className="w-full" />
                 <SkeletonText size="xs" className="w-3/4" />
             </div>

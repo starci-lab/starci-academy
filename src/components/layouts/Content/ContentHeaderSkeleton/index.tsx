@@ -25,7 +25,7 @@ export const ContentHeaderSkeleton = () => {
             <div className="h-3" />
             <SkeletonParagraph size="sm" lines={3} />
             <div className="h-3" />
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex flex-wrap items-center gap-1.5">
                 <Skeleton className="h-7 w-[120px] rounded-full" />
                 <Skeleton className="h-7 w-[100px] rounded-full" />
             </div>

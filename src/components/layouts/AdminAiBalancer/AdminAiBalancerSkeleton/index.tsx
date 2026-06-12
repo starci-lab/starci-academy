@@ -31,18 +31,18 @@ export const AdminAiBalancerSkeleton = ({
                     <CardContent className="gap-4 p-5">
                         {/* provider heading + summary pills */}
                         <div className="flex flex-wrap items-start justify-between gap-3">
-                            <div className="flex flex-col gap-2">
+                            <div className="flex flex-col gap-1.5">
                                 <Skeleton className="h-5 w-32 rounded" />
                                 <Skeleton className="h-3 w-48 rounded-sm" />
                             </div>
-                            <div className="flex flex-wrap gap-2">
+                            <div className="flex flex-wrap gap-1.5">
                                 <Skeleton className="h-6 w-20 rounded-full" />
                                 <Skeleton className="h-6 w-20 rounded-full" />
                                 <Skeleton className="h-6 w-20 rounded-full" />
                             </div>
                         </div>
                         {/* key table */}
-                        <div className="flex flex-col gap-2 rounded-lg border border-white/5 p-3">
+                        <div className="flex flex-col gap-1.5 rounded-lg border border-white/5 p-3">
                             {Array.from({ length: 3 }).map((_unusedRow, rowIndex) => (
                                 <Skeleton
                                     key={rowIndex}

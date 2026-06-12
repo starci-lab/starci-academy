@@ -18,7 +18,7 @@ export const ContactForm = () => {
     return (
         <form className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
+                <div className="space-y-1.5">
                     <label className="text-sm font-semibold text-white/60 ml-1">
                         First Name
                     </label>
@@ -28,7 +28,7 @@ export const ContactForm = () => {
                         className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 focus:outline-none focus:border-brand-blue transition-colors"
                     />
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-1.5">
                     <label className="text-sm font-semibold text-white/60 ml-1">
                         Last Name
                     </label>
@@ -40,7 +40,7 @@ export const ContactForm = () => {
                 </div>
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-1.5">
                 <label className="text-sm font-semibold text-white/60 ml-1">
                     Email Address
                 </label>
@@ -51,7 +51,7 @@ export const ContactForm = () => {
                 />
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-1.5">
                 <label className="text-sm font-semibold text-white/60 ml-1">
                     Subject
                 </label>
@@ -67,7 +67,7 @@ export const ContactForm = () => {
                 </select>
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-1.5">
                 <label className="text-sm font-semibold text-white/60 ml-1">
                     Message
                 </label>

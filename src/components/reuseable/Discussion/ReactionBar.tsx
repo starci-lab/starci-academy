@@ -50,7 +50,7 @@ export const ReactionBar = ({ summary, onReact, disabled }: ReactionBarProps) =>
     return (
         <div
             ref={containerRef}
-            className="relative flex items-center gap-2"
+            className="relative flex items-center gap-1.5"
             onBlur={(e) => {
                 // close picker when focus leaves the entire reaction bar
                 if (!containerRef.current?.contains(e.relatedTarget as Node)) {

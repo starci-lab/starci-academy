@@ -27,7 +27,7 @@ export const LessonVideoModal = () => {
                         </Modal.Header>
                         <Modal.Body className="gap-0 p-4">
                             <div className="flex w-full place-content-center">
-                                <div className="flex flex-wrap items-center justify-center gap-2">
+                                <div className="flex flex-wrap items-center justify-center gap-1.5">
                                     <Chip color="accent" size="sm" variant="soft">
                                         <ClockIcon className="size-4" />
                                         <Chip.Label>

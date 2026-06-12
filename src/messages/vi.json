@@ -352,7 +352,7 @@
         }
     },
     "task": {
-        "briefTitle": "Đề bài",
+        "briefTitle": "Hướng dẫn",
         "criteriaTitle": "Tiêu chí chấm điểm",
         "codeImplementationsTitle": "Hướng dẫn triển khai",
         "codeImplementationsTabsAria": "Hướng dẫn triển khai theo ngôn ngữ",
@@ -643,6 +643,20 @@
         "hintTitle": "Gợi ý tư duy",
         "showHint": "Hiện gợi ý",
         "hideHint": "Ẩn gợi ý",
+        "solutionTitle": "Đáp án tham khảo",
+        "showSolution": "Xem đáp án",
+        "hideSolution": "Ẩn đáp án",
+        "revealConfirm": "Xem đáp án sẽ không được cộng điểm bài này. Tiếp tục?",
+        "points": "+{points} điểm",
+        "totalPoints": "{points} điểm",
+        "emptyHint": "Đang thêm bài phỏng vấn mới — quay lại sau nhé.",
+        "solvedOf": "Đã giải {solved}/{total}",
+        "allLevels": "Tất cả",
+        "level": {
+            "junior": "Junior",
+            "mid": "Mid",
+            "senior": "Senior"
+        },
         "difficulty": {
             "easy": "Cơ bản",
             "medium": "Nâng cao",

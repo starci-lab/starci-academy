@@ -82,10 +82,9 @@ export const PersonalProjectSubmission = () => {
                 {t("finalProject.page.submitGithub.repoFieldTitle")}
             </div>
             <TextField isInvalid={urlInvalid}>
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-1.5">
                     <Input
                         className="flex-1"
-                        variant="secondary"
                         placeholder={t("finalProject.page.submitGithub.placeholder")}
                         name="githubUrl"
                         value={githubUrl}
@@ -95,7 +94,7 @@ export const PersonalProjectSubmission = () => {
                     {
                         syncGithubSwr.isMutating
                             ? (
-                                <div className="flex items-center gap-2">
+                                <div className="flex items-center gap-1.5">
                                     <Spinner size="sm" />
                                     <div className="text-sm text-muted">{t("finalProject.page.submitGithub.syncing")}</div>
                                 </div>
@@ -110,9 +109,8 @@ export const PersonalProjectSubmission = () => {
                 {t("finalProject.page.submitGithub.branchFieldTitle")}
             </div>
             <TextField isInvalid={branchInvalid}>
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-1.5">
                     <Input
-                        variant="secondary"
                         placeholder={t("finalProject.page.submitGithub.branchPlaceholder")}
                         name="branch"
                         value={branch}
@@ -122,7 +120,7 @@ export const PersonalProjectSubmission = () => {
                     {
                         syncBranchSwr.isMutating
                             ? (
-                                <div className="flex items-center gap-2">
+                                <div className="flex items-center gap-1.5">
                                     <Spinner size="sm" />
                                     <div className="text-sm text-muted">{t("finalProject.page.submitGithub.syncing")}</div>
                                 </div>

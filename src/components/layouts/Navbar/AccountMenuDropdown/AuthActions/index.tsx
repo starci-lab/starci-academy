@@ -28,7 +28,7 @@ export const AuthActions = ({
     onSelectAction,
 }: AuthActionsProps) => {
     return (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
             {items.map((item) => (
                 <Button
                     key={item.key}

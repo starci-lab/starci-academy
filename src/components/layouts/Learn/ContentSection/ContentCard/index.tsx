@@ -42,7 +42,7 @@ export const ContentCard = ({ content }: ContentCardProps) => {
                 <div className="text-base font-semibold text-foreground overflow-hidden whitespace-normal">
                     {content.sortIndex}{". "} {content.title} <span>(Chưa đọc)</span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5">
                     <Chip
                         variant="secondary"
                         size="sm"

@@ -72,7 +72,7 @@ export const ModelCard = ({
                 <div className="mb-2 text-xs font-semibold text-muted">
                     Chuỗi dự phòng
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1.5">
                     {model.fallbackChain.map((choice, index) => (
                         <FallbackChoice
                             key={`${choice.model}-${index}`}

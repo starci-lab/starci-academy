@@ -1,6 +1,6 @@
 "use client"
 
-import { Aperture as ScanIcon } from "@gravity-ui/icons"
+import { Sparkles as SparkleIcon } from "@gravity-ui/icons"
 import React from "react"
 import {
     Button,
@@ -63,7 +63,7 @@ export const TaskActions = ({
     const t = useTranslations()
     return (
         <>
-            <div className={cn("mt-3", "flex flex-wrap items-center gap-2")}>
+            <div className={cn("mt-3", "flex flex-wrap items-center gap-1.5")}>
                 <Button
                     size="lg"
                     isDisabled={isEvaluateDisabled}
@@ -72,7 +72,7 @@ export const TaskActions = ({
                 >
                     {({ isPending }) => (
                         <>
-                            {isPending ? <Spinner color="current" /> : <ScanIcon className="size-5" />}
+                            {isPending ? <Spinner color="current" /> : <SparkleIcon className="size-5" />}
                             {hasReviewAttempts
                                 ? t("finalProject.page.submitGithub.ctaReEvaluate")
                                 : t("finalProject.page.submitGithub.ctaEvaluate")}

@@ -42,7 +42,7 @@ export const ChallengeCard = () => {
                     onPress={open}
                     variant="tertiary"
                 >
-                    <span className="inline-flex items-center gap-2">
+                    <span className="inline-flex items-center gap-1.5">
                         <Flame className="size-5" />
                         {t("challenge.battle.cta")}
                     </span>

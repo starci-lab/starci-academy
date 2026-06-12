@@ -147,7 +147,7 @@ export const ChallengeV2Modal = () => {
                                         {challenge?.title ?? ""}
                                     </div>
                                 </div>
-                                <div className="flex flex-wrap justify-center gap-2">
+                                <div className="flex flex-wrap justify-center gap-1.5">
                                     <Chip color="accent" variant="soft">
                                         <TrophyIcon className="size-5" />
                                         <Chip.Label>
@@ -236,7 +236,7 @@ export const ChallengeV2Modal = () => {
                                                     <div className="flex flex-col divide-y divide-default">
                                                         {requirements.map((item, index) => (
                                                             <div key={`req-${index}`} className="py-3 first:pt-0 last:pb-0">
-                                                                <div className="flex items-start justify-between gap-2">
+                                                                <div className="flex items-start justify-between gap-1.5">
                                                                     <div className="text-base font-semibold text-foreground">
                                                                         {item.title}
                                                                     </div>
@@ -287,7 +287,7 @@ export const ChallengeV2Modal = () => {
                                             <Accordion.Item key={`step-${index}`} id={`step-${index}`}>
                                                 <Accordion.Heading>
                                                     <Accordion.Trigger className="w-full">
-                                                        <div className="flex w-full items-center justify-between gap-2">
+                                                        <div className="flex w-full items-center justify-between gap-1.5">
                                                             <div className="font-semibold text-lg text-foreground">
                                                                 {`${index + 1}. ${step.title || t("challenge.steps.label", { index: index + 1 })}`}
                                                             </div>

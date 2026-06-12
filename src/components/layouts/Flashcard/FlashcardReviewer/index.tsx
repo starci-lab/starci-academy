@@ -2,7 +2,7 @@
 
 import React, { useMemo, useState } from "react"
 import useSWR from "swr"
-import { Button } from "@heroui/react"
+import { Button, Chip } from "@heroui/react"
 import { motion } from "framer-motion"
 import { useTranslations, useLocale } from "next-intl"
 import { useRouter } from "next/navigation"
@@ -19,9 +19,17 @@ export interface FlashcardReviewerProps {
     deckId: string
 }
 
-/** Shared surface for both faces — a plain (borderless) card. */
+/** HeroUI Chip color per interview seniority level. */
+const LEVEL_COLOR: Record<string, "success" | "warning" | "danger" | "accent"> = {
+    junior: "success",
+    middle: "warning",
+    senior: "danger",
+    staff: "accent",
+}
+
+/** Shared surface for both faces — a soft, borderless card (semantic tokens, no shadow). */
 const FACE_CLASS =
-    "flex min-h-64 flex-col gap-4 rounded-2xl bg-default-100 p-8 shadow-sm"
+    "flex min-h-64 flex-col gap-3 rounded-xl bg-default/40 p-8"
 /** Keeps both faces stacked in the same grid cell + hides the away-facing side. */
 const FACE_STYLE: React.CSSProperties = {
     gridArea: "1 / 1",
@@ -82,7 +90,7 @@ export const FlashcardReviewer = ({ deckId }: FlashcardReviewerProps) => {
     // empty deck guard
     if (cards.length === 0) {
         return (
-            <p className="py-10 text-center text-muted">
+            <p className="py-10 text-center text-sm text-muted">
                 {t("flashcard.empty")}
             </p>
         )
@@ -95,18 +103,18 @@ export const FlashcardReviewer = ({ deckId }: FlashcardReviewerProps) => {
     const progressPercent = Math.round(((currentIndex + 1) / cards.length) * 100)
 
     return (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-6">
             {/* progress: counter + bar */}
-            <div className="flex flex-col gap-2">
-                <span className="text-sm text-muted">
+            <div className="flex flex-col gap-1.5">
+                <span className="text-xs text-muted">
                     {t("flashcard.cardProgress", {
                         current: currentIndex + 1,
                         total: cards.length,
                     })}
                 </span>
-                <div className="h-2 w-full overflow-hidden rounded-full bg-default-200">
+                <div className="h-1.5 w-full overflow-hidden rounded-full bg-default">
                     <div
-                        className="h-full rounded-full bg-primary transition-all"
+                        className="h-full rounded-full bg-accent transition-all"
                         style={{ width: `${progressPercent}%` }}
                     />
                 </div>
@@ -114,19 +122,16 @@ export const FlashcardReviewer = ({ deckId }: FlashcardReviewerProps) => {
 
             {/* current card meta: interview level + technology tags (always visible) */}
             {(card.level || (card.tags?.length ?? 0) > 0) ? (
-                <div className="flex flex-wrap items-center gap-2">
+                <div className="flex flex-wrap items-center gap-1.5">
                     {card.level ? (
-                        <span className="rounded-full bg-primary-100 px-2.5 py-0.5 text-xs font-semibold text-primary">
+                        <Chip size="sm" variant="soft" color={LEVEL_COLOR[card.level] ?? "default"}>
                             {t(`flashcard.level.${card.level}`)}
-                        </span>
+                        </Chip>
                     ) : null}
                     {card.tags?.map((tag) => (
-                        <span
-                            key={tag}
-                            className="rounded-full bg-default-100 px-2.5 py-0.5 text-xs text-muted"
-                        >
+                        <Chip key={tag} size="sm" variant="soft" color="default">
                             {tag}
-                        </span>
+                        </Chip>
                     ))}
                 </div>
             ) : null}
@@ -156,7 +161,7 @@ export const FlashcardReviewer = ({ deckId }: FlashcardReviewerProps) => {
                 >
                     {/* front: question */}
                     <div className={FACE_CLASS} style={FACE_STYLE}>
-                        <span className="text-xs font-medium uppercase tracking-wide text-muted">
+                        <span className="text-xs font-medium text-muted">
                             {t("flashcard.questionLabel")}
                         </span>
                         <div className="text-lg font-medium text-foreground">
@@ -170,7 +175,7 @@ export const FlashcardReviewer = ({ deckId }: FlashcardReviewerProps) => {
                         className={FACE_CLASS}
                         style={{ ...FACE_STYLE, transform: "rotateY(180deg)" }}
                     >
-                        <span className="text-xs font-medium uppercase tracking-wide text-muted">
+                        <span className="text-xs font-medium text-muted">
                             {t("flashcard.answerLabel")}
                         </span>
                         {card.answer ? (
@@ -181,7 +186,7 @@ export const FlashcardReviewer = ({ deckId }: FlashcardReviewerProps) => {
                             <p className="text-sm text-muted">{t("flashcard.noAnswer")}</p>
                         )}
                         {card.explanation && (
-                            <div className="border-t border-divider/60 pt-4 text-sm text-muted">
+                            <div className="border-t border-divider pt-3 text-sm text-muted">
                                 <MarkdownContent markdown={card.explanation} />
                             </div>
                         )}
@@ -215,13 +220,13 @@ export const FlashcardReviewer = ({ deckId }: FlashcardReviewerProps) => {
 
             {/* lessons + modules this deck references (N:N), deep-linked to their pages */}
             {(data?.contents?.length || data?.modules?.length) ? (
-                <div className="flex flex-col gap-4 border-t border-divider/60 pt-4">
+                <div className="flex flex-col gap-6 border-t border-divider pt-6">
                     {data?.contents?.length ? (
-                        <div className="flex flex-col gap-2">
-                            <span className="text-xs font-medium uppercase tracking-wide text-muted">
+                        <div className="flex flex-col gap-1.5">
+                            <span className="text-xs text-muted">
                                 {t("flashcard.relatedContents")}
                             </span>
-                            <div className="flex flex-wrap gap-2">
+                            <div className="flex flex-wrap gap-1.5">
                                 {data.contents.map((content) => (
                                     <button
                                         key={content.id}
@@ -241,7 +246,7 @@ export const FlashcardReviewer = ({ deckId }: FlashcardReviewerProps) => {
                                                     .build(),
                                             )
                                         }}
-                                        className="rounded-full bg-default-100 px-3 py-1 text-sm transition-colors hover:bg-default-200 disabled:cursor-default disabled:opacity-60"
+                                        className="rounded-full bg-default/40 px-3 py-1 text-sm transition-colors hover:bg-surface-secondary disabled:cursor-default disabled:opacity-60"
                                     >
                                         {content.title}
                                     </button>
@@ -250,11 +255,11 @@ export const FlashcardReviewer = ({ deckId }: FlashcardReviewerProps) => {
                         </div>
                     ) : null}
                     {data?.modules?.length ? (
-                        <div className="flex flex-col gap-2">
-                            <span className="text-xs font-medium uppercase tracking-wide text-muted">
+                        <div className="flex flex-col gap-1.5">
+                            <span className="text-xs text-muted">
                                 {t("flashcard.relatedModules")}
                             </span>
-                            <div className="flex flex-wrap gap-2">
+                            <div className="flex flex-wrap gap-1.5">
                                 {data.modules.map((module) => (
                                     <button
                                         key={module.id}
@@ -273,7 +278,7 @@ export const FlashcardReviewer = ({ deckId }: FlashcardReviewerProps) => {
                                                     .build(),
                                             )
                                         }}
-                                        className="rounded-full bg-default-100 px-3 py-1 text-sm transition-colors hover:bg-default-200 disabled:cursor-default disabled:opacity-60"
+                                        className="rounded-full bg-default/40 px-3 py-1 text-sm transition-colors hover:bg-surface-secondary disabled:cursor-default disabled:opacity-60"
                                     >
                                         {module.title}
                                     </button>

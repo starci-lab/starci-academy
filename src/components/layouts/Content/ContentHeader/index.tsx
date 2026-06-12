@@ -46,7 +46,7 @@ export const ContentHeader = () => {
             <div className="h-3" />
             <div className="text-sm text-muted">{description}</div>
             <div className="h-3" />
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5">
                 <ReadBadge />
                 <Chip variant="secondary" color="accent">
                     <ClockIcon className="size-5" />

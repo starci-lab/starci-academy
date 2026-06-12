@@ -29,7 +29,7 @@ export const FlashcardDeckListSkeleton = ({
         <div className="flex flex-col gap-3">
             {Array.from({ length: Math.max(count, 1) }).map((_unused, index) => (
                 <Card key={index} className="w-full">
-                    <CardContent className="flex flex-col gap-2">
+                    <CardContent className="flex flex-col gap-1.5">
                         {/* title + difficulty chip */}
                         <div className="flex items-center justify-between gap-3">
                             <SkeletonText size="base" width="w-1/2" />

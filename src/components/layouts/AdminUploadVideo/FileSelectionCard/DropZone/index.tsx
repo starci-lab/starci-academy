@@ -50,14 +50,14 @@ export const DropZone = ({
             className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-white/10 bg-white/[0.02] p-8 transition-all hover:border-indigo-400/40 hover:bg-indigo-500/5"
         >
             {file ? (
-                <div className="flex flex-col items-center gap-2">
+                <div className="flex flex-col items-center gap-1.5">
                     <div className="rounded-full bg-emerald-500/10 p-3">
                         <VideoIcon className="h-8 w-8 text-emerald-400" />
                     </div>
                     <p className="text-sm font-medium text-white">
                         {file.name}
                     </p>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1.5">
                         <Chip
                             size="sm"
                             variant="secondary"

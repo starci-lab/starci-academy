@@ -101,6 +101,16 @@ export interface CodingProblemStarterCode {
     code: string
 }
 
+/** Per-language full reference solution for a problem (revealed answer). */
+export interface CodingProblemSolution {
+    /** Solution id. */
+    id: string
+    /** Language the solution is written in. */
+    language: CodingLanguage
+    /** The full reference solution source. */
+    code: string
+}
+
 /** A coding problem row (list view uses a subset of these fields). */
 export interface CodingProblem {
     /** Problem id. */
@@ -113,6 +123,8 @@ export interface CodingProblem {
     statement?: string
     /** Difficulty tier. */
     difficulty: CodingDifficulty
+    /** Points awarded for a first clean solve (by level: 10 / 15 / 20). */
+    points: number
     /** Primary interview topic domain (drives list grouping). */
     domain: CodingDomain
     /** Topic tags. */
@@ -127,6 +139,8 @@ export interface CodingProblem {
     testcases?: Array<CodingProblemTestcase>
     /** Starter code per language — present on detail. */
     starterCodes?: Array<CodingProblemStarterCode>
+    /** Full reference solutions per language — present on detail (revealed answer). */
+    solutions?: Array<CodingProblemSolution>
 }
 
 /** A user's submission row. */
@@ -179,20 +193,38 @@ export interface CodingProblemsRequest {
     limit?: number
 }
 
-/** Payload inside `codingProblems.data`. */
+/** Payload inside `codingProblems.data` (shared catalog — no per-user state). */
 export interface QueryCodingProblemsPayload {
     /** The page of problems. */
     problems: Array<CodingProblem>
     /** Total matching the filters. */
     total: number
-    /** Ids the user has solved. */
-    solvedProblemIds: Array<string>
 }
 
 /** Response for the `codingProblems` query. */
 export interface QueryCodingProblemsResponse {
     /** Top-level `codingProblems` field. */
     codingProblems: GraphQLResponse<QueryCodingProblemsPayload>
+}
+
+/* ───────────────────────── myCodingProgress (status) ───────────────────── */
+
+/** The user's coding-practice status (mirrors backend `myCodingProgress`). */
+export interface MyCodingProgress {
+    /** Problem ids the user has solved (Accepted). */
+    solvedProblemIds: Array<string>
+    /** Problem ids the user has submitted to (any verdict). */
+    attemptedProblemIds: Array<string>
+    /** Problem ids whose reference solution the user revealed. */
+    revealedProblemIds: Array<string>
+    /** Cumulative coding points earned by the user. */
+    totalPoints: number
+}
+
+/** Response for the `myCodingProgress` query. */
+export interface QueryMyCodingProgressResponse {
+    /** Top-level `myCodingProgress` field. */
+    myCodingProgress: GraphQLResponse<MyCodingProgress>
 }
 
 /* ───────────────────────── codingProblem (detail) ──────────────────────── */

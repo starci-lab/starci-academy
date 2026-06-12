@@ -30,7 +30,7 @@ export const ModuleSummaryChips = ({
 }: ModuleSummaryChipsProps) => {
     const t = useTranslations()
     return (
-        <div className="mt-2 flex flex-wrap gap-2">
+        <div className="mt-2 flex flex-wrap gap-1.5">
             {items.map((item) => {
                 const ItemIcon = item.icon
                 return (

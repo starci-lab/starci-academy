@@ -74,7 +74,7 @@ export const AmbitionSection = () => {
         >
             {/* Header */}
             <motion.div variants={itemVariants} className="max-w-2xl mx-auto text-center">
-                <div className="flex items-center justify-center gap-2 text-accent mb-4">
+                <div className="flex items-center justify-center gap-1.5 text-accent mb-4">
                     <Cube width={22} height={22} />
                     <span className="font-mono uppercase tracking-[0.2em] text-xs">
                         Tham vọng
@@ -88,7 +88,7 @@ export const AmbitionSection = () => {
             {/* Roadmap rail */}
             <motion.div
                 variants={itemVariants}
-                className="mt-14 flex flex-col md:flex-row items-stretch md:items-center justify-center gap-4 md:gap-2"
+                className="mt-14 flex flex-col md:flex-row items-stretch md:items-center justify-center gap-4 md:gap-1.5"
             >
                 {ROADMAP.map((stage, index) => {
                     const Icon = stage.icon

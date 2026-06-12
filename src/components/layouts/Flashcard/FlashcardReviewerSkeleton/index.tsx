@@ -16,7 +16,7 @@ export const FlashcardReviewerSkeleton = () => {
     return (
         <div className="flex flex-col gap-4">
             {/* progress bar */}
-            <Skeleton className="h-2 w-full rounded-full" />
+            <Skeleton className="h-1.5 w-full rounded-full" />
             {/* the flashcard — plain (borderless) surface */}
             <div className="flex min-h-64 flex-col gap-4 rounded-2xl bg-default-100 p-8 shadow-sm">
                 <SkeletonText size="base" width="w-3/4" />

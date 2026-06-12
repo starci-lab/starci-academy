@@ -88,8 +88,8 @@ export const ChallengeModalLegacy = () => {
                                     ) : null}
                                     {challenge?.title ?? ""}
                                 </div>
-                                <div className="h-2" />
-                                <div className="flex flex-wrap justify-center gap-2">
+                                <div className="h-1.5" />
+                                <div className="flex flex-wrap justify-center gap-1.5">
                                     <Chip color="accent" variant="soft">
                                         <TrophyIcon className="size-5" />
                                         <Chip.Label>
@@ -129,7 +129,7 @@ export const ChallengeModalLegacy = () => {
                                                     threshold={passThreshold}
                                                 />
                                                 <div className="h-3" />
-                                                <div className="flex items-center gap-2">
+                                                <div className="flex items-center gap-1.5">
                                                     <div className="text-xs text-muted">
                                                         {t("challenge.minimumPassRequirementAll")}
                                                     </div>
@@ -151,7 +151,7 @@ export const ChallengeModalLegacy = () => {
                                                             <Accordion.Item key={step.id} id={step.id}>
                                                                 <Accordion.Heading>
                                                                     <Accordion.Trigger className="w-full">
-                                                                        <div className="flex w-full items-center justify-between gap-2">
+                                                                        <div className="flex w-full items-center justify-between gap-1.5">
                                                                             <div className="font-semibold text-base text-foreground">
                                                                                 {`${step.sortIndex}. ${step.title || t("challenge.steps.label", { index: step.sortIndex })}`}
                                                                             </div>

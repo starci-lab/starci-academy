@@ -64,7 +64,7 @@ export const ChallengeCard = ({ challenge }: ChallengeCardProps) => {
             <CardContent>
                 <div>
                     <div className="font-medium mb-2">{challenge.sortIndex}. {challenge.title}</div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1.5">
                         <Chip variant="secondary" color="accent">
                             <TrophyIcon className="size-4" />
                             <Chip.Label>{challenge.score}</Chip.Label>
@@ -82,7 +82,7 @@ export const ChallengeCard = ({ challenge }: ChallengeCardProps) => {
                     </div>
                     <div className="text-xs text-muted mt-3">{challenge.description}</div>
                     <div className="h-3"/>
-                    <div className="flex gap-2">
+                    <div className="flex gap-1.5">
                         <Button onPress={() => {
                             dispatch(setChallengeId(challenge.id))
                             challengeOverlayState.open()

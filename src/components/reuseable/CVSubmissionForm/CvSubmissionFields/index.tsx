@@ -85,7 +85,7 @@ export const CvSubmissionFields = ({
 
     return (
         <Form className="space-y-4">
-            <div className="space-y-2">
+            <div className="space-y-1.5">
                 <label className="block text-sm font-medium">
                     Upload CV (PDF)
                 </label>
@@ -144,7 +144,7 @@ export const CvSubmissionFields = ({
             </div>
 
             {isUploading && (
-                <div className="space-y-2">
+                <div className="space-y-1.5">
                     <div className="flex items-center justify-between">
                         <span className="text-sm font-medium">
                             Uploading...

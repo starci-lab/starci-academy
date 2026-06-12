@@ -11,7 +11,7 @@ export const MilestoneFeedbackCardSkeleton = () => {
         <Card className="bg-background p-0">
             <Card.Content>
                 <div className="p-3">
-                    <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center justify-between gap-1.5">
                         <Skeleton className="h-[14px] flex-1 max-w-[70%] rounded-sm" />
                         <Skeleton className="h-6 w-20 shrink-0 rounded-full" />
                     </div>

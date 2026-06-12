@@ -30,6 +30,8 @@ interface ContentSearchItem {
 export interface ContentSearchProps {
     /** Ordered modules whose contents populate the autocomplete collection. */
     modules: Array<ModuleEntity>
+    /** The value of the autocomplete. */
+    value: string | null
     /** Fired with (moduleId, contentId) when a lesson is chosen. */
     onSelectContent: (moduleId: string, contentId: string) => void
     /** Extra classes for the root field. */
@@ -42,11 +44,17 @@ export interface ContentSearchProps {
  * Unlike the ES-backed typeahead, this loads the *entire* content collection
  * (flattened from the already-cached modules) into the Autocomplete and lets the
  * component filter it client-side as the user types — the native HeroUI pattern.
- * Choosing a row routes to that lesson via {@link ContentSearchProps.onSelectContent}.
+ * Choosing a row routes to that lesson via {@link onSelectContent}.
  *
- * @param props - modules to index, the select callback, and optional classes
+ * @param props - modules to index, the value, the select callback, and optional classes
  */
-export const ContentSearch = ({ modules, onSelectContent, className }: ContentSearchProps) => {
+export const ContentSearch = (
+    { 
+        modules, 
+        value, 
+        onSelectContent, 
+        className 
+    }: ContentSearchProps) => {
     const t = useTranslations()
 
     // diacritic- + case-insensitive "contains" matcher; `Autocomplete.Filter` only
@@ -85,21 +93,20 @@ export const ContentSearch = ({ modules, onSelectContent, className }: ContentSe
             className={cn("w-full", className)}
             fullWidth
             placeholder={t("module.searchContentsPlaceholder")}
-            variant="secondary"
             // fully-controlled reset: we never keep a persistent selection — picking a
             // lesson fires navigation and the trigger falls back to the placeholder
-            selectedKey={null}
-            onSelectionChange={(key) => {
-                if (key == null) {
+            value={value}
+            onChange={(value) => {
+                if (value == null) {
                     return
                 }
-                const item = byId.get(String(key))
+                const item = byId.get(String(value))
                 if (item) {
                     onSelectContent(item.moduleId, item.id)
                 }
             }}
         >
-            <Autocomplete.Trigger className="flex h-10 w-full min-w-0 items-center gap-2 rounded-xl border border-divider px-3 text-start text-sm text-muted">
+            <Autocomplete.Trigger className="flex h-10 w-full min-w-0 items-center gap-1.5 rounded-field border border-divider px-3 text-start text-sm text-muted">
                 <MagnifyingGlassIcon className="size-4 shrink-0" />
                 <Autocomplete.Value className="min-w-0 flex-1 truncate" />
                 <Autocomplete.ClearButton />
@@ -119,6 +126,7 @@ export const ContentSearch = ({ modules, onSelectContent, className }: ContentSe
                                 key={item.id}
                                 id={item.id}
                                 textValue={item.label}
+                                className="py-2"
                             >
                                 {/* wrap up to 2 lines, then ellipsise; full label on hover.
                                     popover is pinned to the trigger width so long lesson

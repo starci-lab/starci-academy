@@ -80,7 +80,7 @@ export const E2eBody = (): React.JSX.Element => {
                         >
                             <Accordion.Heading>
                                 <Accordion.Trigger>
-                                    <span className="flex items-center gap-2 text-start">
+                                    <span className="flex items-center gap-1.5 text-start">
                                         <span
                                             className={[
                                                 "inline-flex h-5 shrink-0 items-center rounded-full px-2 text-[11px] font-semibold",

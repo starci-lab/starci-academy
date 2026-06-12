@@ -25,7 +25,7 @@ export const SearchButton = () => {
     const { open: onOpenSearch } = useSearchOverlayState()
     return (
         <Button className="w-[300px] justify-between px-3" variant="outline" onPress={onOpenSearch}>
-            <span className="inline-flex items-center gap-2">
+            <span className="inline-flex items-center gap-1.5">
                 <MagnifyingGlassIcon className="h-5 w-5" />
                 <span className="text-sm">{t("search.label")}</span>
             </span>

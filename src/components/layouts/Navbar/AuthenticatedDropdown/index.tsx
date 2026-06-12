@@ -112,7 +112,7 @@ export const AuthenticatedDropdown = () => {
                         key="profile"
                         onPress={onOpenProfile}
                     >
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1.5">
                             <UserIcon className="size-5" />
                             {t("nav.profile")}
                         </div>
@@ -122,7 +122,7 @@ export const AuthenticatedDropdown = () => {
                         className="text-danger"
                         onPress={onLogout}
                     >
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1.5">
                             <SignOutIcon className="size-5 text-danger" />
                             {t("nav.logout")}
                         </div>

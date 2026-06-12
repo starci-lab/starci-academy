@@ -68,7 +68,7 @@ export const MindMapFullscreenButton = ({ targetRef }: MindMapFullscreenButtonPr
         : t("mindMap.fullscreen")
 
     return (
-        <Panel className="!m-4 flex flex-col gap-2" position="bottom-right">
+        <Panel className="!m-4 flex flex-col gap-1.5" position="bottom-right">
             <Button
                 isIconOnly
                 variant="secondary"

@@ -103,7 +103,7 @@ export const KeyPoolStatus = () => {
 
     return (
         <section className="flex flex-col gap-4">
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex flex-wrap items-center gap-1.5">
                 <PulseIcon
                     className="size-5 text-accent"
                 />

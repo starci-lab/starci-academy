@@ -115,7 +115,7 @@ export const ByokForm = () => {
 
             {hasByokKey ? (
                 <div className="mb-4 flex items-center justify-between rounded-2xl border border-divider bg-background p-3">
-                    <span className="flex items-center gap-2 text-sm text-muted">
+                    <span className="flex items-center gap-1.5 text-sm text-muted">
                         <KeyIcon className="size-4" />
                         {t("aiSettings.byok.keyOnFile")}
                         {byokProviderOnFile ? ` (${byokProviderOnFile})` : ""}
@@ -132,7 +132,7 @@ export const ByokForm = () => {
             ) : null}
 
             <Label className="text-sm">{t("aiSettings.byok.provider")}</Label>
-            <div className="mt-2 flex flex-wrap gap-2">
+            <div className="mt-2 flex flex-wrap gap-1.5">
                 {BYOK_PROVIDERS.map((provider) => (
                     <Button
                         key={provider.value}

@@ -152,9 +152,11 @@ export const ModuleSidebar = ({ className, collapsed = false }: ModuleSidebarPro
         <div className={shellClass}>
             {/* HeroUI Autocomplete over the full lesson collection (client-side filter, not ES);
                 choosing a lesson routes straight to it */}
-            <div className="p-3">
+            <div>
                 <ContentSearch
+                    className="p-3"
                     modules={sortedModules}
+                    value={activeContent?.id ?? null}
                     onSelectContent={onSelectContent}
                 />
             </div>

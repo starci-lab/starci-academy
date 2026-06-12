@@ -37,7 +37,7 @@ export const Module = () => {
                 <div className="h-3" />
                 <div className="p-3">
                     <Skeleton className="h-6 my-1 w-3/4 rounded" />
-                    <div className="h-2" />
+                    <div className="h-1.5" />
                     <div className="flex flex-col">
                         <Skeleton className="h-[14px] my-[3px] w-full rounded-sm" />
                         <Skeleton className="h-[14px] my-[3px] w-5/6 rounded-sm" />
@@ -82,10 +82,10 @@ export const Module = () => {
             <div className="h-3" />
             <div className="p-3">
                 <div className="text-2xl font-bold">{module?.title}</div>
-                <div className="h-2" />
+                <div className="h-1.5" />
                 <div className="text-sm text-muted">{module?.description}</div>
                 <div className="h-3" />
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5">
                     <Chip variant="secondary" color="accent">
                         <BookOpenIcon className="size-5" />
                         <Chip.Label>

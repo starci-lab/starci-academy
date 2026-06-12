@@ -35,7 +35,7 @@ export const CodeBodySkeleton = ({
                     className="rounded-xl border border-default-200 p-4 flex flex-col gap-3"
                 >
                     {/* chip row (index + language chips) */}
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1.5">
                         <Skeleton className="h-6 w-16 rounded-full" />
                         <Skeleton className="h-6 w-12 rounded-full" />
                     </div>

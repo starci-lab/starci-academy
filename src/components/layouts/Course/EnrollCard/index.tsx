@@ -106,7 +106,7 @@ export const EnrollCard = () => {
                                 <PencilSimpleLineIcon className="w-5 h-5" />
                                 {t("course.enroll")}
                             </Button>
-                            <div className="h-2" />
+                            <div className="h-1.5" />
                             {/* trial: enter the learning experience; premium lessons stay blurred behind the paywall */}
                             <Button
                                 variant="secondary"

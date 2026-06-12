@@ -33,7 +33,7 @@ export const PracticeListSkeleton = ({
                         {/* problem title */}
                         <SkeletonText size="base" width="w-1/2" />
                         {/* topic tag + difficulty chips */}
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1.5">
                             <Skeleton className="h-6 w-16 rounded-full" />
                             <Skeleton className="h-6 w-16 rounded-full" />
                         </div>

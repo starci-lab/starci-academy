@@ -28,7 +28,7 @@ export const ProcessResultBanner = ({
     }
     return (
         <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4 space-y-1">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5">
                 <CheckCircleIcon className="h-4 w-4 text-emerald-400" />
                 <span className="text-sm font-medium text-emerald-300">
                     {processResult.message}

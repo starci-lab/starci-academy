@@ -34,7 +34,7 @@ export const TaskResults = ({
     return (
         <>
             <div className="h-6" />
-            <div className="mt-3 flex items-center gap-2  mb-3">
+            <div className="mt-3 flex items-center gap-1.5  mb-3">
                 <div className="font-semibold">{t("task.resultsTitle")}</div>
                 <StarCiAIBadge />
             </div>

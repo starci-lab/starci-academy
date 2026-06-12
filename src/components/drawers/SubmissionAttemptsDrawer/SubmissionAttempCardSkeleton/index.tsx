@@ -22,7 +22,7 @@ export const SubmissionAttemptCardSkeleton = (props: SubmissionAttemptCardSkelet
                         <Skeleton className="h-[14px] my-[3px] w-3/4 rounded-sm" />
                     </div>
                     <div className="h-3" />
-                    <div className="flex gap-2">
+                    <div className="flex gap-1.5">
                         <Skeleton className="h-9 w-28 rounded-full" />
                         <Skeleton className="h-9 w-36 rounded-full" />
                     </div>

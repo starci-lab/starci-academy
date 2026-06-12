@@ -32,7 +32,7 @@ export const CourseHeader = () => {
                 <h1 className="text-4xl font-bold">{title}</h1>
             )}
             {isLoading ? (
-                <div className="mt-3 space-y-2">
+                <div className="mt-3 space-y-1.5">
                     <Skeleton className="h-[14px] w-[60%] max-w-full" />
                     <Skeleton className="h-[14px] w-[50%] max-w-full" />
                     <Skeleton className="h-[14px] w-[40%] max-w-full" />

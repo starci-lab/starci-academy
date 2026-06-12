@@ -28,7 +28,7 @@ export const FallbackChoice = ({
     index,
 }: FallbackChoiceProps) => {
     return (
-        <div className="flex items-center gap-2 rounded-xl border px-3 py-1.5">
+        <div className="flex items-center gap-1.5 rounded-xl border px-3 py-1.5">
             <span className="text-xs text-muted font-mono">
                 {index + 1}.
             </span>

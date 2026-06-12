@@ -31,7 +31,7 @@ export const FreeTierCardSkeleton = ({
     return (
         <Card className={cn("flex h-full flex-col", className)}>
             <Card.Content className="flex flex-1 flex-col gap-3">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5">
                     <Skeleton className="size-6 shrink-0 rounded-full" />
                     <SkeletonText
                         size="lg"
@@ -44,7 +44,7 @@ export const FreeTierCardSkeleton = ({
                         lines={2}
                     />
                 </div>
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-1.5">
                     <SkeletonText
                         size="3xl"
                         width="w-20"
@@ -65,7 +65,7 @@ export const FreeTierCardSkeleton = ({
                 {/* invisible spacer — mirrors FreeTierCard's empty footer so the
                     card height matches the paid tiers' credit list */}
                 <div
-                    className="flex flex-col gap-2 text-sm invisible"
+                    className="flex flex-col gap-1.5 text-sm invisible"
                     aria-hidden
                 >
                     <div className="flex min-h-5 items-center gap-1">—</div>

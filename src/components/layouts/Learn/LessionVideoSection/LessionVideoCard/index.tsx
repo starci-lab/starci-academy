@@ -43,7 +43,7 @@ export const VideoLessionCard = ({ lessonVideo }: VideoLessionCardProps) => {
                     <div className="flex flex-col gap-3 col-span-2">
                         <div className="line-clamp-1">{lessonVideo.title}</div>
                         <div className="text-sm text-muted text-justify italic line-clamp-3">{lessonVideo.description}</div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1.5">
                             <Chip
                                 color="accent"
                                 size="sm"

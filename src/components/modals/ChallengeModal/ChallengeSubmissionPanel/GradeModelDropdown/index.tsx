@@ -82,7 +82,7 @@ export const GradeModelDropdown = ({
                 isDisabled={isDisabled}
                 className={cn("cursor-pointer", className)}
             >
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5">
                     <SparkleIcon className="size-5" />
                     <span className="max-w-40 truncate">{triggerLabel}</span>
                     <CaretDownIcon className="size-5" />
@@ -105,7 +105,7 @@ export const GradeModelDropdown = ({
                                 provider: null,
                             })}
                         >
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-1.5">
                                 <span>{t("aiSettings.lanes.auto.title")}</span>
                             </div>
                         </DropdownItem>
@@ -134,8 +134,8 @@ export const GradeModelDropdown = ({
                                     >
                                         <Tooltip>
                                             <Tooltip.Trigger>
-                                                <div className="flex w-full items-center justify-between gap-2 text-muted">
-                                                    <span className="flex min-w-0 items-center gap-2">
+                                                <div className="flex w-full items-center justify-between gap-1.5 text-muted">
+                                                    <span className="flex min-w-0 items-center gap-1.5">
                                                         <LockIcon className="size-5 shrink-0" />
                                                         <span className="truncate">{model.model}</span>
                                                     </span>
@@ -157,7 +157,7 @@ export const GradeModelDropdown = ({
                                         provider: model.provider,
                                     })}
                                 >
-                                    <div className="flex items-center justify-between gap-2">
+                                    <div className="flex items-center justify-between gap-1.5">
                                         <span className="truncate">{model.model}</span>
                                         {categoryChip}
                                     </div>

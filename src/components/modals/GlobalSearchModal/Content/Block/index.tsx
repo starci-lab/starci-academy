@@ -68,7 +68,7 @@ export const GlobalSearchContentBlock = (props: GlobalSearchContentBlockProps) =
 
     return (
         <div className="mb-3 last:mb-0">
-            <div className="flex items-center gap-2 text-accent">
+            <div className="flex items-center gap-1.5 text-accent">
                 <SectionIcon className="size-4 shrink-0" aria-hidden />
                 <div className="text-xs font-medium">{label}</div>
             </div>

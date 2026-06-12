@@ -108,7 +108,7 @@ export const FeedbackCard = (props: FeedbackCardProps) => {
                         {statusChip}
                     </div>
                     <div className="flex items-start justify-between gap-3">
-                        <div className="min-w-0 flex-1 space-y-2">
+                        <div className="min-w-0 flex-1 space-y-1.5">
                             <MarkdownContent markdown={message} className="text-sm font-medium" />
                             {detail ? (
                                 <MarkdownContent markdown={detail} className="text-xs text-muted" />
@@ -122,7 +122,7 @@ export const FeedbackCard = (props: FeedbackCardProps) => {
                         />
                     ) : null}
                     {locationLabel ? (
-                        <div className="flex items-center gap-2 text-xs text-muted">
+                        <div className="flex items-center gap-1.5 text-xs text-muted">
                             <MapPinLineIcon className="size-5 min-h-5 min-w-5 shrink-0" />
                             {locationHref ? (
                                 <Link
@@ -140,7 +140,7 @@ export const FeedbackCard = (props: FeedbackCardProps) => {
                         </div>
                     ) : null}
                     {suggestion ? (
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1.5">
                             <LightbulbIcon className="size-5 h-5 w-5 shrink-0 text-muted" />
                             <MarkdownContent markdown={suggestion} className="text-sm text-muted" />
                         </div>

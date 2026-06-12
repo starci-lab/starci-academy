@@ -31,7 +31,7 @@ export const TierCardSkeleton = ({
     return (
         <Card className={cn("flex h-full flex-col", className)}>
             <Card.Content className="flex flex-1 flex-col gap-3">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5">
                     <Skeleton className="size-6 shrink-0 rounded-full" />
                     <SkeletonText
                         size="lg"
@@ -44,7 +44,7 @@ export const TierCardSkeleton = ({
                         lines={2}
                     />
                 </div>
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-1.5">
                     <div className="flex flex-wrap items-baseline gap-x-1">
                         <SkeletonText
                             size="3xl"
@@ -65,7 +65,7 @@ export const TierCardSkeleton = ({
                 <Skeleton className="h-9 w-full rounded-full" />
             </Card.Content>
             <Card.Footer>
-                <div className="flex flex-col gap-2 text-sm">
+                <div className="flex flex-col gap-1.5 text-sm">
                     <div className="flex min-h-5 items-center gap-1">
                         <Skeleton className="size-5 shrink-0 rounded-full" />
                         <div className="min-w-0 flex-1">

@@ -18,6 +18,7 @@ const query1 = gql`
         title
         statement
         difficulty
+        points
         tags
         timeLimitMs
         memoryLimitKb
@@ -30,6 +31,11 @@ const query1 = gql`
           sortIndex
         }
         starterCodes {
+          id
+          language
+          code
+        }
+        solutions {
           id
           language
           code

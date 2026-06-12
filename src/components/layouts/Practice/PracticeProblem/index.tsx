@@ -21,6 +21,8 @@ import {
     queryCodingProblemHint,
     queryMyCodingSubmissions,
     mutateSubmitCodingSolution,
+    mutateRevealCodingSolution,
+    CodingDifficulty,
     CodingLanguage,
     CodingVerdict,
     type CodingProblem,
@@ -39,6 +41,13 @@ import { PracticeProblemSkeleton } from "./PracticeProblemSkeleton"
 export interface PracticeProblemProps {
     /** Problem slug from the route. */
     slug: string
+}
+
+/** Seniority level i18n key per difficulty (easy=junior, medium=mid, hard=senior). */
+const LEVEL_KEY: Record<CodingDifficulty, string> = {
+    [CodingDifficulty.Easy]: "junior",
+    [CodingDifficulty.Medium]: "mid",
+    [CodingDifficulty.Hard]: "senior",
 }
 
 /** Map a coding language to its Monaco editor language id. */
@@ -83,6 +92,8 @@ export const PracticeProblem = ({ slug }: PracticeProblemProps) => {
     const [pendingJobId, setPendingJobId] = useState<string | null>(null)
     const [submitting, setSubmitting] = useState(false)
     const [showHint, setShowHint] = useState(false)
+    const [showSolution, setShowSolution] = useState(false)
+    const [solutionLanguage, setSolutionLanguage] = useState<CodingLanguage>(CodingLanguage.Python)
     const [touchedLanguages, setTouchedLanguages] = useState<Set<CodingLanguage>>(new Set())
 
     const telemetryRef = useRef({
@@ -167,6 +178,44 @@ export const PracticeProblem = ({ slug }: PracticeProblemProps) => {
         [submissionsData?.submissions],
     )
 
+    // reference solution code keyed by language (revealed in the "answer" panel)
+    const solutionByLanguage = useMemo(() => {
+        const map = new Map<CodingLanguage, string>()
+        problem?.solutions?.forEach((solution) => map.set(solution.language, solution.code))
+        return map
+    }, [problem?.solutions])
+
+    // languages that actually ship a reference solution
+    const solutionLanguages = useMemo<Array<CodingLanguage>>(
+        () => problem?.solutions?.map((solution) => solution.language) ?? [],
+        [problem?.solutions],
+    )
+
+    // keep the solution language switcher pinned to an available language
+    useEffect(() => {
+        if (solutionLanguages.length > 0 && !solutionLanguages.includes(solutionLanguage)) {
+            setSolutionLanguage(solutionLanguages[0])
+        }
+    }, [solutionLanguages, solutionLanguage])
+
+    // toggle the answer panel; revealing it forfeits the problem's points, so
+    // confirm first and record the reveal server-side (best-effort)
+    const onToggleSolution = useCallback(async () => {
+        if (showSolution) {
+            setShowSolution(false)
+            return
+        }
+        if (!window.confirm(t("codingPractice.revealConfirm"))) {
+            return
+        }
+        setShowSolution(true)
+        try {
+            await mutateRevealCodingSolution({ request: { slug } })
+        } catch {
+            // reveal recording is best-effort; the answer is already shown
+        }
+    }, [showSolution, slug, t])
+
     const onSubmit = useCallback(async () => {
         setSubmitting(true)
         try {
@@ -228,9 +277,14 @@ export const PracticeProblem = ({ slug }: PracticeProblemProps) => {
                 {/* problem header */}
                 <div className="flex items-center justify-between gap-3 border-b px-6 py-4">
                     <h1 className="text-xl font-bold">{problem.title}</h1>
-                    <Chip size="sm" variant="soft" color="default">
-                        {t(`codingPractice.difficulty.${problem.difficulty}`)}
-                    </Chip>
+                    <div className="flex items-center gap-1.5">
+                        <Chip size="sm" variant="soft" color="default">
+                            {t(`codingPractice.level.${LEVEL_KEY[problem.difficulty]}`)}
+                        </Chip>
+                        <Chip size="sm" variant="soft" color="success">
+                            {t("codingPractice.points", { points: problem.points })}
+                        </Chip>
+                    </div>
                 </div>
 
                 {/* statement body */}
@@ -264,7 +318,7 @@ export const PracticeProblem = ({ slug }: PracticeProblemProps) => {
                     {hint && (
                         <div className="flex flex-col gap-3">
                             <div className="border-t" />
-                            <div className="flex items-center justify-between gap-2">
+                            <div className="flex items-center justify-between gap-1.5">
                                 <p className="font-semibold">{t("codingPractice.hintTitle")}</p>
                                 <Button
                                     size="sm"
@@ -277,13 +331,55 @@ export const PracticeProblem = ({ slug }: PracticeProblemProps) => {
                             {showHint && <MarkdownContent markdown={hint} />}
                         </div>
                     )}
+
+                    {/* reference solutions — reveal-gated, one tab per language */}
+                    {solutionLanguages.length > 0 && (
+                        <div className="flex flex-col gap-3">
+                            <div className="border-t" />
+                            <div className="flex items-center justify-between gap-1.5">
+                                <p className="font-semibold">{t("codingPractice.solutionTitle")}</p>
+                                <Button
+                                    size="sm"
+                                    variant="secondary"
+                                    onPress={onToggleSolution}
+                                >
+                                    {showSolution
+                                        ? t("codingPractice.hideSolution")
+                                        : t("codingPractice.showSolution")}
+                                </Button>
+                            </div>
+                            {showSolution && (
+                                <div className="flex flex-col gap-3">
+                                    {/* language switcher for the revealed solution */}
+                                    <div className="flex flex-wrap items-center gap-1.5">
+                                        {solutionLanguages.map((option) => (
+                                            <Button
+                                                key={option}
+                                                size="sm"
+                                                variant={solutionLanguage === option ? "primary" : "secondary"}
+                                                onPress={() => setSolutionLanguage(option)}
+                                            >
+                                                {t(`codingPractice.language.${option}`)}
+                                            </Button>
+                                        ))}
+                                    </div>
+                                    {/* fenced code block → syntax-highlighted by MarkdownContent */}
+                                    <MarkdownContent
+                                        markdown={`\`\`\`${MONACO_LANGUAGE[solutionLanguage]}\n${
+                                            solutionByLanguage.get(solutionLanguage) ?? ""
+                                        }\n\`\`\``}
+                                    />
+                                </div>
+                            )}
+                        </div>
+                    )}
                 </div>
             </div>
 
             {/* ── RIGHT: editor + submit + result + history ── */}
             <div className="flex flex-col overflow-y-auto">
                 {/* language selector */}
-                <div className="flex flex-wrap items-center gap-2 border-b px-6 py-3">
+                <div className="flex flex-wrap items-center gap-1.5 border-b px-6 py-3">
                     {languages.map((option) => (
                         <Button
                             key={option}
@@ -348,7 +444,7 @@ export const PracticeProblem = ({ slug }: PracticeProblemProps) => {
 
                 {/* result panel */}
                 {latestSubmission && (
-                    <div className="flex flex-col gap-2 border-b px-6 py-4">
+                    <div className="flex flex-col gap-1.5 border-b px-6 py-4">
                         <div className="flex items-center justify-between">
                             <p className="font-semibold">{t("codingPractice.result")}</p>
                             <Chip variant="soft" color={VERDICT_COLOR[latestSubmission.verdict]}>
@@ -374,7 +470,7 @@ export const PracticeProblem = ({ slug }: PracticeProblemProps) => {
 
                 {/* submission history */}
                 {(submissionsData?.submissions.length ?? 0) > 0 && (
-                    <div className="flex flex-col gap-2 px-6 py-4">
+                    <div className="flex flex-col gap-1.5 px-6 py-4">
                         <p className="font-semibold">{t("codingPractice.history")}</p>
                         <div className="flex flex-col gap-1">
                             {submissionsData?.submissions.map((submission: CodingSubmission) => (
@@ -385,7 +481,7 @@ export const PracticeProblem = ({ slug }: PracticeProblemProps) => {
                                     <span className="text-muted">
                                         {new Date(submission.createdAt).toLocaleString()}
                                     </span>
-                                    <span className="flex items-center gap-2">
+                                    <span className="flex items-center gap-1.5">
                                         <Chip size="sm" variant="soft" color="default">
                                             {t(`codingPractice.language.${submission.language}`)}
                                         </Chip>

@@ -117,7 +117,7 @@ export const TaskLockedAlert = () => {
         <>
             <Alert status="warning" className="shadow-none bg-warning/10">
                 <Alert.Indicator />
-                <Alert.Content className="gap-2">
+                <Alert.Content className="gap-1.5">
                     <Alert.Title>{t("task.previewLockedAlertTitle")}</Alert.Title>
                     <Alert.Description>
                         {t("task.previewLockedAlertDescription")}

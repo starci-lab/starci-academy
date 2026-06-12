@@ -33,10 +33,11 @@ Nguồn: `src/app/globals.css` (CSS vars, oklch) + HeroUI theme. **Luôn dùng t
 - Token gốc: `--radius: 0.5rem`, `--field-radius: 0.75rem`.
 
 ## Spacing rhythm (StarCi — RULE)
-3 mức gap chuẩn, dùng nhất quán:
-- **Block chính ↔ block chính: `gap-6`** (giữa 2 nhóm/section lớn, vd 2 nhóm thanh toán).
-- **UI phụ trong 1 section: `gap-3`** (label↔list, các phần tử phụ cùng cụm).
-- **Label ↔ input/control: `gap-2`** (field + label, cụm sát nhau).
+Chọn gap theo **QUAN HỆ ngữ nghĩa** giữa 2 element, KHÔNG theo cảm tính kích thước. 3 mức chuẩn:
+- **`gap-1.5` — coupled / dính nhau:** 2 phần tử gắn chặt thành 1 đơn vị — **label ↔ input/control**, 2 item của cùng 1 list (vd 2 listbox-item), chip ↔ chú thích kế bên.
+- **`gap-3` — CÙNG chức năng:** 2 element cùng vai (vd heading ↔ paragraph mô tả 1 nhóm; các nav-item với nhau; các field cùng 1 form).
+- **`gap-6` — KHÁC chức năng:** 2 element khác vai/tách biệt (vd khối text ↔ nút CTA, section ↔ section, brand ↔ nhóm link).
+> Minh hoạ: `<main gap-6>` (nhóm-text ↔ Button) bọc `<div gap-3>` (Heading ↔ Paragraph). Gần = liên quan, xa = tách biệt.
 - **Page shell padding mặc định: `p-3`** (KHÔNG `p-6`). Shell trang/section: `min-h-screen bg-background p-3` — `bg-background` để nền theo theme, `p-3` là padding chuẩn (vd Sandbox lesson shell).
 - globals.css set padding mặc định: `.card` p-3, `.chip` gap-1 px-2. Container trang `max-w-[1280px]` + grid (xem [03](03-layout-archetypes.md)).
 

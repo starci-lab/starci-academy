@@ -32,7 +32,7 @@ export const PersonalProjectAttemptsSkeleton = () => {
                         {/* attempt number label */}
                         <SkeletonText size="xs" width="w-24" />
                         {/* sparkle icon + score chip */}
-                        <div className="mt-2 flex items-center gap-2">
+                        <div className="mt-2 flex items-center gap-1.5">
                             <Skeleton className="size-5 rounded-full" />
                             <Skeleton className="h-6 w-16 rounded-full" />
                         </div>

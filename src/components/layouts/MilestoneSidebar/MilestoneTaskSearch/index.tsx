@@ -28,6 +28,8 @@ interface MilestoneTaskSearchItem {
 export interface MilestoneTaskSearchProps {
     /** Ordered milestones whose tasks populate the autocomplete collection. */
     milestones: Array<MilestoneEntity>
+    /** The value of the autocomplete — the currently selected task id. */
+    value: string | null
     /** Fired with the task id when a task is chosen. */
     onSelectTask: (taskId: string) => void
     /** Extra classes for the root field. */
@@ -41,7 +43,7 @@ export interface MilestoneTaskSearchProps {
  *
  * @param props - milestones to index, the select callback, and optional classes
  */
-export const MilestoneTaskSearch = ({ milestones, onSelectTask, className }: MilestoneTaskSearchProps) => {
+export const MilestoneTaskSearch = ({ milestones, value, onSelectTask, className }: MilestoneTaskSearchProps) => {
     const t = useTranslations()
 
     // diacritic- + case-insensitive "contains" matcher (handles Vietnamese accents).
@@ -74,28 +76,27 @@ export const MilestoneTaskSearch = ({ milestones, onSelectTask, className }: Mil
             className={cn("w-full", className)}
             fullWidth
             placeholder={t("finalProject.page.searchTaskPlaceholder")}
-            variant="secondary"
-            selectedKey={null}
-            onSelectionChange={(key) => {
-                if (key == null) {
+            value={value}
+            onChange={(value) => {
+                if (value == null) {
                     return
                 }
-                const item = byId.get(String(key))
+                const item = byId.get(String(value))
                 if (item) {
                     onSelectTask(item.id)
                 }
             }}
         >
-            <Autocomplete.Trigger className="flex h-10 w-full min-w-0 items-center gap-2 rounded-xl border border-divider px-3 text-start text-sm text-muted">
+            <Autocomplete.Trigger className="flex h-10 w-full min-w-0 items-center gap-1.5 rounded-field border border-divider px-3 text-start text-sm text-muted">
                 <MagnifyingGlassIcon className="size-4 shrink-0" />
                 <Autocomplete.Value className="min-w-0 flex-1 truncate" />
                 <Autocomplete.ClearButton />
                 <Autocomplete.Indicator />
             </Autocomplete.Trigger>
-            <Autocomplete.Popover className="w-[var(--trigger-width)]">
+            <Autocomplete.Popover className="w-[var(--trigger-width)] overflow-hidden p-0">
                 <Autocomplete.Filter filter={contains}>
-                    <SearchField className="px-2 pt-2">
-                        <SearchField.Group>
+                    <SearchField className="w-full">
+                        <SearchField.Group className="w-full rounded-none border-0 border-b border-divider px-3">
                             <SearchField.SearchIcon />
                             <SearchField.Input placeholder={t("finalProject.page.searchTaskPlaceholder")} />
                         </SearchField.Group>
@@ -106,6 +107,7 @@ export const MilestoneTaskSearch = ({ milestones, onSelectTask, className }: Mil
                                 key={item.id}
                                 id={item.id}
                                 textValue={item.label}
+                                className="py-2"
                             >
                                 {/* wrap up to 2 lines, then ellipsise; full label on hover.
                                     popover is pinned to the trigger width so long task

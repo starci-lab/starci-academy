@@ -71,7 +71,7 @@ export const ProviderCard = ({
     return (
         <div className="rounded-3xl border bg-background p-5 transition-shadow hover:shadow-md">
             <div className="flex flex-wrap items-center justify-between gap-3">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5">
                     <Chip
                         size="sm"
                         color={chipColor}
@@ -85,13 +85,13 @@ export const ProviderCard = ({
                 </div>
             </div>
             <div className="h-4" />
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1.5">
                 {sortedKeys.map((keyHealth) => (
                     <div
                         key={`${providerHealth.provider}-${keyHealth.keySuffix}`}
-                        className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-default-200/60 bg-default-50/50 px-3 py-2"
+                        className="flex flex-wrap items-center justify-between gap-1.5 rounded-2xl border border-default-200/60 bg-default-50/50 px-3 py-2"
                     >
-                        <div className="flex flex-wrap items-center gap-2">
+                        <div className="flex flex-wrap items-center gap-1.5">
                             <span className="font-mono text-xs font-semibold text-foreground">
                                 …{keyHealth.keySuffix}
                             </span>

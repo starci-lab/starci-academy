@@ -12,7 +12,7 @@ export type LessonCardSkeletonProps = WithClassNames<undefined>
  */
 export const LessonCardSkeleton = ({ className }: LessonCardSkeletonProps) => {
     return (
-        <div className={cn("space-y-2", className)}>
+        <div className={cn("space-y-1.5", className)}>
             <Skeleton className="h-14 w-full rounded-2xl" />
             <Skeleton className="h-14 w-full rounded-2xl" />
         </div>

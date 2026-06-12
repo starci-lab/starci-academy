@@ -61,7 +61,7 @@ export const LessonVideoSection = () => {
                             count && (
                                 <>
                                     <div className="h-12" />
-                                    <div className="flex gap-2 items-center justify-center">
+                                    <div className="flex gap-1.5 items-center justify-center">
                                         {Array.from({ length: Math.ceil((count ?? 0) / (limit ?? 10)) }, (_, i) => i + 1).map(p => (
                                             <Button
                                                 key={p}

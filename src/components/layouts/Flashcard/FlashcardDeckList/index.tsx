@@ -106,9 +106,9 @@ export const FlashcardDeckList = ({ courseId, onSelectDeck }: FlashcardDeckListP
                     {filteredDecks.map((deck: FlashcardDeckEntity) => (
                         <Card
                             key={deck.id}
-                            className="w-full transition-colors hover:bg-default-50"
+                            className="w-full transition-colors hover:bg-surface-secondary"
                         >
-                            <CardContent className="flex flex-col gap-2">
+                            <CardContent className="flex flex-col gap-1.5">
                                 <div className="flex items-center justify-between gap-3">
                                     <span className="font-medium">{deck.title}</span>
                                     <Chip

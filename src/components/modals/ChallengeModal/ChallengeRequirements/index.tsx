@@ -39,7 +39,7 @@ export const ChallengeRequirements = (props: ChallengeRequirementsProps) => {
     return (
         <>
             <div className="text-lg font-semibold text-foreground">{t("challenge.requirements")}</div>
-            <div className="h-2" />
+            <div className="h-1.5" />
             {challengeRequirements.length ? (
                 <Accordion                   
                     allowsMultipleExpanded
@@ -48,7 +48,7 @@ export const ChallengeRequirements = (props: ChallengeRequirementsProps) => {
                         <Accordion.Item key={requirement.id} id={requirement.id}>
                             <Accordion.Heading>
                                 <Accordion.Trigger className="w-full">
-                                    <div className="flex w-full items-center justify-between gap-2">
+                                    <div className="flex w-full items-center justify-between gap-1.5">
                                         <div className="text-sm text-foreground">
                                             {`${index + 1}. ${requirement.purpose?.slice(0, 80) || t("challenge.requirement.label", { index: index + 1 })}`}
                                         </div>

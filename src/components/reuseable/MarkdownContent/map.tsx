@@ -11,12 +11,46 @@ import {
 } from "./MarkdownTableParts"
 import { CodeToHtml } from "./CodeToHtml"
 import { LayoutWidget } from "./LayoutWidget"
-import { MdxWidget } from "./MdxWidget"
 import { MermaidDiagram } from "./MermaidDiagram"
+import { RenderReactComponent } from "./RenderReactComponent"
+import { TabsBlock, TabPane } from "./TabsBlock"
 import type { MarkdownRenderersParams } from "./types"
 
 // Named handles used by the markdown element renderers below.
-const { Link, Table, Text } = HeroUI
+const { Link, Table } = HeroUI
+
+// Tailwind size class per the old HeroUI `Text` `size` token. HeroUI v3.0.5 renamed
+// `Text` → `Typography` and its root no longer accepts `size`/`elementType`, so prose
+// blocks render through this tiny local helper instead — keeping visuals pixel-identical
+// and decoupled from the renamed component.
+const PROSE_SIZE: Record<string, string> = {
+    xs: "text-xs",
+    sm: "text-sm",
+    base: "text-base",
+    lg: "text-lg",
+    xl: "text-xl",
+}
+
+/**
+ * Minimal prose text node: renders `elementType` with a size class plus extra classes.
+ * Drop-in for the former HeroUI `<Text elementType size className>` used by the markdown
+ * heading/paragraph/list renderers.
+ * @param props.elementType - HTML element/tag to render (default `div`).
+ * @param props.size - Size token mapped to a Tailwind text-size class (default `sm`).
+ * @param props.className - Extra classes appended after the size class.
+ * @param props.children - Inline content.
+ */
+const ProseText = ({
+    elementType: As = "div",
+    size = "sm",
+    className,
+    children,
+}: {
+    elementType?: React.ElementType
+    size?: keyof typeof PROSE_SIZE
+    className?: string
+    children?: React.ReactNode
+}) => <As className={[PROSE_SIZE[size], className].filter(Boolean).join(" ")}>{children}</As>
 
 /**
  * Builds the element-renderer map handed to `ReactMarkdown` so headings, tables, code
@@ -33,31 +67,35 @@ export const buildMarkdownRenderers = ({
     mermaidCaptions,
 }: MarkdownRenderersParams): Components => ({
     h1: ({ children }) => (
-        <Text elementType="div" size="xl" className="font-semibold">{children}</Text>
+        <ProseText elementType="div" size="xl" className="font-semibold">{children}</ProseText>
     ),
     h2: ({ children }) => (
-        <Text elementType="div" size="lg" className="font-semibold">{children}</Text>
+        <ProseText elementType="div" size="lg" className="font-semibold">{children}</ProseText>
     ),
     h3: ({ children }) => (
-        <Text elementType="div" size="base" className="font-semibold">{children}</Text>
+        <ProseText elementType="div" size="base" className="font-semibold">{children}</ProseText>
     ),
     h4: ({ children }) => (
-        <Text elementType="div" size="sm" className="font-semibold text-muted">{children}</Text>
+        <ProseText elementType="div" size="sm" className="font-semibold text-muted">{children}</ProseText>
     ),
     h5: ({ children }) => (
-        <Text elementType="div" size="sm" className="font-semibold text-muted">{children}</Text>
+        <ProseText elementType="div" size="sm" className="font-semibold text-muted">{children}</ProseText>
     ),
     h6: ({ children }) => (
-        <Text elementType="div" size="xs" className="font-semibold text-muted">{children}</Text>
+        <ProseText elementType="div" size="xs" className="font-semibold text-muted">{children}</ProseText>
     ),
     // Custom `:::muted` directive tags (see remarkMuted in ./index): small, muted label text.
     // `[&_*]:text-muted` forces the muted colour onto any inner `<p>` the container wraps.
     mutedblock: ({ children }: { children?: React.ReactNode }) => (
-        <Text elementType="div" size="sm" className="font-semibold text-muted [&_*]:text-muted">{children}</Text>
+        <ProseText elementType="div" size="sm" className="font-semibold text-muted [&_*]:text-muted">{children}</ProseText>
     ),
     mutedtext: ({ children }: { children?: React.ReactNode }) => (
-        <Text elementType="span" size="sm" className="font-semibold text-muted">{children}</Text>
+        <ProseText elementType="span" size="sm" className="font-semibold text-muted">{children}</ProseText>
     ),
+    // :::tab → [ Preview | Code ] tabs; code/preview panes carry `kind` so TabsBlock can match them.
+    tabblock: ({ children }: { children?: React.ReactNode }) => <TabsBlock>{children}</TabsBlock>,
+    tabcode: ({ children }: { children?: React.ReactNode }) => <TabPane kind="code">{children}</TabPane>,
+    tabpreview: ({ children }: { children?: React.ReactNode }) => <TabPane kind="preview">{children}</TabPane>,
     table: ({ children }) => (
         <MarkdownTable ariaLabel={t("markdown.tableAriaLabel")}>
             {children}
@@ -103,9 +141,9 @@ export const buildMarkdownRenderers = ({
                 />
             )
         }
-        // ```mdx fence → compile the isolated snippet to a real HeroUI React tree.
+        // ```mdx fence → live HeroUI render (render-only; tabs come from a :::tab block).
         if (lang.toLowerCase() === "mdx") {
-            return <MdxWidget code={code} />
+            return <RenderReactComponent code={code} />
         }
         if (lang.toLowerCase() === "layout") {
             return <LayoutWidget html={code} />
@@ -131,10 +169,10 @@ export const buildMarkdownRenderers = ({
     ol: ({ children }) => <ol className="list-decimal space-y-0.5 pl-5 marker:text-muted">{children}</ol>,
     ul: ({ children }) => <ul className="list-disc space-y-0.5 pl-5 marker:text-muted">{children}</ul>,
     li: ({ children }) => (
-        <Text elementType="li" size="sm" className="space-y-1 leading-relaxed">{children}</Text>
+        <ProseText elementType="li" size="sm" className="space-y-1 leading-relaxed">{children}</ProseText>
     ),
     p: ({ children }) => (
-        <Text elementType="div" size="sm" className="leading-relaxed">{children}</Text>
+        <ProseText elementType="div" size="sm" className="leading-relaxed">{children}</ProseText>
     ),
     a: ({ href, children }) => (
         <Link href={href} target="_blank" className="!inline text-accent underline underline-offset-2">

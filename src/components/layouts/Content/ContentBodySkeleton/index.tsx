@@ -46,7 +46,7 @@ const MarkdownArticleSkeleton = () => (
                 {/* gap before each section heading except the first */}
                 {index > 0 ? <div className="h-3" /> : null}
                 <SkeletonText size="xl" width={section.headingWidth} />
-                <div className="h-2" />
+                <div className="h-1.5" />
                 <SkeletonParagraph size="sm" lines={section.lines} />
             </React.Fragment>
         ))}
@@ -62,7 +62,7 @@ const ReferenceLinksSkeleton = () => (
         <div className="h-3" />
         <div className="flex flex-col gap-3">
             {Array.from({ length: 2 }).map((_unused, index) => (
-                <div key={index} className="flex flex-wrap items-center gap-2">
+                <div key={index} className="flex flex-wrap items-center gap-1.5">
                     <Skeleton className="h-[14px] w-24 rounded-sm" />
                     <Skeleton className="h-[14px] w-4 rounded-sm" />
                     <Skeleton className="h-[14px] w-3/5 rounded-sm" />
@@ -76,7 +76,7 @@ const ReferenceLinksSkeleton = () => (
  * Icon action row mirroring {@link ActionToolbar} (bookmark, share, fullscreen).
  */
 const ActionToolbarSkeleton = () => (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-1.5">
         {Array.from({ length: 3 }).map((_unused, index) => (
             <Skeleton
                 key={index}

@@ -174,7 +174,7 @@ export const PaymentModal = () => {
                                 {paymentGroups.map((group) => (
                                     <div key={group.id} className="flex flex-col gap-3">
                                         {/* labeled divider — normal case, not uppercase */}
-                                        <div className="flex gap-2">
+                                        <div className="flex gap-1.5">
                                             <div className="text-start text-xs text-muted">{group.label}</div>
                                         </div>
                                         <div className="flex flex-col overflow-hidden rounded-3xl border">
@@ -207,7 +207,7 @@ export const PaymentModal = () => {
                                                                     src={paymentMethod.iconUrl}
                                                                 />
                                                                 <div className="col-span-2 flex flex-col gap-1">
-                                                                    <div className="flex items-center gap-2">
+                                                                    <div className="flex items-center gap-1.5">
                                                                         {isMutating &&
                                                                             selectedPaymentMethod === paymentMethod.type && (
                                                                             <Spinner size="sm" />

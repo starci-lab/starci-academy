@@ -17,7 +17,7 @@ export const ContentCardSkeleton = ({ className }: ContentCardSkeletonProps) => 
             <Card.Content>
                 <div>
                     <Skeleton className="h-4 my-1 w-2/3 rounded" />
-                    <div className="h-2" />
+                    <div className="h-1.5" />
                     <div className="flex flex-col">
                         <Skeleton className="h-[14px] my-[3px] w-full rounded-sm" />
                         <Skeleton className="h-[14px] my-[3px] w-5/6 rounded-sm" />

@@ -99,7 +99,7 @@ export const AiQuotaHistoryTab = ({
                 </div>
             </div>
 
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1.5">
                 <div className="text-sm font-semibold text-foreground">
                     {t("aiQuota.history.title")}
                 </div>
@@ -112,7 +112,7 @@ export const AiQuotaHistoryTab = ({
                 ) : (
                     <div className="flex max-h-64 flex-col divide-y divide-divider overflow-y-auto">
                         {history?.items.map((item) => (
-                            <div key={item.id} className="flex items-center justify-between gap-2 py-2">
+                            <div key={item.id} className="flex items-center justify-between gap-1.5 py-2">
                                 <div className="min-w-0">
                                     <div className="truncate text-sm font-medium text-foreground">
                                         {item.model ?? t("aiQuota.history.autoModel")}

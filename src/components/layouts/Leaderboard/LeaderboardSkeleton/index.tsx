@@ -21,7 +21,7 @@ export const LeaderboardSkeleton = ({ rows = 6 }: LeaderboardSkeletonProps) => {
             {/* podium: three pedestals, the middle one tallest */}
             <div className="flex items-end justify-center gap-3 sm:gap-6">
                 {[16, 24, 12].map((height, index) => (
-                    <div key={index} className="flex flex-1 flex-col items-center gap-2">
+                    <div key={index} className="flex flex-1 flex-col items-center gap-1.5">
                         <Skeleton className="size-12 rounded-full" />
                         <SkeletonText size="sm" width="w-16" />
                         <Skeleton

@@ -43,10 +43,47 @@ const remarkMuted = () => (tree: unknown): void => {
 }
 
 /**
+ * Recursively rewrites the `:::tab` / `:::code` / `:::preview` container directives into custom hast
+ * tags the renderer map turns into a [Preview|Code] tabs block (see TabsBlock): `tab`→`tabblock`,
+ * `code`→`tabcode`, `preview`→`tabpreview`. Each pane's child fence (` ```tsx ` / ` ```mdx `) still
+ * renders through the normal `pre` handler. Other directive names are left untouched.
+ *
+ * Note: container nesting needs MORE colons on the outer fence — `::::tab` wraps `:::code` /
+ * `:::preview`.
+ * @param node - Current mdast node being walked.
+ */
+const applyTabDirective = (node: { type?: string, name?: string, data?: Record<string, unknown>, children?: Array<unknown> }): void => {
+    if (node.type === "containerDirective") {
+        const tag = node.name === "tab"
+            ? "tabblock"
+            : node.name === "code"
+                ? "tabcode"
+                : node.name === "preview"
+                    ? "tabpreview"
+                    : null
+        if (tag) {
+            const data = node.data || (node.data = {})
+            data.hName = tag
+            data.hProperties = {}
+        }
+    }
+    if (Array.isArray(node.children)) {
+        for (const child of node.children) {
+            applyTabDirective(child as Parameters<typeof applyTabDirective>[0])
+        }
+    }
+}
+
+/** remark transformer: turn `::::tab`/`:::code`/`:::preview` directives into tabs-block tags. */
+const remarkTab = () => (tree: unknown): void => {
+    applyTabDirective(tree as Parameters<typeof applyTabDirective>[0])
+}
+
+/**
  * Module-level constant — NOT recreated every render. If `remarkPlugins={[...]}` were inline, each
  * MarkdownContent re-render would hand ReactMarkdown a new array → re-parse the whole markdown.
  */
-const REMARK_PLUGINS = [remarkGfm, remarkDirective, remarkMuted]
+const REMARK_PLUGINS = [remarkGfm, remarkDirective, remarkMuted, remarkTab]
 
 // Matches each ```mermaid fence and the figure caption paragraph that follows it.
 // Group 1 = diagram source; group 2 = the first non-blank line after the fence.
@@ -107,7 +144,7 @@ export const MarkdownContent = ({ markdown, className }: MarkdownContentProps) =
         ],
     )
     return (
-        <div className={cn("min-w-0 space-y-2 text-sm leading-relaxed text-foreground", className)}>
+        <div className={cn("min-w-0 space-y-1.5 text-sm leading-relaxed text-foreground", className)}>
             <ReactMarkdown
                 remarkPlugins={REMARK_PLUGINS}
                 components={components}

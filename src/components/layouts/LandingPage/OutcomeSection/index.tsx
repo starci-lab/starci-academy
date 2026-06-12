@@ -60,7 +60,7 @@ export const OutcomeSection = () => {
         >
             {/* Header */}
             <motion.div variants={itemVariants} className="max-w-2xl mx-auto text-center">
-                <div className="flex items-center justify-center gap-2 text-accent mb-4">
+                <div className="flex items-center justify-center gap-1.5 text-accent mb-4">
                     <Target width={22} height={22} />
                     <span className="font-mono uppercase tracking-[0.2em] text-xs">
                         Đầu ra
@@ -93,18 +93,18 @@ export const OutcomeSection = () => {
                         vì rải CV vào hư không và chờ một email không bao giờ đến.
                     </p>
                     <ul className="mt-6 space-y-3 text-sm text-muted">
-                        <li className="flex items-center gap-2">
+                        <li className="flex items-center gap-1.5">
                             <div className="w-1.5 h-1.5 rounded-full bg-accent" />
                             Được headhunt dựa trên năng lực thật, không phải từ khoá đẹp trong CV.
                         </li>
-                        <li className="flex items-center gap-2">
+                        <li className="flex items-center gap-1.5">
                             <div className="w-1.5 h-1.5 rounded-full bg-accent" />
                             StarCi AI soi Red Flags trong hồ sơ trước khi nó tới tay nhà tuyển dụng.
                         </li>
                     </ul>
                     <a
                         href="#courses"
-                        className="mt-8 flex items-center gap-2 font-medium text-accent group-hover:gap-4 transition-all"
+                        className="mt-8 flex items-center gap-1.5 font-medium text-accent group-hover:gap-4 transition-all"
                     >
                         Bắt đầu lộ trình <ArrowRight />
                     </a>
@@ -125,11 +125,11 @@ export const OutcomeSection = () => {
                         không cần kiểm tra lại tư duy nền tảng — chúng tôi đã làm điều đó.
                     </p>
                     <ul className="mt-6 space-y-3 text-sm text-muted">
-                        <li className="flex items-center gap-2">
+                        <li className="flex items-center gap-1.5">
                             <SealCheck width={16} height={16} className="text-accent shrink-0" />
                             Ứng viên được đánh giá qua bài thật, không phải bằng cấp.
                         </li>
-                        <li className="flex items-center gap-2">
+                        <li className="flex items-center gap-1.5">
                             <SealCheck width={16} height={16} className="text-accent shrink-0" />
                             Rút ngắn vòng tuyển — tập trung vào fit văn hoá và chuyên môn sâu.
                         </li>

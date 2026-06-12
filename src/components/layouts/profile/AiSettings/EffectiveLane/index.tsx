@@ -24,7 +24,7 @@ export const EffectiveLane = () => {
         return null
     }
     return (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
             <span className="text-sm text-muted">{t("aiSettings.effectiveNow")}:</span>
             <Chip
                 size="sm"

@@ -51,7 +51,7 @@ export const PremiumGateModal = () => {
                     <Modal.Dialog>
                         <Modal.CloseTrigger />
                         <Modal.Header>
-                            <div className="flex items-center gap-2 pr-8">
+                            <div className="flex items-center gap-1.5 pr-8">
                                 <LockKeyIcon className="h-5 w-5 text-warning" />
                                 <span className="text-lg font-semibold text-foreground">
                                     {t("course.paywall.title")}

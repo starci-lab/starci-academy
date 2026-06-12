@@ -63,8 +63,8 @@ export const MilestoneAccordion = ({
                         id={String(milestone.id)}
                     >
                         <Accordion.Heading>
-                            <Accordion.Trigger className="w-full">
-                                <div className="flex w-full items-center justify-between gap-2">
+                            <Accordion.Trigger className="w-full p-3 border-b border-separator">
+                                <div className="flex w-full items-center justify-between gap-1.5">
                                     <span className="min-w-0 flex-1 cursor-pointer text-start text-base font-semibold">
                                         {`${milestone.sortIndex}. ${milestone.title || "Milestone"}`}
                                     </span>

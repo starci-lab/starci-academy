@@ -67,7 +67,7 @@ export const LaneCard = ({
         >
             {LANE_ICON_MAP[mode]}
             <div className="flex-1">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5">
                     <span className="text-base font-semibold">
                         {t(`aiSettings.lanes.${mode}.title`)}
                     </span>

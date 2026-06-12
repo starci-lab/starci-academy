@@ -36,7 +36,7 @@ export const LastAttemptResult = ({
         <div>
             <div className="border-t border-divider" />
             <div className="h-3" />
-            <div className="flex gap-2 text-sm text-muted items-center">
+            <div className="flex gap-1.5 text-sm text-muted items-center">
                 <Chip color={isPassed ? "success" : "danger"} size="sm" variant="soft">
                     <Chip.Label>
                         {t(isPassed ? "challenge.pass" : "challenge.fail")}

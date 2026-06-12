@@ -27,11 +27,6 @@ const query1 = gql`
               body
               sortIndex
               defaultLocale
-              translations {
-                locale
-                field
-                value
-              }
             }
             criterias {
               id

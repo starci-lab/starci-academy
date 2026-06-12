@@ -57,7 +57,8 @@ export interface RefreshTokenVariables {
 /**
  * The refresh token mutation.
  */
-export const mutateRefreshToken = async ({
+/** Performs one refresh mutation on a dedicated, throwaway Apollo client. */
+const sendRefreshToken = ({
     mutation = MutationRefreshToken.Mutation1,
     request,
     debug,
@@ -71,4 +72,33 @@ export const mutateRefreshToken = async ({
         mutation: mutationMap[mutation],
         variables: { request },
     })
+}
+
+/**
+ * In-flight refresh shared across concurrent callers (single-flight).
+ *
+ * The proactive-refresh link awaits a refresh before EVERY operation when the
+ * token is near expiry, so firing N queries at once would otherwise spawn N
+ * parallel refreshes — wasteful, and worse: each one rotates the server CSRF
+ * cookie out from under its siblings, producing "CSRF token mismatch". While a
+ * refresh is in flight, everyone shares the same promise.
+ */
+let inFlightRefresh: ReturnType<typeof sendRefreshToken> | null = null
+
+/**
+ * The refresh token mutation. Coalesces overlapping calls into one network
+ * refresh; the next near-expiry after it settles triggers a fresh one.
+ */
+export const mutateRefreshToken = (
+    params: MutateParams<MutationRefreshToken, RefreshTokenRequest>,
+) => {
+    // join the in-flight refresh instead of starting a competing one
+    if (inFlightRefresh) {
+        return inFlightRefresh
+    }
+    inFlightRefresh = sendRefreshToken(params).finally(() => {
+        // release once settled so a later expiry can refresh again
+        inFlightRefresh = null
+    })
+    return inFlightRefresh
 }

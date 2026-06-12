@@ -206,7 +206,6 @@ export const FoundationsCategoryGridLayout = () => {
             {/* search row: box (server-side, debounced) on the left, topic count right-aligned */}
             <div className="flex items-center justify-between gap-3">
                 <SearchInput
-                    variant="secondary"
                     value={query}
                     onValueChange={setQuery}
                     placeholder={t("foundations.searchPlaceholder")}

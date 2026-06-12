@@ -148,7 +148,7 @@
         "title": "CV",
         "preview": {
             "title": "Xem trước CV (PDF)",
-            "fullscreen": "Xem full"
+            "fullscreen": "Xem toàn màn hình"
         },
         "submission": {
             "fileCardTitle": "Thông tin CV đã nộp",
@@ -364,7 +364,7 @@
         "loadingResults": "Đang tải kết quả chấm điểm...",
         "resultsTitle": "Kết quả chấm điểm",
         "previewLockedAlertTitle": "Hoàn thành bài trước trước",
-        "previewLockedAlertDescription": "Bạn vẫn xem được tiêu chí của bài này. Đánh giá AI, xem phản hồi/lịch sử và chỉnh GitHub chỉ bật sau khi hoàn thành bước trước.",
+        "previewLockedAlertDescription": "Bạn vẫn xem được tiêu chí của bài này. Đánh giá AI, xem phản hồi/lịch sử và chỉnh GitHub chỉ được bật sau khi hoàn thành bước trước.",
         "previewLockedGoToCurrentTaskButton": "Về bài hiện tại",
         "personalProjectDockerMultiStageIntro": "Đóng gói ứng dụng NestJS của bạn bằng Dockerfile multi-stage để tối ưu hóa dung lượng image. Build image và push lên một container registry như Docker Hub.",
         "attemptNumber": "Lần #{number}",
@@ -606,7 +606,7 @@
         "subtitle": "Các mô hình AI đang được sử dụng trong hệ thống",
         "keyPool": {
             "title": "Trạng thái pool API key",
-            "subtitle": "Health realtime từ cache ping — key disabled sẽ bị bỏ qua ở lần gọi tiếp theo.",
+            "subtitle": "Trạng thái realtime từ cache ping — key disabled sẽ bị bỏ qua ở lần gọi tiếp theo.",
             "refreshing": "Đang làm mới…",
             "error": "Không tải được trạng thái pool key.",
             "empty": "Chưa cấu hình pool provider nào.",
@@ -801,11 +801,11 @@
             "title": "Trạng thái AI Balancer",
             "subtitle": "Trạng thái key API từ cache ping — key disabled sẽ bị bỏ qua ở lần gọi tiếp theo.",
             "backToAdmin": "Về trang admin",
-            "uploadVideoTool": "Upload video",
+            "uploadVideoTool": "Tải lên video",
             "refreshing": "Đang làm mới…",
             "refreshNow": "Làm mới ngay",
             "empty": "Chưa có pool provider nào.",
-            "error": "Không tải được trạng thái balancer. Hãy đăng nhập.",
+            "error": "Không tải được trạng thái balancer. Vui lòng đăng nhập.",
             "providers": {
                 "gemini": "Gemini",
                 "openai": "OpenAI",
@@ -1015,7 +1015,7 @@
         },
         "sepay": {
             "desc": "Thanh toán qua Sepay",
-            "instruction": "Sử dụng ứng dụng ngân hàng để quét mã QR bên dưới để thanh toán.",
+            "instruction": "Quét mã QR bằng ứng dụng ngân hàng để thanh toán.",
             "bank": "Ngân hàng",
             "account": "Số tài khoản",
             "amount": "Số tiền",

@@ -14,6 +14,7 @@ import { LayoutWidget } from "./LayoutWidget"
 import { MermaidDiagram } from "./MermaidDiagram"
 import { RenderReactComponent } from "./RenderReactComponent"
 import { TabsBlock, TabPane } from "./TabsBlock"
+import { Link as IntlLink } from "@/i18n/navigation"
 import type { MarkdownRenderersParams } from "./types"
 
 // Named handles used by the markdown element renderers below.
@@ -174,9 +175,21 @@ export const buildMarkdownRenderers = ({
     p: ({ children }) => (
         <ProseText elementType="div" size="sm" className="leading-relaxed">{children}</ProseText>
     ),
-    a: ({ href, children }) => (
-        <Link href={href} target="_blank" className="!inline text-accent underline underline-offset-2">
-            {children}
-        </Link>
-    ),
+    a: ({ href, children }) => {
+        // Internal links (e.g. related-problem `/practice/<slug>`) navigate in-app
+        // (same tab, locale-aware) via the next-intl Link; external links open a new tab.
+        const isInternal = typeof href === "string" && href.startsWith("/")
+        if (isInternal) {
+            return (
+                <IntlLink href={href} className="!inline text-accent underline underline-offset-2">
+                    {children}
+                </IntlLink>
+            )
+        }
+        return (
+            <Link href={href} target="_blank" className="!inline text-accent underline underline-offset-2">
+                {children}
+            </Link>
+        )
+    },
 } as Components)

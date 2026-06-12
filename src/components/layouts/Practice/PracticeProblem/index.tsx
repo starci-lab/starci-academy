@@ -31,12 +31,11 @@ import {
 } from "@/modules/api/graphql"
 import {
     useJobNotificationsSocketIo,
-    jobNotificationsSocketIoEventEmitter,
     PublicationEvent,
-    SubscriptionEvent,
 } from "@/hooks/socketio"
-import { JobCategory, JobStatus, type JobStatusUpdatedSocketIoMessage } from "@/modules/types"
+import { JobCategory, JobStatus } from "@/modules/types"
 import { AIProcessingText } from "@/components/reuseable/AIProcessingText"
+import { useAppSelector } from "@/redux"
 import { PracticeProblemSkeleton } from "./PracticeProblemSkeleton"
 
 /** Props for {@link PracticeProblem}. */
@@ -92,9 +91,14 @@ export const PracticeProblem = ({ slug }: PracticeProblemProps) => {
     const [language, setLanguage] = useState<CodingLanguage>(CodingLanguage.Python)
     const [code, setCode] = useState<string>("")
     const [pendingJobId, setPendingJobId] = useState<string | null>(null)
-    const [pendingJobStatus, setPendingJobStatus] = useState<JobStatus | null>(null)
-    const [pendingJobError, setPendingJobError] = useState<string | undefined>(undefined)
     const [submitting, setSubmitting] = useState(false)
+    // Live job status mirrored from Redux — the global /job_notifications lifecycle
+    // dispatches every subscribed job's status into socketIo.jobStatusByJobId, the same
+    // single source the challenge panel reads (no per-component EventEmitter listener).
+    const pendingJobMessage = useAppSelector((state) =>
+        (pendingJobId ? state.socketIo.jobStatusByJobId[pendingJobId] : undefined))
+    const pendingJobStatus = pendingJobMessage?.data?.status
+    const pendingJobError = pendingJobMessage?.data?.error
     const [showHint, setShowHint] = useState(false)
     const [showSolution, setShowSolution] = useState(false)
     // reference solutions arrive ONLY from the gated reveal mutation (never the
@@ -246,10 +250,8 @@ export const PracticeProblem = ({ slug }: PracticeProblemProps) => {
             })
             const jobId = response.data?.submitCodingSolution.data?.jobId
             if (!jobId) return
-            // Subscribe to the job room + show the live "judging" indicator BEFORE the
-            // refetch so an early socket push is never missed (race-free, like challenge).
-            setPendingJobError(undefined)
-            setPendingJobStatus(JobStatus.Queued)
+            // Subscribe to the job room BEFORE the refetch so an early socket push is
+            // never missed (race-free, like challenge). Status comes from Redux.
             setPendingJobId(jobId)
             socket.emit(PublicationEvent.SubscribeJobNotification, {
                 data: { jobId },
@@ -261,24 +263,14 @@ export const PracticeProblem = ({ slug }: PracticeProblemProps) => {
         }
     }, [slug, language, code, mutateSubmissions, socket, locale])
 
+    // When the watched job reaches a terminal status (from Redux), refetch the
+    // submissions (verdict now persisted) and stop watching.
     useEffect(() => {
-        if (!pendingJobId) return
-        const onMessage = (message: JobStatusUpdatedSocketIoMessage) => {
-            if (message.data?.jobId !== pendingJobId) return
-            // track live status so the indicator reflects queued → processing → done
-            setPendingJobStatus(message.data?.status ?? JobStatus.Processing)
-            setPendingJobError(message.data?.error)
-            if (isTerminalStatus(message.data?.status)) {
-                void mutateSubmissions()
-                setPendingJobId(null)
-                setPendingJobStatus(null)
-            }
+        if (pendingJobId && isTerminalStatus(pendingJobStatus)) {
+            void mutateSubmissions()
+            setPendingJobId(null)
         }
-        jobNotificationsSocketIoEventEmitter.on(SubscriptionEvent.JobStatusUpdated, onMessage)
-        return () => {
-            jobNotificationsSocketIoEventEmitter.off(SubscriptionEvent.JobStatusUpdated, onMessage)
-        }
-    }, [pendingJobId, mutateSubmissions])
+    }, [pendingJobId, pendingJobStatus, mutateSubmissions])
 
     const judging = pendingJobId !== null
 

@@ -16,3 +16,7 @@ export const jobNotificationsSocket: Socket = jobNotificationsManager.socket("/j
 const contentDiscussionManager = createManager()
 /** The `/content_discussion` namespace socket. */
 export const contentDiscussionSocket: Socket = contentDiscussionManager.socket("/content_discussion")
+
+const aiLabManager = createManager()
+/** The `/ai_lab` namespace socket (playground prompt token streaming). */
+export const aiLabSocket: Socket = aiLabManager.socket("/ai_lab")

@@ -65,16 +65,18 @@ export const Layout = ({ children }: PropsWithChildren) => {
                 {children}
             </div>
             {/* right rail: module outline on lesson routes, milestone rail on personal-project.
-                Milestone rail has no slim variant, so it hides while collapsed. Mobile uses the
-                drawer in LearnMobileBar instead. */}
+                Both collapse to a slim numbered index. Mobile uses the drawer in LearnMobileBar. */}
             {isModules && (
                 <ModuleSidebar
                     collapsed={rightCollapsed}
                     className="hidden min-w-0 overflow-x-hidden lg:block lg:self-start"
                 />
             )}
-            {isPersonalProject && !rightCollapsed && (
-                <MilestoneSidebar className="hidden min-w-0 overflow-x-hidden lg:block lg:self-start" />
+            {isPersonalProject && (
+                <MilestoneSidebar
+                    collapsed={rightCollapsed}
+                    className="hidden min-w-0 overflow-x-hidden lg:block lg:self-start"
+                />
             )}
         </div>
     )

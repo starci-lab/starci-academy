@@ -93,6 +93,15 @@ export const buildMarkdownRenderers = ({
     mutedtext: ({ children }: { children?: React.ReactNode }) => (
         <ProseText elementType="span" size="sm" className="font-semibold text-muted">{children}</ProseText>
     ),
+    // Custom `:::chip` directive tag (see remarkChip in ./index): a wrapped row of soft chips,
+    // one per authored keyword line. `items` is the `|`-joined keyword list.
+    chipblock: ({ items }: { items?: string }) => (
+        <span className="my-1 flex flex-wrap gap-1.5">
+            {String(items ?? "").split("|").filter(Boolean).map((keyword, index) => (
+                <HeroUI.Chip key={index} size="sm" variant="soft" color="default">{keyword}</HeroUI.Chip>
+            ))}
+        </span>
+    ),
     // :::tab → [ Preview | Code ] tabs; code/preview panes carry `kind` so TabsBlock can match them.
     tabblock: ({ children }: { children?: React.ReactNode }) => <TabsBlock>{children}</TabsBlock>,
     tabcode: ({ children }: { children?: React.ReactNode }) => <TabPane kind="code">{children}</TabPane>,

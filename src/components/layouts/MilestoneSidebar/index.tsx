@@ -44,11 +44,17 @@ import {
 import {
     MilestoneTaskSearch,
 } from "./MilestoneTaskSearch"
+import {
+    MilestoneIndexStrip,
+} from "./MilestoneIndexStrip"
 
 /**
  * Props for {@link MilestoneSidebar}.
  */
-type MilestoneSidebarProps = WithClassNames<undefined>
+type MilestoneSidebarProps = WithClassNames<undefined> & {
+    /** Collapsed mode: render a slim numbered index instead of the full list. */
+    collapsed?: boolean
+}
 
 /**
  * Milestone navigation sidebar for the personal-project learn view.
@@ -58,10 +64,9 @@ type MilestoneSidebarProps = WithClassNames<undefined>
  * presentational {@link MilestoneAccordion}. `"use client"` for hooks.
  * @param props - optional container class name
  */
-export const MilestoneSidebar = ({ className }: MilestoneSidebarProps) => {
+export const MilestoneSidebar = ({ className, collapsed = false }: MilestoneSidebarProps) => {
     const milestonesSwr = useQueryMilestonesSwr()
     const progressSwr = useQueryMilestoneTaskProgressSwr()
-    const isLoading = milestonesSwr.isLoading
     const dispatch = useAppDispatch()
     const router = useRouter()
     const locale = useLocale()
@@ -114,12 +119,62 @@ export const MilestoneSidebar = ({ className }: MilestoneSidebarProps) => {
         ],
     )
 
-    if (isLoading && milestones.length === 0) {
-        return <MilestoneSidebarSkeleton className={className} />
+    /** Milestone that owns the currently selected task — highlighted in the collapsed rail. */
+    const activeMilestoneId = useMemo(() => {
+        if (!selectedTaskId) {
+            return undefined
+        }
+        const owner = milestones.find((milestone) =>
+            (milestone.tasks ?? []).some((task) => task.id === selectedTaskId),
+        )
+        return owner ? String(owner.id) : undefined
+    }, [
+        milestones,
+        selectedTaskId,
+    ])
+
+    /** Collapsed-rail press: jump to the first task of the chosen milestone. */
+    const onSelectMilestone = useCallback(
+        (milestoneId: string) => {
+            const milestone = milestones.find((entity) => String(entity.id) === milestoneId)
+            const firstTask = (milestone?.tasks ?? [])
+                .slice()
+                .sort((prev, next) => prev.sortIndex - next.sortIndex)[0]
+            if (firstTask) {
+                onSelectTask(firstTask.id)
+            }
+        },
+        [
+            milestones,
+            onSelectTask,
+        ],
+    )
+
+    /**
+     * Loading gate: prefer cached redux milestones (SWR hydrates into `milestone.entities`);
+     * otherwise wait for the singleton query to settle.
+     */
+    const ready = milestones.length > 0
+        || (!milestonesSwr.isLoading && !!milestonesSwr.data && !milestonesSwr.error)
+
+    // shared sticky/scroll shell so every render branch lines up under the navbar
+    const shellClass = cn("lg:sticky lg:top-16 lg:self-start lg:h-[calc(100vh-64px)] lg:overflow-y-auto", className)
+
+    // collapsed rail: show only the slim numbered index (clicking a number jumps to that milestone)
+    if (collapsed) {
+        return (
+            <div className={shellClass}>
+                <MilestoneIndexStrip
+                    milestones={milestones}
+                    activeMilestoneId={activeMilestoneId}
+                    onSelectMilestone={onSelectMilestone}
+                />
+            </div>
+        )
     }
 
     return (
-        <div className={cn("lg:sticky lg:top-16 lg:self-start lg:h-[calc(100vh-64px)] lg:overflow-y-auto", className)}>
+        <div className={shellClass}>
             <div>
                 <MilestoneTaskSearch
                     className="p-3"
@@ -128,15 +183,22 @@ export const MilestoneSidebar = ({ className }: MilestoneSidebarProps) => {
                     onSelectTask={onSelectTask}
                 />
             </div>
-            {/* divider separating the search field from the milestone list */}
-            <Separator className="mb-2" />
-            <MilestoneAccordion
-                milestones={milestones}
-                progressMap={progressMap}
-                selectedTaskId={selectedTaskId}
-                isTaskUnlocked={isTaskUnlocked}
-                onSelectTask={onSelectTask}
-            />
+            {/* divider separating the search field from the milestone list — sits flush
+                against the accordion; the trigger's own padding gives the breathing room */}
+            <Separator />
+            {
+                ready ? (
+                    <MilestoneAccordion
+                        milestones={milestones}
+                        progressMap={progressMap}
+                        selectedTaskId={selectedTaskId}
+                        isTaskUnlocked={isTaskUnlocked}
+                        onSelectTask={onSelectTask}
+                    />
+                ) : (
+                    <MilestoneSidebarSkeleton count={5} />
+                )
+            }
         </div>
     )
 }

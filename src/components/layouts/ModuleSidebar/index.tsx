@@ -140,14 +140,6 @@ export const ModuleSidebar = ({ className, collapsed = false }: ModuleSidebarPro
         )
     }
 
-    if (!ready) {
-        return (
-            <div className={shellClass}>
-                <ModuleSidebarSkeleton count={5} />
-            </div>
-        )
-    }
-
     return (
         <div className={shellClass}>
             {/* HeroUI Autocomplete over the full lesson collection (client-side filter, not ES);
@@ -160,15 +152,22 @@ export const ModuleSidebar = ({ className, collapsed = false }: ModuleSidebarPro
                     onSelectContent={onSelectContent}
                 />
             </div>
-            {/* divider separating the search field from the module list */}
-            <Separator className="mb-2" />
-            <ModuleAccordion
-                modules={sortedModules}
-                activeModuleId={moduleId}
-                activeContentId={activeContent?.id}
-                onSelectContent={onSelectContent}
-                onExpandModule={onExpandedChange}
-            />
+            {/* divider separating the search field from the module list — sits flush
+                against the accordion; the trigger's own padding gives the breathing room */}
+            <Separator />
+            {
+                ready ? (
+                    <ModuleAccordion
+                        modules={sortedModules}
+                        activeModuleId={moduleId}
+                        activeContentId={activeContent?.id}
+                        onSelectContent={onSelectContent}
+                        onExpandModule={onExpandedChange}
+                    />
+                ) : (
+                    <ModuleSidebarSkeleton count={5} />
+                )
+            }
         </div>
     )
 }

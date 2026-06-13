@@ -22,6 +22,9 @@ export type SearchableEntity =
     | "ContentEntity"
     | "LessonVideoEntity"
     | "ChallengeEntity"
+    | "MilestoneEntity"
+    | "MilestoneTaskEntity"
+    | "FlashcardDeckEntity"
 
 /** Grouped global-search hits, bucketed by entity kind. */
 export interface GlobalSearchGroups {
@@ -35,6 +38,12 @@ export interface GlobalSearchGroups {
     contents?: Array<GlobalSearchItem>
     /** Lesson-video hits. */
     lessonVideos?: Array<GlobalSearchItem>
+    /** Flashcard-deck hits. */
+    flashcardDecks?: Array<GlobalSearchItem>
+    /** Milestone hits. */
+    milestones?: Array<GlobalSearchItem>
+    /** Milestone-task hits. */
+    milestoneTasks?: Array<GlobalSearchItem>
 }
 
 /** Payload shape for global search subscription results (mirrors UI `GlobalSearchContent`). */

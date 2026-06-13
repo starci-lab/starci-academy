@@ -7,6 +7,9 @@ export type SearchableEntity =
     | "ContentEntity"
     | "LessonVideoEntity"
     | "ChallengeEntity"
+    | "MilestoneEntity"
+    | "MilestoneTaskEntity"
+    | "FlashcardDeckEntity"
 
 /** One resolved ancestor (course/module/content/challenge) of a search hit. */
 export interface AutocompleteGlobalSearchParentRef {
@@ -26,6 +29,8 @@ export interface AutocompleteGlobalSearchParentPath {
     content?: AutocompleteGlobalSearchParentRef
     /** The challenge itself (present for challenge hits). */
     challenge?: AutocompleteGlobalSearchParentRef
+    /** The milestone's first task (present for milestone hits) — used to deep-link into the personal-project page. */
+    task?: AutocompleteGlobalSearchParentRef
 }
 
 /** One result item returned from the autocomplete global search endpoint. */
@@ -54,6 +59,12 @@ export interface AutocompleteGlobalSearchData {
     contents?: Array<AutocompleteGlobalSearchItem>
     /** Matching lesson video results. */
     lessonVideos?: Array<AutocompleteGlobalSearchItem>
+    /** Matching flashcard-deck results. */
+    flashcardDecks?: Array<AutocompleteGlobalSearchItem>
+    /** Matching milestone results. */
+    milestones?: Array<AutocompleteGlobalSearchItem>
+    /** Matching milestone-task results. */
+    milestoneTasks?: Array<AutocompleteGlobalSearchItem>
 }
 
 /** Apollo variables for `autocompleteGlobalSearch(request: AutocompleteGlobalSearchRequest!)`. */

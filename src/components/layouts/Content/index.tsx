@@ -29,6 +29,7 @@ import {
     useQueryContentSwr,
     useQueryContentStatusSwr,
     usePremiumGateOverlayState,
+    useQueryAiLabPlaygroundSwr,
 } from "@/hooks"
 import {
     ContentTab,
@@ -49,6 +50,9 @@ import {
 import {
     SandboxBody,
 } from "./SandboxBody"
+import {
+    AiLabBody,
+} from "./AiLabBody"
 import {
     E2eResultDrawer,
 } from "./E2eResultDrawer"
@@ -95,6 +99,9 @@ export const Content = ({ className }: ContentProps) => {
             ? contentSnapshot
             : undefined
     useQueryContentStatusSwr()
+    /** AI Lab playground bound to this lesson, if any (drives the AI Lab tab). */
+    const playgroundSwr = useQueryAiLabPlaygroundSwr(content?.id)
+    const playground = playgroundSwr.data
     const dispatch = useAppDispatch()
     const router = useRouter()
     const pathname = usePathname()
@@ -144,6 +151,13 @@ export const Content = ({ className }: ContentProps) => {
                 component: <ChallengeBody />,
                 locked: isLocked,
             })
+            if (playground) {
+                items.push({
+                    key: ContentTab.AILab,
+                    label: t("aiLab.tabs.aiLab"),
+                    component: <AiLabBody />,
+                })
+            }
             return items
         },
         [
@@ -151,6 +165,7 @@ export const Content = ({ className }: ContentProps) => {
             isLocked,
             isSchemaV2,
             isSandbox,
+            playground,
         ],
     )
 
@@ -185,6 +200,10 @@ export const Content = ({ className }: ContentProps) => {
             tabItems,
         ],
     )
+
+    /** Tabs that span the full page width (no reading-width cap / article padding). */
+    const isFullWidthTab =
+        selectedTabKey === ContentTab.Sandbox || selectedTabKey === ContentTab.AILab
 
     /** Body of the currently selected tab. */
     const bodyComponent = useMemo(
@@ -258,10 +277,10 @@ export const Content = ({ className }: ContentProps) => {
                     <div
                         className={cn(
                             "relative w-full",
-                            selectedTabKey !== ContentTab.Sandbox && "mx-auto max-w-[1024px]",
+                            !isFullWidthTab && "mx-auto max-w-[1024px]",
                         )}
                     >
-                        <div className={cn(selectedTabKey !== ContentTab.Sandbox && "p-3", isLocked && "select-none")}>
+                        <div className={cn(!isFullWidthTab && "p-3", isLocked && "select-none")}>
                             {bodyComponent}
                         </div>
                         {/* Medium-style teaser: a tall, smooth gradient fades the tail of the body
@@ -272,7 +291,7 @@ export const Content = ({ className }: ContentProps) => {
                     </div>
                     {/* E2E proof: a quiet link at the bottom of the lesson that opens a
                         right-side drawer with the recorded per-language test results. */}
-                    {hasE2e && !isLocked && selectedTabKey !== ContentTab.Sandbox ? (
+                    {hasE2e && !isLocked && !isFullWidthTab ? (
                         <div className="mx-auto w-full max-w-[1024px] px-3 pb-6">
                             <E2eResultDrawer />
                         </div>

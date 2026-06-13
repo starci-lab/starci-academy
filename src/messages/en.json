@@ -30,7 +30,10 @@
             "videos": "Videos",
             "challenges": "Challenges",
             "contents": "Contents",
-            "lessonVideos": "Lesson videos"
+            "lessonVideos": "Lesson videos",
+            "flashcards": "Flashcard decks",
+            "milestones": "Progress",
+            "milestoneTasks": "Tasks"
         },
         "idleHint": "Type to search courses, modules, lessons…"
     },
@@ -221,6 +224,7 @@
     },
     "finalProject": {
         "title": "Personal project",
+        "aria": "Milestone {index}",
         "page": {
             "title": "Personal project",
             "searchTaskPlaceholder": "Search tasks...",
@@ -643,6 +647,7 @@
         "emptyHint": "New interview problems are being added — check back soon.",
         "solvedOf": "Solved {solved}/{total}",
         "allLevels": "All",
+        "filterAria": "Filter by level",
         "level": {
             "junior": "Junior",
             "mid": "Mid",
@@ -1228,6 +1233,73 @@
             "subline": "StarCi is not a generic fullstack bootcamp. It is where you train architectural thinking — what AI has not replaced, and what decides whether you are a <b>\"code monkey\"</b> or a <b>system designer</b>.",
             "ctaRoadmap": "See the roadmap",
             "ctaFounder": "Meet the founder of StarCi"
+        }
+    },
+    "aiLab": {
+        "tabs": {
+            "aiLab": "AI Lab"
+        },
+        "playground": {
+            "title": "Prompt playground",
+            "description": "Tweak the prompt and parameters, then run it against a live model and watch the response stream in.",
+            "systemPrompt": "System prompt",
+            "systemPromptPlaceholder": "Optional. Set the model's role and rules.",
+            "userPrompt": "User prompt",
+            "userPromptPlaceholder": "Type the prompt to send to the model.",
+            "params": "Parameters",
+            "temperature": "Temperature",
+            "topP": "Top-p",
+            "maxTokens": "Max tokens",
+            "lane": "Lane",
+            "model": "Model",
+            "run": "Run",
+            "abort": "Abort",
+            "resetToDefault": "Reset to default",
+            "output": "Output",
+            "outputEmpty": "The response will appear here.",
+            "cached": "Cached",
+            "tokens": "{prompt} prompt / {completion} completion tokens",
+            "estimatedCost": "≈ {credits} credits",
+            "remainingRuns": "{count} runs left this window",
+            "quotaExhausted": "You have used all your runs for this window.",
+            "byokNudge": "Add your own API key to keep running without limits.",
+            "goToAiSettings": "Open AI settings",
+            "runHistory": "Run history",
+            "runHistoryEmpty": "No runs yet.",
+            "failed": "The run failed. Please try again."
+        },
+        "eval": {
+            "title": "Evaluation challenge",
+            "description": "Write a prompt template, submit it, and we grade your output across every hidden test case.",
+            "systemPrompt": "System prompt",
+            "systemPromptPlaceholder": "Optional. Set the model's role and rules.",
+            "userTemplate": "User template",
+            "userTemplatePlaceholder": "Use {{input}} where each test case input should go.",
+            "templatePlaceholderHint": "Use the {{input}} placeholder — it is replaced with each test case input.",
+            "submit": "Submit for grading",
+            "submitting": "Submitting…",
+            "grading": "Grading…",
+            "passedSummary": "{passed}/{total} cases passed",
+            "score": "Score {score}/{max}",
+            "passed": "Passed",
+            "failed": "Failed",
+            "caseInput": "Input",
+            "actualOutput": "Output",
+            "expected": "Expected",
+            "feedback": "Feedback",
+            "citationPresent": "Citation present",
+            "citationMissing": "Citation missing",
+            "viewResult": "View result",
+            "caseLabel": "Case {index}",
+            "empty": "This lesson has no evaluation challenge."
+        },
+        "status": {
+            "streaming": "Streaming",
+            "completed": "Completed",
+            "failed": "Failed",
+            "cached": "Cached",
+            "pending": "Pending",
+            "grading": "Grading"
         }
     }
 }

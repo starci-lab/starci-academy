@@ -1,16 +1,11 @@
 "use client"
 
-import type { IconComponent } from "@/types"
 import { AutocompleteGlobalSearchItem } from "@/modules/api"
 import { ListBox } from "@heroui/react"
 import React from "react"
 
 /** Props for {@link GlobalSearchContentBlock}. */
 interface GlobalSearchContentBlockProps {
-    /** Section heading (translated). */
-    label: string
-    /** Leading icon for the section header. */
-    icon: IconComponent
     /** Result rows. */
     items: Array<AutocompleteGlobalSearchItem>
     /** Called when the user activates a row; parent resolves href and navigation. */
@@ -18,12 +13,12 @@ interface GlobalSearchContentBlockProps {
 }
 
 /**
- * One grouped block of global search hits (header + list rows).
- * @param props.kind — Drives how `onItemPress` builds routes in the parent.
+ * The list body of one global-search group (rows only) — rendered inside an accordion panel.
+ * The section heading and hit count live on the accordion trigger in the parent.
  * @param props.onItemPress — Invoked when a `ListBox.Item` is pressed.
  */
 export const GlobalSearchContentBlock = (props: GlobalSearchContentBlockProps) => {
-    const { icon: SectionIcon, label, items, onItemPress } = props
+    const { items, onItemPress } = props
 
     /** Render text with `<em>...</em>` as emphasized spans. */
     const renderEmText = (text: string) => {
@@ -67,40 +62,34 @@ export const GlobalSearchContentBlock = (props: GlobalSearchContentBlockProps) =
     }
 
     return (
-        <div className="mb-3 last:mb-0">
-            <div className="flex items-center gap-1.5 text-accent">
-                <SectionIcon className="size-4 shrink-0" aria-hidden />
-                <div className="text-xs font-medium">{label}</div>
-            </div>
-            <ListBox aria-label={label} className="mt-1 gap-0">
-                {items.map((item) => {
-                    const titleLine = item.title ?? item.texts?.[0] ?? item.displayId
-                    const textLines = item.texts ?? []
-                    const textValue = [titleLine, ...textLines].join(" ").replace(/<[^>]*>/g, "")
-                    return (
-                        <ListBox.Item
-                            key={item.id}
-                            className="rounded-lg py-1 data-[hovered=true]:bg-default-100 data-[pressed=true]:bg-default-200"
-                            id={item.id}
-                            textValue={textValue}
-                            onAction={() => onItemPress(item)}
-                        >
-                            <div className="py-1">
-                                <div className="text-sm text-foreground">{titleLine}</div>
-                                {textLines.length > 0 ? (
-                                    <ul className="mt-1 list-none space-y-0.5 pl-0">
-                                        {textLines.map((line: string) => (
-                                            <li key={line}>
-                                                <div className="text-xs text-muted">{renderEmText(line)}</div>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                ) : null}
-                            </div>
-                        </ListBox.Item>
-                    )
-                })}
-            </ListBox>
-        </div>
+        <ListBox aria-label="search results" className="gap-0">
+            {items.map((item) => {
+                const titleLine = item.title ?? item.texts?.[0] ?? item.displayId
+                const textLines = item.texts ?? []
+                const textValue = [titleLine, ...textLines].join(" ").replace(/<[^>]*>/g, "")
+                return (
+                    <ListBox.Item
+                        key={item.id}
+                        className="rounded-lg py-1 data-[hovered=true]:bg-default-100 data-[pressed=true]:bg-default-200"
+                        id={item.id}
+                        textValue={textValue}
+                        onAction={() => onItemPress(item)}
+                    >
+                        <div className="py-1">
+                            <div className="text-sm text-foreground">{titleLine}</div>
+                            {textLines.length > 0 ? (
+                                <ul className="mt-1 list-none space-y-0.5 pl-0">
+                                    {textLines.map((line: string) => (
+                                        <li key={line}>
+                                            <div className="text-xs text-muted">{renderEmText(line)}</div>
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : null}
+                        </div>
+                    </ListBox.Item>
+                )
+            })}
+        </ListBox>
     )
 }

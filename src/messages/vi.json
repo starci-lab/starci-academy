@@ -30,7 +30,10 @@
             "videos": "Video",
             "challenges": "Thử thách",
             "contents": "Nội dung",
-            "lessonVideos": "Bài giảng"
+            "lessonVideos": "Bài giảng",
+            "flashcards": "Bộ flashcard",
+            "milestones": "Tiến độ",
+            "milestoneTasks": "Tasks"
         },
         "idleHint": "Nhập để tìm khóa học, học phần, bài giảng…"
     },
@@ -230,6 +233,7 @@
     },
     "finalProject": {
         "title": "Dự án cá nhân",
+        "aria": "Cột mốc {index}",
         "page": {
             "title": "Dự án cá nhân",
             "searchTaskPlaceholder": "Tìm task...",
@@ -652,6 +656,7 @@
         "emptyHint": "Đang thêm bài phỏng vấn mới — quay lại sau nhé.",
         "solvedOf": "Đã giải {solved}/{total}",
         "allLevels": "Tất cả",
+        "filterAria": "Lọc theo cấp độ",
         "level": {
             "junior": "Junior",
             "mid": "Mid",
@@ -1228,6 +1233,73 @@
             "subline": "StarCi không phải bootcamp fullstack đại trà. Đây là nơi rèn tư duy kiến trúc — thứ AI chưa thay thế được, và là thứ quyết định bạn là một <b>\"thợ code\"</b> hay một <b>người thiết kế hệ thống</b>.",
             "ctaRoadmap": "Xem lộ trình",
             "ctaFounder": "Gặp người dựng StarCi"
+        }
+    },
+    "aiLab": {
+        "tabs": {
+            "aiLab": "Phòng thí nghiệm AI"
+        },
+        "playground": {
+            "title": "Sân chơi prompt",
+            "description": "Tinh chỉnh prompt và tham số, chạy thử với mô hình thật và xem phản hồi hiện ra theo thời gian thực.",
+            "systemPrompt": "System prompt",
+            "systemPromptPlaceholder": "Tùy chọn. Thiết lập vai trò và quy tắc cho mô hình.",
+            "userPrompt": "User prompt",
+            "userPromptPlaceholder": "Nhập prompt để gửi cho mô hình.",
+            "params": "Tham số",
+            "temperature": "Độ ngẫu nhiên (temperature)",
+            "topP": "Top-p",
+            "maxTokens": "Số token tối đa",
+            "lane": "Làn",
+            "model": "Mô hình",
+            "run": "Chạy",
+            "abort": "Dừng",
+            "resetToDefault": "Khôi phục mặc định",
+            "output": "Kết quả",
+            "outputEmpty": "Phản hồi sẽ hiển thị ở đây.",
+            "cached": "Đã lưu đệm",
+            "tokens": "{prompt} token prompt / {completion} token phản hồi",
+            "estimatedCost": "≈ {credits} tín dụng",
+            "remainingRuns": "Còn {count} lượt chạy trong cửa sổ này",
+            "quotaExhausted": "Bạn đã dùng hết lượt chạy trong cửa sổ này.",
+            "byokNudge": "Thêm khóa API của riêng bạn để tiếp tục chạy không giới hạn.",
+            "goToAiSettings": "Mở cài đặt AI",
+            "runHistory": "Lịch sử chạy",
+            "runHistoryEmpty": "Chưa có lượt chạy nào.",
+            "failed": "Lượt chạy thất bại. Vui lòng thử lại."
+        },
+        "eval": {
+            "title": "Thử thách đánh giá",
+            "description": "Viết mẫu prompt, nộp lên và chúng tôi chấm kết quả của bạn trên toàn bộ test case ẩn.",
+            "systemPrompt": "System prompt",
+            "systemPromptPlaceholder": "Tùy chọn. Thiết lập vai trò và quy tắc cho mô hình.",
+            "userTemplate": "Mẫu prompt người dùng",
+            "userTemplatePlaceholder": "Dùng {{input}} ở nơi cần chèn nội dung của từng test case.",
+            "templatePlaceholderHint": "Dùng placeholder {{input}} — nó sẽ được thay bằng nội dung của từng test case.",
+            "submit": "Nộp để chấm",
+            "submitting": "Đang nộp…",
+            "grading": "Đang chấm…",
+            "passedSummary": "Đạt {passed}/{total} câu",
+            "score": "Điểm {score}/{max}",
+            "passed": "Đạt",
+            "failed": "Chưa đạt",
+            "caseInput": "Đầu vào",
+            "actualOutput": "Kết quả",
+            "expected": "Mong đợi",
+            "feedback": "Nhận xét",
+            "citationPresent": "Có trích dẫn",
+            "citationMissing": "Thiếu trích dẫn",
+            "viewResult": "Xem kết quả",
+            "caseLabel": "Câu {index}",
+            "empty": "Bài học này chưa có thử thách đánh giá."
+        },
+        "status": {
+            "streaming": "Đang truyền",
+            "completed": "Hoàn tất",
+            "failed": "Thất bại",
+            "cached": "Đã lưu đệm",
+            "pending": "Đang chờ",
+            "grading": "Đang chấm"
         }
     }
 }

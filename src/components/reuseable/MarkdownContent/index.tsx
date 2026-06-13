@@ -80,10 +80,60 @@ const remarkTab = () => (tree: unknown): void => {
 }
 
 /**
+ * Recursively collects the raw text of a directive subtree, preserving line breaks so each
+ * authored line (one keyword per line) can be split back out into a separate chip.
+ * @param node - Current mdast node.
+ */
+const collectDirectiveText = (node: { type?: string, value?: string, children?: Array<unknown> }): string => {
+    if (node.type === "text") {
+        return node.value ?? ""
+    }
+    if (node.type === "break") {
+        return "\n"
+    }
+    if (Array.isArray(node.children)) {
+        return node.children
+            .map((child) => collectDirectiveText(child as Parameters<typeof collectDirectiveText>[0]))
+            .join("\n")
+    }
+    return ""
+}
+
+/**
+ * Rewrites the `:::chip` container directive into a custom `chipblock` tag (see map.tsx),
+ * carrying its keywords (one per authored line) as a newline-split, `|`-joined `items` prop so the
+ * renderer can render each as its own Chip. Other directive names are left untouched.
+ * @param node - Current mdast node being walked.
+ */
+const applyChipDirective = (node: { type?: string, name?: string, data?: Record<string, unknown>, children?: Array<unknown> }): void => {
+    if (node.type === "containerDirective" && node.name === "chip") {
+        const items = collectDirectiveText(node)
+            .split(/[\n·]+/)
+            .map((line) => line.trim())
+            .filter((line) => line.length > 0)
+        const data = node.data || (node.data = {})
+        data.hName = "chipblock"
+        data.hProperties = {
+            items: items.join("|"),
+        }
+    }
+    if (Array.isArray(node.children)) {
+        for (const child of node.children) {
+            applyChipDirective(child as Parameters<typeof applyChipDirective>[0])
+        }
+    }
+}
+
+/** remark transformer: turn `:::chip` directives into a chips-row tag. */
+const remarkChip = () => (tree: unknown): void => {
+    applyChipDirective(tree as Parameters<typeof applyChipDirective>[0])
+}
+
+/**
  * Module-level constant — NOT recreated every render. If `remarkPlugins={[...]}` were inline, each
  * MarkdownContent re-render would hand ReactMarkdown a new array → re-parse the whole markdown.
  */
-const REMARK_PLUGINS = [remarkGfm, remarkDirective, remarkMuted, remarkTab]
+const REMARK_PLUGINS = [remarkGfm, remarkDirective, remarkMuted, remarkTab, remarkChip]
 
 // Matches each ```mermaid fence and the figure caption paragraph that follows it.
 // Group 1 = diagram source; group 2 = the first non-blank line after the fence.

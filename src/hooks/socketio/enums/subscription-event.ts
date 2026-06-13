@@ -13,4 +13,6 @@ export enum SubscriptionEvent {
     ContentReactionChanged = "content_discussion.content_reaction_changed.subscription",
     /** A comment's aggregate reactions changed (must match backend). */
     CommentReactionChanged = "content_discussion.comment_reaction_changed.subscription",
+    /** A streamed token chunk for an AI Lab run (must match backend). */
+    AiLabRunChunk = "ai_lab.run_chunk.subscription",
 }

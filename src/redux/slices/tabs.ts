@@ -41,6 +41,8 @@ export enum ContentTab {
     Challenges = "challenges",
     /** Live Sandpack sandbox — shown when content.isSandbox is true. */
     Sandbox = "sandbox",
+    /** AI Lab playground — shown when the lesson has a backing AI Lab playground. */
+    AILab = "aiLab",
     /** E2E test proof — shown when content.e2eFlows has captured flows. */
     E2e = "e2e",
 }

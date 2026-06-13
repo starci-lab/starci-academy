@@ -1,5 +1,5 @@
 import type { IconComponent } from "@/types"
-import { BookOpen as BookOpenIcon, Code as CodeIcon, Flame, Play as PlayIcon, CircleCheck as CircleCheckIcon } from "@gravity-ui/icons"
+import { BookOpen as BookOpenIcon, Code as CodeIcon, Flame, Play as PlayIcon, CircleCheck as CircleCheckIcon, Flask as FlaskIcon } from "@gravity-ui/icons"
 import {
     ContentTab,
 } from "@/redux/slices"
@@ -19,6 +19,8 @@ export const CONTENT_TAB_ICON_MAP: Record<ContentTab, IconComponent> = {
     [ContentTab.Challenges]: Flame,
     /** Live Sandpack sandbox tab. */
     [ContentTab.Sandbox]: PlayIcon,
+    /** AI Lab playground tab. */
+    [ContentTab.AILab]: FlaskIcon,
     /** E2E test-proof tab. */
     [ContentTab.E2e]: CircleCheckIcon,
     /** @deprecated Legacy lesson-videos tab, kept for a total lookup. */

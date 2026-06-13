@@ -22,7 +22,7 @@ export interface GlobalSearchEmptyProps extends WithClassNames<undefined> {
 export const GlobalSearchEmpty = ({ hasQuery, className }: GlobalSearchEmptyProps) => {
     const t = useTranslations()
     return (
-        <div className={cn("flex flex-col items-center justify-center px-4 py-10 text-center", className)}>
+        <div className={cn("flex flex-col items-center justify-center px-4 py-9 text-center", className)}>
             <div className="text-sm text-muted">
                 {hasQuery ? t("search.noResults") : t("search.idleHint")}
             </div>

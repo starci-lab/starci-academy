@@ -1,5 +1,6 @@
 "use client"
 
+import { useAiLabSocketIoLifecycle } from "./useAiLabSocketIoLifecycle"
 import { useContentDiscussionSocketIoLifecycle } from "./useContentDiscussionSocketIoLifecycle"
 import { useJobNotificationsSocketIoLifecycle } from "./useJobNotificationsSocketIoLifecycle"
 
@@ -13,5 +14,6 @@ import { useJobNotificationsSocketIoLifecycle } from "./useJobNotificationsSocke
 export const SocketIoSideEffects = () => {
     useJobNotificationsSocketIoLifecycle()
     useContentDiscussionSocketIoLifecycle()
+    useAiLabSocketIoLifecycle()
     return null
 }

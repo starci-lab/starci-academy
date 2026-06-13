@@ -1,7 +1,7 @@
 "use client"
 
 import { Magnifier as MagnifyingGlassIcon } from "@gravity-ui/icons"
-import React, { useMemo } from "react"
+import React, { useCallback, useMemo, useState } from "react"
 import {
     Autocomplete,
     ListBox,
@@ -70,6 +70,30 @@ export const MilestoneTaskSearch = ({ milestones, value, onSelectTask, className
 
     const byId = useMemo(() => new Map(items.map((item) => [item.id, item])), [items])
 
+    const [filterQuery, setFilterQuery] = useState("")
+
+    const filteredItems = useMemo<Array<MilestoneTaskSearchItem>>(() => {
+        const trimmed = filterQuery.trim()
+
+        if (!trimmed) {
+            return items
+        }
+
+        return items.filter((item) => contains(item.label, trimmed))
+    }, [contains, filterQuery, items])
+
+    const showEmpty = filterQuery.trim().length > 0 && filteredItems.length === 0
+
+    const onFilterQueryChange = useCallback((next: string) => {
+        setFilterQuery(next)
+    }, [])
+
+    const onPopoverOpenChange = useCallback((isOpen: boolean) => {
+        if (!isOpen) {
+            setFilterQuery("")
+        }
+    }, [])
+
     return (
         <Autocomplete
             aria-label={t("finalProject.page.searchTaskPlaceholder")}
@@ -77,15 +101,17 @@ export const MilestoneTaskSearch = ({ milestones, value, onSelectTask, className
             fullWidth
             placeholder={t("finalProject.page.searchTaskPlaceholder")}
             value={value}
-            onChange={(value) => {
-                if (value == null) {
+            onChange={(nextValue) => {
+                if (nextValue == null) {
                     return
                 }
-                const item = byId.get(String(value))
+                const item = byId.get(String(nextValue))
                 if (item) {
                     onSelectTask(item.id)
+                    setFilterQuery("")
                 }
             }}
+            onOpenChange={onPopoverOpenChange}
         >
             <Autocomplete.Trigger className="flex h-10 w-full min-w-0 items-center gap-1.5 rounded-field border border-divider px-3 text-start text-sm text-muted">
                 <MagnifyingGlassIcon className="size-4 shrink-0" />
@@ -94,25 +120,50 @@ export const MilestoneTaskSearch = ({ milestones, value, onSelectTask, className
                 <Autocomplete.Indicator />
             </Autocomplete.Trigger>
             <Autocomplete.Popover className="w-[var(--trigger-width)] overflow-hidden p-0">
-                <Autocomplete.Filter filter={contains}>
-                    <SearchField className="w-full">
-                        <SearchField.Group className="w-full rounded-none border-0 border-b border-divider px-3">
-                            <SearchField.SearchIcon />
-                            <SearchField.Input placeholder={t("finalProject.page.searchTaskPlaceholder")} />
-                        </SearchField.Group>
-                    </SearchField>
-                    <ListBox className="max-h-72 overflow-auto p-1">
-                        {items.map((item) => (
+                {/* manual-filter pattern mirrored from ContentSearch: a controlled
+                    SearchField drives filteredItems and the ListBox is rendered directly.
+                    Using HeroUI's built-in Autocomplete.Filter here produced a different
+                    DOM that rendered rows taller/looser than the lesson search. */}
+                <SearchField
+                    aria-label={t("finalProject.page.searchTaskPlaceholder")}
+                    className="w-full p-0"
+                    value={filterQuery}
+                    onChange={onFilterQueryChange}
+                >
+                    <SearchField.Group className="relative w-full rounded-none border-0 border-b border-divider bg-transparent py-2 shadow-none ring-0 outline-none focus-within:border-divider focus-within:ring-0 focus-within:outline-none">
+                        <MagnifyingGlassIcon
+                            aria-hidden
+                            className="pointer-events-none absolute top-1/2 left-2 size-5 -translate-y-1/2 shrink-0 text-muted"
+                        />
+                        <SearchField.Input
+                            className="w-full border-0 bg-transparent py-0 pr-2 pl-9 shadow-none ring-0 focus:ring-0 outline-none"
+                            placeholder={t("finalProject.page.searchTaskPlaceholder")}
+                        />
+                    </SearchField.Group>
+                </SearchField>
+                {showEmpty ? (
+                    <div className="px-4 py-9 text-center text-sm text-muted">
+                        {t("search.noResults")}
+                    </div>
+                ) : (
+                    <ListBox className="max-h-72 gap-0 overflow-auto p-1">
+                        {filteredItems.map((item) => (
                             <ListBox.Item
                                 key={item.id}
                                 id={item.id}
                                 textValue={item.label}
-                                className="py-2"
+                                // matches ContentSearch: min-h-0 drops HeroUI's fixed 36px
+                                // min-height so the box sizes to content, shrink-0 stops the
+                                // scrolling flex column from compressing rows, py-1.5 sets the
+                                // vertical breathing room (utilities win over base via layers)
+                                className="min-h-0 shrink-0 py-1.5"
                             >
                                 {/* wrap up to 2 lines, then ellipsise; full label on hover.
                                     popover is pinned to the trigger width so long task
-                                    titles wrap instead of stretching the dropdown */}
-                                <span className="line-clamp-2 w-full" title={item.label}>
+                                    titles wrap instead of stretching the dropdown.
+                                    leading-snug keeps the two wrapped lines reading as one
+                                    block so the inter-row gap stays visually dominant */}
+                                <span className="line-clamp-2 w-full leading-snug" title={item.label}>
                                     <span className="font-semibold">{item.prefix}</span>
                                     {" "}
                                     {item.title}
@@ -120,7 +171,7 @@ export const MilestoneTaskSearch = ({ milestones, value, onSelectTask, className
                             </ListBox.Item>
                         ))}
                     </ListBox>
-                </Autocomplete.Filter>
+                )}
             </Autocomplete.Popover>
         </Autocomplete>
     )

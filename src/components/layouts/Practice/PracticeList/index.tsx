@@ -2,7 +2,7 @@
 
 import React, { useMemo, useState } from "react"
 import useSWR from "swr"
-import { Button, Card, CardContent, Chip } from "@heroui/react"
+import { Card, CardContent, Chip, Tabs } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { Link } from "@/i18n/navigation"
 import {
@@ -125,20 +125,29 @@ export const PracticeList = () => {
                 </div>
             </div>
 
-            {/* ── level filter (segmented pills) + progress ── */}
+            {/* ── level filter (tabs) + progress ── */}
             <div className="flex flex-wrap items-center justify-between gap-3">
-                <div className="flex flex-wrap items-center gap-2">
-                    {DIFFICULTY_FILTERS.map((filter) => (
-                        <Button
-                            key={filter ?? "all"}
-                            size="sm"
-                            variant={difficulty === filter ? "primary" : "secondary"}
-                            onPress={() => setDifficulty(filter)}
+                <Tabs
+                    className="w-fit text-center"
+                    selectedKey={difficulty ?? "all"}
+                    onSelectionChange={(key) =>
+                        setDifficulty(key === "all" ? null : (key as CodingDifficulty))
+                    }
+                >
+                    <Tabs.ListContainer>
+                        <Tabs.List
+                            aria-label={t("codingPractice.filterAria")}
+                            className="w-fit *:w-fit *:px-3 *:text-sm *:font-normal *:data-[selected=true]:text-accent-foreground"
                         >
-                            {filter ? t(`codingPractice.level.${LEVEL_KEY[filter]}`) : t("codingPractice.allLevels")}
-                        </Button>
-                    ))}
-                </div>
+                            {DIFFICULTY_FILTERS.map((filter) => (
+                                <Tabs.Tab key={filter ?? "all"} id={filter ?? "all"}>
+                                    {filter ? t(`codingPractice.level.${LEVEL_KEY[filter]}`) : t("codingPractice.allLevels")}
+                                    <Tabs.Indicator className="bg-accent" />
+                                </Tabs.Tab>
+                            ))}
+                        </Tabs.List>
+                    </Tabs.ListContainer>
+                </Tabs>
                 {!isLoading && total > 0 && (
                     <span className="text-xs text-muted">
                         {t("codingPractice.solvedOf", { solved: solvedCount, total })}

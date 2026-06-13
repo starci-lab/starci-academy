@@ -15,6 +15,9 @@ const DEFAULT_ENTITIES: Array<SearchableEntity> = [
     "ContentEntity",
     "LessonVideoEntity",
     "ChallengeEntity",
+    "MilestoneEntity",
+    "MilestoneTaskEntity",
+    "FlashcardDeckEntity",
 ]
 
 const DEFAULT_SIZE = 8

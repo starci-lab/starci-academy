@@ -1,26 +1,16 @@
 import type { AbstractEntity } from "./abstract"
-import type { ChallengeStepTranslationEntity } from "./challenge-step-translation"
+import type { ChallengeStepLangEntity } from "./challenge-step-lang"
 
 /**
- * Ordered instruction step within a challenge (short plain `description` + Markdown `body`).
- *
- * Mirrors Nest `ChallengeStepEntity` / table `challenge_steps`
- * (`ref/sql/challenge-step.entity copy.ts`).
+ * SCHEMA V2 step item (one row per position).
+ * Mirrors Nest `ChallengeStepEntity` / `challenge_steps_v2`.
+ * Title/body live on each {@link ChallengeStepLangEntity} row.
  */
 export interface ChallengeStepEntity extends AbstractEntity {
-    /** Step title (default locale). */
-    title: string
-    /** Short step summary (plain text); use `body` for Markdown. */
-    description: string
-    /** Main step content as Markdown. */
-    body: string
     /** Pure ordering index used to sort/reorder (1-based). */
     sortIndex: number
-    /** Default locale for this row (Nest `Locale` / GraphQL `GraphQLTypeLocale`). */
+    /** Default locale for this step item. */
     defaultLocale: string
-    /**
-     * Localized overrides for `title`, `description`, `body`.
-     * Nest exposes a non-empty array when loaded; optional when not selected.
-     */
-    translations?: Array<ChallengeStepTranslationEntity>
+    /** Per-programming-language title + body rows. */
+    langs?: Array<ChallengeStepLangEntity>
 }

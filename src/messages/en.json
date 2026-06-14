@@ -720,6 +720,33 @@
         "relatedModules": "Related modules",
         "searchPlaceholder": "Search flashcard decks...",
         "searchEmpty": "No decks match \"{query}\".",
+        "mode": {
+            "study": "Study",
+            "interview": "Mock interview"
+        },
+        "interview": {
+            "record": "Answer aloud",
+            "stop": "Stop",
+            "recording": "Listening…",
+            "yourAnswer": "Your answer",
+            "transcriptHint": "Tap “Answer aloud” and speak your answer — it is transcribed live.",
+            "unsupported": "Voice input is not supported in this browser. Try Chrome or Edge.",
+            "micError": "Could not access the microphone. Check the permission and try again.",
+            "submit": "Submit answer",
+            "grading": "Grading your answer…",
+            "newQuestion": "New question",
+            "nextQuestion": "Next question",
+            "retry": "Try again",
+            "drawError": "Could not load an interview question for this deck.",
+            "gradeError": "Could not grade your answer. Please try again.",
+            "pass": "Pass",
+            "fail": "Not yet",
+            "score": "Score: {score}/100",
+            "strengths": "What you got right",
+            "gaps": "What to improve",
+            "hint": "Toward the model answer",
+            "followUp": "Likely follow-up"
+        },
         "level": {
             "junior": "Junior",
             "middle": "Middle",
@@ -773,6 +800,23 @@
             "keyOnFile": "An API key is on file",
             "removeKey": "Remove key",
             "keyHint": "Enter an API key to use BYOK mode."
+        }
+    },
+    "membership": {
+        "title": "Membership",
+        "subtitle": "Join the StarCi community",
+        "price": "$5",
+        "priceHint": "/ month",
+        "cta": "Become a member",
+        "card": {
+            "title": "StarCi Community Membership",
+            "desc": "Everything you need to learn faster and get hired — in one membership."
+        },
+        "perks": {
+            "blog": "Full access to the premium tech blog",
+            "community": "Private community + founder Q&A",
+            "discount": "20% off every StarCi course",
+            "recruitment": "Get your profile in front of hiring partners"
         }
     },
     "aiSubscription": {
@@ -875,12 +919,68 @@
             "title": "You are not signed in",
             "desc": "Sign in to view your profile and AI quota."
         },
+        "followers": "followers",
+        "following": "following",
         "nav": {
+            "editDesc": "Update your avatar, name and bio",
+            "sessionsDesc": "See your logged-in devices and log them out",
+            "securityDesc": "Two-factor authentication",
             "aiSettingsDesc": "Choose your AI lane and manage your own API key",
             "aiSubscriptionDesc": "Upgrade for more weekly AI credits",
             "bookmarks": "Bookmarks",
             "bookmarksDesc": "Your saved content"
         }
+    },
+    "profileEdit": {
+        "title": "Edit profile",
+        "subtitle": "Update how you appear across StarCi Academy.",
+        "displayName": "Display name",
+        "bio": "Bio",
+        "bioPlaceholder": "Tell others a bit about yourself",
+        "changeAvatar": "Change avatar",
+        "avatarHint": "PNG, JPG, WEBP or GIF, up to 5 MB.",
+        "save": "Save changes",
+        "saved": "Profile updated successfully.",
+        "error": "Could not update your profile. Please try again.",
+        "uploadFailed": "Avatar upload failed. Please try again."
+    },
+    "sessions": {
+        "title": "Devices",
+        "subtitle": "Devices currently signed in to your account.",
+        "thisDevice": "This device",
+        "revoke": "Log out",
+        "empty": "No active sessions.",
+        "unknownDevice": "Unknown device"
+    },
+    "follow": {
+        "follow": "Follow",
+        "following": "Following"
+    },
+    "security": {
+        "title": "Security",
+        "subtitle": "Protect your account with two-factor authentication.",
+        "twoFactor": "Two-factor authentication",
+        "enabledLabel": "Enabled",
+        "disabledLabel": "Disabled",
+        "enabledDesc": "An authenticator code is required where 2FA is enforced.",
+        "disabledDesc": "Add a second step using an authenticator app (TOTP).",
+        "enable": "Enable 2FA",
+        "disable": "Disable 2FA",
+        "confirm": "Confirm",
+        "cancel": "Cancel",
+        "scanHint": "Scan this QR code with an authenticator app (Google Authenticator, Authy…), then enter the 6-digit code.",
+        "secretHint": "Or enter this key manually:",
+        "codeLabel": "Verification code",
+        "codePlaceholder": "6-digit code",
+        "enabledToast": "Two-factor authentication is now on.",
+        "disabledToast": "Two-factor authentication is now off.",
+        "invalidCode": "Invalid code. Please try again.",
+        "error": "Something went wrong. Please try again.",
+        "note": "Two-factor authentication can be configured now; enforcing it at sign-in will come later."
+    },
+    "publicProfile": {
+        "title": "Profile",
+        "notFound": "This user could not be found."
     },
     "reference": {
         "title": "References"
@@ -1130,6 +1230,53 @@
             "des4": "Low cost, high standard",
             "des5": "StarCi Academy operates on a lean model, eliminating unnecessary costs to keep tuition affordable. Our goal is to create a high-quality learning environment that anyone serious about the profession can join.",
             "des6": "We teach you to build truly valuable projects and provide long-term support throughout your career development."
+        }
+    },
+    "dashboard": {
+        "greeting": "Welcome back, {name}",
+        "subtitle": "Pick up where you left off.",
+        "continueLearning": "Continue learning",
+        "emptyCourses": "You have no courses yet. Browse the catalog to get started.",
+        "xp": "{xp} XP",
+        "rank": "#{rank}",
+        "continue": "Continue",
+        "title": "Home",
+        "history": "Learned lessons",
+        "historySearch": "Search...",
+        "enrolledCourses": "My courses",
+        "enrolledCoursesEmpty": "You haven't joined any course yet.",
+        "recentContent": "Recent content",
+        "recentContentEmpty": "No lessons read yet.",
+        "inProgressChallenges": "Challenges in progress",
+        "inProgressChallengesEmpty": "No challenges in progress.",
+        "historyEmpty": "No lessons read yet.",
+        "feedEmpty": "No activity yet. Explore courses to get started.",
+        "feedTabsAria": "Activity feed",
+        "loadMore": "Load more",
+        "tabs": {
+            "forYou": "For you",
+            "following": "Following"
+        },
+        "loadError": "Could not load your dashboard. Your session may have expired.",
+        "retry": "Retry",
+        "goHome": "Go to home",
+        "feed": {
+            "lessonRead": "<actor></actor> read <target></target>",
+            "lessonBookmarked": "<actor></actor> bookmarked <target></target>",
+            "challengePassed": "<actor></actor> passed the challenge <target></target>",
+            "codingSolved": "<actor></actor> solved <target></target>",
+            "milestonePassed": "<actor></actor> completed the milestone <target></target>",
+            "aiLabPassed": "<actor></actor> passed the AI Lab challenge <target></target>",
+            "courseEnrolled": "<actor></actor> enrolled in <target></target>",
+            "discussionCommented": "<actor></actor> commented on <target></target>",
+            "userFollowed": "<actor></actor> started following <target></target>"
+        },
+        "quickActions": "Quick actions",
+        "actions": {
+            "courses": "Browse courses",
+            "practice": "Coding practice",
+            "bookmarks": "Bookmarks",
+            "profile": "Profile"
         }
     },
     "languages": {

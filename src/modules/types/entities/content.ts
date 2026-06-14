@@ -3,7 +3,6 @@ import type { ChallengeEntity } from "./challenge"
 import type { CodeExplainingEntity } from "./code-explaining"
 import type { CodeImplementationEntity } from "./code-implementation"
 import type { ContentBody } from "./content-body"
-import type { ContentReferenceEntity } from "./content-reference"
 import type { ModuleEntity } from "./module"
 
 /**
@@ -26,8 +25,6 @@ export interface ContentEntity extends AbstractEntity {
     module?: ModuleEntity
     /** The minutes read of the content. */
     minutesRead: number
-    /** External URL references for this content. */
-    references?: Array<ContentReferenceEntity>
     /** Challenges linked to this content (id-only when loaded from list queries). */
     challenges?: Array<Pick<ChallengeEntity, "id">>
     /** Critical code snippets with explanations. */

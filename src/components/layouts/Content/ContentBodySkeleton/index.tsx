@@ -17,10 +17,8 @@ import {
 export type ContentBodySkeletonVariant = "v2" | "legacy"
 
 export type ContentBodySkeletonProps = WithClassNames<undefined> & {
-    /** `v2` — article (+ references when `showReferences`); `legacy` — toolbar + article. */
+    /** `v2` — article only; `legacy` — toolbar + article. */
     variant?: ContentBodySkeletonVariant
-    /** When false, V2 skips the references block. @default true */
-    showReferences?: boolean
 }
 
 /**
@@ -54,25 +52,6 @@ const MarkdownArticleSkeleton = () => (
 )
 
 /**
- * References block mirroring {@link ReferenceLinks} (title + link rows).
- */
-const ReferenceLinksSkeleton = () => (
-    <>
-        <SkeletonText size="base" width="w-32" />
-        <div className="h-3" />
-        <div className="flex flex-col gap-3">
-            {Array.from({ length: 2 }).map((_unused, index) => (
-                <div key={index} className="flex flex-wrap items-center gap-1.5">
-                    <Skeleton className="h-[14px] w-24 rounded-sm" />
-                    <Skeleton className="h-[14px] w-4 rounded-sm" />
-                    <Skeleton className="h-[14px] w-3/5 rounded-sm" />
-                </div>
-            ))}
-        </div>
-    </>
-)
-
-/**
  * Icon action row mirroring {@link ActionToolbar} (bookmark, share, fullscreen).
  */
 const ActionToolbarSkeleton = () => (
@@ -93,7 +72,6 @@ const ActionToolbarSkeleton = () => (
 export const ContentBodySkeleton = ({
     className,
     variant = "v2",
-    // showReferences = true,
 }: ContentBodySkeletonProps) => {
     if (variant === "legacy") {
         return (
@@ -101,8 +79,6 @@ export const ContentBodySkeleton = ({
                 <ActionToolbarSkeleton />
                 <div className="h-3" />
                 <MarkdownArticleSkeleton />
-                <div className="h-6" />
-                <ReferenceLinksSkeleton />
             </div>
         )
     }
@@ -110,14 +86,6 @@ export const ContentBodySkeleton = ({
     return (
         <div className={cn("flex flex-col overflow-x-auto text-sm text-muted", className)}>
             <MarkdownArticleSkeleton />
-            {/* {
-                showReferences ? (
-                    <>
-                        <div className="h-6" />
-                        <ReferenceLinksSkeleton />
-                    </>
-                ) : null
-            } */}
         </div>
     )
 }

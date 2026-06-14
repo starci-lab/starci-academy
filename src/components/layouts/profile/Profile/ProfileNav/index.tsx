@@ -1,6 +1,6 @@
 "use client"
 
-import { Bookmark as BookmarkSimpleIcon, ChevronRight as CaretRightIcon, CrownDiamond as CrownIcon, Sliders as SlidersHorizontalIcon } from "@gravity-ui/icons"
+import { Bookmark as BookmarkSimpleIcon, ChevronRight as CaretRightIcon, CrownDiamond as CrownIcon, Display as DisplayIcon, Pencil as PencilIcon, ShieldKeyhole as ShieldIcon, Sliders as SlidersHorizontalIcon } from "@gravity-ui/icons"
 import React, {
     useCallback,
     useMemo,
@@ -58,6 +58,13 @@ export const ProfileNav = () => {
     const items = useMemo<Array<ProfileNavItem>>(
         () => [
             {
+                key: "edit",
+                icon: <PencilIcon className="size-5 text-accent" />,
+                label: t("profileEdit.title"),
+                description: t("profile.nav.editDesc"),
+                href: pathConfig().locale(locale).profile().edit().build(),
+            },
+            {
                 key: "ai-settings",
                 icon: <SlidersHorizontalIcon className="size-5 text-accent" />,
                 label: t("aiSettings.title"),
@@ -77,6 +84,20 @@ export const ProfileNav = () => {
                 label: t("profile.nav.bookmarks"),
                 description: t("profile.nav.bookmarksDesc"),
                 href: pathConfig().locale(locale).profile().bookmarks().build(),
+            },
+            {
+                key: "sessions",
+                icon: <DisplayIcon className="size-5 text-accent" />,
+                label: t("sessions.title"),
+                description: t("profile.nav.sessionsDesc"),
+                href: pathConfig().locale(locale).profile().sessions().build(),
+            },
+            {
+                key: "security",
+                icon: <ShieldIcon className="size-5 text-accent" />,
+                label: t("security.title"),
+                description: t("profile.nav.securityDesc"),
+                href: pathConfig().locale(locale).profile().security().build(),
             },
         ],
         [

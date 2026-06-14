@@ -12,34 +12,10 @@ const query1 = gql`
       data {
         id
         title
-        requirements {
-          id
-          purpose
-          technicalConstraints
-          proTipsHints
-          forbidden
-          sortIndex
-        }
-        outputs {
-          id
-          text
-          sortIndex
-        }
-        prerequisites {
-          id
-          text
-          sortIndex
-        }
         description
         score
         difficulty
         sortIndex
-        steps {
-          id
-          title
-          body
-          sortIndex
-        }
         submissions {
           id
           type
@@ -50,15 +26,9 @@ const query1 = gql`
             submissionUrl
           }
         }
-        references {
-          id
-          alias
-          url
-          sortIndex
-        }
         verified
         defaultLocale
-        requirementsV2 {
+        requirements {
           id
           sortIndex
           defaultLocale
@@ -72,7 +42,7 @@ const query1 = gql`
             body
           }
         }
-        stepsV2 {
+        steps {
           id
           sortIndex
           defaultLocale
@@ -85,7 +55,7 @@ const query1 = gql`
             body
           }
         }
-        outputsV2 {
+        outputs {
           id
           sortIndex
           defaultLocale
@@ -97,7 +67,7 @@ const query1 = gql`
             text
           }
         }
-        prerequisitesV2 {
+        prerequisites {
           id
           sortIndex
           defaultLocale
@@ -123,7 +93,8 @@ const queryMap: Record<QueryChallenge, DocumentNode> = {
 }
 
 /**
- * One challenge by id with steps, inputs, references (`ref/queries/challenges`).
+ * One challenge by id with requirements, steps, outputs, prerequisites
+ * (criteria-based per-language schema).
  */
 export const queryChallenge = async ({
     query = QueryChallenge.Query1,

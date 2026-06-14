@@ -16,12 +16,27 @@ import { YoutubePlayer } from "./Youtube"
 // Resolve which sub-player to use
 // ---------------------------------------------------------------------------
 
+/** True when the URL is a YouTube watch/share link. */
+const isYoutubeUrl = (url?: string): boolean => /youtube\.com|youtu\.be/i.test(url ?? "")
+
+/** True when the URL points at an MPEG-DASH `.mpd` manifest (ignoring query/hash). */
+const isMpegDashUrl = (url?: string): boolean => /\.mpd(\?|#|$)/i.test(url ?? "")
+
 const resolveRendererType = (
+    url: string | undefined,
     videoType?: LessonVideoType,
     hostPlatform?: VideoHostPlatform,
 ): VideoRendererType => {
+    // an explicit YouTube platform, or a YouTube URL, always wins
+    if (hostPlatform === VideoHostPlatform.Youtube || isYoutubeUrl(url)) {
+        return VideoRendererType.Youtube
+    }
+    // an explicit delivery format takes precedence over URL sniffing
     if (videoType === LessonVideoType.MpegDash) return VideoRendererType.MpegDash
-    if (hostPlatform === VideoHostPlatform.Youtube) return VideoRendererType.Youtube
+    if (videoType === LessonVideoType.Standard) return VideoRendererType.Standard
+    // no explicit type → infer from the URL: `.mpd` is DASH, everything else
+    // (mp4/webm/…) plays through the native Standard player
+    if (isMpegDashUrl(url)) return VideoRendererType.MpegDash
     return VideoRendererType.Standard
 }
 
@@ -62,7 +77,7 @@ export const VideoRenderer = ({
     className,
 }: VideoRendererProps) => {
     const type =
-        rendererType ?? resolveRendererType(videoType, hostPlatform)
+        rendererType ?? resolveRendererType(url, videoType, hostPlatform)
 
     const renderContent = () => {
         if (!url?.trim()) {

@@ -30,10 +30,40 @@ export const pathConfig = () => {
                     build,
                 }
             }
+            const edit = () => {
+                const editPath = `${profilePath}/edit`
+                const build = () => {
+                    return editPath
+                }
+                return {
+                    build,
+                }
+            }
+            const sessions = () => {
+                const sessionsPath = `${profilePath}/sessions`
+                const build = () => {
+                    return sessionsPath
+                }
+                return {
+                    build,
+                }
+            }
+            const security = () => {
+                const securityPath = `${profilePath}/security`
+                const build = () => {
+                    return securityPath
+                }
+                return {
+                    build,
+                }
+            }
             return {
                 build,
                 bookmarks,
                 aiUsage,
+                edit,
+                sessions,
+                security,
             }
         }
         const authentication = () => {
@@ -266,10 +296,37 @@ export const pathConfig = () => {
                 build,
             }
         }
+        const dashboard = () => {
+            const dashboardPath = `${localePath}/dashboard`
+            const build = () => {
+                return dashboardPath
+            }
+            return {
+                build,
+            }
+        }
+        const practice = () => {
+            const practicePath = `${localePath}/practice`
+            const build = () => {
+                return practicePath
+            }
+            return {
+                build,
+            }
+        }
         const publicContent = (contentId?: string) => {
             const publicContentPath = contentId ? `${localePath}/contents/${contentId}` : `${localePath}/content`
             const build = () => {
                 return publicContentPath
+            }
+            return {
+                build,
+            }
+        }
+        const user = (userId?: string) => {
+            const userPath = userId ? `${localePath}/u/${userId}` : `${localePath}/u`
+            const build = () => {
+                return userPath
             }
             return {
                 build,
@@ -282,6 +339,9 @@ export const pathConfig = () => {
             authentication,
             contact,
             publicContent,
+            dashboard,
+            practice,
+            user,
         }
     }
     return {

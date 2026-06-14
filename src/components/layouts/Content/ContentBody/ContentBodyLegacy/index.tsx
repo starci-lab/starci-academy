@@ -2,13 +2,9 @@
 
 import React, {
     useCallback,
-    useEffect,
-    useMemo,
-    useRef,
 } from "react"
 import {
     MarkdownContent,
-    ReferenceLinks,
 } from "@/components/reuseable"
 import {
     useTranslations,
@@ -22,7 +18,6 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types"
-import _ from "lodash"
 import {
     useContentOverlayState,
     useMutateToggleFavoriteSwr,
@@ -30,9 +25,6 @@ import {
     useQueryContentSwr,
     useShareOverlayState,
 } from "@/hooks"
-import {
-    mutateMarkContentAsReaded,
-} from "@/modules/api"
 import {
     runGraphQLWithToast,
 } from "@/modules/toast"
@@ -42,11 +34,14 @@ import {
 import {
     ContentBodySkeleton,
 } from "../../ContentBodySkeleton"
+import {
+    useAutoMarkContentRead,
+} from "../useAutoMarkContentRead"
 
 export type ContentBodyLegacyProps = WithClassNames<undefined>
 
 /**
- * Legacy (V1) content body: action toolbar, markdown article, references and an intersection
+ * Legacy (V1) content body: action toolbar, markdown article and an intersection
  * sentinel that marks the content as read once scrolled into view. Selected by {@link ContentBody}
  * when the content is NOT verified.
  *
@@ -62,53 +57,14 @@ export const ContentBodyLegacy = ({ className }: ContentBodyLegacyProps) => {
     const contentOverlay = useContentOverlayState()
     const shareOverlay = useShareOverlayState()
     const isLoading = queryContentSwr.isLoading && !content
-    const references = useMemo(
-        () => _.cloneDeep(content?.references ?? []).sort(
-            (prev, next) => prev.sortIndex - next.sortIndex,
-        ),
-        [content?.references],
-    )
 
-    // Sentinel ref at bottom of content
-    const sentinelRef = useRef<HTMLDivElement>(null)
-    const hasMarkedRef = useRef(false)
-
-    const markAsRead = useCallback(async () => {
-        if (!content?.id || hasMarkedRef.current || queryContentStatusSwr.data?.isRead) return
-        hasMarkedRef.current = true
-        try {
-            await mutateMarkContentAsReaded({
-                request: {
-                    contentId: content.id,
-                    readed: true,
-                },
-            })
-        } catch {
-            hasMarkedRef.current = false
-        }
-    }, [content?.id, queryContentStatusSwr.data?.isRead])
-
-    // Reset when content changes
-    useEffect(() => {
-        hasMarkedRef.current = false
-    }, [content?.id])
-
-    // IntersectionObserver: mark as read when user scrolls to bottom
-    useEffect(() => {
-        if (isLoading || !sentinelRef.current || queryContentStatusSwr.data?.isRead) return
-
-        const observer = new IntersectionObserver(
-            (entries) => {
-                if (entries[0]?.isIntersecting) {
-                    markAsRead()
-                }
-            },
-            { threshold: 1.0 },
-        )
-
-        observer.observe(sentinelRef.current)
-        return () => observer.disconnect()
-    }, [isLoading, queryContentStatusSwr.data?.isRead, markAsRead])
+    // Auto mark-as-read on scroll: silent progress tick at the bottom sentinel,
+    // dwell-gated XP + feed grant. Returns the ref for the sentinel element below.
+    const sentinelRef = useAutoMarkContentRead({
+        contentId: content?.id,
+        isRead: queryContentStatusSwr.data?.isRead,
+        isLoading,
+    })
 
     /** Toggle the favorite flag, then re-fetch the content status on success. */
     const onToggleFavorite = useCallback(async () => {
@@ -162,10 +118,6 @@ export const ContentBodyLegacy = ({ className }: ContentBodyLegacyProps) => {
             <div className="h-3" />
             <MarkdownContent markdown={content?.body || t("content.empty")} />
             <div className="h-6" />
-            <ReferenceLinks
-                references={references}
-                titleKey="reference.title"
-            />
             {/* Sentinel element for IntersectionObserver — triggers mark-as-read */}
             <div ref={sentinelRef} className="h-1" />
         </div>

@@ -37,12 +37,6 @@ const query1 = gql`
           minutesRead
           title
           body
-          references {
-            id
-            alias
-            url
-            sortIndex
-          }
         }
       }
     }

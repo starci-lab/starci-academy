@@ -1,2 +1,2 @@
-export * from "./challenge-v2-section"
+export * from "./challenge-section"
 export * from "./programming-language"

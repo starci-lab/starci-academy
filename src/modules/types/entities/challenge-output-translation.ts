@@ -1,15 +1,12 @@
-import type { AbstractEntity } from "./abstract"
-
 /**
- * Localized row for a {@link ChallengeOutputEntity}.
+ * Per-locale title for a SCHEMA V2 output item (usually null).
+ * Mirrors Nest `ChallengeOutputTranslationEntity` / `challenge_output_v2_translations`.
  */
-export interface ChallengeOutputTranslationEntity extends AbstractEntity {
-    /** Owning challenge output id. */
+export interface ChallengeOutputTranslationEntity {
+    /** Parent output item id (composite PK). */
     challengeOutputId: string
-    /** Locale code (e.g. `vi`, `en`). */
+    /** Locale of this title (composite PK). */
     locale: string
-    /** Field name being translated. */
-    field: string
-    /** Translated value. */
-    value: string
+    /** Localized output title (usually null). */
+    title: string | null
 }

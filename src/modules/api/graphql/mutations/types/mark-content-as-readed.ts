@@ -6,6 +6,13 @@ export interface MarkContentAsReadedRequest {
     contentId: string
     /** `true` to mark as read, `false` to mark as unread. */
     readed: boolean
+    /**
+     * When `true`, only the read progress is updated — the server grants no XP and
+     * posts no activity-feed entry. Used by the auto-mark-on-scroll path so reaching
+     * the bottom flips the flag cheaply; the deliberate XP grant fires separately
+     * with `silent: false`. Defaults to `false` server-side when omitted.
+     */
+    silent?: boolean
 }
 
 /** Payload inside `markContentAsReaded.data` after the standard API wrapper. */

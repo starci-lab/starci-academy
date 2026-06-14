@@ -1,0 +1,341 @@
+"use client"
+
+import {
+    ShieldKeyhole as ShieldIcon,
+} from "@gravity-ui/icons"
+import React, {
+    useCallback,
+    useState,
+} from "react"
+import {
+    Breadcrumbs,
+    Button,
+    Chip,
+    Input,
+    Label,
+    Spinner,
+    TextField,
+} from "@heroui/react"
+import {
+    useLocale,
+    useTranslations,
+} from "next-intl"
+import {
+    useRouter,
+} from "next/navigation"
+import {
+    useAppSelector,
+} from "@/redux"
+import {
+    useQueryUserSwr,
+    useMutateSetupTwoFactorSwr,
+    useMutateConfirmTwoFactorSwr,
+    useMutateDisableTwoFactorSwr,
+} from "@/hooks"
+import type {
+    SetupTwoFactorData,
+} from "@/modules/api"
+import {
+    pathConfig,
+} from "@/resources"
+import {
+    QRCode,
+    SubPageHeader,
+} from "@/components/reuseable"
+
+/** Inline status shown after a 2FA action. */
+interface SecurityStatus {
+    /** Whether the action succeeded or failed (drives the colour). */
+    kind: "success" | "error"
+    /** The message to show. */
+    text: string
+}
+
+/**
+ * Security feature container — configure app-level two-factor auth (TOTP).
+ *
+ * Reads the current 2FA flag from the signed-in user. Disabled → "Enable" runs
+ * `setupTwoFactor`, shows the QR + secret, then `confirmTwoFactor` verifies a
+ * code. Enabled → a code + `disableTwoFactor` turns it off. After each change it
+ * refetches `me` so redux reflects the new state. Mounted by `/profile/security`.
+ *
+ * Note: this configures the second factor; enforcing it at a specific login flow
+ * is a separate concern that is intentionally not wired yet.
+ */
+export const Security = () => {
+    const t = useTranslations()
+    const router = useRouter()
+    const locale = useLocale()
+    const user = useAppSelector((state) => state.user.user)
+    const { mutate: refreshUser } = useQueryUserSwr()
+    const {
+        trigger: triggerSetup,
+        isMutating: settingUp,
+    } = useMutateSetupTwoFactorSwr()
+    const {
+        trigger: triggerConfirm,
+        isMutating: confirming,
+    } = useMutateConfirmTwoFactorSwr()
+    const {
+        trigger: triggerDisable,
+        isMutating: disabling,
+    } = useMutateDisableTwoFactorSwr()
+
+    const enabled = Boolean(user?.twoFactorEnabled)
+    // enrollment material from setupTwoFactor (QR + secret); null when not enrolling
+    const [setup, setSetup] = useState<SetupTwoFactorData | null>(null)
+    // the 6-digit code the user types to confirm or disable
+    const [code, setCode] = useState("")
+    const [status, setStatus] = useState<SecurityStatus | null>(null)
+
+    /** Navigate to the home page (breadcrumb root). */
+    const onNavigateHome = useCallback(
+        () => router.push(pathConfig().locale().build()),
+        [
+            router,
+        ],
+    )
+    /** Navigate to the profile hub (breadcrumb parent + back target). */
+    const onNavigateProfile = useCallback(
+        () => router.push(pathConfig().locale(locale).profile().build()),
+        [
+            router,
+            locale,
+        ],
+    )
+
+    /** Keep only digits + cap at 6 so the field always holds a clean code. */
+    const onCodeChange = useCallback(
+        (event: React.ChangeEvent<HTMLInputElement>) => {
+            setCode(event.target.value.replace(/\D/g, "").slice(0, 6))
+        },
+        [],
+    )
+
+    /** Begin enrollment: fetch a secret + otpauth URI, then show the QR. */
+    const onStartSetup = useCallback(
+        async () => {
+            setStatus(null)
+            setCode("")
+            try {
+                const result = await triggerSetup()
+                const payload = result?.data?.setupTwoFactor
+                if (payload?.success && payload.data) {
+                    setSetup(payload.data)
+                } else {
+                    setStatus({ kind: "error", text: payload?.message ?? t("security.error") })
+                }
+            } catch (error) {
+                setStatus({ kind: "error", text: (error as Error)?.message ?? t("security.error") })
+            }
+        },
+        [
+            triggerSetup,
+            t,
+        ],
+    )
+
+    /** Verify the typed code against the pending secret and enable 2FA. */
+    const onConfirm = useCallback(
+        async () => {
+            try {
+                const result = await triggerConfirm({ code })
+                const payload = result?.data?.confirmTwoFactor
+                if (payload?.success) {
+                    setSetup(null)
+                    setCode("")
+                    await refreshUser()
+                    setStatus({ kind: "success", text: t("security.enabledToast") })
+                } else {
+                    setStatus({ kind: "error", text: payload?.message ?? t("security.invalidCode") })
+                }
+            } catch (error) {
+                setStatus({ kind: "error", text: (error as Error)?.message ?? t("security.invalidCode") })
+            }
+        },
+        [
+            triggerConfirm,
+            code,
+            refreshUser,
+            t,
+        ],
+    )
+
+    /** Disable 2FA (a valid code is required while it is enabled). */
+    const onDisable = useCallback(
+        async () => {
+            try {
+                const result = await triggerDisable({ code })
+                const payload = result?.data?.disableTwoFactor
+                if (payload?.success) {
+                    setCode("")
+                    await refreshUser()
+                    setStatus({ kind: "success", text: t("security.disabledToast") })
+                } else {
+                    setStatus({ kind: "error", text: payload?.message ?? t("security.invalidCode") })
+                }
+            } catch (error) {
+                setStatus({ kind: "error", text: (error as Error)?.message ?? t("security.invalidCode") })
+            }
+        },
+        [
+            triggerDisable,
+            code,
+            refreshUser,
+            t,
+        ],
+    )
+
+    /** Abandon an in-progress enrollment. */
+    const onCancelSetup = useCallback(
+        () => {
+            setSetup(null)
+            setCode("")
+            setStatus(null)
+        },
+        [],
+    )
+
+    // confirm / disable need a full 6-digit code
+    const codeComplete = code.length === 6
+
+    return (
+        <div className="mx-auto flex max-w-3xl flex-col gap-6 p-6">
+            <Breadcrumbs>
+                <Breadcrumbs.Item onPress={onNavigateHome}>
+                    {t("nav.home")}
+                </Breadcrumbs.Item>
+                <Breadcrumbs.Item onPress={onNavigateProfile}>
+                    {t("nav.profile")}
+                </Breadcrumbs.Item>
+                <Breadcrumbs.Item>
+                    <span>{t("security.title")}</span>
+                </Breadcrumbs.Item>
+            </Breadcrumbs>
+            <SubPageHeader
+                title={t("security.title")}
+                description={t("security.subtitle")}
+                onBack={onNavigateProfile}
+            />
+
+            <div className="flex flex-col gap-4 rounded-large bg-default/40 p-4">
+                <div className="flex items-center gap-3">
+                    <ShieldIcon className="size-5 text-accent" />
+                    <div className="flex flex-1 flex-col">
+                        <span className="font-medium text-foreground">{t("security.twoFactor")}</span>
+                        <span className="text-xs text-muted">
+                            {enabled ? t("security.enabledDesc") : t("security.disabledDesc")}
+                        </span>
+                    </div>
+                    <Chip
+                        color={enabled ? "success" : "default"}
+                        variant="soft"
+                        size="sm"
+                    >
+                        {enabled ? t("security.enabledLabel") : t("security.disabledLabel")}
+                    </Chip>
+                </div>
+
+                {/* status line */}
+                {status ? (
+                    <div className={status.kind === "success" ? "text-sm text-success" : "text-sm text-danger"}>
+                        {status.text}
+                    </div>
+                ) : null}
+
+                {/* ENABLED → offer disable (requires a code) */}
+                {enabled ? (
+                    <div className="flex flex-col gap-3">
+                        <TextField>
+                            <Label>{t("security.codeLabel")}</Label>
+                            <Input
+                                variant="secondary"
+                                inputMode="numeric"
+                                autoComplete="one-time-code"
+                                placeholder={t("security.codePlaceholder")}
+                                value={code}
+                                onChange={onCodeChange}
+                            />
+                        </TextField>
+                        <Button
+                            variant="danger"
+                            isDisabled={!codeComplete || disabling}
+                            isPending={disabling}
+                            onPress={onDisable}
+                        >
+                            {({ isPending }) => (
+                                <>
+                                    {isPending ? <Spinner color="current" size="sm" /> : null}
+                                    {t("security.disable")}
+                                </>
+                            )}
+                        </Button>
+                    </div>
+                ) : setup ? (
+                    /* ENROLLING → show QR + secret, ask for a code to confirm */
+                    <div className="flex flex-col gap-4">
+                        <div className="text-sm text-muted">{t("security.scanHint")}</div>
+                        <div className="flex flex-col items-center gap-3">
+                            <QRCode size={180} data={setup.otpauthUrl} />
+                            <div className="text-center text-xs text-muted">
+                                {t("security.secretHint")}
+                                <div className="mt-1 break-all font-mono text-foreground">{setup.secret}</div>
+                            </div>
+                        </div>
+                        <TextField>
+                            <Label>{t("security.codeLabel")}</Label>
+                            <Input
+                                variant="secondary"
+                                inputMode="numeric"
+                                autoComplete="one-time-code"
+                                placeholder={t("security.codePlaceholder")}
+                                value={code}
+                                onChange={onCodeChange}
+                            />
+                        </TextField>
+                        <div className="flex gap-3">
+                            <Button
+                                variant="primary"
+                                fullWidth
+                                isDisabled={!codeComplete || confirming}
+                                isPending={confirming}
+                                onPress={onConfirm}
+                            >
+                                {({ isPending }) => (
+                                    <>
+                                        {isPending ? <Spinner color="current" size="sm" /> : null}
+                                        {t("security.confirm")}
+                                    </>
+                                )}
+                            </Button>
+                            <Button
+                                variant="ghost"
+                                onPress={onCancelSetup}
+                            >
+                                {t("security.cancel")}
+                            </Button>
+                        </div>
+                    </div>
+                ) : (
+                    /* DISABLED → offer enable */
+                    <Button
+                        variant="primary"
+                        isDisabled={settingUp}
+                        isPending={settingUp}
+                        onPress={onStartSetup}
+                    >
+                        {({ isPending }) => (
+                            <>
+                                {isPending ? <Spinner color="current" size="sm" /> : null}
+                                {t("security.enable")}
+                            </>
+                        )}
+                    </Button>
+                )}
+            </div>
+
+            {/* config-only feature: enforcement at login is not wired yet */}
+            <div className="text-xs text-muted">{t("security.note")}</div>
+        </div>
+    )
+}

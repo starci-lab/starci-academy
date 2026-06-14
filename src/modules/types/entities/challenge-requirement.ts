@@ -1,22 +1,16 @@
 import type { AbstractEntity } from "./abstract"
-import type { ChallengeRequirementTranslationEntity } from "./challenge-requirement-translation"
+import type { ChallengeRequirementLangEntity } from "./challenge-requirement-lang"
 
 /**
- * One detailed requirement row for a challenge.
+ * SCHEMA V2 requirement item (one row per position).
+ * Mirrors Nest `ChallengeRequirementEntity` / `challenge_requirements_v2`.
+ * Title/body live on each {@link ChallengeRequirementLangEntity} row.
  */
 export interface ChallengeRequirementEntity extends AbstractEntity {
-    /** Goal statement of this requirement. */
-    purpose: string
-    /** Technical constraints to follow. */
-    technicalConstraints: string
-    /** Hints and implementation tips. */
-    proTipsHints: string
-    /** Explicit forbidden practices. */
-    forbidden: string
     /** Pure ordering index used to sort/reorder (1-based). */
     sortIndex: number
-    /** Default locale for this row. */
+    /** Default locale for this requirement item. */
     defaultLocale: string
-    /** Localized field overrides. */
-    translations?: Array<ChallengeRequirementTranslationEntity>
+    /** Per-programming-language score + title + body rows. */
+    langs?: Array<ChallengeRequirementLangEntity>
 }

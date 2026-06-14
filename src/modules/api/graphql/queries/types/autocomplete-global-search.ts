@@ -45,6 +45,11 @@ export interface AutocompleteGlobalSearchItem {
     texts?: Array<string>
     /** Resolved ancestor chain used to build a navigation URL (absent if uncached). */
     parentPath?: AutocompleteGlobalSearchParentPath
+    /**
+     * Canonical, locale-agnostic route built server-side by the route index.
+     * Client prepends `/{locale}` and pushes it. Null/absent when unroutable.
+     */
+    path?: string | null
 }
 
 /** Payload inside `autocompleteGlobalSearch.data` after the standard API wrapper. */

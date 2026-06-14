@@ -1,16 +1,16 @@
 import type { AbstractEntity } from "./abstract"
-import type { ChallengePrerequisiteTranslationEntity } from "./challenge-prerequisite-translation"
+import type { ChallengePrerequisiteLangEntity } from "./challenge-prerequisite-lang"
 
 /**
- * One prerequisite row for a challenge.
+ * SCHEMA V2 prerequisite item (one row per position).
+ * Mirrors Nest `ChallengePrerequisiteEntity` / `challenge_prerequisites_v2`.
+ * CDN payload has no item-level title; only per-lang `text` rows.
  */
 export interface ChallengePrerequisiteEntity extends AbstractEntity {
-    /** Prerequisite text. */
-    text: string
     /** Pure ordering index used to sort/reorder (1-based). */
     sortIndex: number
-    /** Default locale for this row. */
+    /** Default locale for this prerequisite item. */
     defaultLocale: string
-    /** Localized field overrides. */
-    translations?: Array<ChallengePrerequisiteTranslationEntity>
+    /** Per-programming-language text rows. */
+    langs?: Array<ChallengePrerequisiteLangEntity>
 }

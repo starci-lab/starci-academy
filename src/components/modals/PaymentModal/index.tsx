@@ -5,6 +5,7 @@ import { Card, Chip, cn, Modal, Separator, Spinner } from "@heroui/react"
 import {
     useMutateCourseEnrollSwr,
     useMutatePurchaseAiSubscriptionSwr,
+    useMutatePurchaseMembershipSwr,
     usePaymentOverlayState,
 } from "@/hooks"
 import { useAppSelector } from "@/redux"
@@ -30,13 +31,14 @@ export const PaymentModal = () => {
     // both purchase mutations live here; the active one is chosen per context
     const courseEnrollSwr = useMutateCourseEnrollSwr()
     const purchaseAiSubscriptionSwr = useMutatePurchaseAiSubscriptionSwr()
+    const purchaseMembershipSwr = useMutatePurchaseMembershipSwr()
     const course = useAppSelector((state) => state.course.entity)
     // which method is mid-checkout, so only its row shows a spinner
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentType | null>(null)
     const t = useTranslations()
 
     // any mutation in flight disables interaction + drives the row spinner
-    const isMutating = courseEnrollSwr.isMutating || purchaseAiSubscriptionSwr.isMutating
+    const isMutating = courseEnrollSwr.isMutating || purchaseAiSubscriptionSwr.isMutating || purchaseMembershipSwr.isMutating
 
     // domestic and international method groups, each rendered as its own section
     const paymentGroups = useMemo(
@@ -130,6 +132,21 @@ export const PaymentModal = () => {
                     checkoutUrl = data?.checkoutUrl ?? ""
                     checkoutFields = data?.checkoutFields
                     return response.data.courseEnroll
+                }
+                // membership flow — single product, no tier in the payload
+                if (context.flow === PaymentFlow.Membership) {
+                    const response = await purchaseMembershipSwr.trigger({
+                        paymentType,
+                        payosReturnUrl: window.location.href,
+                        payosCancelUrl: window.location.href,
+                    })
+                    if (!response.data?.purchaseMembership) {
+                        throw new Error(response.error?.message)
+                    }
+                    const data = response.data.purchaseMembership.data
+                    checkoutUrl = data?.checkoutUrl ?? ""
+                    checkoutFields = data?.checkoutFields
+                    return response.data.purchaseMembership
                 }
                 // AI subscription flow — payload carries the tier slug
                 const response = await purchaseAiSubscriptionSwr.trigger({

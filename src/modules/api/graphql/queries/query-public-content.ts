@@ -21,12 +21,6 @@ const query1 = gql`
         challenges {
           id
         }
-        references {
-          id
-          alias
-          url
-          sortIndex
-        }
       }
     }
   }

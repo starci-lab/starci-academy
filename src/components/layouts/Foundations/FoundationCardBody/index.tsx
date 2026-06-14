@@ -5,7 +5,7 @@ import { Button } from "@heroui/react"
 import { MarkdownContent } from "@/components/reuseable"
 import { VideoRenderer } from "@/components/reuseable"
 import type { FoundationEntity } from "@/modules/types"
-import { FoundationKind, LessonVideoType, VideoHostPlatform } from "@/modules/types"
+import { FoundationKind, VideoHostPlatform } from "@/modules/types"
 
 import { useTranslations } from "next-intl"
 import React, { useMemo } from "react"
@@ -43,15 +43,18 @@ export const FoundationCardBody = ({
 
     if (foundation.kind === FoundationKind.Video && foundation.value) {
         const isYoutube = /youtube\.com|youtu\.be/i.test(foundation.value)
+        // resolve mount-relative values to a full URL (full URLs pass through);
+        // VideoRenderer then auto-picks the player from the URL (.mpd → DASH,
+        // mp4/webm → Standard, YouTube → embed)
+        const videoUrl = resolveFoundationMountFileUrl(foundation.value)
         return (
             <VideoRenderer
                 classNames={{
                     base: "w-full overflow-hidden rounded-lg",
                     content: "w-full",
                 }}
-                url={foundation.value}
+                url={videoUrl}
                 hostPlatform={isYoutube ? VideoHostPlatform.Youtube : undefined}
-                videoType={isYoutube ? undefined : LessonVideoType.MpegDash}
                 title={foundation.title}
             />
         )

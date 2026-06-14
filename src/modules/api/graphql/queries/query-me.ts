@@ -14,7 +14,12 @@ const query1 = gql`
         email
         avatar
         username
+        displayName
+        bio
         githubUsername
+        followerCount
+        followingCount
+        twoFactorEnabled
       }
     }
   }

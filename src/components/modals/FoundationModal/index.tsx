@@ -4,8 +4,9 @@ import React from "react"
 import { Modal, ScrollShadow } from "@heroui/react"
 import { MarkdownContent } from "@/components/reuseable"
 import { VideoRenderer } from "@/components/reuseable/VideoRenderer"
+import { resolveFoundationMountFileUrl } from "@/components/layouts/Foundations/utils"
 import { useFoundationOverlayState } from "@/hooks"
-import { FoundationKind, LessonVideoType, VideoHostPlatform } from "@/modules/types"
+import { FoundationKind, VideoHostPlatform } from "@/modules/types"
 import { useAppSelector } from "@/redux"
 
 /**
@@ -29,8 +30,11 @@ export const FoundationModal = () => {
                 </ScrollShadow>
             )
         case FoundationKind.Video: {
-            const url = foundation.value ?? ""
-            const isYoutube = /youtube\.com|youtu\.be/i.test(url)
+            const rawValue = foundation.value ?? ""
+            const isYoutube = /youtube\.com|youtu\.be/i.test(rawValue)
+            // resolve mount-relative values to a full URL; VideoRenderer then
+            // auto-picks the player from the URL (.mpd → DASH, mp4 → Standard)
+            const url = resolveFoundationMountFileUrl(rawValue)
             return (
                 <div className="flex flex-col items-center p-4">
                     <VideoRenderer
@@ -40,7 +44,6 @@ export const FoundationModal = () => {
                         }}
                         url={url}
                         hostPlatform={isYoutube ? VideoHostPlatform.Youtube : undefined}
-                        videoType={isYoutube ? undefined : LessonVideoType.MpegDash}
                         title={foundation.title}
                     />
                 </div>

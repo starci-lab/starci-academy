@@ -11,8 +11,12 @@ import { type WithClassNames } from "@/modules/types"
 import { FlashcardDeckList } from "../FlashcardDeckList"
 import { FlashcardDeckListSkeleton } from "../FlashcardDeckList/FlashcardDeckListSkeleton"
 import { FlashcardReviewer } from "../FlashcardReviewer"
+import { InterviewSession } from "../InterviewSession"
 
 export type FlashcardLayoutProps = WithClassNames<undefined>
+
+/** Study mode within a selected deck: flip cards vs. answer aloud. */
+type FlashcardMode = "study" | "interview"
 
 /**
  * Course-level interview-prep ("Flashcards") page. Lists the open-ended Q&A
@@ -26,6 +30,8 @@ export const FlashcardLayout = ({ className }: FlashcardLayoutProps) => {
     const courseId = useAppSelector((state) => state.course.entity?.id)
     // selected deck (null = showing the deck list)
     const [selectedDeckId, setSelectedDeckId] = useState<string | null>(null)
+    // within a deck: flip-card study vs. voice-interview drilling
+    const [mode, setMode] = useState<FlashcardMode>("study")
 
     return (
         <div className={cn("p-3", className)}>
@@ -48,7 +54,8 @@ export const FlashcardLayout = ({ className }: FlashcardLayoutProps) => {
                     />
                 ) : (
                     <div className="flex flex-col gap-6">
-                        <div>
+                        {/* back to deck list + study/interview mode switch */}
+                        <div className="flex flex-wrap items-center justify-between gap-3">
                             <Button
                                 size="sm"
                                 variant="secondary"
@@ -56,9 +63,29 @@ export const FlashcardLayout = ({ className }: FlashcardLayoutProps) => {
                             >
                                 {t("flashcard.backToDecks")}
                             </Button>
+                            <div className="flex items-center gap-1.5">
+                                <Button
+                                    size="sm"
+                                    variant={mode === "study" ? "primary" : "outline"}
+                                    onPress={() => setMode("study")}
+                                >
+                                    {t("flashcard.mode.study")}
+                                </Button>
+                                <Button
+                                    size="sm"
+                                    variant={mode === "interview" ? "primary" : "outline"}
+                                    onPress={() => setMode("interview")}
+                                >
+                                    {t("flashcard.mode.interview")}
+                                </Button>
+                            </div>
                         </div>
-                        {/* keyed so switching decks resets the reviewer's local state */}
-                        <FlashcardReviewer key={selectedDeckId} deckId={selectedDeckId} />
+                        {/* keyed so switching decks resets the inner mode's local state */}
+                        {mode === "study" ? (
+                            <FlashcardReviewer key={selectedDeckId} deckId={selectedDeckId} />
+                        ) : (
+                            <InterviewSession key={selectedDeckId} deckId={selectedDeckId} />
+                        )}
                     </div>
                 )}
             </div>

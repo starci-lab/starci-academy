@@ -1,11 +1,12 @@
-import type { AbstractEntity } from "./abstract"
-
 /**
- * Localized row for a {@link ChallengePrerequisiteEntity}.
+ * Per-locale title for a SCHEMA V2 prerequisite item (usually null).
+ * Mirrors Nest `ChallengePrerequisiteTranslationEntity` / `challenge_prerequisite_v2_translations`.
  */
-export interface ChallengePrerequisiteTranslationEntity extends AbstractEntity {
+export interface ChallengePrerequisiteTranslationEntity {
+    /** Parent prerequisite item id (composite PK). */
     challengePrerequisiteId: string
+    /** Locale of this title (composite PK). */
     locale: string
-    field: string
-    value: string
+    /** Localized prerequisite title (usually null). */
+    title: string | null
 }

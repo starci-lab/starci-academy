@@ -729,6 +729,33 @@
         "relatedModules": "Học phần liên quan",
         "searchPlaceholder": "Tìm bộ flashcard...",
         "searchEmpty": "Không có bộ nào khớp với \"{query}\".",
+        "mode": {
+            "study": "Học thẻ",
+            "interview": "Phỏng vấn thử"
+        },
+        "interview": {
+            "record": "Trả lời bằng giọng nói",
+            "stop": "Dừng",
+            "recording": "Đang nghe…",
+            "yourAnswer": "Câu trả lời của bạn",
+            "transcriptHint": "Bấm “Trả lời bằng giọng nói” và nói câu trả lời — hệ thống tự chuyển thành văn bản.",
+            "unsupported": "Trình duyệt này không hỗ trợ nhập bằng giọng nói. Hãy thử Chrome hoặc Edge.",
+            "micError": "Không truy cập được micro. Kiểm tra quyền và thử lại.",
+            "submit": "Nộp câu trả lời",
+            "grading": "Đang chấm câu trả lời…",
+            "newQuestion": "Câu hỏi khác",
+            "nextQuestion": "Câu tiếp theo",
+            "retry": "Thử lại",
+            "drawError": "Không tải được câu hỏi phỏng vấn cho bộ thẻ này.",
+            "gradeError": "Không chấm được câu trả lời. Vui lòng thử lại.",
+            "pass": "Đạt",
+            "fail": "Chưa đạt",
+            "score": "Điểm: {score}/100",
+            "strengths": "Điểm bạn làm tốt",
+            "gaps": "Điểm cần cải thiện",
+            "hint": "Gợi ý hướng tới đáp án mẫu",
+            "followUp": "Câu hỏi đào sâu có thể gặp"
+        },
         "level": {
             "junior": "Junior",
             "middle": "Middle",
@@ -782,6 +809,23 @@
             "keyOnFile": "Đã lưu một khoá API",
             "removeKey": "Xoá khoá",
             "keyHint": "Hãy nhập khoá API để dùng chế độ BYOK."
+        }
+    },
+    "membership": {
+        "title": "Hội viên",
+        "subtitle": "Gia nhập cộng đồng StarCi",
+        "price": "$5",
+        "priceHint": "/ tháng",
+        "cta": "Trở thành hội viên",
+        "card": {
+            "title": "Hội viên cộng đồng StarCi",
+            "desc": "Tất cả những gì bạn cần để học nhanh hơn và có việc — trong một gói hội viên."
+        },
+        "perks": {
+            "blog": "Đọc trọn vẹn blog kỹ thuật premium",
+            "community": "Cộng đồng kín + hỏi đáp cùng founder",
+            "discount": "Giảm 20% mọi khóa học StarCi",
+            "recruitment": "Đưa hồ sơ của bạn đến nhà tuyển dụng đối tác"
         }
     },
     "aiSubscription": {
@@ -884,12 +928,68 @@
             "title": "Bạn chưa đăng nhập",
             "desc": "Đăng nhập để xem hồ sơ và hạn mức AI của bạn."
         },
+        "followers": "người theo dõi",
+        "following": "đang theo dõi",
         "nav": {
+            "editDesc": "Cập nhật ảnh đại diện, tên và tiểu sử",
+            "sessionsDesc": "Xem thiết bị đang đăng nhập và đăng xuất chúng",
+            "securityDesc": "Xác thực hai lớp",
             "aiSettingsDesc": "Chọn nguồn AI và quản lý API key của riêng bạn",
             "aiSubscriptionDesc": "Nâng cấp để có thêm credit AI mỗi tuần",
             "bookmarks": "Đã lưu",
             "bookmarksDesc": "Nội dung bạn đã lưu"
         }
+    },
+    "profileEdit": {
+        "title": "Chỉnh sửa hồ sơ",
+        "subtitle": "Cập nhật cách bạn hiển thị trên StarCi Academy.",
+        "displayName": "Tên hiển thị",
+        "bio": "Tiểu sử",
+        "bioPlaceholder": "Giới thiệu đôi nét về bạn",
+        "changeAvatar": "Đổi ảnh đại diện",
+        "avatarHint": "PNG, JPG, WEBP hoặc GIF, tối đa 5 MB.",
+        "save": "Lưu thay đổi",
+        "saved": "Cập nhật hồ sơ thành công.",
+        "error": "Không thể cập nhật hồ sơ. Vui lòng thử lại.",
+        "uploadFailed": "Tải ảnh đại diện thất bại. Vui lòng thử lại."
+    },
+    "sessions": {
+        "title": "Thiết bị",
+        "subtitle": "Các thiết bị đang đăng nhập vào tài khoản của bạn.",
+        "thisDevice": "Thiết bị này",
+        "revoke": "Đăng xuất",
+        "empty": "Không có phiên đăng nhập nào.",
+        "unknownDevice": "Thiết bị không xác định"
+    },
+    "follow": {
+        "follow": "Theo dõi",
+        "following": "Đang theo dõi"
+    },
+    "security": {
+        "title": "Bảo mật",
+        "subtitle": "Bảo vệ tài khoản bằng xác thực hai lớp.",
+        "twoFactor": "Xác thực hai lớp",
+        "enabledLabel": "Đang bật",
+        "disabledLabel": "Đang tắt",
+        "enabledDesc": "Yêu cầu mã từ ứng dụng xác thực ở những nơi bắt buộc 2FA.",
+        "disabledDesc": "Thêm bước xác thực thứ hai bằng ứng dụng authenticator (TOTP).",
+        "enable": "Bật 2FA",
+        "disable": "Tắt 2FA",
+        "confirm": "Xác nhận",
+        "cancel": "Hủy",
+        "scanHint": "Quét mã QR này bằng ứng dụng xác thực (Google Authenticator, Authy…), rồi nhập mã 6 chữ số.",
+        "secretHint": "Hoặc nhập khóa này thủ công:",
+        "codeLabel": "Mã xác thực",
+        "codePlaceholder": "Mã 6 chữ số",
+        "enabledToast": "Đã bật xác thực hai lớp.",
+        "disabledToast": "Đã tắt xác thực hai lớp.",
+        "invalidCode": "Mã không đúng. Vui lòng thử lại.",
+        "error": "Có lỗi xảy ra. Vui lòng thử lại.",
+        "note": "Có thể cấu hình xác thực hai lớp ngay bây giờ; việc bắt buộc khi đăng nhập sẽ bổ sung sau."
+    },
+    "publicProfile": {
+        "title": "Hồ sơ",
+        "notFound": "Không tìm thấy người dùng này."
     },
     "reference": {
         "title": "Tài liệu tham khảo"
@@ -1139,6 +1239,53 @@
             "des4": "Chi phí tối thiểu, tiêu chuẩn cao",
             "des5": "StarCi Academy vận hành theo mô hình tinh gọn, loại bỏ các chi phí không cần thiết để giữ học phí ở mức dễ tiếp cận. Mục tiêu của chúng tớ là tạo ra một môi trường học tập chất lượng cao mà bất kỳ ai nghiêm túc với nghề đều có thể tham gia.",
             "des6": "Chúng tớ dạy để bạn xây dựng những project có giá trị thực sự và hỗ trợ lâu dài trong quá trình phát triển sự nghiệp."
+        }
+    },
+    "dashboard": {
+        "greeting": "Chào mừng trở lại, {name}",
+        "subtitle": "Tiếp tục từ chỗ bạn đang học dở.",
+        "continueLearning": "Tiếp tục học",
+        "emptyCourses": "Bạn chưa có khóa học nào. Xem danh sách khóa học để bắt đầu.",
+        "xp": "{xp} XP",
+        "rank": "#{rank}",
+        "continue": "Tiếp tục",
+        "title": "Trang chủ",
+        "history": "Bài đã học",
+        "historySearch": "Tìm...",
+        "enrolledCourses": "Khóa học của tôi",
+        "enrolledCoursesEmpty": "Bạn chưa tham gia khóa nào.",
+        "recentContent": "Nội dung gần đây",
+        "recentContentEmpty": "Chưa đọc bài nào.",
+        "inProgressChallenges": "Challenge đang làm",
+        "inProgressChallengesEmpty": "Không có challenge đang làm.",
+        "historyEmpty": "Chưa đọc bài nào.",
+        "feedEmpty": "Chưa có hoạt động nào. Khám phá khóa học để bắt đầu.",
+        "feedTabsAria": "Bảng hoạt động",
+        "loadMore": "Tải thêm",
+        "tabs": {
+            "forYou": "Dành cho bạn",
+            "following": "Đang theo dõi"
+        },
+        "loadError": "Không tải được bảng điều khiển. Phiên đăng nhập của bạn có thể đã hết hạn.",
+        "retry": "Thử lại",
+        "goHome": "Về trang chủ",
+        "feed": {
+            "lessonRead": "<actor></actor> đã đọc <target></target>",
+            "lessonBookmarked": "<actor></actor> đã lưu <target></target>",
+            "challengePassed": "<actor></actor> đã vượt qua challenge <target></target>",
+            "codingSolved": "<actor></actor> đã giải xong <target></target>",
+            "milestonePassed": "<actor></actor> đã hoàn thành milestone <target></target>",
+            "aiLabPassed": "<actor></actor> đã qua thử thách AI Lab <target></target>",
+            "courseEnrolled": "<actor></actor> đã tham gia khóa <target></target>",
+            "discussionCommented": "<actor></actor> đã bình luận ở <target></target>",
+            "userFollowed": "<actor></actor> đã theo dõi <target></target>"
+        },
+        "quickActions": "Truy cập nhanh",
+        "actions": {
+            "courses": "Xem khóa học",
+            "practice": "Luyện code",
+            "bookmarks": "Đã lưu",
+            "profile": "Hồ sơ"
         }
     },
     "languages": {

@@ -2,13 +2,10 @@
 
 import React, {
     useCallback,
-    useEffect,
     useMemo,
-    useRef,
 } from "react"
 import {
     MarkdownContent,
-    ReferenceLinks,
     ProgrammingLanguageTabs,
     ProgrammingLanguageTabsVariant,
 } from "@/components/reuseable"
@@ -33,7 +30,6 @@ import {
     resolveContentBody,
     type WithClassNames,
 } from "@/modules/types"
-import _ from "lodash"
 import {
     useContentOverlayState,
     useMutateToggleFavoriteSwr,
@@ -42,15 +38,15 @@ import {
     useShareOverlayState,
 } from "@/hooks"
 import {
-    mutateMarkContentAsReaded,
-} from "@/modules/api"
-import {
     runGraphQLWithToast,
 } from "@/modules/toast"
 // ActionToolbar is no longer rendered here — it lives inside ContentDiscussion/InteractionBar
 import {
     ContentBodySkeleton,
 } from "../../ContentBodySkeleton"
+import {
+    useAutoMarkContentRead,
+} from "../useAutoMarkContentRead"
 import {
     ContentDiscussion,
 } from "./Discussion"
@@ -82,12 +78,6 @@ export const ContentBodyV2 = ({ className }: ContentBodyV2Props) => {
     const contentOverlay = useContentOverlayState()
     const shareOverlay = useShareOverlayState()
     const isLoading = queryContentSwr.isLoading && !content
-    const references = useMemo(
-        () => _.cloneDeep(content?.references ?? []).sort(
-            (prev, next) => prev.sortIndex - next.sortIndex,
-        ),
-        [content?.references],
-    )
 
     // SCHEMA V2 lesson body: all languages fetched up-front as `bodies`; a tab switches which one
     // is rendered, resolved to the active locale.
@@ -114,46 +104,13 @@ export const ContentBodyV2 = ({ className }: ContentBodyV2Props) => {
         [content?.bodies, activeLang, locale],
     )
 
-    // Sentinel ref at bottom of content
-    const sentinelRef = useRef<HTMLDivElement>(null)
-    const hasMarkedRef = useRef(false)
-
-    const markAsRead = useCallback(async () => {
-        if (!content?.id || hasMarkedRef.current || queryContentStatusSwr.data?.isRead) return
-        hasMarkedRef.current = true
-        try {
-            await mutateMarkContentAsReaded({
-                request: {
-                    contentId: content.id,
-                    readed: true,
-                },
-            })
-        } catch {
-            hasMarkedRef.current = false
-        }
-    }, [content?.id, queryContentStatusSwr.data?.isRead])
-
-    // Reset read-tracking when the active content row changes (`setContentId` clears lang tab).
-    useEffect(() => {
-        hasMarkedRef.current = false
-    }, [content?.id])
-
-    // IntersectionObserver: mark as read when user scrolls to bottom
-    useEffect(() => {
-        if (isLoading || !sentinelRef.current || queryContentStatusSwr.data?.isRead) return
-
-        const observer = new IntersectionObserver(
-            (entries) => {
-                if (entries[0]?.isIntersecting) {
-                    markAsRead()
-                }
-            },
-            { threshold: 1.0 },
-        )
-
-        observer.observe(sentinelRef.current)
-        return () => observer.disconnect()
-    }, [isLoading, queryContentStatusSwr.data?.isRead, markAsRead])
+    // Auto mark-as-read on scroll: silent progress tick at the bottom sentinel,
+    // dwell-gated XP + feed grant. Returns the ref for the sentinel element below.
+    const sentinelRef = useAutoMarkContentRead({
+        contentId: content?.id,
+        isRead: queryContentStatusSwr.data?.isRead,
+        isLoading,
+    })
 
     /** Toggle the favorite flag, then re-fetch the content status on success. */
     const onToggleFavorite = useCallback(async () => {
@@ -191,7 +148,7 @@ export const ContentBodyV2 = ({ className }: ContentBodyV2Props) => {
     )
 
     if (isLoading) {
-        return <ContentBodySkeleton className={className} variant="v2" showReferences={false} />
+        return <ContentBodySkeleton className={className} variant="v2" />
     }
 
     return (
@@ -213,10 +170,6 @@ export const ContentBodyV2 = ({ className }: ContentBodyV2Props) => {
             {contentFromRedux?.isPremium ? null : (
                 <>
                     <div className="h-6" />
-                    <ReferenceLinks
-                        references={references}
-                        titleKey="reference.title"
-                    />
                     {/* Sentinel element for IntersectionObserver — triggers mark-as-read */}
                     <div ref={sentinelRef} className="h-1" />
                     <div className="h-6" />

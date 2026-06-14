@@ -1,16 +1,34 @@
 import type { AbstractEntity } from "./abstract"
-import type { ChallengeOutputTranslationEntity } from "./challenge-output-translation"
+
+import type { ChallengeOutputLangEntity } from "./challenge-output-lang"
+
+
 
 /**
- * Expected output row for a challenge.
+
+ * SCHEMA V2 output item (one row per position).
+
+ * Mirrors Nest `ChallengeOutputEntity` / `challenge_outputs_v2`.
+
+ * CDN payload has no item-level title; only per-lang `text` rows.
+
  */
+
 export interface ChallengeOutputEntity extends AbstractEntity {
-    /** Output text / statement. */
-    text: string
+
+    /** Display order within the challenge output list. */
+
     /** Pure ordering index used to sort/reorder (1-based). */
     sortIndex: number
-    /** Default locale for this row. */
+
+    /** Default locale for this output item. */
+
     defaultLocale: string
-    /** Localized field overrides. */
-    translations?: Array<ChallengeOutputTranslationEntity>
+
+    /** Per-programming-language text rows. */
+
+    langs?: Array<ChallengeOutputLangEntity>
+
 }
+
+

@@ -7,7 +7,6 @@ import { GlobalSearchContentBlock } from "./Block"
 import { GlobalSearchEmpty } from "./Empty"
 import { useAppSelector } from "@/redux"
 import { Accordion, ScrollShadow } from "@heroui/react"
-import { pathConfig } from "@/resources/path"
 import type { AutocompleteGlobalSearchItem } from "@/modules/api"
 
 
@@ -47,73 +46,16 @@ export const GlobalSearchContent = () => {
     const milestoneTasks = useAppSelector((state) => state.socketIo.globalSearchResults?.data?.milestoneTasks)
     const query = useAppSelector((state) => state.search.query).trim()
 
-    // Build the deep-link URL for a pressed hit from its kind + resolved ancestor chain.
-    // Returns null when the data needed for that kind is missing so we can no-op safely.
-    const buildHref = useCallback(
-        (kind: GlobalSearchKind, item: AutocompleteGlobalSearchItem): string | null => {
-            const parent = item.parentPath
-            const root = pathConfig().locale(locale)
-            switch (kind) {
-            // a course links to its own public course page (slug = the item's displayId)
-            case "course": {
-                if (!item.displayId) return null
-                return root.course(item.displayId).build()
-            }
-            // a module needs the owning course slug; the module segment uses its UUID
-            case "module": {
-                const courseSlug = parent?.course?.displayId
-                if (!courseSlug) return null
-                return root.course(courseSlug).learn().module(item.id).build()
-            }
-            // a content needs course slug + module UUID; the content segment uses its UUID
-            case "content": {
-                const courseSlug = parent?.course?.displayId
-                const moduleId = parent?.module?.id
-                if (!courseSlug || !moduleId) return null
-                return root.course(courseSlug).learn().module(moduleId).content(item.id).build()
-            }
-            // a challenge has no standalone route → land on its parent content page
-            case "challenge": {
-                const courseSlug = parent?.course?.displayId
-                const moduleId = parent?.module?.id
-                const contentId = parent?.content?.id
-                if (!courseSlug || !moduleId || !contentId) return null
-                return root.course(courseSlug).learn().module(moduleId).content(contentId).build()
-            }
-            // a flashcard deck lives on the course-level flashcards tab (needs only the course slug)
-            case "flashcardDeck": {
-                const courseSlug = parent?.course?.displayId
-                if (!courseSlug) return null
-                return root.course(courseSlug).learn().flashcards().build()
-            }
-            // a milestone has no standalone page → deep-link to its first task, falling back to
-            // the personal-project root when the milestone has no tasks (task id absent)
-            case "milestone": {
-                const courseSlug = parent?.course?.displayId
-                if (!courseSlug) return null
-                const taskId = parent?.task?.id
-                return root.course(courseSlug).learn().personalProject(taskId).build()
-            }
-            // a task deep-links to its own personal-project page (task id = the hit's own id)
-            case "milestoneTask": {
-                const courseSlug = parent?.course?.displayId
-                if (!courseSlug) return null
-                return root.course(courseSlug).learn().personalProject(item.id).build()
-            }
-            default:
-                return null
-            }
-        }, [locale])
-
-    // Resolve the href for the pressed item, navigate to it, then close the palette.
+    // Navigate to the pressed hit using the server-built canonical route (the route
+    // index is the single source of truth now — no client-side URL assembly).
     const onItemPress = useCallback(
-        (kind: GlobalSearchKind) => (item: AutocompleteGlobalSearchItem) => {
-            const href = buildHref(kind, item)
-            // ignore presses we cannot resolve a destination for (missing ancestors)
-            if (!href) return
-            router.push(href)
+        (item: AutocompleteGlobalSearchItem) => {
+            // ignore presses with no resolvable route (cache miss / unroutable kind)
+            if (!item.path) return
+            // server path is locale-agnostic → prepend the active locale
+            router.push(`/${locale}${item.path}`)
             setOpen(false)
-        }, [buildHref, router, setOpen])
+        }, [locale, router, setOpen])
 
     // One section per bucket, in display order; only non-empty buckets are shown.
     const allSections: Array<GlobalSearchSection> = [
@@ -186,7 +128,7 @@ export const GlobalSearchContent = () => {
                                 <Accordion.Body className="p-3 pt-0">
                                     <GlobalSearchContentBlock
                                         items={section.items ?? []}
-                                        onItemPress={onItemPress(section.kind)}
+                                        onItemPress={onItemPress}
                                     />
                                 </Accordion.Body>
                             </Accordion.Panel>

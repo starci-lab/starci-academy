@@ -1,17 +1,14 @@
 "use client"
 
-import React, { useMemo } from "react"
-import _ from "lodash"
+import React from "react"
 import { Modal, ScrollShadow } from "@heroui/react"
 import { MarkdownContent } from "@/components/reuseable"
-import { ContentReferences } from "./ContentReferences"
 import { useContentOverlayState } from "@/hooks"
 import { useAppSelector } from "@/redux"
 
 export const ContentModal = () => {
     const { isOpen, setOpen } = useContentOverlayState()
     const content = useAppSelector((state) => state.content.entity)
-    const references = useMemo(() => _.cloneDeep(content?.references ?? []), [content?.references])
     return (
         <Modal isOpen={isOpen} onOpenChange={setOpen}>
             <Modal.Backdrop>
@@ -26,7 +23,6 @@ export const ContentModal = () => {
                         <Modal.Body>
                             <ScrollShadow hideScrollBar={true} className="px-3">   
                                 <MarkdownContent markdown={content?.body ?? ""} />
-                                <ContentReferences references={references} />
                                 <div className="h-6"/>
                             </ScrollShadow>
                         </Modal.Body>

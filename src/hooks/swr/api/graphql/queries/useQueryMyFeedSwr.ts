@@ -1,5 +1,5 @@
 import useSWRInfinite from "swr/infinite"
-import { queryMyFeed, MyFeedTab } from "@/modules/api"
+import { queryMyFeed, MyFeedTab, MyFeedCategory } from "@/modules/api"
 import type { QueryMyFeedResponseData } from "@/modules/api"
 import { useAppSelector } from "@/redux"
 
@@ -9,18 +9,23 @@ const PAGE_LIMIT = 20
 /**
  * Cursor-paginated SWR hook for the home feed (infinite scroll). Each page keys
  * off the previous page's `nextCursor`; returns `null` key to stop when the feed
- * is exhausted or the viewer is unauthenticated.
+ * is exhausted or the viewer is unauthenticated. Re-keys on `tab` + `category` so
+ * switching feed or filter chip refetches from page 1.
  *
  * @param tab - which feed (forYou | following)
+ * @param category - filter chip (defaults to All)
  * @returns the SWRInfinite handle (data = array of pages, size, setSize, ...)
  */
-export const useQueryMyFeedSwr = (tab: MyFeedTab) => {
+export const useQueryMyFeedSwr = (
+    tab: MyFeedTab,
+    category: MyFeedCategory = MyFeedCategory.All,
+) => {
     const authenticated = useAppSelector((state) => state.keycloak.authenticated)
 
     const getKey = (
         index: number,
         previous: QueryMyFeedResponseData | null,
-    ): readonly [string, MyFeedTab, string] | null => {
+    ): readonly [string, MyFeedTab, MyFeedCategory, string] | null => {
         // don't fetch when signed out
         if (!authenticated) {
             return null
@@ -31,15 +36,16 @@ export const useQueryMyFeedSwr = (tab: MyFeedTab) => {
         }
         // page 1 has no cursor; later pages use the previous page's nextCursor
         const cursor = index === 0 ? "" : previous?.nextCursor ?? ""
-        return ["QUERY_MY_FEED_SWR", tab, cursor]
+        return ["QUERY_MY_FEED_SWR", tab, category, cursor]
     }
 
     return useSWRInfinite(
         getKey,
-        async ([, currentTab, cursor]) => {
+        async ([, currentTab, currentCategory, cursor]) => {
             const data = await queryMyFeed({
                 request: {
                     tab: currentTab,
+                    category: currentCategory,
                     cursor: cursor || undefined,
                     limit: PAGE_LIMIT,
                 },

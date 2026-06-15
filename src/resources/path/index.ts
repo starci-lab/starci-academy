@@ -327,15 +327,6 @@ export const pathConfig = () => {
                 build,
             }
         }
-        const user = (userId?: string) => {
-            const userPath = userId ? `${localePath}/u/${userId}` : `${localePath}/u`
-            const build = () => {
-                return userPath
-            }
-            return {
-                build,
-            }
-        }
         return {
             build,
             course,
@@ -345,7 +336,6 @@ export const pathConfig = () => {
             publicContent,
             dashboard,
             practice,
-            user,
         }
     }
     return {

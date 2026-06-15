@@ -6,10 +6,10 @@ import React, {
     useState,
 } from "react"
 import {
-    Breadcrumbs,
     Button,
     cn,
     Spinner,
+    Tabs,
 } from "@heroui/react"
 import {
     useLocale,
@@ -31,25 +31,47 @@ import {
 } from "@/resources"
 import {
     FollowButton,
-    SubPageHeader,
+    MarkdownContent,
     UserAvatar,
 } from "@/components/reuseable"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import {
+    ProfileAchievements,
+} from "./ProfileAchievements"
+import {
+    ProfileActivity,
+} from "./ProfileActivity"
+import {
+    ProfileCourses,
+} from "./ProfileCourses"
 
 /** Props for {@link PublicProfile}. */
 export type PublicProfileProps = WithClassNames<undefined>
 
+/** The four profile tabs (drives the panel switch). */
+type ProfileTab = "overview" | "achievements" | "activity" | "courses"
+
+/** Tabs rendered in order, left to right (id + i18n label key suffix). */
+const PROFILE_TABS: ReadonlyArray<ProfileTab> = [
+    "overview",
+    "achievements",
+    "activity",
+    "courses",
+]
+
 /**
- * Public profile of another user — avatar, name, bio, follow counts, and a
- * follow / unfollow button.
+ * GitHub-style public profile of any user — viewable by anyone, signed in or not.
+ * An identity header (avatar + name + follow counts) with the primary action
+ * (follow / unfollow, or "edit" on your own profile) sits **above** a tab strip;
+ * the tabs are Overview (bio rendered as markdown, like a GitHub README),
+ * Achievements, Activity, and Courses. Each tab is its own self-fetching
+ * container, so a tab only queries when first opened.
  *
- * Reads the public profile via SWR (works for anonymous viewers). The follower
- * count + follow state are seeded from the server then adjusted locally on
- * toggle so the UI feels instant. The follow button is hidden for the viewer's
- * own profile and for signed-out visitors. Mounted by `/u/[userId]`; the target
- * user id is read from the route via `useParams`.
+ * The follower count + follow state are seeded from the server then nudged
+ * locally on toggle so the action feels instant. Mounted by `/profile/[userId]`;
+ * the target user id is read from the route via `useParams`.
  *
  * @param props - {@link PublicProfileProps}
  */
@@ -59,7 +81,7 @@ export const PublicProfile = ({
     const t = useTranslations()
     const router = useRouter()
     const locale = useLocale()
-    // target user id comes from the route segment `/u/[userId]`
+    // target user id comes from the route segment `/profile/[userId]`
     const userId = String(useParams().userId)
     const viewer = useAppSelector((state) => state.user.user)
     const authenticated = useAppSelector((state) => state.keycloak.authenticated)
@@ -68,6 +90,9 @@ export const PublicProfile = ({
         isLoading,
         error,
     } = useQueryUserProfileSwr(userId)
+
+    // which tab is open (Overview by default); panels mount lazily on select
+    const [tab, setTab] = useState<ProfileTab>("overview")
 
     // local mirror of the follow state + count so toggles feel instant
     const [following, setFollowing] = useState(false)
@@ -85,15 +110,6 @@ export const PublicProfile = ({
     }, [
         user,
     ])
-
-    /** Navigate to the home page (breadcrumb root + back target). */
-    const onNavigateHome = useCallback(
-        () => router.push(pathConfig().locale(locale).build()),
-        [
-            router,
-            locale,
-        ],
-    )
 
     /** Run the follow toggle, then flip the flag + nudge the counter on success. */
     const onToggleFollow = useCallback(
@@ -125,77 +141,118 @@ export const PublicProfile = ({
     // viewing your own public profile → no follow button (link to edit instead)
     const isSelf = !!viewer && viewer.id === userId
 
-    return (
-        <div className={cn("mx-auto flex max-w-3xl flex-col gap-6 p-6", className)}>
-            <Breadcrumbs>
-                <Breadcrumbs.Item onPress={onNavigateHome}>
-                    {t("nav.home")}
-                </Breadcrumbs.Item>
-                <Breadcrumbs.Item>
-                    <span>{t("publicProfile.title")}</span>
-                </Breadcrumbs.Item>
-            </Breadcrumbs>
-            <SubPageHeader
-                title={t("publicProfile.title")}
-                onBack={onNavigateHome}
-            />
+    // first load → centered spinner so the column never jumps
+    if (isLoading) {
+        return (
+            <div className={cn("mx-auto flex max-w-5xl justify-center p-12", className)}>
+                <Spinner size="lg" />
+            </div>
+        )
+    }
 
-            {isLoading ? (
-                <div className="flex justify-center p-12">
-                    <Spinner size="lg" />
-                </div>
-            ) : !user || error ? (
+    // not found / soft-deleted / failed read → muted empty card
+    if (!user || error) {
+        return (
+            <div className={cn("mx-auto max-w-5xl p-6", className)}>
                 <div className="rounded-large bg-default/40 p-6 text-center text-sm text-muted">
                     {t("publicProfile.notFound")}
                 </div>
-            ) : (
-                <div className="flex flex-col gap-6">
-                    <div className="flex items-center gap-3">
-                        <UserAvatar
-                            username={user.displayName ?? user.username}
-                            avatar={user.avatar}
-                            size="lg"
-                            className="size-20 text-2xl"
-                        />
-                        <div className="flex min-w-0 flex-1 flex-col gap-1.5">
-                            <div className="truncate text-2xl font-bold text-foreground">
-                                {user.displayName?.trim() ? user.displayName : user.username}
-                            </div>
-                            <div className="flex items-center gap-3 text-sm">
-                                <span className="text-foreground">
-                                    <span className="font-semibold">{followerCount}</span>
-                                    <span className="ml-1 text-muted">{t("profile.followers")}</span>
-                                </span>
-                                <span className="text-foreground">
-                                    <span className="font-semibold">{user.followingCount ?? 0}</span>
-                                    <span className="ml-1 text-muted">{t("profile.following")}</span>
-                                </span>
-                            </div>
-                        </div>
-                        {/* follow button: only for signed-in visitors viewing someone else */}
-                        {authenticated && !isSelf ? (
-                            <FollowButton
-                                following={following}
-                                isPending={isFollowPending}
-                                onToggle={onToggleFollow}
-                            />
-                        ) : null}
-                        {/* own profile → quick link to edit */}
-                        {isSelf ? (
-                            <Button
-                                variant="secondary"
-                                size="sm"
-                                onPress={() => router.push(pathConfig().locale(locale).profile().edit().build())}
-                            >
-                                {t("profileEdit.title")}
-                            </Button>
-                        ) : null}
+            </div>
+        )
+    }
+
+    // prefer the chosen display name; fall back to the username as the title
+    const hasDisplayName = Boolean(user.displayName?.trim())
+    const title = hasDisplayName ? user.displayName : user.username
+
+    return (
+        <div className={cn("mx-auto flex max-w-5xl flex-col gap-6 p-6", className)}>
+            {/* identity header + primary action — sits ABOVE the tab strip */}
+            <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
+                <UserAvatar
+                    username={user.displayName ?? user.username}
+                    avatar={user.avatar}
+                    seed={user.username}
+                    size="lg"
+                    className="size-24 text-3xl"
+                />
+                <div className="flex min-w-0 flex-1 flex-col gap-1.5">
+                    <div className="truncate text-2xl font-bold text-foreground">
+                        {title}
                     </div>
-                    {user.bio?.trim() ? (
-                        <div className="whitespace-pre-wrap break-words text-sm text-foreground">{user.bio}</div>
+                    {/* show the @handle only when it differs from the title */}
+                    {hasDisplayName ? (
+                        <div className="truncate text-base text-muted">
+                            @{user.username}
+                        </div>
                     ) : null}
+                    <div className="flex items-center gap-3 text-sm">
+                        <span className="text-foreground">
+                            <span className="font-semibold">{followerCount}</span>
+                            <span className="ml-1 text-muted">{t("profile.followers")}</span>
+                        </span>
+                        <span className="text-foreground">
+                            <span className="font-semibold">{user.followingCount ?? 0}</span>
+                            <span className="ml-1 text-muted">{t("profile.following")}</span>
+                        </span>
+                    </div>
                 </div>
-            )}
+                {/* action: follow for signed-in visitors; edit on your own profile */}
+                {authenticated && !isSelf ? (
+                    <FollowButton
+                        following={following}
+                        isPending={isFollowPending}
+                        onToggle={onToggleFollow}
+                    />
+                ) : null}
+                {isSelf ? (
+                    <Button
+                        variant="secondary"
+                        size="sm"
+                        onPress={() => router.push(pathConfig().locale(locale).profile().edit().build())}
+                    >
+                        {t("profileEdit.title")}
+                    </Button>
+                ) : null}
+            </div>
+
+            {/* tab strip (underline style) */}
+            <Tabs
+                selectedKey={tab}
+                variant="secondary"
+                onSelectionChange={(key) => setTab(String(key) as ProfileTab)}
+            >
+                <Tabs.ListContainer>
+                    <Tabs.List aria-label={t("publicProfile.title")}>
+                        {PROFILE_TABS.map((tabId) => (
+                            <Tabs.Tab
+                                key={tabId}
+                                id={tabId}
+                                className="rounded-none data-[selected=true]:border-b-2 data-[selected=true]:border-accent data-[selected=true]:text-accent"
+                            >
+                                {t(`publicProfile.tabs.${tabId}`)}
+                            </Tabs.Tab>
+                        ))}
+                    </Tabs.List>
+                </Tabs.ListContainer>
+            </Tabs>
+
+            {/* panel — only the selected tab mounts (lazy fetch per tab) */}
+            <div>
+                {tab === "overview" ? (
+                    user.bio?.trim() ? (
+                        // bio rendered as markdown — the GitHub "About Me" README
+                        <MarkdownContent markdown={user.bio} />
+                    ) : (
+                        <div className="rounded-large bg-default/40 p-6 text-center text-sm text-muted">
+                            {t("publicProfile.bioEmpty")}
+                        </div>
+                    )
+                ) : null}
+                {tab === "achievements" ? <ProfileAchievements /> : null}
+                {tab === "activity" ? <ProfileActivity /> : null}
+                {tab === "courses" ? <ProfileCourses /> : null}
+            </div>
         </div>
     )
 }

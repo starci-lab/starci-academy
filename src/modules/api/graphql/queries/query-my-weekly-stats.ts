@@ -11,8 +11,13 @@ const query1 = gql`
       error
       data {
         streak
+        longestStreak
         xp
         lessons
+        days {
+          date
+          active
+        }
       }
     }
   }

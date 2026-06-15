@@ -1,11 +1,14 @@
 import { createAuthApolloClient } from "../clients"
 import { type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
-import type { QueryActiveAdvertisementResponse } from "./types"
+import type {
+    QueryActiveAdvertisementRequest,
+    QueryActiveAdvertisementResponse,
+} from "./types"
 
 const query1 = gql`
-  query ActiveAdvertisement {
-    activeAdvertisement {
+  query ActiveAdvertisement($placement: AdvertisementPlacement, $courseId: String) {
+    activeAdvertisement(placement: $placement, courseId: $courseId) {
       success
       message
       error
@@ -31,17 +34,22 @@ const queryMap: Record<QueryActiveAdvertisement, DocumentNode> = {
 }
 
 /**
- * Fetches the banner to show in the dashboard right rail (paid first, else the
- * internal house ad), or null when none is active.
+ * Fetches the banner to show in a placement (paid first, else the internal house
+ * ad), or null when none is active. `request.placement` selects the slot (defaults
+ * to the dashboard right rail); `request.courseId` gives lesson placements their
+ * course context so enrolled viewers are exempted server-side.
  *
  * Mirrors `activeAdvertisement` (queries/dashboard/active-advertisement).
  */
 export const queryActiveAdvertisement = async ({
     query = QueryActiveAdvertisement.Query1,
+    request,
     headers,
     debug,
     signal,
-}: Omit<QueryParams<QueryActiveAdvertisement, never>, "request"> & { request?: never }) => {
+}: Omit<QueryParams<QueryActiveAdvertisement, QueryActiveAdvertisementRequest>, "request"> & {
+    request?: QueryActiveAdvertisementRequest
+}) => {
     const apollo = createAuthApolloClient({
         cache: false,
         headers,
@@ -50,5 +58,9 @@ export const queryActiveAdvertisement = async ({
     })
     return apollo.query<QueryActiveAdvertisementResponse>({
         query: queryMap[query],
+        variables: {
+            placement: request?.placement,
+            courseId: request?.courseId,
+        },
     })
 }

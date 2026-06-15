@@ -28,14 +28,26 @@ export interface QueryMyDashboardMilestoneProgressItemData {
     total: number
 }
 
-/** Rolling 7-day activity stats for the rail's "this week" widget. */
+/** One day in the last-7-days streak strip. */
+export interface QueryMyWeeklyStatsDayData {
+    /** Calendar day, YYYY-MM-DD (oldest → today). */
+    date: string
+    /** Whether the user earned any XP that day. */
+    active: boolean
+}
+
+/** Streak + rolling 7-day activity stats for the streak strip. */
 export interface QueryMyDashboardWeeklyStatsData {
     /** Consecutive days (up to today) with at least one XP event. */
     streak: number
+    /** Longest-ever consecutive-day streak. */
+    longestStreak: number
     /** Total XP earned in the last 7 days. */
     xp: number
     /** Number of lessons read in the last 7 days. */
     lessons: number
+    /** The last 7 calendar days (oldest → today) with active flags. */
+    days: Array<QueryMyWeeklyStatsDayData>
 }
 
 /**

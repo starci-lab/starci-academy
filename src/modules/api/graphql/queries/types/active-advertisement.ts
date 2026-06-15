@@ -1,5 +1,29 @@
 import type { GraphQLResponse } from "../../types"
 
+/** UI slot an ad banner is shown in (mirrors backend `AdvertisementPlacement`). */
+export enum AdvertisementPlacement {
+    /** The right rail of the logged-in dashboard. */
+    DashboardRight = "dashboard_right",
+    /** Interstitial modal shown when a non-enrolled viewer opens a lesson. */
+    LessonInterstitial = "lesson_interstitial",
+    /** Banner on the public course detail page (below the enroll card). */
+    CourseDetail = "course_detail",
+    /** Inline banner inside the lesson reader (below the paywall fade). */
+    LessonInline = "lesson_inline",
+    /** Right rail of the coding practice list. */
+    PracticeRail = "practice_rail",
+    /** Right rail of the course leaderboard. */
+    LeaderboardRail = "leaderboard_rail",
+}
+
+/** Variables for the `activeAdvertisement` query (both optional). */
+export interface QueryActiveAdvertisementRequest {
+    /** UI slot to fetch the banner for (defaults to the dashboard right rail). */
+    placement?: AdvertisementPlacement
+    /** Course context for lesson placements (enrolled viewers are exempt). */
+    courseId?: string
+}
+
 /** Media kind of an ad banner (mirrors backend `AdvertisementMediaType`). */
 export enum AdvertisementMediaType {
     /** A single poster image. */

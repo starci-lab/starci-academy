@@ -989,7 +989,18 @@
     },
     "publicProfile": {
         "title": "Hồ sơ",
-        "notFound": "Không tìm thấy người dùng này."
+        "notFound": "Không tìm thấy người dùng này.",
+        "tabs": {
+            "overview": "Tổng quan",
+            "achievements": "Thành tích",
+            "activity": "Hoạt động",
+            "courses": "Khóa học"
+        },
+        "bioEmpty": "Người dùng này chưa viết phần giới thiệu.",
+        "achievementsEmpty": "Chưa có thành tích nào.",
+        "activityEmpty": "Chưa có hoạt động nào.",
+        "coursesEmpty": "Chưa tham gia khóa học nào.",
+        "loadMore": "Xem thêm"
     },
     "reference": {
         "title": "Tài liệu tham khảo"
@@ -1269,7 +1280,8 @@
         "lessonsLabel": "bài",
         "contributions": {
             "title": "{count} hoạt động học trong năm {year}",
-            "cellTitle": "{count} hoạt động · {date}",
+            "cellTitle": "{count} hoạt động",
+            "breakdown": "{contents} bài · {challenges} challenge · {milestones} milestone",
             "less": "Ít",
             "more": "Nhiều"
         },
@@ -1277,8 +1289,20 @@
             "title": "Thành tích",
             "earned": "Đã đạt"
         },
+        "streak": {
+            "current": "Chuỗi {count} ngày",
+            "longest": "Dài nhất {count}",
+            "empty": "Học một bài để nhóm lửa chuỗi của bạn"
+        },
+        "league": {
+            "resetIn": "Reset sau {days} ngày {hours} giờ",
+            "promote": "Top {count} thăng hạng",
+            "demote": "{count} cuối rớt hạng",
+            "points": "{count} điểm"
+        },
         "sponsored": "Quảng cáo",
         "sponsoredBy": "Tài trợ bởi {sponsor}",
+        "adModalTitle": "Quảng cáo",
         "changelog": "Có gì mới",
         "changelogCategory": {
             "feature": "Tính năng",
@@ -1288,6 +1312,16 @@
         "historyEmpty": "Chưa đọc bài nào.",
         "feedEmpty": "Không có hoạt động nào.",
         "feedTabsAria": "Bảng hoạt động",
+        "feedFilter": {
+            "all": "Tất cả",
+            "courses": "Khóa học",
+            "achievements": "Thành tựu",
+            "people": "Người"
+        },
+        "trending": {
+            "title": "Nổi bật tuần này",
+            "reads": "{count} lượt đọc"
+        },
         "loadMore": "Tải thêm",
         "tabs": {
             "forYou": "Khám phá",

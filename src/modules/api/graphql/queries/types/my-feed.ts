@@ -50,6 +50,18 @@ export enum MyFeedTab {
     Following = "following",
 }
 
+/** Feed filter chip (mirrors backend `MyFeedCategory`). */
+export enum MyFeedCategory {
+    /** Everything (no type filter). */
+    All = "all",
+    /** Course/learning activity. */
+    Courses = "courses",
+    /** Achievement (pass) activity. */
+    Achievements = "achievements",
+    /** Social (follow/comment) activity. */
+    People = "people",
+}
+
 /** Variables for the cursor-paginated `myFeed` query. */
 export interface MyFeedRequest {
     /** Which feed to read. */
@@ -58,6 +70,8 @@ export interface MyFeedRequest {
     cursor?: string
     /** Max items per page. */
     limit?: number
+    /** Filter chip — which slice of activity to show (defaults to All). */
+    category?: MyFeedCategory
 }
 
 /** Payload inside `myFeed.data`. */

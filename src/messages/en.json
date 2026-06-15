@@ -980,7 +980,18 @@
     },
     "publicProfile": {
         "title": "Profile",
-        "notFound": "This user could not be found."
+        "notFound": "This user could not be found.",
+        "tabs": {
+            "overview": "Overview",
+            "achievements": "Achievements",
+            "activity": "Activity",
+            "courses": "Courses"
+        },
+        "bioEmpty": "This user hasn't written a bio yet.",
+        "achievementsEmpty": "No achievements yet.",
+        "activityEmpty": "No activity yet.",
+        "coursesEmpty": "Not enrolled in any course yet.",
+        "loadMore": "Load more"
     },
     "reference": {
         "title": "References"
@@ -1260,7 +1271,8 @@
         "lessonsLabel": "lessons",
         "contributions": {
             "title": "{count} learning activities in {year}",
-            "cellTitle": "{count} activities · {date}",
+            "cellTitle": "{count} activities",
+            "breakdown": "{contents} lessons · {challenges} challenges · {milestones} milestones",
             "less": "Less",
             "more": "More"
         },
@@ -1268,8 +1280,20 @@
             "title": "Achievements",
             "earned": "Earned"
         },
+        "streak": {
+            "current": "{count}-day streak",
+            "longest": "Longest {count}",
+            "empty": "Read a lesson to start your streak"
+        },
+        "league": {
+            "resetIn": "Resets in {days}d {hours}h",
+            "promote": "Top {count} promote",
+            "demote": "Bottom {count} demote",
+            "points": "{count} pts"
+        },
         "sponsored": "Sponsored",
         "sponsoredBy": "Sponsored by {sponsor}",
+        "adModalTitle": "Advertisement",
         "changelog": "What's new",
         "changelogCategory": {
             "feature": "Feature",
@@ -1279,6 +1303,16 @@
         "historyEmpty": "No lessons read yet.",
         "feedEmpty": "No activity yet.",
         "feedTabsAria": "Activity feed",
+        "feedFilter": {
+            "all": "All",
+            "courses": "Courses",
+            "achievements": "Achievements",
+            "people": "People"
+        },
+        "trending": {
+            "title": "Trending this week",
+            "reads": "{count} reads"
+        },
         "loadMore": "Load more",
         "tabs": {
             "forYou": "Explore",

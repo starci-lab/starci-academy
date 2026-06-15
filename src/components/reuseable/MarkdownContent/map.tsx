@@ -106,6 +106,27 @@ export const buildMarkdownRenderers = ({
     tabblock: ({ children }: { children?: React.ReactNode }) => <TabsBlock>{children}</TabsBlock>,
     tabcode: ({ children }: { children?: React.ReactNode }) => <TabPane kind="code">{children}</TabPane>,
     tabpreview: ({ children }: { children?: React.ReactNode }) => <TabPane kind="preview">{children}</TabPane>,
+    // ::::accordion / :::panel{title} → HeroUI collapsible accordion (see remarkAccordion in ./index).
+    accordionblock: ({ children }: { children?: React.ReactNode }) => (
+        <HeroUI.Accordion variant="surface" className="my-1.5">{children}</HeroUI.Accordion>
+    ),
+    accordionpanel: ({ title, children }: { title?: string, children?: React.ReactNode }) => (
+        <HeroUI.Accordion.Item aria-label={String(title ?? "")}>
+            <HeroUI.Accordion.Heading>
+                <HeroUI.Accordion.Trigger>
+                    <div className="flex w-full items-center justify-between gap-3 text-start">
+                        <span className="text-sm font-semibold">{title}</span>
+                        <HeroUI.Accordion.Indicator />
+                    </div>
+                </HeroUI.Accordion.Trigger>
+            </HeroUI.Accordion.Heading>
+            <HeroUI.Accordion.Panel>
+                <HeroUI.Accordion.Body>
+                    <div className="space-y-1.5">{children}</div>
+                </HeroUI.Accordion.Body>
+            </HeroUI.Accordion.Panel>
+        </HeroUI.Accordion.Item>
+    ),
     table: ({ children }) => (
         <MarkdownTable ariaLabel={t("markdown.tableAriaLabel")}>
             {children}

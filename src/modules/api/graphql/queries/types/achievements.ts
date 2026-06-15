@@ -38,8 +38,18 @@ export interface QueryMyAchievementItemData {
     tierReached: number | null
 }
 
+/** The achievements payload: the full list, the earned count, + the newly earned. */
+export interface QueryMyAchievementsData {
+    /** Every achievement with the viewer's earned status + live progress. */
+    data: Array<QueryMyAchievementItemData>
+    /** How many of them the viewer has earned. */
+    count: number
+    /** Achievements whose first award was inserted on this read. */
+    newAchievements: Array<QueryMyAchievementItemData>
+}
+
 /** Apollo response shape for the `myAchievements` query. */
 export interface QueryMyAchievementsResponse {
     /** Top-level `myAchievements` field wrapping the standard API response. */
-    myAchievements: GraphQLResponse<Array<QueryMyAchievementItemData>>
+    myAchievements: GraphQLResponse<QueryMyAchievementsData>
 }

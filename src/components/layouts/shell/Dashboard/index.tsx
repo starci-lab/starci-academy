@@ -11,6 +11,12 @@ import {
     ContributionHeatmap,
 } from "./ContributionHeatmap"
 import {
+    StreakStrip,
+} from "./StreakStrip"
+import {
+    League,
+} from "./League"
+import {
     FeedTabs,
 } from "./FeedTabs"
 import {
@@ -44,6 +50,10 @@ export const Dashboard = ({
                 <div className="flex flex-col md:border-l md:border">
                     {/* GitHub-style learning-activity heatmap on top of the feed */}
                     <ContributionHeatmap />
+                    {/* streak strip (last 7 days + current/longest) under the heatmap */}
+                    <StreakStrip />
+                    {/* Duolingo-style weekly-league standing */}
+                    <League />
                     <FeedTabs />
                 </div>
                 {/* right rail — ad banner + changelog (xl only), divider before it */}

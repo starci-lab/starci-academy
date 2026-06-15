@@ -2,6 +2,7 @@
 
 import { create } from "zustand"
 import type { MindMapDetailsSelection, PaymentContext } from "@/modules/types"
+import type { QueryActiveAdvertisementData } from "@/modules/api"
 
 /**
  * Identifier for each overlay (modal/drawer/popover) in the app. Each key holds an independent
@@ -9,6 +10,7 @@ import type { MindMapDetailsSelection, PaymentContext } from "@/modules/types"
  */
 export type OverlayKey =
     | "accountMenu"
+    | "adModal"
     | "aiProcessing"
     | "aiQuota"
     | "authentication"
@@ -38,6 +40,7 @@ export type OverlayKey =
 /** Every key — used to build the initial state (all overlays default to closed). */
 const OVERLAY_KEYS: ReadonlyArray<OverlayKey> = [
     "accountMenu",
+    "adModal",
     "aiProcessing",
     "aiQuota",
     "authentication",
@@ -73,6 +76,8 @@ interface OverlayStoreState {
     paymentContext: PaymentContext | null
     /** Mind-map content-details drawer payload (selected lesson) — the drawer reads it. */
     mindMapContentDetailsContext: MindMapDetailsSelection | null
+    /** Interstitial ad modal payload (the active ad to render). */
+    adModalContext: QueryActiveAdvertisementData | null
     /** Set the open state of an overlay (used by `onOpenChange`). */
     setOpenFor: (key: OverlayKey, isOpen: boolean) => void
     /** Open an overlay. */
@@ -85,6 +90,8 @@ interface OverlayStoreState {
     setPaymentContext: (context: PaymentContext | null) => void
     /** Stash the mind-map content-details drawer payload. */
     setMindMapContentDetailsContext: (context: MindMapDetailsSelection | null) => void
+    /** Stash the interstitial ad modal payload. */
+    setAdModalContext: (context: QueryActiveAdvertisementData | null) => void
 }
 
 /** Initial open map — every overlay closed. */
@@ -109,6 +116,7 @@ export const useOverlayStore = create<OverlayStoreState>((set) => ({
     openMap: buildInitialOpenMap(),
     paymentContext: null,
     mindMapContentDetailsContext: null,
+    adModalContext: null,
     setOpenFor: (key, isOpen) =>
         set((state) => ({ openMap: { ...state.openMap, [key]: isOpen } })),
     openOverlay: (key) =>
@@ -119,4 +127,5 @@ export const useOverlayStore = create<OverlayStoreState>((set) => ({
         set((state) => ({ openMap: { ...state.openMap, [key]: !state.openMap[key] } })),
     setPaymentContext: (context) => set({ paymentContext: context }),
     setMindMapContentDetailsContext: (context) => set({ mindMapContentDetailsContext: context }),
+    setAdModalContext: (context) => set({ adModalContext: context }),
 }))

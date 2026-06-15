@@ -37,9 +37,10 @@ export const Achievements = ({
 }: AchievementsProps) => {
     const t = useTranslations()
     const { data } = useQueryMyAchievementsSwr()
+    const achievements = data?.data ?? []
 
     // nothing to show until definitions are seeded
-    if (!data || data.length === 0) {
+    if (achievements.length === 0) {
         return null
     }
 
@@ -51,7 +52,7 @@ export const Achievements = ({
                 {t("dashboard.achievements.title")}
             </div>
             <div className="grid grid-cols-[repeat(auto-fill,minmax(64px,1fr))] gap-3">
-                {data.map((item) => (
+                {achievements.map((item) => (
                     <div
                         key={item.slug}
                         title={`${item.name} — ${item.description}`}

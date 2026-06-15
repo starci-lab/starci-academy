@@ -134,7 +134,42 @@ const remarkChip = () => (tree: unknown): void => {
  * Module-level constant — NOT recreated every render. If `remarkPlugins={[...]}` were inline, each
  * MarkdownContent re-render would hand ReactMarkdown a new array → re-parse the whole markdown.
  */
-const REMARK_PLUGINS = [remarkGfm, remarkDirective, remarkMuted, remarkTab, remarkChip]
+/**
+ * Rewrites the `::::accordion` / `:::panel` container directives into custom hast tags the renderer
+ * map turns into a HeroUI Accordion (see map.tsx): `accordion`→`accordionblock`; each
+ * `:::panel{title="…"}`→`accordionpanel` carrying its `title` attribute. Inner panel content
+ * (bullets, code fences) still renders through the normal handlers.
+ *
+ * Note: nesting needs MORE colons on the outer fence — `::::accordion` wraps `:::panel`.
+ * @param node - Current mdast node being walked.
+ */
+const applyAccordionDirective = (node: { type?: string, name?: string, attributes?: Record<string, string>, data?: Record<string, unknown>, children?: Array<unknown> }): void => {
+    if (node.type === "containerDirective") {
+        if (node.name === "accordion") {
+            const data = node.data || (node.data = {})
+            data.hName = "accordionblock"
+            data.hProperties = {}
+        } else if (node.name === "panel") {
+            const data = node.data || (node.data = {})
+            data.hName = "accordionpanel"
+            data.hProperties = {
+                title: node.attributes?.title ?? "",
+            }
+        }
+    }
+    if (Array.isArray(node.children)) {
+        for (const child of node.children) {
+            applyAccordionDirective(child as Parameters<typeof applyAccordionDirective>[0])
+        }
+    }
+}
+
+/** remark transformer: turn `::::accordion`/`:::panel` directives into accordion tags. */
+const remarkAccordion = () => (tree: unknown): void => {
+    applyAccordionDirective(tree as Parameters<typeof applyAccordionDirective>[0])
+}
+
+const REMARK_PLUGINS = [remarkGfm, remarkDirective, remarkMuted, remarkTab, remarkChip, remarkAccordion]
 
 // Matches each ```mermaid fence and the figure caption paragraph that follows it.
 // Group 1 = diagram source; group 2 = the first non-blank line after the fence.

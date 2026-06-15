@@ -4,22 +4,31 @@ import { DocumentNode, gql } from "@apollo/client"
 import type { QueryMyAchievementsResponse } from "./types"
 
 const query1 = gql`
+  fragment AchievementItem on MyAchievementItemData {
+    slug
+    name
+    description
+    iconKey
+    criteriaType
+    threshold
+    earned
+    earnedAt
+    currentValue
+    tierReached
+  }
   query MyAchievements {
     myAchievements {
       success
       message
       error
       data {
-        slug
-        name
-        description
-        iconKey
-        criteriaType
-        threshold
-        earned
-        earnedAt
-        currentValue
-        tierReached
+        data {
+          ...AchievementItem
+        }
+        count
+        newAchievements {
+          ...AchievementItem
+        }
       }
     }
   }

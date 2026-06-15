@@ -22,8 +22,7 @@ const query1 = gql`
         bio
         avatar
         githubUsername
-        rewardPoints
-        codingPoints
+        points
         createdAt
         followerCount
         followingCount

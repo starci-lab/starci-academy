@@ -17,10 +17,14 @@ import {
     Feed,
 } from "../Feed"
 import {
+    TrendingContents,
+} from "../TrendingContents"
+import {
     useQueryMyFeedSwr,
 } from "@/hooks"
 import {
     MyFeedTab,
+    MyFeedCategory,
 } from "@/modules/api"
 import type {
     WithClassNames,
@@ -41,15 +45,43 @@ export const FeedTabs = ({
 }: FeedTabsProps = {}) => {
     const t = useTranslations()
     const [tab, setTab] = useState<MyFeedTab>(MyFeedTab.ForYou)
+    /** Active filter chip — narrows the feed to a slice of activity types. */
+    const [category, setCategory] = useState<MyFeedCategory>(MyFeedCategory.All)
 
-    // cursor-paginated feed for the active tab (array of pages)
+    // cursor-paginated feed for the active tab + filter (array of pages)
     const {
         data: pages,
         size,
         setSize,
         isLoading,
         isValidating,
-    } = useQueryMyFeedSwr(tab)
+    } = useQueryMyFeedSwr(tab,
+        category)
+
+    /** Filter chips shown above the feed. */
+    const filters = useMemo(
+        () => [
+            {
+                key: MyFeedCategory.All,
+                label: t("dashboard.feedFilter.all"),
+            },
+            {
+                key: MyFeedCategory.Courses,
+                label: t("dashboard.feedFilter.courses"),
+            },
+            {
+                key: MyFeedCategory.Achievements,
+                label: t("dashboard.feedFilter.achievements"),
+            },
+            {
+                key: MyFeedCategory.People,
+                label: t("dashboard.feedFilter.people"),
+            },
+        ],
+        [
+            t,
+        ],
+    )
 
     // flatten pages → one list
     const items = useMemo(
@@ -90,6 +122,32 @@ export const FeedTabs = ({
                     </Tabs.List>
                 </Tabs.ListContainer>
             </Tabs>
+
+            {/* trending discovery card — only on the recommendation tab, so the
+                explore stream opens with "what to learn" before the social feed */}
+            {tab === MyFeedTab.ForYou ? (
+                <TrendingContents className="mx-3 mt-3" />
+            ) : null}
+
+            {/* filter chips — narrow the feed to a slice (courses / achievements / people) */}
+            <div className="flex flex-wrap gap-1.5 px-3 pt-3">
+                {filters.map((filter) => (
+                    <button
+                        key={filter.key}
+                        type="button"
+                        onClick={() => setCategory(filter.key)}
+                        className={cn(
+                            "rounded-full px-3 py-1 text-xs",
+                            filter.key === category
+                                ? "bg-accent text-background"
+                                : "bg-default/40 text-muted hover:text-foreground",
+                        )}
+                    >
+                        {filter.label}
+                    </button>
+                ))}
+            </div>
+
             <div className="p-3">
                 {/* skeleton on first load so the empty-state text never flashes
                     before the feed arrives; Feed shows "no activity" only once loaded */}

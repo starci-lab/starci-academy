@@ -19,6 +19,9 @@ import {
 import {
     EnrollCard,
 } from "./EnrollCard"
+import {
+    CourseDetailAd,
+} from "./CourseDetailAd"
 
 /**
  * Course detail container.
@@ -43,7 +46,10 @@ export const Course = () => {
                     <div className="h-6" />
                     <QnA />
                 </div>
-                <EnrollCard />
+                <div className="order-1 md:order-2 md:col-span-2 flex flex-col gap-6">
+                    <EnrollCard />
+                    <CourseDetailAd />
+                </div>
             </div>
         </div>
     )

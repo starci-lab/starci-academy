@@ -24,7 +24,6 @@ import {
     useQueryMyCoursesSwr,
     useQueryMyInProgressChallengesSwr,
     useQueryMyLearnedLessonsSwr,
-    useQueryMyWeeklyStatsSwr,
 } from "@/hooks"
 import {
     SearchInput,
@@ -38,6 +37,9 @@ import type {
 import {
     EntityToken,
 } from "../EntityToken"
+import {
+    Achievements,
+} from "../Achievements"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -73,7 +75,6 @@ export const HistoryRail = ({
     const courses = useQueryMyCoursesSwr()
     const learnedLessons = useQueryMyLearnedLessonsSwr()
     const inProgressChallenges = useQueryMyInProgressChallengesSwr()
-    const weeklyStats = useQueryMyWeeklyStatsSwr()
 
     /** Immediate filter input (filters every section by label). */
     const [query, setQuery] = useState("")
@@ -82,12 +83,10 @@ export const HistoryRail = ({
     const isLoading = courses.isLoading
         || learnedLessons.isLoading
         || inProgressChallenges.isLoading
-        || weeklyStats.isLoading
     // any leaf failed (often a dead session behind a stale cookie)
     const hasError = Boolean(courses.error
         || learnedLessons.error
-        || inProgressChallenges.error
-        || weeklyStats.error)
+        || inProgressChallenges.error)
 
     /**
      * Display name shown next to the avatar. Prefers the user's chosen display
@@ -150,13 +149,6 @@ export const HistoryRail = ({
         ],
     )
 
-    /** Weekly stats with safe defaults so the widget always renders. */
-    const stats = weeklyStats.data ?? {
-        streak: 0,
-        xp: 0,
-        lessons: 0,
-    }
-
     // first load — placeholder rail so the column never jumps
     if (isLoading) {
         return (
@@ -195,7 +187,6 @@ export const HistoryRail = ({
                             void courses.mutate()
                             void learnedLessons.mutate()
                             void inProgressChallenges.mutate()
-                            void weeklyStats.mutate()
                         }}
                     >
                         {t("dashboard.retry")}
@@ -230,6 +221,9 @@ export const HistoryRail = ({
                     </div>
                 </div>
             </div>
+
+            {/* GitHub-profile-style achievement badges, right under the identity */}
+            <Achievements />
 
             <SearchInput
                 value={query}
@@ -316,49 +310,6 @@ export const HistoryRail = ({
                 )}
             </div>
 
-            {/* "this week": rolling 7-day activity — streak / XP / lessons read */}
-            <div className="flex flex-col gap-3">
-                <div className="text-base font-semibold text-foreground">
-                    {t("dashboard.weekStats")}
-                </div>
-                <div className="grid grid-cols-3 gap-1.5">
-                    {/* streak — flame glyph reinforces the consecutive-day count */}
-                    <div className="flex flex-col items-center gap-0 rounded-medium bg-default/40 p-3">
-                        <div className="flex items-center gap-1.5 text-lg font-semibold text-foreground">
-                            <svg
-                                viewBox="0 0 24 24"
-                                className="size-4 text-warning"
-                                fill="currentColor"
-                                aria-hidden="true"
-                            >
-                                <path d="M12 2c.5 3-1.5 4.5-3 6-1.6 1.6-3 3.3-3 6a6 6 0 0 0 12 0c0-2-1-3.7-2-5-.3 1.2-1 2-2 2 .8-2.2.3-4.6-2-9z" />
-                            </svg>
-                            {stats.streak}
-                        </div>
-                        <div className="text-xs text-muted">
-                            {t("dashboard.streakLabel")}
-                        </div>
-                    </div>
-                    {/* XP earned in the window */}
-                    <div className="flex flex-col items-center gap-0 rounded-medium bg-default/40 p-3">
-                        <div className="text-lg font-semibold text-foreground">
-                            {stats.xp}
-                        </div>
-                        <div className="text-xs text-muted">
-                            {t("dashboard.xpLabel")}
-                        </div>
-                    </div>
-                    {/* lessons read in the window */}
-                    <div className="flex flex-col items-center gap-0 rounded-medium bg-default/40 p-3">
-                        <div className="text-lg font-semibold text-foreground">
-                            {stats.lessons}
-                        </div>
-                        <div className="text-xs text-muted">
-                            {t("dashboard.lessonsLabel")}
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             {/* one block per section: heading + token rows (or empty hint) */}
             {sections.map((section) => (

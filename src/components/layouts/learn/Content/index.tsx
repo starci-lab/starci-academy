@@ -4,6 +4,7 @@ import React, {
     useCallback,
     useEffect,
     useMemo,
+    useRef,
     type Key,
 } from "react"
 import {
@@ -29,8 +30,16 @@ import {
     useQueryContentSwr,
     useQueryContentStatusSwr,
     usePremiumGateOverlayState,
+    useAdModalOverlayState,
+    useQueryActiveAdvertisementSwr,
     useQueryAiLabPlaygroundSwr,
 } from "@/hooks"
+import {
+    AdvertisementPlacement,
+} from "@/modules/api"
+import {
+    AdBanner,
+} from "@/components/layouts/shell/Dashboard/AdBanner"
 import {
     ContentTab,
     setContentTab,
@@ -107,6 +116,37 @@ export const Content = ({ className }: ContentProps) => {
     const pathname = usePathname()
     const searchParams = useSearchParams()
     const { open: openPremiumGate } = usePremiumGateOverlayState()
+    const courseId = params.courseId as string | undefined
+
+    // interstitial ad for the lesson — null server-side for members / viewers
+    // already enrolled in this course, so a non-null result means "show it"
+    const { data: interstitialAd } = useQueryActiveAdvertisementSwr({
+        placement: AdvertisementPlacement.LessonInterstitial,
+        courseId,
+    })
+    // inline banner at the foot of the lesson (same exemptions applied server-side)
+    const { data: inlineAd } = useQueryActiveAdvertisementSwr({
+        placement: AdvertisementPlacement.LessonInline,
+        courseId,
+    })
+    const { open: openAdModal } = useAdModalOverlayState()
+    /** Lesson id the interstitial already popped for — pop once per lesson open. */
+    const adShownForRef = useRef<string | null>(null)
+
+    // pop the interstitial immediately when a lesson opens (once per lesson)
+    useEffect(
+        () => {
+            if (interstitialAd && content?.id && adShownForRef.current !== content.id) {
+                adShownForRef.current = content.id
+                openAdModal(interstitialAd)
+            }
+        },
+        [
+            interstitialAd,
+            content?.id,
+            openAdModal,
+        ],
+    )
 
     /**
      * Locked premium lesson ("trial read"): the backend returns a truncated body
@@ -298,6 +338,14 @@ export const Content = ({ className }: ContentProps) => {
                     ) : null}
                     {/* paywall sits directly under the faded teaser */}
                     {isLocked ? <PremiumPaywall /> : null}
+                    {/* inline house/sponsor banner at the foot of the lesson; null
+                        server-side for members + enrolled viewers, so render only
+                        when present and not on full-width (sandbox / AI lab) tabs */}
+                    {inlineAd && !isFullWidthTab ? (
+                        <div className="mx-auto w-full max-w-[1024px] px-3 pb-6">
+                            <AdBanner ad={inlineAd} />
+                        </div>
+                    ) : null}
                 </div>
             )}
         </div>

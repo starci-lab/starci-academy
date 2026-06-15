@@ -1,5 +1,6 @@
 export * from "./QRCode"
 export * from "./MarkdownContent"
+export * from "./ContributionCalendarView"
 export * from "./Discussion"
 export * from "./UserAvatar"
 export * from "./FollowButton"

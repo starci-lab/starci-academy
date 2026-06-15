@@ -46,6 +46,9 @@ import {
 import {
     ProfileCourses,
 } from "./ProfileCourses"
+import {
+    ProfileContributions,
+} from "./ProfileContributions"
 
 /** Props for {@link PublicProfile}. */
 export type PublicProfileProps = WithClassNames<undefined>
@@ -156,13 +159,27 @@ export const PublicProfile = ({
         )
     }
 
-    // not found / soft-deleted / failed read → muted empty card
+    // not found / soft-deleted / failed read → a proper 404-style page
     if (!user || error) {
         return (
-            <div className={cn("mx-auto max-w-5xl p-6", className)}>
-                <div className="rounded-large bg-default/40 p-6 text-center text-sm text-muted">
-                    {t("publicProfile.notFound")}
+            <div className={cn("mx-auto flex max-w-5xl flex-col items-center gap-6 p-6 py-24 text-center", className)}>
+                <div className="text-7xl font-bold leading-none text-default-300">
+                    404
                 </div>
+                <div className="flex flex-col gap-1.5">
+                    <div className="text-xl font-semibold text-foreground">
+                        {t("publicProfile.notFound")}
+                    </div>
+                    <div className="text-sm text-muted">
+                        {t("publicProfile.notFoundDescription")}
+                    </div>
+                </div>
+                <Button
+                    variant="primary"
+                    onPress={() => router.push(pathConfig().locale(locale).build())}
+                >
+                    {t("nav.home")}
+                </Button>
             </div>
         )
     }
@@ -246,14 +263,18 @@ export const PublicProfile = ({
             {/* panel — only the selected tab mounts (lazy fetch per tab) */}
             <div>
                 {tab === "overview" ? (
-                    user.bio?.trim() ? (
-                        // bio rendered as markdown — the GitHub "About Me" README
-                        <MarkdownContent markdown={user.bio} />
-                    ) : (
-                        <div className="rounded-large bg-default/40 p-6 text-center text-sm text-muted">
-                            {t("publicProfile.bioEmpty")}
-                        </div>
-                    )
+                    <div className="flex flex-col gap-6">
+                        {user.bio?.trim() ? (
+                            // bio rendered as markdown — the GitHub "About Me" README
+                            <MarkdownContent markdown={user.bio} />
+                        ) : (
+                            <div className="rounded-large bg-default/40 p-6 text-center text-sm text-muted">
+                                {t("publicProfile.bioEmpty")}
+                            </div>
+                        )}
+                        {/* GitHub-style contribution heatmap for this user (public) */}
+                        <ProfileContributions />
+                    </div>
                 ) : null}
                 {tab === "achievements" ? <ProfileAchievements /> : null}
                 {tab === "activity" ? <ProfileActivity /> : null}

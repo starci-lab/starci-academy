@@ -19,6 +19,7 @@ const mutation1 = gql`
         githubUsername
         followerCount
         followingCount
+        profileLocked
       }
     }
   }

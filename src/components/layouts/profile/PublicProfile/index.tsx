@@ -193,6 +193,56 @@ export const PublicProfile = ({
     const hasDisplayName = Boolean(user.displayName?.trim())
     const title = hasDisplayName ? user.displayName : user.username
 
+    // locked profile viewed by someone other than the owner → show only the
+    // public header + a "private" notice; the tab content is withheld (also
+    // enforced server-side, so the tabs would come back empty anyway)
+    const isLocked = Boolean(user.profileLocked) && !isSelf
+
+    if (isLocked) {
+        return (
+            <div className={cn("mx-auto flex max-w-6xl flex-col gap-6 p-6 md:flex-row md:items-start", className)}>
+                <aside className="flex w-full flex-col gap-3 md:w-64 md:shrink-0">
+                    <UserAvatar
+                        username={user.displayName ?? user.username}
+                        avatar={user.avatar}
+                        seed={user.username}
+                        size="lg"
+                        className="size-32 text-5xl"
+                    />
+                    <div className="flex flex-col gap-0">
+                        <div className="truncate text-2xl font-bold text-foreground">
+                            {title}
+                        </div>
+                        {hasDisplayName ? (
+                            <div className="truncate text-base text-muted">
+                                @{user.username}
+                            </div>
+                        ) : null}
+                    </div>
+                    {/* you can still follow a locked profile */}
+                    {authenticated ? (
+                        <FollowButton
+                            following={following}
+                            isPending={isFollowPending}
+                            onToggle={onToggleFollow}
+                            className="w-full"
+                        />
+                    ) : null}
+                </aside>
+                <main className="flex min-w-0 flex-1">
+                    <div className="flex w-full flex-col items-center gap-1.5 rounded-large border border-default/40 p-12 text-center">
+                        <div className="text-lg font-semibold text-foreground">
+                            {t("publicProfile.locked.title")}
+                        </div>
+                        <div className="max-w-md text-sm text-muted">
+                            {t("publicProfile.locked.description")}
+                        </div>
+                    </div>
+                </main>
+            </div>
+        )
+    }
+
     return (
         <div className={cn("mx-auto flex max-w-6xl flex-col gap-6 p-6", className)}>
             {/* full-width tab strip at the top (GitHub-style) */}

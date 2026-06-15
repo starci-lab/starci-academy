@@ -90,6 +90,8 @@ export const EditProfile = () => {
     // controlled text fields, seeded from the redux user once on mount
     const [displayName, setDisplayName] = useState(user?.displayName ?? "")
     const [bio, setBio] = useState(user?.bio ?? "")
+    // privacy: lock profile (FB-style) — when on, only the owner sees full content
+    const [profileLocked, setProfileLocked] = useState(user?.profileLocked ?? false)
     // whole-flow in-flight flag (upload + mutate) + inline result
     const [submitting, setSubmitting] = useState(false)
     const [status, setStatus] = useState<SaveStatus | null>(null)
@@ -182,6 +184,7 @@ export const EditProfile = () => {
                 const request: UpdateProfileRequest = {
                     displayName: displayName.trim() ? displayName.trim() : null,
                     bio: bio.trim() ? bio.trim() : null,
+                    profileLocked,
                 }
                 const result = await triggerUpdate(request)
                 const payload = result?.data?.updateProfile
@@ -215,6 +218,7 @@ export const EditProfile = () => {
             file,
             displayName,
             bio,
+            profileLocked,
             triggerGenerateAvatarPresign,
             triggerVerifyAvatarPresign,
             triggerUpdate,
@@ -315,6 +319,21 @@ export const EditProfile = () => {
                     className="w-full resize-none rounded-large bg-default/40 p-3 text-sm text-foreground outline-none focus-visible:ring-2 focus-visible:ring-accent"
                 />
                 <span className="self-end text-xs text-muted">{`${bio.length}/${BIO_MAX}`}</span>
+            </div>
+
+            {/* privacy: lock profile (FB-style) */}
+            <div className="flex items-start justify-between gap-3 rounded-large bg-default/40 p-3">
+                <div className="flex flex-col gap-0">
+                    <Label htmlFor="profile-locked">{t("profileEdit.lockProfile")}</Label>
+                    <span className="text-xs text-muted">{t("profileEdit.lockProfileHint")}</span>
+                </div>
+                <input
+                    id="profile-locked"
+                    type="checkbox"
+                    checked={profileLocked}
+                    onChange={(event) => setProfileLocked(event.target.checked)}
+                    className="mt-1 size-4 shrink-0"
+                />
             </div>
 
             {status ? (

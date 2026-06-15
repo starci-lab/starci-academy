@@ -9,6 +9,8 @@ export interface UpdateProfileRequest {
     bio?: string | null
     /** New avatar public URL (from the avatar-upload endpoint); null clears it. */
     avatar?: string | null
+    /** Lock the profile (true = only the owner sees full content); omit to leave unchanged. */
+    profileLocked?: boolean
 }
 
 /** Apollo response shape for `updateProfile` (returns the fresh user). */

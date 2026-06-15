@@ -951,7 +951,9 @@
         "save": "Lưu thay đổi",
         "saved": "Cập nhật hồ sơ thành công.",
         "error": "Không thể cập nhật hồ sơ. Vui lòng thử lại.",
-        "uploadFailed": "Tải ảnh đại diện thất bại. Vui lòng thử lại."
+        "uploadFailed": "Tải ảnh đại diện thất bại. Vui lòng thử lại.",
+        "lockProfile": "Khóa hồ sơ",
+        "lockProfileHint": "Khi bật, chỉ mình bạn xem được hoạt động, thành tích và khóa học. Người khác chỉ thấy ảnh đại diện và tên."
     },
     "sessions": {
         "title": "Thiết bị",
@@ -992,6 +994,10 @@
         "notFound": "Không tìm thấy người dùng này.",
         "notFoundDescription": "Có thể tên người dùng sai hoặc tài khoản đã bị gỡ.",
         "bioHeading": "Giới thiệu",
+        "locked": {
+            "title": "Hồ sơ này ở chế độ riêng tư",
+            "description": "Người dùng đã khóa hồ sơ. Chỉ chủ hồ sơ mới xem được hoạt động, thành tích và khóa học."
+        },
         "tabs": {
             "overview": "Tổng quan",
             "achievements": "Thành tích",
@@ -1290,6 +1296,11 @@
         "achievements": {
             "title": "Thành tích",
             "earned": "Đã đạt"
+        },
+        "congrats": {
+            "title": "Chúc mừng! 🎉",
+            "subtitle": "Bạn vừa mở khóa thành tựu mới",
+            "cta": "Tuyệt vời!"
         },
         "streak": {
             "current": "Chuỗi {count} ngày",

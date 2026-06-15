@@ -942,7 +942,9 @@
         "save": "Save changes",
         "saved": "Profile updated successfully.",
         "error": "Could not update your profile. Please try again.",
-        "uploadFailed": "Avatar upload failed. Please try again."
+        "uploadFailed": "Avatar upload failed. Please try again.",
+        "lockProfile": "Lock profile",
+        "lockProfileHint": "When on, only you can see your activity, achievements and courses. Others see just your avatar and name."
     },
     "sessions": {
         "title": "Devices",
@@ -983,6 +985,10 @@
         "notFound": "This user could not be found.",
         "notFoundDescription": "The username may be wrong or the account was removed.",
         "bioHeading": "About",
+        "locked": {
+            "title": "This profile is private",
+            "description": "This user has locked their profile. Only they can see their activity, achievements and courses."
+        },
         "tabs": {
             "overview": "Overview",
             "achievements": "Achievements",
@@ -1281,6 +1287,11 @@
         "achievements": {
             "title": "Achievements",
             "earned": "Earned"
+        },
+        "congrats": {
+            "title": "Congratulations! 🎉",
+            "subtitle": "You just unlocked a new achievement",
+            "cta": "Awesome!"
         },
         "streak": {
             "current": "{count}-day streak",

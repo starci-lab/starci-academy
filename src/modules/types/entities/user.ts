@@ -28,6 +28,8 @@ export interface UserEntity extends AbstractEntity {
     followingCount?: number
     /** True when the requesting viewer already follows this user (resolved field). */
     isFollowedByMe?: boolean
+    /** When true the profile is locked — only the owner sees the full content (FB-style). */
+    profileLocked?: boolean
     /** Whether two-factor authentication (TOTP) is enabled for the user. */
     twoFactorEnabled?: boolean
     /** The submissions of the user. */

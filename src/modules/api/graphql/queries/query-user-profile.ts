@@ -24,6 +24,7 @@ const query1 = gql`
         followerCount
         followingCount
         isFollowedByMe
+        profileLocked
       }
     }
   }

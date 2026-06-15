@@ -20,6 +20,7 @@ const mutation1 = gql`
         followerCount
         followingCount
         profileLocked
+        openToWork
       }
     }
   }

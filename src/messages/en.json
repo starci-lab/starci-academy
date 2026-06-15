@@ -948,7 +948,9 @@
         "error": "Could not update your profile. Please try again.",
         "uploadFailed": "Avatar upload failed. Please try again.",
         "lockProfile": "Lock profile",
-        "lockProfileHint": "When on, only you can see your activity, achievements and courses. Others see just your avatar and name."
+        "lockProfileHint": "When on, only you can see your activity, achievements and courses. Others see just your avatar and name.",
+        "openToWork": "Open to work",
+        "openToWorkHint": "When on, your profile shows an \"Open to work\" badge so recruiters / headhunters can see you're available."
     },
     "sessions": {
         "title": "Devices",
@@ -989,6 +991,7 @@
         "notFound": "This user could not be found.",
         "notFoundDescription": "The username may be wrong or the account was removed.",
         "bioHeading": "About",
+        "openToWork": "Open to work",
         "locked": {
             "title": "This profile is private",
             "description": "This user has locked their profile. Only they can see their activity, achievements and courses."

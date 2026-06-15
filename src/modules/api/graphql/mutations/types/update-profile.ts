@@ -11,6 +11,8 @@ export interface UpdateProfileRequest {
     avatar?: string | null
     /** Lock the profile (true = only the owner sees full content); omit to leave unchanged. */
     profileLocked?: boolean
+    /** Mark the user as open to work (shows a hiring badge); omit to leave unchanged. */
+    openToWork?: boolean
 }
 
 /** Apollo response shape for `updateProfile` (returns the fresh user). */

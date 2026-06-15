@@ -71,6 +71,7 @@ export const EditProfile = () => {
     const displayName = watch("displayName")
     const bio = watch("bio")
     const profileLocked = watch("profileLocked")
+    const openToWork = watch("openToWork")
 
     /** Navigate to the home page (breadcrumb root). */
     const onNavigateHome = useCallback(
@@ -193,6 +194,21 @@ export const EditProfile = () => {
                     type="checkbox"
                     checked={profileLocked}
                     onChange={(event) => setValue("profileLocked", event.target.checked)}
+                    className="mt-1 size-4 shrink-0"
+                />
+            </div>
+
+            {/* hiring: open to work */}
+            <div className="flex items-start justify-between gap-3 rounded-large bg-default/40 p-3">
+                <div className="flex flex-col gap-0">
+                    <Label htmlFor="profile-open-to-work">{t("profileEdit.openToWork")}</Label>
+                    <span className="text-xs text-muted">{t("profileEdit.openToWorkHint")}</span>
+                </div>
+                <input
+                    id="profile-open-to-work"
+                    type="checkbox"
+                    checked={openToWork}
+                    onChange={(event) => setValue("openToWork", event.target.checked)}
                     className="mt-1 size-4 shrink-0"
                 />
             </div>

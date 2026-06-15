@@ -34,6 +34,8 @@ export interface UserEntity extends AbstractEntity {
     isFollowedByMe?: boolean
     /** When true the profile is locked — only the owner sees the full content (FB-style). */
     profileLocked?: boolean
+    /** When true the user is open to work (shows a hiring badge). */
+    openToWork?: boolean
     /** Whether two-factor authentication (TOTP) is enabled for the user. */
     twoFactorEnabled?: boolean
     /** The submissions of the user. */

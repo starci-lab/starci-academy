@@ -29,6 +29,7 @@ const query1 = gql`
         followingCount
         isFollowedByMe
         profileLocked
+        openToWork
       }
     }
   }

@@ -28,6 +28,8 @@ export interface EditProfileFormValues {
     bio: string
     /** Lock profile (FB-style): when on, only the owner sees full content. */
     profileLocked: boolean
+    /** Open to work: when on, the profile shows a hiring badge. */
+    openToWork: boolean
 }
 
 /**
@@ -61,6 +63,7 @@ export const useEditProfileForm = () => {
             displayName: z.string().trim().max(DISPLAY_NAME_MAX),
             bio: z.string().trim().max(BIO_MAX),
             profileLocked: z.boolean(),
+            openToWork: z.boolean(),
         }),
         [],
     )
@@ -72,6 +75,7 @@ export const useEditProfileForm = () => {
             displayName: user?.displayName ?? "",
             bio: user?.bio ?? "",
             profileLocked: user?.profileLocked ?? false,
+            openToWork: user?.openToWork ?? false,
         },
     })
 
@@ -136,6 +140,7 @@ export const useEditProfileForm = () => {
                     displayName: value.displayName.trim() ? value.displayName.trim() : null,
                     bio: value.bio.trim() ? value.bio.trim() : null,
                     profileLocked: value.profileLocked,
+                    openToWork: value.openToWork,
                 })
                 const env = result?.data?.updateProfile
                 if (!env) {

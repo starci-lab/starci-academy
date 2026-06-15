@@ -301,6 +301,12 @@ export const PublicProfile = ({
                             </div>
                         ) : null}
                     </div>
+                    {/* open-to-work hiring badge (public, user opted in) */}
+                    {user.openToWork ? (
+                        <span className="w-fit rounded-medium bg-success/15 px-2 py-0.5 text-xs font-medium text-success">
+                            {t("publicProfile.openToWork")}
+                        </span>
+                    ) : null}
                     {/* action (full-width under the identity): follow others, edit self */}
                     {authenticated && !isSelf ? (
                         <FollowButton

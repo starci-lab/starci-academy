@@ -22,6 +22,10 @@ export interface UserEntity extends AbstractEntity {
     bio?: string | null
     /** Linked GitHub username (null/undefined when the user has not linked GitHub yet). */
     githubUsername?: string | null
+    /** Cumulative reward points from XP-granting course activities (challenges/lessons/milestones). */
+    rewardPoints?: number
+    /** Cumulative coding-practice points (global, first-solve). */
+    codingPoints?: number
     /** Number of users who follow this user (resolved field). */
     followerCount?: number
     /** Number of users this user follows (resolved field). */

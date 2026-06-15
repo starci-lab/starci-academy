@@ -21,6 +21,10 @@ const query1 = gql`
         displayName
         bio
         avatar
+        githubUsername
+        rewardPoints
+        codingPoints
+        createdAt
         followerCount
         followingCount
         isFollowedByMe

@@ -16,6 +16,9 @@ import {
     useTranslations,
 } from "next-intl"
 import {
+    SiGithub,
+} from "@icons-pack/react-simple-icons"
+import {
     useRouter,
 } from "next/navigation"
 import {
@@ -316,6 +319,41 @@ export const PublicProfile = ({
                             <span className="font-semibold">{user.followingCount ?? 0}</span>
                             <span className="ml-1 text-muted">{t("profile.following")}</span>
                         </span>
+                    </div>
+                    {/* points: course XP + coding-practice points */}
+                    <div className="flex items-center gap-3 text-sm">
+                        <span className="text-foreground">
+                            <span className="font-semibold">{user.rewardPoints ?? 0}</span>
+                            <span className="ml-1 text-muted">{t("profile.xp")}</span>
+                        </span>
+                        <span className="text-foreground">
+                            <span className="font-semibold">{user.codingPoints ?? 0}</span>
+                            <span className="ml-1 text-muted">{t("profile.codingPoints")}</span>
+                        </span>
+                    </div>
+                    {/* meta: github link + joined date */}
+                    <div className="flex flex-col gap-1.5 text-sm text-muted">
+                        {user.githubUsername ? (
+                            <a
+                                href={`https://github.com/${user.githubUsername}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-1.5 hover:text-foreground"
+                            >
+                                <SiGithub className="size-4 shrink-0" />
+                                <span className="truncate">{user.githubUsername}</span>
+                            </a>
+                        ) : null}
+                        {user.createdAt ? (
+                            <span>
+                                {t("profile.joined", {
+                                    date: new Date(user.createdAt).toLocaleDateString(locale, {
+                                        month: "short",
+                                        year: "numeric",
+                                    }),
+                                })}
+                            </span>
+                        ) : null}
                     </div>
                 </aside>
 

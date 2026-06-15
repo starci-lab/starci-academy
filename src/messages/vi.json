@@ -930,6 +930,9 @@
         },
         "followers": "người theo dõi",
         "following": "đang theo dõi",
+        "xp": "XP",
+        "codingPoints": "điểm code",
+        "joined": "Tham gia {date}",
         "nav": {
             "editDesc": "Cập nhật ảnh đại diện, tên và tiểu sử",
             "sessionsDesc": "Xem thiết bị đang đăng nhập và đăng xuất chúng",
@@ -1296,11 +1299,6 @@
         "achievements": {
             "title": "Thành tích",
             "earned": "Đã đạt"
-        },
-        "congrats": {
-            "title": "Chúc mừng! 🎉",
-            "subtitle": "Bạn vừa mở khóa thành tựu mới",
-            "cta": "Tuyệt vời!"
         },
         "streak": {
             "current": "Chuỗi {count} ngày",

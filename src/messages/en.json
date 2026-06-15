@@ -921,6 +921,9 @@
         },
         "followers": "followers",
         "following": "following",
+        "xp": "XP",
+        "codingPoints": "coding pts",
+        "joined": "Joined {date}",
         "nav": {
             "editDesc": "Update your avatar, name and bio",
             "sessionsDesc": "See your logged-in devices and log them out",
@@ -1287,11 +1290,6 @@
         "achievements": {
             "title": "Achievements",
             "earned": "Earned"
-        },
-        "congrats": {
-            "title": "Congratulations! 🎉",
-            "subtitle": "You just unlocked a new achievement",
-            "cta": "Awesome!"
         },
         "streak": {
             "current": "{count}-day streak",

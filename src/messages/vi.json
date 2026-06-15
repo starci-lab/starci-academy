@@ -1017,10 +1017,13 @@
         "coding": {
             "solved": "Đã giải",
             "attempted": "Đã thử",
-            "points": "Điểm code"
+            "points": "Điểm code",
+            "history": "Lịch sử giải bài"
         },
         "capstone": {
-            "score": "Điểm {score}"
+            "score": "Điểm {score}",
+            "tasksHeading": "Dự án / Capstone",
+            "challengesHeading": "Challenge đã giải"
         },
         "skills": {
             "byLanguage": "Theo ngôn ngữ",

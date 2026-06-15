@@ -1008,10 +1008,13 @@
         "coding": {
             "solved": "Solved",
             "attempted": "Attempted",
-            "points": "Coding pts"
+            "points": "Coding pts",
+            "history": "Solved problems"
         },
         "capstone": {
-            "score": "Score {score}"
+            "score": "Score {score}",
+            "tasksHeading": "Capstone tasks",
+            "challengesHeading": "Solved challenges"
         },
         "skills": {
             "byLanguage": "By language",

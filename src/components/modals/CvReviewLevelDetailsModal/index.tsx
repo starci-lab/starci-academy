@@ -5,6 +5,7 @@ import React, {
 } from "react"
 import {
     Button,
+    cn,
     Modal,
 } from "@heroui/react"
 import {
@@ -20,6 +21,9 @@ import {
 import {
     setSelectedCvReviewTemplateId,
 } from "@/redux/slices"
+import {
+    WithClassNames,
+} from "@/modules/types"
 
 /**
  * One selectable CV rubric template row in the modal.
@@ -33,10 +37,13 @@ interface CvReviewLevelOption {
     description?: string | null
 }
 
+/** Props for {@link CvReviewLevelDetailsModal}. */
+type CvReviewLevelDetailsModalProps = WithClassNames<undefined>
+
 /**
  * Lets the learner choose a CV review level from template title and description.
  */
-export const CvReviewLevelDetailsModal = () => {
+export const CvReviewLevelDetailsModal = ({ className }: CvReviewLevelDetailsModalProps = {}) => {
     const {
         isOpen,
         setOpen,
@@ -78,7 +85,7 @@ export const CvReviewLevelDetailsModal = () => {
                     ].join(" ")}
                     onClick={() => handleSelectReviewLevel(option.id)}
                 >
-                    <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-start justify-between gap-1.5">
                         <div className="font-semibold text-foreground">
                             {option.title}
                         </div>
@@ -110,7 +117,7 @@ export const CvReviewLevelDetailsModal = () => {
         >
             <Modal.Backdrop>
                 <Modal.Container size="md">
-                    <Modal.Dialog>
+                    <Modal.Dialog className={cn(className)}>
                         <Modal.CloseTrigger />
                         <Modal.Header>
                             <div className="text-base font-semibold">
@@ -120,7 +127,7 @@ export const CvReviewLevelDetailsModal = () => {
                                 {t("cv.submission.reviewLevelDetails.subtitle")}
                             </div>
                         </Modal.Header>
-                        <Modal.Body className="flex flex-col gap-4">
+                        <Modal.Body className="flex flex-col gap-6">
                             <div className="flex max-h-[60vh] flex-col gap-3 overflow-y-auto">
                                 {optionElements}
                             </div>

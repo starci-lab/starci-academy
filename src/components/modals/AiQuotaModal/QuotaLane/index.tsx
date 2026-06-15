@@ -4,8 +4,12 @@ import React, {
     useMemo,
 } from "react"
 import {
+    cn,
     Skeleton,
 } from "@heroui/react"
+import type {
+    WithClassNames,
+} from "@/modules/types/base/class-name"
 import {
     useTranslations,
 } from "next-intl"
@@ -27,7 +31,7 @@ import {
 } from "../types"
 
 /** Props for {@link QuotaLane}. */
-export interface QuotaLaneProps {
+export interface QuotaLaneProps extends WithClassNames<undefined> {
     /** Which lane to load from SWR (`myCreditUsage` vs `myAiQuota`). */
     variant: QuotaLaneVariant
 }
@@ -39,6 +43,7 @@ export interface QuotaLaneProps {
  */
 export const QuotaLane = ({
     variant,
+    className,
 }: QuotaLaneProps) => {
     const t = useTranslations()
     const buildResetLabel = useWindowResetLabel()
@@ -101,15 +106,15 @@ export const QuotaLane = ({
     ])
 
     if (variant === QuotaLaneVariant.Auto && (isCreditUsageLoading || !window5h || !windowWeek)) {
-        return <Skeleton className="h-40 w-full rounded-xl" />
+        return <Skeleton className={cn("h-40 w-full rounded-xl", className)} />
     }
 
     if (variant === QuotaLaneVariant.Premium && (!window5h || !windowWeek)) {
-        return <Skeleton className="h-40 w-full rounded-xl" />
+        return <Skeleton className={cn("h-40 w-full rounded-xl", className)} />
     }
 
     return (
-        <div className="flex flex-col gap-4">
+        <div className={cn("flex flex-col gap-3", className)}>
             <QuotaBar
                 label={t("aiQuota.window5h")}
                 used={window5h!.used}

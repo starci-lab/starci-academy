@@ -1,8 +1,10 @@
 "use client"
 
 import { FaceRobot as Robot, Layers as Stack, Target, Thunderbolt as Lightning } from "@gravity-ui/icons"
+import { cn } from "@heroui/react"
 import { motion } from "framer-motion"
 import React from "react"
+import { type WithClassNames } from "@/modules/types"
 
 
 /** Container stagger so each proof cell snaps in one after another. */
@@ -60,14 +62,19 @@ const PROOFS = [
  * into the narrative. No fabricated social proof — that would break the brand's
  * "we refuse to lie to you" promise.
  */
-export const ProofStrip = () => {
+export type ProofStripProps = WithClassNames<undefined>
+
+/**
+ * @param {ProofStripProps} props Optional wrapper styling props.
+ */
+export const ProofStrip = ({ className }: ProofStripProps) => {
     return (
         <motion.section
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-80px" }}
-            className="grid grid-cols-2 lg:grid-cols-4 gap-px rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden backdrop-blur-sm"
+            className={cn("grid grid-cols-2 lg:grid-cols-4 gap-px rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden backdrop-blur-sm", className)}
         >
             {PROOFS.map((proof) => {
                 const Icon = proof.icon

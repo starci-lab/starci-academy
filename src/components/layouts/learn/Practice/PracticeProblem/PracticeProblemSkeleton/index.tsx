@@ -18,10 +18,10 @@ import {
  */
 export const PracticeProblemSkeleton = () => {
     return (
-        <div className="mx-auto grid max-w-7xl gap-4 p-4 lg:grid-cols-2">
+        <div className="mx-auto grid max-w-7xl gap-6 p-4 lg:grid-cols-2">
             {/* ── left: statement + samples ── */}
             <Card>
-                <CardContent className="flex flex-col gap-4">
+                <CardContent className="flex flex-col gap-3">
                     {/* title + difficulty chip */}
                     <div className="flex items-center justify-between gap-1.5">
                         <SkeletonText size="xl" width="w-1/2" />
@@ -40,7 +40,7 @@ export const PracticeProblemSkeleton = () => {
             </Card>
 
             {/* ── right: editor + submit ── */}
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-3">
                 <Card>
                     <CardContent className="flex flex-col gap-3">
                         {/* language selector */}

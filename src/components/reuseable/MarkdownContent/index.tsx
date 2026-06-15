@@ -7,6 +7,7 @@ import remarkDirective from "remark-directive"
 import { cn } from "@heroui/react"
 import { useTheme } from "next-themes"
 import { useTranslations } from "next-intl"
+import type { WithClassNames } from "@/modules/types"
 import { buildMarkdownRenderers } from "./map"
 
 // Re-export the colocated sub-renderers so the reuseable barrel surface stays identical.
@@ -162,11 +163,9 @@ const extractMermaidCaptions = (markdown: string): Record<string, string> => {
 }
 
 /** Props for {@link MarkdownContent}. */
-export interface MarkdownContentProps {
+export interface MarkdownContentProps extends WithClassNames<undefined> {
     /** Markdown source string. */
     markdown: string
-    /** Extra classes on the prose wrapper. */
-    className?: string
 }
 
 /**

@@ -2,10 +2,14 @@
 
 import { ChevronsLeft as CaretDoubleLeftIcon, ChevronsRight as CaretDoubleRightIcon } from "@gravity-ui/icons"
 import React from "react"
+import { cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import { toggleLeftCollapsed, toggleRightCollapsed } from "@/redux/slices"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
+/** Props for {@link LearnPanelToggles}. */
+export type LearnPanelTogglesProps = WithClassNames<undefined>
 
 /**
  * Desktop collapse handles styled as short accent bars on the content borders.
@@ -16,8 +20,9 @@ import { toggleLeftCollapsed, toggleRightCollapsed } from "@/redux/slices"
  * slim vertical bar that reveals a direction caret on hover, kept centered in the
  * viewport via a sticky wrapper. Hidden below `lg` (mobile uses drawers). Must be
  * rendered inside a `relative` content column. `"use client"` for redux + presses.
+ * @param props - {@link LearnPanelTogglesProps}
  */
-export const LearnPanelToggles = () => {
+export const LearnPanelToggles = ({ className }: LearnPanelTogglesProps) => {
     const t = useTranslations()
     const dispatch = useAppDispatch()
     // current collapse state drives both the caret direction and the aria label
@@ -32,7 +37,7 @@ export const LearnPanelToggles = () => {
     return (
         // full-height, click-through overlay spanning the content column; desktop only.
         // absolute so it adds no layout, z-20 to float above the article text.
-        <div className="pointer-events-none absolute inset-0 z-20 hidden lg:block">
+        <div className={cn("pointer-events-none absolute inset-0 z-20 hidden lg:block", className)}>
             {/* zero-height bar that sticks at viewport mid-line, so handles stay centered while scrolling */}
             <div className="sticky top-1/2">
                 {/* left handle: sits on the divider between the nav rail and content */}

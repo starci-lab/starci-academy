@@ -4,32 +4,30 @@ import { Bell as BellIcon } from "@gravity-ui/icons"
 import React from "react"
 import {
     Badge,
+    cn,
 } from "@heroui/react"
 import { truncate } from "lodash"
 import { UserAvatar } from "@/components/reuseable/UserAvatar"
-import type {
+import { useAppSelector } from "@/redux"
+import type { WithClassNames } from "@/modules/types"
 
-    UserEntity,
-} from "@/modules/types"
-
-/** Props for {@link UserSummary}. */
-export interface UserSummaryProps {
-    /** Authenticated user whose name + email are displayed. */
-    user: UserEntity
-}
+/**
+ * Props for {@link UserSummary}.
+ */
+export type UserSummaryProps = WithClassNames<undefined>
 
 /**
  * Header panel for authenticated users: avatar, truncated username, email,
  * and a notification bell badge.
  *
- * Presentational: pure display from the `user` prop. No business logic.
- * @param props - the authenticated user
+ * Container: reads the authenticated user from the Redux store itself.
+ * `"use client"` for the store selector hook.
+ * @param props - optional root class name
  */
-export const UserSummary = ({
-    user,
-}: UserSummaryProps) => {
+export const UserSummary = ({ className }: UserSummaryProps) => {
+    const user = useAppSelector((state) => state.user.user)
     return (
-        <div className="flex items-center justify-between gap-4">
+        <div className={cn("flex items-center justify-between gap-6", className)}>
             <div className="flex items-center gap-1.5">
                 <UserAvatar
                     className="cursor-pointer"
@@ -37,7 +35,7 @@ export const UserSummary = ({
                     avatar={user?.avatar}
                     seed={user?.email ?? user?.username}
                 />
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col gap-0">
                     <div className="text-sm">
                         {truncate(user?.username, { length: 10 })}
                     </div>

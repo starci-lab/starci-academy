@@ -2,14 +2,16 @@
 
 import React from "react"
 import {
+    cn,
     Chip,
 } from "@heroui/react"
 import {
     useTranslations,
 } from "next-intl"
+import type { WithClassNames } from "@/modules/types"
 
 /** Props for {@link LastAttemptResult}. */
-export interface LastAttemptResultProps {
+export interface LastAttemptResultProps extends WithClassNames<undefined> {
     /** Score earned on the most recent grading attempt. */
     earnedScore: number
     /** Maximum score the requirement is worth. */
@@ -28,12 +30,13 @@ export const LastAttemptResult = ({
     earnedScore,
     maxScore,
     passThreshold,
+    className,
 }: LastAttemptResultProps) => {
     const t = useTranslations()
     const requiredScore = maxScore * passThreshold
     const isPassed = earnedScore >= requiredScore
     return (
-        <div>
+        <div className={cn(className)}>
             <div className="border-t border-divider" />
             <div className="h-3" />
             <div className="flex gap-1.5 text-sm text-muted items-center">

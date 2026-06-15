@@ -6,18 +6,22 @@ import React, {
     useState,
 } from "react"
 import {
+    cn,
     FieldError,
     Input,
     Label,
     Link,
     TextField,
 } from "@heroui/react"
+import type {
+    WithClassNames,
+} from "@/modules/types/base/class-name"
 import {
     useTranslations,
 } from "next-intl"
 
 /** Props for {@link PasswordField}. */
-export interface PasswordFieldProps {
+export interface PasswordFieldProps extends WithClassNames<undefined> {
     /** Current password value. */
     value: string
     /** Validation error message, if any. */
@@ -44,6 +48,7 @@ export const PasswordField = ({
     touched,
     onChangeValue,
     onBlurField,
+    className,
 }: PasswordFieldProps) => {
     const t = useTranslations()
 
@@ -55,7 +60,7 @@ export const PasswordField = ({
     )
 
     return (
-        <TextField isInvalid={!!(touched && error)}>
+        <TextField isInvalid={!!(touched && error)} className={cn(className)}>
             <Label htmlFor="sign-in-password" className="text-sm">
                 {t("auth.signIn.password.label")}
             </Label>

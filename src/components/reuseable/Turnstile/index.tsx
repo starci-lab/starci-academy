@@ -2,8 +2,10 @@
 
 import React, { useEffect, useRef } from "react"
 import { publicEnv } from "@/resources"
+import { cn } from "@heroui/react"
+import type { WithClassNames } from "@/modules/types"
 
-export interface TurnstileProps {
+export interface TurnstileProps extends WithClassNames<undefined> {
     /** Callback triggered when Turnstile successfully validates the visitor. */
     onVerify: (token: string) => void
     /** Callback triggered when Turnstile token expires. */
@@ -12,12 +14,31 @@ export interface TurnstileProps {
     onError?: () => void
 }
 
+/** Render options passed to `turnstile.render()`. */
+interface TurnstileRenderOptions {
+    sitekey: string
+    callback: (token: string) => void
+    "expired-callback": () => void
+    "error-callback": () => void
+}
+
+/** Minimal subset of the Cloudflare Turnstile global API used in this module. */
+interface TurnstileApi {
+    render: (container: HTMLElement, options: TurnstileRenderOptions) => string
+    remove: (widgetId: string) => void
+}
+
+/** Window augmented with the optional Turnstile global. */
+interface WindowWithTurnstile extends Window {
+    turnstile?: TurnstileApi
+}
+
 /**
  * Renders the Cloudflare Turnstile captcha widget dynamically.
  * Automatically loads the Turnstile script if not already present.
  * No-ops (returns null) when captcha is disabled in public config.
  */
-export const Turnstile = ({ onVerify, onExpire, onError }: TurnstileProps) => {
+export const Turnstile = ({ onVerify, onExpire, onError, className }: TurnstileProps) => {
     const containerRef = useRef<HTMLDivElement>(null)
     const widgetIdRef = useRef<string | null>(null)
 
@@ -28,7 +49,7 @@ export const Turnstile = ({ onVerify, onExpire, onError }: TurnstileProps) => {
         let isMounted = true
 
         const renderWidget = () => {
-            const turnstile = (window as any).turnstile
+            const turnstile = (window as WindowWithTurnstile).turnstile
             if (!isMounted || !containerRef.current || !turnstile) return
 
             try {
@@ -65,7 +86,7 @@ export const Turnstile = ({ onVerify, onExpire, onError }: TurnstileProps) => {
             document.body.appendChild(script)
         }
 
-        const turnstile = (window as any).turnstile
+        const turnstile = (window as WindowWithTurnstile).turnstile
         if (turnstile) {
             renderWidget()
         } else {
@@ -76,7 +97,7 @@ export const Turnstile = ({ onVerify, onExpire, onError }: TurnstileProps) => {
             return () => {
                 isMounted = false
                 script?.removeEventListener("load", handleLoad)
-                const activeTurnstile = (window as any).turnstile
+                const activeTurnstile = (window as WindowWithTurnstile).turnstile
                 if (widgetIdRef.current !== null && activeTurnstile) {
                     activeTurnstile.remove(widgetIdRef.current)
                 }
@@ -85,7 +106,7 @@ export const Turnstile = ({ onVerify, onExpire, onError }: TurnstileProps) => {
 
         return () => {
             isMounted = false
-            const activeTurnstile = (window as any).turnstile
+            const activeTurnstile = (window as WindowWithTurnstile).turnstile
             if (widgetIdRef.current !== null && activeTurnstile) {
                 activeTurnstile.remove(widgetIdRef.current)
             }
@@ -95,6 +116,6 @@ export const Turnstile = ({ onVerify, onExpire, onError }: TurnstileProps) => {
     const { enabled } = publicEnv().captcha
     if (!enabled) return null
 
-    return <div ref={containerRef} className="flex justify-center my-2 min-h-[74px]" />
+    return <div ref={containerRef} className={cn("flex justify-center my-2 min-h-[74px]", className)} />
 }
 export default Turnstile

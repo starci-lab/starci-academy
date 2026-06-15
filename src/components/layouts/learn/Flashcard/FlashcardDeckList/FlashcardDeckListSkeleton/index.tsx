@@ -5,13 +5,15 @@ import {
     Card,
     CardContent,
     Skeleton,
+    cn,
 } from "@heroui/react"
 import {
     SkeletonText,
 } from "@/components/reuseable"
+import type { WithClassNames } from "@/modules/types"
 
 /** Props for {@link FlashcardDeckListSkeleton}. */
-export interface FlashcardDeckListSkeletonProps {
+export interface FlashcardDeckListSkeletonProps extends WithClassNames<undefined> {
     /** Number of placeholder deck cards to render. Defaults to `3`. */
     count?: number
 }
@@ -24,9 +26,10 @@ export interface FlashcardDeckListSkeletonProps {
  */
 export const FlashcardDeckListSkeleton = ({
     count = 3,
+    className,
 }: FlashcardDeckListSkeletonProps) => {
     return (
-        <div className="flex flex-col gap-3">
+        <div className={cn("flex flex-col gap-3", className)}>
             {Array.from({ length: Math.max(count, 1) }).map((_unused, index) => (
                 <Card key={index} className="w-full">
                     <CardContent className="flex flex-col gap-1.5">

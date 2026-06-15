@@ -1,9 +1,11 @@
 "use client"
 
 import React, { useMemo } from "react"
+import { cn } from "@heroui/react"
+import type { WithClassNames } from "@/modules/types"
 
 /** Props for {@link LayoutWidget}. */
-export interface LayoutWidgetProps {
+export interface LayoutWidgetProps extends WithClassNames<undefined> {
     /** Raw HTML layout-mockup source authored inside a ```layout fence. */
     html: string
 }
@@ -40,12 +42,12 @@ const sanitizeLayoutHtml = (html: string): string =>
  * `"use client"` so it pairs with the client-rendered markdown tree.
  * @param props - {@link LayoutWidgetProps}
  */
-export const LayoutWidget = ({ html }: LayoutWidgetProps) => {
+export const LayoutWidget = ({ html, className }: LayoutWidgetProps) => {
     // Memoize the scrub so re-renders don't re-run the regex passes over the same source.
     const safeHtml = useMemo(() => sanitizeLayoutHtml(html), [html])
     return (
         <div
-            className="not-prose overflow-hidden rounded-xl border border-default bg-surface"
+            className={cn("not-prose overflow-hidden rounded-xl border border-default bg-surface", className)}
             dangerouslySetInnerHTML={{ __html: safeHtml }}
         />
     )

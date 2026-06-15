@@ -3,15 +3,19 @@
 import React from "react"
 import {
     Checkbox,
+    cn,
     Label,
     Link,
 } from "@heroui/react"
+import type {
+    WithClassNames,
+} from "@/modules/types/base/class-name"
 import {
     useTranslations,
 } from "next-intl"
 
 /** Props for {@link RememberMeRow}. */
-export interface RememberMeRowProps {
+export interface RememberMeRowProps extends WithClassNames<undefined> {
     /** Whether the "remember me" box is checked. */
     isSelected: boolean
     /** Fired with the new checked state. */
@@ -28,10 +32,11 @@ export interface RememberMeRowProps {
 export const RememberMeRow = ({
     isSelected,
     onChangeSelected,
+    className,
 }: RememberMeRowProps) => {
     const t = useTranslations()
     return (
-        <div className="flex justify-between">
+        <div className={cn("flex justify-between", className)}>
             <Checkbox
                 id="sign-in-remember-me"
                 variant="secondary"

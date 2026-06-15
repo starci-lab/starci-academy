@@ -4,6 +4,7 @@ import { Aperture as ScanIcon } from "@gravity-ui/icons"
 import React from "react"
 import {
     Button,
+    cn,
     Spinner,
 } from "@heroui/react"
 import {
@@ -18,9 +19,10 @@ import {
     JobCategory,
     JobStatus,
 } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link FeedbackSection}. */
-export interface FeedbackSectionProps {
+export interface FeedbackSectionProps extends WithClassNames<undefined> {
     /** Markdown feedback body to render. */
     feedbackMarkdown: string
     /** Whether the backend already returned persisted AI feedback (re-run copy). */
@@ -58,10 +60,11 @@ export const FeedbackSection = ({
     activeCvReviewJobError,
     onReview,
     onOpenAttempts,
+    className,
 }: FeedbackSectionProps) => {
     const t = useTranslations()
     return (
-        <div>
+        <div className={cn(className)}>
             <div className="flex items-center gap-1.5 text-base font-semibold">
                 {t("cv.submission.feedbackTitle")}
                 <StarCiAIBadge />

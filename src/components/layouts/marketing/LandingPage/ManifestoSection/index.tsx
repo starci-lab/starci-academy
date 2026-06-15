@@ -1,8 +1,10 @@
 "use client"
 
 import { QuoteOpen as Quotes, Thunderbolt as Lightning } from "@gravity-ui/icons"
+import { cn } from "@heroui/react"
 import { motion } from "framer-motion"
 import React from "react"
+import { type WithClassNames } from "@/modules/types"
 
 
 /** Container stagger so each paragraph lands one after another. */
@@ -32,7 +34,12 @@ const itemVariants = {
  * placeholder — drop in the real photo at `public/founder.jpg` and the real
  * name/handle before launch.
  */
-export const ManifestoSection = () => {
+export type ManifestoSectionProps = WithClassNames<undefined>
+
+/**
+ * @param {ManifestoSectionProps} props Optional wrapper styling props.
+ */
+export const ManifestoSection = ({ className }: ManifestoSectionProps) => {
     return (
         <motion.section
             id="manifesto"
@@ -40,7 +47,7 @@ export const ManifestoSection = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="max-w-3xl mx-auto"
+            className={cn("max-w-3xl mx-auto", className)}
         >
             {/* Eyebrow */}
             <motion.div
@@ -90,7 +97,7 @@ export const ManifestoSection = () => {
             {/* Signature block — replace placeholders before launch */}
             <motion.div
                 variants={itemVariants}
-                className="mt-12 flex items-center gap-4 pl-6 border-l-2 border-accent"
+                className="mt-12 flex items-center gap-3 pl-6 border-l-2 border-accent"
             >
                 {/* TODO: replace with the real photo — <img src="/founder.jpg" ... /> */}
                 <div className="w-14 h-14 rounded-full bg-default flex items-center justify-center shrink-0">

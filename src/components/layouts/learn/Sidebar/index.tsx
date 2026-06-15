@@ -18,8 +18,8 @@ import {
  * `"use client"` for the underlying hooks + navigation.
  */
 export const Sidebar = () => {
-    // shared entries + select handler (also used by the mobile drawer)
-    const { items, selectedTab, onSelect } = useSidebarNavItems()
+    // shared entries (also used by the mobile drawer)
+    const { items, selectedTab } = useSidebarNavItems()
     // when collapsed the rail shrinks (grid column) and shows icons only
     const leftCollapsed = useAppSelector((state) => state.sidebar.leftCollapsed)
     return (
@@ -30,7 +30,6 @@ export const Sidebar = () => {
                 items={items}
                 selectedTab={selectedTab}
                 collapsed={leftCollapsed}
-                onSelect={onSelect}
             />
         </div>
     )

@@ -2,16 +2,20 @@
 
 import { BookOpen as BookOpenIcon, Clock as ClockIcon, Flame, Lock as LockIcon, Star as StarIcon } from "@gravity-ui/icons"
 import React, { useCallback, useMemo } from "react"
-import { Button, Chip, Drawer, ScrollShadow } from "@heroui/react"
+import { Button, Chip, cn, Drawer, ScrollShadow } from "@heroui/react"
 import { useRouter } from "next/navigation"
 import { useLocale, useTranslations } from "next-intl"
 import { useAppSelector } from "@/redux"
+import type { WithClassNames } from "@/modules/types"
 import {
     useAuthenticationOverlayState,
     useMindMapContentDetailsOverlayState,
 } from "@/hooks"
 import { pathConfig } from "@/resources/path"
 import { getContentChallengeCount } from "@/modules/types"
+
+/** Props for {@link MindMapContentDetailsDrawer}. Container — only layout className. */
+export type MindMapContentDetailsDrawerProps = WithClassNames<undefined>
 
 /**
  * Global drawer showing a mind-map lesson's title, description and meta, with a "read details"
@@ -20,7 +24,8 @@ import { getContentChallengeCount } from "@/modules/types"
  * Mounted once in {@link DrawerContainer}; opened via
  * `useMindMapContentDetailsOverlayState().open(selection)` from a mind-map slot node.
  */
-export const MindMapContentDetailsDrawer = () => {
+export const MindMapContentDetailsDrawer = (props: MindMapContentDetailsDrawerProps = {}) => {
+    const { className } = props
     const t = useTranslations()
     const router = useRouter()
     const locale = useLocale()
@@ -84,7 +89,7 @@ export const MindMapContentDetailsDrawer = () => {
         <Drawer>
             <Drawer.Backdrop isOpen onOpenChange={setOpen}>
                 <Drawer.Content placement="right">
-                    <Drawer.Dialog className="flex h-full flex-col p-0">
+                    <Drawer.Dialog className={cn("flex h-full flex-col p-0", className)}>
                         <div className="shrink-0 p-3">
                             <Drawer.CloseTrigger />
                             <Drawer.Header className="flex flex-col gap-1.5">

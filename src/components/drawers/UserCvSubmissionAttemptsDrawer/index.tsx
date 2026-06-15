@@ -1,24 +1,18 @@
 "use client"
 
 import React, {
-    useCallback,
     useEffect,
     useMemo,
 } from "react"
 import {
+    cn,
     Drawer,
 } from "@heroui/react"
+import type { WithClassNames } from "@/modules/types"
 import {
-    useCvSubmissionAttemptAnalysisOverlayState,
     useCvSubmissionAttemptsDrawerOverlayState,
     useQueryUserCvSubmissionAttemptsSwr,
 } from "@/hooks"
-import {
-    useAppDispatch,
-} from "@/redux"
-import {
-    setSelectedCvSubmissionAttemptAnalysis,
-} from "@/redux/slices"
 import { dayjs } from "@/modules/dayjs"
 import { getFileNameFromUrl } from "@/utils"
 import {
@@ -45,29 +39,23 @@ import {
     AttemptsPagination,
 } from "./AttemptsPagination"
 
-/** No caller props; the drawer reads singleton overlay + SWR. */
-export interface UserCvSubmissionAttemptsDrawerProps {
-    /** Reserved for future shell wiring. */
-    readonly _reserved?: undefined
-}
+/** Props for {@link UserCvSubmissionAttemptsDrawer}. Container — only layout className. */
+export type UserCvSubmissionAttemptsDrawerProps = WithClassNames<undefined>
 
 /**
  * Drawer listing a user's CV submission attempts with server pagination.
  *
- * Container: owns SWR/redux/overlay state and derives display rows; renders
+ * Container: owns SWR/overlay state and derives display rows; renders
  * presentational children (skeleton / list / pagination).
  */
-export const UserCvSubmissionAttemptsDrawer = () => {
+export const UserCvSubmissionAttemptsDrawer = (props: UserCvSubmissionAttemptsDrawerProps = {}) => {
+    const { className } = props
     const t = useTranslations()
     const locale = useLocale()
-    const dispatch = useAppDispatch()
     const {
         isOpen,
         setOpen,
     } = useCvSubmissionAttemptsDrawerOverlayState()
-    const {
-        setOpen: setAnalysisModalOpen,
-    } = useCvSubmissionAttemptAnalysisOverlayState()
     const swr = useQueryUserCvSubmissionAttemptsSwr()
     const payload = swr.data
     const attemptList = payload?.data
@@ -117,69 +105,6 @@ export const UserCvSubmissionAttemptsDrawer = () => {
         ],
     )
 
-    /** 1-based current page, clamped to the visible range. */
-    const currentPage = Math.min(swr.pageNumber + 1, totalPages)
-
-    /** 1-based page numbers rendered as pagination links. */
-    const pageNumbers = useMemo<Array<number>>(
-        () => Array.from({ length: totalPages }, (_, index) => index + 1),
-        [
-            totalPages,
-        ],
-    )
-
-    /** Open the analysis modal for the chosen attempt. */
-    const onOpenAnalysis = useCallback(
-        (attemptId: string) => {
-            const selectedAttempt = rows.find((row) => row.key === attemptId)
-            if (!selectedAttempt) {
-                return
-            }
-            dispatch(setSelectedCvSubmissionAttemptAnalysis({
-                attemptId: selectedAttempt.key,
-                attemptNumber: selectedAttempt.attemptNumber,
-                fileLabel: selectedAttempt.fileLabel,
-                fileUrl: selectedAttempt.fileUrl,
-                fileUrlIsPublic: selectedAttempt.fileUrlIsPublic,
-                submittedAtLabel: selectedAttempt.submittedAtLabel,
-                status: selectedAttempt.status,
-                detailFeedback: selectedAttempt.detailFeedback,
-            }))
-            setAnalysisModalOpen(true)
-        },
-        [
-            rows,
-            dispatch,
-            setAnalysisModalOpen,
-        ],
-    )
-
-    /** Navigate to a specific 1-based page. */
-    const onPageChange = useCallback(
-        (pageNumber: number) => swr.setPageNumber(pageNumber - 1),
-        [
-            swr,
-        ],
-    )
-
-    /** Navigate to the previous page. */
-    const onPreviousPage = useCallback(
-        () => swr.setPageNumber(currentPage - 2),
-        [
-            swr,
-            currentPage,
-        ],
-    )
-
-    /** Navigate to the next page. */
-    const onNextPage = useCallback(
-        () => swr.setPageNumber(currentPage),
-        [
-            swr,
-            currentPage,
-        ],
-    )
-
     useEffect(
         () => {
             if (swr.pageNumber + 1 <= totalPages) {
@@ -208,7 +133,7 @@ export const UserCvSubmissionAttemptsDrawer = () => {
                 onOpenChange={setOpen}
             >
                 <Drawer.Content placement="right">
-                    <Drawer.Dialog className="flex h-full flex-col p-0">
+                    <Drawer.Dialog className={cn("flex h-full flex-col p-0", className)}>
                         <div className="shrink-0 p-3">
                             <Drawer.CloseTrigger />
                             <Drawer.Header>
@@ -228,18 +153,8 @@ export const UserCvSubmissionAttemptsDrawer = () => {
                                     <AttemptsSkeleton />
                                 ) : rows.length ? (
                                     <>
-                                        <AttemptsList
-                                            rows={rows}
-                                            onOpenAnalysis={onOpenAnalysis}
-                                        />
-                                        <AttemptsPagination
-                                            currentPage={currentPage}
-                                            totalPages={totalPages}
-                                            pageNumbers={pageNumbers}
-                                            onPageChange={onPageChange}
-                                            onPrevious={onPreviousPage}
-                                            onNext={onNextPage}
-                                        />
+                                        <AttemptsList rows={rows} />
+                                        <AttemptsPagination />
                                     </>
                                 ) : (
                                     <div className="p-6 text-center text-sm text-muted">

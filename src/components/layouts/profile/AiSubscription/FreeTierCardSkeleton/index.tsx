@@ -68,8 +68,8 @@ export const FreeTierCardSkeleton = ({
                     className="flex flex-col gap-1.5 text-sm invisible"
                     aria-hidden
                 >
-                    <div className="flex min-h-5 items-center gap-1">—</div>
-                    <div className="flex min-h-5 items-center gap-1">—</div>
+                    <div className="flex min-h-5 items-center gap-1.5">—</div>
+                    <div className="flex min-h-5 items-center gap-1.5">—</div>
                 </div>
             </Card.Footer>
         </Card>

@@ -1,11 +1,12 @@
 "use client"
 
 import React from "react"
-import { Skeleton } from "@heroui/react"
+import { Skeleton, cn } from "@heroui/react"
 import { SkeletonText } from "@/components/reuseable"
+import type { WithClassNames } from "@/modules/types"
 
 /** Props for {@link LeaderboardSkeleton}. */
-export interface LeaderboardSkeletonProps {
+export interface LeaderboardSkeletonProps extends WithClassNames<undefined> {
     /** Number of placeholder rows under the podium. Defaults to `6`. */
     rows?: number
 }
@@ -15,9 +16,9 @@ export interface LeaderboardSkeletonProps {
  * list of row placeholders, mirroring {@link LeaderboardPodium} + {@link LeaderboardTable}.
  * @param props - {@link LeaderboardSkeletonProps}
  */
-export const LeaderboardSkeleton = ({ rows = 6 }: LeaderboardSkeletonProps) => {
+export const LeaderboardSkeleton = ({ rows = 6, className }: LeaderboardSkeletonProps) => {
     return (
-        <div className="flex flex-col gap-6">
+        <div className={cn("flex flex-col gap-6", className)}>
             {/* podium: three pedestals, the middle one tallest */}
             <div className="flex items-end justify-center gap-3 sm:gap-6">
                 {[16, 24, 12].map((height, index) => (
@@ -37,7 +38,7 @@ export const LeaderboardSkeleton = ({ rows = 6 }: LeaderboardSkeletonProps) => {
                     <div key={index} className="flex items-center gap-3 px-3 py-2.5">
                         <Skeleton className="size-6 rounded-md" />
                         <Skeleton className="size-9 rounded-full" />
-                        <div className="flex flex-1 flex-col gap-1">
+                        <div className="flex flex-1 flex-col gap-0">
                             <SkeletonText size="sm" width="w-1/3" />
                             <SkeletonText size="xs" width="w-1/2" />
                         </div>

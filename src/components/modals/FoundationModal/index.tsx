@@ -1,18 +1,27 @@
 "use client"
 
 import React from "react"
-import { Modal, ScrollShadow } from "@heroui/react"
+import { cn, Modal, ScrollShadow } from "@heroui/react"
 import { MarkdownContent } from "@/components/reuseable"
 import { VideoRenderer } from "@/components/reuseable/VideoRenderer"
-import { resolveFoundationMountFileUrl } from "@/components/layouts/Foundations/utils"
+import { resolveFoundationMountFileUrl } from "@/components/layouts/learn/Foundations/utils"
 import { useFoundationOverlayState } from "@/hooks"
 import { FoundationKind, VideoHostPlatform } from "@/modules/types"
 import { useAppSelector } from "@/redux"
+import type { WithClassNames } from "@/modules/types"
+
+/**
+ * Props for {@link FoundationModal}.
+ */
+export type FoundationModalProps = WithClassNames<undefined>
 
 /**
  * Foundation viewer modal: renders markdown or MPEG-DASH by `foundation.kind`.
+ *
+ * @param props - Optional styling props.
  */
-export const FoundationModal = () => {
+export const FoundationModal = (props: FoundationModalProps) => {
+    const { className } = props
     const { isOpen, setOpen } = useFoundationOverlayState()
     const foundation = useAppSelector((state) => state.foundation.entity)
 
@@ -66,7 +75,7 @@ export const FoundationModal = () => {
                     size="full"
                     scroll={foundation?.kind === FoundationKind.Document ? "inside" : undefined}
                 >
-                    <Modal.Dialog>
+                    <Modal.Dialog className={cn(className)}>
                         <Modal.CloseTrigger />
                         <Modal.Header>
                             <div className="text-center text-2xl font-bold">

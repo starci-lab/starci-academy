@@ -5,6 +5,9 @@ import React, {
     useState,
 } from "react"
 import {
+    cn,
+} from "@heroui/react"
+import {
     useLocale,
 } from "next-intl"
 import {
@@ -13,9 +16,12 @@ import {
 import {
     queryResolveRoute,
 } from "@/modules/api"
+import type {
+    WithClassNames,
+} from "@/modules/types/base/class-name"
 
 /** Props for {@link EntityToken}. */
-export interface EntityTokenProps {
+export interface EntityTokenProps extends WithClassNames<undefined> {
     /** Opaque global id of the entity, or null when it has no resolvable route. */
     globalId: string | null
     /** Token text (username / lesson title …). */
@@ -38,6 +44,7 @@ export const EntityToken = ({
     globalId,
     label,
     block = false,
+    className,
 }: EntityTokenProps) => {
     const locale = useLocale()
     const router = useRouter()
@@ -82,7 +89,7 @@ export const EntityToken = ({
                 type="button"
                 disabled={!globalId || pending}
                 onClick={onPress}
-                className="truncate rounded-medium px-2 py-1 text-left text-sm text-muted hover:bg-default/40 hover:text-foreground disabled:opacity-60"
+                className={cn("truncate rounded-medium px-2 py-1 text-left text-sm text-muted hover:bg-default/40 hover:text-foreground disabled:opacity-60", className)}
             >
                 {label}
             </button>
@@ -101,7 +108,7 @@ export const EntityToken = ({
             type="button"
             disabled={pending}
             onClick={onPress}
-            className="font-semibold text-accent hover:underline disabled:opacity-60"
+            className={cn("font-semibold text-accent hover:underline disabled:opacity-60", className)}
         >
             {label}
         </button>

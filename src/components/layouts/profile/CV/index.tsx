@@ -22,6 +22,8 @@ import {
 import {
     useQueryCvUrlSwr,
 } from "@/hooks"
+import type { WithClassNames } from "@/modules/types/base/class-name"
+import { cn } from "@heroui/react"
 import { CVUpload } from "./CVUpload"
 import { CVPreview } from "./CVPreview"
 
@@ -35,10 +37,14 @@ type CvLearnBreadcrumbItem = {
     onPress?: () => void
 }
 
+/** Props for {@link CvLearnLayout}. */
+export type CvLearnLayoutProps = WithClassNames<undefined>
+
 /**
  * Learn-module CV page: breadcrumbs, CV upload block, feedback summary, and PDF preview.
+ * @param props - {@link CvLearnLayoutProps}
  */
-export const CvLearnLayout = () => {
+export const CvLearnLayout = ({ className }: CvLearnLayoutProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -75,7 +81,7 @@ export const CvLearnLayout = () => {
     ])
 
     return (
-        <div className="grid grid-cols-1 items-start lg:grid-cols-5">
+        <div className={cn("grid grid-cols-1 items-start lg:grid-cols-5", className)}>
             <div className="col-span-3 min-w-0 lg:border-r lg:border-divider/60">
                 <div className="p-3 pb-0">
                     <Breadcrumbs>

@@ -18,7 +18,7 @@ import {
 } from "@/modules/types"
 import {
     ReadBadge,
-} from "@/components/reuseable"
+} from "@/components/layouts/learn/Content/ReadBadge"
 
 /**
  * Title, description and meta-chip row (reading time, challenges, read state)

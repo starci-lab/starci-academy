@@ -3,9 +3,10 @@
 import React from "react"
 import { Avatar, AvatarFallback, AvatarImage, cn } from "@heroui/react"
 import { dicebearAvatarUrl } from "@/utils/avatar"
+import type { WithClassNames } from "@/modules/types"
 
 /** Props for {@link UserAvatar}. */
-export interface UserAvatarProps {
+export interface UserAvatarProps extends WithClassNames<undefined> {
     /** Display username; drives the initials fallback + image alt text. */
     username?: string | null
     /** Uploaded avatar URL; when missing OR it fails to load, a generated default is shown. */
@@ -17,8 +18,6 @@ export interface UserAvatarProps {
     seed?: string | null
     /** HeroUI avatar size preset. */
     size?: "sm" | "md" | "lg"
-    /** Extra classes on the avatar root. */
-    className?: string
 }
 
 /**

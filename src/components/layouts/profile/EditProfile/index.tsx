@@ -253,7 +253,7 @@ export const EditProfile = () => {
             />
 
             {/* avatar picker — large face + change button */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
                 <button
                     type="button"
                     onClick={onPickAvatar}

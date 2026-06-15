@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { FlashcardLayout } from "@/components/layouts/Flashcard"
+import { FlashcardLayout } from "@/components/layouts/learn/Flashcard"
 
 /**
  * Learn / flashcards: course-level interview-prep page (open-ended Q&A flashcards).

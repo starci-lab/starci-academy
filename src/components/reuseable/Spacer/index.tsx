@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import type { WithClassNames } from "@/modules/types"
 
 const spacingScale: Record<number, string> = {
     0.5: "0.125rem",
@@ -26,10 +27,9 @@ const spacingScale: Record<number, string> = {
     48: "12rem",
 }
 
-interface SpacerProps {
+interface SpacerProps extends WithClassNames<undefined> {
     x?: number
     y?: number
-    className?: string
 }
 
 export const Spacer: React.FC<SpacerProps> = ({ x, y, className }) => {

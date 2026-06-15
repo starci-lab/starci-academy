@@ -5,6 +5,7 @@ import React, {
     useCallback,
 } from "react"
 import {
+    cn,
     Chip,
 } from "@heroui/react"
 import {
@@ -19,9 +20,12 @@ import type {
 import {
     LANE_ICON_MAP,
 } from "../../map"
+import type {
+    WithClassNames,
+} from "@/modules/types"
 
 /** Props for {@link LaneCard} (list item — per-item data only). */
-export interface LaneCardProps {
+export interface LaneCardProps extends WithClassNames<undefined> {
     /** Lane this card represents. */
     mode: AiMode
     /** Whether the lane is locked (not selectable). */
@@ -39,6 +43,7 @@ export interface LaneCardProps {
 export const LaneCard = ({
     mode,
     disabled,
+    className,
 }: LaneCardProps) => {
     const t = useTranslations()
     const { mode: selectedMode, setMode } = useAiSettingsForm()
@@ -57,13 +62,14 @@ export const LaneCard = ({
             type="button"
             disabled={disabled}
             onClick={onPress}
-            className={[
+            className={cn(
                 "flex items-start gap-3 rounded-3xl border p-5 text-left transition-all",
                 selected
                     ? "border-accent bg-accent/5 ring-2 ring-accent/30"
                     : "border-divider bg-background hover:shadow-md",
                 disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer",
-            ].join(" ")}
+                className,
+            )}
         >
             {LANE_ICON_MAP[mode]}
             <div className="flex-1">

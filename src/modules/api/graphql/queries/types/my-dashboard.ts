@@ -77,3 +77,29 @@ export interface QueryMyWeeklyStatsResponse {
     /** Top-level `myWeeklyStats` field wrapping the standard API response. */
     myWeeklyStats: GraphQLResponse<QueryMyDashboardWeeklyStatsData>
 }
+
+/** One active day in the GitHub-style contribution calendar. */
+export interface QueryMyContributionDayData {
+    /** Calendar day as YYYY-MM-DD. */
+    date: string
+    /** Lessons/contents read that day. */
+    contents: number
+    /** Challenges passed that day. */
+    challenges: number
+    /** Milestone tasks passed that day. */
+    milestones: number
+    /** Total contributions that day (drives the cell intensity). */
+    total: number
+}
+
+/** Variables for the `myContributionCalendar` query. */
+export interface QueryMyContributionCalendarRequest {
+    /** Calendar year to read; omit for the current year. */
+    year?: number
+}
+
+/** Apollo response shape for the `myContributionCalendar` query. */
+export interface QueryMyContributionCalendarResponse {
+    /** Top-level `myContributionCalendar` field wrapping the standard API response. */
+    myContributionCalendar: GraphQLResponse<Array<QueryMyContributionDayData>>
+}

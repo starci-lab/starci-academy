@@ -10,33 +10,32 @@ import {
 import _ from "lodash"
 import type {
     ModuleEntity,
+    WithClassNames,
 } from "@/modules/types"
-import type {
-    ModuleSummaryItem,
-} from "../types"
+import {
+    MODULE_SUMMARY_ITEMS,
+} from "../map"
 import {
     ModuleSummaryChips,
 } from "../ModuleSummaryChips"
 
 /** Props for {@link ModuleItem}. */
-export interface ModuleItemProps {
+export interface ModuleItemProps extends WithClassNames<undefined> {
     /** The course module rendered by this accordion item. */
     module: ModuleEntity
-    /** Summary chips (content/video/challenge counters) shown under the title. */
-    summaryItems: Array<ModuleSummaryItem>
 }
 
 /**
  * One module accordion item: title + description + summary chips, expanding to
  * the ordered preview contents.
  *
- * Presentational: sorts the supplied preview contents for display only.
- * `"use client"` because HeroUI `Accordion` is interactive.
- * @param props - the module entity and its summary chips
+ * List item: receives its own module entity from the parent .map(); derives
+ * all other data internally. `"use client"` because HeroUI `Accordion` is
+ * interactive.
+ * @param props - the module entity and optional class names
  */
 export const ModuleItem = ({
     module,
-    summaryItems,
 }: ModuleItemProps) => {
     /** Preview contents sorted by their display order (clone to avoid mutating redux state). */
     const previewContents = useMemo(
@@ -54,7 +53,7 @@ export const ModuleItem = ({
                             <div className="text-lg font-semibold mb-1.5">{module.title}</div>
                             <div>
                                 <div className="text-sm text-muted">{module.description}</div>
-                                <ModuleSummaryChips items={summaryItems} />
+                                <ModuleSummaryChips items={MODULE_SUMMARY_ITEMS} />
                             </div>
                         </div>
                         <Accordion.Indicator />
@@ -65,7 +64,7 @@ export const ModuleItem = ({
                 <Accordion.Body>
                     <div className="text-sm text-start w-full gap-3 flex flex-col">
                         {previewContents.map((content) => (
-                            <div key={content.id} className="flex items-center gap-3">
+                            <div key={content.id} className="flex items-center gap-1.5">
                                 <BracketsCurlyIcon className="w-5 h-5 min-w-5 min-h-5" />
                                 <span
                                     dangerouslySetInnerHTML={{

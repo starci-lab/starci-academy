@@ -2,6 +2,7 @@
 
 import React from "react"
 import {
+    cn,
     Link,
     Modal,
     ScrollShadow,
@@ -18,11 +19,20 @@ import {
     clearSelectedCvSubmissionAttemptAnalysis,
 } from "@/redux/slices"
 import { useTranslations } from "next-intl"
+import type { WithClassNames } from "@/modules/types"
+
+/**
+ * Props for {@link CvSubmissionAttemptAnalysisModal}.
+ */
+export type CvSubmissionAttemptAnalysisModalProps = WithClassNames<undefined>
 
 /**
  * Shows the full AI analysis for a selected CV submission attempt.
+ *
+ * @param props - Optional styling props.
  */
-export const CvSubmissionAttemptAnalysisModal = () => {
+export const CvSubmissionAttemptAnalysisModal = (props: CvSubmissionAttemptAnalysisModalProps) => {
+    const { className } = props
     const t = useTranslations()
     const dispatch = useAppDispatch()
     const {
@@ -49,7 +59,7 @@ export const CvSubmissionAttemptAnalysisModal = () => {
         >
             <Modal.Backdrop>
                 <Modal.Container size="lg">
-                    <Modal.Dialog>
+                    <Modal.Dialog className={cn(className)}>
                         <Modal.CloseTrigger />
                         <Modal.Header>
                             <div className="text-base font-semibold">

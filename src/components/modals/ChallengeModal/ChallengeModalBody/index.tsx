@@ -137,7 +137,7 @@ export const ChallengeModalBody = () => {
                     <Modal.Dialog className="p-0">
                         <Modal.CloseTrigger />
                         <Modal.Header className="border-b max-w-full w-full">
-                            <div className="flex w-full flex-col items-center gap-1 px-8">
+                            <div className="flex w-full flex-col items-center gap-1.5 px-8">
                                 <div className="flex w-full max-w-full justify-center">
                                     <div className="min-w-0 truncate text-center text-2xl font-bold text-foreground">
                                         {statusBadge ? (

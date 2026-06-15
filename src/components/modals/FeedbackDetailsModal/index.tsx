@@ -1,18 +1,27 @@
 "use client"
 
 import React, { useMemo } from "react"
-import { Modal, ScrollShadow } from "@heroui/react"
+import { cn, Modal, ScrollShadow } from "@heroui/react"
 import { useFeedbackDetailsOverlayState, useQuerySubmissionFeedbacksSwr } from "@/hooks"
 import { useAppSelector } from "@/redux"
 import { FeedbackCard } from "./FeedbackCard"
 import { useTranslations } from "next-intl"
 import { FeedbackDetailsEmpty } from "./Empty"
 import { FeedbackCardSkeleton } from "./FeedbackCardSkeleton"
+import type { WithClassNames } from "@/modules/types"
+
+/**
+ * Props for {@link FeedbackDetailsModal}.
+ */
+export type FeedbackDetailsModalProps = WithClassNames<undefined>
 
 /**
  * Modal listing feedback entries for the current submission attempt.
+ *
+ * @param props - Optional styling props.
  */
-export const FeedbackDetailsModal = () => {
+export const FeedbackDetailsModal = (props: FeedbackDetailsModalProps) => {
+    const { className } = props
     const { isOpen, setOpen } = useFeedbackDetailsOverlayState()
     const querySubmissionFeedbacksSwr = useQuerySubmissionFeedbacksSwr()
     const submissionFeedbacks = useAppSelector((state) => state.submissionFeedback.submissionFeedbacks)
@@ -31,7 +40,7 @@ export const FeedbackDetailsModal = () => {
         <Modal isOpen={isOpen} onOpenChange={setOpen}>
             <Modal.Backdrop>
                 <Modal.Container size="lg">
-                    <Modal.Dialog>
+                    <Modal.Dialog className={cn(className)}>
                         <Modal.CloseTrigger />
                         <Modal.Header>
                             <div className="text-lg font-bold">{t("feedback.detailsTitle")}</div>

@@ -4,6 +4,7 @@ import React from "react"
 import {
     Alert,
     Skeleton,
+    cn,
 } from "@heroui/react"
 import {
     useTranslations,
@@ -14,6 +15,14 @@ import {
 import {
     useAppSelector,
 } from "@/redux"
+import type {
+    WithClassNames,
+} from "@/modules/types"
+
+/**
+ * PrerequisitesAlert props — only class-name plumbing (self-contained section).
+ */
+export type PrerequisitesAlertProps = WithClassNames<undefined>
 
 /**
  * Warning alert listing the course prerequisites.
@@ -24,14 +33,14 @@ import {
  * otherwise the prerequisite bullet list. `"use client"` because HeroUI
  * `Alert`/`Skeleton` are client components and it reads redux.
  */
-export const PrerequisitesAlert = () => {
+export const PrerequisitesAlert = (props: PrerequisitesAlertProps) => {
     const t = useTranslations()
     const { isLoading } = useQueryCourseSwr()
     const prerequisites = useAppSelector((state) => state.course.entity?.prerequisites)
     return (
-        <Alert status="warning" className="text-sm">
+        <Alert status="warning" className={cn("text-sm", props.className)}>
             <Alert.Indicator />
-            <Alert.Content className="gap-1">
+            <Alert.Content className="gap-1.5">
                 {isLoading ? (
                     <Alert.Description className="w-full">
                         <Skeleton className="h-[14px] w-[60%] !bg-warning-500/10 my-[3px]" />

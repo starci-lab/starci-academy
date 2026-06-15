@@ -1,13 +1,14 @@
 "use client"
 
 import React, { useCallback, useEffect } from "react"
-import { Spinner } from "@heroui/react"
+import { cn, Spinner } from "@heroui/react"
 import { useRouter } from "next/navigation"
 import { useLocale, useTranslations } from "next-intl"
 
 import { Spacer } from "@/components/reuseable"
 import { pathConfig } from "@/resources/path"
 import { sleep } from "@/modules/utils"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 import type { OauthAction } from "./enums"
 import { OAUTH_ACTION_MESSAGE_KEY_MAP } from "./map"
@@ -15,7 +16,7 @@ import { OAUTH_ACTION_MESSAGE_KEY_MAP } from "./map"
 export * from "./enums"
 
 /** Props for {@link OauthRedirect}. */
-export interface OauthRedirectProps {
+export interface OauthRedirectProps extends WithClassNames<undefined> {
     /**
      * The OAuth lifecycle step this redirect page represents — selects the i18n
      * message shown under the spinner. The redirect destination (locale home)
@@ -31,7 +32,7 @@ export interface OauthRedirectProps {
  *
  * `"use client"`: relies on `useRouter`, `useEffect` and `useLocale`.
  */
-export const OauthRedirect = ({ action }: OauthRedirectProps) => {
+export const OauthRedirect = ({ action, className }: OauthRedirectProps) => {
     const router = useRouter()
     const locale = useLocale()
     const t = useTranslations()
@@ -50,9 +51,9 @@ export const OauthRedirect = ({ action }: OauthRedirectProps) => {
     }, [onRedirect])
 
     return (
-        <div className="flex min-h-[60vh] flex-col items-center justify-center">
+        <div className={cn("flex min-h-[60vh] flex-col items-center justify-center", className)}>
             <div
-                className="flex flex-col items-center gap-1"
+                className="flex flex-col items-center gap-1.5"
             >
                 <Spinner
                     color="accent"

@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { FoundationsLearnLayout } from "@/components/layouts/Foundations"
+import { FoundationsLearnLayout } from "@/components/layouts/learn/Foundations"
 
 /**
  * Learn / foundations / [categoryId] route.

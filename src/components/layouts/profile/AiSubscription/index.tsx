@@ -2,7 +2,6 @@
 
 import React, {
     useCallback,
-    useMemo,
 } from "react"
 import {
     Breadcrumbs,
@@ -16,12 +15,7 @@ import {
 } from "next/navigation"
 import {
     useQueryAiSubscriptionTiersSwr,
-    useQueryMyAiSettingsSwr,
-    usePaymentOverlayState,
 } from "@/hooks"
-import {
-    PaymentFlow,
-} from "@/modules/types"
 import {
     pathConfig,
 } from "@/resources"
@@ -38,19 +32,18 @@ import {
 /**
  * AI subscription feature container.
  *
- * Owns data (SWR tiers + current settings) and the buy action; renders
- * presentational children. Mounted by the `/profile/ai-subscription` route.
- * `"use client"` because it reads SWR singletons and opens the payment overlay.
+ * Owns only the page chrome (breadcrumb + header) and the loading gate. Data
+ * fetching, current-tier derivation, and the buy action are delegated to
+ * {@link TierGrid} which reads its own SWR singletons and opens the payment
+ * overlay directly. Mounted by the `/profile/ai-subscription` route.
+ * `"use client"` because it uses next/navigation hooks.
  */
 export const AiSubscription = () => {
     const t = useTranslations()
     const router = useRouter()
     const locale = useLocale()
+    // need the tiers SWR here only to gate the skeleton vs grid
     const tiersSwr = useQueryAiSubscriptionTiersSwr()
-    const myAiSettingsSwr = useQueryMyAiSettingsSwr()
-    // shared payment modal — opening it with the tier lets the user pick a
-    // payment method, which then runs the purchase mutation + checkout
-    const { open: openPaymentModal } = usePaymentOverlayState()
 
     /** Navigate back to the profile page. */
     const onBack = useCallback(
@@ -75,36 +68,6 @@ export const AiSubscription = () => {
         [
             router,
             locale,
-        ],
-    )
-
-    /** Purchasable tiers from the query (empty until loaded). */
-    const tiers = useMemo(
-        () => tiersSwr.data ?? [],
-        [
-            tiersSwr.data,
-        ],
-    )
-    /** The user's current tier slug, or `null` for the free tier. */
-    const currentTier = useMemo<string | null>(
-        () => myAiSettingsSwr.data?.tier ?? null,
-        [
-            myAiSettingsSwr.data?.tier,
-        ],
-    )
-
-    /** Open the shared payment modal for `tier`; the modal runs the purchase. */
-    const onBuy = useCallback(
-        (tier: string) => {
-            // hand the chosen tier to the modal — it will create the checkout
-            // with whichever payment method the user picks, then redirect
-            openPaymentModal({
-                flow: PaymentFlow.AiSubscription,
-                tier,
-            })
-        },
-        [
-            openPaymentModal,
         ],
     )
 
@@ -133,14 +96,7 @@ export const AiSubscription = () => {
                 onBack={onBack}
             />
             {tiersReady ? (
-                <TierGrid
-                    tiers={tiers}
-                    currentTier={currentTier}
-                    // the purchase spinner now lives inside the payment modal, so no
-                    // tier is ever in a "creating checkout" state on the grid itself
-                    purchasingTier={null}
-                    onBuy={onBuy}
-                />
+                <TierGrid />
             ) : (
                 <AiSubscriptionSkeleton />
             )}

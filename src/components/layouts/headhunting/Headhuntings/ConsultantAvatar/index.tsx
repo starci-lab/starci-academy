@@ -10,8 +10,9 @@ import {
     DEFAULT_CONSULTANT_AVATAR_URL,
     resolveConsultantAvatarUrl,
 } from "../utils"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
-export interface ConsultantAvatarProps {
+export interface ConsultantAvatarProps extends WithClassNames<undefined> {
     /** Profile image URL from API (nullable). */
     avatarUrl?: string | null
     /** Alt text (usually full name). */
@@ -30,6 +31,7 @@ export const ConsultantAvatar = ({
     avatarUrl,
     fullName,
     size = "card",
+    className,
 }: ConsultantAvatarProps) => {
     const initialSrc = useMemo(
         () => resolveConsultantAvatarUrl(avatarUrl),
@@ -58,6 +60,7 @@ export const ConsultantAvatar = ({
                 size === "card"
                     ? "aspect-square w-full"
                     : "mx-auto aspect-square w-40 rounded-full",
+                className,
             )}
         >
             {!failed ? (

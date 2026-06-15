@@ -38,7 +38,7 @@ export const PremiumPaywall = () => {
 
     return (
         <div className="mx-auto w-full max-w-[680px] px-3 pb-12">
-            <div className="flex flex-col items-center gap-4 rounded-3xl border border-divider bg-content1 px-6 py-10 text-center">
+            <div className="flex flex-col items-center gap-3 rounded-3xl border border-divider bg-content1 px-6 py-10 text-center">
                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-warning/10">
                     <LockKeyIcon className="h-6 w-6 text-warning" />
                 </div>

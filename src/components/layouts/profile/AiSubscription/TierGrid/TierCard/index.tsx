@@ -5,6 +5,7 @@ import React, {
     useCallback,
 } from "react"
 import {
+    cn,
     Button,
     Card,
     Chip,
@@ -17,6 +18,13 @@ import type {
     AiSubscriptionTier,
 } from "@/modules/api"
 import {
+    usePaymentOverlayState,
+} from "@/hooks"
+import {
+    PaymentFlow,
+    type WithClassNames,
+} from "@/modules/types"
+import {
     TierLevelIcon,
 } from "@/components/svg"
 import {
@@ -24,39 +32,41 @@ import {
     formatUsd,
 } from "../../utils"
 
-/** Props for {@link TierCard}. */
-export interface TierCardProps {
+/** Props for {@link TierCard} (list item — per-item tier data only). */
+export interface TierCardProps extends WithClassNames<undefined> {
     /** Tier this card represents. */
     tier: AiSubscriptionTier
     /** Whether this tier is the user's current plan. */
     isCurrent: boolean
-    /** Whether a checkout for this tier is currently being created. */
-    isBuying: boolean
-    /** Fired with the tier slug when the user presses the buy button. */
-    onBuy: (tier: string) => void
 }
 
 /**
  * One purchasable AI subscription tier card.
  *
- * Presentational: render + a thin buy callback, no business logic. Uses the
- * HeroUI `Card` (surface color, no shadow per global, `rounded-3xl`); the
- * popular tier gets an accent border + ring. Shows the "current plan" chip when
- * active, otherwise the buy button with a pending spinner.
- * @param props - tier, current/buying state, buy callback
+ * List item: receives its own tier data + current flag; self-opens the shared
+ * payment overlay for the buy action via {@link usePaymentOverlayState}.
+ * Uses the HeroUI `Card` (surface color, no shadow per global, `rounded-3xl`);
+ * the popular tier gets an accent border + ring.
+ * @param props - tier, current state
  */
 export const TierCard = ({
     tier,
     isCurrent,
-    isBuying,
-    onBuy,
+    className,
 }: TierCardProps) => {
     const t = useTranslations()
+    const { open: openPaymentModal } = usePaymentOverlayState()
+
     const onPress = useCallback(
-        () => onBuy(tier.tier),
+        () => {
+            openPaymentModal({
+                flow: PaymentFlow.AiSubscription,
+                tier: tier.tier,
+            })
+        },
         [
             tier.tier,
-            onBuy,
+            openPaymentModal,
         ],
     )
     // ascending tier level — Plus=2, Pro=3, Max=4 (highlighted bars)
@@ -67,12 +77,11 @@ export const TierCard = ({
             : 2
     return (
         <Card
-            className={[
+            className={cn(
                 "flex h-full flex-col",
-                tier.popular
-                    ? "border-accent ring-2 ring-accent/30"
-                    : "",
-            ].join(" ")}
+                tier.popular ? "border-accent ring-2 ring-accent/30" : "",
+                className,
+            )}
         >
             <Card.Content className="flex flex-1 flex-col gap-3">
                 {/* icon + tier name (+ popular chip) — tight pair */}
@@ -120,7 +129,6 @@ export const TierCard = ({
                     <Button
                         variant="primary"
                         fullWidth
-                        isPending={isBuying}
                         onPress={onPress}
                     >
                         {({ isPending }) => (
@@ -138,15 +146,15 @@ export const TierCard = ({
                 )}
             </Card.Content>
             <Card.Footer>
-                {/* feature list — accent check icon + muted text */}
+                {/* feature list — seal-check icon + muted text */}
                 <div className="flex flex-col gap-1.5 text-sm text-muted">
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-1.5">
                         <SealCheckIcon
                             className="size-5 shrink-0 text-muted"
                         />
                         {t("aiSubscription.creditsPer5h", { credits: tier.creditsPer5h })}
                     </div>
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-1.5">
                         <SealCheckIcon
                             className="size-5 shrink-0 text-muted"
                         />

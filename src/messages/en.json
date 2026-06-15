@@ -1258,6 +1258,12 @@
         "streakLabel": "streak",
         "xpLabel": "XP",
         "lessonsLabel": "lessons",
+        "contributions": {
+            "title": "{count} learning activities in {year}",
+            "cellTitle": "{count} activities · {date}",
+            "less": "Less",
+            "more": "More"
+        },
         "sponsored": "Sponsored",
         "sponsoredBy": "Sponsored by {sponsor}",
         "changelog": "What's new",

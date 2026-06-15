@@ -7,6 +7,7 @@ import {
     cn,
     ListBox,
 } from "@heroui/react"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * One nested module item rendered inside {@link SidebarAccordion}.
@@ -23,7 +24,7 @@ interface SidebarAccordionSubItem {
 /**
  * Props for {@link SidebarAccordion}.
  */
-export interface SidebarAccordionProps {
+export interface SidebarAccordionProps extends WithClassNames<undefined> {
     /** Title shown in accordion trigger. */
     label: string
     /** IconComponent rendered for parent and sub items. */
@@ -49,9 +50,10 @@ export const SidebarAccordion = ({
     items,
     onSelectSubItem,
     extraId,
+    className,
 }: SidebarAccordionProps) => {
     return (
-        <Accordion>
+        <Accordion className={cn("", className)}>
             <Accordion.Item>
                 <Accordion.Heading>
                     <Accordion.Trigger>

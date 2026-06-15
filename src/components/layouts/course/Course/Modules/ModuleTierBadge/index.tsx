@@ -9,6 +9,7 @@ import {
 } from "next-intl"
 import {
     CourseContentTier,
+    type WithClassNames,
 } from "@/modules/types"
 
 /** Chip color per learning tier — free→neutral, mid→amber, advanced→red. */
@@ -19,11 +20,9 @@ const TIER_COLOR: Record<CourseContentTier, "success" | "warning" | "danger"> = 
 }
 
 /** Props for {@link ModuleTierBadge}. */
-export interface ModuleTierBadgeProps {
+export interface ModuleTierBadgeProps extends WithClassNames<undefined> {
     /** The module's learning tier. */
     tier: CourseContentTier
-    /** Extra classes for the chip. */
-    className?: string
 }
 
 /**

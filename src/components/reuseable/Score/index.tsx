@@ -3,6 +3,7 @@
 import React, { useMemo } from "react"
 import { cn } from "@heroui/react"
 import { useFormatter, useTranslations } from "next-intl"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Color of the score based on the ratio compared to the threshold.
@@ -34,7 +35,7 @@ const resolveTone = (
     return "success"
 }
 
-export interface ScoreProps {
+export interface ScoreProps extends WithClassNames<undefined> {
     /** Current score (numerator). */
     current: number
     /** Maximum score (denominator). */

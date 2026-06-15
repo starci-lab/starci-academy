@@ -4,10 +4,14 @@ import { Copy } from "@gravity-ui/icons"
 import React from "react"
 import {
     Button,
+    cn,
 } from "@heroui/react"
+import type {
+    WithClassNames,
+} from "@/modules/types"
 
 /** Props for {@link DetailRow}. */
-export interface DetailRowProps {
+export interface DetailRowProps extends WithClassNames<undefined> {
     /** Uppercase caption shown above the value. */
     label: string
     /** The value text rendered in the row. */
@@ -37,10 +41,11 @@ export const DetailRow = ({
     copyValue,
     isHighlighted = false,
     onCopy,
+    className,
 }: DetailRowProps) => {
     const textToCopy = copyValue ?? value
     return (
-        <div className="flex flex-col gap-1.5">
+        <div className={cn("flex flex-col gap-1.5", className)}>
             <span className="text-xs font-semibold uppercase tracking-wide text-muted">
                 {label}
             </span>

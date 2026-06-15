@@ -46,8 +46,8 @@ const resolveRendererType = (
 
 export interface VideoRendererProps
     extends WithClassNames<{
-        content: string
-        base: string
+        content?: string
+        base?: string
     }> {
     url: string
     hostPlatform?: VideoHostPlatform

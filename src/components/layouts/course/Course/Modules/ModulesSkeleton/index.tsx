@@ -4,13 +4,17 @@ import React from "react"
 import {
     Accordion,
     Skeleton,
+    cn,
 } from "@heroui/react"
 import {
     useTranslations,
 } from "next-intl"
+import type {
+    WithClassNames,
+} from "@/modules/types"
 
 /** Props for {@link ModulesSkeleton}. */
-export interface ModulesSkeletonProps {
+export interface ModulesSkeletonProps extends WithClassNames<undefined> {
     /** Number of placeholder accordion items to render. */
     count: number
 }
@@ -24,10 +28,11 @@ export interface ModulesSkeletonProps {
  */
 export const ModulesSkeleton = ({
     count,
+    className,
 }: ModulesSkeletonProps) => {
     const t = useTranslations()
     return (
-        <Accordion variant="surface">
+        <Accordion variant="surface" className={cn(className)}>
             {Array.from({ length: count }).map((_, index) => (
                 <Accordion.Item
                     key={index}

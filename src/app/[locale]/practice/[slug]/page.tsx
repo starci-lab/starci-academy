@@ -1,16 +1,14 @@
 "use client"
 
 import React from "react"
-import { useParams } from "next/navigation"
-import { PracticeProblem } from "@/components/layouts/Practice"
+import { PracticeProblem } from "@/components/layouts/learn/Practice"
 
 /**
- * Route `/[locale]/practice/[slug]` — coding-problem detail + editor. Reads the
- * slug from the route and mounts the problem component.
+ * Route `/[locale]/practice/[slug]` — coding-problem detail + editor.
+ * `PracticeProblem` reads the slug from the route itself.
  */
 const Page = () => {
-    const params = useParams()
-    return <PracticeProblem slug={String(params.slug)} />
+    return <PracticeProblem />
 }
 
 export default Page

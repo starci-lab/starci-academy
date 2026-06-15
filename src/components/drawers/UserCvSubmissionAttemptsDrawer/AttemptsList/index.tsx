@@ -2,21 +2,19 @@
 
 import React from "react"
 import {
+    cn,
     ScrollShadow,
 } from "@heroui/react"
-import type {
-    AttemptRow,
-} from "../types"
+import type { AttemptRow } from "../types"
+import type { WithClassNames } from "@/modules/types"
 import {
     CVCard,
 } from "./CVCard"
 
 /** Props for {@link AttemptsList}. */
-export interface AttemptsListProps {
+export interface AttemptsListProps extends WithClassNames<undefined> {
     /** Display-ready attempt rows to render. */
     rows: Array<AttemptRow>
-    /** Fired with an attempt id when its analysis modal is requested. */
-    onOpenAnalysis: (attemptId: string) => void
 }
 
 /**
@@ -27,11 +25,11 @@ export interface AttemptsListProps {
  */
 export const AttemptsList = ({
     rows,
-    onOpenAnalysis,
+    className,
 }: AttemptsListProps) => {
     return (
         <ScrollShadow
-            className="min-h-0 flex-1 overflow-x-hidden p-3"
+            className={cn("min-h-0 flex-1 overflow-x-hidden p-3", className)}
             hideScrollBar
         >
             <div className="flex flex-col gap-3">
@@ -46,7 +44,7 @@ export const AttemptsList = ({
                         submittedAtLabel={row.submittedAtLabel}
                         status={row.status}
                         feedbackPreview={row.feedbackPreview}
-                        onOpenAnalysis={onOpenAnalysis}
+                        detailFeedback={row.detailFeedback}
                     />
                 ))}
             </div>

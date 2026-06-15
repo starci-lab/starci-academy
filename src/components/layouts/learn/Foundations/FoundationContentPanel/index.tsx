@@ -1,24 +1,25 @@
 "use client"
 
 import { Button, cn } from "@heroui/react"
-import type { FoundationEntity } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types"
 import { FoundationKind } from "@/modules/types"
 import { useTranslations } from "next-intl"
 import React, { useMemo } from "react"
+import { useAppSelector } from "@/redux"
 import { useOpenFoundationResource } from "../hooks"
-import { FoundationMeta } from "../FoundationMeta"
+import { FoundationMeta } from "../shared/FoundationMeta"
 
-export interface FoundationContentPanelProps {
-    /** Selected foundation to render; when undefined shows placeholder. */
-    foundation?: FoundationEntity
-}
+/** Props for {@link FoundationContentPanel}. */
+export type FoundationContentPanelProps = WithClassNames<undefined>
 
 /**
  * Right-hand panel: summary for the selected foundation and action to open content.
- * @param props.foundation - Active foundation row from Redux.
+ * Reads the active foundation from Redux (`state.foundation.entity`).
+ * @param props.className - Optional root class names.
  */
-export const FoundationContentPanel = ({ foundation }: FoundationContentPanelProps) => {
+export const FoundationContentPanel = ({ className }: FoundationContentPanelProps) => {
     const t = useTranslations()
+    const foundation = useAppSelector((state) => state.foundation.entity)
     const openFoundationResource = useOpenFoundationResource()
 
     const actionLabel = useMemo(() => {
@@ -39,14 +40,14 @@ export const FoundationContentPanel = ({ foundation }: FoundationContentPanelPro
 
     if (!foundation) {
         return (
-            <div className="card card--default flex min-h-[240px] items-center justify-center p-6">
+            <div className={cn("card card--default flex min-h-[240px] items-center justify-center p-6", className)}>
                 <p className="text-muted text-center text-sm">{t("foundations.selectPrompt")}</p>
             </div>
         )
     }
 
     return (
-        <div className="card card--default flex flex-col gap-4 p-4 lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto">
+        <div className={cn("card card--default flex flex-col gap-6 p-4 lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto", className)}>
             <div>
                 <h2 className="text-xl font-bold">{foundation.title}</h2>
                 <div className="mt-2">

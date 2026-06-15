@@ -3,6 +3,7 @@
 import React from "react"
 import {
     Button,
+    cn,
     FieldError,
     Input,
     Spinner,
@@ -15,10 +16,16 @@ import {
     useMutateSyncPersonalProjectGithubSwr,
 } from "@/hooks"
 import { usePersonalProjectGithubForm } from "@/hooks/zustand"
+import type { WithClassNames } from "@/modules/types/base/class-name"
+
+/** Props for {@link PersonalProjectSubmission}. */
+export type PersonalProjectSubmissionProps = WithClassNames<undefined>
+
 /**
  * GitHub URL (debounced sync) + branch field for the personal project.
+ * @param props - {@link PersonalProjectSubmissionProps}
  */
-export const PersonalProjectSubmission = () => {
+export const PersonalProjectSubmission = ({ className }: PersonalProjectSubmissionProps) => {
     const t = useTranslations()
     // Component CHỦ → enableSync: true (chạy debounced sync url/branch).
     const {
@@ -49,7 +56,7 @@ export const PersonalProjectSubmission = () => {
         Boolean(touched.branch && errors.branch)
 
     return (
-        <div className="p-3">
+        <div className={cn("p-3", className)}>
             <div className="text-2xl font-bold">{t("finalProject.page.title")}</div>
             <div className="h-3" />
             <div className="text-sm text-muted">{t("finalProject.page.description")}</div>

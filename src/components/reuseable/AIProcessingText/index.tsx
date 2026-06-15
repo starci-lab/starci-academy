@@ -129,7 +129,7 @@ export const AIProcessingText = (props: AIProcessingTextProps) => {
             {textBlock}
         </div>
     ) : (
-        <div className="flex w-full items-center gap-3">
+        <div className="flex w-full items-center gap-1.5">
             {statusIcon}
             <div className="w-full min-w-0">
                 {textBlock}

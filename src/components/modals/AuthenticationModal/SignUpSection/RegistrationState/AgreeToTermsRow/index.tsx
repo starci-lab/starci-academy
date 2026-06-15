@@ -3,15 +3,19 @@
 import React from "react"
 import {
     Checkbox,
+    cn,
     Label,
     Link,
 } from "@heroui/react"
+import type {
+    WithClassNames,
+} from "@/modules/types/base/class-name"
 import {
     useTranslations,
 } from "next-intl"
 
 /** Props for {@link AgreeToTermsRow}. */
-export interface AgreeToTermsRowProps {
+export interface AgreeToTermsRowProps extends WithClassNames<undefined> {
     /** Whether the terms checkbox is checked. */
     isSelected: boolean
     /** Validation error message, if any. */
@@ -34,10 +38,11 @@ export const AgreeToTermsRow = ({
     error,
     touched,
     onChangeSelected,
+    className,
 }: AgreeToTermsRowProps) => {
     const t = useTranslations()
     return (
-        <div className="flex flex-col gap-1">
+        <div className={cn("flex flex-col gap-1.5", className)}>
             <div className="flex items-start gap-1.5">
                 <Checkbox
                     id="sign-up-agree-to-terms"

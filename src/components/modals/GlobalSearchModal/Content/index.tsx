@@ -1,8 +1,6 @@
 "use client"
-import { useSearchOverlayState } from "@/hooks"
-import { useLocale, useTranslations } from "next-intl"
-import { useRouter } from "next/navigation"
-import React, { useCallback } from "react"
+import { useTranslations } from "next-intl"
+import React from "react"
 import { GlobalSearchContentBlock } from "./Block"
 import { GlobalSearchEmpty } from "./Empty"
 import { useAppSelector } from "@/redux"
@@ -33,9 +31,6 @@ interface GlobalSearchSection {
  */
 export const GlobalSearchContent = () => {
     const t = useTranslations()
-    const locale = useLocale()
-    const router = useRouter()
-    const { setOpen } = useSearchOverlayState()
 
     const courses = useAppSelector((state) => state.socketIo.globalSearchResults?.data?.courses)
     const modules = useAppSelector((state) => state.socketIo.globalSearchResults?.data?.modules)
@@ -45,17 +40,6 @@ export const GlobalSearchContent = () => {
     const milestones = useAppSelector((state) => state.socketIo.globalSearchResults?.data?.milestones)
     const milestoneTasks = useAppSelector((state) => state.socketIo.globalSearchResults?.data?.milestoneTasks)
     const query = useAppSelector((state) => state.search.query).trim()
-
-    // Navigate to the pressed hit using the server-built canonical route (the route
-    // index is the single source of truth now — no client-side URL assembly).
-    const onItemPress = useCallback(
-        (item: AutocompleteGlobalSearchItem) => {
-            // ignore presses with no resolvable route (cache miss / unroutable kind)
-            if (!item.path) return
-            // server path is locale-agnostic → prepend the active locale
-            router.push(`/${locale}${item.path}`)
-            setOpen(false)
-        }, [locale, router, setOpen])
 
     // One section per bucket, in display order; only non-empty buckets are shown.
     const allSections: Array<GlobalSearchSection> = [
@@ -128,7 +112,6 @@ export const GlobalSearchContent = () => {
                                 <Accordion.Body className="p-3 pt-0">
                                     <GlobalSearchContentBlock
                                         items={section.items ?? []}
-                                        onItemPress={onItemPress}
                                     />
                                 </Accordion.Body>
                             </Accordion.Panel>

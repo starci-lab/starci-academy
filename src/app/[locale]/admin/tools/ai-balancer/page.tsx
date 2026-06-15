@@ -3,7 +3,7 @@
 import React from "react"
 import {
     AdminAiBalancer,
-} from "@/components/layouts/AdminAiBalancer"
+} from "@/components/layouts/admin/AdminAiBalancer"
 
 /**
  * Route `/[locale]/admin/tools/ai-balancer` — AI balancer key health dashboard.

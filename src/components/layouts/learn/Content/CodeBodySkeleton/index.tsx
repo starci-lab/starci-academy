@@ -8,13 +8,14 @@ import {
 import {
     SkeletonText,
 } from "@/components/reuseable"
+import type {
+    WithClassNames,
+} from "@/modules/types"
 
 /** Props for {@link CodeBodySkeleton}. */
-export interface CodeBodySkeletonProps {
+export interface CodeBodySkeletonProps extends WithClassNames<undefined> {
     /** Number of placeholder code cards to render. Defaults to `2`. */
     count?: number
-    /** Extra classes appended to the wrapper. */
-    className?: string
 }
 
 /**
@@ -28,7 +29,7 @@ export const CodeBodySkeleton = ({
     className,
 }: CodeBodySkeletonProps) => {
     return (
-        <div className={cn("flex flex-col gap-4", className)}>
+        <div className={cn("flex flex-col gap-6", className)}>
             {Array.from({ length: Math.max(count, 1) }).map((_unused, index) => (
                 <article
                     key={index}

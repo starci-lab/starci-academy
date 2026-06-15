@@ -1,6 +1,6 @@
 "use client"
 import React from "react"
-import { LandingPage } from "@/components/layouts/LandingPage"
+import { LandingPage } from "@/components/layouts/marketing/LandingPage"
 
 const Page = () => {
     return (

@@ -12,11 +12,10 @@ import {
     motion,
     type PanInfo,
 } from "framer-motion"
+import type { WithClassNames } from "@/modules/types"
 
 /** Props for {@link DragScrollArea}. */
-export interface DragScrollAreaProps {
-    /** Extra classes on the scroll container. */
-    className?: string
+export interface DragScrollAreaProps extends WithClassNames<undefined> {
     /** Scrollable content. */
     children: React.ReactNode
     /** Hide the native scrollbar (default true). */

@@ -52,7 +52,7 @@ export const E2eBody = (): React.JSX.Element => {
 
     return (
         <div className="mx-auto flex max-w-3xl flex-col gap-6">
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-1.5">
                 <p className="text-sm font-semibold">Kiểm thử end-to-end (Playwright)</p>
                 <p className="text-sm text-default-500">
                     {passed}/{visible.length} luồng pass — log thật ghi lại từ lần chạy E2E trên backend & UI thật.

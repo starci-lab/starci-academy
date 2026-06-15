@@ -1,7 +1,10 @@
+"use client"
+
 import { FaceRobot as RobotIcon, Moon as BedIcon, QuoteOpen as QuotesIcon } from "@gravity-ui/icons"
+import { cn } from "@heroui/react"
 import { motion } from "framer-motion"
-// Thêm icon phù hợp
 import React from "react"
+import { type WithClassNames } from "@/modules/types"
 
 
 // Reuse motion variant patterns similar to TrapSection.
@@ -28,7 +31,12 @@ const childVariants = {
     },
 }
 
-export const RealityCheckSection = () => {
+export type RealityCheckSectionProps = WithClassNames<undefined>
+
+/**
+ * @param {RealityCheckSectionProps} props Optional wrapper styling props.
+ */
+export const RealityCheckSection = ({ className }: RealityCheckSectionProps) => {
     // Data for the 3 points, including full paragraphs.
     const realityPoints = [
         {
@@ -60,7 +68,7 @@ export const RealityCheckSection = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="col-span-3 mt-16 max-w-2xl" // Re-use col-span and max-width for alignment, add margin-top
+            className={cn("col-span-3 mt-16 max-w-2xl", className)}
         >
             <motion.div variants={childVariants} className="space-y-12"> {/* Stack points vertically */}
                 {realityPoints.map((point) => (

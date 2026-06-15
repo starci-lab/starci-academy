@@ -66,7 +66,7 @@ export const TierCardSkeleton = ({
             </Card.Content>
             <Card.Footer>
                 <div className="flex flex-col gap-1.5 text-sm">
-                    <div className="flex min-h-5 items-center gap-1">
+                    <div className="flex min-h-5 items-center gap-1.5">
                         <Skeleton className="size-5 shrink-0 rounded-full" />
                         <div className="min-w-0 flex-1">
                             <SkeletonText
@@ -75,7 +75,7 @@ export const TierCardSkeleton = ({
                             />
                         </div>
                     </div>
-                    <div className="flex min-h-5 items-center gap-1">
+                    <div className="flex min-h-5 items-center gap-1.5">
                         <Skeleton className="size-5 shrink-0 rounded-full" />
                         <div className="min-w-0 flex-1">
                             <SkeletonText

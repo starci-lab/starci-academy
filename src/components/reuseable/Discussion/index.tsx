@@ -1,9 +1,10 @@
 "use client"
 
 import React from "react"
-import { Button, Separator, Spinner } from "@heroui/react"
+import { Button, Separator, Spinner, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { ReactionType, type CommentNode, type ReactionSummary } from "@/modules/api"
+import type { WithClassNames } from "@/modules/types"
 import { InteractionBar, type ActionBarProps } from "./InteractionBar"
 import { CommentComposer } from "./CommentComposer"
 import { CommentItem } from "./CommentItem"
@@ -16,7 +17,7 @@ export * from "./InteractionBar"
 export * from "./constants"
 
 /** Props for {@link Discussion}. */
-export interface DiscussionProps extends ActionBarProps {
+export interface DiscussionProps extends ActionBarProps, WithClassNames<undefined> {
     /** Current viewer id (drives owner-only actions); null when unknown. */
     currentUserId: string | null
     /** Aggregate reactions on the content itself. */
@@ -87,11 +88,12 @@ export const Discussion = ({
     hasMore,
     isLoadingMore,
     onLoadMore,
+    className,
 }: DiscussionProps) => {
     const t = useTranslations()
 
     return (
-        <section className="flex flex-col gap-4">
+        <section className={cn("flex flex-col gap-6", className)}>
             <Separator />
 
             {/* ── Facebook-style two-row interaction bar ── */}

@@ -5,6 +5,7 @@ import {
     SkeletonText,
     type SkeletonTextSize,
 } from "../SkeletonText"
+import type { WithClassNames } from "@/modules/types"
 
 /**
  * Stepped widths cycled across paragraph lines so the block reads like real
@@ -13,13 +14,11 @@ import {
  */
 const stepWidths = ["w-full", "w-3/4", "w-1/2"] as const
 
-export interface SkeletonParagraphProps {
+export interface SkeletonParagraphProps extends WithClassNames<undefined> {
     /** Typography token shared by every line; drives each bar's height. */
     size: SkeletonTextSize
     /** Number of skeleton lines to render. Defaults to `3`. */
     lines?: number
-    /** Extra classes appended to the wrapper. */
-    className?: string
 }
 
 /**

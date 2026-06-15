@@ -5,15 +5,18 @@ import React, {
     useEffect,
     useMemo,
 } from "react"
-import { Modal } from "@heroui/react"
+import { cn, Modal } from "@heroui/react"
 import { useAppSelector } from "@/redux"
 import {
     JobStatus,
+    WithClassNames,
 } from "@/modules/types"
 import { useTranslations } from "next-intl"
 import { useAIProcessingOverlayState } from "@/hooks"
 import { resolveAiProcessingCopy } from "@/components/utils"
 
+/** Props for {@link AIProcessingModal}. */
+type AIProcessingModalProps = WithClassNames<undefined>
 
 /**
  * Modal overlay shown while an AI review job is processing.
@@ -22,7 +25,7 @@ import { resolveAiProcessingCopy } from "@/components/utils"
  * from the job-notifications socket handler), this component opens the modal so callers
  * do not need to invoke `useAIProcessingOverlayState().open` manually.
  */
-export const AIProcessingModal = () => {
+export const AIProcessingModal = ({ className }: AIProcessingModalProps = {}) => {
     const t = useTranslations()
     const { isOpen, setOpen, open } = useAIProcessingOverlayState()
     const jobCategory = useAppSelector((state) => state.modal.aiProcessingData?.category)
@@ -83,9 +86,9 @@ export const AIProcessingModal = () => {
         <Modal isOpen={isOpen} onOpenChange={setOpen}>
             <Modal.Backdrop>
                 <Modal.Container>
-                    <Modal.Dialog>
+                    <Modal.Dialog className={cn(className)}>
                         <Modal.Body>
-                            <div className="flex flex-col items-center justify-center gap-4 py-8 px-4">
+                            <div className="flex flex-col items-center justify-center gap-3 py-8 px-4">
                                 {jobStatus && iconMap[jobStatus]}
                                 <div className="text-lg font-bold text-center">{data?.title}</div>
                                 <div className="text-sm text-muted text-center max-w-sm">{data?.description}</div>

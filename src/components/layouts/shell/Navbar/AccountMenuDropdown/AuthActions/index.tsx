@@ -1,34 +1,70 @@
 "use client"
 
-import React from "react"
+import React, { useCallback, useMemo } from "react"
 import {
     Button,
+    cn,
 } from "@heroui/react"
-import type {
-    AccountActionItem,
-} from "../types"
+import { useTranslations } from "next-intl"
+import { useAppDispatch } from "@/redux"
+import { setAuthenticationModalTab } from "@/redux/slices"
+import { AuthenticationModalTab } from "@/redux/slices/tabs"
+import {
+    useAccountMenuOverlayState,
+    useAuthenticationOverlayState,
+} from "@/hooks"
+import type { WithClassNames } from "@/modules/types"
+import type { AccountActionItem } from "../types"
 
-/** Props for {@link AuthActions}. */
-export interface AuthActionsProps {
-    /** Auth call-to-action buttons (sign in / sign up). */
-    items: Array<AccountActionItem>
-    /** Fired with the chosen action when a button is pressed. */
-    onSelectAction: (item: AccountActionItem) => void
-}
+/**
+ * Props for {@link AuthActions}.
+ */
+export type AuthActionsProps = WithClassNames<undefined>
 
 /**
  * Row of authentication call-to-action buttons shown to signed-out users.
  *
- * Presentational: maps {@link AccountActionItem}s to buttons and forwards the
- * chosen action upward. No business logic.
- * @param props - action items and the select callback
+ * Container: derives its action items from translations itself, dispatches
+ * the auth-tab action, and opens the authentication overlay directly.
+ * `"use client"` for hooks + press handlers.
+ * @param props - optional root class name
  */
-export const AuthActions = ({
-    items,
-    onSelectAction,
-}: AuthActionsProps) => {
+export const AuthActions = ({ className }: AuthActionsProps) => {
+    const t = useTranslations()
+    const dispatch = useAppDispatch()
+    const { close } = useAccountMenuOverlayState()
+    const { open: openAuthentication } = useAuthenticationOverlayState()
+
+    const items = useMemo<Array<AccountActionItem>>(
+        () => [
+            {
+                key: "sign-in",
+                label: t("auth.signIn.submit"),
+                variant: "primary",
+                tab: AuthenticationModalTab.SignIn,
+            },
+            {
+                key: "sign-up",
+                label: t("auth.signUp.submit"),
+                variant: "tertiary",
+                tab: AuthenticationModalTab.SignUp,
+            },
+        ],
+        [t],
+    )
+
+    /** Open the auth modal on the chosen tab and close this dropdown. */
+    const onSelectAction = useCallback(
+        (item: AccountActionItem) => {
+            dispatch(setAuthenticationModalTab(item.tab))
+            close()
+            openAuthentication()
+        },
+        [dispatch, close, openAuthentication],
+    )
+
     return (
-        <div className="flex items-center gap-1.5">
+        <div className={cn("flex items-center gap-3", className)}>
             {items.map((item) => (
                 <Button
                     key={item.key}

@@ -1,14 +1,16 @@
 "use client"
 
 import { Bars as ListIcon, ListUl as ListBulletsIcon } from "@gravity-ui/icons"
-import React, { useState } from "react"
-import { Button, Drawer, ScrollShadow } from "@heroui/react"
+import React, { useEffect, useState } from "react"
+import { Button, cn, Drawer, ScrollShadow } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { SidebarNavList } from "@/components/layouts/Sidebar/SidebarNavList"
-import { useSidebarNavItems } from "@/components/layouts/Sidebar/useSidebarNavItems"
-import { ModuleSidebar } from "@/components/layouts/ModuleSidebar"
-import type { SidebarNavItem } from "@/components/layouts/Sidebar/types"
+import { SidebarNavList } from "@/components/layouts/learn/Sidebar/SidebarNavList"
+import { useSidebarNavItems } from "@/components/layouts/learn/Sidebar/useSidebarNavItems"
+import { ModuleSidebar } from "@/components/layouts/learn/ModuleSidebar"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
+/** Props for {@link LearnMobileBar}. */
+export type LearnMobileBarProps = WithClassNames<undefined>
 
 /**
  * Mobile toolbar for the course-learn pages (hidden from `lg` up).
@@ -17,27 +19,26 @@ import type { SidebarNavItem } from "@/components/layouts/Sidebar/types"
  * slide-in drawers — the course nav (left) and the module outline (right).
  * Each drawer is controlled by local open state. `"use client"` for the
  * interactive triggers + shared nav hook.
+ * @param props - {@link LearnMobileBarProps}
  */
-export const LearnMobileBar = () => {
+export const LearnMobileBar = ({ className }: LearnMobileBarProps) => {
     const t = useTranslations()
     // shared course-nav entries (same list the desktop sidebar renders)
-    const { items, selectedTab, onSelect } = useSidebarNavItems()
+    const { items, selectedTab } = useSidebarNavItems()
     // open state for the left (course menu) drawer
     const [isMenuOpen, setMenuOpen] = useState(false)
     // open state for the right (module outline) drawer
     const [isOutlineOpen, setOutlineOpen] = useState(false)
 
-    /** Route to the chosen entry, then close the drawer so content is visible. */
-    const onSelectItem = (item: SidebarNavItem) => {
-        // perform the normal tab switch + navigation
-        onSelect(item)
-        // collapse the drawer so the user lands back on the content
+    // rows self-dispatch their tab + navigation; collapse the drawer whenever the
+    // active tab changes so the user lands back on the content
+    useEffect(() => {
         setMenuOpen(false)
-    }
+    }, [selectedTab])
 
     return (
         // sticky bar sitting directly under the 64px navbar; mobile/tablet only
-        <div className="sticky top-16 z-40 flex items-center gap-1.5 border-b bg-background/80 px-3 py-2 backdrop-blur-xl lg:hidden">
+        <div className={cn("sticky top-16 z-40 flex items-center gap-3 border-b bg-background/80 px-3 py-2 backdrop-blur-xl lg:hidden", className)}>
             {/* trigger: open the course navigation drawer */}
             <Button variant="ghost" size="sm" onPress={() => setMenuOpen(true)}>
                 <ListIcon className="size-4" />
@@ -65,7 +66,6 @@ export const LearnMobileBar = () => {
                                 <SidebarNavList
                                     items={items}
                                     selectedTab={selectedTab}
-                                    onSelect={onSelectItem}
                                 />
                             </Drawer.Body>
                         </Drawer.Dialog>

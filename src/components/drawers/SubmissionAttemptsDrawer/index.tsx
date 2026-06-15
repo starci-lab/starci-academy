@@ -1,12 +1,12 @@
 "use client"
 
 import React, { useMemo } from "react"
-import { Drawer, Pagination, ScrollShadow } from "@heroui/react"
-import { useFeedbackDetailsOverlayState, useSubmissionAttemptsOverlayState } from "@/hooks"
+import { cn, Drawer, Pagination, ScrollShadow } from "@heroui/react"
+import type { WithClassNames } from "@/modules/types"
+import { useSubmissionAttemptsOverlayState } from "@/hooks"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import {
     setActiveChallengeSubmissionId,
-    setSubmissionAttemptId,
     setSubmissionAttemptsPageNumber,
 } from "@/redux/slices"
 import { useTranslations } from "next-intl"
@@ -15,14 +15,17 @@ import { useQuerySubmissionAttemptsSwr } from "@/hooks"
 import { SubmissionAttemptCardSkeleton } from "./SubmissionAttempCardSkeleton"
 import { Empty } from "./Empty"
 
+/** Props for {@link SubmissionAttemptsDrawer}. Container — only layout className. */
+export type SubmissionAttemptsDrawerProps = WithClassNames<undefined>
+
 /**
  * Drawer listing submission attempts for the active challenge submission.
  */
-export const SubmissionAttemptsDrawer = () => {
+export const SubmissionAttemptsDrawer = (props: SubmissionAttemptsDrawerProps = {}) => {
+    const { className } = props
     const dispatch = useAppDispatch()
     const t = useTranslations()
     const { isOpen, setOpen } = useSubmissionAttemptsOverlayState()
-    const { open: openFeedbackDetails } = useFeedbackDetailsOverlayState()
     const submissionAttempts = useAppSelector((state) => state.submissionAttempt.submissionAttempts)
     const count = useAppSelector((state) => state.submissionAttempt.count)
     const pageNumber = useAppSelector((state) => state.submissionAttempt.pageNumber)
@@ -66,7 +69,7 @@ export const SubmissionAttemptsDrawer = () => {
                 }}
             >
                 <Drawer.Content placement="right">
-                    <Drawer.Dialog className="p-0">
+                    <Drawer.Dialog className={cn("p-0", className)}>
                         <div className="p-3">
                             <Drawer.CloseTrigger />
                             <Drawer.Header>
@@ -97,13 +100,6 @@ export const SubmissionAttemptsDrawer = () => {
                                                                 key={submissionAttempt.id}
                                                                 maxScore={challengeSubmission?.score}
                                                                 submissionAttempt={submissionAttempt}
-                                                                onViewDetails={() => {
-                                                                    dispatch(setSubmissionAttemptId(submissionAttempt.id))
-                                                                    openFeedbackDetails()
-                                                                }}
-                                                                onViewSubmission={() => {
-                                                                    window.open(submissionAttempt.submissionUrl, "_blank")
-                                                                }}
                                                             />
                                                         ),
                                                     )
@@ -122,7 +118,7 @@ export const SubmissionAttemptsDrawer = () => {
                                     className="justify-center"
                                     size="sm"
                                 >
-                                    <Pagination.Content className="flex flex-wrap justify-center gap-1">
+                                    <Pagination.Content className="flex flex-wrap justify-center gap-1.5">
                                         <Pagination.Item>
                                             <Pagination.Previous
                                                 aria-label={t("common.pagination.previous")}

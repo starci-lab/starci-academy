@@ -2,20 +2,18 @@
 
 import { Pulse as PulseIcon } from "@gravity-ui/icons"
 import React, {
-    useCallback,
     useMemo,
 } from "react"
 import {
-    useLocale,
+    cn,
+} from "@heroui/react"
+import {
     useTranslations,
 } from "next-intl"
 import {
     useQueryAiBalancerHealthSwr,
 } from "@/hooks"
-import {
-    AiBalancerKeyStatus,
-    ModelProvider,
-} from "@/modules/api"
+import type { WithClassNames } from "@/modules/types"
 import {
     ProviderCard,
 } from "./ProviderCard"
@@ -23,13 +21,19 @@ import {
     KeyPoolStatusSkeleton,
 } from "./KeyPoolStatusSkeleton"
 
+/** Props for {@link KeyPoolStatus}. */
+export interface KeyPoolStatusProps extends WithClassNames<undefined> {
+    /** Reserved — no caller data props. */
+    readonly _reserved?: undefined
+}
+
 /**
  * Live API key pool status for StarCi AI (Redis ping cache + balancer pool).
  *
  * Polls via {@link useQueryAiBalancerHealthSwr}; only key suffixes are shown.
+ * Each {@link ProviderCard} derives its own labels via i18n hooks.
  */
-export const KeyPoolStatus = () => {
-    const locale = useLocale()
+export const KeyPoolStatus = ({ className }: KeyPoolStatusProps) => {
     const t = useTranslations("starciAi.keyPool")
     const {
         data,
@@ -37,46 +41,6 @@ export const KeyPoolStatus = () => {
         isLoading,
         isValidating,
     } = useQueryAiBalancerHealthSwr()
-
-    const providerLabelMap = useMemo(
-        (): Record<string, string> => ({
-            [ModelProvider.Gemini]: t("providers.gemini"),
-            [ModelProvider.OpenAI]: t("providers.openai"),
-            [ModelProvider.Claude]: t("providers.claude"),
-            [ModelProvider.OpenRouter]: t("providers.openrouter"),
-        }),
-        [
-            t,
-        ],
-    )
-
-    const statusLabel = useCallback(
-        (status: string) => {
-            if (status === AiBalancerKeyStatus.Active) {
-                return t("status.active")
-            }
-            if (status === AiBalancerKeyStatus.Disabled) {
-                return t("status.disabled")
-            }
-            if (status === AiBalancerKeyStatus.Probing) {
-                return t("status.probing")
-            }
-            return status
-        },
-        [
-            t,
-        ],
-    )
-
-    const cardLabels = useMemo(
-        () => ({
-            activeSummary: t("activeSummary"),
-            lastPing: t("lastPing"),
-        }),
-        [
-            t,
-        ],
-    )
 
     const sortedProviders = useMemo(
         () => [
@@ -102,7 +66,7 @@ export const KeyPoolStatus = () => {
     }
 
     return (
-        <section className="flex flex-col gap-4">
+        <section className={cn("flex flex-col gap-3", className)}>
             <div className="flex flex-wrap items-center gap-1.5">
                 <PulseIcon
                     className="size-5 text-accent"
@@ -116,18 +80,11 @@ export const KeyPoolStatus = () => {
                     </p>
                 </div>
             </div>
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-3">
                 {sortedProviders.map((providerHealth) => (
                     <ProviderCard
                         key={providerHealth.provider}
                         providerHealth={providerHealth}
-                        providerLabel={
-                            providerLabelMap[providerHealth.provider]
-                            ?? providerHealth.provider
-                        }
-                        locale={locale}
-                        statusLabel={statusLabel}
-                        labels={cardLabels}
                     />
                 ))}
                 {sortedProviders.length === 0 ? (

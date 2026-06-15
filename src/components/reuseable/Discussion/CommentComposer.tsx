@@ -1,11 +1,12 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
-import { Button } from "@heroui/react"
+import { Button, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
+import type { WithClassNames } from "@/modules/types"
 
 /** Props for {@link CommentComposer}. */
-export interface CommentComposerProps {
+export interface CommentComposerProps extends WithClassNames<undefined> {
     /** Called with the trimmed body when the user submits a non-empty comment. */
     onSubmit: (body: string) => void
     /** Placeholder text for the textarea. */
@@ -33,6 +34,7 @@ export const CommentComposer = ({
     onCancel,
     initialValue,
     busy,
+    className,
 }: CommentComposerProps) => {
     const t = useTranslations()
     // draft body kept local until submit
@@ -53,7 +55,7 @@ export const CommentComposer = ({
     }
 
     return (
-        <div className="flex flex-col gap-1.5">
+        <div className={cn("flex flex-col gap-1.5", className)}>
             <textarea
                 rows={3}
                 value={body}

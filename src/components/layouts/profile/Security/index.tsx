@@ -218,7 +218,7 @@ export const Security = () => {
                 onBack={onNavigateProfile}
             />
 
-            <div className="flex flex-col gap-4 rounded-large bg-default/40 p-4">
+            <div className="flex flex-col gap-3 rounded-large bg-default/40 p-4">
                 <div className="flex items-center gap-3">
                     <ShieldIcon className="size-5 text-accent" />
                     <div className="flex flex-1 flex-col">
@@ -273,7 +273,7 @@ export const Security = () => {
                     </div>
                 ) : setup ? (
                     /* ENROLLING → show QR + secret, ask for a code to confirm */
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-3">
                         <div className="text-sm text-muted">{t("security.scanHint")}</div>
                         <div className="flex flex-col items-center gap-3">
                             <QRCode size={180} data={setup.otpauthUrl} />

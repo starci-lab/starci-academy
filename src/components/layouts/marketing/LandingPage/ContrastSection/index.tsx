@@ -1,8 +1,10 @@
 "use client"
 
 import { Check, TriangleExclamation as Warning, Xmark as X } from "@gravity-ui/icons"
+import { cn } from "@heroui/react"
 import { motion } from "framer-motion"
 import React from "react"
+import { type WithClassNames } from "@/modules/types"
 
 
 /** Container stagger for the two columns + rows. */
@@ -60,21 +62,26 @@ const ROWS: { other: string; starci: string }[] = [
  * teaching habits with StarCi's approach. Sharp but sober: no competitor is
  * named, and the closing line reframes it as honesty, not attack.
  */
-export const ContrastSection = () => {
+export type ContrastSectionProps = WithClassNames<undefined>
+
+/**
+ * @param {ContrastSectionProps} props Optional wrapper styling props.
+ */
+export const ContrastSection = ({ className }: ContrastSectionProps) => {
     return (
         <motion.section
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="max-w-4xl mx-auto"
+            className={cn("max-w-4xl mx-auto", className)}
         >
             {/* Header */}
             <motion.div variants={itemVariants} className="max-w-2xl mb-12">
                 <div className="flex items-center gap-1.5 text-accent mb-4">
                     <Warning width={22} height={22} />
                     <span className="font-mono uppercase tracking-[0.2em] text-xs">
- * "The truth no one tells you" — a side-by-side that contrasts widespread
+                        Sự thật
                     </span>
                 </div>
                 <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground">
@@ -84,7 +91,7 @@ export const ContrastSection = () => {
             </motion.div>
 
             {/* Two-column compare */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
                 {/* Column labels */}
                 <motion.div
                     variants={itemVariants}

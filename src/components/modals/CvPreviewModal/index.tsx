@@ -1,11 +1,12 @@
 "use client"
 
 import React, { useEffect, useMemo } from "react"
-import { Modal } from "@heroui/react"
+import { cn, Modal } from "@heroui/react"
 import dynamic from "next/dynamic"
 import { useTranslations } from "next-intl"
 import { useCvPreviewOverlayState } from "@/hooks"
 import { useCvApplyStore } from "@/hooks/zustand"
+import { WithClassNames } from "@/modules/types"
 
 const PDFView = dynamic(
     () => import("@/components/reuseable/PDFView").then((module) => module.PDFView),
@@ -14,10 +15,13 @@ const PDFView = dynamic(
 
 const REMOTE_TEST_PDF_URL = "https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf"
 
+/** Props for {@link CvPreviewModal}. */
+type CvPreviewModalProps = WithClassNames<undefined>
+
 /**
  * Full-screen CV preview modal controlled by singleton overlay state.
  */
-export const CvPreviewModal = () => {
+export const CvPreviewModal = ({ className }: CvPreviewModalProps = {}) => {
     const t = useTranslations()
     const cvFile = useCvApplyStore((state) => state.cvFile)
     const { isOpen, setOpen } = useCvPreviewOverlayState()
@@ -37,7 +41,7 @@ export const CvPreviewModal = () => {
         <Modal isOpen={isOpen} onOpenChange={setOpen}>
             <Modal.Backdrop>
                 <Modal.Container className="h-[92vh] w-[96vw] max-w-[96vw]">
-                    <Modal.Dialog>
+                    <Modal.Dialog className={cn(className)}>
                         <Modal.CloseTrigger />
                         <Modal.Header>
                             <div className="font-semibold">{t("cv.preview.title")}</div>

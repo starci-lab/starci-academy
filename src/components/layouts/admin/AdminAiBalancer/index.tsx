@@ -9,7 +9,6 @@ import {
     Button,
 } from "@heroui/react"
 import {
-    useLocale,
     useTranslations,
 } from "next-intl"
 import {
@@ -21,10 +20,6 @@ import {
 import {
     useAppSelector,
 } from "@/redux"
-import {
-    AiBalancerKeyStatus,
-    ModelProvider,
-} from "@/modules/api"
 import {
     TopBar,
 } from "./TopBar"
@@ -44,7 +39,6 @@ import {
 export const AdminAiBalancer = () => {
     const apiKey = useAppSelector((state) => state.admin.apiKey)
     const router = useRouter()
-    const locale = useLocale()
     const t = useTranslations("admin.aiBalancer")
     const {
         data,
@@ -62,60 +56,6 @@ export const AdminAiBalancer = () => {
         apiKey,
         router,
     ])
-
-    const providerLabelMap = useMemo(
-        (): Record<string, string> => ({
-            [ModelProvider.Gemini]: t("providers.gemini"),
-            [ModelProvider.OpenAI]: t("providers.openai"),
-            [ModelProvider.Claude]: t("providers.claude"),
-            [ModelProvider.OpenRouter]: t("providers.openrouter"),
-        }),
-        [
-            t,
-        ],
-    )
-
-    const statusLabel = useCallback(
-        (status: string) => {
-            if (status === AiBalancerKeyStatus.Active) {
-                return t("status.active")
-            }
-            if (status === AiBalancerKeyStatus.Disabled) {
-                return t("status.disabled")
-            }
-            if (status === AiBalancerKeyStatus.Probing) {
-                return t("status.probing")
-            }
-            return status
-        },
-        [
-            t,
-        ],
-    )
-
-    const columnLabels = useMemo(
-        () => ({
-            suffix: t("columns.suffix"),
-            status: t("columns.status"),
-            failCount: t("columns.failCount"),
-            lastPing: t("columns.lastPing"),
-            lastUsed: t("columns.lastUsed"),
-        }),
-        [
-            t,
-        ],
-    )
-
-    const summaryLabels = useMemo(
-        () => ({
-            active: t("summary.active"),
-            disabled: t("summary.disabled"),
-            total: t("summary.total"),
-        }),
-        [
-            t,
-        ],
-    )
 
     const sortedProviders = useMemo(
         () => [
@@ -162,14 +102,6 @@ export const AdminAiBalancer = () => {
                             <ProviderSection
                                 key={providerHealth.provider}
                                 providerHealth={providerHealth}
-                                locale={locale}
-                                providerLabel={
-                                    providerLabelMap[providerHealth.provider]
-                                    ?? providerHealth.provider
-                                }
-                                statusLabel={statusLabel}
-                                columnLabels={columnLabels}
-                                summaryLabels={summaryLabels}
                             />
                         ))}
                         {sortedProviders.length === 0 ? (

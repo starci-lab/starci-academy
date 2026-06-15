@@ -4,6 +4,7 @@ import { House as BuildingsIcon } from "@gravity-ui/icons"
 import { cn } from "@heroui/react"
 
 import type { ConsultantEntity } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useLocale } from "next-intl"
 import { useRouter } from "next/navigation"
 import { useCallback, useMemo } from "react"
@@ -14,7 +15,7 @@ import { useOpenHeadhunterDetail } from "../hooks"
 import React from "react"
 
 
-export interface ConsultantCardProps {
+export interface ConsultantCardProps extends WithClassNames<undefined> {
     /** Consultant row from API / Redux. */
     consultant: ConsultantEntity
 }
@@ -23,7 +24,7 @@ export interface ConsultantCardProps {
  * Card for one consultant: opens profile modal; company name navigates to company page.
  * @param props.consultant - Consultant entity to display.
  */
-export const ConsultantCard = ({ consultant }: ConsultantCardProps) => {
+export const ConsultantCard = ({ consultant, className }: ConsultantCardProps) => {
     const locale = useLocale()
     const router = useRouter()
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
@@ -82,6 +83,7 @@ export const ConsultantCard = ({ consultant }: ConsultantCardProps) => {
             tabIndex={0}
             className={cn(
                 "card card--default flex h-full w-full cursor-pointer flex-col overflow-hidden rounded-xl border border-divider/60 text-left transition-colors hover:border-accent/40 hover:bg-accent/5",
+                className,
             )}
             onClick={onOpenDetail}
             onKeyDown={onCardKeyDown}

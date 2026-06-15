@@ -2,7 +2,7 @@
 
 import { Magnifier as MagnifyingGlassIcon } from "@gravity-ui/icons"
 import React, { useEffect, useState } from "react"
-import { Input, Kbd, Modal, TextField } from "@heroui/react"
+import { cn, Input, Kbd, Modal, TextField } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import {
     useSearchOverlayState,
@@ -11,12 +11,21 @@ import debounce from "lodash/debounce"
 import { GlobalSearchContent } from "./Content"
 import { setSearchQuery } from "@/redux/slices"
 import { useAppDispatch, useAppSelector } from "@/redux"
+import type { WithClassNames } from "@/modules/types"
 
 
 /**
- * Global search modal opened by Navbar (Ctrl/Cmd+K).
+ * Props for {@link GlobalSearchModal}.
  */
-export const GlobalSearchModal = () => {
+export type GlobalSearchModalProps = WithClassNames<undefined>
+
+/**
+ * Global search modal opened by Navbar (Ctrl/Cmd+K).
+ *
+ * @param props - Optional styling props.
+ */
+export const GlobalSearchModal = (props: GlobalSearchModalProps) => {
+    const { className } = props
     const t = useTranslations()
     const { isOpen, setOpen } = useSearchOverlayState()
     const dispatch = useAppDispatch()
@@ -48,7 +57,7 @@ export const GlobalSearchModal = () => {
         <Modal isOpen={isOpen} onOpenChange={setOpen}>
             <Modal.Backdrop>
                 <Modal.Container className="p-0" size="lg">
-                    <Modal.Dialog className="p-0 rounded-2xl">
+                    <Modal.Dialog className={cn("p-0 rounded-2xl", className)}>
                         <Modal.Body className="p-0 w-full overflow-hidden">
                             <TextField className="w-full relative">
                                 <MagnifyingGlassIcon className="size-5 absolute left-2 top-1/2 -translate-y-1/2" />

@@ -7,8 +7,17 @@ import { useQueryCourseSwr } from "@/hooks"
 import {
     Accordion,
     Skeleton,
+    cn,
 } from "@heroui/react"
+import type {
+    WithClassNames,
+} from "@/modules/types"
 import _ from "lodash"
+
+/**
+ * QnA props — only class-name plumbing (self-contained section).
+ */
+export type QnAProps = WithClassNames<undefined>
 
 /**
  * Course Q&A accordion container.
@@ -17,7 +26,7 @@ import _ from "lodash"
  * display order, and renders a skeleton while loading. `"use client"` for the
  * redux selector and the interactive HeroUI `Accordion`.
  */
-export const QnA = () => {
+export const QnA = ({ className }: QnAProps) => {
     const course = useAppSelector((state) => state.course.entity)
     const { isLoading } = useQueryCourseSwr()
     const t = useTranslations()
@@ -26,7 +35,7 @@ export const QnA = () => {
             (prev, next) => prev.sortIndex - next.sortIndex)
     }, [course])
     return (
-        <div>
+        <div className={cn(className)}>
             <div className="text-lg font-semibold text-start">{t("qna.title")}</div>
             <div className="h-3" />
             {

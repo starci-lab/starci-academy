@@ -104,7 +104,7 @@ export const OtpState = () => {
                     <FieldError className="text-center">{errors.otp}</FieldError>
                 </TextField>
                 <div className="h-3" />
-                <div className="flex flex-wrap items-center justify-center gap-1 text-center">
+                <div className="flex flex-wrap items-center justify-center gap-1.5 text-center">
                     <span className="text-xs text-muted">{t("auth.signIn.otp.resend")}</span>
                     <Link
                         className={cn("text-xs text-accent", isResending ? "text-muted" : "")}

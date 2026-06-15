@@ -68,7 +68,7 @@ export const QrPanel = () => {
                     )}
                 </div>
 
-                <div className="mt-8 flex w-full flex-col items-center gap-4">
+                <div className="mt-8 flex w-full flex-col items-center gap-3">
                     <div className="flex items-center gap-1.5">
                         <Spinner size="sm" />
                         <span className="text-sm italic text-muted">

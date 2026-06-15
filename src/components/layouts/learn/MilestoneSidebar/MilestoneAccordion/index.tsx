@@ -3,9 +3,11 @@
 import React from "react"
 import {
     Accordion,
+    cn,
 } from "@heroui/react"
 import type {
     MilestoneEntity,
+    WithClassNames,
 } from "@/modules/types"
 import type {
     MilestoneTaskProgressLookup,
@@ -20,7 +22,7 @@ import {
 /**
  * Props for {@link MilestoneAccordion}.
  */
-export interface MilestoneAccordionProps {
+export interface MilestoneAccordionProps extends WithClassNames<undefined> {
     /** Milestones to render, already ordered. */
     milestones: Array<MilestoneEntity>
     /** Task id → completion lookup for status derivation. */
@@ -46,11 +48,12 @@ export const MilestoneAccordion = ({
     selectedTaskId,
     isTaskUnlocked,
     onSelectTask,
+    className,
 }: MilestoneAccordionProps) => {
     return (
         <Accordion
             variant="default"
-            className="rounded-none border-none px-0 shadow-none"
+            className={cn("rounded-none border-none px-0 shadow-none", className)}
             defaultExpandedKeys={milestones.map((milestone) => String(milestone.id))}
         >
             {milestones.map((milestone) => {

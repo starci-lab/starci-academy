@@ -20,6 +20,9 @@ import {
 import {
     pathConfig,
 } from "@/resources"
+import type {
+    WithClassNames,
+} from "@/modules/types"
 
 /** A single navigable row in the profile hub. */
 interface ProfileNavItem {
@@ -41,8 +44,13 @@ interface ProfileNavItem {
  *
  * Container: owns navigation; renders a joined list of rows (outer rounded
  * border + inner separators), matching the StarCi list pattern.
+ * @param props.className - Optional wrapper class merged into the root element.
  */
-export const ProfileNav = () => {
+export type ProfileNavProps = WithClassNames<undefined>
+
+export const ProfileNav = ({
+    className,
+}: ProfileNavProps) => {
     const t = useTranslations()
     const router = useRouter()
     const locale = useLocale()
@@ -115,7 +123,7 @@ export const ProfileNav = () => {
     )
 
     return (
-        <div className="flex flex-col overflow-hidden rounded-large">
+        <div className={cn("flex flex-col overflow-hidden rounded-large", className)}>
             {items.map((item, index) => (
                 <React.Fragment key={item.key}>
                     <Card

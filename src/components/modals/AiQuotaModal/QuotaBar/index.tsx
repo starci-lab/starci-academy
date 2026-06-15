@@ -4,14 +4,18 @@ import React, {
     useMemo,
 } from "react"
 import {
+    cn,
     ProgressBar,
 } from "@heroui/react"
 import {
     resolveQuotaBarFillTone,
 } from "../utils"
+import type {
+    WithClassNames,
+} from "@/modules/types"
 
 /** Props for {@link QuotaBar}. */
-export interface QuotaBarProps {
+export interface QuotaBarProps extends WithClassNames<undefined> {
     /** Window label (e.g. "Next 5 hours"). */
     label: string
     /** Amount consumed in the window. */
@@ -38,6 +42,7 @@ export const QuotaBar = ({
     unit = "",
     showUnit = false,
     resetLabel,
+    className,
 }: QuotaBarProps) => {
     const fillTone = useMemo(
         () => resolveQuotaBarFillTone(used, limit),
@@ -57,7 +62,7 @@ export const QuotaBar = ({
     ])
 
     return (
-        <div className="flex flex-col gap-1.5">
+        <div className={cn("flex flex-col gap-1.5", className)}>
             <div className="flex items-center justify-between gap-1.5 text-sm">
                 <span className="text-muted">{label}</span>
                 <span className="font-medium text-foreground">

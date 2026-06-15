@@ -3,6 +3,7 @@
 import React from "react"
 import {
     Card,
+    cn,
 } from "@heroui/react"
 import {
     Formik,
@@ -13,6 +14,7 @@ import type {
 import type {
     CvSubmissionFormValues,
 } from "@/types"
+import type { WithClassNames } from "@/modules/types"
 import {
     CV_SUBMISSION_VALIDATION_SCHEMA,
 } from "./constants"
@@ -21,7 +23,7 @@ import {
 } from "./CvSubmissionFields"
 
 /** Props for {@link CVSubmissionForm}. */
-export interface CVSubmissionFormProps {
+export interface CVSubmissionFormProps extends WithClassNames<undefined> {
     /** Whether the S3 upload step is in progress. */
     isUploading: boolean
     /** Whether the backend processing step is in progress. */
@@ -57,9 +59,10 @@ export const CVSubmissionForm = ({
     uploadedS3Key,
     onSubmit,
     onProcess,
+    className,
 }: CVSubmissionFormProps) => {
     return (
-        <Card className="p-6">
+        <Card className={cn("p-6", className)}>
             <Formik
                 initialValues={{ cv: null as File | null }}
                 validationSchema={CV_SUBMISSION_VALIDATION_SCHEMA}

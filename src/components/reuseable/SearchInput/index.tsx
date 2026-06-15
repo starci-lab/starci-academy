@@ -10,6 +10,7 @@ import React, {
     type ComponentProps,
 } from "react"
 import { Input, TextField, cn } from "@heroui/react"
+import type { WithClassNames } from "@/modules/types"
 import { AnimatePresence, motion } from "framer-motion"
 import { useTranslations } from "next-intl"
 
@@ -25,15 +26,13 @@ export interface SearchInputSuggestion {
 type SearchInputVariant = NonNullable<ComponentProps<typeof Input>["variant"]>
 
 /** Props for {@link SearchInput}. */
-export interface SearchInputProps {
+export interface SearchInputProps extends WithClassNames<undefined> {
     /** Current search query (controlled). */
     value: string
     /** Fired with the new query on every keystroke. */
     onValueChange: (value: string) => void
     /** Placeholder text; defaults to the generic search placeholder. */
     placeholder?: string
-    /** Extra classes for the outer wrapper (width, spacing, …). */
-    className?: string
     /** HeroUI input surface variant; `secondary` uses a muted field background. */
     variant?: SearchInputVariant
     /**
@@ -256,7 +255,7 @@ const SearchInputSuggestionRow = ({
                 ref={rowRef}
                 type="button"
                 className={cn(
-                    "flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-sm transition-colors",
+                    "flex w-full items-center gap-1.5 rounded-xl px-3 py-2.5 text-left text-sm transition-colors",
                     // hover + keyboard-active share the same soft accent fill (HeroUI listbox feel)
                     active ? "bg-accent/10" : "hover:bg-accent/10",
                 )}

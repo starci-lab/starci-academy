@@ -2,16 +2,16 @@
 
 import { CircleCheck as CheckCircleIcon, Cup as TrophyIcon, Flame } from "@gravity-ui/icons"
 import React, { useMemo } from "react"
-import { Button, Card, CardContent, Chip } from "@heroui/react"
-import { ChallengeDifficulty, type ChallengeEntity } from "@/modules/types"
+import { Button, Card, CardContent, Chip, cn } from "@heroui/react"
+import { ChallengeDifficulty, type ChallengeEntity, type WithClassNames } from "@/modules/types"
 import { useTranslations } from "next-intl"
-import { difficultyPalette } from "../../../../pallettes"
+import { difficultyPalette } from "../../../../../pallettes"
 import { useChallengeOverlayState } from "@/hooks"
 import { setChallengeId } from "@/redux/slices"
 import { useAppDispatch, useAppSelector } from "@/redux"
 
 
-export interface ChallengeCardProps {
+export interface ChallengeCardProps extends WithClassNames<undefined> {
     /** Challenge row displayed in content tab. */
     challenge: ChallengeEntity
 }
@@ -20,7 +20,7 @@ export interface ChallengeCardProps {
  * Render one challenge card item.
  * @param {ChallengeCardProps} props Challenge card props.
  */
-export const ChallengeCard = ({ challenge }: ChallengeCardProps) => {
+export const ChallengeCard = ({ challenge, className }: ChallengeCardProps) => {
     const t = useTranslations()
     const difficultyName = useMemo(() => {
         switch (challenge.difficulty) {
@@ -60,7 +60,7 @@ export const ChallengeCard = ({ challenge }: ChallengeCardProps) => {
         }
     }, [challengeProgress, t])
     return (
-        <Card>
+        <Card className={cn("", className)}>
             <CardContent>
                 <div>
                     <div className="font-medium mb-2">{challenge.sortIndex}. {challenge.title}</div>

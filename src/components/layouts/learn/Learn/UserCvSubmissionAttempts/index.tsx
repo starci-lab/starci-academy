@@ -1,39 +1,41 @@
 "use client"
 
 import React from "react"
-import { Button, Link, Table } from "@heroui/react"
+import { Button, cn, Link, Skeleton, Table } from "@heroui/react"
 import { useTranslations } from "next-intl"
+import { useQueryUserCvSubmissionAttemptsSwr } from "@/hooks"
+import type { WithClassNames } from "@/modules/types"
 
-const isPublicUrl = (value: string) => value.startsWith("http://") || value.startsWith("https://") || value.startsWith("blob:") || value.startsWith("data:")
-
-/** One row in the CV submission attempts table. */
-export interface UserCvSubmissionAttemptRow {
-    /** Stable row id (e.g. attempt id). */
-    id: string
-    /** CV filename shown in the file column. */
-    fileName: string
-    /** Link or path used to open/download the CV. */
-    fileUrl: string
-    /** Submitted time as formatted text. */
-    submittedAt: string
-    /** Short feedback or status text for this attempt. */
-    feedback: string
-}
-
-export interface UserCvSubmissionAttemptsProps {
-    /** Attempt rows to render. */
-    items: Array<UserCvSubmissionAttemptRow>
+/** Props for {@link UserCvSubmissionAttempts}. */
+export interface UserCvSubmissionAttemptsProps extends WithClassNames<undefined> {
+    /** Reserved — no caller data props; component self-fetches via SWR. */
+    readonly _reserved?: undefined
 }
 
 /**
  * Renders a table of the learner's CV submission attempts (file, time, feedback).
- * @param props.items Rows supplied by the parent after mapping API data.
+ *
+ * Container: self-fetches via {@link useQueryUserCvSubmissionAttemptsSwr} and
+ * derives display rows internally. No data props accepted from the parent.
  */
-export const UserCvSubmissionAttempts = (props: UserCvSubmissionAttemptsProps) => {
-    const { items } = props
+export const UserCvSubmissionAttempts = ({ className }: UserCvSubmissionAttemptsProps) => {
     const t = useTranslations()
+    const swr = useQueryUserCvSubmissionAttemptsSwr()
+    const attempts = swr.data?.data ?? []
+    const isLoading = swr.isLoading && !swr.data
+
+    if (isLoading) {
+        return (
+            <div className={cn("flex flex-col gap-3", className)}>
+                {Array.from({ length: 3 }).map((_, index) => (
+                    <Skeleton key={index} className="h-10 w-full rounded-xl" />
+                ))}
+            </div>
+        )
+    }
+
     return (
-        <div>
+        <div className={cn(className)}>
             <Table variant="primary">
                 <Table.Content aria-label={t("cv.submission.attemptsTitle")}>
                     <Table.Header>
@@ -42,19 +44,31 @@ export const UserCvSubmissionAttempts = (props: UserCvSubmissionAttemptsProps) =
                         <Table.Column>{t("cv.submission.attempts.feedback")}</Table.Column>
                     </Table.Header>
                     <Table.Body>
-                        {items.map((item) => (
-                            <Table.Row key={item.id}>
-                                <Table.Cell>
-                                    {isPublicUrl(item.fileUrl) ? (
-                                        <Link className="text-sm font-medium text-accent underline" href={item.fileUrl} target="_blank">{item.fileName}</Link>
-                                    ) : (
-                                        <span className="text-sm font-medium text-muted">{item.fileName}</span>
-                                    )}
-                                </Table.Cell>
-                                <Table.Cell>{item.submittedAt}</Table.Cell>
-                                <Table.Cell>{item.feedback}</Table.Cell>
-                            </Table.Row>
-                        ))}
+                        {attempts.map((attempt) => {
+                            const isPublicUrl = attempt.fileUrl.startsWith("http://") ||
+                                attempt.fileUrl.startsWith("https://") ||
+                                attempt.fileUrl.startsWith("blob:") ||
+                                attempt.fileUrl.startsWith("data:")
+                            return (
+                                <Table.Row key={attempt.attemptId}>
+                                    <Table.Cell>
+                                        {isPublicUrl ? (
+                                            <Link
+                                                className="text-sm font-medium text-accent underline"
+                                                href={attempt.fileUrl}
+                                                target="_blank"
+                                            >
+                                                {attempt.fileKey}
+                                            </Link>
+                                        ) : (
+                                            <span className="text-sm font-medium text-muted">{attempt.fileKey}</span>
+                                        )}
+                                    </Table.Cell>
+                                    <Table.Cell>{attempt.submittedAt}</Table.Cell>
+                                    <Table.Cell>{attempt.detailFeedback ?? ""}</Table.Cell>
+                                </Table.Row>
+                            )
+                        })}
                     </Table.Body>
                 </Table.Content>
             </Table>

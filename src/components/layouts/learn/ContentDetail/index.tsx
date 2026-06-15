@@ -1,12 +1,10 @@
 "use client"
 
 import React from "react"
-import {
-    useAppSelector,
-} from "@/redux"
-import {
-    useQueryPublicContentSwr,
-} from "@/hooks"
+import { cn } from "@heroui/react"
+import { useAppSelector } from "@/redux"
+import { useQueryPublicContentSwr } from "@/hooks"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 import {
     ContentDetailSkeleton,
 } from "./ContentDetailSkeleton"
@@ -20,6 +18,9 @@ import {
     ContentDetailBody,
 } from "./ContentDetailBody"
 
+/** Props for {@link ContentDetail}. */
+export type ContentDetailProps = WithClassNames<undefined>
+
 /**
  * Public content article container for `/[locale]/contents/[contentId]`.
  *
@@ -29,8 +30,9 @@ import {
  * themselves, so this container composes them with no props. The `[contentId]`
  * route param is synced into redux globally. `"use client"` for the SWR + redux
  * hooks.
+ * @param props - {@link ContentDetailProps}
  */
-export const ContentDetail = () => {
+export const ContentDetail = ({ className }: ContentDetailProps) => {
     const queryPublicContentSwr = useQueryPublicContentSwr()
     const content = useAppSelector((state) => state.publicContent.entity)
 
@@ -46,7 +48,7 @@ export const ContentDetail = () => {
     }
 
     return (
-        <div className="mx-auto max-w-4xl p-6">
+        <div className={cn("mx-auto max-w-4xl p-6", className)}>
             <ContentDetailHeader />
 
             <ContentDetailBody />

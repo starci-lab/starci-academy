@@ -1,9 +1,11 @@
 "use client"
 
 import { ArrowRight, ArrowsRotateLeft as ArrowsClockwise, Cube, Database, Layers as Stack, Thunderbolt as Bolt, Thunderbolt as Lightning } from "@gravity-ui/icons"
+import { cn } from "@heroui/react"
 import { motion } from "framer-motion"
 import { useTranslations } from "next-intl"
 import React from "react"
+import { type WithClassNames } from "@/modules/types"
 
 
 /** Container stagger for the hero intro. */
@@ -48,14 +50,19 @@ const FLOW_NODES = [
  * glassmorphism "architecture diagram" visual that signals the System-Design
  * subject matter. Stacks on mobile. `"use client"` only for framer-motion.
  */
-export const HeroSection = () => {
+export type HeroSectionProps = WithClassNames<undefined>
+
+/**
+ * @param {HeroSectionProps} props Optional wrapper styling props.
+ */
+export const HeroSection = ({ className }: HeroSectionProps) => {
     const t = useTranslations("landing.hero")
     return (
         <motion.section
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-10 items-center"
+            className={cn("grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-10 items-center", className)}
         >
             {/* Left column — the message */}
             <div className="flex flex-col items-start text-left">
@@ -115,7 +122,7 @@ export const HeroSection = () => {
                 {/* Keyword strip */}
                 <motion.div
                     variants={itemVariants}
-                    className="mt-10 flex flex-wrap items-center gap-x-3 gap-y-2"
+                    className="mt-10 flex flex-wrap items-center gap-x-3 gap-y-1.5"
                 >
                     <Lightning width={15} height={15} className="text-accent" />
                     {KEYWORDS.map((keyword, index) => (
@@ -160,7 +167,7 @@ export const HeroSection = () => {
                     </div>
 
                     {/* Flow nodes */}
-                    <div className="space-y-2.5">
+                    <div className="space-y-3">
                         {FLOW_NODES.map((node, index) => {
                             const Icon = node.icon
                             return (

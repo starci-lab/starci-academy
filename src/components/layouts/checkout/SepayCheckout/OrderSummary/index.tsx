@@ -75,7 +75,7 @@ export const OrderSummary = () => {
 
             <Card className="flex-grow bg-default/40 p-6 backdrop-blur-md">
                 <Card.Content>
-                    <div className="space-y-6">
+                    <div className="space-y-3">
                         <DetailRow label={t("payment.sepay.bank")} value={bankDetails.bank} />
                         <DetailRow
                             copyValue={bankDetails.account}

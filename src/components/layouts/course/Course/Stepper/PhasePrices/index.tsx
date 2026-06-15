@@ -3,6 +3,7 @@
 import React from "react"
 import {
     Chip,
+    cn,
 } from "@heroui/react"
 import {
     Spacer,
@@ -10,9 +11,12 @@ import {
 import type {
     PricingPhasePriceRow,
 } from "../types"
+import type {
+    WithClassNames,
+} from "@/modules/types"
 
 /** Props for {@link PhasePrices}. */
-export interface PhasePricesProps {
+export interface PhasePricesProps extends WithClassNames<undefined> {
     /** Pre-computed price rows, one per phase, in display order. */
     rows: Array<PricingPhasePriceRow>
 }
@@ -25,9 +29,10 @@ export interface PhasePricesProps {
  */
 export const PhasePrices = ({
     rows,
+    className,
 }: PhasePricesProps) => {
     return (
-        <div className="relative flex items-start justify-between">
+        <div className={cn("relative flex items-start justify-between", className)}>
             {rows.map((row) => (
                 <div key={row.id} className="flex-1 flex flex-col items-center">
                     <div

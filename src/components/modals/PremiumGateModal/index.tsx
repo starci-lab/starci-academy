@@ -6,6 +6,7 @@ import React, {
 } from "react"
 import {
     Button,
+    cn,
     Modal,
 } from "@heroui/react"
 import {
@@ -18,6 +19,7 @@ import {
 import {
     PaymentFlow,
 } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Premium-gate modal: register/buy prompt shown when a viewer clicks a locked
@@ -28,7 +30,7 @@ import {
  * keep browsing the teaser. "Buy" closes this modal and opens the shared payment
  * modal (course-enroll flow). Opened via {@link usePremiumGateOverlayState}.
  */
-export const PremiumGateModal = () => {
+export const PremiumGateModal = ({ className }: WithClassNames<undefined>) => {
     const t = useTranslations()
     const { isOpen, setOpen, close } = usePremiumGateOverlayState()
     const { open: openPayment } = usePaymentOverlayState()
@@ -48,7 +50,7 @@ export const PremiumGateModal = () => {
         <Modal isOpen={isOpen} onOpenChange={setOpen}>
             <Modal.Backdrop>
                 <Modal.Container>
-                    <Modal.Dialog>
+                    <Modal.Dialog className={cn(className)}>
                         <Modal.CloseTrigger />
                         <Modal.Header>
                             <div className="flex items-center gap-1.5 pr-8">
@@ -58,7 +60,7 @@ export const PremiumGateModal = () => {
                                 </span>
                             </div>
                         </Modal.Header>
-                        <Modal.Body className="gap-4 p-4">
+                        <Modal.Body className="gap-3 p-4">
                             <div className="text-sm text-muted">
                                 {t("course.paywall.description")}
                             </div>

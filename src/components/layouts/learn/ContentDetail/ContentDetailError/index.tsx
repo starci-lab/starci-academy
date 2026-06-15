@@ -1,8 +1,15 @@
 "use client"
 
 import React from "react"
+import {
+    cn,
+} from "@heroui/react"
+import type {
+    WithClassNames,
+} from "@/modules/types"
+
 /** Props for {@link ContentDetailError}. */
-export interface ContentDetailErrorProps {
+export interface ContentDetailErrorProps extends WithClassNames<undefined> {
     /** Optional message from the failed query; falls back to a generic copy. */
     message?: string
 }
@@ -16,9 +23,10 @@ export interface ContentDetailErrorProps {
  */
 export const ContentDetailError = ({
     message,
+    className,
 }: ContentDetailErrorProps) => {
     return (
-        <div className="mx-auto max-w-4xl p-6">
+        <div className={cn("mx-auto max-w-4xl p-6", className)}>
             <div className="rounded-2xl border border-danger/30 bg-danger/5 p-6 text-center">
                 <div className="text-lg font-semibold text-danger">
                     {message ?? "Content not found."}

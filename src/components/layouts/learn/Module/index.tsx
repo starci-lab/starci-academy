@@ -3,12 +3,10 @@
 import { BookOpen as BookOpenIcon, CurlyBrackets as BracketsCurlyIcon } from "@gravity-ui/icons"
 import React from "react"
 import { Chip, Skeleton } from "@heroui/react"
-import { useLocale, useTranslations } from "next-intl"
+import { useTranslations } from "next-intl"
 import _ from "lodash"
 import { useAppSelector } from "@/redux"
 import { useQueryModuleSwr } from "@/hooks"
-import { pathConfig } from "@/resources/path"
-import { useRouter } from "next/navigation"
 import { ContentCard } from "./ContentCard"
 import { ContentCardSkeleton } from "./ContentCardSkeleton"
 import { Empty } from "./Empty"
@@ -18,11 +16,7 @@ import { Empty } from "./Empty"
  */
 export const Module = () => {
     const t = useTranslations()
-    const router = useRouter()
-    const locale = useLocale()
     const module = useAppSelector((state) => state.module.entity)
-    const courseDisplayId = useAppSelector((state) => state.course.displayId)
-    const moduleId = useAppSelector((state) => state.module.id)
     const { isLoading: isModuleLoading } = useQueryModuleSwr()
     const isLoading = isModuleLoading || !module
     const contentsFromRedux = useAppSelector((state) => state.content.entities)
@@ -49,15 +43,15 @@ export const Module = () => {
                     <div className="h-3" />
                     <div className="text-sm text-start w-full gap-3 flex flex-col text-muted">
                         <div className="flex flex-col gap-3">
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-1.5">
                                 <Skeleton className="size-5 rounded-full" />
                                 <Skeleton className="h-[14px] my-[3px] w-2/3 rounded-sm" />
                             </div>
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-1.5">
                                 <Skeleton className="size-5 rounded-full" />
                                 <Skeleton className="h-[14px] my-[3px] w-2/3 rounded-sm" />
                             </div>
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-1.5">
                                 <Skeleton className="size-5 rounded-full" />
                                 <Skeleton className="h-[14px] my-[3px] w-2/3 rounded-sm" />
                             </div>
@@ -100,7 +94,7 @@ export const Module = () => {
                     {_.cloneDeep(module?.previewContents ?? [])
                         .sort((previous, current) => previous.sortIndex - current.sortIndex)
                         .map((content) => (
-                            <div key={content.id} className="flex items-center gap-3">
+                            <div key={content.id} className="flex items-center gap-1.5">
                                 <BracketsCurlyIcon className="w-5 h-5 min-w-5 min-h-5" />
                                 <span
                                     dangerouslySetInnerHTML={{
@@ -117,9 +111,7 @@ export const Module = () => {
                     contents?.length && contents.length > 0 ? (
                         <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                             {_.cloneDeep(contents)?.sort((prev, next) => prev.sortIndex - next.sortIndex).map((content) => (
-                                <ContentCard key={content.id} content={content} onPress={
-                                    () => router.push(pathConfig().locale(locale).course(courseDisplayId).learn().module(moduleId).content(content.id).build())
-                                } />
+                                <ContentCard key={content.id} content={content} />
                             ))}
                         </div>
                     ) : <Empty />

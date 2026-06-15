@@ -3,12 +3,12 @@
 import { CircleCheck as CheckCircleIcon } from "@gravity-ui/icons"
 import React from "react"
 import type {
-
     ProcessResult,
 } from "../../types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link ProcessResultBanner}. */
-export interface ProcessResultBannerProps {
+export interface ProcessResultBannerProps extends WithClassNames<undefined> {
     /** Process-video result to show, or null to render nothing. */
     processResult: ProcessResult | null
 }
@@ -27,7 +27,7 @@ export const ProcessResultBanner = ({
         return null
     }
     return (
-        <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4 space-y-1">
+        <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4 space-y-1.5">
             <div className="flex items-center gap-1.5">
                 <CheckCircleIcon className="h-4 w-4 text-emerald-400" />
                 <span className="text-sm font-medium text-emerald-300">

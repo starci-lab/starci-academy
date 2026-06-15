@@ -164,8 +164,8 @@ export const Sessions = () => {
                                         )}
                                     >
                                         <DeviceIcon className="size-5 shrink-0 text-accent" />
-                                        <div className="flex min-w-0 flex-1 flex-col gap-1">
-                                            <div className="flex items-center gap-2">
+                                        <div className="flex min-w-0 flex-1 flex-col gap-1.5">
+                                            <div className="flex items-center gap-1.5">
                                                 <span className="truncate font-medium text-foreground">{headline}</span>
                                                 {session.current ? (
                                                     <Chip
@@ -177,9 +177,9 @@ export const Sessions = () => {
                                                     </Chip>
                                                 ) : null}
                                             </div>
-                                            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted">
+                                            <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs text-muted">
                                                 {session.location ? (
-                                                    <span className="flex items-center gap-1">
+                                                    <span className="flex items-center gap-1.5">
                                                         <GeoPinIcon className="size-3.5" />
                                                         {session.location}
                                                     </span>
@@ -187,7 +187,7 @@ export const Sessions = () => {
                                                 {session.ipAddress ? (
                                                     <span>{session.ipAddress}</span>
                                                 ) : null}
-                                                <span className="flex items-center gap-1">
+                                                <span className="flex items-center gap-1.5">
                                                     <ClockIcon className="size-3.5" />
                                                     {formatSeen(session.lastSeenAt)}
                                                 </span>

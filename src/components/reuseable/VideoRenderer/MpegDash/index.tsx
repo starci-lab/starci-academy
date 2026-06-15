@@ -1,13 +1,14 @@
 "use client"
 
 import React, { useCallback, useEffect, useRef, useState } from "react"
+import { cn } from "@heroui/react"
 import { VideoControls, type QualityLevel } from "../VideoControls"
 import type { MediaPlayerClass } from "dashjs"
+import type { WithClassNames } from "@/modules/types"
 
-export interface MpegDashPlayerProps {
+export interface MpegDashPlayerProps extends WithClassNames<undefined> {
     /** URL pointing to an MPEG-DASH .mpd manifest. */
     src: string
-    className?: string
 }
 
 /**
@@ -166,7 +167,7 @@ export const MpegDashPlayer = ({ src, className }: MpegDashPlayerProps) => {
     return (
         <div
             ref={containerRef}
-            className={`relative aspect-video overflow-hidden rounded-large bg-black ${className ?? ""}`}
+            className={cn("relative aspect-video overflow-hidden rounded-large bg-black", className)}
             onMouseEnter={() => setHideControls(false)}
             onMouseLeave={() => setHideControls(true)}
         >

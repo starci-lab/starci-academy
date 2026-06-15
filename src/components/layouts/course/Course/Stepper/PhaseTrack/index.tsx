@@ -3,16 +3,18 @@
 import React from "react"
 import {
     Separator,
+    cn,
 } from "@heroui/react"
 import {
     motion,
 } from "framer-motion"
 import type {
     PricingPhaseEntity,
+    WithClassNames,
 } from "@/modules/types"
 
 /** Props for {@link PhaseTrack}. */
-export interface PhaseTrackProps {
+export interface PhaseTrackProps extends WithClassNames<undefined> {
     /** Pricing phases ordered for display. */
     pricingPhases: Array<PricingPhaseEntity>
     /** Pre-computed progress-bar width (CSS percentage value). */
@@ -31,9 +33,10 @@ export const PhaseTrack = ({
     pricingPhases,
     progressWidth,
     currentOrderIndex,
+    className,
 }: PhaseTrackProps) => {
     return (
-        <div className="relative flex items-center justify-between w-full">
+        <div className={cn("relative flex items-center justify-between w-full", className)}>
             <Separator className="absolute top-6 left-0 right-0 z-0" />
             <motion.div
                 className="absolute top-6 left-0  z-0 w-full"

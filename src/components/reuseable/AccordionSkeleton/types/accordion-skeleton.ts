@@ -1,5 +1,6 @@
 import type { ReactNode } from "react"
 import type { SkeletonTextSize } from "../../SkeletonText"
+import type { WithClassNames } from "@/modules/types"
 
 /** Visual variant aligned with HeroUI `Accordion`. */
 export type AccordionSkeletonVariant = "default" | "surface"
@@ -19,11 +20,9 @@ export interface AccordionSkeletonItem {
 }
 
 /** Props for {@link AccordionSkeleton}. */
-export interface AccordionSkeletonProps {
+export interface AccordionSkeletonProps extends WithClassNames<undefined> {
     /** Placeholder rows (order preserved). */
     items: Array<AccordionSkeletonItem>
-    /** Root class merged onto the variant container. */
-    className?: string
     /** Container styling preset (default = borderless sidebar). */
     variant?: AccordionSkeletonVariant
     /** Body content for expanded rows; omitted rows render no body block. */

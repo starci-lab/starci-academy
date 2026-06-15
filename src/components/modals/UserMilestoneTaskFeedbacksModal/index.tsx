@@ -8,19 +8,20 @@ import {
 } from "@/modules/api"
 import { useUserMilestoneTaskFeedbacksModalOverlayState } from "@/hooks"
 import { useAppSelector } from "@/redux"
-import { Modal, ScrollShadow } from "@heroui/react"
+import { cn, Modal, ScrollShadow } from "@heroui/react"
 import React, { useMemo } from "react"
 import { useTranslations } from "next-intl"
 import useSWR from "swr"
 import { MilestoneFeedbackCard } from "./MilestoneFeedbackCard"
 import { MilestoneFeedbackCardSkeleton } from "./MilestoneFeedbackCardSkeleton"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 const FEEDBACK_PAGE_LIMIT = 100
 
 /**
- * Modal listing detailed feedback rows for the user’s latest attempt on the selected milestone task.
+ * Modal listing detailed feedback rows for the user's latest attempt on the selected milestone task.
  */
-export const UserMilestoneTaskFeedbacksModal = () => {
+export const UserMilestoneTaskFeedbacksModal = ({ className }: WithClassNames<undefined>) => {
     const { isOpen, setOpen } = useUserMilestoneTaskFeedbacksModalOverlayState()
     const t = useTranslations()
     const course = useAppSelector((state) => state.course.entity)
@@ -81,7 +82,7 @@ export const UserMilestoneTaskFeedbacksModal = () => {
         <Modal isOpen={isOpen} onOpenChange={setOpen}>
             <Modal.Backdrop>
                 <Modal.Container size="lg">
-                    <Modal.Dialog>
+                    <Modal.Dialog className={cn(className)}>
                         <Modal.CloseTrigger />
                         <Modal.Header>
                             <div className="text-2xl font-bold">{t("task.feedbackDetailsModalTitle")}</div>

@@ -1,6 +1,6 @@
 "use client"
 
-import { HeadhuntingCompanyLayout } from "@/components/layouts/HeadhuntingCompany"
+import { HeadhuntingCompanyLayout } from "@/components/layouts/headhunting/HeadhuntingCompany"
 import React from "react"
 /**
  * Course / headhunting-companies / [companyId] — company profile and consultants.

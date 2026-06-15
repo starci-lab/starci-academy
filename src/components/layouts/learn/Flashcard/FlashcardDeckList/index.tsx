@@ -13,7 +13,8 @@ import {
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { queryFlashcardDecksByCourse } from "@/modules/api/graphql"
-import { ChallengeDifficulty, type FlashcardDeckEntity } from "@/modules/types"
+import { ChallengeDifficulty, type FlashcardDeckEntity, type WithClassNames } from "@/modules/types"
+import { useAppSelector } from "@/redux"
 import { FlashcardDeckListSkeleton } from "./FlashcardDeckListSkeleton"
 
 /** HeroUI Chip color per difficulty tier. */
@@ -25,9 +26,7 @@ const DIFFICULTY_COLOR: Record<ChallengeDifficulty, "success" | "warning" | "dan
 }
 
 /** Props for {@link FlashcardDeckList}. */
-export interface FlashcardDeckListProps {
-    /** Owning course id whose decks are listed. */
-    courseId: string
+export interface FlashcardDeckListProps extends WithClassNames<undefined> {
     /** Called with the chosen deck id when the learner opens a deck. */
     onSelectDeck: (deckId: string) => void
 }
@@ -35,18 +34,21 @@ export interface FlashcardDeckListProps {
 /**
  * Lists the interview-prep flashcard decks owned by the active course. Each deck
  * card shows its difficulty + card count and opens the reviewer for that deck.
+ * Reads the owning course id directly from the course Redux slice.
  */
-export const FlashcardDeckList = ({ courseId, onSelectDeck }: FlashcardDeckListProps) => {
+export const FlashcardDeckList = ({ onSelectDeck }: FlashcardDeckListProps) => {
     const t = useTranslations()
+    // read the owning course id from the store — no prop drilling needed
+    const courseId = useAppSelector((state) => state.course.entity?.id)
     // live search query filtering decks by title/description
     const [query, setQuery] = useState("")
 
-    // fetch the decks for this course; re-keys if the course changes
+    // fetch the decks for this course; null key suspends until the course hydrates
     const { data, isLoading, error } = useSWR(
-        ["flashcard-decks-by-course", courseId],
+        courseId ? ["flashcard-decks-by-course", courseId] : null,
         async () => {
             const response = await queryFlashcardDecksByCourse({
-                request: { courseId },
+                request: { courseId: courseId as string },
             })
             return response.data?.flashcardDecksByCourse.data ?? null
         },
@@ -83,7 +85,7 @@ export const FlashcardDeckList = ({ courseId, onSelectDeck }: FlashcardDeckListP
     }
 
     return (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-3">
             {/* search box: filters the deck list client-side by title/description */}
             <TextField aria-label={t("flashcard.searchPlaceholder")} className="w-full sm:max-w-sm">
                 <div className="relative">

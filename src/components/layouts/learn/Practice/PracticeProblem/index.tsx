@@ -15,6 +15,7 @@ import {
 } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useTheme } from "next-themes"
+import { useParams } from "next/navigation"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import {
     queryCodingProblem,
@@ -39,10 +40,7 @@ import { useAppSelector } from "@/redux"
 import { PracticeProblemSkeleton } from "./PracticeProblemSkeleton"
 
 /** Props for {@link PracticeProblem}. */
-export interface PracticeProblemProps {
-    /** Problem slug from the route. */
-    slug: string
-}
+export type PracticeProblemProps = Record<string, never>
 
 /** Seniority level i18n key per difficulty (easy=junior, medium=mid, hard=senior). */
 const LEVEL_KEY: Record<CodingDifficulty, string> = {
@@ -82,9 +80,11 @@ const isTerminalStatus = (status: JobStatus | undefined): boolean =>
  * line (matching the course-learn page pattern): left = statement + samples +
  * hint; right = language selector + Monaco editor + submit + result + history.
  */
-export const PracticeProblem = ({ slug }: PracticeProblemProps) => {
+export const PracticeProblem = () => {
     const t = useTranslations()
     const locale = useLocale()
+    const params = useParams()
+    const slug = String(params.slug ?? "")
     const { theme } = useTheme()
     const socket = useJobNotificationsSocketIo()
 
@@ -493,7 +493,7 @@ export const PracticeProblem = ({ slug }: PracticeProblemProps) => {
                 {(submissionsData?.submissions.length ?? 0) > 0 && (
                     <div className="flex flex-col gap-1.5 px-6 py-4">
                         <p className="font-semibold">{t("codingPractice.history")}</p>
-                        <div className="flex flex-col gap-1">
+                        <div className="flex flex-col gap-1.5">
                             {submissionsData?.submissions.map((submission: CodingSubmission) => (
                                 <div
                                     key={submission.id}

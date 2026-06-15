@@ -13,8 +13,10 @@ import {
     AI_BALANCER_KEY_STATUS_DARK_MAP,
     AI_BALANCER_KEY_STATUS_LIGHT_MAP,
 } from "../map"
+import { cn } from "@heroui/react"
+import type { WithClassNames } from "@/modules/types"
 
-interface KeyStatusChipProps {
+interface KeyStatusChipProps extends WithClassNames<undefined> {
     /** Raw status string from GraphQL (`active` / `disabled` / `probing`). */
     status: string
     /** Translated label for the status. */
@@ -34,6 +36,7 @@ export const KeyStatusChip = ({
     status,
     label,
     variant = KeyStatusChipVariant.Dark,
+    className,
 }: KeyStatusChipProps) => {
     const visual = useMemo(
         () => {
@@ -53,7 +56,7 @@ export const KeyStatusChip = ({
 
     return (
         <span
-            className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-medium ${visual.chipClassName}`}
+            className={cn("inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-medium", visual.chipClassName, className)}
         >
             <StatusIcon
                 className="h-3.5 w-3.5"

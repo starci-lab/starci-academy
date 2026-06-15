@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { Modal } from "@heroui/react"
+import { cn, Modal } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useLanguageOverlayState } from "@/hooks"
 import { useRouter } from "@/i18n/navigation"
@@ -9,11 +9,12 @@ import { usePathname } from "@/i18n/navigation"
 import { Spacer } from "@/components/reuseable"
 import { LanguageCard } from "./LanguageCard"
 import { languages } from "@/resources"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * LanguageModal is a modal component that is used to display the language selection.
  */
-export const LanguageModal = () => {
+export const LanguageModal = ({ className }: WithClassNames<undefined>) => {
     const { isOpen, setOpen } = useLanguageOverlayState()
     const t = useTranslations()
     const locale = useLocale()
@@ -27,7 +28,7 @@ export const LanguageModal = () => {
         <Modal isOpen={isOpen} onOpenChange={setOpen}>
             <Modal.Backdrop>
                 <Modal.Container>
-                    <Modal.Dialog>
+                    <Modal.Dialog className={cn(className)}>
                         <Modal.CloseTrigger />
                         <Modal.Header>
                             <div className="text-2xl font-bold">{t("settings.language.title")}</div>
@@ -35,7 +36,7 @@ export const LanguageModal = () => {
                         <Modal.Body className="gap-0 p-4">
                             <div>
                                 <div className="text-sm text-muted">{t("settings.language.popular")}</div>
-                                <Spacer y={2} />
+                                <Spacer y={1.5} />
                                 <div className="grid grid-cols-3 gap-3">
                                     {popularLanguages.map((lang) => (
                                         <LanguageCard key={lang.code} code={lang.code} label={lang.label} isSelected={lang.code === currentLanguage?.code} onPress={() => router.replace(pathname, { locale: lang.code })} />
@@ -45,7 +46,7 @@ export const LanguageModal = () => {
                             <Spacer y={3} />
                             <div>
                                 <div className="text-sm text-muted">{t("settings.language.all")}</div>
-                                <Spacer y={2} />
+                                <Spacer y={1.5} />
                                 <div className="grid grid-cols-3 gap-3">
                                     {allLanguages.map((lang) => (
                                         <LanguageCard key={lang.code} code={lang.code} label={lang.label} isSelected={lang.code === currentLanguage?.code} onPress={() => router.replace(pathname, { locale: lang.code })} />

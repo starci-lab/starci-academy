@@ -8,6 +8,7 @@ import {
     Button,
     ProgressBar,
     Spinner,
+    cn,
 } from "@heroui/react"
 import {
     Form,
@@ -19,9 +20,10 @@ import type {
 import type {
     CvSubmissionFormValues,
 } from "@/types"
+import type { WithClassNames } from "@/modules/types"
 
 /** Props for {@link CvSubmissionFields}. */
-export interface CvSubmissionFieldsProps {
+export interface CvSubmissionFieldsProps extends WithClassNames<undefined> {
     /** Current form values from Formik. */
     values: CvSubmissionFormValues
     /** Validation errors from Formik. */
@@ -66,6 +68,7 @@ export const CvSubmissionFields = ({
     uploadedFileName,
     uploadedS3Key,
     onProcess,
+    className,
 }: CvSubmissionFieldsProps) => {
     /** Stable id linking the hidden file input to its label. */
     const inputId = useId()
@@ -84,7 +87,7 @@ export const CvSubmissionFields = ({
     )
 
     return (
-        <Form className="space-y-4">
+        <Form className={cn("space-y-3", className)}>
             <div className="space-y-1.5">
                 <label className="block text-sm font-medium">
                     Upload CV (PDF)

@@ -1,12 +1,12 @@
 "use client"
 
 import React from "react"
-import { Card, CardContent, Input } from "@heroui/react"
+import { Card, CardContent, Input, cn } from "@heroui/react"
 import { RENDERER_TYPE_OPTIONS } from "../map"
 import { RendererTypeButton } from "./RendererTypeButton"
-import type { VideoRendererType } from "@/modules/types"
+import type { VideoRendererType, WithClassNames } from "@/modules/types"
 
-export interface ConfigCardProps {
+export interface ConfigCardProps extends WithClassNames<undefined> {
     /** Current URL value. */
     url: string
     /** Currently selected renderer type. */
@@ -29,9 +29,10 @@ export const ConfigCard = ({
     activeType,
     onChangeUrl,
     onSelectType,
+    className,
 }: ConfigCardProps) => (
-    <Card className="border-slate-700/50 bg-slate-800/50 backdrop-blur-xl">
-        <CardContent className="space-y-4 p-6">
+    <Card className={cn("border-slate-700/50 bg-slate-800/50 backdrop-blur-xl", className)}>
+        <CardContent className="space-y-3 p-6">
             <h2 className="text-lg font-semibold text-white">
                 Configuration
             </h2>

@@ -5,15 +5,16 @@ import { MarkdownContent } from "@/components/reuseable"
 import type { SubmissionFeedbackEntity } from "@/modules/types"
 import { SubmissionFeedbackSeverity } from "@/modules/types"
 import { buildGithubFileUrl } from "@/modules/utils"
-import { Card, Chip, Link } from "@heroui/react"
+import { Card, Chip, cn, Link } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import React, { useMemo } from "react"
+import type { WithClassNames } from "@/modules/types"
 
 
 /**
  * Props for {@link FeedbackCard}.
  */
-interface FeedbackCardProps {
+interface FeedbackCardProps extends WithClassNames<undefined> {
     /** One feedback row from the grader. */
     submissionFeedback: SubmissionFeedbackEntity
     /** GitHub repo URL for the selected submission attempt (used for file links). */
@@ -26,7 +27,7 @@ interface FeedbackCardProps {
  * @param props - Feedback row.
  */
 export const FeedbackCard = (props: FeedbackCardProps) => {
-    const { submissionFeedback, repositoryUrl } = props
+    const { submissionFeedback, repositoryUrl, className } = props
     const {
         message,
         detail,
@@ -101,7 +102,7 @@ export const FeedbackCard = (props: FeedbackCardProps) => {
     const showFooter = Boolean(locationLabel || suggestion)
 
     return (
-        <Card className="border border-divider bg-transparent p-0 shadow-none">
+        <Card className={cn("border border-divider bg-transparent p-0 shadow-none", className)}>
             <Card.Content>
                 <div className="flex flex-col gap-3 p-3">
                     <div>

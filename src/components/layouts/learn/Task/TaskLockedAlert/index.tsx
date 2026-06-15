@@ -7,6 +7,7 @@ import React, {
 import {
     Alert,
     Button,
+    cn,
 } from "@heroui/react"
 import {
     useTranslations,
@@ -32,6 +33,10 @@ import {
 import {
     pathConfig,
 } from "@/resources/path"
+import type { WithClassNames } from "@/modules/types/base/class-name"
+
+/** Props for {@link TaskLockedAlert}. */
+export type TaskLockedAlertProps = WithClassNames<undefined>
 
 /**
  * Warning alert shown when previewing a locked (not-yet-unlocked) task.
@@ -42,8 +47,11 @@ import {
  * navigation handler. Renders nothing when the action is unlocked, so the task
  * container just drops `<TaskLockedAlert />` in place. `"use client"` for redux,
  * routing and i18n.
+ * @param props - optional className (unused; alert shape is fixed)
  */
-export const TaskLockedAlert = () => {
+export const TaskLockedAlert = ({
+    className,
+}: TaskLockedAlertProps = {}) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -115,7 +123,7 @@ export const TaskLockedAlert = () => {
 
     return (
         <>
-            <Alert status="warning" className="shadow-none bg-warning/10">
+            <Alert status="warning" className={cn("shadow-none bg-warning/10", className)}>
                 <Alert.Indicator />
                 <Alert.Content className="gap-1.5">
                     <Alert.Title>{t("task.previewLockedAlertTitle")}</Alert.Title>

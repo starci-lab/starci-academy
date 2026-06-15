@@ -46,7 +46,7 @@ export const CodeImplementationBody = ({ className }: CodeImplementationBodyProp
     }
 
     return (
-        <div className={cn("flex flex-col gap-4", className)}>
+        <div className={cn("flex flex-col gap-6", className)}>
             {items.map((item) => (
                 <ImplementationCard key={item.id} item={item} />
             ))}

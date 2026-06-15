@@ -2,6 +2,9 @@
 
 import React from "react"
 import {
+    cn,
+} from "@heroui/react"
+import {
     useLocale,
     useTranslations,
 } from "next-intl"
@@ -14,9 +17,12 @@ import type {
 import {
     UserAvatar,
 } from "@/components/reuseable/UserAvatar"
+import type {
+    WithClassNames,
+} from "@/modules/types/base/class-name"
 
 /** Props for {@link Feed}. */
-export interface FeedProps {
+export interface FeedProps extends WithClassNames<undefined> {
     /** Activity items from followed users, most recent first. */
     items: Array<QueryMyFeedItemData>
 }
@@ -29,6 +35,7 @@ export interface FeedProps {
  */
 export const Feed = ({
     items,
+    className,
 }: FeedProps) => {
     const t = useTranslations()
     const locale = useLocale()
@@ -42,7 +49,7 @@ export const Feed = ({
     }
 
     return (
-        <div className="flex flex-col">
+        <div className={cn("flex flex-col", className)}>
             {items.map((item, index) => (
                 <div
                     key={`${item.actorGlobalId}-${item.at}-${index}`}
@@ -54,7 +61,7 @@ export const Feed = ({
                         avatar={item.actorAvatar}
                         seed={item.actorUsername}
                     />
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-0">
                         <span className="text-sm text-foreground">
                             {t.rich(`dashboard.feed.${item.type}`, {
                                 actor: () => (

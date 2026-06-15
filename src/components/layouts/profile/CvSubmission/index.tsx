@@ -8,6 +8,9 @@ import type {
     FormikHelpers,
 } from "formik"
 import {
+    cn,
+} from "@heroui/react"
+import {
     mutateGetCVPresignedUrl,
     mutateProcessCV,
 } from "@/modules/api/graphql/mutations"
@@ -20,6 +23,7 @@ import type {
 import {
     CVSubmissionForm,
 } from "@/components/reuseable"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Fraction of progress shown after each upload step (UI feedback only). */
 const UPLOAD_PROGRESS = {
@@ -32,12 +36,7 @@ const UPLOAD_PROGRESS = {
 } as const
 
 /** Props for {@link CvSubmission}. */
-export interface CvSubmissionProps {
-    /** Fired with the processing job id once the CV is queued for review. */
-    onSuccess?: (jobId: string) => void
-    /** Fired with a human-readable message when upload/processing fails. */
-    onError?: (error: string) => void
-}
+export type CvSubmissionProps = WithClassNames<undefined>
 
 /**
  * CV submission container.
@@ -48,8 +47,7 @@ export interface CvSubmissionProps {
  * @param props - {@link CvSubmissionProps}
  */
 export const CvSubmission = ({
-    onSuccess,
-    onError,
+    className,
 }: CvSubmissionProps) => {
     /** Keycloak access token used to authorize the API calls. */
     const token = useAppSelector((state) => state.keycloak.accessToken)
@@ -71,11 +69,11 @@ export const CvSubmission = ({
             { resetForm }: FormikHelpers<CvSubmissionFormValues>,
         ) => {
             if (!token) {
-                onError?.("Authentication token not found")
+                console.error("Authentication token not found")
                 return
             }
             if (!values.cv) {
-                onError?.("CV file is required")
+                console.error("CV file is required")
                 return
             }
 
@@ -126,14 +124,12 @@ export const CvSubmission = ({
                 resetForm()
             } catch (error) {
                 console.error("CV upload error:", error)
-                onError?.(error instanceof Error ? error.message : "An error occurred")
             } finally {
                 setIsUploading(false)
             }
         },
         [
             token,
-            onError,
         ],
     )
 
@@ -141,11 +137,11 @@ export const CvSubmission = ({
     const onProcess = useCallback(
         async () => {
             if (!token) {
-                onError?.("Authentication token not found")
+                console.error("Authentication token not found")
                 return
             }
             if (!uploadedS3Key || !uploadedFileName) {
-                onError?.("Please upload CV first")
+                console.error("Please upload CV first")
                 return
             }
 
@@ -164,13 +160,8 @@ export const CvSubmission = ({
                             || "Failed to process CV",
                     )
                 }
-                const {
-                    jobId,
-                } = processResponse.data.processCV.data
-                onSuccess?.(jobId)
             } catch (error) {
                 console.error("CV process error:", error)
-                onError?.(error instanceof Error ? error.message : "An error occurred")
             } finally {
                 setIsProcessing(false)
             }
@@ -179,20 +170,20 @@ export const CvSubmission = ({
             token,
             uploadedS3Key,
             uploadedFileName,
-            onSuccess,
-            onError,
         ],
     )
 
     return (
-        <CVSubmissionForm
-            isUploading={isUploading}
-            isProcessing={isProcessing}
-            uploadProgress={uploadProgress}
-            uploadedFileName={uploadedFileName}
-            uploadedS3Key={uploadedS3Key}
-            onSubmit={onSubmit}
-            onProcess={onProcess}
-        />
+        <div className={cn(className)}>
+            <CVSubmissionForm
+                isUploading={isUploading}
+                isProcessing={isProcessing}
+                uploadProgress={uploadProgress}
+                uploadedFileName={uploadedFileName}
+                uploadedS3Key={uploadedS3Key}
+                onSubmit={onSubmit}
+                onProcess={onProcess}
+            />
+        </div>
     )
 }

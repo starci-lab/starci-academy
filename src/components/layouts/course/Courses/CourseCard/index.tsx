@@ -7,6 +7,7 @@ import React, {
 import {
     Button,
     Card,
+    cn,
 } from "@heroui/react"
 import {
     useLocale,
@@ -17,6 +18,7 @@ import {
 } from "next/navigation"
 import type {
     CourseEntity,
+    WithClassNames,
 } from "@/modules/types"
 import {
     pathConfig,
@@ -26,7 +28,7 @@ import {
 } from "@/components/reuseable"
 
 /** Props for {@link CourseCard}. */
-export interface CourseCardProps {
+export interface CourseCardProps extends WithClassNames<undefined> {
     /** The course summarised by this card. */
     course: CourseEntity
 }
@@ -40,6 +42,7 @@ export interface CourseCardProps {
  */
 export const CourseCard = ({
     course,
+    className,
 }: CourseCardProps) => {
     const locale = useLocale()
     const router = useRouter()
@@ -80,7 +83,7 @@ export const CourseCard = ({
     )
 
     return (
-        <Card>
+        <Card className={cn(className)}>
             <Card.Content>
                 <img src={course.coverImageUrl ?? undefined} alt={course.title} />
                 <Spacer y={4} />

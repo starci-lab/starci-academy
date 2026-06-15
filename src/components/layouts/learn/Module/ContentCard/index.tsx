@@ -1,23 +1,43 @@
 "use client"
 
-import React from "react"
-import { Card, Link } from "@heroui/react"
-import type { ContentEntity } from "@/modules/types"
+import React, { useCallback } from "react"
+import { Card, Link, cn } from "@heroui/react"
+import type { ContentEntity, WithClassNames } from "@/modules/types"
+import { useAppSelector } from "@/redux"
+import { useRouter } from "next/navigation"
+import { useLocale } from "next-intl"
+import { pathConfig } from "@/resources/path"
 
-export interface ContentCardProps {
+/** Props for {@link ContentCard}. */
+export interface ContentCardProps extends WithClassNames<undefined> {
     /** Content row rendered inside module grid. */
     content: ContentEntity
-    /** Navigate to selected content detail. */
-    onPress: () => void
 }
 
 /**
  * Content card shown in module overview grid.
- * @param {ContentCardProps} props Card props.
+ *
+ * List item: keeps its own `content` payload and self-navigates by reading
+ * the course/module ids from Redux and building the route internally.
+ * @param props Card props.
  */
-export const ContentCard = ({ content, onPress }: ContentCardProps) => {
+export const ContentCard = ({ content, className }: ContentCardProps) => {
+    const router = useRouter()
+    const locale = useLocale()
+    const courseDisplayId = useAppSelector((state) => state.course.displayId)
+    const moduleId = useAppSelector((state) => state.module.id)
+
+    const onPress = useCallback(
+        () => {
+            router.push(
+                pathConfig().locale(locale).course(courseDisplayId).learn().module(moduleId).content(content.id).build(),
+            )
+        },
+        [router, locale, courseDisplayId, moduleId, content.id],
+    )
+
     return (
-        <Card>
+        <Card className={cn(className)}>
             <div>
                 <Link className="text-base font-semibold text-foreground" onPress={onPress}>
                     {content.title}

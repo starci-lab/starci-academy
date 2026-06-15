@@ -4,16 +4,24 @@ import React from "react"
 import {
     Separator,
     Skeleton,
+    cn,
 } from "@heroui/react"
+import type { WithClassNames } from "@/modules/types/base/class-name"
+
+/** Props for {@link TaskSkeleton}. */
+export type TaskSkeletonProps = WithClassNames<undefined>
 
 /**
  * Loading placeholder for the milestone task detail panel.
  *
- * Presentational: static skeleton rows, no props or logic.
+ * Presentational: static skeleton rows, no logic.
+ * @param props - optional className (unused; skeleton shape is fixed)
  */
-export const TaskSkeleton = () => {
+export const TaskSkeleton = ({
+    className,
+}: TaskSkeletonProps = {}) => {
     return (
-        <>
+        <div className={cn(className)}>
             <Separator />
             <div className="p-3">
                 <Skeleton className="h-[18px] w-2/3 rounded my-[5px]" />
@@ -35,6 +43,6 @@ export const TaskSkeleton = () => {
                     ))}
                 </div>
             </div>
-        </>
+        </div>
     )
 }

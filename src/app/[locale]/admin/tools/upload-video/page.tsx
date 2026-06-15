@@ -1,6 +1,6 @@
 "use client"
 import React from "react"
-import { AdminUploadVideo } from "@/components/layouts/AdminUploadVideo"
+import { AdminUploadVideo } from "@/components/layouts/admin/AdminUploadVideo"
 
 const Page = () => {
     return (

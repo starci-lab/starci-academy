@@ -1,11 +1,12 @@
 "use client"
 
 import React, { useState } from "react"
-import { Tabs } from "@heroui/react"
+import { Tabs, cn } from "@heroui/react"
 import { Code, LayoutSplitSideContentLeft } from "@gravity-ui/icons"
+import type { WithClassNames } from "@/modules/types"
 
 /** Props for {@link CodePreviewTabs}. */
-export interface CodePreviewTabsProps {
+export interface CodePreviewTabsProps extends WithClassNames<undefined> {
     /** Live render (the rendered React component). */
     preview: React.ReactNode
     /** Source code panel (Shiki-highlighted). */
@@ -19,10 +20,10 @@ export interface CodePreviewTabsProps {
  * `:::tab` panes) so the tab shell stays identical and depends on NO layout component.
  * @param props - {@link CodePreviewTabsProps}
  */
-export const CodePreviewTabs = ({ preview, code }: CodePreviewTabsProps) => {
+export const CodePreviewTabs = ({ preview, code, className }: CodePreviewTabsProps) => {
     const [tab, setTab] = useState<"preview" | "code">("preview")
     return (
-        <div className="not-prose flex flex-col gap-1.5">
+        <div className={cn("not-prose flex flex-col gap-1.5", className)}>
             <Tabs
                 selectedKey={tab}
                 variant="secondary"

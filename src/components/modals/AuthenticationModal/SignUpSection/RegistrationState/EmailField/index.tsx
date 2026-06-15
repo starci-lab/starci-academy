@@ -2,17 +2,21 @@
 
 import React from "react"
 import {
+    cn,
     FieldError,
     Input,
     Label,
     TextField,
 } from "@heroui/react"
+import type {
+    WithClassNames,
+} from "@/modules/types/base/class-name"
 import {
     useTranslations,
 } from "next-intl"
 
 /** Props for {@link EmailField}. */
-export interface EmailFieldProps {
+export interface EmailFieldProps extends WithClassNames<undefined> {
     /** Current email value. */
     value: string
     /** Validation error message, if any. */
@@ -38,10 +42,11 @@ export const EmailField = ({
     touched,
     onChangeValue,
     onBlurField,
+    className,
 }: EmailFieldProps) => {
     const t = useTranslations()
     return (
-        <TextField isInvalid={!!(touched && error)}>
+        <TextField isInvalid={!!(touched && error)} className={cn(className)}>
             <Label htmlFor="sign-up-email" className="text-sm">
                 {t("auth.signUp.email.label")}
             </Label>

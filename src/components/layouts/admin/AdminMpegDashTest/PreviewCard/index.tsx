@@ -1,13 +1,13 @@
 "use client"
 
 import React from "react"
-import { Card, CardContent } from "@heroui/react"
+import { Card, CardContent, cn } from "@heroui/react"
 import { useMemo } from "react"
 import { VideoRenderer } from "@/components/reuseable"
-import type { VideoRendererType } from "@/modules/types"
+import type { VideoRendererType, WithClassNames } from "@/modules/types"
 import { RENDERER_TYPE_OPTION_MAP } from "../map"
 
-export interface PreviewCardProps {
+export interface PreviewCardProps extends WithClassNames<undefined> {
     /** URL to preview. */
     url: string
     /** Renderer type used to preview the URL. */
@@ -20,7 +20,7 @@ export interface PreviewCardProps {
  * @param props.url - URL to preview.
  * @param props.activeType - Renderer type used to preview the URL.
  */
-export const PreviewCard = ({ url, activeType }: PreviewCardProps) => {
+export const PreviewCard = ({ url, activeType, className }: PreviewCardProps) => {
     const activeLabel = useMemo(
         () => RENDERER_TYPE_OPTION_MAP[activeType]?.label,
         [activeType],
@@ -28,7 +28,7 @@ export const PreviewCard = ({ url, activeType }: PreviewCardProps) => {
     const hasUrl = url.trim().length > 0
 
     return (
-        <Card className="border-slate-700/50 bg-slate-800/50 backdrop-blur-xl">
+        <Card className={cn("border-slate-700/50 bg-slate-800/50 backdrop-blur-xl", className)}>
             <CardContent className="space-y-3 p-6">
                 <h2 className="text-lg font-semibold text-white flex items-center gap-1.5">
                     Preview

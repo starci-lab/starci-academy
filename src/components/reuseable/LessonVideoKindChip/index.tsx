@@ -2,10 +2,11 @@
 
 import { Filmstrip as FilmReelIcon, Sparkles as SparkleIcon } from "@gravity-ui/icons"
 import React, { useMemo } from "react"
-import { Chip, Tooltip } from "@heroui/react"
+import { Chip, Tooltip, cn } from "@heroui/react"
 import { LessonVideoKind } from "@/modules/types"
 import { useTranslations } from "next-intl"
 import { SiTwitch as TwitchLogoIcon } from "@icons-pack/react-simple-icons"
+import type { WithClassNames } from "@/modules/types"
 
 
 
@@ -13,7 +14,7 @@ import { SiTwitch as TwitchLogoIcon } from "@icons-pack/react-simple-icons"
  * The props for the LessonVideoKindChip component.
  * @param kind - The kind of the lesson video.
  */
-export interface LessonVideoKindChipProps {
+export interface LessonVideoKindChipProps extends WithClassNames<undefined> {
     /** Lesson video kind from the API. */
     kind: LessonVideoKind
 }
@@ -21,7 +22,7 @@ export interface LessonVideoKindChipProps {
 /**
  * Chip with a tooltip explaining the lesson video kind (raw stream, edited, premium).
  */
-export const LessonVideoKindChip = ({ kind }: LessonVideoKindChipProps) => {
+export const LessonVideoKindChip = ({ kind, className }: LessonVideoKindChipProps) => {
     const t = useTranslations()
     const renderLessonVideoKind = () => {
         switch (kind) {
@@ -51,7 +52,7 @@ export const LessonVideoKindChip = ({ kind }: LessonVideoKindChipProps) => {
     return (
         <Tooltip>
             <Tooltip.Trigger>
-                <Chip color="warning" size="sm" variant="soft">
+                <Chip color="warning" size="sm" variant="soft" className={cn(className)}>
                     {icon}
                     <Chip.Label>{t(label)}</Chip.Label>
                 </Chip>

@@ -145,12 +145,7 @@ export const ModuleSidebar = ({ className, collapsed = false }: ModuleSidebarPro
             {/* HeroUI Autocomplete over the full lesson collection (client-side filter, not ES);
                 choosing a lesson routes straight to it */}
             <div>
-                <ContentSearch
-                    className="p-3"
-                    modules={sortedModules}
-                    value={activeContent?.id ?? null}
-                    onSelectContent={onSelectContent}
-                />
+                <ContentSearch className="p-3" />
             </div>
             {/* divider separating the search field from the module list — sits flush
                 against the accordion; the trigger's own padding gives the breathing room */}

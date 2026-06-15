@@ -6,6 +6,7 @@ import React, {
 import {
     Breadcrumbs,
     Skeleton,
+    cn,
 } from "@heroui/react"
 import {
     useLocale,
@@ -23,6 +24,14 @@ import {
 import {
     pathConfig,
 } from "@/resources"
+import type {
+    WithClassNames,
+} from "@/modules/types"
+
+/**
+ * CourseBreadcrumbs props — only class-name plumbing (self-contained section).
+ */
+export type CourseBreadcrumbsProps = WithClassNames<undefined>
 
 /**
  * Breadcrumb trail for the course detail page (Home / Courses / current title).
@@ -33,7 +42,7 @@ import {
  * props. Shows a skeleton while loading, otherwise the trail. `"use client"`
  * because HeroUI `Breadcrumbs` is interactive and it reads redux/router.
  */
-export const CourseBreadcrumbs = () => {
+export const CourseBreadcrumbs = (props: CourseBreadcrumbsProps) => {
     const t = useTranslations()
     const router = useRouter()
     const locale = useLocale()
@@ -52,10 +61,10 @@ export const CourseBreadcrumbs = () => {
     )
 
     if (isLoading) {
-        return <Skeleton className="w-30 h-5" />
+        return <Skeleton className={cn("w-30 h-5", props.className)} />
     }
     return (
-        <Breadcrumbs>
+        <Breadcrumbs className={props.className}>
             <Breadcrumbs.Item onPress={onNavigateHome}>
                 {t("nav.home")}
             </Breadcrumbs.Item>

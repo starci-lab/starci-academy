@@ -4,12 +4,13 @@ import { CloudArrowUpIn as CloudArrowUpIcon } from "@gravity-ui/icons"
 import React, { useCallback } from "react"
 import { cn } from "@heroui/react"
 import { useDropzone } from "react-dropzone"
+import type { WithClassNames } from "@/modules/types"
 
 
 /**
  * Props for Dropzone component.
  */
-export interface DropzoneProps {
+export interface DropzoneProps extends WithClassNames<undefined> {
     /** Helper text shown below dropzone area. */
     hint: string
     /** Current selected file. */
@@ -38,6 +39,7 @@ export const Dropzone = ({
     maxSizeInBytes,
     onChange,
     onBlur,
+    className,
 }: DropzoneProps) => {
     const onDrop = useCallback((acceptedFiles: Array<File>) => {
         onChange(acceptedFiles[0] ?? null)
@@ -55,7 +57,7 @@ export const Dropzone = ({
     })
 
     return (
-        <div className="flex flex-col gap-1.5">
+        <div className={cn("flex flex-col gap-1.5", className)}>
             <div
                 {...getRootProps()}
                 className={cn(

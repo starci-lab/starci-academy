@@ -1,10 +1,12 @@
 "use client"
 
 import React, { useMemo } from "react"
+import { cn } from "@heroui/react"
 import { formatTime } from "../utils"
+import type { WithClassNames } from "@/modules/types"
 
 /** Props for {@link TimeDisplay}. */
-export interface TimeDisplayProps {
+export interface TimeDisplayProps extends WithClassNames<undefined> {
     /** Current playback position in seconds. */
     currentTime: number
     /** Total media duration in seconds. */
@@ -20,6 +22,7 @@ export interface TimeDisplayProps {
 export const TimeDisplay = ({
     currentTime,
     duration,
+    className,
 }: TimeDisplayProps) => {
     /** Formatted current playback position. */
     const current = useMemo(
@@ -38,7 +41,7 @@ export const TimeDisplay = ({
     )
 
     return (
-        <span className="select-none text-xs font-mono text-white/80">
+        <span className={cn("select-none text-xs font-mono text-white/80", className)}>
             {current}{" "}
             <span className="text-white/40">/</span>{" "}
             {total}

@@ -3,7 +3,7 @@
 import { SiFacebook as FacebookLogoIcon, SiTelegram as TelegramLogoIcon, SiX as TwitterLogoIcon } from "@icons-pack/react-simple-icons"
 import { FaLinkedin as LinkedinLogoIcon } from "react-icons/fa6"
 import React, { useMemo } from "react"
-import { Modal, Surface } from "@heroui/react"
+import { cn, Modal, Surface } from "@heroui/react"
 import { useShareOverlayState } from "@/hooks"
 import { useAppSelector } from "@/redux"
 import { QRCode } from "@/components/reuseable"
@@ -12,8 +12,9 @@ import { useTranslations } from "next-intl"
 import {
     SnippetIcon
 } from "@/components/reuseable"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
-export const ShareModal = () => {
+export const ShareModal = ({ className }: WithClassNames<undefined>) => {
     const t = useTranslations()
     const { isOpen, setOpen } = useShareOverlayState()
     const content = useAppSelector((state) => state.content.entity)
@@ -52,7 +53,7 @@ export const ShareModal = () => {
         <Modal isOpen={isOpen} onOpenChange={setOpen}>
             <Modal.Backdrop>
                 <Modal.Container size="md">
-                    <Modal.Dialog>
+                    <Modal.Dialog className={cn(className)}>
                         <Modal.CloseTrigger />
                         <Modal.Header>
                             <div className="text-2xl font-bold text-center">
@@ -60,7 +61,7 @@ export const ShareModal = () => {
                             </div>
                         </Modal.Header>
                         <Modal.Body>
-                            <div className="flex flex-col items-center gap-4 pb-4">
+                            <div className="flex flex-col items-center gap-6 pb-4">
                                 {shareUrl && (
                                     <div className="flex flex-col items-center gap-3">
                                         <Surface variant="secondary" className="rounded-xl p-2">

@@ -1,15 +1,27 @@
 "use client"
 
 import React from "react"
-import { Button, Modal } from "@heroui/react"
+import { Button, cn, Modal } from "@heroui/react"
 import {
     useCvUpdateOverlayState,
 } from "@/hooks"
 import { useCvApplyForm } from "@/hooks/zustand"
 import { useTranslations } from "next-intl"
 import { Dropzone } from "@/components/reuseable"
+import type { WithClassNames } from "@/modules/types"
 
-export const CvUpdateModal = () => {
+/**
+ * Props for {@link CvUpdateModal}.
+ */
+export type CvUpdateModalProps = WithClassNames<undefined>
+
+/**
+ * Modal to upload/replace the applicant CV file.
+ *
+ * @param props - Optional styling props.
+ */
+export const CvUpdateModal = (props: CvUpdateModalProps) => {
+    const { className } = props
     const { isOpen, setOpen } = useCvUpdateOverlayState()
     // cvFile is shared via the zustand store so CVUpload/CVPreview see the same file.
     const { cvFile, setCvFile, error, submit, isSubmitting } = useCvApplyForm()
@@ -26,7 +38,7 @@ export const CvUpdateModal = () => {
         <Modal isOpen={isOpen} onOpenChange={setOpen}>
             <Modal.Backdrop>
                 <Modal.Container size="sm">
-                    <Modal.Dialog>
+                    <Modal.Dialog className={cn(className)}>
                         <Modal.CloseTrigger />
                         <Modal.Header>
                             <div className="text-base font-semibold">
@@ -36,7 +48,7 @@ export const CvUpdateModal = () => {
                                 {t("cv.form.modal.description")}
                             </div>
                         </Modal.Header>
-                        <Modal.Body className="flex flex-col gap-4">
+                        <Modal.Body className="flex flex-col gap-6">
                             <Dropzone
                                 hint={t("cv.form.cvFile.hint")}
                                 file={cvFile}
@@ -49,7 +61,7 @@ export const CvUpdateModal = () => {
                                 maxSizeInBytes={10 * 1024 * 1024}
                                 onChange={(file) => setCvFile(file)}
                             />
-                            <div className="flex items-center justify-end gap-1.5">
+                            <div className="flex items-center justify-end gap-3">
                                 <Button
                                     variant="ghost"
                                     onPress={() => {

@@ -5,16 +5,18 @@ import {
     Tooltip,
     TooltipTrigger,
     TooltipContent,
+    cn,
 } from "@heroui/react"
 import type {
     PricingPhaseEntity,
+    WithClassNames,
 } from "@/modules/types"
 import {
     PRICING_PHASE_DATA_MAP,
 } from "../map"
 
 /** Props for {@link PhaseLabels}. */
-export interface PhaseLabelsProps {
+export interface PhaseLabelsProps extends WithClassNames<undefined> {
     /** Pricing phases ordered for display. */
     pricingPhases: Array<PricingPhaseEntity>
     /** Order index of the active phase; phases before it are sold out. */
@@ -31,9 +33,10 @@ export interface PhaseLabelsProps {
 export const PhaseLabels = ({
     pricingPhases,
     currentOrderIndex,
+    className,
 }: PhaseLabelsProps) => {
     return (
-        <div className="relative flex items-center justify-between">
+        <div className={cn("relative flex items-center justify-between", className)}>
             {pricingPhases.map((pricingPhase: PricingPhaseEntity) => {
                 // phases before the active one have filled their slots → sold out
                 const soldOut = pricingPhase.sortIndex < currentOrderIndex

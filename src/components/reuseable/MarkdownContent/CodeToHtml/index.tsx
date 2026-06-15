@@ -2,10 +2,12 @@
 
 import React, { useEffect, useRef, useState } from "react"
 import { codeToHtml } from "shiki"
+import { cn } from "@heroui/react"
 import { SnippetIcon } from "../../SnippetIcon"
+import type { WithClassNames } from "@/modules/types"
 
 /** Props for {@link CodeToHtml}. */
-export interface CodeToHtmlProps {
+export interface CodeToHtmlProps extends WithClassNames<undefined> {
     /** Source code to highlight. */
     code: string
     /** Shiki language id (e.g. `bash`, `ts`). */
@@ -25,7 +27,7 @@ export interface CodeToHtmlProps {
  * (Shiki/WASM is heavy); off-screen blocks show raw code (`<pre>`) until scrolled into view.
  * @param props - {@link CodeToHtmlProps}
  */
-export const CodeToHtml = ({ code, language, theme }: CodeToHtmlProps) => {
+export const CodeToHtml = ({ code, language, theme, className }: CodeToHtmlProps) => {
     const containerRef = useRef<HTMLDivElement>(null)
     /** Whether the block has entered (near) the viewport yet — only then do we highlight. */
     const [isVisible, setIsVisible] = useState(false)
@@ -75,7 +77,7 @@ export const CodeToHtml = ({ code, language, theme }: CodeToHtmlProps) => {
     }, [isVisible, code, language, theme])
 
     return (
-        <div ref={containerRef} className="relative w-full max-w-full overflow-hidden rounded-xl bg-default">
+        <div ref={containerRef} className={cn("relative w-full max-w-full overflow-hidden rounded-xl bg-default", className)}>
             <div className="absolute right-3 top-3 z-10">
                 <SnippetIcon copyString={code} />
             </div>

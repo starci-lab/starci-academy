@@ -15,6 +15,7 @@ import {
 import type {
     ProcessResult,
 } from "../types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 import {
     DropZone,
 } from "./DropZone"
@@ -23,7 +24,7 @@ import {
 } from "./ProcessResultBanner"
 
 /** Props for {@link FileSelectionCard}. */
-export interface FileSelectionCardProps {
+export interface FileSelectionCardProps extends WithClassNames<undefined> {
     /** Currently selected file, or null when none is chosen. */
     file: File | null
     /** Ref to the hidden file input, used to open the native picker. */
@@ -91,9 +92,9 @@ export const FileSelectionCard = ({
     )
     return (
         <Card className="bg-white/5 border border-white/10 backdrop-blur-xl shadow-2xl shadow-indigo-500/5">
-            <CardContent className="space-y-4 p-6">
+            <CardContent className="space-y-6 p-6">
                 {/* Section header */}
-                <div className="flex items-center gap-3 pb-2">
+                <div className="flex items-center gap-1.5 pb-2">
                     <div className="rounded-lg bg-indigo-500/10 p-2">
                         <FilmSlateIcon className="h-5 w-5 text-indigo-400" />
                     </div>
@@ -135,6 +136,7 @@ export const FileSelectionCard = ({
 
                 {/* Action Buttons */}
                 <div className="flex gap-3">
+
                     <Button
                         id="admin-upload-button"
                         variant="primary"

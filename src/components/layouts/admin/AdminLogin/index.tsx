@@ -5,6 +5,7 @@ import {
     Button,
     Card,
     CardContent,
+    cn,
     FieldError,
     Input,
     Label,
@@ -13,13 +14,22 @@ import {
 
 import { Controller } from "react-hook-form"
 import { useAdminApiKeyForm } from "@/hooks/rhf"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
+/** Props for {@link AdminLogin}. */
+export type AdminLoginProps = WithClassNames<undefined>
 
-export const AdminLogin = () => {
+/**
+ * Admin login page — API key entry form.
+ *
+ * Container: owns the RHF form and submission logic. `"use client"` for form state.
+ * @param props - {@link AdminLoginProps}
+ */
+export const AdminLogin = ({ className }: AdminLoginProps) => {
     const { control, watch, formState, onSubmit } = useAdminApiKeyForm()
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 flex items-center justify-center p-4">
+        <div className={cn("min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 flex items-center justify-center p-4", className)}>
             {/* Decorative background elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-indigo-500/5 blur-3xl" />
@@ -27,9 +37,9 @@ export const AdminLogin = () => {
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-indigo-500/[0.02] blur-3xl" />
             </div>
 
-            <div className="relative w-full max-w-md space-y-6">
+            <div className="relative flex w-full max-w-md flex-col gap-6">
                 {/* Header */}
-                <div className="text-center space-y-3">
+                <div className="text-center flex flex-col gap-3">
                     <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 border border-indigo-500/20 mx-auto mb-2">
                         <ShieldCheckIcon className="h-8 w-8 text-indigo-400" />
                     </div>
@@ -43,9 +53,9 @@ export const AdminLogin = () => {
 
                 {/* API Key Card */}
                 <Card className="bg-white/5 border border-white/10 backdrop-blur-xl shadow-2xl shadow-indigo-500/5">
-                    <CardContent className="space-y-4 p-6">
+                    <CardContent className="flex flex-col gap-3 p-6">
                         {/* Section header */}
-                        <div className="flex items-center gap-3 pb-1">
+                        <div className="flex items-center gap-1.5 pb-1">
                             <div className="rounded-lg bg-amber-500/10 p-2">
                                 <KeyIcon className="h-5 w-5 text-amber-400" />
                             </div>
@@ -61,7 +71,7 @@ export const AdminLogin = () => {
 
                         <form
                             onSubmit={onSubmit}
-                            className="space-y-4"
+                            className="flex flex-col gap-3"
                         >
                             <Controller
                                 control={control}

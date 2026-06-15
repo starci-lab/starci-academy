@@ -4,10 +4,7 @@ import {
     CircleCheck as CheckIcon,
     Persons as PersonsIcon,
 } from "@gravity-ui/icons"
-import React, {
-    useCallback,
-    useState,
-} from "react"
+import React from "react"
 import {
     Button,
     Spinner,
@@ -15,75 +12,46 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import {
-    useMutateSetFollowSwr,
-} from "@/hooks"
+import type { WithClassNames } from "@/modules/types"
 
 /** Props for {@link FollowButton}. */
-export interface FollowButtonProps {
-    /** Id of the user to follow / unfollow. */
-    userId: string
-    /** Current follow state (controlled by the parent). */
+export interface FollowButtonProps extends WithClassNames<undefined> {
+    /** Current follow state (owned by the parent). */
     following: boolean
-    /** Called with the new follow state after a successful toggle. */
-    onChange?: (following: boolean) => void
+    /** Invoked when the button is pressed; the parent runs the mutation. */
+    onToggle?: () => void
+    /** True while the parent's toggle request is in flight. */
+    isPending?: boolean
 }
 
 /**
  * Reusable follow / unfollow toggle for another user.
  *
- * Fires the idempotent `setFollow` mutation and reports the new state up via
- * `onChange` so the parent can adjust any follower count it shows. Shows a
- * spinner while in flight; the parent owns the authoritative `following` value.
+ * Presentational only: it renders the follow state and forwards presses to the
+ * parent via `onToggle`. The parent (a layout container) owns the `setFollow`
+ * mutation, the authoritative `following` value, and the in-flight `isPending`
+ * flag — per the reuseable = no-store/no-fetch rule.
  *
  * @param props - {@link FollowButtonProps}
  */
 export const FollowButton = ({
-    userId,
     following,
-    onChange,
+    onToggle,
+    isPending = false,
+    className,
 }: FollowButtonProps) => {
     const t = useTranslations()
-    const { trigger } = useMutateSetFollowSwr()
-    // in-flight flag for the toggle request
-    const [pending, setPending] = useState(false)
-
-    /** Toggle follow state, then notify the parent on success. */
-    const onPress = useCallback(
-        async () => {
-            // optimistic target = the opposite of the current state
-            const next = !following
-            setPending(true)
-            try {
-                const result = await trigger({
-                    userId,
-                    follow: next,
-                })
-                // only commit when the server confirms
-                if (result?.data?.setFollow?.success) {
-                    onChange?.(next)
-                }
-            } finally {
-                setPending(false)
-            }
-        },
-        [
-            following,
-            userId,
-            trigger,
-            onChange,
-        ],
-    )
 
     return (
         <Button
             // "following" reads as a softer, already-engaged state
             variant={following ? "secondary" : "primary"}
             size="sm"
-            isDisabled={pending}
-            onPress={onPress}
+            isDisabled={isPending}
+            onPress={onToggle}
+            className={className}
         >
-            {pending ? (
+            {isPending ? (
                 <Spinner
                     color="current"
                     size="sm"

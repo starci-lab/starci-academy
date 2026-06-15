@@ -1,9 +1,10 @@
 "use client"
 
-import React from "react"
+import React, { useMemo } from "react"
 import {
     Accordion,
     Chip,
+    cn,
 } from "@heroui/react"
 import {
     useTranslations,
@@ -11,31 +12,56 @@ import {
 import {
     MarkdownContent,
 } from "@/components/reuseable"
-import type {
-    MilestoneTaskCriteriaEntity,
-} from "@/modules/types"
+import {
+    useAppSelector,
+} from "@/redux"
+import _ from "lodash"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link TaskCriteriaList}. */
-export interface TaskCriteriaListProps {
-    /** Criteria sorted by display order. */
-    criterias: Array<MilestoneTaskCriteriaEntity>
-}
+export type TaskCriteriaListProps = WithClassNames<undefined>
 
 /**
  * Accordion list of pass criteria with score chips and markdown hints.
  *
- * Presentational: renders the supplied sorted criteria, no logic.
- * @param props - the sorted criteria rows
+ * Self-contained: reads sorted criteria from the redux task state, no props needed.
+ * @param props - optional className for the root element
  */
 export const TaskCriteriaList = ({
-    criterias,
-}: TaskCriteriaListProps) => {
+    className,
+}: TaskCriteriaListProps = {}) => {
     const t = useTranslations()
+    const selectedTaskId = useAppSelector((state) => state.milestone.selectedTaskId)
+    const selectedTaskDetail = useAppSelector((state) => state.milestone.selectedTaskDetail)
+    const milestoneEntities = useAppSelector((state) => state.milestone.entities)
+
+    const displayTask = useMemo(() => {
+        if (!selectedTaskId) return undefined
+        if (selectedTaskDetail?.id === selectedTaskId) {
+            return selectedTaskDetail
+        }
+        for (const milestone of milestoneEntities) {
+            const found = milestone.tasks?.find((task) => task.id === selectedTaskId)
+            if (found) return found
+        }
+        return undefined
+    }, [selectedTaskId, selectedTaskDetail, milestoneEntities])
+
+    const sortedCriterias = useMemo(() => {
+        if (!displayTask?.criterias) return []
+        return _.cloneDeep(displayTask.criterias)
+            .sort((prev, next) => prev.sortIndex - next.sortIndex)
+    }, [displayTask?.criterias])
+
+    if (sortedCriterias.length === 0) {
+        return null
+    }
+
     return (
-        <>
+        <div className={cn(className)}>
             <div className="h-3" />
             <Accordion allowsMultipleExpanded variant="surface">
-                {criterias.map((criteria, index) => (
+                {sortedCriterias.map((criteria, index) => (
                     <Accordion.Item key={criteria.id}>
                         <Accordion.Heading>
                             <Accordion.Trigger className="w-full p-3">
@@ -68,6 +94,6 @@ export const TaskCriteriaList = ({
                     </Accordion.Item>
                 ))}
             </Accordion>
-        </>
+        </div>
     )
 }

@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { PracticeList } from "@/components/layouts/Practice"
+import { PracticeList } from "@/components/layouts/learn/Practice"
 
 /**
  * Learn / practice: course-level coding-practice tab (problem bank).

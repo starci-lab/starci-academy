@@ -1,10 +1,10 @@
 "use client"
 
 import React from "react"
-import { Card, CardContent, Link } from "@heroui/react"
-import type { LessonVideoEntity } from "@/modules/types"
+import { Card, CardContent, Link, cn } from "@heroui/react"
+import type { LessonVideoEntity, WithClassNames } from "@/modules/types"
 
-export interface LessonCardProps {
+export interface LessonCardProps extends WithClassNames<undefined> {
     /** Lesson video row for lesson tab. */
     lessonVideo: LessonVideoEntity
 }
@@ -13,9 +13,9 @@ export interface LessonCardProps {
  * Render one lesson video card item.
  * @param {LessonCardProps} props Lesson video card props.
  */
-export const LessonCard = ({ lessonVideo }: LessonCardProps) => {
+export const LessonCard = ({ lessonVideo, className }: LessonCardProps) => {
     return (
-        <Card>
+        <Card className={cn("", className)}>
             <CardContent className="p-3">
                 <Link href={lessonVideo.url} target="_blank" className="text-sm font-medium text-accent">
                     {lessonVideo.title}

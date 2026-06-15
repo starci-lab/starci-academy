@@ -3,18 +3,26 @@
 import { useEffect } from "react"
 import { useAppSelector } from "@/redux"
 import { useLinkGithubOverlayState } from "@/hooks"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Session-storage key marking that the soft GitHub-link prompt already fired this session. */
 const SESSION_PROMPT_KEY = "linkGithubPrompted"
+
+/** Props for {@link GithubLinkGate}. */
+export type GithubLinkGateProps = WithClassNames<undefined>
 
 /**
  * Soft gate that nudges authenticated learners to link their GitHub account.
  *
  * Rendered inside the learn layout. When the signed-in user has no `githubUsername`, it opens
  * the global {@link LinkGithubModal} once per browser session (soft: the user may close it and
- * keep learning; it re-prompts on the next session). Renders nothing.
+ * keep learning; it re-prompts on the next session). Renders nothing — className is accepted
+ * for API conformance but not applied.
+ * @param props - {@link GithubLinkGateProps}
  */
-export const GithubLinkGate = () => {
+export const GithubLinkGate = ({ className }: GithubLinkGateProps) => {
+    // className accepted for API conformance; this component renders null (side-effect only)
+    void className
     // only authenticated users can link; unauthenticated visitors never see the prompt
     const authenticated = useAppSelector((state) => state.keycloak.authenticated)
     // the resolved current user — carries githubUsername once the `me` query populates it

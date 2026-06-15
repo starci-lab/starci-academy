@@ -6,12 +6,10 @@ import {
     cn,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { useAppSelector } from "@/redux"
 import { type WithClassNames } from "@/modules/types"
-import { FlashcardDeckList } from "../FlashcardDeckList"
-import { FlashcardDeckListSkeleton } from "../FlashcardDeckList/FlashcardDeckListSkeleton"
-import { FlashcardReviewer } from "../FlashcardReviewer"
-import { InterviewSession } from "../InterviewSession"
+import { FlashcardDeckList } from "./FlashcardDeckList"
+import { FlashcardReviewer } from "./FlashcardReviewer"
+import { InterviewSession } from "./InterviewSession"
 
 export type FlashcardLayoutProps = WithClassNames<undefined>
 
@@ -26,8 +24,6 @@ type FlashcardMode = "study" | "interview"
  */
 export const FlashcardLayout = ({ className }: FlashcardLayoutProps) => {
     const t = useTranslations()
-    // owning course id drives which decks are listed
-    const courseId = useAppSelector((state) => state.course.entity?.id)
     // selected deck (null = showing the deck list)
     const [selectedDeckId, setSelectedDeckId] = useState<string | null>(null)
     // within a deck: flip-card study vs. voice-interview drilling
@@ -44,12 +40,9 @@ export const FlashcardLayout = ({ className }: FlashcardLayoutProps) => {
                     <p className="text-sm text-muted">{t("flashcard.subtitle")}</p>
                 </div>
 
-                {/* wait for the course to hydrate before any deck query */}
-                {!courseId ? (
-                    <FlashcardDeckListSkeleton />
-                ) : !selectedDeckId ? (
+                {/* deck list or reviewer */}
+                {!selectedDeckId ? (
                     <FlashcardDeckList
-                        courseId={courseId}
                         onSelectDeck={(deckId) => setSelectedDeckId(deckId)}
                     />
                 ) : (

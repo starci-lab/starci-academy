@@ -8,9 +8,10 @@ import {
 import {
     formatSize,
 } from "../../utils"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link DropZone}. */
-export interface DropZoneProps {
+export interface DropZoneProps extends WithClassNames<undefined> {
     /** Currently selected file, or null when none is chosen. */
     file: File | null
     /** Ref to the hidden file input, used to open the native picker. */

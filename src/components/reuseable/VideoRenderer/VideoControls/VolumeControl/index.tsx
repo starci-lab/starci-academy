@@ -2,12 +2,13 @@
 
 import { Volume as SpeakerHighIcon, VolumeSlash as SpeakerSlashIcon } from "@gravity-ui/icons"
 import React from "react"
-import { Button, Popover, Slider } from "@heroui/react"
+import { Button, cn, Popover, Slider } from "@heroui/react"
 import { useCallback, useMemo } from "react"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 
 /** Props for {@link VolumeControl}. */
-export interface VolumeControlProps {
+export interface VolumeControlProps extends WithClassNames<undefined> {
     /** Current volume in the `0..1` range. */
     volume: number
     /** Whether audio is currently muted. */
@@ -29,6 +30,7 @@ export const VolumeControl = ({
     isMuted,
     onVolumeChange,
     onMuteToggle,
+    className,
 }: VolumeControlProps) => {
     /** Slider should sit at zero whenever audio is muted. */
     const sliderValue = useMemo(
@@ -64,7 +66,7 @@ export const VolumeControl = ({
                     variant="ghost"
                     aria-label="Volume"
                     onPress={onMuteToggle}
-                    className="text-white hover:bg-white/20 border-none min-w-8 h-8"
+                    className={cn("text-white hover:bg-white/20 border-none min-w-8 h-8", className)}
                 >
                     {isSilent ? (
                         <SpeakerSlashIcon className="h-4 w-4" />

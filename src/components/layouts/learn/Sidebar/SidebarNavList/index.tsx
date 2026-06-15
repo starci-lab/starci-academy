@@ -2,6 +2,7 @@
 
 import React from "react"
 import {
+    cn,
     ScrollShadow,
 } from "@heroui/react"
 import type {
@@ -13,37 +14,39 @@ import {
 import {
     SidebarNavItemRow,
 } from "./SidebarNavItemRow"
+import type {
+    WithClassNames,
+} from "@/modules/types"
 
 /**
  * Props for {@link SidebarNavList}.
  */
-export interface SidebarNavListProps {
+export interface SidebarNavListProps extends WithClassNames<undefined> {
     /** Nav entries to render. */
     items: Array<SidebarNavItem>
     /** Currently active sidebar tab. */
     selectedTab: SidebarTab
     /** Icon-only mode forwarded to every row (collapsed rail). */
     collapsed?: boolean
-    /** Fired with the chosen entry when a row is pressed. */
-    onSelect: (item: SidebarNavItem) => void
 }
 
 /**
  * Scrollable list of course-learn sidebar rows.
  *
- * Presentational: maps entries → {@link SidebarNavItemRow}, no logic.
- * @param props - entries, active tab, and select callback
+ * Presentational: maps entries → {@link SidebarNavItemRow}. Each row
+ * self-dispatches its tab + navigation; no callback needed here.
+ * @param props - entries, active tab, and collapsed state
  */
 export const SidebarNavList = ({
     items,
     selectedTab,
     collapsed = false,
-    onSelect,
+    className,
 }: SidebarNavListProps) => {
     return (
         <ScrollShadow
             hideScrollBar
-            className="min-h-[calc(100vh-4rem)] overflow-y-auto pr-1 p-3"
+            className={cn("min-h-[calc(100vh-4rem)] overflow-y-auto pr-1 p-3", className)}
             size={40}
         >
             {items.map((item) => (
@@ -52,7 +55,6 @@ export const SidebarNavList = ({
                     item={item}
                     selected={selectedTab === item.tab}
                     collapsed={collapsed}
-                    onSelect={onSelect}
                 />
             ))}
         </ScrollShadow>

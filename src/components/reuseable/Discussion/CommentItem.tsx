@@ -5,6 +5,7 @@ import { Button, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
 import { ReactionType, type CommentNode } from "@/modules/api"
+import type { WithClassNames } from "@/modules/types"
 import { UserAvatar } from "../UserAvatar"
 import { ReactionBar } from "./ReactionBar"
 import { CommentComposer } from "./CommentComposer"
@@ -24,7 +25,7 @@ export interface CommentItemCallbacks {
 }
 
 /** Props for {@link CommentItem}. */
-export interface CommentItemProps extends CommentItemCallbacks {
+export interface CommentItemProps extends CommentItemCallbacks, WithClassNames<undefined> {
     /** The comment to render. */
     comment: CommentNode
     /** Current viewer id (drives owner-only actions); null when unknown. */
@@ -53,6 +54,7 @@ export const CommentItem = ({
     onDelete,
     onReactComment,
     onLoadReplies,
+    className,
 }: CommentItemProps) => {
     const t = useTranslations()
     // transient per-comment UI state
@@ -78,6 +80,7 @@ export const CommentItem = ({
                 "flex flex-col gap-1.5",
                 // indent nested replies with a guide border, capped after a few levels
                 depth > 0 ? "border-l border-default pl-3 sm:pl-4" : undefined,
+                className,
             )}
         >
             <div className="flex gap-3">
@@ -87,7 +90,7 @@ export const CommentItem = ({
                     avatar={comment.author.avatar}
                     className="mt-0.5 shrink-0"
                 />
-                <div className="flex min-w-0 flex-1 flex-col gap-1">
+                <div className="flex min-w-0 flex-1 flex-col gap-1.5">
                     {/* author + timestamp header */}
                     <div className="flex flex-wrap items-center gap-1.5">
                         <span className="text-sm font-semibold text-foreground">
@@ -189,7 +192,7 @@ export const CommentItem = ({
                     ) : null}
 
                     {expanded && replies.length > 0 ? (
-                        <div className="mt-1 flex flex-col gap-4">
+                        <div className="mt-1 flex flex-col gap-3">
                             {replies.map((reply) => (
                                 <CommentItem
                                     key={reply.id}

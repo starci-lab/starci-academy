@@ -2,14 +2,16 @@
 
 import React from "react"
 import {
+    cn,
     Skeleton,
 } from "@heroui/react"
 import {
     SkeletonText,
 } from "@/components/reuseable"
+import type { WithClassNames } from "@/modules/types"
 
 /** Props for {@link KeyPoolStatusSkeleton}. */
-export interface KeyPoolStatusSkeletonProps {
+export interface KeyPoolStatusSkeletonProps extends WithClassNames<undefined> {
     /** Number of placeholder provider cards. Defaults to `3`. */
     count?: number
 }
@@ -22,9 +24,10 @@ export interface KeyPoolStatusSkeletonProps {
  */
 export const KeyPoolStatusSkeleton = ({
     count = 3,
+    className,
 }: KeyPoolStatusSkeletonProps) => {
     return (
-        <section className="flex flex-col gap-4">
+        <section className={cn("flex flex-col gap-3", className)}>
             {Array.from({ length: Math.max(count, 1) }).map((_unused, cardIndex) => (
                 <div
                     key={cardIndex}

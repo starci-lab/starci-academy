@@ -21,6 +21,9 @@ import {
 import {
     AiMode,
 } from "@/modules/api"
+import type {
+    WithClassNames,
+} from "@/modules/types"
 
 /**
  * AI quota summary card on the profile hub.
@@ -28,8 +31,13 @@ import {
  * Container: reads the quota SWR, shows the active lane + the remaining
  * allowance in the current 5h window, and opens the full quota modal.
  * `"use client"` for the SWR singleton + overlay state.
+ * @param props.className - Optional wrapper class merged into the root element.
  */
-export const QuotaCard = () => {
+export type QuotaCardProps = WithClassNames<undefined>
+
+export const QuotaCard = ({
+    className,
+}: QuotaCardProps) => {
     const t = useTranslations()
     const { open } = useAiQuotaOverlayState()
     const { data: quota, isLoading: isQuotaLoading } = useQueryMyAiQuotaSwr()
@@ -50,7 +58,7 @@ export const QuotaCard = () => {
     const isLoading = isQuotaLoading || (!isPremium && isCreditLoading)
 
     return (
-        <div className="flex flex-col gap-4 rounded-large bg-default/40 p-5">
+        <div className={cn("flex flex-col gap-3 rounded-large bg-default/40 p-5", className)}>
             <div className="flex items-center justify-between gap-1.5">
                 <div className="flex items-center gap-1.5">
                     <GaugeIcon

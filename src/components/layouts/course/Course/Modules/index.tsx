@@ -20,9 +20,6 @@ import type {
     WithClassNames,
 } from "@/modules/types"
 import {
-    MODULE_SUMMARY_ITEMS,
-} from "./map"
-import {
     ModulesSkeleton,
 } from "./ModulesSkeleton"
 import {
@@ -70,7 +67,6 @@ export const Modules = (props: ModulesProps) => {
                         <ModuleItem
                             key={module.id}
                             module={module}
-                            summaryItems={MODULE_SUMMARY_ITEMS}
                         />
                     ))}
                 </Accordion>

@@ -23,14 +23,10 @@ import {
 } from "@/redux"
 import {
     setFoundation,
-    setFoundationId,
     setFoundationLimit,
     setFoundationPageNumber,
     setFoundationSearch,
 } from "@/redux/slices"
-import type {
-    FoundationEntity,
-} from "@/modules/types"
 import {
     useQueryFoundationCategoriesSwr,
     useQueryFoundationsSwr,
@@ -42,11 +38,8 @@ import {
     useOpenFoundationResource,
 } from "./hooks"
 import {
-    compareFoundations,
-} from "./utils"
-import {
     FoundationsBreadcrumbs,
-} from "./FoundationsBreadcrumbs"
+} from "./shared/FoundationsBreadcrumbs"
 import {
     FoundationsLearnHeader,
 } from "./FoundationsLearnHeader"
@@ -83,9 +76,9 @@ export const FoundationsLearnLayout = () => {
     const course = useAppSelector((state) => state.course.entity)
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
     const category = useAppSelector((state) => state.foundation.category)
-    const categoryId = useAppSelector((state) => state.foundation.categoryId)
     const foundations = useAppSelector((state) => state.foundation.entities)
     const foundationId = useAppSelector((state) => state.foundation.foundationId)
+    const foundation = useAppSelector((state) => state.foundation.entity)
     const count = useAppSelector((state) => state.foundation.count)
     const pageNumber = useAppSelector((state) => state.foundation.pageNumber)
     const search = useAppSelector((state) => state.foundation.search)
@@ -123,25 +116,6 @@ export const FoundationsLearnLayout = () => {
         && foundations !== undefined
         && (search?.trim().length ?? 0) > 0
         && count === 0
-
-    /** Navigate back to the foundations category hub. */
-    const onBack = useCallback(() => {
-        if (!courseDisplayId) {
-            return
-        }
-        router.push(
-            pathConfig()
-                .locale(locale)
-                .course(courseDisplayId)
-                .learn()
-                .foundations()
-                .build(),
-        )
-    }, [
-        courseDisplayId,
-        locale,
-        router,
-    ])
 
     /** Change the current page of resources. */
     const onPageChange = useCallback((nextPage: number) => {
@@ -185,22 +159,14 @@ export const FoundationsLearnLayout = () => {
         t,
     ])
 
-    /** Foundations sorted into display order (StarCi video → roadmap → cheatsheet → rest). */
-    const sortedFoundations = useMemo(() => {
-        if (!foundations?.length) {
-            return []
-        }
-        return [...foundations].sort(compareFoundations)
-    }, [foundations])
-
     // typeahead suggestions for the resource search — reuse the category-scoped server
     // search results (titles) so the dropdown matches the grid without a separate endpoint
     const resourceSuggestions = useMemo(
-        () => sortedFoundations.map((foundation) => ({
-            id: foundation.id,
-            label: foundation.title,
+        () => (foundations ?? []).map((f) => ({
+            id: f.id,
+            label: f.title,
         })),
-        [sortedFoundations],
+        [foundations],
     )
 
     /** Fill the search box with the chosen resource title (the grid then narrows to it). */
@@ -211,46 +177,16 @@ export const FoundationsLearnLayout = () => {
         [],
     )
 
-    /** Select a foundation: persist it, deep-link the URL, then open its viewer. */
-    const onSelectFoundation = useCallback(
-        (foundation: FoundationEntity) => {
-            dispatch(setFoundation(foundation))
-            dispatch(setFoundationId(foundation.id))
-
-            if (courseDisplayId && categoryId) {
-                router.push(
-                    pathConfig()
-                        .locale(locale)
-                        .course(courseDisplayId)
-                        .learn()
-                        .foundations(categoryId)
-                        .item(foundation.id)
-                        .build(),
-                )
-            }
-
-            openFoundationResource(foundation)
-        },
-        [
-            dispatch,
-            courseDisplayId,
-            categoryId,
-            locale,
-            router,
-            openFoundationResource,
-        ],
-    )
-
     // auto-open a deep-linked foundation once the list is available
     useEffect(() => {
-        if (!foundationId || !sortedFoundations.length) {
+        if (!foundationId || !foundations?.length) {
             return
         }
         if (openedFromUrlRef.current === foundationId) {
             return
         }
 
-        const fromUrl = sortedFoundations.find(
+        const fromUrl = foundations.find(
             (item) => item.id === foundationId,
         )
         if (!fromUrl) {
@@ -262,18 +198,17 @@ export const FoundationsLearnLayout = () => {
         openFoundationResource(fromUrl)
     }, [
         dispatch,
+        foundation,
         foundationId,
+        foundations,
         openFoundationResource,
-        sortedFoundations,
     ])
 
     return (
         <div className="p-3">
             <FoundationsBreadcrumbs items={breadcrumbItems} />
             <div className="h-6" />
-            <FoundationsLearnHeader
-                onBack={onBack}
-            />
+            <FoundationsLearnHeader />
             <div className="h-6" />
             {/* search row: box (server-side, debounced) on the left, resource count right-aligned */}
             <div className="flex items-center justify-between gap-3">
@@ -299,12 +234,7 @@ export const FoundationsLearnLayout = () => {
                 </p>
             ) : (
                 <>
-                    <FoundationsList
-                        foundations={foundations}
-                        isLoading={isFoundationsLoading && !foundationsData}
-                        sortedFoundations={sortedFoundations}
-                        onSelect={onSelectFoundation}
-                    />
+                    <FoundationsList />
                     {/* server-driven pagination; persists across page/search loads (count in redux) */}
                     {(count ?? 0) > 0 ? (
                         <Pagination

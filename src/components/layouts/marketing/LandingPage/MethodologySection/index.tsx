@@ -1,6 +1,10 @@
+"use client"
+
 import { ArrowRight, FaceRobot as Robot, FileText as Article, ShieldCheck, Terminal as TerminalWindow } from "@gravity-ui/icons"
+import { cn } from "@heroui/react"
 import { motion } from "framer-motion"
 import React from "react"
+import { type WithClassNames } from "@/modules/types"
 
 
 // Define the motion variants.
@@ -21,14 +25,19 @@ const itemVariants = {
     }
 }
 
-export const MethodologySection = () => {
+export type MethodologySectionProps = WithClassNames<undefined>
+
+/**
+ * @param {MethodologySectionProps} props Optional wrapper styling props.
+ */
+export const MethodologySection = ({ className }: MethodologySectionProps) => {
     return (
         <motion.section
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="col-span-3 mt-24 space-y-20 w-full max-w-6xl mx-auto"
+            className={cn("col-span-3 mt-24 space-y-20 w-full max-w-6xl mx-auto", className)}
         >
             {/* Section header */}
             <motion.div variants={itemVariants} className="max-w-2xl">
@@ -67,9 +76,9 @@ export const MethodologySection = () => {
               Thiết kế chuyên nghiệp, đầy đủ diagram và case study.
                         </li>
                     </ul>
-                    <button className="mt-8 flex items-center gap-1.5 font-medium text-accent group-hover:gap-4 transition-all">
+                    <div className="mt-8 flex items-center gap-1.5 font-medium text-accent group-hover:gap-4 transition-all">
             Đọc thử nội dung <ArrowRight />
-                    </button>
+                    </div>
                 </motion.div>
 
                 {/* Card 2: Challenge System */}
@@ -92,9 +101,9 @@ export const MethodologySection = () => {
               Tư duy giải quyết vấn đề thay vì copy-paste.
                         </li>
                     </ul>
-                    <button className="mt-8 flex items-center gap-1.5 font-medium text-accent group-hover:gap-4 transition-all">
+                    <div className="mt-8 flex items-center gap-1.5 font-medium text-accent group-hover:gap-4 transition-all">
             Làm thử Challenge <ArrowRight />
-                    </button>
+                    </div>
                 </motion.div>
 
                 {/* Card 3: AI & Career Support */}
@@ -109,9 +118,9 @@ export const MethodologySection = () => {
                             <p className="mt-4 text-muted leading-relaxed max-w-xl">
                 Không chỉ là khóa học, chúng tôi cung cấp bộ công cụ AI chuyên dụng để **Review CV**, tối ưu hóa Profile và hướng dẫn bạn hoàn thiện **Final Project** ở mức độ tinh xảo nhất.
                             </p>
-                            <button className="mt-8 px-6 py-2 rounded-full border border-accent/50 text-accent hover:bg-accent hover:text-white transition-all font-medium text-sm">
+                            <div className="mt-8 px-6 py-2 rounded-full border border-accent/50 text-accent hover:bg-accent hover:text-white transition-all font-medium text-sm w-fit">
                 Trải nghiệm AI ngay
-                            </button>
+                            </div>
                         </div>
             
                         {/* Visual AI Placeholder */}

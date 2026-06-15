@@ -1,7 +1,8 @@
 import { ArrowUpRightFromSquare as ArrowUpRightIcon } from "@gravity-ui/icons"
-import { Link } from "@heroui/react"
+import { Link, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import React from "react"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 
 /** Minimal shape for content or challenge reference rows. */
@@ -13,7 +14,7 @@ export interface ReferenceLinkItem {
     alias: string
 }
 
-export interface ReferenceLinksProps {
+export interface ReferenceLinksProps extends WithClassNames<undefined> {
     references: Array<ReferenceLinkItem>
     /** i18n key for section title (e.g. reference.title). */
     titleKey: string
@@ -22,13 +23,13 @@ export interface ReferenceLinksProps {
 /**
  * Sorted list of external reference links (content or challenge).
  */
-export const ReferenceLinks = ({ references, titleKey }: ReferenceLinksProps) => {
+export const ReferenceLinks = ({ references, titleKey, className }: ReferenceLinksProps) => {
     const t = useTranslations()
     if (references.length === 0) {
         return null
     }
     return (
-        <>
+        <div className={cn(className)}>
             <div className="font-semibold text-base text-foreground">
                 {t(titleKey)}
             </div>
@@ -51,6 +52,6 @@ export const ReferenceLinks = ({ references, titleKey }: ReferenceLinksProps) =>
                     )
                 })}
             </ul>
-        </>
+        </div>
     )
 }

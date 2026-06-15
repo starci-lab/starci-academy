@@ -3,6 +3,7 @@
 import React from "react"
 import {
     Skeleton,
+    cn,
 } from "@heroui/react"
 import {
     useQueryCourseSwr,
@@ -10,6 +11,14 @@ import {
 import {
     useAppSelector,
 } from "@/redux"
+import type {
+    WithClassNames,
+} from "@/modules/types"
+
+/**
+ * CourseHeader props — only class-name plumbing (self-contained section).
+ */
+export type CourseHeaderProps = WithClassNames<undefined>
 
 /**
  * Course title + rich-text description block.
@@ -20,16 +29,16 @@ import {
  * the heading and the description HTML. `"use client"` because HeroUI
  * `Skeleton` is a client component and it reads redux.
  */
-export const CourseHeader = () => {
+export const CourseHeader = (props: CourseHeaderProps) => {
     const { isLoading } = useQueryCourseSwr()
     const title = useAppSelector((state) => state.course.entity?.title)
     const description = useAppSelector((state) => state.course.entity?.description)
     return (
         <>
             {isLoading ? (
-                <Skeleton className="h-10 w-60 max-w-full" />
+                <Skeleton className={cn("h-10 w-60 max-w-full", props.className)} />
             ) : (
-                <h1 className="text-4xl font-bold">{title}</h1>
+                <h1 className={cn("text-4xl font-bold", props.className)}>{title}</h1>
             )}
             {isLoading ? (
                 <div className="mt-3 space-y-1.5">

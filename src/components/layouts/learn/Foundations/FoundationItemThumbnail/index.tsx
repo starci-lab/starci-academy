@@ -2,11 +2,10 @@
 
 import { Layers as StackIcon } from "@gravity-ui/icons"
 import { cn } from "@heroui/react"
-
 import React, { useMemo } from "react"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
-
-export interface FoundationItemThumbnailProps {
+export interface FoundationItemThumbnailProps extends WithClassNames<undefined> {
     /** Foundation-specific cover image URL (full-bleed when set). */
     thumbnailUrl?: string | null
     /** Accessible label for the image (usually foundation title). */
@@ -25,6 +24,7 @@ export const FoundationItemThumbnail = ({
     thumbnailUrl,
     title,
     size = "card",
+    className,
 }: FoundationItemThumbnailProps) => {
     const resolvedThumbnailUrl = useMemo(
         () => thumbnailUrl?.trim() || undefined,
@@ -36,6 +36,7 @@ export const FoundationItemThumbnail = ({
             className={cn(
                 "relative aspect-video w-full shrink-0 overflow-hidden bg-accent/10",
                 size === "detail" && "max-h-72",
+                className,
             )}
         >
             {resolvedThumbnailUrl ? (

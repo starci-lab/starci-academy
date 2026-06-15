@@ -11,6 +11,7 @@ import {
     Button,
     Card,
     CardContent,
+    cn,
 } from "@heroui/react"
 import type {
     QueryActiveAdvertisementData,
@@ -21,9 +22,12 @@ import type {
 import {
     AdvertisementMediaType,
 } from "@/modules/api"
+import type {
+    WithClassNames,
+} from "@/modules/types/base/class-name"
 
 /** Props for {@link AdBanner}. */
-export interface AdBannerProps {
+export interface AdBannerProps extends WithClassNames<undefined> {
     /** The active advertisement to render. */
     ad: QueryActiveAdvertisementData
 }
@@ -40,6 +44,7 @@ const DEFAULT_CAROUSEL_INTERVAL = 4000
  */
 export const AdBanner = ({
     ad,
+    className,
 }: AdBannerProps) => {
     const t = useTranslations()
 
@@ -127,7 +132,7 @@ export const AdBanner = ({
     }
 
     return (
-        <Card>
+        <Card className={cn(className)}>
             <CardContent className="flex flex-col gap-3">
                 {/* "Sponsored" / "Ad" tag row */}
                 <div className="flex items-center justify-between">

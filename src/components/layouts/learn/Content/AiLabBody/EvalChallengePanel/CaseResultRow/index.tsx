@@ -56,7 +56,7 @@ export const CaseResultRow = ({ caseResult, className }: CaseResultRowProps) => 
                 </div>
             </div>
             {caseResult.actualOutput ? (
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col gap-1.5">
                     <span className="text-xs text-muted">{t("aiLab.eval.actualOutput")}</span>
                     <pre className="whitespace-pre-wrap break-words rounded-xl bg-background p-3 text-sm text-foreground">
                         {caseResult.actualOutput}
@@ -64,7 +64,7 @@ export const CaseResultRow = ({ caseResult, className }: CaseResultRowProps) => 
                 </div>
             ) : null}
             {caseResult.feedback ? (
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col gap-1.5">
                     <span className="text-xs text-muted">{t("aiLab.eval.feedback")}</span>
                     <span className="text-sm text-muted">{caseResult.feedback}</span>
                 </div>

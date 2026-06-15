@@ -2,11 +2,11 @@
 
 import React from "react"
 import { MarkdownContent } from "@/components/reuseable"
-import type { CodeExplainingEntity } from "@/modules/types"
-import { Chip } from "@heroui/react"
+import type { CodeExplainingEntity, WithClassNames } from "@/modules/types"
+import { Chip, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 
-export interface ExplainingCardProps {
+export interface ExplainingCardProps extends WithClassNames<undefined> {
     /** One code explaining row from `content.codeExplainings`. */
     item: CodeExplainingEntity
 }
@@ -15,11 +15,11 @@ export interface ExplainingCardProps {
  * Renders one critical code snippet and its explanation.
  * @param props.item - Code explaining entity for this card.
  */
-export const ExplainingCard = ({ item }: ExplainingCardProps) => {
+export const ExplainingCard = ({ item, className }: ExplainingCardProps) => {
     const t = useTranslations()
 
     return (
-        <article className="rounded-xl border border-default-200 p-4 flex flex-col gap-3">
+        <article className={cn("rounded-xl border border-default-200 p-4 flex flex-col gap-3", className)}>
             <div className="flex items-center gap-1.5">
                 <Chip variant="secondary" color="accent" size="sm">
                     <Chip.Label>{t("content.codeExplainings.indexLabel", { index: item.sortIndex })}</Chip.Label>

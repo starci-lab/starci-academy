@@ -176,12 +176,7 @@ export const MilestoneSidebar = ({ className, collapsed = false }: MilestoneSide
     return (
         <div className={shellClass}>
             <div>
-                <MilestoneTaskSearch
-                    className="p-3"
-                    milestones={milestones}
-                    value={selectedTaskId ?? null}
-                    onSelectTask={onSelectTask}
-                />
+                <MilestoneTaskSearch className="p-3" />
             </div>
             {/* divider separating the search field from the milestone list — sits flush
                 against the accordion; the trigger's own padding gives the breathing room */}

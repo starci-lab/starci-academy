@@ -10,23 +10,21 @@ import {
 
     useTranslations,
 } from "next-intl"
+import type { WithClassNames } from "@/modules/types"
 
-
-export interface StarCiAIBadgeProps {
-    /** Extra classes on the root {@link Chip}. */
-    className?: string
+export type StarCiAIBadgeProps = WithClassNames<{
     /** Extra classes on the sparkle icon (default `size-5`). */
-    iconClassName?: string
-}
+    icon?: string
+}>
 
 /**
- * Compact “StarCi AI” label with accent chip styling (sparkle + translated brand).
+ * Compact "StarCi AI" label with accent chip styling (sparkle + translated brand).
  * @param props - {@link StarCiAIBadgeProps}
  */
 export const StarCiAIBadge = (props: StarCiAIBadgeProps) => {
     const {
         className,
-        iconClassName,
+        classNames,
     } = props
     const t = useTranslations()
     return (
@@ -35,7 +33,7 @@ export const StarCiAIBadge = (props: StarCiAIBadgeProps) => {
             color="accent"
             variant="secondary"
         >
-            <SparkleIcon className={cn("size-5 shrink-0", iconClassName)} />
+            <SparkleIcon className={cn("size-5 shrink-0", classNames?.icon)} />
             <Chip.Label>{t("cv.submission.aiBrand")}</Chip.Label>
         </Chip>
     )

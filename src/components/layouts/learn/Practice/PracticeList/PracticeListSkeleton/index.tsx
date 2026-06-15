@@ -4,14 +4,16 @@ import React from "react"
 import {
     Card,
     CardContent,
+    cn,
     Skeleton,
 } from "@heroui/react"
 import {
     SkeletonText,
 } from "@/components/reuseable"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link PracticeListSkeleton}. */
-export interface PracticeListSkeletonProps {
+export interface PracticeListSkeletonProps extends WithClassNames<undefined> {
     /** Number of placeholder problem rows to render. Defaults to `6`. */
     count?: number
 }
@@ -24,9 +26,10 @@ export interface PracticeListSkeletonProps {
  */
 export const PracticeListSkeleton = ({
     count = 6,
+    className,
 }: PracticeListSkeletonProps) => {
     return (
-        <div className="flex flex-col gap-3">
+        <div className={cn("flex flex-col gap-3", className)}>
             {Array.from({ length: Math.max(count, 1) }).map((_unused, index) => (
                 <Card key={index} className="w-full">
                     <CardContent className="flex flex-row items-center justify-between gap-3">

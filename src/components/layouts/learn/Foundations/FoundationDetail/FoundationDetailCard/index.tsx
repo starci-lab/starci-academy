@@ -1,21 +1,23 @@
 "use client"
 
 import React from "react"
+import { cn } from "@heroui/react"
 import type {
     FoundationEntity,
 } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 import {
     FoundationCardBody,
-} from "../../FoundationCardBody"
+} from "../../shared/FoundationCardBody"
 import {
     FoundationItemThumbnail,
 } from "../../FoundationItemThumbnail"
 import {
     FoundationMeta,
-} from "../../FoundationMeta"
+} from "../../shared/FoundationMeta"
 
 /** Props for {@link FoundationDetailCard}. */
-export interface FoundationDetailCardProps {
+export interface FoundationDetailCardProps extends WithClassNames<undefined> {
     /** Foundation row to render in full. */
     foundation: FoundationEntity
 }
@@ -28,9 +30,10 @@ export interface FoundationDetailCardProps {
  */
 export const FoundationDetailCard = ({
     foundation,
+    className,
 }: FoundationDetailCardProps) => {
     return (
-        <div className="card card--default max-w-2xl overflow-hidden rounded-xl border border-divider/60">
+        <div className={cn("card card--default max-w-2xl overflow-hidden rounded-xl border border-divider/60", className)}>
             <FoundationItemThumbnail
                 thumbnailUrl={foundation.thumbnailUrl}
                 title={foundation.title}

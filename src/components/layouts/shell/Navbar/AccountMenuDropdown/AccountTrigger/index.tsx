@@ -1,45 +1,45 @@
 "use client"
 
 import { Person as UserIcon } from "@gravity-ui/icons"
-import React from "react"
+import React, { useCallback } from "react"
 import {
     Badge,
     Button,
+    cn,
 } from "@heroui/react"
 import { UserAvatar } from "@/components/reuseable/UserAvatar"
-import type {
+import { useAppSelector } from "@/redux"
+import { useAccountMenuOverlayState } from "@/hooks"
+import type { WithClassNames } from "@/modules/types"
 
-    UserEntity,
-} from "@/modules/types"
-
-/** Props for {@link AccountTrigger}. */
-export interface AccountTriggerProps {
-    /** Whether the visitor is authenticated (drives avatar vs. generic icon). */
-    isAuthenticated: boolean
-    /** Current user, used for the avatar initials when authenticated. */
-    user: UserEntity | null
-    /** Fired when the trigger button is pressed (opens the dropdown). */
-    onOpen: () => void
-}
+/**
+ * Props for {@link AccountTrigger}.
+ */
+export type AccountTriggerProps = WithClassNames<undefined>
 
 /**
  * Dropdown trigger button shown in the navbar.
  *
- * Presentational: renders a generic user icon for guests or an avatar with a
- * notification badge for authenticated users. No business logic.
- * @param props - auth state, user, and the open callback
+ * Container: reads auth state + user from Redux and opens the account-menu
+ * overlay itself. Renders a generic user icon for guests or an avatar badge
+ * for authenticated users.
+ * `"use client"` for store selectors + press handler.
+ * @param props - optional root class name
  */
-export const AccountTrigger = ({
-    isAuthenticated,
-    user,
-    onOpen,
-}: AccountTriggerProps) => {
+export const AccountTrigger = ({ className }: AccountTriggerProps) => {
+    const isAuthenticated = useAppSelector((state) => state.keycloak.authenticated)
+    const user = useAppSelector((state) => state.user.user)
+    const { open } = useAccountMenuOverlayState()
+
+    /** Open the account dropdown. */
+    const onOpen = useCallback(() => open(), [open])
+
     if (!isAuthenticated) {
         return (
             <Button
                 onPress={onOpen}
                 isIconOnly
-                className="rounded-full"
+                className={cn("rounded-full", className)}
                 variant="tertiary"
             >
                 <UserIcon className="size-5" />
@@ -50,7 +50,7 @@ export const AccountTrigger = ({
         <Button
             onPress={onOpen}
             isIconOnly
-            className="rounded-full"
+            className={cn("rounded-full", className)}
             variant="tertiary"
         >
             <Badge.Anchor>

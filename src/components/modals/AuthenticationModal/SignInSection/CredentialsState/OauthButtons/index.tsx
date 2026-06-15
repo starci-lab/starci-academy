@@ -3,7 +3,11 @@
 import React from "react"
 import {
     Button,
+    cn,
 } from "@heroui/react"
+import type {
+    WithClassNames,
+} from "@/modules/types/base/class-name"
 import {
     useTranslations,
 } from "next-intl"
@@ -15,7 +19,7 @@ import type {
 } from "../types"
 
 /** Props for {@link OauthButtons}. */
-export interface OauthButtonsProps {
+export interface OauthButtonsProps extends WithClassNames<undefined> {
     /** OAuth provider buttons to render, in display order. */
     items: Array<OauthButtonItem>
     /** Fired with the chosen provider when a button is pressed. */
@@ -32,10 +36,11 @@ export interface OauthButtonsProps {
 export const OauthButtons = ({
     items,
     onOauthPress,
+    className,
 }: OauthButtonsProps) => {
     const t = useTranslations()
     return (
-        <>
+        <div className={cn(className)}>
             {items.map((item, idx) => (
                 <React.Fragment key={item.provider}>
                     <Button
@@ -52,6 +57,6 @@ export const OauthButtons = ({
                     {idx === 0 && <div className="h-1.5" />}
                 </React.Fragment>
             ))}
-        </>
+        </div>
     )
 }

@@ -5,6 +5,7 @@ import React, { useRef, useState } from "react"
 import { Spinner, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { ReactionType, type ReactionSummary } from "@/modules/api"
+import type { WithClassNames } from "@/modules/types"
 import { REACTIONS, REACTION_BY_TYPE } from "./constants"
 import { ReactionEmoji } from "./ReactionEmoji"
 
@@ -20,7 +21,7 @@ export interface ActionBarProps {
 }
 
 /** Props for {@link InteractionBar}. */
-export interface InteractionBarProps extends ActionBarProps {
+export interface InteractionBarProps extends ActionBarProps, WithClassNames<undefined> {
     /** Aggregate reaction summary for the content. */
     summary: ReactionSummary | undefined
     /** React to / un-react from the content (null removes the reaction). */
@@ -51,6 +52,7 @@ export const InteractionBar = ({
     onFullscreen,
     viewCount,
     shareCount,
+    className,
 }: InteractionBarProps) => {
     const t = useTranslations()
     const [pickerOpen, setPickerOpen] = useState(false)
@@ -75,7 +77,7 @@ export const InteractionBar = ({
     }
 
     return (
-        <div className="flex flex-col">
+        <div className={cn("flex flex-col", className)}>
             {/* ── ROW 1: stats ── */}
             <div className="flex items-center justify-between py-2">
                 {/* LEFT: reaction emoji pill */}
@@ -97,13 +99,13 @@ export const InteractionBar = ({
                 {/* RIGHT: view + share counts */}
                 <div className="flex items-center gap-3 text-xs text-muted">
                     {viewCount !== undefined && (
-                        <span className="flex items-center gap-1">
+                        <span className="flex items-center gap-1.5">
                             <EyeIcon className="size-3.5" />
                             {viewCount.toLocaleString()}
                         </span>
                     )}
                     {shareCount !== undefined && isShareVisible && (
-                        <span className="flex items-center gap-1">
+                        <span className="flex items-center gap-1.5">
                             <ShareNetworkIcon className="size-3.5" />
                             {shareCount.toLocaleString()}
                         </span>
@@ -144,7 +146,7 @@ export const InteractionBar = ({
 
                     {/* floating emoji picker */}
                     {pickerOpen ? (
-                        <div className="absolute bottom-full left-0 z-20 mb-2 flex items-center gap-1 rounded-full border border-default bg-background p-1 shadow-lg">
+                        <div className="absolute bottom-full left-0 z-20 mb-2 flex items-center gap-1.5 rounded-full border border-default bg-background p-1 shadow-lg">
                             {REACTIONS.map((reaction) => (
                                 <button
                                     key={reaction.type}

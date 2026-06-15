@@ -26,7 +26,7 @@ export const E2eResultDrawer = (): React.JSX.Element | null => {
             <button
                 type="button"
                 onClick={() => setOpen(true)}
-                className="inline-flex items-center gap-1 text-sm font-medium text-accent underline-offset-4 hover:underline"
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-accent underline-offset-4 hover:underline"
             >
                 Xem kết quả kiểm thử E2E ({passed}/{flows.length} luồng pass) →
             </button>

@@ -3,19 +3,21 @@
 import React from "react"
 import {
     Skeleton,
+    cn,
 } from "@heroui/react"
 import {
     SkeletonText,
 } from "@/components/reuseable"
+import type { WithClassNames } from "@/modules/types"
 
 /**
  * Loading placeholder for the voice-interview session. Mirrors the real layout:
  * meta chips, one tall question panel, a centered mic button, and the
  * new-question / submit controls.
  */
-export const InterviewSessionSkeleton = () => {
+export const InterviewSessionSkeleton = ({ className }: WithClassNames<undefined> = {}) => {
     return (
-        <div className="flex flex-col gap-6">
+        <div className={cn("flex flex-col gap-6", className)}>
             {/* level + tag chips */}
             <div className="flex gap-1.5">
                 <Skeleton className="h-6 w-16 rounded-full" />

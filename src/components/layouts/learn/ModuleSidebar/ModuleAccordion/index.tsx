@@ -7,6 +7,7 @@ import {
 } from "@heroui/react"
 import type {
     ModuleEntity,
+    WithClassNames,
 } from "@/modules/types"
 import {
     ModuleContentRow,
@@ -15,7 +16,7 @@ import {
 /**
  * Props for {@link ModuleAccordion}.
  */
-export interface ModuleAccordionProps {
+export interface ModuleAccordionProps extends WithClassNames<undefined> {
     /** Modules to render, already ordered. */
     modules: Array<ModuleEntity>
     /** Currently expanded module id (controlled from URL / Redux). */
@@ -41,11 +42,12 @@ export const ModuleAccordion = ({
     activeContentId,
     onSelectContent,
     onExpandModule,
+    className,
 }: ModuleAccordionProps) => {
     return (
         <Accordion
             variant="default"
-            className="rounded-none border-none px-0 shadow-none"
+            className={cn("rounded-none border-none px-0 shadow-none", className)}
             expandedKeys={new Set(activeModuleId ? [String(activeModuleId)] : [])}
             onExpandedChange={(keys) => {
                 // single-expand: route to the newly-expanded module (the key that isn't the active one).

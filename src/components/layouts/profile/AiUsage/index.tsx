@@ -100,14 +100,14 @@ export const AiUsage = () => {
                 onBack={onBack}
             />
 
-            <section className="flex flex-col gap-4">
+            <section className="flex flex-col gap-3">
                 <h2 className="text-base font-semibold text-foreground">
                     {t("aiQuota.tabs.auto")}
                 </h2>
                 <QuotaLane variant={QuotaLaneVariant.Auto} />
             </section>
 
-            <section className="flex flex-col gap-4">
+            <section className="flex flex-col gap-3">
                 <h2 className="text-base font-semibold text-foreground">
                     {t("aiQuota.tabs.subscription")}
                 </h2>
@@ -136,7 +136,7 @@ export const AiUsage = () => {
                 )}
             </section>
 
-            <section className="flex flex-col gap-4">
+            <section className="flex flex-col gap-3">
                 <h2 className="text-base font-semibold text-foreground">
                     {t("aiQuota.tabs.history")}
                 </h2>

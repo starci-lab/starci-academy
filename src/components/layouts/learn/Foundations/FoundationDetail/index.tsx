@@ -26,7 +26,7 @@ import type {
 } from "../types"
 import {
     FoundationsBreadcrumbs,
-} from "../FoundationsBreadcrumbs"
+} from "../shared/FoundationsBreadcrumbs"
 import {
     FoundationDetailSkeleton,
 } from "./FoundationDetailSkeleton"

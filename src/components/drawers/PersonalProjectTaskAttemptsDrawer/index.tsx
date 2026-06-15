@@ -5,9 +5,11 @@ import React, {
     useMemo,
 } from "react"
 import {
+    cn,
     Drawer,
     ScrollShadow,
 } from "@heroui/react"
+import type { WithClassNames } from "@/modules/types"
 import {
     usePersonalProjectTaskAttemptsDrawerOverlayState,
     useQueryUserPersonalTaskAttemptsSwr,
@@ -30,11 +32,15 @@ type AttemptRow = {
     processedAtLabel: string
 }
 
+/** Props for {@link PersonalProjectTaskAttemptsDrawer}. Container — only layout className. */
+export type PersonalProjectTaskAttemptsDrawerProps = WithClassNames<undefined>
+
 /**
  * Drawer listing AI review attempts for the selected personal-project milestone task.
  * Mirrors {@link UserCvSubmissionAttemptsDrawer} layout without server pagination.
  */
-export const PersonalProjectTaskAttemptsDrawer = () => {
+export const PersonalProjectTaskAttemptsDrawer = (props: PersonalProjectTaskAttemptsDrawerProps = {}) => {
+    const { className } = props
     const t = useTranslations()
     const locale = useLocale()
     const {
@@ -91,7 +97,7 @@ export const PersonalProjectTaskAttemptsDrawer = () => {
                 onOpenChange={setOpen}
             >
                 <Drawer.Content placement="right">
-                    <Drawer.Dialog className="flex h-full flex-col p-0">
+                    <Drawer.Dialog className={cn("flex h-full flex-col p-0", className)}>
                         <div className="shrink-0 p-3">
                             <Drawer.CloseTrigger />
                             <Drawer.Header>

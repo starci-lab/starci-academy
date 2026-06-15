@@ -1,11 +1,11 @@
 import React from "react"
+import { cn } from "@heroui/react"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link TierLevelIcon}. */
-export interface TierLevelIconProps {
+export interface TierLevelIconProps extends WithClassNames<undefined> {
     /** Active tier level 1–4: how many ascending bars are highlighted. */
     level: number
-    /** Optional className; color comes from `currentColor` (e.g. `text-accent`). */
-    className?: string
 }
 
 /**
@@ -32,7 +32,7 @@ export const TierLevelIcon = ({
         <svg
             viewBox="0 0 24 24"
             fill="currentColor"
-            className={className}
+            className={cn(className)}
             aria-hidden="true"
         >
             {bars.map((bar, index) => (

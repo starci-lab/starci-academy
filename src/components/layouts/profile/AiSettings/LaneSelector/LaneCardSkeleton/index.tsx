@@ -32,7 +32,7 @@ export const LaneCardSkeleton = ({
             )}
         >
             <Skeleton className="size-6 shrink-0 rounded-full" />
-            <div className="flex min-w-0 flex-1 flex-col gap-1">
+            <div className="flex min-w-0 flex-1 flex-col gap-1.5">
                 <SkeletonText
                     size="base"
                     width="w-32"

@@ -1,7 +1,7 @@
 "use client"
 
 import { Clock as ClockIcon } from "@gravity-ui/icons"
-import { Calendar, Chip, Modal } from "@heroui/react"
+import { Calendar, Chip, cn, Modal } from "@heroui/react"
 import {
     useLivestreamCalendarOverlayState,
 } from "@/hooks"
@@ -14,6 +14,7 @@ import { Spacer } from "@/components/reuseable"
 import { useFormatter, useTranslations } from "next-intl"
 import React, { useMemo } from "react"
 import dayjs from "dayjs"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 
 /** JS `Date#getDay()` (0 = Sunday … 6 = Saturday). */
@@ -68,7 +69,7 @@ const useSessionWeekdaySet = (sessions: Array<LivestreamSessionEntity> | undefin
 
 const formatTime = (hhmmss: string) => hhmmss.slice(0, 5)
 
-export const LivestreamCalendarModal = () => {
+export const LivestreamCalendarModal = ({ className }: WithClassNames<undefined>) => {
     const t = useTranslations()
     const format = useFormatter()
     const { isOpen, setOpen } = useLivestreamCalendarOverlayState()
@@ -107,7 +108,7 @@ export const LivestreamCalendarModal = () => {
         <Modal isOpen={isOpen} onOpenChange={setOpen}>
             <Modal.Backdrop>
                 <Modal.Container className="max-w-lg" size="lg">
-                    <Modal.Dialog>
+                    <Modal.Dialog className={cn(className)}>
                         <Modal.CloseTrigger />
                         <Modal.Header>
                             <div className="text-2xl font-bold">{t("livestream.calendar.modalTitle")}</div>

@@ -2,11 +2,12 @@
 
 import { Pause as PauseIcon, Play as PlayIcon } from "@gravity-ui/icons"
 import React from "react"
-import { Button } from "@heroui/react"
+import { Button, cn } from "@heroui/react"
+import type { WithClassNames } from "@/modules/types"
 
 
 /** Props for {@link PlayPauseButton}. */
-export interface PlayPauseButtonProps {
+export interface PlayPauseButtonProps extends WithClassNames<undefined> {
     /** Whether playback is currently active (renders the pause icon). */
     isPlaying: boolean
     /** Fired when the user toggles play/pause. */
@@ -22,6 +23,7 @@ export interface PlayPauseButtonProps {
 export const PlayPauseButton = ({
     isPlaying,
     onPlayPause,
+    className,
 }: PlayPauseButtonProps) => {
     return (
         <Button
@@ -29,7 +31,7 @@ export const PlayPauseButton = ({
             variant="ghost"
             aria-label={isPlaying ? "Pause" : "Play"}
             onPress={onPlayPause}
-            className="text-white hover:bg-white/20 border-none min-w-8 h-8"
+            className={cn("text-white hover:bg-white/20 border-none min-w-8 h-8", className)}
         >
             {isPlaying ? (
                 <PauseIcon className="h-4 w-4" />

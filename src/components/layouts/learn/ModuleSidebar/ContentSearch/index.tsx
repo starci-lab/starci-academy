@@ -9,8 +9,13 @@ import {
     cn,
 } from "@heroui/react"
 import { useFilter } from "react-aria-components"
-import { useTranslations } from "next-intl"
-import type { ModuleEntity } from "@/modules/types"
+import { useTranslations, useLocale } from "next-intl"
+import { useRouter } from "next/navigation"
+import _ from "lodash"
+import { useAppSelector, useAppDispatch } from "@/redux"
+import { ContentTab, setContentTab } from "@/redux/slices"
+import { pathConfig } from "@/resources/path"
+import type { WithClassNames } from "@/modules/types"
 
 /** One flattened lesson fed into the autocomplete collection. */
 interface ContentSearchItem {
@@ -27,13 +32,7 @@ interface ContentSearchItem {
 }
 
 /** Props for {@link ContentSearch}. */
-export interface ContentSearchProps {
-    /** Ordered modules whose contents populate the autocomplete collection. */
-    modules: Array<ModuleEntity>
-    /** The value of the autocomplete. */
-    value: string | null
-    /** Fired with (moduleId, contentId) when a lesson is chosen. */
-    onSelectContent: (moduleId: string, contentId: string) => void
+export interface ContentSearchProps extends WithClassNames<undefined> {
     /** Extra classes for the root field. */
     className?: string
 }
@@ -44,18 +43,49 @@ export interface ContentSearchProps {
  * Unlike the ES-backed typeahead, this loads the *entire* content collection
  * (flattened from the already-cached modules) into the Autocomplete and lets the
  * component filter it client-side as the user types — the native HeroUI pattern.
- * Choosing a row routes to that lesson via {@link onSelectContent}.
+ * Reads modules and the active content id from the Redux store; choosing a row
+ * routes to that lesson and dispatches the content-tab action.
  *
- * @param props - modules to index, the value, the select callback, and optional classes
+ * @param props - optional classes
  */
 export const ContentSearch = ({
-    modules,
-    value,
-    onSelectContent,
     className,
 }: ContentSearchProps) => {
     const t = useTranslations()
+    const locale = useLocale()
+    const router = useRouter()
+    const dispatch = useAppDispatch()
     const [filterQuery, setFilterQuery] = useState("")
+
+    // read modules and the active content id from the Redux store
+    const rawModules = useAppSelector((state) => state.module.modules)
+    const activeContentId = useAppSelector((state) => state.content.entity?.id)
+    const courseDisplayId = useAppSelector((state) => state.course.displayId)
+
+    // sort modules by their display order (mirrors ModuleSidebar's sortedModules)
+    const modules = useMemo(
+        () => _.cloneDeep(rawModules ?? []).sort((a, b) => a.sortIndex - b.sortIndex),
+        [rawModules],
+    )
+
+    /** Route to the chosen content, dispatching the content tab. */
+    const onSelectContent = useCallback(
+        (targetModuleId: string, contentId: string) => {
+            if (!courseDisplayId || !targetModuleId || !contentId) {
+                return
+            }
+            dispatch(setContentTab(ContentTab.Content))
+            const path = pathConfig()
+                .locale(locale)
+                .course(courseDisplayId)
+                .learn()
+                .module(targetModuleId)
+                .content(contentId)
+                .build()
+            router.push(`${path}?tab=${ContentTab.Content}`)
+        },
+        [dispatch, router, locale, courseDisplayId],
+    )
 
     // diacritic- + case-insensitive "contains" matcher; `sensitivity: "base"` lets "phong thu" match "Phòng thủ" (handy for Vietnamese).
     const { contains } = useFilter({ sensitivity: "base" })
@@ -116,7 +146,7 @@ export const ContentSearch = ({
             placeholder={t("module.searchContentsPlaceholder")}
             // fully-controlled reset: we never keep a persistent selection — picking a
             // lesson fires navigation and the trigger falls back to the placeholder
-            value={value}
+            value={activeContentId ?? null}
             onChange={(nextValue) => {
                 if (nextValue == null) {
                     return

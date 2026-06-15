@@ -5,7 +5,7 @@ import {
     SwrProvider,
 } from "@/components/providers"
 import { DrawerContainer } from "@/components/drawers"
-import { Navbar } from "@/components/layouts/Navbar"
+import { Navbar } from "@/components/layouts/shell/Navbar"
 import { ToastProvider } from "@heroui/react"
 import React, { PropsWithChildren, Suspense } from "react"
 import { SocketIoSideEffects } from "@/hooks/socketio"

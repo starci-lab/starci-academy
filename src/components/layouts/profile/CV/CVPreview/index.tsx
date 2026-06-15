@@ -17,24 +17,21 @@ import {
     useQueryCvUrlSwr,
 } from "@/hooks"
 import { useCvApplyStore } from "@/hooks/zustand"
-
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 const PDFView = dynamic(
     () => import("@/components/reuseable/PDFView").then((module) => module.PDFView),
     { ssr: false },
 )
 
-export interface CVPreviewProps {
-    /** Optional classes on the root column wrapper (height / sticky). */
-    className?: string
-}
+/** Props for {@link CVPreview}. */
+export type CVPreviewProps = WithClassNames<undefined>
 
 /**
  * Sticky PDF preview of the current CV (blob or saved URL) plus fullscreen entry.
  * @param props - {@link CVPreviewProps}
  */
-export const CVPreview = (props: CVPreviewProps) => {
-    const { className } = props
+export const CVPreview = ({ className }: CVPreviewProps) => {
     const t = useTranslations()
     const cvFile = useCvApplyStore((state) => state.cvFile)
     const {
@@ -71,7 +68,7 @@ export const CVPreview = (props: CVPreviewProps) => {
             )}
         >
             {/*
-              PDF scrolls inside a flex child with `min-h-0` so the “Xem full” bar stays
+              PDF scrolls inside a flex child with `min-h-0` so the "Xem full" bar stays
               anchored under the preview instead of being pushed to the viewport bottom.
             */}
             <div className="flex min-h-0 flex-1 flex-col">

@@ -2,6 +2,9 @@
 
 import React from "react"
 import {
+    cn,
+} from "@heroui/react"
+import {
     useLocale,
     useTranslations,
 } from "next-intl"
@@ -11,9 +14,12 @@ import type {
 import {
     ChangelogCategory,
 } from "@/modules/api"
+import type {
+    WithClassNames,
+} from "@/modules/types/base/class-name"
 
 /** Props for {@link ChangelogList}. */
-export interface ChangelogListProps {
+export interface ChangelogListProps extends WithClassNames<undefined> {
     /** Recent changelog entries, newest first. */
     entries: Array<QueryChangelogEntryData>
 }
@@ -33,6 +39,7 @@ const CATEGORY_CLASS: Record<ChangelogCategory, string> = {
  */
 export const ChangelogList = ({
     entries,
+    className,
 }: ChangelogListProps) => {
     const t = useTranslations()
     const locale = useLocale()
@@ -42,7 +49,7 @@ export const ChangelogList = ({
     }
 
     return (
-        <div className="flex flex-col gap-3">
+        <div className={cn("flex flex-col gap-3", className)}>
             <div className="text-base font-semibold text-foreground">
                 {t("dashboard.changelog")}
             </div>
@@ -50,7 +57,7 @@ export const ChangelogList = ({
                 {entries.map((entry) => (
                     <div
                         key={entry.id}
-                        className="flex flex-col gap-1"
+                        className="flex flex-col gap-1.5"
                     >
                         <div className="flex items-center gap-1.5">
                             <span className="text-xs text-muted">

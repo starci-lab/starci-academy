@@ -1,5 +1,6 @@
 import React from "react"
-import { Table } from "@heroui/react"
+import { cn, Table } from "@heroui/react"
+import type { WithClassNames } from "@/modules/types"
 import {
     flattenMarkdownTableHeaderChildren,
     isMarkdownHeaderTableRowNode,
@@ -23,7 +24,7 @@ const toMarkdownHeaderColumn = (column: React.ReactNode, index: number): React.R
 }
 
 /** Props for markdown table row/cell parts (optional HAST `node` when `passNode` is on). */
-interface MarkdownTablePartProps {
+interface MarkdownTablePartProps extends WithClassNames<undefined> {
     /** Rendered cell content. */
     children?: React.ReactNode
     /** HAST element for the markdown row (requires `passNode` on `ReactMarkdown`). */
@@ -34,12 +35,12 @@ interface MarkdownTablePartProps {
  * Header row: columns must be direct children of `Table.Header` (fragment, not `Table.Row`).
  * Body row: wrapped in HeroUI `Table.Row`.
  */
-export const MarkdownTableRow = ({ children, node }: MarkdownTablePartProps) => {
+export const MarkdownTableRow = ({ children, node, className }: MarkdownTablePartProps) => {
     if (isMarkdownHeaderTableRowNode(node)) {
         return <>{children}</>
     }
 
-    return <Table.Row>{children}</Table.Row>
+    return <Table.Row className={cn(className)}>{children}</Table.Row>
 }
 
 /**
@@ -47,11 +48,11 @@ export const MarkdownTableRow = ({ children, node }: MarkdownTablePartProps) => 
  * Rebuilds columns with `isRowHeader` on the first column (required by HeroUI / React Aria).
  * Renders a screen-reader-only column when the header row is empty so the table still mounts.
  */
-export const MarkdownTableHead = ({ children }: MarkdownTablePartProps) => {
+export const MarkdownTableHead = ({ children, className }: MarkdownTablePartProps) => {
     const columns = flattenMarkdownTableHeaderChildren(children)
 
     return (
-        <Table.Header>
+        <Table.Header className={cn(className)}>
             {columns.length === 0 ? (
                 <Table.Column isRowHeader className="sr-only">
                     {" "}
@@ -64,7 +65,7 @@ export const MarkdownTableHead = ({ children }: MarkdownTablePartProps) => {
 }
 
 /** Props for {@link MarkdownTable}. */
-export interface MarkdownTableProps {
+export interface MarkdownTableProps extends WithClassNames<undefined> {
     /** Rendered `thead` / `tbody` from react-markdown. */
     children?: React.ReactNode
     /** Accessible name for `Table.Content`. */
@@ -76,7 +77,7 @@ export interface MarkdownTableProps {
  * Some markdown tables only emit `tbody`; the first body row is promoted to `thead` in that case.
  * @param props - {@link MarkdownTableProps}
  */
-export const MarkdownTable = ({ children, ariaLabel }: MarkdownTableProps) => {
+export const MarkdownTable = ({ children, ariaLabel, className }: MarkdownTableProps) => {
     const parts = React.Children.toArray(children)
     const hasThead = parts.some(
         (child) => React.isValidElement(child) && child.type === MarkdownTableHead,
@@ -84,7 +85,7 @@ export const MarkdownTable = ({ children, ariaLabel }: MarkdownTableProps) => {
 
     if (hasThead) {
         return (
-            <Table variant="primary">
+            <Table variant="primary" className={cn(className)}>
                 <Table.ScrollContainer>
                     <Table.Content aria-label={ariaLabel}>
                         {children}
@@ -100,7 +101,7 @@ export const MarkdownTable = ({ children, ariaLabel }: MarkdownTableProps) => {
 
     if (tbodyIndex < 0) {
         return (
-            <Table variant="primary">
+            <Table variant="primary" className={cn(className)}>
                 <Table.ScrollContainer>
                     <Table.Content aria-label={ariaLabel}>
                         <MarkdownTableHead />
@@ -118,7 +119,7 @@ export const MarkdownTable = ({ children, ariaLabel }: MarkdownTableProps) => {
     const afterTbody = parts.slice(tbodyIndex + 1)
 
     return (
-        <Table variant="primary">
+        <Table variant="primary" className={cn(className)}>
             <Table.ScrollContainer>
                 <Table.Content aria-label={ariaLabel}>
                     {beforeTbody}
@@ -132,11 +133,11 @@ export const MarkdownTable = ({ children, ariaLabel }: MarkdownTableProps) => {
 }
 
 /** Maps markdown `tbody` to HeroUI `Table.Body`. */
-export const MarkdownTableBody = ({ children }: MarkdownTablePartProps) => (
-    <Table.Body>{children}</Table.Body>
+export const MarkdownTableBody = ({ children, className }: MarkdownTablePartProps) => (
+    <Table.Body className={cn(className)}>{children}</Table.Body>
 )
 
 /** Maps markdown `th` to HeroUI `Table.Column`. */
-export const MarkdownTableColumn = ({ children }: MarkdownTablePartProps) => (
-    <Table.Column>{children}</Table.Column>
+export const MarkdownTableColumn = ({ children, className }: MarkdownTablePartProps) => (
+    <Table.Column className={cn(className)}>{children}</Table.Column>
 )

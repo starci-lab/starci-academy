@@ -8,6 +8,7 @@ import React, {
     useState,
 } from "react"
 import {
+    cn,
     toast,
 } from "@heroui/react"
 import {
@@ -23,6 +24,7 @@ import {
 import type {
     AdminPresignedUrlItem,
 } from "@/modules/api"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 import {
     UploadStatus,
 } from "./enums"
@@ -46,6 +48,9 @@ import {
     UploadProgressCard,
 } from "./UploadProgressCard"
 
+/** Props for {@link AdminUploadVideo}. */
+export type AdminUploadVideoProps = WithClassNames<undefined>
+
 /**
  * Admin video upload tool container.
  *
@@ -53,8 +58,11 @@ import {
  * process-video SWR triggers, and the upload orchestration; renders the
  * presentational cards. "use client" because it relies on browser APIs
  * (XMLHttpRequest, clipboard, drag/drop) and local state.
+ * @param props - optional className forwarded to the wrapper div
  */
-export const AdminUploadVideo = () => {
+export const AdminUploadVideo = ({
+    className,
+}: AdminUploadVideoProps = {}) => {
     const apiKey = useAppSelector((state) => state.admin.apiKey)
     const router = useRouter()
 
@@ -334,7 +342,7 @@ export const AdminUploadVideo = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 p-4 md:p-8">
+        <div className={cn("min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 p-4 md:p-8", className)}>
             <div className="mx-auto max-w-3xl space-y-6">
                 <TopBar />
 

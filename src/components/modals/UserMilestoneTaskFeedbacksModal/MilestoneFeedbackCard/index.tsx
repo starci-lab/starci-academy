@@ -3,15 +3,16 @@
 import { DiamondExclamation as RadioactiveIcon, MapPin as MapPinLineIcon } from "@gravity-ui/icons"
 import type { UserMilestoneTaskAttemptFeedbackEntity } from "@/modules/types"
 import { MilestoneSeverity } from "@/modules/types"
-import { Card, Chip } from "@heroui/react"
+import { Card, Chip, cn } from "@heroui/react"
 import React from "react"
 import { useTranslations } from "next-intl"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 
 /**
  * Props for {@link MilestoneFeedbackCard}.
  */
-interface MilestoneFeedbackCardProps {
+interface MilestoneFeedbackCardProps extends WithClassNames<undefined> {
     /** One structured feedback row from the latest milestone-task attempt. */
     feedback: UserMilestoneTaskAttemptFeedbackEntity
 }
@@ -22,7 +23,7 @@ interface MilestoneFeedbackCardProps {
  * @param props - Feedback entity from the grader.
  */
 export const MilestoneFeedbackCard = (props: MilestoneFeedbackCardProps) => {
-    const { feedback } = props
+    const { feedback, className } = props
     const {
         message,
         severity,
@@ -65,7 +66,7 @@ export const MilestoneFeedbackCard = (props: MilestoneFeedbackCardProps) => {
     }
 
     return (
-        <Card className="bg-background p-0">
+        <Card className={cn("bg-background p-0", className)}>
             <Card.Content>
                 <div>
                     <div className="p-3">

@@ -4,9 +4,9 @@ import React from "react"
 import { cn } from "@heroui/react"
 import { useCallback } from "react"
 import type { RendererTypeOption } from "../../types"
-import type { VideoRendererType } from "@/modules/types"
+import type { VideoRendererType, WithClassNames } from "@/modules/types"
 
-export interface RendererTypeButtonProps {
+export interface RendererTypeButtonProps extends WithClassNames<undefined> {
     /** Option metadata to render. */
     option: RendererTypeOption
     /** Whether this option is currently selected. */
@@ -25,6 +25,7 @@ export const RendererTypeButton = ({
     option,
     isActive,
     onSelect,
+    className,
 }: RendererTypeButtonProps) => {
     const onPress = useCallback(
         () => onSelect(option.type),
@@ -36,6 +37,7 @@ export const RendererTypeButton = ({
             onClick={onPress}
             className={cn(
                 "flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-sm font-medium transition-all",
+                className,
                 isActive
                     ? `bg-gradient-to-r ${option.color} text-white shadow-lg`
                     : "bg-slate-700/50 text-slate-300 hover:bg-slate-700",

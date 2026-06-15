@@ -169,17 +169,17 @@ export const buildMarkdownRenderers = ({
         )
     },
     blockquote: ({ children }) => (
-        <blockquote className="space-y-1 rounded-r-xl border-l-2 border-accent bg-default/40 px-4 py-2 text-muted">
+        <blockquote className="space-y-1.5 rounded-r-xl border-l-2 border-accent bg-default/40 px-4 py-2 text-muted">
             {children}
         </blockquote>
     ),
     strong: ({ children }) => <strong className="font-semibold text-foreground">{children}</strong>,
     em: ({ children }) => <em className="italic">{children}</em>,
     hr: () => <hr className="border-default" />,
-    ol: ({ children }) => <ol className="list-decimal space-y-0.5 pl-5 marker:text-muted">{children}</ol>,
-    ul: ({ children }) => <ul className="list-disc space-y-0.5 pl-5 marker:text-muted">{children}</ul>,
+    ol: ({ children }) => <ol className="list-decimal space-y-1.5 pl-5 marker:text-muted">{children}</ol>,
+    ul: ({ children }) => <ul className="list-disc space-y-1.5 pl-5 marker:text-muted">{children}</ul>,
     li: ({ children }) => (
-        <ProseText elementType="li" size="sm" className="space-y-1 leading-relaxed">{children}</ProseText>
+        <ProseText elementType="li" size="sm" className="space-y-1.5 leading-relaxed">{children}</ProseText>
     ),
     p: ({ children }) => (
         <ProseText elementType="div" size="sm" className="leading-relaxed">{children}</ProseText>

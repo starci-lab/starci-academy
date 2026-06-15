@@ -2,11 +2,11 @@
 
 import React from "react"
 import { MarkdownContent } from "@/components/reuseable"
-import type { CodeImplementationEntity } from "@/modules/types"
-import { Chip } from "@heroui/react"
+import type { CodeImplementationEntity, WithClassNames } from "@/modules/types"
+import { Chip, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 
-export interface ImplementationCardProps {
+export interface ImplementationCardProps extends WithClassNames<undefined> {
     /** One implementation guide row from `content.codeImplementations`. */
     item: CodeImplementationEntity
 }
@@ -15,11 +15,11 @@ export interface ImplementationCardProps {
  * Renders guide and example for one target language.
  * @param props.item - Code implementation entity for this card.
  */
-export const ImplementationCard = ({ item }: ImplementationCardProps) => {
+export const ImplementationCard = ({ item, className }: ImplementationCardProps) => {
     const t = useTranslations()
 
     return (
-        <article className="rounded-xl border border-default-200 p-4 flex flex-col gap-4">
+        <article className={cn("rounded-xl border border-default-200 p-4 flex flex-col gap-6", className)}>
             <Chip variant="secondary" color="accent" size="sm" className="w-fit">
                 <Chip.Label>{item.lang}</Chip.Label>
             </Chip>

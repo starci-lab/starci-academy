@@ -1,52 +1,76 @@
 "use client"
 
-import React from "react"
+import React, { useCallback, useMemo } from "react"
 import {
+    cn,
     Pagination,
 } from "@heroui/react"
 import {
     useTranslations,
 } from "next-intl"
+import { useQueryUserCvSubmissionAttemptsSwr } from "@/hooks"
+import { MAX_VISIBLE_PAGES } from "../constants"
+import type { WithClassNames } from "@/modules/types"
 
-/** Props for {@link AttemptsPagination}. */
-export interface AttemptsPaginationProps {
-    /** 1-based current page. */
-    currentPage: number
-    /** Total number of pages. */
-    totalPages: number
-    /** Page numbers to render as links (1-based). */
-    pageNumbers: Array<number>
-    /** Fired with a 1-based page number when the user picks a page. */
-    onPageChange: (pageNumber: number) => void
-    /** Fired when the user requests the previous page. */
-    onPrevious: () => void
-    /** Fired when the user requests the next page. */
-    onNext: () => void
-}
+/** Props for {@link AttemptsPagination}. Container — only layout className. */
+export type AttemptsPaginationProps = WithClassNames<undefined>
 
 /**
  * Pagination control for the attempts drawer.
  *
- * Presentational: renders page links + prev/next, delegates navigation via props.
- * @param props - {@link AttemptsPaginationProps}
+ * Self-reads page state from {@link useQueryUserCvSubmissionAttemptsSwr}.
+ * @param props - Optional className.
  */
-export const AttemptsPagination = ({
-    currentPage,
-    totalPages,
-    pageNumbers,
-    onPageChange,
-    onPrevious,
-    onNext,
-}: AttemptsPaginationProps) => {
+export const AttemptsPagination = (props: AttemptsPaginationProps = {}) => {
+    const { className } = props
     const t = useTranslations()
+    const swr = useQueryUserCvSubmissionAttemptsSwr()
+    const payload = swr.data
+
+    /** Total visible pages, capped at {@link MAX_VISIBLE_PAGES}. */
+    const totalPages = useMemo(
+        () => Math.min(
+            Math.max(1, Math.ceil((payload?.totalCount ?? 0) / swr.pageSize)),
+            MAX_VISIBLE_PAGES,
+        ),
+        [payload?.totalCount, swr.pageSize],
+    )
+
+    /** 1-based current page, clamped to the visible range. */
+    const currentPage = Math.min(swr.pageNumber + 1, totalPages)
+
+    /** 1-based page numbers rendered as pagination links. */
+    const pageNumbers = useMemo<Array<number>>(
+        () => Array.from({ length: totalPages }, (_, index) => index + 1),
+        [totalPages],
+    )
+
+    /** Navigate to a specific 1-based page. */
+    const onPageChange = useCallback(
+        (pageNumber: number) => swr.setPageNumber(pageNumber - 1),
+        [swr],
+    )
+
+    /** Navigate to the previous page. */
+    const onPrevious = useCallback(
+        () => swr.setPageNumber(currentPage - 2),
+        [swr, currentPage],
+    )
+
+    /** Navigate to the next page. */
+    const onNext = useCallback(
+        () => swr.setPageNumber(currentPage),
+        [swr, currentPage],
+    )
+
     return (
-        <div className="shrink-0 border-t bg-content1 px-3 py-3">
+        <div className={cn("shrink-0 border-t bg-content1 px-3 py-3", className)}>
             <Pagination
                 aria-label={t("common.pagination.navAria")}
                 className="w-full justify-center"
                 size="sm"
             >
-                <Pagination.Content className="flex flex-wrap justify-center gap-1">
+                <Pagination.Content className="flex flex-wrap justify-center gap-1.5">
                     <Pagination.Item>
                         <Pagination.Previous
                             aria-label={t("common.pagination.previous")}

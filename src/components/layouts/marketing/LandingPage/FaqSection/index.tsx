@@ -1,8 +1,10 @@
 "use client"
 
 import { CircleQuestion as Question, Minus, Plus } from "@gravity-ui/icons"
+import { cn } from "@heroui/react"
 import { motion } from "framer-motion"
 import React, { useState, useCallback } from "react"
+import { type WithClassNames } from "@/modules/types"
 
 
 /** Container stagger for the header + rows. */
@@ -100,7 +102,7 @@ const FaqRow = ({ q, a }: { q: string; a: React.ReactNode }) => {
                 type="button"
                 onClick={toggle}
                 aria-expanded={open}
-                className="flex w-full items-center justify-between gap-4 p-5 md:p-6 text-left"
+                className="flex w-full items-center justify-between gap-3 p-5 md:p-6 text-left"
             >
                 <span className="text-base md:text-lg font-semibold text-foreground">
                     {q}
@@ -130,14 +132,19 @@ const FaqRow = ({ q, a }: { q: string; a: React.ReactNode }) => {
  * Facing the hardest questions directly is how the page signals authority
  * without bragging or attacking competitors.
  */
-export const FaqSection = () => {
+export type FaqSectionProps = WithClassNames<undefined>
+
+/**
+ * @param {FaqSectionProps} props Optional wrapper styling props.
+ */
+export const FaqSection = ({ className }: FaqSectionProps) => {
     return (
         <motion.section
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="max-w-3xl mx-auto"
+            className={cn("max-w-3xl mx-auto", className)}
         >
             {/* Header */}
             <motion.div variants={itemVariants} className="text-center mb-12">

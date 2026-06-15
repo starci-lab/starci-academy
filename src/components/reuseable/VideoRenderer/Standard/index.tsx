@@ -1,12 +1,13 @@
 "use client"
 
 import React, { useCallback, useEffect, useRef, useState } from "react"
+import { cn } from "@heroui/react"
 import { VideoControls } from "../VideoControls"
+import type { WithClassNames } from "@/modules/types"
 
-export interface StandardPlayerProps {
+export interface StandardPlayerProps extends WithClassNames<undefined> {
     /** Direct video URL (mp4, webm, ogg). */
     src: string
-    className?: string
 }
 
 /**
@@ -92,7 +93,7 @@ export const StandardPlayer = ({ src, className }: StandardPlayerProps) => {
     return (
         <div
             ref={containerRef}
-            className={`relative aspect-video overflow-hidden rounded-large bg-black ${className ?? ""}`}
+            className={cn("relative aspect-video overflow-hidden rounded-large bg-black", className)}
             onMouseEnter={() => setHideControls(false)}
             onMouseLeave={() => setHideControls(true)}
         >

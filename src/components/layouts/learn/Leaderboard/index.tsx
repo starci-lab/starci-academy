@@ -9,10 +9,10 @@ import { useAppSelector } from "@/redux"
 import { useQueryCourseSwr } from "@/hooks"
 import { queryCourseLeaderboard } from "@/modules/api/graphql"
 import { type WithClassNames } from "@/modules/types"
-import { LeaderboardPodium } from "../LeaderboardPodium"
-import { LeaderboardTable } from "../LeaderboardTable"
-import { MyRankCard } from "../MyRankCard"
-import { LeaderboardSkeleton } from "../LeaderboardSkeleton"
+import { LeaderboardPodium } from "./LeaderboardPodium"
+import { LeaderboardTable } from "./LeaderboardTable"
+import { MyRankCard } from "./MyRankCard"
+import { LeaderboardSkeleton } from "./LeaderboardSkeleton"
 
 
 export type LeaderboardLayoutProps = WithClassNames<undefined>
@@ -32,7 +32,7 @@ export const LeaderboardLayout = ({ className }: LeaderboardLayoutProps) => {
     useQueryCourseSwr()
     // owning course id drives which leaderboard is fetched
     const courseId = useAppSelector((state) => state.course.entity?.id)
-    // viewer identity highlights their own row / podium and feeds the rank card avatar
+    // viewer identity highlights their own row / podium
     const viewer = useAppSelector((state) => state.user.user)
 
     const { data, isLoading, isValidating, error, mutate } = useSWR(
@@ -105,8 +105,6 @@ export const LeaderboardLayout = ({ className }: LeaderboardLayoutProps) => {
                 {ready && data && (
                     <MyRankCard
                         myRank={data.myRank}
-                        username={viewer?.username}
-                        avatar={viewer?.avatar}
                     />
                 )}
             </div>

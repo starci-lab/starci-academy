@@ -7,51 +7,82 @@ import {
     Card,
     CardContent,
 } from "@heroui/react"
+import {
+    useTranslations,
+} from "next-intl"
 import type {
     AiBalancerProviderHealth,
 } from "@/modules/api"
 import {
+    ModelProvider,
+} from "@/modules/api"
+import type {
+    WithClassNames,
+} from "@/modules/types"
+import {
     KeyRow,
 } from "./KeyRow"
 
-interface ProviderSectionProps {
+interface ProviderSectionProps extends WithClassNames<undefined> {
     /** Provider aggregate from GraphQL. */
     providerHealth: AiBalancerProviderHealth
-    /** BCP-47 locale for timestamps. */
-    locale: string
-    /** Localized provider display name. */
-    providerLabel: string
-    /** Maps status enum value to translated label. */
-    statusLabel: (status: string) => string
-    /** Column header labels for the keys table. */
-    columnLabels: {
-        suffix: string
-        status: string
-        failCount: string
-        lastPing: string
-        lastUsed: string
-    }
-    /** Summary line template values (active / total). */
-    summaryLabels: {
-        active: string
-        disabled: string
-        total: string
-    }
 }
 
 /**
  * Card listing all keys for one AI provider in the balancer pool.
  *
+ * List item: keeps its own `providerHealth` payload but reads all display
+ * labels itself from the i18n hook (no prop-drilled label maps).
  * @param props.providerHealth - Provider snapshot from GraphQL.
  */
 export const ProviderSection = ({
     providerHealth,
-    locale,
-    providerLabel,
-    statusLabel,
-    columnLabels,
-    summaryLabels,
 }: ProviderSectionProps) => {
+    const t = useTranslations("admin.aiBalancer")
+
+    /** Localized provider display name, falling back to the raw provider id. */
+    const providerLabel = useMemo(
+        (): string => {
+            const labelByProvider: Record<string, string> = {
+                [ModelProvider.Gemini]: t("providers.gemini"),
+                [ModelProvider.OpenAI]: t("providers.openai"),
+                [ModelProvider.Claude]: t("providers.claude"),
+                [ModelProvider.OpenRouter]: t("providers.openrouter"),
+            }
+            return labelByProvider[providerHealth.provider] ?? providerHealth.provider
+        },
+        [
+            t,
+            providerHealth.provider,
+        ],
+    )
+
+    /** Column header labels for the keys table. */
+    const columnLabels = useMemo(
+        () => ({
+            suffix: t("columns.suffix"),
+            status: t("columns.status"),
+            failCount: t("columns.failCount"),
+            lastPing: t("columns.lastPing"),
+            lastUsed: t("columns.lastUsed"),
+        }),
+        [
+            t,
+        ],
+    )
+
+    /** Summary pill labels (active / disabled / total). */
+    const summaryLabels = useMemo(
+        () => ({
+            active: t("summary.active"),
+            disabled: t("summary.disabled"),
+            total: t("summary.total"),
+        }),
+        [
+            t,
+        ],
+    )
+
     const sortedKeys = useMemo(
         () => [
             ...providerHealth.keys,
@@ -63,7 +94,7 @@ export const ProviderSection = ({
 
     return (
         <Card className="border border-white/10 bg-white/5 backdrop-blur-xl">
-            <CardContent className="gap-4 p-5">
+            <CardContent className="gap-3 p-5">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                     <div>
                         <h2 className="text-lg font-semibold text-white">
@@ -111,8 +142,6 @@ export const ProviderSection = ({
                                 <KeyRow
                                     key={`${providerHealth.provider}-${keyHealth.keySuffix}`}
                                     keyHealth={keyHealth}
-                                    locale={locale}
-                                    statusLabel={statusLabel}
                                 />
                             ))}
                         </tbody>

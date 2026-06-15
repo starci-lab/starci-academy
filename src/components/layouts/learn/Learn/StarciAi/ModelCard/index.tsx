@@ -2,9 +2,11 @@ import { Sparkles as SparkleIcon } from "@gravity-ui/icons"
 import React from "react"
 import {
     Chip,
+    cn,
 } from "@heroui/react"
 import type {
     AiActiveModel,
+    WithClassNames,
 } from "@/modules/types"
 import {
     PROVIDER_COLOR_MAP,
@@ -16,7 +18,7 @@ import {
 } from "./FallbackChoice"
 
 /** Props for {@link ModelCard}. */
-export interface ModelCardProps {
+export interface ModelCardProps extends WithClassNames<undefined> {
     /** One task-kind's active model configuration + fallback chain. */
     model: AiActiveModel
 }
@@ -28,9 +30,10 @@ export interface ModelCardProps {
  */
 export const ModelCard = ({
     model,
+    className,
 }: ModelCardProps) => {
     return (
-        <div className="rounded-3xl border bg-background p-5 transition-shadow hover:shadow-md">
+        <div className={cn("rounded-3xl border bg-background p-5 transition-shadow hover:shadow-md", className)}>
             {/* Card Header */}
             <div className="flex items-center gap-3">
                 {TASK_ICON_MAP[model.taskKind] ?? (

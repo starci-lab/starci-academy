@@ -31,7 +31,7 @@ export const ContactInfo = () => {
                 journey? Our team is here to support you.
             </p>
 
-            <div className="space-y-8">
+            <div className="space-y-6">
                 {channels.map((channel) => (
                     <ContactInfoCard
                         key={channel.kind}

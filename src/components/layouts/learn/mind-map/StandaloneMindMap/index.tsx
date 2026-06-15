@@ -1,10 +1,14 @@
 "use client"
 
 import React from "react"
-import { Skeleton } from "@heroui/react"
+import { Skeleton, cn } from "@heroui/react"
 import { useAppSelector } from "@/redux"
 import { useQueryCourseSwr } from "@/hooks"
 import { MindMapCanvas } from "../MindMapCanvas"
+import type { WithClassNames } from "@/modules/types/base/class-name"
+
+/** Props for {@link StandaloneMindMap}. */
+export type StandaloneMindMapProps = WithClassNames<undefined>
 
 /**
  * Public, full-width mind-map screen mounted by the
@@ -17,14 +21,17 @@ import { MindMapCanvas } from "../MindMapCanvas"
  * what triggers the fetch here.
  *
  * Fills the viewport below the sticky `h-16` (4rem) navbar.
+ * @param props - optional className (unused; layout fills the viewport)
  */
-export const StandaloneMindMap = () => {
+export const StandaloneMindMap = ({
+    className,
+}: StandaloneMindMapProps = {}) => {
     const course = useAppSelector((state) => state.course.entity)
     // Hard refresh straight into this route has no other loader, so kick the fetch here.
     const { isLoading } = useQueryCourseSwr()
 
     return (
-        <div className="h-[calc(100dvh-4rem)] w-full">
+        <div className={cn("h-[calc(100dvh-4rem)] w-full", className)}>
             {!course && isLoading ? (
                 <Skeleton className="h-full w-full" />
             ) : (

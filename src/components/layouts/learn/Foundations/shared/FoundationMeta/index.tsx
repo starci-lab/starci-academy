@@ -1,11 +1,11 @@
 "use client"
 
-import { Chip } from "@heroui/react"
-import type { FoundationEntity } from "@/modules/types"
+import { Chip, cn } from "@heroui/react"
+import type { FoundationEntity, WithClassNames } from "@/modules/types"
 import { useTranslations } from "next-intl"
 import React, { useMemo } from "react"
 
-export interface FoundationMetaProps {
+export interface FoundationMetaProps extends WithClassNames<undefined> {
     /** Foundation row to render metadata chips for. */
     foundation: FoundationEntity
     /** When true, shows the kind chip (external link, video, article). */
@@ -20,6 +20,7 @@ export interface FoundationMetaProps {
 export const FoundationMeta = ({
     foundation,
     showKind = true,
+    className,
 }: FoundationMetaProps) => {
     const t = useTranslations()
 
@@ -43,7 +44,7 @@ export const FoundationMeta = ({
     }, [foundation.author, t])
 
     return (
-        <div className="flex flex-col gap-1.5">
+        <div className={cn("flex flex-col gap-3", className)}>
             <div className="flex flex-wrap items-center gap-1.5">
                 {showKind ? (
                     <Chip size="sm" variant="secondary" color="accent">

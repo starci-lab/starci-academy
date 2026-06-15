@@ -8,6 +8,7 @@ import {
 import {
     skeletonTextSizeMap,
 } from "./map"
+import type { WithClassNames } from "@/modules/types"
 
 /**
  * Typography token of the text the skeleton bar stands in for. Each token maps
@@ -37,13 +38,11 @@ export type SkeletonTextSize =
     /** Mirrors `text-6xl` (60px). */
     | "6xl"
 
-export interface SkeletonTextProps {
+export interface SkeletonTextProps extends WithClassNames<undefined> {
     /** Typography token of the text being replaced; drives the bar's height. */
     size: SkeletonTextSize
     /** Tailwind width class for the bar (e.g. `"w-5/6"`). Defaults to `"w-full"`. */
     width?: string
-    /** Extra classes appended last (override-friendly). */
-    className?: string
 }
 
 /**

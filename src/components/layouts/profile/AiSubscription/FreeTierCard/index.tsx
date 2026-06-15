@@ -2,6 +2,7 @@
 
 import React from "react"
 import {
+    cn,
     Button,
     Card,
 } from "@heroui/react"
@@ -11,9 +12,12 @@ import {
 import {
     TierLevelIcon,
 } from "@/components/svg"
+import type {
+    WithClassNames,
+} from "@/modules/types"
 
 /** Props for {@link FreeTierCard}. */
-export interface FreeTierCardProps {
+export interface FreeTierCardProps extends WithClassNames<undefined> {
     /** True when the user is currently on the free tier (no paid subscription). */
     isCurrent: boolean
 }
@@ -27,10 +31,11 @@ export interface FreeTierCardProps {
  */
 export const FreeTierCard = ({
     isCurrent,
+    className,
 }: FreeTierCardProps) => {
     const t = useTranslations()
     return (
-        <Card className="flex h-full flex-col">
+        <Card className={cn("flex h-full flex-col", className)}>
             <Card.Content className="flex flex-1 flex-col gap-3">
                 {/* icon + tier name — tight pair */}
                 <div className="flex items-center gap-1.5">
@@ -71,8 +76,8 @@ export const FreeTierCard = ({
                     className="flex flex-col gap-1.5 text-sm invisible"
                     aria-hidden
                 >
-                    <div className="flex min-h-5 items-center gap-1">—</div>
-                    <div className="flex min-h-5 items-center gap-1">—</div>
+                    <div className="flex min-h-5 items-center gap-1.5">—</div>
+                    <div className="flex min-h-5 items-center gap-1.5">—</div>
                 </div>
             </Card.Footer>
         </Card>

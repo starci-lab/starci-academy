@@ -4,11 +4,12 @@ import { MagnifierPlus as MagnifyingGlassPlusIcon } from "@gravity-ui/icons"
 import React, { useId, useState } from "react"
 import mermaid from "mermaid"
 import useSWR from "swr"
-import { Modal } from "@heroui/react"
+import { Modal, cn } from "@heroui/react"
+import type { WithClassNames } from "@/modules/types"
 
 
 /** Props for {@link MermaidDiagram}. */
-export interface MermaidDiagramProps {
+export interface MermaidDiagramProps extends WithClassNames<undefined> {
     /** Mermaid source string. */
     code: string
     /** Mermaid theme key resolved from the app theme. */
@@ -31,7 +32,7 @@ export interface MermaidDiagramProps {
  * `"use client"` for the browser-side mermaid renderer.
  * @param props - {@link MermaidDiagramProps}
  */
-export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption, fallbackLabel }: MermaidDiagramProps) => {
+export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption, fallbackLabel, className }: MermaidDiagramProps) => {
     // Stable id so concurrent diagrams never collide on mermaid's render target id.
     const renderId = useId().replace(/:/g, "-")
     // Local open flag for the full-screen preview dialog (per-diagram, not a global modal).
@@ -56,7 +57,7 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
     )
 
     return (
-        <div className="rounded-xl border border-default bg-background p-3">
+        <div className={cn("rounded-xl border border-default bg-background p-3", className)}>
             {data ? (
                 <>
                     {/* Clickable inline diagram — opens the full-screen preview on press. */}
@@ -83,7 +84,7 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
                                     <Modal.CloseTrigger />
                                     <Modal.Body className="p-4">
                                         {/* Full-screen figure: diagram scaled to fill, caption beneath. */}
-                                        <figure className="flex h-full flex-col items-center justify-center gap-4">
+                                        <figure className="flex h-full flex-col items-center justify-center gap-1.5">
                                             <div className="flex w-full flex-1 items-center justify-center overflow-auto">
                                                 <div
                                                     className="[&_svg]:h-auto [&_svg]:w-full [&_svg]:max-w-full"

@@ -17,19 +17,8 @@ import {
     pathConfig,
 } from "@/resources"
 import {
-    useAppDispatch,
     useAppSelector,
 } from "@/redux"
-import {
-    setFoundation,
-    setFoundationCategory,
-    setFoundationCategoryId,
-    setFoundationId,
-    setFoundations,
-} from "@/redux/slices"
-import type {
-    FoundationCategoryEntity,
-} from "@/modules/types"
 import {
     useQueryFoundationCategoriesSwr,
     useQueryFoundationCategorySuggestionsSwr,
@@ -39,7 +28,7 @@ import type {
 } from "../types"
 import {
     FoundationsBreadcrumbs,
-} from "../FoundationsBreadcrumbs"
+} from "../shared/FoundationsBreadcrumbs"
 import {
     FoundationsCategoryGridHeader,
 } from "./FoundationsCategoryGridHeader"
@@ -72,7 +61,6 @@ export const FoundationsCategoryGridLayout = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
-    const dispatch = useAppDispatch()
     const course = useAppSelector((state) => state.course.entity)
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
     const categories = useAppSelector((state) => state.foundation.categories)
@@ -168,35 +156,6 @@ export const FoundationsCategoryGridLayout = () => {
         t,
     ])
 
-    /** Select a category: persist it, reset the foundation selection, deep-link the URL. */
-    const onSelectCategory = useCallback(
-        (category: FoundationCategoryEntity) => {
-            dispatch(setFoundationCategoryId(category.id))
-            dispatch(setFoundationCategory(category))
-            dispatch(setFoundationId(undefined))
-            dispatch(setFoundation(undefined))
-            dispatch(setFoundations(undefined))
-
-            if (!courseDisplayId) {
-                return
-            }
-            router.push(
-                pathConfig()
-                    .locale(locale)
-                    .course(courseDisplayId)
-                    .learn()
-                    .foundations(category.id)
-                    .build(),
-            )
-        },
-        [
-            courseDisplayId,
-            dispatch,
-            locale,
-            router,
-        ],
-    )
-
     return (
         <div className="p-3">
             <FoundationsBreadcrumbs items={breadcrumbItems} />
@@ -229,7 +188,6 @@ export const FoundationsCategoryGridLayout = () => {
                         categories={pageCategories}
                         sortedCategories={pageCategories ?? []}
                         isLoading={isLoading && !data}
-                        onSelect={onSelectCategory}
                     />
                     {isLoading && !data ? (
                         <PaginationSkeleton className="mt-6" />

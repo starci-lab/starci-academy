@@ -9,6 +9,7 @@ import {
 } from "@heroui/react"
 import type {
     MilestoneTaskEntity,
+    WithClassNames,
 } from "@/modules/types"
 import {
     MilestoneTaskStatus,
@@ -20,7 +21,7 @@ import {
 /**
  * Props for {@link MilestoneTaskRow}.
  */
-export interface MilestoneTaskRowProps {
+export interface MilestoneTaskRowProps extends WithClassNames<undefined> {
     /** Task this row renders. */
     task: MilestoneTaskEntity
     /** Derived visual status (completed / unlocked / locked). */
@@ -46,6 +47,7 @@ export const MilestoneTaskRow = ({
     selected,
     isLast,
     onSelectTask,
+    className,
 }: MilestoneTaskRowProps) => {
     const StatusIcon = MILESTONE_TASK_STATUS_ICON_MAP[status]
     const iconClass = cn(
@@ -60,7 +62,7 @@ export const MilestoneTaskRow = ({
         ],
     )
     return (
-        <div>
+        <div className={cn(className)}>
             <div className="flex items-start gap-3">
                 {/* Status icon: shape by progress; color only accent when selected */}
                 <div className="mt-0.5 shrink-0">

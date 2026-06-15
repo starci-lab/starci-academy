@@ -1,36 +1,36 @@
 "use client"
 
-import React, { useMemo } from "react"
-import { Button, Card, Chip } from "@heroui/react"
+import React, { useCallback, useMemo } from "react"
+import { Button, Card, Chip, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { Spacer } from "@/components/reuseable"
-import type { SubmissionAttemptEntity } from "@/modules/types"
+import type { SubmissionAttemptEntity, WithClassNames } from "@/modules/types"
 import { dayjs, getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
-import { useAppSelector } from "@/redux"
+import { useAppDispatch, useAppSelector } from "@/redux"
+import { setSubmissionAttemptId } from "@/redux/slices"
+import { useFeedbackDetailsOverlayState } from "@/hooks"
 
 /**
  * Props for a single submission-attempt card.
  */
-export interface SubmissionAttemptCardProps {
+export interface SubmissionAttemptCardProps extends WithClassNames<undefined> {
     /** The grading / attempt record to display. */
     submissionAttempt: SubmissionAttemptEntity
     /** Max points for the requirement (challenge submission), used for `score/max` display. */
     maxScore: number | undefined
-    /** Opens the feedback details layer (binds the selected attempt in Redux). */
-    onViewDetails: () => void
-    /** Opens this attempt’s submission URL in a new tab. */
-    onViewSubmission: () => void
 }
 
 
 /**
  * Card showing score, short feedback, and actions (view details / open submission) for one attempt.
  *
- * @param props - Attempt row, max score, and view-details / open-submission callbacks.
+ * @param props - Attempt row and max score.
  */
 export const SubmissionAttemptCard = (props: SubmissionAttemptCardProps) => {
-    const { submissionAttempt, maxScore, onViewDetails, onViewSubmission } = props
+    const { submissionAttempt, maxScore, className } = props
     const t = useTranslations()
+    const dispatch = useAppDispatch()
+    const { open: openFeedbackDetails } = useFeedbackDetailsOverlayState()
     const config = useAppSelector((state) => state.system.config)
     const [
         scoreLabel, 
@@ -57,9 +57,20 @@ export const SubmissionAttemptCard = (props: SubmissionAttemptCardProps) => {
         }
         return getTimeAgoLabel(getTimeAgoMessage(dayjs(submissionAttempt.processedAt)), t)
     }, [submissionAttempt.processedAt, t])
-    
+
+    /** Bind this attempt in Redux then open the feedback details overlay. */
+    const onViewDetails = useCallback(() => {
+        dispatch(setSubmissionAttemptId(submissionAttempt.id))
+        openFeedbackDetails()
+    }, [dispatch, openFeedbackDetails, submissionAttempt.id])
+
+    /** Open this attempt's submission URL in a new browser tab. */
+    const onViewSubmission = useCallback(() => {
+        window.open(submissionAttempt.submissionUrl, "_blank")
+    }, [submissionAttempt.submissionUrl])
+
     return (
-        <Card className="border border-divider bg-transparent shadow-none">
+        <Card className={cn("border border-divider bg-transparent shadow-none", className)}>
             <Card.Content>
                 <div>
                     <div className="flex items-center justify-between gap-3">

@@ -6,13 +6,18 @@ import React, {
 } from "react"
 import {
     Button,
+    cn,
     Link,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
+import { useAppDispatch } from "@/redux"
+import { setSelectedCvSubmissionAttemptAnalysis } from "@/redux/slices"
+import { useCvSubmissionAttemptAnalysisOverlayState } from "@/hooks"
+import type { WithClassNames } from "@/modules/types"
 
 
 /** Props for {@link CVCard}. */
-export interface CVCardProps {
+export interface CVCardProps extends WithClassNames<undefined> {
     /** Unique key/id for the CV submission attempt. */
     attemptId: string
     /** Human-visible attempt number. */
@@ -29,14 +34,14 @@ export interface CVCardProps {
     status: string
     /** Short preview of the AI feedback. */
     feedbackPreview: string
-    /** Opens the full analysis modal for this attempt. */
-    onOpenAnalysis: (attemptId: string) => void
+    /** Full AI feedback markdown for the analysis modal. */
+    detailFeedback: string
 }
 
 /**
  * Card row for one uploaded CV attempt in the attempts drawer.
  *
- * @param props - Attempt display data and the details action.
+ * @param props - Attempt display data; self-dispatches to open the analysis modal.
  */
 export const CVCard = (props: CVCardProps) => {
     const {
@@ -48,21 +53,44 @@ export const CVCard = (props: CVCardProps) => {
         submittedAtLabel,
         status,
         feedbackPreview,
-        onOpenAnalysis,
+        detailFeedback,
+        className,
     } = props
     const t = useTranslations()
+    const dispatch = useAppDispatch()
+    const { setOpen: setAnalysisModalOpen } = useCvSubmissionAttemptAnalysisOverlayState()
 
-    /** Open the analysis modal for this card's attempt. */
+    /** Dispatch the selected attempt and open the analysis modal. */
     const onPress = useCallback(
-        () => onOpenAnalysis(attemptId),
+        () => {
+            dispatch(setSelectedCvSubmissionAttemptAnalysis({
+                attemptId,
+                attemptNumber,
+                fileLabel,
+                fileUrl,
+                fileUrlIsPublic,
+                submittedAtLabel,
+                status,
+                detailFeedback,
+            }))
+            setAnalysisModalOpen(true)
+        },
         [
             attemptId,
-            onOpenAnalysis,
+            attemptNumber,
+            fileLabel,
+            fileUrl,
+            fileUrlIsPublic,
+            submittedAtLabel,
+            status,
+            detailFeedback,
+            dispatch,
+            setAnalysisModalOpen,
         ],
     )
 
     return (
-        <article className="rounded-3xl border border-divider/70 bg-content1 p-4 shadow-sm transition hover:border-accent/50 hover:bg-accent/5">
+        <article className={cn("rounded-3xl border border-divider/70 bg-content1 p-4 shadow-sm transition hover:border-accent/50 hover:bg-accent/5", className)}>
             <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
                     <div className="text-xs font-semibold uppercase tracking-wide text-accent">

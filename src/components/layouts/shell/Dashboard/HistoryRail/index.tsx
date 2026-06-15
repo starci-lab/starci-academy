@@ -8,6 +8,7 @@ import {
     Button,
     ProgressBar,
     Skeleton,
+    cn,
 } from "@heroui/react"
 import {
     useLocale,
@@ -37,6 +38,9 @@ import type {
 import {
     EntityToken,
 } from "../EntityToken"
+import type {
+    WithClassNames,
+} from "@/modules/types/base/class-name"
 
 /** One titled, searchable section of left-rail items. */
 interface RailSection {
@@ -46,6 +50,9 @@ interface RailSection {
     items: Array<QueryMyDashboardRefItemData>
 }
 
+/** Props for {@link HistoryRail}. */
+export type HistoryRailProps = WithClassNames<undefined>
+
 /**
  * GitHub-style left rail: the viewer's identity on top, then the "my courses"
  * list (with milestone bars), a "this week" stats widget, and searchable history
@@ -54,7 +61,9 @@ interface RailSection {
  * challenges / weekly stats — and the rail owns its loading + error states.
  * `"use client"` for redux + the search filter + SWR.
  */
-export const HistoryRail = () => {
+export const HistoryRail = ({
+    className,
+}: HistoryRailProps = {}) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -157,7 +166,7 @@ export const HistoryRail = () => {
                     <Skeleton className="h-4 w-32 rounded-medium" />
                 </div>
                 <Skeleton className="h-9 w-full rounded-medium" />
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-1.5">
                     {Array.from({
                         length: 6,
                     }).map((_, index) => (
@@ -203,7 +212,7 @@ export const HistoryRail = () => {
     }
 
     return (
-        <div className="flex flex-col gap-6 p-3">
+        <div className={cn("flex flex-col gap-6 p-3", className)}>
             {/* identity block (avatar + display name) */}
             <div className="flex items-center gap-3">
                 <UserAvatar
@@ -237,7 +246,7 @@ export const HistoryRail = () => {
                     {t("dashboard.enrolledCourses")}
                 </div>
                 {filteredCourses.length > 0 ? (
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-3">
                         {filteredCourses.map((item) => {
                             // three progress dimensions per course; render a row only
                             // when that dimension exists (total > 0) so a course with
@@ -262,7 +271,7 @@ export const HistoryRail = () => {
                             return (
                                 <div
                                     key={item.globalId}
-                                    className="flex flex-col gap-2"
+                                    className="flex flex-col gap-1.5"
                                 >
                                     <EntityToken
                                         globalId={item.globalId}
@@ -273,9 +282,9 @@ export const HistoryRail = () => {
                                         .map((metric) => (
                                             <div
                                                 key={metric.key}
-                                                className="flex flex-col gap-1"
+                                                className="flex flex-col gap-1.5"
                                             >
-                                                <div className="flex items-center justify-between gap-2 text-xs text-muted">
+                                                <div className="flex items-center justify-between gap-1.5 text-xs text-muted">
                                                     <span>
                                                         {t(`dashboard.courseProgress.${metric.key}`)}
                                                     </span>
@@ -314,8 +323,8 @@ export const HistoryRail = () => {
                 </div>
                 <div className="grid grid-cols-3 gap-1.5">
                     {/* streak — flame glyph reinforces the consecutive-day count */}
-                    <div className="flex flex-col items-center gap-0.5 rounded-medium bg-default/40 p-3">
-                        <div className="flex items-center gap-1 text-lg font-semibold text-foreground">
+                    <div className="flex flex-col items-center gap-0 rounded-medium bg-default/40 p-3">
+                        <div className="flex items-center gap-1.5 text-lg font-semibold text-foreground">
                             <svg
                                 viewBox="0 0 24 24"
                                 className="size-4 text-warning"
@@ -331,7 +340,7 @@ export const HistoryRail = () => {
                         </div>
                     </div>
                     {/* XP earned in the window */}
-                    <div className="flex flex-col items-center gap-0.5 rounded-medium bg-default/40 p-3">
+                    <div className="flex flex-col items-center gap-0 rounded-medium bg-default/40 p-3">
                         <div className="text-lg font-semibold text-foreground">
                             {stats.xp}
                         </div>
@@ -340,7 +349,7 @@ export const HistoryRail = () => {
                         </div>
                     </div>
                     {/* lessons read in the window */}
-                    <div className="flex flex-col items-center gap-0.5 rounded-medium bg-default/40 p-3">
+                    <div className="flex flex-col items-center gap-0 rounded-medium bg-default/40 p-3">
                         <div className="text-lg font-semibold text-foreground">
                             {stats.lessons}
                         </div>

@@ -51,7 +51,7 @@ export const TagChips = ({ tags, maxVisible = 3, variant = "soft", classNames }:
                 </Tooltip.Trigger>
                 <Tooltip.Content className={classNames?.content}>
                     <ScrollShadow className="max-h-[200px]" hideScrollBar={true} orientation="horizontal">
-                        <div className="flex flex-col gap-1 text-sm">
+                        <div className="flex flex-col gap-1.5 text-sm">
                             {tags.map((tag) => (
                                 <div key={tag}>{tag}</div>
                             ))}

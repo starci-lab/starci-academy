@@ -2,11 +2,12 @@
 
 import { SquareDashedText as ArrowsOutIcon } from "@gravity-ui/icons"
 import React from "react"
-import { Button } from "@heroui/react"
+import { Button, cn } from "@heroui/react"
+import type { WithClassNames } from "@/modules/types"
 
 
 /** Props for {@link FullscreenButton}. */
-export interface FullscreenButtonProps {
+export interface FullscreenButtonProps extends WithClassNames<undefined> {
     /** Fired when the user requests fullscreen toggle. */
     onFullscreen: () => void
 }
@@ -19,6 +20,7 @@ export interface FullscreenButtonProps {
  */
 export const FullscreenButton = ({
     onFullscreen,
+    className,
 }: FullscreenButtonProps) => {
     return (
         <Button
@@ -26,7 +28,7 @@ export const FullscreenButton = ({
             variant="ghost"
             aria-label="Fullscreen"
             onPress={onFullscreen}
-            className="text-white hover:bg-white/20 border-none min-w-8 h-8"
+            className={cn("text-white hover:bg-white/20 border-none min-w-8 h-8", className)}
         >
             <ArrowsOutIcon className="h-4 w-4" />
         </Button>

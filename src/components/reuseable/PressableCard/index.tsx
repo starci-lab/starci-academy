@@ -3,9 +3,10 @@
 import React from "react"
 import { cn } from "@heroui/react"
 import { motion } from "framer-motion"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link PressableCard}. */
-export interface PressableCardProps {
+export interface PressableCardProps extends WithClassNames<undefined> {
     /** Card content. */
     children: React.ReactNode
     /** Called when the card is activated (click / Enter / Space). */

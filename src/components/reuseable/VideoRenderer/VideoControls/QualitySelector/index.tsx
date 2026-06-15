@@ -3,6 +3,7 @@
 import { Gear as GearSixIcon } from "@gravity-ui/icons"
 import React from "react"
 import {
+    cn,
     Dropdown,
     DropdownItem,
     DropdownMenu,
@@ -11,10 +12,11 @@ import {
 import { useCallback, useMemo } from "react"
 import { AUTO_QUALITY_INDEX } from "../constants"
 import type { QualityLevel } from "../types"
+import type { WithClassNames } from "@/modules/types"
 
 
 /** Props for {@link QualitySelector}. */
-export interface QualitySelectorProps {
+export interface QualitySelectorProps extends WithClassNames<undefined> {
     /** Available quality renditions (excluding the synthetic Auto entry). */
     qualityLevels: Array<QualityLevel>
     /** Currently selected quality index (`-1` = auto). */
@@ -34,6 +36,7 @@ export const QualitySelector = ({
     qualityLevels,
     selectedQuality,
     onQualityChange,
+    className,
 }: QualitySelectorProps) => {
     /** Human-readable label for a quality level. */
     const qualityLabel = useCallback(
@@ -84,7 +87,7 @@ export const QualitySelector = ({
     )
 
     return (
-        <Dropdown>
+        <Dropdown className={cn(className)}>
             <DropdownTrigger aria-label="Quality">
                 <div className="flex h-8 min-w-8 cursor-pointer items-center justify-center rounded-medium border-none text-white hover:bg-white/20">
                     <GearSixIcon className="h-4 w-4" />

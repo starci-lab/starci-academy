@@ -5,10 +5,11 @@ import { Chip, Tooltip, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { UserAvatar } from "@/components/reuseable"
 import type { CourseLeaderboardEntry } from "@/modules/api/graphql"
+import type { WithClassNames } from "@/modules/types"
 import { XpBreakdown } from "../XpBreakdown"
 
 /** Props for {@link LeaderboardTable}. */
-export interface LeaderboardTableProps {
+export interface LeaderboardTableProps extends WithClassNames<undefined> {
     /** Rows to render (typically the entries below the podium). */
     entries: Array<CourseLeaderboardEntry>
     /** Current viewer's user id — highlights their row. */
@@ -21,14 +22,14 @@ export interface LeaderboardTableProps {
  * a hover breakdown. Renders nothing when there are no rows.
  * @param props - {@link LeaderboardTableProps}
  */
-export const LeaderboardTable = ({ entries, viewerUserId }: LeaderboardTableProps) => {
+export const LeaderboardTable = ({ entries, viewerUserId, className }: LeaderboardTableProps) => {
     const t = useTranslations()
     if (entries.length === 0) {
         return null
     }
 
     return (
-        <div className="flex flex-col gap-1.5">
+        <div className={cn("flex flex-col gap-1.5", className)}>
             {entries.map((entry) => {
                 const isViewer = !!viewerUserId && entry.userId === viewerUserId
                 return (

@@ -6,10 +6,12 @@ import React, {
     useState,
 } from "react"
 import { Page } from "react-pdf"
+import { cn } from "@heroui/react"
 import { PAGE_ASPECT_FALLBACK } from "../constants"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link PdfViewportPage}. */
-export interface PdfViewportPageProps {
+export interface PdfViewportPageProps extends WithClassNames<undefined> {
     /** 1-based page index. */
     pageNumber: number
     /** Scroll container ref used as the IntersectionObserver root. */
@@ -33,6 +35,7 @@ export const PdfViewportPage = (props: PdfViewportPageProps) => {
         scrollRootRef,
         width,
         eager,
+        className,
     } = props
     const wrapRef = useRef<HTMLDivElement | null>(null)
     const [showCanvas, setShowCanvas] = useState(eager)
@@ -79,7 +82,7 @@ export const PdfViewportPage = (props: PdfViewportPageProps) => {
     return (
         <div
             ref={wrapRef}
-            className="flex justify-center"
+            className={cn("flex justify-center", className)}
         >
             {
                 showCanvas ? (

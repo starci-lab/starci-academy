@@ -1,28 +1,51 @@
 "use client"
 
 import React, { useMemo } from "react"
+import { cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import type { CodeImplementationEntity } from "@/modules/types"
 import { usePersonalProjectGithubForm } from "@/hooks/zustand"
-import { ImplementationCard } from "@/components/layouts/Content/CodeImplementationBody/ImplementationCard"
+import { useAppSelector } from "@/redux"
+import { ImplementationCard } from "@/components/layouts/learn/Content/CodeImplementationBody/ImplementationCard"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
-export interface TaskCodeImplementationsProps {
-    /** Per-language implementation guides for the task (one row per language). */
-    codeImplementations: Array<CodeImplementationEntity>
-}
+/** Props for {@link TaskCodeImplementations}. */
+export type TaskCodeImplementationsProps = WithClassNames<undefined>
 
 /**
  * Implementation guide for a milestone task, shown for the language picked by the
  * top "grading language" selector in {@link PersonalProjectSubmission} — a single
  * source of truth for the active language, so this section no longer renders its
  * own language tabs. Reuses the lesson implementation card so the look matches.
- * @param props.codeImplementations - Implementation rows to choose from.
+ *
+ * Self-contained: reads `codeImplementations` from redux task state and `lang` from
+ * the github form store.
+ * @param props - optional className for the root element
  */
-export const TaskCodeImplementations = ({ codeImplementations }: TaskCodeImplementationsProps) => {
+export const TaskCodeImplementations = ({
+    className,
+}: TaskCodeImplementationsProps = {}) => {
     const t = useTranslations()
     // active grading language lives in the shared github-form store (set by the top selector);
     // read-only here, so `enableSync` stays off (default) and no debounced sync runs
     const { lang } = usePersonalProjectGithubForm()
+
+    const selectedTaskId = useAppSelector((state) => state.milestone.selectedTaskId)
+    const selectedTaskDetail = useAppSelector((state) => state.milestone.selectedTaskDetail)
+    const milestoneEntities = useAppSelector((state) => state.milestone.entities)
+
+    const displayTask = useMemo(() => {
+        if (!selectedTaskId) return undefined
+        if (selectedTaskDetail?.id === selectedTaskId) {
+            return selectedTaskDetail
+        }
+        for (const milestone of milestoneEntities) {
+            const found = milestone.tasks?.find((task) => task.id === selectedTaskId)
+            if (found) return found
+        }
+        return undefined
+    }, [selectedTaskId, selectedTaskDetail, milestoneEntities])
+
+    const codeImplementations = displayTask?.codeImplementations ?? []
 
     // pick the guide for the selected language (lang vocab matches: typescript/java/csharp/go)
     const selected = useMemo(
@@ -38,7 +61,7 @@ export const TaskCodeImplementations = ({ codeImplementations }: TaskCodeImpleme
     }
 
     return (
-        <div className="mt-6 flex flex-col gap-3">
+        <div className={cn("mt-6 flex flex-col gap-3", className)}>
             <div className="font-semibold">
                 {t("task.codeImplementationsTitle")}
             </div>

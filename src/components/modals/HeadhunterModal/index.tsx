@@ -2,19 +2,28 @@
 
 import { House as BuildingsIcon, Smartphone as PhoneIcon } from "@gravity-ui/icons"
 import { FaLinkedin as LinkedinLogoIcon } from "react-icons/fa6"
-import { Button, Link, Modal } from "@heroui/react"
-import { ConsultantAvatar } from "@/components/layouts/Headhuntings/ConsultantAvatar"
+import { Button, cn, Link, Modal } from "@heroui/react"
+import { ConsultantAvatar } from "@/components/layouts/headhunting/Headhuntings/ConsultantAvatar"
 import { useHeadhunterOverlayState } from "@/hooks"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { pathConfig } from "@/resources"
 import { useAppSelector } from "@/redux"
 import React from "react"
+import type { WithClassNames } from "@/modules/types"
+
+/**
+ * Props for {@link HeadhunterModal}.
+ */
+export type HeadhunterModalProps = WithClassNames<undefined>
 
 /**
  * Headhunter profile modal with bio and links to company, LinkedIn, and Zalo.
+ *
+ * @param props - Optional styling props.
  */
-export const HeadhunterModal = () => {
+export const HeadhunterModal = (props: HeadhunterModalProps) => {
+    const { className } = props
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -41,7 +50,7 @@ export const HeadhunterModal = () => {
         <Modal isOpen={isOpen} onOpenChange={setOpen}>
             <Modal.Backdrop>
                 <Modal.Container className="modal__container--narrow" scroll="inside">
-                    <Modal.Dialog>
+                    <Modal.Dialog className={cn(className)}>
                         <Modal.CloseTrigger />
                         <Modal.Header>
                             <div className="text-center text-xl font-bold">
@@ -50,7 +59,7 @@ export const HeadhunterModal = () => {
                         </Modal.Header>
                         <Modal.Body>
                             {headhunter ? (
-                                <div className="flex flex-col items-center gap-4 px-2 pb-4">
+                                <div className="flex flex-col items-center gap-6 px-2 pb-4">
                                     <ConsultantAvatar
                                         avatarUrl={headhunter.avatarUrl}
                                         fullName={headhunter.fullName}
@@ -82,7 +91,7 @@ export const HeadhunterModal = () => {
                                                 href={headhunter.linkedinUrl}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="inline-flex items-center gap-1 text-sm text-accent"
+                                                className="inline-flex items-center gap-1.5 text-sm text-accent"
                                             >
                                                 <LinkedinLogoIcon className="size-4" aria-hidden />
                                                 {t("headhuntings.linkedin")}
@@ -91,7 +100,7 @@ export const HeadhunterModal = () => {
                                         {headhunter.phoneNumber ? (
                                             <Link
                                                 href={`tel:${headhunter.phoneNumber.replace(/\D/g, "")}`}
-                                                className="inline-flex items-center gap-1 text-sm text-accent"
+                                                className="inline-flex items-center gap-1.5 text-sm text-accent"
                                             >
                                                 <PhoneIcon className="size-4" aria-hidden />
                                                 {t("headhuntings.phone")}: {headhunter.phoneNumber}
@@ -102,7 +111,7 @@ export const HeadhunterModal = () => {
                                                 href={`https://zalo.me/${headhunter.zaloNumber.replace(/\D/g, "")}`}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="inline-flex items-center gap-1 text-sm text-accent"
+                                                className="inline-flex items-center gap-1.5 text-sm text-accent"
                                             >
                                                 <PhoneIcon className="size-4" aria-hidden />
                                                 {t("headhuntings.zalo")}: {headhunter.zaloNumber}
@@ -111,7 +120,7 @@ export const HeadhunterModal = () => {
                                         {headhunter.email ? (
                                             <Link
                                                 href={`mailto:${headhunter.email}`}
-                                                className="inline-flex items-center gap-1 text-sm text-accent"
+                                                className="inline-flex items-center gap-1.5 text-sm text-accent"
                                             >
                                                 {t("headhuntings.email")}: {headhunter.email}
                                             </Link>

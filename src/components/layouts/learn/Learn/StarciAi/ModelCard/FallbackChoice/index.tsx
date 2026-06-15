@@ -1,9 +1,11 @@
 import React from "react"
 import {
     Chip,
+    cn,
 } from "@heroui/react"
 import type {
     AiModelChoice,
+    WithClassNames,
 } from "@/modules/types"
 import {
     PROVIDER_COLOR_MAP,
@@ -11,7 +13,7 @@ import {
 } from "../../map"
 
 /** Props for {@link FallbackChoice}. */
-export interface FallbackChoiceProps {
+export interface FallbackChoiceProps extends WithClassNames<undefined> {
     /** The fallback model reference (model id + provider). */
     choice: AiModelChoice
     /** Zero-based position in the fallback chain (rendered 1-based). */
@@ -26,9 +28,10 @@ export interface FallbackChoiceProps {
 export const FallbackChoice = ({
     choice,
     index,
+    className,
 }: FallbackChoiceProps) => {
     return (
-        <div className="flex items-center gap-1.5 rounded-xl border px-3 py-1.5">
+        <div className={cn("flex items-center gap-1.5 rounded-xl border px-3 py-1.5", className)}>
             <span className="text-xs text-muted font-mono">
                 {index + 1}.
             </span>

@@ -9,8 +9,12 @@ import {
     cn,
 } from "@heroui/react"
 import { useFilter } from "react-aria-components"
-import { useTranslations } from "next-intl"
-import type { MilestoneEntity } from "@/modules/types"
+import { useTranslations, useLocale } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useAppSelector, useAppDispatch } from "@/redux"
+import { setSelectedTaskId } from "@/redux/slices"
+import { pathConfig } from "@/resources/path"
+import type { WithClassNames } from "@/modules/types"
 
 /** One flattened milestone task fed into the autocomplete collection. */
 interface MilestoneTaskSearchItem {
@@ -25,26 +29,45 @@ interface MilestoneTaskSearchItem {
 }
 
 /** Props for {@link MilestoneTaskSearch}. */
-export interface MilestoneTaskSearchProps {
-    /** Ordered milestones whose tasks populate the autocomplete collection. */
-    milestones: Array<MilestoneEntity>
-    /** The value of the autocomplete — the currently selected task id. */
-    value: string | null
-    /** Fired with the task id when a task is chosen. */
-    onSelectTask: (taskId: string) => void
+export interface MilestoneTaskSearchProps extends WithClassNames<undefined> {
     /** Extra classes for the root field. */
     className?: string
 }
 
 /**
  * Milestone-task search built on HeroUI's `Autocomplete` — mirrors the module
- * lesson search. Flattens every milestone's tasks into one client-side collection
- * and filters as the user types; choosing a row selects that task.
+ * lesson search. Reads milestones and the selected task id from the Redux store;
+ * choosing a row dispatches `setSelectedTaskId` and routes to that task.
  *
- * @param props - milestones to index, the select callback, and optional classes
+ * @param props - optional classes
  */
-export const MilestoneTaskSearch = ({ milestones, value, onSelectTask, className }: MilestoneTaskSearchProps) => {
+export const MilestoneTaskSearch = ({ className }: MilestoneTaskSearchProps) => {
     const t = useTranslations()
+    const locale = useLocale()
+    const router = useRouter()
+    const dispatch = useAppDispatch()
+
+    // read milestones and the selected task id from the Redux store
+    const milestoneEntities = useAppSelector((state) => state.milestone.entities)
+    const selectedTaskId = useAppSelector((state) => state.milestone.selectedTaskId)
+    const courseDisplayId = useAppSelector((state) => state.course.displayId)
+
+    // sort milestones by their display order (mirrors MilestoneSidebar's milestones)
+    const milestones = useMemo(
+        () => [...milestoneEntities].sort((prev, next) => prev.sortIndex - next.sortIndex),
+        [milestoneEntities],
+    )
+
+    /** Select a task: store the id in redux and route to its learn page. */
+    const onSelectTask = useCallback(
+        (taskId: string) => {
+            dispatch(setSelectedTaskId(taskId))
+            router.push(
+                pathConfig().locale(locale).course(courseDisplayId).learn().personalProject(taskId).build(),
+            )
+        },
+        [dispatch, router, locale, courseDisplayId],
+    )
 
     // diacritic- + case-insensitive "contains" matcher (handles Vietnamese accents).
     const { contains } = useFilter({ sensitivity: "base" })
@@ -100,7 +123,7 @@ export const MilestoneTaskSearch = ({ milestones, value, onSelectTask, className
             className={cn("w-full", className)}
             fullWidth
             placeholder={t("finalProject.page.searchTaskPlaceholder")}
-            value={value}
+            value={selectedTaskId ?? null}
             onChange={(nextValue) => {
                 if (nextValue == null) {
                     return

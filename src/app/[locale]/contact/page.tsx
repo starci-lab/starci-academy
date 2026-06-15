@@ -1,5 +1,5 @@
 import React from "react"
-import { Contact } from "@/components/layouts/Contact"
+import { Contact } from "@/components/layouts/marketing/Contact"
 
 /**
  * Route `/[locale]/contact` — renders the contact page (info + form).

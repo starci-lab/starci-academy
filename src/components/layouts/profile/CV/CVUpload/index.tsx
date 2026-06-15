@@ -5,6 +5,7 @@ import React, {
     useEffect,
     useMemo,
 } from "react"
+import { cn } from "@heroui/react"
 import {
     useLocale,
     useTranslations,
@@ -37,11 +38,10 @@ import {
     FeedbackSection,
 } from "./FeedbackSection"
 
+import type { WithClassNames } from "@/modules/types/base/class-name"
+
 /** Props for {@link CVUpload}. */
-export interface CVUploadProps {
-    /** Optional wrapper classes on the root fragment wrapper (outer div). */
-    className?: string
-}
+export type CVUploadProps = WithClassNames<undefined>
 /**
  * CV submission block: stored file card, rubric level, review/update actions, and inline job status.
  *
@@ -214,7 +214,7 @@ export const CVUpload = ({ className }: CVUploadProps) => {
         t,
     ])
     /**
-     * When the backend already returned AI markdown feedback, primary CTA copy becomes “re-run”.
+     * When the backend already returned AI markdown feedback, primary CTA copy becomes "re-run".
      */
     const hasPersistedAiFeedback = useMemo(
         () => Boolean(cvUrlPayload?.detailFeedback?.trim()),
@@ -259,7 +259,7 @@ export const CVUpload = ({ className }: CVUploadProps) => {
     )
 
     return (
-        <div className={className}>
+        <div className={cn(className)}>
             <CvFileCard
                 currentCvLink={currentCvLink}
                 currentCvLinkLabel={currentCvLinkLabel}

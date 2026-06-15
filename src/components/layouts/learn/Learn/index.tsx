@@ -1,14 +1,22 @@
 "use client"
 import React, { useEffect, useMemo, useState } from "react"
 import {
+    cn,
     Skeleton,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { useAppSelector } from "@/redux"
 import { useQueryCourseSwr, useQueryModuleSwr } from "@/hooks"
 import { MarkdownContent } from "@/components/reuseable"
+import type { WithClassNames } from "@/modules/types"
 
-export const Learn = () => {
+/** Props for {@link Learn}. */
+export interface LearnProps extends WithClassNames<undefined> {
+    /** Reserved — no caller data props; reads from redux. */
+    readonly _reserved?: undefined
+}
+
+export const Learn = ({ className }: LearnProps) => {
     const t = useTranslations()
     const module = useAppSelector((state) => state.module.entity)
     const course = useAppSelector((state) => state.course.entity)
@@ -34,7 +42,7 @@ export const Learn = () => {
     }, [module?.id, sortedContents])
 
     return (
-        <div className="p-6">
+        <div className={cn("p-6", className)}>
             {isLoading ? (
                 <Skeleton className="h-5 w-32" />
             ) : null}
@@ -47,7 +55,7 @@ export const Learn = () => {
                     <Skeleton className="h-4 w-4/6" />
                 </div>
             ) : (
-                <div className="space-y-4">
+                <div className="space-y-3">
                     <div className="text-2xl font-bold">{selectedContent?.title || module?.title}</div>
                     <div className="rounded-3xl border  p-4">
                         <MarkdownContent markdown={selectedContent?.body || t("content.empty")} />

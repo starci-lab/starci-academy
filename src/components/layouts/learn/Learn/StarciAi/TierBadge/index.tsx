@@ -5,6 +5,7 @@ import React, {
 } from "react"
 import {
     Chip,
+    cn,
 } from "@heroui/react"
 import {
     useAppSelector,
@@ -18,6 +19,13 @@ import type {
 import {
     TIER_INFO_MAP,
 } from "../map"
+import type { WithClassNames } from "@/modules/types"
+
+/** Props for {@link TierBadge}. */
+export interface TierBadgeProps extends WithClassNames<undefined> {
+    /** Reserved — no caller data props; tier is read from redux. */
+    readonly _reserved?: undefined
+}
 
 /**
  * Recommended-tier badge: a "Recommended tier:" label followed by a colored chip.
@@ -27,7 +35,7 @@ import {
  * The StarCI AI container just renders `<TierBadge />` with no props.
  * `"use client"` for the redux selector.
  */
-export const TierBadge = () => {
+export const TierBadge = ({ className }: TierBadgeProps) => {
     const tier = useAppSelector((state) => state.aiModels.tier)
 
     /** Resolve the badge info for the current tier, defaulting to the low tier. */
@@ -40,7 +48,7 @@ export const TierBadge = () => {
     )
 
     return (
-        <div className="mt-4 flex items-center gap-1.5">
+        <div className={cn("mt-4 flex items-center gap-1.5", className)}>
             <span className="text-sm text-muted">Mức khuyến nghị:</span>
             <Chip
                 size="sm"

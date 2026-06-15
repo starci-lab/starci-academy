@@ -1,10 +1,26 @@
 "use client"
 
-import React from "react"
+import React, {
+    useMemo,
+} from "react"
 import {
     Link,
     cn,
 } from "@heroui/react"
+import {
+    useLocale,
+    useTranslations,
+} from "next-intl"
+import {
+    usePathname,
+    useRouter,
+} from "@/i18n/navigation"
+import {
+    pathConfig,
+} from "@/resources/path"
+import type {
+    WithClassNames,
+} from "@/modules/types"
 import type {
     NavbarItem,
 } from "../types"
@@ -12,28 +28,51 @@ import type {
 /**
  * Props for {@link NavLinks}.
  */
-export interface NavLinksProps {
-    /** Navigation entries to render. */
-    items: Array<NavbarItem>
-    /** Fired with the chosen path when an entry is pressed. */
-    onSelectItem: (path: string) => void
-}
+export type NavLinksProps = WithClassNames<undefined>
 
 /**
  * Desktop navbar link group (hidden on small screens).
  *
- * Presentational: maps entries → links, delegating navigation via `onSelectItem`.
- * `"use client"` for the press handlers.
- * @param props - entries and select callback
+ * Container: derives its entries + active-route state from the router/locale
+ * itself and self-navigates on press. `"use client"` for the hooks + press
+ * handlers.
+ * @param props - optional root class name
  */
-export const NavLinks = ({
-    items,
-    onSelectItem,
-}: NavLinksProps) => {
+export const NavLinks = ({ className }: NavLinksProps) => {
+    const t = useTranslations()
+    const router = useRouter()
+    const pathname = usePathname()
+    const locale = useLocale()
+
+    const items = useMemo<Array<NavbarItem>>(
+        () => [
+            {
+                label: t("nav.home"),
+                path: pathConfig().locale().build(),
+                isActive: pathname === pathConfig().locale(locale).build() || pathname === "/",
+            },
+            {
+                label: t("nav.courses"),
+                path: pathConfig().locale().course().build(),
+                isActive: pathname.startsWith(pathConfig().locale(locale).course().build()),
+            },
+            {
+                label: t("nav.contact"),
+                path: pathConfig().locale().contact().build(),
+                isActive: pathname.startsWith(pathConfig().locale(locale).contact().build()),
+            },
+        ],
+        [
+            locale,
+            pathname,
+            t,
+        ],
+    )
+
     return (
-        <div className="hidden flex-1 items-center justify-center gap-1 md:flex">
+        <div className={cn("hidden flex-1 items-center justify-center gap-1.5 md:flex", className)}>
             {items.map((item) => (
-                <Link key={item.path} onPress={() => onSelectItem(item.path)}>
+                <Link key={item.path} onPress={() => router.push(item.path)}>
                     <span
                         className={cn(
                             "whitespace-nowrap rounded-full px-3 py-2 text-sm transition-colors",

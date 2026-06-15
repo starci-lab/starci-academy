@@ -3,6 +3,7 @@
 import React from "react"
 import { cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
+import type { WithClassNames } from "@/modules/types"
 
 /** XP awarded per lesson read (mirrors backend leaderboard scoring). */
 const READING_XP = 3
@@ -10,7 +11,7 @@ const READING_XP = 3
 const MILESTONE_XP = 10
 
 /** Props for {@link XpBreakdown}. */
-export interface XpBreakdownProps {
+export interface XpBreakdownProps extends WithClassNames<undefined> {
     /** Challenge XP (already an XP value, 1:1). */
     totalScore: number
     /** Lessons read in the course (each worth {@link READING_XP} XP). */
@@ -19,8 +20,6 @@ export interface XpBreakdownProps {
     milestoneProgress: number
     /** Total XP — the rank metric; shown as the summed footer. */
     totalXp: number
-    /** Extra classes on the root. */
-    className?: string
 }
 
 /**

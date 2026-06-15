@@ -2,8 +2,9 @@
 
 import { ArrowLeft as ArrowLeftIcon } from "@gravity-ui/icons"
 import React, { useCallback } from "react"
-import { Button } from "@heroui/react"
+import { Button, cn } from "@heroui/react"
 import { useRouter } from "next/navigation"
+import type { WithClassNames } from "@/modules/types"
 
 
 /**
@@ -12,7 +13,7 @@ import { useRouter } from "next/navigation"
  * Self-contained section (single-use): owns its own back-navigation handler via
  * the router, so the container renders `<AdminMpegDashTestHeader />` with no props.
  */
-export const AdminMpegDashTestHeader = () => {
+export const AdminMpegDashTestHeader = ({ className }: WithClassNames<undefined>) => {
     const router = useRouter()
 
     /** Navigate back to the admin dashboard. */
@@ -22,7 +23,7 @@ export const AdminMpegDashTestHeader = () => {
     )
 
     return (
-        <div className="flex items-center gap-3">
+        <div className={cn("flex items-center gap-3", className)}>
             <Button
                 id="admin-mpegdash-back"
                 variant="ghost"

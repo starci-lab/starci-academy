@@ -11,6 +11,9 @@ import type {
     ContentTab,
 } from "@/redux/slices"
 import type {
+    WithClassNames,
+} from "@/modules/types"
+import type {
     ContentTabItem,
 } from "../types"
 import {
@@ -21,7 +24,7 @@ import {
 } from "./TabTrigger"
 
 /** Props for {@link ContentTabBar}. */
-export interface ContentTabBarProps {
+export interface ContentTabBarProps extends WithClassNames<undefined> {
     /** Tabs to render, in display order. */
     tabItems: Array<ContentTabItem>
     /** Currently selected tab key. */
@@ -44,10 +47,11 @@ export const ContentTabBar = ({
     selectedKey,
     ariaLabel,
     onSelectionChange,
+    className,
 }: ContentTabBarProps) => {
     return (
         // outermost: full-width underline edge-to-edge (the only divider under the tab row)
-        <div className="w-full border-b">
+        <div className={cn("w-full border-b", className)}>
             {/* capped + centered wrapper so the tabs line up with the 1024 reading column */}
             <div className="mx-auto w-full max-w-[1024px] px-3">
                 <Tabs

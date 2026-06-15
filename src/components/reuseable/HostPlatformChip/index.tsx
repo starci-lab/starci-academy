@@ -1,21 +1,23 @@
 "use client"
 
 import React, { useMemo } from "react"
-import { Chip } from "@heroui/react"
+import { Chip, cn } from "@heroui/react"
 import { VideoHostPlatform } from "@/modules/types"
 import { useTranslations } from "next-intl"
-import { 
-    SiGoogledrive, 
-    SiYoutube, 
-    SiVimeo, 
-    SiCloudflare 
+import {
+    SiGoogledrive,
+    SiYoutube,
+    SiVimeo,
+    SiCloudflare
 } from "@icons-pack/react-simple-icons"
+import type { WithClassNames } from "@/modules/types"
 
 /**
  * The props for the HostPlatformChip component.
  * @param hostPlatform - The host platform of the lesson video.
  */
-export interface HostPlatformChipProps {
+export interface HostPlatformChipProps extends WithClassNames<undefined> {
+    /** Host platform of the lesson video. */
     hostPlatform: VideoHostPlatform
 }
 
@@ -24,7 +26,7 @@ export interface HostPlatformChipProps {
  * @param hostPlatform - The host platform of the lesson video.
  * @returns A chip that displays the host platform of a lesson video.
  */
-export const HostPlatformChip = ({ hostPlatform }: HostPlatformChipProps) => {
+export const HostPlatformChip = ({ hostPlatform, className }: HostPlatformChipProps) => {
     const t = useTranslations()
     // switch case to return the icon and label
     const renderHostPlatform = () => {
@@ -55,7 +57,7 @@ export const HostPlatformChip = ({ hostPlatform }: HostPlatformChipProps) => {
     }
     const { icon, label } = useMemo(() => renderHostPlatform(), [hostPlatform])
     return (
-        <Chip color="accent" size="sm" variant="soft">
+        <Chip color="accent" size="sm" variant="soft" className={cn(className)}>
             {icon}
             <Chip.Label>{t(label)}</Chip.Label>
         </Chip>

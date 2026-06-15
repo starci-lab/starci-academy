@@ -1,12 +1,13 @@
 import { GithubIcon } from "@/components/svg"
 import { useLinkGithubOverlayState } from "@/hooks"
-import { Button, Modal } from "@heroui/react"
+import { Button, cn, Modal } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import React from "react"
 import { useRouter } from "next/navigation"
 import { githubRedirect } from "@/modules/api"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
-export const LinkGithubModal = () => {
+export const LinkGithubModal = ({ className }: WithClassNames<undefined>) => {
     const { isOpen, setOpen } = useLinkGithubOverlayState()
     const t = useTranslations()
     const router = useRouter()
@@ -16,7 +17,7 @@ export const LinkGithubModal = () => {
             onOpenChange={setOpen}>
             <Modal.Backdrop>
                 <Modal.Container size="xs">
-                    <Modal.Dialog>
+                    <Modal.Dialog className={cn(className)}>
                         <Modal.CloseTrigger />
                         <Modal.Header>
                             <div className="font-semibold text-lg">{t("linkGithub.title")}</div>

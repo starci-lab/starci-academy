@@ -4,6 +4,7 @@ import React from "react"
 import {
     Chip,
     Tooltip,
+    cn,
 } from "@heroui/react"
 import {
     useTranslations,
@@ -11,9 +12,12 @@ import {
 import type {
     ModuleSummaryItem,
 } from "../types"
+import type {
+    WithClassNames,
+} from "@/modules/types"
 
 /** Props for {@link ModuleSummaryChips}. */
-export interface ModuleSummaryChipsProps {
+export interface ModuleSummaryChipsProps extends WithClassNames<undefined> {
     /** Summary items (content/video/challenge counters) to render as chips. */
     items: Array<ModuleSummaryItem>
 }
@@ -27,10 +31,11 @@ export interface ModuleSummaryChipsProps {
  */
 export const ModuleSummaryChips = ({
     items,
+    className,
 }: ModuleSummaryChipsProps) => {
     const t = useTranslations()
     return (
-        <div className="mt-2 flex flex-wrap gap-1.5">
+        <div className={cn("mt-2 flex flex-wrap gap-1.5", className)}>
             {items.map((item) => {
                 const ItemIcon = item.icon
                 return (

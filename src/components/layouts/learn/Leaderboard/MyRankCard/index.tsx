@@ -5,34 +5,35 @@ import { Card, CardContent, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { UserAvatar } from "@/components/reuseable"
 import type { CourseLeaderboardMyRank } from "@/modules/api/graphql"
+import type { WithClassNames } from "@/modules/types"
+import { useAppSelector } from "@/redux"
 import { XpBreakdown } from "../XpBreakdown"
 
 /** Props for {@link MyRankCard}. */
-export interface MyRankCardProps {
+export interface MyRankCardProps extends WithClassNames<undefined> {
     /** The viewer's standing, or null when they have no activity yet. */
     myRank: CourseLeaderboardMyRank | null
-    /** Viewer's display name (snapshot from the user slice). */
-    username?: string | null
-    /** Viewer's avatar URL (snapshot from the user slice). */
-    avatar?: string | null
-    /** Extra classes on the root. */
-    className?: string
 }
 
 /**
  * The viewer's own standing, pinned regardless of whether they land in the top
  * window. Shows rank, total XP, and the XP breakdown; falls back to a prompt
- * when the viewer has no scored activity in the course.
+ * when the viewer has no scored activity in the course. Reads viewer identity
+ * directly from the user Redux slice.
  * @param props - {@link MyRankCardProps}
  */
-export const MyRankCard = ({ myRank, username, avatar, className }: MyRankCardProps) => {
+export const MyRankCard = ({ myRank, className }: MyRankCardProps) => {
     const t = useTranslations()
+    // read viewer identity directly from the user slice — no prop drilling needed
+    const viewer = useAppSelector((state) => state.user.user)
+    const username = viewer?.username
+    const avatar = viewer?.avatar
 
     // no activity → invite the learner to start scoring instead of an empty rank
     if (!myRank) {
         return (
             <Card className={cn("w-full border-accent/30 bg-accent/5", className)}>
-                <CardContent className="flex flex-col gap-1">
+                <CardContent className="flex flex-col gap-0">
                     <span className="text-sm font-semibold text-foreground">
                         {t("leaderboard.yourRank")}
                     </span>

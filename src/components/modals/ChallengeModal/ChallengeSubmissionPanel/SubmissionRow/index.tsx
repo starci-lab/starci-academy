@@ -31,6 +31,7 @@ import {
 import type {
     AiGradableModel,
 } from "@/modules/api"
+import type { WithClassNames } from "@/modules/types"
 import type {
     ChallengeGradeSelection,
     ChallengeSubmissionRowViewModel,
@@ -50,7 +51,7 @@ import {
 } from "./LastAttemptResult"
 
 /** Props for {@link SubmissionRow}. */
-export interface SubmissionRowProps {
+export interface SubmissionRowProps extends WithClassNames<undefined> {
     /** Pre-computed render state for the row. */
     row: ChallengeSubmissionRowViewModel
     /** Fraction of the max score required to pass (0..1). */
@@ -101,6 +102,7 @@ export const SubmissionRow = ({
     onSelectGrade,
     onUpgrade,
     onViewAttempts,
+    className,
 }: SubmissionRowProps) => {
     const t = useTranslations()
     const aiAutoConfig = useSystemAiAutoConfig()
@@ -151,7 +153,7 @@ export const SubmissionRow = ({
 
     const creditLabelClassName = useMemo(
         () => cn(
-            "inline-flex shrink-0 items-center gap-1 text-sm transition-colors",
+            "inline-flex shrink-0 items-center gap-1.5 text-sm transition-colors",
             isQuotaReached
                 ? "cursor-pointer font-semibold text-danger hover:opacity-90"
                 : "cursor-pointer text-muted hover:text-foreground",
@@ -160,7 +162,7 @@ export const SubmissionRow = ({
     )
 
     return (
-        <div className="border-b last:border-b-0 p-3">
+        <div className={cn("border-b last:border-b-0 p-3", className)}>
             <div className="flex flex-col">
                 <div className="flex items-center gap-1.5 text-foreground text-base font-semibold">
                     <div>
@@ -221,7 +223,7 @@ export const SubmissionRow = ({
                             )
                             : null
                 }
-                <div className="flex flex-col items-start gap-4.5">
+                <div className="flex flex-col items-start gap-3">
                     <div className="flex w-full items-center justify-between gap-1.5">
                         <GradeModelDropdown
                             models={gradeModels}

@@ -1,6 +1,8 @@
 "use client"
 
 import React from "react"
+import { cn } from "@heroui/react"
+import type { WithClassNames } from "@/modules/types"
 import "./facebook-emoji.css"
 
 /** Supported reaction types (mirrors the original react-facebook-emoji API). */
@@ -9,7 +11,7 @@ export type FacebookEmojiType = "like" | "love" | "haha" | "yay" | "wow" | "sad"
 /** Visual size of the emoji (mirrors the original react-facebook-emoji API). */
 export type FacebookEmojiSize = "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl" | "xxxl"
 
-export interface FacebookEmojiProps {
+export interface FacebookEmojiProps extends WithClassNames<undefined> {
     /** The reaction type to display. Defaults to `"like"`. */
     type?: FacebookEmojiType
     /** The visual size. Defaults to `"md"`. */
@@ -21,14 +23,14 @@ export interface FacebookEmojiProps {
  * Reimplements the react-facebook-emoji component from extracted source
  * since the npm package was published without its built dist folder.
  */
-export const FacebookEmoji = ({ type = "like", size = "md" }: FacebookEmojiProps) => {
+export const FacebookEmoji = ({ type = "like", size = "md", className }: FacebookEmojiProps) => {
     const sizeClass = size
     const baseClass = `zama-emoji emoji--${type} ${sizeClass}`
 
     switch (type) {
     case "like":
         return (
-            <div id="zama-emoji">
+            <div id="zama-emoji" className={cn(className)}>
                 <div className={baseClass}>
                     <div className="emoji__hand">
                         <div className="emoji__thumb" />
@@ -38,7 +40,7 @@ export const FacebookEmoji = ({ type = "like", size = "md" }: FacebookEmojiProps
         )
     case "love":
         return (
-            <div id="zama-emoji">
+            <div id="zama-emoji" className={cn(className)}>
                 <div className={baseClass}>
                     <div className="emoji__heart" />
                 </div>
@@ -46,7 +48,7 @@ export const FacebookEmoji = ({ type = "like", size = "md" }: FacebookEmojiProps
         )
     case "haha":
         return (
-            <div id="zama-emoji">
+            <div id="zama-emoji" className={cn(className)}>
                 <div className={baseClass}>
                     <div className="emoji__face">
                         <div className="emoji__eyes" />
@@ -59,7 +61,7 @@ export const FacebookEmoji = ({ type = "like", size = "md" }: FacebookEmojiProps
         )
     case "yay":
         return (
-            <div id="zama-emoji">
+            <div id="zama-emoji" className={cn(className)}>
                 <div className={baseClass}>
                     <div className="emoji__face">
                         <div className="emoji__eyebrows" />
@@ -73,7 +75,7 @@ export const FacebookEmoji = ({ type = "like", size = "md" }: FacebookEmojiProps
     case "angry":
     default:
         return (
-            <div id="zama-emoji">
+            <div id="zama-emoji" className={cn(className)}>
                 <div className={baseClass}>
                     <div className="emoji__face">
                         <div className="emoji__eyebrows" />

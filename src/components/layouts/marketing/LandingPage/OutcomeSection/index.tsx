@@ -1,11 +1,13 @@
 "use client"
 
 import { ArrowRight, House as Buildings, Magnifier as MagnifyingGlass, SealCheck, Target } from "@gravity-ui/icons"
+import { cn } from "@heroui/react"
 import { motion } from "framer-motion"
 import { useLocale } from "next-intl"
 import { useRouter } from "next/navigation"
 import React, { useCallback, useMemo } from "react"
 import { pathConfig } from "@/resources/path"
+import { type WithClassNames } from "@/modules/types"
 
 
 /** Container stagger. */
@@ -35,7 +37,12 @@ const itemVariants = {
  * architects. The enterprise CTA routes to `/contact`; the engineer CTA scrolls
  * to the course grid. `"use client"` for the locale-aware router push.
  */
-export const OutcomeSection = () => {
+export type OutcomeSectionProps = WithClassNames<undefined>
+
+/**
+ * @param {OutcomeSectionProps} props Optional wrapper styling props.
+ */
+export const OutcomeSection = ({ className }: OutcomeSectionProps) => {
     const locale = useLocale()
     const router = useRouter()
 
@@ -56,7 +63,7 @@ export const OutcomeSection = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="max-w-5xl mx-auto"
+            className={cn("max-w-5xl mx-auto", className)}
         >
             {/* Header */}
             <motion.div variants={itemVariants} className="max-w-2xl mx-auto text-center">

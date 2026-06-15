@@ -1,13 +1,23 @@
 "use client"
 
 import React, {
+    useCallback,
     useMemo,
 } from "react"
 import {
     Chip,
+    cn,
 } from "@heroui/react"
+import {
+    useLocale,
+    useTranslations,
+} from "next-intl"
 import type {
     AiBalancerProviderHealth,
+} from "@/modules/api"
+import {
+    AiBalancerKeyStatus,
+    ModelProvider,
 } from "@/modules/api"
 import {
     KeyStatusChip,
@@ -17,59 +27,66 @@ import {
 import {
     PROVIDER_COLOR_MAP,
 } from "../../map"
+import type { WithClassNames } from "@/modules/types"
 
-interface ProviderCardProps {
+/** Props for {@link ProviderCard}. */
+export interface ProviderCardProps extends WithClassNames<undefined> {
     /** Provider aggregate from GraphQL. */
     providerHealth: AiBalancerProviderHealth
-    /** Localized provider display name. */
-    providerLabel: string
-    /** BCP-47 locale for timestamps. */
-    locale: string
-    /** Maps status enum value to translated label. */
-    statusLabel: (status: string) => string
-    /** Localized column labels for the compact key list. */
-    labels: {
-        activeSummary: string
-        lastPing: string
-    }
 }
 
 /**
  * One provider card on the StarCi AI key-pool status section.
  *
+ * List item: keeps its own data prop ({@link providerHealth}) and derives all
+ * labels internally via i18n hooks. No callbacks accepted.
+ *
  * @param props.providerHealth - Provider snapshot from GraphQL.
  */
 export const ProviderCard = ({
     providerHealth,
-    providerLabel,
-    locale,
-    statusLabel,
-    labels,
+    className,
 }: ProviderCardProps) => {
-    const sortedKeys = useMemo(
-        () => [
-            ...providerHealth.keys,
-        ].sort((left, right) => left.keySuffix.localeCompare(right.keySuffix)),
-        [
-            providerHealth.keys,
-        ],
+    const locale = useLocale()
+    const t = useTranslations("starciAi.keyPool")
+
+    const providerLabelMap = useMemo(
+        (): Record<string, string> => ({
+            [ModelProvider.Gemini]: t("providers.gemini"),
+            [ModelProvider.OpenAI]: t("providers.openai"),
+            [ModelProvider.Claude]: t("providers.claude"),
+            [ModelProvider.OpenRouter]: t("providers.openrouter"),
+        }),
+        [t],
     )
 
+    const resolveStatusLabel = useCallback(
+        (status: string) => {
+            if (status === AiBalancerKeyStatus.Active) return t("status.active")
+            if (status === AiBalancerKeyStatus.Disabled) return t("status.disabled")
+            if (status === AiBalancerKeyStatus.Probing) return t("status.probing")
+            return status
+        },
+        [t],
+    )
+
+    const providerLabel = providerLabelMap[providerHealth.provider] ?? providerHealth.provider
     const chipColor = PROVIDER_COLOR_MAP[providerHealth.provider] ?? "default"
 
     const activeSummary = useMemo(
-        () => labels.activeSummary
+        () => t("activeSummary")
             .replace("{active}", String(providerHealth.activeKeys))
             .replace("{total}", String(providerHealth.totalKeys)),
-        [
-            labels.activeSummary,
-            providerHealth.activeKeys,
-            providerHealth.totalKeys,
-        ],
+        [t, providerHealth.activeKeys, providerHealth.totalKeys],
+    )
+
+    const sortedKeys = useMemo(
+        () => [...providerHealth.keys].sort((left, right) => left.keySuffix.localeCompare(right.keySuffix)),
+        [providerHealth.keys],
     )
 
     return (
-        <div className="rounded-3xl border bg-background p-5 transition-shadow hover:shadow-md">
+        <div className={cn("rounded-3xl border bg-background p-5 transition-shadow hover:shadow-md", className)}>
             <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center gap-1.5">
                     <Chip
@@ -97,12 +114,12 @@ export const ProviderCard = ({
                             </span>
                             <KeyStatusChip
                                 status={keyHealth.status}
-                                label={statusLabel(keyHealth.status)}
+                                label={resolveStatusLabel(keyHealth.status)}
                                 variant={KeyStatusChipVariant.Light}
                             />
                         </div>
                         <span className="text-xs text-muted">
-                            {labels.lastPing}: {formatBalancerTimestamp(keyHealth.lastHealthCheckAt, locale)}
+                            {t("lastPing")}: {formatBalancerTimestamp(keyHealth.lastHealthCheckAt, locale)}
                         </span>
                     </div>
                 ))}

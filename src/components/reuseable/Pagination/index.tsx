@@ -1,11 +1,12 @@
 "use client"
 
 import React, { useCallback, useMemo } from "react"
-import { Pagination as HeroPagination } from "@heroui/react"
+import { Pagination as HeroPagination, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link Pagination}. */
-export interface PaginationProps {
+export interface PaginationProps extends WithClassNames<undefined> {
     /** 1-based current page. */
     currentPage: number
     /** Total number of pages (>= 1). */
@@ -27,6 +28,7 @@ export const Pagination = ({
     currentPage,
     totalPages,
     onPageChange,
+    className,
 }: PaginationProps) => {
     const t = useTranslations()
 
@@ -49,7 +51,7 @@ export const Pagination = ({
     )
 
     return (
-        <div className="mt-6 flex justify-center">
+        <div className={cn("mt-6 flex justify-center", className)}>
             <HeroPagination aria-label={t("common.pagination.navAria")} size="sm">
                 <HeroPagination.Content className="flex flex-wrap justify-center gap-1">
                     <HeroPagination.Item>

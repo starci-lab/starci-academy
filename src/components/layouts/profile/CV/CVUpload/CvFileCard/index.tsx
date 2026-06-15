@@ -6,14 +6,16 @@ import {
     Button,
     Card,
     CardContent,
+    cn,
     Link,
 } from "@heroui/react"
 import {
     useTranslations,
 } from "next-intl"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link CvFileCard}. */
-export interface CvFileCardProps {
+export interface CvFileCardProps extends WithClassNames<undefined> {
     /** URL the stored/selected CV file resolves to (empty when none). */
     currentCvLink: string
     /** Display label for the CV file link. */
@@ -35,10 +37,11 @@ export const CvFileCard = ({
     currentCvLinkLabel,
     submittedAtLabel,
     onOpenUpdate,
+    className,
 }: CvFileCardProps) => {
     const t = useTranslations()
     return (
-        <div>
+        <div className={cn(className)}>
             <div className="mb-3 text-base font-semibold">{t("cv.submission.fileCardTitle")}</div>
             <Card className="w-full shadow-none">
                 <CardContent className="flex items-center">
@@ -60,7 +63,7 @@ export const CvFileCard = ({
                                             {currentCvLinkLabel}
                                         </span>
                                     )}
-                                <div className="mt-1 flex items-center gap-1 text-xs text-muted">
+                                <div className="mt-1 flex items-center gap-1.5 text-xs text-muted">
                                     <ClockIcon className="size-4" />
                                     {submittedAtLabel}
                                 </div>

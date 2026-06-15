@@ -1,14 +1,18 @@
 "use client"
 
-import { Skeleton } from "@heroui/react"
+import { Skeleton, cn } from "@heroui/react"
+import type { WithClassNames } from "@/modules/types"
 import React from "react"
 
 /**
  * Loading placeholder for a foundation resource card.
+ * @param props.className - Optional root class names.
  */
-export const FoundationCardSkeleton = () => {
+export const FoundationCardSkeleton = ({
+    className,
+}: WithClassNames<undefined>) => {
     return (
-        <div className="card card--default !p-0 flex h-full flex-col overflow-hidden rounded-xl">
+        <div className={cn("card card--default !p-0 flex h-full flex-col overflow-hidden rounded-xl", className)}>
             <Skeleton className="aspect-video w-full rounded-none" />
             <div className="flex flex-col gap-3 p-3">
                 <Skeleton className="h-6 w-2/3 rounded-lg" />

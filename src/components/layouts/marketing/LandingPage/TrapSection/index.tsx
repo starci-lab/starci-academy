@@ -1,10 +1,15 @@
 import { QuoteOpen as QuotesIcon } from "@gravity-ui/icons"
+import { cn } from "@heroui/react"
 import { motion } from "framer-motion"
-
 import React from "react"
+import { type WithClassNames } from "@/modules/types"
 
+export type TrapSectionProps = WithClassNames<undefined>
 
-export const TrapSection = () => {
+/**
+ * @param {TrapSectionProps} props Optional wrapper styling props.
+ */
+export const TrapSection = ({ className }: TrapSectionProps) => {
     return (
         <motion.section 
             variants={{
@@ -17,7 +22,7 @@ export const TrapSection = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="col-span-3 max-w-2xl"
+            className={cn("col-span-3 max-w-2xl", className)}
         >
             <motion.h2 
                 variants={{

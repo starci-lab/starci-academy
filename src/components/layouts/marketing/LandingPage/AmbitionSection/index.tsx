@@ -1,8 +1,10 @@
 "use client"
 
 import { ArrowRight, Cloud, Cube, Cup as Trophy, FaceRobot as Robot, Layers as Stack, Persons as UsersThree, ShieldCheck, Sparkles as Brain } from "@gravity-ui/icons"
+import { cn } from "@heroui/react"
 import { motion } from "framer-motion"
 import React from "react"
+import { type WithClassNames } from "@/modules/types"
 
 
 /** Container stagger. */
@@ -63,14 +65,19 @@ const PILLARS = [
  * the platform's differentiators, and closes on an open-ended vision line (no
  * sale CTA — that lives in the closing section).
  */
-export const AmbitionSection = () => {
+export type AmbitionSectionProps = WithClassNames<undefined>
+
+/**
+ * @param {AmbitionSectionProps} props Optional wrapper styling props.
+ */
+export const AmbitionSection = ({ className }: AmbitionSectionProps) => {
     return (
         <motion.section
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="max-w-6xl mx-auto"
+            className={cn("max-w-6xl mx-auto", className)}
         >
             {/* Header */}
             <motion.div variants={itemVariants} className="max-w-2xl mx-auto text-center">
@@ -88,7 +95,7 @@ export const AmbitionSection = () => {
             {/* Roadmap rail */}
             <motion.div
                 variants={itemVariants}
-                className="mt-14 flex flex-col md:flex-row items-stretch md:items-center justify-center gap-4 md:gap-1.5"
+                className="mt-14 flex flex-col md:flex-row items-stretch md:items-center justify-center gap-3 md:gap-1.5"
             >
                 {ROADMAP.map((stage, index) => {
                     const Icon = stage.icon

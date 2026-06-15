@@ -1,27 +1,17 @@
 "use client"
 
 import React, {
-    useCallback,
     useEffect,
-    useMemo,
 } from "react"
 import {
-    useLocale,
-    useTranslations,
-} from "next-intl"
-import {
-    usePathname,
-    useRouter,
-} from "@/i18n/navigation"
-import {
-    pathConfig,
-} from "@/resources/path"
+    cn,
+} from "@heroui/react"
 import {
     useSearchOverlayState,
 } from "@/hooks"
 import type {
-    NavbarItem,
-} from "./types"
+    WithClassNames,
+} from "@/modules/types"
 import {
     Logo,
 } from "./Logo"
@@ -36,17 +26,19 @@ import {
 } from "./SearchButton"
 
 /**
+ * Props for {@link Navbar}.
+ */
+export type NavbarProps = WithClassNames<undefined>
+
+/**
  * Navbar — top application navigation bar.
  *
- * Container: owns the active-route derivation, the Ctrl/Cmd+K search shortcut,
- * and navigation; renders the logo, presentational links, search trigger, and
- * the account dropdown. `"use client"` for hooks + keyboard handling.
+ * Container: owns the Ctrl/Cmd+K search shortcut and renders the logo,
+ * self-navigating links, search trigger, and the account dropdown.
+ * `"use client"` for hooks + keyboard handling.
+ * @param props - optional root class name
  */
-export const Navbar = () => {
-    const t = useTranslations()
-    const router = useRouter()
-    const pathname = usePathname()
-    const locale = useLocale()
+export const Navbar = ({ className }: NavbarProps) => {
     const { open: openSearch } = useSearchOverlayState()
 
     // register the global Ctrl/Cmd+K shortcut to open the search overlay
@@ -62,48 +54,12 @@ export const Navbar = () => {
         return () => window.removeEventListener("keydown", onKeyDown)
     }, [openSearch])
 
-    const items = useMemo<Array<NavbarItem>>(
-        () => [
-            {
-                label: t("nav.home"),
-                path: pathConfig().locale().build(),
-                isActive: pathname === pathConfig().locale(locale).build() || pathname === "/",
-            },
-            {
-                label: t("nav.courses"),
-                path: pathConfig().locale().course().build(),
-                isActive: pathname.startsWith(pathConfig().locale(locale).course().build()),
-            },
-            {
-                label: t("nav.contact"),
-                path: pathConfig().locale().contact().build(),
-                isActive: pathname.startsWith(pathConfig().locale(locale).contact().build()),
-            },
-        ],
-        [
-            locale,
-            pathname,
-            t,
-        ],
-    )
-
-    /** Navigate to the chosen nav entry path. */
-    const onSelectItem = useCallback(
-        (path: string) => router.push(path),
-        [
-            router,
-        ],
-    )
-
     return (
-        <nav className="sticky top-0 z-50 h-16 min-h-16 border-b bg-background">
+        <nav className={cn("sticky top-0 z-50 h-16 min-h-16 border-b bg-background", className)}>
             <div className="mx-auto flex h-full w-full items-center justify-between px-3">
                 <div className="flex items-center gap-6">
                     <Logo className="flex-1 justify-start" />
-                    <NavLinks
-                        items={items}
-                        onSelectItem={onSelectItem}
-                    />
+                    <NavLinks />
                 </div>
 
                 <div className="flex items-center justify-end gap-3">

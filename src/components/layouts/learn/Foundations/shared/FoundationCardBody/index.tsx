@@ -1,18 +1,18 @@
 "use client"
 
 import { ArrowUpRightFromSquare as ArrowSquareOutIcon } from "@gravity-ui/icons"
-import { Button } from "@heroui/react"
+import { Button, cn } from "@heroui/react"
 import { MarkdownContent } from "@/components/reuseable"
 import { VideoRenderer } from "@/components/reuseable"
-import type { FoundationEntity } from "@/modules/types"
+import type { FoundationEntity, WithClassNames } from "@/modules/types"
 import { FoundationKind, VideoHostPlatform } from "@/modules/types"
 
 import { useTranslations } from "next-intl"
 import React, { useMemo } from "react"
-import { resolveFoundationMountFileUrl } from "../utils"
+import { resolveFoundationMountFileUrl } from "../../utils"
 
 
-export interface FoundationCardBodyProps {
+export interface FoundationCardBodyProps extends WithClassNames<undefined> {
     /** Foundation entity to render. */
     foundation: FoundationEntity
 }
@@ -23,6 +23,7 @@ export interface FoundationCardBodyProps {
  */
 export const FoundationCardBody = ({
     foundation,
+    className,
 }: FoundationCardBodyProps) => {
     const t = useTranslations()
 
@@ -35,7 +36,7 @@ export const FoundationCardBody = ({
 
     if (foundation.kind === FoundationKind.Document && foundation.value) {
         return (
-            <div className="prose prose-sm dark:prose-invert max-w-none">
+            <div className={cn("prose prose-sm dark:prose-invert max-w-none", className)}>
                 <MarkdownContent markdown={foundation.value} />
             </div>
         )
@@ -50,7 +51,7 @@ export const FoundationCardBody = ({
         return (
             <VideoRenderer
                 classNames={{
-                    base: "w-full overflow-hidden rounded-lg",
+                    base: cn("w-full overflow-hidden rounded-lg", className),
                     content: "w-full",
                 }}
                 url={videoUrl}
@@ -70,7 +71,7 @@ export const FoundationCardBody = ({
                 }
                 variant="secondary"
                 size="sm"
-                className="w-full"
+                className={cn("w-full", className)}
             >
                 <ArrowSquareOutIcon className="size-4" />
                 {t("foundations.openLink")} <span className="sr-only">{externalUrl}</span>

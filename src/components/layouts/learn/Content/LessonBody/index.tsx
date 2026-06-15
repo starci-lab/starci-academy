@@ -8,7 +8,7 @@ import { useQueryLessonVideosSwr } from "@/hooks"
 import { LessonCard } from "./LessonCard"
 import { LessonCardSkeleton } from "./LessonCardSkeleton"
 import { LessonBodyEmpty } from "./Empty"
-import { SearchBar } from "../../../reuseable"
+import { SearchBar } from "../../../../reuseable"
 
 export type LessonBodyProps = WithClassNames<undefined>
 

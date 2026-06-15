@@ -1,7 +1,8 @@
 "use client"
 
 import React, { useCallback, useState } from "react"
-import { VideoRendererType } from "@/modules/types"
+import { cn } from "@heroui/react"
+import { VideoRendererType, type WithClassNames } from "@/modules/types"
 import { AdminMpegDashTestHeader } from "./Header"
 import { ConfigCard } from "./ConfigCard"
 import { PreviewCard } from "./PreviewCard"
@@ -13,7 +14,7 @@ import type { QuickTestUrl } from "./types"
  * Owns the URL + active-type state and action handlers; renders presentational cards.
  * Enter a URL and pick Standard / MpegDash / Youtube to preview.
  */
-export const AdminMpegDashTest = () => {
+export const AdminMpegDashTest = ({ className }: WithClassNames<undefined>) => {
     const [url, setUrl] = useState("")
     const [activeType, setActiveType] = useState<VideoRendererType>(
         VideoRendererType.MpegDash,
@@ -39,7 +40,7 @@ export const AdminMpegDashTest = () => {
     )
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-4 md:p-8">
+        <div className={cn("min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-4 md:p-8", className)}>
             <div className="mx-auto max-w-4xl space-y-6">
                 <AdminMpegDashTestHeader />
 

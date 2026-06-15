@@ -1,15 +1,17 @@
 "use client"
 
 import React from "react"
+import { cn } from "@heroui/react"
 import {
     CONTACT_CHANNEL_ICON_MAP,
 } from "../../map"
 import type {
     ContactChannel,
 } from "../../types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link ContactInfoCard}. */
-export interface ContactInfoCardProps {
+export interface ContactInfoCardProps extends WithClassNames<undefined> {
     /** The contact channel to render (icon resolved from its kind). */
     channel: ContactChannel
 }
@@ -23,11 +25,12 @@ export interface ContactInfoCardProps {
  */
 export const ContactInfoCard = ({
     channel,
+    className,
 }: ContactInfoCardProps) => {
     const Icon = CONTACT_CHANNEL_ICON_MAP[channel.kind]
 
     return (
-        <div className="flex gap-6 group">
+        <div className={cn("flex gap-3 group", className)}>
             <div className="bg-brand-blue/10 w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 border border-brand-blue/20 group-hover:bg-brand-blue group-hover:border-brand-blue transition-all duration-300">
                 <Icon className="w-6 h-6 text-brand-blue group-hover:text-white transition-colors" />
             </div>

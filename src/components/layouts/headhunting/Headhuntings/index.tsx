@@ -3,10 +3,10 @@
 import React, {
     useCallback,
     useEffect,
-    useMemo,
     useState,
 } from "react"
-import { Skeleton } from "@heroui/react"
+import { cn, Skeleton } from "@heroui/react"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { pathConfig } from "@/resources"
@@ -23,6 +23,9 @@ import { HeadhuntingsBreadcrumbs } from "./HeadhuntingsBreadcrumbs"
 /** Debounce window (ms) before a typed search hits the suggestions backend. */
 const SEARCH_DEBOUNCE_MS = 350
 
+/** Props for {@link HeadhuntingsLearnLayout}. */
+export type HeadhuntingsLearnLayoutProps = WithClassNames<undefined>
+
 /**
  * Learn headhuntings page: grid of consultant cards; card opens profile modal.
  * Container — owns data + breadcrumb orchestration; renders presentational children.
@@ -33,7 +36,7 @@ const SEARCH_DEBOUNCE_MS = 350
  * ({@link useQueryHeadhuntingCompanySuggestionsSwr}) whose selection deep-links to
  * the chosen recruitment company's page.
  */
-export const HeadhuntingsLearnLayout = () => {
+export const HeadhuntingsLearnLayout = ({ className }: HeadhuntingsLearnLayoutProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -62,13 +65,6 @@ export const HeadhuntingsLearnLayout = () => {
     const { data: suggestionItems } = useQueryHeadhuntingCompanySuggestionsSwr(debouncedQuery)
     const suggestions = suggestionItems ?? []
 
-    const sortedConsultants = useMemo(() => {
-        if (!consultants?.length) {
-            return []
-        }
-        return [...consultants].sort((a, b) => a.sortIndex - b.sortIndex)
-    }, [consultants])
-
     /** Deep-link to the chosen company's page (the suggestion id is the company id). */
     const onSelectSuggestion = useCallback(
         (suggestion: { id: string; label: string }) => {
@@ -92,7 +88,7 @@ export const HeadhuntingsLearnLayout = () => {
     )
 
     return (
-        <div className="p-3">
+        <div className={cn("p-3", className)}>
             <HeadhuntingsBreadcrumbs />
             <div className="h-6" />
             <div>
@@ -117,10 +113,7 @@ export const HeadhuntingsLearnLayout = () => {
                 </p>
             )}
             <div className="h-6" />
-            <ConsultantGrid
-                consultants={consultants}
-                sortedConsultants={sortedConsultants}
-            />
+            <ConsultantGrid />
         </div>
     )
 }

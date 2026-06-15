@@ -2,11 +2,15 @@
 
 import React from "react"
 import {
+    cn,
+} from "@heroui/react"
+import {
     useAppSelector,
 } from "@/redux"
 import {
     useQueryAiModelsSwr,
 } from "@/hooks"
+import type { WithClassNames } from "@/modules/types"
 import {
     StarciAiHeader,
 } from "./Header"
@@ -23,6 +27,12 @@ import {
     StarciAiSkeleton,
 } from "./StarciAiSkeleton"
 
+/** Props for {@link StarciAi}. */
+export interface StarciAiProps extends WithClassNames<undefined> {
+    /** Reserved — no caller data props. */
+    readonly _reserved?: undefined
+}
+
 /**
  * StarCI AI feature container.
  *
@@ -33,7 +43,7 @@ import {
  *
  * Client component: relies on redux selectors and a client SWR hook.
  */
-export const StarciAi = () => {
+export const StarciAi = ({ className }: StarciAiProps) => {
     const aiModelsSwr = useQueryAiModelsSwr()
     const models = useAppSelector((state) => state.aiModels.models)
 
@@ -44,7 +54,7 @@ export const StarciAi = () => {
     }
 
     return (
-        <div className="mx-auto max-w-4xl p-6">
+        <div className={cn("mx-auto max-w-4xl p-6", className)}>
             <StarciAiHeader />
 
             <TierBadge />
@@ -55,7 +65,7 @@ export const StarciAi = () => {
 
             <div className="h-8" />
 
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-6">
                 {models.map((model) => (
                     <ModelCard
                         key={model.taskKind}

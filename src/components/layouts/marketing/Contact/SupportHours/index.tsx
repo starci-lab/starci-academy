@@ -17,13 +17,13 @@ export const SupportHours = () => {
     const rows = SUPPORT_HOURS
     return (
         <div className="mt-16 p-8 glass rounded-3xl border-white/5">
-            <div className="flex items-center gap-4 mb-6">
+            <div className="flex items-center gap-1.5 mb-6">
                 <div className="bg-green-500/20 p-2 rounded-lg">
                     <ClockIcon className="w-5 h-5 text-green-500" />
                 </div>
                 <h4 className="font-bold">Support Hours</h4>
             </div>
-            <div className="grid grid-cols-2 gap-4 text-sm">
+            <div className="grid grid-cols-2 gap-3 text-sm">
                 {rows.map((row) => (
                     <div
                         key={row.day}

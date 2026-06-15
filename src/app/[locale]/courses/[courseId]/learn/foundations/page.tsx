@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { FoundationsCategoryGridLayout } from "@/components/layouts/Foundations/FoundationsCategoryGrid"
+import { FoundationsCategoryGridLayout } from "@/components/layouts/learn/Foundations/FoundationsCategoryGrid"
 
 /**
  * Learn / foundations hub: grid of category cards.

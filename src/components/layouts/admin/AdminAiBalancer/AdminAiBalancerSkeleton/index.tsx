@@ -5,10 +5,14 @@ import {
     Card,
     CardContent,
     Skeleton,
+    cn,
 } from "@heroui/react"
+import type {
+    WithClassNames,
+} from "@/modules/types"
 
 /** Props for {@link AdminAiBalancerSkeleton}. */
-export interface AdminAiBalancerSkeletonProps {
+export interface AdminAiBalancerSkeletonProps extends WithClassNames<undefined> {
     /** Number of placeholder provider sections. Defaults to `3`. */
     count?: number
 }
@@ -20,15 +24,16 @@ export interface AdminAiBalancerSkeletonProps {
  */
 export const AdminAiBalancerSkeleton = ({
     count = 3,
+    className,
 }: AdminAiBalancerSkeletonProps) => {
     return (
-        <div className="flex flex-col gap-6">
+        <div className={cn("flex flex-col gap-6", className)}>
             {Array.from({ length: Math.max(count, 1) }).map((_unused, cardIndex) => (
                 <Card
                     key={cardIndex}
                     className="border border-white/10 bg-white/5 backdrop-blur-xl"
                 >
-                    <CardContent className="gap-4 p-5">
+                    <CardContent className="gap-3 p-5">
                         {/* provider heading + summary pills */}
                         <div className="flex flex-wrap items-start justify-between gap-3">
                             <div className="flex flex-col gap-1.5">

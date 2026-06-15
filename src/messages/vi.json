@@ -1267,6 +1267,12 @@
         "streakLabel": "streak",
         "xpLabel": "XP",
         "lessonsLabel": "bài",
+        "contributions": {
+            "title": "{count} hoạt động học trong năm {year}",
+            "cellTitle": "{count} hoạt động · {date}",
+            "less": "Ít",
+            "more": "Nhiều"
+        },
         "sponsored": "Quảng cáo",
         "sponsoredBy": "Tài trợ bởi {sponsor}",
         "changelog": "Có gì mới",

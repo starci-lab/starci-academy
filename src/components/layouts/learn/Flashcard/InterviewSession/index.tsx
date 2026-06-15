@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useCallback, useEffect, useState } from "react"
-import { Button, Chip, Spinner } from "@heroui/react"
+import { Button, Chip, cn, Spinner } from "@heroui/react"
 import { useTranslations, useLocale } from "next-intl"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { queryDrawInterviewCard } from "@/modules/api/graphql"
@@ -13,9 +13,10 @@ import { InterviewVerdict } from "@/modules/api"
 import { useMutateGradeInterviewAnswerSwr } from "@/hooks"
 import { useSpeechRecognition } from "@/hooks"
 import { InterviewSessionSkeleton } from "../InterviewSessionSkeleton"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link InterviewSession}. */
-export interface InterviewSessionProps {
+export interface InterviewSessionProps extends WithClassNames<undefined> {
     /** Deck to draw random interview questions from. */
     deckId: string
 }
@@ -38,7 +39,7 @@ const PANEL_CLASS = "flex flex-col gap-3 rounded-xl bg-default/40 p-8"
  * pass/borderline/fail verdict ("đạt"/"không đạt") with concrete feedback.
  * "Draw a new question" reshuffles to a fresh card.
  */
-export const InterviewSession = ({ deckId }: InterviewSessionProps) => {
+export const InterviewSession = ({ deckId, className }: InterviewSessionProps) => {
     const t = useTranslations()
     const locale = useLocale()
     // recognize speech in the active UI locale (Web Speech wants a BCP-47 tag)
@@ -151,7 +152,7 @@ export const InterviewSession = ({ deckId }: InterviewSessionProps) => {
     const hasTranscript = transcript.trim().length > 0
 
     return (
-        <div className="flex flex-col gap-6">
+        <div className={cn("flex flex-col gap-6", className)}>
             {/* question meta: interview level + technology tags */}
             {(card.level || (card.tags?.length ?? 0) > 0) ? (
                 <div className="flex flex-wrap items-center gap-1.5">

@@ -3,13 +3,17 @@
 import React from "react"
 import {
     Breadcrumbs,
+    cn,
 } from "@heroui/react"
 import type {
+    WithClassNames,
+} from "@/modules/types"
+import type {
     FoundationsBreadcrumbItem,
-} from "../types"
+} from "../../types"
 
 /** Props for {@link FoundationsBreadcrumbs}. */
-export interface FoundationsBreadcrumbsProps {
+export interface FoundationsBreadcrumbsProps extends WithClassNames<undefined> {
     /** Breadcrumb rows to render, in order. */
     items: Array<FoundationsBreadcrumbItem>
 }
@@ -24,9 +28,10 @@ export interface FoundationsBreadcrumbsProps {
  */
 export const FoundationsBreadcrumbs = ({
     items,
+    className,
 }: FoundationsBreadcrumbsProps) => {
     return (
-        <Breadcrumbs>
+        <Breadcrumbs className={cn(className)}>
             {items.map((item) => (
                 <Breadcrumbs.Item
                     key={item.key}

@@ -1,5 +1,5 @@
 import React from "react"
-import { ContentDetail } from "@/components/layouts/ContentDetail"
+import { ContentDetail } from "@/components/layouts/learn/ContentDetail"
 
 /**
  * Route `/[locale]/contents/[contentId]` — renders a public content article.

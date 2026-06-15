@@ -5,13 +5,15 @@ import {
     Button,
     Card,
     CardContent,
+    cn,
 } from "@heroui/react"
 import {
     useTranslations,
 } from "next-intl"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link ReviewLevelCard}. */
-export interface ReviewLevelCardProps {
+export interface ReviewLevelCardProps extends WithClassNames<undefined> {
     /** Title of the selected rubric template (if any). */
     templateTitle?: string | null
     /** Description of the selected rubric template (if any). */
@@ -33,10 +35,11 @@ export const ReviewLevelCard = ({
     templateDescription,
     isUpdateDisabled,
     onOpenReviewLevelDetails,
+    className,
 }: ReviewLevelCardProps) => {
     const t = useTranslations()
     return (
-        <div>
+        <div className={cn(className)}>
             <div className="mb-3 text-base font-semibold">{t("cv.submission.reviewLevelLabel")}</div>
             <Card className="w-full shadow-none">
                 <CardContent>

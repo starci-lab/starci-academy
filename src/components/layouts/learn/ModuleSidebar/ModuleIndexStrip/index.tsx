@@ -1,13 +1,13 @@
 "use client"
 
 import React from "react"
-import type { ModuleEntity } from "@/modules/types"
+import type { ModuleEntity, WithClassNames } from "@/modules/types"
 import { cn, Separator } from "@heroui/react"
 
 /**
  * Props for {@link ModuleIndexStrip}.
  */
-export interface ModuleIndexStripProps {
+export interface ModuleIndexStripProps extends WithClassNames<undefined> {
     /** Modules to render, already ordered. */
     modules: Array<ModuleEntity>
     /** Currently active module id (highlights its number). */
@@ -28,10 +28,11 @@ export const ModuleIndexStrip = ({
     modules,
     activeModuleId,
     onSelectModule,
+    className,
 }: ModuleIndexStripProps) => {
     return (
         // centered vertical stack of number chips; padded to clear the collapse bar
-        <div className="flex flex-col items-center gap-1.5 px-0 py-3">
+        <div className={cn("flex flex-col items-center gap-1.5 px-0 py-3", className)}>
             {modules.map((module) => {
                 return (
                     <React.Fragment key={String(module.id)}>

@@ -2,12 +2,13 @@
 
 import { Clock as ClockIcon, Sparkles as SparkleIcon } from "@gravity-ui/icons"
 import React from "react"
-import { Chip } from "@heroui/react"
+import { Chip, cn } from "@heroui/react"
 
 import { useTranslations } from "next-intl"
+import type { WithClassNames } from "@/modules/types"
 
 
-export interface PersonalProjectAttemptCardProps {
+export interface PersonalProjectAttemptCardProps extends WithClassNames<undefined> {
     /** Attempt sequence from API. */
     attemptNumber: number
     /** Numeric score when present. */
@@ -29,6 +30,7 @@ export const PersonalProjectAttemptCard = (props: PersonalProjectAttemptCardProp
         score,
         shortFeedback,
         processedAtLabel,
+        className,
     } = props
     const t = useTranslations()
     const feedbackText = shortFeedback?.trim() || t("finalProject.page.attemptsDrawer.feedbackEmpty")
@@ -44,7 +46,7 @@ export const PersonalProjectAttemptCard = (props: PersonalProjectAttemptCardProp
         ) : null
 
     return (
-        <article className="rounded-3xl border border-divider/70 bg-content1 p-4 shadow-sm transition hover:border-accent/50 hover:bg-accent/5">
+        <article className={cn("rounded-3xl border border-divider/70 bg-content1 p-4 shadow-sm transition hover:border-accent/50 hover:bg-accent/5", className)}>
             <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="min-w-0 flex-1">
                     <div className="text-xs font-semibold uppercase tracking-wide text-accent">
@@ -57,7 +59,7 @@ export const PersonalProjectAttemptCard = (props: PersonalProjectAttemptCardProp
                     <p className="mt-2 text-sm text-foreground">
                         {feedbackText}
                     </p>
-                    <div className="mt-2 flex items-center gap-1 text-xs text-muted">
+                    <div className="mt-2 flex items-center gap-1.5 text-xs text-muted">
                         <ClockIcon className="size-4 shrink-0" />
                         {processedAtLabel}
                     </div>

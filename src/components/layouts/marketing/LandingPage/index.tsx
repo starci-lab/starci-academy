@@ -1,7 +1,9 @@
 "use client"
+import { cn } from "@heroui/react"
 import { motion } from "framer-motion"
-import { Courses } from "@/components/layouts/Courses"
+import { Courses } from "@/components/layouts/course/Courses"
 import { Spacer } from "@/components/reuseable"
+import { type WithClassNames } from "@/modules/types"
 import { useTranslations } from "next-intl"
 import React from "react"
 import { HeroSection } from "./HeroSection"
@@ -23,11 +25,16 @@ import { OutcomeSection } from "./OutcomeSection"
  * (Methodology) → show the ambition/roadmap (Ambition) → convert (Courses) →
  * leave them thinking (closing). Each block is its own client section.
  */
-export const LandingPage = () => {
+export type LandingPageProps = WithClassNames<undefined>
+
+/**
+ * @param {LandingPageProps} props Optional wrapper styling props.
+ */
+export const LandingPage = ({ className }: LandingPageProps) => {
     const t = useTranslations()
 
     return (
-        <div className="relative">
+        <div className={cn("relative", className)}>
             {/* Atmospheric background — fixed teal glow + faint technical grid */}
             <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
                 <div className="absolute -top-40 left-1/2 -translate-x-1/2 h-[600px] w-[900px] rounded-full bg-accent/15 blur-[140px]" />
@@ -63,7 +70,7 @@ export const LandingPage = () => {
                     viewport={{ once: true, margin: "-100px" }}
                     transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
                 >
-                    <div className="text-2xl font-bold flex gap-1 text-center">{t("home.diff.title")}</div>
+                    <div className="text-2xl font-bold flex gap-1.5 text-center">{t("home.diff.title")}</div>
                 </motion.div>
                 <Spacer y={48} />
                 <MethodologySection />

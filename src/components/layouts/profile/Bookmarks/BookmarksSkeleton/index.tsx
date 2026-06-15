@@ -15,7 +15,7 @@ import {
  */
 export const BookmarksSkeleton = () => {
     return (
-        <div className="flex flex-col gap-4 p-6 max-w-4xl mx-auto">
+        <div className="flex flex-col gap-3 p-6 max-w-4xl mx-auto">
             <Skeleton className="h-8 w-1/3 rounded-lg" />
             {BOOKMARK_SKELETON_PLACEHOLDERS.map((placeholder) => (
                 <Skeleton

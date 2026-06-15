@@ -1,24 +1,39 @@
 "use client"
 
 import { AutocompleteGlobalSearchItem } from "@/modules/api"
-import { ListBox } from "@heroui/react"
-import React from "react"
+import { useSearchOverlayState } from "@/hooks"
+import { cn, ListBox } from "@heroui/react"
+import { useLocale } from "next-intl"
+import { useRouter } from "next/navigation"
+import React, { useCallback } from "react"
+import type { WithClassNames } from "@/modules/types"
 
 /** Props for {@link GlobalSearchContentBlock}. */
-interface GlobalSearchContentBlockProps {
-    /** Result rows. */
+interface GlobalSearchContentBlockProps extends WithClassNames<undefined> {
+    /** Result rows for this bucket section. */
     items: Array<AutocompleteGlobalSearchItem>
-    /** Called when the user activates a row; parent resolves href and navigation. */
-    onItemPress: (item: AutocompleteGlobalSearchItem) => void
 }
 
 /**
  * The list body of one global-search group (rows only) — rendered inside an accordion panel.
  * The section heading and hit count live on the accordion trigger in the parent.
- * @param props.onItemPress — Invoked when a `ListBox.Item` is pressed.
+ * Navigates to the pressed hit and closes the search modal.
  */
 export const GlobalSearchContentBlock = (props: GlobalSearchContentBlockProps) => {
-    const { items, onItemPress } = props
+    const { items, className } = props
+    const locale = useLocale()
+    const router = useRouter()
+    const { setOpen } = useSearchOverlayState()
+
+    // Navigate to the canonical server-built route for the pressed hit, then close.
+    const onItemPress = useCallback(
+        (item: AutocompleteGlobalSearchItem) => {
+            // ignore presses with no resolvable route (cache miss / unroutable kind)
+            if (!item.path) return
+            // server path is locale-agnostic → prepend the active locale
+            router.push(`/${locale}${item.path}`)
+            setOpen(false)
+        }, [locale, router, setOpen])
 
     /** Render text with `<em>...</em>` as emphasized spans. */
     const renderEmText = (text: string) => {
@@ -62,7 +77,7 @@ export const GlobalSearchContentBlock = (props: GlobalSearchContentBlockProps) =
     }
 
     return (
-        <ListBox aria-label="search results" className="gap-0">
+        <ListBox aria-label="search results" className={cn("gap-0", className)}>
             {items.map((item) => {
                 const titleLine = item.title ?? item.texts?.[0] ?? item.displayId
                 const textLines = item.texts ?? []
@@ -78,7 +93,7 @@ export const GlobalSearchContentBlock = (props: GlobalSearchContentBlockProps) =
                         <div className="py-1">
                             <div className="text-sm text-foreground">{titleLine}</div>
                             {textLines.length > 0 ? (
-                                <ul className="mt-1 list-none space-y-0.5 pl-0">
+                                <ul className="mt-1 list-none space-y-1.5 pl-0">
                                     {textLines.map((line: string) => (
                                         <li key={line}>
                                             <div className="text-xs text-muted">{renderEmText(line)}</div>

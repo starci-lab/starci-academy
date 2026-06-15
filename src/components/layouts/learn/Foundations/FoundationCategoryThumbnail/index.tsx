@@ -1,11 +1,11 @@
 "use client"
 
 import { Layers as StackIcon } from "@gravity-ui/icons"
-
+import { cn } from "@heroui/react"
 import React from "react"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
-
-export interface FoundationCategoryThumbnailProps {
+export interface FoundationCategoryThumbnailProps extends WithClassNames<undefined> {
     /** Public thumbnail URL from API; when missing shows fallback icon. */
     thumbnailUrl?: string | null
     /** Category title for accessible image alt text. */
@@ -25,9 +25,10 @@ export interface FoundationCategoryThumbnailProps {
 export const FoundationCategoryThumbnail = ({
     thumbnailUrl,
     title,
+    className,
 }: FoundationCategoryThumbnailProps) => {
     return (
-        <div className="relative aspect-video w-full shrink-0 overflow-hidden bg-accent/10">
+        <div className={cn("relative aspect-video w-full shrink-0 overflow-hidden bg-accent/10", className)}>
             {thumbnailUrl ? (
                 <img
                     src={thumbnailUrl}

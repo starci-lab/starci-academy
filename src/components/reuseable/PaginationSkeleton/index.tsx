@@ -2,9 +2,10 @@
 
 import React, { useMemo } from "react"
 import { Skeleton, cn } from "@heroui/react"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link PaginationSkeleton}. */
-export interface PaginationSkeletonProps {
+export interface PaginationSkeletonProps extends WithClassNames<undefined> {
     /** Extra classes on the outer wrapper (e.g. `mt-6`). */
     className?: string
     /** Number of page-number pill placeholders between prev/next. */

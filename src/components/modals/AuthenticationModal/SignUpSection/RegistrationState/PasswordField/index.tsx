@@ -6,15 +6,17 @@ import React, {
     useState,
 } from "react"
 import {
+    cn,
     FieldError,
     Input,
     Label,
     Link,
     TextField,
 } from "@heroui/react"
+import type { WithClassNames } from "@/modules/types"
 
 /** Props for {@link PasswordField}. */
-export interface PasswordFieldProps {
+export interface PasswordFieldProps extends WithClassNames<undefined> {
     /** DOM id / `name` for the input (e.g. `sign-up-password`). */
     fieldId: string
     /** Form field name passed to the underlying input. */
@@ -53,6 +55,7 @@ export const PasswordField = ({
     touched,
     onChangeValue,
     onBlurField,
+    className,
 }: PasswordFieldProps) => {
     // local UI-only state: whether this field is shown as plaintext
     const [showPassword, setShowPassword] = useState(false)
@@ -62,7 +65,7 @@ export const PasswordField = ({
     )
 
     return (
-        <TextField isInvalid={!!(touched && error)}>
+        <TextField className={cn(className)} isInvalid={!!(touched && error)}>
             <Label htmlFor={fieldId} className="text-sm">
                 {label}
             </Label>

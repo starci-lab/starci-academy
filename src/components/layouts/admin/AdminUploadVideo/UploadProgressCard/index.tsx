@@ -10,12 +10,13 @@ import {
 import type {
     ProviderUploadStatus,
 } from "../types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 import {
     ProviderUploadRow,
 } from "./ProviderUploadRow"
 
 /** Props for {@link UploadProgressCard}. */
-export interface UploadProgressCardProps {
+export interface UploadProgressCardProps extends WithClassNames<undefined> {
     /** Per-provider upload statuses to render. */
     uploads: Array<ProviderUploadStatus>
     /** Whether all uploads have finished (drives the header copy + Done chip). */
@@ -38,9 +39,9 @@ export const UploadProgressCard = ({
 }: UploadProgressCardProps) => {
     return (
         <Card className="bg-white/5 border border-white/10 backdrop-blur-xl shadow-2xl shadow-indigo-500/5">
-            <CardContent className="space-y-4 p-6">
+            <CardContent className="space-y-6 p-6">
                 {/* Section header */}
-                <div className="flex items-center gap-3 pb-2">
+                <div className="flex items-center gap-1.5 pb-2">
                     <div className="rounded-lg bg-purple-500/10 p-2">
                         <UploadIcon className="h-5 w-5 text-purple-400" />
                     </div>

@@ -10,9 +10,10 @@ import {
     AccordionSkeleton,
     SkeletonText,
 } from "@/components/reuseable"
+import type { WithClassNames } from "@/modules/types"
 
 /** Props for {@link ModuleSidebarSkeleton}. */
-export interface ModuleSidebarSkeletonProps {
+export interface ModuleSidebarSkeletonProps extends WithClassNames<undefined> {
     /** Number of placeholder module rows to render. */
     count: number
 }

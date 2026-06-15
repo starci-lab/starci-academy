@@ -7,6 +7,7 @@ import React, {
 import {
     Button,
     Card,
+    cn,
 } from "@heroui/react"
 import {
     useLocale,
@@ -21,6 +22,7 @@ import {
 } from "@/hooks"
 import {
     PaymentFlow,
+    type WithClassNames,
 } from "@/modules/types"
 import {
     useAppSelector,
@@ -36,6 +38,11 @@ import {
 } from "../ValuePropositions"
 
 /**
+ * EnrollCard props — only class-name plumbing (self-contained section).
+ */
+export type EnrollCardProps = WithClassNames<undefined>
+
+/**
  * Sidebar card: cover image, pricing stepper, value propositions and the
  * enroll / continue-learning call to action.
  *
@@ -45,7 +52,7 @@ import {
  * renders `<EnrollCard />` with no props. `"use client"` because HeroUI
  * `Card`/`Button` are interactive and it reads redux/router.
  */
-export const EnrollCard = () => {
+export const EnrollCard = (props: EnrollCardProps) => {
     const t = useTranslations()
     const router = useRouter()
     const locale = useLocale()
@@ -78,7 +85,7 @@ export const EnrollCard = () => {
         [router, locale, courseDisplayId],
     )
     return (
-        <Card className="order-1 md:order-2 md:col-span-2 w-full bg-inherit border  h-fit shrink-0 p-0">
+        <Card className={cn("order-1 md:order-2 md:col-span-2 w-full bg-inherit border  h-fit shrink-0 p-0", props.className)}>
             <Card.Content>
                 <img
                     className="w-full h-full object-cover"

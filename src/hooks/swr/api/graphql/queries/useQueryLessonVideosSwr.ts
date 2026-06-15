@@ -15,10 +15,10 @@ export const useQueryLessonVideosSwr = () => {
     const course = useAppSelector((state) => state.course.entity)
     const content = useAppSelector((state) => state.content.entity)
     const pageNumber = useAppSelector(
-        (state) => state.module.pageNumber,
+        (state) => state.lessonVideo.pageNumber,
     )
     const limit = useAppSelector(
-        (state) => state.module.limit,
+        (state) => state.lessonVideo.limit,
     )
     const contentTab = useAppSelector((state) => state.tabs.contentTab)
     const dispatch = useAppDispatch()

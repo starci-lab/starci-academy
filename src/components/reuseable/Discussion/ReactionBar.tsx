@@ -4,11 +4,12 @@ import React, { useRef, useState } from "react"
 import { Button, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { ReactionType, type ReactionSummary } from "@/modules/api"
+import type { WithClassNames } from "@/modules/types"
 import { REACTIONS, REACTION_BY_TYPE } from "./constants"
 import { ReactionEmoji } from "./ReactionEmoji"
 
 /** Props for {@link ReactionBar}. */
-export interface ReactionBarProps {
+export interface ReactionBarProps extends WithClassNames<undefined> {
     /** Current reaction summary for the target (content or comment). */
     summary: ReactionSummary | undefined
     /** Called with a new emotion, or null to remove the current one. */
@@ -24,7 +25,7 @@ export interface ReactionBarProps {
  * Presentational: only local open state; all persistence is delegated via `onReact`.
  * @param props - {@link ReactionBarProps}
  */
-export const ReactionBar = ({ summary, onReact, disabled }: ReactionBarProps) => {
+export const ReactionBar = ({ summary, onReact, disabled, className }: ReactionBarProps) => {
     const t = useTranslations()
     // local visibility of the emoji picker panel
     const [pickerOpen, setPickerOpen] = useState(false)
@@ -50,7 +51,7 @@ export const ReactionBar = ({ summary, onReact, disabled }: ReactionBarProps) =>
     return (
         <div
             ref={containerRef}
-            className="relative flex items-center gap-1.5"
+            className={cn("relative flex items-center gap-1.5", className)}
             onBlur={(e) => {
                 // close picker when focus leaves the entire reaction bar
                 if (!containerRef.current?.contains(e.relatedTarget as Node)) {
@@ -76,7 +77,7 @@ export const ReactionBar = ({ summary, onReact, disabled }: ReactionBarProps) =>
 
             {/* compact summary: stacked top emojis + total count */}
             {total > 0 ? (
-                <div className="flex items-center gap-1 text-xs text-muted">
+                <div className="flex items-center gap-1.5 text-xs text-muted">
                     <span className="flex items-center -space-x-1">
                         {topReactions.map((reaction) => (
                             <ReactionEmoji key={reaction.type} descriptor={reaction} size="xs" />
@@ -88,7 +89,7 @@ export const ReactionBar = ({ summary, onReact, disabled }: ReactionBarProps) =>
 
             {/* emoji picker panel — floats above the trigger */}
             {pickerOpen ? (
-                <div className="absolute bottom-full left-0 z-20 mb-2 flex items-center gap-1 rounded-full border border-default bg-background p-1 shadow-lg">
+                <div className="absolute bottom-full left-0 z-20 mb-2 flex items-center gap-1.5 rounded-full border border-default bg-background p-1 shadow-lg">
                     {REACTIONS.map((reaction) => (
                         <button
                             key={reaction.type}

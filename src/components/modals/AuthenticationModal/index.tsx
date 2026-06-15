@@ -10,9 +10,13 @@ import {
 } from "@/redux/slices"
 import { SignInSection } from "./SignInSection"
 import { SignUpSection } from "./SignUpSection"
-import { Modal } from "@heroui/react"
+import { cn, Modal } from "@heroui/react"
+import { WithClassNames } from "@/modules/types"
 
-export const AuthenticationModal = () => {
+/** Props for {@link AuthenticationModal}. */
+type AuthenticationModalProps = WithClassNames<undefined>
+
+export const AuthenticationModal = ({ className }: AuthenticationModalProps = {}) => {
     const { isOpen, setOpen } = useAuthenticationOverlayState()
     const dispatch = useAppDispatch()
     const authenticationModalTab = useAppSelector((state) => state.tabs.authenticationModalTab)
@@ -38,7 +42,7 @@ export const AuthenticationModal = () => {
         >
             <Modal.Backdrop>
                 <Modal.Container size="xs">
-                    <Modal.Dialog>
+                    <Modal.Dialog className={cn(className)}>
                         {renderSection()}
                     </Modal.Dialog>
                 </Modal.Container>

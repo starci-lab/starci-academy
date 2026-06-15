@@ -46,7 +46,7 @@ export const CodeExplainingBody = ({ className }: CodeExplainingBodyProps) => {
     }
 
     return (
-        <div className={cn("flex flex-col gap-4", className)}>
+        <div className={cn("flex flex-col gap-6", className)}>
             {items.map((item) => (
                 <ExplainingCard key={item.id} item={item} />
             ))}

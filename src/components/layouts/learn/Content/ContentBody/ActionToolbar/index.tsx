@@ -5,10 +5,14 @@ import React from "react"
 import {
     Button,
     Spinner,
+    cn,
 } from "@heroui/react"
+import type {
+    WithClassNames,
+} from "@/modules/types"
 
 /** Props for {@link ActionToolbar}. */
-export interface ActionToolbarProps {
+export interface ActionToolbarProps extends WithClassNames<undefined> {
     /** Whether the content is currently favorited (controls the bookmark fill). */
     isFavorite: boolean
     /** Whether the share button should be shown (hidden for premium content). */
@@ -37,9 +41,10 @@ export const ActionToolbar = ({
     onToggleFavorite,
     onShare,
     onFullscreen,
+    className,
 }: ActionToolbarProps) => {
     return (
-        <div className="flex items-center gap-1.5">
+        <div className={cn("flex items-center gap-1.5", className)}>
             <Button
                 isIconOnly
                 variant="secondary"

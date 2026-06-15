@@ -2,7 +2,7 @@
 
 import React, { useMemo, useState } from "react"
 import useSWR from "swr"
-import { Button, Chip } from "@heroui/react"
+import { Button, Chip, cn } from "@heroui/react"
 import { motion } from "framer-motion"
 import { useTranslations, useLocale } from "next-intl"
 import { useRouter } from "next/navigation"
@@ -12,9 +12,10 @@ import { type FlashcardCardEntity } from "@/modules/types"
 import { useAppSelector } from "@/redux"
 import { pathConfig } from "@/resources"
 import { FlashcardReviewerSkeleton } from "../FlashcardReviewerSkeleton"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link FlashcardReviewer}. */
-export interface FlashcardReviewerProps {
+export interface FlashcardReviewerProps extends WithClassNames<undefined> {
     /** Deck id being reviewed. */
     deckId: string
 }
@@ -43,7 +44,7 @@ const FACE_STYLE: React.CSSProperties = {
  * reveal the model answer plus optional depth. Prev/Next step through the deck.
  * Pure review — no multiple choice, no scoring, nothing persisted server-side.
  */
-export const FlashcardReviewer = ({ deckId }: FlashcardReviewerProps) => {
+export const FlashcardReviewer = ({ deckId, className }: FlashcardReviewerProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -103,7 +104,7 @@ export const FlashcardReviewer = ({ deckId }: FlashcardReviewerProps) => {
     const progressPercent = Math.round(((currentIndex + 1) / cards.length) * 100)
 
     return (
-        <div className="flex flex-col gap-6">
+        <div className={cn("flex flex-col gap-6", className)}>
             {/* progress: counter + bar */}
             <div className="flex flex-col gap-1.5">
                 <span className="text-xs text-muted">

@@ -1,14 +1,15 @@
 "use client"
 
-import { Card, Skeleton } from "@heroui/react"
+import { Card, cn, Skeleton } from "@heroui/react"
 import React from "react"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Skeleton placeholder for {@link MilestoneFeedbackCard} while feedback rows load.
  */
-export const MilestoneFeedbackCardSkeleton = () => {
+export const MilestoneFeedbackCardSkeleton = ({ className }: WithClassNames<undefined>) => {
     return (
-        <Card className="bg-background p-0">
+        <Card className={cn("bg-background p-0", className)}>
             <Card.Content>
                 <div className="p-3">
                     <div className="flex items-center justify-between gap-1.5">

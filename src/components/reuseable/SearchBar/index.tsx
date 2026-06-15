@@ -14,6 +14,7 @@ import {
 } from "@heroui/react"
 
 import { useTranslations } from "next-intl"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 
 /** One selectable row in the autocomplete list (demo data until search is API-driven). */
@@ -27,7 +28,7 @@ interface SearchSuggestionItem {
 /**
  * Props for the search bar.
  */
-export interface SearchBarProps {
+export interface SearchBarProps extends WithClassNames<undefined> {
     /** Optional class names on the root `TextField` wrapper. */
     className?: string
 }
@@ -62,7 +63,7 @@ export const SearchBar = ({ className }: SearchBarProps) => {
                         placeholder={t("search.placeholder")}
                         variant="secondary"
                     >
-                        <Autocomplete.Trigger className="flex h-10 w-full min-w-0 items-center gap-1 rounded-r-none border-0 bg-transparent px-3 shadow-none ring-0">
+                        <Autocomplete.Trigger className="flex h-10 w-full min-w-0 items-center gap-1.5 rounded-r-none border-0 bg-transparent px-3 shadow-none ring-0">
                             <Autocomplete.Value />
                             <Autocomplete.ClearButton />
                             <Autocomplete.Indicator />

@@ -1,32 +1,41 @@
 "use client"
-import React from "react"
+import React, { useMemo } from "react"
 
-import type { ConsultantEntity } from "@/modules/types"
+import { cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { ConsultantCard } from "@/components/layouts/Headhuntings/ConsultantCard"
-import { ConsultantCardSkeleton } from "@/components/layouts/Headhuntings/ConsultantCardSkeleton"
+import { useAppSelector } from "@/redux"
+import type { WithClassNames } from "@/modules/types/base/class-name"
+import { ConsultantCard } from "@/components/layouts/headhunting/Headhuntings/ConsultantCard"
+import { ConsultantCardSkeleton } from "@/components/layouts/headhunting/Headhuntings/ConsultantCardSkeleton"
 
-export interface HeadhuntingCompanyConsultantsProps {
-    /** All consultants from Redux; undefined while loading. */
-    consultants: Array<ConsultantEntity> | undefined
-    /** Consultants filtered for the current company. */
-    companyConsultants: Array<ConsultantEntity>
-}
+/** Props for {@link HeadhuntingCompanyConsultants}. */
+export type HeadhuntingCompanyConsultantsProps = WithClassNames<undefined>
 
 /**
  * Grid of consultant cards for one headhunting company.
- * @param props.consultants - Full consultant list from Redux (loading state).
- * @param props.companyConsultants - Consultants belonging to the current company.
+ *
+ * Self-contained section (single-use): reads all consultants and the active
+ * company id from the `headhunter` redux slice (synced by the parent hook),
+ * so the container renders `<HeadhuntingCompanyConsultants />` with no props.
+ * @param props - {@link HeadhuntingCompanyConsultantsProps}
  */
-export const HeadhuntingCompanyConsultants = ({
-    consultants,
-    companyConsultants,
-}: HeadhuntingCompanyConsultantsProps) => {
+export const HeadhuntingCompanyConsultants = ({ className }: HeadhuntingCompanyConsultantsProps) => {
     const t = useTranslations()
+    const consultants = useAppSelector((state) => state.headhunter.entities)
+    const companyId = useAppSelector((state) => state.headhunter.companyId)
+
+    const companyConsultants = useMemo(() => {
+        if (!consultants?.length || !companyId) {
+            return []
+        }
+        return consultants
+            .filter((entry) => (entry.company?.id ?? entry.companyId) === companyId)
+            .sort((a, b) => a.sortIndex - b.sortIndex)
+    }, [companyId, consultants])
 
     if (!consultants) {
         return (
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className={cn("grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3", className)}>
                 {Array.from({ length: 3 }).map((_, index) => (
                     <ConsultantCardSkeleton key={index} />
                 ))}
@@ -35,11 +44,11 @@ export const HeadhuntingCompanyConsultants = ({
     }
 
     if (companyConsultants.length === 0) {
-        return <p className="text-muted text-sm">{t("headhuntings.empty")}</p>
+        return <p className={cn("text-muted text-sm", className)}>{t("headhuntings.empty")}</p>
     }
 
     return (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className={cn("grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3", className)}>
             {companyConsultants.map((consultant) => (
                 <ConsultantCard
                     key={consultant.id}

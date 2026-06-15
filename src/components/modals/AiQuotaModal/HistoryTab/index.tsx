@@ -4,6 +4,7 @@ import React, {
     useMemo,
 } from "react"
 import {
+    cn,
     Chip,
     Skeleton,
 } from "@heroui/react"
@@ -23,6 +24,9 @@ import {
 import {
     useAiQuotaHistorySwr,
 } from "../hooks"
+import type {
+    WithClassNames,
+} from "@/modules/types"
 
 /** One day bucket for the usage history chart. */
 interface AiQuotaHistoryChartPoint {
@@ -33,7 +37,7 @@ interface AiQuotaHistoryChartPoint {
 }
 
 /** Props for {@link AiQuotaHistoryTab}. */
-export interface AiQuotaHistoryTabProps {
+export interface AiQuotaHistoryTabProps extends WithClassNames<undefined> {
     /** When true, load history even outside the modal (full usage page). */
     alwaysLoad?: boolean
 }
@@ -44,6 +48,7 @@ export interface AiQuotaHistoryTabProps {
  */
 export const AiQuotaHistoryTab = ({
     alwaysLoad = false,
+    className,
 }: AiQuotaHistoryTabProps) => {
     const t = useTranslations()
     const { data: history, isLoading } = useAiQuotaHistorySwr({
@@ -69,8 +74,8 @@ export const AiQuotaHistoryTab = ({
     }, [history])
 
     return (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-3">
+        <div className={cn("flex flex-col gap-6", className)}>
+            <div className="flex flex-col gap-1.5">
                 <div className="text-sm font-semibold text-foreground">
                     {t("aiQuota.history.chartTitle")}
                 </div>

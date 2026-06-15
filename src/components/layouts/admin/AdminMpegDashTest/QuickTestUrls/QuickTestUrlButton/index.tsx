@@ -1,9 +1,11 @@
 "use client"
 
 import React, { useCallback } from "react"
+import { cn } from "@heroui/react"
 import type { QuickTestUrl } from "../../types"
+import type { WithClassNames } from "@/modules/types"
 
-export interface QuickTestUrlButtonProps {
+export interface QuickTestUrlButtonProps extends WithClassNames<undefined> {
     /** Preset to render. */
     item: QuickTestUrl
     /** Loads the preset's URL + renderer type into the tool. */
@@ -15,7 +17,7 @@ export interface QuickTestUrlButtonProps {
  * @param props.item - Preset to render.
  * @param props.onSelect - Called with the preset when pressed.
  */
-export const QuickTestUrlButton = ({ item, onSelect }: QuickTestUrlButtonProps) => {
+export const QuickTestUrlButton = ({ item, onSelect, className }: QuickTestUrlButtonProps) => {
     const onPress = useCallback(
         () => onSelect(item),
         [onSelect, item],
@@ -24,7 +26,7 @@ export const QuickTestUrlButton = ({ item, onSelect }: QuickTestUrlButtonProps) 
     return (
         <button
             onClick={onPress}
-            className="w-full rounded-lg bg-slate-700/30 px-3 py-2 text-left text-xs text-slate-300 transition-colors hover:bg-slate-700/60"
+            className={cn("w-full rounded-lg bg-slate-700/30 px-3 py-2 text-left text-xs text-slate-300 transition-colors hover:bg-slate-700/60", className)}
         >
             <span className="font-medium text-white">
                 {item.label}

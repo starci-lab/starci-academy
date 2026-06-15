@@ -1,17 +1,16 @@
 "use client"
 
 import React, { useMemo } from "react"
+import { cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { MarkdownContent } from "@/components/reuseable"
 import type { MilestoneTaskBrief } from "@/modules/types"
+import { usePersonalProjectGithubForm } from "@/hooks"
+import { useAppSelector } from "@/redux"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link TaskBrief}. */
-export interface TaskBriefProps {
-    /** Per-language briefs for the milestone task. */
-    briefs: Array<MilestoneTaskBrief>
-    /** Currently selected programming language (matched against `brief.lang`). */
-    lang: string
-}
+export type TaskBriefProps = WithClassNames<undefined>
 
 /**
  * Pick the brief matching the selected language, falling back to the first brief (handles the
@@ -36,10 +35,32 @@ const resolveBriefBody = (
  * `:::muted` callouts, fenced code and ```layout``` widgets) for the selected language, resolved to
  * the active locale. Renders nothing when there are no briefs (legacy tasks).
  *
- * @param props - {@link TaskBriefProps}
+ * Self-contained: reads `briefs` from redux task state and `lang` from the github form store.
+ * @param props - optional className for the root element
  */
-export const TaskBrief = ({ briefs, lang }: TaskBriefProps) => {
+export const TaskBrief = ({
+    className,
+}: TaskBriefProps = {}) => {
     const t = useTranslations()
+    const { lang } = usePersonalProjectGithubForm()
+
+    const selectedTaskDetail = useAppSelector((state) => state.milestone.selectedTaskDetail)
+    const selectedTaskId = useAppSelector((state) => state.milestone.selectedTaskId)
+    const milestoneEntities = useAppSelector((state) => state.milestone.entities)
+
+    const displayTask = useMemo(() => {
+        if (!selectedTaskId) return undefined
+        if (selectedTaskDetail?.id === selectedTaskId) {
+            return selectedTaskDetail
+        }
+        for (const milestone of milestoneEntities) {
+            const found = milestone.tasks?.find((task) => task.id === selectedTaskId)
+            if (found) return found
+        }
+        return undefined
+    }, [selectedTaskId, selectedTaskDetail, milestoneEntities])
+
+    const briefs = displayTask?.briefs ?? []
 
     const body = useMemo(
         () => resolveBriefBody(pickBriefByLang(briefs, lang)),
@@ -51,7 +72,7 @@ export const TaskBrief = ({ briefs, lang }: TaskBriefProps) => {
     }
 
     return (
-        <div className="mt-3">
+        <div className={cn("mt-3", className)}>
             <div className="font-semibold">{t("task.briefTitle")}</div>
             <div className="h-3" />
             <MarkdownContent markdown={body} />

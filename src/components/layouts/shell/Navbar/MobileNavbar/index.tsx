@@ -2,14 +2,18 @@
 
 import type { IconComponent } from "@/types"
 import { Globe as TranslateIcon, Paintbrush as PaintBrushIcon } from "@gravity-ui/icons"
-import React from "react"
+import React, { useMemo, useState } from "react"
 import {
     Link,
     cn,
 } from "@heroui/react"
 import {
+    useLocale,
     useTranslations,
 } from "next-intl"
+import { usePathname, useRouter } from "@/i18n/navigation"
+import { pathConfig } from "@/resources/path"
+import type { WithClassNames } from "@/modules/types"
 import {
     DarkLightModeSwitch,
 } from "../AccountMenuDropdown/DarkLightMode"
@@ -31,37 +35,52 @@ export interface MobileNavItem {
 /**
  * Props for {@link MobileNavbar}.
  */
-export interface MobileNavbarProps {
-    /** Navigation entries to render in the menu. */
-    navItems: Array<MobileNavItem>
-    /** Whether the mobile menu is currently open. */
-    isMenuOpen: boolean
-    /** Fired with the next open state when toggling the menu. */
-    setIsMenuOpen: (value: boolean) => void
-    /** Active locale code (drives the language label). */
-    locale: string
-    /** Fired with the chosen path when a nav entry is pressed. */
-    onSelectItem: (path: string) => void
-}
+export type MobileNavbarProps = WithClassNames<undefined>
 
 /**
  * MobileNavbar — full-screen navigation menu shown on small screens.
  *
- * Presentational: renders the passed nav entries plus appearance/language
- * rows; navigation and menu-state changes are delegated via `onXXX` props.
- * `"use client"` for the interactive theme switch + press handlers.
- * @param props - nav entries, open state, locale, and select callback
+ * Container: derives nav entries + active-route state from the router/locale
+ * itself, manages its own open/close state, and self-navigates on item press.
+ * `"use client"` for the interactive theme switch + hooks + press handlers.
+ * @param props - optional root class name
  */
-export const MobileNavbar = ({
-    navItems,
-    setIsMenuOpen,
-    locale,
-    onSelectItem,
-}: MobileNavbarProps) => {
+export const MobileNavbar = ({ className }: MobileNavbarProps) => {
     const t = useTranslations()
+    const router = useRouter()
+    const pathname = usePathname()
+    const locale = useLocale()
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+    const navItems = useMemo<Array<MobileNavItem>>(
+        () => [
+            {
+                label: t("nav.home"),
+                path: pathConfig().locale().build(),
+                isActive: pathname === pathConfig().locale(locale).build() || pathname === "/",
+                icon: () => null,
+            },
+            {
+                label: t("nav.courses"),
+                path: pathConfig().locale().course().build(),
+                isActive: pathname.startsWith(pathConfig().locale(locale).course().build()),
+                icon: () => null,
+            },
+            {
+                label: t("nav.contact"),
+                path: pathConfig().locale().contact().build(),
+                isActive: pathname.startsWith(pathConfig().locale(locale).contact().build()),
+                icon: () => null,
+            },
+        ],
+        [locale, pathname, t],
+    )
+
+    if (!isMenuOpen) return null
+
     return (
         <nav
-            className="backdrop-blur-xl bg-background/80 flex flex-col h-[calc(100vh-64px)] pb-10"
+            className={cn("backdrop-blur-xl bg-background/80 flex flex-col h-[calc(100vh-64px)] pb-10", className)}
             aria-label={t("nav.mobileMenu")}
         >
             <div className="flex flex-col gap-1.5 mt-4 flex-grow">
@@ -69,32 +88,30 @@ export const MobileNavbar = ({
                     <div key={`${item.path}-${index}`} className="w-full">
                         <Link
                             className={cn(
-                                "w-full flex items-center gap-4 p-4 rounded-2xl transition-all duration-300",
+                                "w-full flex items-center gap-3 p-4 rounded-2xl transition-all duration-300",
                                 item.isActive
                                     ? "bg-primary/10 text-primary shadow-sm"
                                     : "hover:bg-default-100",
                             )}
                             onPress={() => {
-                                onSelectItem(item.path)
+                                router.push(item.path)
                                 setIsMenuOpen(false)
                             }}
                         >
-                            <item.icon
-                                className="size-6"
-                            />
+                            <item.icon className="size-6" />
                             <span className="font-bold tracking-tight">{item.label}</span>
                         </Link>
                     </div>
                 ))}
             </div>
 
-            <div className="mt-auto flex flex-col gap-5 pt-6 border-t ">
+            <div className="mt-auto flex flex-col gap-6 pt-6 border-t">
                 <div className="flex items-center justify-between px-2">
                     <div className="flex items-center gap-3">
                         <div className="p-2 rounded-xl bg-default-100 flex items-center justify-center">
                             <PaintBrushIcon className="size-5" />
                         </div>
-                        <div className="flex flex-col">
+                        <div className="flex flex-col gap-0">
                             <span className="text-sm font-bold">{t("nav.appearance")}</span>
                             <span className="text-xs font-semibold uppercase tracking-wide text-muted">
                                 System theme
@@ -108,7 +125,7 @@ export const MobileNavbar = ({
                         <div className="p-2 rounded-xl bg-default-100 flex items-center justify-center">
                             <TranslateIcon className="size-5" />
                         </div>
-                        <div className="flex flex-col">
+                        <div className="flex flex-col gap-0">
                             <span className="text-sm font-bold">
                                 {t("nav.toggleLanguage")}
                             </span>

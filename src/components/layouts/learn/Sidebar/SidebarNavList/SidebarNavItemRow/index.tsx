@@ -10,45 +10,61 @@ import {
 import type {
     SidebarNavItem,
 } from "../../types"
+import {
+    useAppDispatch,
+} from "@/redux"
+import {
+    setSidebar,
+} from "@/redux/slices"
+import {
+    useRouter,
+} from "next/navigation"
+import type {
+    WithClassNames,
+} from "@/modules/types"
 
 /**
  * Props for {@link SidebarNavItemRow}.
  */
-export interface SidebarNavItemRowProps {
+export interface SidebarNavItemRowProps extends WithClassNames<undefined> {
     /** Nav entry this row represents. */
     item: SidebarNavItem
     /** Whether this row's tab is the active one. */
     selected: boolean
     /** Icon-only mode: hide the label and center the icon (collapsed rail). */
     collapsed?: boolean
-    /** Fired with the row's entry when pressed. */
-    onSelect: (item: SidebarNavItem) => void
 }
 
 /**
  * One selectable sidebar row (icon + label).
  *
- * Presentational: renders a single {@link ListBox} entry and forwards a thin
- * select callback. `"use client"` for the press handler.
- * @param props - the nav entry, selected state, and select callback
+ * List item: keeps its own `item` payload and self-dispatches the tab change +
+ * navigation when pressed. `"use client"` for the dispatch + router.
+ * @param props - the nav entry and selected state
  */
 export const SidebarNavItemRow = ({
     item,
     selected,
     collapsed = false,
-    onSelect,
+    className,
 }: SidebarNavItemRowProps) => {
+    const dispatch = useAppDispatch()
+    const router = useRouter()
+
     const onPress = useCallback(
-        () => onSelect(item),
-        [
-            item,
-            onSelect,
-        ],
+        () => {
+            dispatch(setSidebar({ tab: item.tab, extraId: undefined }))
+            if (item.url) {
+                router.push(item.url)
+            }
+        },
+        [dispatch, router, item],
     )
     return (
         <ListBox
             selectedKeys={selected ? [item.value] : []}
             selectionMode="single"
+            className={cn(className)}
         >
             <ListBox.Item
                 // in collapsed mode keep the label as the accessible name even though it is hidden

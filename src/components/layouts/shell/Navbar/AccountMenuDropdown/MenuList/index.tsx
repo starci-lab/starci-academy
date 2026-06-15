@@ -1,47 +1,77 @@
 "use client"
 
 import { Bookmark as BookmarkSimpleIcon, ChevronRight as CaretRightIcon } from "@gravity-ui/icons"
-import React from "react"
+import React, { useCallback, useMemo } from "react"
 import {
     DropdownItem,
     DropdownMenu,
     DropdownSection,
+    cn,
 } from "@heroui/react"
 import {
+    useLocale,
     useTranslations,
 } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useAppSelector } from "@/redux"
+import { languages } from "@/resources/constants"
+import { pathConfig } from "@/resources/path"
+import {
+    useAccountMenuOverlayState,
+    useLanguageOverlayState,
+} from "@/hooks"
+import type { WithClassNames } from "@/modules/types"
 
-/** Props for {@link MenuList}. */
-export interface MenuListProps {
-    /** Whether a user object exists (controls the bookmarks section). */
-    hasUser: boolean
-    /** Current language label shown beside the language row. */
-    currentLanguageLabel?: string
-    /** Fired when the bookmarks item is pressed. */
-    onOpenBookmarks: () => void
-    /** Fired when the language item is pressed. */
-    onOpenLanguage: () => void
-}
+/**
+ * Props for {@link MenuList}.
+ */
+export type MenuListProps = WithClassNames<undefined>
 
 /**
  * Dropdown body menu: an authenticated-only bookmarks section plus the
  * language switcher row.
  *
- * Presentational: forwards item presses upward via `onXXX` callbacks.
- * No business logic.
- * @param props - auth state, current language label, and item callbacks
+ * Container: reads auth state from Redux, derives current language from locale,
+ * and self-dispatches navigation + overlay actions on press.
+ * `"use client"` for hooks + press handlers.
+ * @param props - optional root class name
  */
-export const MenuList = ({
-    hasUser,
-    currentLanguageLabel,
-    onOpenBookmarks,
-    onOpenLanguage,
-}: MenuListProps) => {
+export const MenuList = ({ className }: MenuListProps) => {
     const t = useTranslations()
+    const locale = useLocale()
+    const router = useRouter()
+    const user = useAppSelector((state) => state.user.user)
+    const { close } = useAccountMenuOverlayState()
+    const { open: openLanguage } = useLanguageOverlayState()
+
+    /** Language entry matching the active locale (for the label). */
+    const currentLanguageLabel = useMemo(
+        () => languages.find((lang) => lang.code === locale)?.label,
+        [locale],
+    )
+
+    /** Close the dropdown and navigate to the bookmarks page. */
+    const onOpenBookmarks = useCallback(
+        () => {
+            close()
+            router.push(pathConfig().locale().profile().bookmarks().build())
+        },
+        [close, router],
+    )
+
+    /** Close the dropdown and open the language overlay. */
+    const onOpenLanguage = useCallback(
+        () => {
+            close()
+            openLanguage()
+        },
+        [close, openLanguage],
+    )
+
     return (
-        <DropdownMenu>
+        <DropdownMenu className={cn(className)}>
             {/** Settings block */}
-            {hasUser && (
+            {!!user && (
                 <DropdownSection className="border-b border-divider pb-2 mb-2">
                     <DropdownItem
                         key="bookmarks"
@@ -63,7 +93,7 @@ export const MenuList = ({
                 >
                     <div className="flex items-center justify-between gap-3 w-full">
                         <div className="text-sm">{t("nav.toggleLanguage")}</div>
-                        <div className="flex items-center gap-1 text-sm text-muted">
+                        <div className="flex items-center gap-1.5 text-sm text-muted">
                             {currentLanguageLabel}
                             <CaretRightIcon className="size-4" />
                         </div>

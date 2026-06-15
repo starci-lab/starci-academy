@@ -14,6 +14,7 @@ import { assetConfig } from "@/resources"
 import { runGraphQLWithToast } from "@/modules/toast"
 import { submitCheckout } from "@/modules/payment"
 import { useTranslations } from "next-intl"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Shared payment-method modal for every paid flow.
@@ -25,7 +26,7 @@ import { useTranslations } from "next-intl"
  * International (Stripe, PayPal, Crypto) sections. `"use client"` because it
  * reads SWR/redux and redirects to the gateway.
  */
-export const PaymentModal = () => {
+export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
     // overlay handle + the flow/payload the opener stashed
     const { isOpen, setOpen, context } = usePaymentOverlayState()
     // both purchase mutations live here; the active one is chosen per context
@@ -178,7 +179,7 @@ export const PaymentModal = () => {
         <Modal isOpen={isOpen} onOpenChange={setOpen}>
             <Modal.Backdrop>
                 <Modal.Container size="xs">
-                    <Modal.Dialog>
+                    <Modal.Dialog className={cn(className)}>
                         <Modal.CloseTrigger />
                         <Modal.Header>
                             <div className="flex flex-col items-center">
@@ -216,14 +217,14 @@ export const PaymentModal = () => {
                                                         }
                                                     >
                                                         <Card.Content>
-                                                            <div className="grid grid-cols-3 items-center gap-4">
+                                                            <div className="grid grid-cols-3 items-center gap-3">
                                                                 {/* brand SVG logo (public/icons/payment) — fixed height, auto width, no distortion */}
                                                                 <img
                                                                     alt={paymentMethod.name}
                                                                     className="col-span-1 h-8 w-auto max-w-full object-contain object-left"
                                                                     src={paymentMethod.iconUrl}
                                                                 />
-                                                                <div className="col-span-2 flex flex-col gap-1">
+                                                                <div className="col-span-2 flex flex-col gap-1.5">
                                                                     <div className="flex items-center gap-1.5">
                                                                         {isMutating &&
                                                                             selectedPaymentMethod === paymentMethod.type && (

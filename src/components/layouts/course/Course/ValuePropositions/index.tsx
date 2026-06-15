@@ -2,11 +2,16 @@
 
 import { SealCheck as SealCheckIcon } from "@gravity-ui/icons"
 import React, { useMemo } from "react"
-import { Skeleton } from "@heroui/react"
+import { Skeleton, cn } from "@heroui/react"
 import { useAppSelector } from "@/redux"
 import { useQueryCourseSwr } from "@/hooks"
 import _ from "lodash"
+import type { WithClassNames } from "@/modules/types"
 
+/**
+ * ValuePropositions props — only class-name plumbing (self-contained section).
+ */
+export type ValuePropositionsProps = WithClassNames<undefined>
 
 /**
  * Course value propositions list container.
@@ -14,8 +19,9 @@ import _ from "lodash"
  * Pulls the value proposition lines from redux + the load flag from SWR, sorts
  * them by display order, and renders a skeleton while loading. `"use client"`
  * for the redux selector and the interactive HeroUI `Skeleton`.
+ * @param props - optional wrapper class names
  */
-export const ValuePropositions = () => {
+export const ValuePropositions = (props: ValuePropositionsProps) => {
     const course = useAppSelector((state) => state.course.entity)
     const { isLoading } = useQueryCourseSwr()
     const valuePropositions = useMemo(() => {
@@ -25,7 +31,7 @@ export const ValuePropositions = () => {
 
     if (isLoading) {
         return (
-            <div className="flex flex-col gap-1.5 text-muted">
+            <div className={cn("flex flex-col gap-3 text-muted", props.className)}>
                 <div className="flex items-center gap-1.5">
                     <Skeleton className="h-5 w-5 shrink-0" />
                     <Skeleton className="h-4 flex-1 max-w-[90%]" />
@@ -43,7 +49,7 @@ export const ValuePropositions = () => {
     }
 
     return (
-        <div className="flex flex-col gap-1.5 text-muted">
+        <div className={cn("flex flex-col gap-3 text-muted", props.className)}>
             {valuePropositions.map((valueProposition) => (
                 <div key={valueProposition.id} className="flex items-start gap-1.5">
                     <SealCheckIcon

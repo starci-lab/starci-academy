@@ -1,19 +1,23 @@
 "use client"
 
 import React from "react"
-import { Modal, ScrollShadow } from "@heroui/react"
+import { cn, Modal, ScrollShadow } from "@heroui/react"
 import { MarkdownContent } from "@/components/reuseable"
 import { useContentOverlayState } from "@/hooks"
 import { useAppSelector } from "@/redux"
+import { WithClassNames } from "@/modules/types"
 
-export const ContentModal = () => {
+/** Props for {@link ContentModal}. */
+type ContentModalProps = WithClassNames<undefined>
+
+export const ContentModal = ({ className }: ContentModalProps = {}) => {
     const { isOpen, setOpen } = useContentOverlayState()
     const content = useAppSelector((state) => state.content.entity)
     return (
         <Modal isOpen={isOpen} onOpenChange={setOpen}>
             <Modal.Backdrop>
                 <Modal.Container size="full" scroll="inside">
-                    <Modal.Dialog>
+                    <Modal.Dialog className={cn(className)}>
                         <Modal.CloseTrigger />
                         <Modal.Header>
                             <div className="text-2xl font-bold text-center">

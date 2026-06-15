@@ -8,6 +8,7 @@ import {
     Button,
     Skeleton,
     Tabs,
+    cn,
 } from "@heroui/react"
 import {
     useTranslations,
@@ -21,14 +22,23 @@ import {
 import {
     MyFeedTab,
 } from "@/modules/api"
+import type {
+    WithClassNames,
+} from "@/modules/types/base/class-name"
+
+/** Props for {@link FeedTabs}. */
+export type FeedTabsProps = WithClassNames<undefined>
 
 /**
  * Twitter/GitHub-style feed tabs: "For you" (recommended, default — never empty
  * without follows) and "Following". Each tab **fetches its own cursor-paginated
  * feed** (`myFeed`) with infinite "load more" — independent of the dashboard rail.
  * `"use client"` for tab state + SWR.
+ * @param props - optional className for the root element
  */
-export const FeedTabs = () => {
+export const FeedTabs = ({
+    className,
+}: FeedTabsProps = {}) => {
     const t = useTranslations()
     const [tab, setTab] = useState<MyFeedTab>(MyFeedTab.ForYou)
 
@@ -54,7 +64,7 @@ export const FeedTabs = () => {
     const isLoadingMore = isValidating && (pages?.length ?? 0) < size
 
     return (
-        <div className="flex flex-col">
+        <div className={cn("flex flex-col", className)}>
             <Tabs
                 selectedKey={tab}
                 className="mt-1.5"

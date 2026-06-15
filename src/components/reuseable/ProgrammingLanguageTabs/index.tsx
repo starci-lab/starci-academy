@@ -16,6 +16,7 @@ import {
     isProgrammingLangAvailable,
     resolveActiveProgrammingLang,
 } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 import {
     PROGRAMMING_LANGUAGE_TABS_INDICATOR_CLASS_NAME,
     PROGRAMMING_LANGUAGE_TABS_LIST_CLASS_NAME,
@@ -34,7 +35,7 @@ import {
 /**
  * Props for {@link ProgrammingLanguageTabs}.
  */
-export interface ProgrammingLanguageTabsProps {
+export interface ProgrammingLanguageTabsProps extends WithClassNames<undefined> {
     /** Language keys returned by the backend (subset of the default four). */
     availableLangs: Array<string>
     /** Controlled selected language key (normalized by {@link resolveActiveProgrammingLang}). */

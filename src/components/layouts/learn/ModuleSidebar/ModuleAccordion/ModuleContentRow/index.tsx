@@ -26,9 +26,10 @@ import {
 } from "@/modules/types"
 import {
     ReadBadge,
-} from "@/components/reuseable"
+} from "@/components/layouts/learn/Content/ReadBadge"
 import type {
     ContentEntity,
+    WithClassNames,
 } from "@/modules/types"
 import {
     MODULE_CONTENT_KIND_ICON_MAP,
@@ -43,7 +44,7 @@ const META_DRAG_CONSTRAINTS = { left: -100, right: 0 }
 /**
  * Props for {@link ModuleContentRow}.
  */
-export interface ModuleContentRowProps {
+export interface ModuleContentRowProps extends WithClassNames<undefined> {
     /** Content this row renders. */
     content: ContentEntity
     /** Whether this content is the active one. */
@@ -67,6 +68,7 @@ export const ModuleContentRow = ({
     isActive,
     isLast,
     onSelectContent,
+    className,
 }: ModuleContentRowProps) => {
     const t = useTranslations()
     /** Free vs premium, deciding the leading icon (premium = star, free = article). */
@@ -105,7 +107,7 @@ export const ModuleContentRow = ({
         isActive ? "text-accent" : "text-foreground",
     )
     return (
-        <div>
+        <div className={cn(className)}>
             {/* Whole row is the navigation target (not just the title) so taps on the
                 description/icon select too; button role + key handler give keyboard parity. */}
             <div

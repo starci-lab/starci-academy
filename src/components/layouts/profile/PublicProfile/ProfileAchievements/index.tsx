@@ -72,42 +72,86 @@ export const ProfileAchievements = ({
     }
 
     return (
-        <div className={cn("grid grid-cols-[repeat(auto-fill,minmax(72px,1fr))] gap-6", className)}>
-            {data.map((item) => (
-                <div
-                    key={item.slug}
-                    title={`${item.name} — ${item.description}`}
-                    className="flex flex-col items-center gap-1.5 text-center"
-                >
-                    {/* badge art (MinIO) → medal placeholder; dimmed when locked */}
-                    <BadgeImage
-                        objectKey={item.iconKey}
-                        size={48}
-                        alt={item.name}
-                        className={cn(!item.earned && "opacity-40 grayscale")}
-                        fallback={(
-                            <MedalIcon
-                                width={48}
-                                height={48}
-                                className={cn(
-                                    item.earned ? "text-warning" : "text-default-400",
+        <div className={cn("grid grid-cols-[repeat(auto-fill,minmax(92px,1fr))] gap-6", className)}>
+            {data.map((item) => {
+                // earned → tier count / done; locked → progress toward threshold
+                const status = item.earned
+                    ? (item.tierReached
+                        ? `×${item.tierReached}`
+                        : t("dashboard.achievements.earned"))
+                    : `${item.currentValue}/${item.threshold}`
+                return (
+                    <Tooltip
+                        key={item.slug}
+                        delay={200}
+                    >
+                        <Tooltip.Trigger>
+                            <div className="flex cursor-default flex-col items-center gap-1.5 text-center">
+                                {/* badge art (MinIO) → medal placeholder; dimmed when locked */}
+                                <BadgeImage
+                                    objectKey={item.iconKey}
+                                    size={64}
+                                    alt={item.name}
+                                    className={cn(!item.earned && "opacity-40 grayscale")}
+                                    fallback={(
+                                        <MedalIcon
+                                            width={64}
+                                            height={64}
+                                            className={cn(
+                                                item.earned ? "text-warning" : "text-default-400",
+                                            )}
+                                        />
+                                    )}
+                                />
+                                <div className="line-clamp-2 text-xs leading-tight text-foreground">
+                                    {item.name}
+                                </div>
+                                <div className="text-[10px] text-muted">
+                                    {status}
+                                </div>
+                            </div>
+                        </Tooltip.Trigger>
+                        <Tooltip.Content
+                            placement="top"
+                            showArrow
+                            className="max-w-[240px]"
+                        >
+                            <Tooltip.Arrow />
+                            {/* hover card: big icon + name + how-to-earn + progress */}
+                            <div className="flex flex-col items-center gap-1.5 p-1 text-center">
+                                <BadgeImage
+                                    objectKey={item.iconKey}
+                                    size={72}
+                                    alt={item.name}
+                                    className={cn(!item.earned && "opacity-40 grayscale")}
+                                    fallback={(
+                                        <MedalIcon
+                                            width={72}
+                                            height={72}
+                                            className={cn(
+                                                item.earned ? "text-warning" : "text-default-400",
+                                            )}
+                                        />
+                                    )}
+                                />
+                                <div className="text-sm font-semibold text-foreground">
+                                    {item.name}
+                                </div>
+                                <div className="text-xs text-muted">
+                                    {item.description}
+                                </div>
+                                <div className={cn(
+                                    "text-xs font-medium",
+                                    item.earned ? "text-success" : "text-foreground",
                                 )}
-                            />
-                        )}
-                    />
-                    <div className="line-clamp-2 text-[11px] leading-tight text-foreground">
-                        {item.name}
-                    </div>
-                    {/* earned → tier count / done; locked → progress toward threshold */}
-                    <div className="text-[10px] text-muted">
-                        {item.earned
-                            ? (item.tierReached
-                                ? `×${item.tierReached}`
-                                : t("dashboard.achievements.earned"))
-                            : `${item.currentValue}/${item.threshold}`}
-                    </div>
-                </div>
-            ))}
+                                >
+                                    {status}
+                                </div>
+                            </div>
+                        </Tooltip.Content>
+                    </Tooltip>
+                )
+            })}
         </div>
     )
 }

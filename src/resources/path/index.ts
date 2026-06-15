@@ -309,6 +309,16 @@ export const pathConfig = () => {
                 build,
             }
         }
+        const talents = () => {
+            // talent directory: users who opted into "open to work"
+            const talentsPath = `${localePath}/talents`
+            const build = () => {
+                return talentsPath
+            }
+            return {
+                build,
+            }
+        }
         const practice = () => {
             const practicePath = `${localePath}/practice`
             const build = () => {
@@ -336,6 +346,7 @@ export const pathConfig = () => {
             publicContent,
             dashboard,
             practice,
+            talents,
         }
     }
     return {

@@ -921,8 +921,8 @@
         },
         "followers": "followers",
         "following": "following",
-        "xp": "XP",
-        "codingPoints": "coding pts",
+        "points": "points",
+        "level": "Level {level}",
         "joined": "Joined {date}",
         "streakLine": "{streak}-day streak · longest {longest}",
         "nav": {
@@ -1001,19 +1001,35 @@
             "achievements": "Achievements",
             "activity": "Activity",
             "courses": "Courses",
-            "coding": "Coding"
+            "coding": "Coding",
+            "capstone": "Projects",
+            "skills": "Skills"
         },
         "coding": {
             "solved": "Solved",
             "attempted": "Attempted",
             "points": "Coding pts"
         },
+        "capstone": {
+            "score": "Score {score}"
+        },
+        "skills": {
+            "byLanguage": "By language",
+            "byDifficulty": "By difficulty",
+            "empty": "No coding problems solved yet."
+        },
         "pinnedAchievements": "Pinned achievements",
         "bioEmpty": "This user hasn't written a bio yet.",
         "achievementsEmpty": "No achievements yet.",
         "activityEmpty": "No activity yet.",
         "coursesEmpty": "Not enrolled in any course yet.",
+        "capstoneEmpty": "No projects completed yet.",
         "loadMore": "Load more"
+    },
+    "talents": {
+        "title": "Talent open to work",
+        "description": "Learners currently open to job opportunities. Click to view a profile.",
+        "empty": "No one has turned on \"Open to work\" yet."
     },
     "reference": {
         "title": "References"

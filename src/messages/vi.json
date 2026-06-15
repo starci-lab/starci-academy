@@ -930,8 +930,8 @@
         },
         "followers": "người theo dõi",
         "following": "đang theo dõi",
-        "xp": "XP",
-        "codingPoints": "điểm code",
+        "points": "điểm",
+        "level": "Cấp {level}",
         "joined": "Tham gia {date}",
         "streakLine": "Chuỗi {streak} ngày · dài nhất {longest}",
         "nav": {
@@ -1010,19 +1010,35 @@
             "achievements": "Thành tích",
             "activity": "Hoạt động",
             "courses": "Khóa học",
-            "coding": "Lập trình"
+            "coding": "Lập trình",
+            "capstone": "Dự án",
+            "skills": "Kỹ năng"
         },
         "coding": {
             "solved": "Đã giải",
             "attempted": "Đã thử",
             "points": "Điểm code"
         },
+        "capstone": {
+            "score": "Điểm {score}"
+        },
+        "skills": {
+            "byLanguage": "Theo ngôn ngữ",
+            "byDifficulty": "Theo độ khó",
+            "empty": "Chưa giải bài coding nào."
+        },
         "pinnedAchievements": "Thành tích nổi bật",
         "bioEmpty": "Người dùng này chưa viết phần giới thiệu.",
         "achievementsEmpty": "Chưa có thành tích nào.",
         "activityEmpty": "Chưa có hoạt động nào.",
         "coursesEmpty": "Chưa tham gia khóa học nào.",
+        "capstoneEmpty": "Chưa hoàn thành dự án nào.",
         "loadMore": "Xem thêm"
+    },
+    "talents": {
+        "title": "Ứng viên sẵn sàng làm việc",
+        "description": "Những học viên đang mở cơ hội việc làm. Bấm vào để xem hồ sơ.",
+        "empty": "Chưa có ứng viên nào bật “Sẵn sàng làm việc”."
     },
     "reference": {
         "title": "Tài liệu tham khảo"

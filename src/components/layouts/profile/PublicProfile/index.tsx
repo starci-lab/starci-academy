@@ -37,6 +37,7 @@ import {
 } from "@/resources"
 import {
     FollowButton,
+    LevelBadge,
     MarkdownContent,
     UserAvatar,
 } from "@/components/reuseable"
@@ -61,12 +62,25 @@ import {
 import {
     ProfilePinned,
 } from "./ProfilePinned"
+import {
+    ProfileCapstone,
+} from "./ProfileCapstone"
+import {
+    ProfileSkills,
+} from "./ProfileSkills"
 
 /** Props for {@link PublicProfile}. */
 export type PublicProfileProps = WithClassNames<undefined>
 
 /** The profile tabs (drives the panel switch). */
-type ProfileTab = "overview" | "achievements" | "activity" | "courses" | "coding"
+type ProfileTab =
+    | "overview"
+    | "achievements"
+    | "activity"
+    | "courses"
+    | "coding"
+    | "capstone"
+    | "skills"
 
 /** Tabs rendered in order, left to right (id + i18n label key suffix). */
 const PROFILE_TABS: ReadonlyArray<ProfileTab> = [
@@ -75,6 +89,8 @@ const PROFILE_TABS: ReadonlyArray<ProfileTab> = [
     "activity",
     "courses",
     "coding",
+    "capstone",
+    "skills",
 ]
 
 /**
@@ -336,17 +352,18 @@ export const PublicProfile = ({
                             <span className="ml-1 text-muted">{t("profile.following")}</span>
                         </span>
                     </div>
-                    {/* points: course XP + coding-practice points */}
+                    {/* unified global points balance */}
                     <div className="flex items-center gap-3 text-sm">
                         <span className="text-foreground">
-                            <span className="font-semibold">{user.rewardPoints ?? 0}</span>
-                            <span className="ml-1 text-muted">{t("profile.xp")}</span>
-                        </span>
-                        <span className="text-foreground">
-                            <span className="font-semibold">{user.codingPoints ?? 0}</span>
-                            <span className="ml-1 text-muted">{t("profile.codingPoints")}</span>
+                            <span className="font-semibold">{user.points ?? 0}</span>
+                            <span className="ml-1 text-muted">{t("profile.points")}</span>
                         </span>
                     </div>
+                    {/* account level + progress, derived from points */}
+                    <LevelBadge
+                        points={user.points ?? 0}
+                        className="max-w-[260px]"
+                    />
                     {/* meta: streak + github link + joined date */}
                     <div className="flex flex-col gap-1.5 text-sm text-muted">
                         {weeklyStats && weeklyStats.streak > 0 ? (
@@ -410,6 +427,8 @@ export const PublicProfile = ({
                     {tab === "activity" ? <ProfileActivity /> : null}
                     {tab === "courses" ? <ProfileCourses /> : null}
                     {tab === "coding" ? <ProfileCoding /> : null}
+                    {tab === "capstone" ? <ProfileCapstone /> : null}
+                    {tab === "skills" ? <ProfileSkills /> : null}
                 </main>
             </div>
         </div>

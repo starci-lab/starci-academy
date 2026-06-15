@@ -1245,16 +1245,33 @@
         "historySearch": "Search...",
         "enrolledCourses": "My courses",
         "enrolledCoursesEmpty": "You haven't joined any course yet.",
+        "courseProgress": {
+            "content": "Content completed",
+            "challenge": "Challenges completed",
+            "milestone": "Milestone"
+        },
         "recentContent": "Recent content",
         "recentContentEmpty": "No lessons read yet.",
         "inProgressChallenges": "Challenges in progress",
         "inProgressChallengesEmpty": "No challenges in progress.",
+        "weekStats": "This week",
+        "streakLabel": "streak",
+        "xpLabel": "XP",
+        "lessonsLabel": "lessons",
+        "sponsored": "Sponsored",
+        "sponsoredBy": "Sponsored by {sponsor}",
+        "changelog": "What's new",
+        "changelogCategory": {
+            "feature": "Feature",
+            "fix": "Fix",
+            "announcement": "Announcement"
+        },
         "historyEmpty": "No lessons read yet.",
-        "feedEmpty": "No activity yet. Explore courses to get started.",
+        "feedEmpty": "No activity yet.",
         "feedTabsAria": "Activity feed",
         "loadMore": "Load more",
         "tabs": {
-            "forYou": "For you",
+            "forYou": "Explore",
             "following": "Following"
         },
         "loadError": "Could not load your dashboard. Your session may have expired.",

@@ -38,6 +38,7 @@ export const ProfileHeader = ({
                 <UserAvatar
                     username={name}
                     avatar={user.avatar}
+                    seed={user.email ?? user.username}
                     size="lg"
                     className="size-20 text-2xl"
                 />

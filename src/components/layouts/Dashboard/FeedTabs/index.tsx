@@ -6,6 +6,7 @@ import React, {
 } from "react"
 import {
     Button,
+    Skeleton,
     Tabs,
 } from "@heroui/react"
 import {
@@ -56,6 +57,7 @@ export const FeedTabs = () => {
         <div className="flex flex-col">
             <Tabs
                 selectedKey={tab}
+                className="mt-1.5"
                 variant="secondary"
                 onSelectionChange={(key) => setTab(String(key) as MyFeedTab)}
             >
@@ -78,22 +80,36 @@ export const FeedTabs = () => {
                     </Tabs.List>
                 </Tabs.ListContainer>
             </Tabs>
-            <div className="h-3" />
-
-            <Feed items={items} />
-
-            {/* infinite "load more" — fetches the next cursor page */}
-            {hasMore ? (
-                <div className="flex justify-center pt-4">
-                    <Button
-                        variant="tertiary"
-                        isPending={isLoading || isLoadingMore}
-                        onPress={() => setSize(size + 1)}
-                    >
-                        {t("dashboard.loadMore")}
-                    </Button>
-                </div>
-            ) : null}
+            <div className="p-3">
+                {/* skeleton on first load so the empty-state text never flashes
+                    before the feed arrives; Feed shows "no activity" only once loaded */}
+                {isLoading && items.length === 0 ? (
+                    <div className="flex flex-col gap-3">
+                        {Array.from({
+                            length: 5,
+                        }).map((_, index) => (
+                            <Skeleton
+                                key={index}
+                                className="h-12 w-full rounded-medium"
+                            />
+                        ))}
+                    </div>
+                ) : (
+                    <Feed items={items} />
+                )}
+                {/* infinite "load more" — fetches the next cursor page */}
+                {hasMore ? (
+                    <div className="flex justify-center pt-4">
+                        <Button
+                            variant="tertiary"
+                            isPending={isLoading || isLoadingMore}
+                            onPress={() => setSize(size + 1)}
+                        >
+                            {t("dashboard.loadMore")}
+                        </Button>
+                    </div>
+                ) : null}
+            </div>
         </div>
     )
 }

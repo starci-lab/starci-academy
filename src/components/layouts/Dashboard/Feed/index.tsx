@@ -2,9 +2,6 @@
 
 import React from "react"
 import {
-    Avatar,
-} from "@heroui/react"
-import {
     useLocale,
     useTranslations,
 } from "next-intl"
@@ -12,16 +9,16 @@ import {
     EntityToken,
 } from "../EntityToken"
 import type {
-    QueryMyDashboardFeedItemData,
+    QueryMyFeedItemData,
 } from "@/modules/api"
 import {
-    resolveUserAvatarUrl,
-} from "@/utils"
+    UserAvatar,
+} from "@/components/reuseable/UserAvatar"
 
 /** Props for {@link Feed}. */
 export interface FeedProps {
     /** Activity items from followed users, most recent first. */
-    items: Array<QueryMyDashboardFeedItemData>
+    items: Array<QueryMyFeedItemData>
 }
 
 /**
@@ -51,15 +48,12 @@ export const Feed = ({
                     key={`${item.actorGlobalId}-${item.at}-${index}`}
                     className="flex items-start gap-3 border-b border-default/40 px-1 py-3 last:border-b-0"
                 >
-                    <Avatar className="size-8 shrink-0">
-                        <Avatar.Image
-                            src={resolveUserAvatarUrl(item.actorAvatar, item.actorUsername)}
-                            alt={item.actorUsername}
-                        />
-                        <Avatar.Fallback>
-                            {item.actorUsername[0]?.toUpperCase() ?? "?"}
-                        </Avatar.Fallback>
-                    </Avatar>
+                    <UserAvatar
+                        className="size-8 shrink-0"
+                        username={item.actorUsername}
+                        avatar={item.actorAvatar}
+                        seed={item.actorUsername}
+                    />
                     <div className="flex flex-col gap-1">
                         <span className="text-sm text-foreground">
                             {t.rich(`dashboard.feed.${item.type}`, {

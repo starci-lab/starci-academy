@@ -1,29 +1,5 @@
 import type { GraphQLResponse } from "../../types"
 
-/**
- * Kind of in-app activity in the home feed (mirrors backend `ActivityType`).
- */
-export enum ActivityType {
-    /** Read a lesson for the first time. */
-    LessonRead = "lessonRead",
-    /** Bookmarked a lesson. */
-    LessonBookmarked = "lessonBookmarked",
-    /** Passed a challenge. */
-    ChallengePassed = "challengePassed",
-    /** Solved a coding problem. */
-    CodingSolved = "codingSolved",
-    /** Passed a milestone task. */
-    MilestonePassed = "milestonePassed",
-    /** Passed an AI Lab eval challenge. */
-    AiLabPassed = "aiLabPassed",
-    /** Enrolled in a course. */
-    CourseEnrolled = "courseEnrolled",
-    /** Posted a discussion comment. */
-    DiscussionCommented = "discussionCommented",
-    /** Started following another user. */
-    UserFollowed = "userFollowed",
-}
-
 /** A clickable left-rail item (course / lesson / challenge) — token-based. */
 export interface QueryMyDashboardRefItemData {
     /** Opaque global id — pass to resolveRoute on click. */
@@ -32,36 +8,72 @@ export interface QueryMyDashboardRefItemData {
     label: string
 }
 
-/** One activity item in the home feed (token-based). */
-export interface QueryMyDashboardFeedItemData {
-    /** Opaque global id of the actor (a user) — pass to resolveRoute on click. */
-    actorGlobalId: string
-    /** Actor username (the actor token label). */
-    actorUsername: string
-    /** Avatar URL of the actor, or null when unset. */
-    actorAvatar: string | null
-    /** Kind of activity (drives the feed phrasing). */
-    type: ActivityType
-    /** Opaque global id of the target entity — pass to resolveRoute on click. */
-    targetGlobalId: string | null
-    /** Target token label (lesson/challenge/course title, or username). */
-    targetLabel: string | null
-    /** When the activity happened (ISO string). */
-    at: string
+/** Per-course progress item for the left rail (content / challenge / milestone). */
+export interface QueryMyDashboardMilestoneProgressItemData {
+    /** Opaque global id of the course — pass to resolveRoute on click. */
+    globalId: string
+    /** Course title (the token label). */
+    label: string
+    /** Lessons the viewer has read in the course. */
+    contentCompleted: number
+    /** Total contents (lessons) in the course. */
+    contentTotal: number
+    /** Challenges the viewer has passed in the course. */
+    challengeCompleted: number
+    /** Total challenges in the course. */
+    challengeTotal: number
+    /** Number of milestone tasks the viewer has passed. */
+    completed: number
+    /** Total milestone tasks in the course. */
+    total: number
 }
 
-/** Payload inside `myDashboard.data` after the standard API wrapper. */
+/** Rolling 7-day activity stats for the rail's "this week" widget. */
+export interface QueryMyDashboardWeeklyStatsData {
+    /** Consecutive days (up to today) with at least one XP event. */
+    streak: number
+    /** Total XP earned in the last 7 days. */
+    xp: number
+    /** Number of lessons read in the last 7 days. */
+    lessons: number
+}
+
+/**
+ * The assembled dashboard rail payload — the client merges the four independent
+ * leaf queries (myCourses / myLearnedLessons / myInProgressChallenges /
+ * myWeeklyStats) back into one shape for the rail components.
+ */
 export interface QueryMyDashboardResponseData {
-    /** Courses the viewer has joined (left rail). */
-    enrolledCourses: Array<QueryMyDashboardRefItemData>
     /** Lessons the viewer recently read (left rail). */
     learnedLessons: Array<QueryMyDashboardRefItemData>
     /** Challenges the viewer has started but not yet passed (left rail). */
     inProgressChallenges: Array<QueryMyDashboardRefItemData>
+    /** Every joined course with its milestone progress (doubles as the course list). */
+    milestoneProgress: Array<QueryMyDashboardMilestoneProgressItemData>
+    /** Rolling 7-day activity stats (streak / XP / lessons). */
+    weeklyStats: QueryMyDashboardWeeklyStatsData
 }
 
-/** Apollo response shape for the `myDashboard` query. */
-export interface QueryMyDashboardResponse {
-    /** Top-level `myDashboard` field wrapping the standard API response. */
-    myDashboard: GraphQLResponse<QueryMyDashboardResponseData>
+/** Apollo response shape for the `myCourses` query. */
+export interface QueryMyCoursesResponse {
+    /** Top-level `myCourses` field wrapping the standard API response. */
+    myCourses: GraphQLResponse<Array<QueryMyDashboardMilestoneProgressItemData>>
+}
+
+/** Apollo response shape for the `myLearnedLessons` query. */
+export interface QueryMyLearnedLessonsResponse {
+    /** Top-level `myLearnedLessons` field wrapping the standard API response. */
+    myLearnedLessons: GraphQLResponse<Array<QueryMyDashboardRefItemData>>
+}
+
+/** Apollo response shape for the `myInProgressChallenges` query. */
+export interface QueryMyInProgressChallengesResponse {
+    /** Top-level `myInProgressChallenges` field wrapping the standard API response. */
+    myInProgressChallenges: GraphQLResponse<Array<QueryMyDashboardRefItemData>>
+}
+
+/** Apollo response shape for the `myWeeklyStats` query. */
+export interface QueryMyWeeklyStatsResponse {
+    /** Top-level `myWeeklyStats` field wrapping the standard API response. */
+    myWeeklyStats: GraphQLResponse<QueryMyDashboardWeeklyStatsData>
 }

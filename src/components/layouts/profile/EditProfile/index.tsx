@@ -32,8 +32,10 @@ import {
 } from "@/redux/slices"
 import {
     useMutateUpdateProfileSwr,
-    usePostUploadAvatarSwr,
+    useMutateGenerateAvatarPresignUrlSwr,
+    useMutateVerifyAvatarPresignUrlSwr,
 } from "@/hooks"
+import axios from "axios"
 import type {
     UpdateProfileRequest,
 } from "@/modules/api"
@@ -75,7 +77,9 @@ export const EditProfile = () => {
     const user = useAppSelector((state) => state.user.user)
 
     const { trigger: triggerUpdate } = useMutateUpdateProfileSwr()
-    const { trigger: triggerUpload } = usePostUploadAvatarSwr()
+    // avatar upload is a presigned-URL flow: generate → PUT to MinIO → verify
+    const { trigger: triggerGenerateAvatarPresign } = useMutateGenerateAvatarPresignUrlSwr()
+    const { trigger: triggerVerifyAvatarPresign } = useMutateVerifyAvatarPresignUrlSwr()
 
     // hidden <input type=file>, opened by the avatar button
     const fileInputRef = useRef<HTMLInputElement>(null)
@@ -143,13 +147,33 @@ export const EditProfile = () => {
             setSubmitting(true)
             setStatus(null)
             try {
-                // 1) upload the new avatar first so the BE already has the URL on the row
+                // 1) upload the new avatar first (presigned-URL flow) so the BE
+                // already has the URL persisted before re-reading the user
                 if (file) {
-                    const uploaded = await triggerUpload({
-                        file,
+                    // 1a) mint a presigned PUT URL for the picked image's type
+                    const presign = await triggerGenerateAvatarPresign({
+                        request: {
+                            contentType: file.type,
+                        },
                     })
-                    // a missing URL means the upload failed — surface it before mutating
-                    if (!uploaded?.data?.url) {
+                    const presignData = presign?.data?.generateAvatarPresignUrl?.data
+                    if (!presignData?.url) {
+                        throw new Error(t("profileEdit.uploadFailed"))
+                    }
+                    // 1b) upload the bytes straight to MinIO (no API round-trip for
+                    // the file); the Content-Type must match the presigned signature
+                    await axios.put(presignData.url, file, {
+                        headers: {
+                            "Content-Type": file.type,
+                        },
+                    })
+                    // 1c) confirm → BE validates the key owner + persists the avatar URL
+                    const verify = await triggerVerifyAvatarPresign({
+                        request: {
+                            key: presignData.key,
+                        },
+                    })
+                    if (!verify?.data?.verifyAvatarPresignUrl?.data?.uploaded) {
                         throw new Error(t("profileEdit.uploadFailed"))
                     }
                 }
@@ -191,7 +215,8 @@ export const EditProfile = () => {
             file,
             displayName,
             bio,
-            triggerUpload,
+            triggerGenerateAvatarPresign,
+            triggerVerifyAvatarPresign,
             triggerUpdate,
             dispatch,
             t,
@@ -238,6 +263,7 @@ export const EditProfile = () => {
                     <UserAvatar
                         username={user.displayName ?? user.username}
                         avatar={shownAvatar}
+                        seed={user.email ?? user.username}
                         size="lg"
                         className="size-20 text-2xl"
                     />

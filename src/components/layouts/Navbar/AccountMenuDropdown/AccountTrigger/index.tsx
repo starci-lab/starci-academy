@@ -3,11 +3,10 @@
 import { Person as UserIcon } from "@gravity-ui/icons"
 import React from "react"
 import {
-    Avatar,
-    AvatarFallback,
     Badge,
     Button,
 } from "@heroui/react"
+import { UserAvatar } from "@/components/reuseable/UserAvatar"
 import type {
 
     UserEntity,
@@ -55,11 +54,13 @@ export const AccountTrigger = ({
             variant="tertiary"
         >
             <Badge.Anchor>
-                <Avatar size="sm" className="cursor-pointer">
-                    <AvatarFallback>
-                        {user?.username?.slice(0, 2).toUpperCase()}
-                    </AvatarFallback>
-                </Avatar>
+                <UserAvatar
+                    size="sm"
+                    className="cursor-pointer"
+                    username={user?.username}
+                    avatar={user?.avatar}
+                    seed={user?.email ?? user?.username}
+                />
                 <Badge size="sm" color="accent">5</Badge>
             </Badge.Anchor>
         </Button>

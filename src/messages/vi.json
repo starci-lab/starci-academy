@@ -1254,16 +1254,33 @@
         "historySearch": "Tìm...",
         "enrolledCourses": "Khóa học của tôi",
         "enrolledCoursesEmpty": "Bạn chưa tham gia khóa nào.",
+        "courseProgress": {
+            "content": "Nội dung hoàn thành",
+            "challenge": "Thử thách hoàn thành",
+            "milestone": "Milestone"
+        },
         "recentContent": "Nội dung gần đây",
         "recentContentEmpty": "Chưa đọc bài nào.",
         "inProgressChallenges": "Challenge đang làm",
         "inProgressChallengesEmpty": "Không có challenge đang làm.",
+        "weekStats": "Tuần này",
+        "streakLabel": "streak",
+        "xpLabel": "XP",
+        "lessonsLabel": "bài",
+        "sponsored": "Quảng cáo",
+        "sponsoredBy": "Tài trợ bởi {sponsor}",
+        "changelog": "Có gì mới",
+        "changelogCategory": {
+            "feature": "Tính năng",
+            "fix": "Sửa lỗi",
+            "announcement": "Thông báo"
+        },
         "historyEmpty": "Chưa đọc bài nào.",
-        "feedEmpty": "Chưa có hoạt động nào. Khám phá khóa học để bắt đầu.",
+        "feedEmpty": "Không có hoạt động nào.",
         "feedTabsAria": "Bảng hoạt động",
         "loadMore": "Tải thêm",
         "tabs": {
-            "forYou": "Dành cho bạn",
+            "forYou": "Khám phá",
             "following": "Đang theo dõi"
         },
         "loadError": "Không tải được bảng điều khiển. Phiên đăng nhập của bạn có thể đã hết hạn.",

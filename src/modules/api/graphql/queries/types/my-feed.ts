@@ -1,5 +1,46 @@
 import type { GraphQLResponse } from "../../types"
-import type { QueryMyDashboardFeedItemData } from "./my-dashboard"
+
+/**
+ * Kind of in-app activity in the home feed (mirrors backend `ActivityType`).
+ */
+export enum ActivityType {
+    /** Read a lesson for the first time. */
+    LessonRead = "lessonRead",
+    /** Bookmarked a lesson. */
+    LessonBookmarked = "lessonBookmarked",
+    /** Passed a challenge. */
+    ChallengePassed = "challengePassed",
+    /** Solved a coding problem. */
+    CodingSolved = "codingSolved",
+    /** Passed a milestone task. */
+    MilestonePassed = "milestonePassed",
+    /** Passed an AI Lab eval challenge. */
+    AiLabPassed = "aiLabPassed",
+    /** Enrolled in a course. */
+    CourseEnrolled = "courseEnrolled",
+    /** Posted a discussion comment. */
+    DiscussionCommented = "discussionCommented",
+    /** Started following another user. */
+    UserFollowed = "userFollowed",
+}
+
+/** One activity item in the home feed (token-based). */
+export interface QueryMyFeedItemData {
+    /** Opaque global id of the actor (a user) — pass to resolveRoute on click. */
+    actorGlobalId: string
+    /** Actor username (the actor token label). */
+    actorUsername: string
+    /** Avatar URL of the actor, or null when unset. */
+    actorAvatar: string | null
+    /** Kind of activity (drives the feed phrasing). */
+    type: ActivityType
+    /** Opaque global id of the target entity — pass to resolveRoute on click. */
+    targetGlobalId: string | null
+    /** Target token label (lesson/challenge/course title, or username). */
+    targetLabel: string | null
+    /** When the activity happened (ISO string). */
+    at: string
+}
 
 /** Which home feed to read (mirrors backend `MyFeedTab`). */
 export enum MyFeedTab {
@@ -22,7 +63,7 @@ export interface MyFeedRequest {
 /** Payload inside `myFeed.data`. */
 export interface QueryMyFeedResponseData {
     /** Feed items for this page, newest first. */
-    items: Array<QueryMyDashboardFeedItemData>
+    items: Array<QueryMyFeedItemData>
     /** Cursor for the next page; null when no more. */
     nextCursor: string | null
 }

@@ -3,9 +3,6 @@
 import { Camera as CameraIcon } from "@gravity-ui/icons"
 import React, {
     useCallback,
-    useMemo,
-    useRef,
-    useState,
 } from "react"
 import {
     Breadcrumbs,
@@ -14,7 +11,6 @@ import {
     Label,
     Spinner,
     TextField,
-    cn,
 } from "@heroui/react"
 import {
     useLocale,
@@ -24,21 +20,11 @@ import {
     useRouter,
 } from "next/navigation"
 import {
-    useAppDispatch,
     useAppSelector,
 } from "@/redux"
 import {
-    setUser,
-} from "@/redux/slices"
-import {
-    useMutateUpdateProfileSwr,
-    useMutateGenerateAvatarPresignUrlSwr,
-    useMutateVerifyAvatarPresignUrlSwr,
+    useEditProfileForm,
 } from "@/hooks"
-import axios from "axios"
-import type {
-    UpdateProfileRequest,
-} from "@/modules/api"
 import {
     pathConfig,
 } from "@/resources"
@@ -52,49 +38,39 @@ const DISPLAY_NAME_MAX = 100
 /** Max length of the bio (mirrors the `bio` column). */
 const BIO_MAX = 280
 
-/** Inline save status shown under the form. */
-interface SaveStatus {
-    /** Whether the save succeeded or failed. */
-    kind: "success" | "error"
-    /** Human-readable status text. */
-    text: string
-}
-
 /**
  * Edit-profile feature container.
  *
- * Owns the page chrome (breadcrumb + header) and a small local form for the
- * three editable fields (avatar, display name, bio). On save it first uploads a
- * freshly picked avatar (multipart REST), then persists the text fields via the
- * `updateProfile` mutation, and pushes the returned fresh user into redux so the
- * header / navbar update instantly. Mounted by `/profile/edit`.
+ * Owns only the page chrome (breadcrumb + header) and the field markup — the form
+ * itself (values, avatar file, validation, submit) lives in the `useEditProfileForm`
+ * react-hook-form hook (per the form pattern; no scattered local state). On save the
+ * hook uploads a freshly picked avatar then persists the text fields + lock flag and
+ * pushes the fresh user into redux. Mounted by `/profile/edit`.
  */
 export const EditProfile = () => {
     const t = useTranslations()
     const router = useRouter()
     const locale = useLocale()
-    const dispatch = useAppDispatch()
     const user = useAppSelector((state) => state.user.user)
 
-    const { trigger: triggerUpdate } = useMutateUpdateProfileSwr()
-    // avatar upload is a presigned-URL flow: generate → PUT to MinIO → verify
-    const { trigger: triggerGenerateAvatarPresign } = useMutateGenerateAvatarPresignUrlSwr()
-    const { trigger: triggerVerifyAvatarPresign } = useMutateVerifyAvatarPresignUrlSwr()
+    // the form (values + avatar file + submit) is owned by the RHF hook
+    const {
+        watch,
+        setValue,
+        onSubmit,
+        formState: {
+            isSubmitting,
+        },
+        fileInputRef,
+        onPickAvatar,
+        onAvatarChange,
+        shownAvatar,
+    } = useEditProfileForm()
 
-    // hidden <input type=file>, opened by the avatar button
-    const fileInputRef = useRef<HTMLInputElement>(null)
-    // the freshly picked avatar file (null until the user chooses one)
-    const [file, setFile] = useState<File | null>(null)
-    // object-URL preview for the picked file (revoked-on-replace is cheap, skip it)
-    const [preview, setPreview] = useState<string | null>(null)
-    // controlled text fields, seeded from the redux user once on mount
-    const [displayName, setDisplayName] = useState(user?.displayName ?? "")
-    const [bio, setBio] = useState(user?.bio ?? "")
-    // privacy: lock profile (FB-style) — when on, only the owner sees full content
-    const [profileLocked, setProfileLocked] = useState(user?.profileLocked ?? false)
-    // whole-flow in-flight flag (upload + mutate) + inline result
-    const [submitting, setSubmitting] = useState(false)
-    const [status, setStatus] = useState<SaveStatus | null>(null)
+    // controlled bindings read straight from the form state (no component useState)
+    const displayName = watch("displayName")
+    const bio = watch("bio")
+    const profileLocked = watch("profileLocked")
 
     /** Navigate to the home page (breadcrumb root). */
     const onNavigateHome = useCallback(
@@ -103,7 +79,7 @@ export const EditProfile = () => {
             router,
         ],
     )
-    /** Navigate to the profile hub (breadcrumb parent + back target). */
+    /** Navigate to the profile (breadcrumb parent + back target). */
     const onNavigateProfile = useCallback(
         () => router.push(pathConfig().locale(locale).profile().build()),
         [
@@ -112,122 +88,7 @@ export const EditProfile = () => {
         ],
     )
 
-    /** Open the native file picker. */
-    const onPickAvatar = useCallback(
-        () => fileInputRef.current?.click(),
-        [],
-    )
-
-    /** Capture the chosen file and build a local preview URL. */
-    const onAvatarChange = useCallback(
-        (event: React.ChangeEvent<HTMLInputElement>) => {
-            const next = event.target.files?.[0]
-            // ignore an empty pick (user cancelled the dialog)
-            if (!next) {
-                return
-            }
-            setFile(next)
-            setPreview(URL.createObjectURL(next))
-            // clear any stale status from a previous attempt
-            setStatus(null)
-        },
-        [],
-    )
-
-    // the face shown: local preview while a new file is staged, else the saved avatar
-    const shownAvatar = useMemo(
-        () => preview ?? user?.avatar ?? null,
-        [
-            preview,
-            user?.avatar,
-        ],
-    )
-
-    /** Upload the avatar (if any) then persist the text fields. */
-    const onSave = useCallback(
-        async () => {
-            setSubmitting(true)
-            setStatus(null)
-            try {
-                // 1) upload the new avatar first (presigned-URL flow) so the BE
-                // already has the URL persisted before re-reading the user
-                if (file) {
-                    // 1a) mint a presigned PUT URL for the picked image's type
-                    const presign = await triggerGenerateAvatarPresign({
-                        request: {
-                            contentType: file.type,
-                        },
-                    })
-                    const presignData = presign?.data?.generateAvatarPresignUrl?.data
-                    if (!presignData?.url) {
-                        throw new Error(t("profileEdit.uploadFailed"))
-                    }
-                    // 1b) upload the bytes straight to MinIO (no API round-trip for
-                    // the file); the Content-Type must match the presigned signature
-                    await axios.put(presignData.url, file, {
-                        headers: {
-                            "Content-Type": file.type,
-                        },
-                    })
-                    // 1c) confirm → BE validates the key owner + persists the avatar URL
-                    const verify = await triggerVerifyAvatarPresign({
-                        request: {
-                            key: presignData.key,
-                        },
-                    })
-                    if (!verify?.data?.verifyAvatarPresignUrl?.data?.uploaded) {
-                        throw new Error(t("profileEdit.uploadFailed"))
-                    }
-                }
-
-                // 2) persist the text fields; empty string clears the column (null)
-                const request: UpdateProfileRequest = {
-                    displayName: displayName.trim() ? displayName.trim() : null,
-                    bio: bio.trim() ? bio.trim() : null,
-                    profileLocked,
-                }
-                const result = await triggerUpdate(request)
-                const payload = result?.data?.updateProfile
-
-                // 3) on success the resolver re-reads the user (incl. the new avatar) —
-                // push it into redux so the header + navbar reflect changes instantly
-                if (payload?.success && payload.data) {
-                    dispatch(setUser(payload.data))
-                    setFile(null)
-                    setPreview(null)
-                    setStatus({
-                        kind: "success",
-                        text: t("profileEdit.saved"),
-                    })
-                } else {
-                    setStatus({
-                        kind: "error",
-                        text: payload?.message ?? t("profileEdit.error"),
-                    })
-                }
-            } catch (error) {
-                setStatus({
-                    kind: "error",
-                    text: (error as Error)?.message ?? t("profileEdit.error"),
-                })
-            } finally {
-                setSubmitting(false)
-            }
-        },
-        [
-            file,
-            displayName,
-            bio,
-            profileLocked,
-            triggerGenerateAvatarPresign,
-            triggerVerifyAvatarPresign,
-            triggerUpdate,
-            dispatch,
-            t,
-        ],
-    )
-
-    // signed-out guard mirrors the profile hub
+    // signed-out guard
     if (!user) {
         return (
             <div className="mx-auto flex max-w-3xl flex-col items-center gap-1.5 p-12 text-center">
@@ -302,7 +163,7 @@ export const EditProfile = () => {
                     placeholder={user.username}
                     maxLength={DISPLAY_NAME_MAX}
                     value={displayName}
-                    onChange={(event) => setDisplayName(event.target.value)}
+                    onChange={(event) => setValue("displayName", event.target.value)}
                 />
             </TextField>
 
@@ -315,7 +176,7 @@ export const EditProfile = () => {
                     placeholder={t("profileEdit.bioPlaceholder")}
                     maxLength={BIO_MAX}
                     value={bio}
-                    onChange={(event) => setBio(event.target.value)}
+                    onChange={(event) => setValue("bio", event.target.value)}
                     className="w-full resize-none rounded-large bg-default/40 p-3 text-sm text-foreground outline-none focus-visible:ring-2 focus-visible:ring-accent"
                 />
                 <span className="self-end text-xs text-muted">{`${bio.length}/${BIO_MAX}`}</span>
@@ -331,28 +192,17 @@ export const EditProfile = () => {
                     id="profile-locked"
                     type="checkbox"
                     checked={profileLocked}
-                    onChange={(event) => setProfileLocked(event.target.checked)}
+                    onChange={(event) => setValue("profileLocked", event.target.checked)}
                     className="mt-1 size-4 shrink-0"
                 />
             </div>
 
-            {status ? (
-                <div
-                    className={cn(
-                        "text-sm",
-                        status.kind === "success" ? "text-accent" : "text-danger",
-                    )}
-                >
-                    {status.text}
-                </div>
-            ) : null}
-
             <Button
                 variant="primary"
                 fullWidth
-                isDisabled={submitting}
-                isPending={submitting}
-                onPress={onSave}
+                isDisabled={isSubmitting}
+                isPending={isSubmitting}
+                onPress={() => onSubmit()}
             >
                 {({ isPending }) => (
                     <>

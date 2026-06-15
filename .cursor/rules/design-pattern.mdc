@@ -34,27 +34,39 @@ alwaysApply: true
 - Throw explicit errors for missing required params or missing response payload.
 - Components read from Redux for rendering; hooks own fetching and cache semantics.
 
-## 3.1) Singleton Formik Pattern (`src/hooks/singleton/formik`)
+## 3.1) Form Pattern — react-hook-form hook (`src/hooks/rhf`) — STRICT
 
-- Keep Formik logic in singleton hooks, not directly inside page components.
-- Structure for each form:
-  - `core/useXxxFormik.ts`: owns `initialValues`, `validationSchema`, `onSubmit`.
-  - `impls/useXxxFormik.ts`: returns formik instance via `FormikContext`.
-  - register in `FormikContext.tsx` and provider value.
-  - export via `core/index.ts` + `impls/index.ts` + `formik/index.ts`.
-- UI components/pages only consume singleton hooks (e.g. `useCvApplyFormik`) and bind HeroUI fields to Formik state.
-- Validation messages should use i18n message keys; map keys to translated text in UI with `t(...)`.
+Forms use **react-hook-form** through a dedicated hook `src/hooks/rhf/useXxxForm.ts`.
+(Formik is removed — the old singleton-Formik / `FormikContext` no longer exists. Don't
+re-introduce it, and don't hand-roll a pile of `useState` for form values in the component.)
 
-## 3.2) Singleton Modal Overlay Pattern (`src/hooks/singleton/overlay-state` + `src/components/modals`)
+- The hook owns the form: `useForm({ resolver: zodResolver(schema), values })`. Seed defaults
+  from redux/SWR via the `values` option (re-seeds on change — replaces formik `enableReinitialize`).
+- Validation = a `zod` schema (`@hookform/resolvers/zod`); messages are i18n keys resolved with `t(...)`.
+- `onSubmit = form.handleSubmit(async (value) => { ... })`; wrap the mutation call in
+  `runGraphQLWithToast(...)` (`@/modules/toast`) for success/error toasts.
+- Any extra state the form needs (e.g. a picked `File` for upload, `fileInputRef`) lives **inside
+  the hook**, not the component. The hook returns `{ ...form, onSubmit, ...extras }`.
+- Export from `src/hooks/rhf/index.ts`.
+- The component ONLY consumes the hook + binds fields (`register`, `watch`, `setValue`,
+  `formState.errors` / `formState.isSubmitting`). **No scattered `useState` for form values.**
+- Examples: `usePersonalProjectIdeaForm`, `useCvReviewForm`, `useEditProfileForm`.
 
-- Keep modal open/close state in singleton overlay hooks, not as local page state when the modal is part of global app UX.
-- Structure for each overlay:
-  - `core/useXxxOverlayState.ts`: returns `useOverlayState()`.
-  - `impls/useXxxOverlayState.ts`: maps context state to `{ isOpen, onOpen, onClose, setOpen }`.
-  - register in `OverlayStateContext.tsx` and provider value.
-  - export via `core/index.ts`, `impls/index.ts`, and `overlay-state/index.ts`.
-- Put modal UI under `src/components/modals/XxxModal/index.tsx` and mount in `ModalContainer`.
-- Pages/components should call singleton overlay hooks (e.g. `onOpen`) instead of rendering modal markup inline.
+## 3.2) Overlay / Modal Pattern — Zustand overlay store (`src/hooks/zustand/overlay`) — STRICT
+
+Modal/drawer/popover open-state lives in ONE zustand store (`useOverlayStore`) — NOT local page
+state, and NOT the old singleton `OverlayStateContext` (removed: the mega-context re-rendered all
+overlays at once).
+
+- Each overlay has an `OverlayKey` + a `useXxxOverlayState()` accessor returning the HeroUI shape
+  (`isOpen`, `setOpen`, `open`, `close`, `toggle`). A component subscribes by selector to its own
+  key, so opening one overlay does not re-render consumers of the others.
+- Overlays that carry a payload (e.g. payment / ad / mind-map details) stash a `context` in the
+  store and override `open(payload)`.
+- Add a new overlay: add the key to `OverlayKey` + `OVERLAY_KEYS` (`store.ts`), add a
+  `useXxxOverlayState` accessor (`hooks.ts`), put the modal UI under `src/components/modals/XxxModal`
+  and mount it in `ModalContainer` (drawers in `DrawerContainer`), then call `open()` / `close()`
+  from components — never render modal markup inline with local open state.
 
 ## 4) Routing Pattern (`pathConfig`)
 

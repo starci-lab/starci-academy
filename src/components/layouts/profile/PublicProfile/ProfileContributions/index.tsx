@@ -4,12 +4,12 @@ import React, {
     useState,
 } from "react"
 import {
-    useParams,
-} from "next/navigation"
-import {
     useQueryUserContributionCalendarSwr,
     useQueryUserProfileSwr,
 } from "@/hooks"
+import {
+    useProfileUsername,
+} from "../useProfileUsername"
 import {
     ContributionCalendarView,
 } from "@/components/reuseable/ContributionCalendarView"
@@ -34,7 +34,7 @@ export const ProfileContributions = ({
     className,
 }: ProfileContributionsProps) => {
     // route carries the username; resolve it to the entity id the calendar keys off
-    const username = String(useParams().username)
+    const username = useProfileUsername()
     const { data: user } = useQueryUserProfileSwr(username)
     const userId = user?.id ?? null
 

@@ -982,6 +982,7 @@
         "title": "Profile",
         "notFound": "This user could not be found.",
         "notFoundDescription": "The username may be wrong or the account was removed.",
+        "bioHeading": "About",
         "tabs": {
             "overview": "Overview",
             "achievements": "Achievements",

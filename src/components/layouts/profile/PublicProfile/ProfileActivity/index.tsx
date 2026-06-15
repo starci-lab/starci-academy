@@ -10,12 +10,12 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    useParams,
-} from "next/navigation"
-import {
     useQueryUserFeedSwr,
     useQueryUserProfileSwr,
 } from "@/hooks"
+import {
+    useProfileUsername,
+} from "../useProfileUsername"
 import {
     Feed,
 } from "@/components/layouts/shell/Dashboard/Feed"
@@ -40,7 +40,7 @@ export const ProfileActivity = ({
     const t = useTranslations()
     // route carries the username; resolve it to the entity id the timeline keys
     // off (the profile fetch is SWR-deduped with the parent + tabs)
-    const username = String(useParams().username)
+    const username = useProfileUsername()
     const { data: user } = useQueryUserProfileSwr(username)
     const userId = user?.id ?? null
     const {

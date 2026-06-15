@@ -1,4 +1,4 @@
-export * from "./Profile"
+export * from "./PublicProfile"
 export * from "./EditProfile"
 export * from "./Sessions"
 export * from "./Security"

@@ -16,7 +16,6 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    useParams,
     useRouter,
 } from "next/navigation"
 import {
@@ -26,6 +25,9 @@ import {
     useMutateSetFollowSwr,
     useQueryUserProfileSwr,
 } from "@/hooks"
+import {
+    useProfileUsername,
+} from "./useProfileUsername"
 import {
     pathConfig,
 } from "@/resources"
@@ -84,8 +86,9 @@ export const PublicProfile = ({
     const t = useTranslations()
     const router = useRouter()
     const locale = useLocale()
-    // target username comes from the route segment `/profile/[username]`
-    const username = String(useParams().username)
+    // target username: the `/profile/[username]` segment, or — on the bare
+    // `/profile` — the signed-in user's own username (one layout for self + others)
+    const username = useProfileUsername()
     const viewer = useAppSelector((state) => state.user.user)
     const authenticated = useAppSelector((state) => state.keycloak.authenticated)
     const {
@@ -150,10 +153,12 @@ export const PublicProfile = ({
     // viewing your own public profile → no follow button (link to edit instead)
     const isSelf = !!viewer && !!targetUserId && viewer.id === targetUserId
 
-    // first load → centered spinner so the column never jumps
-    if (isLoading) {
+    // first load → centered spinner so the column never jumps. On the bare
+    // `/profile` the username is null until the signed-in user hydrates — treat
+    // that as loading too (avoids a not-found flash before redux settles)
+    if (isLoading || (authenticated && !username)) {
         return (
-            <div className={cn("mx-auto flex max-w-5xl justify-center p-12", className)}>
+            <div className={cn("mx-auto flex max-w-6xl justify-center p-12", className)}>
                 <Spinner size="lg" />
             </div>
         )
@@ -189,57 +194,8 @@ export const PublicProfile = ({
     const title = hasDisplayName ? user.displayName : user.username
 
     return (
-        <div className={cn("mx-auto flex max-w-5xl flex-col gap-6 p-6", className)}>
-            {/* identity header + primary action — sits ABOVE the tab strip */}
-            <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
-                <UserAvatar
-                    username={user.displayName ?? user.username}
-                    avatar={user.avatar}
-                    seed={user.username}
-                    size="lg"
-                    className="size-24 text-3xl"
-                />
-                <div className="flex min-w-0 flex-1 flex-col gap-1.5">
-                    <div className="truncate text-2xl font-bold text-foreground">
-                        {title}
-                    </div>
-                    {/* show the @handle only when it differs from the title */}
-                    {hasDisplayName ? (
-                        <div className="truncate text-base text-muted">
-                            @{user.username}
-                        </div>
-                    ) : null}
-                    <div className="flex items-center gap-3 text-sm">
-                        <span className="text-foreground">
-                            <span className="font-semibold">{followerCount}</span>
-                            <span className="ml-1 text-muted">{t("profile.followers")}</span>
-                        </span>
-                        <span className="text-foreground">
-                            <span className="font-semibold">{user.followingCount ?? 0}</span>
-                            <span className="ml-1 text-muted">{t("profile.following")}</span>
-                        </span>
-                    </div>
-                </div>
-                {/* action: follow for signed-in visitors; edit on your own profile */}
-                {authenticated && !isSelf ? (
-                    <FollowButton
-                        following={following}
-                        isPending={isFollowPending}
-                        onToggle={onToggleFollow}
-                    />
-                ) : null}
-                {isSelf ? (
-                    <Button
-                        variant="secondary"
-                        size="sm"
-                        onPress={() => router.push(pathConfig().locale(locale).profile().edit().build())}
-                    >
-                        {t("profileEdit.title")}
-                    </Button>
-                ) : null}
-            </div>
-
-            {/* tab strip (underline style) */}
+        <div className={cn("mx-auto flex max-w-6xl flex-col gap-6 p-6", className)}>
+            {/* full-width tab strip at the top (GitHub-style) */}
             <Tabs
                 selectedKey={tab}
                 variant="secondary"
@@ -260,25 +216,86 @@ export const PublicProfile = ({
                 </Tabs.ListContainer>
             </Tabs>
 
-            {/* panel — only the selected tab mounts (lazy fetch per tab) */}
-            <div>
-                {tab === "overview" ? (
-                    <div className="flex flex-col gap-6">
-                        {user.bio?.trim() ? (
-                            // bio rendered as markdown — the GitHub "About Me" README
-                            <MarkdownContent markdown={user.bio} />
-                        ) : (
-                            <div className="rounded-large bg-default/40 p-6 text-center text-sm text-muted">
-                                {t("publicProfile.bioEmpty")}
+            {/* below the tabs: identity sidebar (left) + tab content (right) */}
+            <div className="flex flex-col gap-8 md:flex-row md:items-start">
+                {/* sidebar — persistent identity + primary action (sticky on desktop) */}
+                <aside className="flex w-full flex-col gap-3 md:sticky md:top-6 md:w-64 md:shrink-0">
+                    <UserAvatar
+                        username={user.displayName ?? user.username}
+                        avatar={user.avatar}
+                        seed={user.username}
+                        size="lg"
+                        className="size-32 text-5xl"
+                    />
+                    <div className="flex flex-col gap-0">
+                        <div className="truncate text-2xl font-bold text-foreground">
+                            {title}
+                        </div>
+                        {/* show the @handle only when it differs from the title */}
+                        {hasDisplayName ? (
+                            <div className="truncate text-base text-muted">
+                                @{user.username}
                             </div>
-                        )}
-                        {/* GitHub-style contribution heatmap for this user (public) */}
-                        <ProfileContributions />
+                        ) : null}
                     </div>
-                ) : null}
-                {tab === "achievements" ? <ProfileAchievements /> : null}
-                {tab === "activity" ? <ProfileActivity /> : null}
-                {tab === "courses" ? <ProfileCourses /> : null}
+                    {/* action (full-width under the identity): follow others, edit self */}
+                    {authenticated && !isSelf ? (
+                        <FollowButton
+                            following={following}
+                            isPending={isFollowPending}
+                            onToggle={onToggleFollow}
+                            className="w-full"
+                        />
+                    ) : null}
+                    {isSelf ? (
+                        <Button
+                            variant="secondary"
+                            className="w-full"
+                            onPress={() => router.push(pathConfig().locale(locale).profile().edit().build())}
+                        >
+                            {t("profileEdit.title")}
+                        </Button>
+                    ) : null}
+                    {/* follower / following counts */}
+                    <div className="flex items-center gap-3 text-sm">
+                        <span className="text-foreground">
+                            <span className="font-semibold">{followerCount}</span>
+                            <span className="ml-1 text-muted">{t("profile.followers")}</span>
+                        </span>
+                        <span className="text-foreground">
+                            <span className="font-semibold">{user.followingCount ?? 0}</span>
+                            <span className="ml-1 text-muted">{t("profile.following")}</span>
+                        </span>
+                    </div>
+                </aside>
+
+                {/* main — selected tab content (only the open tab mounts → lazy fetch) */}
+                <main className="flex min-w-0 flex-1 flex-col gap-6">
+                    {tab === "overview" ? (
+                        <>
+                            {/* README-style bio card (markdown) */}
+                            <div className="rounded-large border border-default/40 p-5">
+                                <div className="mb-3 text-xs text-muted">
+                                    {t("publicProfile.bioHeading")}
+                                </div>
+                                {user.bio?.trim() ? (
+                                    <MarkdownContent markdown={user.bio} />
+                                ) : (
+                                    <div className="text-sm text-muted">
+                                        {t("publicProfile.bioEmpty")}
+                                    </div>
+                                )}
+                            </div>
+                            {/* contribution heatmap card (public, per user) */}
+                            <div className="rounded-large border border-default/40">
+                                <ProfileContributions />
+                            </div>
+                        </>
+                    ) : null}
+                    {tab === "achievements" ? <ProfileAchievements /> : null}
+                    {tab === "activity" ? <ProfileActivity /> : null}
+                    {tab === "courses" ? <ProfileCourses /> : null}
+                </main>
             </div>
         </div>
     )

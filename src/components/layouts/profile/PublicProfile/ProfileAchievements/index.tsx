@@ -12,12 +12,12 @@ import {
     Medal as MedalIcon,
 } from "@gravity-ui/icons"
 import {
-    useParams,
-} from "next/navigation"
-import {
     useQueryUserAchievementsSwr,
     useQueryUserProfileSwr,
 } from "@/hooks"
+import {
+    useProfileUsername,
+} from "../useProfileUsername"
 import {
     BadgeImage,
 } from "@/components/reuseable/BadgeImage"
@@ -44,7 +44,7 @@ export const ProfileAchievements = ({
     const t = useTranslations()
     // route carries the username; resolve it to the entity id the achievements
     // query keys off (the profile fetch is SWR-deduped with the parent + tabs)
-    const username = String(useParams().username)
+    const username = useProfileUsername()
     const { data: user } = useQueryUserProfileSwr(username)
     const userId = user?.id ?? null
     const {

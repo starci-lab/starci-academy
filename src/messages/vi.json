@@ -991,6 +991,7 @@
         "title": "Hồ sơ",
         "notFound": "Không tìm thấy người dùng này.",
         "notFoundDescription": "Có thể tên người dùng sai hoặc tài khoản đã bị gỡ.",
+        "bioHeading": "Giới thiệu",
         "tabs": {
             "overview": "Tổng quan",
             "achievements": "Thành tích",

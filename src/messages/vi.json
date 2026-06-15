@@ -1273,6 +1273,10 @@
             "less": "Ít",
             "more": "Nhiều"
         },
+        "achievements": {
+            "title": "Thành tích",
+            "earned": "Đã đạt"
+        },
         "sponsored": "Quảng cáo",
         "sponsoredBy": "Tài trợ bởi {sponsor}",
         "changelog": "Có gì mới",

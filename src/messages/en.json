@@ -1264,6 +1264,10 @@
             "less": "Less",
             "more": "More"
         },
+        "achievements": {
+            "title": "Achievements",
+            "earned": "Earned"
+        },
         "sponsored": "Sponsored",
         "sponsoredBy": "Sponsored by {sponsor}",
         "changelog": "What's new",

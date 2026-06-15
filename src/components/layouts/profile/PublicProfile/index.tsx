@@ -81,15 +81,17 @@ export const PublicProfile = ({
     const t = useTranslations()
     const router = useRouter()
     const locale = useLocale()
-    // target user id comes from the route segment `/profile/[userId]`
-    const userId = String(useParams().userId)
+    // target username comes from the route segment `/profile/[username]`
+    const username = String(useParams().username)
     const viewer = useAppSelector((state) => state.user.user)
     const authenticated = useAppSelector((state) => state.keycloak.authenticated)
     const {
         data: user,
         isLoading,
         error,
-    } = useQueryUserProfileSwr(userId)
+    } = useQueryUserProfileSwr(username)
+    // entity id resolved from the username — what follow + isSelf key off
+    const targetUserId = user?.id ?? null
 
     // which tab is open (Overview by default); panels mount lazily on select
     const [tab, setTab] = useState<ProfileTab>("overview")
@@ -114,12 +116,16 @@ export const PublicProfile = ({
     /** Run the follow toggle, then flip the flag + nudge the counter on success. */
     const onToggleFollow = useCallback(
         async () => {
+            // follow edges key off the entity id; bail until the profile resolved
+            if (!targetUserId) {
+                return
+            }
             // optimistic target = the opposite of the current state
             const next = !following
             setFollowPending(true)
             try {
                 const result = await triggerSetFollow({
-                    userId,
+                    userId: targetUserId,
                     follow: next,
                 })
                 // only commit when the server confirms
@@ -133,13 +139,13 @@ export const PublicProfile = ({
         },
         [
             following,
-            userId,
+            targetUserId,
             triggerSetFollow,
         ],
     )
 
     // viewing your own public profile → no follow button (link to edit instead)
-    const isSelf = !!viewer && viewer.id === userId
+    const isSelf = !!viewer && !!targetUserId && viewer.id === targetUserId
 
     // first load → centered spinner so the column never jumps
     if (isLoading) {

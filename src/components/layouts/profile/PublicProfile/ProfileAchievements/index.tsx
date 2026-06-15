@@ -16,6 +16,7 @@ import {
 } from "next/navigation"
 import {
     useQueryUserAchievementsSwr,
+    useQueryUserProfileSwr,
 } from "@/hooks"
 import {
     BadgeImage,
@@ -41,15 +42,18 @@ export const ProfileAchievements = ({
     className,
 }: ProfileAchievementsProps) => {
     const t = useTranslations()
-    // target user id from the route segment, not a prop
-    const userId = String(useParams().userId)
+    // route carries the username; resolve it to the entity id the achievements
+    // query keys off (the profile fetch is SWR-deduped with the parent + tabs)
+    const username = String(useParams().username)
+    const { data: user } = useQueryUserProfileSwr(username)
+    const userId = user?.id ?? null
     const {
         data,
         isLoading,
     } = useQueryUserAchievementsSwr(userId)
 
-    // first load in flight → spinner
-    if (isLoading && !data) {
+    // first load in flight (username not yet resolved, or query running) → spinner
+    if (!data && (isLoading || !userId)) {
         return (
             <div className="flex justify-center p-12">
                 <Spinner size="lg" />

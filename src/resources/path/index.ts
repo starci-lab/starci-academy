@@ -7,11 +7,11 @@ export const pathConfig = () => {
         const build = () => {
             return `${localePath}`
         }
-        const profile = (displayName?: string) => {
-            // when a displayName is given, point at that user's public profile
-            // (`/profile/<displayName>`); otherwise the viewer's own profile hub.
-            const profilePath = displayName
-                ? `${localePath}/profile/${displayName}`
+        const profile = (username?: string) => {
+            // when a username is given, point at that user's public profile
+            // (`/profile/<username>`, GitHub-style); otherwise the viewer's own hub.
+            const profilePath = username
+                ? `${localePath}/profile/${username}`
                 : `${localePath}/profile`
             const build = () => {
                 return profilePath

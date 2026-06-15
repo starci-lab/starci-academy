@@ -5,13 +5,13 @@ import type { QueryUserProfileResponse } from "./types"
 
 /** Variables for the `userProfile` query. */
 export interface QueryUserProfileRequest {
-    /** Id of the user whose public profile to fetch. */
-    userId: string
+    /** Username of the user whose public profile to fetch (URL-facing handle). */
+    username: string
 }
 
 const query1 = gql`
-  query UserProfile($userId: ID!) {
-    userProfile(userId: $userId) {
+  query UserProfile($username: String!) {
+    userProfile(username: $username) {
       success
       message
       error
@@ -57,7 +57,7 @@ export const queryUserProfile = async ({
     return apollo.query<QueryUserProfileResponse>({
         query: queryMap[query],
         variables: {
-            userId: request?.userId,
+            username: request?.username,
         },
     })
 }

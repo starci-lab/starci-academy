@@ -14,6 +14,7 @@ import {
 } from "next/navigation"
 import {
     useQueryUserFeedSwr,
+    useQueryUserProfileSwr,
 } from "@/hooks"
 import {
     Feed,
@@ -37,9 +38,11 @@ export const ProfileActivity = ({
     className,
 }: ProfileActivityProps) => {
     const t = useTranslations()
-    // target user id comes from the route segment, not a prop (matches the
-    // codebase convention that containers read their own route context)
-    const userId = String(useParams().userId)
+    // route carries the username; resolve it to the entity id the timeline keys
+    // off (the profile fetch is SWR-deduped with the parent + tabs)
+    const username = String(useParams().username)
+    const { data: user } = useQueryUserProfileSwr(username)
+    const userId = user?.id ?? null
     const {
         data,
         size,
@@ -48,8 +51,8 @@ export const ProfileActivity = ({
         isValidating,
     } = useQueryUserFeedSwr(userId)
 
-    // first page in flight → spinner (no skeleton flash for an empty timeline)
-    if (isLoading && !data) {
+    // first page in flight (username not yet resolved, or query running) → spinner
+    if (!data && (isLoading || !userId)) {
         return (
             <div className="flex justify-center p-12">
                 <Spinner size="lg" />

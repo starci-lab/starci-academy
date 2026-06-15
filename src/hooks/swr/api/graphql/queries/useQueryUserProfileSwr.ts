@@ -3,18 +3,19 @@ import useSWR from "swr"
 
 /**
  * SWR query wrapper for {@link queryUserProfile}. `data` is the unwrapped public
- * user (or `null` when not found). Keyed by the target user id; runs whenever an
- * id is provided (works for anonymous viewers too).
+ * user (or `null` when not found). Keyed by the target username; runs whenever a
+ * username is provided (works for anonymous viewers too). The returned entity
+ * carries `id`, which the follow mutation + the profile tabs key off.
  *
- * @param userId - The id of the user whose public profile to fetch.
+ * @param username - The username of the user whose public profile to fetch.
  */
-export const useQueryUserProfileSwr = (userId: string | null | undefined) => {
+export const useQueryUserProfileSwr = (username: string | null | undefined) => {
     const swr = useSWR(
-        userId ? ["QUERY_USER_PROFILE_SWR", userId] : null,
+        username ? ["QUERY_USER_PROFILE_SWR", username] : null,
         async () => {
             const data = await queryUserProfile({
                 request: {
-                    userId: userId as string,
+                    username: username as string,
                 },
             })
 

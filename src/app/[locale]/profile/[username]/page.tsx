@@ -6,12 +6,13 @@ import {
 } from "@/components/layouts/profile/PublicProfile"
 
 /**
- * Route `/[locale]/profile/[userId]` — any user's public, GitHub-style profile
- * (viewable by anyone). The component reads the user id from the route itself.
+ * Route `/[locale]/profile/[username]` — any user's public, GitHub-style profile
+ * (viewable by anyone), addressed by username like `github.com/<username>`. The
+ * component reads the username from the route itself.
  *
  * Static `/profile/*` children (edit, bookmarks, sessions, …) take precedence
  * over this dynamic segment in Next routing, so the viewer's own profile hub and
- * its sub-pages are unaffected; a real user id (a uuid) only ever matches here.
+ * its sub-pages are unaffected.
  */
 const Page = () => {
     return <PublicProfile />

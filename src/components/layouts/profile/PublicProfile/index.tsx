@@ -27,6 +27,7 @@ import {
 import {
     useMutateSetFollowSwr,
     useQueryUserProfileSwr,
+    useQueryUserWeeklyStatsSwr,
 } from "@/hooks"
 import {
     useProfileUsername,
@@ -54,12 +55,18 @@ import {
 import {
     ProfileContributions,
 } from "./ProfileContributions"
+import {
+    ProfileCoding,
+} from "./ProfileCoding"
+import {
+    ProfilePinned,
+} from "./ProfilePinned"
 
 /** Props for {@link PublicProfile}. */
 export type PublicProfileProps = WithClassNames<undefined>
 
-/** The four profile tabs (drives the panel switch). */
-type ProfileTab = "overview" | "achievements" | "activity" | "courses"
+/** The profile tabs (drives the panel switch). */
+type ProfileTab = "overview" | "achievements" | "activity" | "courses" | "coding"
 
 /** Tabs rendered in order, left to right (id + i18n label key suffix). */
 const PROFILE_TABS: ReadonlyArray<ProfileTab> = [
@@ -67,6 +74,7 @@ const PROFILE_TABS: ReadonlyArray<ProfileTab> = [
     "achievements",
     "activity",
     "courses",
+    "coding",
 ]
 
 /**
@@ -101,6 +109,8 @@ export const PublicProfile = ({
     } = useQueryUserProfileSwr(username)
     // entity id resolved from the username — what follow + isSelf key off
     const targetUserId = user?.id ?? null
+    // streak for the sidebar stat strip (Duolingo-style); fires once the id resolves
+    const { data: weeklyStats } = useQueryUserWeeklyStatsSwr(targetUserId)
 
     // which tab is open (Overview by default); panels mount lazily on select
     const [tab, setTab] = useState<ProfileTab>("overview")
@@ -331,8 +341,16 @@ export const PublicProfile = ({
                             <span className="ml-1 text-muted">{t("profile.codingPoints")}</span>
                         </span>
                     </div>
-                    {/* meta: github link + joined date */}
+                    {/* meta: streak + github link + joined date */}
                     <div className="flex flex-col gap-1.5 text-sm text-muted">
+                        {weeklyStats && weeklyStats.streak > 0 ? (
+                            <span>
+                                {t("profile.streakLine", {
+                                    streak: weeklyStats.streak,
+                                    longest: weeklyStats.longestStreak,
+                                })}
+                            </span>
+                        ) : null}
                         {user.githubUsername ? (
                             <a
                                 href={`https://github.com/${user.githubUsername}`}
@@ -374,6 +392,8 @@ export const PublicProfile = ({
                                     </div>
                                 )}
                             </div>
+                            {/* pinned: earned achievement badges */}
+                            <ProfilePinned />
                             {/* contribution heatmap card (public, per user) */}
                             <div className="rounded-large border border-default/40">
                                 <ProfileContributions />
@@ -383,6 +403,7 @@ export const PublicProfile = ({
                     {tab === "achievements" ? <ProfileAchievements /> : null}
                     {tab === "activity" ? <ProfileActivity /> : null}
                     {tab === "courses" ? <ProfileCourses /> : null}
+                    {tab === "coding" ? <ProfileCoding /> : null}
                 </main>
             </div>
         </div>

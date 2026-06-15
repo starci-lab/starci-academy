@@ -924,6 +924,7 @@
         "xp": "XP",
         "codingPoints": "coding pts",
         "joined": "Joined {date}",
+        "streakLine": "{streak}-day streak · longest {longest}",
         "nav": {
             "editDesc": "Update your avatar, name and bio",
             "sessionsDesc": "See your logged-in devices and log them out",
@@ -996,8 +997,15 @@
             "overview": "Overview",
             "achievements": "Achievements",
             "activity": "Activity",
-            "courses": "Courses"
+            "courses": "Courses",
+            "coding": "Coding"
         },
+        "coding": {
+            "solved": "Solved",
+            "attempted": "Attempted",
+            "points": "Coding pts"
+        },
+        "pinnedAchievements": "Pinned achievements",
         "bioEmpty": "This user hasn't written a bio yet.",
         "achievementsEmpty": "No achievements yet.",
         "activityEmpty": "No activity yet.",

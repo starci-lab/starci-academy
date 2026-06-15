@@ -933,6 +933,7 @@
         "xp": "XP",
         "codingPoints": "điểm code",
         "joined": "Tham gia {date}",
+        "streakLine": "Chuỗi {streak} ngày · dài nhất {longest}",
         "nav": {
             "editDesc": "Cập nhật ảnh đại diện, tên và tiểu sử",
             "sessionsDesc": "Xem thiết bị đang đăng nhập và đăng xuất chúng",
@@ -1005,8 +1006,15 @@
             "overview": "Tổng quan",
             "achievements": "Thành tích",
             "activity": "Hoạt động",
-            "courses": "Khóa học"
+            "courses": "Khóa học",
+            "coding": "Lập trình"
         },
+        "coding": {
+            "solved": "Đã giải",
+            "attempted": "Đã thử",
+            "points": "Điểm code"
+        },
+        "pinnedAchievements": "Thành tích nổi bật",
         "bioEmpty": "Người dùng này chưa viết phần giới thiệu.",
         "achievementsEmpty": "Chưa có thành tích nào.",
         "activityEmpty": "Chưa có hoạt động nào.",

@@ -4,6 +4,7 @@ import React from "react"
 import {
     cn,
     Spinner,
+    Tooltip,
 } from "@heroui/react"
 import {
     useTranslations,

@@ -5,7 +5,8 @@ import {
     SwrProvider,
 } from "@/components/providers"
 import { DrawerContainer } from "@/components/drawers"
-import { Navbar } from "@/components/layouts/shell/Navbar"
+import { AmbientBackground } from "@/components/blocks"
+import { Navbar } from "@/components/features/navbar/Navbar"
 import { ToastProvider } from "@heroui/react"
 import React, { PropsWithChildren, Suspense } from "react"
 import { SocketIoSideEffects } from "@/hooks/socketio"
@@ -29,6 +30,7 @@ export const InnerLayout = ({ children }: PropsWithChildren) => {
                             <SwrSideEffects />
                             <SocketIoSideEffects />
                             <UseEffects />
+                            <AmbientBackground />
                             <Navbar />
                             <ModalContainer />
                             <DrawerContainer />

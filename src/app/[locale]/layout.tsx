@@ -9,10 +9,22 @@ const font = Open_Sans({
     variable: "--font-open-sans",
 })
 
+/** Route params for the `[locale]` segment. */
+interface LocaleRouteParams {
+    /** Active locale code resolved from the URL (e.g. `vi`, `en`). */
+    locale: string
+}
+
+/** Props for the locale root layout: page subtree plus the awaited route params. */
+interface LocaleLayoutProps extends PropsWithChildren {
+    /** Promise of the resolved `[locale]` route params (Next.js App Router). */
+    params: Promise<LocaleRouteParams>
+}
+
 const Layout = async ({
     children,
     params,
-}: PropsWithChildren & { params: Promise<{ locale: string }> }) => {
+}: LocaleLayoutProps) => {
     const { locale } = await params
     const messages = await getMessages()
     return (

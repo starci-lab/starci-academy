@@ -2,8 +2,12 @@
 
 import React, {
     useMemo,
+    useRef,
     useState,
 } from "react"
+import {
+    motion,
+} from "framer-motion"
 import {
     cn,
 } from "@heroui/react"
@@ -44,13 +48,17 @@ interface HeatmapCell {
     milestones: number
 }
 
-/** Tailwind fill per intensity level (0 = none → 4 = most). 0 = muted track; 1–4 = GitHub greens. */
+/**
+ * Fill per intensity level (0 = none → 4 = most). Theme-aware brand-pink ramp via
+ * the `--heat-*` tokens (globals.css): 0 = empty track, 1→4 = rising activity,
+ * with a distinct light/dark palette each so levels stay legible in both modes.
+ */
 const LEVEL_CLASS = [
-    "bg-muted/20",
-    "bg-[#0e4429]",
-    "bg-[#006d32]",
-    "bg-[#26a641]",
-    "bg-[#39d353]",
+    "bg-[var(--heat-0)]",
+    "bg-[var(--heat-1)]",
+    "bg-[var(--heat-2)]",
+    "bg-[var(--heat-3)]",
+    "bg-[var(--heat-4)]",
 ]
 
 /** How many recent years the selector offers (current + 2 back). */
@@ -97,6 +105,9 @@ export const ContributionCalendarView = ({
 }: ContributionCalendarViewProps) => {
     const t = useTranslations()
     const locale = useLocale()
+
+    /** Viewport box the draggable grid is constrained to (no native scroll). */
+    const viewportRef = useRef<HTMLDivElement>(null)
 
     /** The hovered cell + its viewport anchor, driving the single shared popover. */
     const [hovered, setHovered] = useState<{
@@ -232,7 +243,7 @@ export const ContributionCalendarView = ({
     )
 
     return (
-        <div className={cn("flex flex-col gap-3 p-3",
+        <div className={cn("flex flex-col gap-3",
             className)}
         >
             {/* header: year-scoped count + the year switcher */}
@@ -263,9 +274,21 @@ export const ContributionCalendarView = ({
                 </div>
             </div>
 
-            {/* scrollable grid (≈53 columns can exceed the column width) */}
-            <div className="overflow-x-auto">
-                <div className="flex flex-col gap-1.5">
+            {/* draggable grid (≈53 columns can exceed the viewport): grab + pull
+                horizontally instead of a native scrollbar. Framer constrains the
+                motion track to the viewport box so it can't be flung off-edge. */}
+            <div
+                ref={viewportRef}
+                className="cursor-grab overflow-hidden active:cursor-grabbing"
+            >
+                <motion.div
+                    drag="x"
+                    dragConstraints={viewportRef}
+                    dragElastic={0.04}
+                    dragMomentum={false}
+                    className="flex w-max flex-col gap-1.5"
+                >
+
                     {/* month labels aligned to the week columns */}
                     <div className="flex gap-[3px] pl-8">
                         {monthLabels.map((label, index) => (
@@ -330,7 +353,7 @@ export const ContributionCalendarView = ({
                             </div>
                         ))}
                     </div>
-                </div>
+                </motion.div>
             </div>
 
             {/* legend: Less → More */}

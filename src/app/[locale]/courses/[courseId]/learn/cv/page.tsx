@@ -3,7 +3,7 @@
 import React from "react"
 import {
     CvLearnLayout,
-} from "@/components/layouts/profile/CV"
+} from "@/components/features/profile/CV"
 
 /**
  * Learn / CV route: delegates UI to `CvLearnLayout`.

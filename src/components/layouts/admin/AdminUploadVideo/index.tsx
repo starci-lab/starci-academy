@@ -16,6 +16,9 @@ import {
     usePostAdminProcessVideoSwr,
 } from "@/hooks/swr"
 import {
+    useRestWithToast,
+} from "@/modules/toast"
+import {
     useAppSelector,
 } from "@/redux"
 import {
@@ -93,6 +96,7 @@ export const AdminUploadVideo = ({
     const fileInputRef = useRef<HTMLInputElement>(null)
     const { trigger: triggerPresignedUrl } = usePostAdminPresignedUrlSwr()
     const { trigger: triggerProcessVideo } = usePostAdminProcessVideoSwr()
+    const runRest = useRestWithToast()
 
     /** Handle file selection */
     const onFileChange = useCallback(
@@ -242,55 +246,56 @@ export const AdminUploadVideo = ({
 
         setIsRequesting(true)
         setUploadDone(false)
-        try {
-            const result = await triggerPresignedUrl({
-                request: {
-                    key: objectKey,
-                    contentType: file.type || "video/mp4",
-                },
-                apiKey,
-            })
 
-            const items: Array<AdminPresignedUrlItem> = result.data ?? []
-            if (items.length === 0) {
-                toast.danger("No presigned URLs", {
-                    description: "The server returned an empty list.",
-                })
-                setIsRequesting(false)
-                return
-            }
-
-            // Initialize per-provider statuses
-            const initial: Array<ProviderUploadStatus> = items.map((item) => ({
-                provider: item.provider,
-                url: item.url,
-                status: UploadStatus.Idle,
-                progress: 0,
-            }))
-            setUploads(initial)
+        // Request the presigned URLs (REST write). `runRest` toasts on failure.
+        const presignedResult = await runRest(
+            () =>
+                triggerPresignedUrl({
+                    request: {
+                        key: objectKey,
+                        contentType: file.type || "video/mp4",
+                    },
+                    apiKey,
+                }),
+            { showSuccessToast: false },
+        )
+        if (!presignedResult) {
             setIsRequesting(false)
-
-            // Upload to all providers concurrently
-            await Promise.all(
-                items.map((item, idx) => uploadToProvider(item, file, idx)),
-            )
-
-            setUploadDone(true)
-            // Save first provider URL for process-video
-            setUploadedVideoUrl(items[0].url.split("?")[0])
-            toast.success("Upload complete", {
-                description: "Video has been uploaded to all providers.",
-            })
-        } catch (err: unknown) {
-            setIsRequesting(false)
-            toast.danger("Failed to get presigned URLs", {
-                description:
-                    err instanceof Error
-                        ? err.message
-                        : "Unknown error occurred.",
-            })
+            return
         }
-    }, [file, objectKey, apiKey, triggerPresignedUrl, uploadToProvider])
+
+        const items: Array<AdminPresignedUrlItem> = presignedResult.data ?? []
+        if (items.length === 0) {
+            toast.danger("No presigned URLs", {
+                description: "The server returned an empty list.",
+            })
+            setIsRequesting(false)
+            return
+        }
+
+        // Initialize per-provider statuses
+        const initial: Array<ProviderUploadStatus> = items.map((item) => ({
+            provider: item.provider,
+            url: item.url,
+            status: UploadStatus.Idle,
+            progress: 0,
+        }))
+        setUploads(initial)
+        setIsRequesting(false)
+
+        // Upload to all providers concurrently (REST writes via XHR PUT).
+        await runRest(
+            () =>
+                Promise.all(
+                    items.map((item, idx) => uploadToProvider(item, file, idx)),
+                ),
+            { successMessage: "Video has been uploaded to all providers." },
+        )
+
+        setUploadDone(true)
+        // Save first provider URL for process-video
+        setUploadedVideoUrl(items[0].url.split("?")[0])
+    }, [file, objectKey, apiKey, triggerPresignedUrl, uploadToProvider, runRest])
 
     /** Trigger video processing (FFmpeg encode + MPEG-DASH) on the backend */
     const onProcess = useCallback(async () => {
@@ -302,26 +307,23 @@ export const AdminUploadVideo = ({
         }
         setIsProcessing(true)
         setProcessResult(null)
-        try {
-            const result = await triggerProcessVideo({
-                request: { url: uploadedVideoUrl },
-                apiKey,
-            })
+        // Trigger backend video processing (REST write). `runRest` toasts the result.
+        const result = await runRest(
+            () =>
+                triggerProcessVideo({
+                    request: { url: uploadedVideoUrl },
+                    apiKey,
+                }),
+            { showSuccessToast: false },
+        )
+        if (result) {
             setProcessResult({ jobId: result.jobId, message: result.message })
             toast.success("Processing started", {
                 description: `Job ${result.jobId} enqueued.`,
             })
-        } catch (err: unknown) {
-            toast.danger("Failed to process video", {
-                description:
-                    err instanceof Error
-                        ? err.message
-                        : "Unknown error occurred.",
-            })
-        } finally {
-            setIsProcessing(false)
         }
-    }, [uploadedVideoUrl, apiKey, triggerProcessVideo])
+        setIsProcessing(false)
+    }, [uploadedVideoUrl, apiKey, triggerProcessVideo, runRest])
 
     /** Copy URL to clipboard */
     const onCopyUrl = useCallback((url: string) => {

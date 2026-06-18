@@ -3,7 +3,7 @@ import type { Metadata } from "next"
 import { publicEnv } from "@/resources"
 import {
     PublicProfile,
-} from "@/components/layouts/profile/PublicProfile"
+} from "@/components/features/profile/PublicProfile"
 
 /** Route params for the public profile page. */
 interface ProfilePageParams {

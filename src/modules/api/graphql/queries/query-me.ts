@@ -20,6 +20,14 @@ const query1 = gql`
         followerCount
         followingCount
         twoFactorEnabled
+        openToWork
+        profileLocked
+        featuredAchievementSlug
+        roleTitle
+        location
+        workMode
+        linkedinUrl
+        websiteUrl
       }
     }
   }

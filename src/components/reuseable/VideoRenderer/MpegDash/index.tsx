@@ -11,13 +11,31 @@ export interface MpegDashPlayerProps extends WithClassNames<undefined> {
     src: string
 }
 
+/** One bitrate rendition reported by the legacy dashjs `getBitrateInfoListFor`. */
+interface DashBitrateInfo {
+    /** Index of this quality rendition (used to pin playback). */
+    qualityIndex: number
+    /** Pixel height of the rendition (e.g. 720). */
+    height: number
+    /** Encoded bitrate of the rendition, in bits per second. */
+    bitrate: number
+}
+
+/** Payload of the dashjs `playbackTimeUpdated` event. */
+interface DashPlaybackTimeUpdatedEvent {
+    /** Current playback position, in seconds. */
+    time: number
+    /** Seconds remaining until the end of the stream (0 at the end). */
+    timeToEnd: number
+}
+
 /**
  * Legacy dashjs quality APIs that exist at runtime but were dropped from the
  * v5 `MediaPlayerClass` typings — narrowed here so we can call them without `any`.
  */
 interface DashLegacyQualityApi {
     /** Returns the available bitrate renditions for a media type (`"video"`). */
-    getBitrateInfoListFor: (type: string) => Array<{ qualityIndex: number; height: number; bitrate: number }>
+    getBitrateInfoListFor: (type: string) => Array<DashBitrateInfo>
     /** Pins playback to a specific quality index for a media type. */
     setQualityFor: (type: string, qualityIndex: number) => void
 }
@@ -62,16 +80,16 @@ export const MpegDashPlayer = ({ src, className }: MpegDashPlayerProps) => {
             player.on("streamInitialized", () => {
                 const bitrates = (player as unknown as DashLegacyQualityApi).getBitrateInfoListFor("video")
                 setQualityLevels(
-                    bitrates.map((b: { qualityIndex: number; height: number; bitrate: number }) => ({
-                        index: b.qualityIndex,
-                        height: b.height,
-                        bitrate: b.bitrate,
+                    bitrates.map((rendition) => ({
+                        index: rendition.qualityIndex,
+                        height: rendition.height,
+                        bitrate: rendition.bitrate,
                     })),
                 )
                 setDuration(player.duration())
             })
 
-            player.on("playbackTimeUpdated", (event: { time: number; timeToEnd: number }) => {
+            player.on("playbackTimeUpdated", (event: DashPlaybackTimeUpdatedEvent) => {
                 setCurrentTime(event.time)
                 if (event.timeToEnd === 0) {
                     player.pause()

@@ -1,4 +1,4 @@
-import type { UserEntity } from "@/modules/types"
+import type { UserEntity, WorkMode } from "@/modules/types"
 import type { GraphQLResponse } from "../../types"
 
 /** GraphQL `UpdateProfileRequest` body (partial update; null clears a field). */
@@ -13,6 +13,18 @@ export interface UpdateProfileRequest {
     profileLocked?: boolean
     /** Mark the user as open to work (shows a hiring badge); omit to leave unchanged. */
     openToWork?: boolean
+    /** Slug of the achievement to pin as the profile mascot; null clears it. */
+    featuredAchievementSlug?: string | null
+    /** Professional headline / role title; null clears it. */
+    roleTitle?: string | null
+    /** Free-text location; null clears it. */
+    location?: string | null
+    /** Preferred work arrangement (remote / hybrid / onsite); null clears it. */
+    workMode?: WorkMode | null
+    /** Public LinkedIn profile URL; null clears it. */
+    linkedinUrl?: string | null
+    /** Personal website / portfolio URL; null clears it. */
+    websiteUrl?: string | null
 }
 
 /** Apollo response shape for `updateProfile` (returns the fresh user). */

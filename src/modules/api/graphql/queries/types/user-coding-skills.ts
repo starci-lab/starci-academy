@@ -20,6 +20,8 @@ export interface QueryUserCodingSkillsData {
     byLanguage: Array<QueryUserCodingSkillCount>
     /** Distinct problems solved, grouped by problem difficulty. */
     byDifficulty: Array<QueryUserCodingSkillCount>
+    /** Distinct problems solved, grouped by topic domain (arrays/dp/graph…). */
+    byDomain: Array<QueryUserCodingSkillCount>
 }
 
 /** Apollo response shape for the `userCodingSkills` query. */

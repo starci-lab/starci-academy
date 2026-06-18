@@ -1,6 +1,7 @@
 import type { AbstractEntity } from "./abstract"
 import type { EnrollmentEntity } from "./enrollment"
 import type { SubmissionEntity } from "./submission"
+import type { WorkMode } from "../enums"
 
 /**
  * Application user; identity comes from Keycloak (keycloakId = JWT sub).
@@ -34,6 +35,18 @@ export interface UserEntity extends AbstractEntity {
     profileLocked?: boolean
     /** When true the user is open to work (shows a hiring badge). */
     openToWork?: boolean
+    /** Slug of the achievement pinned as the profile mascot (frames the avatar); null = none. */
+    featuredAchievementSlug?: string | null
+    /** Professional headline / role title shown under the user's name. */
+    roleTitle?: string | null
+    /** Free-text location shown on the profile. */
+    location?: string | null
+    /** Preferred work arrangement (remote / hybrid / onsite). */
+    workMode?: WorkMode | null
+    /** Public LinkedIn profile URL. */
+    linkedinUrl?: string | null
+    /** Personal website / portfolio URL. */
+    websiteUrl?: string | null
     /** Whether two-factor authentication (TOTP) is enabled for the user. */
     twoFactorEnabled?: boolean
     /** The submissions of the user. */

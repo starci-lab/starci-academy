@@ -2,6 +2,7 @@
 
 import React from "react"
 import {
+    Chip,
     cn,
 } from "@heroui/react"
 import {
@@ -14,6 +15,9 @@ import {
 import {
     useQueryMyWeeklyStatsSwr,
 } from "@/hooks"
+import {
+    InfoTooltip,
+} from "@/components/blocks"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -53,13 +57,13 @@ export const StreakStrip = ({
                     return (
                         <div
                             key={day.date}
-                            className="flex flex-col items-center gap-0.5"
+                            className="flex flex-col items-center gap-1.5"
                         >
                             <div
                                 title={date.toLocaleDateString(locale)}
                                 className={cn(
-                                    "h-6 w-6 rounded-medium",
-                                    day.active ? "bg-success/80" : "bg-muted/20",
+                                    "h-6 w-6 rounded-full",
+                                    day.active ? "bg-accent/80" : "bg-muted/20",
                                 )}
                             />
                             <span className="text-[10px] text-muted">
@@ -76,19 +80,24 @@ export const StreakStrip = ({
             {/* current + longest streak, or a learning invite when never active */}
             {hasAny ? (
                 <div className="flex items-center gap-1.5">
-                    <FlameIcon className="h-5 w-5 shrink-0 text-warning" />
+                    <FlameIcon className="h-5 w-5 shrink-0 text-accent" />
                     <span className="text-sm font-medium text-foreground">
-                        {t("dashboard.streak.current",
-                            {
-                                count: streak,
-                            })}
+                        <InfoTooltip
+                            title={t("dashboard.streakLabel")}
+                            description={t("dashboard.streak.help")}
+                        >
+                            {t("dashboard.streak.current",
+                                {
+                                    count: streak,
+                                })}
+                        </InfoTooltip>
                     </span>
-                    <span className="text-xs text-muted">
+                    <Chip className="bg-accent/15" color="accent" variant="secondary" size="sm">
                         {t("dashboard.streak.longest",
                             {
                                 count: longest,
                             })}
-                    </span>
+                    </Chip>
                 </div>
             ) : (
                 <span className="text-sm text-muted">

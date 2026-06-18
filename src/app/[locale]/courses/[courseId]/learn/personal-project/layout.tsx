@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation"
 import { pathConfig } from "@/resources"
 import { useAppSelector } from "@/redux"
 import { useQueryMilestonesSwr } from "@/hooks"
-import { PersonalProjectSubmission } from "@/components/layouts/profile/PersonalProjectSubmission"
+import { PersonalProjectSubmission } from "@/components/features/profile/PersonalProjectSubmission"
 import { Task } from "@/components/layouts/learn/Task"
 
 const Layout = () => {

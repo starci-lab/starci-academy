@@ -9,7 +9,7 @@ import {
     useMutateSignUpVerifyOtpSwr,
     useQueryCheckEmailExistsSwr,
 } from "@/hooks"
-import { runGraphQLWithToast } from "@/modules/toast"
+import { useGraphQLWithToast } from "@/modules/toast"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import {
     AuthenticationModalTab,
@@ -27,6 +27,7 @@ import { useSignUpStore } from "./store"
  */
 export const useSignUpForm = () => {
     const t = useTranslations()
+    const runGraphQL = useGraphQLWithToast()
     const dispatch = useAppDispatch()
     const signUpState = useAppSelector((state) => state.state.signUpState)
     const { trigger: mutateSignUpInit } = useMutateSignUpSwr()
@@ -110,7 +111,7 @@ export const useSignUpForm = () => {
         try {
             if (signUpState === SignUpState.Registration) {
                 let nextChallengeId: string | undefined
-                const ok = await runGraphQLWithToast(
+                const ok = await runGraphQL(
                     async () => {
                         const apolloResult = await mutateSignUpInit({
                             request: { email, password },
@@ -136,7 +137,7 @@ export const useSignUpForm = () => {
                 dispatch(setSignUpState(SignUpState.Otp))
                 return
             }
-            const ok = await runGraphQLWithToast(
+            const ok = await runGraphQL(
                 async () => {
                     if (!challengeId) {
                         throw new Error("challengeId is required")
@@ -159,7 +160,7 @@ export const useSignUpForm = () => {
         } finally {
             setIsSubmitting(false)
         }
-    }, [signUpState, email, password, challengeId, otp, captchaToken, mutateSignUpInit, mutateSignUpVerifyOtp, setValue, dispatch, reset, setIsSubmitting])
+    }, [signUpState, email, password, challengeId, otp, captchaToken, mutateSignUpInit, mutateSignUpVerifyOtp, setValue, dispatch, reset, setIsSubmitting, runGraphQL])
 
     useEffect(() => {
         const controller = new AbortController()

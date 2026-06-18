@@ -12,15 +12,7 @@ const query1 = gql`
       data {
         mode
         tier
-        auto {
-          limit5h
-          used5h
-          remaining5h
-          limitWeek
-          usedWeek
-          remainingWeek
-        }
-        premium {
+        credit {
           limit5h
           used5h
           remaining5h
@@ -44,9 +36,9 @@ const queryMap: Record<QueryMyAiQuota, DocumentNode> = {
 }
 
 /**
- * Fetches the current user's AI quota snapshot — Auto (complimentary) "uses"
- * and Premium credits, each with limit/used/remaining per 5h + weekly window,
- * plus the window reset times.
+ * Fetches the current user's AI quota snapshot — a single credit pool (free
+ * base + tier) with limit/used/remaining per 5h + weekly window, plus the
+ * window reset times.
  *
  * Mirrors `myAiQuota` (queries/ai/my-ai-quota/my-ai-quota.resolver.ts).
  */

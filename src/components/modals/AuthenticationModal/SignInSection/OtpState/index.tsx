@@ -12,7 +12,7 @@ import React from "react"
 import { Button, cn, FieldError, InputOTP, Link, Modal, Spinner, TextField } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { useMutateSignInResendOtpSwr, useSignInForm } from "@/hooks"
-import { runGraphQLWithToast } from "@/modules/toast"
+import { useGraphQLWithToast } from "@/modules/toast"
 
 /**
  * OTPState component.
@@ -21,6 +21,7 @@ import { runGraphQLWithToast } from "@/modules/toast"
  */
 export const OtpState = () => {
     const t = useTranslations()
+    const runGraphQL = useGraphQLWithToast()
     const { trigger: mutateSignInResendOtp, isMutating: isResending } = useMutateSignInResendOtpSwr()
     const {
         values,
@@ -37,7 +38,7 @@ export const OtpState = () => {
         if (!challengeId) {
             return
         }
-        await runGraphQLWithToast(
+        await runGraphQL(
             async () => {
                 const apolloResult = await mutateSignInResendOtp({
                     request: {

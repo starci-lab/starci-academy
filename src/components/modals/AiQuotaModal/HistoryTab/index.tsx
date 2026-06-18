@@ -6,6 +6,7 @@ import React, {
 import {
     cn,
     Chip,
+    ScrollShadow,
     Skeleton,
 } from "@heroui/react"
 import {
@@ -115,7 +116,7 @@ export const AiQuotaHistoryTab = ({
                         {t("aiQuota.history.empty")}
                     </div>
                 ) : (
-                    <div className="flex max-h-64 flex-col divide-y divide-divider overflow-y-auto">
+                    <ScrollShadow className="flex max-h-64 flex-col divide-y divide-divider">
                         {history?.items.map((item) => (
                             <div key={item.id} className="flex items-center justify-between gap-1.5 py-2">
                                 <div className="min-w-0">
@@ -133,7 +134,7 @@ export const AiQuotaHistoryTab = ({
                                 </Chip>
                             </div>
                         ))}
-                    </div>
+                    </ScrollShadow>
                 )}
             </div>
         </div>

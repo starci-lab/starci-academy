@@ -12,6 +12,41 @@ export interface QueryMyLeagueEntryData {
     weekPoints: number
     /** 1-based rank within the cohort (descending by week points). */
     rank: number
+    /**
+     * Rank movement vs last week (`lastWeekRank - rank`): >0 climbed N places,
+     * <0 dropped, null when there is no last-week baseline.
+     */
+    rankDelta: number | null
+}
+
+/** One ranked user of the global (all-users) points leaderboard. */
+export interface QueryGlobalLeaderboardEntryData {
+    /** Opaque global id of the user. */
+    userGlobalId: string
+    /** User's display username (null when unset). */
+    username: string | null
+    /** User's avatar URL (null when unset). */
+    avatar: string | null
+    /** The user's unified global points balance. */
+    points: number
+    /** 1-based rank across all users (descending by points). */
+    rank: number
+}
+
+/** The global points leaderboard (top users + the viewer's own standing). */
+export interface QueryGlobalLeaderboardData {
+    /** Top-ranked users (best → worst). */
+    entries: Array<QueryGlobalLeaderboardEntryData>
+    /** The viewer's own 1-based rank across all users. */
+    myRank: number
+    /** The viewer's unified global points balance. */
+    myPoints: number
+}
+
+/** Apollo response shape for the `globalLeaderboard` query. */
+export interface QueryGlobalLeaderboardResponse {
+    /** Top-level `globalLeaderboard` field wrapping the standard API response. */
+    globalLeaderboard: GraphQLResponse<QueryGlobalLeaderboardData>
 }
 
 /** The viewer's weekly-league standing (tier + cohort board). */

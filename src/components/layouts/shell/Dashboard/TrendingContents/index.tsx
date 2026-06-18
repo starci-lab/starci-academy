@@ -47,7 +47,7 @@ export const TrendingContents = ({
             className)}
         >
             <div className="flex items-center gap-1.5">
-                <FlameIcon className="h-4 w-4 shrink-0 text-warning" />
+                <FlameIcon className="h-4 w-4 shrink-0 text-accent" />
                 <span className="text-base font-semibold text-foreground">
                     {t("dashboard.trending.title")}
                 </span>

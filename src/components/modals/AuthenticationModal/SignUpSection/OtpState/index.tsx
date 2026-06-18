@@ -9,13 +9,14 @@ import React from "react"
 import { Button, cn, FieldError, InputOTP, Link, Modal, Spinner, TextField } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { useMutateSignUpResendOtpSwr, useSignUpForm } from "@/hooks"
-import { runGraphQLWithToast } from "@/modules/toast"
+import { useGraphQLWithToast } from "@/modules/toast"
 
 /**
  * OTP entry for completing GraphQL sign-up (mirrors sign-in `OTPState`).
  */
 export const OtpState = () => {
     const t = useTranslations()
+    const runGraphQL = useGraphQLWithToast()
     const { trigger: mutateSignUpResendOtp, isMutating: isResending } = useMutateSignUpResendOtpSwr()
     const {
         values,
@@ -33,7 +34,7 @@ export const OtpState = () => {
         if (!challengeId) {
             return
         }
-        await runGraphQLWithToast(
+        await runGraphQL(
             async () => {
                 const apolloResult = await mutateSignUpResendOtp({
                     request: {

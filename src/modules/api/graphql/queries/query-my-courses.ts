@@ -18,6 +18,7 @@ const query1 = gql`
         challengeTotal
         completed
         total
+        completionPercent
       }
     }
   }

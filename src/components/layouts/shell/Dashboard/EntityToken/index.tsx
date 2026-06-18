@@ -6,6 +6,7 @@ import React, {
 } from "react"
 import {
     cn,
+    Link,
 } from "@heroui/react"
 import {
     useLocale,
@@ -104,13 +105,12 @@ export const EntityToken = ({
     }
 
     return (
-        <button
-            type="button"
-            disabled={pending}
-            onClick={onPress}
-            className={cn("font-semibold text-accent hover:underline disabled:opacity-60", className)}
+        <Link
+            onPress={onPress}
+            isDisabled={pending}
+            className={cn("font-semibold text-foreground hover:underline disabled:opacity-6 text-sm", className)}
         >
             {label}
-        </button>
+        </Link>
     )
 }

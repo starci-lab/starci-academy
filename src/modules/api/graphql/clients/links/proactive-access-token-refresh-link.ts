@@ -65,21 +65,37 @@ export const createProactiveAccessTokenRefreshLink = (
                             ))
 
                     const token = resolveAccessToken()
-                    if (shouldRefreshAccessTokenBeforeRequest(token, minValiditySeconds)) {
+                    // Only proactively refresh when we ACTUALLY have a token that is
+                    // near/after expiry. Anonymous requests (no token) must proceed
+                    // unauthenticated — public queries (e.g. a logged-out recruiter
+                    // viewing a public profile) are valid, and attempting a refresh
+                    // with no refresh session would otherwise throw and fail the whole
+                    // query. A refresh failure is non-fatal: forward the request anyway
+                    // and let the server enforce auth where it matters.
+                    if (token && shouldRefreshAccessTokenBeforeRequest(token, minValiditySeconds)) {
                         if (debug) {
                             console.log(
                                 `[ProactiveTokenRefreshLink] op=${operation.operationName} → token within ${minValiditySeconds}s of expiry, refresh before request`
                             )
                         }
-                        const result = await mutateRefreshToken(
-                            {
-                                request: {
-                                    minValiditySeconds,
-                                },
+                        try {
+                            const result = await mutateRefreshToken(
+                                {
+                                    request: {
+                                        minValiditySeconds,
+                                    },
+                                }
+                            )
+                            if (result.data?.refreshToken?.data?.accessToken) {
+                                persistAccessToken(result.data.refreshToken.data.accessToken)
                             }
-                        )
-                        if (result.data?.refreshToken?.data?.accessToken) {
-                            persistAccessToken(result.data.refreshToken.data.accessToken)
+                        } catch (refreshError) {
+                            if (debug) {
+                                console.log(
+                                    `[ProactiveTokenRefreshLink] op=${operation.operationName} → proactive refresh failed, forwarding anyway`,
+                                    refreshError
+                                )
+                            }
                         }
                     }
                     sub = forward(operation).subscribe({

@@ -4,7 +4,7 @@ import { useCallback, useMemo, useState } from "react"
 import { z } from "zod"
 import axios from "axios"
 import { sleep } from "@/modules/utils"
-import { runGraphQLWithToast } from "@/modules/toast"
+import { useGraphQLWithToast, useRestWithToast } from "@/modules/toast"
 import {
     useMutateGenerateSubmitCvPresignUrlSwr,
     useMutateVerifySubmitCvPresignUrlSwr,
@@ -27,6 +27,8 @@ export const useCvApplyForm = () => {
     const setCvFile = useCvApplyStore((state) => state.setCvFile)
     const { trigger: triggerGenerateSubmitCvPresignUrl } = useMutateGenerateSubmitCvPresignUrlSwr()
     const { trigger: triggerVerifySubmitCvPresignUrl } = useMutateVerifySubmitCvPresignUrlSwr()
+    const runGraphQL = useGraphQLWithToast()
+    const runRest = useRestWithToast()
     const [isSubmitting, setIsSubmitting] = useState(false)
 
     /** i18n key of the current validation error; null when valid. */
@@ -41,7 +43,7 @@ export const useCvApplyForm = () => {
         }
         setIsSubmitting(true)
         try {
-            await runGraphQLWithToast(
+            await runGraphQL(
                 async () => {
                     const generateResponse = await triggerGenerateSubmitCvPresignUrl({
                         request: { fileName: cvFile.name },
@@ -51,11 +53,14 @@ export const useCvApplyForm = () => {
                         throw new Error("Failed to get pre-signed URL")
                     }
                     const contentType = cvFile.type || "application/pdf"
-                    const uploadResponse = await axios.put(generatePayload.url, cvFile, {
-                        headers: { "Content-Type": contentType },
-                    })
-                    if (uploadResponse.status !== 200) {
-                        throw new Error(`Upload failed with status ${uploadResponse.status}`)
+                    const uploadResponse = await runRest(
+                        () => axios.put(generatePayload.url, cvFile, {
+                            headers: { "Content-Type": contentType },
+                        }),
+                        { showSuccessToast: false },
+                    )
+                    if (!uploadResponse || uploadResponse.status !== 200) {
+                        throw new Error(`Upload failed with status ${uploadResponse?.status}`)
                     }
                     // Wait 1s for MinIO to propagate before verifying.
                     await sleep(1000)
@@ -73,7 +78,7 @@ export const useCvApplyForm = () => {
         } finally {
             setIsSubmitting(false)
         }
-    }, [cvFile, error, triggerGenerateSubmitCvPresignUrl, triggerVerifySubmitCvPresignUrl])
+    }, [cvFile, error, triggerGenerateSubmitCvPresignUrl, triggerVerifySubmitCvPresignUrl, runGraphQL, runRest])
 
     return { cvFile, setCvFile, error, submit, isSubmitting }
 }

@@ -3,7 +3,7 @@
 import { useCallback } from "react"
 import type { MindMapDetailsSelection, PaymentContext } from "@/modules/types"
 import type { QueryActiveAdvertisementData } from "@/modules/api"
-import { useOverlayStore, type OverlayKey } from "./store"
+import { useOverlayStore, type OverlayKey, type FollowListContext } from "./store"
 
 /**
  * Return shape of an overlay accessor — matches HeroUI's `UseOverlayStateReturn`
@@ -50,6 +50,8 @@ export const useAIProcessingOverlayState = () => useOverlayHandle("aiProcessing"
 export const useAiQuotaOverlayState = () => useOverlayHandle("aiQuota")
 /** Authentication overlay state. */
 export const useAuthenticationOverlayState = () => useOverlayHandle("authentication")
+/** Avatar-upload modal overlay state (edit-profile avatar dropzone). */
+export const useAvatarUploadOverlayState = () => useOverlayHandle("avatarUpload")
 /** Challenge overlay state. */
 export const useChallengeOverlayState = () => useOverlayHandle("challenge")
 /** Content overlay state. */
@@ -143,8 +145,31 @@ export const useAdModalOverlayState = () => {
     return { ...base, open, context }
 }
 
+/**
+ * Follow-list modal overlay state. Like {@link useAdModalOverlayState}, overrides
+ * `open` to accept a {@link FollowListContext} (whose graph + which tab) and
+ * stashes it so the global modal (mounted in `ModalContainer`) can render it.
+ * @returns the overlay handle plus `context` and `open(context)`.
+ */
+export const useFollowListOverlayState = () => {
+    const base = useOverlayHandle("followList")
+    const context = useOverlayStore((state) => state.followListContext)
+    const setContext = useOverlayStore((state) => state.setFollowListContext)
+    const openOverlay = useOverlayStore((state) => state.openOverlay)
+    const open = useCallback(
+        (next: FollowListContext) => {
+            setContext(next)
+            openOverlay("followList")
+        },
+        [setContext, openOverlay],
+    )
+    return { ...base, open, context }
+}
+
 /** Personal project task attempts drawer overlay state. */
 export const usePersonalProjectTaskAttemptsDrawerOverlayState = () => useOverlayHandle("personalProjectTaskAttemptsDrawer")
+/** Manage-pinned-projects modal overlay state (profile owner only). */
+export const usePinnedProjectsOverlayState = () => useOverlayHandle("pinnedProjects")
 /** Premium gate overlay state. */
 export const usePremiumGateOverlayState = () => useOverlayHandle("premiumGate")
 /** Search overlay state. */

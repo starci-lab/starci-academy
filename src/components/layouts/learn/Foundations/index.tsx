@@ -59,6 +59,14 @@ const PAGE_SIZE = 10
 /** Debounce window (ms) before a typed search hits the backend. */
 const SEARCH_DEBOUNCE_MS = 350
 
+/** One search-box suggestion built from a foundation resource (`{ id, label }`). */
+interface FoundationResourceSuggestion {
+    /** Foundation resource id (selecting it narrows the grid). */
+    id: string
+    /** Display label shown in the suggestion list (the resource title). */
+    label: string
+}
+
 /**
  * Learn foundations page container (resources within a category).
  *
@@ -171,7 +179,7 @@ export const FoundationsLearnLayout = () => {
 
     /** Fill the search box with the chosen resource title (the grid then narrows to it). */
     const onSelectResourceSuggestion = useCallback(
-        (suggestion: { id: string; label: string }) => {
+        (suggestion: FoundationResourceSuggestion) => {
             setQuery(suggestion.label)
         },
         [],

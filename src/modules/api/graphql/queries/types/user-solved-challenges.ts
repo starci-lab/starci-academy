@@ -18,6 +18,12 @@ export interface QueryUserSolvedChallengeItemData {
     selectedLang: string | null
     /** Passed time (ISO), or null. */
     passedAt: string | null
+    /** Challenge difficulty value (easy/medium/hard/insane/expert), or null on V1-legacy rows. */
+    difficulty: string | null
+    /** Score awarded for the passing attempt, or null when not recorded. */
+    score: number | null
+    /** Title of the course the challenge belongs to, or null when not resolvable. */
+    courseTitle: string | null
 }
 
 /** Apollo response shape for the `userSolvedChallenges` query. */

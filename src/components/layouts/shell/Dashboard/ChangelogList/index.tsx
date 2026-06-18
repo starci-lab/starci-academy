@@ -2,15 +2,15 @@
 
 import React from "react"
 import {
-    cn,
-} from "@heroui/react"
-import {
     useLocale,
     useTranslations,
 } from "next-intl"
-import type {
-    QueryChangelogEntryData,
-} from "@/modules/api"
+import {
+    cn,
+} from "@heroui/react"
+import {
+    useQueryChangelogEntriesSwr,
+} from "@/hooks"
 import {
     ChangelogCategory,
 } from "@/modules/api"
@@ -19,10 +19,7 @@ import type {
 } from "@/modules/types/base/class-name"
 
 /** Props for {@link ChangelogList}. */
-export interface ChangelogListProps extends WithClassNames<undefined> {
-    /** Recent changelog entries, newest first. */
-    entries: Array<QueryChangelogEntryData>
-}
+export type ChangelogListProps = WithClassNames<undefined>
 
 /** Tailwind classes for each category chip. */
 const CATEGORY_CLASS: Record<ChangelogCategory, string> = {
@@ -34,25 +31,28 @@ const CATEGORY_CLASS: Record<ChangelogCategory, string> = {
 /**
  * GitHub-style "Latest from our changelog" list for the dashboard right rail.
  * Each row shows the published date, an optional colored category chip and the
- * title (linked when the entry has a destination).
- * @param props - the changelog entries
+ * title (linked when the entry has a destination). Self-fetches the recent
+ * changelog entries (newest first) like every other sidebar block.
+ * @param props - optional className for the root element
  */
 export const ChangelogList = ({
-    entries,
     className,
-}: ChangelogListProps) => {
+}: ChangelogListProps = {}) => {
     const t = useTranslations()
     const locale = useLocale()
+    const { data: changelog } = useQueryChangelogEntriesSwr()
+    const entries = changelog ?? []
 
     if (entries.length === 0) {
         return null
     }
 
     return (
-        <div className={cn("flex flex-col gap-3", className)}>
-            <div className="text-base font-semibold text-foreground">
+        <div className={cn("flex w-full flex-col gap-3", className)}>
+            {/* heading (no card) */}
+            <span className="text-base font-semibold text-foreground">
                 {t("dashboard.changelog")}
-            </div>
+            </span>
             <div className="flex flex-col gap-3">
                 {entries.map((entry) => (
                     <div

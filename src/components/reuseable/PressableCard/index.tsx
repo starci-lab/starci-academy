@@ -39,7 +39,7 @@ export interface PressableCardProps extends WithClassNames<undefined> {
  *
  * @param props - {@link PressableCardProps}
  */
-export const PressableCard = ({
+export const PressableCard = React.forwardRef<HTMLButtonElement, PressableCardProps>(({
     children,
     onPress,
     className,
@@ -48,9 +48,10 @@ export const PressableCard = ({
     ariaLabel,
     pressScale = 0.96,
     hoverScale = 1.02,
-}: PressableCardProps) => {
+}, ref) => {
     return (
         <motion.button
+            ref={ref}
             type={type}
             disabled={disabled}
             aria-label={ariaLabel}
@@ -76,4 +77,6 @@ export const PressableCard = ({
             {children}
         </motion.button>
     )
-}
+})
+
+PressableCard.displayName = "PressableCard"

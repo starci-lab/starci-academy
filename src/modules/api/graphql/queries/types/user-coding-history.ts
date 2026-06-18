@@ -12,6 +12,8 @@ export interface QueryUserCodingHistoryItemData {
     problemTitle: string
     /** Difficulty value (easy/medium/hard). */
     difficulty: string
+    /** Topic domain value (arrays/strings/trees/dp/graph…), or null when not tagged. */
+    domain: string | null
     /** Language values the problem was solved in. */
     languages: Array<string>
     /** First-solve time (ISO), or null. */

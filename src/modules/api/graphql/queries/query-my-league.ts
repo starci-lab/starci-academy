@@ -20,6 +20,7 @@ const query1 = gql`
           avatar
           weekPoints
           rank
+          rankDelta
         }
       }
     }

@@ -23,6 +23,7 @@ import {
     useQueryFoundationCategoriesSwr,
     useQueryFoundationCategorySuggestionsSwr,
 } from "@/hooks"
+import type { FoundationCategorySuggestionItem } from "@/modules/api/graphql"
 import type {
     FoundationsBreadcrumbItem,
 } from "../types"
@@ -106,7 +107,7 @@ export const FoundationsCategoryGridLayout = () => {
 
     /** Fill the search box with the chosen suggestion (the grid then filters to it). */
     const onSelectSuggestion = useCallback(
-        (suggestion: { id: string; label: string }) => {
+        (suggestion: FoundationCategorySuggestionItem) => {
             setQuery(suggestion.label)
         },
         [],

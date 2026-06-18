@@ -1,16 +1,48 @@
-import React from "react"
+"use client"
+
+import React, {
+    useEffect,
+} from "react"
+import {
+    useLocale,
+} from "next-intl"
+import {
+    useRouter,
+    useSearchParams,
+} from "next/navigation"
+import {
+    useAppSelector,
+} from "@/redux"
+import {
+    pathConfig,
+} from "@/resources"
 import {
     PublicProfile,
-} from "@/components/layouts/profile/PublicProfile"
+} from "@/components/features/profile/PublicProfile"
 
 /**
- * Route `/[locale]/profile` — the signed-in user's own profile, rendered with the
- * same GitHub-style layout as any public profile. PublicProfile resolves the
- * username from the signed-in user on this bare route, and shows the "edit" action
- * for the owner. Settings live under the `/profile/*` sub-pages (edit, sessions,
- * security, …), reached from the account menu — there is no separate hub anymore.
+ * Route `/[locale]/profile` — the signed-in user's own profile. Canonicalizes the
+ * URL to `/[locale]/profile/<username>` (GitHub-style) once the viewer is known,
+ * preserving the query (e.g. `?tab=overview`), so the bare route never lingers in
+ * the address bar. {@link PublicProfile} renders immediately meanwhile (it resolves
+ * the viewer's username on the bare route), so the redirect causes no blank flash.
+ * Settings live under `/profile/*` sub-pages reached from the account menu.
  */
 const Page = () => {
+    const router = useRouter()
+    const locale = useLocale()
+    const searchParams = useSearchParams()
+    const username = useAppSelector((state) => state.user.user?.username)
+
+    useEffect(() => {
+        if (!username) {
+            return
+        }
+        const query = searchParams.toString()
+        const target = pathConfig().locale(locale).profile(username).build()
+        router.replace(query ? `${target}?${query}` : target)
+    }, [username, locale, searchParams, router])
+
     return <PublicProfile />
 }
 

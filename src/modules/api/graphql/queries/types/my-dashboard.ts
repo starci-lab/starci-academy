@@ -26,6 +26,8 @@ export interface QueryMyDashboardMilestoneProgressItemData {
     completed: number
     /** Total milestone tasks in the course. */
     total: number
+    /** Overall completion %, equal-weight across content/challenge/milestone (0–100). */
+    completionPercent: number
 }
 
 /** One day in the last-7-days streak strip. */
@@ -46,6 +48,10 @@ export interface QueryMyDashboardWeeklyStatsData {
     xp: number
     /** Number of lessons read in the last 7 days. */
     lessons: number
+    /** The viewer's chosen weekly lessons target, or null when none is set. */
+    weeklyGoalLessons: number | null
+    /** Streak freezes the viewer currently owns (cap 3). */
+    streakFreezes: number
     /** The last 7 calendar days (oldest → today) with active flags. */
     days: Array<QueryMyWeeklyStatsDayData>
 }

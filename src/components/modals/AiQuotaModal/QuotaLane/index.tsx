@@ -68,8 +68,8 @@ export const QuotaLane = ({
             return null
         }
         return {
-            used: quota.premium.used5h,
-            limit: quota.premium.limit5h,
+            used: quota.credit.used5h,
+            limit: quota.credit.limit5h,
             resetLabel: buildResetLabel(quota.window5hResetAt),
         }
     }, [
@@ -94,8 +94,8 @@ export const QuotaLane = ({
             return null
         }
         return {
-            used: quota.premium.usedWeek,
-            limit: quota.premium.limitWeek,
+            used: quota.credit.usedWeek,
+            limit: quota.credit.limitWeek,
             resetLabel: buildResetLabel(quota.windowWeekResetAt),
         }
     }, [

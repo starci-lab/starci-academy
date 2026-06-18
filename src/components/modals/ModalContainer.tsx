@@ -21,6 +21,8 @@ import { HeadhunterModal } from "./HeadhunterModal"
 import { AiQuotaModal } from "./AiQuotaModal"
 import { PremiumGateModal } from "./PremiumGateModal"
 import { AdModal } from "./AdModal"
+import { ManagePinnedProjectsModal } from "./ManagePinnedProjectsModal"
+import { FollowListModal } from "./FollowListModal"
 
 export const ModalContainer = () => {
     return (
@@ -46,6 +48,8 @@ export const ModalContainer = () => {
             <AiQuotaModal />
             <PremiumGateModal />
             <AdModal />
+            <ManagePinnedProjectsModal />
+            <FollowListModal />
             {/* <AIProcessingModal /> */}
         </>
     )

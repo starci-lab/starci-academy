@@ -36,6 +36,8 @@ export interface QueryMyAchievementItemData {
     currentValue: number
     /** Highest tier reached (1-based), or null. */
     tierReached: number | null
+    /** Approx % of users who hold this badge (lower = rarer); null when not earned. */
+    rarityPercent: number | null
 }
 
 /** The achievements payload: the full list, the earned count, + the newly earned. */

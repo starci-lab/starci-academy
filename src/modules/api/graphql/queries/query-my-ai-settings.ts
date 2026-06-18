@@ -38,6 +38,7 @@ const query1 = gql`
         canByok
         byokProvider
         hasByokKey
+        byokKeyLast4
         tier
       }
     }

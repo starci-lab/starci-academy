@@ -15,6 +15,7 @@ const query1 = gql`
     earnedAt
     currentValue
     tierReached
+    rarityPercent
   }
   query MyAchievements {
     myAchievements {

@@ -16,6 +16,7 @@ import {
     useQueryHeadhuntersSwr,
     useQueryHeadhuntingCompanySuggestionsSwr,
 } from "@/hooks"
+import type { HeadhuntingCompanySuggestionItem } from "@/modules/api/graphql"
 import { SearchInput } from "@/components/reuseable"
 import { ConsultantGrid } from "./ConsultantGrid"
 import { HeadhuntingsBreadcrumbs } from "./HeadhuntingsBreadcrumbs"
@@ -67,7 +68,7 @@ export const HeadhuntingsLearnLayout = ({ className }: HeadhuntingsLearnLayoutPr
 
     /** Deep-link to the chosen company's page (the suggestion id is the company id). */
     const onSelectSuggestion = useCallback(
-        (suggestion: { id: string; label: string }) => {
+        (suggestion: HeadhuntingCompanySuggestionItem) => {
             if (!courseDisplayId) {
                 return
             }

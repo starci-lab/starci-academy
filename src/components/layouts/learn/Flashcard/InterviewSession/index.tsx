@@ -12,6 +12,7 @@ import type {
 import { InterviewVerdict } from "@/modules/api"
 import { useMutateGradeInterviewAnswerSwr } from "@/hooks"
 import { useSpeechRecognition } from "@/hooks"
+import { useGraphQLWithToast } from "@/modules/toast"
 import { InterviewSessionSkeleton } from "../InterviewSessionSkeleton"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
@@ -57,6 +58,7 @@ export const InterviewSession = ({ deckId, className }: InterviewSessionProps) =
     } = useSpeechRecognition({ lang: recognitionLang })
 
     const { trigger: gradeAnswer, isMutating } = useMutateGradeInterviewAnswerSwr()
+    const runGraphQL = useGraphQLWithToast()
 
     // the currently drawn question (null while drawing / on draw failure)
     const [card, setCard] = useState<InterviewCardData | null>(null)
@@ -112,22 +114,31 @@ export const InterviewSession = ({ deckId, className }: InterviewSessionProps) =
             stop()
         }
         setGradeError(null)
-        try {
+        let gradeResult: InterviewGradeResultData | null = null
+        // route the mutation through the toast hook; it toasts based on the
+        // GraphQLResponse `success`, so hand it the `gradeInterviewAnswer` payload
+        const ok = await runGraphQL(async () => {
             const response = await gradeAnswer({
                 flashcardDeckId: card.deckId,
                 flashcardCardId: card.id,
                 transcript: transcript.trim(),
             })
             const payload = response.data?.gradeInterviewAnswer
-            if (!payload?.success || !payload.data) {
-                setGradeError(payload?.message ?? t("flashcard.interview.gradeError"))
-                return
-            }
-            setResult(payload.data)
-        } catch {
+            gradeResult = payload?.data ?? null
+            return (
+                payload ?? {
+                    success: false,
+                    message: t("flashcard.interview.gradeError"),
+                }
+            )
+        })
+        // success toast already shown by the hook; keep the inline error in sync
+        if (ok && gradeResult) {
+            setResult(gradeResult)
+        } else {
             setGradeError(t("flashcard.interview.gradeError"))
         }
-    }, [card, transcript, listening, stop, gradeAnswer, t])
+    }, [card, transcript, listening, stop, gradeAnswer, runGraphQL, t])
 
     // initial load / redraw: mirror with a content-shaped skeleton
     if (drawing) {

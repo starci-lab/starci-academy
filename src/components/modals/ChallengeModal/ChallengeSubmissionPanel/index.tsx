@@ -20,7 +20,7 @@ import {
     useSubmissionAttemptsOverlayState,
 } from "@/hooks"
 import type { AiGradableModel } from "@/modules/api"
-import { useLocale } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import {
     ChallengeSubmissionEntity,
@@ -35,7 +35,7 @@ import {
     setChallengeSubmissionJobId,
 } from "@/redux/slices"
 import { useAppDispatch, useAppSelector } from "@/redux"
-import { runGraphQLWithToast } from "@/modules/toast"
+import { useGraphQLWithToast } from "@/modules/toast"
 import _ from "lodash"
 import { resolveChallengeSubmissionJobEnvelope } from "@/components/utils"
 import type {
@@ -71,8 +71,12 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
         setFieldValue,
         setFieldTouched,
         isSubmitting,
+        autosaveStatus,
     } = formik
+    // Inline auto-save status text for the debounced submission sync.
+    const tAutosave = useTranslations("autosave")
     const { open: openSubmissionAttempts } = useSubmissionAttemptsOverlayState()
+    const runGraphQL = useGraphQLWithToast()
     const submitChallengeSubmissionSwr = useMutateSubmitChallengeSubmissionSwr()
     const syncSubmissionSwr = useMutateSyncChallengeSubmissionSwr()
     const dispatch = useAppDispatch()
@@ -250,7 +254,7 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
                 ...prev,
                 [submissionId]: selection,
             }))
-            void runGraphQLWithToast(
+            void runGraphQL(
                 async () => {
                     const response = await syncSubmissionSwr.trigger({
                         id: submissionId,
@@ -272,6 +276,7 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
         },
         [
             syncSubmissionSwr,
+            runGraphQL,
         ],
     )
 
@@ -296,7 +301,7 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
     /** Submit a single row's URL for grading and subscribe to its job notifications. */
     const onSubmit = useCallback(
         async (submissionId: string, index: number) => {
-            await runGraphQLWithToast(
+            await runGraphQL(
                 async () => {
                     // call the submit mutation with the typed URL + this row's
                     // chosen grading lane + model
@@ -348,6 +353,7 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
             jobNotificationsSocket,
             locale,
             lang,
+            runGraphQL,
         ],
     )
 
@@ -363,8 +369,22 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
         ],
     )
 
+    // Map the hook's auto-save status to its localized label (idle shows nothing).
+    const autosaveLabel = autosaveStatus === "idle" ? undefined : tAutosave(autosaveStatus)
+
     return (
         <div className={cn(className, "flex flex-col")}>
+            {autosaveLabel && (
+                <span
+                    aria-live="polite"
+                    className={cn(
+                        "text-xs",
+                        autosaveStatus === "failed" ? "text-danger" : "text-default-500",
+                    )}
+                >
+                    {autosaveLabel}
+                </span>
+            )}
             {rows.map((row) => (
                 <SubmissionRow
                     key={row.submission.id}

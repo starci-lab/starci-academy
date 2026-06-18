@@ -12,6 +12,7 @@ const query1 = gql`
       data {
         problemTitle
         difficulty
+        domain
         languages
         firstSolvedAt
       }

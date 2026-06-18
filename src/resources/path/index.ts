@@ -61,13 +61,93 @@ export const pathConfig = () => {
                     build,
                 }
             }
+            const aiSettings = () => {
+                const aiSettingsPath = `${profilePath}/ai-settings`
+                const build = () => {
+                    return aiSettingsPath
+                }
+                return {
+                    build,
+                }
+            }
+            const aiSubscription = () => {
+                const aiSubscriptionPath = `${profilePath}/ai-subscription`
+                const build = () => {
+                    return aiSubscriptionPath
+                }
+                return {
+                    build,
+                }
+            }
+            const membership = () => {
+                const membershipPath = `${profilePath}/membership`
+                const build = () => {
+                    return membershipPath
+                }
+                return {
+                    build,
+                }
+            }
+            const settings = () => {
+                const settingsPath = `${profilePath}/settings`
+                const build = () => {
+                    return settingsPath
+                }
+                return {
+                    build,
+                }
+            }
+            const learning = () => {
+                const learningPath = `${profilePath}/learning`
+                const build = () => {
+                    return learningPath
+                }
+                return {
+                    build,
+                }
+            }
+            const submissions = () => {
+                const submissionsPath = `${profilePath}/submissions`
+                const build = () => {
+                    return submissionsPath
+                }
+                return {
+                    build,
+                }
+            }
+            const attempts = () => {
+                const attemptsPath = `${profilePath}/attempts`
+                const build = () => {
+                    return attemptsPath
+                }
+                return {
+                    build,
+                }
+            }
+            const feedback = () => {
+                const feedbackPath = `${profilePath}/feedback`
+                const build = () => {
+                    return feedbackPath
+                }
+                return {
+                    build,
+                }
+            }
             return {
                 build,
                 bookmarks,
                 aiUsage,
+                aiSettings,
+                aiSubscription,
+                membership,
+                settings,
                 edit,
                 sessions,
                 security,
+                learning,
+                submissions,
+                attempts,
+                feedback,
             }
         }
         const authentication = () => {
@@ -319,10 +399,60 @@ export const pathConfig = () => {
                 build,
             }
         }
+        const blog = () => {
+            // editorial blog index (deep-dive / build-in-public / career / …)
+            const blogPath = `${localePath}/blog`
+            const build = () => {
+                return blogPath
+            }
+            return {
+                build,
+            }
+        }
         const practice = () => {
             const practicePath = `${localePath}/practice`
             const build = () => {
                 return practicePath
+            }
+            return {
+                build,
+            }
+        }
+        const review = () => {
+            // flashcard review session (SM-2): all due cards across courses
+            const reviewPath = `${localePath}/review`
+            const build = () => {
+                return reviewPath
+            }
+            return {
+                build,
+            }
+        }
+        const rewards = () => {
+            // reward points store: spend reward points earned from learning on gifts
+            const rewardsPath = `${localePath}/rewards`
+            const build = () => {
+                return rewardsPath
+            }
+            return {
+                build,
+            }
+        }
+        const league = () => {
+            // weekly league + global leaderboard (full board behind the dashboard card)
+            const leaguePath = `${localePath}/league`
+            const build = () => {
+                return leaguePath
+            }
+            return {
+                build,
+            }
+        }
+        const kpi = () => {
+            // weekly KPI editor (set per-metric targets behind the dashboard summary)
+            const kpiPath = `${localePath}/kpi`
+            const build = () => {
+                return kpiPath
             }
             return {
                 build,
@@ -346,7 +476,12 @@ export const pathConfig = () => {
             publicContent,
             dashboard,
             practice,
+            review,
             talents,
+            blog,
+            rewards,
+            league,
+            kpi,
         }
     }
     return {

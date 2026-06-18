@@ -19,6 +19,8 @@ export interface QueryMyAiSettingsResponseData {
     byokProvider: ModelProvider | null
     /** True when the user has stored an encrypted BYOK API key server-side. */
     hasByokKey: boolean
+    /** Last 4 chars of the stored BYOK key (masked hint); null when none. */
+    byokKeyLast4?: string | null
     /** The user's active paid subscription tier; null when on the free tier. */
     tier: AiSubTier | null
 }

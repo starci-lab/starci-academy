@@ -1,12 +1,12 @@
 "use client"
 
-import { useCallback, useEffect, useMemo, useRef } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { debounce } from "lodash"
 import { useLocale, useTranslations } from "next-intl"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import { SidebarTab } from "@/redux/slices/sidebar"
 import { addMilestoneTaskIdToJobId } from "@/redux/slices"
-import { runGraphQLWithToast } from "@/modules/toast"
+import { useGraphQLWithToast } from "@/modules/toast"
 import {
     useMutateReviewPersonalProjectTaskSwr,
     useMutateSyncPersonalProjectGithubBranchSwr,
@@ -23,6 +23,9 @@ import { usePersonalProjectGithubStore } from "./store"
 const GITHUB_REGEX = /^https:\/\/(www\.)?github\.com\/[A-Za-z0-9_.-]+(\/[A-Za-z0-9_.-]+)?(\/)?$/
 const DEFAULT_BRANCH = "main"
 
+/** Autosave status for the debounced url/branch sync (inline feedback). */
+export type PersonalProjectGithubAutosaveStatus = "idle" | "saving" | "saved" | "failed"
+
 /** Options for {@link usePersonalProjectGithubForm}. */
 export interface UsePersonalProjectGithubFormOptions {
     /** Enable the 2 debounced auto-syncs (only the OWNER component — Submission — enables it, to avoid double-firing). */
@@ -37,9 +40,13 @@ export interface UsePersonalProjectGithubFormOptions {
  */
 export const usePersonalProjectGithubForm = (options: UsePersonalProjectGithubFormOptions = {}) => {
     const { enableSync = false } = options
+    // Inline autosave status for each debounced sync (url/branch), surfaced next to the fields.
+    const [urlAutosaveStatus, setUrlAutosaveStatus] = useState<PersonalProjectGithubAutosaveStatus>("idle")
+    const [branchAutosaveStatus, setBranchAutosaveStatus] = useState<PersonalProjectGithubAutosaveStatus>("idle")
     const t = useTranslations()
     const locale = useLocale()
     const dispatch = useAppDispatch()
+    const runGraphQL = useGraphQLWithToast()
     const course = useAppSelector((state) => state.course.entity)
     const enrollment = useAppSelector((state) => state.user.enrollment)
     const sidebarTab = useAppSelector((state) => state.sidebar.sidebar.tab)
@@ -121,17 +128,34 @@ export const usePersonalProjectGithubForm = (options: UsePersonalProjectGithubFo
             return
         }
         const debounced = debounce(async () => {
-            const result = await syncPersonalProjectGithubSwr.trigger({ courseId: course.id, githubUrl: trimmed })
-            const payload = result?.data?.syncPersonalProjectGithub
-            if (payload && !payload.success) {
-                setGithubUrlError(payload.error ?? payload.message ?? t("finalProject.page.submitGithub.syncFailed"))
-                return
-            }
-            await queryCourseEnrollmentStatusSwr.mutate()
+            setUrlAutosaveStatus("saving")
+            await runGraphQL(
+                async () => {
+                    try {
+                        const result = await syncPersonalProjectGithubSwr.trigger({ courseId: course.id, githubUrl: trimmed })
+                        const payload = result?.data?.syncPersonalProjectGithub
+                        if (!payload) {
+                            throw new Error("Sync failed")
+                        }
+                        if (!payload.success) {
+                            setGithubUrlError(payload.error ?? payload.message ?? t("finalProject.page.submitGithub.syncFailed"))
+                            setUrlAutosaveStatus("failed")
+                            return payload
+                        }
+                        await queryCourseEnrollmentStatusSwr.mutate()
+                        setUrlAutosaveStatus("saved")
+                        return payload
+                    } catch (error) {
+                        setUrlAutosaveStatus("failed")
+                        throw error
+                    }
+                },
+                { showSuccessToast: false },
+            )
         }, 300)
         debounced()
         return () => debounced.cancel()
-    }, [enableSync, course?.id, githubUrl, validationError.githubUrl, sidebarTab, t, syncPersonalProjectGithubSwr, queryCourseEnrollmentStatusSwr, setGithubUrlError])
+    }, [enableSync, course?.id, githubUrl, validationError.githubUrl, sidebarTab, t, syncPersonalProjectGithubSwr, queryCourseEnrollmentStatusSwr, setGithubUrlError, runGraphQL])
 
     // Debounced branch sync.
     useEffect(() => {
@@ -146,17 +170,34 @@ export const usePersonalProjectGithubForm = (options: UsePersonalProjectGithubFo
             return
         }
         const debounced = debounce(async () => {
-            const result = await syncBranchSwr.trigger({ courseId: course.id, branch: trimmed.length > 0 ? trimmed : "" })
-            const payload = result?.data?.syncPersonalProjectGithub
-            if (payload && !payload.success) {
-                setBranchError(payload.error ?? payload.message ?? t("finalProject.page.submitGithub.syncFailed"))
-                return
-            }
-            await queryCourseEnrollmentStatusSwr.mutate()
+            setBranchAutosaveStatus("saving")
+            await runGraphQL(
+                async () => {
+                    try {
+                        const result = await syncBranchSwr.trigger({ courseId: course.id, branch: trimmed.length > 0 ? trimmed : "" })
+                        const payload = result?.data?.syncPersonalProjectGithub
+                        if (!payload) {
+                            throw new Error("Sync failed")
+                        }
+                        if (!payload.success) {
+                            setBranchError(payload.error ?? payload.message ?? t("finalProject.page.submitGithub.syncFailed"))
+                            setBranchAutosaveStatus("failed")
+                            return payload
+                        }
+                        await queryCourseEnrollmentStatusSwr.mutate()
+                        setBranchAutosaveStatus("saved")
+                        return payload
+                    } catch (error) {
+                        setBranchAutosaveStatus("failed")
+                        throw error
+                    }
+                },
+                { showSuccessToast: false },
+            )
         }, 300)
         debounced()
         return () => debounced.cancel()
-    }, [enableSync, course?.id, branch, validationError.branch, sidebarTab, t, syncBranchSwr, queryCourseEnrollmentStatusSwr, setBranchError])
+    }, [enableSync, course?.id, branch, validationError.branch, sidebarTab, t, syncBranchSwr, queryCourseEnrollmentStatusSwr, setBranchError, runGraphQL])
 
     const submit = useCallback(async () => {
         if (!course?.id) {
@@ -172,7 +213,7 @@ export const usePersonalProjectGithubForm = (options: UsePersonalProjectGithubFo
         const branchTrimmed = branch.trim()
         setIsSubmitting(true)
         try {
-            await runGraphQLWithToast(
+            await runGraphQL(
                 async () => {
                     if (!selectedTaskId) {
                         throw new Error("Selected task ID is required")
@@ -207,7 +248,7 @@ export const usePersonalProjectGithubForm = (options: UsePersonalProjectGithubFo
         } finally {
             setIsSubmitting(false)
         }
-    }, [course?.id, githubUrl, branch, lang, enrollment?.personalProjectGithubUrl, selectedTaskId, reviewPersonalProjectTaskSwr, jobNotificationsSocket, locale, dispatch, queryCourseEnrollmentStatusSwr, setBranchError, setIsSubmitting, t])
+    }, [course?.id, githubUrl, branch, lang, enrollment?.personalProjectGithubUrl, selectedTaskId, reviewPersonalProjectTaskSwr, jobNotificationsSocket, locale, dispatch, queryCourseEnrollmentStatusSwr, setBranchError, setIsSubmitting, t, runGraphQL])
 
     return {
         githubUrl,
@@ -215,6 +256,7 @@ export const usePersonalProjectGithubForm = (options: UsePersonalProjectGithubFo
         lang,
         errors,
         touched: { githubUrl: touchedGithubUrl, branch: touchedBranch },
+        autosaveStatus: { githubUrl: urlAutosaveStatus, branch: branchAutosaveStatus },
         isSubmitting,
         setGithubUrl,
         setBranch,

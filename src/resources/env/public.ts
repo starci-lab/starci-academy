@@ -62,5 +62,12 @@ export const publicEnv = () => {
             /** The Turnstile site key. Defaults to Cloudflare's always-pass testing key. */
             siteKey: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "1x00000000000000000000AA",
         },
+        /**
+         * Debug mode. Defaults to ON (`true`) — dev affordances activate, e.g.
+         * `AsyncContent` holds the skeleton for a few seconds so loading states can
+         * be inspected without a slow network. Set `NEXT_PUBLIC_DEBUG=false` to
+         * disable (e.g. production).
+         */
+        debug: process.env.NEXT_PUBLIC_DEBUG !== "false",
     }
 }

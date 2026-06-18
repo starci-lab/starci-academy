@@ -5,7 +5,12 @@ import React, {
     useState,
 } from "react"
 import {
-    Button,
+    Bars as AllIcon,
+    BookOpen as CourseIcon,
+    Medal as AchievementIcon,
+    Persons as SocialIcon,
+} from "@gravity-ui/icons"
+import {
     Skeleton,
     Tabs,
     cn,
@@ -64,18 +69,22 @@ export const FeedTabs = ({
             {
                 key: MyFeedCategory.All,
                 label: t("dashboard.feedFilter.all"),
+                Icon: AllIcon,
             },
             {
                 key: MyFeedCategory.Courses,
                 label: t("dashboard.feedFilter.courses"),
+                Icon: CourseIcon,
             },
             {
                 key: MyFeedCategory.Achievements,
                 label: t("dashboard.feedFilter.achievements"),
+                Icon: AchievementIcon,
             },
             {
                 key: MyFeedCategory.People,
                 label: t("dashboard.feedFilter.people"),
+                Icon: SocialIcon,
             },
         ],
         [
@@ -108,14 +117,14 @@ export const FeedTabs = ({
                         <Tabs.Tab
                             key={MyFeedTab.ForYou}
                             id={MyFeedTab.ForYou}
-                            className="rounded-none data-[selected=true]:border-b-2 data-[selected=true]:border-accent data-[selected=true]:text-accent"
+                            className="rounded-none text-foreground data-[selected=true]:border-b-2 data-[selected=true]:border-foreground"
                         >
                             {t("dashboard.tabs.forYou")}
                         </Tabs.Tab>
                         <Tabs.Tab
                             key={MyFeedTab.Following}
                             id={MyFeedTab.Following}
-                            className="rounded-none data-[selected=true]:border-b-2 data-[selected=true]:border-accent data-[selected=true]:text-accent"
+                            className="rounded-none text-foreground data-[selected=true]:border-b-2 data-[selected=true]:border-foreground"
                         >
                             {t("dashboard.tabs.following")}
                         </Tabs.Tab>
@@ -123,30 +132,36 @@ export const FeedTabs = ({
                 </Tabs.ListContainer>
             </Tabs>
 
-            {/* trending discovery card — only on the recommendation tab, so the
-                explore stream opens with "what to learn" before the social feed */}
+            {/* discovery — only on the recommendation tab, so the explore stream
+                opens with what's trending before the social feed */}
             {tab === MyFeedTab.ForYou ? (
                 <TrendingContents className="mx-3 mt-3" />
             ) : null}
 
-            {/* filter chips — narrow the feed to a slice (courses / achievements / people) */}
-            <div className="flex flex-wrap gap-1.5 px-3 pt-3">
-                {filters.map((filter) => (
-                    <button
-                        key={filter.key}
-                        type="button"
-                        onClick={() => setCategory(filter.key)}
-                        className={cn(
-                            "rounded-full px-3 py-1 text-xs",
-                            filter.key === category
-                                ? "bg-accent text-background"
-                                : "bg-default/40 text-muted hover:text-foreground",
-                        )}
-                    >
-                        {filter.label}
-                    </button>
-                ))}
-            </div>
+            {/* filter tabs — narrow the feed to a slice (courses / achievements / people) */}
+            <Tabs
+                selectedKey={category}
+                className="px-3 pt-3"
+                variant="secondary"
+                onSelectionChange={(key) => setCategory(String(key) as MyFeedCategory)}
+            >
+                <Tabs.ListContainer>
+                    <Tabs.List aria-label={t("dashboard.feedTabsAria")}>
+                        {filters.map((filter) => (
+                            <Tabs.Tab
+                                key={filter.key}
+                                id={filter.key}
+                                className="rounded-none text-foreground data-[selected=true]:border-b-2 data-[selected=true]:border-foreground"
+                            >
+                                <span className="flex items-center gap-1.5">
+                                    <filter.Icon className="size-4 shrink-0" />
+                                    {filter.label}
+                                </span>
+                            </Tabs.Tab>
+                        ))}
+                    </Tabs.List>
+                </Tabs.ListContainer>
+            </Tabs>
 
             <div className="p-3">
                 {/* skeleton on first load so the empty-state text never flashes
@@ -165,16 +180,17 @@ export const FeedTabs = ({
                 ) : (
                     <Feed items={items} />
                 )}
-                {/* infinite "load more" — fetches the next cursor page */}
+                {/* infinite "load more" — a text link that fetches the next cursor page */}
                 {hasMore ? (
                     <div className="flex justify-center pt-4">
-                        <Button
-                            variant="tertiary"
-                            isPending={isLoading || isLoadingMore}
-                            onPress={() => setSize(size + 1)}
+                        <button
+                            type="button"
+                            disabled={isLoading || isLoadingMore}
+                            onClick={() => setSize(size + 1)}
+                            className="text-sm font-medium text-foreground hover:underline disabled:opacity-60"
                         >
                             {t("dashboard.loadMore")}
-                        </Button>
+                        </button>
                     </div>
                 ) : null}
             </div>

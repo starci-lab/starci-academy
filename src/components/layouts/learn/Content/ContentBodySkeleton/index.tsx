@@ -21,12 +21,20 @@ export type ContentBodySkeletonProps = WithClassNames<undefined> & {
     variant?: ContentBodySkeletonVariant
 }
 
+/** One skeleton section: a heading width plus how many body lines follow it. */
+interface MarkdownArticleSection {
+    /** Tailwind width class for the section heading bar (e.g. `w-2/5`). */
+    headingWidth: string
+    /** Number of skeleton paragraph lines under the heading. */
+    lines: number
+}
+
 /**
  * Section blocks (heading + body paragraph) standing in for the long-form lesson
  * body. Extra blocks also absorb the vertical space of the removed language-tab
  * row, which not every content renders.
  */
-const MARKDOWN_ARTICLE_SECTIONS: Array<{ headingWidth: string; lines: number }> = [
+const MARKDOWN_ARTICLE_SECTIONS: Array<MarkdownArticleSection> = [
     { headingWidth: "w-2/5", lines: 4 },
     { headingWidth: "w-1/3", lines: 5 },
     { headingWidth: "w-1/4", lines: 4 },

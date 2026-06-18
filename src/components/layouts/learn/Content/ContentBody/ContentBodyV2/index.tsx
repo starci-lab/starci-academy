@@ -38,7 +38,7 @@ import {
     useShareOverlayState,
 } from "@/hooks"
 import {
-    runGraphQLWithToast,
+    useGraphQLWithToast,
 } from "@/modules/toast"
 // ActionToolbar is no longer rendered here — it lives inside ContentDiscussion/InteractionBar
 import {
@@ -65,6 +65,7 @@ export const ContentBodyV2 = ({ className }: ContentBodyV2Props) => {
     const t = useTranslations()
     const locale = useLocale()
     const dispatch = useAppDispatch()
+    const runGraphQL = useGraphQLWithToast()
     const queryContentSwr = useQueryContentSwr()
     const contentFromRedux = useAppSelector((state) => state.content.entity)
     const routeContentId = useAppSelector((state) => state.content.id)
@@ -115,7 +116,7 @@ export const ContentBodyV2 = ({ className }: ContentBodyV2Props) => {
     /** Toggle the favorite flag, then re-fetch the content status on success. */
     const onToggleFavorite = useCallback(async () => {
         if (!content?.id) return
-        await runGraphQLWithToast(
+        await runGraphQL(
             async () => {
                 const env = await mutateToggleFavoriteSwr.trigger({
                     contentId: content.id,
@@ -133,7 +134,7 @@ export const ContentBodyV2 = ({ className }: ContentBodyV2Props) => {
                 showErrorToast: true,
             },
         )
-    }, [content?.id, mutateToggleFavoriteSwr, queryContentStatusSwr])
+    }, [content?.id, mutateToggleFavoriteSwr, queryContentStatusSwr, runGraphQL])
 
     /** Open the share overlay. */
     const onShare = useCallback(

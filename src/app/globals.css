@@ -3,27 +3,9 @@
 @import "@heroui/styles";
 
 /*
- * `divider` is a NextUI-v2 era color token that HeroUI v3 dropped in favor of
- * `separator`. The codebase still has ~35 `border-divider` / `text-divider`
- * usages, which would otherwise generate no utility (invisible borders).
- * Register `divider` here as an alias of HeroUI's separator color so every
- * legacy usage resolves consistently and flips with light/dark mode.
- */
-@theme {
-    --color-divider: var(--color-separator);
-}
-
-/*
- * Safelist for ```layout widget mockups embedded in seeded lesson/brief markdown.
- * Those classes never appear in source (they live in runtime content), so Tailwind
- * would purge them — force-generate the fixed mono palette the widgets are allowed to use.
- */
-@source inline("{flex,inline-flex,grid,hidden} {flex-col,flex-row,flex-wrap,items-center,items-start,items-end,justify-between,justify-center,justify-end,flex-1,flex-none,min-w-0,w-full,h-full,relative,absolute,overflow-hidden} grid-cols-{1,2,3,4} gap-{1,2,3,4} {p,px,py,pt,pb,m,mt,mb,mr,ml}-{0,1,2,3,4} {h,w}-{4,5,6,8,9,10,12,16,20,24,32,40} size-{6,8,10,12} max-w-{xs,sm,md} {top,right,bottom,left}-0 -{top,right}-1 border border-2 {border-b,border-t,border-l} border-{default,separator} rounded{,-md,-lg,-xl,-2xl,-3xl,-full,-none} bg-{surface,surface-secondary,surface-tertiary,background,default,foreground,accent} text-{foreground,muted,surface,accent,background} text-{xs,sm,base,lg,xl} font-{normal,medium,semibold} {text-center,text-left,leading-relaxed,truncate,shrink-0,cursor-pointer} opacity-{60,70,80}");
-
-/*
  * HeroUI Theme Customization
  * Add this to your global.css after importing @heroui/styles
- * Only includes base variables from variables.css
+ * Only includes variables users need to customize
  * @see https://heroui.com/docs/react/getting-started/theming
  */
 
@@ -33,154 +15,169 @@
  [data-theme="light"],
  [data-theme="default"] {
    /* Theme Colors (Light Mode) */
-   --accent: oklch(62.04% 0.1950 185.90);
-   --accent-foreground: oklch(99.11% 0 0);
-   --background: oklch(97.02% 0.0033 185.90);
-   --border: oklch(90.00% 0.0033 185.90);
-   --danger: oklch(65.32% 0.2343 17.59);
+   --accent: oklch(70.00% 0.2100 354.00);
+   --accent-foreground: oklch(15% 0.0300 354.00);
+   --background: oklch(97.02% 0.0058 354.00);
+   --border: oklch(90.00% 0.0058 354.00);
+   --danger: oklch(65.32% 0.2355 37.76);
    --danger-foreground: oklch(99.11% 0 0);
-   --default: oklch(94.00% 0.0033 185.90);
-   --default-foreground: oklch(21.03% 0.0059 185.90);
-   --field-background: oklch(100.00% 0.0016 185.90);
-   --field-foreground: oklch(21.03% 0.0033 185.90);
-   --field-placeholder: oklch(55.17% 0.0066 185.90);
-   --focus: oklch(62.04% 0.1950 185.90);
-   --foreground: oklch(21.03% 0.0033 185.90);
-   --muted: oklch(55.17% 0.0066 185.90);
-   --overlay: oklch(100.00% 0.0010 185.90);
-   --overlay-foreground: oklch(21.03% 0.0033 185.90);
-   --scrollbar: oklch(87.10% 0.0033 185.90);
-   --segment: oklch(100.00% 0.0033 185.90);
-   --segment-foreground: oklch(21.03% 0.0033 185.90);
-   --separator: oklch(92.00% 0.0033 185.90);
-   --success: oklch(73.29% 0.1948 142.66);
-   --success-foreground: oklch(21.03% 0.0059 142.66);
-   --surface: oklch(100.00% 0.0016 185.90);
-   --surface-foreground: oklch(21.03% 0.0033 185.90);
-   --surface-secondary: oklch(95.24% 0.0026 185.90);
-   --surface-secondary-foreground: oklch(21.03% 0.0033 185.90);
-   --surface-tertiary: oklch(93.73% 0.0026 185.90);
-   --surface-tertiary-foreground: oklch(21.03% 0.0033 185.90);
-   --warning: oklch(78.19% 0.1595 64.18);
-   --warning-foreground: oklch(21.03% 0.0059 64.18);
- 
+   --default: oklch(94.00% 0.0058 354.00);
+   --default-foreground: oklch(21.03% 0.0059 354.00);
+   --field-background: oklch(100.00% 0.0029 354.00);
+   --field-border: transparent;
+   --field-foreground: oklch(21.03% 0.0058 354.00);
+   --field-placeholder: oklch(55.17% 0.0116 354.00);
+   --focus: oklch(70.00% 0.2100 354.00);
+   --foreground: oklch(21.03% 0.0058 354.00);
+   --muted: oklch(55.17% 0.0116 354.00);
+   --overlay: oklch(100.00% 0.0017 354.00);
+   --overlay-foreground: oklch(21.03% 0.0058 354.00);
+   --scrollbar: oklch(87.10% 0.0058 354.00);
+   --segment: oklch(100.00% 0.0058 354.00);
+   --segment-foreground: oklch(21.03% 0.0058 354.00);
+   --separator: oklch(92.00% 0.0058 354.00);
+   --success: oklch(73.29% 0.1957 162.83);
+   --success-foreground: oklch(21.03% 0.0059 162.83);
+   --surface: oklch(100.00% 0.0029 354.00);
+   --surface-foreground: oklch(21.03% 0.0058 354.00);
+   --surface-secondary: oklch(95.24% 0.0046 354.00);
+   --surface-secondary-foreground: oklch(21.03% 0.0058 354.00);
+   --surface-tertiary: oklch(93.73% 0.0046 354.00);
+   --surface-tertiary-foreground: oklch(21.03% 0.0058 354.00);
+   --warning: oklch(78.19% 0.1603 84.35);
+   --difficulty-insane: oklch(58.00% 0.2000 300.00);
+   --warning-foreground: oklch(21.03% 0.0059 84.35);
+
+   /* Contribution heatmap ramp (brand hue 354) — 0 = empty track, 1→4 = rising
+      activity. Light mode: faint neutral → deep saturated pink, each step readable
+      on the near-white surface. */
+   --heat-0: oklch(92.00% 0.0058 354.00);
+   --heat-1: oklch(86.00% 0.0750 354.00);
+   --heat-2: oklch(78.00% 0.1350 354.00);
+   --heat-3: oklch(70.00% 0.1900 354.00);
+   --heat-4: oklch(60.00% 0.2350 354.00);
+
    /* Border Radius */
    --radius: 0.5rem;
-   /* Rounder form controls — every input / autocomplete / select / search
-      field derives its corner radius from this token (`rounded-field`).
-      Matches the `rounded-3xl` (1.5rem) radius HeroUI buttons use, so fields
-      and buttons read as one consistent pill-rounded family. */
-   --field-radius: 1.5rem;
-
-   /* Flat form fields — no drop shadow on inputs, selects, textareas, etc. */
-   --field-shadow: 0 0 0 0 transparent;
-
-   /* Bordered form fields — HeroUI's default theme zeroes these out
-      (transparent / 0px), which makes inputs, autocompletes, selects and
-      search fields look borderless. Re-enable a 1px border on the shared
-      separator color so every field reads as an outlined control. */
-   --field-border: var(--border);
-   --field-border-width: 1px;
-
+   --field-radius: 0.75rem;
+ 
    /* Font Family */
-   --font-sans: var(--font-open-sans);
+   /* Make sure to load Inter font in your app */
+   --font-sans: var(--font-inter);
  }
  
  .dark,
  [data-theme="dark"] {
    color-scheme: dark;
    /* Theme Colors (Dark Mode) */
-   --accent: oklch(62.04% 0.1950 185.90);
-   --accent-foreground: oklch(99.11% 0 0);
-   --background: oklch(12.00% 0.0033 185.90);
-   --border: oklch(28.00% 0.0033 185.90);
-   --danger: oklch(59.40% 0.1980 16.48);
+   --accent: oklch(70.00% 0.2100 354.00);
+   --accent-foreground: oklch(15% 0.0300 354.00);
+   --background: oklch(12.00% 0.0058 354.00);
+   --border: oklch(28.00% 0.0058 354.00);
+   --danger: oklch(59.40% 0.1990 36.65);
    --danger-foreground: oklch(99.11% 0 0);
-   --default: oklch(27.40% 0.0033 185.90);
+   --default: oklch(27.40% 0.0058 354.00);
    --default-foreground: oklch(99.11% 0 0);
-   --field-background: oklch(21.03% 0.0066 185.90);
-   --field-foreground: oklch(99.11% 0.0033 185.90);
-   --field-placeholder: oklch(70.50% 0.0066 185.90);
-   --focus: oklch(62.04% 0.1950 185.90);
-   --foreground: oklch(99.11% 0.0033 185.90);
-   --muted: oklch(70.50% 0.0066 185.90);
-   --overlay: oklch(21.03% 0.0066 185.90);
-   --overlay-foreground: oklch(99.11% 0.0033 185.90);
-   --scrollbar: oklch(70.50% 0.0033 185.90);
-   --segment: oklch(39.64% 0.0033 185.90);
-   --segment-foreground: oklch(99.11% 0.0033 185.90);
-   --separator: oklch(25.00% 0.0033 185.90);
-   --success: oklch(73.29% 0.1948 142.66);
-   --success-foreground: oklch(21.03% 0.0059 142.66);
-   --surface: oklch(21.03% 0.0066 185.90);
-   --surface-foreground: oklch(99.11% 0.0033 185.90);
-   --surface-secondary: oklch(25.70% 0.0049 185.90);
-   --surface-secondary-foreground: oklch(99.11% 0.0033 185.90);
-   --surface-tertiary: oklch(27.21% 0.0049 185.90);
-   --surface-tertiary-foreground: oklch(99.11% 0.0033 185.90);
-   --warning: oklch(82.03% 0.1397 68.19);
-   --warning-foreground: oklch(21.03% 0.0059 68.19);
+   --field-background: oklch(21.03% 0.0116 354.00);
+   --field-border: transparent;
+   --field-foreground: oklch(99.11% 0.0058 354.00);
+   --field-placeholder: oklch(70.50% 0.0116 354.00);
+   --focus: oklch(70.00% 0.2100 354.00);
+   --foreground: oklch(99.11% 0.0058 354.00);
+   --muted: oklch(70.50% 0.0116 354.00);
+   --overlay: oklch(21.03% 0.0116 354.00);
+   --overlay-foreground: oklch(99.11% 0.0058 354.00);
+   --scrollbar: oklch(70.50% 0.0058 354.00);
+   --segment: oklch(39.64% 0.0058 354.00);
+   --segment-foreground: oklch(99.11% 0.0058 354.00);
+   --separator: oklch(25.00% 0.0058 354.00);
+   --success: oklch(73.29% 0.1957 162.83);
+   --success-foreground: oklch(21.03% 0.0059 162.83);
+   --surface: oklch(21.03% 0.0116 354.00);
+   --surface-foreground: oklch(99.11% 0.0058 354.00);
+   --surface-secondary: oklch(25.70% 0.0087 354.00);
+   --surface-secondary-foreground: oklch(99.11% 0.0058 354.00);
+   --surface-tertiary: oklch(27.21% 0.0087 354.00);
+   --surface-tertiary-foreground: oklch(99.11% 0.0058 354.00);
+   --warning: oklch(82.03% 0.1404 88.36);
+   --difficulty-insane: oklch(70.00% 0.1900 300.00);
+   --warning-foreground: oklch(21.03% 0.0059 88.36);
 
-   --field-shadow: 0 0 0 0 transparent;
+   /* Contribution heatmap ramp (brand hue 354) — dark mode: dim raised track →
+      bright accent pink, each step clearly above the near-black background. */
+   --heat-0: oklch(27.40% 0.0058 354.00);
+   --heat-1: oklch(36.00% 0.0850 354.00);
+   --heat-2: oklch(47.00% 0.1400 354.00);
+   --heat-3: oklch(58.00% 0.1900 354.00);
+   --heat-4: oklch(70.00% 0.2100 354.00);
+ }
 
-   /* Bordered form fields (see light-mode note above). */
-   --field-border: var(--border);
-   --field-border-width: 1px;
+/* ── Component overrides (UI 2.0) ──────────────────────────────────────── */
+
+/*
+ * Switch — fully round pill with a circular thumb, sized to match the navbar
+ * icon buttons / notification bell (36px tall). Track 4rem × 2.25rem, thumb
+ * 1.75rem circle with a 0.25rem inset; the checked margin slides it flush right.
+ */
+.switch__control {
+    height: 2.25rem !important;
+    width: 4rem !important;
+    border-radius: 9999px !important;
 }
 
-@layer components {
-    .accordion__body-inner {
-        @apply p-3 pt-1.5;
-    }
-    .accordion__trigger {
-        @apply !p-3;
-    }
-    .link {
-      @apply flex items-center gap-2 no-underline cursor-pointer hover:opacity-80;
-    }
-    .modal__dialog {
-        @apply p-0;
-    }
-    .accordion__trigger {
-        @apply p-3 pb-1.5;
-    }
-    .chip {
-      @apply gap-1 px-2;
-    }
-    .dropdown__menu {
-        @apply p-3;
-    }
-    /* Modal.Container: constrain HeroUI modal-header / modal-body slots (768px). */
-    .modal__header {
-        @apply p-3 border-b max-w-full w-full;
-    }
-    .modal__body {
-        @apply p-3 !mt-0 max-w-full w-full;
-    }
-    /* Same as `.modal__headers` + `.modal__body` (Tailwind cannot @apply custom components). */
-    .modal__container {
-        @apply [&_[data-slot=modal-header]]:mx-auto [&_[data-slot=modal-body]]:max-w-[768px] [&_[data-slot=modal-body]]:mx-auto;
-    }
-    .card {
-        @apply p-3 shadow-none;
-        /* Keep every card uniformly rounded — a handful of cards (Foundation,
-           Consultant, PressableCard…) hardcode a squarer `rounded-xl`; force the
-           design-system 3xl radius so they all match. */
-        border-radius: var(--radius-3xl) !important;
-    }
-    .card__content {
-        @apply gap-0;
-    }
-    .drawer__header {
-        @apply gap-2;
-    }
-    .drawer__dialog {
-        @apply p-3;
-    }
-    .drawer__body {
-        @apply mt-0;
-    }
-    .drawer__footer {
-        @apply !p-3 !mt-0;
-    }
+.switch__thumb {
+    height: 1.75rem !important;
+    width: 1.75rem !important;
+    border-radius: 9999px !important;
+    margin-inline-start: 0.25rem !important;
+    align-items: center;
+    justify-content: center;
+}
+
+.switch[data-selected="true"] .switch__thumb,
+.switch[aria-checked="true"] .switch__thumb {
+    margin-inline-start: calc(100% - 1.75rem - 0.25rem) !important;
+}
+
+/*
+ * Checkbox — the global `--field-border` is transparent (borderless inputs), which
+ * leaves the tiny checkbox control invisible (no outline, bg ≈ card). Restore a
+ * visible outline from the `--border` token so the box reads on any surface; the
+ * accent fill on select still comes from the HeroUI default styles.
+ */
+.checkbox__control {
+    border-color: var(--border) !important;
+}
+
+/*
+ * ExtendedTabs (blocks/navigation/ExtendedTabs) — secondary tabs WITHOUT the
+ * built-in `.tabs__list` baseline, so it never doubles up with an outer
+ * separator (e.g. the profile ProfileTabsBar bar border).
+ */
+.extended-tabs .tabs__list {
+    border-bottom-width: 0 !important;
+}
+
+/* Each tab hugs its label (w-fit) with px-3, so the strip packs to the left
+   instead of stretching tabs to equal full width. */
+.extended-tabs .tabs__tab {
+    width: fit-content !important;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+}
+/*
+ * Ambient ember background (blocks/layout/AmbientBackground) — slow brand-pink
+ * sparks drifting upward behind the whole app. Each spark sets `--drift` (its
+ * horizontal wander) inline; this keyframe rises it a full viewport while fading
+ * in then out. Motion is transform/opacity only (GPU-cheap, no JS loop).
+ */
+@keyframes emberRise {
+    0% { transform: translateY(0) translateX(0); opacity: 0; }
+    10% { opacity: 1; }
+    80% { opacity: 0.8; }
+    100% { transform: translateY(-100vh) translateX(var(--drift, 0)); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ambient-ember { animation: none !important; opacity: 0 !important; }
 }

@@ -15,6 +15,9 @@ const query1 = gql`
         submissionType
         selectedLang
         passedAt
+        difficulty
+        score
+        courseTitle
       }
     }
   }

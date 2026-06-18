@@ -13,12 +13,19 @@ import {
     useMutateUpdateProfileSwr,
     useMutateVerifyAvatarPresignUrlSwr,
 } from "@/hooks/swr"
-import { runGraphQLWithToast } from "@/modules/toast"
+import { useGraphQLWithToast, useRestWithToast } from "@/modules/toast"
+import { WorkMode } from "@/modules/types"
 
 /** Max length of the display name (mirrors the `display_name` column). */
 const DISPLAY_NAME_MAX = 100
 /** Max length of the bio (mirrors the `bio` column). */
 const BIO_MAX = 280
+/** Max length of the role title (mirrors the `role_title` column). */
+const ROLE_TITLE_MAX = 80
+/** Max length of the location (mirrors the `location` column). */
+const LOCATION_MAX = 100
+/** Max length of a URL field (mirrors the `linkedin_url` / `website_url` columns). */
+const URL_MAX = 255
 
 /** Editable profile form values. */
 export interface EditProfileFormValues {
@@ -30,6 +37,16 @@ export interface EditProfileFormValues {
     profileLocked: boolean
     /** Open to work: when on, the profile shows a hiring badge. */
     openToWork: boolean
+    /** Professional headline / role title (empty string = clear). */
+    roleTitle: string
+    /** Free-text location (empty string = clear). */
+    location: string
+    /** Preferred work mode (empty string = no preference → clear). */
+    workMode: WorkMode | ""
+    /** Public LinkedIn URL (empty string = clear). */
+    linkedinUrl: string
+    /** Personal website URL (empty string = clear). */
+    websiteUrl: string
 }
 
 /**
@@ -37,7 +54,7 @@ export interface EditProfileFormValues {
  * (re-seeds via `values`), owns the picked-avatar file state, and on submit runs
  * the avatar presigned-upload flow (when a new file is chosen) then the
  * `updateProfile` mutation, pushing the fresh user into redux so the header /
- * navbar update instantly. Toasts the result via `runGraphQLWithToast`.
+ * navbar update instantly. Toasts the result via `useGraphQLWithToast`.
  *
  * @returns the RHF methods + `onSubmit` and the avatar helpers (`fileInputRef`,
  * `onPickAvatar`, `onAvatarChange`, `shownAvatar`).
@@ -46,6 +63,9 @@ export const useEditProfileForm = () => {
     const t = useTranslations()
     const dispatch = useAppDispatch()
     const user = useAppSelector((state) => state.user.user)
+
+    const runGraphQL = useGraphQLWithToast()
+    const runRest = useRestWithToast()
 
     const updateProfileSwr = useMutateUpdateProfileSwr()
     // avatar upload is a presigned-URL flow: generate → PUT to MinIO → verify
@@ -64,6 +84,12 @@ export const useEditProfileForm = () => {
             bio: z.string().trim().max(BIO_MAX),
             profileLocked: z.boolean(),
             openToWork: z.boolean(),
+            roleTitle: z.string().trim().max(ROLE_TITLE_MAX),
+            location: z.string().trim().max(LOCATION_MAX),
+            workMode: z.union([z.nativeEnum(WorkMode), z.literal("")]),
+            // empty = clear; otherwise must be a real URL within the column cap
+            linkedinUrl: z.union([z.literal(""), z.string().trim().url().max(URL_MAX)]),
+            websiteUrl: z.union([z.literal(""), z.string().trim().url().max(URL_MAX)]),
         }),
         [],
     )
@@ -76,6 +102,11 @@ export const useEditProfileForm = () => {
             bio: user?.bio ?? "",
             profileLocked: user?.profileLocked ?? false,
             openToWork: user?.openToWork ?? false,
+            roleTitle: user?.roleTitle ?? "",
+            location: user?.location ?? "",
+            workMode: user?.workMode ?? "",
+            linkedinUrl: user?.linkedinUrl ?? "",
+            websiteUrl: user?.websiteUrl ?? "",
         },
     })
 
@@ -85,7 +116,16 @@ export const useEditProfileForm = () => {
         [],
     )
 
-    /** Capture the chosen file and build a local preview URL. */
+    /** Stage an avatar file + build a local preview URL (shared by picker + dropzone). */
+    const onAvatarFile = useCallback(
+        (next: File) => {
+            setFile(next)
+            setPreview(URL.createObjectURL(next))
+        },
+        [],
+    )
+
+    /** Capture the chosen file from the native picker. */
     const onAvatarChange = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
             const next = event.target.files?.[0]
@@ -93,17 +133,16 @@ export const useEditProfileForm = () => {
             if (!next) {
                 return
             }
-            setFile(next)
-            setPreview(URL.createObjectURL(next))
+            onAvatarFile(next)
         },
-        [],
+        [onAvatarFile],
     )
 
     // the face shown: local preview while a new file is staged, else the saved avatar
     const shownAvatar = preview ?? user?.avatar ?? null
 
     const onSubmit = form.handleSubmit(async (value) => {
-        await runGraphQLWithToast(
+        await runGraphQL(
             async () => {
                 // 1) upload the new avatar first (presigned-URL flow) so the BE has
                 // the URL persisted before re-reading the user
@@ -118,12 +157,16 @@ export const useEditProfileForm = () => {
                     if (!presignData?.url) {
                         throw new Error(t("profileEdit.uploadFailed"))
                     }
-                    // 1b) upload the bytes straight to MinIO; Content-Type must match
-                    await axios.put(presignData.url, file, {
-                        headers: {
-                            "Content-Type": file.type,
-                        },
-                    })
+                    // 1b) upload the bytes straight to MinIO; Content-Type must match.
+                    // the profile update toasts on success, so this upload toasts only on error
+                    await runRest(
+                        () => axios.put(presignData.url, file, {
+                            headers: {
+                                "Content-Type": file.type,
+                            },
+                        }),
+                        { showSuccessToast: false },
+                    )
                     // 1c) confirm → BE validates the key owner + persists the avatar URL
                     const verify = await verifyAvatarPresignSwr.trigger({
                         request: {
@@ -141,6 +184,11 @@ export const useEditProfileForm = () => {
                     bio: value.bio.trim() ? value.bio.trim() : null,
                     profileLocked: value.profileLocked,
                     openToWork: value.openToWork,
+                    roleTitle: value.roleTitle.trim() ? value.roleTitle.trim() : null,
+                    location: value.location.trim() ? value.location.trim() : null,
+                    workMode: value.workMode === "" ? null : value.workMode,
+                    linkedinUrl: value.linkedinUrl.trim() ? value.linkedinUrl.trim() : null,
+                    websiteUrl: value.websiteUrl.trim() ? value.websiteUrl.trim() : null,
                 })
                 const env = result?.data?.updateProfile
                 if (!env) {
@@ -169,6 +217,7 @@ export const useEditProfileForm = () => {
         fileInputRef,
         onPickAvatar,
         onAvatarChange,
+        onAvatarFile,
         shownAvatar,
     }
 }

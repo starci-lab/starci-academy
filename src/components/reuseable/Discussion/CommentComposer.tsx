@@ -73,7 +73,9 @@ export const CommentComposer = ({
                     size="sm"
                     variant="primary"
                     onPress={handleSubmit}
-                    isDisabled={busy || !trimmed}
+                    // spinner + auto-disable while the mutation is in flight (blocks double-submit)
+                    isPending={Boolean(busy)}
+                    isDisabled={!trimmed}
                 >
                     {submitLabel ?? t("discussion.post")}
                 </Button>

@@ -4,6 +4,17 @@ import { create } from "zustand"
 import type { MindMapDetailsSelection, PaymentContext } from "@/modules/types"
 import type { QueryActiveAdvertisementData } from "@/modules/api"
 
+/** Which side of the follow graph the follow-list modal opens on. */
+export type FollowListTab = "followers" | "following"
+
+/** Payload for the follow-list modal: whose graph + which tab to open on. */
+export interface FollowListContext {
+    /** Username of the profile whose follow graph to show. */
+    username: string
+    /** Tab to open on (followers vs following). */
+    tab: FollowListTab
+}
+
 /**
  * Identifier for each overlay (modal/drawer/popover) in the app. Each key holds an independent
  * open state in {@link useOverlayStore}.
@@ -12,6 +23,7 @@ export type OverlayKey =
     | "accountMenu"
     | "adModal"
     | "aiProcessing"
+    | "avatarUpload"
     | "aiQuota"
     | "authentication"
     | "challenge"
@@ -22,6 +34,7 @@ export type OverlayKey =
     | "cvSubmissionAttemptsDrawer"
     | "cvUpdate"
     | "feedbackDetails"
+    | "followList"
     | "foundation"
     | "headhunter"
     | "language"
@@ -31,6 +44,7 @@ export type OverlayKey =
     | "mindMapContentDetails"
     | "payment"
     | "personalProjectTaskAttemptsDrawer"
+    | "pinnedProjects"
     | "premiumGate"
     | "search"
     | "share"
@@ -42,6 +56,7 @@ const OVERLAY_KEYS: ReadonlyArray<OverlayKey> = [
     "accountMenu",
     "adModal",
     "aiProcessing",
+    "avatarUpload",
     "aiQuota",
     "authentication",
     "challenge",
@@ -52,6 +67,7 @@ const OVERLAY_KEYS: ReadonlyArray<OverlayKey> = [
     "cvSubmissionAttemptsDrawer",
     "cvUpdate",
     "feedbackDetails",
+    "followList",
     "foundation",
     "headhunter",
     "language",
@@ -61,6 +77,7 @@ const OVERLAY_KEYS: ReadonlyArray<OverlayKey> = [
     "mindMapContentDetails",
     "payment",
     "personalProjectTaskAttemptsDrawer",
+    "pinnedProjects",
     "premiumGate",
     "search",
     "share",
@@ -78,6 +95,8 @@ interface OverlayStoreState {
     mindMapContentDetailsContext: MindMapDetailsSelection | null
     /** Interstitial ad modal payload (the active ad to render). */
     adModalContext: QueryActiveAdvertisementData | null
+    /** Follow-list modal payload (whose graph + which tab). */
+    followListContext: FollowListContext | null
     /** Set the open state of an overlay (used by `onOpenChange`). */
     setOpenFor: (key: OverlayKey, isOpen: boolean) => void
     /** Open an overlay. */
@@ -92,6 +111,8 @@ interface OverlayStoreState {
     setMindMapContentDetailsContext: (context: MindMapDetailsSelection | null) => void
     /** Stash the interstitial ad modal payload. */
     setAdModalContext: (context: QueryActiveAdvertisementData | null) => void
+    /** Stash the follow-list modal payload. */
+    setFollowListContext: (context: FollowListContext | null) => void
 }
 
 /** Initial open map — every overlay closed. */
@@ -117,6 +138,7 @@ export const useOverlayStore = create<OverlayStoreState>((set) => ({
     paymentContext: null,
     mindMapContentDetailsContext: null,
     adModalContext: null,
+    followListContext: null,
     setOpenFor: (key, isOpen) =>
         set((state) => ({ openMap: { ...state.openMap, [key]: isOpen } })),
     openOverlay: (key) =>
@@ -128,4 +150,5 @@ export const useOverlayStore = create<OverlayStoreState>((set) => ({
     setPaymentContext: (context) => set({ paymentContext: context }),
     setMindMapContentDetailsContext: (context) => set({ mindMapContentDetailsContext: context }),
     setAdModalContext: (context) => set({ adModalContext: context }),
+    setFollowListContext: (context) => set({ followListContext: context }),
 }))

@@ -4,7 +4,7 @@ import type { QueryMyFeedResponseData } from "@/modules/api"
 import { useAppSelector } from "@/redux"
 
 /** Items per feed page. */
-const PAGE_LIMIT = 20
+const PAGE_LIMIT = 5
 
 /**
  * Cursor-paginated SWR hook for the home feed (infinite scroll). Each page keys

@@ -37,6 +37,14 @@ const LEVEL_KEY: Record<CodingDifficulty, string> = {
     [CodingDifficulty.Hard]: "senior",
 }
 
+/** One rendered section: a coding domain plus the problems that fall under it. */
+interface CodingDomainGroup {
+    /** The coding domain this section groups. */
+    domain: CodingDomain
+    /** Problems belonging to the domain, in catalog order. */
+    problems: Array<CodingProblem>
+}
+
 /**
  * Coding-practice problem list. Client component: fetches the problem page via
  * SWR (keyed by the difficulty filter) and renders cards grouped by domain, each
@@ -80,7 +88,7 @@ export const PracticeList = () => {
 
     // group the problems by domain, in the canonical domain order, keeping only
     // domains that actually have problems so empty sections never render
-    const groups = useMemo<Array<{ domain: CodingDomain; problems: Array<CodingProblem> }>>(() => {
+    const groups = useMemo<Array<CodingDomainGroup>>(() => {
         const byDomain = new Map<CodingDomain, Array<CodingProblem>>()
         data?.problems.forEach((problem) => {
             const bucket = byDomain.get(problem.domain) ?? []

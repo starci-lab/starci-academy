@@ -10,7 +10,7 @@ import {
     useQueryCourseEnrollmentStatusSwr,
 } from "@/hooks/swr"
 import { useAppSelector } from "@/redux"
-import { runGraphQLWithToast } from "@/modules/toast"
+import { useGraphQLWithToast } from "@/modules/toast"
 
 /** Form values for the personal-project idea. */
 export interface PersonalProjectIdeaFormValues {
@@ -25,6 +25,7 @@ export interface PersonalProjectIdeaFormValues {
  */
 export const usePersonalProjectIdeaForm = () => {
     const t = useTranslations()
+    const runGraphQL = useGraphQLWithToast()
     const submitPersonalProjectIdealSwr = useMutateSubmitPersonalProjectIdealSwr()
     const queryCourseEnrollmentStatusSwr = useQueryCourseEnrollmentStatusSwr()
     const enrollment = useAppSelector((state) => state.user.enrollment)
@@ -44,7 +45,7 @@ export const usePersonalProjectIdeaForm = () => {
     })
     const onSubmit = form.handleSubmit(async (value) => {
         const normalizedIdeaText = value.ideaText.trim()
-        await runGraphQLWithToast(
+        await runGraphQL(
             async () => {
                 if (!course?.id) {
                     throw new Error("Course id not found")

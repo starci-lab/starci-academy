@@ -45,8 +45,10 @@ export const useAiSettingsForm = () => {
     }, [settings, setMode, setByokProvider])
 
     const submit = useCallback(async () => {
-        const request: UpdateMyAiSettingsRequest = { mode }
-        if (mode === AiMode.Byok && byokApiKey.trim()) {
+        // BYOK-only page: persist the key + provider. The lane is resolved by the
+        // backend (natural order byok → premium → auto), so we never send `mode`.
+        const request: UpdateMyAiSettingsRequest = {}
+        if (byokApiKey.trim()) {
             request.byokProvider = byokProvider
             request.byokApiKey = byokApiKey.trim()
         }
@@ -63,7 +65,7 @@ export const useAiSettingsForm = () => {
         } catch (error) {
             setStatus({ kind: "error", text: (error as Error)?.message ?? t("aiSettings.error") })
         }
-    }, [mode, byokProvider, byokApiKey, trigger, mutate, setByokApiKey, setStatus, t])
+    }, [byokProvider, byokApiKey, trigger, mutate, setByokApiKey, setStatus, t])
 
     return {
         mode,

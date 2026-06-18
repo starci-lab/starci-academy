@@ -22,13 +22,18 @@ const query1 = gql`
         bio
         avatar
         githubUsername
-        points
         createdAt
         followerCount
         followingCount
         isFollowedByMe
         profileLocked
         openToWork
+        featuredAchievementSlug
+        roleTitle
+        location
+        workMode
+        linkedinUrl
+        websiteUrl
       }
     }
   }

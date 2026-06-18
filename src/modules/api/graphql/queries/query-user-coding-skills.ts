@@ -18,6 +18,10 @@ const query1 = gql`
           key
           solved
         }
+        byDomain {
+          key
+          solved
+        }
       }
     }
   }

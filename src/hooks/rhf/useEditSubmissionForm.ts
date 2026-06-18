@@ -10,6 +10,7 @@ import {
     useMutateSyncChallengeSubmissionSwr,
     useQueryChallengeSubmissionsSwr,
 } from "@/hooks"
+import { useGraphQLWithToast } from "@/modules/toast"
 
 /** GitHub URL regex. */
 const GITHUB_REGEX = /^https:\/\/(www\.)?github\.com\/[A-Za-z0-9_.-]+(\/[A-Za-z0-9_.-]+)?(\/)?$/
@@ -18,6 +19,9 @@ const GOOGLE_DOCS_REGEX = /^https:\/\/docs\.google\.com\/(document|spreadsheets|
 const MSG_URL_REQUIRED = "challenge.submissionModal.errors.urlRequired"
 const MSG_INVALID_GITHUB = "challenge.submissionModal.errors.invalidGithubUrl"
 const MSG_INVALID_GOOGLE = "challenge.submissionModal.errors.invalidGoogleDocsUrl"
+
+/** Inline auto-save status surfaced to the consumer for <100ms feedback. */
+export type AutosaveStatus = "idle" | "saving" | "saved" | "failed"
 
 /** Error for one submission row (nested shape like the old formik so consumers need no changes). */
 interface RowError {
@@ -63,11 +67,14 @@ export const useEditSubmissionForm = () => {
     const queryChallengeSubmissionsSwr = useQueryChallengeSubmissionsSwr()
     const { isOpen } = useChallengeOverlayState()
     const dispatch = useAppDispatch()
+    const runGraphQL = useGraphQLWithToast()
 
     /** User-typed URLs overriding the redux value, keyed by submission id. */
     const [urlOverrides, setUrlOverrides] = useState<Record<string, string>>({})
     /** Which fields are touched, keyed by submission id. */
     const [touchedMap, setTouchedMap] = useState<Record<string, boolean>>({})
+    /** Inline auto-save status for debounced sync feedback. */
+    const [autosaveStatus, setAutosaveStatus] = useState<AutosaveStatus>("idle")
 
     const baseSubmissions = useMemo(() => challengeSubmissions ?? [], [challengeSubmissions])
 
@@ -146,8 +153,27 @@ export const useEditSubmissionForm = () => {
             url: submission.userSubmission?.submissionUrl ?? "",
         }))
         dispatch(setLoadingChallengeSubmissionIds(items.map((item) => item.id)))
-        Promise.allSettled(items.map((item) => syncChallengeSubmissionsSwr.trigger(item)))
-            .then(() => queryChallengeSubmissionsSwr.mutate())
+        setAutosaveStatus("saving")
+        Promise.allSettled(items.map((item) => runGraphQL(
+            async () => {
+                const response = await syncChallengeSubmissionsSwr.trigger(item)
+                const result = response.data?.syncSubmission
+                if (!result?.success) {
+                    throw new Error(response.error?.message)
+                }
+                return result
+            },
+            { showSuccessToast: false },
+        )))
+            .then((results) => {
+                // runGraphQL never throws: it resolves `true` on success and `false` on error
+                // (the error toast is already shown there). Mark saved only if every item succeeded.
+                const allSaved = results.every(
+                    (outcome) => outcome.status === "fulfilled" && outcome.value === true,
+                )
+                setAutosaveStatus(allSaved ? "saved" : "failed")
+                return queryChallengeSubmissionsSwr.mutate()
+            })
             .finally(() => dispatch(setLoadingChallengeSubmissionIds([])))
     }
 
@@ -168,5 +194,6 @@ export const useEditSubmissionForm = () => {
         setFieldValue,
         setFieldTouched,
         isSubmitting: false,
+        autosaveStatus,
     }
 }

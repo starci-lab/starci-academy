@@ -14,6 +14,9 @@ import {
     toast,
 } from "@heroui/react"
 import {
+    useGraphQLWithToast,
+} from "@/modules/toast"
+import {
     useLocale,
     useTranslations,
 } from "next-intl"
@@ -23,6 +26,8 @@ import {
 import {
     AiMode,
     type AiGradableModel,
+    type GraphQLResponse,
+    type SubmitEvalChallengeData,
 } from "@/modules/api"
 import {
     JobStatus,
@@ -80,6 +85,7 @@ export const EvalChallengePanel = ({ evalSetId, className }: EvalChallengePanelP
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
+    const runGraphQL = useGraphQLWithToast()
 
     const enrollmentId = useAppSelector((state) => state.user.enrollment?.id)
 
@@ -147,44 +153,50 @@ export const EvalChallengePanel = ({ evalSetId, className }: EvalChallengePanelP
                 })
                 return
             }
-            try {
-                const response = await submitEvalSwr.trigger({
-                    evalSetId,
-                    enrollmentId,
-                    systemPrompt: systemPrompt.trim() || undefined,
-                    userTemplate: userTemplate.trim(),
-                    params: {
-                        temperature: params.temperature,
-                        topP: params.topP,
-                        maxTokens: params.maxTokens,
-                    },
-                    mode: selection.mode,
-                    selectedModel: selection.model ?? undefined,
-                    selectedModelProvider: selection.provider ?? undefined,
-                })
-                const result = response.data?.submitEvalChallenge
-                if (!result?.success || !result.data) {
-                    throw new Error(result?.message ?? response.error?.message)
-                }
-                const { evalRunId: nextEvalRunId, jobId: nextJobId } = result.data
-                setEvalRunId(nextEvalRunId)
-                setJobId(nextJobId)
-                jobNotificationsSocket.emit(
-                    PublicationEvent.SubscribeJobNotification,
-                    {
-                        data: { jobId: nextJobId },
-                        locale,
-                    },
-                )
-            } catch (error) {
-                toast.danger("Error", {
-                    description: (error as Error)?.message ?? t("aiLab.eval.failed"),
-                })
+            // The submission payload captured from the mutation so the success path can subscribe to the job.
+            let result: GraphQLResponse<SubmitEvalChallengeData> | undefined
+            const ok = await runGraphQL<SubmitEvalChallengeData>(
+                async () => {
+                    const response = await submitEvalSwr.trigger({
+                        evalSetId,
+                        enrollmentId,
+                        systemPrompt: systemPrompt.trim() || undefined,
+                        userTemplate: userTemplate.trim(),
+                        params: {
+                            temperature: params.temperature,
+                            topP: params.topP,
+                            maxTokens: params.maxTokens,
+                        },
+                        mode: selection.mode,
+                        selectedModel: selection.model ?? undefined,
+                        selectedModelProvider: selection.provider ?? undefined,
+                    })
+                    result = response.data?.submitEvalChallenge
+                    if (!result?.success || !result.data) {
+                        throw new Error(result?.message ?? response.error?.message)
+                    }
+                    return result
+                },
+                { showSuccessToast: false },
+            )
+            if (!ok || !result?.data) {
+                return
             }
+            const { evalRunId: nextEvalRunId, jobId: nextJobId } = result.data
+            setEvalRunId(nextEvalRunId)
+            setJobId(nextJobId)
+            jobNotificationsSocket.emit(
+                PublicationEvent.SubscribeJobNotification,
+                {
+                    data: { jobId: nextJobId },
+                    locale,
+                },
+            )
         },
         [
             userTemplate,
             enrollmentId,
+            runGraphQL,
             submitEvalSwr,
             evalSetId,
             systemPrompt,

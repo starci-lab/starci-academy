@@ -10,7 +10,6 @@ import {
     Chip,
     Spinner,
     cn,
-    toast,
 } from "@heroui/react"
 import {
     useLocale,
@@ -23,6 +22,8 @@ import {
     AiMode,
     type AiGradableModel,
     type AiLabPlaygroundData,
+    type GraphQLResponse,
+    type RunPlaygroundPromptData,
 } from "@/modules/api"
 import type {
     WithClassNames,
@@ -41,6 +42,9 @@ import {
 import {
     MarkdownContent,
 } from "@/components/reuseable"
+import {
+    useGraphQLWithToast,
+} from "@/modules/toast"
 import {
     LaneModelPicker,
 } from "../LaneModelPicker"
@@ -85,6 +89,7 @@ export const PromptPlayground = ({ playground, className }: PromptPlaygroundProp
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
+    const runGraphQL = useGraphQLWithToast()
 
     // Editable prompt + param + lane state, seeded from the playground defaults.
     const [systemPrompt, setSystemPrompt] = useState(playground.defaultSystemPrompt ?? "")
@@ -142,53 +147,58 @@ export const PromptPlayground = ({ playground, className }: PromptPlaygroundProp
             }
             setRunId(undefined)
             setCachedOutput(null)
-            try {
-                const response = await runPromptSwr.trigger({
-                    playgroundId: playground.id,
-                    systemPrompt: systemPrompt.trim() || undefined,
-                    userPrompt: userPrompt.trim(),
-                    params: {
-                        temperature: params.temperature,
-                        topP: params.topP,
-                        maxTokens: params.maxTokens,
-                    },
-                    mode: selection.mode,
-                    selectedModel: selection.model ?? undefined,
-                    selectedModelProvider: selection.provider ?? undefined,
-                })
-                const result = response.data?.runPlaygroundPrompt
-                if (!result?.success || !result.data) {
-                    throw new Error(response.data?.runPlaygroundPrompt?.message ?? response.error?.message)
-                }
-                const { runId: nextRunId, status, cachedOutput: nextCachedOutput, quotaExhausted: exhausted } =
-                    result.data
-                setQuotaExhausted(exhausted)
-                // Cache hit: the output is returned inline, never streamed over the socket.
-                if (status === AiLabRunStatus.Cached) {
-                    setCachedOutput(nextCachedOutput ?? "")
-                    setRunId(nextRunId)
-                    return
-                }
-                // Live run: track it and subscribe to the token stream.
-                setRunId(nextRunId)
-                subscribe(nextRunId)
-            } catch (error) {
-                toast.danger("Error", {
-                    description: (error as Error)?.message ?? t("aiLab.playground.failed"),
-                })
+            // The run payload captured from the mutation so the success path can drive streaming.
+            let result: GraphQLResponse<RunPlaygroundPromptData> | undefined
+            const ok = await runGraphQL<RunPlaygroundPromptData>(
+                async () => {
+                    const response = await runPromptSwr.trigger({
+                        playgroundId: playground.id,
+                        systemPrompt: systemPrompt.trim() || undefined,
+                        userPrompt: userPrompt.trim(),
+                        params: {
+                            temperature: params.temperature,
+                            topP: params.topP,
+                            maxTokens: params.maxTokens,
+                        },
+                        mode: selection.mode,
+                        selectedModel: selection.model ?? undefined,
+                        selectedModelProvider: selection.provider ?? undefined,
+                    })
+                    result = response.data?.runPlaygroundPrompt
+                    if (!result?.success || !result.data) {
+                        throw new Error(result?.message ?? response.error?.message)
+                    }
+                    return result
+                },
+                { showSuccessToast: false },
+            )
+            if (!ok || !result?.data) {
+                return
             }
+            const { runId: nextRunId, status, cachedOutput: nextCachedOutput, quotaExhausted: exhausted } =
+                result.data
+            setQuotaExhausted(exhausted)
+            // Cache hit: the output is returned inline, never streamed over the socket.
+            if (status === AiLabRunStatus.Cached) {
+                setCachedOutput(nextCachedOutput ?? "")
+                setRunId(nextRunId)
+                return
+            }
+            // Live run: track it and subscribe to the token stream.
+            setRunId(nextRunId)
+            subscribe(nextRunId)
         },
         [
             userPrompt,
             runId,
             reset,
+            runGraphQL,
             runPromptSwr,
             playground.id,
             systemPrompt,
             params,
             selection,
             subscribe,
-            t,
         ],
     )
 

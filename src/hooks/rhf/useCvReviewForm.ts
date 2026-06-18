@@ -15,7 +15,7 @@ import type {
     ReviewCvResponseData,
 } from "@/modules/api"
 import { useAppSelector } from "@/redux"
-import { runGraphQLWithToast } from "@/modules/toast"
+import { useGraphQLWithToast } from "@/modules/toast"
 
 /** Form values for the CV review. */
 export interface CvReviewFormValues {
@@ -38,6 +38,7 @@ export const useCvReviewForm = () => {
     const cvUrlPayload = useAppSelector((state) => state.cvUrl.entity)
     const selectedTemplateId = useAppSelector((state) => state.cvReviewLevel.selectedTemplateId)
     const templateCvs = useAppSelector((state) => state.templateCvs.rows)
+    const runGraphQL = useGraphQLWithToast()
     const schema = useMemo(
         () => z.object({
             cvSubmissionId: z.string().trim().min(1, t("cv.submission.toast.submissionNotFound")),
@@ -60,7 +61,7 @@ export const useCvReviewForm = () => {
         values,
     })
     const onSubmit = form.handleSubmit(async (vals) => {
-        await runGraphQLWithToast(
+        await runGraphQL(
             async (): Promise<GraphQLResponse<ReviewCvResponseData>> => {
                 const reviewResult = await mutateReviewCvSwr.trigger({
                     cvSubmissionId: vals.cvSubmissionId,

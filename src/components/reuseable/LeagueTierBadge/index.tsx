@@ -102,27 +102,29 @@ export const LeagueTierBadge = ({
     // resolve the icon + label for this tier
     const visual = TIER_VISUAL[tier]
     return (
-        <span className={cn("inline-flex items-center gap-1.5", className)}>
-            {/* real art from MinIO (badges/league/<tier>.png) once uploaded; until
+        <div className={cn("shrink-0", className)}>
+            <div className="flex items-center gap-1.5">
+                {/* real art from MinIO (badges/league/<tier>.png) once uploaded; until
                 then fall back to the multicolor fluent-emoji placeholder */}
-            <BadgeImage
-                objectKey={`badges/league/${tier}.png`}
-                size={size}
-                alt={visual.label}
-                fallback={(
-                    <Icon
-                        icon={visual.icon}
-                        width={size}
-                        height={size}
-                        aria-label={visual.label}
-                    />
-                )}
-            />
-            {showLabel ? (
-                <span className="text-sm font-medium text-foreground">
-                    {visual.label}
-                </span>
-            ) : null}
-        </span>
+                <BadgeImage
+                    objectKey={`badges/league/${tier}.png`}
+                    size={size}
+                    alt={visual.label}
+                    fallback={(
+                        <Icon
+                            icon={visual.icon}
+                            width={size}
+                            height={size}
+                            aria-label={visual.label}
+                        />
+                    )}
+                />
+                {showLabel ? (
+                    <span className="text-sm font-medium text-foreground">
+                        {visual.label}
+                    </span>
+                ) : null}
+            </div>
+        </div>
     )
 }

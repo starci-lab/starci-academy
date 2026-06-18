@@ -24,6 +24,9 @@ import {
 import {
     SearchButton,
 } from "./SearchButton"
+import {
+    NotificationBell,
+} from "./NotificationBell"
 
 /**
  * Props for {@link Navbar}.
@@ -64,6 +67,7 @@ export const Navbar = ({ className }: NavbarProps) => {
 
                 <div className="flex items-center justify-end gap-3">
                     <SearchButton />
+                    <NotificationBell />
                     <AccountMenuDropdown />
                 </div>
             </div>

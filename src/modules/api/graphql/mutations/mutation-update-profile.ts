@@ -21,6 +21,12 @@ const mutation1 = gql`
         followingCount
         profileLocked
         openToWork
+        featuredAchievementSlug
+        roleTitle
+        location
+        workMode
+        linkedinUrl
+        websiteUrl
       }
     }
   }

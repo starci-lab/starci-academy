@@ -14,6 +14,8 @@ const query1 = gql`
         longestStreak
         xp
         lessons
+        weeklyGoalLessons
+        streakFreezes
         days {
           date
           active

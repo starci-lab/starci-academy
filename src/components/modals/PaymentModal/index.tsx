@@ -11,7 +11,7 @@ import {
 import { useAppSelector } from "@/redux"
 import { PaymentFlow, PaymentType } from "@/modules/types"
 import { assetConfig } from "@/resources"
-import { runGraphQLWithToast } from "@/modules/toast"
+import { useGraphQLWithToast } from "@/modules/toast"
 import { submitCheckout } from "@/modules/payment"
 import { useTranslations } from "next-intl"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -37,6 +37,7 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
     // which method is mid-checkout, so only its row shows a spinner
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentType | null>(null)
     const t = useTranslations()
+    const runGraphQL = useGraphQLWithToast()
 
     // any mutation in flight disables interaction + drives the row spinner
     const isMutating = courseEnrollSwr.isMutating || purchaseAiSubscriptionSwr.isMutating || purchaseMembershipSwr.isMutating
@@ -116,7 +117,7 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
         // mark the picked method so its row shows the spinner
         setSelectedPaymentMethod(paymentType)
         // create the pending transaction + resolve the checkout URL/fields
-        const success = await runGraphQLWithToast(
+        const success = await runGraphQL(
             async () => {
                 // branch on the flow to call the right mutation with its payload
                 if (context.flow === PaymentFlow.CourseEnroll) {

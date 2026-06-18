@@ -10,7 +10,7 @@ import {
     useMutateSignInVerifyOtpSwr,
     useQueryCheckEmailExistsSwr,
 } from "@/hooks"
-import { runGraphQLWithToast } from "@/modules/toast"
+import { useGraphQLWithToast } from "@/modules/toast"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import { resetSignInState, setSignInState, SignInState } from "@/redux/slices"
 import { useSignInStore } from "./store"
@@ -23,6 +23,7 @@ import { useSignInStore } from "./store"
  */
 export const useSignInForm = () => {
     const t = useTranslations()
+    const runGraphQL = useGraphQLWithToast()
     const dispatch = useAppDispatch()
     const signInState = useAppSelector((state) => state.state.signInState)
     const { trigger: mutateSignInInit } = useMutateSignInInitSwr()
@@ -101,7 +102,7 @@ export const useSignInForm = () => {
         try {
             if (signInState === SignInState.Credentials) {
                 let nextChallengeId: string | undefined
-                const ok = await runGraphQLWithToast(
+                const ok = await runGraphQL(
                     async () => {
                         const apolloResult = await mutateSignInInit({
                             request: { email, password },
@@ -127,7 +128,7 @@ export const useSignInForm = () => {
                 dispatch(setSignInState(SignInState.OTP))
                 return
             }
-            const ok = await runGraphQLWithToast(
+            const ok = await runGraphQL(
                 async () => {
                     if (!challengeId) {
                         throw new Error("challengeId is required")
@@ -150,7 +151,7 @@ export const useSignInForm = () => {
         } finally {
             setIsSubmitting(false)
         }
-    }, [signInState, email, password, challengeId, otp, captchaToken, mutateSignInInit, mutateSignInVerifyOtp, setValue, dispatch, reset, onAuthenticationClose, setIsSubmitting])
+    }, [signInState, email, password, challengeId, otp, captchaToken, mutateSignInInit, mutateSignInVerifyOtp, setValue, dispatch, reset, onAuthenticationClose, setIsSubmitting, runGraphQL])
 
     // Debounced bloom-filter email-exists check (same as the old formik core).
     useEffect(() => {

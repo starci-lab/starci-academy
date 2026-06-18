@@ -54,6 +54,70 @@ const ProseText = ({
 }) => <As className={[PROSE_SIZE[size], className].filter(Boolean).join(" ")}>{children}</As>
 
 /**
+ * Recursively flattens a React children tree to its plain-text content — used to
+ * derive a stable heading slug (and the "on this page" outline label) from the
+ * rendered heading nodes.
+ * @param node - The React node to read text from.
+ * @returns The concatenated text content.
+ */
+const getNodeText = (node: React.ReactNode): string => {
+    if (node === null || node === undefined || typeof node === "boolean") {
+        return ""
+    }
+    if (typeof node === "string" || typeof node === "number") {
+        return String(node)
+    }
+    if (Array.isArray(node)) {
+        return node.map(getNodeText).join("")
+    }
+    if (React.isValidElement(node)) {
+        return getNodeText((node.props as { children?: React.ReactNode }).children)
+    }
+    return ""
+}
+
+/**
+ * Slugify heading text into a URL-safe anchor id (diacritics stripped, Vietnamese
+ * `đ`→`d`, non-alphanumerics collapsed to single hyphens). Deterministic so the
+ * rendered heading id and any "on this page" outline reading it from the DOM agree.
+ * @param text - The raw heading text.
+ * @returns The anchor slug.
+ */
+const slugify = (text: string): string =>
+    text
+        .normalize("NFKD")
+        .replace(/[̀-ͯ]/g, "")
+        .replace(/[đĐ]/g, "d")
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+
+/**
+ * Heading renderer factory: renders a section heading carrying a slug `id` +
+ * `data-toc` markers so an "on this page" rail can scan the rendered article
+ * (`#lesson-article [data-toc]`) and anchor-scroll to it. `scroll-mt-20` clears
+ * the sticky navbar when jumped to.
+ * @param level - The heading depth surfaced in the outline (2 or 3).
+ * @param sizeClass - The prose size class keeping the visual identical to {@link ProseText}.
+ */
+const buildTocHeading = (level: 2 | 3, sizeClass: string) =>
+    ({ children }: { children?: React.ReactNode }) => {
+        // real heading tag (not a div) so the body keeps semantic outline for SEO
+        const Tag = `h${level}` as "h2" | "h3"
+        return (
+            <Tag
+                id={slugify(getNodeText(children))}
+                data-toc=""
+                data-toc-level={level}
+                className={`${sizeClass} scroll-mt-20 font-semibold`}
+            >
+                {children}
+            </Tag>
+        )
+    }
+
+/**
  * Builds the element-renderer map handed to `ReactMarkdown` so headings, tables, code
  * blocks, mermaid diagrams and inline elements use the app's HeroUI typography.
  *
@@ -68,22 +132,18 @@ export const buildMarkdownRenderers = ({
     mermaidCaptions,
 }: MarkdownRenderersParams): Components => ({
     h1: ({ children }) => (
-        <ProseText elementType="div" size="xl" className="font-semibold">{children}</ProseText>
+        <ProseText elementType="h1" size="xl" className="font-semibold">{children}</ProseText>
     ),
-    h2: ({ children }) => (
-        <ProseText elementType="div" size="lg" className="font-semibold">{children}</ProseText>
-    ),
-    h3: ({ children }) => (
-        <ProseText elementType="div" size="base" className="font-semibold">{children}</ProseText>
-    ),
+    h2: buildTocHeading(2, PROSE_SIZE.lg),
+    h3: buildTocHeading(3, PROSE_SIZE.base),
     h4: ({ children }) => (
-        <ProseText elementType="div" size="sm" className="font-semibold text-muted">{children}</ProseText>
+        <ProseText elementType="h4" size="sm" className="font-semibold text-muted">{children}</ProseText>
     ),
     h5: ({ children }) => (
-        <ProseText elementType="div" size="sm" className="font-semibold text-muted">{children}</ProseText>
+        <ProseText elementType="h5" size="sm" className="font-semibold text-muted">{children}</ProseText>
     ),
     h6: ({ children }) => (
-        <ProseText elementType="div" size="xs" className="font-semibold text-muted">{children}</ProseText>
+        <ProseText elementType="h6" size="xs" className="font-semibold text-muted">{children}</ProseText>
     ),
     // Custom `:::muted` directive tags (see remarkMuted in ./index): small, muted label text.
     // `[&_*]:text-muted` forces the muted colour onto any inner `<p>` the container wraps.

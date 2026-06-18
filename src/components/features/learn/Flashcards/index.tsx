@@ -4,55 +4,92 @@ import React, { useState } from "react"
 import { Button } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { type WithClassNames } from "@/modules/types"
-import { PageHeader } from "@/components/blocks"
+import { LabeledCard, PageHeader } from "@/components/blocks"
 import { FlashcardDeckList } from "./FlashcardDeckList"
 import { FlashcardReviewer } from "./FlashcardReviewer"
 import { InterviewSession } from "./InterviewSession"
+import { DueReview } from "./DueReview"
+import { DueReviewHero } from "./DueReviewHero"
+import { FlashcardStatsStrip } from "./FlashcardStatsStrip"
 
 /** Props for {@link Flashcards}. */
 export type FlashcardsProps = WithClassNames<undefined>
 
-/** Study mode within a selected deck: flip cards vs. answer aloud. */
+/** Top-level view: the home hub, the cross-deck due review, or one deck. */
+type FlashcardView = "home" | "due" | "deck"
+
+/** Within a selected deck: flip-card study vs. answer aloud. */
 type FlashcardMode = "study" | "interview"
 
 /**
- * Course-level interview-prep ("Flashcards") page. Lists the open-ended Q&A
- * flashcard decks owned by the active course; selecting a deck opens its
- * reviewer, where the learner flips each card from question to answer. A deck can
- * also be drilled in voice-interview mode. The selected-deck / mode are local UI
- * state owned by this orchestrator.
+ * Course-level flashcards page. Spaced-repetition first: the home leads with the
+ * "due today" review queue (the primary action) and lists the course's decks as a
+ * secondary browse/cram path. Starting the due review opens a cross-deck SM-2
+ * session; opening a deck opens its reviewer (flip + grade) or a voice mock
+ * interview. View / selected-deck / mode are local UI state owned here.
  * @param {FlashcardsProps} props Optional wrapper placement props.
  */
 export const Flashcards = ({ className }: FlashcardsProps) => {
     const t = useTranslations()
-    // selected deck (null = showing the deck list)
+    // which top-level view is showing
+    const [view, setView] = useState<FlashcardView>("home")
+    // selected deck id (set when entering the "deck" view)
     const [selectedDeckId, setSelectedDeckId] = useState<string | null>(null)
     // within a deck: flip-card study vs. voice-interview drilling
     const [mode, setMode] = useState<FlashcardMode>("study")
 
+    // return to the home hub from any sub-view
+    const goHome = () => {
+        setView("home")
+        setSelectedDeckId(null)
+    }
+
     return (
         <div className={className}>
             <div className="mx-auto flex max-w-3xl flex-col gap-6 px-6 py-6">
-                <PageHeader
-                    title={t("flashcard.title")}
-                    description={t("flashcard.subtitle")}
-                />
+                <PageHeader title={t("flashcard.title")} description={t("flashcard.subtitle")} />
 
-                {/* deck list or reviewer */}
-                {!selectedDeckId ? (
-                    <FlashcardDeckList
-                        onSelectDeck={(deckId) => setSelectedDeckId(deckId)}
-                    />
-                ) : (
+                {view === "home" ? (
+                    <>
+                        {/* PRIMARY: today's spaced-repetition queue */}
+                        <DueReviewHero onStart={() => setView("due")} />
+
+                        {/* progress snapshot (auto-hides until first review) */}
+                        <FlashcardStatsStrip />
+
+                        {/* SECONDARY: browse / cram the course's decks */}
+                        <LabeledCard label={t("flashcard.decksLabel")} frameless>
+                            <FlashcardDeckList
+                                onSelectDeck={(deckId) => {
+                                    setSelectedDeckId(deckId)
+                                    setMode("study")
+                                    setView("deck")
+                                }}
+                            />
+                        </LabeledCard>
+                    </>
+                ) : null}
+
+                {view === "due" ? (
                     <div className="flex flex-col gap-6">
-                        {/* back to deck list + study/interview mode switch */}
+                        <Button
+                            size="sm"
+                            variant="secondary"
+                            className="self-start"
+                            onPress={goHome}
+                        >
+                            {t("flashcard.backToHome")}
+                        </Button>
+                        <DueReview onExit={goHome} />
+                    </div>
+                ) : null}
+
+                {view === "deck" && selectedDeckId ? (
+                    <div className="flex flex-col gap-6">
+                        {/* back to home + study/interview mode switch */}
                         <div className="flex flex-wrap items-center justify-between gap-3">
-                            <Button
-                                size="sm"
-                                variant="secondary"
-                                onPress={() => setSelectedDeckId(null)}
-                            >
-                                {t("flashcard.backToDecks")}
+                            <Button size="sm" variant="secondary" onPress={goHome}>
+                                {t("flashcard.backToHome")}
                             </Button>
                             <div className="flex items-center gap-2">
                                 <Button
@@ -78,7 +115,7 @@ export const Flashcards = ({ className }: FlashcardsProps) => {
                             <InterviewSession key={selectedDeckId} deckId={selectedDeckId} />
                         )}
                     </div>
-                )}
+                ) : null}
             </div>
         </div>
     )

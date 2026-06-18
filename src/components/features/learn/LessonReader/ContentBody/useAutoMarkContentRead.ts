@@ -6,14 +6,28 @@ import {
     useRef,
 } from "react"
 import {
+    useSWRConfig,
+} from "swr"
+import {
+    useTranslations,
+} from "next-intl"
+import {
     useAppDispatch,
+    useAppSelector,
 } from "@/redux"
 import {
     setContentIsRead,
 } from "@/redux/slices"
 import {
+    GraphQLHeadersKey,
     mutateMarkContentAsReaded,
 } from "@/modules/api"
+import {
+    useGraphQLWithToast,
+} from "@/modules/toast"
+
+/** SWR key prefix of the course-outline query whose read flags this read updates. */
+const COURSE_OUTLINE_SWR_KEY = "QUERY_MY_COURSE_OUTLINE_SWR"
 
 /**
  * Minimum time (ms) the learner must spend on a lesson before reaching the bottom
@@ -58,6 +72,11 @@ export const useAutoMarkContentRead = ({
     isLoading,
 }: UseAutoMarkContentReadParams) => {
     const dispatch = useAppDispatch()
+    const t = useTranslations()
+    const runGraphQL = useGraphQLWithToast()
+    const { mutate } = useSWRConfig()
+    // the mark-read mutation needs the active course id as a header (BE scopes it)
+    const courseId = useAppSelector((state) => state.course.entity?.id)
     const sentinelRef = useRef<HTMLDivElement>(null)
     // per-content guards so each phase runs at most once
     const markedSilentRef = useRef(false)
@@ -67,30 +86,54 @@ export const useAutoMarkContentRead = ({
     // pending dwell timer, cleared on content change / unmount
     const dwellTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-    // phase 1: flip the read flag silently (progress only, no reward)
+    // phase 1: flip the read flag (no XP/feed) + a confirming toast when the learner
+    // reaches the bottom. "Silent" = no reward, but a toast acknowledges the read.
     const markReadSilently = useCallback(async () => {
-        if (!contentId || markedSilentRef.current) {
+        if (!contentId || !courseId || markedSilentRef.current) {
             return
         }
         markedSilentRef.current = true
-        try {
-            await mutateMarkContentAsReaded({
-                request: {
-                    contentId,
-                    readed: true,
-                    silent: true,
-                },
-            })
-            // reflect the read flag locally so the badge turns green immediately
-            dispatch(setContentIsRead(true))
-        } catch {
+        const ok = await runGraphQL(
+            async () => {
+                const response = await mutateMarkContentAsReaded({
+                    request: {
+                        contentId,
+                        readed: true,
+                        silent: true,
+                    },
+                    headers: {
+                        [GraphQLHeadersKey.XCourseId]: courseId,
+                    },
+                })
+                const envelope = response.data?.markContentAsReaded
+                if (!envelope) {
+                    throw new Error("Mark content as read failed")
+                }
+                return envelope
+            },
+            {
+                successMessage: t("content.markedRead"),
+            },
+        )
+        if (!ok) {
             markedSilentRef.current = false
+            return
         }
-    }, [contentId, dispatch])
+        // reflect the read flag locally so the badge turns green immediately
+        dispatch(setContentIsRead(true))
+        // revalidate the course outline so the content-map rail + contents index
+        // flip this lesson's marker to "read" (they read isRead from that query,
+        // not the content-status slice the badge uses)
+        void mutate(
+            (key) => Array.isArray(key) && key[0] === COURSE_OUTLINE_SWR_KEY,
+            undefined,
+            { revalidate: true },
+        )
+    }, [contentId, courseId, dispatch, mutate, runGraphQL, t])
 
     // phase 2: the deliberate, dwell-gated XP + feed grant
     const grantReadReward = useCallback(async () => {
-        if (!contentId || grantedRef.current) {
+        if (!contentId || !courseId || grantedRef.current) {
             return
         }
         grantedRef.current = true
@@ -101,11 +144,14 @@ export const useAutoMarkContentRead = ({
                     readed: true,
                     silent: false,
                 },
+                headers: {
+                    [GraphQLHeadersKey.XCourseId]: courseId,
+                },
             })
         } catch {
             grantedRef.current = false
         }
-    }, [contentId])
+    }, [contentId, courseId])
 
     // reset both phases + stamp the open time when the active content changes;
     // cancel any pending dwell timer on content change / unmount

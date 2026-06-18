@@ -1,10 +1,9 @@
-"use client"
 import React from "react"
-import { LandingPage } from "@/components/layouts/marketing/LandingPage"
+import { Landing } from "@/components/features/landing/Landing"
 
 const Page = () => {
     return (
-        <LandingPage />
+        <Landing />
     )
 }
 

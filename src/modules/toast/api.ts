@@ -68,6 +68,11 @@ export interface RunGraphQLWithToastOptions {
     showSuccessToast?: boolean
     /** Whether to show a toast on error. Defaults to `true`. */
     showErrorToast?: boolean
+    /**
+     * Custom success description overriding the response message (e.g. a friendly
+     * milestone copy). When omitted the response `message` / `defaultSuccess` is used.
+     */
+    successMessage?: string
     /** Localized labels. Injected by `useGraphQLWithToast`; defaults to English fallbacks. */
     messages?: ToastMessages
 }
@@ -88,13 +93,19 @@ export const runGraphQLWithToast = async <T>(
     const {
         showSuccessToast = true,
         showErrorToast = true,
+        successMessage,
         messages = DEFAULT_TOAST_MESSAGES,
     } = options ?? {}
 
     try {
         const response = await action()
         if (showSuccessToast) {
-            showGraphQLToast(response, messages)
+            // friendly override only on success; fall back to the response-driven toast
+            if (response.success && successMessage) {
+                toast.success(messages.successTitle, { description: successMessage })
+            } else {
+                showGraphQLToast(response, messages)
+            }
         }
         return true
     } catch (error) {

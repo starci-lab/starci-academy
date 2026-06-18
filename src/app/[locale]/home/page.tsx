@@ -1,6 +1,5 @@
-"use client"
 import React from "react"
-import { LandingPage } from "@/components/layouts/marketing/LandingPage"
+import { Landing } from "@/components/features/landing/Landing"
 
 /**
  * Marketing landing page at an explicit URL.
@@ -11,7 +10,7 @@ import { LandingPage } from "@/components/layouts/marketing/LandingPage"
  */
 const Page = () => {
     return (
-        <LandingPage />
+        <Landing />
     )
 }
 

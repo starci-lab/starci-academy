@@ -17,6 +17,8 @@ const query1 = gql`
         difficulty
         sortIndex
         defaultLocale
+        dueCount
+        masteredCount
         cards {
           id
           sortIndex

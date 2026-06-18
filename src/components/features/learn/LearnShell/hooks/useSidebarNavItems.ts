@@ -66,8 +66,6 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
     const course = useAppSelector((state) => state.course.entity)
     // display id is the slug used to build every learn sub-route
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
-    // active module id keeps the "modules" row pointing at the current module
-    const moduleId = useAppSelector((state) => state.module.id)
     // active tab from redux highlights the matching row
     const selectedSidebar = useAppSelector((state) => state.sidebar.sidebar)
 
@@ -94,7 +92,9 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
                 value: "modules",
                 tab: SidebarTab.Modules,
                 icon: BracketsCurlyIcon,
-                url: pathConfig().locale(locale).course(courseDisplayId).learn().module(moduleId).build(),
+                // route to the course-contents index (the docs-style "chỉ mục" landing);
+                // selecting a lesson there drills into its module/content route.
+                url: pathConfig().locale(locale).course(courseDisplayId).learn().build(),
             },
             {
                 label: t("foundations.title"),
@@ -150,7 +150,6 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
             course?.modules?.length,
             courseDisplayId,
             locale,
-            moduleId,
             t,
         ],
     )

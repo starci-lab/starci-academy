@@ -234,6 +234,53 @@
     },
     "idleHint": "Type to search courses, modules, lessons…"
   },
+  "courseContents": {
+    "empty": "This course has no content yet.",
+    "error": "Couldn't load the course contents.",
+    "retry": "Try again",
+    "completion": "Completed",
+    "lessonsStat": "Content {read}/{total}",
+    "challengesStat": "Challenges {done}/{total}",
+    "tasksStat": "Tasks {done}/{total}",
+    "resume": "Continue learning",
+    "allDone": "You've completed this course 🎉",
+    "searchAria": "Search content",
+    "searchPlaceholder": "Search content...",
+    "premium": "Premium content",
+    "read": "Read",
+    "unread": "Unread",
+    "done": "Done",
+    "notDone": "Not done",
+    "noMatch": "No content matches your search.",
+    "lessonCount": "{count} items",
+    "milestones": "Capstone",
+    "status": {
+      "notStarted": "Not started",
+      "inProgress": "In progress",
+      "failed": "Failed",
+      "completed": "Completed"
+    },
+    "taskType": {
+      "design": "Design",
+      "techIntegrate": "Integration",
+      "business": "Business"
+    }
+  },
+  "onThisPage": {
+    "title": "On this page"
+  },
+  "lessonRail": {
+    "flashcards": {
+      "title": "Review this lesson",
+      "count": "{decks} decks · {cards} cards",
+      "review": "Review"
+    },
+    "challenges": {
+      "title": "Practice this lesson",
+      "count": "{count} challenges",
+      "practice": "Start challenges"
+    }
+  },
   "courses": {
     "featuredTitle": "Featured courses",
     "viewCourse": "View Course",
@@ -640,6 +687,11 @@
     "empty": "No content yet.",
     "number": "Content {index}",
     "minutesRead": "{minutes} min read",
+    "minutesShort": "{minutes} min",
+    "markedRead": "Lesson completed — your progress is saved.",
+    "position": "Content {position}/{total}",
+    "prevLesson": "Previous",
+    "nextLesson": "Next",
     "challengeCount": "{count} challenges",
     "codeLessonCount": "{count} code sections",
     "lessonVideosEmpty": "No lesson videos available for this content.",
@@ -990,12 +1042,44 @@
     }
   },
   "flashcard": {
-    "title": "Interview prep",
-    "subtitle": "Drill interview theory with flashcards for this course.",
+    "title": "Review",
+    "subtitle": "Lock in what you learned with spaced repetition, and drill interview answers.",
     "empty": "No flashcards for this course yet.",
     "study": "Study",
     "cardCount": "{count} cards",
     "backToDecks": "← Flashcards",
+    "backToHome": "← Review",
+    "decksLabel": "Decks by topic",
+    "due": {
+      "label": "Due today",
+      "count": "{count} cards due for review",
+      "start": "Review {count} cards",
+      "allCaught": "All caught up",
+      "allCaughtHint": "No cards are due right now. Cram a deck below to get ahead."
+    },
+    "review": {
+      "again": "Again",
+      "hard": "Hard",
+      "good": "Good",
+      "easy": "Easy",
+      "rateHint": "How well did you recall it?",
+      "error": "Could not save your review. Please try again.",
+      "sessionDoneTitle": "Session complete",
+      "sessionDoneDescription": "You reviewed {count} cards. Come back when more are due.",
+      "backToHome": "Back to review",
+      "studyAgain": "Study again",
+      "intervalDays": "{count}d"
+    },
+    "deck": {
+      "due": "{count} due",
+      "mastered": "Mastered {mastered}/{total}"
+    },
+    "stats": {
+      "label": "Progress",
+      "streak": "Day streak",
+      "retention": "Retention",
+      "reviewed": "Reviewed"
+    },
     "cardProgress": "Card {current}/{total}",
     "questionLabel": "Question",
     "answerLabel": "Answer",
@@ -1030,6 +1114,7 @@
       "drawError": "Could not load an interview question for this deck.",
       "gradeError": "Could not grade your answer. Please try again.",
       "pass": "Pass",
+      "borderline": "Borderline",
       "fail": "Not yet",
       "score": "Score: {score}/100",
       "strengths": "What you got right",
@@ -2025,7 +2110,94 @@
       "headline": "Break out of the <crud>CRUD</crud> loop.<br></br>Learn to <accent>design systems</accent> like a Solution Architect.",
       "subline": "StarCi is not a generic fullstack bootcamp. It is where you train architectural thinking — what AI has not replaced, and what decides whether you are a <b>\"code monkey\"</b> or a <b>system designer</b>.",
       "ctaRoadmap": "See the roadmap",
-      "ctaFounder": "Meet the founder of StarCi"
+      "ctaFounder": "Meet the founder of StarCi",
+      "ctaPrimary": "Browse courses",
+      "ctaSecondary": "Sign in"
+    },
+    "stats": {
+      "learners": "Learners",
+      "lessons": "Lessons",
+      "courses": "Courses",
+      "badges": "Badges earned"
+    },
+    "wedge": {
+      "eyebrow": "Learn for real",
+      "title": "Knowledge is everywhere. We train what AI can't replace.",
+      "intro": "Every unit ends in a real challenge, graded by StarCi AI against production-grade criteria — not a quiz, not a certificate of attendance.",
+      "items": {
+        "content": {
+          "title": "Content tracks, not tutorials",
+          "body": "Structured tracks that build architectural thinking — fundamentals, keywords and trade-offs you can carry to any stack."
+        },
+        "challenge": {
+          "title": "Challenge-driven",
+          "body": "You don't pass by watching. Each unit ends in a hands-on challenge you actually have to build and defend."
+        },
+        "aiGrading": {
+          "title": "Graded by StarCi AI",
+          "body": "Submissions are reviewed against production criteria and scored — real feedback, around the clock, not a participation badge."
+        }
+      }
+    },
+    "roadmap": {
+      "eyebrow": "The path",
+      "title": "From writing endpoints to designing systems",
+      "intro": "A deliberate ladder — each track compounds into the next, ending in Solution Architect.",
+      "tracks": {
+        "fullstack": { "label": "Fullstack", "caption": "Build the whole thing" },
+        "devops": { "label": "DevOps", "caption": "Ship and operate it" },
+        "security": { "label": "Security", "caption": "Make it safe" },
+        "architect": { "label": "Solution Architect", "caption": "Design it at scale" }
+      }
+    },
+    "founder": {
+      "eyebrow": "Built in the open",
+      "title": "Why StarCi exists",
+      "role": "Founder · StarCi Academy",
+      "body1": "I built StarCi because I was tired of courses that hand you a certificate and a stack, but never the thinking that decides whether a system survives production.",
+      "body2": "Everything here is built in the open — the platform, the curriculum, the challenges. Read the engineering notes and judge the work for yourself.",
+      "github": "GitHub",
+      "blog": "Read the blog"
+    },
+    "recruiter": {
+      "eyebrow": "For hiring teams",
+      "title": "Hire engineers who've proven it",
+      "intro": "Learners who finished the work and opted in to be hired — vetted by what they built, not by a résumé.",
+      "count": "{count}+ engineers open to work right now",
+      "cta": "Browse candidate profiles"
+    },
+    "outcome": {
+      "eyebrow": "What you get",
+      "title": "Two ways this pays off",
+      "items": {
+        "engineer": {
+          "title": "For engineers",
+          "body": "Build a portfolio of graded, production-grade work and get surfaced to hiring partners — headhunted on merit, not keywords."
+        },
+        "enterprise": {
+          "title": "For companies",
+          "body": "Hire from a pool of engineers vetted by real, AI-graded challenges. Skip the noise and meet builders who can defend their design.",
+          "cta": "Become a hiring partner"
+        }
+      }
+    },
+    "faq": {
+      "eyebrow": "Straight answers",
+      "title": "Questions, answered honestly",
+      "q1": "Is this another bootcamp promising a high salary in 3 months?",
+      "a1": "No. We don't sell a salary number. We train architectural thinking and prove it with graded challenges — the rest is on you and the market.",
+      "q2": "Will AI make these skills obsolete?",
+      "a2": "The opposite. AI writes CRUD already. What it can't do is own trade-offs, design for scale and defend decisions — which is exactly what we train.",
+      "q3": "I'm a beginner. Is this for me?",
+      "a3": "If you can already write basic code and want to level up to designing systems, yes. If you've never coded, start with fundamentals first.",
+      "q4": "How does the AI grading actually work?",
+      "a4": "Each challenge is scored against production-grade criteria with written feedback. You see exactly why you passed or what to fix.",
+      "q5": "What does 'headhunted' really mean here?",
+      "a5": "Opt in as open-to-work and your graded work becomes visible to hiring partners browsing the talent directory. No guarantees — just real signal."
+    },
+    "closing": {
+      "title": "You can write CRUD for three more years. Or start thinking like a system designer today.",
+      "cta": "Browse courses"
     }
   },
   "aiLab": {

@@ -9,10 +9,6 @@ const mutation1 = gql`
       success
       message
       error
-      data {
-        id
-        isRead
-      }
     }
   }
 `
@@ -31,11 +27,13 @@ export type MutateMarkContentAsReadedParams = MutateParams<MutationMarkContentAs
 export const mutateMarkContentAsReaded = async ({
     mutation = MutationMarkContentAsReaded.Mutation1,
     request,
+    headers,
     debug,
     signal,
 }: MutateMarkContentAsReadedParams) => {
     const apollo = createAuthApolloClient({
         cache: false,
+        headers,
         debug,
         signal,
     })

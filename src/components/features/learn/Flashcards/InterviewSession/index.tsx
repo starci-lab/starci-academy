@@ -162,8 +162,20 @@ export const InterviewSession = ({ deckId, className }: InterviewSessionProps) =
         )
     }
 
-    // pass = "đạt"; borderline + fail = "không đạt"
-    const passed = result?.verdict === InterviewVerdict.Pass
+    // three distinct verdicts: pass (đạt) / borderline (cận) / fail (chưa đạt)
+    const verdict = result?.verdict
+    const verdictColor: "success" | "warning" | "danger" =
+        verdict === InterviewVerdict.Pass
+            ? "success"
+            : verdict === InterviewVerdict.Borderline
+                ? "warning"
+                : "danger"
+    const verdictLabel =
+        verdict === InterviewVerdict.Pass
+            ? t("flashcard.interview.pass")
+            : verdict === InterviewVerdict.Borderline
+                ? t("flashcard.interview.borderline")
+                : t("flashcard.interview.fail")
     // whether anything has been transcribed yet (gates the submit button)
     const hasTranscript = transcript.trim().length > 0
 
@@ -296,14 +308,8 @@ export const InterviewSession = ({ deckId, className }: InterviewSessionProps) =
                 <div className="flex flex-col gap-6 rounded-xl bg-default/40 p-8">
                     {/* headline verdict + numeric score */}
                     <div className="flex items-center justify-between gap-3">
-                        <Chip
-                            size="md"
-                            variant="soft"
-                            color={passed ? "success" : "danger"}
-                        >
-                            {passed
-                                ? t("flashcard.interview.pass")
-                                : t("flashcard.interview.fail")}
+                        <Chip size="md" variant="soft" color={verdictColor}>
+                            {verdictLabel}
                         </Chip>
                         <Typography type="body-sm" weight="medium">
                             {t("flashcard.interview.score", { score: result.score })}

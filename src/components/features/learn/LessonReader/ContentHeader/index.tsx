@@ -1,6 +1,6 @@
 "use client"
 
-import { ClockIcon, FlameIcon } from "@phosphor-icons/react"
+import { BookOpenIcon, ClockIcon, FlameIcon } from "@phosphor-icons/react"
 import React, {
     useMemo,
 } from "react"
@@ -19,6 +19,9 @@ import {
 import {
     ReadBadge,
 } from "../ReadBadge"
+import {
+    useLessonNavigation,
+} from "../hooks/useLessonNavigation"
 
 /**
  * Title, description and meta-chip row (reading time, challenges, read state)
@@ -33,6 +36,8 @@ export const ContentHeader = () => {
     const title = content?.title
     const description = content?.description
     const minutesRead = content?.minutesRead ?? 0
+    // linear position of this lesson in the course ("Nội dung N/M")
+    const { position, total } = useLessonNavigation()
 
     /** Challenge count for the meta chip, tolerant of a missing entity. */
     const challengeCount = useMemo(
@@ -48,6 +53,14 @@ export const ContentHeader = () => {
             <div className="h-3" />
             <div className="flex items-center gap-2">
                 <ReadBadge />
+                {total > 0 && position > 0 ? (
+                    <Chip variant="tertiary" color="default" className="text-muted">
+                        <BookOpenIcon className="size-5" />
+                        <Chip.Label>
+                            {t("content.position", { position, total })}
+                        </Chip.Label>
+                    </Chip>
+                ) : null}
                 <Chip variant="secondary" color="accent">
                     <ClockIcon className="size-5" />
                     <Chip.Label>

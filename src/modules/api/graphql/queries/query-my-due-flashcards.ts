@@ -16,6 +16,12 @@ const query1 = gql`
           deckTitle
           front
           back
+          nextIntervals {
+            again
+            hard
+            good
+            easy
+          }
         }
       }
     }

@@ -1,4 +1,5 @@
 export * from "./ExtendedTabs"
 export * from "./CollapsibleSidebar"
+export * from "./ContentMapRow"
 export * from "./SidebarNavGroup"
 export * from "./SidebarNavItem"

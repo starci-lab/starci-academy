@@ -72,6 +72,9 @@ import {
     ContentHeader,
 } from "./ContentHeader"
 import {
+    LessonPager,
+} from "./LessonPager"
+import {
     ContentBodySkeleton,
 } from "./ContentBodySkeleton"
 import {
@@ -320,7 +323,8 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
                             !isFullWidthTab && "mx-auto max-w-[1024px]",
                         )}
                     >
-                        <div className={cn(!isFullWidthTab && "p-3", isLocked && "select-none")}>
+                        {/* id scopes the "on this page" rail's heading scan (#lesson-article [data-toc]) */}
+                        <div id="lesson-article" className={cn(!isFullWidthTab && "p-3", isLocked && "select-none")}>
                             {bodyComponent}
                         </div>
                         {/* Medium-style teaser: a tall, smooth gradient fades the tail of the body
@@ -329,6 +333,11 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
                             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-72 bg-gradient-to-b from-transparent via-background/70 to-background" />
                         ) : null}
                     </div>
+                    {/* previous / next lesson pager — linear course navigation at the foot
+                        of the reading column (hidden on locked / full-width tabs) */}
+                    {!isLocked && !isFullWidthTab ? (
+                        <LessonPager className="mx-auto w-full max-w-[1024px] px-3 pb-6" />
+                    ) : null}
                     {/* E2E proof: a quiet link at the bottom of the lesson that opens a
                         right-side drawer with the recorded per-language test results. */}
                     {hasE2e && !isLocked && !isFullWidthTab ? (

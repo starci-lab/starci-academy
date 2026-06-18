@@ -11,7 +11,7 @@ import {
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { queryFlashcardDecksByCourse } from "@/modules/api/graphql"
-import { AsyncContent, PressableCard } from "@/components/blocks"
+import { AsyncContent, PressableCard, ProgressMeter } from "@/components/blocks"
 import { ChallengeDifficulty, type FlashcardDeckEntity, type WithClassNames } from "@/modules/types"
 import { useAppSelector } from "@/redux"
 import { FlashcardDeckListSkeleton } from "./FlashcardDeckListSkeleton"
@@ -108,19 +108,38 @@ export const FlashcardDeckList = ({ onSelectDeck }: FlashcardDeckListProps) => {
                                         <Typography type="body" weight="medium">
                                             {deck.title}
                                         </Typography>
-                                        <Chip
-                                            size="sm"
-                                            variant="soft"
-                                            color={DIFFICULTY_COLOR[deck.difficulty]}
-                                        >
-                                            {t(`flashcard.difficulty.${deck.difficulty}`)}
-                                        </Chip>
+                                        <div className="flex items-center gap-2">
+                                            {/* viewer's cards due in this deck (per-user) */}
+                                            {deck.dueCount ? (
+                                                <Chip size="sm" variant="soft" color="warning">
+                                                    {t("flashcard.deck.due", { count: deck.dueCount })}
+                                                </Chip>
+                                            ) : null}
+                                            <Chip
+                                                size="sm"
+                                                variant="soft"
+                                                color={DIFFICULTY_COLOR[deck.difficulty]}
+                                            >
+                                                {t(`flashcard.difficulty.${deck.difficulty}`)}
+                                            </Chip>
+                                        </div>
                                     </div>
                                     {/* short description preview */}
                                     {deck.description ? (
                                         <Typography type="body-sm" color="muted" className="line-clamp-2">
                                             {deck.description}
                                         </Typography>
+                                    ) : null}
+                                    {/* per-viewer mastery (cards with repetitions >= 2) */}
+                                    {(deck.cards?.length ?? 0) > 0 ? (
+                                        <ProgressMeter
+                                            value={deck.masteredCount ?? 0}
+                                            max={deck.cards?.length ?? 0}
+                                            label={t("flashcard.deck.mastered", {
+                                                mastered: deck.masteredCount ?? 0,
+                                                total: deck.cards?.length ?? 0,
+                                            })}
+                                        />
                                     ) : null}
                                     <div className="flex items-center justify-between gap-3">
                                         <Typography type="body-xs" color="muted">

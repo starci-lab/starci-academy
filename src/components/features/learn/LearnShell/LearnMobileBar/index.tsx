@@ -10,7 +10,7 @@ import { useTranslations } from "next-intl"
 import {
     SidebarNavItem,
 } from "@/components/blocks"
-import { ModuleOutline } from "@/components/features/learn/ModuleOutline"
+import { ContentMap } from "@/components/features/learn/ContentMap"
 import {
     useSidebarNavItems,
 } from "../hooks/useSidebarNavItems"
@@ -101,8 +101,8 @@ export const LearnMobileBar = ({ className }: LearnMobileBarProps) => {
                             </div>
                             <div className="border-b" />
                             <Drawer.Body className="p-0">
-                                <ScrollShadow hideScrollBar className="h-full overflow-y-auto p-3">
-                                    <ModuleOutline />
+                                <ScrollShadow hideScrollBar className="h-full overflow-y-auto">
+                                    <ContentMap />
                                 </ScrollShadow>
                             </Drawer.Body>
                         </Drawer.Dialog>

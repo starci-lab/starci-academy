@@ -234,6 +234,53 @@
     },
     "idleHint": "Nhập để tìm khóa học, học phần, bài giảng…"
   },
+  "courseContents": {
+    "empty": "Khóa học này chưa có nội dung.",
+    "error": "Không tải được nội dung khóa học.",
+    "retry": "Thử lại",
+    "completion": "Hoàn thành",
+    "lessonsStat": "Nội dung {read}/{total}",
+    "challengesStat": "Challenge {done}/{total}",
+    "tasksStat": "Nhiệm vụ {done}/{total}",
+    "resume": "Tiếp tục học",
+    "allDone": "Bạn đã hoàn thành khóa học này 🎉",
+    "searchAria": "Tìm nội dung",
+    "searchPlaceholder": "Tìm nội dung...",
+    "premium": "Nội dung trả phí",
+    "read": "Đã đọc",
+    "unread": "Chưa đọc",
+    "done": "Đã xong",
+    "notDone": "Chưa xong",
+    "noMatch": "Không có nội dung nào khớp với tìm kiếm.",
+    "lessonCount": "{count} nội dung",
+    "milestones": "Dự án",
+    "status": {
+      "notStarted": "Chưa bắt đầu",
+      "inProgress": "Đang làm",
+      "failed": "Chưa đạt",
+      "completed": "Hoàn thành"
+    },
+    "taskType": {
+      "design": "Thiết kế",
+      "techIntegrate": "Tích hợp",
+      "business": "Nghiệp vụ"
+    }
+  },
+  "onThisPage": {
+    "title": "Trên trang này"
+  },
+  "lessonRail": {
+    "flashcards": {
+      "title": "Ôn lại bài này",
+      "count": "{decks} bộ · {cards} thẻ",
+      "review": "Ôn tập"
+    },
+    "challenges": {
+      "title": "Luyện tập bài này",
+      "count": "{count} thử thách",
+      "practice": "Làm thử thách"
+    }
+  },
   "courses": {
     "featuredTitle": "Khóa học tiêu biểu",
     "viewCourse": "Xem khóa học",
@@ -649,6 +696,11 @@
     "empty": "Chưa có nội dung cho học phần này.",
     "number": "Nội dung {index}",
     "minutesRead": "{minutes} phút đọc",
+    "minutesShort": "{minutes} phút",
+    "markedRead": "Đã đọc xong bài này, tiến độ đã được lưu.",
+    "position": "Nội dung {position}/{total}",
+    "prevLesson": "Nội dung trước",
+    "nextLesson": "Nội dung tiếp",
     "challengeCount": "{count} thử thách",
     "codeLessonCount": "{count} mục code",
     "lessonVideosEmpty": "Chưa có bài giảng cho nội dung này.",
@@ -999,12 +1051,44 @@
     }
   },
   "flashcard": {
-    "title": "Luyện phỏng vấn",
-    "subtitle": "Ôn lý thuyết phỏng vấn bằng Flashcards của khoá học này.",
+    "title": "Ôn tập",
+    "subtitle": "Khắc sâu kiến thức bằng lặp lại ngắt quãng, và luyện trả lời phỏng vấn.",
     "empty": "Khoá học này chưa có Flashcards nào.",
     "study": "Học",
     "cardCount": "{count} thẻ",
     "backToDecks": "← Flashcards",
+    "backToHome": "← Ôn tập",
+    "decksLabel": "Bộ thẻ theo chủ đề",
+    "due": {
+      "label": "Đến hạn hôm nay",
+      "count": "{count} thẻ cần ôn lại",
+      "start": "Ôn {count} thẻ",
+      "allCaught": "Đã ôn hết",
+      "allCaughtHint": "Hiện không có thẻ nào đến hạn. Ôn trước một bộ thẻ bên dưới để đi trước."
+    },
+    "review": {
+      "again": "Quên",
+      "hard": "Khó",
+      "good": "Được",
+      "easy": "Dễ",
+      "rateHint": "Bạn nhớ được tới đâu?",
+      "error": "Không lưu được lượt ôn. Vui lòng thử lại.",
+      "sessionDoneTitle": "Hoàn thành phiên ôn",
+      "sessionDoneDescription": "Bạn đã ôn {count} thẻ. Quay lại khi có thêm thẻ đến hạn.",
+      "backToHome": "Về trang ôn tập",
+      "studyAgain": "Học lại",
+      "intervalDays": "{count} ngày"
+    },
+    "deck": {
+      "due": "{count} đến hạn",
+      "mastered": "Đã thuộc {mastered}/{total}"
+    },
+    "stats": {
+      "label": "Tiến bộ",
+      "streak": "Chuỗi ngày",
+      "retention": "Tỉ lệ nhớ",
+      "reviewed": "Đã ôn"
+    },
     "cardProgress": "Thẻ {current}/{total}",
     "questionLabel": "Câu hỏi",
     "answerLabel": "Đáp án",
@@ -1039,6 +1123,7 @@
       "drawError": "Không tải được câu hỏi phỏng vấn cho bộ thẻ này.",
       "gradeError": "Không chấm được câu trả lời. Vui lòng thử lại.",
       "pass": "Đạt",
+      "borderline": "Cận đạt",
       "fail": "Chưa đạt",
       "score": "Điểm: {score}/100",
       "strengths": "Điểm bạn làm tốt",
@@ -2025,7 +2110,94 @@
       "headline": "Thoát khỏi vòng lặp <crud>CRUD</crud>.<br></br>Học cách <accent>thiết kế hệ thống</accent> như một Solution Architect.",
       "subline": "StarCi không phải bootcamp fullstack đại trà. Đây là nơi rèn tư duy kiến trúc — thứ AI chưa thay thế được, và là thứ quyết định bạn là một <b>\"thợ code\"</b> hay một <b>người thiết kế hệ thống</b>.",
       "ctaRoadmap": "Xem lộ trình",
-      "ctaFounder": "Gặp người dựng StarCi"
+      "ctaFounder": "Gặp người dựng StarCi",
+      "ctaPrimary": "Xem khóa học",
+      "ctaSecondary": "Đăng nhập"
+    },
+    "stats": {
+      "learners": "Học viên",
+      "lessons": "Bài học",
+      "courses": "Khóa học",
+      "badges": "Huy hiệu đã trao"
+    },
+    "wedge": {
+      "eyebrow": "Học thật",
+      "title": "Kiến thức ở khắp nơi. Chúng tôi rèn thứ AI không thay được.",
+      "intro": "Mỗi phần kết thúc bằng một challenge thật, được StarCi AI chấm theo tiêu chí mức production — không phải quiz, không phải giấy chứng nhận có mặt.",
+      "items": {
+        "content": {
+          "title": "Tuyến nội dung, không phải tutorial",
+          "body": "Tuyến học có cấu trúc, rèn tư duy kiến trúc — nền tảng, keyword và đánh đổi mà bạn mang sang bất kỳ stack nào."
+        },
+        "challenge": {
+          "title": "Học qua challenge",
+          "body": "Không qua bài bằng cách xem video. Mỗi phần kết bằng một challenge bạn phải tự dựng và bảo vệ được."
+        },
+        "aiGrading": {
+          "title": "StarCi AI chấm",
+          "body": "Bài nộp được review theo tiêu chí production và chấm điểm — phản hồi thật, 24/7, không phải huy hiệu cho có."
+        }
+      }
+    },
+    "roadmap": {
+      "eyebrow": "Lộ trình",
+      "title": "Từ viết endpoint đến thiết kế hệ thống",
+      "intro": "Một bậc thang có chủ đích — mỗi tuyến cộng dồn vào tuyến sau, đích đến là Solution Architect.",
+      "tracks": {
+        "fullstack": { "label": "Fullstack", "caption": "Dựng trọn sản phẩm" },
+        "devops": { "label": "DevOps", "caption": "Ship và vận hành" },
+        "security": { "label": "Security", "caption": "Làm cho an toàn" },
+        "architect": { "label": "Solution Architect", "caption": "Thiết kế ở quy mô lớn" }
+      }
+    },
+    "founder": {
+      "eyebrow": "Làm công khai",
+      "title": "Vì sao có StarCi",
+      "role": "Founder · StarCi Academy",
+      "body1": "Mình dựng StarCi vì chán những khóa học phát cho bạn cái chứng chỉ và một stack, nhưng không bao giờ là tư duy quyết định một hệ thống sống sót ở production.",
+      "body2": "Mọi thứ ở đây đều làm công khai — nền tảng, chương trình, challenge. Đọc các ghi chú kỹ thuật và tự đánh giá chất lượng.",
+      "github": "GitHub",
+      "blog": "Đọc blog"
+    },
+    "recruiter": {
+      "eyebrow": "Cho nhà tuyển dụng",
+      "title": "Tuyển kỹ sư đã chứng minh được",
+      "intro": "Những học viên hoàn thành bài thật và bật chế độ sẵn sàng đi làm — được đánh giá bằng thứ họ dựng, không phải bằng CV.",
+      "count": "{count}+ kỹ sư đang sẵn sàng đi làm",
+      "cta": "Xem hồ sơ ứng viên"
+    },
+    "outcome": {
+      "eyebrow": "Bạn nhận được gì",
+      "title": "Hai hướng đáng giá",
+      "items": {
+        "engineer": {
+          "title": "Cho kỹ sư",
+          "body": "Xây portfolio gồm bài đã chấm ở mức production và được hiển thị tới đối tác tuyển dụng — được headhunt bằng năng lực thật, không phải keyword."
+        },
+        "enterprise": {
+          "title": "Cho doanh nghiệp",
+          "body": "Tuyển từ nguồn kỹ sư đã được vetted qua challenge thật do AI chấm. Bỏ qua nhiễu, gặp người dựng được và bảo vệ được thiết kế.",
+          "cta": "Trở thành đối tác tuyển dụng"
+        }
+      }
+    },
+    "faq": {
+      "eyebrow": "Nói thẳng",
+      "title": "Hỏi thẳng — đáp thật",
+      "q1": "Đây có phải một bootcamp nữa hứa lương cao sau 3 tháng?",
+      "a1": "Không. Chúng tôi không bán một con số lương. Chúng tôi rèn tư duy kiến trúc và chứng minh bằng challenge có chấm — phần còn lại là ở bạn và thị trường.",
+      "q2": "AI có làm những kỹ năng này lỗi thời không?",
+      "a2": "Ngược lại. AI đã viết được CRUD. Thứ nó không làm được là gánh đánh đổi, thiết kế cho quy mô và bảo vệ quyết định — đúng thứ chúng tôi rèn.",
+      "q3": "Mình mới bắt đầu. Có hợp không?",
+      "a3": "Nếu bạn đã viết được code cơ bản và muốn lên mức thiết kế hệ thống thì hợp. Nếu chưa từng code, hãy bắt đầu từ nền tảng trước.",
+      "q4": "AI chấm thực sự hoạt động thế nào?",
+      "a4": "Mỗi challenge được chấm theo tiêu chí mức production kèm nhận xét bằng chữ. Bạn thấy rõ vì sao đạt hoặc cần sửa gì.",
+      "q5": "'Headhunt' ở đây thực sự nghĩa là gì?",
+      "a5": "Bật chế độ sẵn-sàng-đi-làm và bài đã chấm của bạn hiển thị tới đối tác tuyển dụng đang xem danh bạ nhân tài. Không cam kết — chỉ là tín hiệu thật."
+    },
+    "closing": {
+      "title": "Bạn có thể code CRUD thêm ba năm nữa. Hoặc bắt đầu nghĩ như một người thiết kế hệ thống — hôm nay.",
+      "cta": "Xem khóa học"
     }
   },
   "aiLab": {

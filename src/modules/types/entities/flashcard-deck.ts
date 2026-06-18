@@ -28,4 +28,8 @@ export interface FlashcardDeckEntity extends AbstractEntity {
     modules?: Array<ModuleEntity>
     /** Open-ended Q&A flashcards belonging to this deck. */
     cards?: Array<FlashcardCardEntity>
+    /** Viewer's cards currently due in this deck (runtime, per-user; absent when not requested). */
+    dueCount?: number
+    /** Viewer's mastered cards in this deck — repetitions ≥ 2 (runtime, per-user). */
+    masteredCount?: number
 }

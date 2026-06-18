@@ -1,5 +1,17 @@
 import type { GraphQLResponse } from "../../types"
 
+/** Per-grade next-interval preview (in days) for a due card's rating buttons. */
+export interface QueryFlashcardNextIntervals {
+    /** Days until next review if graded Again (0). */
+    again: number
+    /** Days until next review if graded Hard (1). */
+    hard: number
+    /** Days until next review if graded Good (2). */
+    good: number
+    /** Days until next review if graded Easy (3). */
+    easy: number
+}
+
 /** One flashcard due for review today (SM-2 scheduler). */
 export interface QueryMyDueFlashcardData {
     /** Opaque id of the card (passed to `reviewFlashcard`). */
@@ -10,6 +22,8 @@ export interface QueryMyDueFlashcardData {
     front: string
     /** Back (answer) text revealed after flipping. */
     back: string
+    /** Per-grade next-interval preview (days), from the card's current SM-2 state. */
+    nextIntervals: QueryFlashcardNextIntervals
 }
 
 /** The viewer's due-flashcards payload: a count plus the cards to review. */

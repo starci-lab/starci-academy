@@ -1,8 +1,10 @@
 import { NextIntlClientProvider } from "next-intl"
 import { getMessages } from "next-intl/server"
+import { GoogleAnalytics } from "@next/third-parties/google"
 import { InnerLayout } from "../InnerLayout"
 import React, { PropsWithChildren } from "react"
 import { Open_Sans } from "next/font/google"
+import { SEO_CONFIG } from "@/config/seo"
 
 const font = Open_Sans({
     subsets: ["latin"],
@@ -37,6 +39,8 @@ const Layout = async ({
                         </div>
                     </InnerLayout>
                 </NextIntlClientProvider>
+                {/* GA4 — only injected when a measurement id is configured (mock-safe) */}
+                {SEO_CONFIG.gaId ? <GoogleAnalytics gaId={SEO_CONFIG.gaId} /> : null}
             </body>
         </html>
     )

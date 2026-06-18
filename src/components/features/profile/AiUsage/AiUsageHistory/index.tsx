@@ -134,7 +134,7 @@ export const AiUsageHistory = ({ className }: AiUsageHistoryProps) => {
                 <div className="flex flex-col gap-6">
                     <Skeleton className="h-44 w-full rounded-xl" />
                     <Skeleton.SegmentBar legendItems={3} />
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-2">
                         {[0, 1, 2, 3].map((row) => (
                             <Skeleton key={row} className="h-12 w-full rounded-xl" />
                         ))}
@@ -196,7 +196,7 @@ export const AiUsageHistory = ({ className }: AiUsageHistoryProps) => {
                         <Typography type="body-sm" weight="semibold">
                             {t("aiQuota.history.title")}
                         </Typography>
-                        <div className="flex flex-col gap-1">
+                        <div className="flex flex-col gap-2">
                             <Label className="sr-only">{t("aiQuota.history.lane.all")}</Label>
                             <Select.Root<{ id: string }, "single">
                                 aria-label={t("aiQuota.history.lane.all")}

@@ -4,6 +4,7 @@ import React, { useMemo } from "react"
 import { cn, Drawer, Pagination, ScrollShadow } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types"
 import { useSubmissionAttemptsOverlayState } from "@/hooks"
+import { useSmViewpoint } from "@/hooks/reuseables/useSmViewpoint"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import {
     setActiveChallengeSubmissionId,
@@ -26,6 +27,7 @@ export const SubmissionAttemptsDrawer = (props: SubmissionAttemptsDrawerProps = 
     const dispatch = useAppDispatch()
     const t = useTranslations()
     const { isOpen, setOpen } = useSubmissionAttemptsOverlayState()
+    const { isMobile } = useSmViewpoint()
     const submissionAttempts = useAppSelector((state) => state.submissionAttempt.submissionAttempts)
     const count = useAppSelector((state) => state.submissionAttempt.count)
     const pageNumber = useAppSelector((state) => state.submissionAttempt.pageNumber)
@@ -68,7 +70,7 @@ export const SubmissionAttemptsDrawer = (props: SubmissionAttemptsDrawerProps = 
                     }
                 }}
             >
-                <Drawer.Content placement="right">
+                <Drawer.Content placement={isMobile ? "bottom" : "right"}>
                     <Drawer.Dialog className={cn("p-0", className)}>
                         <div className="p-3">
                             <Drawer.CloseTrigger />

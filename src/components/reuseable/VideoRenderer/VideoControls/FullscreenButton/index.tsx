@@ -30,7 +30,7 @@ export const FullscreenButton = ({
             onPress={onFullscreen}
             className={cn("text-white hover:bg-white/20 border-none min-w-8 h-8", className)}
         >
-            <ArrowsOutIcon className="h-4 w-4" />
+            <ArrowsOutIcon className="h-5 w-5" />
         </Button>
     )
 }

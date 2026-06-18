@@ -139,7 +139,7 @@ export const SearchInput = ({
         <div className={cn("relative w-full sm:max-w-sm", className)}>
             <TextField aria-label={resolvedPlaceholder} className="w-full">
                 <div className="relative">
-                    <MagnifyingGlassIcon className="text-muted pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2" />
+                    <MagnifyingGlassIcon className="text-muted pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2" />
                     <Input
                         type="search"
                         variant={variant}
@@ -262,7 +262,7 @@ const SearchInputSuggestionRow = ({
                 onMouseDown={onMouseDown}
                 onMouseEnter={onHover}
             >
-                <MagnifyingGlassIcon className="text-muted h-4 w-4 shrink-0" />
+                <MagnifyingGlassIcon className="text-muted h-5 w-5 shrink-0" />
                 {/* Google-style: the typed part stays light, the completion is bold.
                     `min-w-0 flex-1` lets the span shrink inside the flex row so a long
                     label truncates with an ellipsis instead of overflowing the dropdown. */}

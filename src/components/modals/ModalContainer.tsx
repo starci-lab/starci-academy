@@ -1,7 +1,6 @@
 import React from "react"
 // import { AIProcessingModal } from "./AIProcessingModal"
 import { AuthenticationModal } from "./AuthenticationModal"
-import { ChallengeModal } from "./ChallengeModal"
 import { ContentModal } from "./ContentModal"
 import { LivestreamCalendarModal } from "./LivestreamCalendarModal"
 import { LessonVideoModal } from "./LessonVideoModal"
@@ -10,7 +9,6 @@ import { LanguageModal } from "./LanguageModal"
 import { FeedbackDetailsModal } from "./FeedbackDetailsModal"
 import { CvPreviewModal } from "./CvPreviewModal"
 import { CvReviewLevelDetailsModal } from "./CvReviewLevelDetailsModal"
-import { CvSubmissionAttemptAnalysisModal } from "./CvSubmissionAttemptAnalysisModal"
 import { CvUpdateModal } from "./CvUpdateModal"
 import { GlobalSearchModal } from "./GlobalSearchModal"
 import { LinkGithubModal } from "./LinkGithubModal"
@@ -32,12 +30,10 @@ export const ModalContainer = () => {
             <ContentModal />
             <LivestreamCalendarModal />
             <LessonVideoModal />
-            <ChallengeModal />
             <LanguageModal />
             <FeedbackDetailsModal />
             <CvPreviewModal />
             <CvReviewLevelDetailsModal />
-            <CvSubmissionAttemptAnalysisModal />
             <CvUpdateModal />
             <GlobalSearchModal />
             <LinkGithubModal />

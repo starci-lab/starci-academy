@@ -57,9 +57,9 @@ export const FollowButton = ({
                     size="sm"
                 />
             ) : following ? (
-                <CheckIcon className="size-4" />
+                <CheckIcon className="size-5" />
             ) : (
-                <PersonsIcon className="size-4" />
+                <PersonsIcon className="size-5" />
             )}
             {following ? t("follow.following") : t("follow.follow")}
         </Button>

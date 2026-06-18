@@ -29,7 +29,7 @@ import {
 } from "@/components/blocks"
 import {
     EntityToken,
-} from "@/components/layouts/shell/Dashboard/EntityToken"
+} from "@/components/features/dashboard/EntityToken"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -81,7 +81,7 @@ export const MyAttempts = ({
 
             <LabeledCard
                 label={t("profileSettings.learning.attempts.title")}
-                icon={<ListChecksIcon aria-hidden focusable="false" className="size-4 text-accent" />}
+                icon={<ListChecksIcon aria-hidden focusable="false" className="size-5 text-accent" />}
             >
                 <AsyncContent
                     isLoading={!swr.data && !swr.error}

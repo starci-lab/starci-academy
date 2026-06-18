@@ -201,7 +201,7 @@ export const NotificationBell = ({ className }: NotificationBellProps) => {
                             onPress={onMarkAllRead}
                             className="gap-1.5"
                         >
-                            <CheckDoubleIcon className="size-4" />
+                            <CheckDoubleIcon className="size-5" />
                             <span className="text-xs">{t("notifications.markAllRead")}</span>
                         </Button>
                     ) : null}

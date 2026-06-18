@@ -152,7 +152,7 @@ export const ProjectCard = ({
             {milestones.length > 0 ? (
                 <Link
                     onPress={() => setExpanded((open) => !open)}
-                    className="group inline-flex w-fit cursor-pointer items-center gap-1 text-accent"
+                    className="group inline-flex w-fit cursor-pointer items-center gap-2 text-accent"
                 >
                     {expanded
                         ? t("publicProfile.capstone.hideTasks")
@@ -184,11 +184,11 @@ export const ProjectCard = ({
                                     <ListRow
                                         key={`${task.title}-${taskIndex}`}
                                         leading={task.passed ? (
-                                            <CheckIcon aria-hidden focusable="false" className="size-4 text-success" />
+                                            <CheckIcon aria-hidden focusable="false" className="size-5 text-success" />
                                         ) : undefined}
                                         title={task.title}
                                         meta={task.passed ? (
-                                            <div className="flex items-center gap-1">
+                                            <div className="flex items-center gap-2">
                                                 {/* score coloured by band so the eye catches weak grades */}
                                                 <Typography
                                                     type="body-xs"
@@ -215,7 +215,7 @@ export const ProjectCard = ({
                     {hiddenMilestoneCount > 0 ? (
                         <Link
                             onPress={() => setShowAllMilestones((open) => !open)}
-                            className="inline-flex w-fit cursor-pointer items-center gap-1 text-accent"
+                            className="inline-flex w-fit cursor-pointer items-center gap-2 text-accent"
                         >
                             {showAllMilestones
                                 ? t("publicProfile.capstone.showLess")

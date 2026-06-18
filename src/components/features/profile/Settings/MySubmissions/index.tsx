@@ -33,7 +33,7 @@ import {
 } from "@/components/blocks"
 import {
     EntityToken,
-} from "@/components/layouts/shell/Dashboard/EntityToken"
+} from "@/components/features/dashboard/EntityToken"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -92,7 +92,7 @@ export const MySubmissions = ({
 
             <LabeledCard
                 label={t("profileSettings.learning.submissions.title")}
-                icon={<CodeIcon aria-hidden focusable="false" className="size-4 text-accent" />}
+                icon={<CodeIcon aria-hidden focusable="false" className="size-5 text-accent" />}
             >
                 <AsyncContent
                     isLoading={!swr.data && !swr.error}
@@ -154,7 +154,7 @@ export const MySubmissions = ({
                                             rel="noopener noreferrer"
                                             className="inline-flex items-center gap-2 text-accent"
                                         >
-                                            <FaGithub aria-hidden focusable="false" className="size-4" />
+                                            <FaGithub aria-hidden focusable="false" className="size-5" />
                                             {t("profileSettings.learning.submissions.open")}
                                         </Link>
                                     ) : (

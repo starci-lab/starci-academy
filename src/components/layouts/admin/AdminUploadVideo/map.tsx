@@ -16,8 +16,8 @@ import {
 export const UPLOAD_STATUS_ICON_MAP: Record<UploadStatus, React.ReactNode> = {
     [UploadStatus.Idle]: null,
     [UploadStatus.Uploading]: <Spinner size="sm" />,
-    [UploadStatus.Success]: <CheckCircleIcon className="h-4 w-4 text-emerald-400" />,
-    [UploadStatus.Error]: <XCircleIcon className="h-4 w-4 text-red-400" />,
+    [UploadStatus.Success]: <CheckCircleIcon className="h-5 w-5 text-emerald-400" />,
+    [UploadStatus.Error]: <XCircleIcon className="h-5 w-5 text-red-400" />,
 }
 
 /** Progress-bar track background class, keyed by upload state. */

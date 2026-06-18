@@ -51,7 +51,7 @@ export const UserStreak = ({ className }: UserStreakProps) => {
                                 <CardContent className="flex flex-col items-center gap-2 text-center">
                                     <Label>{t("streak.current")}</Label>
                                     <div className="flex items-center justify-center gap-2">
-                                        <FireIcon aria-hidden weight="fill" className="size-4 text-accent" />
+                                        <FireIcon aria-hidden weight="fill" className="size-5 text-accent" />
                                         <Typography type="h5" weight="bold">0</Typography>
                                     </div>
                                 </CardContent>
@@ -60,7 +60,7 @@ export const UserStreak = ({ className }: UserStreakProps) => {
                                 <CardContent className="flex flex-col items-center gap-2 text-center">
                                     <Label>{t("streak.longest")}</Label>
                                     <div className="flex items-center justify-center gap-2">
-                                        <FireIcon aria-hidden weight="fill" className="size-4 text-accent" />
+                                        <FireIcon aria-hidden weight="fill" className="size-5 text-accent" />
                                         <Typography type="h5" weight="bold">0</Typography>
                                     </div>
                                 </CardContent>

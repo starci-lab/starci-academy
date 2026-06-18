@@ -62,8 +62,8 @@ export const ChallengeChips = ({
                     title={challenge.title}
                     className="flex max-w-full items-center gap-1.5 rounded-full border border-default/40 px-3 py-1.5 outline-none hover:border-default focus-visible:ring-2 focus-visible:ring-accent"
                 >
-                    <CheckIcon className="size-4 shrink-0 text-success" />
-                    <SiGithub className="size-4 shrink-0 text-muted" />
+                    <CheckIcon className="size-5 shrink-0 text-success" />
+                    <SiGithub className="size-5 shrink-0 text-muted" />
                     <span className="truncate text-xs font-medium text-foreground">
                         {challenge.title}
                     </span>

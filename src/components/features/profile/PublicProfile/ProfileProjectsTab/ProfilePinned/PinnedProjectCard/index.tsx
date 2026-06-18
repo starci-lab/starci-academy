@@ -97,7 +97,7 @@ export const PinnedProjectCard = ({
                 aria-label={t("pinnedProjects.moveUp")}
                 onPress={() => onMoveUp?.(pin.id)}
             >
-                <ArrowUpIcon className="size-4" aria-hidden="true" focusable="false" />
+                <ArrowUpIcon className="size-5" aria-hidden="true" focusable="false" />
             </Button>
             <Button
                 size="sm"
@@ -107,7 +107,7 @@ export const PinnedProjectCard = ({
                 aria-label={t("pinnedProjects.moveDown")}
                 onPress={() => onMoveDown?.(pin.id)}
             >
-                <ArrowDownIcon className="size-4" aria-hidden="true" focusable="false" />
+                <ArrowDownIcon className="size-5" aria-hidden="true" focusable="false" />
             </Button>
             {pin.url ? (
                 <Button
@@ -117,7 +117,7 @@ export const PinnedProjectCard = ({
                     aria-label={t("pinnedProjects.open")}
                     onPress={() => window.open(pin.url as string, "_blank", "noopener,noreferrer")}
                 >
-                    <ExternalLinkIcon className="size-4" aria-hidden="true" focusable="false" />
+                    <ExternalLinkIcon className="size-5" aria-hidden="true" focusable="false" />
                 </Button>
             ) : null}
             <Button
@@ -128,7 +128,7 @@ export const PinnedProjectCard = ({
                 aria-label={t("pinnedProjects.remove")}
                 onPress={() => onRemove?.(pin.id)}
             >
-                <TrashIcon className="size-4" aria-hidden="true" focusable="false" />
+                <TrashIcon className="size-5" aria-hidden="true" focusable="false" />
             </Button>
         </div>
     ) : undefined

@@ -34,9 +34,9 @@ export const PlayPauseButton = ({
             className={cn("text-white hover:bg-white/20 border-none min-w-8 h-8", className)}
         >
             {isPlaying ? (
-                <PauseIcon className="h-4 w-4" />
+                <PauseIcon className="h-5 w-5" />
             ) : (
-                <PlayIcon className="h-4 w-4" />
+                <PlayIcon className="h-5 w-5" />
             )}
         </Button>
     )

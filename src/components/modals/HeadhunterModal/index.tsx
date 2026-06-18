@@ -76,7 +76,7 @@ export const HeadhunterModal = (props: HeadhunterModalProps) => {
                                             className="mt-2"
                                             onPress={onOpenCompany}
                                         >
-                                            <BuildingsIcon className="size-4" aria-hidden />
+                                            <BuildingsIcon className="size-5" aria-hidden />
                                             {headhunter.company.title}
                                         </Button>
                                     ) : null}
@@ -93,7 +93,7 @@ export const HeadhunterModal = (props: HeadhunterModalProps) => {
                                                 rel="noopener noreferrer"
                                                 className="inline-flex items-center gap-1.5 text-sm text-accent"
                                             >
-                                                <LinkedinLogoIcon className="size-4" aria-hidden />
+                                                <LinkedinLogoIcon className="size-5" aria-hidden />
                                                 {t("headhuntings.linkedin")}
                                             </Link>
                                         ) : null}
@@ -102,7 +102,7 @@ export const HeadhunterModal = (props: HeadhunterModalProps) => {
                                                 href={`tel:${headhunter.phoneNumber.replace(/\D/g, "")}`}
                                                 className="inline-flex items-center gap-1.5 text-sm text-accent"
                                             >
-                                                <PhoneIcon className="size-4" aria-hidden />
+                                                <PhoneIcon className="size-5" aria-hidden />
                                                 {t("headhuntings.phone")}: {headhunter.phoneNumber}
                                             </Link>
                                         ) : null}
@@ -113,7 +113,7 @@ export const HeadhunterModal = (props: HeadhunterModalProps) => {
                                                 rel="noopener noreferrer"
                                                 className="inline-flex items-center gap-1.5 text-sm text-accent"
                                             >
-                                                <PhoneIcon className="size-4" aria-hidden />
+                                                <PhoneIcon className="size-5" aria-hidden />
                                                 {t("headhuntings.zalo")}: {headhunter.zaloNumber}
                                             </Link>
                                         ) : null}

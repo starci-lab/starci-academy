@@ -31,7 +31,7 @@ export const AdminMpegDashTestHeader = ({ className }: WithClassNames<undefined>
                 className="text-slate-400 hover:text-white"
                 onPress={onBack}
             >
-                <ArrowLeftIcon className="h-4 w-4 mr-1" />
+                <ArrowLeftIcon className="h-5 w-5 mr-1" />
             Back
             </Button>
             <div>

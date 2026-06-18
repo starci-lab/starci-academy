@@ -155,7 +155,7 @@ export const ModuleContentRow = ({
                                 whileTap={{ cursor: "grabbing" }}
                             >
                                 <Chip variant="tertiary" color="default" className="text-muted" size="sm">
-                                    <ClockIcon className="size-4" />
+                                    <ClockIcon className="size-5" />
                                     <Chip.Label>
                                         {t("content.minutesRead", {
                                             minutes: content?.minutesRead ?? 0,
@@ -163,7 +163,7 @@ export const ModuleContentRow = ({
                                     </Chip.Label>
                                 </Chip>
                                 <Chip variant="tertiary" color="default" className="text-muted" size="sm">
-                                    <Flame className="size-4" />
+                                    <Flame className="size-5" />
                                     <Chip.Label>
                                         {t("content.challengeCount", {
                                             count: getContentChallengeCount(content ?? {}),

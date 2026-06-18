@@ -105,7 +105,7 @@ export const CourseDetail = ({
                 onPress={() => { setSelectedCourse(null) }}
                 className="flex w-fit items-center gap-2 text-sm text-muted"
             >
-                <ArrowLeftIcon aria-hidden focusable="false" className="size-4" />
+                <ArrowLeftIcon aria-hidden focusable="false" className="size-5" />
                 {t("profileSettings.learning.history.title")}
             </Link>
 

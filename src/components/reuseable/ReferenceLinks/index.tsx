@@ -46,7 +46,7 @@ export const ReferenceLinks = ({ references, titleKey, className }: ReferenceLin
                                 className="text-sm text-primary"
                             >
                                 {reference.url}
-                                <ArrowUpRightIcon className="size-4" />
+                                <ArrowUpRightIcon className="size-5" />
                             </Link>
                         </li>
                     )

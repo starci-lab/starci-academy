@@ -123,7 +123,7 @@ export const ChallengeCourseRow = ({
             {/* disclosure → the submission list (on demand) */}
             <Link
                 onPress={() => setExpanded((open) => !open)}
-                className="inline-flex w-fit cursor-pointer items-center gap-1 text-accent"
+                className="inline-flex w-fit cursor-pointer items-center gap-2 text-accent"
             >
                 {expanded
                     ? t("publicProfile.challengesTab.hideSubmissions")
@@ -187,7 +187,7 @@ export const ChallengeCourseRow = ({
                                                 className="flex shrink-0 items-center gap-2 text-accent underline"
                                                 aria-label={t("publicProfile.openRepo", { title: challenge.title })}
                                             >
-                                                <LinkIcon aria-hidden focusable="false" className="size-4" />
+                                                <LinkIcon aria-hidden focusable="false" className="size-5" />
                                                 <Typography type="body-xs">
                                                     {t("publicProfile.repoLink")}
                                                 </Typography>
@@ -203,7 +203,7 @@ export const ChallengeCourseRow = ({
                     {hiddenCount > 0 ? (
                         <Link
                             onPress={() => setShowAll((open) => !open)}
-                            className="inline-flex w-fit cursor-pointer items-center gap-1 text-muted"
+                            className="inline-flex w-fit cursor-pointer items-center gap-2 text-muted"
                         >
                             {showAll
                                 ? t("publicProfile.challengesTab.showLess")

@@ -68,7 +68,7 @@ export const CvFileCard = ({
                                         </Typography>
                                     )}
                                 <div className="flex items-center gap-2">
-                                    <ClockIcon aria-hidden className="size-4 text-muted" />
+                                    <ClockIcon aria-hidden className="size-5 text-muted" />
                                     <Typography type="body-xs" color="muted">
                                         {submittedAtLabel}
                                     </Typography>

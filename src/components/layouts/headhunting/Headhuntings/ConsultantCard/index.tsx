@@ -104,7 +104,7 @@ export const ConsultantCard = ({ consultant, className }: ConsultantCardProps) =
                         className="mt-3 inline-flex items-center gap-1.5 text-left text-sm font-medium text-accent hover:underline"
                         onClick={onOpenCompany}
                     >
-                        <BuildingsIcon className="size-4 shrink-0" aria-hidden />
+                        <BuildingsIcon className="size-5 shrink-0" aria-hidden />
                         {companyTitle}
                     </button>
                 ) : null}

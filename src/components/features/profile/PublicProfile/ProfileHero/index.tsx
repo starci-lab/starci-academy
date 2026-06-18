@@ -3,6 +3,7 @@
 import React from "react"
 import {
     Button,
+    Link,
     Typography,
     cn,
 } from "@heroui/react"
@@ -19,6 +20,7 @@ import {
 } from "react-icons/fa6"
 import {
     BriefcaseIcon,
+    CalendarBlankIcon,
     GlobeIcon,
     MapPinIcon,
     PaperPlaneTiltIcon,
@@ -123,10 +125,24 @@ export const ProfileHero = ({
             websiteHost = user.websiteUrl
         }
     }
+    // show the LinkedIn handle (`/in/<handle>`) for parity with the website host;
+    // fall back to a generic label when the URL has no recognizable handle
+    let linkedinHandle = "LinkedIn"
+    if (user?.linkedinUrl?.trim()) {
+        try {
+            const match = new URL(user.linkedinUrl).pathname.match(/\/in\/([^/]+)/)
+            if (match?.[1]) {
+                linkedinHandle = decodeURIComponent(match[1])
+            }
+        } catch {
+            // keep the generic "LinkedIn" label on a malformed URL
+        }
+    }
     const joinedLabel = user?.createdAt
         ? t("profile.joined", {
+            // full month name per the time-rendering rule ("Tháng 6 2026"), not "thg 6"
             date: new Date(user.createdAt).toLocaleDateString(locale, {
-                month: "short",
+                month: "long",
                 year: "numeric",
             }),
         })
@@ -171,8 +187,8 @@ export const ProfileHero = ({
                     {user.location?.trim() || user.workMode ? (
                         <div className="flex flex-wrap items-center gap-2">
                             {user.location?.trim() ? (
-                                <span className="flex items-center gap-1">
-                                    <MapPinIcon aria-hidden focusable="false" className="size-4 shrink-0 text-muted" />
+                                <span className="flex items-center gap-2">
+                                    <MapPinIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
                                     <Typography type="body-sm" color="muted" truncate>
                                         {user.location}
                                     </Typography>
@@ -203,7 +219,7 @@ export const ProfileHero = ({
                                 aria-label={t("publicProfile.contactForHiring")}
                                 onPress={() => window.open(`https://github.com/${user.githubUsername}`, "_blank", "noopener,noreferrer")}
                             >
-                                <PaperPlaneTiltIcon aria-hidden focusable="false" className="size-4" />
+                                <PaperPlaneTiltIcon aria-hidden focusable="false" className="size-5" />
                                 {t("publicProfile.contactForHiring")}
                             </Button>
                         ) : null}
@@ -232,54 +248,58 @@ export const ProfileHero = ({
                         )}
                     </div>
 
-                    {/* meta: github · linkedin · website · joined (joined sinks to the bottom) */}
+                    {/* meta: github · linkedin · website · joined — tight rows, one
+                        leading icon each (no 44px tap-targets; this is sidebar meta) */}
                     <div className="flex flex-col gap-2">
                         {user.githubUsername ? (
-                            <a
+                            <Link
                                 href={`https://github.com/${user.githubUsername}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label={`GitHub: ${user.githubUsername}`}
-                                className="flex min-h-11 items-center gap-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                                className="flex items-center gap-2 py-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                             >
-                                <FaGithub aria-hidden className="size-4 shrink-0 text-muted" />
+                                <FaGithub aria-hidden className="size-5 shrink-0 text-muted" />
                                 <Typography type="body-sm" color="muted" truncate>
                                     {user.githubUsername}
                                 </Typography>
-                            </a>
+                            </Link>
                         ) : null}
                         {user.linkedinUrl ? (
-                            <a
+                            <Link
                                 href={user.linkedinUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                aria-label="LinkedIn"
-                                className="flex min-h-11 items-center gap-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                                aria-label={`LinkedIn: ${linkedinHandle}`}
+                                className="flex items-center gap-2 py-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                             >
-                                <FaLinkedin aria-hidden className="size-4 shrink-0 text-muted" />
+                                <FaLinkedin aria-hidden className="size-5 shrink-0 text-muted" />
                                 <Typography type="body-sm" color="muted" truncate>
-                            LinkedIn
+                                    {linkedinHandle}
                                 </Typography>
-                            </a>
+                            </Link>
                         ) : null}
                         {websiteHost ? (
-                            <a
+                            <Link
                                 href={user.websiteUrl ?? undefined}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label={`Website: ${websiteHost}`}
-                                className="flex min-h-11 items-center gap-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                                className="flex items-center gap-2 py-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                             >
-                                <GlobeIcon aria-hidden focusable="false" className="size-4 shrink-0 text-muted" />
+                                <GlobeIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
                                 <Typography type="body-sm" color="muted" truncate>
                                     {websiteHost}
                                 </Typography>
-                            </a>
+                            </Link>
                         ) : null}
                         {joinedLabel ? (
-                            <Typography type="body-sm" color="muted">
-                                {joinedLabel}
-                            </Typography>
+                            <div className="flex items-center gap-2 py-0.5">
+                                <CalendarBlankIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
+                                <Typography type="body-sm" color="muted" truncate>
+                                    {joinedLabel}
+                                </Typography>
+                            </div>
                         ) : null}
                     </div>
                 </div>

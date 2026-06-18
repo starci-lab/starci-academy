@@ -1,14 +1,12 @@
-"use client"
-
 import React from "react"
-import { PracticeList } from "@/components/layouts/learn/Practice"
+import { Practice } from "@/components/features/practice"
 
 /**
- * Route `/[locale]/practice` — coding-practice problem list. Thin route file:
- * mounts the list component; all logic/UI lives in the component.
+ * Route `/[locale]/practice` — the coding-practice catalog (phase 1: list +
+ * cockpit). Thin route file: mounts the feature; all logic/UI lives there.
  */
 const Page = () => {
-    return <PracticeList />
+    return <Practice />
 }
 
 export default Page

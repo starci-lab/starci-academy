@@ -1,4 +1,6 @@
+export * from "./ActivityFeed"
 export * from "./FeedItem"
 export * from "./Timeline"
 export * from "./EntityLink"
 export * from "./ActivityAvatar"
+export * from "./ReactionBar"

@@ -41,12 +41,12 @@ export const LearnMobileBar = ({ className }: LearnMobileBarProps) => {
         <div className={cn("sticky top-16 z-40 flex items-center gap-3 border-b bg-background/80 px-3 py-2 backdrop-blur-xl lg:hidden", className)}>
             {/* trigger: open the course navigation drawer */}
             <Button variant="ghost" size="sm" onPress={() => setMenuOpen(true)}>
-                <ListIcon className="size-4" />
+                <ListIcon className="size-5" />
                 {t("nav.courseMenu")}
             </Button>
             {/* trigger: open the module outline drawer */}
             <Button variant="ghost" size="sm" onPress={() => setOutlineOpen(true)}>
-                <ListBulletsIcon className="size-4" />
+                <ListBulletsIcon className="size-5" />
                 {t("nav.contentOutline")}
             </Button>
 

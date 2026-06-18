@@ -49,7 +49,7 @@ export const TopBar = () => {
                 className="text-slate-400 hover:text-white"
                 onPress={onBack}
             >
-                <ArrowLeftIcon className="h-4 w-4" />
+                <ArrowLeftIcon className="h-5 w-5" />
                 {t("backToAdmin")}
             </Button>
             <Button
@@ -58,7 +58,7 @@ export const TopBar = () => {
                 className="text-slate-400 hover:text-white"
                 onPress={onOpenUploadVideo}
             >
-                <FilmStripIcon className="h-4 w-4" />
+                <FilmStripIcon className="h-5 w-5" />
                 {t("uploadVideoTool")}
             </Button>
         </div>

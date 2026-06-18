@@ -7,6 +7,7 @@ import type { LessonVideoEntity } from "./lesson-video"
 import type { GeneralContentEntity } from "./general-content"
 import type { PreviewContentEntity } from "./preview-content"
 import type { SubmissionEntity } from "./submission"
+import type { CourseContentTier } from "../enums/course-content-tier"
 
 /**
  * One module inside a course.
@@ -40,4 +41,8 @@ export interface ModuleEntity extends AbstractEntity {
     submissions?: Array<SubmissionEntity>
     /** The number of contents in the module. */
     numContents: number
+    /** Learning tier (foundation/intermediate/advanced) — drives the badge. */
+    contentTier?: CourseContentTier
+    /** Hard paywall flag for all contents in the module. */
+    isPremium?: boolean
 }

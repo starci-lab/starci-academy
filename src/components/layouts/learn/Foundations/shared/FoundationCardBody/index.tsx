@@ -73,7 +73,7 @@ export const FoundationCardBody = ({
                 size="sm"
                 className={cn("w-full", className)}
             >
-                <ArrowSquareOutIcon className="size-4" />
+                <ArrowSquareOutIcon className="size-5" />
                 {t("foundations.openLink")} <span className="sr-only">{externalUrl}</span>
             </Button>
         )

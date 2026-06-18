@@ -209,7 +209,7 @@ export const NotificationBell = ({ className }: NotificationBellProps) => {
                                 aria-label={t("notifications.markAllRead")}
                                 onPress={onMarkAllRead}
                             >
-                                <CheckDoubleIcon className="size-4" />
+                                <CheckDoubleIcon className="size-5" />
                             </Button>
                         ) : null}
                     </div>

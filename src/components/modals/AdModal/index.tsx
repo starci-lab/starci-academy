@@ -13,7 +13,7 @@ import {
 } from "@/hooks"
 import {
     AdBanner,
-} from "@/components/layouts/shell/Dashboard/AdBanner"
+} from "@/components/features/dashboard/AdBanner"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**

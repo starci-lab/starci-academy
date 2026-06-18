@@ -101,7 +101,7 @@ export const ProfileSolvedChallenges = ({
                                     })}
                                 >
                                     <LinkIcon
-                                        className="size-4"
+                                        className="size-5"
                                         aria-hidden="true"
                                         focusable="false"
                                     />

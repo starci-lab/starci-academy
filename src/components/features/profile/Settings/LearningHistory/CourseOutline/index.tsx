@@ -168,7 +168,7 @@ export const CourseOutline = ({
                                                             <LockIcon
                                                                 aria-label={t("profileSettings.learning.outline.premium")}
                                                                 focusable="false"
-                                                                className="size-4 text-muted"
+                                                                className="size-5 text-muted"
                                                             />
                                                         ) : null}
                                                     </div>
@@ -187,7 +187,7 @@ export const CourseOutline = ({
                                             <Accordion.Body>
                                                 <div className="flex flex-col gap-2">
                                                     {module.lessons.map((lesson) => (
-                                                        <div key={lesson.id} className="flex flex-col gap-1">
+                                                        <div key={lesson.id} className="flex flex-col gap-2">
                                                             <ListRow
                                                                 title={lesson.title}
                                                                 subtitle={t("content.minutesRead", {
@@ -202,7 +202,7 @@ export const CourseOutline = ({
                                                                             <LockIcon
                                                                                 aria-label={t("profileSettings.learning.outline.premium")}
                                                                                 focusable="false"
-                                                                                className="size-4 text-muted"
+                                                                                className="size-5 text-muted"
                                                                             />
                                                                         ) : null}
                                                                         {lesson.isRead ? (
@@ -222,7 +222,7 @@ export const CourseOutline = ({
                                                                 )}
                                                             />
                                                             {lesson.challenges.length > 0 ? (
-                                                                <div className="flex flex-col gap-1 pl-6">
+                                                                <div className="flex flex-col gap-2 pl-6">
                                                                     {lesson.challenges.map((challenge) => (
                                                                         <ListRow
                                                                             key={challenge.id}
@@ -230,7 +230,7 @@ export const CourseOutline = ({
                                                                                 <PuzzlePieceIcon
                                                                                     aria-hidden
                                                                                     focusable="false"
-                                                                                    className="size-4 text-muted"
+                                                                                    className="size-5 text-muted"
                                                                                 />
                                                                             )}
                                                                             title={challenge.title}
@@ -274,7 +274,7 @@ export const CourseOutline = ({
                                     {outline.milestones.map((milestone) => (
                                         <div key={milestone.id} className="flex flex-col gap-2">
                                             <Label>{milestone.title}</Label>
-                                            <div className="flex flex-col gap-1">
+                                            <div className="flex flex-col gap-2">
                                                 {milestone.tasks.map((task) => (
                                                     <ListRow
                                                         key={task.id}

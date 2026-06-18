@@ -5,14 +5,26 @@ import React, {
     useMemo,
 } from "react"
 import {
+    ArrowLeftIcon,
+} from "@phosphor-icons/react"
+import {
     cn,
     Drawer,
+    Link,
 } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types"
 import {
     useCvSubmissionAttemptsDrawerOverlayState,
     useQueryUserCvSubmissionAttemptsSwr,
 } from "@/hooks"
+import { useSmViewpoint } from "@/hooks/reuseables/useSmViewpoint"
+import {
+    useAppDispatch,
+    useAppSelector,
+} from "@/redux"
+import {
+    clearSelectedCvSubmissionAttemptAnalysis,
+} from "@/redux/slices"
 import { dayjs } from "@/modules/dayjs"
 import { getFileNameFromUrl } from "@/utils"
 import {
@@ -38,24 +50,34 @@ import {
 import {
     AttemptsPagination,
 } from "./AttemptsPagination"
+import {
+    CvAttemptAnalysisView,
+} from "./CvAttemptAnalysisView"
 
 /** Props for {@link UserCvSubmissionAttemptsDrawer}. Container — only layout className. */
 export type UserCvSubmissionAttemptsDrawerProps = WithClassNames<undefined>
 
 /**
- * Drawer listing a user's CV submission attempts with server pagination.
+ * Drawer listing a user's CV submission attempts with server pagination, plus an in-drawer
+ * master-detail: tapping an attempt swaps the list for its full AI analysis
+ * ({@link CvAttemptAnalysisView}) with a back link — instead of opening a modal over the drawer.
  *
- * Container: owns SWR/overlay state and derives display rows; renders
- * presentational children (skeleton / list / pagination).
+ * Container: owns SWR/overlay state and derives display rows; renders presentational children
+ * (skeleton / list / pagination / analysis). Desktop = right drawer, mobile = bottom-sheet.
  */
 export const UserCvSubmissionAttemptsDrawer = (props: UserCvSubmissionAttemptsDrawerProps = {}) => {
     const { className } = props
     const t = useTranslations()
     const locale = useLocale()
+    const dispatch = useAppDispatch()
     const {
         isOpen,
         setOpen,
     } = useCvSubmissionAttemptsDrawerOverlayState()
+    const { isMobile } = useSmViewpoint()
+    const selectedAttempt = useAppSelector(
+        (state) => state.cvSubmissionAttemptAnalysis.selectedAttempt,
+    )
     const swr = useQueryUserCvSubmissionAttemptsSwr()
     const payload = swr.data
     const attemptList = payload?.data
@@ -121,6 +143,9 @@ export const UserCvSubmissionAttemptsDrawer = (props: UserCvSubmissionAttemptsDr
     /** Whether to show the loading skeleton instead of content. */
     const showSkeleton = isOpen && swr.isLoading && !(attemptList?.length) && !swr.error
 
+    /** Back from the analysis detail to the attempts list. */
+    const onBackToList = () => dispatch(clearSelectedCvSubmissionAttemptAnalysis())
+
     /** Avoid mounting a closed drawer (backdrop / scroll-lock layers) on every page. */
     if (!isOpen) {
         return null
@@ -130,22 +155,47 @@ export const UserCvSubmissionAttemptsDrawer = (props: UserCvSubmissionAttemptsDr
         <Drawer>
             <Drawer.Backdrop
                 isOpen
-                onOpenChange={setOpen}
+                onOpenChange={(open) => {
+                    setOpen(open)
+                    // closing resets the master-detail back to the list for the next open
+                    if (!open) {
+                        dispatch(clearSelectedCvSubmissionAttemptAnalysis())
+                    }
+                }}
             >
-                <Drawer.Content placement="right">
+                <Drawer.Content placement={isMobile ? "bottom" : "right"}>
                     <Drawer.Dialog className={cn("flex h-full flex-col p-0", className)}>
                         <div className="shrink-0 p-3">
                             <Drawer.CloseTrigger />
                             <Drawer.Header>
-                                <Drawer.Heading>
-                                    {t("cv.submission.attemptsDrawer.title")}
-                                </Drawer.Heading>
+                                {selectedAttempt ? (
+                                    <div className="flex flex-col gap-1.5">
+                                        <Link
+                                            onPress={onBackToList}
+                                            className="inline-flex w-fit items-center gap-1.5 text-sm font-medium text-accent"
+                                        >
+                                            <ArrowLeftIcon aria-hidden className="size-5" />
+                                            {t("cv.submission.attemptsDrawer.title")}
+                                        </Link>
+                                        <Drawer.Heading>
+                                            {t("cv.submission.attemptAnalysis.titleWithAttempt", {
+                                                number: selectedAttempt.attemptNumber,
+                                            })}
+                                        </Drawer.Heading>
+                                    </div>
+                                ) : (
+                                    <Drawer.Heading>
+                                        {t("cv.submission.attemptsDrawer.title")}
+                                    </Drawer.Heading>
+                                )}
                             </Drawer.Header>
                         </div>
                         <div className="border-b" />
                         <Drawer.Body className="flex min-h-0 flex-1 flex-col">
                             {
-                                swr.error ? (
+                                selectedAttempt ? (
+                                    <CvAttemptAnalysisView />
+                                ) : swr.error ? (
                                     <div className="p-3 text-sm text-danger">
                                         {t("cv.submission.attemptsDrawer.loadError")}
                                     </div>

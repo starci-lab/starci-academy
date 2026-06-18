@@ -30,7 +30,7 @@ export const LessonVideoModal = ({ className }: WithClassNames<undefined>) => {
                             <div className="flex w-full place-content-center">
                                 <div className="flex flex-wrap items-center justify-center gap-1.5">
                                     <Chip color="accent" size="sm" variant="soft">
-                                        <ClockIcon className="size-4" />
+                                        <ClockIcon className="size-5" />
                                         <Chip.Label>
                                             {dayjs.duration(lessonVideo?.durationMs ?? 0).format("HH:mm")}
                                         </Chip.Label>

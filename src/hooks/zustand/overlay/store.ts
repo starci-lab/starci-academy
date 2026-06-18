@@ -30,9 +30,9 @@ export type OverlayKey =
     | "content"
     | "cvPreview"
     | "cvReviewLevelDetails"
-    | "cvSubmissionAttemptAnalysis"
     | "cvSubmissionAttemptsDrawer"
     | "cvUpdate"
+    | "e2eResult"
     | "feedbackDetails"
     | "followList"
     | "foundation"
@@ -63,9 +63,9 @@ const OVERLAY_KEYS: ReadonlyArray<OverlayKey> = [
     "content",
     "cvPreview",
     "cvReviewLevelDetails",
-    "cvSubmissionAttemptAnalysis",
     "cvSubmissionAttemptsDrawer",
     "cvUpdate",
+    "e2eResult",
     "feedbackDetails",
     "followList",
     "foundation",

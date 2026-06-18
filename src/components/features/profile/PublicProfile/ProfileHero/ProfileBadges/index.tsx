@@ -94,7 +94,7 @@ export const ProfileBadges = ({ className }: ProfileBadgesProps) => {
                                         ring colour (bronze/silver/gold) = the single standout;
                                         the dot + rarity stay muted behind it. */}
                                     {status || item.rarityPercent != null ? (
-                                        <div className="flex items-center gap-1">
+                                        <div className="flex items-center gap-2">
                                             {status ? (
                                                 <Typography
                                                     type="body-xs"

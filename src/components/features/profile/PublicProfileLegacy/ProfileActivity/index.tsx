@@ -1,14 +1,23 @@
 "use client"
 
-import React from "react"
+import React, {
+    useCallback,
+} from "react"
 import {
     Button,
     cn,
     Spinner,
 } from "@heroui/react"
 import {
+    useLocale,
     useTranslations,
 } from "next-intl"
+import {
+    useRouter,
+} from "next/navigation"
+import {
+    queryResolveRoute,
+} from "@/modules/api"
 import {
     useQueryUserFeedSwr,
     useQueryUserProfileSwr,
@@ -17,9 +26,7 @@ import {
     useProfileUsername,
 } from "../useProfileUsername"
 import {
-    Feed,
-} from "@/components/layouts/shell/Dashboard/Feed"
-import {
+    ActivityFeed,
     ErrorState,
 } from "@/components/blocks"
 import type {
@@ -30,10 +37,10 @@ import type {
 export type ProfileActivityProps = WithClassNames<undefined>
 
 /**
- * Activity tab of the public profile — the profile owner's own activity
+ * Activity tab of the (legacy) public profile — the profile owner's own activity
  * timeline, newest first, with cursor-paginated "load more". Self-contained
- * container: reads the target user id from the route (`/profile/[userId]`) and
- * drives its own infinite SWR, then renders the shared {@link Feed} presenter.
+ * container: reads the target user id from the route and drives its own infinite
+ * SWR, then renders the shared {@link ActivityFeed} block.
  *
  * @param props - optional className for the root element.
  */
@@ -41,8 +48,9 @@ export const ProfileActivity = ({
     className,
 }: ProfileActivityProps) => {
     const t = useTranslations()
-    // route carries the username; resolve it to the entity id the timeline keys
-    // off (the profile fetch is SWR-deduped with the parent + tabs)
+    const locale = useLocale()
+    const router = useRouter()
+    // route carries the username; resolve it to the entity id the timeline keys off
     const username = useProfileUsername()
     const { data: user } = useQueryUserProfileSwr(username)
     const userId = user?.id ?? null
@@ -55,6 +63,28 @@ export const ProfileActivity = ({
         error,
         mutate,
     } = useQueryUserFeedSwr(userId)
+
+    /** Resolve an entity's route via the index, then navigate (no-op if unroutable). */
+    const onResolve = useCallback(
+        (globalId: string | null | undefined): (() => void) | undefined => {
+            if (!globalId) {
+                return undefined
+            }
+            return () => {
+                void (async () => {
+                    const response = await queryResolveRoute({ request: { globalId } })
+                    const path = response.data?.resolveRoute?.data?.path
+                    if (path) {
+                        router.push(`/${locale}${path}`)
+                    }
+                })()
+            }
+        },
+        [
+            locale,
+            router,
+        ],
+    )
 
     // first page in flight (username not yet resolved, or query running) → spinner
     if (!data && (isLoading || !userId)) {
@@ -88,7 +118,7 @@ export const ProfileActivity = ({
 
     return (
         <div className={cn("flex flex-col gap-3", className)}>
-            <Feed items={items} />
+            <ActivityFeed items={items} onResolve={onResolve} />
             {hasMore ? (
                 <div className="flex justify-center">
                     <Button

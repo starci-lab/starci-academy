@@ -34,7 +34,7 @@ export const TabTrigger = ({
         <div className={cn("flex items-center gap-1.5", className)}>
             <TabIcon className="size-5" />
             <span>{label}</span>
-            {locked ? <LockSimpleIcon className="size-4" /> : null}
+            {locked ? <LockSimpleIcon className="size-5" /> : null}
         </div>
     )
 }

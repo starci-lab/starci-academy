@@ -6,7 +6,6 @@ import React, {
 } from "react"
 import {
     Button,
-    Typography,
 } from "@heroui/react"
 import {
     useLocale,
@@ -16,41 +15,28 @@ import {
     useRouter,
 } from "next/navigation"
 import {
-    BookOpenIcon,
-    BookmarkSimpleIcon,
-    ChatCircleIcon,
-    CodeIcon,
-    FlagIcon,
-    GraduationCapIcon,
     PulseIcon,
-    SealCheckIcon,
-    SparkleIcon,
-    UserPlusIcon,
 } from "@phosphor-icons/react"
 import {
-    ActivityType,
     queryResolveRoute,
 } from "@/modules/api"
 import type {
-    QueryMyFeedItemData,
+    ReactionType,
 } from "@/modules/api"
 import {
     useQueryUserFeedSwr,
     useQueryUserProfileSwr,
+    useMutateReactActivitySwr,
 } from "@/hooks"
+import {
+    useAppSelector,
+} from "@/redux"
 import {
     useProfileUsername,
 } from "../../hooks/useProfileUsername"
 import {
-    formatDateTime,
-    getTimeAgoLabel,
-    getTimeAgoMessage,
-} from "@/modules/dayjs"
-import {
-    ActivityAvatar,
+    ActivityFeed,
     AsyncContent,
-    EntityLink,
-    FeedItem,
     LabeledCard,
     Skeleton,
 } from "@/components/blocks"
@@ -61,50 +47,12 @@ import type {
 /** Props for {@link ProfileActivity}. */
 export type ProfileActivityProps = WithClassNames<undefined>
 
-/** Activity-type → badge icon (phosphor `*Icon`) shown over the actor avatar. */
-const TYPE_ICON: Record<ActivityType, typeof BookOpenIcon> = {
-    [ActivityType.LessonRead]: BookOpenIcon,
-    [ActivityType.LessonBookmarked]: BookmarkSimpleIcon,
-    [ActivityType.ChallengePassed]: SealCheckIcon,
-    [ActivityType.CodingSolved]: CodeIcon,
-    [ActivityType.MilestonePassed]: FlagIcon,
-    [ActivityType.AiLabPassed]: SparkleIcon,
-    [ActivityType.CourseEnrolled]: GraduationCapIcon,
-    [ActivityType.DiscussionCommented]: ChatCircleIcon,
-    [ActivityType.UserFollowed]: UserPlusIcon,
-}
-
-/** One rendered row: a single item, or a roll-up of consecutive milestone passes. */
-interface FeedRow {
-    /** Newest item in the row (drives actor + timestamp + icon). */
-    head: QueryMyFeedItemData
-    /** How many milestone passes were rolled up (1 for a normal row). */
-    count: number
-}
-
-/** A day bucket of feed rows under a relative day header. */
-interface DayGroup {
-    /** Stable key (start-of-day ms). */
-    key: string
-    /** Header label ("Hôm nay" / "Hôm qua" / a formatted date). */
-    label: string
-    /** Rows in this day, newest first. */
-    rows: Array<FeedRow>
-}
-
-/** Start-of-day epoch ms for a date (local). */
-const startOfDayMs = (date: Date): number =>
-    new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime()
-
 /**
- * Activity-tab section — the profile owner's timeline, Facebook-style: each row is
- * an {@link ActivityAvatar} (avatar + activity-type icon badge) beside a sentence
- * (actor + action + target, both clickable when routable) and a relative timestamp,
- * grouped under relative day headers (Hôm nay / Hôm qua / date). Consecutive
- * milestone passes roll up into one line. A null target renders a generic-noun
- * fallback phrase — never blank. Self-contained: resolves username → id, drives its
- * own infinite SWR, and owns route resolution (passes a press handler to
- * {@link EntityLink}). Self-hides when empty.
+ * Activity-tab section — the profile owner's timeline, rendered by the shared
+ * {@link ActivityFeed} block (avatar + activity-type badge · actor·action·target
+ * sentence · relative time, grouped by day, milestone roll-up, never-blank target).
+ * This feature owns the fetch (infinite SWR), the "load more" pager, the section
+ * card + states, and the route resolver it hands the block. Self-hides when empty.
  *
  * @param props - optional className (placement only).
  */
@@ -117,6 +65,7 @@ export const ProfileActivity = ({
     const username = useProfileUsername()
     const { data: user } = useQueryUserProfileSwr(username)
     const userId = user?.id ?? null
+    const authenticated = useAppSelector((state) => state.keycloak.authenticated)
     const {
         data,
         size,
@@ -126,6 +75,21 @@ export const ProfileActivity = ({
         error,
         mutate,
     } = useQueryUserFeedSwr(userId)
+    const { trigger: reactActivity } = useMutateReactActivitySwr()
+
+    /** React to a timeline activity, then revalidate. Own items are read-only
+     * (server sets `isMine` → the feed suppresses the picker), so this only ever
+     * fires when viewing someone else's profile. */
+    const onReact = useCallback(
+        async (activityId: string, type: ReactionType | null) => {
+            await reactActivity({ activityId, type })
+            await mutate()
+        },
+        [
+            reactActivity,
+            mutate,
+        ],
+    )
 
     // flatten every loaded page into a single newest-first item list
     const items = useMemo(
@@ -157,115 +121,9 @@ export const ProfileActivity = ({
         ],
     )
 
-    // roll up consecutive same-actor milestone passes, then bucket rows by day
-    const dayGroups = useMemo<Array<DayGroup>>(
-        () => {
-            const rows: Array<FeedRow> = []
-            for (const item of items) {
-                const previous = rows[rows.length - 1]
-                if (
-                    item.type === ActivityType.MilestonePassed
-                    && previous
-                    && previous.head.type === ActivityType.MilestonePassed
-                    && previous.head.actorGlobalId === item.actorGlobalId
-                ) {
-                    previous.count += 1
-                    continue
-                }
-                rows.push({ head: item, count: 1 })
-            }
-
-            const now = new Date()
-            const todayMs = startOfDayMs(now)
-            const dayMs = 86_400_000
-            const groups: Array<DayGroup> = []
-            for (const row of rows) {
-                const at = new Date(row.head.at)
-                const dayMsValue = startOfDayMs(at)
-                let label: string
-                if (dayMsValue === todayMs) {
-                    label = t("dashboard.feed.today")
-                } else if (dayMsValue === todayMs - dayMs) {
-                    label = t("dashboard.feed.yesterday")
-                } else {
-                    label = at.toLocaleDateString(locale, {
-                        day: "numeric",
-                        month: "long",
-                        year: "numeric",
-                    })
-                }
-                const key = String(dayMsValue)
-                const last = groups[groups.length - 1]
-                if (last && last.key === key) {
-                    last.rows.push(row)
-                } else {
-                    groups.push({ key, label, rows: [row] })
-                }
-            }
-            return groups
-        },
-        [
-            items,
-            locale,
-            t,
-        ],
-    )
-
     // resolved-empty + no error → hide the whole section (clean profile)
     if (data && items.length === 0 && !error) {
         return null
-    }
-
-    /** Render one feed row as a FeedItem (avatar+badge · sentence · relative time). */
-    const renderRow = (row: FeedRow, index: number) => {
-        const { head, count } = row
-        const Icon = TYPE_ICON[head.type] ?? PulseIcon
-        // a "followed someone" row leads with the FOLLOWED user's avatar (the
-        // interesting entity) + a follow-icon badge; other rows lead with the actor
-        const followedUser = head.type === ActivityType.UserFollowed && head.targetLabel != null
-            ? head.targetLabel
-            : undefined
-        const avatarUsername = followedUser ?? head.actorUsername
-        // followed user's avatar isn't in the feed payload → generated from username
-        const avatarUrl = followedUser ? null : head.actorAvatar
-        const grouped = head.type === ActivityType.MilestonePassed && count > 1
-        const noTarget = head.targetLabel == null
-        // pick the phrasing: grouped roll-up · generic-noun fallback · normal
-        const messageKey = grouped
-            ? "milestonePassedGrouped"
-            : noTarget
-                ? `${head.type}NoTarget`
-                : head.type
-        const relative = getTimeAgoLabel(getTimeAgoMessage(head.at), t)
-        return (
-            <FeedItem
-                key={`${head.actorGlobalId}-${head.at}-${index}`}
-                leading={(
-                    <ActivityAvatar
-                        username={avatarUsername}
-                        avatar={avatarUrl}
-                        icon={<Icon aria-hidden focusable="false" weight="bold" />}
-                    />
-                )}
-                timestamp={<span title={formatDateTime(head.at, locale)}>{relative}</span>}
-            >
-                {t.rich(`dashboard.feed.${messageKey}`, {
-                    count,
-                    actor: () => (
-                        <EntityLink
-                            label={head.actorUsername}
-                            onPress={onResolve(head.actorGlobalId)}
-                        />
-                    ),
-                    target: () => (
-                        <EntityLink
-                            label={head.targetLabel ?? ""}
-                            onPress={onResolve(head.targetGlobalId)}
-                        />
-                    ),
-                })}
-            </FeedItem>
-        )
     }
 
     return (
@@ -311,16 +169,11 @@ export const ProfileActivity = ({
                 }}
             >
                 <div className="flex flex-col gap-6">
-                    {dayGroups.map((group) => (
-                        <div key={group.key} className="flex flex-col gap-3">
-                            <Typography type="body-xs" color="muted" weight="medium">
-                                {group.label}
-                            </Typography>
-                            <div className="flex flex-col gap-3">
-                                {group.rows.map(renderRow)}
-                            </div>
-                        </div>
-                    ))}
+                    <ActivityFeed
+                        items={items}
+                        onResolve={onResolve}
+                        onReact={authenticated ? onReact : undefined}
+                    />
                     {hasMore ? (
                         <div className="flex justify-center">
                             <Button

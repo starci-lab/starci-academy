@@ -37,28 +37,28 @@ export const MilestoneFeedbackCard = (props: MilestoneFeedbackCardProps) => {
         case MilestoneSeverity.High:
             return (
                 <Chip color="danger" size="sm" variant="primary">
-                    <RadioactiveIcon className="size-4 min-w-4 min-h-4" />
+                    <RadioactiveIcon className="size-5 min-w-4 min-h-4" />
                     <Chip.Label>{t("feedback.severity.high")}</Chip.Label>
                 </Chip>
             )
         case MilestoneSeverity.Medium:
             return (
                 <Chip color="warning" size="sm" variant="primary">
-                    <RadioactiveIcon className="size-4 min-w-4 min-h-4" />
+                    <RadioactiveIcon className="size-5 min-w-4 min-h-4" />
                     <Chip.Label>{t("feedback.severity.medium")}</Chip.Label>
                 </Chip>
             )
         case MilestoneSeverity.Low:
             return (
                 <Chip color="success" size="sm" variant="primary">
-                    <RadioactiveIcon className="size-4 min-w-4 min-h-4" />
+                    <RadioactiveIcon className="size-5 min-w-4 min-h-4" />
                     <Chip.Label>{t("feedback.severity.low")}</Chip.Label>
                 </Chip>
             )
         default:
             return (
                 <Chip color="default" size="sm" variant="primary">
-                    <RadioactiveIcon className="size-4 min-w-4 min-h-4" />
+                    <RadioactiveIcon className="size-5 min-w-4 min-h-4" />
                     <Chip.Label>{t("feedback.severity.unknown")}</Chip.Label>
                 </Chip>
             )
@@ -79,7 +79,7 @@ export const MilestoneFeedbackCard = (props: MilestoneFeedbackCardProps) => {
                         <div className="h-3" />
                         {location ? (
                             <div className="flex items-center gap-1.5 text-xs text-muted">
-                                <MapPinLineIcon className="size-4 min-w-4 min-h-4 shrink-0" />
+                                <MapPinLineIcon className="size-5 min-w-4 min-h-4 shrink-0" />
                                 <span className="min-w-0 break-words">{location}</span>
                             </div>
                         ) : null}

@@ -45,7 +45,7 @@ export const TierCardSkeleton = ({
                     />
                 </div>
                 <div className="flex flex-col gap-2">
-                    <div className="flex flex-wrap items-baseline gap-x-1">
+                    <div className="flex flex-wrap items-baseline gap-x-2">
                         <SkeletonText
                             size="3xl"
                             width="w-32"

@@ -41,7 +41,7 @@ export const FeedbackCard = (props: FeedbackCardProps) => {
         if (!suggestion) {
             return (
                 <Chip color="success" size="sm" variant="soft" className="shrink-0">
-                    <CheckIcon className="size-4 min-h-4 min-w-4" />
+                    <CheckIcon className="size-5 min-h-4 min-w-4" />
                     <Chip.Label>{t("feedback.perfect")}</Chip.Label>
                 </Chip>
             )
@@ -50,28 +50,28 @@ export const FeedbackCard = (props: FeedbackCardProps) => {
         case SubmissionFeedbackSeverity.High:
             return (
                 <Chip color="danger" size="sm" variant="soft" className="shrink-0">
-                    <RadioactiveIcon className="size-4 min-h-4 min-w-4" />
+                    <RadioactiveIcon className="size-5 min-h-4 min-w-4" />
                     <Chip.Label>{t("feedback.severity.high")}</Chip.Label>
                 </Chip>
             )
         case SubmissionFeedbackSeverity.Medium:
             return (
                 <Chip color="warning" size="sm" variant="soft" className="shrink-0">
-                    <RadioactiveIcon className="size-4 min-h-4 min-w-4" />
+                    <RadioactiveIcon className="size-5 min-h-4 min-w-4" />
                     <Chip.Label>{t("feedback.severity.medium")}</Chip.Label>
                 </Chip>
             )
         case SubmissionFeedbackSeverity.Low:
             return (
                 <Chip color="default" size="sm" variant="soft" className="shrink-0">
-                    <RadioactiveIcon className="size-4 min-h-4 min-w-4" />
+                    <RadioactiveIcon className="size-5 min-h-4 min-w-4" />
                     <Chip.Label>{t("feedback.severity.low")}</Chip.Label>
                 </Chip>
             )
         default:
             return (
                 <Chip color="warning" size="sm" variant="soft" className="shrink-0">
-                    <RadioactiveIcon className="size-4 min-h-4 min-w-4" />
+                    <RadioactiveIcon className="size-5 min-h-4 min-w-4" />
                     <Chip.Label>{t("feedback.severity.unknown")}</Chip.Label>
                 </Chip>
             )

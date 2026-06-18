@@ -1,7 +1,7 @@
 "use client"
 import { cn } from "@heroui/react"
 import { motion } from "framer-motion"
-import { Courses } from "@/components/layouts/course/Courses"
+import { CourseCatalog } from "@/components/features/course/CourseCatalog"
 import { Spacer } from "@/components/reuseable"
 import { type WithClassNames } from "@/modules/types"
 import { useTranslations } from "next-intl"
@@ -87,7 +87,7 @@ export const LandingPage = ({ className }: LandingPageProps) => {
                     viewport={{ once: true, margin: "-100px" }}
                     transition={{ duration: 0.5, delay: 0.35, ease: "easeOut" }}
                 >
-                    <Courses />
+                    <CourseCatalog />
                 </motion.div>
                 <Spacer y={48} />
                 <FaqSection />

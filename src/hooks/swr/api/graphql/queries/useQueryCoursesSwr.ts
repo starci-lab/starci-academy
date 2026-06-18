@@ -3,37 +3,55 @@ import { useAppDispatch } from "@/redux"
 import { setCourses } from "@/redux/slices"
 import useSWR from "swr"
 
+/** Params for {@link useQueryCoursesSwr} — server-side search + pagination (ES-backed, scales). */
+export interface UseQueryCoursesSwrParams {
+    /** Full-text search string (title/description); empty = no filter. */
+    search?: string
+    /** Zero-based page index. */
+    pageNumber?: number
+    /** Page size; omit to use the backend default. */
+    limit?: number
+}
+
 /**
- * The core function to query courses with SWR.
+ * Query the paginated, searchable `courses` list (Elasticsearch-backed). Keyed on
+ * search + page + limit so each filter/page is cached independently. Also mirrors the
+ * current page into redux `course.entities` for any incidental consumer.
+ *
+ * @param params - {@link UseQueryCoursesSwrParams}
  */
-export const useQueryCoursesSwr = () => {
-    /** The dispatch. */
+export const useQueryCoursesSwr = ({
+    search = "",
+    pageNumber = 0,
+    limit,
+}: UseQueryCoursesSwrParams = {}) => {
     const dispatch = useAppDispatch()
-    /** The SWR. */
+    const trimmed = search.trim()
     const swr = useSWR(
         [
             "QUERY_COURSES_SWR",
-        ], 
+            trimmed,
+            pageNumber,
+            limit ?? 0,
+        ],
         async () => {
-            /** The data. */
             const data = await queryCourses(
-                { 
+                {
                     request: {
                         filters: {
                             sorts: [],
+                            ...(trimmed ? { search: trimmed } : {}),
+                            pageNumber,
+                            ...(limit != null ? { limit } : {}),
                         },
-                    }
+                    },
                 }
             )
-            /** If the data is not found, throw an error. */
             if (!data || !data.data) {
                 throw new Error("Courses not found")
             }
-            /** Set the courses. */
             dispatch(setCourses(data.data.courses.data?.data ?? []))
-            /** Return the data. */
             return data.data
         })
-    /** Return the SWR. */
     return swr
 }

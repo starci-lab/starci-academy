@@ -63,7 +63,7 @@ export const BookmarkCard = ({
             onPress={onPress}
             className={cn("flex flex-row items-center gap-3", className)}
         >
-            <div className="flex min-w-0 flex-1 flex-col gap-1">
+            <div className="flex min-w-0 flex-1 flex-col gap-2">
                 <Typography type="body-sm" weight="semibold" truncate>
                     {content.title}
                 </Typography>
@@ -72,14 +72,14 @@ export const BookmarkCard = ({
                 </Typography>
                 <div className="flex items-center gap-3">
                     <div className="flex items-center gap-2">
-                        <ClockIcon aria-hidden className="size-4 text-muted" />
+                        <ClockIcon aria-hidden className="size-5 text-muted" />
                         <Typography type="body-xs" color="muted">
                             {t("content.minutesRead", { minutes: content.minutesRead })}
                         </Typography>
                     </div>
                     {challengeCount > 0 && (
                         <div className="flex items-center gap-2">
-                            <FireIcon aria-hidden className="size-4 text-muted" />
+                            <FireIcon aria-hidden className="size-5 text-muted" />
                             <Typography type="body-xs" color="muted">
                                 {t("content.challengeCount", { count: challengeCount })}
                             </Typography>

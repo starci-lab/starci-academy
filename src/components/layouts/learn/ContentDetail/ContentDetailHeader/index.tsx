@@ -24,7 +24,7 @@ export const ContentDetailHeader = () => {
             <p className="text-sm text-muted">{description}</p>
             <div className="h-3" />
             <div className="flex items-center gap-1.5 text-sm text-muted">
-                <ClockIcon className="size-4" />
+                <ClockIcon className="size-5" />
                 <span>{minutesRead} min read</span>
             </div>
         </div>

@@ -51,7 +51,7 @@ export const ProfileFollowers = ({ className }: ProfileFollowersProps) => {
     }
 
     return (
-        <div className={cn("flex flex-wrap items-center gap-x-4 gap-y-1", className)}>
+        <div className={cn("flex flex-wrap items-center gap-x-4 gap-y-2", className)}>
             <Link onPress={() => openList("followers")}>
                 {followerCount} {t("profile.followers")}
             </Link>

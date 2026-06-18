@@ -143,7 +143,7 @@ export const Membership = () => {
                                 key={perk}
                                 className="flex items-start gap-2"
                             >
-                                <CheckIcon aria-hidden className="size-4 shrink-0 text-success" />
+                                <CheckIcon aria-hidden className="size-5 shrink-0 text-success" />
                                 <Typography type="body-sm">{perk}</Typography>
                             </div>
                         ))}

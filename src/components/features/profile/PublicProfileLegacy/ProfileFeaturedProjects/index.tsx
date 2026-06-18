@@ -153,7 +153,7 @@ export const ProfileFeaturedProjects = ({
     return (
         <SectionCard
             className={cn(className)}
-            icon={<BriefcaseIcon className="size-4 text-accent" />}
+            icon={<BriefcaseIcon className="size-5 text-accent" />}
             title={t("publicProfile.featured.heading")}
             action={seeAllAction}
         >
@@ -260,7 +260,7 @@ function PinRow({ pin, divider, t }: PinRowProps) {
                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent",
             )}
         >
-            <ExternalLinkIcon className="size-4" />
+            <ExternalLinkIcon className="size-5" />
         </a>
     ) : undefined
 

@@ -1,4 +1,5 @@
 import type { GraphQLResponse } from "../../types"
+import type { ReactionType } from "./discussion"
 
 /**
  * Kind of in-app activity in the home feed (mirrors backend `ActivityType`).
@@ -26,6 +27,8 @@ export enum ActivityType {
 
 /** One activity item in the home feed (token-based). */
 export interface QueryMyFeedItemData {
+    /** Activity id — pass to reactToActivity (the thing being reacted to). */
+    id: string
     /** Opaque global id of the actor (a user) — pass to resolveRoute on click. */
     actorGlobalId: string
     /** Actor username (the actor token label). */
@@ -40,6 +43,12 @@ export interface QueryMyFeedItemData {
     targetLabel: string | null
     /** When the activity happened (ISO string). */
     at: string
+    /** Total reactions on this activity. */
+    reactionCount: number
+    /** The viewer's own reaction on this activity, or null. */
+    myReaction: ReactionType | null
+    /** Whether this activity belongs to the viewer (cannot react to own). */
+    isMine: boolean
 }
 
 /** Which home feed to read (mirrors backend `MyFeedTab`). */

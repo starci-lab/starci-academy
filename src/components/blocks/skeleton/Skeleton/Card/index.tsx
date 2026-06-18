@@ -24,7 +24,7 @@ export const SkeletonCard = ({ className, lines = 3 }: SkeletonCardProps) => {
             {/* Card title (text-sm/leading-6) */}
             <Skeleton className="my-[5px] h-[14px] w-1/2 rounded" />
             {/* Card content lines (body) */}
-            <div className="flex flex-1 flex-col gap-1">
+            <div className="flex flex-1 flex-col gap-2">
                 {Array.from({ length: lines }).map((_, index) => (
                     <Skeleton
                         key={index}

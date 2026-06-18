@@ -45,6 +45,9 @@ const query1 = gql`
           title
           description
           sortIndex
+          contentTier
+          isPremium
+          numContents
           previewContents {
             id
             sortIndex

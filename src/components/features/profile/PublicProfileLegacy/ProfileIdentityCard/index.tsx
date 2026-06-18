@@ -136,7 +136,7 @@ export const ProfileIdentityCard = ({
                             aria-label={t("publicProfile.contactForHiring")}
                             onPress={() => window.open(`https://github.com/${user.githubUsername}`, "_blank", "noopener,noreferrer")}
                         >
-                            <PaperPlaneIcon aria-hidden className="size-4" />
+                            <PaperPlaneIcon aria-hidden className="size-5" />
                             {t("publicProfile.contactForHiring")}
                         </Button>
                     ) : null}
@@ -168,7 +168,7 @@ export const ProfileIdentityCard = ({
                         aria-label={t("profileSettings.title")}
                         onPress={() => router.push(pathConfig().locale(locale).profile().settings().build())}
                     >
-                        <SettingsIcon aria-hidden className="size-4" />
+                        <SettingsIcon aria-hidden className="size-5" />
                     </Button>
                 </div>
             ) : null}
@@ -203,7 +203,7 @@ export const ProfileIdentityCard = ({
                         aria-label={`GitHub: ${user.githubUsername}`}
                         className="flex min-h-11 items-center gap-2 rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                     >
-                        <SiGithub aria-hidden className="size-4 shrink-0 text-muted" />
+                        <SiGithub aria-hidden className="size-5 shrink-0 text-muted" />
                         <Typography type="body-xs" color="muted" truncate>
                             {user.githubUsername}
                         </Typography>

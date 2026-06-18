@@ -20,7 +20,7 @@ import {
 } from "@gravity-ui/icons"
 import {
     EntityToken,
-} from "@/components/layouts/shell/Dashboard/EntityToken"
+} from "@/components/features/dashboard/EntityToken"
 import type {
     QueryUserCapstoneCourseProgress,
 } from "@/modules/api"
@@ -162,7 +162,7 @@ export const ProjectCard = ({
                                         >
                                             <div className="flex min-w-0 items-center gap-1.5">
                                                 {task.passed ? (
-                                                    <CheckIcon className="size-4 shrink-0 text-success" />
+                                                    <CheckIcon className="size-5 shrink-0 text-success" />
                                                 ) : null}
                                                 <span className="truncate text-sm text-foreground">
                                                     {task.title}

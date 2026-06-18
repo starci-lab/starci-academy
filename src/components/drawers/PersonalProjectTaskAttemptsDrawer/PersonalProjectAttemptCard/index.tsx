@@ -60,7 +60,7 @@ export const PersonalProjectAttemptCard = (props: PersonalProjectAttemptCardProp
                         {feedbackText}
                     </p>
                     <div className="mt-2 flex items-center gap-1.5 text-xs text-muted">
-                        <ClockIcon className="size-4 shrink-0" />
+                        <ClockIcon className="size-5 shrink-0" />
                         {processedAtLabel}
                     </div>
                 </div>

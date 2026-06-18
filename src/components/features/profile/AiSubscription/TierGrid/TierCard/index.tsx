@@ -112,7 +112,7 @@ export const TierCard = ({
                 </div>
                 {/* price block — VND number prominent + "/tháng" + USD hint */}
                 <div className="flex flex-col gap-2">
-                    <div className="flex flex-wrap items-baseline gap-x-1">
+                    <div className="flex flex-wrap items-baseline gap-x-2">
                         <Typography type="h3" weight="bold">
                             {formatVnd(tier.priceVnd)}
                         </Typography>

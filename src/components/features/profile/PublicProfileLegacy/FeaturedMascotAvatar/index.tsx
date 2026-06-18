@@ -177,7 +177,7 @@ export const FeaturedMascotAvatar = ({
                                 className="w-full"
                                 onPress={() => choose(null)}
                             >
-                                <XmarkIcon aria-hidden focusable="false" className="size-4" />
+                                <XmarkIcon aria-hidden focusable="false" className="size-5" />
                                 {t("profileMascot.clear")}
                             </Button>
                         ) : null}

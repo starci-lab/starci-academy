@@ -22,10 +22,11 @@ export interface TopicMasteryGridProps extends WithClassNames<undefined> {
 
 /**
  * Topic-mastery grid — a LeetCode-style "what CS areas is this dev strong in"
- * heatmap. Each solved topic is a soft-accent chip whose tint deepens with the
- * solved count (relative to the strongest topic), with the count printed so the
- * signal never relies on colour alone. Honest (no hidden topics, real counts) and
- * compact. Pure/props-only; owns its look.
+ * heatmap. Each solved topic is a NEUTRAL chip whose tint deepens with the solved
+ * count (relative to the strongest topic), with the count printed so the signal
+ * never relies on colour alone. Neutral (not accent) so it doesn't compete with
+ * the app's accent — the printed count carries the magnitude. Honest (no hidden
+ * topics, real counts) and compact. Pure/props-only; owns its look.
  *
  * @param props - {@link TopicMasteryGridProps}
  */
@@ -38,18 +39,18 @@ export const TopicMasteryGrid = ({ topics, ariaLabel, className }: TopicMasteryG
             className={cn("flex flex-wrap gap-2", className)}
         >
             {topics.map((topic) => {
-                // deeper accent tint the closer a topic is to the strongest (8%–32%)
-                const intensity = Math.round(8 + (topic.solved / max) * 24)
+                // deeper neutral tint the closer a topic is to the strongest (12%–48%)
+                const intensity = Math.round(12 + (topic.solved / max) * 36)
                 return (
                     <span
                         key={topic.key}
-                        style={{ backgroundColor: `color-mix(in srgb, var(--accent) ${intensity}%, transparent)` }}
-                        className="inline-flex items-center gap-1 rounded-full px-3 py-1"
+                        style={{ backgroundColor: `color-mix(in srgb, var(--default) ${intensity}%, transparent)` }}
+                        className="inline-flex items-center gap-2 rounded-full px-3 py-1"
                     >
-                        <Typography type="body-xs" weight="medium" className="text-accent">
+                        <Typography type="body-xs" weight="medium">
                             {topic.label}
                         </Typography>
-                        <Typography type="body-xs" className="text-accent/70">
+                        <Typography type="body-xs" color="muted">
                             {topic.solved}
                         </Typography>
                     </span>

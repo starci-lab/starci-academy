@@ -1,5 +1,5 @@
 import React from "react"
-import { Dashboard } from "@/components/layouts/shell/Dashboard"
+import { Dashboard } from "@/components/features/dashboard"
 
 /** Logged-in home (GitHub-style): the dashboard a signed-in user lands on at `/`. */
 const Page = () => {

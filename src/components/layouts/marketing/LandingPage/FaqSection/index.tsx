@@ -140,6 +140,7 @@ export type FaqSectionProps = WithClassNames<undefined>
 export const FaqSection = ({ className }: FaqSectionProps) => {
     return (
         <motion.section
+            id="faq"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"

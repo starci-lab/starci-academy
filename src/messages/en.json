@@ -1,4 +1,62 @@
 {
+  "contact": {
+    "title": "Contact",
+    "intro": "StarCi is built by one person — your question reaches the person who makes it. Pick the fastest route below, or send a message.",
+    "responseTime": "We usually reply within 24 hours (support hours Mon–Fri, 9:00–18:00).",
+    "direct": {
+      "title": "Reach us directly",
+      "emailLabel": "Email",
+      "phoneLabel": "Phone",
+      "hoursLabel": "Support hours",
+      "hoursValue": "Mon–Fri, 9:00–18:00"
+    },
+    "founder": {
+      "title": "The person behind StarCi",
+      "name": "Stacy Nguyen",
+      "role": "Founder · StarCi Academy",
+      "facebook": "Facebook",
+      "linkedin": "LinkedIn",
+      "github": "GitHub"
+    },
+    "form": {
+      "title": "Send a message",
+      "name": "Full name",
+      "namePlaceholder": "Jane Doe",
+      "email": "Email",
+      "emailPlaceholder": "you@email.com",
+      "category": "Reason",
+      "message": "Message",
+      "messagePlaceholder": "How can we help?",
+      "submit": "Send message",
+      "submitting": "Sending…",
+      "successTitle": "Sent!",
+      "successBody": "Thanks. We'll get back to you by email as soon as we can.",
+      "sendAnother": "Send another",
+      "errorTitle": "Couldn't send your message. Please try again.",
+      "nameRequired": "Please enter your name.",
+      "emailInvalid": "Enter a valid email.",
+      "messageRequired": "Please enter a message."
+    },
+    "categories": {
+      "course_support": "Course / account support",
+      "partnership": "Partnership / hiring",
+      "general": "General question"
+    },
+    "faq": {
+      "title": "Frequently asked",
+      "q1": "How soon will I get a reply?",
+      "a1": "Usually within 24 hours, during support hours Mon–Fri 9:00–18:00.",
+      "q2": "I can't log in or forgot my password?",
+      "a2": "Use \"Forgot password\" on the sign-in screen to reset it. If you're still stuck, send the form with your account email.",
+      "q3": "Payment or refund issue?",
+      "a3": "Send the form with the \"Course / account support\" reason and your transaction id, and we'll look into it.",
+      "q4": "Want to partner or hire StarCi learners?",
+      "a4": "Pick the \"Partnership / hiring\" reason when sending the form, or message the founder directly on LinkedIn.",
+      "q5": "Questions about the courses, or whether StarCi is right for you?",
+      "a5": "See the FAQ on the home page — it covers the roadmap, who it's for, and how learning works in detail.",
+      "landingLink": "See course FAQ on the home page"
+    }
+  },
   "profileSettings": {
     "title": "Settings",
     "subtitle": "Manage your account, AI, content and membership.",
@@ -22,6 +80,9 @@
       "aiSubscription": "AI plan",
       "aiUsage": "AI usage",
       "bookmarks": "Bookmarks",
+      "rewards": "Rewards",
+      "blog": "Blog",
+      "talents": "Talents",
       "membership": "Membership"
     },
     "learning": {
@@ -33,7 +94,7 @@
         "continue": "Continue",
         "openCourse": "Open course",
         "completion": "Completion",
-        "lessons": "Lessons",
+        "lessons": "Content",
         "challenges": "Challenges",
         "tasks": "Tasks",
         "milestones": "Project",
@@ -176,7 +237,12 @@
   "courses": {
     "featuredTitle": "Featured courses",
     "viewCourse": "View Course",
-    "searchPlaceholder": "Search courses..."
+    "searchPlaceholder": "Search courses...",
+    "learners": "{count} learners",
+    "empty": "No courses yet",
+    "loadError": "Couldn't load courses",
+    "retry": "Try again",
+    "count": "{count} courses"
   },
   "course": {
     "enroll": "Enroll",
@@ -198,6 +264,40 @@
     "finalProjectTitle": "Personal project",
     "finalProjectDescription": "Requirements, milestones, and submission details for your personal project in this course.",
     "finalProjectPlaceholder": "Project brief and workspace will appear here."
+  },
+  "courseLanding": {
+    "valueProps": "What you'll learn",
+    "curriculum": "Course content",
+    "prerequisites": "Before you start",
+    "faq": "Frequently asked questions",
+    "premium": "Premium",
+    "currentPhase": "Current",
+    "soldOut": "Sold out",
+    "slotsLeft": "{count} seats left",
+    "slotsLeftPhase": "{count} {phase} seats left",
+    "currentOpen": "Open now",
+    "previewCount": "{count} preview",
+    "moduleMeta": "{lessons} lessons · {minutes} min",
+    "notFound": "Course not found.",
+    "errorTitle": "Couldn't load data.",
+    "retry": "Retry",
+    "stats": {
+      "learners": "Learners",
+      "modules": "Modules",
+      "lessons": "Lessons",
+      "hours": "Hours",
+      "challenges": "Challenges"
+    },
+    "tier": {
+      "foundation": "Foundation",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    },
+    "phase": {
+      "pioneer": "Pioneer",
+      "earlyBird": "Early bird",
+      "regular": "Regular"
+    }
   },
   "programmingLanguage": {
     "typescript": "TypeScript",
@@ -671,7 +771,8 @@
         "completed": "Your submission has been analyzed by StarCi AI.",
         "failed": "Failed"
       }
-    }
+    },
+    "back": "Back to lesson"
   },
   "submissionAttempts": {
     "title": "Submission attempts",
@@ -760,6 +861,53 @@
         "disabled": "Disabled",
         "probing": "Probing"
       }
+    }
+  },
+  "practice": {
+    "retry": "Try again",
+    "cockpit": {
+      "loadError": "Couldn't load your progress",
+      "byDifficulty": "By difficulty",
+      "metric": {
+        "solved": "Solved",
+        "points": "Points",
+        "rank": "Rank",
+        "percentile": "Top percentile"
+      }
+    },
+    "filters": {
+      "searchPlaceholder": "Search problems by name…",
+      "allDifficulties": "All",
+      "allDomains": "All topics",
+      "difficultyAria": "Filter by difficulty",
+      "statusAria": "Filter by status",
+      "domainAria": "Filter by topic",
+      "sortAria": "Sort",
+      "status": {
+        "all": "All",
+        "unsolved": "Unsolved",
+        "attempted": "Attempted",
+        "solved": "Solved"
+      },
+      "sort": {
+        "default": "Default",
+        "difficulty": "Difficulty",
+        "points": "Points"
+      },
+      "grouped": "By topic",
+      "flat": "Flat list"
+    },
+    "row": {
+      "status": {
+        "solved": "Solved",
+        "attempted": "Attempted",
+        "unsolved": "Not started"
+      }
+    },
+    "catalog": {
+      "noMatch": "No problems match your filters",
+      "clearFilters": "Clear filters",
+      "loadError": "Couldn't load the problem list"
     }
   },
   "codingPractice": {
@@ -1088,6 +1236,9 @@
       "aiSettingsDesc": "Choose your AI lane and manage your own API key",
       "aiSubscriptionDesc": "Upgrade for more weekly AI credits",
       "bookmarks": "Bookmarks",
+      "rewards": "Rewards",
+      "blog": "Blog",
+      "talents": "Talents",
       "bookmarksDesc": "Your saved content"
     }
   },
@@ -1578,6 +1729,7 @@
     "xpLabel": "XP",
     "lessonsLabel": "lessons",
     "contributions": {
+      "heading": "Learning activity",
       "title": "{count} learning activities in {year}",
       "cellTitle": "{count} activities",
       "breakdown": "{contents} lessons · {challenges} challenges · {milestones} milestones",
@@ -1591,8 +1743,8 @@
     "streak": {
       "current": "{count}-day streak",
       "longest": "Longest {count}",
-      "empty": "Read a lesson to start your streak",
-      "help": "Learn at least one lesson each day to keep your streak going."
+      "empty": "Read content to start your streak",
+      "help": "Learn at least one piece of content each day to keep your streak going."
     },
     "league": {
       "resetIn": "Resets in {days}d {hours}h",
@@ -1621,6 +1773,33 @@
     },
     "historyEmpty": "No lessons read yet.",
     "feedEmpty": "No activity yet.",
+    "feedError": "Could not load activity.",
+    "feedRetry": "Retry",
+    "railTrigger": "Stats",
+    "railTitle": "Stats & updates",
+    "sections": {
+      "continue": "Continue learning",
+      "streak": "Streak",
+      "goals": "Weekly goals"
+    },
+    "dailyQuest": {
+      "title": "Today's quest",
+      "claim": "Claim {count} pts",
+      "claimed": "Reward claimed",
+      "completePrompt": "Complete all 3 to earn {count} pts",
+      "tasks": {
+        "readContent": "Read content",
+        "passChallenge": "Pass a challenge",
+        "reviewFlashcards": "Review flashcards"
+      }
+    },
+    "identityStats": {
+      "streak": "Streak",
+      "credit": "AI credit",
+      "reward": "Rewards",
+      "streakValue": "{count} days"
+    },
+    "rewardBalance": "{count} pts",
     "feedTabsAria": "Activity feed",
     "feedFilter": {
       "all": "All",
@@ -1635,6 +1814,10 @@
     "loadMore": "Load more",
     "tabs": {
       "forYou": "Explore",
+      "overview": "Overview",
+      "explore": "Explore",
+      "courses": "Courses",
+      "community": "Community",
       "following": "Following"
     },
     "loadError": "Could not load your dashboard. Your session may have expired.",
@@ -1650,6 +1833,15 @@
       "courseEnrolled": "<actor></actor> enrolled in <target></target>",
       "discussionCommented": "<actor></actor> commented on <target></target>",
       "userFollowed": "<actor></actor> started following <target></target>",
+      "lessonReadNoTarget": "<actor></actor> read a lesson",
+      "lessonBookmarkedNoTarget": "<actor></actor> bookmarked a lesson",
+      "challengePassedNoTarget": "<actor></actor> passed a challenge",
+      "codingSolvedNoTarget": "<actor></actor> solved a coding task",
+      "milestonePassedNoTarget": "<actor></actor> completed a milestone",
+      "aiLabPassedNoTarget": "<actor></actor> passed an AI Lab challenge",
+      "courseEnrolledNoTarget": "<actor></actor> enrolled in a course",
+      "discussionCommentedNoTarget": "<actor></actor> commented on a post",
+      "userFollowedNoTarget": "<actor></actor> followed someone",
       "milestonePassedGrouped": "<actor></actor> completed {count} milestone tasks",
       "today": "Today",
       "yesterday": "Yesterday"
@@ -1659,10 +1851,14 @@
       "courses": "Browse courses",
       "practice": "Coding practice",
       "bookmarks": "Bookmarks",
+      "rewards": "Rewards",
+      "blog": "Blog",
+      "talents": "Talents",
       "profile": "Profile"
     },
     "aiQuota": {
       "title": "AI credits",
+      "poolCaption": "One shared credit pool — refreshes per window.",
       "credits": "{remaining}/{limit} left",
       "upgrade": "Upgrade plan",
       "window5h": "Last 5 hours",
@@ -1675,9 +1871,9 @@
       "lesson": "Lesson"
     },
     "dailyGoal": {
-      "cta": "Learn a lesson",
+      "cta": "Learn content",
       "done": "Today's done — {count}-day streak safe",
-      "nudge": "Learn one lesson today to keep your streak"
+      "nudge": "Learn content today to keep your streak"
     },
     "kpi": {
       "clear": "Clear",
@@ -1689,7 +1885,7 @@
       "summary": "{percent}% this week · {completed}/{total} goals met",
       "title": "Weekly KPIs",
       "labels": {
-        "lessons": "Lessons",
+        "lessons": "Content",
         "studyDays": "Study days",
         "challenges": "Challenges",
         "coding": "Coding",
@@ -1700,7 +1896,7 @@
       "rankLine": "Rank #{rank} · top {percent}%"
     },
     "nearCompletion": {
-      "text": "Just {count} lessons left to finish"
+      "text": "Just {count} content left to finish"
     },
     "recommended": {
       "title": "Courses for you"

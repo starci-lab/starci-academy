@@ -177,11 +177,11 @@ export const InteractionBar = ({
                     )}
                 >
                     {isFavoritePending ? (
-                        <Spinner className="size-4" />
+                        <Spinner className="size-5" />
                     ) : isFavorite ? (
-                        <BookmarkFill className="size-4" />
+                        <BookmarkFill className="size-5" />
                     ) : (
-                        <BookmarkSimpleIcon className="size-4" />
+                        <BookmarkSimpleIcon className="size-5" />
                     )}
                     <span>{t("content.save")}</span>
                 </button>
@@ -193,7 +193,7 @@ export const InteractionBar = ({
                         onClick={onShare}
                         className="flex flex-1 items-center justify-center gap-1.5 py-2.5 text-sm font-medium text-muted transition-colors hover:bg-default/50"
                     >
-                        <ShareNetworkIcon className="size-4" />
+                        <ShareNetworkIcon className="size-5" />
                         <span>{t("content.share")}</span>
                     </button>
                 ) : null}
@@ -204,7 +204,7 @@ export const InteractionBar = ({
                     onClick={onFullscreen}
                     className="flex flex-1 items-center justify-center gap-1.5 py-2.5 text-sm font-medium text-muted transition-colors hover:bg-default/50"
                 >
-                    <ArrowsOutIcon className="size-4" />
+                    <ArrowsOutIcon className="size-5" />
                     <span>{t("content.fullscreen")}</span>
                 </button>
             </div>

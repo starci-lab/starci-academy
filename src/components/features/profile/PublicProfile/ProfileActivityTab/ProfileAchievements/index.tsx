@@ -120,7 +120,7 @@ export const ProfileAchievements = ({
         const rankLabel = labelKey ? t(labelKey) : null
         // shared meta line: rank in its ring colour + rarity muted, or locked progress
         const meta = item.earned && rankLabel ? (
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-2">
                 <Typography type="body-xs" weight="medium" style={{ color: ring }}>
                     {rankLabel}
                 </Typography>

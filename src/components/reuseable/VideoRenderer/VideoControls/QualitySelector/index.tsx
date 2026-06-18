@@ -90,7 +90,7 @@ export const QualitySelector = ({
         <Dropdown className={cn(className)}>
             <DropdownTrigger aria-label="Quality">
                 <div className="flex h-8 min-w-8 cursor-pointer items-center justify-center rounded-medium border-none text-white hover:bg-white/20">
-                    <GearSixIcon className="h-4 w-4" />
+                    <GearSixIcon className="h-5 w-5" />
                 </div>
             </DropdownTrigger>
             <DropdownMenu

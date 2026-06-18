@@ -39,7 +39,7 @@ import {
 } from "@/modules/api"
 import {
     AdBanner,
-} from "@/components/layouts/shell/Dashboard/AdBanner"
+} from "@/components/features/dashboard/AdBanner"
 import {
     ContentTab,
     setContentTab,
@@ -63,8 +63,8 @@ import {
     AiLabBody,
 } from "./AiLabBody"
 import {
-    E2eResultDrawer,
-} from "./E2eResultDrawer"
+    E2eResultButton,
+} from "./E2eResultButton"
 import {
     ContentTabBar,
 } from "./ContentTabBar"
@@ -333,7 +333,7 @@ export const Content = ({ className }: ContentProps) => {
                         right-side drawer with the recorded per-language test results. */}
                     {hasE2e && !isLocked && !isFullWidthTab ? (
                         <div className="mx-auto w-full max-w-[1024px] px-3 pb-6">
-                            <E2eResultDrawer />
+                            <E2eResultButton />
                         </div>
                     ) : null}
                     {/* paywall sits directly under the faded teaser */}

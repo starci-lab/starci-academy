@@ -11,6 +11,7 @@ import {
     useAuthenticationOverlayState,
     useMindMapContentDetailsOverlayState,
 } from "@/hooks"
+import { useSmViewpoint } from "@/hooks/reuseables/useSmViewpoint"
 import { pathConfig } from "@/resources/path"
 import { getContentChallengeCount } from "@/modules/types"
 
@@ -39,6 +40,7 @@ export const MindMapContentDetailsDrawer = (props: MindMapContentDetailsDrawerPr
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
     const authenticated = useAppSelector((state) => state.keycloak.authenticated)
     const authentication = useAuthenticationOverlayState()
+    const { isMobile } = useSmViewpoint()
 
     /** Resolve the selected content from the loaded course tree. */
     const content = useMemo(() => {
@@ -88,14 +90,14 @@ export const MindMapContentDetailsDrawer = (props: MindMapContentDetailsDrawerPr
     return (
         <Drawer>
             <Drawer.Backdrop isOpen onOpenChange={setOpen}>
-                <Drawer.Content placement="right">
+                <Drawer.Content placement={isMobile ? "bottom" : "right"}>
                     <Drawer.Dialog className={cn("flex h-full flex-col p-0", className)}>
                         <div className="shrink-0 p-3">
                             <Drawer.CloseTrigger />
                             <Drawer.Header className="flex flex-col gap-1.5">
                                 {content?.isPremium && (
                                     <Chip color="warning" variant="soft" size="sm" className="w-fit">
-                                        <StarIcon className="size-4" />
+                                        <StarIcon className="size-5" />
                                         <Chip.Label>{t("content.mindMapPremium")}</Chip.Label>
                                     </Chip>
                                 )}
@@ -104,13 +106,13 @@ export const MindMapContentDetailsDrawer = (props: MindMapContentDetailsDrawerPr
                                 </Drawer.Heading>
                                 <div className="flex flex-wrap items-center gap-1.5">
                                     <Chip variant="secondary" color="accent" size="sm">
-                                        <ClockIcon className="size-4" />
+                                        <ClockIcon className="size-5" />
                                         <Chip.Label>
                                             {t("content.minutesRead", { minutes: content?.minutesRead ?? 0 })}
                                         </Chip.Label>
                                     </Chip>
                                     <Chip variant="secondary" color="accent" size="sm">
-                                        <Flame className="size-4" />
+                                        <Flame className="size-5" />
                                         <Chip.Label>
                                             {t("content.challengeCount", { count: challengeCount })}
                                         </Chip.Label>

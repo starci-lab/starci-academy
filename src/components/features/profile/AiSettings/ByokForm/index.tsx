@@ -117,7 +117,7 @@ export const ByokForm = () => {
                         <div className="flex min-w-0 items-center gap-2">
                             <KeyIcon
                                 aria-hidden
-                                className="size-4 shrink-0 text-muted"
+                                className="size-5 shrink-0 text-muted"
                             />
                             <div className="flex min-w-0 flex-col gap-0">
                                 {/* masked key — never the plaintext; only the last 4 */}

@@ -74,7 +74,7 @@ export const ShareProfileButton = ({
             className={cn("w-full", className)}
             onPress={onShare}
         >
-            <ShareIcon aria-hidden focusable="false" className="size-4" />
+            <ShareIcon aria-hidden focusable="false" className="size-5" />
             {t("publicProfile.share.button")}
         </Button>
     )

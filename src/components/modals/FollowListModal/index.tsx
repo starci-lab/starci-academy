@@ -129,15 +129,15 @@ export const FollowListModal = ({ className }: WithClassNames<undefined>) => {
                                     </Tabs.ListContainer>
                                 </Tabs>
 
-                                <div className="flex max-h-[60vh] flex-col gap-1 overflow-y-auto">
+                                <div className="flex max-h-[60vh] flex-col gap-2 overflow-y-auto">
                                     <AsyncContent
                                         isLoading={isInitialLoading}
                                         skeleton={(
-                                            <div className="flex flex-col gap-1">
+                                            <div className="flex flex-col gap-2">
                                                 {[0, 1, 2, 3, 4].map((row) => (
                                                     <div key={row} className="flex items-center gap-3 p-2">
                                                         <Skeleton.Avatar size="sm" />
-                                                        <div className="flex flex-col gap-1">
+                                                        <div className="flex flex-col gap-2">
                                                             <Skeleton.Typography type="body-sm" width="1/2" />
                                                             <Skeleton.Typography type="body-xs" width="1/4" />
                                                         </div>

@@ -192,7 +192,7 @@ export const ProfileCoding = ({
                         <div className="grid grid-cols-[minmax(0,1fr)_auto_auto_auto] items-center gap-x-3 gap-y-4">
                             {[0, 1, 2].map((row) => (
                                 <React.Fragment key={row}>
-                                    <div className="flex min-w-0 flex-col gap-1">
+                                    <div className="flex min-w-0 flex-col gap-2">
                                         <Skeleton.Typography type="body-sm" width="1/2" />
                                         <Skeleton.Typography type="body-xs" width="1/3" />
                                     </div>
@@ -290,7 +290,7 @@ export const ProfileCoding = ({
                                     return (
                                         <React.Fragment key={`${item.problemTitle}-${index}`}>
                                             {/* col 1: title + date */}
-                                            <div className="flex min-w-0 flex-col gap-1">
+                                            <div className="flex min-w-0 flex-col gap-2">
                                                 <Typography type="body-sm" weight="medium" truncate>
                                                     {item.problemTitle}
                                                 </Typography>
@@ -329,7 +329,7 @@ export const ProfileCoding = ({
                             {hiddenHistory > 0 ? (
                                 <Link
                                     onPress={() => setShowAllHistory((open) => !open)}
-                                    className="inline-flex w-fit cursor-pointer items-center gap-1 text-muted"
+                                    className="inline-flex w-fit cursor-pointer items-center gap-2 text-muted"
                                 >
                                     {showAllHistory
                                         ? t("publicProfile.coding.showLess")

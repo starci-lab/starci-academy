@@ -95,7 +95,7 @@ export const MenuList = ({ className }: MenuListProps) => {
                         <div className="text-sm">{t("nav.toggleLanguage")}</div>
                         <div className="flex items-center gap-1.5 text-sm text-muted">
                             {currentLanguageLabel}
-                            <CaretRightIcon className="size-4" />
+                            <CaretRightIcon className="size-5" />
                         </div>
                     </div>
                 </DropdownItem>

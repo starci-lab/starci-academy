@@ -69,9 +69,9 @@ export const VolumeControl = ({
                     className={cn("text-white hover:bg-white/20 border-none min-w-8 h-8", className)}
                 >
                     {isSilent ? (
-                        <SpeakerSlashIcon className="h-4 w-4" />
+                        <SpeakerSlashIcon className="h-5 w-5" />
                     ) : (
-                        <SpeakerHighIcon className="h-4 w-4" />
+                        <SpeakerHighIcon className="h-5 w-5" />
                     )}
                 </Button>
             </Popover.Trigger>

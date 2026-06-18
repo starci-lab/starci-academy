@@ -70,9 +70,9 @@ export const PasswordField = ({
                     onPress={onToggleVisibility}
                 >
                     {showPassword ? (
-                        <EyeIcon className="h-4 w-4" />
+                        <EyeIcon className="h-5 w-5" />
                     ) : (
-                        <EyeClosedIcon className="h-4 w-4" />
+                        <EyeClosedIcon className="h-5 w-5" />
                     )}
                 </Link>
                 <Input

@@ -70,7 +70,7 @@ export const ProfileContributions = ({
                 <FireIcon
                     aria-hidden="true"
                     focusable="false"
-                    className="size-4 text-accent"
+                    className="size-5 text-accent"
                 />
                 <Typography type="body-sm" weight="medium">
                     {t("profile.streakLine", {

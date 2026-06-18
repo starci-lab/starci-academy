@@ -26,6 +26,18 @@ export interface LabeledCardProps extends WithClassNames<undefined> {
     children: ReactNode
     /** Extra classes merged onto the card content wrapper. */
     contentClassName?: string
+    /**
+     * When true, drop the inner `<Card>` frame and render children directly under
+     * the label — for sections whose content is ITSELF card(s) (e.g. a grid of
+     * resume / course cards), so they never nest card-in-card.
+     */
+    frameless?: boolean
+    /**
+     * When true, the framed card drops its content padding so an EDGE-OWNING child
+     * (Accordion / Table / full-width-divider list) sits flush to the card edges —
+     * avoids the double-padding / misaligned look. Ignored when `frameless`.
+     */
+    flushContent?: boolean
 }
 
 /**
@@ -46,6 +58,8 @@ export const LabeledCard = ({
     children,
     className,
     contentClassName,
+    frameless = false,
+    flushContent = false,
 }: LabeledCardProps) => {
     return (
         <section className={cn("flex flex-col gap-3", className)}>
@@ -57,7 +71,7 @@ export const LabeledCard = ({
                 {action ?? (onSeeMore ? (
                     <Link
                         onPress={onSeeMore}
-                        className="group inline-flex shrink-0 cursor-pointer items-center gap-1 text-accent"
+                        className="group inline-flex shrink-0 cursor-pointer items-center gap-2 text-accent"
                     >
                         {seeMoreLabel}
                         <CaretRightIcon
@@ -68,11 +82,16 @@ export const LabeledCard = ({
                     </Link>
                 ) : null)}
             </div>
-            <Card>
-                <CardContent className={cn(contentClassName)}>
-                    {children}
-                </CardContent>
-            </Card>
+            {/* frameless = content is itself card(s) → no inner Card (avoid nesting) */}
+            {frameless ? (
+                <div className={cn(contentClassName)}>{children}</div>
+            ) : (
+                <Card>
+                    <CardContent className={cn(flushContent && "p-0", contentClassName)}>
+                        {children}
+                    </CardContent>
+                </Card>
+            )}
         </section>
     )
 }

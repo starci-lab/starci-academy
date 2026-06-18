@@ -221,7 +221,7 @@ export const Sessions = () => {
                                                 {revokingId === session.sessionId ? (
                                                     <Spinner color="current" size="sm" />
                                                 ) : (
-                                                    <SignOutIcon aria-hidden focusable="false" className="size-4" />
+                                                    <SignOutIcon aria-hidden focusable="false" className="size-5" />
                                                 )}
                                                 {t("sessions.revoke")}
                                             </Button>

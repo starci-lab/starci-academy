@@ -25,6 +25,16 @@ const query1 = gql`
           coverImageUrl
           originalPrice
           originalPriceUsd
+          currentPhase
+          enrollmentCount
+          pricingPhases {
+            phase
+            price
+            priceUsd
+          }
+          valuePropositions {
+            text
+          }
         }
       }
     }

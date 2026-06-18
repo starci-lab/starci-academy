@@ -68,7 +68,7 @@ export const ProfilePinned = ({
             variant="secondary"
             onPress={openManage}
         >
-            <PencilIcon className="size-4" aria-hidden="true" focusable="false" />
+            <PencilIcon className="size-5" aria-hidden="true" focusable="false" />
             {t("pinnedProjects.manage")}
         </Button>
     ) : undefined

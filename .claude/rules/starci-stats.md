@@ -30,6 +30,13 @@ Quy ước cho khối SỐ LIỆU & BIỂU ĐỒ: metric row, SegmentBar, Legend
 - Gốc: mắt so **chiều dài/vị trí > góc/diện tích** (Cleveland–McGill); donut tệ nhất khi N nhỏ / nhiều slice gần bằng
   nhau; CSS bar nhẹ + theo token + dark-mode chuẩn, không kéo lib chart. Số "tổng" donut hay khoe ở giữa → để
   headline/`MetricCard`.
+- **Phân biệt theo SỐ HẠNG MỤC, KHÔNG phải part-to-whole:**
+  - **Ít bucket CỐ ĐỊNH** (độ khó 4, ngôn ngữ vài) → `SegmentBar` (so tỉ lệ tốt).
+  - **Tập MỞ-RỘNG/nhiều** (topic, tag, kỹ năng — 10–20+ giá trị) → **chip/tag-cloud kèm count** (LeetCode/GitHub
+    style), scale tốt; **KHÔNG ép stacked-bar** dù part-to-whole hợp lệ (lát mỏng như confetti, legend dài, không đọc nổi).
+- **Chip metadata (topic/tag/skill) = màu NEUTRAL/`--default`, KHÔNG accent** (accent dành cho hành động; bôi accent
+  cho data làm nhiễu + chìm heatmap). Cường độ/heatmap tint bằng `var(--default)` theo count; **count in RÕ** để không
+  dựa màu (a11y). (Mẫu: `blocks/stats/TopicMasteryGrid` tint `--default` 12–48%, label foreground + count muted.)
 - **Donut chỉ khi** rất ít hạng mục + "1 con số tổng ở giữa" là điểm nhấn CHÍNH (hiếm).
 - Block **`LanguageDonut`** (`blocks/stats/LanguageDonut`) GIỮ (còn `ProfileCoding`/legacy dùng) — nếu dùng: độ dày
   = px chính xác qua `thickness` (default **8** = h-2 bar), KHÔNG `innerRadius %`; `size` ~128. Nhưng KHÔNG là mặc định.

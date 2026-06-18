@@ -60,12 +60,12 @@ export const useContentOverlayState = () => useOverlayHandle("content")
 export const useCvPreviewOverlayState = () => useOverlayHandle("cvPreview")
 /** CV review level details overlay state. */
 export const useCvReviewLevelDetailsOverlayState = () => useOverlayHandle("cvReviewLevelDetails")
-/** CV submission attempt analysis overlay state. */
-export const useCvSubmissionAttemptAnalysisOverlayState = () => useOverlayHandle("cvSubmissionAttemptAnalysis")
 /** CV submission attempts drawer overlay state. */
 export const useCvSubmissionAttemptsDrawerOverlayState = () => useOverlayHandle("cvSubmissionAttemptsDrawer")
 /** CV update overlay state. */
 export const useCvUpdateOverlayState = () => useOverlayHandle("cvUpdate")
+/** E2E-result drawer overlay state (lesson footer proof panel). */
+export const useE2eResultOverlayState = () => useOverlayHandle("e2eResult")
 /** Feedback details overlay state. */
 export const useFeedbackDetailsOverlayState = () => useOverlayHandle("feedbackDetails")
 /** Foundation overlay state. */

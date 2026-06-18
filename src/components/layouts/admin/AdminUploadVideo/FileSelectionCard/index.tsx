@@ -123,7 +123,7 @@ export const FileSelectionCard = ({
                         Object Key (S3 Path)
                     </Label>
                     <div className="relative">
-                        <LinkIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
+                        <LinkIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 pointer-events-none" />
                         <Input
                             id="admin-object-key-input"
                             placeholder="videos/my-lecture.mp4"
@@ -150,7 +150,7 @@ export const FileSelectionCard = ({
                     >
                         {({isPending}) => (
                             <>
-                                {!isPending && <UploadIcon className="h-4 w-4" />}
+                                {!isPending && <UploadIcon className="h-5 w-5" />}
                                 {isPending
                                     ? "Getting URLs…"
                                     : isUploading
@@ -170,7 +170,7 @@ export const FileSelectionCard = ({
                     >
                         {({isPending}) => (
                             <>
-                                {!isPending && <GearIcon className="h-4 w-4" />}
+                                {!isPending && <GearIcon className="h-5 w-5" />}
                                 {isPending
                                     ? "Processing…"
                                     : processResult

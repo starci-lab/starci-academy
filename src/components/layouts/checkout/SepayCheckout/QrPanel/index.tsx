@@ -79,7 +79,7 @@ export const QrPanel = () => {
                         variant="secondary"
                         onPress={onRefresh}
                     >
-                        <ArrowsClockwise className="h-4 w-4" />
+                        <ArrowsClockwise className="h-5 w-5" />
                         {t("payment.sepay.checkStatus")}
                     </Button>
                 </div>

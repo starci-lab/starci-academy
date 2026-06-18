@@ -205,7 +205,7 @@ export const InterviewSession = ({ deckId, className }: InterviewSessionProps) =
                         >
                             {/* inline mic glyph keeps the button dependency-free */}
                             <svg
-                                className="size-4"
+                                className="size-5"
                                 viewBox="0 0 24 24"
                                 fill="none"
                                 stroke="currentColor"

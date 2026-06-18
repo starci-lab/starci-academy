@@ -27,12 +27,12 @@ export const StatusLine = () => {
             {isSuccess ? (
                 <CheckCircleIcon
                     aria-hidden
-                    className="size-4 text-success"
+                    className="size-5 text-success"
                 />
             ) : (
                 <WarningCircleIcon
                     aria-hidden
-                    className="size-4 text-danger"
+                    className="size-5 text-danger"
                 />
             )}
             <Typography

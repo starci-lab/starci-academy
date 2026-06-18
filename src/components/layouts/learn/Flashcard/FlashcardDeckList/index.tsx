@@ -89,7 +89,7 @@ export const FlashcardDeckList = ({ onSelectDeck }: FlashcardDeckListProps) => {
             {/* search box: filters the deck list client-side by title/description */}
             <TextField aria-label={t("flashcard.searchPlaceholder")} className="w-full sm:max-w-sm">
                 <div className="relative">
-                    <MagnifyingGlassIcon className="text-muted pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2" />
+                    <MagnifyingGlassIcon className="text-muted pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2" />
                     <Input
                         type="search"
                         placeholder={t("flashcard.searchPlaceholder")}

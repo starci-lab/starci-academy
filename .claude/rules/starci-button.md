@@ -34,6 +34,8 @@ Màu do **variant** quyết (variant tự map token theo theme). CẤM `classNam
 - Mặc định `size="md"` (≥44px touch). `size="sm"` cho nút phụ trong popover/row/header-action.
 - Icon-only → `isIconOnly` + **`aria-label` bắt buộc** (§1 a11y). Hit-area ≥44px.
 - Nút trải rộng cột → `fullWidth` (prop, không phải `w-full` className tùy tiện ở chỗ cấm).
+- **Save/submit trong FORM SETTINGS rộng = NGẮN** (`className="self-start"`, width co theo chữ), **KHÔNG `fullWidth`**.
+  fullWidth chỉ cho CTA chính trong cột hẹp/modal/card. Trong flex-col (stretch) phải `self-start`/`self-end`. (xem `starci-form.md` §7.)
 
 ## 5. Trạng thái (§ async)
 - Nút gọi mutation/fetch → **`isPending`** (tự spinner + khóa double-submit). CẤM nút trơ không state.
@@ -46,7 +48,9 @@ Màu do **variant** quyết (variant tự map token theo theme). CẤM `classNam
 
 ## 7. Anti-patterns (CẤM)
 - Nhiều `primary` cùng màn · `danger` sát `primary` · icon-only thiếu `aria-label` ·
-  tô màu nút bằng `className` thay vì variant · dựng lại Button từ `<button>` trần (dùng HeroUI `Button`).
+  tô màu nút bằng `className` thay vì variant · dựng lại Button từ `<button>` trần (dùng HeroUI `Button`) ·
+  **dãy pill `Button` làm SELECTOR** (provider/mode → `Select`/`Tabs primary`, xem `starci-form.md` §4) ·
+  **`fullWidth` cho save trong form settings rộng** (→ `self-start`).
 
 ## Tham chiếu
 - Variant + onPress/isPending: `starci-ui.rules` §5. Async/loading nút: §7.

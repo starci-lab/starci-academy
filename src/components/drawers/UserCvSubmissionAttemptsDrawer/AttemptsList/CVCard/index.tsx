@@ -12,7 +12,6 @@ import {
 import { useTranslations } from "next-intl"
 import { useAppDispatch } from "@/redux"
 import { setSelectedCvSubmissionAttemptAnalysis } from "@/redux/slices"
-import { useCvSubmissionAttemptAnalysisOverlayState } from "@/hooks"
 import type { WithClassNames } from "@/modules/types"
 
 
@@ -58,9 +57,8 @@ export const CVCard = (props: CVCardProps) => {
     } = props
     const t = useTranslations()
     const dispatch = useAppDispatch()
-    const { setOpen: setAnalysisModalOpen } = useCvSubmissionAttemptAnalysisOverlayState()
 
-    /** Dispatch the selected attempt and open the analysis modal. */
+    /** Select this attempt — the drawer swaps to its analysis detail (master-detail). */
     const onPress = useCallback(
         () => {
             dispatch(setSelectedCvSubmissionAttemptAnalysis({
@@ -73,7 +71,6 @@ export const CVCard = (props: CVCardProps) => {
                 status,
                 detailFeedback,
             }))
-            setAnalysisModalOpen(true)
         },
         [
             attemptId,
@@ -85,7 +82,6 @@ export const CVCard = (props: CVCardProps) => {
             status,
             detailFeedback,
             dispatch,
-            setAnalysisModalOpen,
         ],
     )
 

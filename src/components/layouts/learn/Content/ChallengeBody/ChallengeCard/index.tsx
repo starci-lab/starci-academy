@@ -6,9 +6,9 @@ import { Button, Card, CardContent, Chip, cn } from "@heroui/react"
 import { ChallengeDifficulty, type ChallengeEntity, type WithClassNames } from "@/modules/types"
 import { useTranslations } from "next-intl"
 import { difficultyPalette } from "../../../../../pallettes"
-import { useChallengeOverlayState } from "@/hooks"
-import { setChallengeId } from "@/redux/slices"
-import { useAppDispatch, useAppSelector } from "@/redux"
+import { useParams } from "next/navigation"
+import { useRouter } from "@/i18n/navigation"
+import { useAppSelector } from "@/redux"
 
 
 export interface ChallengeCardProps extends WithClassNames<undefined> {
@@ -34,8 +34,8 @@ export const ChallengeCard = ({ challenge, className }: ChallengeCardProps) => {
             return "challenge.difficulty.easy"
         }
     }, [challenge.difficulty])
-    const challengeOverlayState = useChallengeOverlayState()
-    const dispatch = useAppDispatch()
+    const router = useRouter()
+    const params = useParams()
     // Per-challenge progress, populated by `useQueryChallengeSubmissionProgressSwr`.
     const completionTasks = useAppSelector((state) => state.challenge.completionTasks)
     const challengeProgress = useMemo(
@@ -66,16 +66,16 @@ export const ChallengeCard = ({ challenge, className }: ChallengeCardProps) => {
                     <div className="font-medium mb-2">{challenge.sortIndex}. {challenge.title}</div>
                     <div className="flex items-center gap-1.5">
                         <Chip variant="secondary" color="accent">
-                            <TrophyIcon className="size-4" />
+                            <TrophyIcon className="size-5" />
                             <Chip.Label>{challenge.score}</Chip.Label>
                         </Chip>
                         <Chip color="default" className={difficultyPalette[challenge.difficulty].text}>
-                            <Flame className="size-4" />
+                            <Flame className="size-5" />
                             <Chip.Label>{t(difficultyName)}</Chip.Label>
                         </Chip>
                         {progressChip ? (
                             <Chip variant="secondary" color={progressChip.color}>
-                                {progressChip.withIcon ? <CheckCircleIcon className="size-4" /> : null}
+                                {progressChip.withIcon ? <CheckCircleIcon className="size-5" /> : null}
                                 <Chip.Label>{progressChip.label}</Chip.Label>
                             </Chip>
                         ) : null}
@@ -84,8 +84,10 @@ export const ChallengeCard = ({ challenge, className }: ChallengeCardProps) => {
                     <div className="h-3"/>
                     <div className="flex gap-1.5">
                         <Button onPress={() => {
-                            dispatch(setChallengeId(challenge.id))
-                            challengeOverlayState.open()
+                            const courseId = params.courseId as string
+                            const moduleId = params.moduleId as string
+                            const contentId = params.contentId as string
+                            router.push(`/courses/${courseId}/learn/modules/${moduleId}/contents/${contentId}/challenges/${challenge.id}`)
                         }}>
                             <Flame className="size-5" />
                             {t("challenge.do")}

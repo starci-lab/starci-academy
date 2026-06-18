@@ -11,6 +11,7 @@ const query1 = gql`
       error
       data {
         items {
+          id
           actorGlobalId
           actorUsername
           actorAvatar
@@ -18,6 +19,9 @@ const query1 = gql`
           targetGlobalId
           targetLabel
           at
+          reactionCount
+          myReaction
+          isMine
         }
         nextCursor
       }

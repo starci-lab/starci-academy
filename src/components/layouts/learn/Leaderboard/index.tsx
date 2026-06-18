@@ -75,7 +75,7 @@ export const LeaderboardLayout = ({ className }: LeaderboardLayoutProps) => {
                             void mutate()
                         }}
                     >
-                        <ArrowClockwiseIcon className="size-4" />
+                        <ArrowClockwiseIcon className="size-5" />
                         {t("leaderboard.refresh")}
                     </Button>
                 </div>

@@ -17,7 +17,7 @@ import {
 } from "../useProfileUsername"
 import {
     EntityToken,
-} from "@/components/layouts/shell/Dashboard/EntityToken"
+} from "@/components/features/dashboard/EntityToken"
 import {
     SectionCard,
 } from "@/components/reuseable"

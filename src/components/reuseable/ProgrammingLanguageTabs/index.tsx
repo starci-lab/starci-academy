@@ -135,7 +135,7 @@ export const ProgrammingLanguageTabs = ({
                                 <span className="flex items-center gap-1.5">
                                     <Icon
                                         aria-hidden
-                                        className={cn("shrink-0", isSecondary ? "size-5" : "size-4")}
+                                        className={cn("shrink-0", isSecondary ? "size-5" : "size-5")}
                                     />
                                     {t(`programmingLanguage.${lang}`)}
                                 </span>

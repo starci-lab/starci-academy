@@ -28,19 +28,19 @@ export const LessonVideoKindChip = ({ kind, className }: LessonVideoKindChipProp
         switch (kind) {
         case LessonVideoKind.RawStream:
             return {
-                icon: <TwitchLogoIcon className="size-4" />,
+                icon: <TwitchLogoIcon className="size-5" />,
                 label: "lessonVideoKind.rawStream.label",
                 tooltip: "lessonVideoKind.rawStream.tooltip",
             }
         case LessonVideoKind.EditedStream:
             return {
-                icon: <SparkleIcon className="size-4" />,
+                icon: <SparkleIcon className="size-5" />,
                 label: "lessonVideoKind.editedStream.label",
                 tooltip: "lessonVideoKind.editedStream.tooltip",
             }
         case LessonVideoKind.PremiumRecord:
             return {
-                icon: <FilmReelIcon className="size-4" />,
+                icon: <FilmReelIcon className="size-5" />,
                 label: "lessonVideoKind.premiumRecord.label",
                 tooltip: "lessonVideoKind.premiumRecord.tooltip",
             }

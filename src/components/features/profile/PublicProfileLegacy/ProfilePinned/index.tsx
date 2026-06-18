@@ -72,9 +72,9 @@ export const ProfilePinned = ({
             onPress={openManage}
         >
             {pins.length > 0 ? (
-                <PencilIcon className="size-4" aria-hidden="true" focusable="false" />
+                <PencilIcon className="size-5" aria-hidden="true" focusable="false" />
             ) : (
-                <PlusIcon className="size-4" aria-hidden="true" focusable="false" />
+                <PlusIcon className="size-5" aria-hidden="true" focusable="false" />
             )}
             {pins.length > 0 ? t("pinnedProjects.manage") : t("pinnedProjects.add")}
         </Button>
@@ -85,7 +85,7 @@ export const ProfilePinned = ({
         return (
             <SectionCard
                 title={t("pinnedProjects.heading")}
-                icon={<PinIcon className="size-4 text-accent" aria-hidden="true" focusable="false" />}
+                icon={<PinIcon className="size-5 text-accent" aria-hidden="true" focusable="false" />}
                 className={className}
             >
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -102,7 +102,7 @@ export const ProfilePinned = ({
         return (
             <SectionCard
                 title={t("pinnedProjects.heading")}
-                icon={<PinIcon className="size-4 text-accent" aria-hidden="true" focusable="false" />}
+                icon={<PinIcon className="size-5 text-accent" aria-hidden="true" focusable="false" />}
                 className={className}
             >
                 <ErrorState
@@ -123,7 +123,7 @@ export const ProfilePinned = ({
         return (
             <SectionCard
                 title={t("pinnedProjects.heading")}
-                icon={<PinIcon className="size-4 text-accent" aria-hidden="true" focusable="false" />}
+                icon={<PinIcon className="size-5 text-accent" aria-hidden="true" focusable="false" />}
                 action={action}
                 className={className}
             >
@@ -137,7 +137,7 @@ export const ProfilePinned = ({
                             variant="primary"
                             onPress={openManage}
                         >
-                            <PlusIcon className="size-4" aria-hidden="true" focusable="false" />
+                            <PlusIcon className="size-5" aria-hidden="true" focusable="false" />
                             {t("pinnedProjects.add")}
                         </Button>
                     )}
@@ -149,7 +149,7 @@ export const ProfilePinned = ({
     return (
         <SectionCard
             title={t("pinnedProjects.heading")}
-            icon={<PinIcon className="size-4 text-accent" aria-hidden="true" focusable="false" />}
+            icon={<PinIcon className="size-5 text-accent" aria-hidden="true" focusable="false" />}
             action={action}
             className={className}
         >

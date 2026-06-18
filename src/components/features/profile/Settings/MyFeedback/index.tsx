@@ -86,7 +86,7 @@ export const MyFeedback = ({
 
             <LabeledCard
                 label={t("profileSettings.learning.feedback.title")}
-                icon={<ChatCircleIcon aria-hidden focusable="false" className="size-4 text-accent" />}
+                icon={<ChatCircleIcon aria-hidden focusable="false" className="size-5 text-accent" />}
             >
                 <AsyncContent
                     isLoading={!swr.data && !swr.error}

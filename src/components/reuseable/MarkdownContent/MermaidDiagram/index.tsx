@@ -74,7 +74,7 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
                         />
                         {/* Hover affordance hinting the diagram can be enlarged. */}
                         <span className="pointer-events-none absolute right-2 top-2 rounded-medium bg-default/60 p-1.5 text-muted opacity-0 transition-opacity group-hover:opacity-100">
-                            <MagnifyingGlassPlusIcon className="size-4" />
+                            <MagnifyingGlassPlusIcon className="size-5" />
                         </span>
                     </button>
                     <Modal isOpen={isOpen} onOpenChange={setOpen}>

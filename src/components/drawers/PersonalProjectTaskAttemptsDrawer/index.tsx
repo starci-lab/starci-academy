@@ -14,6 +14,7 @@ import {
     usePersonalProjectTaskAttemptsDrawerOverlayState,
     useQueryUserPersonalTaskAttemptsSwr,
 } from "@/hooks"
+import { useSmViewpoint } from "@/hooks/reuseables/useSmViewpoint"
 import { dayjs } from "@/modules/dayjs"
 import type { UserMilestoneTaskAttemptEntity } from "@/modules/types"
 import {
@@ -47,6 +48,7 @@ export const PersonalProjectTaskAttemptsDrawer = (props: PersonalProjectTaskAtte
         isOpen,
         setOpen,
     } = usePersonalProjectTaskAttemptsDrawerOverlayState()
+    const { isMobile } = useSmViewpoint()
     const swr = useQueryUserPersonalTaskAttemptsSwr()
     const attemptList = swr.data?.data
     const dayjsLocale = locale.startsWith("vi") ? "vi" : "en"
@@ -96,7 +98,7 @@ export const PersonalProjectTaskAttemptsDrawer = (props: PersonalProjectTaskAtte
                 isOpen
                 onOpenChange={setOpen}
             >
-                <Drawer.Content placement="right">
+                <Drawer.Content placement={isMobile ? "bottom" : "right"}>
                     <Drawer.Dialog className={cn("flex h-full flex-col p-0", className)}>
                         <div className="shrink-0 p-3">
                             <Drawer.CloseTrigger />

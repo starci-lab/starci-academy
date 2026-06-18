@@ -22,11 +22,17 @@ export interface FeedItemProps extends WithClassNames<undefined> {
      * action text. Caller-formatted (e.g. "2 hours ago").
      */
     timestamp: ReactNode
+    /**
+     * Optional footer rendered under the timestamp — e.g. a reaction bar. Omit for
+     * a plain row.
+     */
+    footer?: ReactNode
 }
 
 /**
  * Generic activity / timeline row. Lays out an optional leading visual beside a
- * two-line text column: the action text on top and a muted timestamp below.
+ * text column: the action text on top, a muted timestamp below, and an optional
+ * footer (e.g. a reaction bar) beneath that.
  *
  * Purely presentational and self-contained — it holds no state and performs no
  * data access. The owning feature maps an activity type to the `leading` and
@@ -34,13 +40,16 @@ export interface FeedItemProps extends WithClassNames<undefined> {
  *
  * @param props - {@link FeedItemProps}
  */
-export const FeedItem = ({ leading, children, timestamp, className }: FeedItemProps) => {
+export const FeedItem = ({ leading, children, timestamp, footer, className }: FeedItemProps) => {
     return (
         <div className={cn("flex items-start gap-2", className)}>
             {leading ? <div className="shrink-0">{leading}</div> : null}
-            <div className="flex flex-col gap-0 min-w-0">
-                <Typography type="body-sm">{children}</Typography>
-                <Typography type="body-xs" color="muted">{timestamp}</Typography>
+            <div className="flex flex-col gap-1 min-w-0">
+                <div className="flex flex-col gap-0">
+                    <Typography type="body-sm">{children}</Typography>
+                    <Typography type="body-xs" color="muted">{timestamp}</Typography>
+                </div>
+                {footer ? <div>{footer}</div> : null}
             </div>
         </div>
     )

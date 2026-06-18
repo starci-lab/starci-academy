@@ -29,7 +29,7 @@ export const ReadBadge = ({ size, className }: ReadBadgeProps) => {
 
     return (
         <Chip variant="secondary" color="success" size={size} className={cn(className)}>
-            <CheckCircleIcon className={size === "sm" ? "size-4" : "size-5"} />
+            <CheckCircleIcon className={size === "sm" ? "size-5" : "size-5"} />
             <Chip.Label>{t("content.read")}</Chip.Label>
         </Chip>
     )

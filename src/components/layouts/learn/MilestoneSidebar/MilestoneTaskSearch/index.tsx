@@ -137,7 +137,7 @@ export const MilestoneTaskSearch = ({ className }: MilestoneTaskSearchProps) => 
             onOpenChange={onPopoverOpenChange}
         >
             <Autocomplete.Trigger className="flex h-10 w-full min-w-0 items-center gap-1.5 rounded-field border border-divider px-3 text-start text-sm text-muted">
-                <MagnifyingGlassIcon className="size-4 shrink-0" />
+                <MagnifyingGlassIcon className="size-5 shrink-0" />
                 <Autocomplete.Value className="min-w-0 flex-1 truncate" />
                 <Autocomplete.ClearButton />
                 <Autocomplete.Indicator />

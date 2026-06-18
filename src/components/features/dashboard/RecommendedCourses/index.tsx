@@ -106,7 +106,7 @@ export const RecommendedCourses = ({
                                 <div className="flex items-center gap-3">
                                     <IconTile
                                         size="sm"
-                                        src={course.coverImageUrl}
+                                        src={course.thumbnailUrl}
                                         alt={course.title}
                                         icon={<BookOpenIcon aria-hidden focusable="false" />}
                                     />

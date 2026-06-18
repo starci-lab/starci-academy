@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { PracticeProblem } from "@/components/layouts/learn/Practice"
+import { PracticeProblem } from "@/components/features/practice/PracticeProblem"
 
 /**
  * Route `/[locale]/practice/[slug]` — coding-problem detail + editor.

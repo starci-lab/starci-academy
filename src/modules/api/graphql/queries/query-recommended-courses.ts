@@ -14,7 +14,7 @@ const query1 = gql`
           displayId
           title
           description
-          coverImageUrl
+          thumbnailUrl
           originalPriceVnd
           discountedPriceVnd
           discountPercent

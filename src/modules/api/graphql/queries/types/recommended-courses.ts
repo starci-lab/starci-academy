@@ -15,8 +15,8 @@ export interface QueryRecommendedCourseData {
     title: string
     /** Short course description. */
     description: string | null
-    /** Cover image URL, if any. */
-    coverImageUrl: string | null
+    /** Thumbnail URL, if any. */
+    thumbnailUrl: string | null
     /** List price in VND before any discount. */
     originalPriceVnd: number
     /** Price in VND after the viewer's loyalty discount (== charged at checkout). */

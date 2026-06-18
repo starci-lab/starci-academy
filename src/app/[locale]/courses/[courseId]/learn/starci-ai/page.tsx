@@ -1,7 +1,7 @@
 import React from "react"
 import {
     StarciAi,
-} from "@/components/layouts/learn/Learn"
+} from "@/components/features/learn/StarciAi"
 
 /**
  * Route `/[locale]/courses/[courseId]/learn/starci-ai` — renders the StarCI AI

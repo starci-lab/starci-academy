@@ -67,7 +67,7 @@ export const ModuleOverview = ({
             >
                 <div className="flex flex-col gap-6 p-3">
                     <div className="flex flex-col gap-2">
-                        <Typography type="heading-md" weight="bold">
+                        <Typography type="h3" weight="bold">
                             {module?.title}
                         </Typography>
                         <Typography type="body-sm" color="muted">
@@ -84,7 +84,7 @@ export const ModuleOverview = ({
                     </div>
 
                     <div className="flex flex-col gap-3">
-                        <Typography type="body-md" weight="semibold">
+                        <Typography type="body" weight="semibold">
                             {t("module.pathIntroduction")}
                         </Typography>
                         <div className="flex flex-col gap-3">
@@ -93,24 +93,20 @@ export const ModuleOverview = ({
                                 .map((content) => (
                                     <div key={content.id} className="flex items-center gap-2 text-muted">
                                         <BracketsCurlyIcon className="size-5 min-w-5 min-h-5" />
-                                        <Typography
-                                            type="body-sm"
-                                            color="muted"
-                                            asChild
-                                        >
-                                            <span
-                                                dangerouslySetInnerHTML={{
-                                                    __html: content.text,
-                                                }}
-                                            />
-                                        </Typography>
+                                        {/* preview text arrives as sanitized HTML from BE → inject directly */}
+                                        <span
+                                            className="text-sm text-muted"
+                                            dangerouslySetInnerHTML={{
+                                                __html: content.text,
+                                            }}
+                                        />
                                     </div>
                                 ))}
                         </div>
                     </div>
 
                     <div className="flex flex-col gap-3">
-                        <Typography type="body-md" weight="semibold">
+                        <Typography type="body" weight="semibold">
                             {t("content.tabs.content")}
                         </Typography>
                         <AsyncContent

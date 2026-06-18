@@ -56,7 +56,7 @@ export const ContentCard = ({ content, className }: ContentCardProps) => {
     return (
         <PressableCard className={className} onPress={onPress}>
             <div className="flex flex-col gap-2">
-                <Typography type="body-md" weight="semibold">
+                <Typography type="body" weight="semibold">
                     {content.title}
                 </Typography>
                 <Typography type="body-sm" color="muted" className="line-clamp-3">

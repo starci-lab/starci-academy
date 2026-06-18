@@ -1,6 +1,5 @@
 "use client"
 
-import { MagnifyingGlassIcon } from "@phosphor-icons/react"
 import React, { useMemo, useState } from "react"
 import useSWR from "swr"
 import {
@@ -85,19 +84,13 @@ export const FlashcardDeckList = ({ onSelectDeck }: FlashcardDeckListProps) => {
         >
             <div className="flex flex-col gap-3">
                 {/* search box: filters the deck list client-side by title/description */}
-                <TextField aria-label={t("flashcard.searchPlaceholder")} className="w-full sm:max-w-sm">
+                <TextField className="w-full sm:max-w-sm">
                     <Input
                         type="search"
+                        aria-label={t("flashcard.searchPlaceholder")}
                         placeholder={t("flashcard.searchPlaceholder")}
                         value={query}
                         onChange={(event) => setQuery(event.target.value)}
-                        startContent={(
-                            <MagnifyingGlassIcon
-                                className="size-5 text-muted"
-                                aria-hidden
-                                focusable="false"
-                            />
-                        )}
                     />
                 </TextField>
 

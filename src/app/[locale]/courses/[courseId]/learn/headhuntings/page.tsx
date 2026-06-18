@@ -1,13 +1,13 @@
 "use client"
 import React from "react"
 
-import { HeadhuntingsLearnLayout } from "@/components/layouts/headhunting/Headhuntings"
+import { Headhuntings } from "@/components/features/careers/Headhunting"
 
 /**
  * Learn / headhuntings — consultant grid.
  */
 const Page = () => {
-    return <HeadhuntingsLearnLayout />
+    return <Headhuntings />
 }
 
 export default Page

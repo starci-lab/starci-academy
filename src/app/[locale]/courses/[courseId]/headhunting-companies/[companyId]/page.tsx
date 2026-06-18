@@ -1,12 +1,12 @@
 "use client"
 
-import { HeadhuntingCompanyLayout } from "@/components/layouts/headhunting/HeadhuntingCompany"
+import { HeadhuntingCompany } from "@/components/features/careers/Headhunting"
 import React from "react"
 /**
  * Course / headhunting-companies / [companyId] — company profile and consultants.
  */
 const Page = () => {
-    return <HeadhuntingCompanyLayout />
+    return <HeadhuntingCompany />
 }
 
 export default Page

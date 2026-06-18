@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from "react"
-import { Button, Typography } from "@heroui/react"
+import { Button } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { type WithClassNames } from "@/modules/types"
 import { PageHeader } from "@/components/blocks"

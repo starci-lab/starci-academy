@@ -3,7 +3,7 @@
 import React from "react"
 import {
     TalentDirectory,
-} from "@/components/layouts/headhunting/TalentDirectory"
+} from "@/components/features/careers/Headhunting"
 
 /**
  * Route `/[locale]/talents` — the talent directory: users who opted into

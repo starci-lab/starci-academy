@@ -3,7 +3,7 @@
 import { House as BuildingsIcon, Smartphone as PhoneIcon } from "@gravity-ui/icons"
 import { FaLinkedin as LinkedinLogoIcon } from "react-icons/fa6"
 import { Button, cn, Link, Modal } from "@heroui/react"
-import { ConsultantAvatar } from "@/components/layouts/headhunting/Headhuntings/ConsultantAvatar"
+import { ConsultantAvatar } from "@/components/features/careers/Headhunting"
 import { useHeadhunterOverlayState } from "@/hooks"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"

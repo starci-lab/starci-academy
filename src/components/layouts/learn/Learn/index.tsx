@@ -65,5 +65,3 @@ export const Learn = ({ className }: LearnProps) => {
         </div>
     )
 }
-
-export * from "./StarciAi"

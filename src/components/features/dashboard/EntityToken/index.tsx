@@ -23,8 +23,17 @@ import type {
 
 /** Props for {@link EntityToken}. */
 export interface EntityTokenProps extends WithClassNames<undefined> {
-    /** Opaque global id of the entity, or null when it has no resolvable route. */
-    globalId: string | null
+    /**
+     * Opaque global id of the entity — resolved to a route on click. Omit when
+     * passing a direct {@link EntityTokenProps.href} instead.
+     */
+    globalId?: string | null
+    /**
+     * Direct (already-built, locale-prefixed) route to push on click — use when the
+     * caller already knows the path (e.g. a course `displayId`), skipping the
+     * resolve round-trip. Takes precedence over {@link EntityTokenProps.globalId}.
+     */
+    href?: string
     /** Token text (username / lesson title …). */
     label: string
     /**
@@ -43,6 +52,7 @@ export interface EntityTokenProps extends WithClassNames<undefined> {
  */
 export const EntityToken = ({
     globalId,
+    href,
     label,
     block = false,
     className,
@@ -50,10 +60,17 @@ export const EntityToken = ({
     const locale = useLocale()
     const router = useRouter()
     const [pending, setPending] = useState(false)
+    // routable via a direct path OR a resolvable global id
+    const routable = Boolean(href) || Boolean(globalId)
 
-    /** Resolve the route via the index, then push to it. */
+    /** Navigate: a direct href goes straight there; else resolve the global id. */
     const onPress = useCallback(
         async () => {
+            // direct path — no resolve round-trip
+            if (href) {
+                router.push(href)
+                return
+            }
             // guard: nothing to resolve, or a resolve already in flight
             if (!globalId || pending) {
                 return
@@ -77,6 +94,7 @@ export const EntityToken = ({
         },
         [
             globalId,
+            href,
             locale,
             pending,
             router,
@@ -88,7 +106,7 @@ export const EntityToken = ({
         return (
             <button
                 type="button"
-                disabled={!globalId || pending}
+                disabled={!routable || pending}
                 onClick={onPress}
                 className={cn("truncate rounded-medium px-2 py-1 text-left text-sm text-muted hover:bg-default/40 hover:text-foreground disabled:opacity-60", className)}
             >
@@ -98,7 +116,7 @@ export const EntityToken = ({
     }
 
     // unresolvable target → non-interactive bold text
-    if (!globalId) {
+    if (!routable) {
         return (
             <span className="font-semibold text-foreground">{label}</span>
         )

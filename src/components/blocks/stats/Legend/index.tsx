@@ -35,7 +35,7 @@ export const Legend = ({ items, className }: LegendProps) => {
                     <span
                         aria-hidden
                         style={{ backgroundColor: item.color }}
-                        className="size-3 shrink-0 rounded-full"
+                        className="size-2.5 shrink-0 rounded-full"
                     />
                     <Typography type="body-xs" color="muted">
                         {item.label}

@@ -89,7 +89,7 @@ export const SegmentBar = ({
                             <span
                                 aria-hidden
                                 style={{ backgroundColor: segment.color }}
-                                className="size-3 shrink-0 rounded-full"
+                                className="size-2.5 shrink-0 rounded-full"
                             />
                             <Typography type="body-xs" color="muted">
                                 {segment.label}&nbsp;·&nbsp;{segment.value}

@@ -130,7 +130,7 @@ export const WeeklyGoals = ({
                                         aria-label={t(`dashboard.kpi.labels.${key}`)}
                                         value={current}
                                         maxValue={target || 1}
-                                        color="default"
+                                        color="accent"
                                         size="sm"
                                     >
                                         <ProgressBar.Track>

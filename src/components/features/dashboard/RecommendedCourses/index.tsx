@@ -1,8 +1,6 @@
 "use client"
 
-import React, {
-    useCallback,
-} from "react"
+import React from "react"
 import {
     Chip,
     Typography,
@@ -16,18 +14,17 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    useRouter,
-} from "next/navigation"
-import {
     useQueryRecommendedCoursesSwr,
 } from "@/hooks"
 import {
     AsyncContent,
     IconTile,
     LabeledCard,
-    PressableCard,
     Skeleton,
 } from "@/components/blocks"
+import {
+    EntityToken,
+} from "@/components/features/dashboard/EntityToken"
 import {
     pathConfig,
 } from "@/resources/path"
@@ -44,9 +41,10 @@ const formatVnd = (amount: number) => `${amount.toLocaleString("vi-VN")}₫`
 /**
  * "Khóa học cho bạn" — courses the viewer has NOT bought yet, each priced with
  * their engagement-based loyalty discount (an exclusive offer for diligent / multi-
- * course learners; the discounted price is the price actually charged). Owns its
- * `LabeledCard` (frameless — items are cards) and hides entirely when there's
- * nothing left to recommend. Self-fetches its leaf query.
+ * course learners; the discounted price is the price actually charged). One framed
+ * `LabeledCard` with a flat row per course — the TITLE is the link into the course
+ * (not a whole-card press, matching "my courses"). Hides when nothing's left to
+ * recommend. Self-fetches its leaf query.
  * @param props - optional className for the root element.
  */
 export const RecommendedCourses = ({
@@ -54,18 +52,8 @@ export const RecommendedCourses = ({
 }: RecommendedCoursesProps) => {
     const t = useTranslations()
     const locale = useLocale()
-    const router = useRouter()
     const { data, isLoading, error, mutate } = useQueryRecommendedCoursesSwr()
     const items = data?.items ?? []
-
-    /** Open a course detail page. */
-    const onOpen = useCallback(
-        (displayId: string) => router.push(pathConfig().locale(locale).course(displayId).build()),
-        [
-            router,
-            locale,
-        ],
-    )
 
     // bought everything (loaded, no items, no error) → hide the whole section
     if (!isLoading && !error && items.length === 0) {
@@ -77,14 +65,19 @@ export const RecommendedCourses = ({
             label={t("dashboard.recommended.title")}
             icon={<CompassIcon aria-hidden focusable="false" className="size-5" />}
             className={className}
-            frameless
         >
             <AsyncContent
                 isLoading={isLoading && items.length === 0}
                 skeleton={(
                     <div className="flex flex-col gap-3">
                         {[0, 1, 2].map((row) => (
-                            <Skeleton key={row} className="h-20 w-full rounded-3xl" />
+                            <div key={row} className="flex items-center gap-3">
+                                <Skeleton className="size-12 shrink-0 rounded-xl" />
+                                <div className="flex min-w-0 flex-1 flex-col gap-2">
+                                    <Skeleton.Typography type="body-sm" width="1/2" />
+                                    <Skeleton.Typography type="body-xs" width="1/4" />
+                                </div>
+                            </div>
                         ))}
                     </div>
                 )}
@@ -99,53 +92,51 @@ export const RecommendedCourses = ({
                     {items.map((course) => {
                         const discounted = course.discountPercent > 0
                         return (
-                            <PressableCard
-                                key={course.displayId}
-                                onPress={() => onOpen(course.displayId)}
-                            >
-                                <div className="flex items-center gap-3">
-                                    <IconTile
-                                        size="sm"
-                                        src={course.thumbnailUrl}
-                                        alt={course.title}
-                                        icon={<BookOpenIcon aria-hidden focusable="false" />}
-                                    />
-                                    <div className="flex min-w-0 flex-1 flex-col gap-1">
-                                        <div className="flex items-center justify-between gap-2">
-                                            <Typography type="body-sm" weight="medium" truncate>
-                                                {course.title}
-                                            </Typography>
-                                            {discounted ? (
-                                                <Chip color="danger" variant="soft" size="sm">
-                                                    <Chip.Label>{`-${course.discountPercent}%`}</Chip.Label>
-                                                </Chip>
-                                            ) : null}
-                                        </div>
-                                        {course.description ? (
-                                            <Typography type="body-xs" color="muted" truncate>
-                                                {course.description}
-                                            </Typography>
+                            <div key={course.displayId} className="flex items-center gap-3">
+                                <IconTile
+                                    size="sm"
+                                    src={course.thumbnailUrl}
+                                    alt={course.title}
+                                    icon={<BookOpenIcon aria-hidden focusable="false" />}
+                                />
+                                <div className="flex min-w-0 flex-1 flex-col gap-1">
+                                    <div className="flex items-center justify-between gap-2">
+                                        {/* course title is a link into the course */}
+                                        <EntityToken
+                                            href={pathConfig().locale(locale).course(course.displayId).build()}
+                                            label={course.title}
+                                            className="min-w-0 flex-1 truncate"
+                                        />
+                                        {discounted ? (
+                                            <Chip color="danger" variant="soft" size="sm">
+                                                <Chip.Label>{`-${course.discountPercent}%`}</Chip.Label>
+                                            </Chip>
                                         ) : null}
-                                        <div className="flex items-center gap-2">
-                                            <Typography type="body-sm" weight="medium">
-                                                {formatVnd(course.discountedPriceVnd)}
-                                            </Typography>
-                                            {discounted ? (
-                                                <Typography type="body-xs" color="muted" className="line-through">
-                                                    {formatVnd(course.originalPriceVnd)}
-                                                </Typography>
-                                            ) : null}
-                                        </div>
-                                        {discounted && course.discountReason !== "none" ? (
-                                            <Typography type="body-xs" className="text-accent">
-                                                {t(`dashboard.recommended.reason.${course.discountReason}`, {
-                                                    count: course.enrolledCount,
-                                                })}
+                                    </div>
+                                    {course.description ? (
+                                        <Typography type="body-xs" color="muted" truncate>
+                                            {course.description}
+                                        </Typography>
+                                    ) : null}
+                                    <div className="flex items-center gap-2">
+                                        <Typography type="body-sm" weight="medium">
+                                            {formatVnd(course.discountedPriceVnd)}
+                                        </Typography>
+                                        {discounted ? (
+                                            <Typography type="body-xs" color="muted" className="line-through">
+                                                {formatVnd(course.originalPriceVnd)}
                                             </Typography>
                                         ) : null}
                                     </div>
+                                    {discounted && course.discountReason !== "none" ? (
+                                        <Typography type="body-xs" className="text-accent">
+                                            {t(`dashboard.recommended.reason.${course.discountReason}`, {
+                                                count: course.enrolledCount,
+                                            })}
+                                        </Typography>
+                                    ) : null}
                                 </div>
-                            </PressableCard>
+                            </div>
                         )
                     })}
                 </div>

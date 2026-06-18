@@ -34,6 +34,12 @@ Render: `<section>` → hàng [icon + `Label` ……… `Link` "Xem thêm ›"] 
 - **Card tự-title phức tạp** (vd weekly-challenge có leaderboard) → đổi để **tự render `LabeledCard`** (label ngoài) +
   self-hide (`return null`) khi rỗng — KHÔNG dùng `SectionCard` tự-title rời (lệch pattern + double-title nếu bọc).
 
+## Con tự-sở-hữu-mép trong card → card BỎ padding
+- **Content tự lo mép/divider** (`Accordion`, `Table`, list có `Separator` full-width, `ScrollShadow`) đặt trong card →
+  truyền **`contentClassName="p-0"`** cho `LabeledCard` để nó tràn sát mép (đừng để `CardContent` pad mặc định chồng lên
+  mép sẵn-có của con = double-pad + lệch nhịp, item không sát mép). Content PHẲNG thường (rows/bars/text) vẫn để pad
+  mặc định `px-4 py-3`. (Heuristic double-padding 2 chiều — xem `main.md` §14.)
+
 ## Caret + text (chung, mọi nơi)
 Bất kỳ chỗ nào có **text + caret** (see-more, link điều hướng…):
 - Đặt **sát nhau** (`gap-2` — coupled pair; KHÔNG `gap-1`, xem `main.md` §9).
@@ -47,6 +53,12 @@ Bất kỳ chỗ nào có **text + caret** (see-more, link điều hướng…):
   block tự sở hữu look (`bg-surface rounded-3xl px-4 py-3` + hover tint + focus ring) trên `<button>`/`<a>` thật.
   Feature CHỈ ghép — **CẤM** hand-roll `<button className="rounded-* border bg-* p-*">`.
 - **CẤM lồng `Button`/interactive trong `PressableCard`** (button-trong-button). Affordance (mũi tên…) = icon trần.
+- **HẠN CHẾ `PressableCard` (thầy chốt 2026-06-18):** card list có info/giá/chip/nhiều dòng → KHÔNG whole-card press
+  (cả thẻ press dễ bấm nhầm + affordance mờ + lệch với row khác). Card = **TĨNH** (HeroUI `Card`), action là 1 trong:
+  - **tên-là-LINK** (`EntityToken`) — khi tiêu đề chính là đích (vd card khóa "Khóa học cho bạn"); HOẶC
+  - **caret-link "Tiếp tục ›"** (mirror see-more của LabeledCard: `group` + caret `size-4 transition-transform
+    group-hover:translate-x-1`, accent) — khi action là "đi tiếp" (vd `ResumeCard`).
+  `PressableCard` whole-card **chỉ** cho **navigation-tile thuần** (ít info, 1 đích, không text-action riêng — vd ô QuickAction).
 - KHÔNG có class `.card` global trong repo (`globals.css` chưa định nghĩa dù design doc nhắc) → frame tĩnh =
   HeroUI `Card`+`CardContent`; frame bấm-được = `PressableCard`.
 

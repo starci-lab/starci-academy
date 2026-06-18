@@ -5,6 +5,10 @@ import React, {
     useState,
 } from "react"
 import {
+    Card,
+    CardContent,
+    Link,
+    Typography,
     cn,
 } from "@heroui/react"
 import {
@@ -15,10 +19,10 @@ import {
     useRouter,
 } from "next/navigation"
 import {
-    ChevronRight as CaretRightIcon,
-    CircleQuestion as ChallengeIcon,
-    BookOpen as LessonIcon,
-} from "@gravity-ui/icons"
+    CaretRightIcon,
+    PuzzlePieceIcon,
+    BookOpenIcon,
+} from "@phosphor-icons/react"
 import {
     queryResolveRoute,
 } from "@/modules/api"
@@ -46,9 +50,9 @@ export interface ResumeCardProps extends WithClassNames<undefined> {
 }
 
 /**
- * A single clickable "continue" card. Resolves the entity's canonical route via
- * the index on click (the dashboard has no course context), then navigates — the
- * whole card is the hit target, so nothing is nested inside another button.
+ * A "continue" card — a STATIC frame (not whole-card pressable); the "Tiếp tục ›"
+ * caret link is the action: it resolves the entity's canonical route via the index
+ * on click, then navigates. The caret slides right on hover (see-more pattern).
  * @param props - the resume target
  */
 export const ResumeCard = ({
@@ -89,34 +93,34 @@ export const ResumeCard = ({
         ],
     )
 
-    const ChipIcon = item.kind === "challenge" ? ChallengeIcon : LessonIcon
+    const ChipIcon = item.kind === "challenge" ? PuzzlePieceIcon : BookOpenIcon
 
     return (
-        <button
-            type="button"
-            disabled={pending}
-            onClick={onPress}
-            className={cn(
-                "card card--default flex h-full flex-col items-start gap-3 border border-divider/60 text-left transition-colors hover:bg-accent/5 disabled:opacity-60",
-                className,
-            )}
-        >
-            {/* kind icon */}
-            <ChipIcon className="size-5 shrink-0 text-muted" />
-            {/* title + kind label */}
-            <div className="flex w-full min-w-0 flex-1 flex-col gap-0">
-                <span className="truncate text-sm font-semibold text-foreground">
-                    {item.label}
-                </span>
-                <span className="text-xs text-muted">
-                    {t(`dashboard.continueKind.${item.kind}`)}
-                </span>
-            </div>
-            {/* continue affordance */}
-            <span className="flex items-center gap-1.5 text-sm font-medium text-muted">
-                {t("dashboard.continue")}
-                <CaretRightIcon className="size-5" />
-            </span>
-        </button>
+        <Card className={cn("h-full", className)}>
+            <CardContent className="flex h-full flex-col items-start gap-3">
+                <ChipIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
+                <div className="flex w-full min-w-0 flex-1 flex-col gap-0">
+                    <Typography type="body-sm" weight="semibold" truncate>
+                        {item.label}
+                    </Typography>
+                    <Typography type="body-xs" color="muted">
+                        {t(`dashboard.continueKind.${item.kind}`)}
+                    </Typography>
+                </div>
+                {/* the only action — caret slides right on hover (see-more pattern) */}
+                <Link
+                    onPress={onPress}
+                    isDisabled={pending}
+                    className="group inline-flex cursor-pointer items-center gap-2 text-accent"
+                >
+                    {t("dashboard.continue")}
+                    <CaretRightIcon
+                        aria-hidden
+                        focusable="false"
+                        className="size-4 transition-transform group-hover:translate-x-1"
+                    />
+                </Link>
+            </CardContent>
+        </Card>
     )
 }

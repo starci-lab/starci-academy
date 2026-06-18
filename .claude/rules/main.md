@@ -44,6 +44,14 @@ SLOT (không chắc API → fetch docs). (5) Có FETCH? → `AsyncContent` luôn
 
 > ⚠️ `components/reuseable/**` + `components/layouts/**` = **LEGACY**, KHÔNG thêm code mới (migrate dần sang blocks/features).
 
+- **Thấy cụm UI dùng ≥2 nơi (hoặc rõ sẽ tái dùng) → TÁCH ngay thành BLOCK** (props-only, own style). Block GIỮ state
+  UI-ephemeral nội bộ (vd picker mở/đóng) nhưng props-only về DATA (KHÔNG store/SWR); hành động qua **callback prop**
+  (`onReact`/`onResolve` — feature mới gọi mutation); **KHÔNG nhúng i18n** (text từ feature; cần độc-lập-i18n → icon/emoji/số);
+  mở rộng block cũ bằng **slot optional** (`FeedItem.footer`), đừng tạo bản sao. (vd `ActivityAvatar/ReactionBar/SegmentBar`.)
+- **Đụng/redesign 1 route của 1 domain → migrate HẾT trang anh em cùng domain ra `features/`** (vd course = detail+list);
+  đừng để trang này ở `features/` còn trang kia kẹt `layouts/`. Tách đúng tầng (trình bày→block, wiring→feature) +
+  repoint importer + **xoá HẲN folder legacy** đã thay (grep 0 import). Audit 1 trang → liệt kê luôn route cùng domain (đừng migrate nửa vời).
+
 ## 3. Luật style (chỗ được viết style)
 - Style (bg/border/shadow/rounded/text-size/font/padding/colour) **chỉ ở**: blocks (tầng 3) hoặc globals (tầng 1).
 - Features/layouts: `className` = **chỉ PLACEMENT** (`w/h/size`, `flex/grid/col-span/row-span/order`, `gap/m-*`,
@@ -83,6 +91,10 @@ SLOT (không chắc API → fetch docs). (5) Có FETCH? → `AsyncContent` luôn
   KHÔNG dùng `@icons-pack/react-simple-icons` (thiếu LinkedIn). Thiếu icon → đổi lib xịn, đừng chế. Icon map → `map.tsx`.
 - **Icon trang trí:** `aria-hidden` + `focusable="false"`. **Icon ĐẠI DIỆN entity** (course/project/section) → block
   **`IconTile`** (`blocks/identity/IconTile`: frame `bg-{tone}/10`, mặc định w-16 h-16), KHÔNG icon trần.
+- **Brand lockup (logo + wordmark) = block `BrandLogo`** (`blocks/identity`, own look); feature (navbar `Logo`) chỉ bọc
+  `Link`+onPress (wiring, KHÔNG style). In-app logo = **PNG** (`/logo-icon.png`), KHÔNG SVG component. **Ngoại lệ
+  `text-[Npx]`:** tagline wordmark (vd "ACADEMY" dưới brand) ĐƯỢC dùng px chính xác `<12` (`text-[10px]`) + `uppercase`
+  + `tracking-widest` **CHỈ trong block thương hiệu** (chi tiết typographic của logo, không có Typography type) — KHÔNG mở cho UI thường.
 - **Kích thước icon mặc định = `size-5` (20px)** — icon UI đứng/đi-kèm-text (nav row, nút icon-only, status/meta line,
   brand logo fa6). **`size-4` (16px) = NGOẠI LỆ** chỉ khi chật/inline text nhỏ: **caret/chevron** see-more
   (`group-hover:translate-x`) + disclosure (`data-[open=true]:rotate-180`) giữ `size-4`. **`size-3`** cho icon trong
@@ -95,6 +107,8 @@ SLOT (không chắc API → fetch docs). (5) Có FETCH? → `AsyncContent` luôn
   (check tự theo selection)+`Label`; group=`Dropdown.Section`>`Header` (KHÔNG `Separator` thủ công giữa section). → `starci-dropdown.md`.
 - **Tabs = block `ExtendedTabs`** (secondary, indicator accent, bỏ baseline). Feature giữ `Tabs.ListContainer/List/Tab/Indicator`.
 - **Text bấm được = HeroUI `Link`** (href→navigate; `onPress`→modal/overlay), KHÔNG `<button>/<span>`+onClick. Nút KHỐI (CTA/submit) = `Button`.
+- **Tên ENTITY trong list (khóa/lesson/challenge/project) = LINK vào entity** (KHÔNG text trơ): block `EntityToken`
+  (`globalId`→`queryResolveRoute`→navigate; hoặc `href` trực tiếp khi đã biết route — vd course `displayId`, khỏi resolve).
 - **`Card` v3 = `<div>` TĨNH** (KHÔNG `isPressable`/`onPress`) → card cả-thẻ-bấm = block `PressableCard` (→ `starci-card.md`).
 - **Chọn SURFACE theo việc** (đừng nhồi mọi thứ vào modal): **Popover** anchored = menu/picker nhanh (mất focus=đóng:
   account/notif/lang); **Modal** centered nhỏ = **1 QUYẾT ĐỊNH** ngắn (confirm/auth/pay/share/form nhỏ — 1 primary,
@@ -177,6 +191,8 @@ SLOT (không chắc API → fetch docs). (5) Có FETCH? → `AsyncContent` luôn
 - **Tab = URL state**: đổi tab ⇒ sửa `?tab=` (`router.replace {scroll:false}`); vào URL kèm query ⇒ chỉnh tab. Gói trong 1 hook (`fromUrl` ref chống echo). (mẫu `useProfileTabUrlSync`).
 - **Shell "sidebar + content"** (settings…): 1 scroll context (body) + sidebar STICKY (KHÔNG khoá-viewport 2-pane);
   nav row = `Link` (KHÔNG 1-item `ListBox`); KHÔNG per-page back-arrow khi đã có breadcrumb+sidebar. Chi tiết → `starci-navigation.md`.
+- **Trang top-level content full-width (grid/list/cards) bọc `mx-auto w-full max-w-[1280px] px-6 py-6`** — đừng full-bleed
+  (card phình theo màn 1920). **NGOẠI LỆ: trang CÓ SIDEBAR** (home/profile 2-cột, settings) giữ layout/width riêng — đừng ép `max-w-[1280px]` lên khung sidebar.
 - **Meta phụ cột identity** (link social, joined, dòng phụ sidebar/card) = **dòng GỌN** (`py-0.5`, ~24–28px), **KHÔNG ép
   `min-h-11`/44px** (44px tap-target dành cho NÚT hành động, không phải mọi link text → tránh sprawl). Mọi dòng cùng cụm
   PHẢI nhất quán **1 leading icon + text** (joined cũng có icon, vd `CalendarBlankIcon`) thẳng hàng. Link cá thể hoá:
@@ -241,6 +257,10 @@ store, **CẤM `useState` cục bộ**; **ngoại lệ**: overlay TRẢ KẾT QU
 - **Hạn chế BORDER** — phân tách bằng tint/spacing/đổi nền nhẹ; border chỉ cho divider 1 nét / input / focus ring.
 - **CTA trùng → giữ 1, ưu tiên cái GẦN ngữ cảnh** (rỗng→CTA trong empty-state, ẩn header; có data→header đổi "Quản lý"). (mẫu `ProfilePinned`).
 - **Container HeroUI tự pad rồi → KHÔNG bọc thêm `p-*`** (double padding). Nội dung trong chỉ `flex flex-col gap-*`. Hỏi "container ngoài pad chưa?" trước khi gõ `p-*`.
+- **Giá ưu đãi/discount phải THẬT (charged == shown)** — CẤM fake `price*0.9` ở FE rồi charge full (lừa + vỡ contract).
+  Discount tính ở BE (`CoursePricingService`, lưu `transaction.discountPercent`), dựa DỮ LIỆU thật (engagement: số khóa
+  đã mua + streak/XP); copy "độc quyền vì chăm chỉ / đã học N khóa" OK khi % + `reason` suy từ data thật. KHÔNG có cơ chế
+  thật → KHÔNG hiện %. (Recommended-courses: loại enrolled ở BE + 1 query trả giá gốc/giảm + reason; xem `starci-stats`/price §11.)
 - **Branding-first — đừng attribute tên brand chưa có uy tín.** Nhãn tín hiệu/uy tín (verified · powered-by · "by X")
   chỉ ghi **CHỨC NĂNG** ("Đã xác minh"/"Verified"), KHÔNG "bởi StarCi". Gốc: gắn tên vào cái chưa có sức nặng = rỗng,
   phản tác dụng — xây identity trước, gắn tên sau (khi thầy chốt).

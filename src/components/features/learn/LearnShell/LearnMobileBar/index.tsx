@@ -1,12 +1,19 @@
 "use client"
 
-import { Bars as ListIcon, ListUl as ListBulletsIcon } from "@gravity-ui/icons"
+import {
+    ListBulletsIcon,
+    ListIcon,
+} from "@phosphor-icons/react"
 import React, { useEffect, useState } from "react"
 import { Button, cn, Drawer, ScrollShadow } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { SidebarNavList } from "@/components/layouts/learn/Sidebar/SidebarNavList"
-import { useSidebarNavItems } from "@/components/layouts/learn/Sidebar/useSidebarNavItems"
+import {
+    SidebarNavItem,
+} from "@/components/blocks"
 import { ModuleSidebar } from "@/components/layouts/learn/ModuleSidebar"
+import {
+    useSidebarNavItems,
+} from "../hooks/useSidebarNavItems"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link LearnMobileBar}. */
@@ -16,15 +23,16 @@ export type LearnMobileBarProps = WithClassNames<undefined>
  * Mobile toolbar for the course-learn pages (hidden from `lg` up).
  *
  * Container: surfaces the two sidebars that are hidden on small screens as
- * slide-in drawers — the course nav (left) and the module outline (right).
- * Each drawer is controlled by local open state. `"use client"` for the
- * interactive triggers + shared nav hook.
+ * slide-in drawers — the course nav (left) and the module outline (right). The
+ * nav rows reuse the {@link SidebarNavItem} block (always expanded here) and
+ * self-route via the shared select handler. Each drawer is controlled by local
+ * open state. `"use client"` for the interactive triggers + shared nav hook.
  * @param props - {@link LearnMobileBarProps}
  */
 export const LearnMobileBar = ({ className }: LearnMobileBarProps) => {
     const t = useTranslations()
     // shared course-nav entries (same list the desktop sidebar renders)
-    const { items, selectedTab } = useSidebarNavItems()
+    const { items, selectedTab, onSelect } = useSidebarNavItems()
     // open state for the left (course menu) drawer
     const [isMenuOpen, setMenuOpen] = useState(false)
     // open state for the right (module outline) drawer
@@ -62,11 +70,18 @@ export const LearnMobileBar = ({ className }: LearnMobileBarProps) => {
                                 </Drawer.Header>
                             </div>
                             <div className="border-b" />
-                            <Drawer.Body className="p-0">
-                                <SidebarNavList
-                                    items={items}
-                                    selectedTab={selectedTab}
-                                />
+                            <Drawer.Body className="p-3">
+                                <div className="flex flex-col gap-3">
+                                    {items.map((item) => (
+                                        <SidebarNavItem
+                                            key={item.value}
+                                            icon={<item.icon className="size-5 shrink-0" />}
+                                            label={item.label}
+                                            isActive={selectedTab === item.tab}
+                                            onPress={() => onSelect(item)}
+                                        />
+                                    ))}
+                                </div>
                             </Drawer.Body>
                         </Drawer.Dialog>
                     </Drawer.Content>

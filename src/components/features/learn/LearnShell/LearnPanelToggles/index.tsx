@@ -1,23 +1,28 @@
 "use client"
 
-import { ChevronsLeft as CaretDoubleLeftIcon, ChevronsRight as CaretDoubleRightIcon } from "@gravity-ui/icons"
+import {
+    CaretDoubleLeftIcon,
+    CaretDoubleRightIcon,
+} from "@phosphor-icons/react"
 import React from "react"
 import { cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { useAppDispatch, useAppSelector } from "@/redux"
-import { toggleLeftCollapsed, toggleRightCollapsed } from "@/redux/slices"
+import { toggleRightCollapsed } from "@/redux/slices"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link LearnPanelToggles}. */
 export type LearnPanelTogglesProps = WithClassNames<undefined>
 
 /**
- * Desktop collapse handles styled as short accent bars on the content borders.
+ * Desktop collapse handle styled as a short accent bar on the content's right
+ * border.
  *
- * Container: reads/dispatches the rail-collapse flags on the `sidebar` slice. The
- * left handle (left border) toggles the course-nav rail to icon-only; the right
- * handle (right border) shrinks/expands the module-outline rail. Each handle is a
- * slim vertical bar that reveals a direction caret on hover, kept centered in the
+ * Container: reads/dispatches the right-rail collapse flag on the `sidebar` slice.
+ * The handle (right border) shrinks/expands the module-outline rail. (The LEFT
+ * rail now collapses via the {@link import("@/components/blocks").CollapsibleSidebar}
+ * block's own toggle, so no left handle is rendered here.) The handle is a slim
+ * vertical bar that reveals a direction caret on hover, kept centered in the
  * viewport via a sticky wrapper. Hidden below `lg` (mobile uses drawers). Must be
  * rendered inside a `relative` content column. `"use client"` for redux + presses.
  * @param props - {@link LearnPanelTogglesProps}
@@ -26,7 +31,6 @@ export const LearnPanelToggles = ({ className }: LearnPanelTogglesProps) => {
     const t = useTranslations()
     const dispatch = useAppDispatch()
     // current collapse state drives both the caret direction and the aria label
-    const leftCollapsed = useAppSelector((state) => state.sidebar.leftCollapsed)
     const rightCollapsed = useAppSelector((state) => state.sidebar.rightCollapsed)
 
     // short vertical bar that grows a touch on hover
@@ -38,27 +42,8 @@ export const LearnPanelToggles = ({ className }: LearnPanelTogglesProps) => {
         // full-height, click-through overlay spanning the content column; desktop only.
         // absolute so it adds no layout, z-20 to float above the article text.
         <div className={cn("pointer-events-none absolute inset-0 z-20 hidden lg:block", className)}>
-            {/* zero-height bar that sticks at viewport mid-line, so handles stay centered while scrolling */}
+            {/* zero-height bar that sticks at viewport mid-line, so the handle stays centered while scrolling */}
             <div className="sticky top-1/2">
-                {/* left handle: sits on the divider between the nav rail and content */}
-                <button
-                    type="button"
-                    aria-label={leftCollapsed ? t("nav.expandLeftRail") : t("nav.collapseLeftRail")}
-                    title={leftCollapsed ? t("nav.expandLeftRail") : t("nav.collapseLeftRail")}
-                    onClick={() => dispatch(toggleLeftCollapsed())}
-                    className="group pointer-events-auto absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer"
-                >
-                    <span className={barClass} />
-                    {/* caret points the way the rail will move: in to collapse, out to expand */}
-                    <span className={caretClass}>
-                        {leftCollapsed ? (
-                            <CaretDoubleRightIcon className="size-3" />
-                        ) : (
-                            <CaretDoubleLeftIcon className="size-3" />
-                        )}
-                    </span>
-                </button>
-
                 {/* right handle: sits on the divider between content and the outline rail */}
                 <button
                     type="button"

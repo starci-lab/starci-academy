@@ -6,7 +6,7 @@ import type {
 /**
  * One row in the course-learn sidebar navigation.
  */
-export interface SidebarNavItem {
+export interface LearnNavItem {
     /** Visible label. */
     label: string
     /** Stable list key. */

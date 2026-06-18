@@ -1,6 +1,16 @@
 "use client"
 
-import { Code as CodeIcon, CurlyBrackets as BracketsCurlyIcon, GraduationCap as GraduationCapIcon, HandOk as HandshakeIcon, Layers as StackIcon, LayoutCells as CardsIcon, MapPin as MapPinLineIcon, Persons as UsersIcon, Sparkles as SparkleIcon } from "@gravity-ui/icons"
+import {
+    BracketsCurlyIcon,
+    CardsIcon,
+    CodeIcon,
+    GraduationCapIcon,
+    HandshakeIcon,
+    MapPinLineIcon,
+    SparkleIcon,
+    StackIcon,
+    UsersIcon,
+} from "@phosphor-icons/react"
 import {
     useCallback,
     useMemo,
@@ -24,27 +34,27 @@ import {
     pathConfig,
 } from "@/resources/path"
 import type {
-
-    SidebarNavItem,
-} from "./types"
+    LearnNavItem,
+} from "../types"
 
 /**
  * Result of {@link useSidebarNavItems}.
  */
 export interface UseSidebarNavItemsResult {
     /** Ordered nav entries for the course-learn sidebar. */
-    items: Array<SidebarNavItem>
+    items: Array<LearnNavItem>
     /** Currently active sidebar tab (for row highlighting). */
     selectedTab: SidebarTab
     /** Fired with the chosen entry: switches tab then routes to its URL. */
-    onSelect: (item: SidebarNavItem) => void
+    onSelect: (item: LearnNavItem) => void
 }
 
 /**
  * Builds the course-learn sidebar nav entries plus the select handler.
  *
- * Shared by the desktop {@link Sidebar} and the mobile drawer so both render the
- * exact same items + routing without duplicating the redux/route wiring.
+ * Shared by the desktop {@link import("../LearnSidebar").LearnSidebar} and the
+ * mobile drawer ({@link import("../LearnMobileBar").LearnMobileBar}) so both render
+ * the exact same items + routing without duplicating the redux/route wiring.
  * @returns {@link UseSidebarNavItemsResult} entries, active tab, and select callback.
  */
 export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
@@ -70,7 +80,7 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
     )
 
     // build the ordered nav entries; memoized so rows keep stable identity
-    const items = useMemo<Array<SidebarNavItem>>(
+    const items = useMemo<Array<LearnNavItem>>(
         () => [
             {
                 label: t("mindMap.title"),
@@ -147,7 +157,7 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
 
     /** Route on selection: update Redux tab, then navigate once to the row URL. */
     const onSelect = useCallback(
-        (item: SidebarNavItem) => {
+        (item: LearnNavItem) => {
             onSelectSidebarTab(item.tab)
             if (!item.url) {
                 return

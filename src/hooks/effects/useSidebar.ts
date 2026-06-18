@@ -27,10 +27,6 @@ export const useSidebar = () => {
             dispatch(setSidebar({ tab: SidebarTab.Modules, extraId: undefined }))
             return
         }
-        if (pathname.includes("/cv")) {
-            dispatch(setSidebar({ tab: SidebarTab.Cv, extraId: undefined }))
-            return
-        }
         if (pathname.includes("/personal-project")) {
             dispatch(setSidebar({ tab: SidebarTab.PersonalProject, extraId: undefined }))
             return

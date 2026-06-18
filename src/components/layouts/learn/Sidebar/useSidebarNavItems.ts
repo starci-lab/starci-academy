@@ -1,6 +1,6 @@
 "use client"
 
-import { Code as CodeIcon, CurlyBrackets as BracketsCurlyIcon, FileText as ReadCvLogoIcon, GraduationCap as GraduationCapIcon, HandOk as HandshakeIcon, Layers as StackIcon, LayoutCells as CardsIcon, MapPin as MapPinLineIcon, Persons as UsersIcon, Sparkles as SparkleIcon } from "@gravity-ui/icons"
+import { Code as CodeIcon, CurlyBrackets as BracketsCurlyIcon, GraduationCap as GraduationCapIcon, HandOk as HandshakeIcon, Layers as StackIcon, LayoutCells as CardsIcon, MapPin as MapPinLineIcon, Persons as UsersIcon, Sparkles as SparkleIcon } from "@gravity-ui/icons"
 import {
     useCallback,
     useMemo,
@@ -113,13 +113,6 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
                 tab: SidebarTab.Practice,
                 icon: CodeIcon,
                 url: pathConfig().locale(locale).course(courseDisplayId).learn().practice().build(),
-            },
-            {
-                label: t("cv.title"),
-                value: "cv",
-                tab: SidebarTab.Cv,
-                icon: ReadCvLogoIcon,
-                url: pathConfig().locale(locale).course(courseDisplayId).learn().cv().build(),
             },
             {
                 label: t("finalProject.title"),

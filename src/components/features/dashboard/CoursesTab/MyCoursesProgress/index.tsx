@@ -2,10 +2,12 @@
 
 import React from "react"
 import {
-    ProgressBar,
     Typography,
     cn,
 } from "@heroui/react"
+import {
+    BookOpenIcon,
+} from "@phosphor-icons/react"
 import {
     useTranslations,
 } from "next-intl"
@@ -14,6 +16,8 @@ import {
 } from "@/hooks"
 import {
     AsyncContent,
+    IconTile,
+    SegmentBar,
     Skeleton,
 } from "@/components/blocks"
 import {
@@ -26,21 +30,19 @@ import type {
 /** Props for {@link MyCoursesProgress}. */
 export type MyCoursesProgressProps = WithClassNames<undefined>
 
-/** One progress dimension of a course (content / challenge / milestone). */
-interface CourseMetric {
-    /** i18n key suffix under `dashboard.courseProgress`. */
-    key: string
-    /** Items the viewer has completed in this dimension. */
-    completed: number
-    /** Total items in this dimension (0 when the dimension doesn't apply). */
-    total: number
+/** Segment colour per course progress dimension. */
+const DIM_COLOR: Record<string, string> = {
+    content: "var(--accent)",
+    challenge: "var(--success)",
+    milestone: "var(--warning)",
 }
 
 /**
- * Enrolled-course progress list — each joined course as a title + completion % and
- * a bar per applicable dimension (content / challenge / milestone). Content only
- * (the parent {@link import("@/components/blocks").LabeledCard} frames it). Reads
- * its own `myCourses` leaf query through {@link AsyncContent}.
+ * Enrolled-course progress — each course as one compact row (icon + title + overall
+ * %, plus a single segmented bar folding content / challenge / milestone into one
+ * honest bar with a legend), mirroring the profile overview. Content only (the
+ * parent {@link import("@/components/blocks").LabeledCard} frames it). Reads its own
+ * `myCourses` leaf query through {@link AsyncContent}.
  * @param props - optional root class name (placement only)
  */
 export const MyCoursesProgress = ({
@@ -56,9 +58,15 @@ export const MyCoursesProgress = ({
             skeleton={(
                 <div className="flex flex-col gap-4">
                     {[0, 1].map((row) => (
-                        <div key={row} className="flex flex-col gap-2">
-                            <Skeleton.Typography type="body-sm" width="1/2" />
-                            <Skeleton.ProgressBar />
+                        <div key={row} className="flex items-center gap-3">
+                            <Skeleton className="size-12 shrink-0 rounded-2xl" />
+                            <div className="flex min-w-0 flex-1 flex-col gap-2">
+                                <div className="flex items-center justify-between gap-2">
+                                    <Skeleton.Typography type="body-sm" width="1/2" />
+                                    <Skeleton className="h-3 w-8 rounded" />
+                                </div>
+                                <Skeleton.ProgressBar />
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -74,48 +82,40 @@ export const MyCoursesProgress = ({
         >
             <div className={cn("flex flex-col gap-4", className)}>
                 {courses.map((item) => {
-                    const metrics: Array<CourseMetric> = [
+                    const dims = [
                         { key: "content", completed: item.contentCompleted, total: item.contentTotal },
                         { key: "challenge", completed: item.challengeCompleted, total: item.challengeTotal },
                         { key: "milestone", completed: item.completed, total: item.total },
                     ]
+                    const totalTasks = dims.reduce((acc, d) => acc + d.total, 0)
+                    const doneTasks = dims.reduce((acc, d) => acc + d.completed, 0)
+                    const percent = totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : 0
                     return (
-                        <div key={item.globalId} className="flex flex-col gap-2">
-                            <div className="flex items-center justify-between gap-2">
-                                <EntityToken
-                                    globalId={item.globalId}
-                                    label={item.label}
-                                    className="min-w-0 truncate"
+                        <div key={item.globalId} className="flex items-center gap-3">
+                            <IconTile size="sm" icon={<BookOpenIcon aria-hidden focusable="false" />} />
+                            <div className="flex min-w-0 flex-1 flex-col gap-2">
+                                <div className="flex items-center justify-between gap-2">
+                                    {/* course title is a link into the course */}
+                                    <EntityToken
+                                        globalId={item.globalId}
+                                        label={item.label}
+                                        className="min-w-0 flex-1 truncate"
+                                    />
+                                    <Typography type="body-xs" color="muted">
+                                        {percent}%
+                                    </Typography>
+                                </div>
+                                <SegmentBar
+                                    max={totalTasks || 1}
+                                    ariaLabel={`${item.label} · ${percent}%`}
+                                    segments={dims.map((d) => ({
+                                        key: d.key,
+                                        label: t(`dashboard.courseProgress.${d.key}`),
+                                        value: d.completed,
+                                        color: DIM_COLOR[d.key],
+                                    }))}
                                 />
-                                <Typography type="body-xs" color="muted">
-                                    {item.completionPercent}%
-                                </Typography>
                             </div>
-                            {metrics
-                                .filter((metric) => metric.total > 0)
-                                .map((metric) => (
-                                    <div key={metric.key} className="flex flex-col gap-2">
-                                        <div className="flex items-center justify-between gap-2">
-                                            <Typography type="body-xs" color="muted">
-                                                {t(`dashboard.courseProgress.${metric.key}`)}
-                                            </Typography>
-                                            <Typography type="body-xs" color="muted">
-                                                {metric.completed}/{metric.total}
-                                            </Typography>
-                                        </div>
-                                        <ProgressBar
-                                            aria-label={`${item.label} ${metric.key}`}
-                                            value={metric.completed}
-                                            maxValue={metric.total}
-                                            color="default"
-                                            size="sm"
-                                        >
-                                            <ProgressBar.Track>
-                                                <ProgressBar.Fill />
-                                            </ProgressBar.Track>
-                                        </ProgressBar>
-                                    </div>
-                                ))}
                         </div>
                     )
                 })}

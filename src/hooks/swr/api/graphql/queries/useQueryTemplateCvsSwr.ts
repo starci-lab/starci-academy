@@ -10,14 +10,14 @@ import useSWR from "swr"
 
 /**
  * SWR query core for the template CVs query.
- * Only fetches on the CV page (`/learn/cv`) — its only consumer is `CVUpload`.
+ * Only fetches on the CV page (`/profile/cv`) — its only consumer is `CVUpload`.
  * Previously fetched on EVERY page (without even an auth gate).
  * @returns the SWR query handle.
  */
 export const useQueryTemplateCvsSwr = () => {
     const locale = useLocale()
     const pathname = usePathname()
-    const onCvPage = pathname.includes("/learn/cv")
+    const onCvPage = pathname.includes("/profile/cv")
     const dispatch = useAppDispatch()
     const swr = useSWR(
         onCvPage

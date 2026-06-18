@@ -1,11 +1,16 @@
 "use client"
 
 import React, {
-    useMemo,
+    useCallback,
 } from "react"
 import {
-    cn,
+    Chip,
+    Typography,
 } from "@heroui/react"
+import {
+    CompassIcon,
+    BookOpenIcon,
+} from "@phosphor-icons/react"
 import {
     useLocale,
     useTranslations,
@@ -14,12 +19,15 @@ import {
     useRouter,
 } from "next/navigation"
 import {
-    Compass as CompassIcon,
-} from "@gravity-ui/icons"
-import {
-    useQueryCoursesSwr,
-    useQueryMyCoursesSwr,
+    useQueryRecommendedCoursesSwr,
 } from "@/hooks"
+import {
+    AsyncContent,
+    IconTile,
+    LabeledCard,
+    PressableCard,
+    Skeleton,
+} from "@/components/blocks"
 import {
     pathConfig,
 } from "@/resources/path"
@@ -27,18 +35,18 @@ import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 
-/** Max number of recommended courses shown. */
-const RECOMMEND_LIMIT = 3
-
 /** Props for {@link RecommendedCourses}. */
 export type RecommendedCoursesProps = WithClassNames<undefined>
 
+/** Format a VND amount with the vi-VN grouping + đồng sign. */
+const formatVnd = (amount: number) => `${amount.toLocaleString("vi-VN")}₫`
+
 /**
- * "Courses for you" discovery card on the explore tab — courses the viewer has
- * **not** joined yet, so the explore stream offers a genuine next step instead of
- * mirroring the social feed. Enrolled courses are excluded by title (the rail's
- * leaf query exposes labels, not ids). Self-fetches its own leaf queries; hides
- * itself when there is nothing new to recommend.
+ * "Khóa học cho bạn" — courses the viewer has NOT bought yet, each priced with
+ * their engagement-based loyalty discount (an exclusive offer for diligent / multi-
+ * course learners; the discounted price is the price actually charged). Owns its
+ * `LabeledCard` (frameless — items are cards) and hides entirely when there's
+ * nothing left to recommend. Self-fetches its leaf query.
  * @param props - optional className for the root element.
  */
 export const RecommendedCourses = ({
@@ -47,69 +55,104 @@ export const RecommendedCourses = ({
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
-    const { data: coursesData } = useQueryCoursesSwr()
-    const { data: myCourses } = useQueryMyCoursesSwr()
+    const { data, isLoading, error, mutate } = useQueryRecommendedCoursesSwr()
+    const items = data?.items ?? []
 
-    /** Courses not already joined (matched by title), capped at the limit. */
-    const recommended = useMemo(
-        () => {
-            const all = coursesData?.courses?.data?.data ?? []
-            const enrolled = new Set(
-                (myCourses ?? []).map((course) => course.label.trim().toLowerCase()),
-            )
-            return all
-                .filter((course) => !enrolled.has(course.title.trim().toLowerCase()))
-                .slice(0, RECOMMEND_LIMIT)
-        },
+    /** Open a course detail page. */
+    const onOpen = useCallback(
+        (displayId: string) => router.push(pathConfig().locale(locale).course(displayId).build()),
         [
-            coursesData,
-            myCourses,
+            router,
+            locale,
         ],
     )
 
-    // everything already joined (or nothing loaded) → hide the card
-    if (recommended.length === 0) {
+    // bought everything (loaded, no items, no error) → hide the whole section
+    if (!isLoading && !error && items.length === 0) {
         return null
     }
 
     return (
-        <div className={cn("flex flex-col gap-3 rounded-large bg-default/40 p-3", className)}>
-            <div className="flex items-center gap-1.5">
-                <CompassIcon className="size-5 shrink-0 text-accent" />
-                <span className="text-base font-semibold text-foreground">
-                    {t("dashboard.recommended.title")}
-                </span>
-            </div>
-            <div className="flex flex-col gap-1.5">
-                {recommended.map((course) => (
-                    <button
-                        key={course.displayId}
-                        type="button"
-                        onClick={() => router.push(
-                            pathConfig().locale(locale).course(course.displayId).build(),
-                        )}
-                        className="flex items-center gap-3 rounded-medium px-2 py-1.5 text-left hover:bg-default/60"
-                    >
-                        {course.coverImageUrl ? (
-                            <img
-                                src={course.coverImageUrl}
-                                alt={course.title}
-                                className="size-9 shrink-0 rounded-medium object-cover"
-                            />
-                        ) : null}
-                        <div className="flex min-w-0 flex-1 flex-col gap-0">
-                            <span className="truncate text-sm font-semibold text-foreground">
-                                {course.title}
-                            </span>
-                            {course.description ? (
-                                <span className="truncate text-xs text-muted">
-                                    {course.description}
-                                </span>
-                            ) : null}
-                        </div>
-                    </button>
-                ))}
-            </div>
-        </div>
+        <LabeledCard
+            label={t("dashboard.recommended.title")}
+            icon={<CompassIcon aria-hidden focusable="false" className="size-5" />}
+            className={className}
+            frameless
+        >
+            <AsyncContent
+                isLoading={isLoading && items.length === 0}
+                skeleton={(
+                    <div className="flex flex-col gap-3">
+                        {[0, 1, 2].map((row) => (
+                            <Skeleton key={row} className="h-20 w-full rounded-3xl" />
+                        ))}
+                    </div>
+                )}
+                error={items.length === 0 ? error : undefined}
+                errorContent={{
+                    title: t("dashboard.loadError"),
+                    onRetry: () => { void mutate() },
+                    retryLabel: t("dashboard.retry"),
+                }}
+            >
+                <div className="flex flex-col gap-3">
+                    {items.map((course) => {
+                        const discounted = course.discountPercent > 0
+                        return (
+                            <PressableCard
+                                key={course.displayId}
+                                onPress={() => onOpen(course.displayId)}
+                            >
+                                <div className="flex items-center gap-3">
+                                    {course.coverImageUrl ? (
+                                        <img
+                                            src={course.coverImageUrl}
+                                            alt={course.title}
+                                            className="size-12 shrink-0 rounded-xl object-cover"
+                                        />
+                                    ) : (
+                                        <IconTile size="sm" icon={<BookOpenIcon aria-hidden focusable="false" />} />
+                                    )}
+                                    <div className="flex min-w-0 flex-1 flex-col gap-1">
+                                        <div className="flex items-center justify-between gap-2">
+                                            <Typography type="body-sm" weight="medium" truncate>
+                                                {course.title}
+                                            </Typography>
+                                            {discounted ? (
+                                                <Chip color="danger" variant="soft" size="sm">
+                                                    <Chip.Label>{`-${course.discountPercent}%`}</Chip.Label>
+                                                </Chip>
+                                            ) : null}
+                                        </div>
+                                        {course.description ? (
+                                            <Typography type="body-xs" color="muted" truncate>
+                                                {course.description}
+                                            </Typography>
+                                        ) : null}
+                                        <div className="flex items-center gap-2">
+                                            <Typography type="body-sm" weight="medium">
+                                                {formatVnd(course.discountedPriceVnd)}
+                                            </Typography>
+                                            {discounted ? (
+                                                <Typography type="body-xs" color="muted" className="line-through">
+                                                    {formatVnd(course.originalPriceVnd)}
+                                                </Typography>
+                                            ) : null}
+                                        </div>
+                                        {discounted && course.discountReason !== "none" ? (
+                                            <Typography type="body-xs" className="text-accent">
+                                                {t(`dashboard.recommended.reason.${course.discountReason}`, {
+                                                    count: course.enrolledCount,
+                                                })}
+                                            </Typography>
+                                        ) : null}
+                                    </div>
+                                </div>
+                            </PressableCard>
+                        )
+                    })}
+                </div>
+            </AsyncContent>
+        </LabeledCard>
     )
 }

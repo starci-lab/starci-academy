@@ -2,14 +2,14 @@
 
 import React from "react"
 import {
-    CvLearnLayout,
+    Cv,
 } from "@/components/features/profile/CV"
 
 /**
- * Learn / CV route: delegates UI to `CvLearnLayout`.
+ * User-level CV route (`/profile/cv`): the résumé tool, no longer nested under a course's Learn shell.
  */
 const Page = () => {
-    return <CvLearnLayout />
+    return <Cv />
 }
 
 export default Page

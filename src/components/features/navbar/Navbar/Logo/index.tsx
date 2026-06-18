@@ -13,7 +13,9 @@ import {
 import {
     useRouter,
 } from "@/i18n/navigation"
-import { LogoMark } from "@/components/svg"
+import {
+    BrandLogo,
+} from "@/components/blocks"
 import type {
     WithClassNames,
 } from "@/modules/types"
@@ -24,7 +26,8 @@ import type {
 export type LogoProps = WithClassNames<undefined>
 
 /**
- * Logo — application brand mark that routes home when pressed.
+ * Logo — the {@link BrandLogo} lockup wrapped in a link that routes home when
+ * pressed.
  *
  * `"use client"` for the router press handler.
  * @param props - optional container class name
@@ -42,9 +45,9 @@ export const Logo = ({ className }: LogoProps) => {
     return (
         <Link
             onPress={onPress}
-            className={cn(className)}
+            className={cn("cursor-pointer", className)}
         >
-            <LogoMark className="size-10" />
+            <BrandLogo />
         </Link>
     )
 }

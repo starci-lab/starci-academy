@@ -1908,7 +1908,12 @@
       "text": "Chỉ còn {count} nội dung nữa là hoàn thành"
     },
     "recommended": {
-      "title": "Khóa học cho bạn"
+      "title": "Khóa học cho bạn",
+            "reason": {
+                "both": "Độc quyền cho bạn — vì chăm chỉ & đã học {count} khóa",
+                "enrolledCount": "Độc quyền cho bạn — vì đã học {count} khóa",
+                "diligent": "Độc quyền cho bạn — vì bạn chăm chỉ"
+            }
     },
     "upcomingLive": {
       "inDays": "sau {days} ngày {hours} giờ",

@@ -6,12 +6,12 @@ import useSWR from "swr"
 
 /**
  * Fetches the presigned CV view URL for the Keycloak user and mirrors it into Redux.
- * Only fetches on the CV page (`/learn/cv`) — its only consumer is the CV layout.
+ * Only fetches on the CV page (`/profile/cv`) — its only consumer is the CV layout.
  */
 export const useQueryCvUrlSwr = () => {
     const authenticated = useAppSelector((state) => state.keycloak.authenticated)
     const pathname = usePathname()
-    const onCvPage = pathname.includes("/learn/cv")
+    const onCvPage = pathname.includes("/profile/cv")
     const dispatch = useAppDispatch()
     const swr = useSWR(
         authenticated && onCvPage

@@ -5,6 +5,8 @@ import React, {
 } from "react"
 import {
     Breadcrumbs,
+    Typography,
+    cn,
 } from "@heroui/react"
 import {
     useLocale,
@@ -17,87 +19,74 @@ import {
     pathConfig,
 } from "@/resources"
 import {
-    useAppSelector,
-} from "@/redux"
-import {
     useQueryCvUrlSwr,
 } from "@/hooks"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { cn, Typography } from "@heroui/react"
 import { CVUpload } from "./CVUpload"
 import { CVPreview } from "./CVPreview"
 
-/** One breadcrumb row for the learn CV page. */
-type CvLearnBreadcrumbItem = {
+/** One breadcrumb row for the CV page. */
+type CvBreadcrumbItem = {
     /** Stable React key. */
     key: string
-    /** Visible label (already translated or course title). */
+    /** Visible label. */
     label: string
     /** Optional navigation handler when the segment is clickable. */
     onPress?: () => void
 }
 
-/** Props for {@link CvLearnLayout}. */
-export type CvLearnLayoutProps = WithClassNames<undefined>
+/** Props for {@link Cv}. */
+export type CvProps = WithClassNames<undefined>
 
 /**
- * Learn-module CV page: breadcrumbs, CV upload block, feedback summary, and PDF preview.
- * @param props - {@link CvLearnLayoutProps}
+ * CV page — a USER-level (not course-scoped) résumé tool: upload + AI feedback + PDF preview.
+ * Hosted at `/profile/cv` (the user owns one CV across all courses). Profile-context breadcrumb
+ * (Home › Hồ sơ › CV); the upload/preview blocks self-fetch the user-global CV data.
+ *
+ * @param props - {@link CvProps}
  */
-export const CvLearnLayout = ({ className }: CvLearnLayoutProps) => {
+export const Cv = ({ className }: CvProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
-    const course = useAppSelector((state) => state.course.entity)
-    const courseDisplayId = useAppSelector((state) => state.course.displayId)
     useQueryCvUrlSwr()
 
-    const breadcrumbItems = useMemo((): Array<CvLearnBreadcrumbItem> => [
+    const breadcrumbItems = useMemo((): Array<CvBreadcrumbItem> => [
         {
             key: "home",
             label: t("nav.home"),
             onPress: () => router.push(pathConfig().locale().build()),
         },
         {
-            key: "courses",
-            label: t("nav.courses"),
-            onPress: () => router.push(pathConfig().locale(locale).course().build()),
-        },
-        {
-            key: "course",
-            label: course?.title || t("nav.courses"),
-            onPress: () => router.push(pathConfig().locale(locale).course(courseDisplayId).build()),
+            key: "profile",
+            label: t("nav.profile"),
+            onPress: () => router.push(pathConfig().locale(locale).profile().build()),
         },
         {
             key: "cv",
-            label: t("course.cvTitle"),
+            label: t("cv.title"),
         },
     ], [
-        course?.title,
-        courseDisplayId,
         locale,
         router,
         t,
     ])
 
     return (
-        <div className={cn("grid grid-cols-1 items-start lg:grid-cols-5", className)}>
-            <div className="col-span-3 min-w-0 lg:border-r lg:border-divider/60">
-                <div className="p-3 pb-0">
-                    <Breadcrumbs>
-                        {breadcrumbItems.map((item) => (
-                            <Breadcrumbs.Item
-                                key={item.key}
-                                onPress={item.onPress}
-                            >
-                                {item.label}
-                            </Breadcrumbs.Item>
-                        ))}
-                    </Breadcrumbs>
-                </div>
-                <div className="h-3" />
-                <div className="p-3">
-                    <div className="flex flex-col gap-6">
+        <div className={cn("mx-auto flex w-full max-w-[1280px] flex-col gap-4 px-6 py-6", className)}>
+            <Breadcrumbs>
+                {breadcrumbItems.map((item) => (
+                    <Breadcrumbs.Item
+                        key={item.key}
+                        onPress={item.onPress}
+                    >
+                        {item.label}
+                    </Breadcrumbs.Item>
+                ))}
+            </Breadcrumbs>
+            <div className="grid grid-cols-1 items-start lg:grid-cols-5">
+                <div className="col-span-3 min-w-0 lg:border-r lg:border-divider/60">
+                    <div className="flex flex-col gap-6 p-3">
                         <div className="flex flex-col gap-2">
                             <Typography type="h2" weight="bold">{t("course.cvTitle")}</Typography>
                             <Typography type="body-sm" color="muted">{t("course.cvDescription")}</Typography>
@@ -105,8 +94,8 @@ export const CvLearnLayout = ({ className }: CvLearnLayoutProps) => {
                         <CVUpload />
                     </div>
                 </div>
+                <CVPreview />
             </div>
-            <CVPreview />
         </div>
     )
 }

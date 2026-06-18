@@ -14,6 +14,7 @@ import {
     SegmentBar,
     Skeleton,
 } from "@/components/blocks"
+import { EntityToken } from "@/components/features/dashboard/EntityToken"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useProfileUsername } from "../../hooks/useProfileUsername"
 
@@ -92,9 +93,12 @@ export const OverviewCourses = ({ className }: OverviewCoursesProps) => {
                             <IconTile size="sm" icon={<BookOpenIcon aria-hidden focusable="false" />} />
                             <div className="flex min-w-0 flex-1 flex-col gap-2">
                                 <div className="flex items-center justify-between gap-2">
-                                    <Typography type="body-sm" weight="medium" truncate>
-                                        {item.label}
-                                    </Typography>
+                                    {/* course title is a link into the course */}
+                                    <EntityToken
+                                        globalId={item.globalId}
+                                        label={item.label}
+                                        className="min-w-0 flex-1 truncate"
+                                    />
                                     <Typography type="body-xs" color="muted">
                                         {percent}%
                                     </Typography>

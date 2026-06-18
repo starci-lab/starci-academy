@@ -8,6 +8,7 @@ import {
 import {
     SquaresFourIcon,
     UserIcon,
+    FileTextIcon,
     GearIcon,
     SignOutIcon,
 } from "@phosphor-icons/react"
@@ -73,6 +74,14 @@ export const AccountMenuAuthed = ({ className }: AccountMenuAuthedProps) => {
                 >
                     <UserIcon className="size-5" />
                     <Label>{t("nav.profile")}</Label>
+                </Dropdown.Item>
+                <Dropdown.Item
+                    id="cv"
+                    textValue={t("cv.title")}
+                    onPress={() => go(pathConfig().locale().profile().cv().build())}
+                >
+                    <FileTextIcon className="size-5" />
+                    <Label>{t("cv.title")}</Label>
                 </Dropdown.Item>
                 <Dropdown.Item
                     id="settings"

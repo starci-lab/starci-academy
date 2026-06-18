@@ -133,6 +133,15 @@ export const pathConfig = () => {
                     build,
                 }
             }
+            const cv = () => {
+                const cvPath = `${profilePath}/cv`
+                const build = () => {
+                    return cvPath
+                }
+                return {
+                    build,
+                }
+            }
             return {
                 build,
                 bookmarks,
@@ -148,6 +157,7 @@ export const pathConfig = () => {
                 submissions,
                 attempts,
                 feedback,
+                cv,
             }
         }
         const authentication = () => {

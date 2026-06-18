@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { ChallengePage } from "@/components/layouts/learn/Challenge/ChallengePage"
+import { ChallengePage } from "@/components/features/learn/Challenge/ChallengePage"
 
 const Page = () => {
     return (

@@ -14,6 +14,8 @@ export interface QueryMyDashboardMilestoneProgressItemData {
     globalId: string
     /** Course title (the token label). */
     label: string
+    /** Course cover image URL (null when unset) — shown as the course tile. */
+    thumbnailUrl: string | null
     /** Lessons the viewer has read in the course. */
     contentCompleted: number
     /** Total contents (lessons) in the course. */

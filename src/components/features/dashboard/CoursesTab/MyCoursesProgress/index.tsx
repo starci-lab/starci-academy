@@ -92,7 +92,7 @@ export const MyCoursesProgress = ({
                     const percent = totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : 0
                     return (
                         <div key={item.globalId} className="flex items-center gap-3">
-                            <IconTile size="sm" icon={<BookOpenIcon aria-hidden focusable="false" />} />
+                            <IconTile size="sm" src={item.thumbnailUrl} icon={<BookOpenIcon aria-hidden focusable="false" />} />
                             <div className="flex min-w-0 flex-1 flex-col gap-2">
                                 <div className="flex items-center justify-between gap-2">
                                     {/* course title is a link into the course */}

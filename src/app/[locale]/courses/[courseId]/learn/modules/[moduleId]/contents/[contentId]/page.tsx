@@ -1,11 +1,11 @@
 "use client"
 
 import React from "react"
-import { Content } from "@/components/layouts/learn/Content"
+import { LessonReader } from "@/components/features/learn/LessonReader"
 
 const Page = () => {
     return (
-        <Content />
+        <LessonReader />
     )
 }
 

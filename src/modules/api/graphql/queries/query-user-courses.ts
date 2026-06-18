@@ -12,6 +12,7 @@ const query1 = gql`
       data {
         globalId
         label
+        thumbnailUrl
         contentCompleted
         contentTotal
         challengeCompleted

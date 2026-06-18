@@ -169,7 +169,7 @@ export const LearningHistory = ({
                                     onPress={() => { setSelectedCourse(course.globalId) }}
                                 >
                                     <div className="flex items-center gap-3">
-                                        <IconTile size="sm" icon={<BookOpenIcon aria-hidden focusable="false" />} />
+                                        <IconTile size="sm" src={course.thumbnailUrl} icon={<BookOpenIcon aria-hidden focusable="false" />} />
                                         <div className="flex min-w-0 flex-1 flex-col gap-2">
                                             <div className="flex items-center justify-between gap-2">
                                                 <Typography type="body-sm" weight="semibold" truncate>

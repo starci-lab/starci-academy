@@ -1,7 +1,7 @@
 import React from "react"
 import {
     MindMap,
-} from "@/components/layouts/learn/mind-map"
+} from "@/components/features/learn/MindMap"
 
 /**
  * Route `/[locale]/courses/[courseId]/learn/mind-map` — renders the course

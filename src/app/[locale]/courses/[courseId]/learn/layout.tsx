@@ -3,8 +3,8 @@ import React, { PropsWithChildren } from "react"
 import { cn } from "@heroui/react"
 import { useSelectedLayoutSegment } from "next/navigation"
 import { LearnShell } from "@/components/features/learn/LearnShell"
-import { ModuleSidebar } from "@/components/layouts/learn/ModuleSidebar"
-import { MilestoneSidebar } from "@/components/layouts/learn/MilestoneSidebar"
+import { ModuleOutline } from "@/components/features/learn/ModuleOutline"
+import { MilestoneOutline } from "@/components/features/learn/MilestoneOutline"
 import { GithubLinkGate } from "@/components/layouts/auth/GithubLinkGate"
 import { useQueryCourseSwr } from "@/hooks"
 import { useAppSelector } from "@/redux"
@@ -36,9 +36,9 @@ export const Layout = ({ children }: PropsWithChildren) => {
     // pick the active rail (or none). The LearnShell renders it beside the content
     // and exposes the collapse handle only when a rail is present.
     const rightRail = isModules ? (
-        <ModuleSidebar collapsed={rightCollapsed} className={railClass} />
+        <ModuleOutline collapsed={rightCollapsed} className={railClass} />
     ) : isPersonalProject ? (
-        <MilestoneSidebar collapsed={rightCollapsed} className={railClass} />
+        <MilestoneOutline collapsed={rightCollapsed} className={railClass} />
     ) : undefined
 
     return (

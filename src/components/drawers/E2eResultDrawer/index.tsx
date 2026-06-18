@@ -8,11 +8,11 @@ import {
 import { useAppSelector } from "@/redux"
 import { useE2eResultOverlayState } from "@/hooks"
 import { useSmViewpoint } from "@/hooks/reuseables/useSmViewpoint"
-import { E2eBody } from "@/components/layouts/learn/Content/E2eBody"
+import { E2eBody } from "@/components/features/learn/LessonReader/E2eBody"
 
 /**
  * Global E2E-result drawer — the PANEL half of the lesson "view E2E proof" feature
- * (the trigger is {@link import("@/components/layouts/learn/Content/E2eResultButton").E2eResultButton}
+ * (the trigger is {@link import("@/components/features/learn/LessonReader/E2eResultButton").E2eResultButton}
  * in the lesson footer). Open-state lives in the shared overlay store (`e2eResult` key) instead of
  * local `useState`; the recorded per-language Playwright proofs are read from the active lesson in
  * redux and rendered via {@link E2eBody}. Mounted once by {@link import("./../DrawerContainer").DrawerContainer}.

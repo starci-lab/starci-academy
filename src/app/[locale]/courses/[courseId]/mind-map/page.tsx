@@ -1,5 +1,5 @@
 import React from "react"
-import { StandaloneMindMap } from "@/components/layouts/learn/mind-map"
+import { StandaloneMindMap } from "@/components/features/learn/MindMap/StandaloneMindMap"
 
 /**
  * Route `/[locale]/courses/[courseId]/mind-map` — public, full-width course

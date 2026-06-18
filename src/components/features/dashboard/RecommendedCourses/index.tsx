@@ -104,15 +104,12 @@ export const RecommendedCourses = ({
                                 onPress={() => onOpen(course.displayId)}
                             >
                                 <div className="flex items-center gap-3">
-                                    {course.coverImageUrl ? (
-                                        <img
-                                            src={course.coverImageUrl}
-                                            alt={course.title}
-                                            className="size-12 shrink-0 rounded-xl object-cover"
-                                        />
-                                    ) : (
-                                        <IconTile size="sm" icon={<BookOpenIcon aria-hidden focusable="false" />} />
-                                    )}
+                                    <IconTile
+                                        size="sm"
+                                        src={course.coverImageUrl}
+                                        alt={course.title}
+                                        icon={<BookOpenIcon aria-hidden focusable="false" />}
+                                    />
                                     <div className="flex min-w-0 flex-1 flex-col gap-1">
                                         <div className="flex items-center justify-between gap-2">
                                             <Typography type="body-sm" weight="medium" truncate>

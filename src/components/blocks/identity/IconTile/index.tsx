@@ -11,8 +11,16 @@ export type IconTileSize = "sm" | "md" | "lg"
 
 /** Props for the {@link IconTile} block. */
 export interface IconTileProps extends WithClassNames<undefined> {
-    /** The icon (phosphor `*Icon`) — rendered centered and auto-sized. */
+    /** The icon (phosphor `*Icon`) — fallback when no {@link IconTileProps.src}. */
     icon: ReactNode
+    /**
+     * Optional cover image. When set, it FILLS the tile (`object-cover`, centered —
+     * a 16:9 source is cropped to the square frame) instead of the icon; falls back
+     * to {@link IconTileProps.icon} when absent/empty.
+     */
+    src?: string | null
+    /** Alt text for the cover image (decorative tile — usually the entity title). */
+    alt?: string
     /** Tinted background + icon colour. Defaults to "accent". */
     tone?: IconTileTone
     /** Tile size. Defaults to "md" (64px). */
@@ -45,6 +53,8 @@ const SIZE: Record<IconTileSize, string> = {
  */
 export const IconTile = ({
     icon,
+    src,
+    alt = "",
     tone = "accent",
     size = "md",
     className,
@@ -53,13 +63,18 @@ export const IconTile = ({
         <div
             aria-hidden
             className={cn(
-                "flex shrink-0 items-center justify-center",
+                "flex shrink-0 items-center justify-center overflow-hidden",
                 SIZE[size],
-                TONE[tone],
+                // skip the tint when a cover image fills the tile
+                src ? null : TONE[tone],
                 className,
             )}
         >
-            {icon}
+            {src ? (
+                <img src={src} alt={alt} className="size-full object-cover" />
+            ) : (
+                icon
+            )}
         </div>
     )
 }

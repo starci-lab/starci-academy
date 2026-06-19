@@ -24,6 +24,9 @@ import {
 import {
     LessonChallenges,
 } from "./LessonChallenges"
+import {
+    ContentAiCopilot,
+} from "./ContentAiCopilot"
 
 /** Props for {@link OnThisPage}. */
 export type OnThisPageProps = WithClassNames<undefined>
@@ -77,6 +80,9 @@ export const OnThisPage = ({ className }: OnThisPageProps) => {
                         ))}
                     </div>
                 </nav>
+
+                {/* "ask AI about this content" — anchors the rail (always present) */}
+                <ContentAiCopilot />
 
                 {/* "review this lesson" — flashcard decks linked to this content */}
                 <LessonFlashcards />

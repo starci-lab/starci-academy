@@ -269,6 +269,12 @@
   "onThisPage": {
     "title": "Trên trang này"
   },
+  "contentAi": {
+    "title": "Hỏi StarCi AI",
+    "hint": "Hỏi bất cứ điều gì về nội dung này.",
+    "placeholder": "Hỏi về nội dung này...",
+    "ask": "Hỏi AI"
+  },
   "lessonRail": {
     "flashcards": {
       "title": "Ôn lại bài này",

@@ -269,6 +269,12 @@
   "onThisPage": {
     "title": "On this page"
   },
+  "contentAi": {
+    "title": "Ask StarCi AI",
+    "hint": "Ask anything about this content.",
+    "placeholder": "Ask about this content...",
+    "ask": "Ask AI"
+  },
   "lessonRail": {
     "flashcards": {
       "title": "Review this lesson",

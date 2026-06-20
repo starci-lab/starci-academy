@@ -1,11 +1,14 @@
 "use client"
 
-import { BookOpenIcon, ClockIcon, FlameIcon } from "@phosphor-icons/react"
+import { CheckCircleIcon, ClockIcon, FlameIcon, TargetIcon } from "@phosphor-icons/react"
+import _ from "lodash"
+import { LabeledCard } from "@/components/blocks"
 import React, {
     useMemo,
 } from "react"
 import {
     Chip,
+    Typography,
 } from "@heroui/react"
 import {
     useTranslations,
@@ -19,9 +22,6 @@ import {
 import {
     ReadBadge,
 } from "../ReadBadge"
-import {
-    useLessonNavigation,
-} from "../hooks/useLessonNavigation"
 
 /**
  * Title, description and meta-chip row (reading time, challenges, read state)
@@ -36,8 +36,6 @@ export const ContentHeader = () => {
     const title = content?.title
     const description = content?.description
     const minutesRead = content?.minutesRead ?? 0
-    // linear position of this lesson in the course ("Nội dung N/M")
-    const { position, total } = useLessonNavigation()
 
     /** Challenge count for the meta chip, tolerant of a missing entity. */
     const challengeCount = useMemo(
@@ -45,39 +43,60 @@ export const ContentHeader = () => {
         [content],
     )
 
+    /** "What you'll learn" bullets, ordered (mount `# outcomes`); empty → callout hidden. */
+    const outcomes = useMemo(
+        () => _.sortBy(content?.outcomes ?? [], (outcome) => outcome.sortIndex),
+        [content],
+    )
+
     return (
-        <div className="p-3">
-            <div className="text-2xl font-bold">{title}</div>
-            <div className="h-3" />
-            <div className="text-sm text-muted">{description}</div>
-            <div className="h-3" />
-            <div className="flex items-center gap-2">
-                <ReadBadge />
-                {total > 0 && position > 0 ? (
-                    <Chip variant="tertiary" color="default" className="text-muted">
-                        <BookOpenIcon className="size-5" />
+        <div className="flex flex-col gap-6 p-3">
+            {/* header proper (title + desc + meta) — all one content group → gap-3 */}
+            <div className="flex flex-col gap-3">
+                {/* title + description as a tight pair — same shape as the standard PageHeader */}
+                <div className="flex flex-col gap-0">
+                    <Typography.Heading level={3} weight="bold">{title}</Typography.Heading>
+                    {description ? (
+                        <Typography type="body-sm" color="muted">{description}</Typography>
+                    ) : null}
+                </div>
+                {/* Quiet meta row — tertiary chips so the lesson title stays the one loud thing */}
+                <div className="flex flex-wrap items-center gap-2">
+                    <ReadBadge />
+                    <Chip variant="tertiary" color="default">
+                        <ClockIcon className="size-5" />
                         <Chip.Label>
-                            {t("content.position", { position, total })}
+                            {t("content.minutesRead", {
+                                minutes: minutesRead,
+                            })}
                         </Chip.Label>
                     </Chip>
-                ) : null}
-                <Chip variant="secondary" color="accent">
-                    <ClockIcon className="size-5" />
-                    <Chip.Label>
-                        {t("content.minutesRead", {
-                            minutes: minutesRead,
-                        })}
-                    </Chip.Label>
-                </Chip>
-                <Chip variant="secondary" color="accent">
-                    <FlameIcon className="size-5" />
-                    <Chip.Label>
-                        {t("content.challengeCount", {
-                            count: challengeCount,
-                        })}
-                    </Chip.Label>
-                </Chip>
+                    <Chip variant="tertiary" color="default">
+                        <FlameIcon className="size-5" />
+                        <Chip.Label>
+                            {t("content.challengeCount", {
+                                count: challengeCount,
+                            })}
+                        </Chip.Label>
+                    </Chip>
+                </div>
             </div>
+            {/* "What you'll learn" — separate section, OUTSIDE the header scope → gap-6 */}
+            {outcomes.length > 0 ? (
+                <LabeledCard
+                    label={t("content.outcomes")}
+                    icon={<TargetIcon className="size-5" />}
+                >
+                    <ul className="flex flex-col gap-2">
+                        {outcomes.map((outcome) => (
+                            <li key={outcome.id} className="flex items-start gap-2">
+                                <CheckCircleIcon className="mt-0.5 size-5 shrink-0 text-success" />
+                                <Typography type="body-sm">{outcome.text}</Typography>
+                            </li>
+                        ))}
+                    </ul>
+                </LabeledCard>
+            ) : null}
         </div>
     )
 }

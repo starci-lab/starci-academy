@@ -153,3 +153,59 @@ whitespace, không phải lỗi), chỉ cần Challenges hiện reliably; **(b)*
 ### IA rail phải (đề xuất)
 TOC → **(D2) Hỏi StarCi AI về bài này** (anchor luôn-hiện, khi BE sẵn) → Ôn lại (flashcards, ẩn) → Luyện tập (challenges).
 Trước khi có D2: TOC → Flashcards(ẩn) → Challenges (fix reliable).
+
+---
+
+## ROUND 4 (2026-06-18) — "Hỏi AI" thành FAB float + dời ACTIONS vào red box (thầy)
+> Thầy: *"hỏi AI làm cái FLOAT, click ra chat với AI"* + *"mấy cái action bỏ vào cái màu đỏ được không"* (red box =
+> rail phải dưới TOC). Tức: **AI rời rail → nút nổi bottom-right**; **action bài (yêu thích/lưu/chia sẻ/toàn màn hình)
+> rời thanh inline dưới content → vào rail**.
+
+### Hiện trạng (inventory)
+- AI ở rail = `ContentAiCopilot` (panel có nút mở drawer). Drawer chat `ContentAiChatDrawer` **đã có**.
+- **Actions** = thanh ngang DƯỚI content (`ContentDiscussion`/`ActionToolbar`): **Yêu thích · Lưu · Chia sẻ · Xem toàn
+  màn hình** — đều đã wire (toggleFavorite · bookmark · share overlay · content/fullscreen overlay).
+
+### Hướng
+- **D1 ✅ CHỐT — AI = FAB float + actions → rail.**
+  - **`ContentAiFab`** (mới): pill nổi **bottom-right** (`✨ Hỏi AI`), luôn hiện trên trang đọc bài → click `open()` mở
+    `ContentAiChatDrawer` (overlay store `contentAiChat`, đã có). **Bỏ `ContentAiCopilot` khỏi rail.** AI thành
+    **first-class always-on** (kể cả khi rail ẩn / mobile), đúng pattern trợ-lý-AI (ChatGPT/Intercom/Gemini float).
+  - **Rail `OnThisPage`** = TOC → **Actions** (yêu thích/lưu/chia sẻ/toàn màn hình — dời từ thanh inline) → Flashcards
+    (ẩn) → Challenges. **Bỏ thanh `ActionToolbar` inline** (dedup) → content gọn hơn.
+- D2 — AI=FAB nhưng actions GIỮ inline (rail = TOC + flashcards + challenges): ít việc nhưng red box mỏng + thầy đã bảo dời.
+- D3 — giữ AI trong rail: thầy bỏ.
+
+→ **CHỐT D1.** FAB cho AI (nổi bật + luôn-có), rail lấp red box bằng **actions** (luôn-hiện cạnh bài), thanh inline bỏ.
+
+### IA rail phải (sau D1)
+1. **TOC** "Trên trang này".
+2. **Actions** (mới trong rail): yêu thích · lưu · chia sẻ · xem toàn màn hình — dạng list dọc icon+nhãn (block `ListRow`/`SidebarNavItem`-like) hoặc 1 hàng icon gọn.
+3. **Flashcards** (ẩn) · **Challenges**.
+> AI KHÔNG còn ở rail → ở FAB.
+
+### Section → dữ liệu / state
+| Phần | Nguồn / hành động | State |
+|---|---|---|
+| FAB Hỏi AI | `useContentAiChatOverlayState().open` → drawer | luôn hiện khi có `content.id` |
+| Yêu thích | `mutateToggleFavorite` (đã có) | optimistic |
+| Lưu (bookmark) | mutation bookmark (đã có ở `ContentDiscussion`) | optimistic |
+| Chia sẻ | `useShareOverlayState` | overlay |
+| Toàn màn hình | `useContentOverlayState` | overlay |
+
+### Cắt / Thêm / Đừng-vỡ
+- **THÊM:** `ContentAiFab` (mount ở learn layout, lg+mobile); **Actions trong rail** (tách block `ContentActions` props-only nếu cần — nhận các callback từ feature).
+- **CẮT:** `ContentAiCopilot` khỏi rail; **thanh `ActionToolbar` inline** dưới content (dời lên rail).
+- **Đừng-vỡ:** rail vẫn tự ẩn khi bài 0 heading → **actions cũng ẩn theo** (cân nhắc: actions nên CŨNG ở FAB-menu hoặc decouple rail-visibility nếu muốn luôn-có). FAB tránh đè dev-indicator (prod sạch). Mobile: FAB ok; rail ẩn → actions chỉ ở rail = mất trên mobile → cân nhắc giữ 1 thanh action mobile hoặc cho actions vào FAB-menu. Comments/discussion (dưới actions cũ) GIỮ inline (không vào rail).
+
+→ Thầy duyệt **D1** → `/ux-apply`: dựng `ContentAiFab` + dời actions vào rail + bỏ panel AI cũ + bỏ thanh inline.
+
+### > CHỐT 2026-06-18 (thầy)
+- **FAB = hình TRÒN có LINH VẬT, đầu lòi ra trên.** Nút tròn (bg + bóng), ảnh mascot bên trong, **đầu mascot tràn lên
+  trên mép tròn** (`overflow-visible` + ảnh cao hơn vòng / absolute -top). **Cần ASSET ảnh mascot riêng cho FAB —
+  thầy cấp** (tạm: dùng mascot có sẵn / sparkle placeholder, để cấu trúc overflow sẵn, thay ảnh sau). Bottom-right,
+  luôn hiện khi có `content.id` → click mở `ContentAiChatDrawer`.
+- **Mobile actions = DRAWER.** Rail (TOC + actions) trên mobile đi vào **drawer** (đã có `LearnMobileBar` mở rail phải
+  thành drawer) → actions không mất trên mobile, không cần thanh inline. Desktop: actions ở rail; Mobile: trong drawer rail.
+- IA cuối: **FAB(AI tròn+mascot) nổi** · **Rail/Drawer** = TOC → Actions(yêu thích/lưu/chia sẻ/toàn màn hình) → Flashcards → Challenges · **bỏ** panel AI rail + thanh action inline.
+→ `/ux-apply`: FAB (cấu trúc overflow chờ ảnh thật) + ContentActions vào rail + mobile drawer + dọn dead.

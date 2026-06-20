@@ -42,6 +42,9 @@ export const SidebarNavGroup = ({
     const collapsed = useSidebarCollapsed()
     return (
         <div className={cn("flex flex-col", className)}>
+            {/* Divider spans the rail's PADDED content width (lines up with the rows) —
+                the single padding wrapper lives on CollapsibleSidebar, so this stays
+                inset, not edge-to-edge. */}
             {divider ? <Separator className="mb-3" /> : null}
             {label && !collapsed ? (
                 <Typography

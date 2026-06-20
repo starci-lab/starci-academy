@@ -166,3 +166,6 @@ export const ProgrammingLanguageTabs = ({
 export {
     ProgrammingLanguageTabsVariant,
 } from "./enums"
+export {
+    programmingLanguageIconMap,
+} from "./map"

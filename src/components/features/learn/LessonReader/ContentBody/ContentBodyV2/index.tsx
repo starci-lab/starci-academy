@@ -6,20 +6,14 @@ import React, {
 } from "react"
 import {
     MarkdownContent,
-    ProgrammingLanguageTabs,
-    ProgrammingLanguageTabsVariant,
 } from "@/components/reuseable"
 import {
     useLocale,
     useTranslations,
 } from "next-intl"
 import {
-    useAppDispatch,
     useAppSelector,
 } from "@/redux"
-import {
-    setContentSelectedProgrammingLang,
-} from "@/redux/slices"
 import {
     cn,
 } from "@heroui/react"
@@ -64,7 +58,6 @@ export type ContentBodyV2Props = WithClassNames<undefined>
 export const ContentBodyV2 = ({ className }: ContentBodyV2Props) => {
     const t = useTranslations()
     const locale = useLocale()
-    const dispatch = useAppDispatch()
     const runGraphQL = useGraphQLWithToast()
     const queryContentSwr = useQueryContentSwr()
     const contentFromRedux = useAppSelector((state) => state.content.entity)
@@ -93,12 +86,6 @@ export const ContentBodyV2 = ({ className }: ContentBodyV2Props) => {
             selectedLang,
             langs,
         ],
-    )
-    const onSelectLang = useCallback(
-        (lang: string) => {
-            dispatch(setContentSelectedProgrammingLang(lang))
-        },
-        [dispatch],
     )
     const activeBody = useMemo(
         () => resolveContentBody(pickContentBodyByLang(content?.bodies, activeLang), locale),
@@ -154,18 +141,9 @@ export const ContentBodyV2 = ({ className }: ContentBodyV2Props) => {
 
     return (
         <div className={cn("text-sm text-muted overflow-x-auto", className)}>
-            {/* per-language lesson body: tab to switch language, rendered for the active locale */}
-            {langs.length > 0 ? (
-                <ProgrammingLanguageTabs
-                    availableLangs={langs}
-                    selectedLang={activeLang}
-                    onSelectLang={onSelectLang}
-                    ariaLabel={t("content.language")}
-                    variant={ProgrammingLanguageTabsVariant.Secondary}
-                />
-            ) : null}
-            <div className="h-3" />
-            <MarkdownContent markdown={activeBody || t("content.empty")} />
+            {/* the per-language switcher now lives in the tab toolbar (LessonReader →
+                ContentTabBar rightSlot); this body just renders the active language. */}
+            <MarkdownContent reading markdown={activeBody || t("content.empty")} />
             {/* Locked premium teaser: stop right after the (truncated) body so the parent fades the
                 tail and shows the paywall — hide references / toolbar / comments below. */}
             {contentFromRedux?.isPremium ? null : (

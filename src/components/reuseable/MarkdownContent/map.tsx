@@ -30,6 +30,7 @@ const PROSE_SIZE: Record<string, string> = {
     base: "text-base",
     lg: "text-lg",
     xl: "text-xl",
+    "2xl": "text-2xl",
 }
 
 /**
@@ -130,156 +131,165 @@ export const buildMarkdownRenderers = ({
     isDark,
     t,
     mermaidCaptions,
-}: MarkdownRenderersParams): Components => ({
-    h1: ({ children }) => (
-        <ProseText elementType="h1" size="xl" className="font-semibold">{children}</ProseText>
-    ),
-    h2: buildTocHeading(2, PROSE_SIZE.lg),
-    h3: buildTocHeading(3, PROSE_SIZE.base),
-    h4: ({ children }) => (
-        <ProseText elementType="h4" size="sm" className="font-semibold text-muted">{children}</ProseText>
-    ),
-    h5: ({ children }) => (
-        <ProseText elementType="h5" size="sm" className="font-semibold text-muted">{children}</ProseText>
-    ),
-    h6: ({ children }) => (
-        <ProseText elementType="h6" size="xs" className="font-semibold text-muted">{children}</ProseText>
-    ),
-    // Custom `:::muted` directive tags (see remarkMuted in ./index): small, muted label text.
-    // `[&_*]:text-muted` forces the muted colour onto any inner `<p>` the container wraps.
-    mutedblock: ({ children }: { children?: React.ReactNode }) => (
-        <ProseText elementType="div" size="sm" className="font-semibold text-muted [&_*]:text-muted">{children}</ProseText>
-    ),
-    mutedtext: ({ children }: { children?: React.ReactNode }) => (
-        <ProseText elementType="span" size="sm" className="font-semibold text-muted">{children}</ProseText>
-    ),
-    // Custom `:::chip` directive tag (see remarkChip in ./index): a wrapped row of soft chips,
-    // one per authored keyword line. `items` is the `|`-joined keyword list.
-    chipblock: ({ items }: { items?: string }) => (
-        <span className="my-1 flex flex-wrap gap-1.5">
-            {String(items ?? "").split("|").filter(Boolean).map((keyword, index) => (
-                <HeroUI.Chip key={index} size="sm" variant="soft" color="default">{keyword}</HeroUI.Chip>
-            ))}
-        </span>
-    ),
-    // :::tab → [ Preview | Code ] tabs; code/preview panes carry `kind` so TabsBlock can match them.
-    tabblock: ({ children }: { children?: React.ReactNode }) => <TabsBlock>{children}</TabsBlock>,
-    tabcode: ({ children }: { children?: React.ReactNode }) => <TabPane kind="code">{children}</TabPane>,
-    tabpreview: ({ children }: { children?: React.ReactNode }) => <TabPane kind="preview">{children}</TabPane>,
-    // ::::accordion / :::panel{title} → HeroUI collapsible accordion (see remarkAccordion in ./index).
-    accordionblock: ({ children }: { children?: React.ReactNode }) => (
-        <HeroUI.Accordion variant="surface" className="my-1.5">{children}</HeroUI.Accordion>
-    ),
-    accordionpanel: ({ title, children }: { title?: string, children?: React.ReactNode }) => (
-        <HeroUI.Accordion.Item aria-label={String(title ?? "")}>
-            <HeroUI.Accordion.Heading>
-                <HeroUI.Accordion.Trigger>
-                    <div className="flex w-full items-center justify-between gap-3 text-start">
-                        <span className="text-sm font-semibold">{title}</span>
-                        <HeroUI.Accordion.Indicator />
-                    </div>
-                </HeroUI.Accordion.Trigger>
-            </HeroUI.Accordion.Heading>
-            <HeroUI.Accordion.Panel>
-                <HeroUI.Accordion.Body>
-                    <div className="space-y-1.5">{children}</div>
-                </HeroUI.Accordion.Body>
-            </HeroUI.Accordion.Panel>
-        </HeroUI.Accordion.Item>
-    ),
-    table: ({ children }) => (
-        <MarkdownTable ariaLabel={t("markdown.tableAriaLabel")}>
-            {children}
-        </MarkdownTable>
-    ),
-    thead: MarkdownTableHead,
-    img: ({ src, alt }) => (
-        <img src={src} alt={alt} className="w-full rounded-xl border border-default" />
-    ),
-    tbody: MarkdownTableBody,
-    th: MarkdownTableColumn,
-    td: ({ children }) => <Table.Cell>{children}</Table.Cell>,
-    tr: MarkdownTableRow,
-    code: (
-        { children, node }
-    ) => {
-        const code = String(children).trim()
-        const isInline = node ? isInlineCode(node) : undefined
-        if (!isInline) {
-            return children
-        }
-        return (
-            <code className="rounded-md bg-default px-1.5 py-0.5 font-mono text-sm text-accent">
-                {code}
-            </code>
-        )
-    },
-    pre: ({ children }) => {
-        const child = React.Children.only(children) as React.ReactElement
-        const className = (child.props as { className?: string }).className || ""
-        const match = /language-(\w+)/.exec(className)
-        const lang = match?.[1] || "bash"
-        const code = String((child.props as { children?: React.ReactNode }).children || "").replace(/\n$/, "")
-        if (lang.toLowerCase() === "mermaid") {
+    reading = false,
+}: MarkdownRenderersParams): Components => {
+    // Long-form lessons read the larger scale; cards / chat / modals keep the compact one.
+    const bodySize = reading ? "base" : "sm"
+    const h2Size = reading ? PROSE_SIZE["2xl"] : PROSE_SIZE.lg
+    const h3Size = reading ? PROSE_SIZE.xl : PROSE_SIZE.base
+    return ({
+        h1: ({ children }) => (
+            <ProseText elementType="h1" size={reading ? "2xl" : "xl"} className="font-semibold">{children}</ProseText>
+        ),
+        h2: buildTocHeading(2, h2Size),
+        h3: buildTocHeading(3, h3Size),
+        h4: ({ children }) => (
+            reading
+                ? <ProseText elementType="h4" size="base" className="font-semibold">{children}</ProseText>
+                : <ProseText elementType="h4" size="sm" className="font-semibold text-muted">{children}</ProseText>
+        ),
+        h5: ({ children }) => (
+            <ProseText elementType="h5" size="sm" className="font-semibold text-muted">{children}</ProseText>
+        ),
+        h6: ({ children }) => (
+            <ProseText elementType="h6" size="xs" className="font-semibold text-muted">{children}</ProseText>
+        ),
+        // Custom `:::muted` directive tags (see remarkMuted in ./index): small, muted label text.
+        // `[&_*]:text-muted` forces the muted colour onto any inner `<p>` the container wraps.
+        mutedblock: ({ children }: { children?: React.ReactNode }) => (
+            <ProseText elementType="div" size="sm" className="font-semibold text-muted [&_*]:text-muted">{children}</ProseText>
+        ),
+        mutedtext: ({ children }: { children?: React.ReactNode }) => (
+            <ProseText elementType="span" size="sm" className="font-semibold text-muted">{children}</ProseText>
+        ),
+        // Custom `:::chip` directive tag (see remarkChip in ./index): a wrapped row of soft chips,
+        // one per authored keyword line. `items` is the `|`-joined keyword list.
+        chipblock: ({ items }: { items?: string }) => (
+            <span className="my-1 flex flex-wrap gap-1.5">
+                {String(items ?? "").split("|").filter(Boolean).map((keyword, index) => (
+                    <HeroUI.Chip key={index} size="sm" variant="soft" color="default">{keyword}</HeroUI.Chip>
+                ))}
+            </span>
+        ),
+        // :::tab → [ Preview | Code ] tabs; code/preview panes carry `kind` so TabsBlock can match them.
+        tabblock: ({ children }: { children?: React.ReactNode }) => <TabsBlock>{children}</TabsBlock>,
+        tabcode: ({ children }: { children?: React.ReactNode }) => <TabPane kind="code">{children}</TabPane>,
+        tabpreview: ({ children }: { children?: React.ReactNode }) => <TabPane kind="preview">{children}</TabPane>,
+        // ::::accordion / :::panel{title} → HeroUI collapsible accordion (see remarkAccordion in ./index).
+        accordionblock: ({ children }: { children?: React.ReactNode }) => (
+            <HeroUI.Accordion variant="surface" className="my-1.5">{children}</HeroUI.Accordion>
+        ),
+        accordionpanel: ({ title, children }: { title?: string, children?: React.ReactNode }) => (
+            <HeroUI.Accordion.Item aria-label={String(title ?? "")}>
+                <HeroUI.Accordion.Heading>
+                    <HeroUI.Accordion.Trigger>
+                        <div className="flex w-full items-center justify-between gap-3 text-start">
+                            <span className="text-sm font-semibold">{title}</span>
+                            <HeroUI.Accordion.Indicator />
+                        </div>
+                    </HeroUI.Accordion.Trigger>
+                </HeroUI.Accordion.Heading>
+                <HeroUI.Accordion.Panel>
+                    <HeroUI.Accordion.Body>
+                        <div className="space-y-1.5">{children}</div>
+                    </HeroUI.Accordion.Body>
+                </HeroUI.Accordion.Panel>
+            </HeroUI.Accordion.Item>
+        ),
+        table: ({ children }) => (
+            <MarkdownTable ariaLabel={t("markdown.tableAriaLabel")}>
+                {children}
+            </MarkdownTable>
+        ),
+        thead: MarkdownTableHead,
+        img: ({ src, alt }) => (
+            <img src={src} alt={alt} className="w-full rounded-xl border border-default" />
+        ),
+        tbody: MarkdownTableBody,
+        th: MarkdownTableColumn,
+        td: ({ children }) => <Table.Cell>{children}</Table.Cell>,
+        tr: MarkdownTableRow,
+        code: (
+            { children, node }
+        ) => {
+            const code = String(children).trim()
+            const isInline = node ? isInlineCode(node) : undefined
+            if (!isInline) {
+                return children
+            }
             return (
-                <MermaidDiagram
+                <code className="rounded-md bg-default px-1.5 py-0.5 font-mono text-sm text-accent">
+                    {code}
+                </code>
+            )
+        },
+        pre: ({ children }) => {
+            const child = React.Children.only(children) as React.ReactElement
+            const className = (child.props as { className?: string }).className || ""
+            const match = /language-(\w+)/.exec(className)
+            const lang = match?.[1] || "bash"
+            const code = String((child.props as { children?: React.ReactNode }).children || "").replace(/\n$/, "")
+            if (lang.toLowerCase() === "mermaid") {
+                return (
+                    <MermaidDiagram
+                        code={code}
+                        theme={isDark ? "dark" : "default"}
+                        loadingLabel={t("markdown.mermaidRendering")}
+                        expandLabel={t("markdown.mermaidExpand")}
+                        caption={mermaidCaptions[code.trim()]}
+                        fallbackLabel={t("markdown.mermaidFigureLabel")}
+                    />
+                )
+            }
+            // ```mdx fence → live HeroUI render (render-only; tabs come from a :::tab block).
+            if (lang.toLowerCase() === "mdx") {
+                return <RenderReactComponent code={code} />
+            }
+            if (lang.toLowerCase() === "layout") {
+                return <LayoutWidget html={code} />
+            }
+            return (
+                <CodeToHtml
                     code={code}
-                    theme={isDark ? "dark" : "default"}
-                    loadingLabel={t("markdown.mermaidRendering")}
-                    expandLabel={t("markdown.mermaidExpand")}
-                    caption={mermaidCaptions[code.trim()]}
-                    fallbackLabel={t("markdown.mermaidFigureLabel")}
+                    language={lang}
+                    theme={isDark
+                        ? "material-theme-darker"
+                        : "material-theme-lighter"}
                 />
             )
-        }
-        // ```mdx fence → live HeroUI render (render-only; tabs come from a :::tab block).
-        if (lang.toLowerCase() === "mdx") {
-            return <RenderReactComponent code={code} />
-        }
-        if (lang.toLowerCase() === "layout") {
-            return <LayoutWidget html={code} />
-        }
-        return (
-            <CodeToHtml
-                code={code}
-                language={lang}
-                theme={isDark
-                    ? "material-theme-darker"
-                    : "material-theme-lighter"}
-            />
-        )
-    },
-    blockquote: ({ children }) => (
-        <blockquote className="space-y-1.5 rounded-r-xl border-l-2 border-accent bg-default/40 px-4 py-2 text-muted">
-            {children}
-        </blockquote>
-    ),
-    strong: ({ children }) => <strong className="font-semibold text-foreground">{children}</strong>,
-    em: ({ children }) => <em className="italic">{children}</em>,
-    hr: () => <hr className="border-default" />,
-    ol: ({ children }) => <ol className="list-decimal space-y-1.5 pl-5 marker:text-muted">{children}</ol>,
-    ul: ({ children }) => <ul className="list-disc space-y-1.5 pl-5 marker:text-muted">{children}</ul>,
-    li: ({ children }) => (
-        <ProseText elementType="li" size="sm" className="space-y-1.5 leading-relaxed">{children}</ProseText>
-    ),
-    p: ({ children }) => (
-        <ProseText elementType="div" size="sm" className="leading-relaxed">{children}</ProseText>
-    ),
-    a: ({ href, children }) => {
+        },
+        blockquote: ({ children }) => (
+            <blockquote className="space-y-1.5 rounded-r-xl border-l-2 border-accent bg-default/40 px-4 py-2 text-muted">
+                {children}
+            </blockquote>
+        ),
+        strong: ({ children }) => <strong className="font-semibold text-foreground">{children}</strong>,
+        em: ({ children }) => <em className="italic">{children}</em>,
+        hr: () => <hr className="border-default" />,
+        ol: ({ children }) => <ol className="list-decimal space-y-1.5 pl-5 marker:text-muted">{children}</ol>,
+        ul: ({ children }) => <ul className="list-disc space-y-1.5 pl-5 marker:text-muted">{children}</ul>,
+        li: ({ children }) => (
+            <ProseText elementType="li" size={bodySize} className="space-y-1.5 leading-relaxed">{children}</ProseText>
+        ),
+        p: ({ children }) => (
+            <ProseText elementType="div" size={bodySize} className="leading-relaxed">{children}</ProseText>
+        ),
+        a: ({ href, children }) => {
         // Internal links (e.g. related-problem `/practice/<slug>`) navigate in-app
         // (same tab, locale-aware) via the next-intl Link; external links open a new tab.
-        const isInternal = typeof href === "string" && href.startsWith("/")
-        if (isInternal) {
+            const isInternal = typeof href === "string" && href.startsWith("/")
+            if (isInternal) {
+                return (
+                    <IntlLink href={href} className="!inline text-accent underline underline-offset-2">
+                        {children}
+                    </IntlLink>
+                )
+            }
             return (
-                <IntlLink href={href} className="!inline text-accent underline underline-offset-2">
+                <Link href={href} target="_blank" className="!inline text-accent underline underline-offset-2">
                     {children}
-                </IntlLink>
+                </Link>
             )
-        }
-        return (
-            <Link href={href} target="_blank" className="!inline text-accent underline underline-offset-2">
-                {children}
-            </Link>
-        )
-    },
-} as Components)
+        },
+    } as Components)
+}

@@ -28,7 +28,7 @@ export const ReadBadge = ({ size, className }: ReadBadgeProps) => {
     if (!isRead) return null
 
     return (
-        <Chip variant="secondary" color="success" size={size} className={cn(className)}>
+        <Chip variant="secondary" color="success" size={size} className={cn("bg-success/10 text-success", className)}>
             <CheckCircleIcon className="size-5" />
             <Chip.Label>{t("content.read")}</Chip.Label>
         </Chip>

@@ -1,16 +1,20 @@
 "use client"
 import React, { PropsWithChildren } from "react"
 import { cn } from "@heroui/react"
+import { useTranslations } from "next-intl"
 import { useSelectedLayoutSegment } from "next/navigation"
 import { LearnShell } from "@/components/features/learn/LearnShell"
 import { ContentMap } from "@/components/features/learn/ContentMap"
+import { ResizableRail } from "@/components/blocks"
 import { MilestoneOutline } from "@/components/features/learn/MilestoneOutline"
 import { OnThisPage } from "@/components/features/learn/OnThisPage"
+import { ContentAiFab } from "@/components/features/learn/ContentAiFab"
 import { GithubLinkGate } from "@/components/layouts/auth/GithubLinkGate"
 import { useQueryCourseSwr } from "@/hooks"
 import { useAppSelector } from "@/redux"
 
 export const Layout = ({ children }: PropsWithChildren) => {
+    const t = useTranslations()
     // load the active course here so EVERY learn tab has `course.entity` on a cold refresh
     // (the displayId is synced from the URL by a global effect). Tabs like personal-project
     // have no other loader, and downstream queries (milestones, etc.) gate on `course.id`.
@@ -33,13 +37,24 @@ export const Layout = ({ children }: PropsWithChildren) => {
         "hidden min-w-0 shrink-0 overflow-x-hidden transition-[width] duration-300 ease-in-out lg:block lg:self-start",
         rightCollapsed ? "lg:w-14" : "lg:w-80",
     )
-    // persistent left content-map rail (always visible on desktop, no collapse):
-    // fixed width, sticky under the navbar, scrolls internally when the tree is tall.
-    const contentMapClass = "hidden w-80 shrink-0 lg:block lg:sticky lg:top-16 lg:self-start lg:max-h-[calc(100dvh-4rem)] lg:overflow-y-auto"
+    // persistent left content-map rail (always visible on desktop): the width is
+    // drag-resizable (persisted) via ResizableRail; sticky under the navbar and a flex
+    // column bounded to the viewport so the rail pins its header/search and scrolls
+    // ONLY the lesson list. Hidden below lg (mobile opens it in the LearnMobileBar drawer).
+    const railClass = "hidden shrink-0 lg:flex lg:flex-col lg:sticky lg:top-16 lg:self-start lg:h-[calc(100dvh-4rem)]"
 
     // left content-map rail: the lean course content tree while reading.
     const leftRail = isModules ? (
-        <ContentMap className={contentMapClass} />
+        <ResizableRail
+            className={railClass}
+            storageKey="starci.learn.contentMap.width"
+            defaultWidth={320}
+            minWidth={256}
+            maxWidth={560}
+            ariaLabel={t("courseContents.resizeRail")}
+        >
+            <ContentMap className="min-h-0 lg:flex-1" />
+        </ResizableRail>
     ) : undefined
     // right rail: on-this-page for lessons, milestone rail for the capstone.
     const rightRail = isModules ? (
@@ -52,6 +67,8 @@ export const Layout = ({ children }: PropsWithChildren) => {
         <>
             {/* soft prompt: nudge learners with no linked GitHub to connect once per session */}
             <GithubLinkGate />
+            {/* floating "ask StarCi AI" mascot button (self-hides when no content is open) */}
+            <ContentAiFab />
             <LearnShell
                 leftRail={leftRail}
                 rightRail={rightRail}

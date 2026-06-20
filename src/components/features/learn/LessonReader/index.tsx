@@ -8,6 +8,8 @@ import React, {
     type Key,
 } from "react"
 import {
+    Card,
+    CardContent,
     cn,
 } from "@heroui/react"
 import {
@@ -25,7 +27,17 @@ import {
 } from "@/redux"
 import {
     type WithClassNames,
+    DEFAULT_PROGRAMMING_LANGUAGES,
+    isProgrammingLangAvailable,
+    listContentBodyLangs,
+    resolveActiveProgrammingLang,
 } from "@/modules/types"
+import {
+    programmingLanguageIconMap,
+} from "@/components/reuseable"
+import type {
+    TabsCardGroup,
+} from "@/components/blocks"
 import {
     useQueryContentSwr,
     useQueryContentStatusSwr,
@@ -43,6 +55,7 @@ import {
 import {
     ContentTab,
     setContentTab,
+    setContentSelectedProgrammingLang,
 } from "@/redux/slices"
 import type {
     ContentTabItem,
@@ -50,9 +63,6 @@ import type {
 import {
     ContentBody,
 } from "./ContentBody"
-import {
-    CodeLessonBody,
-} from "./CodeLessonBody"
 import {
     ChallengeBody,
 } from "./ChallengeBody"
@@ -83,9 +93,6 @@ import {
 import {
     PremiumPaywall,
 } from "./PremiumPaywall"
-import {
-    isSchemaV2HiddenContentTab,
-} from "./constants"
 
 export type LessonReaderProps = WithClassNames<undefined>
 
@@ -158,8 +165,6 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
      * behind the register modal.
      */
     const isLocked = content?.isPremium === true
-    /** SCHEMA V2 (`verified`) — code lessons live in the markdown body; hide the Bài giảng tab. */
-    const isSchemaV2 = Boolean(content?.verified)
     const isSandbox = Boolean(content?.isSandbox) && Boolean(content?.githubBaseUrl) && Boolean(content?.githubDir)
     const hasE2e = Array.isArray(content?.e2eFlows) && content.e2eFlows.length > 0
 
@@ -173,14 +178,6 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
                     component: <ContentBody />,
                 },
             ]
-            if (!isSchemaV2) {
-                items.push({
-                    key: ContentTab.CodeExplainings,
-                    label: t("content.tabs.codeExplainings"),
-                    component: <CodeLessonBody />,
-                    locked: isLocked,
-                })
-            }
             if (isSandbox) {
                 items.push({
                     key: ContentTab.Sandbox,
@@ -206,34 +203,12 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
         [
             t,
             isLocked,
-            isSchemaV2,
             isSandbox,
             playground,
         ],
     )
 
-    /** Drop legacy code-lesson tab when switching to SCHEMA V2 content. */
-    useEffect(
-        () => {
-            if (!isSchemaV2 || !isSchemaV2HiddenContentTab(contentTab)) {
-                return
-            }
-            dispatch(setContentTab(ContentTab.Content))
-            const params = new URLSearchParams(searchParams.toString())
-            params.set("tab", ContentTab.Content)
-            router.replace(`${pathname}?${params.toString()}`)
-        },
-        [
-            contentTab,
-            dispatch,
-            isSchemaV2,
-            pathname,
-            router,
-            searchParams,
-        ],
-    )
-
-    /** Tab key shown in the bar (falls back when V2 hides the code-lesson tab). */
+    /** Tab key shown in the bar (falls back to Content for an unknown `?tab=`). */
     const selectedTabKey = useMemo(
         () => tabItems.some((item) => item.key === contentTab)
             ? contentTab
@@ -257,15 +232,47 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
         ],
     )
 
+    // Per-language switcher (SCHEMA V2 bodies): hoisted into the tab toolbar so the
+    // reader keeps a single nav layer. Shown only on the Content tab and only when the
+    // lesson actually ships more than one language.
+    const langs = useMemo(
+        () => listContentBodyLangs(content?.bodies),
+        [content?.bodies],
+    )
+    const selectedLang = useAppSelector((state) => state.content.selectedProgrammingLang)
+    const activeLang = useMemo(
+        () => resolveActiveProgrammingLang(selectedLang, langs),
+        [selectedLang, langs],
+    )
+    const onSelectLang = useCallback(
+        (lang: string) => dispatch(setContentSelectedProgrammingLang(lang)),
+        [dispatch],
+    )
+    /** Right-side language tab group for the toolbar (Content tab + multi-lang only). */
+    const languageTabs = useMemo<TabsCardGroup | undefined>(
+        () => {
+            if (selectedTabKey !== ContentTab.Content || langs.length <= 1) {
+                return undefined
+            }
+            return {
+                ariaLabel: t("content.language"),
+                selectedKey: activeLang,
+                onSelectionChange: (key) => onSelectLang(String(key)),
+                items: DEFAULT_PROGRAMMING_LANGUAGES.map((lang) => {
+                    const Icon = programmingLanguageIconMap[lang]
+                    return {
+                        key: lang,
+                        label: t(`programmingLanguage.${lang}`),
+                        icon: <Icon aria-hidden className="size-5 shrink-0" />,
+                        isDisabled: !isProgrammingLangAvailable(lang, langs),
+                    }
+                }),
+            }
+        },
+        [selectedTabKey, langs, activeLang, onSelectLang, t],
+    )
+
     const isLoading = queryContentSwr.isLoading && !content
-    const bodySkeletonVariant =
-        content?.verified
-            ? "v2"
-            : content && !content.verified
-                ? "legacy"
-                : isLoading && selectedTabKey === ContentTab.Content
-                    ? "v2"
-                    : "legacy"
     /**
      * Switch tabs, but intercept locked premium tabs: open the register modal
      * and keep the current tab selected instead of revealing the gated body.
@@ -291,57 +298,81 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
             {isLoading ? (
                 <div>
                     {/* header capped to the reading width; only the tab bar below spans full width */}
-                    <div className="mx-auto w-full max-w-[1024px]">
+                    <div className="mx-auto w-full max-w-3xl">
                         <ContentHeaderSkeleton />
                     </div>
+                    {/* h-3 between the header (tier 2) and the content/tabs (tier 3) */}
+                    <div className="h-3" />
                     <ContentTabBar
                         tabItems={tabItems}
                         selectedKey={selectedTabKey}
                         ariaLabel={t("module.tabListAria")}
                         onSelectionChange={onTabChange}
+                        rightTabs={languageTabs}
                     />
-                    <div className="mx-auto w-full max-w-[1024px] p-3">
-                        <ContentBodySkeleton variant={bodySkeletonVariant} />
+                    {/* gap-3 between the tab toolbar and the reading card */}
+                    <div className="h-3" />
+                    <div className="mx-auto w-full max-w-3xl">
+                        <Card>
+                            <CardContent>
+                                <ContentBodySkeleton variant="v2" />
+                            </CardContent>
+                        </Card>
                     </div>
                 </div>
             ) : (
                 <div>
                     {/* header capped to the reading width; only the tab bar below spans full width */}
-                    <div className="mx-auto w-full max-w-[1024px]">
+                    <div className="mx-auto w-full max-w-3xl">
                         <ContentHeader />
                     </div>
+                    {/* h-3 between the header (tier 2) and the content/tabs (tier 3) */}
+                    <div className="h-3" />
                     <ContentTabBar
                         tabItems={tabItems}
                         selectedKey={selectedTabKey}
                         ariaLabel={t("module.tabListAria")}
                         onSelectionChange={onTabChange}
+                        rightTabs={languageTabs}
                     />
-                    {/* article body capped for readable line length; the sandbox spans full width */}
-                    <div
-                        className={cn(
-                            "relative w-full",
-                            !isFullWidthTab && "mx-auto max-w-[1024px]",
-                        )}
-                    >
-                        {/* id scopes the "on this page" rail's heading scan (#lesson-article [data-toc]) */}
-                        <div id="lesson-article" className={cn(!isFullWidthTab && "p-3", isLocked && "select-none")}>
-                            {bodyComponent}
+                    {/* gap-3 between the tab toolbar and the reading card */}
+                    <div className="h-3" />
+                    {/* Sandbox / AI Lab span full width (no reading card); everything else
+                        reads inside a centered "paper" card on the page canvas. */}
+                    {isFullWidthTab ? (
+                        <div className="relative w-full">
+                            {/* id scopes the "on this page" rail's heading scan (#lesson-article [data-toc]) */}
+                            <div id="lesson-article">
+                                {bodyComponent}
+                            </div>
                         </div>
-                        {/* Medium-style teaser: a tall, smooth gradient fades the tail of the body
-                            into the page background (no blur — pure opacity fade like Medium). */}
-                        {isLocked ? (
-                            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-72 bg-gradient-to-b from-transparent via-background/70 to-background" />
-                        ) : null}
-                    </div>
+                    ) : (
+                        <div className="mx-auto w-full max-w-3xl">
+                            <Card>
+                                <CardContent>
+                                    <div className="relative">
+                                        <div id="lesson-article" className={cn(isLocked && "select-none")}>
+                                            {bodyComponent}
+                                        </div>
+                                        {/* Medium-style teaser: fade the tail of the body into the
+                                            card surface (pure opacity fade) behind the paywall. */}
+                                        {isLocked ? (
+                                            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-72 bg-gradient-to-b from-transparent via-surface/70 to-surface" />
+                                        ) : null}
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </div>
+                    )}
                     {/* previous / next lesson pager — linear course navigation at the foot
                         of the reading column (hidden on locked / full-width tabs) */}
                     {!isLocked && !isFullWidthTab ? (
-                        <LessonPager className="mx-auto w-full max-w-[1024px] px-3 pb-6" />
+                        <LessonPager className="mx-auto w-full max-w-3xl px-3 pb-6" />
                     ) : null}
                     {/* E2E proof: a quiet link at the bottom of the lesson that opens a
                         right-side drawer with the recorded per-language test results. */}
                     {hasE2e && !isLocked && !isFullWidthTab ? (
-                        <div className="mx-auto w-full max-w-[1024px] px-3 pb-6">
+                        <div className="mx-auto w-full max-w-3xl px-3 pb-6">
                             <E2eResultButton />
                         </div>
                     ) : null}
@@ -351,7 +382,7 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
                         server-side for members + enrolled viewers, so render only
                         when present and not on full-width (sandbox / AI lab) tabs */}
                     {inlineAd && !isFullWidthTab ? (
-                        <div className="mx-auto w-full max-w-[1024px] px-3 pb-6">
+                        <div className="mx-auto w-full max-w-3xl px-3 pb-6">
                             <AdBanner ad={inlineAd} />
                         </div>
                     ) : null}

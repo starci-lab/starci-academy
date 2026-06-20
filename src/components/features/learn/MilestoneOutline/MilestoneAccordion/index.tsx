@@ -66,18 +66,22 @@ export const MilestoneAccordion = ({
                         key={String(milestone.id)}
                         id={String(milestone.id)}
                     >
-                        <Accordion.Heading>
-                            <Accordion.Trigger className="w-full p-3">
-                                <div className="flex w-full items-center justify-between gap-2">
-                                    <Typography type="body" className="min-w-0 flex-1 cursor-pointer text-start font-semibold">
+                        <Accordion.Heading className="min-w-0">
+                            <Accordion.Trigger className="min-w-0 w-full">
+                                <div className="flex w-full min-w-0 items-center justify-between gap-2">
+                                    <Typography
+                                        type="body"
+                                        className="min-w-0 flex-1 cursor-pointer truncate text-start font-semibold"
+                                        title={`${milestone.sortIndex}. ${milestone.title || "Milestone"}`}
+                                    >
                                         {`${milestone.sortIndex}. ${milestone.title || "Milestone"}`}
                                     </Typography>
-                                    <Accordion.Indicator />
+                                    <Accordion.Indicator className="shrink-0" />
                                 </div>
                             </Accordion.Trigger>
                         </Accordion.Heading>
                         <Accordion.Panel>
-                            <Accordion.Body className="p-3">
+                            <Accordion.Body>
                                 <div className="flex flex-col gap-3">
                                     {tasks.map((task, index) => {
                                         const progress = progressMap.get(task.id)

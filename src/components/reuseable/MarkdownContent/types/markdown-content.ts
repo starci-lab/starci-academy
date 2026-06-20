@@ -13,4 +13,10 @@ export interface MarkdownRenderersParams {
     t: MarkdownTranslator
     /** Figure captions keyed by trimmed mermaid source, paired from the following paragraph. */
     mermaidCaptions: Record<string, string>
+    /**
+     * Reading-grade typography: when true, body/headings render at the larger
+     * long-form scale (16px body, stronger heading ladder) for full lesson
+     * articles. Defaults to the compact scale used in cards / chat / modals.
+     */
+    reading?: boolean
 }

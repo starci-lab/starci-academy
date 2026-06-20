@@ -239,8 +239,13 @@
     "error": "Không tải được nội dung khóa học.",
     "retry": "Thử lại",
     "completion": "Hoàn thành",
+    "progress": "Tiến độ",
+    "contentCount": "{read}/{total}",
+    "resizeRail": "Kéo để đổi độ rộng thanh nội dung",
     "lessonsStat": "Nội dung {read}/{total}",
     "challengesStat": "Challenge {done}/{total}",
+    "challengesOptional": "Thử thách {done}/{total} · tùy chọn",
+    "moduleLessons": "{read}/{total} bài",
     "tasksStat": "Nhiệm vụ {done}/{total}",
     "resume": "Tiếp tục học",
     "allDone": "Bạn đã hoàn thành khóa học này 🎉",
@@ -273,7 +278,18 @@
     "title": "Hỏi StarCi AI",
     "hint": "Hỏi bất cứ điều gì về nội dung này.",
     "placeholder": "Hỏi về nội dung này...",
-    "ask": "Hỏi AI"
+    "ask": "Hỏi AI",
+    "send": "Gửi",
+    "thinking": "Đang trả lời…",
+    "suggestions": {
+      "summarize": "Tóm tắt bài này trong 3 ý chính",
+      "hardest": "Giải thích phần khó nhất",
+      "example": "Cho mình ví dụ thực tế",
+      "remember": "Mình nên nhớ gì từ bài này?"
+    }
+  },
+  "contentActions": {
+    "title": "Hành động"
   },
   "lessonRail": {
     "flashcards": {
@@ -708,6 +724,7 @@
     "prevLesson": "Nội dung trước",
     "nextLesson": "Nội dung tiếp",
     "challengeCount": "{count} thử thách",
+    "outcomes": "Bạn sẽ nắm được",
     "codeLessonCount": "{count} mục code",
     "lessonVideosEmpty": "Chưa có bài giảng cho nội dung này.",
     "codeLesson": {

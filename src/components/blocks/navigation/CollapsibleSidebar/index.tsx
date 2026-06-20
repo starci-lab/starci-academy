@@ -96,8 +96,12 @@ export const CollapsibleSidebar = ({
                 animate={{ width: collapsed ? COLLAPSED_WIDTH : EXPANDED_WIDTH }}
                 transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 420, damping: 38 }}
                 className={cn(
+                    // ONE padding wrapper for the whole rail: p-6 expanded / px-3 py-6
+                    // collapsed. Header, rows and group dividers all sit inside it, so
+                    // the dividers span the PADDED width (lined up with the rows), not
+                    // edge-to-edge. The border-r is on the box → flush, full-height.
                     "flex h-full shrink-0 flex-col overflow-hidden border-r border-separator",
-                    collapsed ? "pr-2" : "pr-6",
+                    collapsed ? "px-3 py-6" : "p-6",
                     className,
                 )}
             >
@@ -144,7 +148,7 @@ export const CollapsibleSidebar = ({
                     <ScrollShadow
                         hideScrollBar
                         size={40}
-                        className={cn("flex flex-col gap-3 overflow-y-auto", collapsed ? "items-stretch" : "pr-1")}
+                        className={cn("flex flex-col gap-3 overflow-y-auto", collapsed && "items-stretch")}
                     >
                         {children}
                     </ScrollShadow>

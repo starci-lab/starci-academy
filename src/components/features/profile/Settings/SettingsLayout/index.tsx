@@ -58,16 +58,16 @@ export const SettingsLayout = ({
     return (
         <div
             className={cn(
-                // ONE scroll context (the page/body). No locked-viewport + inner
-                // overflow panes — that fights the app-shell body scroll and feels
-                // janky. The sidebar just STICKS; the content flows in the page scroll.
+                // ONE scroll context (the page/body). No shell padding — the sidebar
+                // sits flush so its border-r runs from under the navbar straight to
+                // the bottom edge; the rail + content each own their p-6 breathing.
                 "flex w-full flex-col md:flex-row md:items-start",
                 className,
             )}
         >
             {/* sidebar — sticks under the 4rem navbar, viewport-tall on desktop; the
                 block owns its own scroll (ScrollShadow), divider + width animation. */}
-            <aside className="shrink-0 py-6 pl-6 md:sticky md:top-16 md:h-[calc(100dvh-4rem)]">
+            <aside className="shrink-0 md:sticky md:top-16 md:h-[calc(100dvh-4rem)]">
                 <CollapsibleSidebar
                     title={t("profileSettings.title")}
                     collapseLabel={t("profileSettings.collapseMenu")}
@@ -93,9 +93,10 @@ export const SettingsLayout = ({
                 </CollapsibleSidebar>
             </aside>
 
-            {/* content — the active settings page, flowing in the page scroll. */}
+            {/* content — the active settings page, flowing in the page scroll.
+                Owns its own p-6 frame (the shell no longer pads). */}
             <main className="min-w-0 flex-1">
-                <div className="mx-auto max-w-3xl px-6 py-6">
+                <div className="mx-auto max-w-3xl p-6">
                     {children}
                 </div>
             </main>

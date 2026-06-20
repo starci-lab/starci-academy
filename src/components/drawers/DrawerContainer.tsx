@@ -4,6 +4,7 @@ import { UserCvSubmissionAttemptsDrawer } from "./UserCvSubmissionAttemptsDrawer
 import { PersonalProjectTaskAttemptsDrawer } from "./PersonalProjectTaskAttemptsDrawer"
 import { MindMapContentDetailsDrawer } from "./MindMapContentDetailsDrawer"
 import { E2eResultDrawer } from "./E2eResultDrawer"
+import { ContentAiChatDrawer } from "./ContentAiChatDrawer"
 
 export const DrawerContainer = () => {
     return (
@@ -13,6 +14,7 @@ export const DrawerContainer = () => {
             <PersonalProjectTaskAttemptsDrawer />
             <MindMapContentDetailsDrawer />
             <E2eResultDrawer />
+            <ContentAiChatDrawer />
         </>
     )
 }

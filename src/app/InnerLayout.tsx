@@ -14,8 +14,13 @@ import { SwrSideEffects } from "@/hooks/swr"
 import { ReduxProvider } from "@/redux"
 import { ModalContainer } from "@/components/modals"
 import { UseEffects } from "@/hooks"
+import { usePathname } from "next/navigation"
 
 export const InnerLayout = ({ children }: PropsWithChildren) => {
+    // Suppress the drifting ember background on Learn routes — it competes with
+    // long-form reading. Keep it on marketing / dashboard / the rest of the app.
+    const pathname = usePathname()
+    const isLearnRoute = pathname?.includes("/learn") ?? false
     return (
         <Suspense>
             <NextThemesProvider 
@@ -30,7 +35,7 @@ export const InnerLayout = ({ children }: PropsWithChildren) => {
                             <SwrSideEffects />
                             <SocketIoSideEffects />
                             <UseEffects />
-                            <AmbientBackground />
+                            {!isLearnRoute ? <AmbientBackground /> : null}
                             <Navbar />
                             <ModalContainer />
                             <DrawerContainer />

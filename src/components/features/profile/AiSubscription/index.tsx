@@ -69,7 +69,7 @@ export const AiSubscription = () => {
     const tiersReady = !tiersSwr.isLoading && !!tiersSwr.data && !tiersSwr.error
 
     return (
-        <div className="mx-auto flex max-w-3xl flex-col gap-6 p-6">
+        <div className="flex flex-col gap-6">
             <Breadcrumbs>
                 <Breadcrumbs.Item onPress={onNavigateHome}>
                     {t("nav.home")}

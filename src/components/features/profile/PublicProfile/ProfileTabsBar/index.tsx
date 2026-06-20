@@ -29,12 +29,13 @@ const TAB_ICONS: Record<ProfileTab, typeof HouseIcon> = {
 export type ProfileTabsBarProps = WithClassNames<undefined>
 
 /**
- * Full-width tab strip that sits directly under the app navbar, only on the
- * profile page (the page renders it; the global navbar stays untouched). Uses the
- * native HeroUI secondary Tabs (foreground text on the selected tab + an accent
- * underline indicator) so no custom styling leaks in. Sticky under the 64px
- * navbar so the primary nav stays reachable while the content column scrolls; the
- * open tab lives in the shared store, so panels elsewhere stay in sync.
+ * Full-width tab strip for the profile page. The page registers it as the global
+ * Navbar's bottom layer ({@link useRegisterNavbarBottomLayer}); the Navbar renders
+ * it flush under its primary row and owns the single bottom border + sticky, so
+ * this strip carries no border / sticky / bg of its own. Uses the native HeroUI
+ * secondary Tabs (foreground text on the selected tab + an accent underline
+ * indicator). The open tab lives in the shared store, so panels elsewhere stay in
+ * sync.
  *
  * @param props - optional root class name (placement only)
  */
@@ -43,7 +44,9 @@ export const ProfileTabsBar = ({ className }: ProfileTabsBarProps) => {
     const { tab, setTab } = useProfileTabStore()
 
     return (
-        <div className={cn("sticky top-16 z-40 w-full border-b border-separator bg-background", className)}>
+        // Rendered as the Navbar's bottom layer — no border / sticky / bg of its
+        // own; the Navbar root owns the single bottom border and the sticky.
+        <div className={cn("w-full", className)}>
             <div className="w-full px-6">
                 <ExtendedTabs
                     selectedKey={tab}

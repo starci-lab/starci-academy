@@ -28,8 +28,8 @@ const Layout = ({ children }: LayoutProps) => {
     // contributes the modules breadcrumb above the lesson article.
     return (
         <>
-            {/* breadcrumb capped + centered to match the 1024 reading column below */}
-            <div className="mx-auto w-full max-w-[1024px] px-3 pt-3">
+            {/* breadcrumb (tier 1) capped to the same reading width as the header + content below */}
+            <div className="mx-auto w-full max-w-3xl px-3 pt-3">
                 {isLoading ? (
                     <Skeleton className="h-5 w-32" />
                 ) : (

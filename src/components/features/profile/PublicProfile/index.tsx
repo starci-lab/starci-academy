@@ -1,6 +1,8 @@
 "use client"
 
-import React from "react"
+import React, {
+    useMemo,
+} from "react"
 import {
     cn,
 } from "@heroui/react"
@@ -10,6 +12,7 @@ import {
 import {
     useProfileTabStore,
     useQueryUserProfileSwr,
+    useRegisterNavbarBottomLayer,
 } from "@/hooks"
 import type {
     WithClassNames,
@@ -83,6 +86,15 @@ export const PublicProfile = ({
     // keep the open tab in the URL query (`?tab=`) — shareable + back/forward
     useProfileTabUrlSync()
 
+    const isSelf = !!viewer && !!user?.id && viewer.id === user.id
+    // locked profile viewed by a non-owner → hero + "private" notice, tabs withheld
+    const isLocked = Boolean(user?.profileLocked) && !isSelf
+    // the profile tab strip renders as the global Navbar's bottom layer, but only
+    // when the main profile actually shows (not on loading / not-found / locked).
+    const showTabs = !isLoading && !(authenticated && !username) && Boolean(user) && !error && !isLocked
+    const tabsNode = useMemo(() => <ProfileTabsBar />, [])
+    useRegisterNavbarBottomLayer(showTabs ? tabsNode : null)
+
     // first load → skeleton so the column never jumps. On the bare `/profile` the
     // username is null until the signed-in user hydrates — treat that as loading.
     if (isLoading || (authenticated && !username)) {
@@ -94,18 +106,14 @@ export const PublicProfile = ({
         return <ProfileNotFoundState className={className} />
     }
 
-    const isSelf = !!viewer && !!user.id && viewer.id === user.id
-    // locked profile viewed by a non-owner → hero + "private" notice, tabs withheld
-    const isLocked = Boolean(user.profileLocked) && !isSelf
-
     if (isLocked) {
         return <ProfileLockedState className={className} />
     }
 
     return (
         <div className={cn("flex w-full flex-col", className)}>
-            {/* full-width tab strip pinned under the navbar (profile only) */}
-            <ProfileTabsBar />
+            {/* the profile tab strip is registered as the Navbar's bottom layer
+                above (useRegisterNavbarBottomLayer), so it is NOT rendered here. */}
 
             {/* starci-concept: flex 2-col — left identity BARE, right content cards */}
             <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 py-6 md:flex-row md:items-start">

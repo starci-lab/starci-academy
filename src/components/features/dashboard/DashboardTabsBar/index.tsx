@@ -27,10 +27,12 @@ const TAB_ICONS: Record<DashboardTab, typeof HouseIcon> = {
 export type DashboardTabsBarProps = WithClassNames<undefined>
 
 /**
- * Full-width dashboard tab strip pinned under the navbar (mirror of the profile
- * page's `ProfileTabsBar`). Native HeroUI secondary Tabs (foreground text + accent
- * underline). Sticky under the 64px navbar; the open tab lives in the shared store
- * so panels stay in sync. Mobile = icon only; label shows from `md` up.
+ * Full-width dashboard tab strip (mirror of the profile page's `ProfileTabsBar`).
+ * Registered as the global Navbar's bottom layer ({@link useRegisterNavbarBottomLayer}),
+ * so the Navbar renders it flush under its primary row and owns the single bottom
+ * border + sticky — this strip carries none of its own. Native HeroUI secondary
+ * Tabs (foreground text + accent underline); the open tab lives in the shared
+ * store so panels stay in sync. Mobile = icon only; label shows from `md` up.
  * @param props - optional root class name (placement only)
  */
 export const DashboardTabsBar = ({ className }: DashboardTabsBarProps) => {
@@ -38,7 +40,7 @@ export const DashboardTabsBar = ({ className }: DashboardTabsBarProps) => {
     const { tab, setTab } = useDashboardTabStore()
 
     return (
-        <div className={cn("sticky top-16 z-40 w-full border-b border-separator bg-background", className)}>
+        <div className={cn("w-full", className)}>
             <div className="w-full px-6">
                 <ExtendedTabs
                     selectedKey={tab}

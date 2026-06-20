@@ -24,6 +24,7 @@ import {
     useRouter,
 } from "@/i18n/navigation"
 import {
+    useNavbarBottomLayerStore,
     useSearchOverlayState,
 } from "@/hooks"
 import {
@@ -79,6 +80,8 @@ export const Navbar = ({ className }: NavbarProps) => {
     const pathname = usePathname()
     const { open: openSearch } = useSearchOverlayState()
     const [isDrawerOpen, setDrawerOpen] = useState(false)
+    // optional second layer (e.g. profile tabs) a page registered into the navbar
+    const bottomLayer = useNavbarBottomLayerStore((state) => state.bottomLayer)
 
     // register the global Ctrl/Cmd+K shortcut to open the search overlay
     useEffect(() => {
@@ -116,8 +119,9 @@ export const Navbar = ({ className }: NavbarProps) => {
     )
 
     return (
-        <nav className={cn("sticky top-0 z-50 h-16 min-h-16 bg-background", className)}>
-            <div className="mx-auto flex h-full w-full items-center justify-between gap-3 px-3">
+        <nav className={cn("sticky top-0 z-50 border-b border-separator bg-background", className)}>
+            {/* primary row — fixed 4rem tall; the nav root owns the single bottom border */}
+            <div className="flex h-16 min-h-16 w-full items-center justify-between gap-3 px-3">
                 <div className="flex items-center gap-6">
                     <Logo className="justify-start" />
                     <NavLinks />
@@ -154,6 +158,12 @@ export const Navbar = ({ className }: NavbarProps) => {
                     </Button>
                 </div>
             </div>
+
+            {/* page-registered secondary layer (e.g. profile tabs). It sits flush
+                under the primary row with NO divider of its own — the nav root's
+                single border-b falls under whichever layer is last (single → row,
+                bottomLayer → this), so there is always exactly one navbar border. */}
+            {bottomLayer ? <div className="w-full">{bottomLayer}</div> : null}
 
             {/* mobile navigation drawer (opened by the expand icon) */}
             <Drawer>

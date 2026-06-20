@@ -1,11 +1,14 @@
 "use client"
 
-import React from "react"
+import React, {
+    useMemo,
+} from "react"
 import {
     cn,
 } from "@heroui/react"
 import {
     useDashboardTabStore,
+    useRegisterNavbarBottomLayer,
 } from "@/hooks"
 import {
     useDashboardTabUrlSync,
@@ -36,8 +39,8 @@ import type {
 export type DashboardProps = WithClassNames<undefined>
 
 /**
- * Logged-in home — rebuilt on the proven PROFILE page layout: a sticky tab strip
- * under the navbar, then a centered 2-column body — left = the viewer's identity +
+ * Logged-in home — rebuilt on the proven PROFILE page layout: a tab strip rendered
+ * as the navbar's bottom layer, then a centered 2-column body — left = the viewer's identity +
  * standing (bare, stable across tabs), right = the selected tab's content. Tabs:
  * Overview (cockpit) · Explore (feed) · Courses · Community. The open tab lives in
  * the shared store and mirrors `?tab=` (shareable); only the active panel mounts,
@@ -50,9 +53,12 @@ export const Dashboard = ({
 }: DashboardProps) => {
     useDashboardTabUrlSync()
     const tab = useDashboardTabStore((state) => state.tab)
+    // the dashboard tab strip renders as the global Navbar's bottom layer
+    const tabsNode = useMemo(() => <DashboardTabsBar />, [])
+    useRegisterNavbarBottomLayer(tabsNode)
     return (
         <div className={cn("flex w-full flex-col", className)}>
-            <DashboardTabsBar />
+            {/* tab strip is registered as the Navbar bottom layer above (not here) */}
             {/* 2-col body (starci concept): left identity BARE, right content cards */}
             <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 py-6 md:flex-row md:items-start">
                 {/* LEFT: identity + standing, bare, scrolls with the page */}

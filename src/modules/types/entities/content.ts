@@ -5,6 +5,16 @@ import type { CodeImplementationEntity } from "./code-implementation"
 import type { ContentBody } from "./content-body"
 import type { ModuleEntity } from "./module"
 
+/** One "what you'll learn" outcome bullet (mount `# outcomes`). */
+export interface ContentLearningOutcome {
+    /** Outcome row id. */
+    id: string
+    /** Outcome text (one bullet). */
+    text: string
+    /** Display order. */
+    sortIndex: number
+}
+
 /**
  * Content attached to a module (title + body).
  */
@@ -57,6 +67,8 @@ export interface ContentEntity extends AbstractEntity {
     verified?: string | null
     /** SCHEMA V2 per-language lesson bodies (mount `bodies/<N>-<lang>/`). */
     bodies?: Array<ContentBody>
+    /** Ordered "what you'll learn" outcome bullets shown at the top of the lesson. */
+    outcomes?: Array<ContentLearningOutcome>
 }
 
 /** Code explaining rows from `content` payload. */

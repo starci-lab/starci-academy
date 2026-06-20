@@ -1,4 +1,5 @@
 export * from "./AmbientBackground"
 export * from "./PageContainer"
 export * from "./PageHeader"
+export * from "./ResizableRail"
 export * from "./StickyBottomBar"

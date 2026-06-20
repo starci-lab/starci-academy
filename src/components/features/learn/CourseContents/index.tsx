@@ -259,11 +259,16 @@ export const CourseContents = ({ className }: CourseContentsProps) => {
                             >
                                 {modules.map((module) => (
                                     <Accordion.Item key={module.id} id={module.id} aria-label={module.title}>
-                                        <Accordion.Heading>
-                                            <Accordion.Trigger>
-                                                <div className="flex w-full items-center justify-between gap-3">
-                                                    <div className="flex min-w-0 items-center gap-2">
-                                                        <Typography type="body-sm" weight="semibold" truncate>
+                                        <Accordion.Heading className="min-w-0">
+                                            <Accordion.Trigger className="min-w-0 w-full">
+                                                <div className="flex w-full min-w-0 items-center justify-between gap-3">
+                                                    <div className="flex min-w-0 flex-1 items-center gap-2">
+                                                        <Typography
+                                                            type="body-sm"
+                                                            weight="semibold"
+                                                            truncate
+                                                            title={module.title}
+                                                        >
                                                             {module.title}
                                                         </Typography>
                                                         {module.isPremium ? (

@@ -2,8 +2,8 @@
 
 import React from "react"
 import {
+    Label,
     Link,
-    Typography,
     cn,
 } from "@heroui/react"
 import {
@@ -25,8 +25,8 @@ import {
     LessonChallenges,
 } from "./LessonChallenges"
 import {
-    ContentAiCopilot,
-} from "./ContentAiCopilot"
+    ContentActions,
+} from "./ContentActions"
 
 /** Props for {@link OnThisPage}. */
 export type OnThisPageProps = WithClassNames<undefined>
@@ -59,11 +59,9 @@ export const OnThisPage = ({ className }: OnThisPageProps) => {
                 className,
             )}
         >
-            <div className="flex flex-col gap-6 p-3">
+            <div className="flex flex-col gap-6 p-6">
                 <nav className="flex flex-col gap-3">
-                    <Typography type="body-sm" weight="semibold" color="muted">
-                        {t("onThisPage.title")}
-                    </Typography>
+                    <Label>{t("onThisPage.title")}</Label>
                     <div className="flex flex-col gap-2">
                         {headings.map((heading) => (
                             <Link
@@ -81,8 +79,8 @@ export const OnThisPage = ({ className }: OnThisPageProps) => {
                     </div>
                 </nav>
 
-                {/* "ask AI about this content" — anchors the rail (always present) */}
-                <ContentAiCopilot />
+                {/* content actions (bookmark / share / fullscreen) — moved from the inline bar */}
+                <ContentActions />
 
                 {/* "review this lesson" — flashcard decks linked to this content */}
                 <LessonFlashcards />

@@ -201,6 +201,12 @@ const extractMermaidCaptions = (markdown: string): Record<string, string> => {
 export interface MarkdownContentProps extends WithClassNames<undefined> {
     /** Markdown source string. */
     markdown: string
+    /**
+     * Reading-grade typography for full lesson articles: 16px body, looser line
+     * rhythm and a stronger heading ladder. Off by default (compact scale used in
+     * cards, chat, flashcards and modals).
+     */
+    reading?: boolean
 }
 
 /**
@@ -211,7 +217,7 @@ export interface MarkdownContentProps extends WithClassNames<undefined> {
  * theme hook and client-side markdown rendering.
  * @param props - {@link MarkdownContentProps}
  */
-export const MarkdownContent = ({ markdown, className }: MarkdownContentProps) => {
+export const MarkdownContent = ({ markdown, reading = false, className }: MarkdownContentProps) => {
     const theme = useTheme()
     const t = useTranslations()
     const mermaidCaptions = useMemo(() => extractMermaidCaptions(markdown), [markdown])
@@ -220,15 +226,25 @@ export const MarkdownContent = ({ markdown, className }: MarkdownContentProps) =
             isDark: theme.theme === "dark",
             t,
             mermaidCaptions,
+            reading,
         }),
         [
             theme.theme,
             t,
             mermaidCaptions,
+            reading,
         ],
     )
     return (
-        <div className={cn("min-w-0 space-y-1.5 text-sm leading-relaxed text-foreground", className)}>
+        <div
+            className={cn(
+                "min-w-0 text-foreground",
+                reading
+                    ? "space-y-4 text-base leading-7"
+                    : "space-y-1.5 text-sm leading-relaxed",
+                className,
+            )}
+        >
             <ReactMarkdown
                 remarkPlugins={REMARK_PLUGINS}
                 components={components}

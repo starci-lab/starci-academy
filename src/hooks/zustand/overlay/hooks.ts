@@ -56,6 +56,8 @@ export const useAvatarUploadOverlayState = () => useOverlayHandle("avatarUpload"
 export const useChallengeOverlayState = () => useOverlayHandle("challenge")
 /** Content overlay state. */
 export const useContentOverlayState = () => useOverlayHandle("content")
+/** Content AI chat drawer overlay state (ask StarCi AI about the current content). */
+export const useContentAiChatOverlayState = () => useOverlayHandle("contentAiChat")
 /** CV preview overlay state. */
 export const useCvPreviewOverlayState = () => useOverlayHandle("cvPreview")
 /** CV review level details overlay state. */

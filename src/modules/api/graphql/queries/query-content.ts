@@ -23,6 +23,11 @@ const query1 = gql`
         e2eFlows
         title
         body
+        outcomes {
+          id
+          text
+          sortIndex
+        }
         challenges {
           id
         }

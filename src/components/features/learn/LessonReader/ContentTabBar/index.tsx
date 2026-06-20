@@ -1,12 +1,16 @@
 "use client"
 
 import React, {
+    useMemo,
     type Key,
 } from "react"
 import {
     cn,
-    Tabs,
 } from "@heroui/react"
+import {
+    TabsCard,
+    type TabsCardGroup,
+} from "@/components/blocks"
 import type {
     ContentTab,
 } from "@/redux/slices"
@@ -33,14 +37,20 @@ export interface ContentTabBarProps extends WithClassNames<undefined> {
     ariaLabel: string
     /** Fired with the newly selected tab key. */
     onSelectionChange: (key: Key) => void
+    /**
+     * Optional right-aligned tab group on the SAME row (e.g. the programming-language
+     * switcher) — keeps the reader to a single toolbar layer instead of a second strip.
+     */
+    rightTabs?: TabsCardGroup
 }
 
 /**
  * Secondary tab bar shown above the content body (loading and loaded states).
  *
- * Presentational: maps {@link ContentTabItem} rows to triggers and forwards the
- * selection callback; no data or business logic.
- * @param props - tab items, selected key, a11y label and selection callback
+ * Builds the left tab group from {@link ContentTabItem} rows (icon + label, lock glyph
+ * for gated tabs) and hands it — plus an optional right group — to {@link TabsCard}.
+ * Owns only the lesson-reader chrome (full-width underline + reading-width cap).
+ * @param props - tab items, selected key, a11y label, selection callback, right group
  */
 export const ContentTabBar = ({
     tabItems,
@@ -48,42 +58,38 @@ export const ContentTabBar = ({
     ariaLabel,
     onSelectionChange,
     className,
+    rightTabs,
 }: ContentTabBarProps) => {
+    /** Left group: content tabs mapped to TabsCard items (icon + label + lock). */
+    const leftTabs = useMemo<TabsCardGroup>(
+        () => ({
+            ariaLabel,
+            selectedKey,
+            onSelectionChange,
+            items: tabItems.map((item) => ({
+                key: item.key,
+                muted: item.locked,
+                label: (
+                    <TabTrigger
+                        icon={CONTENT_TAB_ICON_MAP[item.key]}
+                        label={item.label}
+                        locked={item.locked}
+                    />
+                ),
+            })),
+        }),
+        [tabItems, selectedKey, ariaLabel, onSelectionChange],
+    )
+
     return (
-        // outermost: full-width underline edge-to-edge (the only divider under the tab row)
-        <div className={cn("w-full border-b", className)}>
-            {/* capped + centered wrapper so the tabs line up with the 1024 reading column */}
-            <div className="mx-auto w-full max-w-[1024px] px-3">
-                <Tabs
-                    selectedKey={selectedKey}
-                    variant="secondary"
-                    onSelectionChange={onSelectionChange}
-                    className="w-full"
-                >
-                    <Tabs.ListContainer className="w-full">
-                        {/* kill HeroUI secondary's own list border so only the full-width line above shows */}
-                        <Tabs.List aria-label={ariaLabel} className="w-full border-b-0!">
-                            {tabItems.map((item) => (
-                                <Tabs.Tab
-                                    key={item.key}
-                                    id={item.key}
-                                    className={cn(
-                                        "rounded-none data-[selected=true]:border-b-2 data-[selected=true]:border-accent data-[selected=true]:text-accent",
-                                        // locked premium tab: muted but still clickable (opens the register modal)
-                                        item.locked && "text-muted",
-                                    )}
-                                >
-                                    <TabTrigger
-                                        icon={CONTENT_TAB_ICON_MAP[item.key]}
-                                        label={item.label}
-                                        locked={item.locked}
-                                    />
-                                </Tabs.Tab>
-                            ))}
-                        </Tabs.List>
-                    </Tabs.ListContainer>
-                </Tabs>
-            </div>
+        // no divider line under the row — the toolbar floats above the reading card
+        <div className={cn("w-full", className)}>
+            {/* capped + centered wrapper so the toolbar lines up with the reading column */}
+            <TabsCard
+                className="mx-auto w-full max-w-3xl px-3"
+                leftTabs={leftTabs}
+                rightTabs={rightTabs}
+            />
         </div>
     )
 }

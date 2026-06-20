@@ -28,6 +28,7 @@ export type OverlayKey =
     | "authentication"
     | "challenge"
     | "content"
+    | "contentAiChat"
     | "cvPreview"
     | "cvReviewLevelDetails"
     | "cvSubmissionAttemptsDrawer"
@@ -61,6 +62,7 @@ const OVERLAY_KEYS: ReadonlyArray<OverlayKey> = [
     "authentication",
     "challenge",
     "content",
+    "contentAiChat",
     "cvPreview",
     "cvReviewLevelDetails",
     "cvSubmissionAttemptsDrawer",

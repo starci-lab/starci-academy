@@ -239,8 +239,13 @@
     "error": "Couldn't load the course contents.",
     "retry": "Try again",
     "completion": "Completed",
+    "progress": "Progress",
+    "contentCount": "{read}/{total}",
+    "resizeRail": "Drag to resize the content rail",
     "lessonsStat": "Content {read}/{total}",
     "challengesStat": "Challenges {done}/{total}",
+    "challengesOptional": "Challenges {done}/{total} · optional",
+    "moduleLessons": "{read}/{total} lessons",
     "tasksStat": "Tasks {done}/{total}",
     "resume": "Continue learning",
     "allDone": "You've completed this course 🎉",
@@ -273,7 +278,18 @@
     "title": "Ask StarCi AI",
     "hint": "Ask anything about this content.",
     "placeholder": "Ask about this content...",
-    "ask": "Ask AI"
+    "ask": "Ask AI",
+    "send": "Send",
+    "thinking": "Thinking…",
+    "suggestions": {
+      "summarize": "Summarize this lesson in 3 key points",
+      "hardest": "Explain the hardest part",
+      "example": "Give me a real-world example",
+      "remember": "What should I remember from this?"
+    }
+  },
+  "contentActions": {
+    "title": "Actions"
   },
   "lessonRail": {
     "flashcards": {
@@ -699,6 +715,7 @@
     "prevLesson": "Previous",
     "nextLesson": "Next",
     "challengeCount": "{count} challenges",
+    "outcomes": "What you'll learn",
     "codeLessonCount": "{count} code sections",
     "lessonVideosEmpty": "No lesson videos available for this content.",
     "codeLesson": {

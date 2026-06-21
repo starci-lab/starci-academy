@@ -8,7 +8,6 @@ import type {
     FoundationCategoryEntity,
     WithClassNames,
 } from "@/modules/types"
-import { cn } from "@heroui/react"
 import {
     FoundationCategoryCard,
 } from "../../FoundationCategoryCard"
@@ -16,8 +15,19 @@ import {
     FoundationCategoryCardSkeleton,
 } from "../../FoundationCategoryCard/FoundationCategoryCardSkeleton"
 import {
+    cn,
+} from "@heroui/react"
+import {
     AsyncContent,
 } from "@/components/blocks"
+
+/**
+ * Container for the joined list — the house card surface forced to `p-0` so rows
+ * sit edge-to-edge with full-width dividers (the `Accordion variant="surface"`
+ * look). This is NOT a functional accordion; we only borrow that surface styling.
+ * (`!p-0` overrides the HeroUI `.card--default` recipe padding, not our own code.)
+ */
+const LIST_CONTAINER_CLASS = "card card--default !p-0 overflow-hidden"
 
 /** Props for {@link FoundationsCategoryGridBody}. */
 export interface FoundationsCategoryGridBodyProps extends WithClassNames<undefined> {
@@ -29,14 +39,18 @@ export interface FoundationsCategoryGridBodyProps extends WithClassNames<undefin
     isLoading: boolean
 }
 
-/** Shared responsive grid layout for cards + skeletons. */
-const GRID_CLASS = "grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+/** Number of skeleton rows shown while the categories load. */
+const SKELETON_ROWS = 6
 
 /**
- * Foundations category grid body: skeletons while loading, empty state, or the card grid.
+ * Foundations category list body: skeleton rows while loading, empty state, or the
+ * joined link-and-caret list.
  *
- * List items (`FoundationCategoryCard`) own their own selection dispatch and navigation;
- * this component only handles layout and loading state.
+ * Rows ({@link FoundationCategoryCard}) own their own selection dispatch + navigation
+ * and render as {@link import("@/components/blocks").ListRow}s inside one `p-0` house
+ * card surface (a joined list with full-width dividers — the `Accordion
+ * variant="surface"` look, not a real accordion); this component only handles the
+ * container, ordering, and loading state.
  * @param props.categories - Raw categories for empty-state check.
  * @param props.sortedCategories - Display-ordered categories.
  * @param props.isLoading - Shows skeletons when true and no data cached.
@@ -56,18 +70,22 @@ export const FoundationsCategoryGridBody = ({
             isEmpty={!categories?.length}
             emptyContent={{ title: t("foundations.emptyCategories") }}
             skeleton={(
-                <div className={cn(GRID_CLASS, className)}>
-                    {Array.from({ length: 6 }).map((_, index) => (
-                        <FoundationCategoryCardSkeleton key={index} />
+                <div className={cn(LIST_CONTAINER_CLASS, className)}>
+                    {Array.from({ length: SKELETON_ROWS }).map((_, index) => (
+                        <FoundationCategoryCardSkeleton
+                            key={index}
+                            divider={index < SKELETON_ROWS - 1}
+                        />
                     ))}
                 </div>
             )}
         >
-            <div className={cn(GRID_CLASS, className)}>
-                {sortedCategories.map((category) => (
+            <div className={cn(LIST_CONTAINER_CLASS, className)}>
+                {sortedCategories.map((category, index) => (
                     <FoundationCategoryCard
                         key={category.id}
                         category={category}
+                        divider={index < sortedCategories.length - 1}
                     />
                 ))}
             </div>

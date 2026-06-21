@@ -26,12 +26,19 @@ import {
 /** Props for {@link FoundationsList}. */
 export type FoundationsListProps = WithClassNames<undefined>
 
-/** Shared responsive grid layout for cards + skeletons. */
-const GRID_CLASS = "grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+/** Number of skeleton rows shown while the resources load. */
+const SKELETON_ROWS = 6
+
+/**
+ * Container for the joined list — the house card surface forced to `p-0` so rows
+ * sit edge-to-edge with full-width dividers (the `Accordion variant="surface"`
+ * look). NOT a functional accordion; only the surface styling is borrowed.
+ */
+const LIST_CONTAINER_CLASS = "card card--default !p-0 overflow-hidden"
 
 /**
  * Foundations master list: reads from Redux + SWR; shows skeletons while loading,
- * empty state, or the card grid.
+ * empty state, or the joined link-and-caret list.
  * @param props.className - Optional root class names.
  */
 export const FoundationsList = ({
@@ -58,19 +65,23 @@ export const FoundationsList = ({
             isEmpty={sortedFoundations.length === 0}
             emptyContent={{ title: t("foundations.empty") }}
             skeleton={(
-                <div className={cn(GRID_CLASS, className)}>
-                    {Array.from({ length: 6 }).map((_, index) => (
-                        <FoundationCardSkeleton key={index} />
+                <div className={cn(LIST_CONTAINER_CLASS, className)}>
+                    {Array.from({ length: SKELETON_ROWS }).map((_, index) => (
+                        <FoundationCardSkeleton
+                            key={index}
+                            divider={index < SKELETON_ROWS - 1}
+                        />
                     ))}
                 </div>
             )}
         >
-            <div className={cn(GRID_CLASS, className)}>
+            <div className={cn(LIST_CONTAINER_CLASS, className)}>
                 {sortedFoundations.map((foundation, index) => (
                     <FoundationCard
                         key={foundation.id}
                         foundation={foundation}
                         displayIndex={index}
+                        divider={index < sortedFoundations.length - 1}
                     />
                 ))}
             </div>

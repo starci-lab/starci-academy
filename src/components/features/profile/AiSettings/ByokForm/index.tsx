@@ -180,7 +180,7 @@ export const ByokForm = () => {
                 </Select.Root>
             </div>
 
-            <TextField>
+            <TextField variant="secondary">
                 <Label htmlFor="byok-api-key">
                     {t("aiSettings.byok.apiKey")}
                 </Label>

@@ -259,6 +259,20 @@
     "noMatch": "Không có nội dung nào khớp với tìm kiếm.",
     "lessonCount": "{count} nội dung",
     "milestones": "Dự án",
+    "lessonsLabel": "Nội dung",
+    "challengesLabel": "Challenge",
+    "lessonsHint": "bài đã đọc",
+    "challengesHint": "đã hoàn thành",
+    "continueEyebrow": "Học tiếp",
+    "capstoneEyebrow": "Đã xong nội dung — tới đồ án cá nhân",
+    "resumeCapstone": "Tiếp tục đồ án",
+    "challengesByDifficulty": "Challenge theo độ khó",
+    "difficulty": {
+      "beginner": "Dễ",
+      "intermediate": "Trung bình",
+      "advanced": "Khó",
+      "insane": "Cực khó"
+    },
     "status": {
       "notStarted": "Chưa bắt đầu",
       "inProgress": "Đang làm",
@@ -273,6 +287,11 @@
   },
   "onThisPage": {
     "title": "Trên trang này"
+  },
+  "learnTabs": {
+    "contents": "Mục lục",
+    "lesson": "Bài học",
+    "onThisPage": "Trên trang"
   },
   "contentAi": {
     "title": "Hỏi StarCi AI",
@@ -542,6 +561,23 @@
     }
   },
   "finalProject": {
+    "dashboard": {
+      "title": "Dự án cá nhân",
+      "subtitle": "Xây dựng dự án của bạn theo từng chặng — chấm điểm bằng AI.",
+      "progress": "Tiến độ",
+      "tasksDone": "{done}/{total} nhiệm vụ",
+      "nextTask": "Nhiệm vụ kế tiếp",
+      "continue": "Tiếp tục",
+      "allDone": "Đã hoàn thành tất cả",
+      "github": "GitHub",
+      "connected": "Đã kết nối",
+      "notConnected": "Chưa kết nối",
+      "statDone": "Đã đạt",
+      "statLocked": "Đang khoá",
+      "statAttempts": "Lần nộp",
+      "statAvg": "Điểm TB",
+      "empty": "Chưa có chặng nào trong dự án."
+    },
     "title": "Dự án cá nhân",
     "aria": "Cột mốc {index}",
     "page": {
@@ -563,6 +599,7 @@
       },
       "submitGithub": {
         "title": "Github dự án",
+        "settingsTitle": "Cài đặt chấm điểm",
         "langFieldTitle": "Ngôn ngữ chấm điểm",
         "langFieldHint": "Backend của bạn được chấm theo tiêu chí approach của ngôn ngữ này.",
         "repoFieldTitle": "URL GitHub",
@@ -579,7 +616,12 @@
         "resetButton": "Đặt lại",
         "ctaEvaluate": "Đánh giá tiến độ",
         "ctaReEvaluate": "Đánh giá lại tiến độ",
-        "syncFailed": "Đồng bộ thất bại. Vui lòng thử lại."
+        "syncFailed": "Đồng bộ thất bại. Vui lòng thử lại.",
+        "privateTokenFieldTitle": "Token GitHub (repo riêng tư)",
+        "privateTokenPlaceholder": "github_pat_… hoặc ghp_…",
+        "privateTokenHint": "Chỉ cần khi repo riêng tư. Tạo fine-grained token (quyền Contents: read) cho đúng repo này — token được mã hóa khi lưu và không hiển thị lại.",
+        "privateTokenSaveButton": "Lưu token",
+        "privateTokenRemoveButton": "Xóa token"
       },
       "reviewPreview": {
         "title": "Kết quả mới nhất",
@@ -923,30 +965,6 @@
     "myRankEmpty": "Bạn chưa có hoạt động nào trong khoá học này. Làm challenge hoặc đọc bài để lên bảng xếp hạng.",
     "error": "Không tải được bảng xếp hạng. Vui lòng thử lại."
   },
-  "starciAi": {
-    "title": "StarCi AI",
-    "subtitle": "Các mô hình AI đang được sử dụng trong hệ thống",
-    "keyPool": {
-      "title": "Trạng thái pool API key",
-      "subtitle": "Trạng thái realtime từ cache ping — key disabled sẽ bị bỏ qua ở lần gọi tiếp theo.",
-      "refreshing": "Đang làm mới…",
-      "error": "Không tải được trạng thái pool key.",
-      "empty": "Chưa cấu hình pool provider nào.",
-      "activeSummary": "{active} / {total} key đang hoạt động",
-      "lastPing": "Ping cuối",
-      "providers": {
-        "gemini": "Google Gemini",
-        "openai": "OpenAI",
-        "claude": "Anthropic Claude",
-        "openrouter": "OpenRouter"
-      },
-      "status": {
-        "active": "Hoạt động",
-        "disabled": "Tắt",
-        "probing": "Thử lại"
-      }
-    }
-  },
   "practice": {
     "retry": "Thử lại",
     "cockpit": {
@@ -992,6 +1010,16 @@
       "noMatch": "Không có bài khớp bộ lọc",
       "clearFilters": "Xoá bộ lọc",
       "loadError": "Không tải được danh sách bài"
+    },
+    "tabs": {
+      "problems": "Bài tập",
+      "leaderboard": "Bảng xếp hạng"
+    },
+    "leaderboard": {
+      "you": "Bạn",
+      "solved": "Đã giải {count} bài",
+      "empty": "Chưa có ai trên bảng xếp hạng. Giải một bài để chiếm vị trí đầu tiên!",
+      "error": "Không tải được bảng xếp hạng"
     }
   },
   "codingPractice": {
@@ -2094,7 +2122,8 @@
     "tableAriaLabel": "Bảng nội dung",
     "mermaidRendering": "Đang vẽ sơ đồ...",
     "mermaidExpand": "Phóng to sơ đồ",
-    "mermaidFigureLabel": "Hình"
+    "mermaidFigureLabel": "Hình",
+    "headingAnchor": "Liên kết tới mục này"
   },
   "discussion": {
     "title": "Bình luận ({count})",

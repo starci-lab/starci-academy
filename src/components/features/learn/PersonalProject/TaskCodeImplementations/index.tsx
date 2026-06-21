@@ -61,7 +61,7 @@ export const TaskCodeImplementations = ({
     }
 
     return (
-        <div className={cn("mt-6 flex flex-col gap-3", className)}>
+        <div className={cn("flex flex-col gap-3", className)}>
             <div className="font-semibold">
                 {t("task.codeImplementationsTitle")}
             </div>

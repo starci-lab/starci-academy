@@ -1,10 +1,12 @@
 "use client"
 
 import React from "react"
-import { Typography, cn } from "@heroui/react"
 import {
     useTranslations,
 } from "next-intl"
+import {
+    PageHeader,
+} from "@/components/blocks"
 import type {
     WithClassNames,
 } from "@/modules/types"
@@ -13,11 +15,11 @@ import type {
 export type FoundationsCategoryGridHeaderProps = WithClassNames<undefined>
 
 /**
- * Title and description for the foundations category hub.
+ * Title + description for the foundations category hub.
  *
- * Self-contained section (single-use). The topic count lives on the search row
- * (right-aligned) in the layout, mirroring the resource count on the category
- * learn page.
+ * Renders the house {@link PageHeader} block (H3 title + `body-sm` muted
+ * description) so it reads at the exact same scale as the category learn page
+ * header. The topic count lives on the search row (right-aligned) in the layout.
  * @param props.className - Optional root class names.
  */
 export const FoundationsCategoryGridHeader = ({
@@ -26,9 +28,10 @@ export const FoundationsCategoryGridHeader = ({
     const t = useTranslations()
 
     return (
-        <div className={cn("flex flex-col gap-2", className)}>
-            <Typography type="h1" weight="bold">{t("foundations.title")}</Typography>
-            <Typography type="body-sm" color="muted">{t("foundations.gridDescription")}</Typography>
-        </div>
+        <PageHeader
+            title={t("foundations.title")}
+            description={t("foundations.gridDescription")}
+            className={className}
+        />
     )
 }

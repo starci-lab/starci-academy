@@ -77,7 +77,7 @@ export const AdminLogin = ({ className }: AdminLoginProps) => {
                                 control={control}
                                 name="apiKey"
                                 render={({ field, fieldState }) => (
-                                    <TextField isInvalid={fieldState.invalid && fieldState.isTouched}>
+                                    <TextField variant="secondary" isInvalid={fieldState.invalid && fieldState.isTouched}>
                                         <Label htmlFor="admin-api-key-input" className="text-sm text-slate-300">
                                             API Key
                                         </Label>

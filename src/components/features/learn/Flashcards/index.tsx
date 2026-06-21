@@ -5,6 +5,7 @@ import { Button } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { type WithClassNames } from "@/modules/types"
 import { LabeledCard, PageHeader } from "@/components/blocks"
+import { LearnBreadcrumb } from "../shared/LearnBreadcrumb"
 import { FlashcardDeckList } from "./FlashcardDeckList"
 import { FlashcardReviewer } from "./FlashcardReviewer"
 import { InterviewSession } from "./InterviewSession"
@@ -46,8 +47,12 @@ export const Flashcards = ({ className }: FlashcardsProps) => {
 
     return (
         <div className={className}>
-            <div className="mx-auto flex max-w-3xl flex-col gap-6 px-6 py-6">
-                <PageHeader title={t("flashcard.title")} description={t("flashcard.subtitle")} />
+            <div className="mx-auto flex max-w-3xl flex-col gap-6">
+                <PageHeader
+                    breadcrumb={<LearnBreadcrumb current={t("flashcard.title")} />}
+                    title={t("flashcard.title")}
+                    description={t("flashcard.subtitle")}
+                />
 
                 {view === "home" ? (
                     <>

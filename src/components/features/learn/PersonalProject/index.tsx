@@ -5,9 +5,15 @@ import React, {
 } from "react"
 import { useAppSelector } from "@/redux"
 import {
-    Separator,
+    Typography,
     cn,
 } from "@heroui/react"
+import {
+    AsyncContent,
+} from "@/components/blocks"
+import {
+    RichText,
+} from "@/components/reuseable"
 import { useTranslations } from "next-intl"
 import {
     useQueryMilestoneTaskSwr,
@@ -27,25 +33,20 @@ import {
 import {
     TaskCodeImplementations,
 } from "./TaskCodeImplementations"
-import {
-    TaskResults,
-} from "./TaskResults"
-import {
-    TaskActions,
-} from "./TaskActions"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link Task}. */
 export type TaskProps = WithClassNames<undefined>
 
 /**
- * Milestone task detail container.
+ * Milestone task BRIEF column (left side of the split workspace).
  *
- * Reads the active task from redux, renders its title + description, then mounts
- * self-contained sub-sections (brief, criteria, code implementations, results,
- * actions). Each sub-section owns its own data reads — the container only
- * provides the structural layout and the loading/empty gate.
- * `"use client"` for redux selectors.
+ * Reads the active task from redux and renders the reading content: title (H3) +
+ * description, then the per-language brief (and the legacy public criteria /
+ * implementation guides for old tasks that have no SCHEMA V2 brief). The
+ * submission + evaluate + result actions live in the persistent right panel
+ * ({@link import("./TaskSubmissionPanel").TaskSubmissionPanel}) — this column only
+ * swaps per task; the panel persists across milestones. `"use client"` for redux.
  * @param props - optional className for the root element
  */
 export const Task = ({
@@ -74,35 +75,38 @@ export const Task = ({
         return taskFromMilestones
     }, [selectedTaskId, selectedTaskDetail, taskFromMilestones])
 
-    if (!displayTask || milestoneTaskQuery.isLoading || !selectedTaskId) {
-        return <TaskSkeleton />
-    }
+    const body = (
+        // tier-2 header (title H3 + desc) stands alone; the brief renders itself as the
+        // "Hướng dẫn" LabeledCard (TaskBrief), so each section here is its own labeled block.
+        <div className={cn("flex flex-col gap-6", className)}>
+            <div className="flex flex-col gap-2">
+                <Typography type="h3" weight="bold">{displayTask?.title}</Typography>
+                {displayTask?.description && (
+                    <RichText text={displayTask.description} size="body-sm" color="muted" />
+                )}
+            </div>
+            <TaskLockedAlert />
+            <TaskBrief />
+            {/* SCHEMA V2 tasks (with briefs) keep their rubric internal — the legacy
+                public criteria + codeImplementations are only shown for old tasks. */}
+            {(displayTask?.briefs?.length ?? 0) === 0 && (
+                <div className="flex flex-col gap-3">
+                    <Typography type="body" weight="semibold">
+                        {t("task.criteriaTitle")}
+                    </Typography>
+                    <TaskCriteriaList />
+                    <TaskCodeImplementations />
+                </div>
+            )}
+        </div>
+    )
 
     return (
-        <div className={cn(className)}>
-            <Separator />
-            <div className="p-3">
-                <div className="text-lg font-semibold">{displayTask.title}</div>
-                {displayTask.description && (
-                    <div className="text-muted mt-2 text-sm">{displayTask.description}</div>
-                )}
-                <div className="h-3" />
-                <TaskLockedAlert />
-                <TaskBrief />
-                {/* SCHEMA V2 tasks (with briefs) keep their rubric internal — the legacy
-                    public criteria + codeImplementations are only shown for old tasks. */}
-                {(displayTask.briefs?.length ?? 0) === 0 && (
-                    <>
-                        <div className="font-semibold">
-                            {t("task.criteriaTitle")}
-                        </div>
-                        <TaskCriteriaList />
-                        <TaskCodeImplementations />
-                    </>
-                )}
-                <TaskResults />
-                <TaskActions />
-            </div>
-        </div>
+        <AsyncContent
+            isLoading={!displayTask || milestoneTaskQuery.isLoading || !selectedTaskId}
+            skeleton={<TaskSkeleton />}
+        >
+            {body}
+        </AsyncContent>
     )
 }

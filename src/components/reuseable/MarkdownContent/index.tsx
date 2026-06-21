@@ -197,6 +197,25 @@ const extractMermaidCaptions = (markdown: string): Record<string, string> => {
     return captions
 }
 
+/**
+ * Removes each mermaid figure-caption paragraph ("Hình N: …" / "Figure N: …") from the source
+ * so it isn't rendered twice — the diagram now shows it as a real `<figcaption>` (see
+ * {@link extractMermaidCaptions} + MermaidDiagram). Non-caption paragraphs after a fence are left intact.
+ * @param markdown - Raw markdown source.
+ * @returns Markdown with figure-caption paragraphs stripped.
+ */
+const stripMermaidCaptions = (markdown: string): string => {
+    MERMAID_CAPTION_REGEX.lastIndex = 0
+    return markdown.replace(MERMAID_CAPTION_REGEX, (match: string, _code: string, caption: string) => {
+        const clean = caption.trim().replace(/^\*+|\*+$/g, "").trim()
+        if (/^(Hình|Figure)\b/i.test(clean)) {
+            // keep the fence + the blank line(s) after it, drop only the caption text
+            return match.slice(0, match.lastIndexOf(caption))
+        }
+        return match
+    })
+}
+
 /** Props for {@link MarkdownContent}. */
 export interface MarkdownContentProps extends WithClassNames<undefined> {
     /** Markdown source string. */
@@ -221,6 +240,8 @@ export const MarkdownContent = ({ markdown, reading = false, className }: Markdo
     const theme = useTheme()
     const t = useTranslations()
     const mermaidCaptions = useMemo(() => extractMermaidCaptions(markdown), [markdown])
+    // Strip the figure-caption paragraphs (rendered as `<figcaption>` by MermaidDiagram instead).
+    const renderedMarkdown = useMemo(() => stripMermaidCaptions(markdown), [markdown])
     const components = useMemo(
         () => buildMarkdownRenderers({
             isDark: theme.theme === "dark",
@@ -239,8 +260,13 @@ export const MarkdownContent = ({ markdown, reading = false, className }: Markdo
         <div
             className={cn(
                 "min-w-0 text-foreground",
+                // Reading lessons: NO uniform space-y — each block renderer carries its own
+                // asymmetric margin (more above headings than below) for a real section rhythm.
+                // Measure (line length) is owned by the READING COLUMN, not capped here — an
+                // inner max-width would left-align inside the wider column and look lopsided.
+                // Compact (cards / chat / flashcards) keeps the tight uniform rhythm.
                 reading
-                    ? "space-y-4 text-base leading-7"
+                    ? "text-base leading-7 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0"
                     : "space-y-1.5 text-sm leading-relaxed",
                 className,
             )}
@@ -249,7 +275,7 @@ export const MarkdownContent = ({ markdown, reading = false, className }: Markdo
                 remarkPlugins={REMARK_PLUGINS}
                 components={components}
             >
-                {markdown}
+                {renderedMarkdown}
             </ReactMarkdown>
         </div>
     )

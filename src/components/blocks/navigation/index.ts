@@ -1,6 +1,7 @@
 export * from "./ExtendedTabs"
 export * from "./CollapsibleSidebar"
 export * from "./ContentMapRow"
+export * from "./OutlineRail"
 export * from "./SidebarNavGroup"
 export * from "./SidebarNavItem"
 export * from "./TabsCard"

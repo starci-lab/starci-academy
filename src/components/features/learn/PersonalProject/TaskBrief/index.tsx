@@ -1,8 +1,8 @@
 "use client"
 
 import React, { useMemo } from "react"
-import { cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
+import { LabeledCard } from "@/components/blocks"
 import { MarkdownContent } from "@/components/reuseable"
 import type { MilestoneTaskBrief } from "@/modules/types"
 import { usePersonalProjectGithubForm } from "@/hooks"
@@ -72,10 +72,9 @@ export const TaskBrief = ({
     }
 
     return (
-        <div className={cn("mt-3", className)}>
-            <div className="font-semibold">{t("task.briefTitle")}</div>
-            <div className="h-3" />
+        // the brief IS a labeled card: "Hướng dẫn" is the label OUTSIDE, the markdown body inside.
+        <LabeledCard className={className} label={t("task.briefTitle")}>
             <MarkdownContent markdown={body} />
-        </div>
+        </LabeledCard>
     )
 }

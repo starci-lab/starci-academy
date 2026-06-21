@@ -2,47 +2,39 @@
 
 import React from "react"
 import {
-    Separator,
     Skeleton,
     cn,
 } from "@heroui/react"
+import {
+    SkeletonText,
+    SkeletonParagraph,
+} from "@/components/reuseable"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link TaskSkeleton}. */
 export type TaskSkeletonProps = WithClassNames<undefined>
 
 /**
- * Loading placeholder for the milestone task detail panel.
+ * Loading placeholder for the milestone task BRIEF column
+ * ({@link import("../").Task}).
  *
- * Presentational: static skeleton rows, no logic.
- * @param props - optional className (unused; skeleton shape is fixed)
+ * Mirrors the real layout 1:1 so nothing jumps when the task lands: the
+ * `gap-6` stack of the tier-2 header (H3 title `text-2xl` + `body-sm` description,
+ * a tight pair) followed by the per-language brief card. Static-shaped, no logic.
+ * @param props - optional className for the root element
  */
 export const TaskSkeleton = ({
     className,
 }: TaskSkeletonProps = {}) => {
     return (
-        <div className={cn(className)}>
-            <Separator />
-            <div className="p-3">
-                <Skeleton className="h-[18px] w-2/3 rounded my-[5px]" />
-                <div className="flex flex-col mt-2">
-                    <Skeleton className="h-[14px] w-full rounded-sm my-[3px]" />
-                    <Skeleton className="h-[14px] w-2/3 rounded-sm my-[3px]" />
-                    <Skeleton className="h-[14px] w-1/2 rounded-sm my-[3px]" />
-                </div>
-                <div className="h-3" />
-                <Skeleton className="h-4 my-1 rounded w-1/2" />
-                <div className="rounded-3xl p-3 bg-surface">
-                    {Array.from({ length: 3 }, (_, index) => (
-                        <React.Fragment key={`task-criteria-skeleton-${index}`}>
-                            <div className="p-3">
-                                <Skeleton className="h-[14px] w-2/3 my-[3px]" />
-                            </div>
-                            <Separator className="last:hidden" />
-                        </React.Fragment>
-                    ))}
-                </div>
+        <div className={cn("flex flex-col gap-6", className)}>
+            {/* tier-2 header — title (H3) + description, the gap-0 pair */}
+            <div className="flex flex-col gap-2">
+                <SkeletonText size="2xl" width="w-2/3" />
+                <SkeletonParagraph size="sm" lines={2} />
             </div>
+            {/* per-language brief card */}
+            <Skeleton className="h-[220px] w-full rounded-xl" />
         </div>
     )
 }

@@ -108,7 +108,6 @@ export const PersonalProjectTaskAttemptsDrawer = (props: PersonalProjectTaskAtte
                                 </Drawer.Heading>
                             </Drawer.Header>
                         </div>
-                        <div className="border-b" />
                         <Drawer.Body className="flex min-h-0 flex-1 flex-col">
                             {
                                 swr.error ? (

@@ -271,15 +271,6 @@ export const pathConfig = () => {
                         build,
                     }
                 }
-                const starciAi = () => {
-                    const starciAiPath = `${learnPath}/starci-ai`
-                    const build = () => {
-                        return starciAiPath
-                    }
-                    return {
-                        build,
-                    }
-                }
                 const headhuntings = () => {
                     const headhuntingsPath = `${learnPath}/headhuntings`
                     const build = () => {
@@ -355,7 +346,6 @@ export const pathConfig = () => {
                     cv,
                     personalProject,
                     leaderboard,
-                    starciAi,
                     headhuntings,
                     flashcards,
                     practice,

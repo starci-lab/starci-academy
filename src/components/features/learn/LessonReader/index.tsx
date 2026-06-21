@@ -39,6 +39,9 @@ import type {
     TabsCardGroup,
 } from "@/components/blocks"
 import {
+    AsyncContent,
+} from "@/components/blocks"
+import {
     useQueryContentSwr,
     useQueryContentStatusSwr,
     usePremiumGateOverlayState,
@@ -295,23 +298,31 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
     return (
         <div className={cn("", className)}>
             <div className="h-3" />
-            {isLoading ? (
-                <div>
-                    {/* header capped to the reading width; only the tab bar below spans full width */}
-                    <div className="mx-auto w-full max-w-3xl">
-                        <ContentHeaderSkeleton />
-                    </div>
-                    {/* h-3 between the header (tier 2) and the content/tabs (tier 3) */}
-                    <div className="h-3" />
-                    <ContentTabBar
-                        tabItems={tabItems}
-                        selectedKey={selectedTabKey}
-                        ariaLabel={t("module.tabListAria")}
-                        onSelectionChange={onTabChange}
-                        rightTabs={languageTabs}
-                    />
-                    {/* gap-3 between the tab toolbar and the reading card */}
-                    <div className="h-3" />
+            {/* header (tier 2) capped to the reading width; skeleton vs real via AsyncContent */}
+            <div className="mx-auto w-full max-w-3xl">
+                <AsyncContent
+                    isLoading={isLoading}
+                    skeleton={<ContentHeaderSkeleton />}
+                >
+                    <ContentHeader />
+                </AsyncContent>
+            </div>
+            {/* h-3 between the header (tier 2) and the content/tabs (tier 3) */}
+            <div className="h-3" />
+            {/* REAL tab bar — static chrome, shows immediately (never skeleton-ised) */}
+            <ContentTabBar
+                tabItems={tabItems}
+                selectedKey={selectedTabKey}
+                ariaLabel={t("module.tabListAria")}
+                onSelectionChange={onTabChange}
+                rightTabs={languageTabs}
+            />
+            {/* gap-3 between the tab toolbar and the reading card */}
+            <div className="h-3" />
+            {/* body (tier 3) — skeleton mirrors the centered reading card while content loads */}
+            <AsyncContent
+                isLoading={isLoading}
+                skeleton={(
                     <div className="mx-auto w-full max-w-3xl">
                         <Card>
                             <CardContent>
@@ -319,75 +330,58 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
                             </CardContent>
                         </Card>
                     </div>
-                </div>
-            ) : (
-                <div>
-                    {/* header capped to the reading width; only the tab bar below spans full width */}
-                    <div className="mx-auto w-full max-w-3xl">
-                        <ContentHeader />
+                )}
+            >
+                {/* Sandbox / AI Lab span full width (no reading card); everything else
+                    reads inside a centered "paper" card on the page canvas. */}
+                {isFullWidthTab ? (
+                    <div className="relative w-full">
+                        {/* id scopes the "on this page" rail's heading scan (#lesson-article [data-toc]) */}
+                        <div id="lesson-article">
+                            {bodyComponent}
+                        </div>
                     </div>
-                    {/* h-3 between the header (tier 2) and the content/tabs (tier 3) */}
-                    <div className="h-3" />
-                    <ContentTabBar
-                        tabItems={tabItems}
-                        selectedKey={selectedTabKey}
-                        ariaLabel={t("module.tabListAria")}
-                        onSelectionChange={onTabChange}
-                        rightTabs={languageTabs}
-                    />
-                    {/* gap-3 between the tab toolbar and the reading card */}
-                    <div className="h-3" />
-                    {/* Sandbox / AI Lab span full width (no reading card); everything else
-                        reads inside a centered "paper" card on the page canvas. */}
-                    {isFullWidthTab ? (
-                        <div className="relative w-full">
-                            {/* id scopes the "on this page" rail's heading scan (#lesson-article [data-toc]) */}
-                            <div id="lesson-article">
-                                {bodyComponent}
-                            </div>
-                        </div>
-                    ) : (
-                        <div className="mx-auto w-full max-w-3xl">
-                            <Card>
-                                <CardContent>
-                                    <div className="relative">
-                                        <div id="lesson-article" className={cn(isLocked && "select-none")}>
-                                            {bodyComponent}
-                                        </div>
-                                        {/* Medium-style teaser: fade the tail of the body into the
-                                            card surface (pure opacity fade) behind the paywall. */}
-                                        {isLocked ? (
-                                            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-72 bg-gradient-to-b from-transparent via-surface/70 to-surface" />
-                                        ) : null}
+                ) : (
+                    <div className="mx-auto w-full max-w-3xl">
+                        <Card>
+                            <CardContent>
+                                <div className="relative">
+                                    <div id="lesson-article" className={cn(isLocked && "select-none")}>
+                                        {bodyComponent}
                                     </div>
-                                </CardContent>
-                            </Card>
-                        </div>
-                    )}
-                    {/* previous / next lesson pager — linear course navigation at the foot
-                        of the reading column (hidden on locked / full-width tabs) */}
-                    {!isLocked && !isFullWidthTab ? (
-                        <LessonPager className="mx-auto w-full max-w-3xl px-3 pb-6" />
-                    ) : null}
-                    {/* E2E proof: a quiet link at the bottom of the lesson that opens a
-                        right-side drawer with the recorded per-language test results. */}
-                    {hasE2e && !isLocked && !isFullWidthTab ? (
-                        <div className="mx-auto w-full max-w-3xl px-3 pb-6">
-                            <E2eResultButton />
-                        </div>
-                    ) : null}
-                    {/* paywall sits directly under the faded teaser */}
-                    {isLocked ? <PremiumPaywall /> : null}
-                    {/* inline house/sponsor banner at the foot of the lesson; null
-                        server-side for members + enrolled viewers, so render only
-                        when present and not on full-width (sandbox / AI lab) tabs */}
-                    {inlineAd && !isFullWidthTab ? (
-                        <div className="mx-auto w-full max-w-3xl px-3 pb-6">
-                            <AdBanner ad={inlineAd} />
-                        </div>
-                    ) : null}
-                </div>
-            )}
+                                    {/* Medium-style teaser: fade the tail of the body into the
+                                        card surface (pure opacity fade) behind the paywall. */}
+                                    {isLocked ? (
+                                        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-72 bg-gradient-to-b from-transparent via-surface/70 to-surface" />
+                                    ) : null}
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </div>
+                )}
+                {/* previous / next lesson pager — linear course navigation at the foot
+                    of the reading column (hidden on locked / full-width tabs) */}
+                {!isLocked && !isFullWidthTab ? (
+                    <LessonPager className="mx-auto w-full max-w-3xl px-3 pb-6" />
+                ) : null}
+                {/* E2E proof: a quiet link at the bottom of the lesson that opens a
+                    right-side drawer with the recorded per-language test results. */}
+                {hasE2e && !isLocked && !isFullWidthTab ? (
+                    <div className="mx-auto w-full max-w-3xl px-3 pb-6">
+                        <E2eResultButton />
+                    </div>
+                ) : null}
+                {/* paywall sits directly under the faded teaser */}
+                {isLocked ? <PremiumPaywall /> : null}
+                {/* inline house/sponsor banner at the foot of the lesson; null
+                    server-side for members + enrolled viewers, so render only
+                    when present and not on full-width (sandbox / AI lab) tabs */}
+                {inlineAd && !isFullWidthTab ? (
+                    <div className="mx-auto w-full max-w-3xl px-3 pb-6">
+                        <AdBanner ad={inlineAd} />
+                    </div>
+                ) : null}
+            </AsyncContent>
         </div>
     )
 }

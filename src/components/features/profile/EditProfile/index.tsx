@@ -176,7 +176,7 @@ export const EditProfile = () => {
             <AvatarUploadModal onFile={onAvatarFile} />
 
             {/* display name */}
-            <TextField>
+            <TextField variant="secondary">
                 <Label htmlFor="profile-display-name">{t("profileEdit.displayName")}</Label>
                 <Input
                     id="profile-display-name"
@@ -188,7 +188,7 @@ export const EditProfile = () => {
             </TextField>
 
             {/* bio */}
-            <TextField>
+            <TextField variant="secondary">
                 <Label htmlFor="profile-bio">{t("profileEdit.bio")}</Label>
                 <TextArea
                     id="profile-bio"
@@ -205,7 +205,7 @@ export const EditProfile = () => {
             </TextField>
 
             {/* role title (professional headline) */}
-            <TextField>
+            <TextField variant="secondary">
                 <Label htmlFor="profile-role-title">{t("profileEdit.roleTitle")}</Label>
                 <Input
                     id="profile-role-title"
@@ -217,7 +217,7 @@ export const EditProfile = () => {
             </TextField>
 
             {/* location */}
-            <TextField>
+            <TextField variant="secondary">
                 <Label htmlFor="profile-location">{t("profileEdit.location")}</Label>
                 <Input
                     id="profile-location"
@@ -280,7 +280,7 @@ export const EditProfile = () => {
             </div>
 
             {/* LinkedIn URL */}
-            <TextField>
+            <TextField variant="secondary">
                 <Label htmlFor="profile-linkedin">{t("profileEdit.linkedinUrl")}</Label>
                 <Input
                     id="profile-linkedin"
@@ -294,7 +294,7 @@ export const EditProfile = () => {
             </TextField>
 
             {/* website URL */}
-            <TextField>
+            <TextField variant="secondary">
                 <Label htmlFor="profile-website">{t("profileEdit.websiteUrl")}</Label>
                 <Input
                     id="profile-website"

@@ -32,7 +32,7 @@ export const HeadhuntingCompany = ({ className }: HeadhuntingCompanyProps) => {
 
     if (!company && companyId) {
         return (
-            <div className="p-3">
+            <div>
                 <Typography type="body-sm" color="muted">{t("headhuntings.companyNotFound")}</Typography>
             </div>
         )
@@ -40,7 +40,7 @@ export const HeadhuntingCompany = ({ className }: HeadhuntingCompanyProps) => {
 
     return (
         <div className={className}>
-            <div className="flex flex-col gap-6 p-3">
+            <div className="flex flex-col gap-6">
                 <HeadhuntingCompanyBreadcrumbs />
                 <HeadhuntingCompanyProfile />
                 <HeadhuntingCompanyConsultants />

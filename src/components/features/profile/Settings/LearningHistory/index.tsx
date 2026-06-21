@@ -109,7 +109,7 @@ export const LearningHistory = ({
 
             {/* search — only worth showing once there are several courses */}
             {courses.length >= SEARCH_MIN_COURSES ? (
-                <TextField>
+                <TextField variant="secondary">
                     <Input
                         aria-label={t("profileSettings.learning.history.searchCourses")}
                         placeholder={t("profileSettings.learning.history.searchCourses")}

@@ -2,10 +2,14 @@
 
 import { create } from "zustand"
 
+/** Inline autosave status for the debounced url/branch sync. */
+export type PersonalProjectGithubAutosaveStatus = "idle" | "saving" | "saved" | "failed"
+
 /**
  * Zustand store for the personal-project GitHub form — SHARED between PersonalProjectSubmission
  * (enters url/branch, shows errors) and Task (reads isSubmitting, triggers submit). Previously a
- * formik singleton.
+ * formik singleton. The url/branch autosave status lives here too so the field (which may render in
+ * the settings Drawer) and the sync OWNER (the panel) stay in sync across component boundaries.
  */
 interface PersonalProjectGithubStoreState {
     /** GitHub repo URL. */
@@ -26,6 +30,12 @@ interface PersonalProjectGithubStoreState {
     isSubmitting: boolean
     /** Whether the form has been seeded from enrollment yet (seed-once). */
     seeded: boolean
+    /** Autosave status of the debounced URL sync (set by the enableSync owner). */
+    urlAutosaveStatus: PersonalProjectGithubAutosaveStatus
+    /** Autosave status of the debounced branch sync. */
+    branchAutosaveStatus: PersonalProjectGithubAutosaveStatus
+    setUrlAutosaveStatus: (value: PersonalProjectGithubAutosaveStatus) => void
+    setBranchAutosaveStatus: (value: PersonalProjectGithubAutosaveStatus) => void
     setGithubUrl: (value: string) => void
     setBranch: (value: string) => void
     setLang: (value: string) => void
@@ -49,6 +59,10 @@ export const usePersonalProjectGithubStore = create<PersonalProjectGithubStoreSt
     branchError: null,
     isSubmitting: false,
     seeded: false,
+    urlAutosaveStatus: "idle",
+    branchAutosaveStatus: "idle",
+    setUrlAutosaveStatus: (urlAutosaveStatus) => set({ urlAutosaveStatus }),
+    setBranchAutosaveStatus: (branchAutosaveStatus) => set({ branchAutosaveStatus }),
     setGithubUrl: (githubUrl) => set({ githubUrl, githubUrlError: null }),
     setBranch: (branch) => set({ branch, branchError: null }),
     setLang: (lang) => set({ lang }),

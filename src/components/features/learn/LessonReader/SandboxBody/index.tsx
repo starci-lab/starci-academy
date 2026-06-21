@@ -5,6 +5,7 @@ import { useTheme } from "next-themes"
 import { useAppSelector } from "@/redux"
 import { useQueryContentSwr, useRepoSandpackFiles } from "@/hooks"
 import { SandpackPanel } from "@/components/reuseable/SandpackPanel"
+import { AsyncContent } from "@/components/blocks"
 import { CodeBodySkeleton } from "../CodeBodySkeleton"
 import type { SandpackFiles } from "@codesandbox/sandpack-react"
 
@@ -148,7 +149,8 @@ export const SandboxBody = () => {
     )
 
     const contentReady = !queryContentSwr.isLoading && !!queryContentSwr.data && !queryContentSwr.error
-    if (!contentReady || githubLoading) return <CodeBodySkeleton />
+    // first load (content + repo files) → mirror the code-shaped skeleton via AsyncContent
+    const isLoading = !contentReady || githubLoading
 
     // full session-scoped mock URL the lesson's VITE_API_BASE will point at
     const mockApiBase = lessonPath
@@ -157,7 +159,7 @@ export const SandboxBody = () => {
 
     // rewrite every fetched file's env reference to the live mock URL
     const rewrittenFiles: SandpackFiles = {}
-    for (const [path, file] of Object.entries(githubFiles)) {
+    for (const [path, file] of Object.entries(githubFiles ?? {})) {
         const code = typeof file === "string" ? file : file.code
         rewrittenFiles[path] = { code: rewriteForSandpack(code, mockApiBase) }
     }
@@ -183,7 +185,7 @@ export const SandboxBody = () => {
     const thumb = isDark ? "rgba(255,255,255,0.16)" : "rgba(0,0,0,0.16)"
     const thumbHover = isDark ? "rgba(255,255,255,0.28)" : "rgba(0,0,0,0.28)"
 
-    return (
+    const body = (
         <div className="sb-scroll mt-3">
             <style>{`
                 .sb-scroll *::-webkit-scrollbar { width: 8px; height: 8px; }
@@ -203,5 +205,14 @@ export const SandboxBody = () => {
                 isDark={isDark}
             />
         </div>
+    )
+
+    return (
+        <AsyncContent
+            isLoading={isLoading}
+            skeleton={<CodeBodySkeleton />}
+        >
+            {body}
+        </AsyncContent>
     )
 }

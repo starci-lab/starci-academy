@@ -1,6 +1,7 @@
 "use client"
 
-import { Typography, cn } from "@heroui/react"
+import { CaretRightIcon } from "@phosphor-icons/react"
+import { cn } from "@heroui/react"
 import type { FoundationCategoryEntity, WithClassNames } from "@/modules/types"
 import React, { useCallback } from "react"
 import { useLocale } from "next-intl"
@@ -15,20 +16,29 @@ import {
     setFoundations,
 } from "@/redux/slices"
 import { FoundationCategoryThumbnail } from "../FoundationCategoryThumbnail"
-import { PressableCard } from "@/components/reuseable"
+import { resolveFoundationLogo } from "../shared/foundation-logo"
+import { ListRow } from "@/components/blocks"
 
 export interface FoundationCategoryCardProps extends WithClassNames<undefined> {
     /** Foundation category from API. */
     category: FoundationCategoryEntity
+    /** Render a bottom divider — set on every row except the last in the list. */
+    divider?: boolean
 }
 
 /**
- * Clickable card for one foundation category in the overview grid.
+ * One foundation category as a link-and-caret list row (block {@link ListRow}).
+ *
+ * Replaces the former heavy pressable card: a small brand thumbnail, the title +
+ * one-line description, and a trailing caret signalling "drills in". The feature
+ * only owns the selection dispatch + navigation; the row owns all styling.
  * @param props.category - Category row (title, description, thumbnail).
+ * @param props.divider - Bottom border for all but the last row in the joined list.
  * @param props.className - Optional root class names.
  */
 export const FoundationCategoryCard = ({
     category,
+    divider = false,
     className,
 }: FoundationCategoryCardProps) => {
     const locale = useLocale()
@@ -63,28 +73,32 @@ export const FoundationCategoryCard = ({
         router,
     ])
 
+    // prefer a crisp local square brand logo; fall back to the synced banner inside the thumbnail box
+    const logoSrc = resolveFoundationLogo(category.title)
+
     return (
-        <PressableCard
-            ariaLabel={category.title}
-            className={cn(
-                "card card--default !p-0 flex h-full w-full flex-col overflow-hidden rounded-xl transition-colors",
-                "hover:bg-accent/5",
-                className,
+        <ListRow
+            leading={(
+                <FoundationCategoryThumbnail
+                    logoSrc={logoSrc}
+                    thumbnailUrl={category.thumbnailUrl}
+                    title={category.title}
+                    className="size-10 aspect-square rounded-md"
+                />
             )}
+            title={category.title}
+            subtitle={category.description ?? undefined}
+            trailing={(
+                <CaretRightIcon
+                    aria-hidden
+                    focusable="false"
+                    className="size-4 text-muted"
+                />
+            )}
+            divider={divider}
             onPress={onPress}
-        >
-            <FoundationCategoryThumbnail
-                thumbnailUrl={category.thumbnailUrl}
-                title={category.title}
-            />
-            <div className="flex flex-1 flex-col gap-2 p-3">
-                <Typography type="h4" weight="semibold">{category.title}</Typography>
-                {category.description ? (
-                    <Typography type="body-sm" color="muted" className="line-clamp-3">
-                        {category.description}
-                    </Typography>
-                ) : null}
-            </div>
-        </PressableCard>
+            // flush rows (square hover + full-width divider) for the p-0 "accordion surface" container
+            className={cn("rounded-none px-3", className)}
+        />
     )
 }

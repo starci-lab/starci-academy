@@ -1,6 +1,6 @@
 "use client"
 
-import { MagnifierPlus as MagnifyingGlassPlusIcon } from "@gravity-ui/icons"
+import { MagnifyingGlassPlusIcon } from "@phosphor-icons/react"
 import React, { useId, useState } from "react"
 import mermaid from "mermaid"
 import useSWR from "swr"
@@ -57,7 +57,7 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
     )
 
     return (
-        <div className={cn("rounded-xl border border-default bg-background p-3", className)}>
+        <figure className={cn("rounded-xl border border-default bg-background p-3", className)}>
             {data ? (
                 <>
                     {/* Clickable inline diagram — opens the full-screen preview on press. */}
@@ -73,10 +73,17 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
                             dangerouslySetInnerHTML={{ __html: data }}
                         />
                         {/* Hover affordance hinting the diagram can be enlarged. */}
-                        <span className="pointer-events-none absolute right-2 top-2 rounded-medium bg-default/60 p-1.5 text-muted opacity-0 transition-opacity group-hover:opacity-100">
+                        <span className="pointer-events-none absolute right-2 top-2 rounded-medium bg-default/60 p-2 text-muted opacity-0 transition-opacity group-hover:opacity-100">
                             <MagnifyingGlassPlusIcon className="size-5" />
                         </span>
                     </button>
+                    {/* Authored caption ("Hình N: …") as a real figcaption — the source paragraph
+                        is stripped upstream so it isn't shown twice. Generic fallback stays modal-only. */}
+                    {caption ? (
+                        <figcaption className="mt-2 text-center text-sm italic text-muted">
+                            {caption}
+                        </figcaption>
+                    ) : null}
                     <Modal isOpen={isOpen} onOpenChange={setOpen}>
                         <Modal.Backdrop>
                             <Modal.Container size="full">
@@ -84,7 +91,7 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
                                     <Modal.CloseTrigger />
                                     <Modal.Body className="p-4">
                                         {/* Full-screen figure: diagram scaled to fill, caption beneath. */}
-                                        <figure className="flex h-full flex-col items-center justify-center gap-1.5">
+                                        <figure className="flex h-full flex-col items-center justify-center gap-2">
                                             <div className="flex w-full flex-1 items-center justify-center overflow-auto">
                                                 <div
                                                     className="[&_svg]:h-auto [&_svg]:w-full [&_svg]:max-w-full"
@@ -104,6 +111,6 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
             ) : (
                 <div className="text-sm text-muted">{loadingLabel}</div>
             )}
-        </div>
+        </figure>
     )
 }

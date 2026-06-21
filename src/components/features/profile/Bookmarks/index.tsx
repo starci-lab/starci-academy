@@ -98,7 +98,7 @@ export const Bookmarks = () => {
             />
 
             {/* search — filters the loaded items by title / description */}
-            <TextField>
+            <TextField variant="secondary">
                 <Input
                     aria-label={t("bookmarks.searchPlaceholder")}
                     placeholder={t("bookmarks.searchPlaceholder")}

@@ -5,6 +5,7 @@ import { Pagination, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import { WithClassNames } from "@/modules/types"
+import { AsyncContent } from "@/components/blocks"
 import { useQueryChallengesSwr } from "@/hooks"
 import { setChallengePageNumber } from "@/redux/slices"
 import { ChallengeCard } from "./ChallengeCard"
@@ -22,13 +23,9 @@ export const ChallengeBody = ({ className }: ChallengeBodyProps) => {
     const count = useAppSelector((state) => state.challenge.count)
     const limit = useAppSelector((state) => state.challenge.limit)
     const pageNumber = useAppSelector((state) => state.challenge.pageNumber)
-    const isLoading = useMemo(
-        () => queryChallengesSwr.isLoading || queryChallengesSwr.isValidating,
-        [
-            queryChallengesSwr.isLoading,
-            queryChallengesSwr.isValidating,
-        ],
-    )
+    // gate on first-load only (NOT isValidating) — a background revalidate on page
+    // change keeps the current cards on screen instead of flashing the skeleton
+    const isLoading = queryChallengesSwr.isLoading
     const pageSize = limit ?? 10
     const totalPages = useMemo(() => {
         if (count == null || count <= 0) {
@@ -42,23 +39,11 @@ export const ChallengeBody = ({ className }: ChallengeBodyProps) => {
     )
     const currentPage = pageNumber ?? 1
 
-    if (isLoading) {
-        return (
-            <div className={cn("flex flex-col gap-3", className)}>
-                <ChallengeCardSkeleton />
-                <ChallengeCardSkeleton />
-            </div>
-        )
-    }
-    if (!challenges?.length) {
-        return (
-            <div className={cn("", className)}>
-                <ChallengeBodyEmpty />
-            </div>
-        )
-    }
-
-    return (
+    const body = !challenges?.length ? (
+        <div className={cn("", className)}>
+            <ChallengeBodyEmpty />
+        </div>
+    ) : (
         <div>
             <div className="text-sm text-muted">
                 {t("challenge.count", { count: count ?? 0 })}
@@ -113,5 +98,19 @@ export const ChallengeBody = ({ className }: ChallengeBodyProps) => {
                 </>
             ) : null}
         </div>
+    )
+
+    return (
+        <AsyncContent
+            isLoading={isLoading}
+            skeleton={(
+                <div className={cn("flex flex-col gap-3", className)}>
+                    <ChallengeCardSkeleton />
+                    <ChallengeCardSkeleton />
+                </div>
+            )}
+        >
+            {body}
+        </AsyncContent>
     )
 }

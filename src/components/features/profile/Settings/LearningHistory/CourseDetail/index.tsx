@@ -169,7 +169,7 @@ export const CourseDetail = ({
             </div>
 
             {/* search over the course's lessons / events (filters both tabs) */}
-            <TextField>
+            <TextField variant="secondary">
                 <Input
                     aria-label={t("profileSettings.learning.detail.searchLessons")}
                     placeholder={t("profileSettings.learning.detail.searchLessons")}

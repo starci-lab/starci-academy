@@ -1,9 +1,11 @@
 "use client"
 
-import { Typography, cn } from "@heroui/react"
+import { CaretRightIcon, StackIcon } from "@phosphor-icons/react"
+import { Chip, cn } from "@heroui/react"
+import { FoundationKind } from "@/modules/types"
 import type { FoundationEntity, WithClassNames } from "@/modules/types"
 import React, { useCallback } from "react"
-import { useLocale } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { pathConfig } from "@/resources"
 import { useAppDispatch, useAppSelector } from "@/redux"
@@ -11,10 +13,8 @@ import {
     setFoundation,
     setFoundationId,
 } from "@/redux/slices"
-import { FoundationItemThumbnail } from "../FoundationItemThumbnail"
-import { FoundationMeta } from "../shared/FoundationMeta"
-import { PressableCard } from "@/components/reuseable"
-import { useOpenFoundationResource } from "../hooks"
+import { IconTile, ListRow } from "@/components/blocks"
+import { resolveFoundationMountFileUrl } from "../utils"
 
 export interface FoundationCardProps extends WithClassNames<undefined> {
     /** Foundation resource row from API. */
@@ -23,33 +23,59 @@ export interface FoundationCardProps extends WithClassNames<undefined> {
     displayIndex: number
     /** Whether this card is the active selection. */
     selected?: boolean
+    /** Render a bottom divider — set on every row except the last in the list. */
+    divider?: boolean
 }
 
 /**
- * Selectable foundation card in the category list (master pane).
+ * One foundation resource as a link-and-caret list row (block {@link ListRow}).
+ *
+ * Replaces the former pressable card: a small square thumbnail, the numbered
+ * title + one-line description, the resource KIND chip (+ "recommended" badge) in
+ * the meta slot, and a trailing caret. Tags + author are intentionally dropped for
+ * the compact list — they live on the resource itself. The feature owns only the
+ * select dispatch + open-resource side effect; the row owns all styling.
  * @param props.foundation - Foundation entity from the category list.
- * @param props.displayIndex - Position in the sorted grid (shown as 1-based label).
- * @param props.selected - Highlights the card when true.
+ * @param props.displayIndex - Position in the sorted list (shown as 1-based label).
+ * @param props.selected - Highlights the row when true.
+ * @param props.divider - Bottom border for all but the last row in the joined list.
  * @param props.className - Optional root class names.
  */
 export const FoundationCard = ({
     foundation,
     displayIndex,
     selected = false,
+    divider = false,
     className,
 }: FoundationCardProps) => {
+    const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
     const dispatch = useAppDispatch()
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
     const categoryId = useAppSelector((state) => state.foundation.categoryId)
-    const openFoundationResource = useOpenFoundationResource()
 
-    /** Select this foundation: persist to store, deep-link URL, open viewer. */
+    /**
+     * Open the resource: external links go to a new tab; document/video resources
+     * navigate to their dedicated page (no modal).
+     */
     const onPress = useCallback(() => {
         dispatch(setFoundation(foundation))
         dispatch(setFoundationId(foundation.id))
 
+        // external links live off-site — open in a new tab, no in-app page
+        if (foundation.kind === FoundationKind.ExternalLink) {
+            if (foundation.value?.trim()) {
+                window.open(
+                    resolveFoundationMountFileUrl(foundation.value),
+                    "_blank",
+                    "noopener,noreferrer",
+                )
+            }
+            return
+        }
+
+        // document / video → the dedicated resource page
         if (courseDisplayId && categoryId) {
             router.push(
                 pathConfig()
@@ -61,8 +87,6 @@ export const FoundationCard = ({
                     .build(),
             )
         }
-
-        openFoundationResource(foundation)
     }, [
         dispatch,
         foundation,
@@ -70,39 +94,43 @@ export const FoundationCard = ({
         categoryId,
         locale,
         router,
-        openFoundationResource,
     ])
 
     return (
-        <PressableCard
-            ariaLabel={foundation.title}
-            className={cn(
-                "card !p-0 flex h-full w-full cursor-pointer flex-col overflow-hidden rounded-xl transition-colors",
-                selected
-                    ? "bg-accent/10 ring-1 ring-accent/30"
-                    : "card--default hover:bg-accent/5",
-                className,
+        <ListRow
+            leading={(
+                <IconTile
+                    src={foundation.thumbnailUrl}
+                    icon={<StackIcon />}
+                    alt={foundation.title}
+                    size="sm"
+                />
             )}
+            title={`${displayIndex + 1}. ${foundation.title}`}
+            subtitle={foundation.description ?? undefined}
+            meta={(
+                <>
+                    <Chip size="sm" variant="secondary" color="accent">
+                        <Chip.Label>{t(`foundations.kind.${foundation.kind}`)}</Chip.Label>
+                    </Chip>
+                    {foundation.isRecommended ? (
+                        <Chip size="sm" variant="secondary" color="success" className="bg-success/10 text-success">
+                            <Chip.Label>{t("foundations.recommended")}</Chip.Label>
+                        </Chip>
+                    ) : null}
+                </>
+            )}
+            trailing={(
+                <CaretRightIcon
+                    aria-hidden
+                    focusable="false"
+                    className="size-4 text-muted"
+                />
+            )}
+            divider={divider}
             onPress={onPress}
-        >
-            <FoundationItemThumbnail
-                thumbnailUrl={foundation.thumbnailUrl}
-                title={foundation.title}
-                size="card"
-            />
-            <div className="flex flex-1 flex-col p-3">
-                <Typography type="h4" weight="semibold">
-                    {displayIndex + 1}. {foundation.title}
-                </Typography>
-                <div className="mt-2">
-                    <FoundationMeta foundation={foundation} />
-                </div>
-                {foundation.description ? (
-                    <Typography type="body-sm" color="muted" className="mt-2 line-clamp-2">
-                        {foundation.description}
-                    </Typography>
-                ) : null}
-            </div>
-        </PressableCard>
+            // flush rows for the p-0 "accordion surface" container; tint the active row
+            className={cn("rounded-none px-3", selected && "bg-accent/10", className)}
+        />
     )
 }

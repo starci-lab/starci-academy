@@ -4,6 +4,7 @@ import React from "react"
 import { useAppSelector } from "@/redux"
 import { WithClassNames } from "@/modules/types"
 import { cn } from "@heroui/react"
+import { AsyncContent } from "@/components/blocks"
 import { useQueryLessonVideosSwr } from "@/hooks"
 import { LessonCard } from "./LessonCard"
 import { LessonCardSkeleton } from "./LessonCardSkeleton"
@@ -18,23 +19,11 @@ export const LessonBody = ({ className }: LessonBodyProps) => {
 
     // loading gate: skeleton until the query settles AND redux has hydrated the
     // list (undefined = not yet hydrated → skeleton; [] = settled-but-empty → empty state)
-    if (queryLessonVideosSwr.isLoading || !lessonVideos) {
-        return (
-            <div className={cn("", className)}>
-                <LessonCardSkeleton />
-            </div>
-        )
-    }
-
-    if (!lessonVideos?.length) {
-        return (
-            <div className={cn("", className)}>
-                <LessonBodyEmpty />
-            </div>
-        )
-    }
-
-    return (
+    const body = !lessonVideos?.length ? (
+        <div className={cn("", className)}>
+            <LessonBodyEmpty />
+        </div>
+    ) : (
         <div>
             <SearchBar />
             <div className="h-6" />
@@ -44,5 +33,18 @@ export const LessonBody = ({ className }: LessonBodyProps) => {
                 ))}
             </div>
         </div>
+    )
+
+    return (
+        <AsyncContent
+            isLoading={queryLessonVideosSwr.isLoading || !lessonVideos}
+            skeleton={(
+                <div className={cn("", className)}>
+                    <LessonCardSkeleton />
+                </div>
+            )}
+        >
+            {body}
+        </AsyncContent>
     )
 }

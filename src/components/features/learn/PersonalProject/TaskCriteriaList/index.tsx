@@ -59,7 +59,6 @@ export const TaskCriteriaList = ({
 
     return (
         <div className={cn(className)}>
-            <div className="h-3" />
             <Accordion allowsMultipleExpanded variant="surface">
                 {sortedCriterias.map((criteria, index) => (
                     <Accordion.Item key={criteria.id}>

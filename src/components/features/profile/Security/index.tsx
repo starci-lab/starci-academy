@@ -258,7 +258,7 @@ export const Security = () => {
                     {/* ENABLED → offer disable (requires a code) */}
                     {enabled ? (
                         <div className="flex flex-col gap-3">
-                            <TextField>
+                            <TextField variant="secondary">
                                 <Label>{t("security.codeLabel")}</Label>
                                 <Input
                                     variant="secondary"
@@ -300,7 +300,7 @@ export const Security = () => {
                                     </Typography>
                                 </div>
                             </div>
-                            <TextField>
+                            <TextField variant="secondary">
                                 <Label>{t("security.codeLabel")}</Label>
                                 <Input
                                     variant="secondary"

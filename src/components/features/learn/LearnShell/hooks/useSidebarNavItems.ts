@@ -5,9 +5,7 @@ import {
     CardsIcon,
     CodeIcon,
     GraduationCapIcon,
-    HandshakeIcon,
     MapPinLineIcon,
-    SparkleIcon,
     StackIcon,
     UsersIcon,
 } from "@phosphor-icons/react"
@@ -85,6 +83,7 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
                 value: "mind-map",
                 tab: SidebarTab.MindMap,
                 icon: MapPinLineIcon,
+                group: "study",
                 url: pathConfig().locale(locale).course(courseDisplayId).learn().mindMap().build(),
             },
             {
@@ -92,6 +91,7 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
                 value: "modules",
                 tab: SidebarTab.Modules,
                 icon: BracketsCurlyIcon,
+                group: "study",
                 // route to the course-contents index (the docs-style "chỉ mục" landing);
                 // selecting a lesson there drills into its module/content route.
                 url: pathConfig().locale(locale).course(courseDisplayId).learn().build(),
@@ -101,20 +101,15 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
                 value: "foundations",
                 tab: SidebarTab.Foundations,
                 icon: StackIcon,
+                group: "study",
                 url: pathConfig().locale(locale).course(courseDisplayId).learn().foundations().build(),
-            },
-            {
-                label: t("headhuntings.title"),
-                value: "headhuntings",
-                tab: SidebarTab.Headhuntings,
-                icon: HandshakeIcon,
-                url: pathConfig().locale(locale).course(courseDisplayId).learn().headhuntings().build(),
             },
             {
                 label: t("flashcard.title"),
                 value: "flashcards",
                 tab: SidebarTab.Flashcards,
                 icon: CardsIcon,
+                group: "practice",
                 url: pathConfig().locale(locale).course(courseDisplayId).learn().flashcards().build(),
             },
             {
@@ -122,6 +117,7 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
                 value: "practice",
                 tab: SidebarTab.Practice,
                 icon: CodeIcon,
+                group: "practice",
                 url: pathConfig().locale(locale).course(courseDisplayId).learn().practice().build(),
             },
             {
@@ -129,6 +125,7 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
                 value: "personal-project",
                 tab: SidebarTab.PersonalProject,
                 icon: GraduationCapIcon,
+                group: "practice",
                 url: pathConfig().locale(locale).course(courseDisplayId).learn().personalProject().build(),
             },
             {
@@ -136,14 +133,8 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
                 value: "leaderboard",
                 tab: SidebarTab.Leaderboard,
                 icon: UsersIcon,
+                group: "practice",
                 url: pathConfig().locale(locale).course(courseDisplayId).learn().leaderboard().build(),
-            },
-            {
-                label: t("starciAi.title"),
-                value: "starci-ai",
-                tab: SidebarTab.StarciAi,
-                icon: SparkleIcon,
-                url: pathConfig().locale(locale).course(courseDisplayId).learn().starciAi().build(),
             },
         ],
         [

@@ -1,13 +1,14 @@
 "use client"
 
 import React from "react"
-import { FoundationsLearnLayout } from "@/components/features/learn/Foundations"
+import { FoundationResourceLayout } from "@/components/features/learn/Foundations"
 
 /**
- * Deep link to a foundation item by id; same UI as the category page.
+ * Learn / foundations / [categoryId] / [foundationId]: the dedicated resource page
+ * (markdown / video). Reached by clicking a Document/Video resource in the list.
  */
 const Page = () => {
-    return <FoundationsLearnLayout />
+    return <FoundationResourceLayout />
 }
 
 export default Page

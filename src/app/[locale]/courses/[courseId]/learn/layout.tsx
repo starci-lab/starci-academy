@@ -1,6 +1,5 @@
 "use client"
 import React, { PropsWithChildren } from "react"
-import { cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { useSelectedLayoutSegment } from "next/navigation"
 import { LearnShell } from "@/components/features/learn/LearnShell"
@@ -11,7 +10,6 @@ import { OnThisPage } from "@/components/features/learn/OnThisPage"
 import { ContentAiFab } from "@/components/features/learn/ContentAiFab"
 import { GithubLinkGate } from "@/components/layouts/auth/GithubLinkGate"
 import { useQueryCourseSwr } from "@/hooks"
-import { useAppSelector } from "@/redux"
 
 export const Layout = ({ children }: PropsWithChildren) => {
     const t = useTranslations()
@@ -19,31 +17,27 @@ export const Layout = ({ children }: PropsWithChildren) => {
     // (the displayId is synced from the URL by a global effect). Tabs like personal-project
     // have no other loader, and downstream queries (milestones, etc.) gate on `course.id`.
     useQueryCourseSwr()
-    // the milestone (personal-project) rail collapse is still redux-driven.
-    const rightCollapsed = useAppSelector((state) => state.sidebar.rightCollapsed)
     // which learn sub-route is active. Docs-style layout:
     //  - "modules" (module list / detail / content) → content-map on the LEFT (persistent)
     //    + an on-this-page outline on the RIGHT (self-hides when the body has no headings).
-    //  - "personal-project" → its own milestone rail on the right (redux-collapsible).
+    //  - "personal-project" → its milestone rail on the LEFT too (same place as the content-map),
+    //    so the capstone reads like every other learn tab; no right rail.
     // every other tab (mind-map, foundations, headhuntings, practice, leaderboard, starci-ai)
     // has no side rails, so its content spans the full width.
     const segment = useSelectedLayoutSegment()
     const isModules = segment === "modules"
     const isPersonalProject = segment === "personal-project"
+    // the mind-map is a full-bleed interactive canvas (fills the viewport edge-to-edge),
+    // so it opts out of the shell's canonical p-6 reading-column padding.
+    const isMindMap = segment === "mind-map"
 
-    // milestone rail track width tracks the collapse flag; class literals are enumerated
-    // so the Tailwind JIT emits them. Hidden below lg (mobile uses the drawer).
-    const milestoneRailClass = cn(
-        "hidden min-w-0 shrink-0 overflow-x-hidden transition-[width] duration-300 ease-in-out lg:block lg:self-start",
-        rightCollapsed ? "lg:w-14" : "lg:w-80",
-    )
-    // persistent left content-map rail (always visible on desktop): the width is
-    // drag-resizable (persisted) via ResizableRail; sticky under the navbar and a flex
-    // column bounded to the viewport so the rail pins its header/search and scrolls
-    // ONLY the lesson list. Hidden below lg (mobile opens it in the LearnMobileBar drawer).
+    // persistent left rail (always visible on desktop): the width is drag-resizable
+    // (persisted) via ResizableRail; sticky under the navbar and a flex column bounded to
+    // the viewport so the rail pins its header/search and scrolls ONLY the list. Hidden
+    // below lg (mobile opens it in the LearnMobileBar drawer).
     const railClass = "hidden shrink-0 lg:flex lg:flex-col lg:sticky lg:top-16 lg:self-start lg:h-[calc(100dvh-4rem)]"
 
-    // left content-map rail: the lean course content tree while reading.
+    // left rail: course content-map while reading lessons; milestone outline for the capstone.
     const leftRail = isModules ? (
         <ResizableRail
             className={railClass}
@@ -55,12 +49,21 @@ export const Layout = ({ children }: PropsWithChildren) => {
         >
             <ContentMap className="min-h-0 lg:flex-1" />
         </ResizableRail>
+    ) : isPersonalProject ? (
+        <ResizableRail
+            className={railClass}
+            storageKey="starci.learn.milestoneMap.width"
+            defaultWidth={320}
+            minWidth={256}
+            maxWidth={560}
+            ariaLabel={t("courseContents.resizeRail")}
+        >
+            <MilestoneOutline className="min-h-0 lg:flex-1" />
+        </ResizableRail>
     ) : undefined
-    // right rail: on-this-page for lessons, milestone rail for the capstone.
+    // right rail: on-this-page for lessons only; the capstone now keeps its rail on the left.
     const rightRail = isModules ? (
         <OnThisPage />
-    ) : isPersonalProject ? (
-        <MilestoneOutline collapsed={rightCollapsed} className={milestoneRailClass} />
     ) : undefined
 
     return (
@@ -72,7 +75,7 @@ export const Layout = ({ children }: PropsWithChildren) => {
             <LearnShell
                 leftRail={leftRail}
                 rightRail={rightRail}
-                showRightCollapse={isPersonalProject}
+                fullBleed={isMindMap}
             >
                 {children}
             </LearnShell>

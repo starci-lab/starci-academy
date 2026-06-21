@@ -142,7 +142,6 @@ export const TaskLockedAlert = ({
                     ) : null}
                 </Alert.Content>
             </Alert>
-            <div className="h-3" />
         </>
     )
 }

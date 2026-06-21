@@ -80,7 +80,7 @@ export const OtpState = () => {
                     })}
                 </div>
                 <div className="h-3" />
-                <TextField isInvalid={!!(touched.otp && errors.otp)}>
+                <TextField variant="secondary" isInvalid={!!(touched.otp && errors.otp)}>
                     <InputOTP
                         id="sign-in-otp"
                         name="otp"

@@ -153,6 +153,13 @@ export interface MyCourseOutlinePayload {
     progress: MyCourseOutlineProgress
     /** Pointer to the viewer's current task, or null if everything is done. */
     currentTask: MyCourseOutlineCurrentTask | null
+    /**
+     * Content-first resume pointer for the course-content home: the next unread
+     * lesson, else the first uncompleted challenge, else null when all content is
+     * done. Never a milestone task (the capstone resumes on its own surface) —
+     * unlike {@link MyCourseOutlinePayload.currentTask} which prefers capstone tasks.
+     */
+    nextContentTask: MyCourseOutlineCurrentTask | null
 }
 
 /** Apollo variables for `myCourseOutline(request: MyCourseOutlineRequest!)`. */

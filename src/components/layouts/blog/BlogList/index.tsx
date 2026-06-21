@@ -23,13 +23,13 @@ const CATEGORY_FILTERS: Array<BlogCategory | null> = [
 ]
 
 /** HeroUI Chip color per editorial pillar. */
-const CATEGORY_COLOR: Record<BlogCategory, "accent" | "success" | "warning" | "secondary"> = {
+const CATEGORY_COLOR: Record<BlogCategory, "accent" | "success" | "warning" | "danger" | "default"> = {
     [BlogCategory.Codebase]: "accent",
     [BlogCategory.DeepDive]: "accent",
-    [BlogCategory.BuildInPublic]: "secondary",
+    [BlogCategory.BuildInPublic]: "danger",
     [BlogCategory.Career]: "success",
     [BlogCategory.Ai]: "warning",
-    [BlogCategory.CaseStudy]: "secondary",
+    [BlogCategory.CaseStudy]: "default",
 }
 
 /**
@@ -87,7 +87,7 @@ export const BlogList = () => {
                         >
                             <Chip
                                 size="md"
-                                variant={selected ? "solid" : "soft"}
+                                variant={selected ? "primary" : "soft"}
                                 color={filter ? CATEGORY_COLOR[filter] : "accent"}
                             >
                                 {filter ? t(`categories.${filter}`) : t("categories.all")}

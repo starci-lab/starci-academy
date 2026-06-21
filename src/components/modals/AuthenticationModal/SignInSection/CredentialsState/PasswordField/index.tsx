@@ -60,7 +60,7 @@ export const PasswordField = ({
     )
 
     return (
-        <TextField isInvalid={!!(touched && error)} className={cn(className)}>
+        <TextField variant="secondary" isInvalid={!!(touched && error)} className={cn(className)}>
             <Label htmlFor="sign-in-password" className="text-sm">
                 {t("auth.signIn.password.label")}
             </Label>

@@ -259,6 +259,20 @@
     "noMatch": "No content matches your search.",
     "lessonCount": "{count} items",
     "milestones": "Capstone",
+    "lessonsLabel": "Content",
+    "challengesLabel": "Challenge",
+    "lessonsHint": "lessons read",
+    "challengesHint": "completed",
+    "continueEyebrow": "Pick up where you left off",
+    "capstoneEyebrow": "Content done — on to your project",
+    "resumeCapstone": "Continue project",
+    "challengesByDifficulty": "Challenges by difficulty",
+    "difficulty": {
+      "beginner": "Easy",
+      "intermediate": "Medium",
+      "advanced": "Hard",
+      "insane": "Insane"
+    },
     "status": {
       "notStarted": "Not started",
       "inProgress": "In progress",
@@ -273,6 +287,11 @@
   },
   "onThisPage": {
     "title": "On this page"
+  },
+  "learnTabs": {
+    "contents": "Contents",
+    "lesson": "Lesson",
+    "onThisPage": "On this page"
   },
   "contentAi": {
     "title": "Ask StarCi AI",
@@ -533,6 +552,23 @@
     }
   },
   "finalProject": {
+    "dashboard": {
+      "title": "Personal project",
+      "subtitle": "Build your project milestone by milestone — graded by AI.",
+      "progress": "Progress",
+      "tasksDone": "{done}/{total} tasks",
+      "nextTask": "Next task",
+      "continue": "Continue",
+      "allDone": "All tasks complete",
+      "github": "GitHub",
+      "connected": "Connected",
+      "notConnected": "Not connected",
+      "statDone": "Passed",
+      "statLocked": "Locked",
+      "statAttempts": "Attempts",
+      "statAvg": "Avg score",
+      "empty": "No milestones in this project yet."
+    },
     "title": "Personal project",
     "aria": "Milestone {index}",
     "page": {
@@ -554,6 +590,7 @@
       },
       "submitGithub": {
         "title": "Project GitHub",
+        "settingsTitle": "Grading settings",
         "langFieldTitle": "Grading language",
         "langFieldHint": "Your backend is graded against this language's approach criteria.",
         "repoFieldTitle": "GitHub URL",
@@ -570,7 +607,12 @@
         "resetButton": "Reset",
         "ctaEvaluate": "Evaluate progress",
         "ctaReEvaluate": "Re-evaluate progress",
-        "syncFailed": "Failed to sync. Please try again."
+        "syncFailed": "Failed to sync. Please try again.",
+        "privateTokenFieldTitle": "GitHub token (private repo)",
+        "privateTokenPlaceholder": "github_pat_… or ghp_…",
+        "privateTokenHint": "Only needed for a private repo. Create a fine-grained token (Contents: read) scoped to this repo — it's encrypted on save and never shown again.",
+        "privateTokenSaveButton": "Save token",
+        "privateTokenRemoveButton": "Remove token"
       },
       "reviewPreview": {
         "title": "Latest result",
@@ -914,30 +956,6 @@
     "myRankEmpty": "You have no activity in this course yet. Solve a challenge or read a lesson to join the leaderboard.",
     "error": "Could not load the leaderboard. Please try again."
   },
-  "starciAi": {
-    "title": "StarCi AI",
-    "subtitle": "AI models currently used across the platform",
-    "keyPool": {
-      "title": "API key pool status",
-      "subtitle": "Live health from ping cache — disabled keys are skipped on the next request.",
-      "refreshing": "Refreshing…",
-      "error": "Could not load key pool status.",
-      "empty": "No provider pools configured.",
-      "activeSummary": "{active} / {total} keys active",
-      "lastPing": "Last ping",
-      "providers": {
-        "gemini": "Google Gemini",
-        "openai": "OpenAI",
-        "claude": "Anthropic Claude",
-        "openrouter": "OpenRouter"
-      },
-      "status": {
-        "active": "Active",
-        "disabled": "Disabled",
-        "probing": "Probing"
-      }
-    }
-  },
   "practice": {
     "retry": "Try again",
     "cockpit": {
@@ -983,6 +1001,16 @@
       "noMatch": "No problems match your filters",
       "clearFilters": "Clear filters",
       "loadError": "Couldn't load the problem list"
+    },
+    "tabs": {
+      "problems": "Problems",
+      "leaderboard": "Leaderboard"
+    },
+    "leaderboard": {
+      "you": "You",
+      "solved": "{count} solved",
+      "empty": "No one is on the leaderboard yet. Solve a problem to claim the first spot!",
+      "error": "Couldn't load the leaderboard"
     }
   },
   "codingPractice": {
@@ -2094,7 +2122,8 @@
     "tableAriaLabel": "Content table",
     "mermaidRendering": "Rendering diagram...",
     "mermaidExpand": "Expand diagram",
-    "mermaidFigureLabel": "Figure"
+    "mermaidFigureLabel": "Figure",
+    "headingAnchor": "Link to this section"
   },
   "discussion": {
     "title": "Comments ({count})",

@@ -9,6 +9,7 @@ import { useAppSelector } from "@/redux"
 import { useQueryCourseSwr } from "@/hooks"
 import { queryCourseLeaderboard } from "@/modules/api/graphql"
 import { AsyncContent, PageHeader, Skeleton } from "@/components/blocks"
+import { LearnBreadcrumb } from "../shared/LearnBreadcrumb"
 import type { WithClassNames } from "@/modules/types"
 import { LeaderboardPodium } from "./LeaderboardPodium"
 import { LeaderboardTable } from "./LeaderboardTable"
@@ -54,9 +55,10 @@ export const Leaderboard = ({ className }: LeaderboardProps) => {
     const entries = data?.entries ?? []
 
     return (
-        <div className={cn("flex flex-col gap-6", className)}>
+        <div className={cn("mx-auto flex w-full max-w-2xl flex-col gap-6", className)}>
             {/* page heading + refresh */}
             <PageHeader
+                breadcrumb={<LearnBreadcrumb current={t("leaderboard.title")} />}
                 title={t("leaderboard.title")}
                 description={t("leaderboard.subtitle")}
                 actions={(
@@ -120,14 +122,16 @@ export const Leaderboard = ({ className }: LeaderboardProps) => {
                 }}
             >
                 <div className="flex flex-col gap-6">
-                    {/* top 3 on the podium */}
-                    <LeaderboardPodium
-                        entries={entries}
-                        viewerUserId={viewer?.id}
-                    />
-                    {/* everyone from rank 4 down */}
+                    {/* podium only with enough learners (≥3) — fewer → no empty pedestals, straight to list */}
+                    {entries.length >= 3 ? (
+                        <LeaderboardPodium
+                            entries={entries}
+                            viewerUserId={viewer?.id}
+                        />
+                    ) : null}
+                    {/* ranked rows: rank 4 down when there's a podium, otherwise EVERY entry */}
                     <LeaderboardTable
-                        entries={entries.slice(3)}
+                        entries={entries.length >= 3 ? entries.slice(3) : entries}
                         viewerUserId={viewer?.id}
                     />
                     {/* snapshot freshness — the board is cached server-side */}

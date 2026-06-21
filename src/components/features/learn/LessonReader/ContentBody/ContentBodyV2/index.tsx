@@ -18,6 +18,9 @@ import {
     cn,
 } from "@heroui/react"
 import {
+    AsyncContent,
+} from "@/components/blocks"
+import {
     listContentBodyLangs,
     pickContentBodyByLang,
     resolveActiveProgrammingLang,
@@ -135,11 +138,7 @@ export const ContentBodyV2 = ({ className }: ContentBodyV2Props) => {
         [contentOverlay],
     )
 
-    if (isLoading) {
-        return <ContentBodySkeleton className={className} variant="v2" />
-    }
-
-    return (
+    const body = (
         <div className={cn("text-sm text-muted overflow-x-auto", className)}>
             {/* the per-language switcher now lives in the tab toolbar (LessonReader →
                 ContentTabBar rightSlot); this body just renders the active language. */}
@@ -164,5 +163,14 @@ export const ContentBodyV2 = ({ className }: ContentBodyV2Props) => {
                 </>
             )}
         </div>
+    )
+
+    return (
+        <AsyncContent
+            isLoading={isLoading}
+            skeleton={<ContentBodySkeleton className={className} variant="v2" />}
+        >
+            {body}
+        </AsyncContent>
     )
 }

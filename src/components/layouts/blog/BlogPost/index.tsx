@@ -124,7 +124,7 @@ export const BlogPost = () => {
                     {/* funnel CTA (optional) — links to the related course */}
                     {data.ctaUrl && (
                         <Link href={data.ctaUrl}>
-                            <Button color="accent" size="lg" className="w-full">
+                            <Button variant="primary" size="lg" className="w-full">
                                 {data.ctaLabel ?? t("ctaDefault")}
                             </Button>
                         </Link>

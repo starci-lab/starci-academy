@@ -65,7 +65,7 @@ export const PasswordField = ({
     )
 
     return (
-        <TextField className={cn(className)} isInvalid={!!(touched && error)}>
+        <TextField variant="secondary" className={cn(className)} isInvalid={!!(touched && error)}>
             <Label htmlFor={fieldId} className="text-sm">
                 {label}
             </Label>

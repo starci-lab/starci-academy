@@ -62,7 +62,7 @@ export const ContactForm = ({ className }: ContactFormProps) => {
 
     return (
         <form onSubmit={onSubmit} className={cn("flex flex-col gap-4", className)}>
-            <TextField>
+            <TextField variant="secondary">
                 <Label htmlFor="contact-name">{t("contact.form.name")}</Label>
                 <Input
                     id="contact-name"
@@ -77,7 +77,7 @@ export const ContactForm = ({ className }: ContactFormProps) => {
                 ) : null}
             </TextField>
 
-            <TextField>
+            <TextField variant="secondary">
                 <Label htmlFor="contact-email">{t("contact.form.email")}</Label>
                 <Input
                     id="contact-email"
@@ -129,7 +129,7 @@ export const ContactForm = ({ className }: ContactFormProps) => {
                 </Select.Root>
             </div>
 
-            <TextField>
+            <TextField variant="secondary">
                 <Label htmlFor="contact-message">{t("contact.form.message")}</Label>
                 <TextArea
                     id="contact-message"

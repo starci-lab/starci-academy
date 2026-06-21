@@ -118,7 +118,7 @@ export const FileSelectionCard = ({
                 />
 
                 {/* Object Key Input */}
-                <TextField>
+                <TextField variant="secondary">
                     <Label htmlFor="admin-object-key-input" className="text-sm text-slate-300">
                         Object Key (S3 Path)
                     </Label>

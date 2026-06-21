@@ -9,12 +9,18 @@ export enum SidebarTab {
     Cv = "cv",
     PersonalProject = "personalProject",
     Leaderboard = "leaderboard",
-    StarciAi = "starciAi",
     Foundations = "foundations",
     Headhuntings = "headhuntings",
     Flashcards = "flashcards",
     Practice = "practice",
 }
+
+/**
+ * Which of the lesson-reader's three regions the mobile bottom-tab is showing.
+ * Desktop ignores this (it renders all columns side by side); mobile shows ONE
+ * full-screen view at a time. `"content"` is the reading default.
+ */
+export type MobileLearnView = "map" | "content" | "toc"
 
 /**
  * The shape of the active sidebar selection stored in Redux.
@@ -26,6 +32,8 @@ export interface SidebarSlice {
     leftCollapsed: boolean
     /** Desktop: when true the right module-outline rail is hidden. */
     rightCollapsed: boolean
+    /** Mobile: which lesson-reader region the bottom-tab bar is showing. */
+    mobileView: MobileLearnView
 }
 
 /**
@@ -47,6 +55,8 @@ export const initialState: SidebarSlice = {
     // both rails start expanded/visible on desktop
     leftCollapsed: false,
     rightCollapsed: false,
+    // mobile lands on the content (reading) view
+    mobileView: "content",
 }
 
 /**
@@ -68,6 +78,10 @@ export const sidebarSlice = createSlice({
         toggleRightCollapsed: (state) => {
             state.rightCollapsed = !state.rightCollapsed
         },
+        /** Set which lesson-reader region the mobile bottom-tab bar shows. */
+        setMobileView: (state, action: PayloadAction<MobileLearnView>) => {
+            state.mobileView = action.payload
+        },
     },
 })
 
@@ -76,6 +90,7 @@ export const {
     setSidebar,
     toggleLeftCollapsed,
     toggleRightCollapsed,
+    setMobileView,
 } = sidebarSlice.actions
 /** Root reducer for the sidebar slice. */
 export const sidebarReducer = sidebarSlice.reducer

@@ -178,7 +178,7 @@ export const SubmissionRow = ({
                     {submission.description}
                 </Typography>
                 <div className="h-3" />
-                <TextField
+                <TextField variant="secondary"
                     className="w-full"
                     fullWidth
                     isInvalid={!!(isTouched && errorMessage)}

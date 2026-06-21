@@ -93,7 +93,7 @@ export const Headhuntings = ({ className }: HeadhuntingsProps) => {
 
     return (
         <div className={className}>
-            <div className="flex flex-col gap-6 p-3">
+            <div className="flex flex-col gap-6">
                 <PageHeader
                     breadcrumb={<HeadhuntingsBreadcrumbs />}
                     title={t("headhuntings.title")}

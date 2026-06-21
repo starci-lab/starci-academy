@@ -46,7 +46,7 @@ export const EmailField = ({
 }: EmailFieldProps) => {
     const t = useTranslations()
     return (
-        <TextField isInvalid={!!(touched && error)} className={cn(className)}>
+        <TextField variant="secondary" isInvalid={!!(touched && error)} className={cn(className)}>
             <Label htmlFor="sign-up-email" className="text-sm">
                 {t("auth.signUp.email.label")}
             </Label>

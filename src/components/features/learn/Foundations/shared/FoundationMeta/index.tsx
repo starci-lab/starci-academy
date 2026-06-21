@@ -52,7 +52,7 @@ export const FoundationMeta = ({
                     </Chip>
                 ) : null}
                 {foundation.isRecommended ? (
-                    <Chip size="sm" variant="primary" color="warning">
+                    <Chip size="sm" variant="secondary" color="success" className="bg-success/10 text-success">
                         <Chip.Label>{t("foundations.recommended")}</Chip.Label>
                     </Chip>
                 ) : null}

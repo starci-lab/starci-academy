@@ -4,6 +4,7 @@ import React, { PropsWithChildren, ReactNode } from "react"
 import { cn } from "@heroui/react"
 import { LearnSidebar } from "./LearnSidebar"
 import { LearnMobileBar } from "./LearnMobileBar"
+import { LearnMobileTabBar } from "./LearnMobileTabBar"
 import { LearnPanelToggles } from "./LearnPanelToggles"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
@@ -27,6 +28,13 @@ export interface LearnShellProps extends WithClassNames<undefined>, PropsWithChi
      * leave this off. Defaults to `false`.
      */
     showRightCollapse?: boolean
+    /**
+     * Opt out of the shell's canonical `p-6` content padding for full-bleed routes
+     * (e.g. the mind-map canvas, which fills the viewport edge-to-edge). Every
+     * other learn page reads as a padded reading column, so the shell owns that
+     * `p-6` once here instead of each feature re-declaring it. Defaults to `false`.
+     */
+    fullBleed?: boolean
 }
 
 /**
@@ -47,6 +55,7 @@ export const LearnShell = ({
     leftRail,
     rightRail,
     showRightCollapse = false,
+    fullBleed = false,
     className,
 }: LearnShellProps) => {
     return (
@@ -60,12 +69,16 @@ export const LearnShell = ({
             </aside>
             {/* persistent left content-map rail (course content tree) supplied by the layout */}
             {leftRail}
-            {/* content column; only anchors the collapse handle + right border for the
-                redux-driven (milestone) rail that opts into it */}
-            <div className={cn("min-h-0 min-w-0 flex-1", showRightCollapse && "relative lg:border-r")}>
+            {/* content column; the shell owns the canonical p-6 reading-column padding
+                for every learn page (features supply only max-w + mx-auto + gap), except
+                full-bleed routes (mind-map canvas). Also anchors the collapse handle +
+                right border for the redux-driven (milestone) rail that opts into it */}
+            <div className={cn("min-h-0 min-w-0 flex-1", !fullBleed && "p-6", leftRail && "max-lg:pb-16", rightRail && "lg:pr-0 lg:pb-0", showRightCollapse && "relative lg:border-r")}>
                 {showRightCollapse && <LearnPanelToggles />}
-                {/* mobile-only toolbar exposing both sidebars as drawers */}
-                <LearnMobileBar />
+                {/* mobile chrome: the lesson reader (modules — has a left rail) folds
+                    its 4 columns into a bottom-tab bar; other learn tabs keep the top
+                    drawer bar for course-nav. */}
+                {leftRail ? <LearnMobileTabBar /> : <LearnMobileBar />}
                 {children}
             </div>
             {/* right rail supplied by the layout (on-this-page outline / milestone rail) */}

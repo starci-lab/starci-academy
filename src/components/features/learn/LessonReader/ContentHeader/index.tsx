@@ -53,8 +53,8 @@ export const ContentHeader = () => {
         <div className="flex flex-col gap-6 p-3">
             {/* header proper (title + desc + meta) — all one content group → gap-3 */}
             <div className="flex flex-col gap-3">
-                {/* title + description as a tight pair — same shape as the standard PageHeader */}
-                <div className="flex flex-col gap-0">
+                {/* title + description pair (gap-2 — same shape as the standard PageHeader) */}
+                <div className="flex flex-col gap-2">
                     <Typography.Heading level={3} weight="bold">{title}</Typography.Heading>
                     {description ? (
                         <Typography type="body-sm" color="muted">{description}</Typography>

@@ -49,7 +49,7 @@ export const ExternalProjectForm = ({
         >
             <div className="flex flex-col gap-4">
                 {/* title (required) */}
-                <TextField isInvalid={Boolean(errors.title)}>
+                <TextField variant="secondary" isInvalid={Boolean(errors.title)}>
                     <Label htmlFor="pin-title">{t("pinnedProjects.form.title")}</Label>
                     <Input
                         id="pin-title"
@@ -64,7 +64,7 @@ export const ExternalProjectForm = ({
                 </TextField>
 
                 {/* url (optional, validated) */}
-                <TextField isInvalid={Boolean(errors.url)}>
+                <TextField variant="secondary" isInvalid={Boolean(errors.url)}>
                     <Label htmlFor="pin-url">{t("pinnedProjects.form.url")}</Label>
                     <Input
                         id="pin-url"
@@ -79,7 +79,7 @@ export const ExternalProjectForm = ({
                 </TextField>
 
                 {/* tech stack (comma / newline separated) */}
-                <TextField>
+                <TextField variant="secondary">
                     <Label htmlFor="pin-tech">{t("pinnedProjects.form.techStack")}</Label>
                     <Input
                         id="pin-tech"

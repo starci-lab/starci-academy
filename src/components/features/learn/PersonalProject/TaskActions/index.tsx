@@ -167,7 +167,7 @@ export const TaskActions = ({
 
     return (
         <>
-            <div className={cn("mt-3", "flex flex-wrap items-center gap-2", className)}>
+            <div className={cn("flex flex-wrap items-center gap-2", className)}>
                 <Button
                     size="lg"
                     isDisabled={isEvaluateDisabled}

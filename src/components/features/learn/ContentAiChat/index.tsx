@@ -132,7 +132,7 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
 
             {/* composer */}
             <div className="flex items-end gap-2">
-                <TextField className="flex-1">
+                <TextField className="flex-1" variant="secondary">
                     <Input
                         aria-label={t("contentAi.placeholder")}
                         placeholder={t("contentAi.placeholder")}

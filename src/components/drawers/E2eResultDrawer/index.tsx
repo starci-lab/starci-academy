@@ -36,7 +36,6 @@ export const E2eResultDrawer = () => {
                                 <Drawer.Heading>E2E result</Drawer.Heading>
                             </Drawer.Header>
                         </div>
-                        <div className="border-b" />
                         <Drawer.Body>
                             <ScrollShadow className="h-full p-3" hideScrollBar>
                                 <E2eBody />

@@ -159,7 +159,7 @@ export const FoundationsCategoryGridLayout = () => {
     ])
 
     return (
-        <div className="p-3">
+        <div className="mx-auto max-w-3xl">
             <FoundationsBreadcrumbs items={breadcrumbItems} />
             <div className="h-6" />
             <FoundationsCategoryGridHeader />

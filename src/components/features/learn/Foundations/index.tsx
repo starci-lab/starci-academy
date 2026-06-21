@@ -4,7 +4,6 @@ import React, {
     useCallback,
     useEffect,
     useMemo,
-    useRef,
     useState,
 } from "react"
 import {
@@ -25,7 +24,6 @@ import {
     useAppSelector,
 } from "@/redux"
 import {
-    setFoundation,
     setFoundationLimit,
     setFoundationPageNumber,
     setFoundationSearch,
@@ -37,9 +35,6 @@ import {
 import type {
     FoundationsBreadcrumbItem,
 } from "./types"
-import {
-    useOpenFoundationResource,
-} from "./hooks"
 import {
     FoundationsBreadcrumbs,
 } from "./shared/FoundationsBreadcrumbs"
@@ -56,6 +51,7 @@ import {
 } from "@/components/reuseable"
 
 export { FoundationsCategoryGridLayout } from "./FoundationsCategoryGrid"
+export { FoundationResourceLayout } from "./FoundationResourceLayout"
 
 /** Max foundation resources shown per page. */
 const PAGE_SIZE = 10
@@ -75,25 +71,22 @@ interface FoundationResourceSuggestion {
  *
  * Server-side search + pagination via the `foundations` query: the debounced
  * search, page number and page size live in Redux and drive the SWR key, so the
- * backend returns only the current page (no client-side filtering). `"use client"`
- * for routing, redux and the open-resource side effect.
+ * backend returns only the current page (no client-side filtering). Selecting a
+ * resource navigates to its dedicated page (see `FoundationCard`). `"use client"`
+ * for routing, redux and the debounced search.
  */
 export const FoundationsLearnLayout = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
     const dispatch = useAppDispatch()
-    const openFoundationResource = useOpenFoundationResource()
     const course = useAppSelector((state) => state.course.entity)
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
     const category = useAppSelector((state) => state.foundation.category)
     const foundations = useAppSelector((state) => state.foundation.entities)
-    const foundationId = useAppSelector((state) => state.foundation.foundationId)
-    const foundation = useAppSelector((state) => state.foundation.entity)
     const count = useAppSelector((state) => state.foundation.count)
     const pageNumber = useAppSelector((state) => state.foundation.pageNumber)
     const search = useAppSelector((state) => state.foundation.search)
-    const openedFromUrlRef = useRef<string | null>(null)
 
     useQueryFoundationCategoriesSwr()
     const { data: foundationsData, isLoading: isFoundationsLoading } = useQueryFoundationsSwr()
@@ -188,35 +181,8 @@ export const FoundationsLearnLayout = () => {
         [],
     )
 
-    // auto-open a deep-linked foundation once the list is available
-    useEffect(() => {
-        if (!foundationId || !foundations?.length) {
-            return
-        }
-        if (openedFromUrlRef.current === foundationId) {
-            return
-        }
-
-        const fromUrl = foundations.find(
-            (item) => item.id === foundationId,
-        )
-        if (!fromUrl) {
-            return
-        }
-
-        openedFromUrlRef.current = foundationId
-        dispatch(setFoundation(fromUrl))
-        openFoundationResource(fromUrl)
-    }, [
-        dispatch,
-        foundation,
-        foundationId,
-        foundations,
-        openFoundationResource,
-    ])
-
     return (
-        <div className="p-3">
+        <div className="mx-auto max-w-3xl">
             <FoundationsBreadcrumbs items={breadcrumbItems} />
             <div className="h-6" />
             <FoundationsLearnHeader />

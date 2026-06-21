@@ -1,24 +1,32 @@
 "use client"
 
-import { Skeleton, cn } from "@heroui/react"
+import { cn } from "@heroui/react"
+import { Skeleton } from "@/components/blocks"
 import type { WithClassNames } from "@/modules/types"
 import React from "react"
 
+/** Props for {@link FoundationCardSkeleton}. */
+export interface FoundationCardSkeletonProps extends WithClassNames<undefined> {
+    /** Render a bottom divider — set on every row except the last in the list. */
+    divider?: boolean
+}
+
 /**
- * Loading placeholder for a foundation resource card.
+ * Loading placeholder for one foundation resource row: mirrors the
+ * {@link import("@/components/blocks").ListRow} layout (small thumbnail + title +
+ * one-line description + trailing meta/caret) used by the real
+ * {@link import("../FoundationCard").FoundationCard}.
+ * @param props.divider - Bottom border for all but the last row in the joined list.
  * @param props.className - Optional root class names.
  */
 export const FoundationCardSkeleton = ({
+    divider = false,
     className,
-}: WithClassNames<undefined>) => {
+}: FoundationCardSkeletonProps) => {
     return (
-        <div className={cn("card card--default !p-0 flex h-full flex-col overflow-hidden rounded-xl", className)}>
-            <Skeleton className="aspect-video w-full rounded-none" />
-            <div className="flex flex-col gap-3 p-3">
-                <Skeleton className="h-6 w-2/3 rounded-lg" />
-                <Skeleton className="h-4 w-full rounded-lg" />
-                <Skeleton className="h-16 w-full rounded-lg" />
-            </div>
-        </div>
+        <Skeleton.ListRow
+            withTrailing
+            className={cn("px-3", divider && "border-b border-separator", className)}
+        />
     )
 }

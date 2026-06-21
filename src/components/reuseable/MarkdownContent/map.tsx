@@ -102,18 +102,29 @@ const slugify = (text: string): string =>
  * @param level - The heading depth surfaced in the outline (2 or 3).
  * @param sizeClass - The prose size class keeping the visual identical to {@link ProseText}.
  */
-const buildTocHeading = (level: 2 | 3, sizeClass: string) =>
+const buildTocHeading = (level: 2 | 3, sizeClass: string, marginClass: string, anchorLabel: string) =>
     ({ children }: { children?: React.ReactNode }) => {
         // real heading tag (not a div) so the body keeps semantic outline for SEO
         const Tag = `h${level}` as "h2" | "h3"
+        const id = slugify(getNodeText(children))
         return (
             <Tag
-                id={slugify(getNodeText(children))}
+                id={id}
                 data-toc=""
                 data-toc-level={level}
-                className={`${sizeClass} scroll-mt-20 font-semibold`}
+                className={`group ${marginClass} ${sizeClass} scroll-mt-20 font-semibold`.trim()}
             >
                 {children}
+                {/* Hover anchor (#) — copy/share a deep link to the section (reading only). */}
+                {anchorLabel ? (
+                    <a
+                        href={`#${id}`}
+                        aria-label={anchorLabel}
+                        className="ml-2 text-muted no-underline opacity-0 transition-opacity group-hover:opacity-100"
+                    >
+                        #
+                    </a>
+                ) : null}
             </Tag>
         )
     }
@@ -137,22 +148,37 @@ export const buildMarkdownRenderers = ({
     const bodySize = reading ? "base" : "sm"
     const h2Size = reading ? PROSE_SIZE["2xl"] : PROSE_SIZE.lg
     const h3Size = reading ? PROSE_SIZE.xl : PROSE_SIZE.base
+    // Reading-only asymmetric rhythm: a heading carries MORE space above than below so it
+    // reads as a new section binding to the text under it (Tailwind-prose style). Compact
+    // mode leaves block renderers margin-free and relies on the wrapper's uniform space-y.
+    const h2Margin = reading ? "mt-10 mb-3" : ""
+    const h3Margin = reading ? "mt-8 mb-3" : ""
+    const blockMy = reading ? "my-4" : ""
+    // Heading deep-link anchor only in reading mode (cards / chat have no shareable url).
+    const anchorLabel = reading ? t("markdown.headingAnchor") : ""
     return ({
         h1: ({ children }) => (
-            <ProseText elementType="h1" size={reading ? "2xl" : "xl"} className="font-semibold">{children}</ProseText>
+            <ProseText elementType="h1" size={reading ? "2xl" : "xl"} className={reading ? "mb-4 font-semibold" : "font-semibold"}>{children}</ProseText>
         ),
-        h2: buildTocHeading(2, h2Size),
-        h3: buildTocHeading(3, h3Size),
+        h2: buildTocHeading(2, h2Size, h2Margin, anchorLabel),
+        h3: buildTocHeading(3, h3Size, h3Margin, anchorLabel),
         h4: ({ children }) => (
             reading
-                ? <ProseText elementType="h4" size="base" className="font-semibold">{children}</ProseText>
+                ? <ProseText elementType="h4" size="base" className="mt-6 mb-2 font-semibold">{children}</ProseText>
                 : <ProseText elementType="h4" size="sm" className="font-semibold text-muted">{children}</ProseText>
         ),
+        // StarCi lessons number sections deep (e.g. 2.1.3.2 → h5), so deep headings must still
+        // READ as headings in reading mode: foreground + weight + a little top space — never the
+        // muted/small "label" look (that's only for compact contexts like cards/chat).
         h5: ({ children }) => (
-            <ProseText elementType="h5" size="sm" className="font-semibold text-muted">{children}</ProseText>
+            reading
+                ? <ProseText elementType="h5" size="sm" className="mt-4 mb-2 font-semibold">{children}</ProseText>
+                : <ProseText elementType="h5" size="sm" className="font-semibold text-muted">{children}</ProseText>
         ),
         h6: ({ children }) => (
-            <ProseText elementType="h6" size="xs" className="font-semibold text-muted">{children}</ProseText>
+            reading
+                ? <ProseText elementType="h6" size="sm" className="mt-4 mb-2 font-semibold text-muted">{children}</ProseText>
+                : <ProseText elementType="h6" size="xs" className="font-semibold text-muted">{children}</ProseText>
         ),
         // Custom `:::muted` directive tags (see remarkMuted in ./index): small, muted label text.
         // `[&_*]:text-muted` forces the muted colour onto any inner `<p>` the container wraps.
@@ -165,7 +191,7 @@ export const buildMarkdownRenderers = ({
         // Custom `:::chip` directive tag (see remarkChip in ./index): a wrapped row of soft chips,
         // one per authored keyword line. `items` is the `|`-joined keyword list.
         chipblock: ({ items }: { items?: string }) => (
-            <span className="my-1 flex flex-wrap gap-1.5">
+            <span className="my-2 flex flex-wrap gap-2">
                 {String(items ?? "").split("|").filter(Boolean).map((keyword, index) => (
                     <HeroUI.Chip key={index} size="sm" variant="soft" color="default">{keyword}</HeroUI.Chip>
                 ))}
@@ -176,34 +202,46 @@ export const buildMarkdownRenderers = ({
         tabcode: ({ children }: { children?: React.ReactNode }) => <TabPane kind="code">{children}</TabPane>,
         tabpreview: ({ children }: { children?: React.ReactNode }) => <TabPane kind="preview">{children}</TabPane>,
         // ::::accordion / :::panel{title} → HeroUI collapsible accordion (see remarkAccordion in ./index).
+        // Use the DEFAULT variant (no baked bg-surface to fight) + an explicit bg-default fill — the
+        // same distinct neutral the code blocks use — so the accordion clearly stands apart from the
+        // page bg in dark mode. (Surface variant's bg-surface ≈ page bg → it blended in.)
         accordionblock: ({ children }: { children?: React.ReactNode }) => (
-            <HeroUI.Accordion variant="surface" className="my-1.5">{children}</HeroUI.Accordion>
+            <HeroUI.Accordion variant="default" className={`${reading ? "my-4" : "my-2"} overflow-hidden rounded-2xl border border-default bg-default`}>{children}</HeroUI.Accordion>
         ),
         accordionpanel: ({ title, children }: { title?: string, children?: React.ReactNode }) => (
             <HeroUI.Accordion.Item aria-label={String(title ?? "")}>
                 <HeroUI.Accordion.Heading>
                     <HeroUI.Accordion.Trigger>
                         <div className="flex w-full items-center justify-between gap-3 text-start">
-                            <span className="text-sm font-semibold">{title}</span>
+                            <span className={reading ? "text-base font-semibold" : "text-sm font-semibold"}>{title}</span>
                             <HeroUI.Accordion.Indicator />
                         </div>
                     </HeroUI.Accordion.Trigger>
                 </HeroUI.Accordion.Heading>
                 <HeroUI.Accordion.Panel>
                     <HeroUI.Accordion.Body>
-                        <div className="space-y-1.5">{children}</div>
+                        <div className="space-y-2">{children}</div>
                     </HeroUI.Accordion.Body>
                 </HeroUI.Accordion.Panel>
             </HeroUI.Accordion.Item>
         ),
         table: ({ children }) => (
-            <MarkdownTable ariaLabel={t("markdown.tableAriaLabel")}>
+            <MarkdownTable ariaLabel={t("markdown.tableAriaLabel")} className={blockMy}>
                 {children}
             </MarkdownTable>
         ),
         thead: MarkdownTableHead,
         img: ({ src, alt }) => (
-            <img src={src} alt={alt} className="w-full rounded-xl border border-default" />
+            // Markdown `![caption](src)`: a non-empty alt doubles as a real figure caption;
+            // an empty alt renders a bare (decorative) image.
+            alt ? (
+                <figure className={reading ? "my-4" : undefined}>
+                    <img src={src} alt={alt} className="w-full rounded-xl border border-default" />
+                    <figcaption className="mt-2 text-center text-sm italic text-muted">{alt}</figcaption>
+                </figure>
+            ) : (
+                <img src={src} alt="" className={`${reading ? "my-4 " : ""}w-full rounded-xl border border-default`} />
+            )
         ),
         tbody: MarkdownTableBody,
         th: MarkdownTableColumn,
@@ -217,8 +255,10 @@ export const buildMarkdownRenderers = ({
             if (!isInline) {
                 return children
             }
+            // Neutral inline code (GitHub/Stripe-style): subtle surface + foreground text, NOT
+            // the brand accent — accent is reserved for links so a keyword-dense paragraph stays calm.
             return (
-                <code className="rounded-md bg-default px-1.5 py-0.5 font-mono text-sm text-accent">
+                <code className="rounded-md bg-default px-1 py-0.5 font-mono text-sm text-foreground">
                     {code}
                 </code>
             )
@@ -238,6 +278,7 @@ export const buildMarkdownRenderers = ({
                         expandLabel={t("markdown.mermaidExpand")}
                         caption={mermaidCaptions[code.trim()]}
                         fallbackLabel={t("markdown.mermaidFigureLabel")}
+                        className={blockMy}
                     />
                 )
             }
@@ -255,24 +296,26 @@ export const buildMarkdownRenderers = ({
                     theme={isDark
                         ? "material-theme-darker"
                         : "material-theme-lighter"}
+                    className={blockMy}
                 />
             )
         },
         blockquote: ({ children }) => (
-            <blockquote className="space-y-1.5 rounded-r-xl border-l-2 border-accent bg-default/40 px-4 py-2 text-muted">
+            <blockquote className={`${reading ? "my-4 " : ""}space-y-2 rounded-r-xl border-l-2 border-accent bg-default/40 px-4 py-2 text-muted`}>
                 {children}
             </blockquote>
         ),
-        strong: ({ children }) => <strong className="font-semibold text-foreground">{children}</strong>,
+        // Bold = weight only — no colour jump — so a keyword-heavy paragraph doesn't flicker.
+        strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
         em: ({ children }) => <em className="italic">{children}</em>,
-        hr: () => <hr className="border-default" />,
-        ol: ({ children }) => <ol className="list-decimal space-y-1.5 pl-5 marker:text-muted">{children}</ol>,
-        ul: ({ children }) => <ul className="list-disc space-y-1.5 pl-5 marker:text-muted">{children}</ul>,
+        hr: () => <hr className={`${reading ? "my-6 " : ""}border-default`} />,
+        ol: ({ children }) => <ol className={`${reading ? "my-4 " : ""}list-decimal space-y-2 pl-5 marker:text-muted`}>{children}</ol>,
+        ul: ({ children }) => <ul className={`${reading ? "my-4 " : ""}list-disc space-y-2 pl-5 marker:text-muted`}>{children}</ul>,
         li: ({ children }) => (
-            <ProseText elementType="li" size={bodySize} className="space-y-1.5 leading-relaxed">{children}</ProseText>
+            <ProseText elementType="li" size={bodySize} className="space-y-2 leading-relaxed">{children}</ProseText>
         ),
         p: ({ children }) => (
-            <ProseText elementType="div" size={bodySize} className="leading-relaxed">{children}</ProseText>
+            <ProseText elementType="div" size={bodySize} className={reading ? "mb-4 leading-relaxed" : "leading-relaxed"}>{children}</ProseText>
         ),
         a: ({ href, children }) => {
         // Internal links (e.g. related-problem `/practice/<slug>`) navigate in-app

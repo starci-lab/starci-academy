@@ -24,10 +24,17 @@ export const ContentAiChatDrawer = () => {
     const { isMobile } = useSmViewpoint()
     const contentTitle = useAppSelector((state) => state.content.entity?.title)
 
+    // Desktop opens the chat in an anchored popover beside the draggable FAB
+    // ({@link import("@/components/features/learn/ContentAiFab").ContentAiFab});
+    // the drawer is the MOBILE-only panel (a popover is too cramped on a phone).
+    if (!isMobile) {
+        return null
+    }
+
     return (
         <Drawer>
             <Drawer.Backdrop isOpen={isOpen} onOpenChange={setOpen}>
-                <Drawer.Content placement={isMobile ? "bottom" : "right"}>
+                <Drawer.Content placement="bottom">
                     <Drawer.Dialog className="p-0 sm:max-w-md">
                         <div className="p-3">
                             <Drawer.CloseTrigger />
@@ -37,7 +44,6 @@ export const ContentAiChatDrawer = () => {
                                 </Drawer.Heading>
                             </Drawer.Header>
                         </div>
-                        <div className="border-b" />
                         <Drawer.Body className="p-3">
                             <ContentAiChat />
                         </Drawer.Body>

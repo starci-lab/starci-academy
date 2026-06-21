@@ -69,6 +69,11 @@ const query1 = gql`
           id
           milestoneId
         }
+        nextContentTask {
+          kind
+          id
+          milestoneId
+        }
       }
     }
   }

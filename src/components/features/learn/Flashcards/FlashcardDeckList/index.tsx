@@ -84,7 +84,7 @@ export const FlashcardDeckList = ({ onSelectDeck }: FlashcardDeckListProps) => {
         >
             <div className="flex flex-col gap-3">
                 {/* search box: filters the deck list client-side by title/description */}
-                <TextField className="w-full sm:max-w-sm">
+                <TextField variant="secondary" className="w-full sm:max-w-sm">
                     <Input
                         type="search"
                         aria-label={t("flashcard.searchPlaceholder")}

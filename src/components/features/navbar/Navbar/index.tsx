@@ -86,7 +86,8 @@ export const Navbar = ({ className }: NavbarProps) => {
     // register the global Ctrl/Cmd+K shortcut to open the search overlay
     useEffect(() => {
         const onKeyDown = (event: KeyboardEvent) => {
-            const isK = event.key.toLowerCase() === "k"
+            // some keydown events (IME composition, autofill) fire with no `key`
+            const isK = event.key?.toLowerCase() === "k"
             if (!isK) return
             if (!(event.ctrlKey || event.metaKey)) return
             event.preventDefault()

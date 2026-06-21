@@ -5,6 +5,7 @@ import { cn } from "@heroui/react"
 import { useAppSelector } from "@/redux"
 import type { WithClassNames } from "@/modules/types"
 import { getContentCodeExplainings } from "@/modules/types"
+import { AsyncContent } from "@/components/blocks"
 import { useQueryContentSwr } from "@/hooks"
 import { CodeBodySkeleton } from "../CodeBodySkeleton"
 import { ExplainingCard } from "./ExplainingCard"
@@ -33,23 +34,24 @@ export const CodeExplainingBody = ({ className }: CodeExplainingBodyProps) => {
         && !!queryContentSwr.data
         && !queryContentSwr.error
 
-    if (!ready) {
-        return <CodeBodySkeleton className={className} />
-    }
-
-    if (!items.length) {
-        return (
-            <div className={cn("", className)}>
-                <CodeExplainingEmpty />
-            </div>
-        )
-    }
-
-    return (
+    const body = !items.length ? (
+        <div className={cn("", className)}>
+            <CodeExplainingEmpty />
+        </div>
+    ) : (
         <div className={cn("flex flex-col gap-6", className)}>
             {items.map((item) => (
                 <ExplainingCard key={item.id} item={item} />
             ))}
         </div>
+    )
+
+    return (
+        <AsyncContent
+            isLoading={!ready}
+            skeleton={<CodeBodySkeleton className={className} />}
+        >
+            {body}
+        </AsyncContent>
     )
 }

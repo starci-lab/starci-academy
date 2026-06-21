@@ -17,14 +17,14 @@ import {
     PublicationEvent,
     useJobNotificationsSocketIo,
 } from "@/hooks/socketio"
-import { usePersonalProjectGithubStore } from "./store"
+import { usePersonalProjectGithubStore, type PersonalProjectGithubAutosaveStatus } from "./store"
 
 /** GitHub repo regex (aligned with the challenge submission rule). */
 const GITHUB_REGEX = /^https:\/\/(www\.)?github\.com\/[A-Za-z0-9_.-]+(\/[A-Za-z0-9_.-]+)?(\/)?$/
 const DEFAULT_BRANCH = "main"
 
-/** Autosave status for the debounced url/branch sync (inline feedback). */
-export type PersonalProjectGithubAutosaveStatus = "idle" | "saving" | "saved" | "failed"
+/** Autosave status for the debounced url/branch sync (inline feedback). Lives in the store. */
+export type { PersonalProjectGithubAutosaveStatus } from "./store"
 
 /** Options for {@link usePersonalProjectGithubForm}. */
 export interface UsePersonalProjectGithubFormOptions {
@@ -40,9 +40,6 @@ export interface UsePersonalProjectGithubFormOptions {
  */
 export const usePersonalProjectGithubForm = (options: UsePersonalProjectGithubFormOptions = {}) => {
     const { enableSync = false } = options
-    // Inline autosave status for each debounced sync (url/branch), surfaced next to the fields.
-    const [urlAutosaveStatus, setUrlAutosaveStatus] = useState<PersonalProjectGithubAutosaveStatus>("idle")
-    const [branchAutosaveStatus, setBranchAutosaveStatus] = useState<PersonalProjectGithubAutosaveStatus>("idle")
     const t = useTranslations()
     const locale = useLocale()
     const dispatch = useAppDispatch()
@@ -57,6 +54,14 @@ export const usePersonalProjectGithubForm = (options: UsePersonalProjectGithubFo
     const queryCourseEnrollmentStatusSwr = useQueryCourseEnrollmentStatusSwr()
     const reviewPersonalProjectTaskSwr = useMutateReviewPersonalProjectTaskSwr()
     const jobNotificationsSocket = useJobNotificationsSocketIo()
+
+    // SWR exposes STABLE trigger/mutate fns; the debounced-sync effects depend on
+    // THESE, not the whole hook objects — otherwise every `isMutating` flip during a
+    // sync changed the object identity, re-ran the effect, and re-fired the sync in a
+    // loop that tripped the backend rate limiter (ThrottlerException: Too Many Requests).
+    const syncGithubTrigger = syncPersonalProjectGithubSwr.trigger
+    const syncBranchTrigger = syncBranchSwr.trigger
+    const mutateEnrollmentStatus = queryCourseEnrollmentStatusSwr.mutate
 
     const githubUrl = usePersonalProjectGithubStore((state) => state.githubUrl)
     const branch = usePersonalProjectGithubStore((state) => state.branch)
@@ -76,6 +81,12 @@ export const usePersonalProjectGithubForm = (options: UsePersonalProjectGithubFo
     const setBranchError = usePersonalProjectGithubStore((state) => state.setBranchError)
     const setIsSubmitting = usePersonalProjectGithubStore((state) => state.setIsSubmitting)
     const seed = usePersonalProjectGithubStore((state) => state.seed)
+    // url/branch autosave status live in the shared store so the field (which can render
+    // in the settings Drawer) reads the same status the sync OWNER (panel) writes.
+    const urlAutosaveStatus = usePersonalProjectGithubStore((state) => state.urlAutosaveStatus)
+    const branchAutosaveStatus = usePersonalProjectGithubStore((state) => state.branchAutosaveStatus)
+    const setUrlAutosaveStatus = usePersonalProjectGithubStore((state) => state.setUrlAutosaveStatus)
+    const setBranchAutosaveStatus = usePersonalProjectGithubStore((state) => state.setBranchAutosaveStatus)
 
     // Seed once from enrollment (replaces enableReinitialize).
     useEffect(() => {
@@ -124,6 +135,8 @@ export const usePersonalProjectGithubForm = (options: UsePersonalProjectGithubFo
             return
         }
         const trimmed = githubUrl.trim()
+        // skip when it matches what we LAST synced — without this the effect's re-runs
+        // (enrollment refetch after a save) would re-fire the same sync endlessly.
         if (trimmed === initialUrlRef.current) {
             return
         }
@@ -132,7 +145,7 @@ export const usePersonalProjectGithubForm = (options: UsePersonalProjectGithubFo
             await runGraphQL(
                 async () => {
                     try {
-                        const result = await syncPersonalProjectGithubSwr.trigger({ courseId: course.id, githubUrl: trimmed })
+                        const result = await syncGithubTrigger({ courseId: course.id, githubUrl: trimmed })
                         const payload = result?.data?.syncPersonalProjectGithub
                         if (!payload) {
                             throw new Error("Sync failed")
@@ -142,7 +155,9 @@ export const usePersonalProjectGithubForm = (options: UsePersonalProjectGithubFo
                             setUrlAutosaveStatus("failed")
                             return payload
                         }
-                        await queryCourseEnrollmentStatusSwr.mutate()
+                        // record the synced value so the guard above stops re-firing
+                        initialUrlRef.current = trimmed
+                        await mutateEnrollmentStatus()
                         setUrlAutosaveStatus("saved")
                         return payload
                     } catch (error) {
@@ -152,10 +167,10 @@ export const usePersonalProjectGithubForm = (options: UsePersonalProjectGithubFo
                 },
                 { showSuccessToast: false },
             )
-        }, 300)
+        }, 600)
         debounced()
         return () => debounced.cancel()
-    }, [enableSync, course?.id, githubUrl, validationError.githubUrl, sidebarTab, t, syncPersonalProjectGithubSwr, queryCourseEnrollmentStatusSwr, setGithubUrlError, runGraphQL])
+    }, [enableSync, course?.id, githubUrl, validationError.githubUrl, sidebarTab, t, syncGithubTrigger, mutateEnrollmentStatus, setGithubUrlError, runGraphQL])
 
     // Debounced branch sync.
     useEffect(() => {
@@ -174,7 +189,7 @@ export const usePersonalProjectGithubForm = (options: UsePersonalProjectGithubFo
             await runGraphQL(
                 async () => {
                     try {
-                        const result = await syncBranchSwr.trigger({ courseId: course.id, branch: trimmed.length > 0 ? trimmed : "" })
+                        const result = await syncBranchTrigger({ courseId: course.id, branch: trimmed.length > 0 ? trimmed : "" })
                         const payload = result?.data?.syncPersonalProjectGithub
                         if (!payload) {
                             throw new Error("Sync failed")
@@ -184,7 +199,9 @@ export const usePersonalProjectGithubForm = (options: UsePersonalProjectGithubFo
                             setBranchAutosaveStatus("failed")
                             return payload
                         }
-                        await queryCourseEnrollmentStatusSwr.mutate()
+                        // record the synced value so the guard above stops re-firing
+                        initialBranchRef.current = trimmed
+                        await mutateEnrollmentStatus()
                         setBranchAutosaveStatus("saved")
                         return payload
                     } catch (error) {
@@ -194,10 +211,67 @@ export const usePersonalProjectGithubForm = (options: UsePersonalProjectGithubFo
                 },
                 { showSuccessToast: false },
             )
-        }, 300)
+        }, 600)
         debounced()
         return () => debounced.cancel()
-    }, [enableSync, course?.id, branch, validationError.branch, sidebarTab, t, syncBranchSwr, queryCourseEnrollmentStatusSwr, setBranchError, runGraphQL])
+    }, [enableSync, course?.id, branch, validationError.branch, sidebarTab, t, syncBranchTrigger, mutateEnrollmentStatus, setBranchError, runGraphQL])
+
+    // Private-repo GitHub token: a one-off save/clear (NOT autosaved per keystroke — it's a secret).
+    // Write-only — the plaintext is encrypted server-side and never returned.
+    const [tokenSaveStatus, setTokenSaveStatus] = useState<PersonalProjectGithubAutosaveStatus>("idle")
+
+    const saveGithubToken = useCallback(async (token: string) => {
+        const trimmed = token.trim()
+        if (!course?.id || !trimmed) {
+            return
+        }
+        setTokenSaveStatus("saving")
+        await runGraphQL(
+            async () => {
+                try {
+                    const result = await syncPersonalProjectGithubSwr.trigger({ courseId: course.id, githubToken: trimmed })
+                    const payload = result?.data?.syncPersonalProjectGithub
+                    if (!payload?.success) {
+                        setTokenSaveStatus("failed")
+                        throw new Error(payload?.error ?? payload?.message ?? t("finalProject.page.submitGithub.syncFailed"))
+                    }
+                    await queryCourseEnrollmentStatusSwr.mutate()
+                    setTokenSaveStatus("saved")
+                    return payload
+                } catch (error) {
+                    setTokenSaveStatus("failed")
+                    throw error
+                }
+            },
+            { showSuccessToast: true },
+        )
+    }, [course?.id, syncPersonalProjectGithubSwr, queryCourseEnrollmentStatusSwr, t, runGraphQL])
+
+    const clearGithubToken = useCallback(async () => {
+        if (!course?.id) {
+            return
+        }
+        setTokenSaveStatus("saving")
+        await runGraphQL(
+            async () => {
+                try {
+                    const result = await syncPersonalProjectGithubSwr.trigger({ courseId: course.id, clearGithubToken: true })
+                    const payload = result?.data?.syncPersonalProjectGithub
+                    if (!payload?.success) {
+                        setTokenSaveStatus("failed")
+                        throw new Error(payload?.error ?? payload?.message ?? t("finalProject.page.submitGithub.syncFailed"))
+                    }
+                    await queryCourseEnrollmentStatusSwr.mutate()
+                    setTokenSaveStatus("idle")
+                    return payload
+                } catch (error) {
+                    setTokenSaveStatus("failed")
+                    throw error
+                }
+            },
+            { showSuccessToast: true },
+        )
+    }, [course?.id, syncPersonalProjectGithubSwr, queryCourseEnrollmentStatusSwr, t, runGraphQL])
 
     const submit = useCallback(async () => {
         if (!course?.id) {
@@ -266,5 +340,8 @@ export const usePersonalProjectGithubForm = (options: UsePersonalProjectGithubFo
         setGithubUrlError,
         setBranchError,
         submit,
+        saveGithubToken,
+        clearGithubToken,
+        tokenSaveStatus,
     }
 }

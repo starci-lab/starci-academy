@@ -80,7 +80,6 @@ export const SubmissionAttemptsDrawer = (props: SubmissionAttemptsDrawerProps = 
                                 </Drawer.Heading>
                             </Drawer.Header>
                         </div>
-                        <div className="border-b "/>
                         <Drawer.Body>
                             {
                                 showSkeleton ? (

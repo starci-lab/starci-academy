@@ -3,7 +3,9 @@
 import React from "react"
 import {
     Button,
-    Skeleton,
+    Card,
+    CardContent,
+    Typography,
     cn,
 } from "@heroui/react"
 import {
@@ -17,8 +19,14 @@ import {
     pathConfig,
 } from "@/resources/path"
 import {
+    AsyncContent,
+} from "@/components/blocks"
+import {
     ResumeCard,
 } from "./ResumeCard"
+import {
+    ContinueLearningSkeleton,
+} from "./ContinueLearningSkeleton"
 import {
     useResumeItems,
 } from "./useResumeItems"
@@ -50,43 +58,45 @@ export const ContinueLearning = ({
         isLoading,
     } = useResumeItems()
 
-    // first load — keep the height stable so the card never jumps
-    if (isLoading) {
-        return (
-            <div className={cn("flex flex-col gap-3", className)}>
-                <Skeleton className="h-16 w-full rounded-large" />
-                <Skeleton className="h-16 w-full rounded-large" />
-            </div>
-        )
-    }
-
+    // the resume slot is loading → onboarding/cards (no generic empty: the "nothing
+    // to resume" case is a designed onboarding CTA, so it lives in the content branch,
+    // not AsyncContent's emptyContent). debug holds the skeleton ~3s for inspection.
     return (
-        <div className={cn("flex flex-col gap-3", className)}>
-            {/* resume cards, or an onboarding CTA when there is nothing to resume */}
-            {resumeItems.length > 0 ? (
-                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                    {resumeItems.map((item) => (
-                        <ResumeCard
-                            key={item.globalId}
-                            item={item}
-                        />
-                    ))}
-                </div>
-            ) : (
-                <div className="flex flex-col items-start gap-3 rounded-large border p-3">
-                    <span className="text-sm text-muted">
-                        {hasCourses
-                            ? t("dashboard.continueResumeEmpty")
-                            : t("dashboard.emptyCourses")}
-                    </span>
-                    <Button
-                        variant="primary"
-                        onPress={() => router.push(pathConfig().locale(locale).course().build())}
-                    >
-                        {t("dashboard.browseCourses")}
-                    </Button>
-                </div>
-            )}
-        </div>
+        <AsyncContent
+            isLoading={isLoading}
+            skeleton={<ContinueLearningSkeleton className={className} />}
+        >
+            <div className={cn("flex flex-col gap-3", className)}>
+                {/* resume cards, or an onboarding CTA when there is nothing to resume */}
+                {resumeItems.length > 0 ? (
+                    <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                        {resumeItems.map((item) => (
+                            <ResumeCard
+                                key={item.globalId}
+                                item={item}
+                            />
+                        ))}
+                    </div>
+                ) : (
+                    // empty / onboarding: a real Card so it matches the framed sibling sections
+                    // (the parent LabeledCard is `frameless` for the self-framed resume cards).
+                    <Card>
+                        <CardContent className="flex flex-col items-start gap-3">
+                            <Typography type="body-sm" color="muted">
+                                {hasCourses
+                                    ? t("dashboard.continueResumeEmpty")
+                                    : t("dashboard.emptyCourses")}
+                            </Typography>
+                            <Button
+                                variant="primary"
+                                onPress={() => router.push(pathConfig().locale(locale).course().build())}
+                            >
+                                {t("dashboard.browseCourses")}
+                            </Button>
+                        </CardContent>
+                    </Card>
+                )}
+            </div>
+        </AsyncContent>
     )
 }

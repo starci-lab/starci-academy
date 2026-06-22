@@ -6,7 +6,6 @@ import React, {
 import {
     Input,
     Link,
-    Tabs,
     TextField,
     Typography,
     cn,
@@ -17,18 +16,19 @@ import {
 import {
     ArrowLeftIcon,
     BookOpenIcon,
-    CalendarBlankIcon,
+    FlagIcon,
     ListBulletsIcon,
 } from "@phosphor-icons/react"
 import {
     useQueryMyCourseOutlineSwr,
+    useQueryMyCoursesSwr,
 } from "@/hooks"
 import {
     AsyncContent,
-    ExtendedTabs,
     IconTile,
     SegmentBar,
     Skeleton,
+    TabsCard,
 } from "@/components/blocks"
 import {
     fromGlobalId,
@@ -43,14 +43,14 @@ import {
     CourseOutline,
 } from "../CourseOutline"
 import {
-    CourseDayTimeline,
-} from "./CourseDayTimeline"
+    CourseMilestoneOutline,
+} from "../CourseMilestoneOutline"
 
 /** Props for {@link CourseDetail}. */
 export type CourseDetailProps = WithClassNames<undefined>
 
-/** Detail view tabs. */
-type DetailTab = "day" | "chapter"
+/** Detail view tabs: course content vs the personal-project capstone. */
+type DetailTab = "contents" | "personalProject"
 
 /** Segment colour per course progress dimension. */
 const DIM_COLOR: Record<string, string> = {
@@ -60,18 +60,18 @@ const DIM_COLOR: Record<string, string> = {
 }
 
 /**
- * Per-course detail (brainstorm direction A / H1). A sticky course header
- * ({@link IconTile} + title + completion % + {@link SegmentBar} + a meta line of
- * lessons / challenges / milestones), a client search over the course's lessons,
- * and an {@link ExtendedTabs} toggle:
+ * Per-course detail. A sticky course header ({@link IconTile} + title +
+ * completion % + {@link SegmentBar} + a meta line of lessons / challenges /
+ * milestones), a client search over the active tab, and a two-tab toggle — both
+ * tabs render an accordion-card off the SAME `myCourseOutline` payload:
  *
- *   - "Theo ngày" (default): the {@link CourseDayTimeline} — a journal of the
- *     viewer's learning events grouped by day (needs `courseLearningHistory`).
- *   - "Theo chương": the existing {@link CourseOutline} chapter tree, filtered by
- *     the same search — the "what's left to learn" view.
+ *   - "Nội dung" (Contents, default): the {@link CourseOutline} module → lesson →
+ *     challenge tree with read flags.
+ *   - "Dự án cá nhân" (Personal Project): the {@link CourseMilestoneOutline}
+ *     milestone → task tree with a roll-up completion status per milestone.
  *
- * Reads the selected course globalId from `?course=` (passes it straight to the
- * day-timeline query; decodes it to the raw id for the outline query).
+ * Reads the selected course globalId from `?course=` (decoded to the raw id for
+ * the shared outline query in each tab).
  *
  * @param props - optional root className (placement only).
  */
@@ -80,13 +80,18 @@ export const CourseDetail = ({
 }: CourseDetailProps) => {
     const t = useTranslations()
     const { selectedCourse, setSelectedCourse } = useSelectedCourse()
-    const [tab, setTab] = useState<DetailTab>("day")
+    const [tab, setTab] = useState<DetailTab>("contents")
     const [search, setSearch] = useState("")
 
     // decode the selected course globalId (CourseEntity:<id>) → raw id for the outline query
     const rawCourseId = selectedCourse ? fromGlobalId(selectedCourse)?.id ?? null : null
     const outlineSwr = useQueryMyCourseOutlineSwr(rawCourseId)
     const outline = outlineSwr.data
+    // the outline payload has no cover; reuse the (cached) course list to show the real
+    // course logo in the header IconTile, like the hub list does — falls back to the book icon.
+    const coursesSwr = useQueryMyCoursesSwr()
+    const courseThumbnailUrl = (coursesSwr.data ?? [])
+        .find((course) => course.globalId === selectedCourse)?.thumbnailUrl
     const query = search.trim().toLowerCase()
 
     const progress = outline?.progress
@@ -112,7 +117,7 @@ export const CourseDetail = ({
             {/* sticky course header — title + progress + meta */}
             <div className="sticky top-16 z-30 -mx-4 flex flex-col gap-3 bg-background px-4 py-3">
                 <AsyncContent
-                    isLoading={!outlineSwr.data && !outlineSwr.error}
+                    isLoading={outlineSwr.data === null || outlineSwr.data === undefined ? !outlineSwr.error : false}
                     skeleton={(
                         <div className="flex items-center gap-3">
                             <Skeleton className="size-12 shrink-0 rounded-xl" />
@@ -133,7 +138,7 @@ export const CourseDetail = ({
                 >
                     {outline && progress ? (
                         <div className="flex items-center gap-3">
-                            <IconTile size="sm" icon={<BookOpenIcon aria-hidden focusable="false" />} />
+                            <IconTile size="sm" src={courseThumbnailUrl} icon={<BookOpenIcon aria-hidden focusable="false" />} />
                             <div className="flex min-w-0 flex-1 flex-col gap-2">
                                 <div className="flex items-center justify-between gap-2">
                                     <Typography type="h5" weight="bold" truncate>
@@ -168,7 +173,7 @@ export const CourseDetail = ({
                 </AsyncContent>
             </div>
 
-            {/* search over the course's lessons / events (filters both tabs) */}
+            {/* search over the active tab (lessons or milestone tasks) */}
             <TextField variant="secondary">
                 <Input
                     aria-label={t("profileSettings.learning.detail.searchLessons")}
@@ -178,42 +183,34 @@ export const CourseDetail = ({
                 />
             </TextField>
 
-            {/* toggle: day journal vs chapter outline */}
-            <ExtendedTabs
-                selectedKey={tab}
-                onSelectionChange={(key) => setTab(key as DetailTab)}
-            >
-                <Tabs.ListContainer>
-                    <Tabs.List aria-label={t("profileSettings.learning.detail.viewToggle")}>
-                        <Tabs.Tab id="day" aria-controls="learning-detail-day">
-                            <span className="flex items-center gap-2">
-                                <CalendarBlankIcon aria-hidden focusable="false" className="size-5 shrink-0" />
-                                {t("profileSettings.learning.detail.byDay")}
-                            </span>
-                            <Tabs.Indicator />
-                        </Tabs.Tab>
-                        <Tabs.Tab id="chapter" aria-controls="learning-detail-chapter">
-                            <span className="flex items-center gap-2">
-                                <ListBulletsIcon aria-hidden focusable="false" className="size-5 shrink-0" />
-                                {t("profileSettings.learning.detail.byChapter")}
-                            </span>
-                            <Tabs.Indicator />
-                        </Tabs.Tab>
-                    </Tabs.List>
-                </Tabs.ListContainer>
-            </ExtendedTabs>
-
-            {tab === "day" ? (
-                selectedCourse ? (
-                    <div id="learning-detail-day">
-                        <CourseDayTimeline courseGlobalId={selectedCourse} query={query} />
-                    </div>
-                ) : null
-            ) : (
-                <div id="learning-detail-chapter">
+            {/* Contents vs Personal Project — TabsCard pattern: tabs float ABOVE, each
+                tab below is its own accordion-card (Card p-0 skin owned by the view). */}
+            <div className="flex flex-col gap-3">
+                <TabsCard
+                    leftTabs={{
+                        items: [
+                            {
+                                key: "contents",
+                                label: t("profileSettings.learning.detail.contents"),
+                                icon: <ListBulletsIcon aria-hidden focusable="false" className="size-5 shrink-0" />,
+                            },
+                            {
+                                key: "personalProject",
+                                label: t("profileSettings.learning.detail.personalProject"),
+                                icon: <FlagIcon aria-hidden focusable="false" className="size-5 shrink-0" />,
+                            },
+                        ],
+                        selectedKey: tab,
+                        ariaLabel: t("profileSettings.learning.detail.viewToggle"),
+                        onSelectionChange: (key) => setTab(key as DetailTab),
+                    }}
+                />
+                {tab === "contents" ? (
                     <CourseOutline search={query} />
-                </div>
-            )}
+                ) : (
+                    <CourseMilestoneOutline search={query} />
+                )}
+            </div>
         </div>
     )
 }

@@ -126,7 +126,7 @@ export const PromptPlayground = ({ playground, className }: PromptPlaygroundProp
     /** Route to AI settings so the user can subscribe or add a BYOK key. */
     const onGoToAiSettings = useCallback(
         () => {
-            router.push(`/${locale}/profile/ai-settings`)
+            router.push(`/${locale}/profile/settings/ai-settings`)
         },
         [router, locale],
     )

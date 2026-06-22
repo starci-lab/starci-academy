@@ -115,6 +115,14 @@
                     "design": "Thiết kế",
                     "techIntegrate": "Tích hợp",
                     "business": "Nghiệp vụ"
+                },
+                "readCount": "{read}/{total} đã đọc",
+                "taskProgress": "{done}/{total}",
+                "milestonesEmpty": "Khóa này chưa có dự án cá nhân.",
+                "milestoneStatus": {
+                    "done": "Hoàn thành",
+                    "inProgress": "Đang làm",
+                    "todo": "Chưa làm"
                 }
             },
             "history": {
@@ -137,6 +145,8 @@
                 "viewToggle": "Cách xem",
                 "byDay": "Theo ngày",
                 "byChapter": "Theo chương",
+                "contents": "Nội dung",
+                "personalProject": "Dự án cá nhân",
                 "meta": "Đã đọc {lessonsRead}/{lessonsTotal} bài · {challenges} challenge · {milestones} milestone"
             },
             "day": {
@@ -155,6 +165,7 @@
                 "title": "Bài nộp challenge",
                 "subtitle": "Tất cả bài nộp challenge của bạn và kết quả chấm.",
                 "empty": "Bạn chưa có bài nộp challenge nào.",
+                "emptyHint": "Tham gia một khóa học và nộp bài tập để xem kết quả chấm ở đây.",
                 "colTitle": "Challenge",
                 "colCourse": "Khóa học",
                 "colStatus": "Trạng thái",
@@ -173,6 +184,7 @@
                 "title": "Lượt làm milestone",
                 "subtitle": "Các lượt làm nhiệm vụ milestone của bạn, kể cả lượt chưa đạt.",
                 "empty": "Bạn chưa có lượt làm milestone nào.",
+                "emptyHint": "Tham gia một khóa học và làm milestone để xem các lượt làm ở đây.",
                 "colTask": "Nhiệm vụ",
                 "colMilestone": "Milestone",
                 "colCourse": "Khóa học",
@@ -202,6 +214,7 @@
         "contact": "Liên hệ",
         "logout": "Đăng xuất",
         "profile": "Hồ sơ",
+        "settings": "Cài đặt",
         "signIn": "Đăng nhập",
         "learn": "Học",
         "toggleLanguage": "Chuyển đổi ngôn ngữ",
@@ -445,6 +458,12 @@
             "locked": "Cần nâng cấp",
             "current": "Đang ở đây"
         }
+    },
+    "enrollGate": {
+        "title": "Mở khoá {surface}",
+        "description": "Đăng ký khoá học để mở khoá phần này và bắt đầu thực hành.",
+        "cta": "Đăng ký khoá học",
+        "locked": "Cần đăng ký khoá học"
     },
     "foundations": {
         "title": "Nền tảng",
@@ -1196,6 +1215,9 @@
         "showQuestion": "Xem câu hỏi",
         "flipHint": "Bấm vào thẻ để lật ra đáp án",
         "flipBackHint": "Bấm vào thẻ để quay lại câu hỏi",
+        "premiumLockedTitle": "Thẻ premium",
+        "premiumLockedHint": "Đăng ký khoá học để mở khoá đáp án các thẻ này.",
+        "premiumCta": "Đăng ký để mở khoá",
         "noAnswer": "Chưa có đáp án.",
         "previous": "Trước",
         "next": "Tiếp",
@@ -1265,6 +1287,7 @@
         "gradeWith": "Chấm bằng AI",
         "pickModel": "Chọn mô hình",
         "subscribeToGrade": "Đăng ký gói trả phí để chấm bài bằng model này",
+        "modelUnavailable": "Model tạm không khả dụng (không có key hoạt động)",
         "categories": {
             "economy": "Tiết kiệm",
             "balanced": "Cân bằng",
@@ -1424,7 +1447,9 @@
             }
         },
         "creditPool": "Quỹ credit",
-        "freeTier": "Miễn phí"
+        "freeTier": "Miễn phí",
+        "upgradeCta": "Nâng cấp gói",
+        "upgradeWarning": "Bạn đang dùng gói {tier}. Nâng cấp để có thêm credit và chấm bài bằng model mạnh hơn."
     },
     "profile": {
         "signedOut": {
@@ -1544,6 +1569,8 @@
             "showLess": "Thu gọn",
             "showMore": "Xem thêm {count}",
             "statsHeading": "Thống kê",
+            "empty": "Chưa giải bài luyện code nào",
+            "emptyHint": "Giải các bài luyện code được chấm điểm để thể hiện kỹ năng lập trình của bạn ở đây.",
             "metric": {
                 "solved": "Đã giải",
                 "xp": "XP",
@@ -1578,7 +1605,8 @@
         "pinnedAchievements": "Thành tích nổi bật",
         "bioEmpty": "Người dùng này chưa viết phần giới thiệu.",
         "achievementsEmpty": "Chưa có thành tích nào.",
-        "activityEmpty": "Chưa có hoạt động nào.",
+        "activityEmpty": "Chưa có hoạt động nào",
+        "activityEmptyHint": "Đọc bài, vượt thử thách hay nộp dự án — hoạt động sẽ hiện ở đây.",
         "coursesEmpty": "Chưa tham gia khóa học nào.",
         "capstoneEmpty": "Chưa hoàn thành dự án nào.",
         "loadMore": "Xem thêm",
@@ -1970,6 +1998,17 @@
             "title": "League tuần",
             "yourRank": "Hạng của bạn"
         },
+        "community": {
+            "globalStanding": {
+                "title": "Vị thế toàn cục",
+                "line": "Hạng #{rank} toàn nền tảng · {points} XP",
+                "seeMore": "Xem bảng xếp hạng"
+            },
+            "topLearners": {
+                "title": "Top học viên tuần",
+                "xp": "{points} XP"
+            }
+        },
         "sponsored": "Quảng cáo",
         "sponsoredBy": "Tài trợ bởi {sponsor}",
         "adModalTitle": "Quảng cáo",
@@ -2008,6 +2047,7 @@
             "streakValue": "{count} ngày"
         },
         "rewardBalance": "{count} điểm",
+        "dueCount": "{count} đến hạn",
         "feedTabsAria": "Bảng hoạt động",
         "feedFilter": {
             "all": "Tất cả",
@@ -2057,7 +2097,9 @@
         "quickActions": "Truy cập nhanh",
         "actions": {
             "courses": "Xem khóa học",
+            "review": "Ôn tập",
             "practice": "Luyện code",
+            "league": "Bảng xếp hạng",
             "bookmarks": "Đã lưu",
             "rewards": "Phần thưởng",
             "blog": "Blog",
@@ -2529,7 +2571,9 @@
     "bookmarks": {
         "count": "{count, plural, other {# mục đã lưu}}",
         "noMatch": "Không có mục đã lưu nào khớp với tìm kiếm của bạn.",
-        "searchPlaceholder": "Tìm trong mục đã lưu"
+        "searchPlaceholder": "Tìm trong mục đã lưu",
+        "savedCount": "{count, plural, other {# bài đã lưu}}",
+        "otherCourse": "Khác"
     },
     "followList": {
         "title": "Kết nối",

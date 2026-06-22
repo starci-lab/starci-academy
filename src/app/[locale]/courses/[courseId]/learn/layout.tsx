@@ -2,14 +2,32 @@
 import React, { PropsWithChildren } from "react"
 import { useTranslations } from "next-intl"
 import { useSelectedLayoutSegments } from "next/navigation"
+import { Spinner } from "@heroui/react"
 import { LearnShell } from "@/components/features/learn/LearnShell"
 import { ContentMap } from "@/components/features/learn/ContentMap"
 import { ResizableRail } from "@/components/blocks"
 import { MilestoneOutline } from "@/components/features/learn/MilestoneOutline"
 import { OnThisPage } from "@/components/features/learn/OnThisPage"
 import { ContentAiFab } from "@/components/features/learn/ContentAiFab"
+import { EnrollGate } from "@/components/features/learn/shared/EnrollGate"
 import { GithubLinkGate } from "@/components/layouts/auth/GithubLinkGate"
-import { useQueryCourseSwr } from "@/hooks"
+import { useQueryCourseSwr, useQueryCourseEnrollmentStatusSwr } from "@/hooks"
+import { useAppSelector } from "@/redux"
+
+/**
+ * Learn surfaces that require enrollment. Only the capstone (personal-project) is gated:
+ * it's the enrolled-only hands-on outcome. Trial viewers ("Học thử") may freely browse the
+ * rest — flashcards (non-premium), leaderboard, foundations, content + mind-map — so those
+ * are NOT gated. Keyed by `segments[0]`.
+ */
+const ENROLL_REQUIRED_SURFACES: ReadonlySet<string> = new Set([
+    "personal-project",
+])
+
+/** i18n key for each gated surface's display name (folded into the gate title). */
+const SURFACE_LABEL_KEY: Record<string, string> = {
+    "personal-project": "finalProject.title",
+}
 
 export const Layout = ({ children }: PropsWithChildren) => {
     const t = useTranslations()
@@ -17,6 +35,12 @@ export const Layout = ({ children }: PropsWithChildren) => {
     // (the displayId is synced from the URL by a global effect). Tabs like personal-project
     // have no other loader, and downstream queries (milestones, etc.) gate on `course.id`.
     useQueryCourseSwr()
+    // enrollment status drives the enroll-gate on hands-on surfaces (populates state.user.enrolled).
+    const enrollmentSwr = useQueryCourseEnrollmentStatusSwr()
+    const enrolled = useAppSelector((state) => state.user.enrolled)
+    // `enrolled` defaults to false, so only trust it once the status query has settled —
+    // otherwise an enrolled viewer would flash the gate on cold load.
+    const enrollKnown = Boolean(enrollmentSwr.data) || Boolean(enrollmentSwr.error)
     // which learn sub-route is active. Docs-style layout:
     //  - "modules" (module list / detail / content) → content-map on the LEFT (persistent)
     //    + an on-this-page outline on the RIGHT (self-hides when the body has no headings).
@@ -81,6 +105,30 @@ export const Layout = ({ children }: PropsWithChildren) => {
         <OnThisPage />
     ) : undefined
 
+    // enroll-gate: a trial viewer hitting a hands-on surface sees the enroll CTA, not a broken
+    // page. Only gate once enrollment is KNOWN (enrolled defaults false → would flash otherwise);
+    // while it resolves, hold the surface (and its enrollment-bound hooks) back behind a spinner.
+    const surface = segments[0]
+    const isEnrollRequired = Boolean(surface) && ENROLL_REQUIRED_SURFACES.has(surface as string)
+    const showSurface = !isEnrollRequired || (enrollKnown && enrolled)
+    const isGated = isEnrollRequired && enrollKnown && !enrolled
+    const gateLabelKey = surface ? SURFACE_LABEL_KEY[surface] : undefined
+
+    const content = showSurface
+        ? children
+        : isGated
+            ? (
+                <EnrollGate
+                    title={t("enrollGate.title", { surface: gateLabelKey ? t(gateLabelKey) : "" })}
+                    description={t("enrollGate.description")}
+                />
+            )
+            : (
+                <div className="flex justify-center py-12">
+                    <Spinner />
+                </div>
+            )
+
     return (
         <>
             {/* soft prompt: nudge learners with no linked GitHub to connect once per session */}
@@ -88,11 +136,11 @@ export const Layout = ({ children }: PropsWithChildren) => {
             {/* floating "ask StarCi AI" mascot button (self-hides when no content is open) */}
             <ContentAiFab />
             <LearnShell
-                leftRail={leftRail}
-                rightRail={rightRail}
+                leftRail={showSurface ? leftRail : undefined}
+                rightRail={showSurface ? rightRail : undefined}
                 fullBleed={isMindMap}
             >
-                {children}
+                {content}
             </LearnShell>
         </>
     )

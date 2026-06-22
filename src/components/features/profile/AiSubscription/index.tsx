@@ -61,6 +61,14 @@ export const AiSubscription = () => {
             locale,
         ],
     )
+    /** Navigate to the settings root (breadcrumb parent of every settings page). */
+    const onNavigateSettings = useCallback(
+        () => router.push(pathConfig().locale(locale).profile().settings().build()),
+        [
+            router,
+            locale,
+        ],
+    )
 
     // gate only the data-dependent tier grid; breadcrumb + header are static
     // chrome (i18n/router only) so they render immediately, outside the gate.
@@ -76,6 +84,9 @@ export const AiSubscription = () => {
                 </Breadcrumbs.Item>
                 <Breadcrumbs.Item onPress={onNavigateProfile}>
                     {t("nav.profile")}
+                </Breadcrumbs.Item>
+                <Breadcrumbs.Item onPress={onNavigateSettings}>
+                    {t("nav.settings")}
                 </Breadcrumbs.Item>
                 <Breadcrumbs.Item>
                     <span>{t("aiSubscription.title")}</span>

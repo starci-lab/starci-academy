@@ -27,10 +27,14 @@ import {
     AsyncContent,
     EmptyContent,
     IconTile,
+    PageHeader,
     PressableCard,
     SegmentBar,
     Skeleton,
 } from "@/components/blocks"
+import {
+    SettingsBreadcrumb,
+} from "../SettingsBreadcrumb"
 import {
     pathConfig,
 } from "@/resources"
@@ -98,14 +102,11 @@ export const LearningHistory = ({
 
     return (
         <div className={cn("flex flex-col gap-6", className)}>
-            <div className="flex flex-col gap-2">
-                <Typography type="h4" weight="bold">
-                    {t("profileSettings.learning.history.title")}
-                </Typography>
-                <Typography type="body-sm" color="muted">
-                    {t("profileSettings.learning.history.subtitle")}
-                </Typography>
-            </div>
+            <SettingsBreadcrumb current={t("profileSettings.learning.history.title")} />
+            <PageHeader
+                title={t("profileSettings.learning.history.title")}
+                description={t("profileSettings.learning.history.subtitle")}
+            />
 
             {/* search — only worth showing once there are several courses */}
             {courses.length >= SEARCH_MIN_COURSES ? (

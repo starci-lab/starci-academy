@@ -68,7 +68,7 @@ export const StreakStrip = ({
 
     return (
         <AsyncContent
-            isLoading={isLoading && !weekly}
+            isLoading={weekly === null || weekly === undefined || isLoading}
             error={error}
             errorContent={{
                 title: t("dashboard.streak.empty"),

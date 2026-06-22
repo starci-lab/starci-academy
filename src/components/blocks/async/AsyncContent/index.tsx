@@ -1,16 +1,12 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
+import React from "react"
 import type { ReactNode } from "react"
 
-import { publicEnv } from "@/resources"
 import { EmptyContent } from "../EmptyContent"
 import type { EmptyContentProps } from "../EmptyContent"
 import { ErrorContent } from "../ErrorContent"
 import type { ErrorContentProps } from "../ErrorContent"
-
-/** How long (ms) the debug hold keeps the skeleton on screen. */
-const DEBUG_HOLD_MS = 3000
 
 /**
  * Props for the {@link AsyncContent} block.
@@ -47,14 +43,6 @@ export interface AsyncContentProps {
      */
     errorContent?: ErrorContentProps
     /**
-     * Inspection-only: hold the skeleton for {@link DEBUG_HOLD_MS} before showing
-     * the real result, so loading states can be eyeballed without throttling the
-     * network. Defaults to `false` (OFF) — opt in per-region with `debug` to test a
-     * skeleton, then remove it. Even when on it still requires the env flag
-     * (`publicEnv().debug`), so it can never fire in production.
-     */
-    debug?: boolean
-    /**
      * The loaded content, shown once loading resolves with non-empty data.
      */
     children: ReactNode
@@ -65,7 +53,7 @@ export interface AsyncContentProps {
  * the error / loading / empty / content branches the SWR render contract
  * requires (starci-async.md). Renders, in priority order:
  *
- *   (debug hold) → error → loading → empty → content
+ *   error → loading → empty → content
  *
  * The empty/error states are configured by passing their PROPS (not nodes):
  * `emptyContent={{ title, onRetry, retryLabel }}`. The `skeleton` is a tree of
@@ -78,24 +66,8 @@ export const AsyncContent = ({
     emptyContent,
     error,
     errorContent,
-    debug = false,
     children,
 }: AsyncContentProps) => {
-    // dev affordance: hold the skeleton a few seconds so loading is inspectable,
-    // gated on the env debug flag so it never fires in production
-    const holdEnabled = debug && publicEnv().debug
-    const [held, setHeld] = useState(holdEnabled)
-    useEffect(() => {
-        if (!holdEnabled) {
-            return
-        }
-        const timer = setTimeout(() => setHeld(false), DEBUG_HOLD_MS)
-        return () => clearTimeout(timer)
-    }, [holdEnabled])
-
-    if (held) {
-        return <>{skeleton}</>
-    }
     if (error && errorContent) {
         return <ErrorContent {...errorContent} />
     }

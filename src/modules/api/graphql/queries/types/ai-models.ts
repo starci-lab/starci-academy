@@ -13,6 +13,8 @@ export interface AiGradableModel {
     category: AiModelCategory
     /** Whether the model is usable on the free Auto lane. */
     complimentary: boolean
+    /** Whether the model's provider has a working key right now; false → locked (no key). */
+    available: boolean
 }
 
 /** Payload inside `aiModels.data` after the standard API wrapper. */

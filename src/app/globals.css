@@ -46,7 +46,15 @@
    --surface-tertiary-foreground: oklch(21.03% 0.0015 354.13);
    --warning: oklch(78.19% 0.1590 84.37);
    --warning-foreground: oklch(21.03% 0.0059 84.37);
- 
+
+   /* Learning-activity heatmap ramp (brand-pink, hue 354.13). 0 = empty track,
+      1→4 = rising intensity. Light-mode palette. */
+   --heat-0: var(--default);
+   --heat-1: oklch(90.00% 0.0600 354.13);
+   --heat-2: oklch(82.00% 0.1200 354.13);
+   --heat-3: oklch(74.00% 0.1800 354.13);
+   --heat-4: oklch(67.00% 0.2092 354.13);
+
    /* Border Radius */
    --radius: 0.5rem;
    --field-radius: 0.75rem;
@@ -91,6 +99,13 @@
    --surface-tertiary-foreground: oklch(99.11% 0.0015 354.13);
    --warning: oklch(82.03% 0.1392 88.38);
    --warning-foreground: oklch(21.03% 0.0059 88.38);
+
+   /* Learning-activity heatmap ramp (dark). 0 = empty track, 1→4 rising. */
+   --heat-0: var(--default);
+   --heat-1: oklch(35.00% 0.0800 354.13);
+   --heat-2: oklch(45.00% 0.1300 354.13);
+   --heat-3: oklch(57.00% 0.1800 354.13);
+   --heat-4: oklch(70.00% 0.2092 354.13);
  }
 
 /* ── Component overrides (UI 2.0) ──────────────────────────────────────── */

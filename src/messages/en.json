@@ -115,6 +115,14 @@
                     "design": "Design",
                     "techIntegrate": "Integration",
                     "business": "Business"
+                },
+                "readCount": "{read}/{total} read",
+                "taskProgress": "{done}/{total}",
+                "milestonesEmpty": "This course has no personal project yet.",
+                "milestoneStatus": {
+                    "done": "Done",
+                    "inProgress": "In progress",
+                    "todo": "Not started"
                 }
             },
             "history": {
@@ -137,6 +145,8 @@
                 "viewToggle": "View",
                 "byDay": "By day",
                 "byChapter": "By chapter",
+                "contents": "Contents",
+                "personalProject": "Personal project",
                 "meta": "{lessonsRead}/{lessonsTotal} lessons read · {challenges} challenges · {milestones} milestones"
             },
             "day": {
@@ -155,6 +165,7 @@
                 "title": "Challenge submissions",
                 "subtitle": "All your challenge submissions and their grading.",
                 "empty": "You have no challenge submissions yet.",
+                "emptyHint": "Join a course and submit a challenge to see your grading results here.",
                 "colTitle": "Challenge",
                 "colCourse": "Course",
                 "colStatus": "Status",
@@ -173,6 +184,7 @@
                 "title": "Milestone attempts",
                 "subtitle": "Your milestone-task attempts, including failed ones.",
                 "empty": "You have no milestone attempts yet.",
+                "emptyHint": "Join a course and work on a milestone to see your attempts here.",
                 "colTask": "Task",
                 "colMilestone": "Milestone",
                 "colCourse": "Course",
@@ -202,6 +214,7 @@
         "contact": "Contact",
         "logout": "Logout",
         "profile": "Profile",
+        "settings": "Settings",
         "signIn": "Sign In",
         "learn": "Learn",
         "toggleLanguage": "Toggle Language",
@@ -436,6 +449,12 @@
             "locked": "Upgrade needed",
             "current": "You are here"
         }
+    },
+    "enrollGate": {
+        "title": "Unlock {surface}",
+        "description": "Enroll in the course to unlock this section and start practising.",
+        "cta": "Enroll in course",
+        "locked": "Enrollment required"
     },
     "foundations": {
         "title": "Foundations",
@@ -1187,6 +1206,9 @@
         "showQuestion": "Show question",
         "flipHint": "Tap the card to reveal the answer",
         "flipBackHint": "Tap the card to go back to the question",
+        "premiumLockedTitle": "Premium card",
+        "premiumLockedHint": "Enrol in the course to unlock these cards' answers.",
+        "premiumCta": "Enrol to unlock",
         "noAnswer": "No answer yet.",
         "previous": "Previous",
         "next": "Next",
@@ -1256,6 +1278,7 @@
         "gradeWith": "Grade with AI",
         "pickModel": "Pick a model",
         "subscribeToGrade": "Subscribe to a paid plan to grade with this model",
+        "modelUnavailable": "This model is temporarily unavailable (no working key)",
         "categories": {
             "economy": "Economy",
             "balanced": "Balanced",
@@ -1415,7 +1438,9 @@
             }
         },
         "creditPool": "Credit pool",
-        "freeTier": "Free"
+        "freeTier": "Free",
+        "upgradeCta": "Upgrade plan",
+        "upgradeWarning": "You are on the {tier} plan. Upgrade for more credits and stronger grading models."
     },
     "profile": {
         "signedOut": {
@@ -1535,6 +1560,8 @@
             "showLess": "Show less",
             "showMore": "Show {count} more",
             "statsHeading": "Stats",
+            "empty": "No practice problems solved yet",
+            "emptyHint": "Solve scored coding-practice problems to show your programming skills here.",
             "metric": {
                 "solved": "Solved",
                 "xp": "XP",
@@ -1569,7 +1596,8 @@
         "pinnedAchievements": "Pinned achievements",
         "bioEmpty": "This user hasn't written a bio yet.",
         "achievementsEmpty": "No achievements yet.",
-        "activityEmpty": "No activity yet.",
+        "activityEmpty": "No activity yet",
+        "activityEmptyHint": "Read lessons, pass challenges or submit projects — your activity shows up here.",
         "coursesEmpty": "Not enrolled in any course yet.",
         "capstoneEmpty": "No projects completed yet.",
         "loadMore": "Load more",
@@ -1961,6 +1989,17 @@
             "title": "Weekly league",
             "yourRank": "Your rank"
         },
+        "community": {
+            "globalStanding": {
+                "title": "Global standing",
+                "line": "Rank #{rank} platform-wide · {points} XP",
+                "seeMore": "View leaderboard"
+            },
+            "topLearners": {
+                "title": "Top learners",
+                "xp": "{points} XP"
+            }
+        },
         "sponsored": "Sponsored",
         "sponsoredBy": "Sponsored by {sponsor}",
         "adModalTitle": "Advertisement",
@@ -1999,6 +2038,7 @@
             "streakValue": "{count} days"
         },
         "rewardBalance": "{count} pts",
+        "dueCount": "{count} due",
         "feedTabsAria": "Activity feed",
         "feedFilter": {
             "all": "All",
@@ -2048,7 +2088,9 @@
         "quickActions": "Quick actions",
         "actions": {
             "courses": "Browse courses",
+            "review": "Review",
             "practice": "Coding practice",
+            "league": "Leaderboard",
             "bookmarks": "Bookmarks",
             "rewards": "Rewards",
             "blog": "Blog",
@@ -2529,7 +2571,9 @@
     "bookmarks": {
         "count": "{count, plural, one {# bookmark} other {# bookmarks}}",
         "noMatch": "No bookmarks match your search.",
-        "searchPlaceholder": "Search bookmarks"
+        "searchPlaceholder": "Search bookmarks",
+        "savedCount": "{count, plural, one {# saved lesson} other {# saved lessons}}",
+        "otherCourse": "Other"
     },
     "followList": {
         "title": "Connections",

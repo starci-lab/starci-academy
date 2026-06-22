@@ -8,16 +8,21 @@ import {
     LeagueCard,
 } from "../LeagueCard"
 import {
-    ChangelogList,
-} from "../ChangelogList"
+    GlobalStanding,
+} from "../GlobalStanding"
+import {
+    TopLearners,
+} from "../TopLearners"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 
 /**
- * Dashboard "Community" tab — competitive + platform news: the weekly league
- * standing and the system changelog. Each child self-fetches + self-hides when
- * empty. (Global leaderboard is a candidate addition once a FE query exists.)
+ * Dashboard "Community" tab — competition + standing among people: the weekly
+ * league cohort, the viewer's global standing, and the platform's top learners
+ * (follow inline). Each child self-fetches + self-hides when empty. The product
+ * changelog ("Có gì mới") now lives on the Overview tab, not here — Community is
+ * people/competition, not platform news.
  * @param props - optional root class name (placement only)
  */
 export type CommunityTabProps = WithClassNames<undefined>
@@ -27,8 +32,9 @@ export const CommunityTab = ({
 }: CommunityTabProps) => {
     return (
         <div className={cn("flex flex-col gap-6", className)}>
-            <LeagueCard />
-            <ChangelogList />
+            <LeagueCard framed />
+            <GlobalStanding />
+            <TopLearners />
         </div>
     )
 }

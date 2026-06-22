@@ -97,7 +97,7 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
     // Route to the AI subscription page so the user can top up their quota.
     const onAddQuota = useCallback(
         () => {
-            router.push(`/${locale}/profile/ai-subscription`)
+            router.push(`/${locale}/profile/settings/ai-subscription`)
         },
         [
             router,

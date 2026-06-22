@@ -66,6 +66,14 @@ export const Membership = () => {
             locale,
         ],
     )
+    /** Navigate to the settings root (breadcrumb parent of every settings page). */
+    const onNavigateSettings = useCallback(
+        () => router.push(pathConfig().locale(locale).profile().settings().build()),
+        [
+            router,
+            locale,
+        ],
+    )
 
     /** Perk rows shown under the price — each is a translated benefit line. */
     const perks = useMemo(
@@ -102,6 +110,9 @@ export const Membership = () => {
                 </Breadcrumbs.Item>
                 <Breadcrumbs.Item onPress={onNavigateProfile}>
                     {t("nav.profile")}
+                </Breadcrumbs.Item>
+                <Breadcrumbs.Item onPress={onNavigateSettings}>
+                    {t("nav.settings")}
                 </Breadcrumbs.Item>
                 <Breadcrumbs.Item>
                     <span>{t("membership.title")}</span>

@@ -30,6 +30,9 @@ import {
 import {
     pathConfig,
 } from "@/resources/path"
+import {
+    useQueryCourseEnrollmentStatusSwr,
+} from "@/hooks"
 import type {
     LearnNavItem,
 } from "../types"
@@ -65,6 +68,11 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
     // active tab from redux highlights the matching row
     const selectedSidebar = useAppSelector((state) => state.sidebar.sidebar)
+    // enrollment drives the lock badge on hands-on rows; only lock once the status is KNOWN
+    // (enrolled defaults false → would flash a lock on enrolled viewers otherwise).
+    const enrollmentSwr = useQueryCourseEnrollmentStatusSwr()
+    const enrolled = useAppSelector((state) => state.user.enrolled)
+    const locked = (Boolean(enrollmentSwr.data) || Boolean(enrollmentSwr.error)) && !enrolled
 
     /** Record the active sidebar tab in Redux (routing is handled in {@link onSelect}). */
     const onSelectSidebarTab = useCallback(
@@ -118,6 +126,7 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
                 icon: GraduationCapIcon,
                 group: "practice",
                 url: pathConfig().locale(locale).course(courseDisplayId).learn().personalProject().build(),
+                locked,
             },
             {
                 label: t("leaderboard.title"),
@@ -132,6 +141,7 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
             course?.modules?.length,
             courseDisplayId,
             locale,
+            locked,
             t,
         ],
     )

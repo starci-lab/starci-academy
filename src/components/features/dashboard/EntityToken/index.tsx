@@ -101,14 +101,15 @@ export const EntityToken = ({
         ],
     )
 
-    // block (left-rail row): full-width, truncated, hover background
+    // block (left-rail row): full-width, truncated, link-style — hover underlines the
+    // label (like a <Link>), no block fill; flush (no px) so it aligns with the card edge.
     if (block) {
         return (
             <button
                 type="button"
                 disabled={!routable || pending}
                 onClick={onPress}
-                className={cn("truncate rounded-medium px-2 py-1 text-left text-sm text-muted hover:bg-default/40 hover:text-foreground disabled:opacity-60", className)}
+                className={cn("truncate py-1 text-left text-sm text-muted transition-colors hover:text-foreground hover:underline disabled:opacity-60", className)}
             >
                 {label}
             </button>

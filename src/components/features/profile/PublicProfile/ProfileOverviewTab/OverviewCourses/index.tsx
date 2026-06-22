@@ -48,7 +48,6 @@ export const OverviewCourses = ({ className }: OverviewCoursesProps) => {
 
     return (
         <AsyncContent
-            debug={true}
             isLoading={(isLoading || !userId) && courses.length === 0}
             skeleton={(
                 <div className="flex flex-col gap-4">

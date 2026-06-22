@@ -9,9 +9,6 @@ import {
     SlidersHorizontalIcon as AiSettingsIcon,
     StarIcon as MembershipIcon,
     GraduationCapIcon as CourseHistoryIcon,
-    CodeIcon as SubmissionsIcon,
-    ListChecksIcon as AttemptsIcon,
-    ChatCircleIcon as FeedbackIcon,
 } from "@phosphor-icons/react"
 import {
     pathConfig,
@@ -58,9 +55,6 @@ export const getSettingsGroups = (locale: string): Array<SettingsNavGroup> => {
             key: "learning",
             items: [
                 { key: "courseHistory", href: profile.learning().build(), icon: <CourseHistoryIcon className="size-5" /> },
-                { key: "submissions", href: profile.submissions().build(), icon: <SubmissionsIcon className="size-5" /> },
-                { key: "attempts", href: profile.attempts().build(), icon: <AttemptsIcon className="size-5" /> },
-                { key: "feedback", href: profile.feedback().build(), icon: <FeedbackIcon className="size-5" /> },
             ],
         },
         {

@@ -32,6 +32,7 @@ import {
 import {
     AsyncContent,
     InfiniteScrollSentinel,
+    LabeledCard,
     SegmentBar,
     Skeleton,
 } from "@/components/blocks"
@@ -132,13 +133,19 @@ export const AiUsageHistory = ({ className }: AiUsageHistoryProps) => {
             isLoading={isLoading && items.length === 0}
             skeleton={(
                 <div className="flex flex-col gap-6">
-                    <Skeleton className="h-44 w-full rounded-xl" />
-                    <Skeleton.SegmentBar legendItems={3} />
-                    <div className="flex flex-col gap-2">
-                        {[0, 1, 2, 3].map((row) => (
-                            <Skeleton key={row} className="h-12 w-full rounded-xl" />
-                        ))}
-                    </div>
+                    <LabeledCard label={t("aiQuota.history.chartTitle")}>
+                        <Skeleton className="h-44 w-full rounded-xl" />
+                    </LabeledCard>
+                    <LabeledCard label={t("aiQuota.history.breakdownTitle")}>
+                        <Skeleton.SegmentBar legendItems={3} />
+                    </LabeledCard>
+                    <LabeledCard label={t("aiQuota.history.title")}>
+                        <div className="flex flex-col gap-2">
+                            {[0, 1, 2, 3].map((row) => (
+                                <Skeleton key={row} className="h-12 w-full rounded-xl" />
+                            ))}
+                        </div>
+                    </LabeledCard>
                 </div>
             )}
             isEmpty={items.length === 0}
@@ -151,11 +158,8 @@ export const AiUsageHistory = ({ className }: AiUsageHistoryProps) => {
             }}
         >
             <div className={cn("flex flex-col gap-6", className)}>
-                {/* per-day spend chart */}
-                <div className="flex flex-col gap-2">
-                    <Typography type="body-sm" weight="semibold">
-                        {t("aiQuota.history.chartTitle")}
-                    </Typography>
+                {/* card 1 — per-day spend chart */}
+                <LabeledCard label={t("aiQuota.history.chartTitle")}>
                     <div className="h-44 w-full text-accent">
                         <ResponsiveContainer width="100%" height="100%">
                             <BarChart data={chartData} margin={{ top: 8, right: 8, bottom: 0, left: -16 }}>
@@ -175,28 +179,24 @@ export const AiUsageHistory = ({ className }: AiUsageHistoryProps) => {
                             </BarChart>
                         </ResponsiveContainer>
                     </div>
-                </div>
+                </LabeledCard>
 
-                {/* by-provider breakdown (credits) */}
+                {/* card 2 — by-provider breakdown (credits) */}
                 {providerSegments.length > 0 ? (
-                    <div className="flex flex-col gap-2">
-                        <Typography type="body-sm" weight="semibold">
-                            {t("aiQuota.history.breakdownTitle")}
-                        </Typography>
+                    <LabeledCard label={t("aiQuota.history.breakdownTitle")}>
                         <SegmentBar
                             ariaLabel={t("aiQuota.history.breakdownTitle")}
                             segments={providerSegments}
                         />
-                    </div>
+                    </LabeledCard>
                 ) : null}
 
-                {/* history list — lane filter + infinite scroll */}
-                <div className="flex flex-col gap-2">
-                    <div className="flex flex-wrap items-center justify-between gap-2">
-                        <Typography type="body-sm" weight="semibold">
-                            {t("aiQuota.history.title")}
-                        </Typography>
-                        <div className="flex flex-col gap-2">
+                {/* card 3 — charge history list; the lane filter sits in the card's
+                    action slot (right of the label) instead of a separate row */}
+                <LabeledCard
+                    label={t("aiQuota.history.title")}
+                    action={(
+                        <>
                             <Label className="sr-only">{t("aiQuota.history.lane.all")}</Label>
                             <Select.Root<{ id: string }, "single">
                                 aria-label={t("aiQuota.history.lane.all")}
@@ -227,9 +227,9 @@ export const AiUsageHistory = ({ className }: AiUsageHistoryProps) => {
                                     </ListBox.Root>
                                 </Select.Popover>
                             </Select.Root>
-                        </div>
-                    </div>
-
+                        </>
+                    )}
+                >
                     <ScrollShadow className="flex max-h-96 flex-col divide-y divide-divider">
                         {filtered.map((item) => (
                             <div key={item.id} className="flex items-center justify-between gap-3 py-2">
@@ -260,7 +260,7 @@ export const AiUsageHistory = ({ className }: AiUsageHistoryProps) => {
                             disabled={!hasMore || isLoadingMore}
                         />
                     </ScrollShadow>
-                </div>
+                </LabeledCard>
             </div>
         </AsyncContent>
     )

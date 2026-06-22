@@ -83,6 +83,14 @@ export const Sessions = () => {
             locale,
         ],
     )
+    /** Navigate to the settings root (breadcrumb parent of every settings page). */
+    const onNavigateSettings = useCallback(
+        () => router.push(pathConfig().locale(locale).profile().settings().build()),
+        [
+            router,
+            locale,
+        ],
+    )
 
     /** Revoke a device session, then revalidate the list. */
     const onRevoke = useCallback(
@@ -139,6 +147,9 @@ export const Sessions = () => {
                 </Breadcrumbs.Item>
                 <Breadcrumbs.Item onPress={onNavigateProfile}>
                     {t("nav.profile")}
+                </Breadcrumbs.Item>
+                <Breadcrumbs.Item onPress={onNavigateSettings}>
+                    {t("nav.settings")}
                 </Breadcrumbs.Item>
                 <Breadcrumbs.Item>
                     {t("sessions.title")}

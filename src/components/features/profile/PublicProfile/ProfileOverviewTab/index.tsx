@@ -65,6 +65,7 @@ export const ProfileOverviewTab = ({
                     icon={<PuzzlePieceIcon aria-hidden focusable="false" className="size-5" />}
                     onSeeMore={() => setTab("challenges")}
                     seeMoreLabel={t("publicProfile.overview.seeMore")}
+                    fillHeight
                 >
                     <OverviewChallengeSkills />
                 </LabeledCard>
@@ -74,6 +75,7 @@ export const ProfileOverviewTab = ({
                     icon={<CodeIcon aria-hidden focusable="false" className="size-5" />}
                     onSeeMore={() => setTab("skills")}
                     seeMoreLabel={t("publicProfile.overview.seeMore")}
+                    fillHeight
                 >
                     <OverviewCodeSkills />
                 </LabeledCard>

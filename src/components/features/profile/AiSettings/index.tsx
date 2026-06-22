@@ -78,6 +78,14 @@ export const AiSettings = () => {
             locale,
         ],
     )
+    /** Navigate to the settings root (breadcrumb parent of every settings page). */
+    const onNavigateSettings = useCallback(
+        () => router.push(pathConfig().locale(locale).profile().settings().build()),
+        [
+            router,
+            locale,
+        ],
+    )
     /** Navigate to the AI subscription page (cross-link for paid models). */
     const onNavigateSubscription = useCallback(
         () => router.push(`${pathConfig().locale(locale).profile().build()}/ai-subscription`),
@@ -105,6 +113,9 @@ export const AiSettings = () => {
                 </Breadcrumbs.Item>
                 <Breadcrumbs.Item onPress={onNavigateProfile}>
                     {t("nav.profile")}
+                </Breadcrumbs.Item>
+                <Breadcrumbs.Item onPress={onNavigateSettings}>
+                    {t("nav.settings")}
                 </Breadcrumbs.Item>
                 <Breadcrumbs.Item>
                     {t("aiSettings.title")}

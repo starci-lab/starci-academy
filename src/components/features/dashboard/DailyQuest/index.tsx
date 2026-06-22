@@ -85,7 +85,7 @@ export const DailyQuest = ({
 
     return (
         <AsyncContent
-            isLoading={isLoading && !data}
+            isLoading={data === null || data === undefined || isLoading}
             skeleton={(
                 <div className="flex flex-col gap-3">
                     {[0, 1, 2].map((row) => (

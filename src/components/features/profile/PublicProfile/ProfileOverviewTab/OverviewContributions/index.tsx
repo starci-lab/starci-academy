@@ -42,7 +42,6 @@ export const OverviewContributions = ({ className }: OverviewContributionsProps)
 
     return (
         <AsyncContent
-            debug={true}
             isLoading={(isLoading || !userId) && days.length === 0}
             skeleton={(
                 <div className="flex flex-col gap-3">

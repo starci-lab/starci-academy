@@ -20,6 +20,15 @@ const query1 = gql`
           challenges {
             id
           }
+          module {
+            id
+            course {
+              id
+              displayId
+              title
+              coverImageUrl
+            }
+          }
         }
         count
       }

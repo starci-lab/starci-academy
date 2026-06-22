@@ -71,7 +71,6 @@ export const ProfileCapstone = ({
             icon={<RocketIcon aria-hidden focusable="false" className="size-5" />}
         >
             <AsyncContent
-                debug={true}
                 isLoading={(isLoading || !userId) && !projectsData}
                 skeleton={(
                     // mirror the real list: assume 3 capstone rows, Separator between

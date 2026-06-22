@@ -5,17 +5,14 @@ import React, {
     useState,
 } from "react"
 import {
-    Breadcrumbs,
+    Accordion,
     Input,
     TextField,
+    Typography,
 } from "@heroui/react"
 import {
-    useLocale,
     useTranslations,
 } from "next-intl"
-import {
-    useRouter,
-} from "next/navigation"
 import {
     AsyncContent,
     EmptyContent,
@@ -26,26 +23,37 @@ import {
 import {
     useQuerySavedContentsInfiniteSwr,
 } from "@/hooks"
+import type {
+    ContentEntity,
+} from "@/modules/types"
 import {
-    pathConfig,
-} from "@/resources"
+    SettingsBreadcrumb,
+} from "../Settings/SettingsBreadcrumb"
 import {
     BookmarkCard,
 } from "./BookmarkCard"
 
+/** Saved contents grouped under one course. */
+interface BookmarkGroup {
+    /** Course id (or a sentinel for contents with no resolvable course). */
+    id: string
+    /** Course title, or undefined when unknown. */
+    title?: string
+    /** The saved contents in this course. */
+    items: Array<ContentEntity>
+}
+
 /**
- * Bookmarks ("Đã lưu") page. A searchable, infinite-scrolling library of the
- * viewer's saved contents. Owns the page chrome (breadcrumb + {@link PageHeader}
- * with the saved count, matching sibling settings pages), a client-side search
- * filter over the loaded items, and the offset-paginated list (compact rows that
- * self-navigate). Data states go through {@link AsyncContent}; more pages load as
- * the {@link InfiniteScrollSentinel} scrolls into view. Mounted by
+ * Bookmarks ("Đã lưu") page. A searchable library of the viewer's saved contents,
+ * GROUPED BY COURSE: each course is a collapsible section showing how many lessons
+ * are saved in it; expanding reveals the saved-lesson rows. Owns the page chrome
+ * (breadcrumb + {@link PageHeader} with the total saved count), a client-side search
+ * filter, and offset pagination. Data states go through {@link AsyncContent}; more
+ * pages load as the {@link InfiniteScrollSentinel} scrolls into view. Mounted by
  * `/profile/bookmarks`.
  */
 export const Bookmarks = () => {
     const t = useTranslations()
-    const locale = useLocale()
-    const router = useRouter()
     const [search, setSearch] = useState("")
 
     const {
@@ -77,22 +85,27 @@ export const Bookmarks = () => {
         [contents, query],
     )
 
+    // group the (filtered) saved contents by their owning course, preserving the
+    // load order so the most-recently-saved course surfaces first
+    const groups = useMemo<Array<BookmarkGroup>>(() => {
+        const byCourse = new Map<string, BookmarkGroup>()
+        for (const content of filtered) {
+            const course = content.module?.course
+            const key = course?.id ?? "__none__"
+            const existing = byCourse.get(key)
+            if (existing) {
+                existing.items.push(content)
+            } else {
+                byCourse.set(key, { id: key, title: course?.title, items: [content] })
+            }
+        }
+        return Array.from(byCourse.values())
+    }, [filtered])
+
     return (
         <div className="mx-auto flex max-w-4xl flex-col gap-6 p-6">
+            <SettingsBreadcrumb current={t("content.saved")} />
             <PageHeader
-                breadcrumb={(
-                    <Breadcrumbs>
-                        <Breadcrumbs.Item onPress={() => router.push(pathConfig().locale(locale).build())}>
-                            {t("nav.home")}
-                        </Breadcrumbs.Item>
-                        <Breadcrumbs.Item onPress={() => router.push(pathConfig().locale(locale).profile().build())}>
-                            {t("nav.profile")}
-                        </Breadcrumbs.Item>
-                        <Breadcrumbs.Item>
-                            {t("content.saved")}
-                        </Breadcrumbs.Item>
-                    </Breadcrumbs>
-                )}
                 title={t("content.saved")}
                 description={t("bookmarks.count", { count })}
             />
@@ -129,11 +142,45 @@ export const Bookmarks = () => {
                     // loaded but the current search matches nothing
                     <EmptyContent title={t("bookmarks.noMatch")} />
                 ) : (
-                    <div className="flex flex-col gap-2">
-                        {filtered.map((content) => (
-                            <BookmarkCard key={content.id} content={content} />
+                    // grouped by course: collapse shows the per-course saved count,
+                    // expand reveals the saved-lesson rows (first course open by default)
+                    <Accordion
+                        variant="surface"
+                        defaultExpandedKeys={groups[0] ? new Set([groups[0].id]) : undefined}
+                    >
+                        {groups.map((group) => (
+                            <Accordion.Item
+                                key={group.id}
+                                id={group.id}
+                                aria-label={group.title ?? t("bookmarks.otherCourse")}
+                            >
+                                <Accordion.Heading className="min-w-0">
+                                    <Accordion.Trigger className="min-w-0 w-full">
+                                        <div className="flex w-full min-w-0 items-center justify-between gap-3 text-start">
+                                            <Typography type="body-sm" weight="semibold" truncate title={group.title}>
+                                                {group.title ?? t("bookmarks.otherCourse")}
+                                            </Typography>
+                                            <div className="flex shrink-0 items-center gap-2">
+                                                <Typography type="body-xs" color="muted">
+                                                    {t("bookmarks.savedCount", { count: group.items.length })}
+                                                </Typography>
+                                                <Accordion.Indicator />
+                                            </div>
+                                        </div>
+                                    </Accordion.Trigger>
+                                </Accordion.Heading>
+                                <Accordion.Panel>
+                                    <Accordion.Body>
+                                        <div className="flex flex-col gap-2">
+                                            {group.items.map((content) => (
+                                                <BookmarkCard key={content.id} content={content} />
+                                            ))}
+                                        </div>
+                                    </Accordion.Body>
+                                </Accordion.Panel>
+                            </Accordion.Item>
                         ))}
-                    </div>
+                    </Accordion>
                 )}
                 {/* grow the list as the sentinel scrolls into view */}
                 <InfiniteScrollSentinel

@@ -35,6 +35,9 @@ import {
 import {
     OverviewContributions,
 } from "./OverviewContributions"
+import {
+    ChangelogList,
+} from "../ChangelogList"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -89,6 +92,8 @@ export const OverviewTab = ({
             >
                 <OverviewContributions />
             </LabeledCard>
+            {/* platform news — moved here from the Community tab (Community = people/competition) */}
+            <ChangelogList framed />
         </div>
     )
 }

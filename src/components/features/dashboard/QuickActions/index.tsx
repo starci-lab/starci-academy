@@ -6,7 +6,6 @@ import React, {
 import {
     Chip,
     cn,
-    ListBox,
 } from "@heroui/react"
 import {
     useLocale,
@@ -16,18 +15,21 @@ import {
     useRouter,
 } from "next/navigation"
 import {
-    GraduationCap as CoursesIcon,
-    Code as PracticeIcon,
-    Bookmark as BookmarkIcon,
-    Gift as RewardsIcon,
-    TextAlignLeft as BlogIcon,
-    Briefcase as TalentsIcon,
-} from "@gravity-ui/icons"
+    GraduationCapIcon,
+    CardsIcon,
+    CodeIcon,
+    TrophyIcon,
+    BookmarkIcon,
+    GiftIcon,
+    ArticleIcon,
+    BriefcaseIcon,
+} from "@phosphor-icons/react"
 import {
     useAppSelector,
 } from "@/redux"
 import {
     useQueryMyRewardWalletSwr,
+    useQueryMyDueFlashcardsSwr,
 } from "@/hooks"
 import {
     pathConfig,
@@ -40,10 +42,11 @@ import type {
 export type QuickActionsProps = WithClassNames<undefined>
 
 /**
- * Left-rail "quick access" grid — one-tap shortcuts to the surfaces a learner
+ * Left-rail "quick access" list — one-tap shortcuts to the surfaces a learner
  * reaches for most (catalog, practice, bookmarks, own profile). Pure navigation;
- * self-reads the viewer's username from redux for the profile-scoped links.
- * `"use client"` for redux + the router.
+ * self-reads the viewer's username from redux for the profile-scoped links. Rows
+ * are flush-left (aligned with the heading + the identity stats above), not the
+ * indented HeroUI ListBox. `"use client"` for redux + the router.
  * @param props - optional className for the root element.
  */
 export const QuickActions = ({
@@ -55,19 +58,32 @@ export const QuickActions = ({
     const username = useAppSelector((state) => state.user.user?.username)
     // spendable reward balance — surfaced as a chip on the rewards shortcut
     const { data: wallet } = useQueryMyRewardWalletSwr()
+    // due-card count — a live "N due" nudge on the review shortcut
+    const { data: dueFlashcards } = useQueryMyDueFlashcardsSwr()
+    const dueCount = dueFlashcards?.dueCount ?? 0
 
-    /** The shortcut tiles (icon + label + destination). */
+    /** The shortcut rows (icon + label + destination), ordered by everyday frequency. */
     const actions = useMemo(
         () => [
             {
                 key: "courses",
-                Icon: CoursesIcon,
+                Icon: GraduationCapIcon,
                 href: pathConfig().locale(locale).course().build(),
             },
             {
+                key: "review",
+                Icon: CardsIcon,
+                href: pathConfig().locale(locale).review().build(),
+            },
+            {
                 key: "practice",
-                Icon: PracticeIcon,
+                Icon: CodeIcon,
                 href: pathConfig().locale(locale).practice().build(),
+            },
+            {
+                key: "league",
+                Icon: TrophyIcon,
+                href: pathConfig().locale(locale).league().build(),
             },
             {
                 key: "bookmarks",
@@ -79,17 +95,17 @@ export const QuickActions = ({
             },
             {
                 key: "rewards",
-                Icon: RewardsIcon,
+                Icon: GiftIcon,
                 href: pathConfig().locale(locale).rewards().build(),
             },
             {
                 key: "blog",
-                Icon: BlogIcon,
+                Icon: ArticleIcon,
                 href: pathConfig().locale(locale).blog().build(),
             },
             {
                 key: "talents",
-                Icon: TalentsIcon,
+                Icon: BriefcaseIcon,
                 href: pathConfig().locale(locale).talents().build(),
             },
         ],
@@ -99,37 +115,26 @@ export const QuickActions = ({
         ],
     )
 
-    /** Map an item key to its destination for the listbox `onAction` handler. */
-    const hrefByKey = useMemo(
-        () => Object.fromEntries(actions.map(({
-            key, href,
-        }) => [
-            key, href,
-        ])),
-        [actions],
-    )
-
     return (
         <div className={cn("flex flex-col gap-3", className)}>
             <div className="text-base font-semibold text-foreground">
                 {t("dashboard.quickActions")}
             </div>
-            <ListBox
-                aria-label={t("dashboard.quickActions")}
-                selectionMode="none"
-                onAction={(key) => router.push(hrefByKey[key])}
-            >
+            {/* flush list (no ListBox indent): each row aligns left with the heading */}
+            <div className="flex flex-col">
                 {actions.map(({
                     key,
                     Icon,
+                    href,
                 }) => (
-                    <ListBox.Item
+                    <button
                         key={key}
-                        id={key}
-                        textValue={t(`dashboard.actions.${key}`)}
+                        type="button"
+                        onClick={() => router.push(href)}
+                        className="group flex w-full cursor-pointer items-center gap-3 py-2 text-left"
                     >
-                        <Icon className="size-5 shrink-0 text-muted" />
-                        <span className="truncate text-sm">
+                        <Icon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
+                        <span className="truncate text-sm transition-colors group-hover:text-foreground group-hover:underline">
                             {t(`dashboard.actions.${key}`)}
                         </span>
                         {key === "rewards" && wallet ? (
@@ -139,9 +144,16 @@ export const QuickActions = ({
                                 </Chip.Label>
                             </Chip>
                         ) : null}
-                    </ListBox.Item>
+                        {key === "review" && dueCount > 0 ? (
+                            <Chip className="ml-auto" size="sm" variant="soft" color="accent">
+                                <Chip.Label>
+                                    {t("dashboard.dueCount", { count: dueCount })}
+                                </Chip.Label>
+                            </Chip>
+                        ) : null}
+                    </button>
                 ))}
-            </ListBox>
+            </div>
         </div>
     )
 }

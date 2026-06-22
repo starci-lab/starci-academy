@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
-import { Button, cn } from "@heroui/react"
+import { Button, TextArea, TextField, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import type { WithClassNames } from "@/modules/types"
 
@@ -55,15 +55,17 @@ export const CommentComposer = ({
     }
 
     return (
-        <div className={cn("flex flex-col gap-1.5", className)}>
-            <textarea
-                rows={3}
-                value={body}
-                onChange={(event) => setBody(event.target.value)}
-                placeholder={placeholder ?? t("discussion.placeholder")}
-                className="w-full resize-none rounded-2xl border border-default bg-background px-4 py-3 text-sm text-foreground focus:border-accent focus:outline-none"
-            />
-            <div className="flex items-center justify-end gap-1.5">
+        <div className={cn("flex flex-col gap-2", className)}>
+            <TextField variant="secondary" className="w-full">
+                <TextArea
+                    rows={3}
+                    value={body}
+                    onChange={(event) => setBody(event.target.value)}
+                    placeholder={placeholder ?? t("discussion.placeholder")}
+                    className="resize-none"
+                />
+            </TextField>
+            <div className="flex items-center justify-end gap-2">
                 {onCancel ? (
                     <Button size="sm" variant="tertiary" onPress={onCancel} isDisabled={busy}>
                         {t("common.cancel")}

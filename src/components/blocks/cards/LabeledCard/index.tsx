@@ -38,6 +38,13 @@ export interface LabeledCardProps extends WithClassNames<undefined> {
      * avoids the double-padding / misaligned look. Ignored when `frameless`.
      */
     flushContent?: boolean
+    /**
+     * When true, the section + framed card stretch to fill their container's height
+     * (`h-full` + the card grows via `flex-1`). Use for side-by-side cards in a grid
+     * row so uneven content (e.g. a 1-line vs 2-line empty state) still renders at
+     * equal height. Ignored when `frameless`.
+     */
+    fillHeight?: boolean
 }
 
 /**
@@ -60,9 +67,10 @@ export const LabeledCard = ({
     contentClassName,
     frameless = false,
     flushContent = false,
+    fillHeight = false,
 }: LabeledCardProps) => {
     return (
-        <section className={cn("flex flex-col gap-3", className)}>
+        <section className={cn("flex flex-col gap-3", fillHeight && "h-full", className)}>
             <div className="flex items-center justify-between gap-3">
                 <div className="flex min-w-0 items-center gap-2">
                     {icon}
@@ -86,8 +94,8 @@ export const LabeledCard = ({
             {frameless ? (
                 <div className={cn(contentClassName)}>{children}</div>
             ) : (
-                <Card>
-                    <CardContent className={cn(flushContent && "p-0", contentClassName)}>
+                <Card className={cn(fillHeight && "flex-1")}>
+                    <CardContent className={cn(flushContent && "p-0", fillHeight && "h-full", contentClassName)}>
                         {children}
                     </CardContent>
                 </Card>

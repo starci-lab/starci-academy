@@ -18,6 +18,7 @@ import {
     useQueryWeeklyChallengeSwr,
 } from "@/hooks"
 import {
+    AsyncContent,
     LabeledCard,
 } from "@/components/blocks"
 import {
@@ -26,6 +27,9 @@ import {
 import {
     EntityToken,
 } from "../EntityToken"
+import {
+    WeeklyChallengeCardSkeleton,
+} from "./WeeklyChallengeCardSkeleton"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -48,7 +52,7 @@ export const WeeklyChallengeCard = ({
 }: WeeklyChallengeCardProps) => {
     const t = useTranslations()
     const locale = useLocale()
-    const { data } = useQueryWeeklyChallengeSwr()
+    const { data, isLoading } = useQueryWeeklyChallengeSwr()
 
     /** Days/hours left until the event closes (computed from `weekEndAt`). */
     const countdown = useMemo(
@@ -92,81 +96,84 @@ export const WeeklyChallengeCard = ({
         return relativeFormatter.format(Math.round(hours / 24), "day")
     }
 
-    // no active event (or not loaded yet) → hide the whole section
-    if (!data) {
-        return null
-    }
-
-    const topRows = data.leaderboard.slice(0, TOP_ROWS)
+    const topRows = data?.leaderboard.slice(0, TOP_ROWS) ?? []
 
     return (
-        <LabeledCard
-            label={t("weeklyChallenge.title")}
-            icon={<FlameIcon aria-hidden focusable="false" className="size-5" />}
-            className={className}
-            contentClassName="flex flex-col gap-3"
+        // self-hiding section: skeleton while loading, then hide when no event is active
+        // (empty / error → no emptyContent/errorContent → renders null).
+        <AsyncContent
+            isLoading={isLoading}
+            skeleton={<WeeklyChallengeCardSkeleton className={className} />}
+            isEmpty={!data}
         >
-            {/* featured challenge title (routable) */}
-            <EntityToken
-                globalId={data.challengeGlobalId}
-                label={data.title}
-            />
+            <LabeledCard
+                label={t("weeklyChallenge.title")}
+                icon={<FlameIcon aria-hidden focusable="false" className="size-5" />}
+                className={className}
+                contentClassName="flex flex-col gap-3"
+            >
+                {/* featured challenge title (routable) */}
+                <EntityToken
+                    globalId={data?.challengeGlobalId}
+                    label={data?.title ?? ""}
+                />
 
-            {/* countdown + viewer status */}
-            <div className="flex items-center justify-between gap-3">
-                {countdown ? (
-                    <Typography type="body-xs" color="muted">
-                        {t("weeklyChallenge.endsIn", {
-                            days: countdown.days,
-                            hours: countdown.hours,
-                        })}
-                    </Typography>
-                ) : <span />}
-                {data.viewerPassed ? (
-                    <Chip color="success" size="sm" variant="soft">
-                        <Chip.Label>
-                            {t("weeklyChallenge.passed")}
-                        </Chip.Label>
-                    </Chip>
-                ) : (
-                    <EntityToken
-                        globalId={data.challengeGlobalId}
-                        label={t("weeklyChallenge.tryNow")}
-                    />
-                )}
-            </div>
-
-            {/* total passers */}
-            <Typography type="body-xs" color="muted">
-                {t("weeklyChallenge.passedCount", {
-                    count: data.passedCount,
-                })}
-            </Typography>
-
-            {/* recent finishers */}
-            {topRows.length > 0 ? (
-                <div className="flex flex-col gap-2">
-                    {topRows.map((entry) => (
-                        <div
-                            key={entry.username}
-                            className="flex items-center gap-2"
-                        >
-                            <UserAvatar
-                                className="size-6 shrink-0"
-                                username={entry.username}
-                                avatar={entry.avatar}
-                                seed={entry.username}
-                            />
-                            <Typography type="body-sm" className="flex-1 truncate">
-                                {entry.username}
-                            </Typography>
-                            <Typography type="body-xs" color="muted" className="shrink-0">
-                                {formatRelative(entry.passedAt)}
-                            </Typography>
-                        </div>
-                    ))}
+                {/* countdown + viewer status */}
+                <div className="flex items-center justify-between gap-3">
+                    {countdown ? (
+                        <Typography type="body-xs" color="muted">
+                            {t("weeklyChallenge.endsIn", {
+                                days: countdown.days,
+                                hours: countdown.hours,
+                            })}
+                        </Typography>
+                    ) : <span />}
+                    {data?.viewerPassed ? (
+                        <Chip color="success" size="sm" variant="soft">
+                            <Chip.Label>
+                                {t("weeklyChallenge.passed")}
+                            </Chip.Label>
+                        </Chip>
+                    ) : (
+                        <EntityToken
+                            globalId={data?.challengeGlobalId}
+                            label={t("weeklyChallenge.tryNow")}
+                        />
+                    )}
                 </div>
-            ) : null}
-        </LabeledCard>
+
+                {/* total passers */}
+                <Typography type="body-xs" color="muted">
+                    {t("weeklyChallenge.passedCount", {
+                        count: data?.passedCount ?? 0,
+                    })}
+                </Typography>
+
+                {/* recent finishers */}
+                {topRows.length > 0 ? (
+                    <div className="flex flex-col gap-2">
+                        {topRows.map((entry) => (
+                            <div
+                                key={entry.username}
+                                className="flex items-center gap-2"
+                            >
+                                <UserAvatar
+                                    className="size-6 shrink-0"
+                                    username={entry.username}
+                                    avatar={entry.avatar}
+                                    seed={entry.username}
+                                />
+                                <Typography type="body-sm" className="flex-1 truncate">
+                                    {entry.username}
+                                </Typography>
+                                <Typography type="body-xs" color="muted" className="shrink-0">
+                                    {formatRelative(entry.passedAt)}
+                                </Typography>
+                            </div>
+                        ))}
+                    </div>
+                ) : null}
+            </LabeledCard>
+        </AsyncContent>
     )
 }

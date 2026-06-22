@@ -57,7 +57,6 @@ export const OverviewChallengeSkills = ({ className }: OverviewChallengeSkillsPr
 
     return (
         <AsyncContent
-            debug={true}
             isLoading={(isLoading || !userId) && challenges.length === 0}
             skeleton={(
                 <div className="flex flex-col gap-3">

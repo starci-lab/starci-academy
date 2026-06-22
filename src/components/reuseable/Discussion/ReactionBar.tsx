@@ -1,7 +1,7 @@
 "use client"
 
-import React, { useRef, useState } from "react"
-import { Button, cn } from "@heroui/react"
+import React, { useState } from "react"
+import { Button, Popover, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { ReactionType, type ReactionSummary } from "@/modules/api"
 import type { WithClassNames } from "@/modules/types"
@@ -19,17 +19,18 @@ export interface ReactionBarProps extends WithClassNames<undefined> {
 }
 
 /**
- * Facebook-style reaction control: a trigger that opens a 6-emoji picker, plus a compact
- * summary (top emojis + total). Picking the active emotion again removes it.
+ * Facebook-style reaction control: a HeroUI Button trigger that opens a 6-emoji picker
+ * (HeroUI Popover), plus a compact summary (top emojis + total). Picking the active
+ * emotion again removes it. The SAME control is used for both the content reaction
+ * (InteractionBar) and each comment, so they render identically.
  *
- * Presentational: only local open state; all persistence is delegated via `onReact`.
+ * Presentational: only local picker-open state; all persistence is delegated via `onReact`.
  * @param props - {@link ReactionBarProps}
  */
 export const ReactionBar = ({ summary, onReact, disabled, className }: ReactionBarProps) => {
     const t = useTranslations()
-    // local visibility of the emoji picker panel
-    const [pickerOpen, setPickerOpen] = useState(false)
-    const containerRef = useRef<HTMLDivElement>(null)
+    // controlled so the popover closes as soon as an emotion is picked
+    const [open, setOpen] = useState(false)
     const myReaction = summary?.myReaction ?? null
     const total = summary?.total ?? 0
     // emotions present on the target, busiest first, capped to the top 3 descriptors
@@ -42,54 +43,32 @@ export const ReactionBar = ({ summary, onReact, disabled, className }: ReactionB
 
     const myDescriptor = myReaction ? REACTION_BY_TYPE[myReaction] : REACTION_BY_TYPE[ReactionType.Like]
 
-    // picking an emotion toggles it off when it's already the user's pick
+    // picking an emotion toggles it off when it's already the user's pick, then closes
     const handlePick = (type: ReactionType) => {
-        setPickerOpen(false)
+        setOpen(false)
         onReact(myReaction === type ? null : type)
     }
 
     return (
-        <div
-            ref={containerRef}
-            className={cn("relative flex items-center gap-1.5", className)}
-            onBlur={(e) => {
-                // close picker when focus leaves the entire reaction bar
-                if (!containerRef.current?.contains(e.relatedTarget as Node)) {
-                    setPickerOpen(false)
-                }
-            }}
-        >
-            {/* trigger button: shows current reaction or default "Like" */}
-            <Button
-                size="sm"
-                variant={myReaction ? "secondary" : "tertiary"}
-                isDisabled={disabled}
-                onPress={() => setPickerOpen((prev) => !prev)}
-                className="rounded-full"
-            >
-                <ReactionEmoji descriptor={myDescriptor} size="xs" />
-                <span className="text-xs">
-                    {myReaction
-                        ? t(REACTION_BY_TYPE[myReaction].labelKey)
-                        : t("discussion.react")}
-                </span>
-            </Button>
-
-            {/* compact summary: stacked top emojis + total count */}
-            {total > 0 ? (
-                <div className="flex items-center gap-1.5 text-xs text-muted">
-                    <span className="flex items-center -space-x-1">
-                        {topReactions.map((reaction) => (
-                            <ReactionEmoji key={reaction.type} descriptor={reaction} size="xs" />
-                        ))}
-                    </span>
-                    <span>{total}</span>
-                </div>
-            ) : null}
-
-            {/* emoji picker panel — floats above the trigger */}
-            {pickerOpen ? (
-                <div className="absolute bottom-full left-0 z-20 mb-2 flex items-center gap-1.5 rounded-full border border-default bg-background p-1 shadow-lg">
+        <div className={cn("flex items-center gap-2", className)}>
+            {/* trigger: a real HeroUI Button (pill); secondary once the viewer has reacted */}
+            <Popover isOpen={open} onOpenChange={setOpen}>
+                <Popover.Trigger>
+                    <Button
+                        size="sm"
+                        variant={myReaction ? "secondary" : "tertiary"}
+                        isDisabled={disabled}
+                        className="rounded-full"
+                    >
+                        <ReactionEmoji descriptor={myDescriptor} size="xs" />
+                        <span className="text-xs">
+                            {myReaction
+                                ? t(REACTION_BY_TYPE[myReaction].labelKey)
+                                : t("discussion.react")}
+                        </span>
+                    </Button>
+                </Popover.Trigger>
+                <Popover.Content className="flex items-center gap-2 rounded-full p-1">
                     {REACTIONS.map((reaction) => (
                         <button
                             key={reaction.type}
@@ -98,13 +77,25 @@ export const ReactionBar = ({ summary, onReact, disabled, className }: ReactionB
                             title={t(reaction.labelKey)}
                             onClick={() => handlePick(reaction.type)}
                             className={cn(
-                                "rounded-full p-1 transition-transform hover:scale-125",
+                                "cursor-pointer rounded-full p-1 transition-transform hover:scale-125",
                                 myReaction === reaction.type ? "bg-accent/10" : undefined,
                             )}
                         >
                             <ReactionEmoji descriptor={reaction} size="sm" />
                         </button>
                     ))}
+                </Popover.Content>
+            </Popover>
+
+            {/* compact summary: stacked top emojis + total count */}
+            {total > 0 ? (
+                <div className="flex items-center gap-2 text-xs text-muted">
+                    <span className="flex items-center -space-x-1">
+                        {topReactions.map((reaction) => (
+                            <ReactionEmoji key={reaction.type} descriptor={reaction} size="xs" />
+                        ))}
+                    </span>
+                    <span>{total}</span>
                 </div>
             ) : null}
         </div>

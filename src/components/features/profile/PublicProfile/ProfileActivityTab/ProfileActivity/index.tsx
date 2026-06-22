@@ -121,11 +121,6 @@ export const ProfileActivity = ({
         ],
     )
 
-    // resolved-empty + no error → hide the whole section (clean profile)
-    if (data && items.length === 0 && !error) {
-        return null
-    }
-
     return (
         <LabeledCard
             className={className}
@@ -133,7 +128,6 @@ export const ProfileActivity = ({
             icon={<PulseIcon aria-hidden focusable="false" className="size-5" />}
         >
             <AsyncContent
-                debug={true}
                 isLoading={(isLoading || !userId) && items.length === 0}
                 skeleton={(
                     <div className="flex flex-col gap-6">
@@ -158,6 +152,7 @@ export const ProfileActivity = ({
                 isEmpty={items.length === 0}
                 emptyContent={{
                     title: t("publicProfile.activityEmpty"),
+                    description: t("publicProfile.activityEmptyHint"),
                 }}
                 error={items.length === 0 ? error : undefined}
                 errorContent={{

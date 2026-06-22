@@ -16,8 +16,11 @@ export const pathConfig = () => {
             const build = () => {
                 return profilePath
             }
+            // settings hub root — all account-management pages nest under it
+            // (`/profile/settings/<page>`); the hub itself is `/profile/settings`.
+            const settingsPath = `${profilePath}/settings`
             const bookmarks = () => {
-                const bookmarksPath = `${profilePath}/bookmarks`
+                const bookmarksPath = `${settingsPath}/bookmarks`
                 const build = () => {
                     return bookmarksPath
                 }
@@ -26,7 +29,7 @@ export const pathConfig = () => {
                 }
             }
             const aiUsage = () => {
-                const aiUsagePath = `${profilePath}/ai-usage`
+                const aiUsagePath = `${settingsPath}/ai-usage`
                 const build = () => {
                     return aiUsagePath
                 }
@@ -35,7 +38,7 @@ export const pathConfig = () => {
                 }
             }
             const edit = () => {
-                const editPath = `${profilePath}/edit`
+                const editPath = `${settingsPath}/edit`
                 const build = () => {
                     return editPath
                 }
@@ -44,7 +47,7 @@ export const pathConfig = () => {
                 }
             }
             const sessions = () => {
-                const sessionsPath = `${profilePath}/sessions`
+                const sessionsPath = `${settingsPath}/sessions`
                 const build = () => {
                     return sessionsPath
                 }
@@ -53,7 +56,7 @@ export const pathConfig = () => {
                 }
             }
             const security = () => {
-                const securityPath = `${profilePath}/security`
+                const securityPath = `${settingsPath}/security`
                 const build = () => {
                     return securityPath
                 }
@@ -62,7 +65,7 @@ export const pathConfig = () => {
                 }
             }
             const aiSettings = () => {
-                const aiSettingsPath = `${profilePath}/ai-settings`
+                const aiSettingsPath = `${settingsPath}/ai-settings`
                 const build = () => {
                     return aiSettingsPath
                 }
@@ -71,7 +74,7 @@ export const pathConfig = () => {
                 }
             }
             const aiSubscription = () => {
-                const aiSubscriptionPath = `${profilePath}/ai-subscription`
+                const aiSubscriptionPath = `${settingsPath}/ai-subscription`
                 const build = () => {
                     return aiSubscriptionPath
                 }
@@ -80,7 +83,7 @@ export const pathConfig = () => {
                 }
             }
             const membership = () => {
-                const membershipPath = `${profilePath}/membership`
+                const membershipPath = `${settingsPath}/membership`
                 const build = () => {
                     return membershipPath
                 }
@@ -89,7 +92,6 @@ export const pathConfig = () => {
                 }
             }
             const settings = () => {
-                const settingsPath = `${profilePath}/settings`
                 const build = () => {
                     return settingsPath
                 }
@@ -98,7 +100,7 @@ export const pathConfig = () => {
                 }
             }
             const learning = () => {
-                const learningPath = `${profilePath}/learning`
+                const learningPath = `${settingsPath}/learning`
                 const build = () => {
                     return learningPath
                 }
@@ -107,7 +109,7 @@ export const pathConfig = () => {
                 }
             }
             const submissions = () => {
-                const submissionsPath = `${profilePath}/submissions`
+                const submissionsPath = `${settingsPath}/submissions`
                 const build = () => {
                     return submissionsPath
                 }
@@ -116,7 +118,7 @@ export const pathConfig = () => {
                 }
             }
             const attempts = () => {
-                const attemptsPath = `${profilePath}/attempts`
+                const attemptsPath = `${settingsPath}/attempts`
                 const build = () => {
                     return attemptsPath
                 }
@@ -125,7 +127,7 @@ export const pathConfig = () => {
                 }
             }
             const feedback = () => {
-                const feedbackPath = `${profilePath}/feedback`
+                const feedbackPath = `${settingsPath}/feedback`
                 const build = () => {
                     return feedbackPath
                 }

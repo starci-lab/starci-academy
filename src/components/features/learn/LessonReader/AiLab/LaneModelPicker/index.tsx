@@ -126,6 +126,28 @@ export const LaneModelPicker = ({
                                     {t(`aiSettings.categories.${model.category}`)}
                                 </Chip>
                             )
+                            if (!model.available) {
+                                return (
+                                    <DropdownItem
+                                        key={key}
+                                        textValue={model.model}
+                                        onPress={() => undefined}
+                                    >
+                                        <Tooltip>
+                                            <Tooltip.Trigger>
+                                                <div className="flex w-full items-center justify-between gap-2 text-muted">
+                                                    <span className="flex min-w-0 items-center gap-2">
+                                                        <LockIcon className="size-5 shrink-0" />
+                                                        <span className="truncate">{model.model}</span>
+                                                    </span>
+                                                    {categoryChip}
+                                                </div>
+                                            </Tooltip.Trigger>
+                                            <Tooltip.Content>{t("aiSettings.modelUnavailable")}</Tooltip.Content>
+                                        </Tooltip>
+                                    </DropdownItem>
+                                )
+                            }
                             if (!canPremium) {
                                 return (
                                     <DropdownItem

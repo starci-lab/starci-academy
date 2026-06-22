@@ -81,7 +81,7 @@ export const WeeklyGoals = ({
 
     return (
         <AsyncContent
-            isLoading={isLoading && !kpis}
+            isLoading={kpis === null || kpis === undefined || isLoading}
             error={error}
             errorContent={{
                 title: t("dashboard.loadError"),

@@ -1,125 +1,198 @@
 "use client"
 
 import React, { useMemo, useState } from "react"
-import { Card, Chip, cn, Modal, Separator, Spinner } from "@heroui/react"
+import { Chip, Modal, Spinner, Typography, cn } from "@heroui/react"
+import useSWR from "swr"
+import { LockSimpleIcon } from "@phosphor-icons/react"
 import {
     useMutateCourseEnrollSwr,
     useMutatePurchaseAiSubscriptionSwr,
     useMutatePurchaseMembershipSwr,
     usePaymentOverlayState,
+    useQueryCoursePricePreviewSwr,
 } from "@/hooks"
 import { useAppSelector } from "@/redux"
 import { PaymentFlow, PaymentType } from "@/modules/types"
 import { assetConfig } from "@/resources"
 import { useGraphQLWithToast } from "@/modules/toast"
 import { submitCheckout } from "@/modules/payment"
+import { queryAiSubscriptionTiers } from "@/modules/api"
+import type { DiscountReason } from "@/modules/api"
+import { AsyncContent, PressableCard } from "@/components/blocks"
 import { useTranslations } from "next-intl"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
+/** Format an integer VND amount as "1.275.000₫". */
+const formatVnd = (amount: number): string => `${amount.toLocaleString("vi-VN")}₫`
+
+/** Format a USD amount as "$3.99". */
+const formatUsd = (amount: number): string =>
+    amount.toLocaleString("en-US", { style: "currency", currency: "USD" })
+
+/** The unified order shown in the summary, derived per flow. */
+interface PaymentOrder {
+    /** Product name (course title / AI tier / membership). */
+    name: string
+    /** Discounted VND price (what domestic gateways charge); undefined while loading. */
+    priceVnd?: number
+    /** Original VND price (struck through when a discount applies). */
+    originalVnd?: number
+    /** Discounted USD price for international gateways; null when not available. */
+    priceUsd?: number | null
+    /** Loyalty discount percent (0 when none — course flow only). */
+    discountPercent: number
+    /** Why the discount applies (course flow only). */
+    discountReason: DiscountReason
+    /** Courses the viewer already owns (feeds the discount copy). */
+    enrolledCount: number
+}
+
 /**
- * Shared payment-method modal for every paid flow.
+ * Shared payment modal for every paid flow (course enroll · membership · AI subscription).
  *
- * The opener stashes a {@link import("@/modules/types").PaymentContext} via
- * `usePaymentOverlayState().open(context)`; this modal reads that context to
- * decide which SWR mutation to run (course enroll vs AI subscription) when the
- * user picks a method. Methods are grouped into Domestic (PayOS, Sepay) and
- * International (Stripe, PayPal, Crypto) sections. `"use client"` because it
- * reads SWR/redux and redirects to the gateway.
+ * Summary-first: shows WHAT the buyer gets + HOW MUCH (with the loyalty discount surfaced)
+ * BEFORE the gateway choice, then groups methods into Domestic (VND) and International (USD)
+ * — the latter locked when the product has no USD price — with a trust line beneath. The
+ * opener stashes a {@link import("@/modules/types").PaymentContext}; this modal reads it to
+ * decide which price to preview and which mutation to run on pick.
  */
 export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
-    // overlay handle + the flow/payload the opener stashed
     const { isOpen, setOpen, context } = usePaymentOverlayState()
-    // both purchase mutations live here; the active one is chosen per context
     const courseEnrollSwr = useMutateCourseEnrollSwr()
     const purchaseAiSubscriptionSwr = useMutatePurchaseAiSubscriptionSwr()
     const purchaseMembershipSwr = useMutatePurchaseMembershipSwr()
     const course = useAppSelector((state) => state.course.entity)
-    // which method is mid-checkout, so only its row shows a spinner
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentType | null>(null)
     const t = useTranslations()
     const runGraphQL = useGraphQLWithToast()
 
-    // any mutation in flight disables interaction + drives the row spinner
-    const isMutating = courseEnrollSwr.isMutating || purchaseAiSubscriptionSwr.isMutating || purchaseMembershipSwr.isMutating
+    const isCourse = context?.flow === PaymentFlow.CourseEnroll
+    const isAi = context?.flow === PaymentFlow.AiSubscription
+    const isMembership = context?.flow === PaymentFlow.Membership
 
-    // domestic and international method groups, each rendered as its own section
+    // course price preview (original vs loyalty-discounted) — exact checkout pricing
+    const coursePriceSwr = useQueryCoursePricePreviewSwr(isCourse ? course?.id ?? null : null)
+    // AI tiers fetched modal-locally (the page hook is gated to /profile/ai-subscription)
+    const aiTiersSwr = useSWR(
+        isAi ? ["PAYMENT_MODAL_AI_TIERS"] : null,
+        async () => (await queryAiSubscriptionTiers({})).data?.aiSubscriptionTiers?.data?.tiers ?? [],
+    )
+    const aiTier = useMemo(
+        () => (isAi && context.flow === PaymentFlow.AiSubscription
+            ? aiTiersSwr.data?.find((tier) => tier.tier === context.tier)
+            : undefined),
+        [isAi, context, aiTiersSwr.data],
+    )
+
+    // any mutation in flight disables interaction + drives the row spinner
+    const isMutating = courseEnrollSwr.isMutating
+        || purchaseAiSubscriptionSwr.isMutating
+        || purchaseMembershipSwr.isMutating
+
+    // the loading / error state of the price source for the active flow
+    const priceLoading = (isCourse && !coursePriceSwr.data && !coursePriceSwr.error)
+        || (isAi && !aiTiersSwr.data && !aiTiersSwr.error)
+    const priceError = isCourse
+        ? coursePriceSwr.error
+        : isAi
+            ? aiTiersSwr.error
+            : undefined
+
+    // unified order summary derived per flow
+    const order = useMemo<PaymentOrder | null>(() => {
+        if (!context) {
+            return null
+        }
+        if (context.flow === PaymentFlow.CourseEnroll) {
+            const price = coursePriceSwr.data
+            return {
+                name: course?.title ?? "",
+                priceVnd: price?.discountedPriceVnd,
+                originalVnd: price?.originalPriceVnd,
+                priceUsd: price?.discountedPriceUsd ?? null,
+                discountPercent: price?.discountPercent ?? 0,
+                discountReason: price?.discountReason ?? "none",
+                enrolledCount: price?.enrolledCount ?? 0,
+            }
+        }
+        if (context.flow === PaymentFlow.AiSubscription) {
+            return {
+                name: aiTier?.displayName ?? t("payment.aiPlanName"),
+                priceVnd: aiTier?.priceVnd,
+                priceUsd: aiTier?.priceUsd ?? null,
+                discountPercent: 0,
+                discountReason: "none",
+                enrolledCount: 0,
+            }
+        }
+        // membership — single product, price from i18n config copy
+        return {
+            name: t("payment.membershipName"),
+            discountPercent: 0,
+            discountReason: "none",
+            enrolledCount: 0,
+            priceUsd: null,
+        }
+    }, [context, coursePriceSwr.data, aiTier, course?.title, t])
+
+    // whether international (USD) gateways are usable for this order
+    const hasUsd = isMembership || (order?.priceUsd != null)
+
+    // method groups, each carrying its currency + whether it needs a USD price
     const paymentGroups = useMemo(
         () => [
             {
                 id: "domestic",
                 label: t("payment.group.domestic"),
+                currency: "VND",
+                requiresUsd: false,
                 methods: [
-                    {
-                        id: "payos",
-                        type: PaymentType.PayOS,
-                        name: "PayOS",
-                        description: t("payment.payos.desc"),
-                        // domestic providers have brand SVGs on disk
-                        iconUrl: assetConfig().icon().payment().payos,
-                        disabled: false,
-                    },
-                    {
-                        id: "sepay",
-                        type: PaymentType.Sepay,
-                        name: "Sepay",
-                        description: t("payment.sepay.desc"),
-                        iconUrl: assetConfig().icon().payment().sepay,
-                        disabled: false,
-                    },
+                    { type: PaymentType.PayOS, name: "PayOS", description: t("payment.payos.desc"), iconUrl: assetConfig().icon().payment().payos },
+                    { type: PaymentType.Sepay, name: "Sepay", description: t("payment.sepay.desc"), iconUrl: assetConfig().icon().payment().sepay },
                 ],
             },
             {
                 id: "international",
                 label: t("payment.group.international"),
+                currency: "USD",
+                requiresUsd: true,
                 methods: [
-                    {
-                        id: "stripe",
-                        type: PaymentType.Stripe,
-                        name: "Stripe",
-                        description: t("payment.stripe.desc"),
-                        iconUrl: assetConfig().icon().payment().stripe,
-                        disabled: false,
-                    },
-                    {
-                        id: "paypal",
-                        type: PaymentType.Paypal,
-                        name: "PayPal",
-                        description: t("payment.paypal.desc"),
-                        iconUrl: assetConfig().icon().payment().paypal,
-                        disabled: false,
-                    },
-                    {
-                        id: "crypto",
-                        type: PaymentType.Crypto,
-                        name: "Crypto",
-                        description: t("payment.crypto.desc"),
-                        iconUrl: assetConfig().icon().payment().crypto,
-                        disabled: false,
-                    },
+                    { type: PaymentType.Stripe, name: "Stripe", description: t("payment.stripe.desc"), iconUrl: assetConfig().icon().payment().stripe },
+                    { type: PaymentType.Paypal, name: "PayPal", description: t("payment.paypal.desc"), iconUrl: assetConfig().icon().payment().paypal },
+                    { type: PaymentType.Crypto, name: "Crypto", description: t("payment.crypto.desc"), iconUrl: assetConfig().icon().payment().crypto },
                 ],
             },
         ],
         [t],
     )
 
+    /** Loyalty discount copy for the chip (course flow). */
+    const discountCopy = (reason: DiscountReason, enrolledCount: number): string => {
+        switch (reason) {
+        case "enrolledCount":
+            return t("payment.discount.enrolledCount", { count: enrolledCount })
+        case "diligent":
+            return t("payment.discount.diligent")
+        case "both":
+            return t("payment.discount.both", { count: enrolledCount })
+        default:
+            return ""
+        }
+    }
+
     /**
-     * Run the purchase for the active flow with the chosen method, then send
-     * the user to the gateway. Returns the resolved checkout payload (or null
-     * on failure) so the caller can decide whether to redirect.
+     * Run the purchase for the active flow with the chosen method, then send the user
+     * to the gateway (or the Sepay QR page).
      */
     const runCheckout = async (paymentType: PaymentType) => {
-        // guard: nothing to do without a flow context (defensive — opener sets it)
         if (!context) {
             return
         }
         let checkoutUrl = ""
         let checkoutFields: string | null | undefined
-        // mark the picked method so its row shows the spinner
         setSelectedPaymentMethod(paymentType)
-        // create the pending transaction + resolve the checkout URL/fields
         const success = await runGraphQL(
             async () => {
-                // branch on the flow to call the right mutation with its payload
                 if (context.flow === PaymentFlow.CourseEnroll) {
                     const response = await courseEnrollSwr.trigger({
                         courseId: course?.id ?? "",
@@ -135,7 +208,6 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
                     checkoutFields = data?.checkoutFields
                     return response.data.courseEnroll
                 }
-                // membership flow — single product, no tier in the payload
                 if (context.flow === PaymentFlow.Membership) {
                     const response = await purchaseMembershipSwr.trigger({
                         paymentType,
@@ -150,7 +222,6 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
                     checkoutFields = data?.checkoutFields
                     return response.data.purchaseMembership
                 }
-                // AI subscription flow — payload carries the tier slug
                 const response = await purchaseAiSubscriptionSwr.trigger({
                     tier: context.tier,
                     paymentType,
@@ -170,7 +241,6 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
                 showErrorToast: true,
             },
         )
-        // redirect to the gateway only when a checkout URL came back
         if (success && checkoutUrl) {
             submitCheckout({ checkoutUrl, checkoutFields })
         }
@@ -179,83 +249,107 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
     return (
         <Modal isOpen={isOpen} onOpenChange={setOpen}>
             <Modal.Backdrop>
-                <Modal.Container size="xs">
+                <Modal.Container size="sm">
                     <Modal.Dialog className={cn(className)}>
                         <Modal.CloseTrigger />
                         <Modal.Header>
-                            <div className="flex flex-col items-center">
-                                <div className="font-semibold text-lg">{t("payment.title")}</div>
-                                <div className="text-xs text-muted">{t("payment.desc")}</div>
-                            </div>
+                            <Typography type="body" weight="semibold">{t("payment.title")}</Typography>
                         </Modal.Header>
                         <Modal.Body>
                             <div className="flex flex-col gap-6">
-                                {paymentGroups.map((group) => (
-                                    <div key={group.id} className="flex flex-col gap-3">
-                                        {/* labeled divider — normal case, not uppercase */}
-                                        <div className="flex gap-1.5">
-                                            <div className="text-start text-xs text-muted">{group.label}</div>
+                                {/* order summary — what + how much (+ loyalty discount) before the method choice.
+                                    The modal dialog sits on --overlay; the neutral token ladder has no step a touch
+                                    lighter than it, so use the app's elevation idiom (a white veil, cf. bg-white/5
+                                    elsewhere) to RAISE this card a bit lighter — a real "card in card" lift. */}
+                                <div className="flex flex-col gap-2 rounded-2xl border border-white/10 bg-white/10 px-4 py-3">
+                                    <Typography type="body-sm" weight="semibold" truncate title={order?.name}>
+                                        {order?.name}
+                                    </Typography>
+                                    <AsyncContent
+                                        isLoading={Boolean(priceLoading)}
+                                        skeleton={<div className="h-8 w-32 animate-pulse rounded-xl bg-surface" />}
+                                        error={priceError}
+                                        errorContent={{ title: t("payment.priceError") }}
+                                    >
+                                        <div className="flex flex-wrap items-baseline gap-2">
+                                            {order?.priceVnd != null ? (
+                                                <Typography type="h4" weight="bold">{formatVnd(order.priceVnd)}</Typography>
+                                            ) : isMembership ? (
+                                                <Typography type="h4" weight="bold">{t("membership.price")}</Typography>
+                                            ) : null}
+                                            {order && order.discountPercent > 0 && order.originalVnd != null ? (
+                                                <Typography type="body-sm" color="muted" className="line-through">
+                                                    {formatVnd(order.originalVnd)}
+                                                </Typography>
+                                            ) : null}
+                                            {order && order.discountPercent > 0 ? (
+                                                <Chip size="sm" variant="soft" color="success">
+                                                    <Chip.Label>
+                                                        {`−${order.discountPercent}% · ${discountCopy(order.discountReason, order.enrolledCount)}`}
+                                                    </Chip.Label>
+                                                </Chip>
+                                            ) : null}
                                         </div>
-                                        <div className="flex flex-col overflow-hidden rounded-3xl border">
-                                            {group.methods.map((paymentMethod, index) => (
-                                                <React.Fragment key={paymentMethod.id}>
-                                                    <Card
-                                                        className={
-                                                            cn(
-                                                                paymentMethod.disabled || isMutating
-                                                                    ? "cursor-not-allowed rounded-none opacity-60"
-                                                                    : "cursor-pointer rounded-none active:scale-[0.99]"
-                                                                , "bg-transparent"
-                                                            )
-                                                            
-                                                        }
-                                                        onClick={
-                                                            paymentMethod.disabled || isMutating
-                                                                ? undefined
-                                                                : () => {
-                                                                    void runCheckout(paymentMethod.type)
-                                                                }
-                                                        }
-                                                    >
-                                                        <Card.Content>
-                                                            <div className="grid grid-cols-3 items-center gap-3">
-                                                                {/* brand SVG logo (public/icons/payment) — fixed height, auto width, no distortion */}
+                                    </AsyncContent>
+                                </div>
+
+                                {/* method groups: domestic (VND) + international (USD, locked when no USD price) */}
+                                {paymentGroups.map((group) => {
+                                    const groupLocked = group.requiresUsd && !hasUsd
+                                    return (
+                                        <div key={group.id} className="flex flex-col gap-3">
+                                            <div className="flex items-center justify-between">
+                                                <Typography type="body-xs" color="muted">{group.label}</Typography>
+                                                <Typography type="body-xs" color="muted">{group.currency}</Typography>
+                                            </div>
+                                            <div className="flex flex-col gap-2">
+                                                {group.methods.map((method) => {
+                                                    const disabled = groupLocked || isMutating
+                                                    // the amount THIS gateway charges (VND domestic, USD international)
+                                                    const amountLabel = group.requiresUsd
+                                                        ? (order?.priceUsd != null ? formatUsd(order.priceUsd) : null)
+                                                        : (order?.priceVnd != null ? formatVnd(order.priceVnd) : null)
+                                                    return (
+                                                        <PressableCard
+                                                            key={method.type}
+                                                            isDisabled={disabled}
+                                                            onPress={() => { void runCheckout(method.type) }}
+                                                        >
+                                                            <div className="flex items-center gap-3">
                                                                 <img
-                                                                    alt={paymentMethod.name}
-                                                                    className="col-span-1 h-8 w-auto max-w-full object-contain object-left"
-                                                                    src={paymentMethod.iconUrl}
+                                                                    alt={method.name}
+                                                                    className="h-8 w-12 shrink-0 object-contain object-left"
+                                                                    src={method.iconUrl}
                                                                 />
-                                                                <div className="col-span-2 flex flex-col gap-1.5">
-                                                                    <div className="flex items-center gap-1.5">
-                                                                        {isMutating &&
-                                                                            selectedPaymentMethod === paymentMethod.type && (
-                                                                            <Spinner size="sm" />
-                                                                        )}
-                                                                        <div className="text-sm text-foreground">{paymentMethod.name}</div>
-                                                                        {paymentMethod.disabled && (
-                                                                            <Chip
-                                                                                className="text-xs"
-                                                                                color="danger"
-                                                                                size="sm"
-                                                                                variant="soft"
-                                                                            >
-                                                                                <Chip.Label>{t("common.disabled")}</Chip.Label>
-                                                                            </Chip>
-                                                                        )}
-                                                                    </div>
-                                                                    <div className="text-xs text-muted">
-                                                                        {paymentMethod.description}
-                                                                    </div>
+                                                                <div className="flex min-w-0 flex-col">
+                                                                    <Typography type="body-sm" weight="semibold">{method.name}</Typography>
+                                                                    <Typography type="body-xs" color="muted" truncate>{method.description}</Typography>
+                                                                </div>
+                                                                <div className="ml-auto flex shrink-0 items-center gap-2">
+                                                                    {amountLabel ? (
+                                                                        <Typography type="body-xs" color="muted">{amountLabel}</Typography>
+                                                                    ) : null}
+                                                                    {isMutating && selectedPaymentMethod === method.type ? (
+                                                                        <Spinner size="sm" />
+                                                                    ) : null}
                                                                 </div>
                                                             </div>
-                                                        </Card.Content>
-                                                    </Card>
-                                                    {index !== group.methods.length - 1 ? <Separator /> : null}
-                                                </React.Fragment>
-                                            ))}
+                                                        </PressableCard>
+                                                    )
+                                                })}
+                                                {groupLocked ? (
+                                                    <Typography type="body-xs" color="muted">{t("payment.intlNoUsd")}</Typography>
+                                                ) : null}
+                                            </div>
                                         </div>
-                                    </div>
-                                ))}
+                                    )
+                                })}
+
+                                {/* trust line — secure-payment reassurance next to the action (Baymard) */}
+                                <div className="flex items-center justify-center gap-2">
+                                    <LockSimpleIcon aria-hidden focusable="false" className="size-5 text-muted" />
+                                    <Typography type="body-xs" color="muted">{t("payment.secure")}</Typography>
+                                </div>
                             </div>
                         </Modal.Body>
                     </Modal.Dialog>

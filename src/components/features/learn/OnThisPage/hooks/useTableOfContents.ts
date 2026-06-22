@@ -51,9 +51,13 @@ export const useTableOfContents = (rescanKey: string | undefined): UseTableOfCon
     // while the article subtree mutates (markdown renders client-side, async).
     useEffect(() => {
         let frame = 0
-        let observer: MutationObserver | undefined
 
-        const scan = (container: HTMLElement) => {
+        const scan = () => {
+            const container = document.getElementById(ARTICLE_ID)
+            if (!container) {
+                setHeadings([])
+                return
+            }
             const nodes = Array.from(container.querySelectorAll<HTMLElement>("[data-toc]"))
             const next = nodes
                 .filter((node) => node.id)
@@ -67,31 +71,32 @@ export const useTableOfContents = (rescanKey: string | undefined): UseTableOfCon
             setHeadings(next)
         }
 
-        // the article may not be mounted yet when this effect runs — poll a few
-        // frames for it, then attach a mutation observer + do the first scan.
-        let attempts = 0
-        const attach = () => {
-            const container = document.getElementById(ARTICLE_ID)
-            if (!container) {
-                if (attempts < 60) {
-                    attempts += 1
-                    frame = requestAnimationFrame(attach)
-                } else {
-                    setHeadings([])
-                }
+        // coalesce mutation bursts into a single scan per frame.
+        const schedule = () => {
+            if (frame) {
                 return
             }
-            scan(container)
-            observer = new MutationObserver(() => scan(container))
-            observer.observe(container, { childList: true, subtree: true })
+            frame = requestAnimationFrame(() => {
+                frame = 0
+                scan()
+            })
         }
-        attach()
+
+        // Observe a STABLE root (document.body) instead of polling a fixed number
+        // of frames for #lesson-article. On a hard reload the article mounts only
+        // after the SWR fetch + markdown render resolves, which can exceed any
+        // fixed timeout — the old 60-frame poll then gave up with an empty outline
+        // and never re-scanned. body always exists, so we reliably catch both the
+        // article mounting and its async heading render, on hard reload AND SPA nav.
+        scan()
+        const observer = new MutationObserver(schedule)
+        observer.observe(document.body, { childList: true, subtree: true })
 
         return () => {
             if (frame) {
                 cancelAnimationFrame(frame)
             }
-            observer?.disconnect()
+            observer.disconnect()
         }
     }, [rescanKey])
 

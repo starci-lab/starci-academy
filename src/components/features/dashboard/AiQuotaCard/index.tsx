@@ -128,7 +128,7 @@ export const AiQuotaCard = ({
                 variant="tertiary"
                 size="sm"
                 className="self-start"
-                onPress={() => router.push(`/${locale}/profile/ai-subscription`)}
+                onPress={() => router.push(`/${locale}/profile/settings/ai-subscription`)}
             >
                 {t("dashboard.aiQuota.upgrade")}
             </Button>

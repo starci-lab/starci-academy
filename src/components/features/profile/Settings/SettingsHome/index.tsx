@@ -14,8 +14,12 @@ import {
 } from "next/navigation"
 import {
     IconTile,
+    PageHeader,
     PressableCard,
 } from "@/components/blocks"
+import {
+    SettingsBreadcrumb,
+} from "../SettingsBreadcrumb"
 import {
     getSettingsGroups,
 } from "../nav"
@@ -44,14 +48,11 @@ export const SettingsHome = ({
 
     return (
         <div className={cn("flex flex-col gap-6", className)}>
-            <div className="flex flex-col gap-2">
-                <Typography type="h4" weight="bold">
-                    {t("profileSettings.title")}
-                </Typography>
-                <Typography type="body-sm" color="muted">
-                    {t("profileSettings.subtitle")}
-                </Typography>
-            </div>
+            <SettingsBreadcrumb current={t("profileSettings.title")} />
+            <PageHeader
+                title={t("profileSettings.title")}
+                description={t("profileSettings.subtitle")}
+            />
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 {items.map((item) => (
                     <PressableCard

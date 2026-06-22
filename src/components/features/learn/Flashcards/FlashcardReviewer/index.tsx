@@ -3,7 +3,7 @@
 import React, { useCallback, useMemo, useState } from "react"
 import useSWR from "swr"
 import { Button, Chip, Typography, cn } from "@heroui/react"
-import { CheckCircleIcon } from "@phosphor-icons/react"
+import { CheckCircleIcon, LockIcon } from "@phosphor-icons/react"
 import { useTranslations, useLocale } from "next-intl"
 import { useRouter } from "next/navigation"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
@@ -52,6 +52,8 @@ export const FlashcardReviewer = ({ deckId, className }: FlashcardReviewerProps)
     const runGraphQL = useGraphQLWithToast()
     // owning course slug drives the deep-links to referenced lessons/modules
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
+    // entitlement: enrolled viewers unlock premium cards (first ~20%/deck stay free)
+    const enrolled = useAppSelector((state) => state.user.enrolled)
     // index of the card currently shown
     const [currentIndex, setCurrentIndex] = useState(0)
     // whether the current card is flipped to its answer side
@@ -85,7 +87,14 @@ export const FlashcardReviewer = ({ deckId, className }: FlashcardReviewerProps)
     )
 
     const card = cards[currentIndex]
+    // a premium card is locked for a non-enrolled viewer — its answer is withheld
+    const isLocked = Boolean(card?.isPremium) && !enrolled
     const isFirst = currentIndex === 0
+
+    /** Open the course page so the viewer can enrol to unlock premium cards. */
+    const onUnlock = useCallback(() => {
+        router.push(pathConfig().locale(locale).course(courseDisplayId).build())
+    }, [router, locale, courseDisplayId])
     // past the last card → the run is complete
     const done = cards.length > 0 && currentIndex >= cards.length
 
@@ -206,25 +215,47 @@ export const FlashcardReviewer = ({ deckId, className }: FlashcardReviewerProps)
                                 <Typography type="body-xs" weight="medium" color="muted">
                                     {t("flashcard.answerLabel")}
                                 </Typography>
-                                {card?.answer ? (
-                                    <MarkdownContent markdown={card.answer} />
+                                {isLocked ? (
+                                    // premium card, viewer not enrolled → withhold the answer
+                                    <div className="flex flex-1 flex-col items-center justify-center gap-3 text-center">
+                                        <LockIcon aria-hidden focusable="false" className="size-8 text-muted" />
+                                        <Typography type="body-sm" weight="semibold">
+                                            {t("flashcard.premiumLockedTitle")}
+                                        </Typography>
+                                        <Typography type="body-xs" color="muted">
+                                            {t("flashcard.premiumLockedHint")}
+                                        </Typography>
+                                    </div>
                                 ) : (
-                                    <Typography type="body-sm" color="muted">
-                                        {t("flashcard.noAnswer")}
-                                    </Typography>
+                                    <>
+                                        {card?.answer ? (
+                                            <MarkdownContent markdown={card.answer} />
+                                        ) : (
+                                            <Typography type="body-sm" color="muted">
+                                                {t("flashcard.noAnswer")}
+                                            </Typography>
+                                        )}
+                                        {card?.explanation ? (
+                                            <MarkdownContent markdown={card.explanation} />
+                                        ) : null}
+                                        <Typography type="body-xs" color="muted" className="mt-auto">
+                                            {t("flashcard.flipBackHint")}
+                                        </Typography>
+                                    </>
                                 )}
-                                {card?.explanation ? (
-                                    <MarkdownContent markdown={card.explanation} />
-                                ) : null}
-                                <Typography type="body-xs" color="muted" className="mt-auto">
-                                    {t("flashcard.flipBackHint")}
-                                </Typography>
                             </>
                         }
                     />
 
-                    {/* reveal first, then grade recall (which advances) */}
-                    {revealed ? (
+                    {/* reveal first, then grade recall (which advances) — unless the card is
+                        locked premium, where we surface an enrol CTA instead of grading */}
+                    {revealed && isLocked ? (
+                        <div className="flex justify-center">
+                            <Button size="sm" variant="primary" onPress={onUnlock}>
+                                {t("flashcard.premiumCta")}
+                            </Button>
+                        </div>
+                    ) : revealed ? (
                         <div className="flex flex-col gap-2">
                             <Typography type="body-xs" color="muted" align="center">
                                 {t("flashcard.review.rateHint")}

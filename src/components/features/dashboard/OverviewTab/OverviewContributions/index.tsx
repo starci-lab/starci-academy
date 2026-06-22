@@ -17,8 +17,10 @@ import {
 } from "@/components/reuseable/ContributionCalendarView"
 import {
     AsyncContent,
-    Skeleton,
 } from "@/components/blocks"
+import {
+    OverviewContributionsSkeleton,
+} from "./OverviewContributionsSkeleton"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -44,7 +46,7 @@ export const OverviewContributions = ({
     return (
         <AsyncContent
             isLoading={isLoading && days.length === 0}
-            skeleton={<Skeleton className="h-40 w-full rounded-xl" />}
+            skeleton={<OverviewContributionsSkeleton className={className} />}
             error={days.length === 0 ? error : undefined}
             errorContent={{
                 title: t("dashboard.loadError"),

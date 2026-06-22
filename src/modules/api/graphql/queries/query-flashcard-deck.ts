@@ -26,6 +26,7 @@ const query1 = gql`
           tags
           sortIndex
           defaultLocale
+          isPremium
         }
         contents {
           id

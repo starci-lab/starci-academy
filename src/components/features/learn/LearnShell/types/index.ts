@@ -25,4 +25,6 @@ export interface LearnNavItem {
     group: LearnNavGroup
     /** Navigation target the row routes to when pressed. */
     url?: string
+    /** Whether this surface is locked for the viewer (enroll-required + not enrolled). */
+    locked?: boolean
 }

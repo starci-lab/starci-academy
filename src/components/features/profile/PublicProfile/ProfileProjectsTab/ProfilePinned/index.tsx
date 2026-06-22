@@ -87,7 +87,6 @@ export const ProfilePinned = ({
             className={className}
         >
             <AsyncContent
-                debug={true}
                 isLoading={isLoading && !data}
                 skeleton={(
                     // mirror the responsive two-column pinned grid (two card boxes)

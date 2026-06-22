@@ -228,7 +228,6 @@ export const ProfileAchievements = ({
             icon={<TrophyIcon aria-hidden focusable="false" className="size-5" />}
         >
             <AsyncContent
-                debug={true}
                 isLoading={(isLoading || !userId) && items.length === 0}
                 skeleton={
                     <div className="flex flex-col gap-6">

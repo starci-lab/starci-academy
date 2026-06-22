@@ -205,6 +205,11 @@ export const ProfileCoding = ({
                     </div>
                 </div>
             )}
+            isEmpty={solved === 0 && !hasStats && solvedHistory.length === 0}
+            emptyContent={{
+                title: t("publicProfile.coding.empty"),
+                description: t("publicProfile.coding.emptyHint"),
+            }}
             error={error}
             errorContent={{
                 title: t("publicProfile.loadError"),

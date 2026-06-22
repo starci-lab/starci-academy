@@ -26,8 +26,12 @@ import {
 import {
     AsyncContent,
     LabeledCard,
+    PageHeader,
     Skeleton,
 } from "@/components/blocks"
+import {
+    SettingsBreadcrumb,
+} from "../SettingsBreadcrumb"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -75,14 +79,11 @@ export const MyFeedback = ({
 
     return (
         <div className={cn("flex flex-col gap-6", className)}>
-            <div className="flex flex-col gap-2">
-                <Typography type="h4" weight="bold">
-                    {t("profileSettings.learning.feedback.title")}
-                </Typography>
-                <Typography type="body-sm" color="muted">
-                    {t("profileSettings.learning.feedback.subtitle")}
-                </Typography>
-            </div>
+            <SettingsBreadcrumb current={t("profileSettings.learning.feedback.title")} />
+            <PageHeader
+                title={t("profileSettings.learning.feedback.title")}
+                description={t("profileSettings.learning.feedback.subtitle")}
+            />
 
             <LabeledCard
                 label={t("profileSettings.learning.feedback.title")}

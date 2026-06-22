@@ -150,7 +150,6 @@ export const ProfileHero = ({
 
     return (
         <AsyncContent
-            debug={true}
             isLoading={isLoading && !user}
             skeleton={<ProfileHeroSkeleton className={className} />}
         >

@@ -118,6 +118,14 @@ export const EditProfile = () => {
             locale,
         ],
     )
+    /** Navigate to the settings root (breadcrumb parent of every settings page). */
+    const onNavigateSettings = useCallback(
+        () => router.push(pathConfig().locale(locale).profile().settings().build()),
+        [
+            router,
+            locale,
+        ],
+    )
 
     // signed-out guard
     if (!user) {
@@ -141,6 +149,9 @@ export const EditProfile = () => {
                 </Breadcrumbs.Item>
                 <Breadcrumbs.Item onPress={onNavigateProfile}>
                     {t("nav.profile")}
+                </Breadcrumbs.Item>
+                <Breadcrumbs.Item onPress={onNavigateSettings}>
+                    {t("nav.settings")}
                 </Breadcrumbs.Item>
                 <Breadcrumbs.Item>
                     {t("profileEdit.title")}

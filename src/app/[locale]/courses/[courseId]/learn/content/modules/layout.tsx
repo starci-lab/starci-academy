@@ -32,9 +32,11 @@ const Layout = ({ children }: LayoutProps) => {
     // contributes the modules breadcrumb above the lesson article.
     return (
         <>
-            {/* breadcrumb (tier 1) capped to the same reading width as the header + content below */}
+            {/* breadcrumb (tier 1) capped to the same reading width as the header + content below.
+                No own padding — it shares the LearnShell column's p-6 (a separate px-3/pt-3 wrapper
+                would double-pad + push the breadcrumb off the header's left edge). */}
             {!isChallenge ? (
-                <div className="mx-auto w-full max-w-3xl px-3 pt-3">
+                <div className="mx-auto w-full max-w-3xl">
                     {isLoading ? (
                         <Skeleton className="h-5 w-32" />
                     ) : (

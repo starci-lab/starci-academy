@@ -5,6 +5,9 @@ import {
     useTranslations,
 } from "next-intl"
 import {
+    LockSimpleIcon,
+} from "@phosphor-icons/react"
+import {
     CollapsibleSidebar,
     SidebarNavGroup,
     SidebarNavItem,
@@ -72,6 +75,13 @@ export const LearnSidebar = ({ className }: LearnSidebarProps) => {
                                 icon={<item.icon className="size-5 shrink-0" />}
                                 label={item.label}
                                 isActive={selectedTab === item.tab}
+                                endContent={item.locked ? (
+                                    <LockSimpleIcon
+                                        aria-label={t("enrollGate.locked")}
+                                        focusable="false"
+                                        className="size-4 text-muted"
+                                    />
+                                ) : undefined}
                                 onPress={() => onSelect(item)}
                             />
                         ))}

@@ -25,8 +25,12 @@ import {
     AsyncContent,
     LabeledCard,
     ListRow,
+    PageHeader,
     Skeleton,
 } from "@/components/blocks"
+import {
+    SettingsBreadcrumb,
+} from "../SettingsBreadcrumb"
 import {
     EntityToken,
 } from "@/components/features/dashboard/EntityToken"
@@ -70,14 +74,11 @@ export const MyAttempts = ({
 
     return (
         <div className={cn("flex flex-col gap-6", className)}>
-            <div className="flex flex-col gap-2">
-                <Typography type="h4" weight="bold">
-                    {t("profileSettings.learning.attempts.title")}
-                </Typography>
-                <Typography type="body-sm" color="muted">
-                    {t("profileSettings.learning.attempts.subtitle")}
-                </Typography>
-            </div>
+            <SettingsBreadcrumb current={t("profileSettings.learning.attempts.title")} />
+            <PageHeader
+                title={t("profileSettings.learning.attempts.title")}
+                description={t("profileSettings.learning.attempts.subtitle")}
+            />
 
             <LabeledCard
                 label={t("profileSettings.learning.attempts.title")}
@@ -95,6 +96,7 @@ export const MyAttempts = ({
                     isEmpty={items.length === 0}
                     emptyContent={{
                         title: t("profileSettings.learning.attempts.empty"),
+                        description: t("profileSettings.learning.attempts.emptyHint"),
                     }}
                     error={!swr.data ? swr.error : undefined}
                     errorContent={{

@@ -27,7 +27,7 @@ export const AiQuotaHeader = () => {
                         {t("aiQuota.title")}
                     </span>
                     {quota?.tier ? (
-                        <Chip size="sm" color="warning" variant="soft">
+                        <Chip size="sm" color={quota.tier === "max" ? "warning" : "default"} variant="soft">
                             {quota.tier.toUpperCase()}
                         </Chip>
                     ) : null}

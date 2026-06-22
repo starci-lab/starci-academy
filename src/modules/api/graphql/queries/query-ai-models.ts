@@ -36,6 +36,7 @@ const query1 = gql`
           provider
           category
           complimentary
+          available
         }
       }
     }

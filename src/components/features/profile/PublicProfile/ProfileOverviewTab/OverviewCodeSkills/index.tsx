@@ -68,7 +68,6 @@ export const OverviewCodeSkills = ({ className }: OverviewCodeSkillsProps) => {
 
     return (
         <AsyncContent
-            debug={true}
             isLoading={(isLoading || !userId) && totalSolved === 0 && !data}
             skeleton={(
                 <div className="flex flex-col gap-3">

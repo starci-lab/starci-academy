@@ -9,7 +9,7 @@ import useSWR from "swr"
  */
 export const useQueryAiSubscriptionTiersSwr = () => {
     const pathname = usePathname()
-    const onPage = pathname.includes("/profile/ai-subscription")
+    const onPage = pathname.includes("/profile/settings/ai-subscription")
     const swr = useSWR(
         onPage ? ["QUERY_AI_SUBSCRIPTION_TIERS_SWR"] : null,
         async () => {

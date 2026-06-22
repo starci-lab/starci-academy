@@ -20,4 +20,9 @@ export interface FlashcardCardEntity extends AbstractEntity {
     defaultLocale: string
     /** Parent deck id. */
     deckId?: string
+    /**
+     * Whether this card is premium. First ~20% of each deck is free; the rest is
+     * premium (unlocked by enrolling in the deck's course).
+     */
+    isPremium?: boolean
 }

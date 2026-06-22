@@ -21,6 +21,8 @@ export interface SidebarNavItemProps extends WithClassNames<undefined> {
     label: string
     /** Whether this is the current destination (accent fill). */
     isActive?: boolean
+    /** Optional trailing content pinned to the row's right edge (e.g. a lock badge). Hidden when collapsed. */
+    endContent?: React.ReactNode
     /** Fired when the row is activated. */
     onPress: () => void
 }
@@ -41,6 +43,7 @@ export const SidebarNavItem = ({
     icon,
     label,
     isActive = false,
+    endContent,
     onPress,
     className,
 }: SidebarNavItemProps) => {
@@ -65,12 +68,15 @@ export const SidebarNavItem = ({
             {!collapsed ? (
                 <Typography
                     type="body-sm"
-                    className={cn(isActive ? "text-accent" : undefined)}
+                    className={cn("min-w-0 flex-1", isActive ? "text-accent" : undefined)}
                     weight={isActive ? "medium" : "normal"}
                     truncate
                 >
                     {label}
                 </Typography>
+            ) : null}
+            {!collapsed && endContent ? (
+                <span className="ml-auto shrink-0">{endContent}</span>
             ) : null}
         </Link>
     )

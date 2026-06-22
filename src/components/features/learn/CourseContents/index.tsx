@@ -3,13 +3,10 @@
 import React, {
     useCallback,
     useMemo,
-    useState,
 } from "react"
 import {
-    Accordion,
     Button,
-    Input,
-    TextField,
+    Chip,
     Typography,
     cn,
 } from "@heroui/react"
@@ -17,15 +14,18 @@ import {
     useLocale,
     useTranslations,
 } from "next-intl"
+import numeral from "numeral"
 import {
     useRouter,
 } from "next/navigation"
 import {
     CheckCircleIcon,
     CircleIcon,
+    ClockIcon,
     LockIcon,
     PlayIcon,
-    PuzzlePieceIcon,
+    StackIcon,
+    UsersIcon,
 } from "@phosphor-icons/react"
 import {
     useAppSelector,
@@ -38,9 +38,9 @@ import {
     DifficultyChip,
     ListRow,
     ProgressMeter,
-    StatusChip,
 } from "@/components/blocks"
 import { LearnBreadcrumb } from "../shared/LearnBreadcrumb"
+import { useCourseTotals } from "../../course/CourseDetail/hooks/useCourseTotals"
 import type {
     MyCourseOutlineModule,
 } from "@/modules/api"
@@ -51,10 +51,8 @@ import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 import {
-    isAttempted,
     resolveResumeHref,
     toDifficulty,
-    toStatusTone,
 } from "./map"
 import {
     CourseContentsSkeleton,
@@ -64,43 +62,15 @@ import {
 export type CourseContentsProps = WithClassNames<undefined>
 
 /**
- * Filter modules + their lessons by a lower-cased query. A module survives when
- * its own title matches OR it has at least one matching lesson; surviving modules
- * keep only their matching lessons (or all when the module title itself matched).
- * Empty query → unchanged.
- *
- * @param modules - The course's modules.
- * @param query - Lower-cased trimmed search query.
- * @returns The filtered modules.
- */
-const filterModules = (
-    modules: Array<MyCourseOutlineModule>,
-    query: string,
-): Array<MyCourseOutlineModule> => {
-    if (!query) {
-        return modules
-    }
-    const result: Array<MyCourseOutlineModule> = []
-    for (const module of modules) {
-        const moduleMatches = module.title.toLowerCase().includes(query)
-        const lessons = moduleMatches
-            ? module.lessons
-            : module.lessons.filter((lesson) => lesson.title.toLowerCase().includes(query))
-        if (moduleMatches || lessons.length > 0) {
-            result.push({ ...module, lessons })
-        }
-    }
-    return result
-}
-
-/**
- * Course learn home — the focused "continue learning" hub for `/learn`. A single
- * reading column: TIER-1 breadcrumb → TIER-2 header (course title + one honest
- * completion meter + the single primary "Continue" action) → TIER-3 the content
- * index (module → lesson → challenge tree, the current module expanded). The other
- * learn surfaces (leaderboard, flashcards, practice…) live behind the sidebar — this
- * page deliberately does NOT duplicate them. Reads the active course id/displayId
- * from Redux, fetches `myCourseOutline`, and lets each lesson row open the reader.
+ * Course-content home — the dashboard for `/learn/content`. The full module →
+ * lesson tree now lives in the left content-map rail (its one home, shared with the
+ * lesson reader), so the body is a focused dashboard rather than a second tree:
+ * TIER-1 breadcrumb → TIER-2 header (course title + one-line description + catalog
+ * meta, then one honest completion meter + the single primary "Continue" action,
+ * resuming CONTENT via `nextContentTask`) → TIER-3 the "keep going" path = the
+ * current module's lessons (highlighting the next one). Other learn surfaces
+ * (leaderboard, flashcards, practice…) live behind the sidebar — this page
+ * deliberately does NOT duplicate them.
  *
  * @param props - {@link CourseContents}
  */
@@ -111,16 +81,16 @@ export const CourseContents = ({ className }: CourseContentsProps) => {
     const courseId = useAppSelector((state) => state.course.id)
     const displayId = useAppSelector((state) => state.course.displayId)
     const courseTitle = useAppSelector((state) => state.course.entity?.title)
+    const courseDescription = useAppSelector((state) => state.course.entity?.description)
+    const enrollmentCount = useAppSelector((state) => state.course.entity?.enrollmentCount) ?? 0
+
+    // catalog meta (chương · giờ học · học viên) — derived client-side from the loaded
+    // course tree, identity facts the progress stat line below does NOT carry.
+    const totals = useCourseTotals()
+    const readingHours = Math.max(1, Math.round(totals.totalMinutes / 60))
 
     const outlineSwr = useQueryMyCourseOutlineSwr(courseId ?? null)
     const outline = outlineSwr.data
-
-    const [search, setSearch] = useState("")
-    const query = search.trim().toLowerCase()
-    const modules = useMemo(
-        () => (outline ? filterModules(outline.modules, query) : []),
-        [outline, query],
-    )
 
     /**
      * The pointer the "Tiếp tục học" action resumes. CONTENT-FIRST: the next unread
@@ -145,7 +115,7 @@ export const CourseContents = ({ className }: CourseContentsProps) => {
         [outline, resumePointer, locale, displayId],
     )
 
-    /** Title of the resume target (walk the tree by id) for the continue card. */
+    /** Title of the resume target (walk the tree by id) for the continue line. */
     const resumeTitle = useMemo(() => {
         if (!outline || !resumePointer) {
             return null
@@ -177,23 +147,46 @@ export const CourseContents = ({ className }: CourseContentsProps) => {
         return null
     }, [outline, resumePointer])
 
-    /** Module id to expand on first paint: the one owning the current task, else the first. */
-    const initialExpandedModuleId = useMemo(() => {
+    /**
+     * The module the learner is currently in: the one owning the resume pointer, else
+     * the first module. Its lessons are the "keep going" path shown in the body.
+     */
+    const currentModule = useMemo<MyCourseOutlineModule | undefined>(() => {
         if (!outline) {
             return undefined
         }
-        const current = outline.currentTask
-        if (current) {
+        const pointer = outline.nextContentTask ?? outline.currentTask
+        if (pointer) {
             const owning = outline.modules.find((module) =>
                 module.lessons.some((lesson) =>
-                    lesson.id === current.id
-                    || lesson.challenges.some((challenge) => challenge.id === current.id)))
+                    lesson.id === pointer.id
+                    || lesson.challenges.some((challenge) => challenge.id === pointer.id)))
             if (owning) {
-                return owning.id
+                return owning
             }
         }
-        return outline.modules[0]?.id
+        return outline.modules[0]
     }, [outline])
+
+    /** The lesson to highlight in the path: the resume lesson, or the resume challenge's owner. */
+    const activeLessonId = useMemo(() => {
+        if (!outline || !resumePointer) {
+            return undefined
+        }
+        if (resumePointer.kind === "lesson") {
+            return resumePointer.id
+        }
+        if (resumePointer.kind === "challenge") {
+            for (const module of outline.modules) {
+                const lesson = module.lessons.find((entry) =>
+                    entry.challenges.some((challenge) => challenge.id === resumePointer.id))
+                if (lesson) {
+                    return lesson.id
+                }
+            }
+        }
+        return undefined
+    }, [outline, resumePointer])
 
     /** Navigate into the reader for the chosen lesson. */
     const onSelectLesson = useCallback(
@@ -216,7 +209,7 @@ export const CourseContents = ({ className }: CourseContentsProps) => {
     }, [router, resumeHref])
 
     return (
-        <div className={cn("p-3", className)}>
+        <div className={className}>
             <AsyncContent
                 isLoading={!outlineSwr.data && !outlineSwr.error}
                 skeleton={<CourseContentsSkeleton className="mx-auto max-w-3xl" />}
@@ -234,12 +227,51 @@ export const CourseContents = ({ className }: CourseContentsProps) => {
                 {outline ? (
                     <div className="mx-auto flex max-w-3xl flex-col gap-6">
                         {/* region A — identity + the one primary action (continue), a gap-3 cluster;
-                            the outer gap-6 sets it apart from the browse region below. */}
+                            the outer gap-6 sets it apart from the path region below. */}
                         <div className="flex flex-col gap-3">
                             <LearnBreadcrumb />
-                            <Typography type="h3" weight="bold">
-                                {courseTitle ?? outline.course.title}
-                            </Typography>
+
+                            {/* header identity: title + one-line description (gap-2 pair) + a
+                                static catalog meta row (chương · giờ · học viên) so the title
+                                no longer stands bare/duplicating the last breadcrumb crumb. */}
+                            <div className="flex flex-col gap-3">
+                                <div className="flex flex-col gap-2">
+                                    <Typography type="h3" weight="bold">
+                                        {courseTitle ?? outline.course.title}
+                                    </Typography>
+                                    {courseDescription ? (
+                                        <Typography type="body-sm" color="muted" className="line-clamp-2">
+                                            {courseDescription}
+                                        </Typography>
+                                    ) : null}
+                                </div>
+                                {totals.moduleCount > 0 ? (
+                                    <div className="flex flex-wrap items-center gap-2">
+                                        <Chip color="default">
+                                            <StackIcon className="size-5" />
+                                            <Chip.Label>
+                                                {t("courseContents.metaModules", { count: totals.moduleCount })}
+                                            </Chip.Label>
+                                        </Chip>
+                                        <Chip color="default">
+                                            <ClockIcon className="size-5" />
+                                            <Chip.Label>
+                                                {t("courseContents.metaHours", { hours: readingHours })}
+                                            </Chip.Label>
+                                        </Chip>
+                                        {enrollmentCount > 0 ? (
+                                            <Chip color="default">
+                                                <UsersIcon className="size-5" />
+                                                <Chip.Label>
+                                                    {t("courseContents.metaLearners", {
+                                                        count: numeral(enrollmentCount).format("0,0"),
+                                                    })}
+                                                </Chip.Label>
+                                            </Chip>
+                                        ) : null}
+                                    </div>
+                                ) : null}
+                            </div>
 
                             {/* continue + progress — flat (no card frame), the honest unified meter */}
                             <div className="flex flex-col gap-3">
@@ -288,153 +320,67 @@ export const CourseContents = ({ className }: CourseContentsProps) => {
                                             done: outline.progress.challengesCompleted,
                                             total: outline.progress.challengesTotal,
                                         }),
-                                        ...(outline.progress.tasksTotal > 0
-                                            ? [t("courseContents.tasksStat", {
-                                                done: outline.progress.tasksCompleted,
-                                                total: outline.progress.tasksTotal,
-                                            })]
-                                            : []),
                                     ].join(" · ")}
                                 </Typography>
                             </div>
                         </div>
 
-                        {/* region B — browse: search + content index, a gap-3 cluster */}
-                        <div className="flex flex-col gap-3">
-                            {/* search over the lesson collection */}
-                            <TextField variant="secondary">
-                                <Input
-                                    aria-label={t("courseContents.searchAria")}
-                                    value={search}
-                                    onChange={(event) => setSearch(event.target.value)}
-                                    placeholder={t("courseContents.searchPlaceholder")}
-                                />
-                            </TextField>
-
-                            {/* tier-3 content index: module → lesson → challenge tree */}
-                            {modules.length > 0 ? (
-                                <Accordion
-                                    variant="surface"
-                                    defaultExpandedKeys={initialExpandedModuleId
-                                        ? new Set([initialExpandedModuleId])
-                                        : undefined}
-                                >
-                                    {modules.map((module) => (
-                                        <Accordion.Item key={module.id} id={module.id} aria-label={module.title}>
-                                            <Accordion.Heading className="min-w-0">
-                                                <Accordion.Trigger className="min-w-0 w-full">
-                                                    <div className="flex w-full min-w-0 items-center justify-between gap-3">
-                                                        <div className="flex min-w-0 flex-1 items-center gap-2">
-                                                            <Typography
-                                                                type="body-sm"
-                                                                weight="semibold"
-                                                                truncate
-                                                                title={module.title}
-                                                            >
-                                                                {module.title}
-                                                            </Typography>
-                                                            {module.isPremium ? (
-                                                                <LockIcon
-                                                                    aria-label={t("courseContents.premium")}
-                                                                    focusable="false"
-                                                                    className="size-5 text-muted"
-                                                                />
-                                                            ) : null}
-                                                        </div>
-                                                        <div className="flex shrink-0 items-center gap-2">
-                                                            <Typography type="body-xs" color="muted">
-                                                                {t("courseContents.lessonCount", {
-                                                                    count: module.lessons.length,
-                                                                })}
-                                                            </Typography>
-                                                            <Accordion.Indicator />
-                                                        </div>
-                                                    </div>
-                                                </Accordion.Trigger>
-                                            </Accordion.Heading>
-                                            <Accordion.Panel>
-                                                <Accordion.Body>
-                                                    <div className="flex flex-col gap-2">
-                                                        {module.lessons.map((lesson) => (
-                                                            <div key={lesson.id} className="flex flex-col gap-2">
-                                                                <ListRow
-                                                                    title={lesson.title}
-                                                                    subtitle={t("content.minutesRead", {
-                                                                        minutes: lesson.minutesRead,
-                                                                    })}
-                                                                    onPress={() => onSelectLesson(lesson.id, module.id)}
-                                                                    meta={(
-                                                                        <>
-                                                                            {lesson.difficulty ? (
-                                                                                <DifficultyChip difficulty={toDifficulty(lesson.difficulty)} />
-                                                                            ) : null}
-                                                                            {lesson.isPremium ? (
-                                                                                <LockIcon
-                                                                                    aria-label={t("courseContents.premium")}
-                                                                                    focusable="false"
-                                                                                    className="size-5 text-muted"
-                                                                                />
-                                                                            ) : null}
-                                                                            {lesson.isRead ? (
-                                                                                <CheckCircleIcon
-                                                                                    aria-label={t("courseContents.read")}
-                                                                                    focusable="false"
-                                                                                    className="size-5 text-success"
-                                                                                />
-                                                                            ) : (
-                                                                                <CircleIcon
-                                                                                    aria-label={t("courseContents.unread")}
-                                                                                    focusable="false"
-                                                                                    className="size-5 text-muted"
-                                                                                />
-                                                                            )}
-                                                                        </>
-                                                                    )}
-                                                                />
-                                                                {lesson.challenges.length > 0 ? (
-                                                                    <div className="flex flex-col gap-2 pl-6">
-                                                                        {lesson.challenges.map((challenge) => (
-                                                                            <ListRow
-                                                                                key={challenge.id}
-                                                                                leading={(
-                                                                                    <PuzzlePieceIcon
-                                                                                        aria-hidden
-                                                                                        focusable="false"
-                                                                                        className="size-5 text-muted"
-                                                                                    />
-                                                                                )}
-                                                                                title={challenge.title}
-                                                                                meta={(
-                                                                                    <>
-                                                                                        <DifficultyChip difficulty={toDifficulty(challenge.difficulty)} />
-                                                                                        <StatusChip tone={toStatusTone(challenge.status)}>
-                                                                                            {t(`courseContents.status.${challenge.status}`)}
-                                                                                        </StatusChip>
-                                                                                        {isAttempted(challenge.status) ? (
-                                                                                            <Typography type="body-xs" color="muted">
-                                                                                                {`${challenge.lastScore}/${challenge.maxScore}`}
-                                                                                            </Typography>
-                                                                                        ) : null}
-                                                                                    </>
-                                                                                )}
-                                                                            />
-                                                                        ))}
-                                                                    </div>
-                                                                ) : null}
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                </Accordion.Body>
-                                            </Accordion.Panel>
-                                        </Accordion.Item>
-                                    ))}
-                                </Accordion>
-                            ) : (
-                                <Typography type="body-sm" color="muted" align="center">
-                                    {t("courseContents.noMatch")}
+                        {/* region B — keep-going path: the current module's lessons. The full
+                            module → lesson tree lives in the left content-map rail, so the body
+                            never re-draws it; here we only surface "where you are + what's next". */}
+                        {currentModule ? (
+                            <div className="flex flex-col gap-3">
+                                <Typography type="body-sm" weight="semibold" color="muted">
+                                    {t("courseContents.keepGoing")} · {currentModule.title}
                                 </Typography>
-                            )}
-                        </div>
+                                <div className="flex flex-col gap-1">
+                                    {currentModule.lessons.map((lesson) => (
+                                        <ListRow
+                                            key={lesson.id}
+                                            className={cn("px-3", lesson.id === activeLessonId && "bg-accent/10")}
+                                            leading={lesson.id === activeLessonId ? (
+                                                <PlayIcon
+                                                    aria-hidden
+                                                    focusable="false"
+                                                    className="size-5 text-accent"
+                                                />
+                                            ) : lesson.isRead ? (
+                                                <CheckCircleIcon
+                                                    aria-label={t("courseContents.read")}
+                                                    focusable="false"
+                                                    className="size-5 text-success"
+                                                />
+                                            ) : (
+                                                <CircleIcon
+                                                    aria-label={t("courseContents.unread")}
+                                                    focusable="false"
+                                                    className="size-5 text-muted"
+                                                />
+                                            )}
+                                            title={lesson.title}
+                                            subtitle={t("content.minutesRead", {
+                                                minutes: lesson.minutesRead,
+                                            })}
+                                            onPress={() => onSelectLesson(lesson.id, currentModule.id)}
+                                            meta={(
+                                                <>
+                                                    {lesson.difficulty ? (
+                                                        <DifficultyChip difficulty={toDifficulty(lesson.difficulty)} />
+                                                    ) : null}
+                                                    {lesson.isPremium ? (
+                                                        <LockIcon
+                                                            aria-label={t("courseContents.premium")}
+                                                            focusable="false"
+                                                            className="size-5 text-muted"
+                                                        />
+                                                    ) : null}
+                                                </>
+                                            )}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                        ) : null}
                     </div>
                 ) : null}
             </AsyncContent>

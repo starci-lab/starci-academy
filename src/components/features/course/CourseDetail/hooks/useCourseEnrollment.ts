@@ -54,8 +54,10 @@ export const useCourseEnrollment = (): UseCourseEnrollmentResult => {
         [open],
     )
     const onContinueLearning = useCallback(
+        // land on the course-content dashboard (`/learn/content`); the module list/overview
+        // surface was removed, so the learner resumes from the dashboard's "Continue" action.
         () => router.push(
-            pathConfig().locale(locale).course(courseDisplayId).learn().module().build(),
+            pathConfig().locale(locale).course(courseDisplayId).learn().content().build(),
         ),
         [router, locale, courseDisplayId],
     )

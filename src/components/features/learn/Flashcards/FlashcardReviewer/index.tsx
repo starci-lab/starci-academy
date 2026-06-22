@@ -287,38 +287,6 @@ export const FlashcardReviewer = ({ deckId, className }: FlashcardReviewerProps)
                                     </div>
                                 </div>
                             ) : null}
-                            {data?.modules?.length ? (
-                                <div className="flex flex-col gap-2">
-                                    <Typography type="body-xs" color="muted">
-                                        {t("flashcard.relatedModules")}
-                                    </Typography>
-                                    <div className="flex flex-wrap gap-2">
-                                        {data.modules.map((module) => (
-                                            <Button
-                                                key={module.id}
-                                                size="sm"
-                                                variant="secondary"
-                                                isDisabled={!courseDisplayId}
-                                                onPress={() => {
-                                                    if (!courseDisplayId) {
-                                                        return
-                                                    }
-                                                    router.push(
-                                                        pathConfig()
-                                                            .locale(locale)
-                                                            .course(courseDisplayId)
-                                                            .learn()
-                                                            .module(module.id)
-                                                            .build(),
-                                                    )
-                                                }}
-                                            >
-                                                {module.title}
-                                            </Button>
-                                        ))}
-                                    </div>
-                                </div>
-                            ) : null}
                         </div>
                     ) : null}
                 </div>

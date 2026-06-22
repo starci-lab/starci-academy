@@ -198,3 +198,31 @@ KHÔNG bê data trang khác (rank…) lên home. Thầy chọn **"không thêm g
   KHÔNG dựng.
 - **Kết quả:** `/learn` = home "tiếp tục học" gọn 1 cột (`max-w-3xl`), không trùng sidebar. Các surface khác vào
   qua sidebar như cũ. Đã dựng trong `CourseContents/index.tsx` + skeleton mirror.
+
+---
+
+## > CHỐT 2026-06-21 (v2) — Workspace dashboard tại `/learn/content` (rail + dashboard)
+Thầy đổi hướng: route `/learn` → **`/learn/content`** (segment riêng) + render trang đó thành **dashboard kiểu
+workspace** (giống bố cục trang Dự án cá nhân: rail trái + thân dashboard), KHÔNG còn 1-cột-nhúng-cây. Lý do gốc:
+cây accordion trong thân = "cây thứ 2" trùng vai rail `ContentMap` của reader. **Đính chính** [[course-home-vertical-rhythm-gap3]]
+(bản v1 = continue phẳng 1 cột) cho layout workspace mới.
+
+- **Phân vai rõ (thầy chốt): "personal-project là personal-project, content là content".** KHÔNG clone/đồng bộ
+  2 surface; content dashboard chỉ **mượn bố cục** (rail + dashboard), tuyệt đối KHÔNG bê data/khái niệm capstone
+  (milestone/task/github) sang. Ref [[course-home-no-duplicate-surfaces]].
+- **Đã dựng:**
+  1. `learn/layout.tsx`: thêm `isContent = segment === "content"` → `leftRail = <ContentMap/>` (cây nội dung về rail,
+     dùng lại đúng rail của reader; storageKey chung `starci.learn.contentMap.width`). rightRail vẫn modules-only.
+  2. `CourseContents/index.tsx`: bỏ search + accordion cả-cây. Thân = **dashboard content-scoped**: breadcrumb →
+     header (title + desc + meta chương/giờ/học viên) → **continue PHẲNG** (`nextContentTask`, content-first) +
+     `ProgressMeter` completion + đếm **bài/challenge** (BỎ tasksStat — capstone không thuộc content) → **region B
+     "Đi tiếp lộ trình"** = lessons của **module hiện tại** (highlight bài kế = `activeLessonId`, đọc/chưa-đọc icon,
+     difficulty/premium meta), mỗi row → reader. Cây đầy đủ ở rail.
+  3. Skeleton mirror cấu trúc mới (header + continue + path rows, KHÔNG search/accordion).
+  4. i18n: thêm key `courseContents.keepGoing` (vi "Đi tiếp lộ trình" / en "Keep going").
+- **Land thẳng dashboard, KHÔNG auto-forward vào bài.** `/learn/content` không dính `useDefaultRedirect` nên land
+  đúng dashboard. (personal-project vẫn bị forward vào task đầu qua `useDefaultRedirect` — để riêng, KHÔNG đụng lần
+  này theo yêu cầu thầy; nguyên tắc ghi ở draft [[surface-lands-on-dashboard-no-auto-forward]].)
+- **Chưa làm (đề xuất sau, hỏi thầy):** completion% vẫn là equal-weight gồm tasks (BE) — nếu muốn % "thuần nội dung"
+  phải sửa BE; rail `ContentMap` mặc định không auto-mở module hiện tại trên trang content (giữ nguyên vì share reader).
+- Verify: `tsc`/`eslint` sạch cho file đã sửa (lỗi tsc `MindMap/ModuleNode.pastelBackground` là có sẵn, ngoài phạm vi).

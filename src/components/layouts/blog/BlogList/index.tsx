@@ -2,60 +2,46 @@
 
 import React, { useState } from "react"
 import useSWR from "swr"
-import { Card, CardContent, Chip, Spinner } from "@heroui/react"
+import { Button } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
-import { Link } from "@/i18n/navigation"
-import {
-    queryBlogPosts,
-    BlogCategory,
-    type QueryBlogPostListItem,
-} from "@/modules/api/graphql"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { queryBlogPosts, BlogCategory } from "@/modules/api/graphql"
+import { CategoryFilter } from "./CategoryFilter"
+import { FeaturedPost } from "./FeaturedPost"
+import { PostRow } from "../shared/PostRow"
+import { BlogListSkeleton } from "./BlogListSkeleton"
 
-/** Category filter options (null = all). */
-const CATEGORY_FILTERS: Array<BlogCategory | null> = [
-    null,
-    BlogCategory.Codebase,
-    BlogCategory.DeepDive,
-    BlogCategory.BuildInPublic,
-    BlogCategory.Career,
-    BlogCategory.Ai,
-    BlogCategory.CaseStudy,
-]
-
-/** HeroUI Chip color per editorial pillar. */
-const CATEGORY_COLOR: Record<BlogCategory, "accent" | "success" | "warning" | "danger" | "default"> = {
-    [BlogCategory.Codebase]: "accent",
-    [BlogCategory.DeepDive]: "accent",
-    [BlogCategory.BuildInPublic]: "danger",
-    [BlogCategory.Career]: "success",
-    [BlogCategory.Ai]: "warning",
-    [BlogCategory.CaseStudy]: "default",
-}
+/** Posts fetched per page / "load more" step (mirrors the backend default). */
+const PAGE_SIZE = 12
 
 /**
- * Public `/blog` listing. Client component: fetches published posts via SWR
- * (re-keyed by the active category filter) and renders a responsive card grid.
- * Body is not fetched here — each card links to the `/blog/[slug]` article.
+ * Public `/blog` listing (Direction C — featured lead + typographic list).
+ *
+ * Fetches published posts via SWR (re-keyed by the active pillar + grown limit),
+ * then renders an editorial lead (newest post) above a text-first list with
+ * load-more pagination. Cover images are used only when present — the layout is
+ * built for the coverless reality of the content.
  */
 export const BlogList = () => {
     const t = useTranslations("blog")
     const locale = useLocale()
     // active editorial-pillar filter (null = all)
     const [category, setCategory] = useState<BlogCategory | null>(null)
+    // grows by PAGE_SIZE on "load more"; reset when the filter changes
+    const [limit, setLimit] = useState(PAGE_SIZE)
 
-    // fetch the post page; re-keys when the category filter changes
-    const { data, isLoading } = useSWR(
-        ["blog-posts", category],
+    // keepPreviousData → old posts stay visible while the next page/filter loads,
+    // so the skeleton only ever shows on the very first paint
+    const { data, isLoading, isValidating, error, mutate } = useSWR(
+        ["blog-posts", category, limit],
         async () => {
             const response = await queryBlogPosts({
-                request: {
-                    ...(category ? { category } : {}),
-                    limit: 24,
-                    offset: 0,
-                },
+                request: { ...(category ? { category } : {}), limit, offset: 0 },
             })
-            return response.data?.blogPosts.data ?? null
+            return response.data?.blogPosts.data ?? []
         },
+        { keepPreviousData: true },
     )
 
     // localized publish-date formatter (short, calendar style)
@@ -66,101 +52,86 @@ export const BlogList = () => {
             day: "numeric",
         })
 
+    const posts = data ?? []
+    const [featured, ...rest] = posts
+    // a full page came back → there may be more to load
+    const hasMore = posts.length >= limit
+
+    // switching pillar resets pagination back to the first page
+    const changeCategory = (next: BlogCategory | null) => {
+        setCategory(next)
+        setLimit(PAGE_SIZE)
+    }
+
     return (
-        <div className="mx-auto flex max-w-5xl flex-col gap-6 p-6">
-            {/* ── header ── */}
-            <div className="flex flex-col gap-1.5">
-                <h1 className="text-2xl font-bold">{t("title")}</h1>
-                <p className="text-sm text-muted">{t("subtitle")}</p>
-            </div>
+        <div className="mx-auto flex max-w-3xl flex-col gap-6 p-6">
+            {/* zone A — identity */}
+            <PageHeader title={t("title")} description={t("subtitle")} />
 
-            {/* ── category filter chips ── */}
-            <div className="flex flex-wrap items-center gap-1.5">
-                {CATEGORY_FILTERS.map((filter) => {
-                    const selected = filter === category
-                    return (
-                        <button
-                            key={filter ?? "all"}
-                            type="button"
-                            onClick={() => setCategory(filter)}
-                            aria-pressed={selected}
-                        >
-                            <Chip
-                                size="md"
-                                variant={selected ? "primary" : "soft"}
-                                color={filter ? CATEGORY_COLOR[filter] : "accent"}
-                            >
-                                {filter ? t(`categories.${filter}`) : t("categories.all")}
-                            </Chip>
-                        </button>
-                    )
-                })}
-            </div>
+            {/* zone B — browse (filter + results, one cohesive cluster) */}
+            <div className="flex flex-col gap-3">
+                <CategoryFilter value={category} onChange={changeCategory} />
 
-            {/* ── loading / empty / grid ── */}
-            {(isLoading || !data) && (
-                <div className="flex items-center justify-center gap-1.5 py-10 text-muted">
-                    <Spinner size="sm" />
-                    <span className="text-sm">{t("loading")}</span>
-                </div>
-            )}
-
-            {!isLoading && !!data && data.length === 0 && (
-                <Card className="w-full">
-                    <CardContent className="flex flex-col items-center gap-1.5 py-10 text-center">
-                        <p className="font-medium">{t("empty")}</p>
-                        <p className="text-sm text-muted">{t("emptyHint")}</p>
-                    </CardContent>
-                </Card>
-            )}
-
-            {!isLoading && !!data && data.length > 0 && (
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                    {data.map((post: QueryBlogPostListItem) => (
-                        <Link key={post.id} href={`/blog/${post.slug}`}>
-                            <Card className="h-full w-full transition-colors hover:bg-surface-secondary">
-                                {/* cover image (optional) */}
-                                {post.coverImageUrl && (
-                                    // eslint-disable-next-line @next/next/no-img-element
-                                    <img
-                                        src={post.coverImageUrl}
-                                        alt=""
-                                        className="aspect-[16/9] w-full rounded-t-large object-cover"
+                <AsyncContent
+                    isLoading={isLoading && posts.length === 0}
+                    skeleton={<BlogListSkeleton />}
+                    error={error}
+                    errorContent={{
+                        title: t("errorTitle"),
+                        description: t("errorHint"),
+                        onRetry: () => {
+                            void mutate()
+                        },
+                        retryLabel: t("retry"),
+                    }}
+                    isEmpty={posts.length === 0}
+                    emptyContent={
+                        category
+                            ? {
+                                title: t("emptyInFilter"),
+                                description: t("emptyInFilterHint"),
+                                onRetry: () => changeCategory(null),
+                                retryLabel: t("clearFilter"),
+                            }
+                            : {
+                                title: t("empty"),
+                                description: t("emptyHint"),
+                            }
+                    }
+                >
+                    <div className="flex flex-col gap-3">
+                        {featured && (
+                            <FeaturedPost
+                                post={featured}
+                                formattedDate={formatDate(featured.publishedAt)}
+                            />
+                        )}
+                        {rest.length > 0 && (
+                            <div className="flex flex-col">
+                                {rest.map((post) => (
+                                    <PostRow
+                                        key={post.id}
+                                        post={post}
+                                        formattedDate={formatDate(post.publishedAt)}
                                     />
-                                )}
-                                <CardContent className="flex flex-col gap-3">
-                                    {/* category + premium chips */}
-                                    <div className="flex flex-wrap items-center gap-1.5">
-                                        <Chip size="sm" variant="soft" color={CATEGORY_COLOR[post.category]}>
-                                            {t(`categories.${post.category}`)}
-                                        </Chip>
-                                        {post.isPremium && (
-                                            <Chip size="sm" variant="soft" color="warning">
-                                                {t("premium")}
-                                            </Chip>
-                                        )}
-                                    </div>
-                                    {/* title + excerpt */}
-                                    <div className="flex flex-col gap-1.5">
-                                        <h2 className="line-clamp-2 text-lg font-semibold">{post.title}</h2>
-                                        {post.excerpt && (
-                                            <p className="line-clamp-3 text-sm text-muted">{post.excerpt}</p>
-                                        )}
-                                    </div>
-                                    {/* meta: reading time · date */}
-                                    <div className="flex items-center gap-1.5 text-xs text-muted">
-                                        {post.readingMinutes && (
-                                            <span>{t("readingMinutes", { minutes: post.readingMinutes })}</span>
-                                        )}
-                                        {post.readingMinutes && <span>·</span>}
-                                        <span>{formatDate(post.publishedAt)}</span>
-                                    </div>
-                                </CardContent>
-                            </Card>
-                        </Link>
-                    ))}
-                </div>
-            )}
+                                ))}
+                            </div>
+                        )}
+                        {hasMore && (
+                            <div className="flex justify-center pt-2">
+                                <Button
+                                    variant="secondary"
+                                    size="md"
+                                    isPending={isValidating}
+                                    onPress={() => setLimit((current) => current + PAGE_SIZE)}
+                                >
+                                    {t("loadMore")}
+                                </Button>
+                            </div>
+                        )}
+                    </div>
+                </AsyncContent>
+            </div>
         </div>
     )
 }

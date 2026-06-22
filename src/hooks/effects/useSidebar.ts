@@ -23,7 +23,7 @@ export const useSidebar = () => {
             dispatch(setSidebar({ tab: SidebarTab.MindMap, extraId: undefined }))
             return
         }
-        if (pathname.includes("/modules")) {
+        if (pathname.includes("/modules") || pathname.includes("/learn/content")) {
             dispatch(setSidebar({ tab: SidebarTab.Modules, extraId: undefined }))
             return
         }

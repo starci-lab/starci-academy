@@ -102,16 +102,20 @@ const slugify = (text: string): string =>
  * @param level - The heading depth surfaced in the outline (2 or 3).
  * @param sizeClass - The prose size class keeping the visual identical to {@link ProseText}.
  */
-const buildTocHeading = (level: 2 | 3, sizeClass: string, marginClass: string, anchorLabel: string) =>
+const buildTocHeading = (level: 2 | 3 | 4, sizeClass: string, marginClass: string, anchorLabel: string) =>
     ({ children }: { children?: React.ReactNode }) => {
         // real heading tag (not a div) so the body keeps semantic outline for SEO
-        const Tag = `h${level}` as "h2" | "h3"
-        const id = slugify(getNodeText(children))
+        const Tag = `h${level}` as "h2" | "h3" | "h4"
+        const text = getNodeText(children)
+        const id = slugify(text)
         return (
             <Tag
                 id={id}
                 data-toc=""
                 data-toc-level={level}
+                // clean label for the "on this page" rail — read instead of textContent so the
+                // hover anchor (#) and any inline code in the heading never leak into the outline.
+                data-toc-label={text}
                 className={`group ${marginClass} ${sizeClass} scroll-mt-20 font-semibold`.trim()}
             >
                 {children}
@@ -162,14 +166,13 @@ export const buildMarkdownRenderers = ({
         ),
         h2: buildTocHeading(2, h2Size, h2Margin, anchorLabel),
         h3: buildTocHeading(3, h3Size, h3Margin, anchorLabel),
-        h4: ({ children }) => (
-            reading
-                ? <ProseText elementType="h4" size="base" className="mt-6 mb-2 font-semibold">{children}</ProseText>
-                : <ProseText elementType="h4" size="sm" className="font-semibold text-muted">{children}</ProseText>
-        ),
-        // StarCi lessons number sections deep (e.g. 2.1.3.2 → h5), so deep headings must still
-        // READ as headings in reading mode: foreground + weight + a little top space — never the
-        // muted/small "label" look (that's only for compact contexts like cards/chat).
+        // TOC caps at 3 levels (h2/h3/h4). Reading h4 goes through the TOC factory (id + data-toc
+        // + anchor) so 2.1.x sub-sections show in the rail; compact (cards/chat, no TOC) stays muted.
+        h4: reading
+            ? buildTocHeading(4, PROSE_SIZE.base, "mt-6 mb-2", anchorLabel)
+            : ({ children }) => <ProseText elementType="h4" size="sm" className="font-semibold text-muted">{children}</ProseText>,
+        // h5 stays a readable heading in the article (foreground + weight in reading) but is NOT in
+        // the TOC — deeper than 3 levels (e.g. 2.1.3.2 → h5) would over-nest the outline rail.
         h5: ({ children }) => (
             reading
                 ? <ProseText elementType="h5" size="sm" className="mt-4 mb-2 font-semibold">{children}</ProseText>

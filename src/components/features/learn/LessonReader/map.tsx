@@ -2,7 +2,7 @@ import type { IconComponent } from "@/types"
 import {
     BookOpenIcon,
     CodeIcon,
-    FlameIcon,
+    PuzzlePieceIcon,
     PlayIcon,
     CheckCircleIcon,
     FlaskIcon,
@@ -23,7 +23,7 @@ export const CONTENT_TAB_ICON_MAP: Record<ContentTab, IconComponent> = {
     /** Code explainings + implementations tab. */
     [ContentTab.CodeExplainings]: CodeIcon,
     /** Challenges tab. */
-    [ContentTab.Challenges]: FlameIcon,
+    [ContentTab.Challenges]: PuzzlePieceIcon,
     /** Live Sandpack sandbox tab. */
     [ContentTab.Sandbox]: PlayIcon,
     /** AI Lab playground tab. */

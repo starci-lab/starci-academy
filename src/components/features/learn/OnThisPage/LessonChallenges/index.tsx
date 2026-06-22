@@ -3,7 +3,7 @@
 import React from "react"
 import useSWR from "swr"
 import { Button, Label, Separator, Typography, cn } from "@heroui/react"
-import { FlameIcon } from "@phosphor-icons/react"
+import { PuzzlePieceIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { usePathname, useRouter } from "next/navigation"
 import { GraphQLHeadersKey, queryChallenges } from "@/modules/api"
@@ -96,7 +96,7 @@ export const LessonChallenges = ({ className }: LessonChallengesProps) => {
             <div className={cn("flex flex-col gap-3", className)}>
                 <Separator />
                 <div className="flex items-center gap-2">
-                    <FlameIcon className="size-5" aria-hidden focusable="false" />
+                    <PuzzlePieceIcon className="size-5" aria-hidden focusable="false" />
                     <Label>{t("lessonRail.challenges.title")}</Label>
                 </div>
                 <div className="flex flex-col gap-2">

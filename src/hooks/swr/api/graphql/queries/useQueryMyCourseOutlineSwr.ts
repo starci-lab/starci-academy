@@ -1,7 +1,27 @@
+import { CombinedGraphQLErrors } from "@apollo/client"
 import { queryMyCourseOutline } from "@/modules/api"
 import type { MyCourseOutlinePayload } from "@/modules/api"
 import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+
+/** Backend exception code raised when the viewer has no enrollment for the course. */
+const ENROLLMENT_NOT_FOUND_CODE = "ENROLLMENT_NOT_FOUND_EXCEPTION"
+
+/** Default capped retry policy for transient errors (network / 5xx). */
+const MAX_RETRIES = 5
+const RETRY_INTERVAL_MS = 5000
+
+/**
+ * Whether a thrown SWR error is the permanent "not enrolled" GraphQL error — retrying it is
+ * pointless (it never heals) and just hammers the server every few seconds.
+ * @param error - The error SWR caught from the fetcher.
+ */
+const isEnrollmentNotFound = (error: unknown): boolean =>
+    CombinedGraphQLErrors.is(error)
+    && error.errors.some(
+        (gqlError) => gqlError.extensions?.code === ENROLLMENT_NOT_FOUND_CODE
+            || gqlError.message?.includes("No enrollment"),
+    )
 
 /**
  * SWR wrapper for {@link queryMyCourseOutline}. Fetches the signed-in viewer's
@@ -36,6 +56,20 @@ export const useQueryMyCourseOutlineSwr = (courseId: string | null) => {
                 throw new Error("Course outline not found")
             }
             return payload
+        },
+        {
+            // "not enrolled" is a PERMANENT error: stop retrying immediately so SWR doesn't
+            // re-hit the server every few seconds (which spammed the backend logs). Other
+            // (transient) errors keep a small capped retry.
+            onErrorRetry: (error, _key, _config, revalidate, { retryCount }) => {
+                if (isEnrollmentNotFound(error)) {
+                    return
+                }
+                if (retryCount >= MAX_RETRIES) {
+                    return
+                }
+                setTimeout(() => { void revalidate({ retryCount }) }, RETRY_INTERVAL_MS)
+            },
         },
     )
 }

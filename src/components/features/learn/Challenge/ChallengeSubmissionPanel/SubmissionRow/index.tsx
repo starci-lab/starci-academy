@@ -79,6 +79,12 @@ export interface SubmissionRowProps extends WithClassNames<undefined> {
     onUpgrade: () => void
     /** Fired to open the attempt history for this submission. */
     onViewAttempts: (submissionId: string) => void
+    /**
+     * True when the row is rendered INSIDE an accordion item (the deliverables list): the
+     * accordion header already shows the title/status/score + owns the separation, so the row
+     * drops its own title line + border/padding and renders only the form + result.
+     */
+    inAccordion?: boolean
 }
 
 /**
@@ -103,6 +109,7 @@ export const SubmissionRow = ({
     onSelectGrade,
     onUpgrade,
     onViewAttempts,
+    inAccordion = false,
     className,
 }: SubmissionRowProps) => {
     const t = useTranslations()
@@ -163,17 +170,21 @@ export const SubmissionRow = ({
     )
 
     return (
-        <div className={cn("border-b last:border-b-0 p-3", className)}>
+        <div className={cn(!inAccordion && "border-b last:border-b-0 p-3", className)}>
             <div className="flex flex-col">
-                <div className="flex items-center gap-2 text-foreground">
-                    <Typography type="body" className="font-semibold">
-                        {submission.sortIndex}
-                        {". "}
-                        {submission.title}
-                    </Typography>
-                    {IconComponent ? <IconComponent width={16} height={16} /> : null}
-                </div>
-                <div className="h-2" />
+                {!inAccordion ? (
+                    <>
+                        <div className="flex items-center gap-2 text-foreground">
+                            <Typography type="body" className="font-semibold">
+                                {submission.sortIndex}
+                                {". "}
+                                {submission.title}
+                            </Typography>
+                            {IconComponent ? <IconComponent width={16} height={16} /> : null}
+                        </div>
+                        <div className="h-2" />
+                    </>
+                ) : null}
                 <Typography type="body-xs" className="text-muted">
                     {submission.description}
                 </Typography>
@@ -284,6 +295,7 @@ export const SubmissionRow = ({
                     earnedScore={lastAttemptScore ?? 0}
                     maxScore={maxScore}
                     passThreshold={passThreshold}
+                    feedbacks={submission.userSubmission.lastAttempt.feedbacks}
                 />
             ) : null}
         </div>

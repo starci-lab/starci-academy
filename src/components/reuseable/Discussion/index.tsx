@@ -1,11 +1,12 @@
 "use client"
 
 import React from "react"
-import { Button, Separator, Spinner, cn } from "@heroui/react"
+import { Button, Spinner, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { ReactionType, type CommentNode, type ReactionSummary } from "@/modules/api"
 import type { WithClassNames } from "@/modules/types"
-import { InteractionBar, type ActionBarProps } from "./InteractionBar"
+import { LabeledCard } from "@/components/blocks"
+import { InteractionBar } from "./InteractionBar"
 import { CommentComposer } from "./CommentComposer"
 import { CommentItem } from "./CommentItem"
 
@@ -17,7 +18,7 @@ export * from "./InteractionBar"
 export * from "./constants"
 
 /** Props for {@link Discussion}. */
-export interface DiscussionProps extends ActionBarProps, WithClassNames<undefined> {
+export interface DiscussionProps extends WithClassNames<undefined> {
     /** Current viewer id (drives owner-only actions); null when unknown. */
     currentUserId: string | null
     /** Aggregate reactions on the content itself. */
@@ -53,23 +54,17 @@ export interface DiscussionProps extends ActionBarProps, WithClassNames<undefine
 }
 
 /**
- * Bottom-of-article discussion: Facebook-style interaction bar, a composer, and a threaded
- * comment list.
+ * Bottom-of-article discussion: a single-row reaction bar (stays with the content) + a separate
+ * community surface holding the composer and threaded comment list.
  *
- * The {@link InteractionBar} merges the old separate ActionToolbar + ReactionBar into one row:
- * LEFT = stacked emoji reactions + total, RIGHT = bookmark/share/fullscreen + reaction picker.
+ * {@link InteractionBar} is reaction-only (plain-emoji picker + view count); bookmark / share /
+ * fullscreen live in the OnThisPage rail, not here. The comments sit in their own bordered
+ * surface so they read as a distinct community area, separated from the lesson.
  *
  * Presentational: receives all data + callbacks from a container; holds no data hooks.
  * @param props - {@link DiscussionProps}
  */
 export const Discussion = ({
-    // action bar
-    isFavorite,
-    isShareVisible,
-    isFavoritePending,
-    onToggleFavorite,
-    onShare,
-    onFullscreen,
     // reactions
     currentUserId,
     contentReactions,
@@ -94,68 +89,61 @@ export const Discussion = ({
 
     return (
         <section className={cn("flex flex-col gap-6", className)}>
-            <Separator />
-
-            {/* ── Facebook-style two-row interaction bar ── */}
+            {/* ── reaction bar (reaction + view count) — belongs to the content ── */}
             <InteractionBar
                 summary={contentReactions}
                 onReact={onReactContent}
-                isFavorite={isFavorite}
-                isShareVisible={isShareVisible}
-                isFavoritePending={isFavoritePending}
-                onToggleFavorite={onToggleFavorite}
-                onShare={onShare}
-                onFullscreen={onFullscreen}
                 viewCount={contentReactions?.viewCount}
             />
 
-            <Separator />
+            {/* ── comment zone: the canonical section card (LabeledCard) — title sits ABOVE the
+                card; composer + threaded list inside. Reads as a distinct community area, apart
+                from the lesson. ── */}
+            <LabeledCard
+                label={t("discussion.title", { count: total })}
+                contentClassName="flex flex-col gap-6"
+            >
+                {/* new comment composer */}
+                <CommentComposer onSubmit={onSubmitComment} />
 
-            {/* ── comment count heading ── */}
-            <h2 className="text-base font-semibold text-foreground">
-                {t("discussion.title", { count: total })}
-            </h2>
-
-            {/* ── new comment composer ── */}
-            <CommentComposer onSubmit={onSubmitComment} />
-
-            {/* ── comment list / loading / empty states ── */}
-            {isLoading ? (
-                <div className="flex justify-center py-6">
-                    <Spinner />
-                </div>
-            ) : comments.length === 0 ? (
-                <div className="py-6 text-center text-sm text-muted">
-                    {t("discussion.empty")}
-                </div>
-            ) : (
-                <div className="flex flex-col gap-6">
-                    {comments.map((comment) => (
-                        <CommentItem
-                            key={comment.id}
-                            comment={comment}
-                            currentUserId={currentUserId}
-                            depth={0}
-                            repliesByParent={repliesByParent}
-                            onReply={onReply}
-                            onEdit={onEdit}
-                            onDelete={onDelete}
-                            onReactComment={onReactComment}
-                            onLoadReplies={onLoadReplies}
-                        />
-                    ))}
-                    {hasMore ? (
-                        <Button
-                            variant="tertiary"
-                            className="self-center text-sm text-accent"
-                            isDisabled={isLoadingMore}
-                            onPress={onLoadMore}
-                        >
-                            {isLoadingMore ? <Spinner size="sm" /> : t("discussion.loadMore")}
-                        </Button>
-                    ) : null}
-                </div>
-            )}
+                {/* ── comment list / loading / empty states ── */}
+                {isLoading ? (
+                    <div className="flex justify-center py-6">
+                        <Spinner />
+                    </div>
+                ) : comments.length === 0 ? (
+                    <div className="py-6 text-center text-sm text-muted">
+                        {t("discussion.empty")}
+                    </div>
+                ) : (
+                    <div className="flex flex-col gap-6">
+                        {comments.map((comment) => (
+                            <CommentItem
+                                key={comment.id}
+                                comment={comment}
+                                currentUserId={currentUserId}
+                                depth={0}
+                                repliesByParent={repliesByParent}
+                                onReply={onReply}
+                                onEdit={onEdit}
+                                onDelete={onDelete}
+                                onReactComment={onReactComment}
+                                onLoadReplies={onLoadReplies}
+                            />
+                        ))}
+                        {hasMore ? (
+                            <Button
+                                variant="tertiary"
+                                className="self-center text-sm text-accent"
+                                isDisabled={isLoadingMore}
+                                onPress={onLoadMore}
+                            >
+                                {isLoadingMore ? <Spinner size="sm" /> : t("discussion.loadMore")}
+                            </Button>
+                        ) : null}
+                    </div>
+                )}
+            </LabeledCard>
         </section>
     )
 }

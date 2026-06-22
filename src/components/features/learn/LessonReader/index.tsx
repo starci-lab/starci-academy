@@ -88,6 +88,9 @@ import {
     LessonPager,
 } from "./LessonPager"
 import {
+    ContentDiscussion,
+} from "./ContentBody/ContentBodyV2/Discussion"
+import {
     ContentBodySkeleton,
 } from "./ContentBodySkeleton"
 import {
@@ -226,6 +229,13 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
     const isFullWidthTab =
         selectedTabKey === ContentTab.Sandbox || selectedTabKey === ContentTab.AILab
 
+    /**
+     * Tabs that keep the centered reading width but render flat on the canvas (no
+     * "paper" reading card). The Challenges tab is already a list of bordered cards,
+     * so wrapping it in the reading card would be a redundant card-in-card.
+     */
+    const isCardlessReadingTab = selectedTabKey === ContentTab.Challenges
+
     /** Body of the currently selected tab. */
     const bodyComponent = useMemo(
         () => tabItems.find((item) => item.key === selectedTabKey)?.component,
@@ -341,6 +351,14 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
                             {bodyComponent}
                         </div>
                     </div>
+                ) : isCardlessReadingTab ? (
+                    // capped reading width but flat — the Challenges body is already a list
+                    // of cards, so it sits directly on the canvas (no paper card-in-card)
+                    <div className="mx-auto w-full max-w-3xl">
+                        <div id="lesson-article">
+                            {bodyComponent}
+                        </div>
+                    </div>
                 ) : (
                     <div className="mx-auto w-full max-w-3xl">
                         <Card>
@@ -359,16 +377,19 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
                         </Card>
                     </div>
                 )}
-                {/* previous / next lesson pager — linear course navigation at the foot
-                    of the reading column (hidden on locked / full-width tabs) */}
+                {/* engagement + navigation — rendered OUTSIDE the reading card as their own blocks,
+                    each separated by gap-6: reaction (belongs to the lesson) + comments (own surface),
+                    then the prev/next pager, then the quiet E2E-results link. Hidden on locked /
+                    full-width tabs. */}
                 {!isLocked && !isFullWidthTab ? (
-                    <LessonPager className="mx-auto w-full max-w-3xl px-3 pb-6" />
-                ) : null}
-                {/* E2E proof: a quiet link at the bottom of the lesson that opens a
-                    right-side drawer with the recorded per-language test results. */}
-                {hasE2e && !isLocked && !isFullWidthTab ? (
-                    <div className="mx-auto w-full max-w-3xl px-3 pb-6">
-                        <E2eResultButton />
+                    <div className="flex flex-col gap-6 pt-6 pb-6">
+                        <ContentDiscussion className="mx-auto w-full max-w-3xl px-3" />
+                        <LessonPager className="mx-auto w-full max-w-3xl px-3" />
+                        {hasE2e ? (
+                            <div className="mx-auto w-full max-w-3xl px-3">
+                                <E2eResultButton />
+                            </div>
+                        ) : null}
                     </div>
                 ) : null}
                 {/* paywall sits directly under the faded teaser */}

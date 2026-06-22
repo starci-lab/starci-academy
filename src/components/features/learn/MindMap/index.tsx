@@ -10,9 +10,6 @@ import {
 } from "@/hooks"
 
 import { MindMapCanvas } from "./MindMapCanvas"
-import {
-    MindMapBreadcrumbs,
-} from "./MindMapBreadcrumbs"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link MindMap}. */
@@ -21,11 +18,12 @@ export type MindMapProps = WithClassNames<undefined>
 /**
  * Course mind-map feature container for the authenticated learn shell.
  *
- * Triggers the course fetch for hard refreshes, renders the breadcrumb trail,
- * then mounts the {@link MindMapCanvas}. Mounted by the
+ * Triggers the course fetch for hard refreshes, then mounts the full-bleed
+ * {@link MindMapCanvas}. No breadcrumb / page chrome — the canvas owns the whole
+ * viewport (its own on-canvas controls handle orientation). Mounted by the
  * `/[locale]/courses/[courseId]/learn/mind-map` route.
  *
- * Client component: relies on redux selectors and the i18n hook.
+ * Client component: relies on redux selectors.
  * @param props - optional className for the root element
  */
 export const MindMap = ({
@@ -37,19 +35,13 @@ export const MindMap = ({
     const { isLoading } = useQueryCourseSwr()
 
     return (
-        // fill the viewport below the sticky h-16 navbar; breadcrumb is fixed, canvas takes the rest
-        <div className={cn("flex h-[calc(100dvh-4rem)] flex-col", className)}>
-            <div className="shrink-0 p-3">
-                <MindMapBreadcrumbs />
-            </div>
-            {/* full-bleed canvas: only a top border separates it from the breadcrumb, no side/bottom gaps */}
-            <div className="min-h-0 flex-1 border-t">
-                {!course && isLoading ? (
-                    <Skeleton className="h-full w-full" />
-                ) : (
-                    <MindMapCanvas />
-                )}
-            </div>
+        // full-bleed canvas filling the viewport below the sticky h-16 navbar
+        <div className={cn("h-[calc(100dvh-4rem)] w-full", className)}>
+            {!course && isLoading ? (
+                <Skeleton className="h-full w-full" />
+            ) : (
+                <MindMapCanvas />
+            )}
         </div>
     )
 }

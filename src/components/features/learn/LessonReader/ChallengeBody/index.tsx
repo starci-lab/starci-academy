@@ -10,7 +10,6 @@ import { useQueryChallengesSwr } from "@/hooks"
 import { setChallengePageNumber } from "@/redux/slices"
 import { ChallengeCard } from "./ChallengeCard"
 import { ChallengeCardSkeleton } from "./ChallengeCardSkeleton"
-import { ChallengeBodyEmpty } from "./Empty"
 import _ from "lodash"
 
 export type ChallengeBodyProps = WithClassNames<undefined>
@@ -26,6 +25,10 @@ export const ChallengeBody = ({ className }: ChallengeBodyProps) => {
     // gate on first-load only (NOT isValidating) — a background revalidate on page
     // change keeps the current cards on screen instead of flashing the skeleton
     const isLoading = queryChallengesSwr.isLoading
+    // surface fetch failures (e.g. the FE↔BE schema drift that broke this tab) as a
+    // distinct error+retry state instead of an indistinguishable "no challenges" empty
+    const error = queryChallengesSwr.error
+    const isEmpty = !isLoading && !error && !challenges?.length
     const pageSize = limit ?? 10
     const totalPages = useMemo(() => {
         if (count == null || count <= 0) {
@@ -39,67 +42,6 @@ export const ChallengeBody = ({ className }: ChallengeBodyProps) => {
     )
     const currentPage = pageNumber ?? 1
 
-    const body = !challenges?.length ? (
-        <div className={cn("", className)}>
-            <ChallengeBodyEmpty />
-        </div>
-    ) : (
-        <div>
-            <div className="text-sm text-muted">
-                {t("challenge.count", { count: count ?? 0 })}
-            </div>
-            <div className="h-3" />
-            <div className={cn("flex flex-col gap-3", className)}>
-                {
-                    _.cloneDeep(challenges)
-                        ?.sort((prev, next) => prev.sortIndex - next.sortIndex)
-                        .map((challenge) => <ChallengeCard key={challenge.id} challenge={challenge} />)
-                }
-            </div>
-            {count ? (
-                <>
-                    <div className="h-6" />
-                    <Pagination
-                        aria-label={t("common.pagination.navAria")}
-                        className="justify-center"
-                        size="sm"
-                    >
-                        <Pagination.Content className="flex flex-wrap justify-center gap-1">
-                            <Pagination.Item>
-                                <Pagination.Previous
-                                    aria-label={t("common.pagination.previous")}
-                                    isDisabled={currentPage <= 1}
-                                    onPress={() => dispatch(setChallengePageNumber(currentPage - 1))}
-                                >
-                                    <Pagination.PreviousIcon />
-                                </Pagination.Previous>
-                            </Pagination.Item>
-                            {pageNumbers.map((pageNumber) => (
-                                <Pagination.Item key={pageNumber}>
-                                    <Pagination.Link
-                                        isActive={pageNumber === currentPage}
-                                        onPress={() => dispatch(setChallengePageNumber(pageNumber))}
-                                    >
-                                        {pageNumber}
-                                    </Pagination.Link>
-                                </Pagination.Item>
-                            ))}
-                            <Pagination.Item>
-                                <Pagination.Next
-                                    aria-label={t("common.pagination.next")}
-                                    isDisabled={currentPage >= totalPages}
-                                    onPress={() => dispatch(setChallengePageNumber(currentPage + 1))}
-                                >
-                                    <Pagination.NextIcon />
-                                </Pagination.Next>
-                            </Pagination.Item>
-                        </Pagination.Content>
-                    </Pagination>
-                </>
-            ) : null}
-        </div>
-    )
-
     return (
         <AsyncContent
             isLoading={isLoading}
@@ -109,8 +51,73 @@ export const ChallengeBody = ({ className }: ChallengeBodyProps) => {
                     <ChallengeCardSkeleton />
                 </div>
             )}
+            isEmpty={isEmpty}
+            emptyContent={{ title: t("challenge.empty") }}
+            error={error}
+            errorContent={{
+                title: t("challenge.errorTitle"),
+                description: t("challenge.errorDescription"),
+                onRetry: () => queryChallengesSwr.mutate(),
+                retryLabel: t("challenge.retry"),
+            }}
         >
-            {body}
+            <div>
+                <div className="text-sm text-muted">
+                    {t("challenge.count", { count: count ?? 0 })}
+                </div>
+                <div className="h-3" />
+                <div className={cn("flex flex-col gap-3", className)}>
+                    {
+                        _.cloneDeep(challenges)
+                            ?.sort((prev, next) => prev.sortIndex - next.sortIndex)
+                            .map((challenge) => <ChallengeCard key={challenge.id} challenge={challenge} />)
+                    }
+                </div>
+                {count ? (
+                    <>
+                        <div className="h-6" />
+                        <Pagination
+                            aria-label={t("common.pagination.navAria")}
+                            className="justify-start"
+                            size="sm"
+                        >
+                            <Pagination.Content className="flex flex-wrap justify-start gap-1">
+                                <Pagination.Item>
+                                    <Pagination.Previous
+                                        aria-label={t("common.pagination.previous")}
+                                        isDisabled={currentPage <= 1}
+                                        onPress={() => dispatch(setChallengePageNumber(currentPage - 1))}
+                                        className="cursor-pointer rounded-medium transition-colors hover:bg-default"
+                                    >
+                                        <Pagination.PreviousIcon />
+                                    </Pagination.Previous>
+                                </Pagination.Item>
+                                {pageNumbers.map((pageNumber) => (
+                                    <Pagination.Item key={pageNumber}>
+                                        <Pagination.Link
+                                            isActive={pageNumber === currentPage}
+                                            onPress={() => dispatch(setChallengePageNumber(pageNumber))}
+                                            className="cursor-pointer rounded-medium transition-colors hover:bg-default data-[active=true]:hover:bg-accent"
+                                        >
+                                            {pageNumber}
+                                        </Pagination.Link>
+                                    </Pagination.Item>
+                                ))}
+                                <Pagination.Item>
+                                    <Pagination.Next
+                                        aria-label={t("common.pagination.next")}
+                                        isDisabled={currentPage >= totalPages}
+                                        onPress={() => dispatch(setChallengePageNumber(currentPage + 1))}
+                                        className="cursor-pointer rounded-medium transition-colors hover:bg-default"
+                                    >
+                                        <Pagination.NextIcon />
+                                    </Pagination.Next>
+                                </Pagination.Item>
+                            </Pagination.Content>
+                        </Pagination>
+                    </>
+                ) : null}
+            </div>
         </AsyncContent>
     )
 }

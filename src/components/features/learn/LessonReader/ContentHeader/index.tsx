@@ -50,7 +50,7 @@ export const ContentHeader = () => {
     )
 
     return (
-        <div className="flex flex-col gap-6 p-3">
+        <div className="flex flex-col gap-6">
             {/* header proper (title + desc + meta) — all one content group → gap-3 */}
             <div className="flex flex-col gap-3">
                 {/* title + description pair (gap-2 — same shape as the standard PageHeader) */}
@@ -60,10 +60,10 @@ export const ContentHeader = () => {
                         <Typography type="body-sm" color="muted">{description}</Typography>
                     ) : null}
                 </div>
-                {/* Quiet meta row — tertiary chips so the lesson title stays the one loud thing */}
+                {/* Quiet meta row — default chips so the lesson title stays the one loud thing */}
                 <div className="flex flex-wrap items-center gap-2">
                     <ReadBadge />
-                    <Chip variant="tertiary" color="default">
+                    <Chip color="default">
                         <ClockIcon className="size-5" />
                         <Chip.Label>
                             {t("content.minutesRead", {
@@ -71,7 +71,7 @@ export const ContentHeader = () => {
                             })}
                         </Chip.Label>
                     </Chip>
-                    <Chip variant="tertiary" color="default">
+                    <Chip color="default">
                         <FlameIcon className="size-5" />
                         <Chip.Label>
                             {t("content.challengeCount", {

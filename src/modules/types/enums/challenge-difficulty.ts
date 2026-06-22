@@ -10,4 +10,6 @@ export enum ChallengeDifficulty {
     Hard = "hard",
     /** Extremely difficult — advanced architecture or algorithm knowledge needed. */
     Insane = "insane",
+    /** Expert tier — the hardest, mastery-level challenges. */
+    Expert = "expert",
 }

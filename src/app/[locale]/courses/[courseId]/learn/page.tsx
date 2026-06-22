@@ -1,11 +1,16 @@
-"use client"
-import React from "react"
-import { CourseContents } from "@/components/features/learn/CourseContents"
+import { redirect } from "next/navigation"
 
-const Page = () => {
-    return (
-        <CourseContents />
-    )
+interface PageProps {
+    params: Promise<{ locale: string; courseId: string }>
+}
+
+/**
+ * Bare `/learn` is now an alias of the course-contents home: redirect to
+ * `/learn/content` so old links + entry points keep working.
+ */
+const Page = async ({ params }: PageProps) => {
+    const { locale, courseId } = await params
+    redirect(`/${locale}/courses/${courseId}/learn/content`)
 }
 
 export default Page

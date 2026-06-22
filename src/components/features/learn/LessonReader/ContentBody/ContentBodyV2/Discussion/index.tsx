@@ -31,7 +31,7 @@ import {
     useContentDiscussionSocketIo,
     type SubscribeContentDiscussionSocketIoPayload,
 } from "@/hooks"
-import type { ActionBarProps } from "@/components/reuseable"
+import type { WithClassNames } from "@/modules/types"
 
 /** Page size for a parent's replies (loaded in one shot per parent). */
 const REPLIES_LIMIT = 50
@@ -52,20 +52,12 @@ const DISCUSSION_EVENTS: ReadonlyArray<SubscriptionEvent> = [
  * Container for the lesson-content discussion (reactions + threaded comments).
  *
  * Owns the data hooks (local SWR), the realtime socket subscription, and all persistence
- * callbacks; renders the presentational {@link Discussion}. Mounted at the bottom of
- * {@link ContentBodyV2}. `"use client"` for hooks + socket.
+ * callbacks; renders the presentational {@link Discussion}. Rendered OUTSIDE the reading card
+ * (by {@link LessonReader}) as its own block. `"use client"` for hooks + socket.
  *
- * Accepts {@link ActionBarProps} so the bookmark/share/fullscreen actions that used to live
- * in a separate ActionToolbar can be merged into the Discussion's InteractionBar.
+ * Reaction + comments only — bookmark / share / fullscreen live in the OnThisPage rail.
  */
-export const ContentDiscussion = ({
-    isFavorite,
-    isShareVisible,
-    isFavoritePending,
-    onToggleFavorite,
-    onShare,
-    onFullscreen,
-}: ActionBarProps) => {
+export const ContentDiscussion = ({ className }: WithClassNames<undefined>) => {
     const locale = useLocale()
     const contentId = useAppSelector((state) => state.content.entity?.id)
     const currentUserId = useAppSelector((state) => state.user.user?.id ?? null)
@@ -315,13 +307,7 @@ export const ContentDiscussion = ({
 
     return (
         <Discussion
-            // action bar (merged from the old separate ActionToolbar)
-            isFavorite={isFavorite}
-            isShareVisible={isShareVisible}
-            isFavoritePending={isFavoritePending}
-            onToggleFavorite={onToggleFavorite}
-            onShare={onShare}
-            onFullscreen={onFullscreen}
+            className={className}
             // discussion data
             currentUserId={currentUserId}
             contentReactions={reactionsSwr.data ?? undefined}

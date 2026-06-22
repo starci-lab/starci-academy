@@ -59,7 +59,9 @@ export const useTableOfContents = (rescanKey: string | undefined): UseTableOfCon
                 .filter((node) => node.id)
                 .map((node) => ({
                     id: node.id,
-                    text: node.textContent?.trim() ?? "",
+                    // prefer the clean data-toc-label (set by MarkdownContent) so the hover
+                    // anchor "#" / inline code in the heading never leaks into the outline.
+                    text: node.dataset.tocLabel ?? node.textContent?.trim() ?? "",
                     level: Number(node.dataset.tocLevel ?? "2"),
                 }))
             setHeadings(next)

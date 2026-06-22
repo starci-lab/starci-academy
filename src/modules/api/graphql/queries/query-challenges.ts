@@ -29,31 +29,11 @@ const query1 = gql`
         data {
           id
           title
-          requirements {
-            id
-            purpose
-            technicalConstraints
-            proTipsHints
-            forbidden
-            sortIndex
-          }
-          outputs {
-            id
-            text
-            sortIndex
-          }
-          prerequisites {
-            id
-            text
-            sortIndex
-          }
           description
           score
           difficulty
           sortIndex
-          steps {
-            id
-          }
+          hint
         }
       }
     }

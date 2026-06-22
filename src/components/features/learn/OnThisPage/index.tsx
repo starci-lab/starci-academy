@@ -4,6 +4,7 @@ import React from "react"
 import {
     Label,
     Link,
+    ScrollShadow,
     cn,
 } from "@heroui/react"
 import {
@@ -100,11 +101,15 @@ export const OnThisPage = ({ className, mobile = false }: OnThisPageProps) => {
     return (
         <aside
             className={cn(
-                "hidden w-64 shrink-0 lg:ml-8 lg:block lg:sticky lg:top-16 lg:self-start lg:max-h-[calc(100dvh-4rem)] lg:overflow-y-auto",
+                "hidden w-64 shrink-0 lg:ml-8 lg:block lg:sticky lg:top-16 lg:self-start lg:max-h-[calc(100dvh-4rem)]",
                 className,
             )}
         >
-            <div className="flex flex-col gap-6 p-6 pl-0">{body}</div>
+            {/* ScrollShadow owns the overflow + fades the top/bottom edges so a long
+                outline reads as scrollable (the rail often overflows the viewport). */}
+            <ScrollShadow hideScrollBar className="lg:max-h-[calc(100dvh-4rem)] lg:overflow-y-auto">
+                <div className="flex flex-col gap-6 p-6 pl-0">{body}</div>
+            </ScrollShadow>
         </aside>
     )
 }

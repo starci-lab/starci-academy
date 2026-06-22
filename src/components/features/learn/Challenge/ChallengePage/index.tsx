@@ -1,9 +1,6 @@
 "use client"
 
 import React, { useEffect } from "react"
-import { ArrowLeftIcon } from "@phosphor-icons/react"
-import { Link, Typography } from "@heroui/react"
-import { useTranslations } from "next-intl"
 import { useParams } from "next/navigation"
 import { useRouter } from "@/i18n/navigation"
 import { useAppDispatch } from "@/redux"
@@ -22,7 +19,6 @@ import { ChallengeView } from "../ChallengeView"
  * `enrolled`) is bootstrapped by the parent learn layout, so the global query is satisfied here.
  */
 export const ChallengePage = () => {
-    const t = useTranslations()
     const params = useParams()
     const router = useRouter()
     const dispatch = useAppDispatch()
@@ -44,24 +40,13 @@ export const ChallengePage = () => {
     /** Back to the owning lesson (falls back to history when params are missing). */
     const onBack = () => {
         if (courseId && moduleId && contentId) {
-            router.push(`/courses/${courseId}/learn/modules/${moduleId}/contents/${contentId}`)
+            router.push(`/courses/${courseId}/learn/content/modules/${moduleId}/contents/${contentId}`)
             return
         }
         router.back()
     }
 
-    return (
-        <div className="flex h-[calc(100dvh-4rem)] min-h-0 w-full flex-col">
-            <div className="flex items-center gap-2 border-b px-4 py-2">
-                <Link
-                    onPress={onBack}
-                    className="inline-flex items-center gap-2 font-medium text-accent"
-                >
-                    <ArrowLeftIcon aria-hidden className="size-5" />
-                    <Typography type="body-sm" className="font-medium">{t("challenge.back")}</Typography>
-                </Link>
-            </div>
-            <ChallengeView className="min-h-0 flex-1" />
-        </div>
-    )
+    // the shell owns padding + the course-tree rail; ChallengeView owns the split workspace
+    // (centered brief column + the sticky submit/result aside), mirroring the personal-project task page.
+    return <ChallengeView onBack={onBack} />
 }

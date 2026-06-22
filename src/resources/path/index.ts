@@ -233,6 +233,16 @@ export const pathConfig = () => {
                 const build = () => {
                     return learnPath
                 }
+                const content = () => {
+                    // course-contents home ("Học phần"): the docs-style chỉ-mục landing
+                    const contentPath = `${learnPath}/content`
+                    const build = () => {
+                        return contentPath
+                    }
+                    return {
+                        build,
+                    }
+                }
                 const mindMap = () => {
                     const mindMapPath = `${learnPath}/mind-map`
                     const build = () => {
@@ -322,7 +332,9 @@ export const pathConfig = () => {
                     }
                 }
                 const module = (moduleId?: string) => {
-                    const modulePath = moduleId ? `${learnPath}/modules/${moduleId}` : `${learnPath}/modules`
+                    // lessons live UNDER the content home: `/learn/content/modules/...`
+                    const modulesBase = `${learnPath}/content/modules`
+                    const modulePath = moduleId ? `${modulesBase}/${moduleId}` : modulesBase
                     const build = () => {
                         return modulePath
                     }
@@ -342,6 +354,7 @@ export const pathConfig = () => {
                 }
                 return {
                     build,
+                    content,
                     mindMap,
                     cv,
                     personalProject,

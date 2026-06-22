@@ -14,33 +14,56 @@ import {
     useReactFlow,
 } from "@xyflow/react"
 import { FrameCornersIcon } from "@phosphor-icons/react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { useTheme } from "next-themes"
 import { useAppSelector } from "@/redux"
+import { useQueryMyCourseOutlineSwr } from "@/hooks"
 import { build } from "../build"
+import type { MindMapThemeMode } from "../build"
+import { computeMindMapProgress, resolveContentHref } from "../progress"
 import { useMindMapFitView } from "../hooks"
-import type { MindMapThemeMode } from "../pastel"
 import { COURSE_MODULE_NODE_TYPE, CourseModuleNode } from "../ModuleNode"
 import type { CourseModuleSlotNodeData } from "../ModuleSlotNode"
 import { CourseModuleSlotNode } from "../ModuleSlotNode"
 import { COURSE_MODULE_SLOT_NODE_TYPE } from "../moduleExpansion"
 import { COURSE_ROOT_NODE_TYPE, CourseRootNode } from "../RootNode"
 import { MindMapFullscreenButton } from "../MindMapFullscreenButton"
+import { MindMapContinueButton } from "../MindMapContinueButton"
+import { MindMapLegend } from "../MindMapLegend"
 
 /**
  * Inner canvas: syncs graph from Redux course + highlights active module; follows app light/dark theme.
  */
 export const Canvas = () => {
     const t = useTranslations()
+    const locale = useLocale()
     const { resolvedTheme } = useTheme()
     const course = useAppSelector((state) => state.course.entity)
+    const courseId = useAppSelector((state) => state.course.id)
+    const displayId = useAppSelector((state) => state.course.displayId)
     const activeModuleId = useAppSelector((state) => state.module.entity?.id)
 
     const themeMode: MindMapThemeMode = resolvedTheme === "dark" ? "dark" : "light"
 
+    // Authenticated viewer's outline overlays progress onto the graph. Skips for guests /
+    // the public standalone route (the hook returns no data when unauthenticated), so the
+    // map degrades to a structure-only view.
+    const { data: outline } = useQueryMyCourseOutlineSwr(courseId ?? null)
+    const progress = useMemo(() => computeMindMapProgress(outline), [outline])
+
+    /** Content-first resume target — the map is a content surface, never the capstone. */
+    const resumeHref = useMemo(
+        () => (outline
+            ? resolveContentHref(outline.nextContentTask, outline.modules, locale, displayId)
+            : null),
+        [outline, locale, displayId],
+    )
+    /** Outline known + nothing left to do → show the "all done" note instead of Continue. */
+    const allContentDone = Boolean(outline && !outline.nextContentTask)
+
     const graph = useMemo(
-        () => build({ course, activeModuleId, themeMode }),
-        [course, activeModuleId, themeMode],
+        () => build({ course, activeModuleId, themeMode, progress }),
+        [course, activeModuleId, themeMode, progress],
     )
 
     const [nodes, setNodes, onNodesChange] = useNodesState(graph.nodes)
@@ -118,7 +141,7 @@ export const Canvas = () => {
         ],
     )
 
-    useMindMapFitView()
+    useMindMapFitView(progress.currentModuleId)
 
     if (!course) {
         return null
@@ -162,6 +185,8 @@ export const Canvas = () => {
                     </ControlButton>
                 </Controls>
                 <MindMapFullscreenButton targetRef={containerRef} />
+                <MindMapContinueButton resumeHref={resumeHref} allContentDone={allContentDone} />
+                {outline ? <MindMapLegend /> : null}
             </ReactFlow>
         </div>
     )

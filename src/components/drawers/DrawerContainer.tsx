@@ -2,7 +2,6 @@ import React from "react"
 import { SubmissionAttemptsDrawer } from "./SubmissionAttemptsDrawer"
 import { UserCvSubmissionAttemptsDrawer } from "./UserCvSubmissionAttemptsDrawer"
 import { PersonalProjectTaskAttemptsDrawer } from "./PersonalProjectTaskAttemptsDrawer"
-import { MindMapContentDetailsDrawer } from "./MindMapContentDetailsDrawer"
 import { E2eResultDrawer } from "./E2eResultDrawer"
 import { ContentAiChatDrawer } from "./ContentAiChatDrawer"
 
@@ -12,7 +11,6 @@ export const DrawerContainer = () => {
             <SubmissionAttemptsDrawer />
             <UserCvSubmissionAttemptsDrawer />
             <PersonalProjectTaskAttemptsDrawer />
-            <MindMapContentDetailsDrawer />
             <E2eResultDrawer />
             <ContentAiChatDrawer />
         </>

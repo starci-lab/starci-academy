@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from "react"
-import { Button, cn } from "@heroui/react"
+import { Link, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
 import { ReactionType, type CommentNode } from "@/modules/api"
@@ -130,32 +130,26 @@ export const CommentItem = ({
                                 summary={comment.reactions}
                                 onReact={(type) => onReactComment(comment.id, type)}
                             />
-                            <Button
-                                size="sm"
-                                variant="tertiary"
-                                className="text-xs"
+                            <Link
+                                className="cursor-pointer text-xs font-medium text-muted hover:text-foreground"
                                 onPress={() => setReplying((prev) => !prev)}
                             >
                                 {t("discussion.reply")}
-                            </Button>
+                            </Link>
                             {isOwner ? (
                                 <>
-                                    <Button
-                                        size="sm"
-                                        variant="tertiary"
-                                        className="text-xs"
+                                    <Link
+                                        className="cursor-pointer text-xs font-medium text-muted hover:text-foreground"
                                         onPress={() => setEditing(true)}
                                     >
                                         {t("common.edit")}
-                                    </Button>
-                                    <Button
-                                        size="sm"
-                                        variant="tertiary"
-                                        className="text-xs text-danger"
+                                    </Link>
+                                    <Link
+                                        className="cursor-pointer text-xs font-medium text-muted hover:text-danger"
                                         onPress={() => onDelete(comment.id)}
                                     >
                                         {t("common.delete")}
-                                    </Button>
+                                    </Link>
                                 </>
                             ) : null}
                         </div>
@@ -179,16 +173,14 @@ export const CommentItem = ({
 
                     {/* replies toggle + recursive subtree */}
                     {comment.replyCount > 0 ? (
-                        <Button
-                            size="sm"
-                            variant="tertiary"
-                            className="self-start text-xs text-accent"
+                        <Link
+                            className="cursor-pointer self-start text-xs font-medium text-accent hover:underline"
                             onPress={toggleReplies}
                         >
                             {expanded
                                 ? t("discussion.hideReplies")
                                 : t("discussion.viewReplies", { count: comment.replyCount })}
-                        </Button>
+                        </Link>
                     ) : null}
 
                     {expanded && replies.length > 0 ? (

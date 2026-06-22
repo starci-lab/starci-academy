@@ -171,3 +171,75 @@ Lý do: lý do *duy nhất* flashcard tồn tại tách khỏi việc đọc les
 
 ## 9. Bước tiếp
 Thầy duyệt **Hướng A** → `/ux-apply flashcards` để dựng. Khuyến nghị làm MVP gồm mục §7 (1)–(6) trước (gần như 0 đụng BE), rồi mới tính (7)(8) cần BE.
+
+---
+
+# Addendum 2026-06-21 — Tách "Học thẻ" vs "Phỏng vấn thử" (thầy thấy gộp chung → rối)
+
+> Skill: `/starci-fe-ux-brainstorm` (Opus MAX) · KHÔNG code, chốt hướng. Ref: Quizlet study-modes
+> (https://quizlet.com/gb/features/study-modes) — 1 bộ thẻ → mode picker tách nhiều chế độ học riêng biệt.
+
+## Điểm đau (mới)
+Hướng A đã dựng đúng vòng SM-2, NHƯNG nhồi 2 hoạt động khác bản chất vào 1 trang:
+- **Học thẻ** = ghi nhớ qua lặp lại ngắt quãng. Mô hình: *due-queue xuyên deck* + vòng lật→tự chấm (`myDueFlashcards`/`reviewFlashcard`). Có "đến hạn", streak, mastery.
+- **Phỏng vấn thử** = nói + AI chấm. Mô hình: *bốc câu hỏi theo deck* → voice → verdict (`drawInterviewCard`/`gradeInterviewAnswer`). **KHÔNG có due/SR, KHÔNG persist** (không entity lịch sử).
+- Hiện interview bị **giấu 2 tầng**: deck card chỉ nhãn "Học" → vào deck → mới có toggle "Phỏng vấn thử". Subtitle trang hứa cả 2 nhưng body chỉ thấy học → lệch kỳ vọng = rối.
+
+→ 2 mode khác **mental-mode** (nhớ thụ động vs nói chủ động) + khác **data-model** (cross-deck due vs deck-scoped stateless) ⇒ đáng tách surface, không nên chung 1 luồng.
+
+## Ba hướng (widget đã vẽ)
+- **H1 — Tab chế độ trong "Ôn tập" (✅ CHỐT đề xuất):** giữ 1 mục sidebar; dưới header thêm 2 tab thứ cấp `Học thẻ · Phỏng vấn thử`, mỗi tab 1 surface. Khớp Quizlet modes + rule [[tabscard-two-secondary-groups]] (2 nhóm secondary, underline) + [[course-home-no-duplicate-surfaces]] (không thêm mục sidebar trùng). Mỗi mode có IA riêng đúng mô hình của nó.
+- **H2 — Hai mục sidebar tách hẳn:** thêm mục `Phỏng vấn thử` riêng. Tách triệt để nhưng sidebar nặng thêm + lưới chọn deck nhân đôi (vi phạm tinh thần no-duplicate-surface).
+- **H3 — Deck 2 nút (Ôn thẻ · Phỏng vấn), không đổi nav:** nhẹ nhất, hết-giấu interview, nhưng KHÔNG thật sự "tách 2 phần" như thầy muốn.
+
+### CHỐT H1 — lý do
+Tab giữ điều hướng gọn (1 "nhà" = Ôn tập), nhưng cho mỗi mode trọn vẹn IA riêng: tab Học thẻ = due-hero + stats + deck-list "Ôn" (giữ nguyên Hướng A); tab Phỏng vấn thử = lưới chủ đề (deck) → vào buồng voice. Hết cảnh "nhãn Học mà bên trong lại có phỏng vấn".
+
+## IA mới (H1)
+**Trang `/learn/flashcards` = "Ôn tập"**, header + breadcrumb giữ, thêm hàng **tab thứ cấp** (TabsCard secondary):
+
+### Tab 1 — Học thẻ (mặc định) — giữ nguyên Hướng A
+1. Hero "Đến hạn hôm nay" (`myDueFlashcards.dueCount` → Ôn N thẻ, vòng SM-2).
+2. Stats strip (`myFlashcardStats`: streak/retention/reviewed, auto-ẩn khi chưa ôn).
+3. Deck list (cram): mỗi deck due-badge + mastery bar + nút **"Ôn"** (chỉ còn 1 hành động — bỏ interview khỏi deck).
+
+### Tab 2 — Phỏng vấn thử (mới tách)
+1. **Lưới chủ đề** = các deck (title + difficulty + số câu) → mỗi tile nút **"Phỏng vấn"** → vào `InterviewSession(deckId)`.
+2. (tùy) lọc theo `level` (junior/middle/senior/staff) / `tags` — field card có sẵn, hợp ngữ cảnh "luyện theo cấp phỏng vấn".
+3. Buồng voice giữ nguyên (mic → transcript → verdict pass/borderline/fail + strengths/gaps/hint/follow-up).
+4. Empty/loading/error: lưới rỗng = "khoá chưa có bộ phỏng vấn"; draw lỗi = retry (đã có).
+
+## Section → Dữ liệu BE/DB
+| Section | Nguồn | Trạng thái |
+|---|---|---|
+| Tab bar Học thẻ / Phỏng vấn thử | UI state (local) | ✅ FE-only |
+| Tab1: due hero + SR loop | `myDueFlashcards`, `reviewFlashcard`, `nextIntervals` | ✅ Đã dùng |
+| Tab1: stats strip | `myFlashcardStats` | ✅ Đã dùng |
+| Tab1: deck list "Ôn" | `flashcardDecksByCourse` (dueCount/masteredCount) | ✅ Đã dùng |
+| Tab2: lưới chủ đề | `flashcardDecksByCourse` (title/difficulty/cards count) | ✅ Có |
+| Tab2: lọc level/tags | `card.level`, `card.tags` | ✅ Có, chưa dùng |
+| Tab2: voice + chấm | `drawInterviewCard` (đã fix schema 2026-06-21), `gradeInterviewAnswer` | ✅ Có |
+| Tab2: lịch sử/điểm yếu phỏng vấn | — (chưa có entity persist) | ⚠️ CẦN BE (đề xuất, không bắt buộc) |
+
+## Cắt / Thêm / Đổi
+- **THÊM:** tab thứ cấp Học thẻ/Phỏng vấn thử; tab2 lưới chủ đề có nút "Phỏng vấn"; (tùy) lọc level/tags ở tab2.
+- **CẮT:** toggle Study/Interview ẩn TRONG deck view (chuyển interview lên tab riêng); nút interview khỏi deck card tab1.
+- **ĐỔI:** deck card tab1 chỉ còn 1 hành động "Ôn"; mọi entry phỏng vấn dồn về tab2.
+- **GIỮ:** flip+rate, due session, stats, voice session, verdict — không đụng logic, chỉ tái bố trí.
+
+## Bước tiếp
+Thầy chọn hướng trên widget → `/starci-fe-ux-apply flashcards` để dựng (mặc định H1).
+
+## Build status 2026-06-21 (sau /starci-fe-ux-apply — split + nâng cấp)
+- **DONE** Split 2 tab (TabsCard secondary): `Flashcards/index.tsx` orchestrator tab `study|interview`; bỏ toggle ẩn trong deck; `FlashcardDeckList` generalize (`ctaLabel` + `showProgress`) dùng chung cả 2 tab.
+- **DONE (B + phần FE của C)** Interview = PHIÊN N câu (`SESSION_LENGTH=5`): `InterviewSession` 3 phase `setup → active → summary`. Setup chọn level (All/junior/middle/senior/staff). Active: progress "Câu n/5", dedupe card trong phiên (seenIds). Summary: điểm TB + breakdown pass/borderline/fail + **weak tags** (tag của câu chưa pass) + replay.
+- **DONE (A)** Lọc theo cấp: BE `drawInterviewCard(level: FlashcardLevel)` (resolver arg + `drawRandomCard` filter `card.level===level`); FE query + setup chips truyền `level`.
+- **CHƯA / cần BE nặng (phần persist của C):** lịch sử phỏng vấn XUYÊN phiên (entity `interview_attempt` + query) → để bước sau. Hiện summary chỉ trong-phiên (mất khi rời tab).
+- **CHƯA (D):** pixel polish (nhịp/card/empty của tab phỏng vấn) → để `/ui-apply`.
+
+## Build status 2026-06-21b (#C persist — lịch sử phỏng vấn xuyên phiên)
+- **DONE (BE)** Entity `InterviewAttemptEntity` (`interview_attempts`): userId·deckId·cardId·score·verdict·level·tags·createdAt; index (userId, deckId). Đăng ký primary.module (import + forRoot + forFeature) + barrel. synchronize=true tự tạo table.
+- **DONE (BE)** Persist: `InterviewGradingService.grade()` → `recordAttempt()` (best-effort try/catch, không fail grade). 1 row / câu chấm.
+- **DONE (BE)** Query `myInterviewHistory(flashcardDeckId: ID)`: `InterviewHistoryService.getSummary` aggregate (totalAnswered·averageScore·pass/borderline/fail·weakTags top6·lastAttemptAt) từ window 200 attempt mới nhất. Resolver auth + wrapper response; wire flashcard-decks.module.
+- **DONE (FE)** Query `queryMyInterviewHistory` + types + barrels. `InterviewSession` setup phase hiện history strip (điểm TB · N câu đã luyện · weak tags), auto-ẩn khi chưa có; refresh sau khi xong phiên (`refreshHistory` ở `advance→summary`).
+- Verify: BE tsc/lint sạch (file mới 0 lỗi); FE src 0 lỗi. Schema `myInterviewHistory` + table `interview_attempts` verify khi BE restart.

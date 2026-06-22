@@ -6,7 +6,8 @@ import React, {
     useMemo,
     useState,
 } from "react"
-import { cn } from "@heroui/react"
+import { Accordion, Chip, Typography, cn } from "@heroui/react"
+import { CheckCircleIcon, CircleIcon, XCircleIcon } from "@phosphor-icons/react"
 import {
     PublicationEvent,
     useAiQuotaOverlayState,
@@ -73,6 +74,7 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
         isSubmitting,
         autosaveStatus,
     } = formik
+    const t = useTranslations()
     // Inline auto-save status text for the debounced submission sync.
     const tAutosave = useTranslations("autosave")
     const { open: openSubmissionAttempts } = useSubmissionAttemptsOverlayState()
@@ -372,8 +374,19 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
     // Map the hook's auto-save status to its localized label (idle shows nothing).
     const autosaveLabel = autosaveStatus === "idle" ? undefined : tAutosave(autosaveStatus)
 
+    // per-submission status for the accordion header: done = last attempt passed the threshold,
+    // failed = attempted but below it, todo = never submitted.
+    const statusOf = (row: typeof rows[number]): "done" | "failed" | "todo" => {
+        if (!row.submission.userSubmission?.lastAttempt) {
+            return "todo"
+        }
+        return (row.lastAttemptScore ?? 0) >= row.maxScore * passThreshold ? "done" : "failed"
+    }
+    // auto-open the first deliverable still to pass (the one the learner works on next)
+    const firstOpenId = rows.find((row) => statusOf(row) !== "done")?.submission.id
+
     return (
-        <div className={cn(className, "flex flex-col")}>
+        <div className={cn(className, "flex flex-col gap-2")}>
             {autosaveLabel && (
                 <span
                     aria-live="polite"
@@ -385,26 +398,74 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
                     {autosaveLabel}
                 </span>
             )}
-            {rows.map((row) => (
-                <SubmissionRow
-                    key={row.submission.id}
-                    row={row}
-                    passThreshold={passThreshold}
-                    gradeModels={gradableModels}
-                    gradeSelection={
-                        selectionBySubmissionId[row.submission.id] ?? AUTO_GRADE_SELECTION
-                    }
-                    canPremium={canPremium}
-                    creditUsage={creditUsage ?? undefined}
-                    onOpenAiQuota={openAiQuota}
-                    onChangeUrl={onChangeUrl}
-                    onBlurUrl={onBlurUrl}
-                    onSubmit={onSubmit}
-                    onSelectGrade={onSelectGrade}
-                    onUpgrade={onAddQuota}
-                    onViewAttempts={onViewAttempts}
-                />
-            ))}
+            {/* deliverables as a bg-default accordion (one open at a time): each header shows the
+                submission's status + title + its points / earned score; the panel holds the form. */}
+            <Accordion
+                variant="default"
+                className="overflow-hidden rounded-2xl border border-default bg-default"
+                defaultExpandedKeys={firstOpenId ? new Set([firstOpenId]) : undefined}
+            >
+                {rows.map((row) => {
+                    const status = statusOf(row)
+                    const attempted = Boolean(row.submission.userSubmission?.lastAttempt)
+                    return (
+                        <Accordion.Item key={row.submission.id} id={row.submission.id} aria-label={row.submission.title}>
+                            <Accordion.Heading>
+                                <Accordion.Trigger className="w-full">
+                                    <div className="flex w-full items-center justify-between gap-3 text-start">
+                                        <div className="flex min-w-0 items-center gap-2">
+                                            {status === "done" ? (
+                                                <CheckCircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-success" />
+                                            ) : status === "failed" ? (
+                                                <XCircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-danger" />
+                                            ) : (
+                                                <CircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
+                                            )}
+                                            <span className="truncate text-base font-semibold">
+                                                {row.submission.sortIndex}. {row.submission.title}
+                                            </span>
+                                        </div>
+                                        <div className="flex shrink-0 items-center gap-2">
+                                            {attempted ? (
+                                                <Typography type="body-xs" color="muted">
+                                                    {`${row.lastAttemptScore ?? 0}/${row.maxScore}`}
+                                                </Typography>
+                                            ) : (
+                                                <Chip color="accent" variant="soft" size="sm">
+                                                    <Chip.Label>{t("challenge.score", { score: row.maxScore })}</Chip.Label>
+                                                </Chip>
+                                            )}
+                                            <Accordion.Indicator />
+                                        </div>
+                                    </div>
+                                </Accordion.Trigger>
+                            </Accordion.Heading>
+                            <Accordion.Panel>
+                                <Accordion.Body>
+                                    <SubmissionRow
+                                        inAccordion
+                                        row={row}
+                                        passThreshold={passThreshold}
+                                        gradeModels={gradableModels}
+                                        gradeSelection={
+                                            selectionBySubmissionId[row.submission.id] ?? AUTO_GRADE_SELECTION
+                                        }
+                                        canPremium={canPremium}
+                                        creditUsage={creditUsage ?? undefined}
+                                        onOpenAiQuota={openAiQuota}
+                                        onChangeUrl={onChangeUrl}
+                                        onBlurUrl={onBlurUrl}
+                                        onSubmit={onSubmit}
+                                        onSelectGrade={onSelectGrade}
+                                        onUpgrade={onAddQuota}
+                                        onViewAttempts={onViewAttempts}
+                                    />
+                                </Accordion.Body>
+                            </Accordion.Panel>
+                        </Accordion.Item>
+                    )
+                })}
+            </Accordion>
         </div>
     )
 }

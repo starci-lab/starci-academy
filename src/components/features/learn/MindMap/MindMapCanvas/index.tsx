@@ -15,8 +15,10 @@ export type MindMapCanvasProps = WithClassNames<undefined>
  * Shared React Flow mind-map canvas: provider wrapper and empty-state handling.
  *
  * Used by both {@link MindMap} (learn shell) and {@link StandaloneMindMap} (public route).
- * Clicking a lesson opens the global {@link MindMapContentDetailsDrawer} (mounted in
- * `DrawerContainer`) via `useMindMapContentDetailsOverlayState` — no local state or context needed.
+ * The authenticated canvas overlays the viewer's progress (per-module status, the "you
+ * are here" module, overall completion) and a content-first "Continue" action; the public
+ * standalone route degrades to a structure-only map. Clicking a lesson navigates straight
+ * into its reader.
  * @param props - optional className (unused; layout is controlled by the parent container)
  */
 export const MindMapCanvas = ({

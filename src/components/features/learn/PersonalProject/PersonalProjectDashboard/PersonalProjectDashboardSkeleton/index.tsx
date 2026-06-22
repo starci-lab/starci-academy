@@ -5,13 +5,16 @@ import { Skeleton, cn } from "@heroui/react"
 import { SkeletonText } from "@/components/reuseable"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
+/** Number of placeholder task rows shown in the keep-going path. */
+const SKELETON_TASK_COUNT = 4
+
 /** Props for {@link PersonalProjectDashboardSkeleton}. */
 export type PersonalProjectDashboardSkeletonProps = WithClassNames<undefined>
 
 /**
  * Loading placeholder for {@link import("../").PersonalProjectDashboard}. Mirrors
- * the real layout 1:1: the 3-up KPI card grid (label + card body) over the 4-stat
- * ribbon, so nothing jumps when the milestones + progress land.
+ * the real flat layout: the continue + progress block over the current-milestone
+ * "keep going" path, so nothing jumps when the milestones + progress land.
  * @param props - optional className for the root element
  */
 export const PersonalProjectDashboardSkeleton = ({
@@ -19,23 +22,26 @@ export const PersonalProjectDashboardSkeleton = ({
 }: PersonalProjectDashboardSkeletonProps = {}) => {
     return (
         <div className={cn("flex flex-col gap-6", className)}>
-            {/* 3-up KPI cards (label above a card body) */}
-            <div className="grid gap-3 sm:grid-cols-3">
-                {Array.from({ length: 3 }, (_, index) => (
-                    <div key={`pp-dash-card-${index}`} className="flex flex-col gap-3">
-                        <SkeletonText size="sm" width="w-24" />
-                        <Skeleton className="h-[92px] w-full rounded-xl" />
+            {/* flat continue + progress block */}
+            <div className="flex flex-col gap-3">
+                <div className="flex items-start justify-between gap-3">
+                    <div className="flex flex-col gap-1">
+                        <SkeletonText size="sm" width="w-16" />
+                        <SkeletonText size="sm" width="w-48" />
                     </div>
-                ))}
+                    <Skeleton className="h-8 w-24 rounded-2xl" />
+                </div>
+                <Skeleton className="h-2 w-full rounded-full" />
+                <SkeletonText size="sm" width="w-56" />
             </div>
-            {/* 4-stat ribbon */}
-            <div className="flex flex-wrap gap-6 border-t border-default-200 pt-3">
-                {Array.from({ length: 4 }, (_, index) => (
-                    <div key={`pp-dash-stat-${index}`} className="flex flex-col gap-1">
-                        <Skeleton className="h-5 w-10 rounded" />
-                        <Skeleton className="h-3 w-14 rounded-sm" />
-                    </div>
-                ))}
+            {/* keep-going path: section label + task rows */}
+            <div className="flex flex-col gap-3">
+                <SkeletonText size="sm" width="w-40" />
+                <div className="flex flex-col gap-1">
+                    {Array.from({ length: SKELETON_TASK_COUNT }, (_, index) => (
+                        <Skeleton key={`pp-dash-task-${index}`} className="h-10 w-full rounded-2xl" />
+                    ))}
+                </div>
             </div>
         </div>
     )

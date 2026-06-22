@@ -1,7 +1,7 @@
 "use client"
 import React, { PropsWithChildren } from "react"
 import { useTranslations } from "next-intl"
-import { useSelectedLayoutSegment } from "next/navigation"
+import { useSelectedLayoutSegments } from "next/navigation"
 import { LearnShell } from "@/components/features/learn/LearnShell"
 import { ContentMap } from "@/components/features/learn/ContentMap"
 import { ResizableRail } from "@/components/blocks"
@@ -24,12 +24,25 @@ export const Layout = ({ children }: PropsWithChildren) => {
     //    so the capstone reads like every other learn tab; no right rail.
     // every other tab (mind-map, foundations, headhuntings, practice, leaderboard, starci-ai)
     // has no side rails, so its content spans the full width.
-    const segment = useSelectedLayoutSegment()
-    const isModules = segment === "modules"
-    const isPersonalProject = segment === "personal-project"
+    // lessons now live UNDER the content home (`/learn/content/modules/...`), so the
+    // immediate child segment is "content" for BOTH the dashboard home and the reader.
+    // Use the full segment list: `includes("modules")` flags the reader/module routes,
+    // while `segments[0]` flags the top-level tabs (content / personal-project / mind-map).
+    const segments = useSelectedLayoutSegments()
+    const isModules = segments.includes("modules")
+    // the course-content home (`/learn/content`) + the lesson reader (`/content/modules/...`)
+    // both share the content-map rail on the LEFT: the full module → lesson tree lives in
+    // the rail (its one home), and the dashboard body shows continue + progress + the
+    // current-module path instead of re-drawing the whole tree.
+    const isContent = segments[0] === "content"
+    const isPersonalProject = segments[0] === "personal-project"
     // the mind-map is a full-bleed interactive canvas (fills the viewport edge-to-edge),
     // so it opts out of the shell's canonical p-6 reading-column padding.
-    const isMindMap = segment === "mind-map"
+    const isMindMap = segments[0] === "mind-map"
+    // a single challenge (`…/contents/<id>/challenges/<id>`) KEEPS the course-tree rail (the
+    // learner still navigates the course while solving), but its body is a tabbed single column
+    // (Đề bài / Nộp bài), so it needs no on-this-page outline. Only the right rail is dropped.
+    const isChallenge = segments.includes("challenges")
 
     // persistent left rail (always visible on desktop): the width is drag-resizable
     // (persisted) via ResizableRail; sticky under the navbar and a flex column bounded to
@@ -37,8 +50,9 @@ export const Layout = ({ children }: PropsWithChildren) => {
     // below lg (mobile opens it in the LearnMobileBar drawer).
     const railClass = "hidden shrink-0 lg:flex lg:flex-col lg:sticky lg:top-16 lg:self-start lg:h-[calc(100dvh-4rem)]"
 
-    // left rail: course content-map while reading lessons; milestone outline for the capstone.
-    const leftRail = isModules ? (
+    // left rail: course content-map while reading lessons AND on the content home;
+    // milestone outline for the capstone.
+    const leftRail = (isModules || isContent) ? (
         <ResizableRail
             className={railClass}
             storageKey="starci.learn.contentMap.width"
@@ -61,8 +75,9 @@ export const Layout = ({ children }: PropsWithChildren) => {
             <MilestoneOutline className="min-h-0 lg:flex-1" />
         </ResizableRail>
     ) : undefined
-    // right rail: on-this-page for lessons only; the capstone now keeps its rail on the left.
-    const rightRail = isModules ? (
+    // right rail: on-this-page for lessons only; the capstone keeps its rail on the left, and
+    // the challenge (tabbed single column) needs no outline.
+    const rightRail = (isModules && !isChallenge) ? (
         <OnThisPage />
     ) : undefined
 

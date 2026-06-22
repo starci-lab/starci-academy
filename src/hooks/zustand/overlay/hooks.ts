@@ -1,7 +1,7 @@
 "use client"
 
 import { useCallback } from "react"
-import type { MindMapDetailsSelection, PaymentContext } from "@/modules/types"
+import type { PaymentContext } from "@/modules/types"
 import type { QueryActiveAdvertisementData } from "@/modules/api"
 import { useOverlayStore, type OverlayKey, type FollowListContext } from "./store"
 
@@ -104,32 +104,10 @@ export const usePaymentOverlayState = () => {
     return { ...base, open, context }
 }
 /**
- * Mind-map content-details drawer overlay state.
- *
- * Like {@link usePaymentOverlayState}, this overrides `open` to accept the selected lesson and
- * stashes it so the global drawer (mounted in `DrawerContainer`) can resolve and render it.
- * @returns the overlay handle plus `context` (selected lesson) and `open(selection)`.
- */
-export const useMindMapContentDetailsOverlayState = () => {
-    const base = useOverlayHandle("mindMapContentDetails")
-    const context = useOverlayStore((state) => state.mindMapContentDetailsContext)
-    const setContext = useOverlayStore((state) => state.setMindMapContentDetailsContext)
-    const openOverlay = useOverlayStore((state) => state.openOverlay)
-    const open = useCallback(
-        (next: MindMapDetailsSelection) => {
-            setContext(next)
-            openOverlay("mindMapContentDetails")
-        },
-        [setContext, openOverlay],
-    )
-    return { ...base, open, context }
-}
-
-/**
  * Interstitial ad modal overlay state.
  *
- * Like {@link useMindMapContentDetailsOverlayState}, this overrides `open` to accept the active ad
- * and stashes it so the global modal (mounted in `ModalContainer`) can render it.
+ * Overrides `open` to accept the active ad and stashes it so the global modal (mounted in
+ * `ModalContainer`) can render it.
  * @returns the overlay handle plus `context` (the ad) and `open(ad)`.
  */
 export const useAdModalOverlayState = () => {

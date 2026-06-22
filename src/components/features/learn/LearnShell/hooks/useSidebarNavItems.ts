@@ -3,7 +3,6 @@
 import {
     BracketsCurlyIcon,
     CardsIcon,
-    CodeIcon,
     GraduationCapIcon,
     MapPinLineIcon,
     StackIcon,
@@ -94,7 +93,7 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
                 group: "study",
                 // route to the course-contents index (the docs-style "chỉ mục" landing);
                 // selecting a lesson there drills into its module/content route.
-                url: pathConfig().locale(locale).course(courseDisplayId).learn().build(),
+                url: pathConfig().locale(locale).course(courseDisplayId).learn().content().build(),
             },
             {
                 label: t("foundations.title"),
@@ -111,14 +110,6 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
                 icon: CardsIcon,
                 group: "practice",
                 url: pathConfig().locale(locale).course(courseDisplayId).learn().flashcards().build(),
-            },
-            {
-                label: t("codingPractice.title"),
-                value: "practice",
-                tab: SidebarTab.Practice,
-                icon: CodeIcon,
-                group: "practice",
-                url: pathConfig().locale(locale).course(courseDisplayId).learn().practice().build(),
             },
             {
                 label: t("finalProject.title"),

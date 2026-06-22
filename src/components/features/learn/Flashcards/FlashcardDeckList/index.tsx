@@ -22,22 +22,35 @@ const DIFFICULTY_COLOR: Record<ChallengeDifficulty, "success" | "warning" | "dan
     [ChallengeDifficulty.Medium]: "warning",
     [ChallengeDifficulty.Hard]: "danger",
     [ChallengeDifficulty.Insane]: "danger",
+    [ChallengeDifficulty.Expert]: "danger",
 }
 
 /** Props for {@link FlashcardDeckList}. */
 export interface FlashcardDeckListProps extends WithClassNames<undefined> {
     /** Called with the chosen deck id when the learner opens a deck. */
     onSelectDeck: (deckId: string) => void
+    /** CTA label on each deck card. Defaults to the study label. */
+    ctaLabel?: string
+    /** Show the per-viewer spaced-repetition chrome (due chip + mastery meter).
+     * The interview tab passes `false` — SR state is irrelevant when picking a
+     * topic to drill aloud. Defaults to `true`. */
+    showProgress?: boolean
 }
 
 /**
- * Lists the interview-prep flashcard decks owned by the active course. Each deck
- * card shows its difficulty + card count and opens the reviewer for that deck.
- * Reads the owning course id directly from the course Redux slice; data states go
- * through {@link AsyncContent}.
+ * Lists the flashcard decks owned by the active course as a topic picker, shared
+ * by both the study and interview tabs. Each deck card shows its difficulty + card
+ * count and (in study mode) the viewer's due/mastery; the CTA label and SR chrome
+ * are caller-controlled so the same list drives "Study" and "Interview". Reads the
+ * owning course id from the course Redux slice; data states go through
+ * {@link AsyncContent}.
  * @param props - {@link FlashcardDeckListProps}
  */
-export const FlashcardDeckList = ({ onSelectDeck }: FlashcardDeckListProps) => {
+export const FlashcardDeckList = ({
+    onSelectDeck,
+    ctaLabel,
+    showProgress = true,
+}: FlashcardDeckListProps) => {
     const t = useTranslations()
     // read the owning course id from the store — no prop drilling needed
     const courseId = useAppSelector((state) => state.course.entity?.id)
@@ -109,8 +122,8 @@ export const FlashcardDeckList = ({ onSelectDeck }: FlashcardDeckListProps) => {
                                             {deck.title}
                                         </Typography>
                                         <div className="flex items-center gap-2">
-                                            {/* viewer's cards due in this deck (per-user) */}
-                                            {deck.dueCount ? (
+                                            {/* viewer's cards due in this deck (per-user) — study only */}
+                                            {showProgress && deck.dueCount ? (
                                                 <Chip size="sm" variant="soft" color="warning">
                                                     {t("flashcard.deck.due", { count: deck.dueCount })}
                                                 </Chip>
@@ -130,8 +143,8 @@ export const FlashcardDeckList = ({ onSelectDeck }: FlashcardDeckListProps) => {
                                             {deck.description}
                                         </Typography>
                                     ) : null}
-                                    {/* per-viewer mastery (cards with repetitions >= 2) */}
-                                    {(deck.cards?.length ?? 0) > 0 ? (
+                                    {/* per-viewer mastery (cards with repetitions >= 2) — study only */}
+                                    {showProgress && (deck.cards?.length ?? 0) > 0 ? (
                                         <ProgressMeter
                                             value={deck.masteredCount ?? 0}
                                             max={deck.cards?.length ?? 0}
@@ -150,7 +163,7 @@ export const FlashcardDeckList = ({ onSelectDeck }: FlashcardDeckListProps) => {
                                             variant="primary"
                                             onPress={() => onSelectDeck(deck.id)}
                                         >
-                                            {t("flashcard.study")}
+                                            {ctaLabel ?? t("flashcard.study")}
                                         </Button>
                                     </div>
                                 </div>

@@ -24,4 +24,9 @@ export const difficultyPalette = {
         bg: "bg-purple-500",
         text: "text-purple-500",
     },
+    /** Expert difficulty color. */
+    [ChallengeDifficulty.Expert]: {
+        bg: "bg-fuchsia-500",
+        text: "text-fuchsia-500",
+    },
 }

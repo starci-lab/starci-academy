@@ -2276,6 +2276,7 @@
         "linkCta": "Link GitHub",
         "requestDescription": "You're enrolled but not yet in your course GitHub team. Request to join, then accept the invite on GitHub to continue.",
         "requestCta": "Request to join team",
+        "sending": "Sending request…",
         "recheckCta": "I've accepted — re-check",
         "acceptHint": "After requesting, open GitHub and accept the team invitation, then press re-check.",
         "state": {

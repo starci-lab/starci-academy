@@ -2276,6 +2276,7 @@
         "linkCta": "Liên kết GitHub",
         "requestDescription": "Bạn đã ghi danh nhưng chưa ở trong team GitHub của khóa học. Hãy gửi yêu cầu tham gia, sau đó chấp nhận lời mời trên GitHub để tiếp tục.",
         "requestCta": "Gửi yêu cầu vào team",
+        "sending": "Đang gửi yêu cầu…",
         "recheckCta": "Tôi đã chấp nhận — kiểm tra lại",
         "acceptHint": "Sau khi gửi yêu cầu, mở GitHub và chấp nhận lời mời vào team, rồi bấm kiểm tra lại.",
         "state": {

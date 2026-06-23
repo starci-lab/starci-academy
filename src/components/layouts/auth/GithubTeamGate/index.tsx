@@ -1,11 +1,17 @@
 "use client"
 
-import React, { useCallback, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import { useParams } from "next/navigation"
 import { Button, Modal, cn } from "@heroui/react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { useAppSelector } from "@/redux"
-import { useQueryMyGithubTeamStatusSwr, useLinkGithubOverlayState } from "@/hooks"
+import {
+    useQueryMyGithubTeamStatusSwr,
+    useLinkGithubOverlayState,
+    useJobNotificationsSocketIo,
+    PublicationEvent,
+} from "@/hooks"
+import { JobStatus } from "@/modules/types"
 import { mutateRequestToTeam } from "@/modules/api"
 import { GithubIcon } from "@/components/svg"
 
@@ -28,6 +34,11 @@ export const GithubTeamGate = () => {
     const { data, mutate, isLoading } = useQueryMyGithubTeamStatusSwr()
     const { setOpen: setLinkGithubOpen, isOpen: linkGithubOpen } = useLinkGithubOverlayState()
     const [requesting, setRequesting] = useState(false)
+    const locale = useLocale()
+    const jobNotificationsSocket = useJobNotificationsSocketIo()
+    const jobStatusByJobId = useAppSelector((state) => state.socketIo.jobStatusByJobId)
+    // courseId -> id of the enqueued resolve-github invite job (for realtime status)
+    const [jobByCourse, setJobByCourse] = useState<Record<string, string>>({})
 
     // scope the gate to the COURSE CURRENTLY BEING STUDIED. The route segment
     // [courseId] holds the course slug (e.g. "system-design-mastery"), which matches
@@ -39,26 +50,62 @@ export const GithubTeamGate = () => {
     const courseTeams = (data?.teams ?? []).filter((entry) => entry.courseSlug === courseSlug)
     const allInCourseTeams = courseTeams.every((entry) => entry.state === "active")
 
-    // request to join THIS course's team if not invited yet
+    // request to join THIS course's team if not invited yet. NON-BLOCKING: only the
+    // (fast) enqueue mutation is awaited; we grab the job id and subscribe to its
+    // /job_notifications room, so status flows in via Redux — no blocking refetch
+    // (the old `await mutate()` ran live GitHub calls and froze the UI).
     const onRequest = useCallback(
         async () => {
             setRequesting(true)
             try {
+                const next: Record<string, string> = {}
                 for (const team of courseTeams.filter((entry) => entry.state === "none")) {
-                    await mutateRequestToTeam({
+                    const res = await mutateRequestToTeam({
                         request: {
                             courseId: team.courseId,
                         },
                     })
+                    const jobId = res.data?.requestToTeam?.data?.jobId
+                    if (jobId) {
+                        next[team.courseId] = jobId
+                        jobNotificationsSocket.emit(
+                            PublicationEvent.SubscribeJobNotification,
+                            {
+                                data: {
+                                    jobId,
+                                },
+                                locale,
+                            },
+                        )
+                    }
                 }
-                // refetch so freshly-pending invites show + the gate re-evaluates
-                await mutate()
+                setJobByCourse((prev) => ({ ...prev, ...next }))
             } finally {
                 setRequesting(false)
             }
         },
-        [courseTeams, mutate],
+        [courseTeams, jobNotificationsSocket, locale],
     )
+
+    // when a tracked invite job settles (Completed/Failed), refetch team status once
+    // so the row flips to "pending" (or surfaces the error) without a manual recheck.
+    useEffect(() => {
+        const settled = Object.entries(jobByCourse).filter(([, id]) => {
+            const status = jobStatusByJobId[id]?.data?.status
+            return status === JobStatus.Completed || status === JobStatus.Failed
+        })
+        if (settled.length === 0) {
+            return
+        }
+        void mutate()
+        setJobByCourse((prev) => {
+            const remaining = { ...prev }
+            for (const [courseId] of settled) {
+                delete remaining[courseId]
+            }
+            return remaining
+        })
+    }, [jobStatusByJobId, jobByCourse, mutate])
 
     // block only enrolled-with-team viewers who are not fully in their teams.
     // YIELD while the link-GitHub overlay is open: this gate is non-dismissable and
@@ -74,6 +121,11 @@ export const GithubTeamGate = () => {
 
     const linked = data.linked
     const hasUninvited = courseTeams.some((entry) => entry.state === "none")
+    // any in-flight invite job (tracked, not yet settled) → drives the "sending" UI
+    const anySending = Object.values(jobByCourse).some((id) => {
+        const status = jobStatusByJobId[id]?.data?.status
+        return status !== JobStatus.Completed && status !== JobStatus.Failed
+    })
 
     return (
         <Modal
@@ -112,32 +164,47 @@ export const GithubTeamGate = () => {
                                         {t("githubTeamGate.requestDescription")}
                                     </p>
                                     <ul className="flex flex-col gap-2">
-                                        {courseTeams.map((team) => (
-                                            <li
-                                                key={team.courseId}
-                                                className="flex items-center justify-between rounded-medium border border-default p-3 text-sm">
-                                                <span className="truncate">{team.courseTitle}</span>
-                                                <span
-                                                    className={cn(
-                                                        "shrink-0 text-xs",
-                                                        team.state === "active"
-                                                            ? "text-success"
-                                                            : team.state === "pending"
+                                        {courseTeams.map((team) => {
+                                            const inflightJobId = jobByCourse[team.courseId]
+                                            const jobStatus = inflightJobId
+                                                ? jobStatusByJobId[inflightJobId]?.data?.status
+                                                : undefined
+                                            const sending = Boolean(inflightJobId)
+                                                && jobStatus !== JobStatus.Completed
+                                                && jobStatus !== JobStatus.Failed
+                                            return (
+                                                <li
+                                                    key={team.courseId}
+                                                    className="flex items-center justify-between rounded-medium border border-default p-3 text-sm">
+                                                    <span className="truncate">{team.courseTitle}</span>
+                                                    <span
+                                                        className={cn(
+                                                            "shrink-0 text-xs",
+                                                            sending
                                                                 ? "text-warning"
-                                                                : "text-default-500",
-                                                    )}>
-                                                    {t(`githubTeamGate.state.${team.state}`)}
-                                                </span>
-                                            </li>
-                                        ))}
+                                                                : team.state === "active"
+                                                                    ? "text-success"
+                                                                    : team.state === "pending"
+                                                                        ? "text-warning"
+                                                                        : "text-default-500",
+                                                        )}>
+                                                        {sending
+                                                            ? t("githubTeamGate.sending")
+                                                            : t(`githubTeamGate.state.${team.state}`)}
+                                                    </span>
+                                                </li>
+                                            )
+                                        })}
                                     </ul>
                                     <div className="flex flex-col gap-2">
                                         {hasUninvited ? (
                                             <Button
                                                 variant="primary"
-                                                isDisabled={requesting}
+                                                isDisabled={requesting || anySending}
                                                 onPress={onRequest}>
-                                                {t("githubTeamGate.requestCta")}
+                                                {anySending
+                                                    ? t("githubTeamGate.sending")
+                                                    : t("githubTeamGate.requestCta")}
                                             </Button>
                                         ) : null}
                                         <Button

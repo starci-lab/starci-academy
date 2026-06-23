@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useCallback, useState } from "react"
+import { useParams } from "next/navigation"
 import { Button, Modal, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { useAppSelector } from "@/redux"
@@ -28,15 +29,22 @@ export const GithubTeamGate = () => {
     const { setOpen: setLinkGithubOpen, isOpen: linkGithubOpen } = useLinkGithubOverlayState()
     const [requesting, setRequesting] = useState(false)
 
-    // request to join every team the viewer has not been invited to yet
+    // scope the gate to the COURSE CURRENTLY BEING STUDIED. The route segment
+    // [courseId] holds the course slug (e.g. "system-design-mastery"), which matches
+    // `team.courseSlug`. The gate is mounted under courses/[courseId]/learn, so only
+    // THIS course's team should block/show here — not every enrolled course's team
+    // (the viewer still joins each course's team lazily as they enter that course).
+    const params = useParams()
+    const courseSlug = Array.isArray(params.courseId) ? params.courseId[0] : params.courseId
+    const courseTeams = (data?.teams ?? []).filter((entry) => entry.courseSlug === courseSlug)
+    const allInCourseTeams = courseTeams.every((entry) => entry.state === "active")
+
+    // request to join THIS course's team if not invited yet
     const onRequest = useCallback(
         async () => {
-            if (!data) {
-                return
-            }
             setRequesting(true)
             try {
-                for (const team of data.teams.filter((entry) => entry.state === "none")) {
+                for (const team of courseTeams.filter((entry) => entry.state === "none")) {
                     await mutateRequestToTeam({
                         request: {
                             courseId: team.courseId,
@@ -49,7 +57,7 @@ export const GithubTeamGate = () => {
                 setRequesting(false)
             }
         },
-        [data, mutate],
+        [courseTeams, mutate],
     )
 
     // block only enrolled-with-team viewers who are not fully in their teams.
@@ -58,14 +66,14 @@ export const GithubTeamGate = () => {
     // an unclickable backdrop. Hiding the gate while linking lets the link modal work;
     // closing the link modal without linking re-shows the gate (still a hard gate).
     const open = Boolean(
-        authenticated && data && data.teams.length > 0 && !data.allInTeam && !linkGithubOpen,
+        authenticated && data && courseTeams.length > 0 && !allInCourseTeams && !linkGithubOpen,
     )
     if (!open || !data) {
         return null
     }
 
     const linked = data.linked
-    const hasUninvited = data.teams.some((entry) => entry.state === "none")
+    const hasUninvited = courseTeams.some((entry) => entry.state === "none")
 
     return (
         <Modal
@@ -104,7 +112,7 @@ export const GithubTeamGate = () => {
                                         {t("githubTeamGate.requestDescription")}
                                     </p>
                                     <ul className="flex flex-col gap-2">
-                                        {data.teams.map((team) => (
+                                        {courseTeams.map((team) => (
                                             <li
                                                 key={team.courseId}
                                                 className="flex items-center justify-between rounded-medium border border-default p-3 text-sm">

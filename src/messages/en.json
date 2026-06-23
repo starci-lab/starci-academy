@@ -1796,6 +1796,9 @@
     "payment": {
         "title": "Payment",
         "desc": "Choose a payment method to continue",
+        "priceError": "Couldn't load the price",
+        "intlNoUsd": "International methods aren't available for this order.",
+        "secure": "Your payment is encrypted and secure.",
         "group": {
             "domestic": "Domestic",
             "international": "International"

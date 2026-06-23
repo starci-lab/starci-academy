@@ -1805,6 +1805,9 @@
     "payment": {
         "title": "Thanh toán",
         "desc": "Chọn một phương thức để tiếp tục",
+        "priceError": "Không tải được giá",
+        "intlNoUsd": "Phương thức quốc tế chưa khả dụng cho đơn này.",
+        "secure": "Thanh toán được mã hoá & bảo mật.",
         "group": {
             "domestic": "Thanh toán trong nước",
             "international": "Thanh toán quốc tế"

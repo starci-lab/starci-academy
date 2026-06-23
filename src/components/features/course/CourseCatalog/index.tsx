@@ -26,9 +26,11 @@ import {
 } from "@/hooks"
 import {
     AsyncContent,
-    CourseCard,
     CourseCardSkeleton,
 } from "@/components/blocks"
+import {
+    CatalogCourseCard,
+} from "./CatalogCourseCard"
 import {
     pathConfig,
 } from "@/resources"
@@ -149,7 +151,7 @@ export const CourseCatalog = ({ className }: CourseCatalogProps) => {
                 >
                     <div className="grid w-full grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
                         {list.map((course) => (
-                            <CourseCard key={course.id} course={course} />
+                            <CatalogCourseCard key={course.id} course={course} />
                         ))}
                     </div>
                 </AsyncContent>

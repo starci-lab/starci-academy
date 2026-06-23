@@ -382,6 +382,7 @@
         },
         "prerequisites": "Yêu cầu đầu vào",
         "usersEnrolled": "{count} người đã đăng ký",
+        "loyaltyOff": "−{percent}% loyalty",
         "cvTitle": "Lộ trình CV",
         "cvDescription": "Chuẩn bị và chỉnh sửa CV developer theo hướng dẫn trong khóa học.",
         "cvPlaceholder": "Công cụ và bài tập CV sẽ hiển thị tại đây.",

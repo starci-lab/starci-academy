@@ -40,6 +40,17 @@ const formatVnd = (amount: number): string => `${amount.toLocaleString("vi-VN")}
 export interface CourseCardProps extends WithClassNames<undefined> {
     /** The course summarised by this card (list-item data). */
     course: CourseEntity
+    /**
+     * Loyalty-discounted VND price (what THIS viewer is actually charged, from
+     * `coursePricePreview`). When set it takes over the price block so the catalog
+     * shows the same personalised price as the rest of the app; omit for the phase
+     * price (guests / not-yet-loaded).
+     */
+    loyaltyPriceVnd?: number | null
+    /** List/original VND price struck through under the loyalty price. */
+    loyaltyOriginalVnd?: number | null
+    /** Loyalty discount percent (drives the chip); 0 → no loyalty chip. */
+    loyaltyPercent?: number | null
 }
 
 /**
@@ -52,6 +63,9 @@ export interface CourseCardProps extends WithClassNames<undefined> {
  */
 export const CourseCard = ({
     course,
+    loyaltyPriceVnd,
+    loyaltyOriginalVnd,
+    loyaltyPercent,
     className,
 }: CourseCardProps) => {
     const locale = useLocale()
@@ -114,6 +128,16 @@ export const CourseCard = ({
 
     const showCover = Boolean(course.coverImageUrl) && !coverFailed
 
+    // price block: prefer the viewer's loyalty price (uniform with the rest of the app)
+    // when supplied, else fall back to the active-phase price.
+    const useLoyalty = loyaltyPriceVnd != null
+    const displayPrice = useLoyalty ? loyaltyPriceVnd : currentPrice
+    const displayOriginal = useLoyalty ? loyaltyOriginalVnd ?? null : course.originalPrice ?? null
+    const displayPercent = useLoyalty ? loyaltyPercent ?? 0 : percentOff
+    const displayHasDiscount = useLoyalty
+        ? (loyaltyPercent ?? 0) > 0 && loyaltyOriginalVnd != null
+        : hasDiscount
+
     return (
         <Card className={cn("flex flex-col overflow-hidden", className)}>
             <Card.Content className="flex flex-col gap-3 p-0">
@@ -170,18 +194,22 @@ export const CourseCard = ({
             <Card.Footer className="mt-auto flex flex-col gap-2">
                 {/* price block: active price + (strikethrough list + % off) when discounted */}
                 <div className="flex flex-wrap items-baseline gap-2">
-                    {currentPrice != null ? (
+                    {displayPrice != null ? (
                         <Typography type="h6" weight="bold">
-                            {formatVnd(currentPrice)}
+                            {formatVnd(displayPrice)}
                         </Typography>
                     ) : null}
-                    {hasDiscount && course.originalPrice != null ? (
+                    {displayHasDiscount && displayOriginal != null ? (
                         <>
                             <Typography type="body-sm" color="muted" className="line-through">
-                                {formatVnd(course.originalPrice)}
+                                {formatVnd(displayOriginal)}
                             </Typography>
-                            <Chip variant="secondary" color="danger" size="sm">
-                                <Chip.Label>{`-${percentOff}%`}</Chip.Label>
+                            <Chip variant="secondary" color={useLoyalty ? "success" : "danger"} size="sm">
+                                <Chip.Label>
+                                    {useLoyalty
+                                        ? t("course.loyaltyOff", { percent: displayPercent })
+                                        : `-${displayPercent}%`}
+                                </Chip.Label>
                             </Chip>
                         </>
                     ) : null}

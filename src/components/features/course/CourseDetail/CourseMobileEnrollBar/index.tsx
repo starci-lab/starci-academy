@@ -16,6 +16,12 @@ import {
     StickyBottomBar,
 } from "@/components/blocks"
 import {
+    useAppSelector,
+} from "@/redux"
+import {
+    useQueryCoursePricePreviewSwr,
+} from "@/hooks"
+import {
     usePricingRows,
 } from "../hooks/usePricingRows"
 import {
@@ -24,6 +30,9 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+
+/** Format an integer VND amount as "1.020.000₫". */
+const formatVnd = (amount: number): string => `${amount.toLocaleString("vi-VN")}₫`
 
 /** Props for {@link CourseMobileEnrollBar}. */
 export type CourseMobileEnrollBarProps = WithClassNames<undefined>
@@ -39,12 +48,16 @@ export const CourseMobileEnrollBar = ({ className }: CourseMobileEnrollBarProps)
     const t = useTranslations()
     const { active } = usePricingRows()
     const { isEnrolled, onEnroll, onContinueLearning } = useCourseEnrollment()
+    const courseId = useAppSelector((state) => state.course.entity?.id)
+    // viewer's loyalty price (matches the rail / catalog) — fall back to phase price.
+    const { data: preview } = useQueryCoursePricePreviewSwr(courseId ?? null)
+    const hasLoyalty = preview != null && preview.discountPercent > 0
 
     return (
         <StickyBottomBar className={className}>
             <div className="flex items-center justify-between gap-3">
                 <Typography type="body" weight="bold">
-                    {active?.formattedPrice}
+                    {hasLoyalty && preview ? formatVnd(preview.discountedPriceVnd) : active?.formattedPrice}
                 </Typography>
                 {isEnrolled ? (
                     <Button variant="primary" onPress={onContinueLearning}>

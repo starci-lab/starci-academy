@@ -382,6 +382,7 @@
         },
         "prerequisites": "Prerequisites",
         "usersEnrolled": "{count} users have enrolled",
+        "loyaltyOff": "−{percent}% loyalty",
         "cvTitle": "CV track",
         "cvDescription": "Prepare and refine your developer CV with guidance from this course.",
         "cvPlaceholder": "CV tools and assignments will appear here.",

@@ -251,7 +251,13 @@
             "milestones": "Tiến độ",
             "milestoneTasks": "Tasks"
         },
-        "idleHint": "Nhập để tìm khóa học, học phần, bài giảng…"
+        "idleHint": "Nhập để tìm khóa học, học phần, bài giảng…",
+        "popular": "Phổ biến",
+        "hint": {
+            "move": "di chuyển",
+            "open": "mở",
+            "close": "esc đóng"
+        }
     },
     "courseContents": {
         "empty": "Khóa học này chưa có nội dung.",
@@ -363,9 +369,16 @@
         "tryLearning": "Học thử",
         "paywall": {
             "title": "Nội dung trả phí",
-            "description": "Đây là bài học dành cho học viên đã đăng ký. Mua khóa học để mở khóa toàn bộ nội dung.",
-            "buy": "Mua ngay",
-            "back": "Quay lại"
+            "titleNamed": "Mở khoá {course}",
+            "description": "Bạn đang đọc thử. Mở khoá để học trọn khóa.",
+            "buy": "Mở khoá khóa học",
+            "back": "Quay lại",
+            "loyaltyOff": "−{percent}% loyalty",
+            "unlock": {
+                "content": "Toàn bộ bài học",
+                "challenges": "Tất cả challenge chấm tự động",
+                "project": "Dự án cá nhân + review"
+            }
         },
         "prerequisites": "Yêu cầu đầu vào",
         "usersEnrolled": "{count} người đã đăng ký",

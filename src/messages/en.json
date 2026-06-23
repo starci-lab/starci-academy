@@ -251,7 +251,13 @@
             "milestones": "Progress",
             "milestoneTasks": "Tasks"
         },
-        "idleHint": "Type to search courses, modules, lessons…"
+        "idleHint": "Type to search courses, modules, lessons…",
+        "popular": "Popular",
+        "hint": {
+            "move": "to move",
+            "open": "to open",
+            "close": "esc to close"
+        }
     },
     "courseContents": {
         "empty": "This course has no content yet.",
@@ -363,9 +369,16 @@
         "tryLearning": "Try for free",
         "paywall": {
             "title": "Premium content",
-            "description": "This lesson is for enrolled learners. Purchase the course to unlock the full content.",
-            "buy": "Buy now",
-            "back": "Go back"
+            "titleNamed": "Unlock {course}",
+            "description": "You're reading a preview. Unlock to learn the whole course.",
+            "buy": "Unlock the course",
+            "back": "Go back",
+            "loyaltyOff": "−{percent}% loyalty",
+            "unlock": {
+                "content": "All lessons",
+                "challenges": "Every auto-graded challenge",
+                "project": "Personal project + review"
+            }
         },
         "prerequisites": "Prerequisites",
         "usersEnrolled": "{count} users have enrolled",

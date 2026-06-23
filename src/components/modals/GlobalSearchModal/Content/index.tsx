@@ -4,7 +4,7 @@ import React from "react"
 import { GlobalSearchContentBlock } from "./Block"
 import { GlobalSearchEmpty } from "./Empty"
 import { useAppSelector } from "@/redux"
-import { Accordion, ScrollShadow } from "@heroui/react"
+import { ScrollShadow } from "@heroui/react"
 import type { AutocompleteGlobalSearchItem } from "@/modules/api"
 
 
@@ -22,12 +22,11 @@ interface GlobalSearchSection {
 }
 
 /**
- * Grouped command-palette results for global search, rendered as an accordion: one collapsible
- * section per non-empty bucket, each titled `Label (count)` (no icons). Sections start expanded so
- * hits are visible immediately; learners can collapse the ones they don't care about.
+ * Grouped command-palette results for global search, rendered as a FLAT grouped list: one
+ * section per non-empty bucket (a `Label (count)` header + a React-Aria ListBox of rows).
+ * No accordion — every hit is visible and keyboard-navigable (↑↓ within a list, ↵ to open).
  *
- * Each result carries a `parentPath` (resolved from the indexer parent-index cache) holding the
- * course slug + module/content/task ids needed to build the deep-link learn URL.
+ * Each result carries a `path` (server-built deep-link); pressing a row navigates there.
  */
 export const GlobalSearchContent = () => {
     const t = useTranslations()
@@ -82,42 +81,20 @@ export const GlobalSearchContent = () => {
     const sections = allSections.filter((section) => (section.items?.length ?? 0) > 0)
 
     return (
-        <ScrollShadow hideScrollBar className="max-h-[300px] py-3">
+        <ScrollShadow hideScrollBar className="max-h-[320px] py-2">
             {sections.length === 0 ? (
                 <GlobalSearchEmpty hasQuery={query.length > 0} />
             ) : (
-                <Accordion
-                    variant="default"
-                    hideSeparator
-                    className="px-0"
-                    defaultExpandedKeys={sections.map((section) => section.kind)}
-                >
+                <div className="flex flex-col gap-3 px-2">
                     {sections.map((section) => (
-                        <Accordion.Item
-                            key={section.kind}
-                            id={section.kind}
-                            aria-label={section.label}
-                        >
-                            <Accordion.Heading>
-                                <Accordion.Trigger className="w-full p-0">
-                                    <div className="flex w-full items-center justify-between gap-1.5">
-                                        <span className="text-sm font-medium text-foreground">
-                                            {`${section.label} (${section.items?.length ?? 0})`}
-                                        </span>
-                                        <Accordion.Indicator />
-                                    </div>
-                                </Accordion.Trigger>
-                            </Accordion.Heading>
-                            <Accordion.Panel>
-                                <Accordion.Body className="p-3 pt-0">
-                                    <GlobalSearchContentBlock
-                                        items={section.items ?? []}
-                                    />
-                                </Accordion.Body>
-                            </Accordion.Panel>
-                        </Accordion.Item>
+                        <div key={section.kind} className="flex flex-col gap-1">
+                            <div className="px-2 text-xs font-medium text-muted">
+                                {`${section.label} (${section.items?.length ?? 0})`}
+                            </div>
+                            <GlobalSearchContentBlock items={section.items ?? []} />
+                        </div>
                     ))}
-                </Accordion>
+                </div>
             )}
         </ScrollShadow>
     )

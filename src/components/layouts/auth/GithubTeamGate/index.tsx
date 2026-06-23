@@ -25,7 +25,7 @@ export const GithubTeamGate = () => {
     const t = useTranslations()
     const authenticated = useAppSelector((state) => state.keycloak.authenticated)
     const { data, mutate, isLoading } = useQueryMyGithubTeamStatusSwr()
-    const { setOpen: setLinkGithubOpen } = useLinkGithubOverlayState()
+    const { setOpen: setLinkGithubOpen, isOpen: linkGithubOpen } = useLinkGithubOverlayState()
     const [requesting, setRequesting] = useState(false)
 
     // request to join every team the viewer has not been invited to yet
@@ -52,8 +52,14 @@ export const GithubTeamGate = () => {
         [data, mutate],
     )
 
-    // block only enrolled-with-team viewers who are not fully in their teams
-    const open = Boolean(authenticated && data && data.teams.length > 0 && !data.allInTeam)
+    // block only enrolled-with-team viewers who are not fully in their teams.
+    // YIELD while the link-GitHub overlay is open: this gate is non-dismissable and
+    // would otherwise stack ON TOP of the LinkGithubModal it opens, trapping it behind
+    // an unclickable backdrop. Hiding the gate while linking lets the link modal work;
+    // closing the link modal without linking re-shows the gate (still a hard gate).
+    const open = Boolean(
+        authenticated && data && data.teams.length > 0 && !data.allInTeam && !linkGithubOpen,
+    )
     if (!open || !data) {
         return null
     }

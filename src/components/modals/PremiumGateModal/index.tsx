@@ -60,7 +60,7 @@ export const PremiumGateModal = ({ className }: WithClassNames<undefined>) => {
                                 </span>
                             </div>
                         </Modal.Header>
-                        <Modal.Body className="gap-3 p-4">
+                        <Modal.Body className="gap-3">
                             <div className="text-sm text-muted">
                                 {t("course.paywall.description")}
                             </div>

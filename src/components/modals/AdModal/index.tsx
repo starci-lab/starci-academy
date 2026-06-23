@@ -46,7 +46,7 @@ export const AdModal = ({ className }: WithClassNames<undefined>) => {
                                 {t("dashboard.adModalTitle")}
                             </span>
                         </Modal.Header>
-                        <Modal.Body className="gap-3 p-4">
+                        <Modal.Body className="gap-3">
                             <AdBanner ad={context} />
                         </Modal.Body>
                     </Modal.Dialog>

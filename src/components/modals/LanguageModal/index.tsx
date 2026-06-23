@@ -33,7 +33,7 @@ export const LanguageModal = ({ className }: WithClassNames<undefined>) => {
                         <Modal.Header>
                             <div className="text-2xl font-bold">{t("settings.language.title")}</div>
                         </Modal.Header>
-                        <Modal.Body className="gap-0 p-4">
+                        <Modal.Body className="gap-0">
                             <div>
                                 <div className="text-sm text-muted">{t("settings.language.popular")}</div>
                                 <Spacer y={1.5} />

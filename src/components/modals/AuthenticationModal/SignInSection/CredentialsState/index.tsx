@@ -167,7 +167,7 @@ export const CredentialsState = () => {
                     <div className="text-xs text-muted">{t("auth.signIn.desc")}</div>
                 </div>
             </Modal.Header>
-            <Modal.Body className="overflow-visible p-3">
+            <Modal.Body>
                 <OauthButtons
                     items={oauthButtons}
                     onOauthPress={onOauthPress}

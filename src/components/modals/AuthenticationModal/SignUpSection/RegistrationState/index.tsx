@@ -148,7 +148,7 @@ export const RegistrationState = () => {
                     <div className="text-xs text-muted">{t("auth.signUp.desc")}</div>
                 </div>
             </Modal.Header>
-            <Modal.Body className="overflow-visible p-3">
+            <Modal.Body>
                 <EmailField
                     value={values.email}
                     error={errors.email}

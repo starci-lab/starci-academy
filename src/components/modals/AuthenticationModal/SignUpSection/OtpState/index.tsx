@@ -66,7 +66,7 @@ export const OtpState = () => {
                     <div className="font-semibold text-lg">{t("auth.signUp.otp.title")}</div>
                 </div>
             </Modal.Header>
-            <Modal.Body className="overflow-visible p-3">
+            <Modal.Body>
                 <div className="text-xs text-muted text-center">
                     {
                         t.rich("auth.signUp.otp.desc", {

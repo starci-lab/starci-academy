@@ -113,7 +113,7 @@ export const LivestreamCalendarModal = ({ className }: WithClassNames<undefined>
                         <Modal.Header>
                             <div className="text-2xl font-bold">{t("livestream.calendar.modalTitle")}</div>
                         </Modal.Header>
-                        <Modal.Body className="gap-0 p-4">
+                        <Modal.Body className="gap-0">
                             {
                                 visibleSessions.length === 0 ? (
                                     <div className="text-center text-sm text-muted">

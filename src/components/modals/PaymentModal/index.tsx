@@ -268,10 +268,10 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
                         <Modal.Body>
                             <div className="flex flex-col gap-6">
                                 {/* order summary — what + how much (+ loyalty discount) before the method choice.
-                                    The modal dialog sits on --overlay; the neutral token ladder has no step a touch
-                                    lighter than it, so use the app's elevation idiom (a white veil, cf. bg-white/5
-                                    elsewhere) to RAISE this card a bit lighter — a real "card in card" lift. */}
-                                <div className="flex flex-col gap-2 rounded-2xl border border-white/10 bg-white/10 px-4 py-3">
+                                    Surface-in-surface (a card ON the modal surface) → the INNER surface carries a
+                                    real `border border-default` to delineate it, plus a faint white veil for lift
+                                    (the --overlay ladder has no step lighter than the dialog). */}
+                                <div className="flex flex-col gap-2 rounded-2xl border border-default bg-white/5 px-4 py-3">
                                     <Typography type="body-sm" weight="semibold" truncate title={order?.name}>
                                         {order?.name}
                                     </Typography>

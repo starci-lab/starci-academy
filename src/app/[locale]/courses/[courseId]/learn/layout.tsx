@@ -11,6 +11,7 @@ import { OnThisPage } from "@/components/features/learn/OnThisPage"
 import { ContentAiFab } from "@/components/features/learn/ContentAiFab"
 import { EnrollGate } from "@/components/features/learn/shared/EnrollGate"
 import { GithubLinkGate } from "@/components/layouts/auth/GithubLinkGate"
+import { GithubTeamGate } from "@/components/layouts/auth/GithubTeamGate"
 import { useQueryCourseSwr, useQueryCourseEnrollmentStatusSwr } from "@/hooks"
 import { useAppSelector } from "@/redux"
 
@@ -133,6 +134,8 @@ export const Layout = ({ children }: PropsWithChildren) => {
         <>
             {/* soft prompt: nudge learners with no linked GitHub to connect once per session */}
             <GithubLinkGate />
+            {/* hard gate: force enrolled learners into their course GitHub team (non-dismissable) */}
+            <GithubTeamGate />
             {/* floating "ask StarCi AI" mascot button (self-hides when no content is open) */}
             <ContentAiFab />
             <LearnShell

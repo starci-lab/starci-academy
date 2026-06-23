@@ -129,3 +129,5 @@ export * from "./query-my-course-outline"
 export * from "./query-my-daily-quest"
 export * from "./query-recommended-courses"
 export * from "./query-course-price-preview"
+
+export * from "./query-my-github-team-status"

@@ -105,3 +105,5 @@ export * from "./useQueryUserFollowersInfiniteSwr"
 export * from "./useQueryUserFollowingInfiniteSwr"
 export * from "./useQueryMyDailyQuestSwr"
 export * from "./useQueryRecommendedCoursesSwr"
+
+export * from "./useQueryMyGithubTeamStatusSwr"

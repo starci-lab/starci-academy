@@ -59,3 +59,5 @@ export * from "./mutation-reorder-pinned-projects"
 export * from "./mutation-claim-daily-quest-reward"
 export * from "./mutation-submit-contact"
 export * from "./mutation-ask-content-ai"
+
+export * from "./mutation-request-to-team"

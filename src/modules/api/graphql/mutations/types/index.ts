@@ -48,3 +48,5 @@ export * from "./pinned-projects"
 export * from "./claim-daily-quest-reward"
 export * from "./contact"
 export * from "./ask-content-ai"
+
+export * from "./request-to-team"

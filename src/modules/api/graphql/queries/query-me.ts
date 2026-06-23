@@ -17,6 +17,7 @@ const query1 = gql`
         displayName
         bio
         githubUsername
+        authenticationType
         followerCount
         followingCount
         twoFactorEnabled

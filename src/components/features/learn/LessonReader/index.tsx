@@ -382,11 +382,11 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
                     then the prev/next pager, then the quiet E2E-results link. Hidden on locked /
                     full-width tabs. */}
                 {!isLocked && !isFullWidthTab ? (
-                    <div className="flex flex-col gap-6 pt-6 pb-6">
-                        <ContentDiscussion className="mx-auto w-full max-w-3xl px-3" />
-                        <LessonPager className="mx-auto w-full max-w-3xl px-3" />
+                    <div className="flex flex-col gap-6 pb-6">
+                        <ContentDiscussion className="mx-auto w-full max-w-3xl" />
+                        <LessonPager className="mx-auto w-full max-w-3xl" />
                         {hasE2e ? (
-                            <div className="mx-auto w-full max-w-3xl px-3">
+                            <div className="mx-auto w-full max-w-3xl">
                                 <E2eResultButton />
                             </div>
                         ) : null}
@@ -398,7 +398,7 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
                     server-side for members + enrolled viewers, so render only
                     when present and not on full-width (sandbox / AI lab) tabs */}
                 {inlineAd && !isFullWidthTab ? (
-                    <div className="mx-auto w-full max-w-3xl px-3 pb-6">
+                    <div className="mx-auto w-full max-w-3xl pb-6">
                         <AdBanner ad={inlineAd} />
                     </div>
                 ) : null}

@@ -1,7 +1,7 @@
 import type { AbstractEntity } from "./abstract"
 import type { EnrollmentEntity } from "./enrollment"
 import type { SubmissionEntity } from "./submission"
-import type { WorkMode } from "../enums"
+import type { WorkMode, AuthenticationType } from "../enums"
 
 /**
  * Application user; identity comes from Keycloak (keycloakId = JWT sub).
@@ -23,6 +23,8 @@ export interface UserEntity extends AbstractEntity {
     bio?: string | null
     /** Linked GitHub username (null/undefined when the user has not linked GitHub yet). */
     githubUsername?: string | null
+    /** How the user signs in (provider = login method): google / github / credentials. */
+    authenticationType?: AuthenticationType | null
     /** The user's unified global points balance (course activities + coding practice). */
     points?: number
     /** Number of users who follow this user (resolved field). */

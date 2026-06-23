@@ -113,3 +113,5 @@ export * from "./user-following"
 export * from "./my-daily-quest"
 export * from "./recommended-courses"
 export * from "./course-price-preview"
+
+export * from "./my-github-team-status"

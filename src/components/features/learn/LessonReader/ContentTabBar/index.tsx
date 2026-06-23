@@ -86,7 +86,7 @@ export const ContentTabBar = ({
         <div className={cn("w-full", className)}>
             {/* capped + centered wrapper so the toolbar lines up with the reading column */}
             <TabsCard
-                className="mx-auto w-full max-w-3xl px-3"
+                className="mx-auto w-full max-w-3xl"
                 leftTabs={leftTabs}
                 rightTabs={rightTabs}
             />

@@ -3,8 +3,12 @@
 import React from "react"
 import {
     Typography,
+    Chip,
     cn,
 } from "@heroui/react"
+import {
+    EnvelopeIcon,
+} from "@phosphor-icons/react"
 import {
     useLocale,
     useTranslations,
@@ -17,6 +21,16 @@ import {
     PageHeader,
     PressableCard,
 } from "@/components/blocks"
+import {
+    GithubIcon,
+    GoogleIcon,
+} from "@/components/svg"
+import {
+    useAppSelector,
+} from "@/redux"
+import {
+    AuthenticationType,
+} from "@/modules/types"
 import {
     SettingsBreadcrumb,
 } from "../SettingsBreadcrumb"
@@ -46,6 +60,16 @@ export const SettingsHome = ({
     const router = useRouter()
     const items = getSettingsGroups(locale).flatMap((group) => group.items)
 
+    // login method (provider) badge — google / github / credentials
+    const authType = useAppSelector((state) => state.user.user?.authenticationType)
+    const methodMeta = authType === AuthenticationType.Github
+        ? { key: "github", icon: <GithubIcon className="size-3.5" /> }
+        : authType === AuthenticationType.Google
+            ? { key: "google", icon: <GoogleIcon className="size-3.5" /> }
+            : authType === AuthenticationType.Credentials
+                ? { key: "credentials", icon: <EnvelopeIcon className="size-3.5" /> }
+                : null
+
     return (
         <div className={cn("flex flex-col gap-6", className)}>
             <SettingsBreadcrumb current={t("profileSettings.title")} />
@@ -53,6 +77,19 @@ export const SettingsHome = ({
                 title={t("profileSettings.title")}
                 description={t("profileSettings.subtitle")}
             />
+            {methodMeta ? (
+                <div className="flex items-center gap-2">
+                    <Typography type="body-sm" className="text-default-500">
+                        {t("profileSettings.loginMethod")}
+                    </Typography>
+                    <Chip size="sm" variant="soft" color="default" className="gap-1.5">
+                        {methodMeta.icon}
+                        <Chip.Label>
+                            {t(`profileSettings.loginMethodValue.${methodMeta.key}`)}
+                        </Chip.Label>
+                    </Chip>
+                </div>
+            ) : null}
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 {items.map((item) => (
                     <PressableCard

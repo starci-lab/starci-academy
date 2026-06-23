@@ -60,6 +60,12 @@
     "profileSettings": {
         "title": "Settings",
         "subtitle": "Manage your account, AI, content and membership.",
+        "loginMethod": "Login method",
+        "loginMethodValue": {
+            "github": "GitHub",
+            "google": "Google",
+            "credentials": "Email & password"
+        },
         "collapseMenu": "Collapse menu",
         "expandMenu": "Expand menu",
         "groups": {
@@ -2260,6 +2266,20 @@
         "title": "Link GitHub",
         "description": "Link your GitHub account to unlock full access to StarCi Academy repositories.",
         "button": "Link GitHub Account"
+    },
+    "githubTeamGate": {
+        "title": "Join your course team",
+        "linkFirst": "First, link your GitHub account so we can invite you to the course team.",
+        "linkCta": "Link GitHub",
+        "requestDescription": "You're enrolled but not yet in your course GitHub team. Request to join, then accept the invite on GitHub to continue.",
+        "requestCta": "Request to join team",
+        "recheckCta": "I've accepted — re-check",
+        "acceptHint": "After requesting, open GitHub and accept the team invitation, then press re-check.",
+        "state": {
+            "active": "In team",
+            "pending": "Invite pending",
+            "none": "Not requested"
+        }
     },
     "landing": {
         "hero": {

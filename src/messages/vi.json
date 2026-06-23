@@ -60,6 +60,12 @@
     "profileSettings": {
         "title": "Cài đặt",
         "subtitle": "Quản lý tài khoản, AI, nội dung và thành viên.",
+        "loginMethod": "Phương thức đăng nhập",
+        "loginMethodValue": {
+            "github": "GitHub",
+            "google": "Google",
+            "credentials": "Email & mật khẩu"
+        },
         "collapseMenu": "Thu gọn menu",
         "expandMenu": "Mở rộng menu",
         "groups": {
@@ -2260,6 +2266,20 @@
         "title": "Liên kết GitHub",
         "description": "Liên kết tài khoản GitHub của bạn để mở khóa toàn quyền truy cập vào kho mã nguồn của StarCi Academy.",
         "button": "Liên kết tài khoản GitHub"
+    },
+    "githubTeamGate": {
+        "title": "Tham gia team khóa học",
+        "linkFirst": "Trước tiên, hãy liên kết GitHub để chúng tôi có thể mời bạn vào team khóa học.",
+        "linkCta": "Liên kết GitHub",
+        "requestDescription": "Bạn đã ghi danh nhưng chưa ở trong team GitHub của khóa học. Hãy gửi yêu cầu tham gia, sau đó chấp nhận lời mời trên GitHub để tiếp tục.",
+        "requestCta": "Gửi yêu cầu vào team",
+        "recheckCta": "Tôi đã chấp nhận — kiểm tra lại",
+        "acceptHint": "Sau khi gửi yêu cầu, mở GitHub và chấp nhận lời mời vào team, rồi bấm kiểm tra lại.",
+        "state": {
+            "active": "Đã vào team",
+            "pending": "Đang chờ chấp nhận",
+            "none": "Chưa gửi yêu cầu"
+        }
     },
     "landing": {
         "hero": {

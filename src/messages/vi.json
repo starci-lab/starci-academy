@@ -996,6 +996,17 @@
         "viewDetails": "Xem chi tiết",
         "viewSubmission": "Xem bài nộp"
     },
+    "submissionResult": {
+        "backToChallenge": "Quay lại thử thách",
+        "attempts": "Các lần thử",
+        "passed": "Đạt",
+        "failed": "Chưa đạt",
+        "emptyAttempts": "Chưa có lần nộp nào",
+        "emptyAttemptsHint": "Nộp bài để xem kết quả chấm điểm ở đây.",
+        "noFeedback": "Không có phản hồi chi tiết cho lần thử này.",
+        "error": "Không tải được kết quả.",
+        "retry": "Thử lại"
+    },
     "timeAgo": {
         "justNow": "Vừa xong",
         "yearsAgo": "{years} năm trước",

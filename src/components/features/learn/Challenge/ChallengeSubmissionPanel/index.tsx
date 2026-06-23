@@ -18,11 +18,10 @@ import {
     useQueryAiModelsSwr,
     useQueryMyAiSettingsSwr,
     useQueryMyCreditUsageSwr,
-    useSubmissionAttemptsOverlayState,
 } from "@/hooks"
 import type { AiGradableModel } from "@/modules/api"
 import { useLocale, useTranslations } from "next-intl"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import {
     ChallengeSubmissionEntity,
     JobCategory,
@@ -32,7 +31,6 @@ import {
 } from "@/modules/types"
 import { FormikErrors, FormikTouched } from "formik"
 import {
-    setActiveChallengeSubmissionId,
     setChallengeSubmissionJobId,
 } from "@/redux/slices"
 import { useAppDispatch, useAppSelector } from "@/redux"
@@ -77,7 +75,6 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
     const t = useTranslations()
     // Inline auto-save status text for the debounced submission sync.
     const tAutosave = useTranslations("autosave")
-    const { open: openSubmissionAttempts } = useSubmissionAttemptsOverlayState()
     const runGraphQL = useGraphQLWithToast()
     const submitChallengeSubmissionSwr = useMutateSubmitChallengeSubmissionSwr()
     const syncSubmissionSwr = useMutateSyncChallengeSubmissionSwr()
@@ -89,6 +86,7 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
     const aiProcessingData = useAppSelector((state) => state.modal.aiProcessingData)
     const locale = useLocale()
     const router = useRouter()
+    const pathname = usePathname()
     // Credit usage snapshot (source of truth: credit_usage_histories), Redis-cached.
     const creditUsageSwr = useQueryMyCreditUsageSwr()
     const creditUsage = creditUsageSwr.data
@@ -359,15 +357,14 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
         ],
     )
 
-    /** Open the attempt-history overlay for a submission. */
+    /** Navigate to the dedicated result page for this requirement's attempts. */
     const onViewAttempts = useCallback(
         (submissionId: string) => {
-            dispatch(setActiveChallengeSubmissionId(submissionId))
-            openSubmissionAttempts()
+            router.push(`${pathname}/result?submission=${submissionId}`)
         },
         [
-            dispatch,
-            openSubmissionAttempts,
+            router,
+            pathname,
         ],
     )
 
@@ -398,11 +395,12 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
                     {autosaveLabel}
                 </span>
             )}
-            {/* deliverables as a bg-default accordion (one open at a time): each header shows the
-                submission's status + title + its points / earned score; the panel holds the form. */}
+            {/* deliverables as a nested card (one open at a time): each header shows the submission's
+                status + title + its points / earned score; the panel holds the form. Card-in-card →
+                border + INHERITED bg (transparent), NOT a second fill on the outer "Nộp bài" card. */}
             <Accordion
                 variant="default"
-                className="overflow-hidden rounded-2xl border border-default bg-default"
+                className="overflow-hidden rounded-2xl border border-default bg-transparent"
                 defaultExpandedKeys={firstOpenId ? new Set([firstOpenId]) : undefined}
             >
                 {rows.map((row) => {
@@ -422,7 +420,7 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
                                                 <CircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
                                             )}
                                             <span className="truncate text-base font-semibold">
-                                                {row.submission.sortIndex}. {row.submission.title}
+                                                {row.submission.sortIndex + 1}. {row.submission.title}
                                             </span>
                                         </div>
                                         <div className="flex shrink-0 items-center gap-2">

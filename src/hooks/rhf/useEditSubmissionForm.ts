@@ -111,11 +111,6 @@ export const useEditSubmissionForm = () => {
         [submissions, touchedMap],
     )
 
-    const hasErrors = useMemo(
-        () => errorSubmissions.some((rowError) => rowError?.userSubmission?.submissionUrl),
-        [errorSubmissions],
-    )
-
     const setFieldValue = useCallback((fieldName: string, value: string) => {
         const index = parseIndex(fieldName)
         const submissionId = baseSubmissions[index]?.id
@@ -138,12 +133,21 @@ export const useEditSubmissionForm = () => {
     const mountedRef = useRef(false)
     const syncRef = useRef<() => void>(() => undefined)
     syncRef.current = () => {
-        if (!isOpen || hasErrors) {
+        if (!isOpen) {
             return
         }
         const changed = submissions.filter((submission) => {
             const initial = baseSubmissions.find((candidate) => candidate.id === submission.id)
-            return submission.userSubmission?.submissionUrl !== initial?.userSubmission?.submissionUrl
+            const urlChanged = submission.userSubmission?.submissionUrl !== initial?.userSubmission?.submissionUrl
+            if (!urlChanged) {
+                return false
+            }
+            // PER-ROW guard: only auto-save a row whose OWN url is non-empty + valid.
+            // (the old global `hasErrors` gate blocked EVERY row whenever ANY requirement
+            // was still empty/invalid — so with >1 requirement a typed URL never persisted
+            // across submissions / F5. Each valid row now saves independently.)
+            const url = submission.userSubmission?.submissionUrl ?? ""
+            return url.length > 0 && !validateUrl(submission.type, url)
         })
         if (changed.length === 0) {
             return

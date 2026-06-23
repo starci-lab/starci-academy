@@ -9,7 +9,6 @@ import {
     Typography,
     cn,
 } from "@heroui/react"
-import { PaperPlaneRightIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { useAppSelector } from "@/redux"
 import { useMutateAskContentAiSwr } from "@/hooks"
@@ -152,7 +151,6 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                     isPending={askSwr.isMutating}
                     onPress={() => void onSend()}
                 >
-                    <PaperPlaneRightIcon aria-hidden focusable="false" className="size-5" />
                     {t("contentAi.send")}
                 </Button>
             </div>

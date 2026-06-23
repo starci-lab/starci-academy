@@ -1,7 +1,6 @@
 "use client"
 
 import {
-    PuzzlePieceIcon,
     TrophyIcon,
     FlameIcon,
     LightbulbIcon,
@@ -23,6 +22,7 @@ import { difficultyPalette } from "@/components/pallettes"
 import { useParams } from "next/navigation"
 import { useRouter } from "@/i18n/navigation"
 import { useAppSelector } from "@/redux"
+import { MarkdownContent } from "@/components/reuseable"
 
 /** i18n key for each difficulty tier label (covers all 5 BE tiers). */
 const DIFFICULTY_LABEL_KEY: Record<ChallengeDifficulty, string> = {
@@ -107,8 +107,10 @@ export const ChallengeCard = ({ challenge, className }: ChallengeCardProps) => {
             <div className="flex flex-col gap-3">
                 <div>
                     <div className="flex items-center justify-between gap-2 mb-2">
-                        <span className="inline-flex items-center gap-1.5 text-xs text-muted">
-                            <PuzzlePieceIcon className="size-4 shrink-0" />
+                        {/* quiet eyebrow — the challenge number is a low-key label, not a heading;
+                            the title below is the meaningful line. No motif icon (it lives once on
+                            the section's LabeledCard label). */}
+                        <span className="text-xs text-muted">
                             {t("challenge.number", { index: challenge.sortIndex })}
                         </span>
                         <span className={cn("inline-flex items-center gap-1.5 text-xs", statusMeta.className)}>
@@ -134,7 +136,12 @@ export const ChallengeCard = ({ challenge, className }: ChallengeCardProps) => {
                         </span>
                     ) : null}
                 </div>
-                <div className="text-xs text-muted line-clamp-2">{challenge.description}</div>
+                {challenge.description ? (
+                    <MarkdownContent
+                        markdown={challenge.description}
+                        className="text-xs text-muted [&_p]:m-0 [&_p]:line-clamp-2"
+                    />
+                ) : null}
                 <div className="flex items-center justify-between gap-2">
                     <span className="inline-flex items-center gap-1.5 text-xs text-muted">
                         <ArrowClockwiseIcon className="size-4 shrink-0" />

@@ -987,6 +987,17 @@
         "viewDetails": "View details",
         "viewSubmission": "View submission"
     },
+    "submissionResult": {
+        "backToChallenge": "Back to challenge",
+        "attempts": "Attempts",
+        "passed": "Passed",
+        "failed": "Not passed",
+        "emptyAttempts": "No attempts yet",
+        "emptyAttemptsHint": "Submit your work to see the grading result here.",
+        "noFeedback": "No detailed feedback for this attempt.",
+        "error": "Couldn't load the result.",
+        "retry": "Retry"
+    },
     "timeAgo": {
         "justNow": "Just now",
         "yearsAgo": "{years} years ago",

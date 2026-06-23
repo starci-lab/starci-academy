@@ -13,6 +13,9 @@ import {
 import {
     useAppSelector,
 } from "@/redux"
+import {
+    ContentTab,
+} from "@/redux/slices"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -53,34 +56,44 @@ export interface OnThisPageProps extends WithClassNames<undefined> {
 export const OnThisPage = ({ className, mobile = false }: OnThisPageProps) => {
     const t = useTranslations()
     const contentId = useAppSelector((state) => state.content.id)
+    const contentTab = useAppSelector((state) => state.tabs.contentTab)
     const { headings, activeId, onJump } = useTableOfContents(contentId)
 
-    // self-hide when there is nothing to outline (rail reclaims no width)
-    if (headings.length === 0) {
+    // The rail is the per-lesson sidebar (outline + actions + review + practice), so it shows
+    // whenever a lesson is open — NOT only when the body has headings. Earlier it self-hid on
+    // `headings.length === 0`, which wrongly dropped the WHOLE rail (incl. actions/review/practice)
+    // on the Challenges tab (a card list with no headings) → the layout jumped. Now we hide only
+    // when no lesson is open (e.g. module overview) so there is nothing to host.
+    if (!contentId) {
         return null
     }
 
     // shared body: the outline + the per-lesson action/review/practice blocks
     const body = (
         <>
-            <nav className="flex flex-col gap-3">
-                <Label>{t("onThisPage.title")}</Label>
-                <div className="flex flex-col gap-2">
-                    {headings.map((heading) => (
-                        <Link
-                            key={heading.id}
-                            onPress={() => onJump(heading.id)}
-                            className={cn(
-                                "cursor-pointer text-start",
-                                heading.level >= 3 && "pl-3",
-                                heading.id === activeId ? "text-accent" : "text-muted",
-                            )}
-                        >
-                            {heading.text}
-                        </Link>
-                    ))}
-                </div>
-            </nav>
+            {/* in-article outline — only when the active body has headings (the prose Content
+                tab). The Challenges tab body is a card list with none, so the outline is omitted
+                while the rest of the rail stays put. */}
+            {headings.length > 0 && (
+                <nav className="flex flex-col gap-3">
+                    <Label>{t("onThisPage.title")}</Label>
+                    <div className="flex flex-col gap-2">
+                        {headings.map((heading) => (
+                            <Link
+                                key={heading.id}
+                                onPress={() => onJump(heading.id)}
+                                className={cn(
+                                    "cursor-pointer text-start",
+                                    heading.level >= 3 && "pl-3",
+                                    heading.id === activeId ? "text-accent" : "text-muted",
+                                )}
+                            >
+                                {heading.text}
+                            </Link>
+                        ))}
+                    </div>
+                </nav>
+            )}
 
             {/* content actions (bookmark / share / fullscreen) — moved from the inline bar */}
             <ContentActions />
@@ -88,8 +101,9 @@ export const OnThisPage = ({ className, mobile = false }: OnThisPageProps) => {
             {/* "review this lesson" — flashcard decks linked to this content */}
             <LessonFlashcards />
 
-            {/* "practice this lesson" — challenges of this content (closes the loop) */}
-            <LessonChallenges />
+            {/* "practice this lesson" — challenges of this content (closes the loop). Hidden ON
+                the Challenges tab, where the body already lists them (avoid the duplicate). */}
+            {contentTab !== ContentTab.Challenges && <LessonChallenges />}
         </>
     )
 

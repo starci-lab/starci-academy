@@ -5,7 +5,7 @@ import { Pagination, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import { WithClassNames } from "@/modules/types"
-import { AsyncContent } from "@/components/blocks"
+import { AsyncContent, LabeledCard } from "@/components/blocks"
 import { useQueryChallengesSwr } from "@/hooks"
 import { setChallengePageNumber } from "@/redux/slices"
 import { ChallengeCard } from "./ChallengeCard"
@@ -61,12 +61,12 @@ export const ChallengeBody = ({ className }: ChallengeBodyProps) => {
                 retryLabel: t("challenge.retry"),
             }}
         >
-            <div>
-                <div className="text-sm text-muted">
-                    {t("challenge.count", { count: count ?? 0 })}
-                </div>
-                <div className="h-3" />
-                <div className={cn("flex flex-col gap-3", className)}>
+            <LabeledCard
+                label={t("challenge.count", { count: count ?? 0 })}
+                frameless
+                className={className}
+            >
+                <div className="flex flex-col gap-3">
                     {
                         _.cloneDeep(challenges)
                             ?.sort((prev, next) => prev.sortIndex - next.sortIndex)
@@ -117,7 +117,7 @@ export const ChallengeBody = ({ className }: ChallengeBodyProps) => {
                         </Pagination>
                     </>
                 ) : null}
-            </div>
+            </LabeledCard>
         </AsyncContent>
     )
 }

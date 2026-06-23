@@ -1,9 +1,11 @@
 "use client"
 
-import { ArrowLeftIcon, CaretRightIcon, GearSixIcon, TrophyIcon, FlameIcon, LightbulbIcon } from "@phosphor-icons/react"
+import { ArrowLeftIcon, CaretRightIcon, GearSixIcon, TrophyIcon, FlameIcon, LightbulbIcon, CheckCircleIcon } from "@phosphor-icons/react"
 import React, { useEffect, useMemo, useState } from "react"
-import { Accordion, Chip, Drawer, Label, Link, Tabs, Typography, cn } from "@heroui/react"
+import { Accordion, Button, Chip, Drawer, Input, Label, Link, ScrollShadow, Spinner, Tabs, TextField, Typography, cn } from "@heroui/react"
 import { MarkdownContent, Score } from "@/components/reuseable"
+import { useMutateSyncPersonalProjectGithubSwr } from "@/hooks"
+import { useGraphQLWithToast } from "@/modules/toast"
 import { LabeledCard } from "@/components/blocks"
 import { ChallengeViewSkeleton } from "./ChallengeViewSkeleton"
 import { ChallengeSubmissionPanel } from "../ChallengeSubmissionPanel"
@@ -58,6 +60,51 @@ export const ChallengeView = ({ className, onBack }: ChallengeViewProps) => {
     )
     // the language selector lives behind a settings Drawer (mirrors the personal-project task panel)
     const [isLangOpen, setLangOpen] = useState(false)
+
+    // optional private-repo token (encrypted at rest), shared per-enrollment with the
+    // personal-project capstone — the challenge grader clones private student repos with it.
+    const courseId = useAppSelector((state) => state.course.entity?.id)
+    const runGraphQL = useGraphQLWithToast()
+    const syncGithubSwr = useMutateSyncPersonalProjectGithubSwr()
+    const [tokenInput, setTokenInput] = useState("")
+    const [savingToken, setSavingToken] = useState(false)
+    const saveGithubToken = async () => {
+        const trimmed = tokenInput.trim()
+        if (!courseId || !trimmed) {
+            return
+        }
+        setSavingToken(true)
+        await runGraphQL(
+            async () => {
+                const result = await syncGithubSwr.trigger({ courseId, githubToken: trimmed })
+                const payload = result?.data?.syncPersonalProjectGithub
+                if (!payload?.success) {
+                    throw new Error(payload?.error ?? payload?.message ?? t("finalProject.page.submitGithub.syncFailed"))
+                }
+                setTokenInput("")
+                return payload
+            },
+            { showSuccessToast: true },
+        ).finally(() => setSavingToken(false))
+    }
+    const clearGithubToken = async () => {
+        if (!courseId) {
+            return
+        }
+        setSavingToken(true)
+        await runGraphQL(
+            async () => {
+                const result = await syncGithubSwr.trigger({ courseId, clearGithubToken: true })
+                const payload = result?.data?.syncPersonalProjectGithub
+                if (!payload?.success) {
+                    throw new Error(payload?.error ?? payload?.message ?? t("finalProject.page.submitGithub.syncFailed"))
+                }
+                setTokenInput("")
+                return payload
+            },
+            { showSuccessToast: true },
+        ).finally(() => setSavingToken(false))
+    }
     /** Human label for the active language, shown on the settings summary row. */
     const langLabelMap: Record<string, string> = {
         typescript: t("programmingLanguage.typescript"),
@@ -110,15 +157,6 @@ export const ChallengeView = ({ className, onBack }: ChallengeViewProps) => {
             .map((body) => `- ${body}`)
             .join("\n"),
         [prerequisites],
-    )
-    /** Expected outputs for the active language as a single markdown bullet list. */
-    const outputsMarkdown = useMemo(
-        () => outputs
-            .map((item) => item.body.trim())
-            .filter((body) => body.length > 0)
-            .map((body) => `- ${body}`)
-            .join("\n"),
-        [outputs],
     )
     const hint = challenge?.hint?.trim() ?? ""
 
@@ -213,12 +251,12 @@ export const ChallengeView = ({ className, onBack }: ChallengeViewProps) => {
                                 <Typography type="body" weight="semibold" className="text-foreground">
                                     {t("challenge.requirements")}
                                 </Typography>
-                                {/* requirements as a bg-default accordion (same fill as the markdown
-                                    accordion / code blocks); collapsed by default — the per-requirement
-                                    points stay visible in each header, expand to read the detail. */}
+                                {/* requirements as a surface accordion (card fill — this is a standalone
+                                    solve page, not a markdown code-block cluster); collapsed by default —
+                                    the per-requirement points stay visible in each header. */}
                                 <Accordion
-                                    variant="default"
-                                    className="overflow-hidden rounded-2xl border border-default bg-default"
+                                    variant="surface"
+                                    className="overflow-hidden border border-default"
                                     allowsMultipleExpanded
                                 >
                                     {requirements.map((item, index) => (
@@ -254,11 +292,11 @@ export const ChallengeView = ({ className, onBack }: ChallengeViewProps) => {
                                 <Typography type="body" weight="semibold" className="text-foreground">
                                     {t("challenge.steps.title")}
                                 </Typography>
-                                {/* steps share the requirements' bg-default accordion, collapsed by
+                                {/* steps share the requirements' surface accordion, collapsed by
                                     default (a guide you expand step by step). */}
                                 <Accordion
-                                    variant="default"
-                                    className="overflow-hidden rounded-2xl border border-default bg-default"
+                                    variant="surface"
+                                    className="overflow-hidden border border-default"
                                     allowsMultipleExpanded
                                 >
                                     {steps.map((step, index) => (
@@ -285,18 +323,38 @@ export const ChallengeView = ({ className, onBack }: ChallengeViewProps) => {
                         ) : null}
 
                         {outputs.length > 0 ? (
-                            <section className="flex flex-col gap-3">
-                                <Typography type="body" weight="semibold" className="text-foreground">
-                                    {t("challenge.outputs")}
-                                </Typography>
-                                <MarkdownContent markdown={outputsMarkdown} />
-                            </section>
+                            <LabeledCard
+                                label={t("challenge.outputs")}
+                                contentClassName="flex flex-col"
+                            >
+                                {/* expected outputs as a check-led list card: each deliverable is one
+                                    row (leading success check + its markdown body), separated by a
+                                    divider — the body renders markdown so inline code stays formatted. */}
+                                {outputs.map((item, index) => (
+                                    <div
+                                        key={`output-${index}`}
+                                        className={cn(
+                                            "flex items-start gap-3 py-3",
+                                            index < outputs.length - 1 && "border-b border-separator",
+                                        )}
+                                    >
+                                        <CheckCircleIcon
+                                            aria-hidden
+                                            className="mt-0.5 size-5 shrink-0 text-success"
+                                        />
+                                        <MarkdownContent
+                                            markdown={item.body}
+                                            className="min-w-0 [&_p]:m-0"
+                                        />
+                                    </div>
+                                ))}
+                            </LabeledCard>
                         ) : null}
 
                         {hint.length > 0 ? (
                             <Accordion
-                                variant="default"
-                                className="overflow-hidden rounded-2xl border border-default bg-default"
+                                variant="surface"
+                                className="overflow-hidden border border-default"
                             >
                                 <Accordion.Item id="hint" aria-label={t("challenge.hint")}>
                                     <Accordion.Heading>
@@ -324,9 +382,14 @@ export const ChallengeView = ({ className, onBack }: ChallengeViewProps) => {
                 </div>
             </div>
 
-            {/* RIGHT — the submit + result (act): a sticky aside of cards, like the task page */}
-            <aside className="w-full shrink-0 xl:sticky xl:top-24 xl:max-h-[calc(100dvh-7rem)] xl:w-[360px] xl:self-start xl:overflow-y-auto">
-                <div className="flex flex-col gap-6">
+            {/* RIGHT — the submit + result (act): a sticky aside of cards, like the task page.
+                The inner ScrollShadow owns the overflow + fades the top/bottom edges so a long
+                submission panel scrolls within the viewport with a clear "more below" cue. */}
+            <aside className="w-full shrink-0 xl:sticky xl:top-24 xl:w-[360px] xl:self-start">
+                <ScrollShadow
+                    hideScrollBar
+                    className="flex flex-col gap-6 xl:max-h-[calc(100dvh-7rem)] xl:overflow-y-auto"
+                >
                     <LabeledCard
                         label={t("challenge.submissionModal.title")}
                         contentClassName="flex flex-col gap-4"
@@ -362,7 +425,7 @@ export const ChallengeView = ({ className, onBack }: ChallengeViewProps) => {
                             {t("challenge.minimumPassRequirementAll")}
                         </Typography>
                     </LabeledCard>
-                </div>
+                </ScrollShadow>
             </aside>
 
             {/* language-settings Drawer (mirrors the personal-project grading-settings drawer; for a
@@ -379,26 +442,65 @@ export const ChallengeView = ({ className, onBack }: ChallengeViewProps) => {
                             </div>
                             <div className="border-b" />
                             <Drawer.Body className="p-6 pt-3">
-                                <div className="flex flex-col gap-2">
-                                    <Label>{t("challenge.language")}</Label>
-                                    {/* block tabs (primary), same as the personal-project grading-settings drawer */}
-                                    <Tabs
-                                        selectedKey={activeLang}
-                                        variant="primary"
-                                        className="w-fit"
-                                        onSelectionChange={(key) => setSelectedLang(String(key))}
-                                    >
-                                        <Tabs.ListContainer>
-                                            <Tabs.List aria-label={t("challenge.language")}>
-                                                {langs.map((lang) => (
-                                                    <Tabs.Tab key={lang} id={lang}>
-                                                        {langLabelMap[lang] ?? lang}
-                                                        <Tabs.Indicator />
-                                                    </Tabs.Tab>
-                                                ))}
-                                            </Tabs.List>
-                                        </Tabs.ListContainer>
-                                    </Tabs>
+                                <div className="flex flex-col gap-6">
+                                    <div className="flex flex-col gap-2">
+                                        <Label>{t("challenge.language")}</Label>
+                                        {/* block tabs (primary), same as the personal-project grading-settings drawer */}
+                                        <Tabs
+                                            selectedKey={activeLang}
+                                            variant="primary"
+                                            className="w-fit"
+                                            onSelectionChange={(key) => setSelectedLang(String(key))}
+                                        >
+                                            <Tabs.ListContainer>
+                                                <Tabs.List aria-label={t("challenge.language")}>
+                                                    {langs.map((lang) => (
+                                                        <Tabs.Tab key={lang} id={lang}>
+                                                            {langLabelMap[lang] ?? lang}
+                                                            <Tabs.Indicator />
+                                                        </Tabs.Tab>
+                                                    ))}
+                                                </Tabs.List>
+                                            </Tabs.ListContainer>
+                                        </Tabs>
+                                    </div>
+                                    {/* optional private-repo token (write-only, encrypted at rest) — only
+                                        needed when the student's challenge repo is PRIVATE; public/org repos
+                                        grade with the org token. Shared per-enrollment with the capstone. */}
+                                    <div className="flex flex-col gap-2">
+                                        <Label>{t("finalProject.page.submitGithub.privateTokenFieldTitle")}</Label>
+                                        <TextField variant="secondary" className="w-full">
+                                            <Input
+                                                className="w-full"
+                                                type="password"
+                                                autoComplete="off"
+                                                placeholder={t("finalProject.page.submitGithub.privateTokenPlaceholder")}
+                                                name="githubToken"
+                                                value={tokenInput}
+                                                onChange={(event) => setTokenInput(event.target.value)}
+                                            />
+                                        </TextField>
+                                        <Typography type="body-sm" color="muted">
+                                            {t("finalProject.page.submitGithub.privateTokenHint")}
+                                        </Typography>
+                                        <div className="flex flex-wrap items-center gap-2">
+                                            <Button
+                                                variant="secondary"
+                                                isDisabled={savingToken || tokenInput.trim().length === 0}
+                                                onPress={() => void saveGithubToken()}
+                                            >
+                                                {savingToken ? <Spinner size="sm" color="current" /> : null}
+                                                {t("finalProject.page.submitGithub.privateTokenSaveButton")}
+                                            </Button>
+                                            <Button
+                                                variant="tertiary"
+                                                isDisabled={savingToken}
+                                                onPress={() => void clearGithubToken()}
+                                            >
+                                                {t("finalProject.page.submitGithub.privateTokenRemoveButton")}
+                                            </Button>
+                                        </div>
+                                    </div>
                                 </div>
                             </Drawer.Body>
                         </Drawer.Dialog>

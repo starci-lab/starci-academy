@@ -1,6 +1,6 @@
 "use client"
 
-import { CaretDownIcon, LockIcon, SparkleIcon } from "@phosphor-icons/react"
+import { CaretDownIcon, LockIcon, SparkleIcon, WarningCircleIcon } from "@phosphor-icons/react"
 import React from "react"
 import {
     Chip,
@@ -127,6 +127,9 @@ export const GradeModelDropdown = ({
                                 </Chip>
                             )
                             if (!model.available) {
+                                // DISABLED (not locked): model/provider tạm không khả dụng (vd key
+                                // không hợp lệ / provider down) → icon CẢNH BÁO, KHÔNG phải ổ khoá.
+                                // Phân biệt với case chưa mua gói (canPremium=false) bên dưới.
                                 return (
                                     <DropdownItem
                                         key={key}
@@ -137,7 +140,7 @@ export const GradeModelDropdown = ({
                                             <Tooltip.Trigger>
                                                 <div className="flex w-full items-center justify-between gap-2 text-muted">
                                                     <span className="flex min-w-0 items-center gap-2">
-                                                        <LockIcon className="size-5 shrink-0" />
+                                                        <WarningCircleIcon className="size-5 shrink-0" />
                                                         <span className="truncate">{model.model}</span>
                                                     </span>
                                                     {categoryChip}

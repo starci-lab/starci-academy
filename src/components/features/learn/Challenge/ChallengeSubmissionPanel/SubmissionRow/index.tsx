@@ -28,6 +28,7 @@ import {
 } from "@/hooks/useSystemAiAutoConfig"
 import {
     AIProcessingText,
+    MarkdownContent,
 } from "@/components/reuseable"
 import type {
     AiGradableModel,
@@ -176,7 +177,7 @@ export const SubmissionRow = ({
                     <>
                         <div className="flex items-center gap-2 text-foreground">
                             <Typography type="body" className="font-semibold">
-                                {submission.sortIndex}
+                                {submission.sortIndex + 1}
                                 {". "}
                                 {submission.title}
                             </Typography>
@@ -185,9 +186,12 @@ export const SubmissionRow = ({
                         <div className="h-2" />
                     </>
                 ) : null}
-                <Typography type="body-xs" className="text-muted">
-                    {submission.description}
-                </Typography>
+                {submission.description ? (
+                    <MarkdownContent
+                        markdown={submission.description}
+                        className="text-xs text-muted"
+                    />
+                ) : null}
                 <div className="h-3" />
                 <TextField variant="secondary"
                     className="w-full"
@@ -266,16 +270,17 @@ export const SubmissionRow = ({
                             )
                         ) : null}
                     </div>
-                    <div className="flex flex-wrap items-center gap-2">
+                    <div className="flex w-full items-center gap-2">
                         <Button
                             isPending={isPending}
                             size="lg"
                             variant="primary"
+                            className="shrink-0"
                             onPress={() => onSubmit(submission.id, row.index)}
                         >
                             {({ isPending: pending }) => (
                                 <>
-                                    {pending ? <Spinner color="current" /> : <PencilLineIcon className="size-5" />}
+                                    {pending ? <Spinner color="current" /> : <PencilLineIcon className="size-5 shrink-0" />}
                                     {t("challenge.submissionModal.submit")}
                                 </>
                             )}
@@ -283,9 +288,12 @@ export const SubmissionRow = ({
                         <Button
                             size="lg"
                             variant="secondary"
+                            className="min-w-0 flex-1"
                             onPress={() => onViewAttempts(submission.id)}
                         >
-                            {t("challenge.submissionModal.viewAttempts")}
+                            <span className="truncate">
+                                {t("challenge.submissionModal.viewAttempts")}
+                            </span>
                         </Button>
                     </div>
                 </div>

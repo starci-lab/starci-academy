@@ -1,6 +1,6 @@
 "use client"
 
-import { CircleCheck as CheckCircleIcon, LayoutList as QueueIcon, OctagonXmark as WarningOctagonIcon, Sparkles as SparkleIcon } from "@gravity-ui/icons"
+import { CheckCircleIcon, HourglassIcon as QueueIcon, WarningOctagonIcon, SparkleIcon } from "@phosphor-icons/react"
 import React, {
     useEffect,
     useMemo,

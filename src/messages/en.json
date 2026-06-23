@@ -1297,7 +1297,7 @@
         "error": "Could not update AI settings",
         "lanes": {
             "auto": {
-                "title": "Auto (free)",
+                "title": "Auto",
                 "desc": "Use the free allowance bundled with your course — basic models only."
             },
             "premium": {
@@ -1799,6 +1799,13 @@
         "priceError": "Couldn't load the price",
         "intlNoUsd": "International methods aren't available for this order.",
         "secure": "Your payment is encrypted and secure.",
+        "noCardStored": "StarCi never stores your card details",
+        "aiPlanName": "AI plan",
+        "membershipName": "StarCi membership",
+        "loyalty": {
+            "enrolled": "You own {count} courses",
+            "diligent": "You keep a learning streak"
+        },
         "group": {
             "domestic": "Domestic",
             "international": "International"

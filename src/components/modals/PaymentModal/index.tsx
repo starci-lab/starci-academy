@@ -3,7 +3,7 @@
 import React, { useMemo, useState } from "react"
 import { Chip, Modal, Spinner, Typography, cn } from "@heroui/react"
 import useSWR from "swr"
-import { LockSimpleIcon } from "@phosphor-icons/react"
+import { ArrowRightIcon, FlameIcon, GraduationCapIcon, LockSimpleIcon } from "@phosphor-icons/react"
 import {
     useMutateCourseEnrollSwr,
     useMutatePurchaseAiSubscriptionSwr,
@@ -166,18 +166,28 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
         [t],
     )
 
-    /** Loyalty discount copy for the chip (course flow). */
-    const discountCopy = (reason: DiscountReason, enrolledCount: number): string => {
-        switch (reason) {
-        case "enrolledCount":
-            return t("payment.discount.enrolledCount", { count: enrolledCount })
-        case "diligent":
-            return t("payment.discount.diligent")
-        case "both":
-            return t("payment.discount.both", { count: enrolledCount })
-        default:
-            return ""
+    /**
+     * Loyalty breakdown rows (course flow) — explains WHY the discount applies, not just the %.
+     * Reads the BE `discountReason` + `enrolledCount`: enrolled-count bonus (+5%/owned course)
+     * and/or the diligent bonus (streak/points). Renders one row per active reason.
+     */
+    const loyaltyReasons = (reason: DiscountReason, enrolledCount: number) => {
+        const rows: Array<{ key: string, icon: React.ReactNode, label: string }> = []
+        if (reason === "enrolledCount" || reason === "both") {
+            rows.push({
+                key: "enrolled",
+                icon: <GraduationCapIcon aria-hidden focusable="false" className="size-4 text-success" />,
+                label: t("payment.loyalty.enrolled", { count: enrolledCount }),
+            })
         }
+        if (reason === "diligent" || reason === "both") {
+            rows.push({
+                key: "diligent",
+                icon: <FlameIcon aria-hidden focusable="false" className="size-4 text-success" />,
+                label: t("payment.loyalty.diligent"),
+            })
+        }
+        return rows
     }
 
     /**
@@ -284,19 +294,31 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
                                             ) : null}
                                             {order && order.discountPercent > 0 ? (
                                                 <Chip size="sm" variant="soft" color="success">
-                                                    <Chip.Label>
-                                                        {`−${order.discountPercent}% · ${discountCopy(order.discountReason, order.enrolledCount)}`}
-                                                    </Chip.Label>
+                                                    <Chip.Label>{`−${order.discountPercent}%`}</Chip.Label>
                                                 </Chip>
                                             ) : null}
                                         </div>
                                     </AsyncContent>
+                                    {/* loyalty breakdown — WHY the discount applies (reads discountReason + enrolledCount) */}
+                                    {order && order.discountPercent > 0
+                                        && loyaltyReasons(order.discountReason, order.enrolledCount).length > 0 ? (
+                                            <div className="flex flex-col gap-1 border-t border-white/10 pt-2">
+                                                {loyaltyReasons(order.discountReason, order.enrolledCount).map((row) => (
+                                                    <div key={row.key} className="flex items-center gap-2">
+                                                        {row.icon}
+                                                        <Typography type="body-xs" color="muted">{row.label}</Typography>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        ) : null}
                                 </div>
 
-                                {/* method groups: domestic (VND) + international (USD, locked when no USD price) */}
-                                {paymentGroups.map((group) => {
-                                    const groupLocked = group.requiresUsd && !hasUsd
-                                    return (
+                                {/* method groups: domestic (VND) always; international (USD) only when the
+                                    order HAS a USD price — otherwise the whole group is hidden (no dead, locked
+                                    rows). One currency per group; the row arrow signals an off-site redirect. */}
+                                {paymentGroups
+                                    .filter((group) => !(group.requiresUsd && !hasUsd))
+                                    .map((group) => (
                                         <div key={group.id} className="flex flex-col gap-3">
                                             <div className="flex items-center justify-between">
                                                 <Typography type="body-xs" color="muted">{group.label}</Typography>
@@ -304,15 +326,15 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
                                             </div>
                                             <div className="flex flex-col gap-2">
                                                 {group.methods.map((method) => {
-                                                    const disabled = groupLocked || isMutating
                                                     // the amount THIS gateway charges (VND domestic, USD international)
                                                     const amountLabel = group.requiresUsd
                                                         ? (order?.priceUsd != null ? formatUsd(order.priceUsd) : null)
                                                         : (order?.priceVnd != null ? formatVnd(order.priceVnd) : null)
+                                                    const rowPending = isMutating && selectedPaymentMethod === method.type
                                                     return (
                                                         <PressableCard
                                                             key={method.type}
-                                                            isDisabled={disabled}
+                                                            isDisabled={isMutating}
                                                             onPress={() => { void runCheckout(method.type) }}
                                                         >
                                                             <div className="flex items-center gap-3">
@@ -329,26 +351,27 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
                                                                     {amountLabel ? (
                                                                         <Typography type="body-xs" color="muted">{amountLabel}</Typography>
                                                                     ) : null}
-                                                                    {isMutating && selectedPaymentMethod === method.type ? (
+                                                                    {rowPending ? (
                                                                         <Spinner size="sm" />
-                                                                    ) : null}
+                                                                    ) : (
+                                                                        <ArrowRightIcon aria-hidden focusable="false" className="size-4 text-muted" />
+                                                                    )}
                                                                 </div>
                                                             </div>
                                                         </PressableCard>
                                                     )
                                                 })}
-                                                {groupLocked ? (
-                                                    <Typography type="body-xs" color="muted">{t("payment.intlNoUsd")}</Typography>
-                                                ) : null}
                                             </div>
                                         </div>
-                                    )
-                                })}
+                                    ))}
 
                                 {/* trust line — secure-payment reassurance next to the action (Baymard) */}
-                                <div className="flex items-center justify-center gap-2">
-                                    <LockSimpleIcon aria-hidden focusable="false" className="size-5 text-muted" />
-                                    <Typography type="body-xs" color="muted">{t("payment.secure")}</Typography>
+                                <div className="flex flex-col items-center gap-1">
+                                    <div className="flex items-center justify-center gap-2">
+                                        <LockSimpleIcon aria-hidden focusable="false" className="size-5 text-muted" />
+                                        <Typography type="body-xs" color="muted">{t("payment.secure")}</Typography>
+                                    </div>
+                                    <Typography type="body-xs" color="muted">{t("payment.noCardStored")}</Typography>
                                 </div>
                             </div>
                         </Modal.Body>

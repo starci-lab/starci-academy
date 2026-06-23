@@ -1306,7 +1306,7 @@
         "error": "Không thể cập nhật cài đặt AI",
         "lanes": {
             "auto": {
-                "title": "Tự động (miễn phí)",
+                "title": "Tự động",
                 "desc": "Dùng lượt miễn phí kèm theo khoá học, chỉ với các mô hình cơ bản."
             },
             "premium": {
@@ -1808,6 +1808,13 @@
         "priceError": "Không tải được giá",
         "intlNoUsd": "Phương thức quốc tế chưa khả dụng cho đơn này.",
         "secure": "Thanh toán được mã hoá & bảo mật.",
+        "noCardStored": "StarCi không lưu thông tin thẻ của bạn",
+        "aiPlanName": "Gói AI",
+        "membershipName": "Hội viên StarCi",
+        "loyalty": {
+            "enrolled": "Bạn đã sở hữu {count} khóa học",
+            "diligent": "Bạn duy trì streak học tập"
+        },
         "group": {
             "domestic": "Thanh toán trong nước",
             "international": "Thanh toán quốc tế"

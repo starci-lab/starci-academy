@@ -28,8 +28,14 @@ export interface QueryMyDueFlashcardData {
 
 /** The viewer's due-flashcards payload: a count plus the cards to review. */
 export interface QueryMyDueFlashcardsData {
-    /** How many cards are due today (drives the dashboard widget). */
+    /** Today's actionable queue = overdue reviews + capped new batch (NOT the whole backlog). */
     dueCount: number
+    /** Overdue review cards (learned once, now past due). */
+    dueReviewCount: number
+    /** New cards offered today = min(newTotalCount, daily new limit). */
+    newCount: number
+    /** Total never-reviewed cards (full new backlog). */
+    newTotalCount: number
     /** The cards to review (capped by the query `limit`). */
     cards: Array<QueryMyDueFlashcardData>
 }

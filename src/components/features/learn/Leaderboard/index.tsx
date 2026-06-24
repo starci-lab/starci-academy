@@ -1,155 +1,162 @@
 "use client"
 
-import React from "react"
-import useSWR from "swr"
-import { Button, Separator, cn } from "@heroui/react"
+import React, { useMemo } from "react"
+import { Button, Typography, cn } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
-import { ArrowsClockwiseIcon } from "@phosphor-icons/react"
+import { useSearchParams } from "next/navigation"
 import { useAppSelector } from "@/redux"
 import { useQueryCourseSwr } from "@/hooks"
-import { queryCourseLeaderboard } from "@/modules/api/graphql"
 import { AsyncContent, PageHeader, Skeleton } from "@/components/blocks"
 import { LearnBreadcrumb } from "../shared/LearnBreadcrumb"
 import type { WithClassNames } from "@/modules/types"
-import { LeaderboardPodium } from "./LeaderboardPodium"
 import { LeaderboardTable } from "./LeaderboardTable"
-import { MyRankCard } from "./MyRankCard"
+import { LeaderboardPodium } from "./LeaderboardPodium"
+import { LeaderboardChampion } from "./LeaderboardChampion"
+import { LeaderboardCategoryRail } from "./LeaderboardCategoryRail"
+import { rankEntriesByCategory, parseCategoryParam, type LeaderboardCategoryKey } from "./categories"
+import { useLeaderboardSwr } from "./useLeaderboardSwr"
 
 /** Props for {@link Leaderboard}. */
 export type LeaderboardProps = WithClassNames<undefined>
 
 /**
- * Course-level leaderboard. Ranks enrolled learners by total XP (challenge score
- * + lessons read + milestones) as a top-3 podium, the ranked rows below it, and
- * the viewer's own standing pinned in a card. Reads the owning course id and the
- * viewer identity from Redux and drives the cached `courseLeaderboard` query; a
- * refresh button revalidates on demand. A thin orchestrator — the podium, table,
- * and rank card are composed sub-components; the fetch is wrapped in
- * {@link AsyncContent}.
+ * Course-level leaderboard board. The XP-category selector lives in the learn
+ * shell's left rail (a sidebar, like the content page) on desktop and as a chip
+ * row here on mobile; both drive the `?category=` URL param. This board reads that
+ * param and ranks learners by the selected category (client-side): a top-3 podium
+ * + ranked list when there are enough, a single champion card when the course has
+ * one learner. A text "refresh" revalidates the cached `courseLeaderboard` query.
  *
  * @param props - optional className for the root element.
  */
 export const Leaderboard = ({ className }: LeaderboardProps) => {
     const t = useTranslations()
     const locale = useLocale()
-    // hydrate the course entity from the URL slug so this route works on a direct
-    // load / refresh — unlike the modules layout, nothing upstream fetches it here
+    // hydrate the course entity from the URL slug so this route works on a direct load / refresh
     useQueryCourseSwr()
-    // owning course id drives which leaderboard is fetched
-    const courseId = useAppSelector((state) => state.course.entity?.id)
-    // viewer identity highlights their own row / podium
+    // viewer identity highlights their own podium/row
     const viewer = useAppSelector((state) => state.user.user)
+    const courseId = useAppSelector((state) => state.course.entity?.id)
 
-    const { data, isLoading, isValidating, error, mutate } = useSWR(
-        courseId ? ["course-leaderboard", courseId] : null,
-        async () => {
-            const response = await queryCourseLeaderboard({
-                request: { courseId: courseId as string },
-            })
-            return response.data?.courseLeaderboard.data ?? null
-        },
-    )
+    // the selected category lives in the URL so the left rail (a different layout
+    // slot) and this board stay in sync without shared React state
+    const searchParams = useSearchParams()
+    const selectedCategory = parseCategoryParam(searchParams.get("category"))
+
+    const { data, isLoading, isValidating, error, mutate } = useLeaderboardSwr()
 
     // gate: wait for the course to hydrate before the fetch can resolve
     const waiting = !courseId || (isLoading && !data)
-    const entries = data?.entries ?? []
+    const entries = useMemo(() => data?.entries ?? [], [data])
+    const rankedEntries = useMemo(
+        () => rankEntriesByCategory(entries, selectedCategory),
+        [entries, selectedCategory],
+    )
+    // display label per category (explicit keys — avoids a dynamic i18n lookup)
+    const categoryLabels: Record<LeaderboardCategoryKey, string> = {
+        total: t("leaderboard.categories.total"),
+        challenge: t("leaderboard.categories.challenge"),
+        reading: t("leaderboard.categories.reading"),
+        milestone: t("leaderboard.categories.milestone"),
+    }
+
+    // board shape: 1 learner → champion card; ≥3 → podium + list; otherwise → plain list
+    const isSole = rankedEntries.length === 1
+    const showPodium = rankedEntries.length >= 3
+    const podiumRows = showPodium ? rankedEntries.slice(0, 3) : []
+    const listRows = showPodium ? rankedEntries.slice(3) : rankedEntries
 
     return (
-        <div className={cn("mx-auto flex w-full max-w-2xl flex-col gap-6", className)}>
-            {/* page heading + refresh */}
+        <div className={cn("mx-auto flex w-full max-w-3xl flex-col gap-10", className)}>
+            {/* page heading (no top-right action — refresh lives with the board below) */}
             <PageHeader
                 breadcrumb={<LearnBreadcrumb current={t("leaderboard.title")} />}
                 title={t("leaderboard.title")}
                 description={t("leaderboard.subtitle")}
-                actions={(
-                    <Button
-                        size="sm"
-                        variant="secondary"
-                        isPending={isValidating}
-                        onPress={() => {
-                            void mutate()
-                        }}
-                    >
-                        <ArrowsClockwiseIcon
-                            aria-hidden
-                            focusable="false"
-                            className="size-5"
-                        />
-                        {t("leaderboard.refresh")}
-                    </Button>
-                )}
             />
 
-            <AsyncContent
-                isLoading={waiting}
-                skeleton={(
-                    <div className="flex flex-col gap-6">
-                        {/* podium: three pedestals, the middle one tallest */}
-                        <div className="flex items-end justify-center gap-3 sm:gap-6">
-                            {["h-16", "h-24", "h-12"].map((height, index) => (
-                                <div key={index} className="flex flex-1 flex-col items-center gap-2">
-                                    <Skeleton className="size-12 rounded-full" />
-                                    <Skeleton.Typography type="body-sm" width="2/3" />
-                                    <Skeleton className={cn("w-full rounded-t-xl", height)} />
-                                </div>
-                            ))}
-                        </div>
-                        {/* ranked rows */}
-                        <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-6">
+                {/* mobile category selector (the desktop rail lives in the shell's left slot) */}
+                <LeaderboardCategoryRail variant="chips" className="lg:hidden" />
+
+                {/* board toolbar: what we're ranked by + freshness + a plain refresh */}
+                <div className="flex items-center justify-between gap-3">
+                    <Typography type="body-sm" weight="medium">
+                        {t("leaderboard.rankedBy", { category: categoryLabels[selectedCategory] })}
+                    </Typography>
+                    <div className="flex shrink-0 items-center gap-3">
+                        {data ? (
+                            <Typography type="body-xs" color="muted">
+                                {t("leaderboard.updatedAt", {
+                                    time: new Date(data.computedAt).toLocaleString(locale),
+                                })}
+                            </Typography>
+                        ) : null}
+                        <Button
+                            size="sm"
+                            variant="ghost"
+                            isPending={isValidating}
+                            onPress={() => {
+                                void mutate()
+                            }}
+                        >
+                            {t("leaderboard.refresh")}
+                        </Button>
+                    </div>
+                </div>
+
+                <AsyncContent
+                    isLoading={waiting}
+                    skeleton={(
+                        <div className="flex flex-col gap-2">
                             {[0, 1, 2, 3, 4, 5].map((index) => (
-                                <div key={index} className="flex items-center gap-3 px-3 py-2">
-                                    <Skeleton className="size-6 rounded-md" />
+                                <div key={index} className="flex items-center gap-3 px-2 py-2">
+                                    <Skeleton className="size-5 rounded-md" />
                                     <Skeleton className="size-9 rounded-full" />
                                     <div className="flex flex-1 flex-col gap-2">
                                         <Skeleton.Typography type="body-sm" width="1/3" />
-                                        <Skeleton.Typography type="body-xs" width="1/2" />
+                                        <Skeleton className="h-1.5 w-4/5 rounded-full" />
                                     </div>
                                     <Skeleton.Typography type="body-sm" width="1/4" />
                                 </div>
                             ))}
                         </div>
-                    </div>
-                )}
-                isEmpty={entries.length === 0}
-                emptyContent={{
-                    title: t("leaderboard.empty"),
-                }}
-                error={error}
-                errorContent={{
-                    title: t("leaderboard.error"),
-                    onRetry: () => { void mutate() },
-                    retryLabel: t("leaderboard.refresh"),
-                }}
-            >
-                <div className="flex flex-col gap-6">
-                    {/* podium only with enough learners (≥3) — fewer → no empty pedestals, straight to list */}
-                    {entries.length >= 3 ? (
-                        <LeaderboardPodium
-                            entries={entries}
+                    )}
+                    isEmpty={entries.length === 0}
+                    emptyContent={{
+                        title: t("leaderboard.empty"),
+                    }}
+                    error={error}
+                    errorContent={{
+                        title: t("leaderboard.error"),
+                        onRetry: () => { void mutate() },
+                        retryLabel: t("leaderboard.refresh"),
+                    }}
+                >
+                    {isSole ? (
+                        <LeaderboardChampion
+                            entry={rankedEntries[0].entry}
+                            totalXp={rankedEntries[0].entry.totalXp}
                             viewerUserId={viewer?.id}
                         />
-                    ) : null}
-                    {/* ranked rows: rank 4 down when there's a podium, otherwise EVERY entry */}
-                    <LeaderboardTable
-                        entries={entries.length >= 3 ? entries.slice(3) : entries}
-                        viewerUserId={viewer?.id}
-                    />
-                    {/* snapshot freshness — the board is cached server-side */}
-                    {data ? (
-                        <Separator />
-                    ) : null}
-                </div>
-            </AsyncContent>
-
-            {/* viewer's own standing, shown below the board */}
-            {!waiting && data && !error ? (
-                <MyRankCard
-                    myRank={data.myRank}
-                    updatedAtLabel={t("leaderboard.updatedAt", {
-                        time: new Date(data.computedAt).toLocaleString(locale),
-                    })}
-                />
-            ) : null}
+                    ) : (
+                        <div className="flex flex-col gap-6">
+                            {showPodium ? (
+                                <LeaderboardPodium
+                                    top={podiumRows}
+                                    selectedCategory={selectedCategory}
+                                    viewerUserId={viewer?.id}
+                                />
+                            ) : null}
+                            <LeaderboardTable
+                                rankedEntries={listRows}
+                                selectedCategory={selectedCategory}
+                                viewerUserId={viewer?.id}
+                            />
+                        </div>
+                    )}
+                </AsyncContent>
+            </div>
         </div>
     )
 }

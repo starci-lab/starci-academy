@@ -93,28 +93,30 @@ export const Headhuntings = ({ className }: HeadhuntingsProps) => {
 
     return (
         <div className={className}>
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-10">
                 <PageHeader
                     breadcrumb={<HeadhuntingsBreadcrumbs />}
                     title={t("headhuntings.title")}
                     description={t("headhuntings.description")}
                 />
-                {/* company search box (debounced) with ES-backed autocomplete dropdown */}
-                <SearchInput
-                    value={query}
-                    onValueChange={setQuery}
-                    placeholder={t("headhuntings.companySearchPlaceholder")}
-                    suggestions={suggestions}
-                    onSelectSuggestion={onSelectSuggestion}
-                />
-                {!consultants ? (
-                    <Skeleton className="h-4 w-40 rounded-lg" />
-                ) : (
-                    <Typography type="body-sm" color="muted">
-                        {t("headhuntings.count", { count: count ?? 0 })}
-                    </Typography>
-                )}
-                <ConsultantGrid />
+                <div className="flex flex-col gap-6">
+                    {/* company search box (debounced) with ES-backed autocomplete dropdown */}
+                    <SearchInput
+                        value={query}
+                        onValueChange={setQuery}
+                        placeholder={t("headhuntings.companySearchPlaceholder")}
+                        suggestions={suggestions}
+                        onSelectSuggestion={onSelectSuggestion}
+                    />
+                    {!consultants ? (
+                        <Skeleton className="h-4 w-40 rounded-lg" />
+                    ) : (
+                        <Typography type="body-sm" color="muted">
+                            {t("headhuntings.count", { count: count ?? 0 })}
+                        </Typography>
+                    )}
+                    <ConsultantGrid />
+                </div>
             </div>
         </div>
     )

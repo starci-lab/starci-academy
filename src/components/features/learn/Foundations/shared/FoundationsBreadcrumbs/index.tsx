@@ -1,13 +1,12 @@
 "use client"
 
 import React from "react"
-import {
-    Breadcrumbs,
-    cn,
-} from "@heroui/react"
 import type {
     WithClassNames,
 } from "@/modules/types"
+import {
+    ResponsiveBreadcrumb,
+} from "@/components/blocks"
 import type {
     FoundationsBreadcrumbItem,
 } from "../../types"
@@ -30,16 +29,5 @@ export const FoundationsBreadcrumbs = ({
     items,
     className,
 }: FoundationsBreadcrumbsProps) => {
-    return (
-        <Breadcrumbs className={cn(className)}>
-            {items.map((item) => (
-                <Breadcrumbs.Item
-                    key={item.key}
-                    onPress={item.onPress}
-                >
-                    {item.label}
-                </Breadcrumbs.Item>
-            ))}
-        </Breadcrumbs>
-    )
+    return <ResponsiveBreadcrumb items={items} className={className} />
 }

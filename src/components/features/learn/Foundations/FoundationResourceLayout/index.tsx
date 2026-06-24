@@ -111,9 +111,8 @@ export const FoundationResourceLayout = () => {
     ])
 
     return (
-        <div className="mx-auto max-w-3xl">
+        <div className="mx-auto flex max-w-3xl flex-col gap-10">
             <FoundationsBreadcrumbs items={breadcrumbItems} />
-            <div className="h-3" />
             <AsyncContent
                 isLoading={isFirstLoad}
                 isEmpty={!isFirstLoad && !foundation}

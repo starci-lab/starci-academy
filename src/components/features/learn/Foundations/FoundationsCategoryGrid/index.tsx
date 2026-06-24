@@ -159,51 +159,51 @@ export const FoundationsCategoryGridLayout = () => {
     ])
 
     return (
-        <div className="mx-auto max-w-3xl">
-            <FoundationsBreadcrumbs items={breadcrumbItems} />
-            <div className="h-6" />
-            <FoundationsCategoryGridHeader />
-            <div className="h-6" />
-            {/* search row: box (server-side, debounced) on the left, topic count right-aligned */}
-            <div className="flex items-center justify-between gap-3">
-                <SearchInput
-                    value={query}
-                    onValueChange={setQuery}
-                    placeholder={t("foundations.searchPlaceholder")}
-                    suggestions={suggestions}
-                    onSelectSuggestion={onSelectSuggestion}
-                />
-                {categories === undefined ? (
-                    <SkeletonText size="sm" width="w-[90px]" />
-                ) : (
-                    <Typography type="body-sm" color="muted" className="shrink-0">
-                        {t("foundations.categoryCount", { count: categories.length })}
+        // tier layout: PageHeader (breadcrumb+title+desc) → content cluster, gap-10 between (debt page-heading)
+        <div className="mx-auto flex max-w-3xl flex-col gap-10">
+            <FoundationsCategoryGridHeader breadcrumb={<FoundationsBreadcrumbs items={breadcrumbItems} />} />
+            {/* browse cluster: search row · grid · pager (gap-6 inside the cluster) */}
+            <div className="flex flex-col gap-6">
+                {/* search row: box (server-side, debounced) on the left, topic count right-aligned */}
+                <div className="flex items-center justify-between gap-3">
+                    <SearchInput
+                        value={query}
+                        onValueChange={setQuery}
+                        placeholder={t("foundations.searchPlaceholder")}
+                        suggestions={suggestions}
+                        onSelectSuggestion={onSelectSuggestion}
+                    />
+                    {categories === undefined ? (
+                        <SkeletonText size="sm" width="w-[90px]" />
+                    ) : (
+                        <Typography type="body-sm" color="muted" className="shrink-0">
+                            {t("foundations.categoryCount", { count: categories.length })}
+                        </Typography>
+                    )}
+                </div>
+                {hasNoMatches ? (
+                    <Typography type="body-sm" color="muted">
+                        {t("foundations.searchEmpty", { query: debouncedQuery.trim() })}
                     </Typography>
+                ) : (
+                    <>
+                        <FoundationsCategoryGridBody
+                            categories={pageCategories}
+                            sortedCategories={pageCategories ?? []}
+                            isLoading={isLoading && !data}
+                        />
+                        {isLoading && !data ? (
+                            <PaginationSkeleton />
+                        ) : totalCount > 0 ? (
+                            <Pagination
+                                currentPage={currentPage}
+                                totalPages={totalPages}
+                                onPageChange={setPage}
+                            />
+                        ) : null}
+                    </>
                 )}
             </div>
-            <div className="h-6" />
-            {hasNoMatches ? (
-                <Typography type="body-sm" color="muted">
-                    {t("foundations.searchEmpty", { query: debouncedQuery.trim() })}
-                </Typography>
-            ) : (
-                <>
-                    <FoundationsCategoryGridBody
-                        categories={pageCategories}
-                        sortedCategories={pageCategories ?? []}
-                        isLoading={isLoading && !data}
-                    />
-                    {isLoading && !data ? (
-                        <PaginationSkeleton className="mt-6" />
-                    ) : totalCount > 0 ? (
-                        <Pagination
-                            currentPage={currentPage}
-                            totalPages={totalPages}
-                            onPageChange={setPage}
-                        />
-                    ) : null}
-                </>
-            )}
         </div>
     )
 }

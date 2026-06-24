@@ -209,7 +209,7 @@ export const buildMarkdownRenderers = ({
         // same distinct neutral the code blocks use — so the accordion clearly stands apart from the
         // page bg in dark mode. (Surface variant's bg-surface ≈ page bg → it blended in.)
         accordionblock: ({ children }: { children?: React.ReactNode }) => (
-            <HeroUI.Accordion variant="default" className={`${reading ? "my-4" : "my-2"} overflow-hidden rounded-2xl border border-default bg-default`}>{children}</HeroUI.Accordion>
+            <HeroUI.Accordion variant="surface" className={`${reading ? "my-4" : "my-2"} overflow-hidden border border-default`}>{children}</HeroUI.Accordion>
         ),
         accordionpanel: ({ title, children }: { title?: string, children?: React.ReactNode }) => (
             <HeroUI.Accordion.Item aria-label={String(title ?? "")}>

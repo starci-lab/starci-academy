@@ -39,8 +39,8 @@ export type ContinueLearningProps = WithClassNames<undefined>
 
 /**
  * "Tiếp tục học" content — the single most important next-action slot: a capped
- * set of resume cards prioritising in-progress challenges (active work) over
- * recently-read lessons. When the viewer has joined no course it shows an
+ * set of resume cards, CONTENT-FIRST (recently-read lessons lead, mixed with at
+ * most one in-progress challenge as a nudge). When the viewer has joined no course it shows an
  * onboarding CTA instead of an empty void. Content only (the parent
  * {@link import("@/components/blocks").LabeledCard} frames it; the greeting lives
  * in the identity column). Self-fetches its own leaf queries (no data props).

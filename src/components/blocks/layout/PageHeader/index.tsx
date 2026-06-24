@@ -83,7 +83,10 @@ export const PageHeader = ({
                 <div className="flex flex-col gap-2">
                     <Typography.Heading level={3} weight="bold">{title}</Typography.Heading>
                     {description ? (
-                        <Typography type="body-sm" color="muted">{description}</Typography>
+                        // clamp to 2 lines on mobile (keep the header short on a phone); full on sm+
+                        <Typography type="body-sm" color="muted" className="line-clamp-2 sm:line-clamp-none">
+                            {description}
+                        </Typography>
                     ) : null}
                 </div>
 

@@ -44,19 +44,18 @@ const MARKDOWN_ARTICLE_SECTIONS: Array<MarkdownArticleSection> = [
 
 /**
  * Markdown article block: section headings (`text-xl` in prose) + body paragraphs.
+ * gap-3 giữa các section; gap-2 giữa heading và paragraph trong mỗi section.
  */
 const MarkdownArticleSkeleton = () => (
-    <>
+    <div className="flex flex-col gap-3">
         {MARKDOWN_ARTICLE_SECTIONS.map((section, index) => (
-            <React.Fragment key={index}>
-                {/* gap before each section heading except the first */}
-                {index > 0 ? <div className="h-3" /> : null}
+            // gap-2 = heading ↔ paragraph (cụm con sát nhau trong 1 section)
+            <div key={index} className="flex flex-col gap-2">
                 <SkeletonText size="xl" width={section.headingWidth} />
-                <div className="h-2" />
                 <SkeletonParagraph size="sm" lines={section.lines} />
-            </React.Fragment>
+            </div>
         ))}
-    </>
+    </div>
 )
 
 /**
@@ -82,10 +81,10 @@ export const ContentBodySkeleton = ({
     variant = "v2",
 }: ContentBodySkeletonProps) => {
     if (variant === "legacy") {
+        // gap-3 = toolbar ↔ article (trong 1 block skeleton)
         return (
-            <div className={cn("flex flex-col text-sm text-muted", className)}>
+            <div className={cn("flex flex-col gap-3 text-sm text-muted", className)}>
                 <ActionToolbarSkeleton />
-                <div className="h-3" />
                 <MarkdownArticleSkeleton />
             </div>
         )

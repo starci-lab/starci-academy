@@ -93,7 +93,7 @@ export const Landing = ({ className }: LandingProps) => {
                     })}
                     subline={t("landing.hero.subline")}
                     primary={(
-                        <Button variant="primary" onPress={onSeeCourses}>
+                        <Button variant="primary" size="lg" onPress={onSeeCourses}>
                             {t("landing.hero.ctaPrimary")}
                             <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
                         </Button>
@@ -253,7 +253,7 @@ export const Landing = ({ className }: LandingProps) => {
                     <Typography.Heading level={2} weight="bold" align="center" className="max-w-2xl">
                         {t("landing.closing.title")}
                     </Typography.Heading>
-                    <Button variant="primary" onPress={onSeeCourses}>
+                    <Button variant="primary" size="lg" onPress={onSeeCourses}>
                         {t("landing.closing.cta")}
                         <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
                     </Button>

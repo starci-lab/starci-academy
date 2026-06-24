@@ -6,6 +6,8 @@ export interface QueryMyInterviewHistoryData {
     totalAnswered: number
     /** Mean score (0–100) across those answers, one decimal. */
     averageScore: number
+    /** Best (highest) score across those answers; 0 when none. */
+    bestScore: number
     /** How many answers passed. */
     passCount: number
     /** How many answers were borderline. */

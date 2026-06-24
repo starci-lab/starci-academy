@@ -66,16 +66,15 @@ export const ChallengeBody = ({ className }: ChallengeBodyProps) => {
                 frameless
                 className={className}
             >
-                <div className="flex flex-col gap-3">
-                    {
-                        _.cloneDeep(challenges)
-                            ?.sort((prev, next) => prev.sortIndex - next.sortIndex)
-                            .map((challenge) => <ChallengeCard key={challenge.id} challenge={challenge} />)
-                    }
-                </div>
-                {count ? (
-                    <>
-                        <div className="h-6" />
+                <div className="flex flex-col gap-6">
+                    <div className="flex flex-col gap-3">
+                        {
+                            _.cloneDeep(challenges)
+                                ?.sort((prev, next) => prev.sortIndex - next.sortIndex)
+                                .map((challenge) => <ChallengeCard key={challenge.id} challenge={challenge} />)
+                        }
+                    </div>
+                    {count ? (
                         <Pagination
                             aria-label={t("common.pagination.navAria")}
                             className="justify-start"
@@ -115,8 +114,8 @@ export const ChallengeBody = ({ className }: ChallengeBodyProps) => {
                                 </Pagination.Item>
                             </Pagination.Content>
                         </Pagination>
-                    </>
-                ) : null}
+                    ) : null}
+                </div>
             </LabeledCard>
         </AsyncContent>
     )

@@ -1,159 +1,107 @@
 "use client"
 
-import React, { useState, type Key } from "react"
-import { Button } from "@heroui/react"
+import React from "react"
+import useSWR from "swr"
 import { useTranslations } from "next-intl"
 import { type WithClassNames } from "@/modules/types"
-import { LabeledCard, PageHeader, TabsCard } from "@/components/blocks"
+import { PageHeader } from "@/components/blocks"
+import { useAppSelector } from "@/redux"
+import { useQueryCourseEnrollmentStatusSwr } from "@/hooks"
+import { queryFlashcardDeck } from "@/modules/api/graphql"
+import { EnrollGate } from "../shared/EnrollGate"
 import { LearnBreadcrumb } from "../shared/LearnBreadcrumb"
-import { FlashcardDeckList } from "./FlashcardDeckList"
 import { FlashcardReviewer } from "./FlashcardReviewer"
 import { InterviewSession } from "./InterviewSession"
 import { DueReview } from "./DueReview"
 import { DueReviewHero } from "./DueReviewHero"
 import { FlashcardStatsStrip } from "./FlashcardStatsStrip"
+import { useFlashcardNav } from "./useFlashcardNav"
 
 /** Props for {@link Flashcards}. */
 export type FlashcardsProps = WithClassNames<undefined>
 
-/** The two top-level modes, each its own surface (one tab apiece). */
-type FlashcardTab = "study" | "interview"
-
-/** Within the study tab: the home hub, the cross-deck due review, or one deck. */
-type StudyView = "home" | "due" | "deck"
-
 /**
- * Course-level flashcards page, split into two sibling modes by a secondary tab
- * row under the header — each mode is its own surface with its own model:
+ * Course-level flashcards WORK PANE. The mode switch + deck list live in the
+ * left rail (rendered by the learn layout, same as the content-map rail); this
+ * page is the right pane and reads the active surface off the URL via
+ * {@link useFlashcardNav}: study mode lands on an overview (today's due queue +
+ * mastery), opens a deck's SM-2 reviewer, or runs the cross-deck due session;
+ * interview mode drills the chosen deck by voice.
  *
- * - "Study" (spaced repetition): the due-today queue is the primary action; decks
- *   are a secondary cram/browse path; opening one runs the flip + SM-2 reviewer.
- * - "Mock interview": a topic picker (the same decks, SR chrome hidden) leads into
- *   a voice question-answer drill graded by the backend.
- *
- * The active tab, the study sub-view, and the two selected-deck ids are local UI
- * state owned here. Interview is no longer a hidden toggle inside a deck — every
- * interview entry lives on its own tab.
+ * Back navigation from a sub-view (a deck / the due session) is the breadcrumb's
+ * clickable "Ôn tập" crumb — no separate back-link.
  * @param {FlashcardsProps} props Optional wrapper placement props.
  */
 export const Flashcards = ({ className }: FlashcardsProps) => {
     const t = useTranslations()
-    // which top-level mode is showing (one tab each)
-    const [tab, setTab] = useState<FlashcardTab>("study")
-    // study tab: which sub-view + which deck is open for study
-    const [studyView, setStudyView] = useState<StudyView>("home")
-    const [studyDeckId, setStudyDeckId] = useState<string | null>(null)
-    // interview tab: which deck is being drilled (null = still on the topic picker)
-    const [interviewDeckId, setInterviewDeckId] = useState<string | null>(null)
+    const courseId = useAppSelector((state) => state.course.entity?.id)
+    const { mode, deckId, session, goDue, goOverview } = useFlashcardNav()
+    // mock interview is enrolled-only (it spends AI credits) — gate the tab for trial viewers
+    const enrollmentSwr = useQueryCourseEnrollmentStatusSwr()
+    const isEnrolled = enrollmentSwr.data?.courseEnrollmentStatus?.data?.isEnrolled === true
 
-    // return to the study hub from any study sub-view
-    const goStudyHome = () => {
-        setStudyView("home")
-        setStudyDeckId(null)
-    }
+    // deck name for the breadcrumb when reviewing one deck (shared SWR key with the
+    // reviewer → one fetch). The reviewer owns the heavy card states.
+    const { data: deckData } = useSWR(
+        deckId ? ["flashcard-deck", deckId] : null,
+        async () => {
+            const response = await queryFlashcardDeck({
+                request: { flashcardDeckId: deckId as string },
+            })
+            return response.data?.flashcardDeck.data ?? null
+        },
+    )
 
-    // the two mode tabs, both secondary (one nav layer)
-    const modeTabs = {
-        items: [
-            { key: "study", label: t("flashcard.mode.study") },
-            { key: "interview", label: t("flashcard.mode.interview") },
-        ],
-        selectedKey: tab,
-        ariaLabel: t("flashcard.title"),
-        onSelectionChange: (key: Key) => setTab(key as FlashcardTab),
-    }
+    // breadcrumb: a sub-view (deck / due session) inserts a clickable "Ôn tập" crumb
+    // (→ overview) + names the sub-view; the overview/interview just end at "Ôn tập".
+    const isDeck = mode === "study" && Boolean(deckId)
+    const isDue = mode === "study" && session === "due"
+    const breadcrumb = isDeck ? (
+        <LearnBreadcrumb
+            current={deckData?.title ?? t("flashcard.title")}
+            section={{ label: t("flashcard.title"), onPress: goOverview }}
+        />
+    ) : isDue ? (
+        <LearnBreadcrumb
+            current={t("flashcard.due.label")}
+            section={{ label: t("flashcard.title"), onPress: goOverview }}
+        />
+    ) : (
+        <LearnBreadcrumb current={t("flashcard.title")} />
+    )
 
     return (
         <div className={className}>
-            <div className="mx-auto flex max-w-3xl flex-col gap-6">
+            <div className="mx-auto flex max-w-3xl flex-col gap-10">
                 <PageHeader
-                    breadcrumb={<LearnBreadcrumb current={t("flashcard.title")} />}
+                    breadcrumb={breadcrumb}
                     title={t("flashcard.title")}
                     description={t("flashcard.subtitle")}
                 />
 
-                {/* split the page into two sibling surfaces: study vs interview */}
-                <TabsCard leftTabs={modeTabs} />
-
-                {/* ── STUDY TAB ───────────────────────────────────────────── */}
-                {tab === "study" ? (
-                    <>
-                        {studyView === "home" ? (
-                            <div className="flex flex-col gap-6">
-                                {/* PRIMARY: today's spaced-repetition queue */}
-                                <DueReviewHero onStart={() => setStudyView("due")} />
-
-                                {/* progress snapshot (auto-hides until first review) */}
-                                <FlashcardStatsStrip />
-
-                                {/* SECONDARY: browse / cram the course's decks */}
-                                <LabeledCard label={t("flashcard.decksLabel")} frameless>
-                                    <FlashcardDeckList
-                                        onSelectDeck={(deckId) => {
-                                            setStudyDeckId(deckId)
-                                            setStudyView("deck")
-                                        }}
-                                    />
-                                </LabeledCard>
-                            </div>
-                        ) : null}
-
-                        {studyView === "due" ? (
-                            <div className="flex flex-col gap-6">
-                                <Button
-                                    size="sm"
-                                    variant="secondary"
-                                    className="self-start"
-                                    onPress={goStudyHome}
-                                >
-                                    {t("flashcard.backToHome")}
-                                </Button>
-                                <DueReview onExit={goStudyHome} />
-                            </div>
-                        ) : null}
-
-                        {studyView === "deck" && studyDeckId ? (
-                            <div className="flex flex-col gap-6">
-                                <Button
-                                    size="sm"
-                                    variant="secondary"
-                                    className="self-start"
-                                    onPress={goStudyHome}
-                                >
-                                    {t("flashcard.backToHome")}
-                                </Button>
-                                {/* keyed so switching decks resets the reviewer's local state */}
-                                <FlashcardReviewer key={studyDeckId} deckId={studyDeckId} />
-                            </div>
-                        ) : null}
-                    </>
-                ) : null}
-
-                {/* ── INTERVIEW TAB ───────────────────────────────────────── */}
-                {tab === "interview" ? (
-                    interviewDeckId ? (
-                        <div className="flex flex-col gap-6">
-                            <Button
-                                size="sm"
-                                variant="secondary"
-                                className="self-start"
-                                onPress={() => setInterviewDeckId(null)}
-                            >
-                                {t("flashcard.interview.backToTopics")}
-                            </Button>
-                            {/* keyed so switching topics resets the session's local state */}
-                            <InterviewSession key={interviewDeckId} deckId={interviewDeckId} />
-                        </div>
+                {mode === "study" ? (
+                    session === "due" ? (
+                        <DueReview onExit={goOverview} />
+                    ) : deckId ? (
+                        // keyed so switching decks resets the reviewer's local state
+                        <FlashcardReviewer key={deckId} deckId={deckId} />
                     ) : (
-                        // topic picker: the same decks, SR chrome hidden, interview CTA
-                        <LabeledCard label={t("flashcard.interview.pickLabel")} frameless>
-                            <FlashcardDeckList
-                                showProgress={false}
-                                ctaLabel={t("flashcard.interview.start")}
-                                onSelectDeck={(deckId) => setInterviewDeckId(deckId)}
-                            />
-                        </LabeledCard>
+                        <div className="flex flex-col gap-6">
+                            {/* today's spaced-repetition queue + mastery overview */}
+                            <DueReviewHero onStart={goDue} />
+                            <FlashcardStatsStrip />
+                        </div>
                     )
+                ) : !isEnrolled ? (
+                    // trial viewer → lock the interview behind an enroll CTA
+                    <EnrollGate
+                        title={t("flashcard.interview.gateTitle")}
+                        description={t("flashcard.interview.gateDescription")}
+                    />
+                ) : courseId ? (
+                    // mock interview = a fixed-length random session over the whole
+                    // course (no per-deck topic pick); keyed by course so it resets
+                    <InterviewSession key={courseId} courseId={courseId} />
                 ) : null}
             </div>
         </div>

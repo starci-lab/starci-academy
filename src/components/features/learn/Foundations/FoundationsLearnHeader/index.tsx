@@ -15,7 +15,10 @@ import type {
 } from "@/modules/types"
 
 /** Props for {@link FoundationsLearnHeader}. */
-export type FoundationsLearnHeaderProps = WithClassNames<undefined>
+export interface FoundationsLearnHeaderProps extends WithClassNames<undefined> {
+    /** Breadcrumb node rendered in the PageHeader breadcrumb slot (tier-1). */
+    breadcrumb?: React.ReactNode
+}
 
 /**
  * Title + description for the foundations category learn page.
@@ -27,6 +30,7 @@ export type FoundationsLearnHeaderProps = WithClassNames<undefined>
  * @param props.className - Optional root class names.
  */
 export const FoundationsLearnHeader = ({
+    breadcrumb,
     className,
 }: FoundationsLearnHeaderProps) => {
     const t = useTranslations()
@@ -37,6 +41,7 @@ export const FoundationsLearnHeader = ({
 
     return (
         <PageHeader
+            breadcrumb={breadcrumb}
             title={title}
             description={description}
             className={className}

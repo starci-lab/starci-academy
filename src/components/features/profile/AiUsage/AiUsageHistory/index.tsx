@@ -47,7 +47,6 @@ const CHART_DAYS = 14
 const PROVIDER_LABELS: Record<string, string> = {
     openai: "OpenAI",
     gemini: "Gemini",
-    claude: "Claude",
 }
 
 /** Lane filter values, in display order. */

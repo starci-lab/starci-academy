@@ -4,7 +4,7 @@ import type { WithClassNames } from "@/modules/types"
 
 /**
  * Loading placeholder for {@link import("../").DueReview}. Mirrors the real
- * layout: a deck-context line, a progress bar, one tall borderless flashcard, and
+ * layout: a deck-context line, a progress bar, one fixed-height flashcard, and
  * the reveal control.
  */
 export const DueReviewSkeleton = ({ className }: WithClassNames<undefined> = {}) => {
@@ -18,8 +18,8 @@ export const DueReviewSkeleton = ({ className }: WithClassNames<undefined> = {})
                 </div>
                 {/* deck-context line */}
                 <Skeleton.Typography type="body-xs" width="1/3" />
-                {/* the flashcard — plain (borderless) surface */}
-                <div className="flex min-h-64 flex-col gap-3 rounded-xl bg-default/40 p-8">
+                {/* the flashcard — fixed-height bordered surface (mirrors FlipCard) */}
+                <div className="flex h-80 flex-col gap-3 rounded-2xl border border-default bg-surface p-6 sm:h-[22rem]">
                     <Skeleton.Typography type="body" width="3/4" />
                     <Skeleton.Typography type="body" width="2/3" />
                     <Skeleton.Typography type="body" width="1/2" />

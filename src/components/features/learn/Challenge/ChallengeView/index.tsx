@@ -1,12 +1,12 @@
 "use client"
 
-import { ArrowLeftIcon, CaretRightIcon, GearSixIcon, TrophyIcon, FlameIcon, LightbulbIcon, CheckCircleIcon } from "@phosphor-icons/react"
+import { ArrowLeftIcon, CaretRightIcon, GearSixIcon, TrophyIcon, FlameIcon, LightbulbIcon } from "@phosphor-icons/react"
 import React, { useEffect, useMemo, useState } from "react"
 import { Accordion, Button, Chip, Drawer, Input, Label, Link, ScrollShadow, Spinner, Tabs, TextField, Typography, cn } from "@heroui/react"
 import { MarkdownContent, Score } from "@/components/reuseable"
 import { useMutateSyncPersonalProjectGithubSwr } from "@/hooks"
 import { useGraphQLWithToast } from "@/modules/toast"
-import { LabeledCard } from "@/components/blocks"
+import { CheckListCard, CheckListItem, LabeledCard, PageHeader } from "@/components/blocks"
 import { ChallengeViewSkeleton } from "./ChallengeViewSkeleton"
 import { ChallengeSubmissionPanel } from "../ChallengeSubmissionPanel"
 import { useTranslations } from "next-intl"
@@ -149,15 +149,6 @@ export const ChallengeView = ({ className, onBack }: ChallengeViewProps) => {
             .filter((row) => row.body.trim().length > 0),
         [challenge?.prerequisites, activeLang],
     )
-    /** Prerequisites for the active language as a single markdown bullet list. */
-    const prerequisitesMarkdown = useMemo(
-        () => prerequisites
-            .map((item) => item.body.trim())
-            .filter((body) => body.length > 0)
-            .map((body) => `- ${body}`)
-            .join("\n"),
-        [prerequisites],
-    )
     const hint = challenge?.hint?.trim() ?? ""
 
     const passThreshold = config?.challenge?.passThreshold ?? 0
@@ -202,48 +193,54 @@ export const ChallengeView = ({ className, onBack }: ChallengeViewProps) => {
         <div className={cn("flex flex-col gap-6 xl:flex-row xl:items-start xl:gap-8", className)}>
             {/* CENTER — the brief (read), a centered reading column */}
             <div className="min-w-0 flex-1">
-                <div className="mx-auto flex w-full max-w-3xl flex-col gap-4">
-                    {onBack ? (
-                        <Link
-                            onPress={onBack}
-                            className="inline-flex w-fit cursor-pointer items-center gap-2 font-medium text-accent"
-                        >
-                            <ArrowLeftIcon aria-hidden className="size-5" />
-                            <Typography type="body-sm" className="font-medium">{t("challenge.back")}</Typography>
-                        </Link>
-                    ) : null}
-
-                    {/* header: title + meta chips */}
-                    <div className="flex flex-col gap-3">
-                        <Typography type="h4" weight="bold" className="text-foreground">
-                            {challenge?.title ?? ""}
-                        </Typography>
-                        <div className="flex flex-wrap items-center gap-2">
-                            <Chip color="accent" variant="soft">
-                                <TrophyIcon className="size-5" />
-                                <Chip.Label>{t("challenge.score", { score: challenge?.score ?? 0 })}</Chip.Label>
-                            </Chip>
-                            <Chip className={difficultyPalette[challenge?.difficulty ?? ChallengeDifficulty.Easy].text} variant="soft">
-                                <FlameIcon className="size-5" />
-                                <Chip.Label>{t(challengeDifficultyKey)}</Chip.Label>
-                            </Chip>
-                            {statusBadge ? (
-                                <Chip color={statusBadge.color} variant="soft">
-                                    <Chip.Label>{statusBadge.label}</Chip.Label>
+                <div className="mx-auto flex w-full max-w-3xl flex-col gap-10">
+                    {/* header → PageHeader: back link (breadcrumb slot = leaf nav) · title H3 ·
+                        description · meta chips (score · difficulty · status) */}
+                    <PageHeader
+                        breadcrumb={onBack ? (
+                            <Link
+                                onPress={onBack}
+                                className="inline-flex w-fit cursor-pointer items-center gap-2 font-medium text-accent"
+                            >
+                                <ArrowLeftIcon aria-hidden className="size-5" />
+                                <Typography type="body-sm" className="font-medium">{t("challenge.back")}</Typography>
+                            </Link>
+                        ) : undefined}
+                        title={challenge?.title ?? ""}
+                        description={challenge?.description || undefined}
+                        meta={(
+                            <div className="flex flex-wrap items-center gap-2">
+                                <Chip color="accent" variant="soft">
+                                    <TrophyIcon className="size-5" />
+                                    <Chip.Label>{t("challenge.score", { score: challenge?.score ?? 0 })}</Chip.Label>
                                 </Chip>
-                            ) : null}
-                        </div>
-                    </div>
+                                <Chip className={difficultyPalette[challenge?.difficulty ?? ChallengeDifficulty.Easy].text} variant="soft">
+                                    <FlameIcon className="size-5" />
+                                    <Chip.Label>{t(challengeDifficultyKey)}</Chip.Label>
+                                </Chip>
+                                {statusBadge ? (
+                                    <Chip color={statusBadge.color} variant="soft">
+                                        <Chip.Label>{statusBadge.label}</Chip.Label>
+                                    </Chip>
+                                ) : null}
+                            </div>
+                        )}
+                    />
 
                     {/* brief sections */}
                     <div className="flex flex-col gap-6">
                         {prerequisites.length > 0 ? (
-                            <section className="flex flex-col gap-3">
-                                <Typography type="body" weight="semibold" className="text-foreground">
-                                    {t("challenge.prerequisites")}
-                                </Typography>
-                                <MarkdownContent markdown={prerequisitesMarkdown} />
-                            </section>
+                            <LabeledCard frameless label={t("challenge.prerequisites")}>
+                                {/* shared check-list card; prerequisites = NO tick (needed beforehand,
+                                    not achievements) */}
+                                <CheckListCard>
+                                    {prerequisites.map((item, index) => (
+                                        <CheckListItem key={`prereq-${index}`} showCheck={false}>
+                                            <MarkdownContent markdown={item.body} className="[&_p]:m-0" />
+                                        </CheckListItem>
+                                    ))}
+                                </CheckListCard>
+                            </LabeledCard>
                         ) : null}
 
                         {requirements.length > 0 ? (
@@ -323,31 +320,15 @@ export const ChallengeView = ({ className, onBack }: ChallengeViewProps) => {
                         ) : null}
 
                         {outputs.length > 0 ? (
-                            <LabeledCard
-                                label={t("challenge.outputs")}
-                                contentClassName="flex flex-col"
-                            >
-                                {/* expected outputs as a check-led list card: each deliverable is one
-                                    row (leading success check + its markdown body), separated by a
-                                    divider — the body renders markdown so inline code stays formatted. */}
-                                {outputs.map((item, index) => (
-                                    <div
-                                        key={`output-${index}`}
-                                        className={cn(
-                                            "flex items-start gap-3 py-3",
-                                            index < outputs.length - 1 && "border-b border-separator",
-                                        )}
-                                    >
-                                        <CheckCircleIcon
-                                            aria-hidden
-                                            className="mt-0.5 size-5 shrink-0 text-success"
-                                        />
-                                        <MarkdownContent
-                                            markdown={item.body}
-                                            className="min-w-0 [&_p]:m-0"
-                                        />
-                                    </div>
-                                ))}
+                            <LabeledCard frameless label={t("challenge.outputs")}>
+                                {/* shared check-list card: tick-led rows, markdown body keeps inline code */}
+                                <CheckListCard>
+                                    {outputs.map((item, index) => (
+                                        <CheckListItem key={`output-${index}`}>
+                                            <MarkdownContent markdown={item.body} className="[&_p]:m-0" />
+                                        </CheckListItem>
+                                    ))}
+                                </CheckListCard>
                             </LabeledCard>
                         ) : null}
 
@@ -392,7 +373,7 @@ export const ChallengeView = ({ className, onBack }: ChallengeViewProps) => {
                 >
                     <LabeledCard
                         label={t("challenge.submissionModal.title")}
-                        contentClassName="flex flex-col gap-4"
+                        contentClassName="flex flex-col gap-3"
                     >
                         {/* language = a grading setting (also drives which language's brief shows),
                             picked behind a Drawer like the personal-project grading settings — a

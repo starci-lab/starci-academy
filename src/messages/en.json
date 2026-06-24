@@ -335,6 +335,9 @@
         "metaModules": "{count} modules",
         "metaHours": "~{hours}h of reading",
         "metaLearners": "{count} learners",
+        "metaModulesLabel": "modules",
+        "metaHoursLabel": "h reading",
+        "metaLearnersLabel": "learners",
         "capstoneEyebrow": "Content done — on to your project",
         "resumeCapstone": "Continue project",
         "challengesByDifficulty": "Challenges by difficulty",
@@ -415,7 +418,6 @@
             "description": "You're reading a preview. Enroll to learn the whole course.",
             "buy": "Enroll in course",
             "back": "Go back",
-            "loyaltyOff": "−{percent}% loyalty",
             "unlock": {
                 "content": "All lessons",
                 "challenges": "Every auto-graded challenge",
@@ -424,7 +426,6 @@
         },
         "prerequisites": "Prerequisites",
         "usersEnrolled": "{count} users have enrolled",
-        "loyaltyOff": "−{percent}% loyalty",
         "cvTitle": "CV track",
         "cvDescription": "Prepare and refine your developer CV with guidance from this course.",
         "cvPlaceholder": "CV tools and assignments will appear here.",
@@ -1031,6 +1032,8 @@
     },
     "submissionResult": {
         "backToChallenge": "Back to challenge",
+        "title": "Submission result",
+        "passNeeded": "need {score} to pass",
         "attempts": "Attempts",
         "passed": "Passed",
         "failed": "Not passed",
@@ -1075,6 +1078,7 @@
         "xpLabel": "XP",
         "you": "You",
         "refresh": "Refresh",
+        "champion": "Rank #1 · leading the course",
         "updatedAt": "Updated {time}",
         "columns": {
             "rank": "Rank",
@@ -1093,6 +1097,19 @@
             "lessonsRead": "{count} lessons read",
             "milestones": "{count} milestones"
         },
+        "categories": {
+            "label": "Categories",
+            "total": "Total XP",
+            "challenge": "Challenges",
+            "reading": "Reading",
+            "milestone": "Milestones",
+            "coding": "Coding",
+            "comingSoon": "Coming soon",
+            "captionChallenge": "{count} done · ×1",
+            "captionReading": "{count} read · ×3",
+            "captionMilestone": "{count} tasks · ×10"
+        },
+        "rankedBy": "Ranked by {category}",
         "empty": "No one is on the leaderboard yet. Solve a challenge or read a lesson to score your first points!",
         "myRankEmpty": "You have no activity in this course yet. Solve a challenge or read a lesson to join the leaderboard.",
         "error": "Could not load the leaderboard. Please try again."
@@ -1264,13 +1281,22 @@
         },
         "deck": {
             "due": "{count} due",
-            "mastered": "Mastered {mastered}/{total}"
+            "mastered": "Mastered {mastered}/{total}",
+            "found": "{count} decks found"
         },
         "stats": {
             "label": "Progress",
             "streak": "Day streak",
             "retention": "Retention",
-            "reviewed": "Reviewed"
+            "reviewed": "Reviewed",
+            "masteredLine": "{mastered}/{total} cards mastered",
+            "mastered": "Mastered",
+            "learning": "Learning",
+            "new": "New",
+            "streakChip": "{count}-day streak",
+            "retentionCaption": "{percent}% retention",
+            "firstReviewHint": "Review your first card to start tracking mastery",
+            "barAria": "{mastered} mastered, {learning} learning, {newCount} new of {total} cards"
         },
         "cardProgress": "Card {current}/{total}",
         "questionLabel": "Question",
@@ -1325,11 +1351,21 @@
             "viewResults": "See session result",
             "summaryTitle": "Session result",
             "avgScore": "Average score",
+            "bestScore": "Best score",
             "weakTags": "Topics to revisit",
             "replay": "Interview again",
+            "setupTitle": "Ready to interview?",
+            "setupSubtitle": "Random questions across the whole course.",
             "setupHint": "Pick a seniority level (optional), then answer {total} questions aloud.",
+            "expectCount": "{total} questions",
+            "expectVoice": "Answer by voice",
+            "expectAiGrade": "AI scores + feedback",
+            "levelLabel": "Question level",
             "historyTitle": "Your interview progress",
-            "historyAnswered": "{count} questions practiced"
+            "historyAnswered": "{count} questions practiced",
+            "pickHint": "Pick a deck from the list on the left to start a mock interview.",
+            "gateTitle": "Mock interview is for enrolled learners",
+            "gateDescription": "Enroll in the course to practice with the AI interviewer — a score and feedback after every answer."
         },
         "level": {
             "junior": "Junior",
@@ -1342,7 +1378,8 @@
             "medium": "Medium",
             "hard": "Hard",
             "insane": "Insane"
-        }
+        },
+        "backToOverview": "Overview"
     },
     "aiSettings": {
         "title": "AI Settings",
@@ -2326,14 +2363,15 @@
         "headingAnchor": "Link to this section"
     },
     "discussion": {
-        "title": "Comments ({count})",
+        "title": "Discussion · {count}",
         "react": "React",
         "post": "Post",
         "reply": "Reply",
         "edited": "(edited)",
-        "placeholder": "Write a comment...",
+        "placeholder": "Ask a question or share…",
         "replyPlaceholder": "Write a reply...",
-        "empty": "No comments yet. Be the first!",
+        "empty": "No discussion yet",
+        "emptyHint": "Be the first to ask about this lesson",
         "deletedPlaceholder": "[Comment deleted]",
         "viewReplies": "View {count} replies",
         "hideReplies": "Hide replies",

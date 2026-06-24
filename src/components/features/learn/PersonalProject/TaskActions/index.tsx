@@ -166,8 +166,9 @@ export const TaskActions = ({
     )
 
     return (
-        <>
-            <div className={cn("flex flex-wrap items-center gap-2", className)}>
+        // button row ↔ AI processing status = gap-3 (same block), no manual h-* spacer
+        <div className={cn("flex flex-col gap-3", className)}>
+            <div className="flex flex-wrap items-center gap-2">
                 <Button
                     size="lg"
                     isDisabled={isEvaluateDisabled}
@@ -201,15 +202,12 @@ export const TaskActions = ({
                 </Button>
             </div>
             {showAiProcessing && (
-                <>
-                    <div className="h-3" />
-                    <AIProcessingText
-                        jobCategory={JobCategory.ReviewTask}
-                        jobStatus={aiJobStatus}
-                        error={reviewJobError}
-                    />
-                </>
+                <AIProcessingText
+                    jobCategory={JobCategory.ReviewTask}
+                    jobStatus={aiJobStatus}
+                    error={reviewJobError}
+                />
             )}
-        </>
+        </div>
     )
 }

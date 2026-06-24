@@ -3,7 +3,7 @@
 import React, { useCallback, useMemo, useState } from "react"
 import useSWR, { useSWRConfig } from "swr"
 import { Button, Typography, cn } from "@heroui/react"
-import { CheckCircleIcon } from "@phosphor-icons/react"
+import { CheckCircleIcon, CursorClickIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { mutateReviewFlashcard, queryMyDueFlashcards } from "@/modules/api/graphql"
@@ -15,12 +15,10 @@ import {
     RatingBar,
 } from "@/components/blocks"
 import { useGraphQLWithToast } from "@/modules/toast"
+import { useAppSelector } from "@/redux"
 import { DUE_REVIEW_LIMIT, SM2_GRADES } from "../constants"
 import { DueReviewSkeleton } from "./DueReviewSkeleton"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-
-/** SWR cache key shared with {@link import("../DueReviewHero").DueReviewHero}. */
-const DUE_KEY: [string, number] = ["my-due-flashcards", DUE_REVIEW_LIMIT]
 
 /** Props for {@link DueReview}. */
 export interface DueReviewProps extends WithClassNames<undefined> {
@@ -40,6 +38,12 @@ export const DueReview = ({ onExit, className }: DueReviewProps) => {
     const t = useTranslations()
     const runGraphQL = useGraphQLWithToast()
     const { mutate: globalMutate } = useSWRConfig()
+    // scope the due queue to THIS course; shared SWR key with the hero (DueReviewHero)
+    const courseId = useAppSelector((state) => state.course.entity?.id)
+    const dueKey = useMemo(
+        () => ["my-due-flashcards", courseId ?? null, DUE_REVIEW_LIMIT] as const,
+        [courseId],
+    )
     // index of the card currently shown + whether its answer is revealed
     const [currentIndex, setCurrentIndex] = useState(0)
     const [revealed, setRevealed] = useState(false)
@@ -49,8 +53,8 @@ export const DueReview = ({ onExit, className }: DueReviewProps) => {
     const [reviewedCount, setReviewedCount] = useState(0)
 
     // the due queue (count + first batch of cards), shared key with the hero
-    const { data, isLoading, error, mutate } = useSWR(DUE_KEY, async () => {
-        const response = await queryMyDueFlashcards({ request: { limit: DUE_REVIEW_LIMIT } })
+    const { data, isLoading, error, mutate } = useSWR(dueKey, async () => {
+        const response = await queryMyDueFlashcards({ request: { courseId, limit: DUE_REVIEW_LIMIT } })
         return response.data?.myDueFlashcards.data ?? null
     })
 
@@ -114,9 +118,9 @@ export const DueReview = ({ onExit, className }: DueReviewProps) => {
 
     // finish: refresh the due queue (count changed) and return home
     const onFinish = useCallback(() => {
-        void globalMutate(DUE_KEY)
+        void globalMutate(dueKey)
         onExit()
-    }, [globalMutate, onExit])
+    }, [globalMutate, onExit, dueKey])
 
     return (
         <AsyncContent
@@ -145,7 +149,7 @@ export const DueReview = ({ onExit, className }: DueReviewProps) => {
                     }
                 />
             ) : (
-                <div className={cn("flex flex-col gap-6", className)}>
+                <div className={cn("flex flex-col gap-3", className)}>
                     {/* progress through this batch */}
                     <ProgressMeter
                         value={currentIndex + 1}
@@ -168,15 +172,24 @@ export const DueReview = ({ onExit, className }: DueReviewProps) => {
                         revealed={revealed}
                         onToggle={() => setRevealed((flipped) => !flipped)}
                         ariaLabel={revealed ? t("flashcard.showQuestion") : t("flashcard.showAnswer")}
+                        frontHint={
+                            <>
+                                <CursorClickIcon className="size-3.5" aria-hidden focusable="false" />
+                                {t("flashcard.flipHint")}
+                            </>
+                        }
+                        backHint={
+                            <>
+                                <CursorClickIcon className="size-3.5" aria-hidden focusable="false" />
+                                {t("flashcard.flipBackHint")}
+                            </>
+                        }
                         front={
                             <>
                                 <Typography type="body-xs" weight="medium" color="muted">
                                     {t("flashcard.questionLabel")}
                                 </Typography>
                                 <MarkdownContent markdown={card?.front ?? ""} />
-                                <Typography type="body-xs" color="muted" className="mt-auto">
-                                    {t("flashcard.flipHint")}
-                                </Typography>
                             </>
                         }
                         back={
@@ -185,9 +198,6 @@ export const DueReview = ({ onExit, className }: DueReviewProps) => {
                                     {t("flashcard.answerLabel")}
                                 </Typography>
                                 <MarkdownContent markdown={card?.back ?? ""} />
-                                <Typography type="body-xs" color="muted" className="mt-auto">
-                                    {t("flashcard.flipBackHint")}
-                                </Typography>
                             </>
                         }
                     />

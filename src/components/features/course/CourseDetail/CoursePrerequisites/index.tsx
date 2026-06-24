@@ -15,6 +15,8 @@ import {
 } from "@phosphor-icons/react"
 import {
     AsyncContent,
+    CheckListCard,
+    CheckListItem,
     LabeledCard,
     Skeleton,
 } from "@/components/blocks"
@@ -77,19 +79,15 @@ export const CoursePrerequisites = ({ className }: CoursePrerequisitesProps) => 
                     retryLabel: t("courseLanding.retry"),
                 }}
             >
-                {/* List Card: list TĨNH (không click/expand) nhưng "da" y chang Accordion surface —
-                    surface card frameless + viền, mỗi row px-4 py-4 + separator inset
-                    (bg-surface-foreground/6, left-3% w-94%, row cuối ẩn). Ref elements/card.md §3. */}
-                <ul className="overflow-hidden rounded-3xl border border-default bg-surface">
+                {/* shared check-list card (elements/card.md §3b); prerequisites = NO tick
+                    (things you need beforehand, not achievements) */}
+                <CheckListCard>
                     {items.map((item) => (
-                        <li
-                            key={item.id}
-                            className="relative px-4 py-4 after:absolute after:bottom-0 after:left-[3%] after:h-px after:w-[94%] after:bg-surface-foreground/6 after:content-[''] last:after:hidden"
-                        >
+                        <CheckListItem key={item.id} showCheck={false}>
                             <Typography type="body-sm">{item.text}</Typography>
-                        </li>
+                        </CheckListItem>
                     ))}
-                </ul>
+                </CheckListCard>
             </AsyncContent>
         </LabeledCard>
     )

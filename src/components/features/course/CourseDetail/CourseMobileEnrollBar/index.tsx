@@ -3,7 +3,6 @@
 import React from "react"
 import {
     Button,
-    Typography,
 } from "@heroui/react"
 import {
     useTranslations,
@@ -13,6 +12,7 @@ import {
     BookOpenIcon,
 } from "@phosphor-icons/react"
 import {
+    PriceTag,
     StickyBottomBar,
 } from "@/components/blocks"
 import {
@@ -30,9 +30,6 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
-
-/** Format an integer VND amount as "1.020.000₫". */
-const formatVnd = (amount: number): string => `${amount.toLocaleString("vi-VN")}₫`
 
 /** Props for {@link CourseMobileEnrollBar}. */
 export type CourseMobileEnrollBarProps = WithClassNames<undefined>
@@ -56,9 +53,19 @@ export const CourseMobileEnrollBar = ({ className }: CourseMobileEnrollBarProps)
     return (
         <StickyBottomBar className={className}>
             <div className="flex items-center justify-between gap-3">
-                <Typography type="body" weight="bold">
-                    {hasLoyalty && preview ? formatVnd(preview.discountedPriceVnd) : active?.formattedPrice}
-                </Typography>
+                {hasLoyalty && preview ? (
+                    <PriceTag
+                        discounted={preview.discountedPriceVnd}
+                        original={preview.originalPriceVnd}
+                        size="sm"
+                    />
+                ) : active ? (
+                    <PriceTag
+                        discounted={active.priceVnd}
+                        original={active.listPriceVnd}
+                        size="sm"
+                    />
+                ) : null}
                 {isEnrolled ? (
                     <Button variant="primary" onPress={onContinueLearning}>
                         <BookOpenIcon className="size-5" />

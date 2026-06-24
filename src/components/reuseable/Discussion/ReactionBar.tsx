@@ -5,8 +5,9 @@ import { Button, Popover, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { ReactionType, type ReactionSummary } from "@/modules/api"
 import type { WithClassNames } from "@/modules/types"
-import { REACTIONS, REACTION_BY_TYPE } from "./constants"
+import { REACTION_BY_TYPE } from "./constants"
 import { ReactionEmoji } from "./ReactionEmoji"
+import { FacebookReactionSelector } from "./FacebookReactionSelector"
 
 /** Props for {@link ReactionBar}. */
 export interface ReactionBarProps extends WithClassNames<undefined> {
@@ -68,22 +69,8 @@ export const ReactionBar = ({ summary, onReact, disabled, className }: ReactionB
                         </span>
                     </Button>
                 </Popover.Trigger>
-                <Popover.Content className="flex items-center gap-2 rounded-full p-1">
-                    {REACTIONS.map((reaction) => (
-                        <button
-                            key={reaction.type}
-                            type="button"
-                            aria-label={t(reaction.labelKey)}
-                            title={t(reaction.labelKey)}
-                            onClick={() => handlePick(reaction.type)}
-                            className={cn(
-                                "cursor-pointer rounded-full p-1 transition-transform hover:scale-125",
-                                myReaction === reaction.type ? "bg-accent/10" : undefined,
-                            )}
-                        >
-                            <ReactionEmoji descriptor={reaction} size="sm" />
-                        </button>
-                    ))}
+                <Popover.Content className="overflow-visible rounded-full px-2 py-1">
+                    <FacebookReactionSelector active={myReaction} onSelect={handlePick} />
                 </Popover.Content>
             </Popover>
 

@@ -26,7 +26,6 @@ export const CatalogCourseCard = ({ course }: CatalogCourseCardProps) => {
             course={course}
             loyaltyPriceVnd={data?.discountedPriceVnd ?? null}
             loyaltyOriginalVnd={data?.originalPriceVnd ?? null}
-            loyaltyPercent={data?.discountPercent ?? null}
         />
     )
 }

@@ -23,7 +23,7 @@ export const ChallengeViewSkeleton = ({ className }: ChallengeViewSkeletonProps)
         <div className={cn("flex flex-col gap-6 xl:flex-row xl:items-start xl:gap-8", className)}>
             {/* center — brief column */}
             <div className="min-w-0 flex-1">
-                <div className="mx-auto flex w-full max-w-3xl flex-col gap-4">
+                <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
                     <Skeleton.Typography type="body-sm" width="1/4" />
                     <div className="flex flex-col gap-3">
                         <Skeleton.Typography type="h4" width="3/4" />

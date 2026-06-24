@@ -16,7 +16,6 @@ import {
     mutateCreateComment,
     mutateDeleteComment,
     mutateReactToComment,
-    mutateReactToContent,
     mutateUpdateComment,
     queryContentComments,
     queryContentReactions,
@@ -49,18 +48,20 @@ const DISCUSSION_EVENTS: ReadonlyArray<SubscriptionEvent> = [
 ]
 
 /**
- * Container for the lesson-content discussion (reactions + threaded comments).
+ * Container for the lesson-content threaded comments.
  *
- * Owns the data hooks (local SWR), the realtime socket subscription, and all persistence
- * callbacks; renders the presentational {@link Discussion}. Rendered OUTSIDE the reading card
- * (by {@link LessonReader}) as its own block. `"use client"` for hooks + socket.
- *
- * Reaction + comments only — bookmark / share / fullscreen live in the OnThisPage rail.
+ * Owns the comment data hooks (local SWR), the realtime socket subscription (for BOTH
+ * comment and reaction events), and all comment persistence callbacks; renders the
+ * presentational {@link Discussion} (comments only — frameless). Rendered below the reading
+ * card by {@link LessonReader}. The reaction picker itself lives in the reading-card footer
+ * ({@link ContentReactionBar}); this container only keeps the reaction SWR alive so socket
+ * events refresh that bar via the shared cache key. `"use client"` for hooks + socket.
  */
 export const ContentDiscussion = ({ className }: WithClassNames<undefined>) => {
     const locale = useLocale()
     const contentId = useAppSelector((state) => state.content.entity?.id)
-    const currentUserId = useAppSelector((state) => state.user.user?.id ?? null)
+    const currentUser = useAppSelector((state) => state.user.user)
+    const currentUserId = currentUser?.id ?? null
     // the enrolled-guard on every discussion resolver requires the X-Course-Id header
     const courseId = useAppSelector((state) => state.course.entity?.id)
     const socket = useContentDiscussionSocketIo()
@@ -77,7 +78,10 @@ export const ContentDiscussion = ({ className }: WithClassNames<undefined>) => {
     // track which parents have replies loaded so realtime can refresh exactly those
     const loadedParentsRef = useRef<Set<string>>(new Set())
 
-    // content-level reaction summary (only once we also have the course id for the header)
+    // content-level reaction summary — kept here ONLY to revalidate on realtime
+    // ContentReactionChanged events; the reaction bar itself ({@link ContentReactionBar},
+    // rendered in the reading-card footer) holds an SWR with this SAME key, so a
+    // socket-driven mutate() here refreshes the bar through the shared cache.
     const reactionsSwr = useSWR(
         contentId && courseId ? ["content-discussion-reactions", contentId] : null,
         async () => {
@@ -209,20 +213,6 @@ export const ContentDiscussion = ({ className }: WithClassNames<undefined>) => {
 
     // --- persistence callbacks (optimistic-free: mutate then revalidate) ---
 
-    const onReactContent = useCallback(async (type: ReactionType | null) => {
-        if (!contentId || !courseId) {
-            return
-        }
-        await mutateReactToContent({
-            request: {
-                contentId,
-                type,
-            },
-            headers: courseHeaders,
-        })
-        void reactionsSwr.mutate()
-    }, [contentId, courseId, courseHeaders, reactionsSwr])
-
     const onSubmitComment = useCallback(async (body: string) => {
         if (!contentId || !courseId) {
             return
@@ -310,8 +300,7 @@ export const ContentDiscussion = ({ className }: WithClassNames<undefined>) => {
             className={className}
             // discussion data
             currentUserId={currentUserId}
-            contentReactions={reactionsSwr.data ?? undefined}
-            onReactContent={onReactContent}
+            currentUser={currentUser ? { username: currentUser.username, avatar: currentUser.avatar } : null}
             comments={comments}
             total={total}
             isLoading={commentsSwr.isLoading}

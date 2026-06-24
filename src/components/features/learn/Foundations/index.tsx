@@ -182,46 +182,46 @@ export const FoundationsLearnLayout = () => {
     )
 
     return (
-        <div className="mx-auto max-w-3xl">
-            <FoundationsBreadcrumbs items={breadcrumbItems} />
-            <div className="h-6" />
-            <FoundationsLearnHeader />
-            <div className="h-6" />
-            {/* search row: box (server-side, debounced) on the left, resource count right-aligned */}
-            <div className="flex items-center justify-between gap-3">
-                <SearchInput
-                    value={query}
-                    onValueChange={setQuery}
-                    placeholder={t("foundations.searchResourcesPlaceholder")}
-                    suggestions={resourceSuggestions}
-                    onSelectSuggestion={onSelectResourceSuggestion}
-                />
-                {(isFoundationsLoading && !foundationsData) || foundations === undefined ? (
-                    <SkeletonText size="sm" width="w-[110px]" />
-                ) : (
-                    <Typography type="body-sm" color="muted" className="shrink-0">
-                        {t("foundations.count", { count: count ?? 0 })}
+        // tier layout: PageHeader (breadcrumb+title+desc) → content cluster, gap-10 between (debt page-heading)
+        <div className="mx-auto flex max-w-3xl flex-col gap-10">
+            <FoundationsLearnHeader breadcrumb={<FoundationsBreadcrumbs items={breadcrumbItems} />} />
+            {/* browse cluster: search row · list · pager (gap-6 inside the cluster) */}
+            <div className="flex flex-col gap-6">
+                {/* search row: box (server-side, debounced) on the left, resource count right-aligned */}
+                <div className="flex items-center justify-between gap-3">
+                    <SearchInput
+                        value={query}
+                        onValueChange={setQuery}
+                        placeholder={t("foundations.searchResourcesPlaceholder")}
+                        suggestions={resourceSuggestions}
+                        onSelectSuggestion={onSelectResourceSuggestion}
+                    />
+                    {(isFoundationsLoading && !foundationsData) || foundations === undefined ? (
+                        <SkeletonText size="sm" width="w-[110px]" />
+                    ) : (
+                        <Typography type="body-sm" color="muted" className="shrink-0">
+                            {t("foundations.count", { count: count ?? 0 })}
+                        </Typography>
+                    )}
+                </div>
+                {hasNoMatches ? (
+                    <Typography type="body-sm" color="muted">
+                        {t("foundations.searchResourcesEmpty", { query: search?.trim() ?? "" })}
                     </Typography>
+                ) : (
+                    <>
+                        <FoundationsList />
+                        {/* server-driven pagination; persists across page/search loads (count in redux) */}
+                        {(count ?? 0) > 0 ? (
+                            <Pagination
+                                currentPage={currentPage}
+                                totalPages={totalPages}
+                                onPageChange={onPageChange}
+                            />
+                        ) : null}
+                    </>
                 )}
             </div>
-            <div className="h-6" />
-            {hasNoMatches ? (
-                <Typography type="body-sm" color="muted">
-                    {t("foundations.searchResourcesEmpty", { query: search?.trim() ?? "" })}
-                </Typography>
-            ) : (
-                <>
-                    <FoundationsList />
-                    {/* server-driven pagination; persists across page/search loads (count in redux) */}
-                    {(count ?? 0) > 0 ? (
-                        <Pagination
-                            currentPage={currentPage}
-                            totalPages={totalPages}
-                            onPageChange={onPageChange}
-                        />
-                    ) : null}
-                </>
-            )}
         </div>
     )
 }

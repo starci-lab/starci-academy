@@ -11,7 +11,7 @@ import {
     Typography,
 } from "@heroui/react"
 import {
-    CheckIcon,
+    CheckCircleIcon,
 } from "@phosphor-icons/react"
 import {
     useLocale,
@@ -154,7 +154,7 @@ export const Membership = () => {
                                 key={perk}
                                 className="flex items-start gap-2"
                             >
-                                <CheckIcon aria-hidden className="size-5 shrink-0 text-success" />
+                                <CheckCircleIcon aria-hidden className="size-5 shrink-0 text-success" />
                                 <Typography type="body-sm">{perk}</Typography>
                             </div>
                         ))}

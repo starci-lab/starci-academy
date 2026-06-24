@@ -1,7 +1,7 @@
 "use client"
 
 import { CaretRightIcon, StackIcon } from "@phosphor-icons/react"
-import { Chip, cn } from "@heroui/react"
+import { Chip } from "@heroui/react"
 import { FoundationKind } from "@/modules/types"
 import type { FoundationEntity, WithClassNames } from "@/modules/types"
 import React, { useCallback } from "react"
@@ -13,7 +13,7 @@ import {
     setFoundation,
     setFoundationId,
 } from "@/redux/slices"
-import { IconTile, ListRow } from "@/components/blocks"
+import { IconTile, SurfaceListCardRow } from "@/components/blocks"
 import { resolveFoundationMountFileUrl } from "../utils"
 
 export interface FoundationCardProps extends WithClassNames<undefined> {
@@ -23,8 +23,6 @@ export interface FoundationCardProps extends WithClassNames<undefined> {
     displayIndex: number
     /** Whether this card is the active selection. */
     selected?: boolean
-    /** Render a bottom divider — set on every row except the last in the list. */
-    divider?: boolean
 }
 
 /**
@@ -45,7 +43,6 @@ export const FoundationCard = ({
     foundation,
     displayIndex,
     selected = false,
-    divider = false,
     className,
 }: FoundationCardProps) => {
     const t = useTranslations()
@@ -97,7 +94,7 @@ export const FoundationCard = ({
     ])
 
     return (
-        <ListRow
+        <SurfaceListCardRow
             leading={(
                 <IconTile
                     src={foundation.thumbnailUrl}
@@ -127,10 +124,9 @@ export const FoundationCard = ({
                     className="size-4 text-muted"
                 />
             )}
-            divider={divider}
             onPress={onPress}
-            // flush rows for the p-0 "accordion surface" container; tint the active row
-            className={cn("rounded-none px-3", selected && "bg-accent/10", className)}
+            selected={selected}
+            className={className}
         />
     )
 }

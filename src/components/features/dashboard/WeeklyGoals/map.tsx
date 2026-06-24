@@ -30,3 +30,16 @@ export const KPI_ORDER: Array<KpiKey> = [
     "coding",
     "flashcards",
 ]
+
+/**
+ * Sensible default weekly targets used when the learner hasn't set a custom goal
+ * yet — so each meter tracks this week's activity out of the box (the bar fills as
+ * you study). The learner can still override any of these via the "Sửa" editor.
+ */
+export const DEFAULT_KPI_TARGETS: Record<KpiKey, number> = {
+    lessons: 5,
+    studyDays: 5,
+    challenges: 3,
+    coding: 3,
+    flashcards: 20,
+}

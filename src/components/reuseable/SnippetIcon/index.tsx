@@ -1,6 +1,7 @@
 "use client"
 
-import { Check as CheckIcon, Copy as CopyIcon } from "@gravity-ui/icons"
+import { Copy as CopyIcon } from "@gravity-ui/icons"
+import { CheckCircleIcon } from "@phosphor-icons/react"
 import React, { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 
@@ -39,7 +40,7 @@ export const SnippetIcon = ({ copyString, classNames = {}, className }: SnippetI
                         exit={{ scale: 0.85, opacity: 0 }}
                         transition={{ duration: 0.15, ease: "easeOut" }}
                     >
-                        <CheckIcon className={cn(classNames.checkIcon, "w-5 h-5")} />
+                        <CheckCircleIcon className={cn(classNames.checkIcon, "w-5 h-5")} />
                     </motion.span>
                 ) : (
                     <motion.span

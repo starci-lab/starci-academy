@@ -44,9 +44,8 @@ export const MilestoneOutlineSkeleton = ({
     )
     const renderExpandedBody = useMemo(
         () => () => (
-            <div>
+            <div className="flex flex-col gap-2">
                 <SkeletonText size="sm" className="w-3/4" />
-                <div className="h-2" />
                 <SkeletonText size="xs" className="w-full" />
                 <SkeletonText size="xs" className="w-3/4" />
             </div>

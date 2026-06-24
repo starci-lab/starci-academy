@@ -7,6 +7,7 @@ import { CardsThreeIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { queryMyDueFlashcards } from "@/modules/api/graphql"
 import { AsyncContent, LabeledCard, Skeleton } from "@/components/blocks"
+import { useAppSelector } from "@/redux"
 import { DUE_REVIEW_LIMIT } from "../constants"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
@@ -25,11 +26,14 @@ export interface DueReviewHeroProps extends WithClassNames<undefined> {
  */
 export const DueReviewHero = ({ onStart, className }: DueReviewHeroProps) => {
     const t = useTranslations()
+    // scope the due queue to THIS course (the count must reflect this course's
+    // decks, not every deck system-wide); shared SWR key with {@link DueReview}.
+    const courseId = useAppSelector((state) => state.course.entity?.id)
 
     const { data, isLoading, error, mutate } = useSWR(
-        ["my-due-flashcards", DUE_REVIEW_LIMIT],
+        ["my-due-flashcards", courseId ?? null, DUE_REVIEW_LIMIT],
         async () => {
-            const response = await queryMyDueFlashcards({ request: { limit: DUE_REVIEW_LIMIT } })
+            const response = await queryMyDueFlashcards({ request: { courseId, limit: DUE_REVIEW_LIMIT } })
             return response.data?.myDueFlashcards.data ?? null
         },
     )

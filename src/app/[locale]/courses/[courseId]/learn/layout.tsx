@@ -7,6 +7,8 @@ import { LearnShell } from "@/components/features/learn/LearnShell"
 import { ContentMap } from "@/components/features/learn/ContentMap"
 import { ResizableRail } from "@/components/blocks"
 import { MilestoneOutline } from "@/components/features/learn/MilestoneOutline"
+import { LeaderboardCategoryRail } from "@/components/features/learn/Leaderboard/LeaderboardCategoryRail"
+import { FlashcardStudyRail } from "@/components/features/learn/Flashcards/FlashcardStudyRail"
 import { OnThisPage } from "@/components/features/learn/OnThisPage"
 import { ContentAiFab } from "@/components/features/learn/ContentAiFab"
 import { EnrollGate } from "@/components/features/learn/shared/EnrollGate"
@@ -61,9 +63,15 @@ export const Layout = ({ children }: PropsWithChildren) => {
     // current-module path instead of re-drawing the whole tree.
     const isContent = segments[0] === "content"
     const isPersonalProject = segments[0] === "personal-project"
+    // the flashcards surface uses the same docs-style left rail: a mode switch +
+    // the course's decks as a nav list (drives the work pane via the URL).
+    const isFlashcards = segments[0] === "flashcards"
     // the mind-map is a full-bleed interactive canvas (fills the viewport edge-to-edge),
     // so it opts out of the shell's canonical p-6 reading-column padding.
     const isMindMap = segments[0] === "mind-map"
+    // the leaderboard shows its XP-category selector as a sidebar (like the content
+    // page) on the LEFT; the board reads the selection from the `?category=` URL param.
+    const isLeaderboard = segments[0] === "leaderboard"
     // a single challenge (`…/contents/<id>/challenges/<id>`) KEEPS the course-tree rail (the
     // learner still navigates the course while solving), but its body is a tabbed single column
     // (Đề bài / Nộp bài), so it needs no on-this-page outline. Only the right rail is dropped.
@@ -98,6 +106,28 @@ export const Layout = ({ children }: PropsWithChildren) => {
             ariaLabel={t("courseContents.resizeRail")}
         >
             <MilestoneOutline className="min-h-0 lg:flex-1" />
+        </ResizableRail>
+    ) : isFlashcards ? (
+        <ResizableRail
+            className={railClass}
+            storageKey="starci.learn.flashcardRail.width"
+            defaultWidth={320}
+            minWidth={256}
+            maxWidth={560}
+            ariaLabel={t("courseContents.resizeRail")}
+        >
+            <FlashcardStudyRail className="min-h-0 lg:flex-1" />
+        </ResizableRail>
+    ) : isLeaderboard ? (
+        <ResizableRail
+            className={railClass}
+            storageKey="starci.learn.leaderboardRail.width"
+            defaultWidth={300}
+            minWidth={240}
+            maxWidth={420}
+            ariaLabel={t("leaderboard.categories.label")}
+        >
+            <LeaderboardCategoryRail variant="rail" className="min-h-0 lg:flex-1" />
         </ResizableRail>
     ) : undefined
     // right rail: on-this-page for lessons only; the capstone keeps its rail on the left, and
@@ -142,6 +172,7 @@ export const Layout = ({ children }: PropsWithChildren) => {
                 leftRail={showSurface ? leftRail : undefined}
                 rightRail={showSurface ? rightRail : undefined}
                 fullBleed={isMindMap}
+                simpleMobileBar={isLeaderboard || isFlashcards}
             >
                 {content}
             </LearnShell>

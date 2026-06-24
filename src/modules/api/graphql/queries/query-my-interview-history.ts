@@ -4,14 +4,15 @@ import { DocumentNode, gql } from "@apollo/client"
 import type { QueryMyInterviewHistoryResponse } from "./types"
 
 const query1 = gql`
-  query MyInterviewHistory($flashcardDeckId: ID) {
-    myInterviewHistory(flashcardDeckId: $flashcardDeckId) {
+  query MyInterviewHistory($courseId: ID, $flashcardDeckId: ID) {
+    myInterviewHistory(courseId: $courseId, flashcardDeckId: $flashcardDeckId) {
       success
       message
       error
       data {
         totalAnswered
         averageScore
+        bestScore
         passCount
         borderlineCount
         failCount
@@ -32,7 +33,9 @@ const queryMap: Record<QueryMyInterviewHistory, DocumentNode> = {
 
 /** Request body for the my-interview-history query. */
 export interface MyInterviewHistoryRequest {
-    /** Optional deck to scope the history to; omit for account-wide history. */
+    /** Optional course to scope the history to (random-interview mode = course-wide). */
+    courseId?: string | null
+    /** Optional deck to scope the history to; omit for account-/course-wide history. */
     flashcardDeckId?: string | null
 }
 
@@ -58,6 +61,7 @@ export const queryMyInterviewHistory = async ({
     return apollo.query<QueryMyInterviewHistoryResponse>({
         query: queryMap[query],
         variables: {
+            courseId: request?.courseId ?? null,
             flashcardDeckId: request?.flashcardDeckId ?? null,
         },
     })

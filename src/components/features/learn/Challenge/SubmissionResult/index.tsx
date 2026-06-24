@@ -2,8 +2,10 @@
 
 import React, { useMemo } from "react"
 import {
-    Chip,
+    Alert,
+    Label,
     Link,
+    ListBox,
     Typography,
     cn,
 } from "@heroui/react"
@@ -16,9 +18,12 @@ import {
 import {
     ArrowLeftIcon,
     ArrowSquareOutIcon,
+    CheckCircleIcon,
+    XCircleIcon,
 } from "@phosphor-icons/react"
 import {
     AsyncContent,
+    PageHeader,
     Skeleton,
 } from "@/components/blocks"
 import { FeedbackCard } from "@/components/modals/FeedbackDetailsModal/FeedbackCard"
@@ -38,19 +43,21 @@ import type {
 /** Props for {@link SubmissionResult}. */
 export type SubmissionResultProps = WithClassNames<undefined>
 
-/** Severity groups in descending urgency — drives the section order. */
-const SEVERITY_GROUPS: ReadonlyArray<{ severity: SubmissionFeedbackSeverity, tone: "danger" | "warning" | "default", key: string }> = [
+/** Severity groups in descending urgency — drives the section order + eyebrow tone. */
+const SEVERITY_GROUPS: ReadonlyArray<{ severity: SubmissionFeedbackSeverity, tone: "danger" | "warning" | "muted", key: string }> = [
     { severity: SubmissionFeedbackSeverity.High, tone: "danger", key: "high" },
     { severity: SubmissionFeedbackSeverity.Medium, tone: "warning", key: "medium" },
-    { severity: SubmissionFeedbackSeverity.Low, tone: "default", key: "low" },
+    { severity: SubmissionFeedbackSeverity.Low, tone: "muted", key: "low" },
 ]
 
 /**
- * Dedicated challenge-result page (replaces the drawer → modal stack). A master rail
- * of attempts on the left; on the right the selected attempt's verdict + score +
- * artifact link, its one-line summary, and the feedback grouped by severity. Reads
- * the requirement id from `?submission=` and the chosen attempt from `?attempt=`
- * (defaults to the newest). Reuses the shared {@link FeedbackCard}.
+ * Dedicated challenge-result page. TIER-1/2 {@link PageHeader} (back-link in the
+ * breadcrumb slot + requirement title); below it a two-column body: a flat list of
+ * attempts on the left (no card — select to view) and the selected attempt's verdict
+ * + score + artifact link + summary + severity-grouped findings inside ONE surface
+ * card on the right. Reads the requirement id from `?submission=` and the chosen
+ * attempt from `?attempt=` (defaults to the newest). Reuses {@link FeedbackCard}
+ * (frameless) as inset finding rows.
  *
  * @param props - optional root className (placement only).
  */
@@ -97,29 +104,39 @@ export const SubmissionResult = ({
     /** Verdict for a score against the requirement's pass threshold. */
     const isPassing = (score: number | null) => (score ?? 0) >= passThreshold * maxScore
     const scoreLabel = (score: number | null) => (maxScore > 0 ? `${score ?? 0}/${maxScore}` : `${score ?? 0}`)
+    /** Minimum score needed to pass (for the verdict banner sub-line). */
+    const passScore = Math.ceil(passThreshold * maxScore)
+
+    const attemptsLoading = attemptsSwr.data === null || attemptsSwr.data === undefined ? !attemptsSwr.error : false
+    const feedbacksLoading = feedbacksSwr.data === null || feedbacksSwr.data === undefined ? !feedbacksSwr.error : false
 
     return (
-        <div className={cn("mx-auto flex w-full max-w-5xl flex-col gap-6 p-6", className)}>
-            <Link
-                onPress={() => router.push(challengeHref)}
-                className="flex w-fit items-center gap-2 text-sm text-muted"
-            >
-                <ArrowLeftIcon aria-hidden focusable="false" className="size-5" />
-                {t("submissionResult.backToChallenge")}
-            </Link>
+        // PageHeader (header) → content cluster, gap-10 (page-heading debt)
+        <div className={cn("mx-auto flex w-full max-w-5xl flex-col gap-10 p-6", className)}>
+            <PageHeader
+                breadcrumb={(
+                    <Link
+                        onPress={() => router.push(challengeHref)}
+                        className="flex w-fit cursor-pointer items-center gap-2 text-sm text-muted"
+                    >
+                        <ArrowLeftIcon aria-hidden focusable="false" className="size-5" />
+                        {t("submissionResult.backToChallenge")}
+                    </Link>
+                )}
+                title={requirement?.title ?? t("submissionResult.title")}
+                description={requirement?.description || undefined}
+            />
 
             <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
-                {/* master rail — the attempts (newest first); select to view */}
+                {/* LEFT — attempts as a flat list (no card); select to view */}
                 <aside className="flex shrink-0 flex-col gap-2 lg:w-64">
-                    <Typography type="body-xs" color="muted" className="uppercase">
-                        {t("submissionResult.attempts")}
-                    </Typography>
+                    <Label>{t("submissionResult.attempts")}</Label>
                     <AsyncContent
-                        isLoading={attemptsSwr.data === null || attemptsSwr.data === undefined ? !attemptsSwr.error : false}
+                        isLoading={attemptsLoading}
                         skeleton={(
                             <div className="flex flex-col gap-2">
                                 {[0, 1].map((row) => (
-                                    <Skeleton key={row} className="h-16 w-full rounded-xl" />
+                                    <Skeleton key={row} className="h-12 w-full rounded-lg" />
                                 ))}
                             </div>
                         )}
@@ -135,60 +152,83 @@ export const SubmissionResult = ({
                             retryLabel: t("submissionResult.retry"),
                         }}
                     >
-                        {attempts.map((attempt) => {
-                            const active = attempt.id === selectedAttempt?.id
-                            return (
-                                <button
+                        <ListBox
+                            aria-label={t("submissionResult.attempts")}
+                            selectionMode="single"
+                            disallowEmptySelection
+                            selectedKeys={selectedAttempt ? [selectedAttempt.id] : []}
+                            className="gap-1 p-0"
+                        >
+                            {attempts.map((attempt) => (
+                                <ListBox.Item
                                     key={attempt.id}
-                                    type="button"
-                                    onClick={() => router.push(`${pathname}?submission=${challengeSubmissionId}&attempt=${attempt.id}`)}
-                                    className={cn(
-                                        "flex cursor-pointer flex-col gap-1 rounded-xl border border-default bg-surface p-3 text-start transition-colors hover:border-accent",
-                                        active && "border-accent bg-accent/5",
-                                    )}
+                                    id={attempt.id}
+                                    textValue={t("submissionAttempts.attemptLine", { number: attempt.attemptNumber })}
+                                    onAction={() => router.push(`${pathname}?submission=${challengeSubmissionId}&attempt=${attempt.id}`)}
+                                    className="cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent/10"
                                 >
-                                    <Typography type="body-sm" weight="semibold">
-                                        {t("submissionAttempts.attemptLine", { number: attempt.attemptNumber })}
-                                    </Typography>
-                                    <Typography type="body-xs" className={isPassing(attempt.score) ? "text-success" : "text-danger"}>
-                                        {`${scoreLabel(attempt.score)} · ${t(isPassing(attempt.score) ? "submissionResult.passed" : "submissionResult.failed")}`}
-                                    </Typography>
-                                </button>
-                            )
-                        })}
+                                    <div className="flex flex-col gap-0.5">
+                                        <Typography type="body-sm" weight="semibold">
+                                            {t("submissionAttempts.attemptLine", { number: attempt.attemptNumber })}
+                                        </Typography>
+                                        <Typography type="body-xs" className={isPassing(attempt.score) ? "text-success" : "text-danger"}>
+                                            {`${scoreLabel(attempt.score)} · ${t(isPassing(attempt.score) ? "submissionResult.passed" : "submissionResult.failed")}`}
+                                        </Typography>
+                                    </div>
+                                </ListBox.Item>
+                            ))}
+                        </ListBox>
                     </AsyncContent>
                 </aside>
 
-                {/* detail — verdict + score + artifact + summary + severity-grouped feedback */}
-                <div className="flex min-w-0 flex-1 flex-col gap-4">
+                {/* RIGHT — selected attempt detail in ONE surface card */}
+                <div className="min-w-0 flex-1">
                     {selectedAttempt ? (
-                        <>
+                        <div className="flex flex-col gap-6">
+                            {/* verdict banner — tinted by result (the page's #1 signal: pass/fail) + summary */}
                             <div className="flex flex-col gap-3">
-                                <div className="flex flex-wrap items-center justify-between gap-3">
-                                    <div className="flex items-center gap-3">
-                                        <Chip color={isPassing(selectedAttempt.score) ? "success" : "danger"} size="sm" variant="soft">
-                                            <Chip.Label>
-                                                {`${t(isPassing(selectedAttempt.score) ? "submissionResult.passed" : "submissionResult.failed")} · ${scoreLabel(selectedAttempt.score)}`}
-                                            </Chip.Label>
-                                        </Chip>
-                                        {selectedAttempt.processedAt ? (
-                                            <Typography type="body-xs" color="muted">
-                                                {getTimeAgoLabel(getTimeAgoMessage(dayjs(selectedAttempt.processedAt)), t)}
-                                            </Typography>
-                                        ) : null}
-                                    </div>
+                                <Alert
+                                    status={isPassing(selectedAttempt.score) ? "success" : "danger"}
+                                    className={cn(
+                                        "shadow-none",
+                                        isPassing(selectedAttempt.score) ? "bg-success/10" : "bg-danger/10",
+                                    )}
+                                >
+                                    <Alert.Indicator>
+                                        {isPassing(selectedAttempt.score) ? (
+                                            <CheckCircleIcon aria-hidden focusable="false" className="size-6" />
+                                        ) : (
+                                            <XCircleIcon aria-hidden focusable="false" className="size-6" />
+                                        )}
+                                    </Alert.Indicator>
+                                    <Alert.Content className="gap-1">
+                                        <Alert.Title>
+                                            <span className="flex flex-wrap items-baseline gap-2">
+                                                <span className="text-base font-bold">
+                                                    {t(isPassing(selectedAttempt.score) ? "submissionResult.passed" : "submissionResult.failed")}
+                                                </span>
+                                                <span className="text-sm font-semibold">{scoreLabel(selectedAttempt.score)}</span>
+                                            </span>
+                                        </Alert.Title>
+                                        <Alert.Description>
+                                            {[
+                                                selectedAttempt.processedAt ? getTimeAgoLabel(getTimeAgoMessage(dayjs(selectedAttempt.processedAt)), t) : null,
+                                                passScore > 0 ? t("submissionResult.passNeeded", { score: passScore }) : null,
+                                            ].filter(Boolean).join(" · ")}
+                                        </Alert.Description>
+                                    </Alert.Content>
                                     {selectedAttempt.submissionUrl ? (
                                         <Link
                                             href={selectedAttempt.submissionUrl}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="flex items-center gap-1.5 text-sm text-accent hover:underline"
+                                            className="ml-auto flex shrink-0 items-center gap-1.5 text-sm hover:underline"
                                         >
                                             {t("submissionAttempts.viewSubmission")}
                                             <ArrowSquareOutIcon aria-hidden focusable="false" className="size-5" />
                                         </Link>
                                     ) : null}
-                                </div>
+                                </Alert>
                                 {selectedAttempt.shortFeedback ? (
                                     <Typography type="body-sm" color="muted">
                                         {selectedAttempt.shortFeedback}
@@ -196,12 +236,14 @@ export const SubmissionResult = ({
                                 ) : null}
                             </div>
 
+                            {/* findings — severity groups; each = quiet eyebrow + separated bordered
+                                FeedbackCards (gap-3), each finding its own bounded object */}
                             <AsyncContent
-                                isLoading={feedbacksSwr.data === null || feedbacksSwr.data === undefined ? !feedbacksSwr.error : false}
+                                isLoading={feedbacksLoading}
                                 skeleton={(
                                     <div className="flex flex-col gap-3">
                                         {[0, 1, 2].map((row) => (
-                                            <Skeleton key={row} className="h-24 w-full rounded-xl" />
+                                            <Skeleton key={row} className="h-16 w-full rounded-2xl" />
                                         ))}
                                     </div>
                                 )}
@@ -214,7 +256,7 @@ export const SubmissionResult = ({
                                     retryLabel: t("submissionResult.retry"),
                                 }}
                             >
-                                <div className="flex flex-col gap-4">
+                                <div className="flex flex-col gap-6">
                                     {SEVERITY_GROUPS.map((group) => {
                                         const items = feedbacks.filter((feedback) => feedback.severity === group.severity)
                                         if (items.length === 0) {
@@ -222,22 +264,28 @@ export const SubmissionResult = ({
                                         }
                                         return (
                                             <div key={group.key} className="flex flex-col gap-2">
-                                                <Typography type="body-xs" className={cn("uppercase", group.tone === "danger" ? "text-danger" : group.tone === "warning" ? "text-warning" : "text-muted")}>
+                                                <Typography
+                                                    type="body-xs"
+                                                    className={group.tone === "danger" ? "text-danger" : group.tone === "warning" ? "text-warning" : "text-muted"}
+                                                >
                                                     {`${t(`feedback.severity.${group.key}`)} · ${items.length}`}
                                                 </Typography>
-                                                {items.map((feedback) => (
-                                                    <FeedbackCard
-                                                        key={feedback.id}
-                                                        submissionFeedback={feedback}
-                                                        repositoryUrl={selectedAttempt.submissionUrl}
-                                                    />
-                                                ))}
+                                                {/* findings as SEPARATE bordered cards (gap-3), each a bounded object */}
+                                                <div className="flex flex-col gap-3">
+                                                    {items.map((feedback) => (
+                                                        <FeedbackCard
+                                                            key={feedback.id}
+                                                            submissionFeedback={feedback}
+                                                            repositoryUrl={selectedAttempt.submissionUrl}
+                                                        />
+                                                    ))}
+                                                </div>
                                             </div>
                                         )
                                     })}
                                 </div>
                             </AsyncContent>
-                        </>
+                        </div>
                     ) : null}
                 </div>
             </div>

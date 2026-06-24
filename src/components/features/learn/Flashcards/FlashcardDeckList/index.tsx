@@ -1,20 +1,25 @@
 "use client"
 
-import React, { useMemo, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import useSWR from "swr"
 import {
     Button,
+    Card,
     Chip,
     Input,
+    Pagination,
     TextField,
     Typography,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { queryFlashcardDecksByCourse } from "@/modules/api/graphql"
-import { AsyncContent, PressableCard, ProgressMeter } from "@/components/blocks"
+import { AsyncContent, ProgressMeter } from "@/components/blocks"
 import { ChallengeDifficulty, type FlashcardDeckEntity, type WithClassNames } from "@/modules/types"
 import { useAppSelector } from "@/redux"
 import { FlashcardDeckListSkeleton } from "./FlashcardDeckListSkeleton"
+
+/** Decks shown per page in the topic list before the pager kicks in. */
+const DECKS_PER_PAGE = 8
 
 /** HeroUI Chip color per difficulty tier. */
 const DIFFICULTY_COLOR: Record<ChallengeDifficulty, "success" | "warning" | "danger"> = {
@@ -56,6 +61,8 @@ export const FlashcardDeckList = ({
     const courseId = useAppSelector((state) => state.course.entity?.id)
     // live search query filtering decks by title/description
     const [query, setQuery] = useState("")
+    // 1-based page for the client-side deck pager
+    const [page, setPage] = useState(1)
 
     // fetch the decks for this course; null key suspends until the course hydrates
     const { data, isLoading, error, mutate } = useSWR(
@@ -83,6 +90,15 @@ export const FlashcardDeckList = ({
         })
     }, [decks, query])
 
+    // paginate the filtered decks client-side
+    const totalPages = Math.max(1, Math.ceil(filteredDecks.length / DECKS_PER_PAGE))
+    // a new search shrinks the list — snap back to the first page
+    useEffect(() => {
+        setPage(1)
+    }, [query])
+    const pagedDecks = filteredDecks.slice((page - 1) * DECKS_PER_PAGE, page * DECKS_PER_PAGE)
+    const pageNumbers = Array.from({ length: totalPages }, (_unused, index) => index + 1)
+
     return (
         <AsyncContent
             isLoading={(isLoading || !courseId) && decks.length === 0}
@@ -96,16 +112,24 @@ export const FlashcardDeckList = ({
             }}
         >
             <div className="flex flex-col gap-3">
-                {/* search box: filters the deck list client-side by title/description */}
-                <TextField variant="secondary" className="w-full sm:max-w-sm">
-                    <Input
-                        type="search"
-                        aria-label={t("flashcard.searchPlaceholder")}
-                        placeholder={t("flashcard.searchPlaceholder")}
-                        value={query}
-                        onChange={(event) => setQuery(event.target.value)}
-                    />
-                </TextField>
+                {/* search row: filter input (left) balanced by the result count (right).
+                    The input sits on the page background, so it takes NO variant —
+                    the default (clean bg-field) reads on the background; `secondary`
+                    (grey fill) is for inputs on a card / bg-surface, not here. */}
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                    <TextField className="w-full sm:max-w-sm">
+                        <Input
+                            type="search"
+                            aria-label={t("flashcard.searchPlaceholder")}
+                            placeholder={t("flashcard.searchPlaceholder")}
+                            value={query}
+                            onChange={(event) => setQuery(event.target.value)}
+                        />
+                    </TextField>
+                    <Typography type="body-sm" color="muted" className="shrink-0">
+                        {t("flashcard.deck.found", { count: filteredDecks.length })}
+                    </Typography>
+                </div>
 
                 {filteredDecks.length === 0 ? (
                     <Typography type="body-sm" color="muted">
@@ -113,9 +137,12 @@ export const FlashcardDeckList = ({
                     </Typography>
                 ) : (
                     <div className="flex flex-col gap-3">
-                        {/* decks sorted by display order, filtered by the search query */}
-                        {filteredDecks.map((deck: FlashcardDeckEntity) => (
-                            <PressableCard key={deck.id} onPress={() => onSelectDeck(deck.id)}>
+                        {/* decks sorted by display order, filtered + paged */}
+                        {/* Plain static card — the "Học" button is the only action
+                            (no whole-card press): a card with an explicit CTA must
+                            not also be clickable. */}
+                        {pagedDecks.map((deck: FlashcardDeckEntity) => (
+                            <Card key={deck.id}>
                                 <div className="flex flex-col gap-2">
                                     <div className="flex items-center justify-between gap-3">
                                         <Typography type="body" weight="medium">
@@ -167,8 +194,52 @@ export const FlashcardDeckList = ({
                                         </Button>
                                     </div>
                                 </div>
-                            </PressableCard>
+                            </Card>
                         ))}
+
+                        {/* pager: left-aligned with the cards, hidden on a single page.
+                            HeroUI Pagination bakes no hover/cursor → add per the rule. */}
+                        {totalPages > 1 ? (
+                            <Pagination
+                                aria-label={t("common.pagination.navAria")}
+                                className="justify-start"
+                                size="sm"
+                            >
+                                <Pagination.Content className="flex flex-wrap justify-start gap-1.5">
+                                    <Pagination.Item>
+                                        <Pagination.Previous
+                                            aria-label={t("common.pagination.previous")}
+                                            isDisabled={page <= 1}
+                                            className="cursor-pointer rounded-medium transition-colors hover:bg-default"
+                                            onPress={() => setPage((current) => Math.max(1, current - 1))}
+                                        >
+                                            <Pagination.PreviousIcon />
+                                        </Pagination.Previous>
+                                    </Pagination.Item>
+                                    {pageNumbers.map((pageNumber) => (
+                                        <Pagination.Item key={pageNumber}>
+                                            <Pagination.Link
+                                                isActive={pageNumber === page}
+                                                className="cursor-pointer rounded-medium transition-colors hover:bg-default data-[active=true]:hover:bg-accent"
+                                                onPress={() => setPage(pageNumber)}
+                                            >
+                                                {pageNumber}
+                                            </Pagination.Link>
+                                        </Pagination.Item>
+                                    ))}
+                                    <Pagination.Item>
+                                        <Pagination.Next
+                                            aria-label={t("common.pagination.next")}
+                                            isDisabled={page >= totalPages}
+                                            className="cursor-pointer rounded-medium transition-colors hover:bg-default"
+                                            onPress={() => setPage((current) => Math.min(totalPages, current + 1))}
+                                        >
+                                            <Pagination.NextIcon />
+                                        </Pagination.Next>
+                                    </Pagination.Item>
+                                </Pagination.Content>
+                            </Pagination>
+                        ) : null}
                     </div>
                 )}
             </div>

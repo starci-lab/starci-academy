@@ -24,10 +24,9 @@ export const LessonBody = ({ className }: LessonBodyProps) => {
             <LessonBodyEmpty />
         </div>
     ) : (
-        <div>
+        <div className={cn("flex flex-col gap-6", className)}>
             <SearchBar />
-            <div className="h-6" />
-            <div className={cn("flex flex-col gap-3", className)}>
+            <div className="flex flex-col gap-3">
                 {lessonVideos.map((lessonVideo) => (
                     <LessonCard key={lessonVideo.id} lessonVideo={lessonVideo} />
                 ))}

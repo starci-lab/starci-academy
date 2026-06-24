@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { Breadcrumbs } from "@heroui/react"
+import { ResponsiveBreadcrumb } from "@/components/blocks"
 import { useHeadhuntingsBreadcrumbs } from "../../hooks"
 
 /**
@@ -14,16 +14,5 @@ import { useHeadhuntingsBreadcrumbs } from "../../hooks"
 export const HeadhuntingsBreadcrumbs = () => {
     const items = useHeadhuntingsBreadcrumbs()
 
-    return (
-        <Breadcrumbs>
-            {items.map((item) => (
-                <Breadcrumbs.Item
-                    key={item.key}
-                    onPress={item.onPress}
-                >
-                    {item.label}
-                </Breadcrumbs.Item>
-            ))}
-        </Breadcrumbs>
-    )
+    return <ResponsiveBreadcrumb items={items} />
 }

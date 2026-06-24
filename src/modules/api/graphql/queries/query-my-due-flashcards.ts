@@ -4,13 +4,16 @@ import { DocumentNode, gql } from "@apollo/client"
 import type { QueryMyDueFlashcardsResponse } from "./types"
 
 const query1 = gql`
-  query MyDueFlashcards($limit: Int) {
-    myDueFlashcards(limit: $limit) {
+  query MyDueFlashcards($courseId: String, $limit: Int) {
+    myDueFlashcards(courseId: $courseId, limit: $limit) {
       success
       message
       error
       data {
         dueCount
+        dueReviewCount
+        newCount
+        newTotalCount
         cards {
           cardId
           deckTitle
@@ -38,6 +41,8 @@ const queryMap: Record<QueryMyDueFlashcards, DocumentNode> = {
 
 /** Variables for {@link queryMyDueFlashcards}. */
 export interface QueryMyDueFlashcardsRequest {
+    /** Scope the due queue to one course's decks; omit for a global (cross-course) queue. */
+    courseId?: string
     /** Maximum number of cards to fetch (backend default 20). */
     limit?: number
 }
@@ -64,6 +69,7 @@ export const queryMyDueFlashcards = async ({
     return apollo.query<QueryMyDueFlashcardsResponse>({
         query: queryMap[query],
         variables: {
+            courseId: request?.courseId,
             limit: request?.limit,
         },
     })

@@ -1,17 +1,19 @@
 "use client"
 
-import React, { useCallback, useEffect, useRef, useState } from "react"
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import useSWR from "swr"
-import { Button, Chip, Spinner, Typography, cn } from "@heroui/react"
-import { MicrophoneIcon } from "@phosphor-icons/react"
+import { Button, Card, CardContent, Chip, Spinner, Typography, cn } from "@heroui/react"
+import { ListNumbersIcon, MicrophoneIcon, RobotIcon } from "@phosphor-icons/react"
 import { useTranslations, useLocale } from "next-intl"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { SegmentedControl } from "@/components/blocks/navigation/SegmentedControl"
 import { queryDrawInterviewCard, queryMyInterviewHistory } from "@/modules/api/graphql"
 import type {
     InterviewCardData,
     InterviewGradeResultData,
+    GraphQLHeaders,
 } from "@/modules/api"
-import { InterviewVerdict } from "@/modules/api"
+import { GraphQLHeadersKey, InterviewVerdict } from "@/modules/api"
 import { useMutateGradeInterviewAnswerSwr } from "@/hooks"
 import { useSpeechRecognition } from "@/hooks"
 import { useGraphQLWithToast } from "@/modules/toast"
@@ -20,8 +22,8 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link InterviewSession}. */
 export interface InterviewSessionProps extends WithClassNames<undefined> {
-    /** Deck to draw random interview questions from. */
-    deckId: string
+    /** Course to draw random interview questions across (random mode, no topic pick). */
+    courseId: string
 }
 
 /** The phases of one mock-interview session. */
@@ -65,11 +67,16 @@ const PANEL_CLASS = "flex flex-col gap-3 rounded-xl bg-default/40 p-8"
  * pick per question, de-duplicated within the session).
  * @param props - {@link InterviewSessionProps}
  */
-export const InterviewSession = ({ deckId, className }: InterviewSessionProps) => {
+export const InterviewSession = ({ courseId, className }: InterviewSessionProps) => {
     const t = useTranslations()
     const locale = useLocale()
     // recognize speech in the active UI locale (Web Speech wants a BCP-47 tag)
     const recognitionLang = locale === "vi" ? "vi-VN" : "en-US"
+    // mock interview is enrolled-only → send the course header for the backend guard
+    const courseHeaders = useMemo<GraphQLHeaders>(
+        () => ({ [GraphQLHeadersKey.XCourseId]: courseId }),
+        [courseId],
+    )
 
     const {
         supported,
@@ -109,10 +116,11 @@ export const InterviewSession = ({ deckId, className }: InterviewSessionProps) =
     // the viewer's cross-session history for this deck (persisted server-side per
     // graded answer); `mutate` refreshes it after a session adds new attempts
     const { data: history, mutate: refreshHistory } = useSWR(
-        ["interview-history", deckId],
+        ["interview-history", courseId],
         async () => {
             const response = await queryMyInterviewHistory({
-                request: { flashcardDeckId: deckId },
+                request: { courseId },
+                headers: courseHeaders,
             })
             return response.data?.myInterviewHistory.data ?? null
         },
@@ -130,7 +138,8 @@ export const InterviewSession = ({ deckId, className }: InterviewSessionProps) =
             // redraw a few times to dodge a repeat within the session (decks are small)
             for (let attempt = 0; attempt < 5; attempt += 1) {
                 const response = await queryDrawInterviewCard({
-                    request: { flashcardDeckId: deckId, level },
+                    request: { courseId, level },
+                    headers: courseHeaders,
                 })
                 const payload = response.data?.drawInterviewCard
                 // typed backend failure (e.g. no gradable card at this level)
@@ -154,7 +163,7 @@ export const InterviewSession = ({ deckId, className }: InterviewSessionProps) =
         } finally {
             setDrawing(false)
         }
-    }, [deckId, level, reset, t])
+    }, [courseId, level, reset, t, courseHeaders])
 
     // while active, (re)draw whenever the slot index changes
     useEffect(() => {
@@ -228,77 +237,123 @@ export const InterviewSession = ({ deckId, className }: InterviewSessionProps) =
     if (phase === "setup") {
         return (
             <div className={cn("flex flex-col gap-6", className)}>
-                <div className="flex flex-col gap-2">
-                    <Typography type="body" weight="medium">
-                        {t("flashcard.interview.setupTitle")}
-                    </Typography>
-                    <Typography type="body-sm" color="muted">
-                        {t("flashcard.interview.setupHint", { total: SESSION_LENGTH })}
-                    </Typography>
-                </div>
-
-                {/* cross-session history for this deck (auto-hides until first attempt) */}
-                {history && history.totalAnswered > 0 ? (
-                    <div className="flex flex-col gap-3 rounded-xl bg-default/40 p-4">
-                        <Typography type="body-xs" weight="medium" color="muted">
-                            {t("flashcard.interview.historyTitle")}
-                        </Typography>
-                        <div className="flex flex-wrap items-center gap-3">
+                <Card>
+                    <CardContent className="flex flex-col gap-6">
+                        {/* hero: mic + headline */}
+                        <div className="flex items-center gap-3">
+                            <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent">
+                                <MicrophoneIcon className="size-6" aria-hidden focusable="false" />
+                            </div>
                             <div className="flex flex-col">
-                                <Typography type="body-xs" color="muted">
-                                    {t("flashcard.interview.avgScore")}
+                                <Typography type="h4" weight="semibold">
+                                    {t("flashcard.interview.setupTitle")}
                                 </Typography>
-                                <Typography className="text-xl font-medium text-foreground">
-                                    {history.averageScore}
+                                <Typography type="body-sm" color="muted">
+                                    {t("flashcard.interview.setupSubtitle")}
                                 </Typography>
                             </div>
-                            <Typography type="body-sm" color="muted">
-                                {t("flashcard.interview.historyAnswered", {
-                                    count: history.totalAnswered,
-                                })}
-                            </Typography>
                         </div>
-                        {history.weakTags.length > 0 ? (
-                            <div className="flex flex-col gap-2">
+
+                        {/* what to expect — quick chips */}
+                        <div className="flex flex-wrap items-center gap-2">
+                            <Chip size="sm" variant="soft" color="default">
+                                <ListNumbersIcon className="size-4" aria-hidden focusable="false" />
+                                {t("flashcard.interview.expectCount", { total: SESSION_LENGTH })}
+                            </Chip>
+                            <Chip size="sm" variant="soft" color="default">
+                                <MicrophoneIcon className="size-4" aria-hidden focusable="false" />
+                                {t("flashcard.interview.expectVoice")}
+                            </Chip>
+                            <Chip size="sm" variant="soft" color="default">
+                                <RobotIcon className="size-4" aria-hidden focusable="false" />
+                                {t("flashcard.interview.expectAiGrade")}
+                            </Chip>
+                        </div>
+
+                        {/* seniority level — single-select SETTING → block segmented (not underline) */}
+                        <div className="flex flex-col gap-2">
+                            <Typography type="body-xs" weight="medium" color="muted">
+                                {t("flashcard.interview.levelLabel")}
+                            </Typography>
+                            <SegmentedControl
+                                ariaLabel={t("flashcard.interview.levelLabel")}
+                                value={level ?? "all"}
+                                onChange={(value) => setLevel(value === "all" ? null : value)}
+                                items={[
+                                    { value: "all", label: t("flashcard.interview.levelAll") },
+                                    ...LEVELS.map((value) => ({
+                                        value,
+                                        label: t(`flashcard.level.${value}`),
+                                    })),
+                                ]}
+                            />
+                        </div>
+
+                        {/* cross-session history (auto-hides until first attempt) */}
+                        {history && history.totalAnswered > 0 ? (
+                            <div className="flex flex-col gap-3 border-t border-default pt-4">
                                 <Typography type="body-xs" weight="medium" color="muted">
-                                    {t("flashcard.interview.weakTags")}
+                                    {t("flashcard.interview.historyTitle")}
                                 </Typography>
-                                <div className="flex flex-wrap items-center gap-2">
-                                    {history.weakTags.map((tag) => (
-                                        <Chip key={tag} size="sm" variant="soft" color="default">
-                                            {tag}
-                                        </Chip>
-                                    ))}
+                                <div className="flex flex-wrap items-center gap-6">
+                                    <div className="flex flex-col">
+                                        <Typography type="body-xs" color="muted">
+                                            {t("flashcard.interview.avgScore")}
+                                        </Typography>
+                                        <Typography className="text-xl font-medium text-foreground">
+                                            {history.averageScore}
+                                        </Typography>
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <Typography type="body-xs" color="muted">
+                                            {t("flashcard.interview.bestScore")}
+                                        </Typography>
+                                        <Typography className="text-xl font-medium text-success">
+                                            {history.bestScore}
+                                        </Typography>
+                                    </div>
+                                    <Typography type="body-sm" color="muted">
+                                        {t("flashcard.interview.historyAnswered", {
+                                            count: history.totalAnswered,
+                                        })}
+                                    </Typography>
                                 </div>
+                                {/* verdict breakdown — pass / borderline / fail counts */}
+                                <div className="flex flex-wrap items-center gap-2">
+                                    <Chip size="sm" variant="soft" color="success">
+                                        {`${t("flashcard.interview.pass")} · ${history.passCount}`}
+                                    </Chip>
+                                    <Chip size="sm" variant="soft" color="warning">
+                                        {`${t("flashcard.interview.borderline")} · ${history.borderlineCount}`}
+                                    </Chip>
+                                    <Chip size="sm" variant="soft" color="danger">
+                                        {`${t("flashcard.interview.fail")} · ${history.failCount}`}
+                                    </Chip>
+                                </div>
+                                {history.weakTags.length > 0 ? (
+                                    <div className="flex flex-col gap-2">
+                                        <Typography type="body-xs" weight="medium" color="muted">
+                                            {t("flashcard.interview.weakTags")}
+                                        </Typography>
+                                        <div className="flex flex-wrap items-center gap-2">
+                                            {history.weakTags.map((tag) => (
+                                                <Chip key={tag} size="sm" variant="soft" color="default">
+                                                    {tag}
+                                                </Chip>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ) : null}
                             </div>
                         ) : null}
-                    </div>
-                ) : null}
 
-                {/* optional seniority filter — "all" plus the four levels */}
-                <div className="flex flex-wrap items-center gap-2">
-                    <Button
-                        size="sm"
-                        variant={level === null ? "primary" : "outline"}
-                        onPress={() => setLevel(null)}
-                    >
-                        {t("flashcard.interview.levelAll")}
-                    </Button>
-                    {LEVELS.map((value) => (
-                        <Button
-                            key={value}
-                            size="sm"
-                            variant={level === value ? "primary" : "outline"}
-                            onPress={() => setLevel(value)}
-                        >
-                            {t(`flashcard.level.${value}`)}
+                        {/* primary CTA — loud, mic-led (one primary action) */}
+                        <Button variant="primary" size="lg" className="self-start" onPress={startSession}>
+                            <MicrophoneIcon className="size-5" aria-hidden focusable="false" />
+                            {t("flashcard.interview.begin")}
                         </Button>
-                    ))}
-                </div>
-
-                <Button variant="primary" className="self-start" onPress={startSession}>
-                    {t("flashcard.interview.begin")}
-                </Button>
+                    </CardContent>
+                </Card>
             </div>
         )
     }

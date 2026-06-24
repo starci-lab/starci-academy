@@ -1,8 +1,9 @@
 "use client"
 
-import { CheckCircleIcon, ClockIcon, FlameIcon, TargetIcon } from "@phosphor-icons/react"
+import { ClockIcon, FlameIcon, TargetIcon } from "@phosphor-icons/react"
 import _ from "lodash"
-import { LabeledCard } from "@/components/blocks"
+import { CheckListCard, CheckListItem, LabeledCard, PageHeader, ResponsiveBreadcrumb } from "@/components/blocks"
+import type { ResponsiveBreadcrumbItem } from "@/components/blocks"
 import React, {
     useMemo,
 } from "react"
@@ -11,14 +12,21 @@ import {
     Typography,
 } from "@heroui/react"
 import {
+    useLocale,
     useTranslations,
 } from "next-intl"
+import {
+    useRouter,
+} from "next/navigation"
 import {
     useAppSelector,
 } from "@/redux"
 import {
     getContentChallengeCount,
 } from "@/modules/types"
+import {
+    pathConfig,
+} from "@/resources"
 import {
     ReadBadge,
 } from "../ReadBadge"
@@ -32,10 +40,23 @@ import {
  */
 export const ContentHeader = () => {
     const t = useTranslations()
+    const locale = useLocale()
+    const router = useRouter()
     const content = useAppSelector((state) => state.content.entity)
+    const course = useAppSelector((state) => state.course.entity)
+    const courseDisplayId = useAppSelector((state) => state.course.displayId)
     const title = content?.title
     const description = content?.description
     const minutesRead = content?.minutesRead ?? 0
+
+    /** Tier-1 breadcrumb (Home › Courses › <course> › Học phần) — lives in the PageHeader
+     *  breadcrumb slot so the whole header is one unit (moved out of the route layout). */
+    const breadcrumbItems = useMemo<Array<ResponsiveBreadcrumbItem>>(() => [
+        { key: "home", label: t("nav.home"), onPress: () => router.push(pathConfig().locale().build()) },
+        { key: "courses", label: t("nav.courses"), onPress: () => router.push(pathConfig().locale(locale).course().build()) },
+        { key: "course", label: course?.title || t("nav.courses"), onPress: () => router.push(pathConfig().locale(locale).course(courseDisplayId).build()) },
+        { key: "modules", label: t("modules.title"), onPress: () => router.push(pathConfig().locale(locale).course(courseDisplayId).learn().content().build()) },
+    ], [t, locale, router, course?.title, courseDisplayId])
 
     /** Challenge count for the meta chip, tolerant of a missing entity. */
     const challengeCount = useMemo(
@@ -50,51 +71,47 @@ export const ContentHeader = () => {
     )
 
     return (
-        <div className="flex flex-col gap-6">
-            {/* header proper (title + desc + meta) — all one content group → gap-3 */}
-            <div className="flex flex-col gap-3">
-                {/* title + description pair (gap-2 — same shape as the standard PageHeader) */}
-                <div className="flex flex-col gap-2">
-                    <Typography.Heading level={3} weight="bold">{title}</Typography.Heading>
-                    {description ? (
-                        <Typography type="body-sm" color="muted">{description}</Typography>
-                    ) : null}
-                </div>
-                {/* Quiet meta row — default chips so the lesson title stays the one loud thing */}
-                <div className="flex flex-wrap items-center gap-2">
-                    <ReadBadge />
-                    <Chip color="default">
-                        <ClockIcon className="size-5" />
-                        <Chip.Label>
-                            {t("content.minutesRead", {
-                                minutes: minutesRead,
-                            })}
-                        </Chip.Label>
-                    </Chip>
-                    <Chip color="default">
-                        <FlameIcon className="size-5" />
-                        <Chip.Label>
-                            {t("content.challengeCount", {
-                                count: challengeCount,
-                            })}
-                        </Chip.Label>
-                    </Chip>
-                </div>
-            </div>
-            {/* "What you'll learn" — separate section, OUTSIDE the header scope → gap-6 */}
+        // header proper (title+desc+meta) → outcomes = header → content boundary = gap-10 (page-heading debt)
+        <div className="flex flex-col gap-10">
+            {/* header (tier 1/2) via the shared PageHeader block for cross-page consistency:
+                title (H3) + description + a quiet meta-chip row (read state · time · challenges). */}
+            <PageHeader
+                breadcrumb={<ResponsiveBreadcrumb items={breadcrumbItems} />}
+                title={title}
+                description={description || undefined}
+                meta={(
+                    <div className="flex flex-wrap items-center gap-2">
+                        <ReadBadge />
+                        <Chip color="default">
+                            <ClockIcon className="size-5" />
+                            <Chip.Label>
+                                {t("content.minutesRead", { minutes: minutesRead })}
+                            </Chip.Label>
+                        </Chip>
+                        <Chip color="default">
+                            <FlameIcon className="size-5" />
+                            <Chip.Label>
+                                {t("content.challengeCount", { count: challengeCount })}
+                            </Chip.Label>
+                        </Chip>
+                    </div>
+                )}
+            />
+            {/* "What you'll learn" — first CONTENT block, gap-10 below the header above */}
             {outcomes.length > 0 ? (
                 <LabeledCard
+                    frameless
                     label={t("content.outcomes")}
                     icon={<TargetIcon className="size-5" />}
                 >
-                    <ul className="flex flex-col gap-2">
+                    {/* shared check-list card (same as course value-props / challenge outputs) */}
+                    <CheckListCard>
                         {outcomes.map((outcome) => (
-                            <li key={outcome.id} className="flex items-start gap-2">
-                                <CheckCircleIcon className="mt-0.5 size-5 shrink-0 text-success" />
+                            <CheckListItem key={outcome.id}>
                                 <Typography type="body-sm">{outcome.text}</Typography>
-                            </li>
+                            </CheckListItem>
                         ))}
-                    </ul>
+                    </CheckListCard>
                 </LabeledCard>
             ) : null}
         </div>

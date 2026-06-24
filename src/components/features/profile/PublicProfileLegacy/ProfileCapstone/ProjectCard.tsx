@@ -15,9 +15,11 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    Check as CheckIcon,
     Rocket as RocketIcon,
 } from "@gravity-ui/icons"
+import {
+    CheckCircleIcon,
+} from "@phosphor-icons/react"
 import {
     EntityToken,
 } from "@/components/features/dashboard/EntityToken"
@@ -162,7 +164,7 @@ export const ProjectCard = ({
                                         >
                                             <div className="flex min-w-0 items-center gap-1.5">
                                                 {task.passed ? (
-                                                    <CheckIcon className="size-5 shrink-0 text-success" />
+                                                    <CheckCircleIcon className="size-5 shrink-0 text-success" />
                                                 ) : null}
                                                 <span className="truncate text-sm text-foreground">
                                                     {task.title}

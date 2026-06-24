@@ -96,11 +96,11 @@ export const ContentBodyV2 = ({ className }: ContentBodyV2Props) => {
             {/* Mark-as-read sentinel only — reactions + comments are rendered OUTSIDE this reading
                 card by LessonReader (their own blocks below). Hidden for premium (paywall follows). */}
             {contentFromRedux?.isPremium ? null : (
-                <>
-                    <div className="h-6" />
+                // gap-6 = khoảng thở giữa body bài và sentinel mark-as-read
+                <div className="flex flex-col gap-6">
                     {/* Sentinel element for IntersectionObserver — triggers mark-as-read */}
                     <div ref={sentinelRef} className="h-1" />
-                </>
+                </div>
             )}
         </div>
     )

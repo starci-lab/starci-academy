@@ -46,8 +46,6 @@ export const ProviderSection = ({
             const labelByProvider: Record<string, string> = {
                 [ModelProvider.Gemini]: t("providers.gemini"),
                 [ModelProvider.OpenAI]: t("providers.openai"),
-                [ModelProvider.Claude]: t("providers.claude"),
-                [ModelProvider.OpenRouter]: t("providers.openrouter"),
             }
             return labelByProvider[providerHealth.provider] ?? providerHealth.provider
         },

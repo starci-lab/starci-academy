@@ -22,7 +22,7 @@ export const FlashcardDeckListSkeleton = ({
         <div className={className}>
             <div className="flex flex-col gap-3">
                 {Array.from({ length: Math.max(count, 1) }).map((_unused, index) => (
-                    <div key={index} className="rounded-3xl bg-surface px-4 py-3">
+                    <div key={index} className="rounded-3xl border border-default bg-surface p-4">
                         <div className="flex flex-col gap-2">
                             {/* title + difficulty chip */}
                             <div className="flex items-center justify-between gap-3">

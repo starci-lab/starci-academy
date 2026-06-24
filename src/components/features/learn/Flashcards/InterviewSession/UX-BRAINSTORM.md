@@ -1,0 +1,100 @@
+# UX Brainstorm — Phỏng vấn thử: RANDOM toàn khóa (bỏ chọn chủ đề) + chặn chưa-enroll (2026-06-25)
+
+> `/starci-fe-ux-brainstorm`. Trang: `/learn/flashcards` tab **"Phỏng vấn thử"**. Thầy: *"random câu hỏi, không cho users chọn theo chủ đề; có attempts; dùng Web Voice; gửi BE chấm = AI + feedback; KHÔNG mua khóa khỏi xài; nhớ chặn nếu chưa enroll"*. KHÔNG code (chờ `/starci-fe-ux-apply`).
+
+## 0. PHÁT HIỆN LỚN — tính năng ĐÃ DỰNG gần đủ (FE + BE)
+Voice + AI chấm + attempts + history **đã có sẵn**, KHÔNG phải làm lại:
+- **FE** `InterviewSession/index.tsx`: 3 phase setup→active→summary, 5 câu, `useSpeechRecognition` (Web Speech client-side STT), mic record + transcript live, submit → grade, verdict + strengths/gaps/modelAnswerHint/followUpQuestion, summary (avg + pass/borderline/fail + weak tags). `useMutateGradeInterviewAnswerSwr`.
+- **BE**: `drawInterviewCard(flashcardDeckId!, level?)` (bốc random card có `answer != null`, GIẤU answer) · `gradeInterviewAnswer(flashcardDeckId, flashcardCardId, transcript)` → AI chấm (prompt theo level + rubric, model tier `Grade`, charge 10 credit auto, parse score/verdict/strengths/gaps/hint/followUp) · `myInterviewHistory(flashcardDeckId?)` (avg, pass/borderline/fail, weakTags) · `InterviewAttemptEntity` (log score/verdict/level/tags/user/deck).
+
+→ **Việc THỰC SỰ phải làm CHỈ là 2 thứ:** (1) bỏ bước chọn chủ đề → random **xuyên toàn khóa**; (2) **chặn chưa-enroll**.
+
+## 1. Mục tiêu trang
+Học viên (đã mua) vào "Phỏng vấn thử" → bấm 1 nút → AI hỏi NGẪU NHIÊN (mọi chủ đề của khóa) → trả lời bằng giọng nói → chấm + góp ý → câu kế. Như app phỏng vấn thật (Final Round / Huru): KHÔNG bắt chọn topic, KHÔNG menu.
+
+## 2. Đổi gì (cắt/thêm)
+- **CẮT:** topic picker (`FlashcardDeckList` ở tab interview) + state `interviewDeckId` + nút "back to topics" + nhãn "Chọn chủ đề để phỏng vấn". Người dùng KHÔNG còn chọn bộ thẻ.
+- **THÊM:** (a) **interview landing** = stats history (course-wide) + level selector + 1 CTA "Bắt đầu phỏng vấn"; (b) **enroll gate** bọc cả tab.
+- **GIỮ NGUYÊN:** toàn bộ session (mic/transcript/verdict/summary), attempts, voice, AI grading.
+
+## 3. IA mới (tab "Phỏng vấn thử")
+```
+tab=interview →
+  CHƯA enroll → <EnrollGate>  (lock + "Đăng ký khóa học để luyện phỏng vấn với AI") 
+  ĐÃ enroll →
+    landing (phase setup):
+      • intro 1 dòng ("AI hỏi ngẫu nhiên — trả lời bằng giọng nói, nhận chấm điểm + góp ý")
+      • stats card (myInterviewHistory course-wide, auto-hide nếu 0 attempt): điểm TB (lớn) · đã trả lời · Đạt/Tạm/Trượt chips · chủ đề yếu chips
+      • cấp độ: [Tất cả · Junior · Middle · Senior · Staff]  (đã có, drives độ khó)
+      • CTA "Bắt đầu phỏng vấn" (icon mic, lg)  → session
+    session (phase active): random draw toàn khóa → mic → submit → verdict → câu kế (random lại)
+    summary (phase summary): avg + breakdown + weak tags + "Phỏng vấn lại"
+```
+→ Lần đầu (0 attempt): landing chỉ còn intro + level + CTA (sạch). Có lịch sử: thêm stats card.
+
+## 4. Hướng (chốt A)
+| Hướng | Là gì | ✅ | ❌ |
+|---|---|---|---|
+| **A — landing stats + Start** ✅ đề xuất | vào tab thấy stats + level + 1 nút Start → session random | rõ "đang ở đâu / luyện tiếp"; tái dùng phase setup sẵn có; 1 primary action | thêm 1 màn trước session (nhưng đáng — cho chọn level + xem tiến bộ) |
+| B — vào thẳng câu hỏi | click tab = câu hỏi đầu hiện luôn, stats chỉ ở summary | nhanh nhất | mất chỗ chọn level + mất "tiến bộ"; giật (đang load câu đã vào session) |
+| C — hội thoại liên tục | hỏi→đáp→feedback→hỏi mãi, không cố định 5 | giống chat phỏng vấn thật | mất ranh giới "phiên" + summary; refactor nhiều |
+→ **A** (đúng tinh thần app phỏng vấn: 1 nút Start, random, theo dõi tiến bộ). Refs: Final Round AI · Huru · Interviews.chat (Q-by-Q feedback + score + voice).
+
+## 5. Section → dữ liệu BE
+| Section | Nguồn (đã có / CẦN ĐỔI) |
+|---|---|
+| Enroll gate | trạng thái enrolled (FE `ENROLL_REQUIRED_SURFACES` + BE guard) — **CẦN: thêm interview vào enrolled-only** |
+| Stats landing | `myInterviewHistory(flashcardDeckId: null)` — **CẦN: scope theo course khi deckId null** (giờ chỉ scope deck) |
+| Level selector | `FlashcardLevel` (đã có) |
+| Random draw | `drawInterviewCard` — **CẦN: bỏ bắt buộc `flashcardDeckId`** → bốc random xuyên MỌI deck của course (filter answer!=null + level) |
+| Chấm + feedback | `gradeInterviewAnswer(flashcardDeckId, flashcardCardId, transcript)` (card trả về đã kèm deckId → grade chạy như cũ) |
+| Attempts | `InterviewAttemptEntity` (đã log) |
+
+## 6. ⚠️ BE phải đổi (báo thầy — cần backend)
+1. **`drawInterviewCard`: `flashcardDeckId` từ required → optional**, thêm scope `courseId` → khi không có deck thì bốc random card gradable (answer!=null + level) **trên TẤT CẢ deck của course**. (Hoặc query mới `drawInterviewQuestion(courseId, level?)`.) Card vẫn mang `deckId` để grade.
+2. **`myInterviewHistory`: scope theo COURSE khi `flashcardDeckId` null** (giờ chỉ aggregate theo deck) → stats course-wide.
+3. **Enrollment guard cho 3 resolver interview** (`drawInterviewCard`, `gradeInterviewAnswer`, `myInterviewHistory`): thêm `GraphQLMustEnrolledGuard`. **Đây là NGOẠI LỆ có chủ đích, ĐÍNH CHÍNH [[trial-preview-enrollment-optional]]** (mở flashcards cho trial): **interview = enrolled-only** vì tốn AI credit thật. "Học thẻ" (review SM-2) vẫn mở cho trial; chỉ "Phỏng vấn thử" khóa.
+
+## 7. FE phải đổi
+- `Flashcards/index.tsx`: tab interview → bỏ `FlashcardDeckList`/`interviewDeckId`; bọc bằng **enroll gate** (`enrolled ? <InterviewSession courseId/> : <EnrollGate/>`). `InterviewSession` nhận `courseId` thay `deckId`.
+- `InterviewSession`: `drawInterviewCard` bỏ deckId (truyền courseId); `myInterviewHistory` course-wide; grade dùng `card.deckId`+`card.id` (đã có trong card trả về). Giữ nguyên phần voice/verdict/summary.
+- SWR gate interview hooks theo `enrolled` (KHỚP BE guard) — đây là chiều NGƯỢC [[fe-swr-gate-must-match-be-enroll-guard]]: surface này CÓ gate enrolled.
+- i18n: tái dùng `enrollGate.*` + `flashcard.interview.*` (bỏ key `pickLabel`/`backToTopics`/`start` của topic picker).
+
+## 8. States / a11y
+- Web Speech KHÔNG hỗ trợ (Firefox…) → fallback "trình duyệt không hỗ trợ" (đã có). Mic permission error (đã có).
+- Enroll gate: lock icon + nhãn rõ "Phỏng vấn thử dành cho học viên" + CTA "Đăng ký khóa học".
+- AI quota hết → `AiQuotaExhaustedException` (BE đã chặn) → FE hiện thông báo hết hạn mức (cần thêm copy nếu chưa có).
+
+## Refs
+- [Final Round AI](https://www.finalroundai.com/) · [Huru](https://huru.ai/) · [Interviews.chat](https://www.interviews.chat/) — voice answer + Q-by-Q structured feedback (score · strengths · gaps · improved answer).
+
+## Cần thầy chốt / đã chốt
+- ✅ Random toàn khóa (bỏ chọn chủ đề) · ✅ chặn chưa-enroll.
+- Hỏi: giữ **5 câu/phiên** (như hiện tại) hay cho chọn số câu? (đề xuất giữ 5, đơn giản).
+- Hỏi: stats landing hiện luôn hay chỉ sau phiên đầu? (đề xuất auto-hide khi 0 attempt).
+
+---
+
+## VÒNG 2 — 2026-06-25: setup screen đẹp hơn + level = tabs BLOCK (không underline)
+> Thầy: *"chọn cấp độ nhớ là dùng tabs dạng block, không phải dạng underline; nghĩ giao diện gì hay hơn đi"*. Hiện setup quá trống (title + hint + underline tabs + 1 nút) — và level đang là `TabsCard` (underline), sai kiểu.
+
+### Pain
+- Level selector = `TabsCard` underline → thầy muốn **block/segmented** (pill, active = khối nền).
+- Màn setup sparse/trống: chỉ title + hint + tabs + button, không kỳ vọng, không thành tích (stats chưa hiện vì BE chưa restart — nhưng kể cả có thì layout vẫn nhạt).
+
+### Phân biệt 2 kiểu tabs (đính chính rule single-select→tabs)
+- **Underline tabs (`TabsCard`)** = NAVIGATION / lọc nội dung phía dưới (đổi panel). Vd tab Nội dung/Thử thách, scope feed.
+- **Block/segmented tabs (`SegmentedControl`)** = chọn 1 OPTION/SETTING gọn tại chỗ (không đổi panel lớn). Vd cấp độ phỏng vấn, công tắc tiền tệ. Active = khối nền (pill `bg-surface` trên track `bg-default`).
+- → Level phỏng vấn là **setting pick** (không phải nav) → **`SegmentedControl` (block)**, KHÔNG underline. Bỏ giới hạn "chỉ 2–3 cái" của SegmentedControl: 5 lựa chọn gọn vẫn dùng block.
+
+### Hướng (chốt A) — widget vòng 2
+| Hướng | Là gì | ✅ |
+|---|---|---|
+| **A — card "sẵn sàng" gọn** ✅ đề xuất | hero mic + headline + 3 chip kỳ vọng (5 câu · giọng nói · AI chấm) + **level block-tabs** + stats gọn (best/avg/đã luyện) + 1 CTA lớn | rõ ràng, 1 primary action, có "what to expect" như app thật |
+| B — stats-forward | dẫn bằng "điểm cao nhất" lớn + breakdown + weak chips, rồi level block + Start | hợp khi đã luyện nhiều; người mới ẩn stats |
+→ **A** (gọn, kỳ vọng rõ). Refs: [Final Round AI](https://www.finalroundai.com/ai-mock-interview) · [Exponent](https://www.tryexponent.com/practice/ai-mock-interviews) · Codecademy interview simulator (chọn level + Begin nổi bật).
+
+### Áp (sau khi thầy duyệt)
+- `InterviewSession` setup: bọc trong **1 card** (`<Card><CardContent>`), thêm hero mic + headline `setupTitle` + 3 chip kỳ vọng; **level `TabsCard` → `SegmentedControl`** (block); stats row giữ (best/avg/đã luyện + breakdown chip) trong card; CTA "Bắt đầu phỏng vấn" `size="lg"` + icon mic.
+- Block `SegmentedControl` (`blocks/navigation/SegmentedControl`) nhận `{items:[{value,label}], value, onChange, ariaLabel}` — generic, đã có.

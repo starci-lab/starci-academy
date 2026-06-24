@@ -114,3 +114,53 @@ Thay surface tự dựng (`rounded-2xl border border-default bg-default p-6` + `
 **`LabeledCard`** (`@/components/blocks`): `label="Bình luận (N)"` (Label NGOÀI/trên card) + composer & list
 trong `Card`/`CardContent` (`contentClassName="flex flex-col gap-6"`). Reaction bar vẫn ngoài (thuộc nội dung).
 Đúng luật "Section card = block LabeledCard". tsc/lint sạch.
+
+---
+
+## CÂU HỎI 2026-06-25 — "comment xấu quá" + like để TRONG card content trên hay card khác?
+> Hiện trạng (sau 2026-06-21): `InteractionBar` **FLAT** (pill cảm xúc + 👁 view) trôi nổi giữa reading card và
+> `LabeledCard` "Bình luận (N)" (composer `TextArea rows=3` + list). Thầy: *"comment xấu quá, ý tưởng gì? like để
+> trong card content trên hay card khác?"*. **Có widget mockup A/B kèm.**
+
+### Pain
+1. **Pill cảm xúc + "1" MỒ CÔI** — 1 hàng flat lửng lơ giữa 2 card, không thuộc khối nào.
+2. **Composer = hộp xám bự rỗng** (`rows=3` luôn mở hết) → nặng, trống.
+3. **Empty nghèo** ("Chưa có bình luận nào…" 1 dòng muted, thiếu icon/hint — không `EmptyContent` chuẩn).
+4. **2 card bordered** (reading paper + comment LabeledCard) chồng dọc → "box nối box" ([[concepts/card]]).
+
+### Like để đâu? (câu hỏi chính — phân biệt với 2026-06-21)
+> Lưu ý: 2026-06-21 thầy bảo *"yêu thích bỏ RA NGOÀI card"* vì lúc đó cả body (article+reaction+comment) nằm trong
+> **1 card** → reaction là **card-in-card** (lồng). Khác hẳn lần này: **footer-row có `border-t` BÊN TRONG card đọc
+> KHÔNG phải card lồng** — chỉ là 1 divider-row cuối "tờ giấy" (kiểu Medium). Nên hướng A dưới KHÔNG tái phạm lỗi cũ.
+
+Nguyên tắc nền: hành động đơn / 1 dòng meta **KHÔNG là 1 card riêng** ([[concepts/card]]) → cảm xúc tuyệt đối không nên là card thứ 3.
+
+| Hướng | Là gì | ✅ | ❌ | Ref |
+|---|---|---|---|---|
+| **A — chân card đọc** ✅ đề xuất | move `InteractionBar` vào **footer reading Card** (`border-t`, cuối bài) | cảm xúc thuộc về BÀI → ở trong bounded object của bài; hết pill mồ côi; "trong card content trên" đúng ý thầy | chỉ hiện ở tab có reading card (Thử thách full-width không có — nhưng Discussion cũng vậy → hoà) | Medium (clap cuối bài) · Substack |
+| **B — toolbar đầu card thảo luận** | gộp cảm xúc+view+đếm comment thành 1 `border-b` toolbar trên card "Thảo luận" | 1 khối community gọn | cảm xúc bị kéo khỏi bài → "react khu comment" (lệch nghĩa) | YouTube |
+
+→ **Đề xuất A.** (Widget: A viền xanh.)
+
+### Làm comment ĐẸP lại (áp cho cả A & B)
+1. **Composer avatar-led collapse→expand**: idle = `[avatar][input pill "Đặt câu hỏi hoặc chia sẻ…"]` 1 hàng mảnh;
+   focus → bung TextArea + Hủy/Đăng. Bỏ hộp xám rỗng. Ref YouTube/Substack/GitHub.
+2. **Empty `EmptyContent` chuẩn**: icon `ChatsCircle` + title + hint ([[labeled-section-render-empty-not-self-hide]]).
+3. **Khu thảo luận FRAMELESS** (label ngoài + composer + list flat, KHÔNG `<Card>`) → trang còn 1 card bordered
+   (reading paper) → hết box-nối-box ([[concepts/card]]). Composer input vẫn bordered (vẫn có affordance).
+4. **Nhãn** "Bình luận (N)" → **"Thảo luận · N"** (Q&A học tập, không phải comment MXH).
+
+### Hướng CHỐT đề xuất
+**A + 4 điểm trên**: cảm xúc → chân card đọc (border-t); khu **Thảo luận frameless** (composer avatar-led collapse→expand
++ empty chuẩn + list flat). Stack: **[reading paper card (+footer cảm xúc)] → gap → [Thảo luận phẳng]**. Hết mồ côi,
+hết hộp rỗng, hết box-nối-box. → BE field đủ (§ data 2026-06-25), không thêm gì.
+
+### Refs (2026-06-25)
+- [25 Comment Thread Design Examples — Subframe](https://www.subframe.com/tips/comment-thread-design-examples)
+- [UX Research for Comments Sections — FT/Medium](https://medium.com/ft-product-technology/ux-research-for-comments-sections-c5b58cea1ba5)
+- Canonical: Medium · Substack · YouTube · GitHub Discussions.
+
+### Cần thầy chốt
+1. Like: **A (chân card đọc — đề xuất)** hay **B (toolbar đầu card thảo luận)**?
+2. Khu thảo luận: **frameless (đề xuất)** hay giữ `LabeledCard`?
+3. Đổi nhãn "Bình luận (N)" → "Thảo luận · N"?

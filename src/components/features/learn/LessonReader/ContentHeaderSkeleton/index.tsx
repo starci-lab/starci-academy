@@ -20,11 +20,9 @@ import {
  */
 export const ContentHeaderSkeleton = () => {
     return (
-        <div className="p-3">
+        <div className="flex flex-col gap-3 p-3">
             <SkeletonText size="2xl" width="w-1/2" />
-            <div className="h-3" />
             <SkeletonParagraph size="sm" lines={3} />
-            <div className="h-3" />
             <div className="flex flex-wrap items-center gap-2">
                 <Skeleton className="h-7 w-[120px] rounded-full" />
                 <Skeleton className="h-7 w-[100px] rounded-full" />

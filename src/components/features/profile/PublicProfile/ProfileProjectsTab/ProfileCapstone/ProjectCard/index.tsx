@@ -14,7 +14,7 @@ import {
 } from "next-intl"
 import {
     CaretDownIcon,
-    CheckIcon,
+    CheckCircleIcon,
     RocketIcon,
     SealCheckIcon,
 } from "@phosphor-icons/react"
@@ -184,7 +184,7 @@ export const ProjectCard = ({
                                     <ListRow
                                         key={`${task.title}-${taskIndex}`}
                                         leading={task.passed ? (
-                                            <CheckIcon aria-hidden focusable="false" className="size-5 text-success" />
+                                            <CheckCircleIcon aria-hidden focusable="false" className="size-5 text-success" />
                                         ) : undefined}
                                         title={task.title}
                                         meta={task.passed ? (

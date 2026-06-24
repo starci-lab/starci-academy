@@ -7,7 +7,6 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types"
-import { cn } from "@heroui/react"
 import { useAppSelector } from "@/redux"
 import { useQueryFoundationsSwr } from "@/hooks"
 import {
@@ -21,6 +20,7 @@ import {
 } from "../utils"
 import {
     AsyncContent,
+    SurfaceListCard,
 } from "@/components/blocks"
 
 /** Props for {@link FoundationsList}. */
@@ -28,13 +28,6 @@ export type FoundationsListProps = WithClassNames<undefined>
 
 /** Number of skeleton rows shown while the resources load. */
 const SKELETON_ROWS = 6
-
-/**
- * Container for the joined list — the house card surface forced to `p-0` so rows
- * sit edge-to-edge with full-width dividers (the `Accordion variant="surface"`
- * look). NOT a functional accordion; only the surface styling is borrowed.
- */
-const LIST_CONTAINER_CLASS = "card card--default !p-0 overflow-hidden"
 
 /**
  * Foundations master list: reads from Redux + SWR; shows skeletons while loading,
@@ -65,26 +58,25 @@ export const FoundationsList = ({
             isEmpty={sortedFoundations.length === 0}
             emptyContent={{ title: t("foundations.empty") }}
             skeleton={(
-                <div className={cn(LIST_CONTAINER_CLASS, className)}>
+                <SurfaceListCard className={className}>
                     {Array.from({ length: SKELETON_ROWS }).map((_, index) => (
                         <FoundationCardSkeleton
                             key={index}
                             divider={index < SKELETON_ROWS - 1}
                         />
                     ))}
-                </div>
+                </SurfaceListCard>
             )}
         >
-            <div className={cn(LIST_CONTAINER_CLASS, className)}>
+            <SurfaceListCard className={className}>
                 {sortedFoundations.map((foundation, index) => (
                     <FoundationCard
                         key={foundation.id}
                         foundation={foundation}
                         displayIndex={index}
-                        divider={index < sortedFoundations.length - 1}
                     />
                 ))}
-            </div>
+            </SurfaceListCard>
         </AsyncContent>
     )
 }

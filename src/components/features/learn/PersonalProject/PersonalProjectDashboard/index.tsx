@@ -21,6 +21,7 @@ import { pathConfig } from "@/resources"
 import {
     AsyncContent,
     ListRow,
+    PageHeader,
     ProgressMeter,
 } from "@/components/blocks"
 import {
@@ -179,32 +180,30 @@ export const PersonalProjectDashboard = ({
     const isEmpty = !hasMilestones && !milestonesSwr.isLoading && !!milestonesSwr.data && !milestonesSwr.error
 
     return (
-        <div className={cn("mx-auto w-full max-w-3xl", className)}>
-            {/* tier-1 breadcrumb — shares the shell's single p-6 (no separate padded wrapper) */}
-            <TaskBreadcrumb />
-            <div className="h-3" />
-            {/* tier-2 header: project title (H3) + description (gap-2 pair) + github status chip */}
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Typography type="h3" weight="bold">{t("finalProject.dashboard.title")}</Typography>
-                    <Typography type="body-sm" color="muted">{t("finalProject.dashboard.subtitle")}</Typography>
-                </div>
-                <div className="flex flex-wrap items-center gap-2">
-                    <Chip
-                        color={isConnected ? "success" : "default"}
-                        className={isConnected ? "bg-success/10 text-success" : undefined}
-                    >
-                        <GithubLogoIcon className="size-5" />
-                        <Chip.Label>
-                            {isConnected
-                                ? `${toRepoLabel(githubUrl)} · ${githubBranch || "main"}`
-                                : t("finalProject.dashboard.notConnected")}
-                        </Chip.Label>
-                    </Chip>
-                </div>
-            </div>
-            <div className="h-3" />
-            {/* tier-3 content */}
+        <div className={cn("mx-auto flex w-full max-w-3xl flex-col gap-10", className)}>
+            {/* shared PageHeader: breadcrumb → H3 title → muted desc → github status chip (meta).
+                header → content = gap-10 (page-heading debt). */}
+            <PageHeader
+                breadcrumb={<TaskBreadcrumb />}
+                title={t("finalProject.dashboard.title")}
+                description={t("finalProject.dashboard.subtitle")}
+                meta={(
+                    <div className="flex flex-wrap items-center gap-2">
+                        <Chip
+                            color={isConnected ? "success" : "default"}
+                            className={isConnected ? "bg-success/10 text-success" : undefined}
+                        >
+                            <GithubLogoIcon className="size-5" />
+                            <Chip.Label>
+                                {isConnected
+                                    ? `${toRepoLabel(githubUrl)} · ${githubBranch || "main"}`
+                                    : t("finalProject.dashboard.notConnected")}
+                            </Chip.Label>
+                        </Chip>
+                    </div>
+                )}
+            />
+            {/* content */}
             <AsyncContent
                 isLoading={isLoading}
                 skeleton={<PersonalProjectDashboardSkeleton />}
@@ -235,7 +234,7 @@ export const PersonalProjectDashboard = ({
                             {currentTask ? (
                                 <Button
                                     variant="primary"
-                                    size="sm"
+                                    size="lg"
                                     className="shrink-0"
                                     onPress={onContinue}
                                 >
@@ -268,7 +267,7 @@ export const PersonalProjectDashboard = ({
                             <Typography type="body-sm" weight="semibold" color="muted">
                                 {t("finalProject.dashboard.keepGoing")} · {currentMilestone.title}
                             </Typography>
-                            <div className="flex flex-col gap-1">
+                            <div className="flex flex-col gap-2">
                                 {(currentMilestone.tasks ?? []).map((task) => {
                                     const isCompleted = progressMap.get(task.id)?.completed ?? false
                                     const isActive = task.id === currentTaskId

@@ -15,8 +15,4 @@ export const BYOK_PROVIDERS: Array<ByokProviderOption> = [
         value: ModelProvider.Gemini,
         label: "Google Gemini",
     },
-    {
-        value: ModelProvider.Claude,
-        label: "Anthropic Claude",
-    },
 ]

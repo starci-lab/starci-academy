@@ -4,8 +4,8 @@ import { DocumentNode, gql } from "@apollo/client"
 import type { QueryDrawInterviewCardResponse } from "./types"
 
 const query1 = gql`
-  query DrawInterviewCard($flashcardDeckId: ID!, $level: FlashcardLevel) {
-    drawInterviewCard(flashcardDeckId: $flashcardDeckId, level: $level) {
+  query DrawInterviewCard($courseId: ID, $flashcardDeckId: ID, $level: FlashcardLevel) {
+    drawInterviewCard(courseId: $courseId, flashcardDeckId: $flashcardDeckId, level: $level) {
       success
       message
       error
@@ -30,8 +30,10 @@ const queryMap: Record<QueryDrawInterviewCard, DocumentNode> = {
 
 /** Request body for the draw-interview-card query. */
 export interface DrawInterviewCardRequest {
-    /** Deck to draw a random gradable question from. */
-    flashcardDeckId: string
+    /** Course to draw a random question across all its decks (random interview mode). */
+    courseId?: string | null
+    /** Optional deck to restrict the draw to (legacy per-topic mode). */
+    flashcardDeckId?: string | null
     /** Optional seniority level to restrict the draw to (junior/middle/senior/staff). */
     level?: string | null
 }
@@ -61,7 +63,8 @@ export const queryDrawInterviewCard = async ({
     return apollo.query<QueryDrawInterviewCardResponse>({
         query: queryMap[query],
         variables: {
-            flashcardDeckId: request?.flashcardDeckId,
+            courseId: request?.courseId ?? null,
+            flashcardDeckId: request?.flashcardDeckId ?? null,
             level: request?.level ?? null,
         },
     })

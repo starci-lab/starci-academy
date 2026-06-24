@@ -1,17 +1,18 @@
 "use client"
 
 import React from "react"
-import { Button, Spinner, cn } from "@heroui/react"
+import { Button, Label, Spinner, cn } from "@heroui/react"
+import { ChatsCircleIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import { ReactionType, type CommentNode, type ReactionSummary } from "@/modules/api"
+import { ReactionType, type CommentNode } from "@/modules/api"
 import type { WithClassNames } from "@/modules/types"
-import { LabeledCard } from "@/components/blocks"
-import { InteractionBar } from "./InteractionBar"
+import { EmptyContent } from "@/components/blocks"
 import { CommentComposer } from "./CommentComposer"
 import { CommentItem } from "./CommentItem"
 
 export * from "./ReactionBar"
 export * from "./ReactionEmoji"
+export * from "./FacebookReactionSelector"
 export * from "./CommentComposer"
 export * from "./CommentItem"
 export * from "./InteractionBar"
@@ -21,10 +22,8 @@ export * from "./constants"
 export interface DiscussionProps extends WithClassNames<undefined> {
     /** Current viewer id (drives owner-only actions); null when unknown. */
     currentUserId: string | null
-    /** Aggregate reactions on the content itself. */
-    contentReactions: ReactionSummary | undefined
-    /** React to the content (null removes the reaction). */
-    onReactContent: (type: ReactionType | null) => void
+    /** Current viewer identity for the composer avatar; null when signed out. */
+    currentUser: { username: string, avatar?: string } | null
     /** Top-level comments for the content. */
     comments: Array<CommentNode>
     /** Total top-level comment count (for the heading). */
@@ -54,22 +53,18 @@ export interface DiscussionProps extends WithClassNames<undefined> {
 }
 
 /**
- * Bottom-of-article discussion: a single-row reaction bar (stays with the content) + a separate
- * community surface holding the composer and threaded comment list.
- *
- * {@link InteractionBar} is reaction-only (plain-emoji picker + view count); bookmark / share /
- * fullscreen live in the OnThisPage rail, not here. The comments sit in their own bordered
- * surface so they read as a distinct community area, separated from the lesson.
+ * Bottom-of-lesson discussion zone — FRAMELESS: a label ("Thảo luận · N") above an
+ * avatar-led composer and the threaded comment list, sitting directly on the page
+ * canvas (no card) so it doesn't stack a second bordered surface under the reading
+ * "paper" card. The content reaction picker is NOT here — it lives in the reading-card
+ * footer ({@link import("@/components/features/learn/LessonReader/ContentBody/ContentBodyV2/Discussion/ContentReactionBar").ContentReactionBar}).
  *
  * Presentational: receives all data + callbacks from a container; holds no data hooks.
  * @param props - {@link DiscussionProps}
  */
 export const Discussion = ({
-    // reactions
     currentUserId,
-    contentReactions,
-    onReactContent,
-    // comments
+    currentUser,
     comments,
     total,
     isLoading,
@@ -88,62 +83,56 @@ export const Discussion = ({
     const t = useTranslations()
 
     return (
-        <section className={cn("flex flex-col gap-6", className)}>
-            {/* ── reaction bar (reaction + view count) — belongs to the content ── */}
-            <InteractionBar
-                summary={contentReactions}
-                onReact={onReactContent}
-                viewCount={contentReactions?.viewCount}
-            />
+        <section className={cn("flex flex-col gap-3", className)}>
+            {/* ── label + composer (related → gap-3) ── */}
+            <div className="flex flex-col gap-3">
+                <div className="flex items-center gap-2">
+                    <ChatsCircleIcon aria-hidden focusable="false" className="size-5 text-muted" />
+                    <Label>{t("discussion.title", { count: total })}</Label>
+                </div>
+                {/* avatar-led composer: collapses to a slim pill until focused */}
+                <CommentComposer onSubmit={onSubmitComment} currentUser={currentUser} collapsible />
+            </div>
 
-            {/* ── comment zone: the canonical section card (LabeledCard) — title sits ABOVE the
-                card; composer + threaded list inside. Reads as a distinct community area, apart
-                from the lesson. ── */}
-            <LabeledCard
-                label={t("discussion.title", { count: total })}
-                contentClassName="flex flex-col gap-6"
-            >
-                {/* new comment composer */}
-                <CommentComposer onSubmit={onSubmitComment} />
-
-                {/* ── comment list / loading / empty states ── */}
-                {isLoading ? (
-                    <div className="flex justify-center py-6">
-                        <Spinner />
-                    </div>
-                ) : comments.length === 0 ? (
-                    <div className="py-6 text-center text-sm text-muted">
-                        {t("discussion.empty")}
-                    </div>
-                ) : (
-                    <div className="flex flex-col gap-6">
-                        {comments.map((comment) => (
-                            <CommentItem
-                                key={comment.id}
-                                comment={comment}
-                                currentUserId={currentUserId}
-                                depth={0}
-                                repliesByParent={repliesByParent}
-                                onReply={onReply}
-                                onEdit={onEdit}
-                                onDelete={onDelete}
-                                onReactComment={onReactComment}
-                                onLoadReplies={onLoadReplies}
-                            />
-                        ))}
-                        {hasMore ? (
-                            <Button
-                                variant="tertiary"
-                                className="self-center text-sm text-accent"
-                                isDisabled={isLoadingMore}
-                                onPress={onLoadMore}
-                            >
-                                {isLoadingMore ? <Spinner size="sm" /> : t("discussion.loadMore")}
-                            </Button>
-                        ) : null}
-                    </div>
-                )}
-            </LabeledCard>
+            {/* ── comment list / loading / empty states ── */}
+            {isLoading ? (
+                <div className="flex justify-center py-6">
+                    <Spinner />
+                </div>
+            ) : comments.length === 0 ? (
+                <EmptyContent
+                    icon={<ChatsCircleIcon aria-hidden focusable="false" className="size-8 text-muted" />}
+                    title={t("discussion.empty")}
+                    description={t("discussion.emptyHint")}
+                />
+            ) : (
+                <div className="flex flex-col gap-3">
+                    {comments.map((comment) => (
+                        <CommentItem
+                            key={comment.id}
+                            comment={comment}
+                            currentUserId={currentUserId}
+                            depth={0}
+                            repliesByParent={repliesByParent}
+                            onReply={onReply}
+                            onEdit={onEdit}
+                            onDelete={onDelete}
+                            onReactComment={onReactComment}
+                            onLoadReplies={onLoadReplies}
+                        />
+                    ))}
+                    {hasMore ? (
+                        <Button
+                            variant="tertiary"
+                            className="self-center text-sm text-accent"
+                            isDisabled={isLoadingMore}
+                            onPress={onLoadMore}
+                        >
+                            {isLoadingMore ? <Spinner size="sm" /> : t("discussion.loadMore")}
+                        </Button>
+                    ) : null}
+                </div>
+            )}
         </section>
     )
 }

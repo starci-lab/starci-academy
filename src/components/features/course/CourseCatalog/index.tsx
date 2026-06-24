@@ -9,7 +9,6 @@ import React, {
 import {
     Breadcrumbs,
     Pagination,
-    Typography,
 } from "@heroui/react"
 import {
     useLocale,
@@ -27,6 +26,7 @@ import {
 import {
     AsyncContent,
     CourseCardSkeleton,
+    PageHeader,
 } from "@/components/blocks"
 import {
     CatalogCourseCard,
@@ -103,26 +103,21 @@ export const CourseCatalog = ({ className }: CourseCatalogProps) => {
     return (
         <div className={className}>
             <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-4 px-6 py-6">
-                <Breadcrumbs>
-                    <Breadcrumbs.Item onPress={onNavigateHome}>
-                        {t("nav.home")}
-                    </Breadcrumbs.Item>
-                    <Breadcrumbs.Item>
-                        {t("nav.courses")}
-                    </Breadcrumbs.Item>
-                </Breadcrumbs>
-
-                {/* left-aligned title + live result count */}
-                <div className="flex flex-col gap-1">
-                    <Typography type="h4" weight="bold">
-                        {t("courses.featuredTitle")}
-                    </Typography>
-                    {count > 0 ? (
-                        <Typography type="body-sm" color="muted">
-                            {t("courses.count", { count })}
-                        </Typography>
-                    ) : null}
-                </div>
+                {/* shared PageHeader block (breadcrumb + title + live result count) for consistency */}
+                <PageHeader
+                    breadcrumb={(
+                        <Breadcrumbs>
+                            <Breadcrumbs.Item onPress={onNavigateHome}>
+                                {t("nav.home")}
+                            </Breadcrumbs.Item>
+                            <Breadcrumbs.Item>
+                                {t("nav.courses")}
+                            </Breadcrumbs.Item>
+                        </Breadcrumbs>
+                    )}
+                    title={t("courses.featuredTitle")}
+                    description={count > 0 ? t("courses.count", { count }) : undefined}
+                />
 
                 {/* server-side search: filters the catalog (debounced), left-aligned */}
                 <SearchInput

@@ -3,7 +3,7 @@
 import React, { useCallback, useMemo, useState } from "react"
 import useSWR from "swr"
 import { Button, Chip, Typography, cn } from "@heroui/react"
-import { CheckCircleIcon, LockIcon } from "@phosphor-icons/react"
+import { CheckCircleIcon, CursorClickIcon, LockIcon } from "@phosphor-icons/react"
 import { useTranslations, useLocale } from "next-intl"
 import { useRouter } from "next/navigation"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
@@ -199,15 +199,24 @@ export const FlashcardReviewer = ({ deckId, className }: FlashcardReviewerProps)
                         revealed={revealed}
                         onToggle={() => setRevealed((flipped) => !flipped)}
                         ariaLabel={revealed ? t("flashcard.showQuestion") : t("flashcard.showAnswer")}
+                        frontHint={
+                            <>
+                                <CursorClickIcon className="size-3.5" aria-hidden focusable="false" />
+                                {t("flashcard.flipHint")}
+                            </>
+                        }
+                        backHint={isLocked ? undefined : (
+                            <>
+                                <CursorClickIcon className="size-3.5" aria-hidden focusable="false" />
+                                {t("flashcard.flipBackHint")}
+                            </>
+                        )}
                         front={
                             <>
                                 <Typography type="body-xs" weight="medium" color="muted">
                                     {t("flashcard.questionLabel")}
                                 </Typography>
                                 <MarkdownContent markdown={card?.question ?? ""} />
-                                <Typography type="body-xs" color="muted" className="mt-auto">
-                                    {t("flashcard.flipHint")}
-                                </Typography>
                             </>
                         }
                         back={
@@ -238,9 +247,6 @@ export const FlashcardReviewer = ({ deckId, className }: FlashcardReviewerProps)
                                         {card?.explanation ? (
                                             <MarkdownContent markdown={card.explanation} />
                                         ) : null}
-                                        <Typography type="body-xs" color="muted" className="mt-auto">
-                                            {t("flashcard.flipBackHint")}
-                                        </Typography>
                                     </>
                                 )}
                             </>
@@ -281,45 +287,6 @@ export const FlashcardReviewer = ({ deckId, className }: FlashcardReviewerProps)
                             </Button>
                         </div>
                     )}
-
-                    {/* lessons + modules this deck references (N:N), deep-linked to their pages */}
-                    {(data?.contents?.length || data?.modules?.length) ? (
-                        <div className="flex flex-col gap-6 border-t border-divider pt-6">
-                            {data?.contents?.length ? (
-                                <div className="flex flex-col gap-2">
-                                    <Typography type="body-xs" color="muted">
-                                        {t("flashcard.relatedContents")}
-                                    </Typography>
-                                    <div className="flex flex-wrap gap-2">
-                                        {data.contents.map((content) => (
-                                            <Button
-                                                key={content.id}
-                                                size="sm"
-                                                variant="secondary"
-                                                isDisabled={!content.module?.id || !courseDisplayId}
-                                                onPress={() => {
-                                                    if (!content.module?.id || !courseDisplayId) {
-                                                        return
-                                                    }
-                                                    router.push(
-                                                        pathConfig()
-                                                            .locale(locale)
-                                                            .course(courseDisplayId)
-                                                            .learn()
-                                                            .module(content.module.id)
-                                                            .content(content.id)
-                                                            .build(),
-                                                    )
-                                                }}
-                                            >
-                                                {content.title}
-                                            </Button>
-                                        ))}
-                                    </div>
-                                </div>
-                            ) : null}
-                        </div>
-                    ) : null}
                 </div>
             )}
         </AsyncContent>

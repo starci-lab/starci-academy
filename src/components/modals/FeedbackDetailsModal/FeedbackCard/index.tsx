@@ -1,6 +1,6 @@
 "use client"
 
-import { Bulb as LightbulbIcon, Check as CheckIcon, DiamondExclamation as RadioactiveIcon, MapPin as MapPinLineIcon } from "@gravity-ui/icons"
+import { CheckCircleIcon, LightbulbIcon, MapPinIcon, WarningCircleIcon } from "@phosphor-icons/react"
 import { MarkdownContent } from "@/components/reuseable"
 import type { SubmissionFeedbackEntity } from "@/modules/types"
 import { SubmissionFeedbackSeverity } from "@/modules/types"
@@ -19,6 +19,12 @@ interface FeedbackCardProps extends WithClassNames<undefined> {
     submissionFeedback: SubmissionFeedbackEntity
     /** GitHub repo URL for the selected submission attempt (used for file links). */
     repositoryUrl?: string
+    /**
+     * Render the inner content only (no bordered `Card` wrapper) — for use as an
+     * inset row inside a parent surface card (e.g. the submission-result findings
+     * list). Default `false` keeps the standalone bordered card (modal usage).
+     */
+    frameless?: boolean
 }
 
 /**
@@ -27,7 +33,7 @@ interface FeedbackCardProps extends WithClassNames<undefined> {
  * @param props - Feedback row.
  */
 export const FeedbackCard = (props: FeedbackCardProps) => {
-    const { submissionFeedback, repositoryUrl, className } = props
+    const { submissionFeedback, repositoryUrl, frameless = false, className } = props
     const {
         message,
         detail,
@@ -41,7 +47,7 @@ export const FeedbackCard = (props: FeedbackCardProps) => {
         if (!suggestion) {
             return (
                 <Chip color="success" size="sm" variant="soft" className="shrink-0">
-                    <CheckIcon className="size-5 min-h-4 min-w-4" />
+                    <CheckCircleIcon className="size-4" />
                     <Chip.Label>{t("feedback.perfect")}</Chip.Label>
                 </Chip>
             )
@@ -50,28 +56,28 @@ export const FeedbackCard = (props: FeedbackCardProps) => {
         case SubmissionFeedbackSeverity.High:
             return (
                 <Chip color="danger" size="sm" variant="soft" className="shrink-0">
-                    <RadioactiveIcon className="size-5 min-h-4 min-w-4" />
+                    <WarningCircleIcon className="size-4" />
                     <Chip.Label>{t("feedback.severity.high")}</Chip.Label>
                 </Chip>
             )
         case SubmissionFeedbackSeverity.Medium:
             return (
                 <Chip color="warning" size="sm" variant="soft" className="shrink-0">
-                    <RadioactiveIcon className="size-5 min-h-4 min-w-4" />
+                    <WarningCircleIcon className="size-4" />
                     <Chip.Label>{t("feedback.severity.medium")}</Chip.Label>
                 </Chip>
             )
         case SubmissionFeedbackSeverity.Low:
             return (
                 <Chip color="default" size="sm" variant="soft" className="shrink-0">
-                    <RadioactiveIcon className="size-5 min-h-4 min-w-4" />
+                    <WarningCircleIcon className="size-4" />
                     <Chip.Label>{t("feedback.severity.low")}</Chip.Label>
                 </Chip>
             )
         default:
             return (
                 <Chip color="warning" size="sm" variant="soft" className="shrink-0">
-                    <RadioactiveIcon className="size-5 min-h-4 min-w-4" />
+                    <WarningCircleIcon className="size-4" />
                     <Chip.Label>{t("feedback.severity.unknown")}</Chip.Label>
                 </Chip>
             )
@@ -101,53 +107,60 @@ export const FeedbackCard = (props: FeedbackCardProps) => {
 
     const showFooter = Boolean(locationLabel || suggestion)
 
-    return (
-        <Card className={cn("border border-divider bg-transparent p-0 shadow-none", className)}>
-            <Card.Content>
-                <div className="flex flex-col gap-3 p-3">
-                    <div>
-                        {statusChip}
-                    </div>
-                    <div className="flex items-start justify-between gap-3">
-                        <div className="min-w-0 flex-1 space-y-1.5">
-                            <MarkdownContent markdown={message} className="text-sm font-medium" />
-                            {detail ? (
-                                <MarkdownContent markdown={detail} className="text-xs text-muted" />
-                            ) : null}
-                        </div>
-                    </div>
-                    {showFooter ? (
-                        <div
-                            className="-mx-3 border-t border-divider"
-                            role="separator"
-                        />
-                    ) : null}
-                    {locationLabel ? (
-                        <div className="flex items-center gap-1.5 text-xs text-muted">
-                            <MapPinLineIcon className="size-5 min-h-5 min-w-5 shrink-0" />
-                            {locationHref ? (
-                                <Link
-                                    href={locationHref}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    aria-label={t("feedback.openFileOnGithub")}
-                                    className="min-w-0 break-words text-accent hover:underline"
-                                >
-                                    {locationLabel}
-                                </Link>
-                            ) : (
-                                <span className="min-w-0 break-words">{locationLabel}</span>
-                            )}
-                        </div>
-                    ) : null}
-                    {suggestion ? (
-                        <div className="flex items-center gap-1.5">
-                            <LightbulbIcon className="size-5 h-5 w-5 shrink-0 text-muted" />
-                            <MarkdownContent markdown={suggestion} className="text-sm text-muted" />
-                        </div>
+    const inner = (
+        <div className={cn("flex flex-col gap-3", frameless ? "px-4 py-4" : "p-3")}>
+            <div>
+                {statusChip}
+            </div>
+            <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0 flex-1 space-y-1.5">
+                    <MarkdownContent markdown={message} className="text-sm font-medium" />
+                    {detail ? (
+                        <MarkdownContent markdown={detail} className="text-xs text-muted" />
                     ) : null}
                 </div>
-            </Card.Content>
+            </div>
+            {showFooter ? (
+                <div
+                    className={cn("border-t border-divider", frameless ? "-mx-4" : "-mx-3")}
+                    role="separator"
+                />
+            ) : null}
+            {locationLabel ? (
+                <div className="flex items-center gap-1.5 text-xs text-muted">
+                    <MapPinIcon className="size-4 shrink-0" />
+                    {locationHref ? (
+                        <Link
+                            href={locationHref}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={t("feedback.openFileOnGithub")}
+                            className="min-w-0 break-words text-accent hover:underline"
+                        >
+                            {locationLabel}
+                        </Link>
+                    ) : (
+                        <span className="min-w-0 break-words">{locationLabel}</span>
+                    )}
+                </div>
+            ) : null}
+            {suggestion ? (
+                <div className="flex items-center gap-1.5">
+                    <LightbulbIcon className="size-4 shrink-0 text-muted" />
+                    <MarkdownContent markdown={suggestion} className="text-sm text-muted" />
+                </div>
+            ) : null}
+        </div>
+    )
+
+    // frameless → inner row only (inset into a parent surface card); else standalone bordered card
+    if (frameless) {
+        return <div className={className}>{inner}</div>
+    }
+
+    return (
+        <Card className={cn("border border-divider bg-transparent p-0 shadow-none", className)}>
+            <Card.Content>{inner}</Card.Content>
         </Card>
     )
 }

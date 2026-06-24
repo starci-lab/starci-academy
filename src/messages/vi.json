@@ -335,6 +335,9 @@
         "metaModules": "{count} chương",
         "metaHours": "~{hours} giờ học",
         "metaLearners": "{count} học viên",
+        "metaModulesLabel": "chương",
+        "metaHoursLabel": "giờ học",
+        "metaLearnersLabel": "học viên",
         "capstoneEyebrow": "Đã xong nội dung — tới đồ án cá nhân",
         "resumeCapstone": "Tiếp tục đồ án",
         "challengesByDifficulty": "Challenge theo độ khó",
@@ -415,7 +418,6 @@
             "description": "Bạn đang đọc thử. Đăng ký để học trọn khóa.",
             "buy": "Đăng ký khóa học",
             "back": "Quay lại",
-            "loyaltyOff": "−{percent}% loyalty",
             "unlock": {
                 "content": "Toàn bộ bài học",
                 "challenges": "Tất cả challenge chấm tự động",
@@ -424,7 +426,6 @@
         },
         "prerequisites": "Yêu cầu đầu vào",
         "usersEnrolled": "{count} người đã đăng ký",
-        "loyaltyOff": "−{percent}% loyalty",
         "cvTitle": "Lộ trình CV",
         "cvDescription": "Chuẩn bị và chỉnh sửa CV developer theo hướng dẫn trong khóa học.",
         "cvPlaceholder": "Công cụ và bài tập CV sẽ hiển thị tại đây.",
@@ -1040,6 +1041,8 @@
     },
     "submissionResult": {
         "backToChallenge": "Quay lại thử thách",
+        "title": "Kết quả nộp bài",
+        "passNeeded": "cần {score} để qua",
         "attempts": "Các lần thử",
         "passed": "Đạt",
         "failed": "Chưa đạt",
@@ -1084,6 +1087,7 @@
         "xpLabel": "XP",
         "you": "Bạn",
         "refresh": "Làm mới",
+        "champion": "Hạng #1 · đang dẫn đầu khoá",
         "updatedAt": "Cập nhật {time}",
         "columns": {
             "rank": "Hạng",
@@ -1102,6 +1106,19 @@
             "lessonsRead": "{count} bài đã đọc",
             "milestones": "{count} milestone"
         },
+        "categories": {
+            "label": "Hạng mục",
+            "total": "Tổng XP",
+            "challenge": "Challenge",
+            "reading": "Đọc bài",
+            "milestone": "Milestone",
+            "coding": "Coding",
+            "comingSoon": "Sắp có",
+            "captionChallenge": "{count} bài · ×1",
+            "captionReading": "{count} bài · ×3",
+            "captionMilestone": "{count} task · ×10"
+        },
+        "rankedBy": "Xếp hạng theo {category}",
         "empty": "Chưa có ai trên bảng xếp hạng. Hãy làm challenge hoặc đọc bài để ghi điểm đầu tiên!",
         "myRankEmpty": "Bạn chưa có hoạt động nào trong khoá học này. Làm challenge hoặc đọc bài để lên bảng xếp hạng.",
         "error": "Không tải được bảng xếp hạng. Vui lòng thử lại."
@@ -1273,13 +1290,22 @@
         },
         "deck": {
             "due": "{count} đến hạn",
-            "mastered": "Đã thuộc {mastered}/{total}"
+            "mastered": "Đã thuộc {mastered}/{total}",
+            "found": "Tìm thấy {count} bộ thẻ"
         },
         "stats": {
             "label": "Tiến bộ",
             "streak": "Chuỗi ngày",
             "retention": "Tỉ lệ nhớ",
-            "reviewed": "Đã ôn"
+            "reviewed": "Đã ôn",
+            "masteredLine": "Đã thuộc {mastered}/{total} thẻ",
+            "mastered": "Đã thuộc",
+            "learning": "Đang học",
+            "new": "Chưa học",
+            "streakChip": "{count} ngày",
+            "retentionCaption": "Giữ lại {percent}%",
+            "firstReviewHint": "Ôn thẻ đầu tiên để bắt đầu theo dõi thuộc bài",
+            "barAria": "Đã thuộc {mastered}, đang học {learning}, chưa học {newCount} trên {total} thẻ"
         },
         "cardProgress": "Thẻ {current}/{total}",
         "questionLabel": "Câu hỏi",
@@ -1334,11 +1360,21 @@
             "viewResults": "Xem kết quả phiên",
             "summaryTitle": "Kết quả phiên",
             "avgScore": "Điểm trung bình",
+            "bestScore": "Điểm cao nhất",
             "weakTags": "Chủ đề cần ôn thêm",
             "replay": "Phỏng vấn lại",
+            "setupTitle": "Sẵn sàng phỏng vấn?",
+            "setupSubtitle": "Câu hỏi ngẫu nhiên trên toàn khóa học.",
             "setupHint": "Chọn cấp độ (tuỳ chọn), rồi trả lời {total} câu bằng giọng nói.",
+            "expectCount": "{total} câu",
+            "expectVoice": "Trả lời bằng giọng nói",
+            "expectAiGrade": "AI chấm điểm + góp ý",
+            "levelLabel": "Cấp độ câu hỏi",
             "historyTitle": "Tiến độ phỏng vấn của bạn",
-            "historyAnswered": "Đã luyện {count} câu"
+            "historyAnswered": "Đã luyện {count} câu",
+            "pickHint": "Chọn 1 bộ thẻ ở danh sách bên trái để bắt đầu phiên phỏng vấn.",
+            "gateTitle": "Phỏng vấn thử dành cho học viên",
+            "gateDescription": "Đăng ký khóa học để luyện phỏng vấn với AI — chấm điểm và góp ý sau mỗi câu trả lời."
         },
         "level": {
             "junior": "Junior",
@@ -1351,7 +1387,8 @@
             "medium": "Trung bình",
             "hard": "Khó",
             "insane": "Cực khó"
-        }
+        },
+        "backToOverview": "Tổng quan"
     },
     "aiSettings": {
         "title": "Cài đặt AI",
@@ -2326,14 +2363,15 @@
         "headingAnchor": "Liên kết tới mục này"
     },
     "discussion": {
-        "title": "Bình luận ({count})",
+        "title": "Thảo luận · {count}",
         "react": "Bày tỏ cảm xúc",
         "post": "Đăng",
         "reply": "Trả lời",
         "edited": "(đã sửa)",
-        "placeholder": "Viết bình luận...",
+        "placeholder": "Đặt câu hỏi hoặc chia sẻ…",
         "replyPlaceholder": "Viết câu trả lời...",
-        "empty": "Chưa có bình luận nào. Hãy là người đầu tiên!",
+        "empty": "Chưa có thảo luận",
+        "emptyHint": "Đặt câu hỏi đầu tiên về bài này",
         "deletedPlaceholder": "[Bình luận đã bị xóa]",
         "viewReplies": "Xem {count} câu trả lời",
         "hideReplies": "Ẩn câu trả lời",

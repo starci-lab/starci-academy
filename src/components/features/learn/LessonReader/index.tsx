@@ -91,6 +91,9 @@ import {
     ContentDiscussion,
 } from "./ContentBody/ContentBodyV2/Discussion"
 import {
+    ContentReactionBar,
+} from "./ContentBody/ContentBodyV2/Discussion/ContentReactionBar"
+import {
     ContentBodySkeleton,
 } from "./ContentBodySkeleton"
 import {
@@ -306,8 +309,7 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
     )
 
     return (
-        <div className={cn("", className)}>
-            <div className="h-3" />
+        <div className={cn("flex flex-col gap-6", className)}>
             {/* header (tier 2) capped to the reading width; skeleton vs real via AsyncContent */}
             <div className="mx-auto w-full max-w-3xl">
                 <AsyncContent
@@ -317,8 +319,6 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
                     <ContentHeader />
                 </AsyncContent>
             </div>
-            {/* h-3 between the header (tier 2) and the content/tabs (tier 3) */}
-            <div className="h-3" />
             {/* REAL tab bar — static chrome, shows immediately (never skeleton-ised) */}
             <ContentTabBar
                 tabItems={tabItems}
@@ -327,8 +327,6 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
                 onSelectionChange={onTabChange}
                 rightTabs={languageTabs}
             />
-            {/* gap-3 between the tab toolbar and the reading card */}
-            <div className="h-3" />
             {/* body (tier 3) — skeleton mirrors the centered reading card while content loads */}
             <AsyncContent
                 isLoading={isLoading}
@@ -376,6 +374,12 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
                                 {/* paywall lives INSIDE the body card, under the faded teaser
                                     (flat — not a 2nd card). */}
                                 {isLocked ? <PremiumPaywall /> : null}
+                                {/* reaction footer (belongs to the lesson) — end-of-article strip
+                                    inside the reading card, à la Medium / Substack; a border-t
+                                    divider, NOT a nested card. Hidden behind the paywall. */}
+                                {!isLocked ? (
+                                    <ContentReactionBar className="mt-6 border-t border-default pt-4" />
+                                ) : null}
                             </CardContent>
                         </Card>
                     </div>

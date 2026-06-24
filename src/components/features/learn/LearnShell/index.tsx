@@ -35,6 +35,14 @@ export interface LearnShellProps extends WithClassNames<undefined>, PropsWithChi
      * `p-6` once here instead of each feature re-declaring it. Defaults to `false`.
      */
     fullBleed?: boolean
+    /**
+     * Force the simple course-nav drawer bar on mobile even when a {@link LearnShellProps.leftRail}
+     * is present. The reader's {@link LearnMobileTabBar} is content-specific (it
+     * folds the content-map + on-this-page into bottom tabs); a non-reader left
+     * rail (e.g. the leaderboard category rail, which hides on mobile and offers a
+     * chip row in-page instead) opts into the plain bar. Defaults to `false`.
+     */
+    simpleMobileBar?: boolean
 }
 
 /**
@@ -56,8 +64,11 @@ export const LearnShell = ({
     rightRail,
     showRightCollapse = false,
     fullBleed = false,
+    simpleMobileBar = false,
     className,
 }: LearnShellProps) => {
+    // the reader's bottom-tab bar only fits a content-map left rail; other left rails use the plain bar
+    const useTabBar = Boolean(leftRail) && !simpleMobileBar
     return (
         // single column on mobile/tablet; a horizontal flow from lg up so the
         // content-map rail (left) and the optional right rail sit beside content
@@ -73,12 +84,12 @@ export const LearnShell = ({
                 for every learn page (features supply only max-w + mx-auto + gap), except
                 full-bleed routes (mind-map canvas). Also anchors the collapse handle +
                 right border for the redux-driven (milestone) rail that opts into it */}
-            <div className={cn("min-h-0 min-w-0 flex-1", !fullBleed && "p-6", leftRail && "max-lg:pb-16", rightRail && "lg:pr-0 lg:pb-0", showRightCollapse && "relative lg:border-r")}>
+            <div className={cn("min-h-0 min-w-0 flex-1", !fullBleed && "p-6", useTabBar && "max-lg:pb-16", rightRail && "lg:pr-0 lg:pb-0", showRightCollapse && "relative lg:border-r")}>
                 {showRightCollapse && <LearnPanelToggles />}
                 {/* mobile chrome: the lesson reader (modules — has a left rail) folds
-                    its 4 columns into a bottom-tab bar; other learn tabs keep the top
-                    drawer bar for course-nav. */}
-                {leftRail ? <LearnMobileTabBar /> : <LearnMobileBar />}
+                    its 4 columns into a bottom-tab bar; other learn tabs (incl. a
+                    non-reader left rail) keep the top drawer bar for course-nav. */}
+                {useTabBar ? <LearnMobileTabBar /> : <LearnMobileBar />}
                 {children}
             </div>
             {/* right rail supplied by the layout (on-this-page outline / milestone rail) */}

@@ -1,7 +1,7 @@
 "use client"
 
 import { ArrowSquareOutIcon } from "@phosphor-icons/react"
-import { Button, cn } from "@heroui/react"
+import { Button, Card, CardContent, cn } from "@heroui/react"
 import React from "react"
 import { MarkdownContent } from "@/components/reuseable"
 import { VideoRenderer } from "@/components/reuseable/VideoRenderer"
@@ -30,11 +30,14 @@ export const FoundationResourceBody = ({
 }: FoundationResourceBodyProps) => {
     switch (foundation.kind) {
     case FoundationKind.Document:
+        // reading article sits in a "paper" Card like the lesson reader's ContentBody
+        // (not flat on the canvas) — markdown is the reading content, the card is its surface.
         return (
-            <MarkdownContent
-                markdown={foundation.value ?? ""}
-                className={className}
-            />
+            <Card className={className}>
+                <CardContent>
+                    <MarkdownContent markdown={foundation.value ?? ""} />
+                </CardContent>
+            </Card>
         )
     case FoundationKind.Video: {
         const rawValue = foundation.value ?? ""

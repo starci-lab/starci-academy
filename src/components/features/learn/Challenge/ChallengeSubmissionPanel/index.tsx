@@ -301,6 +301,13 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
     /** Submit a single row's URL for grading and subscribe to its job notifications. */
     const onSubmit = useCallback(
         async (submissionId: string, index: number) => {
+            // hard guard: never submit without a URL (the button is also disabled on an
+            // empty/invalid url, and the backend throws — this is the belt-and-suspenders).
+            const url = values.submissions?.[index]?.userSubmission?.submissionUrl?.trim()
+            if (!url) {
+                setFieldTouched(`submissions.${index}.userSubmission.submissionUrl`)
+                return
+            }
             await runGraphQL(
                 async () => {
                     // call the submit mutation with the typed URL + this row's
@@ -354,6 +361,7 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
             locale,
             lang,
             runGraphQL,
+            setFieldTouched,
         ],
     )
 

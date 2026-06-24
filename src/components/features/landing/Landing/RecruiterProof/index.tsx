@@ -56,7 +56,7 @@ export const RecruiterProof = ({ className }: RecruiterProofProps) => {
                 <Typography type="body-sm" color="muted" align="center">
                     {t("landing.recruiter.count", { count: users.length })}
                 </Typography>
-                <Button variant="primary" onPress={onViewTalents}>
+                <Button variant="primary" size="lg" onPress={onViewTalents}>
                     {t("landing.recruiter.cta")}
                     <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
                 </Button>

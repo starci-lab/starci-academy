@@ -3,6 +3,20 @@
 @import "@heroui/styles";
 
 /*
+ * Kill the "giật giật" jitter on learn pages: their left rail is exactly
+ * `calc(100dvh - 4rem)` tall, so the document lands right ON the viewport height
+ * and the vertical scrollbar flickers in/out on sub-pixel reflows — each toggle
+ * also shifts the centered `mx-auto` content sideways. Force the document to ALWAYS
+ * own a vertical scrollbar (no appear/disappear) AND reserve its gutter (stable on
+ * overlay-scrollbar OSes + during modal scroll-lock). `overflow-y: scroll` also
+ * pins `html` as the scroll container, so the gutter reserves on the right element.
+ */
+html {
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+}
+
+/*
  * HeroUI Theme Customization
  * Add this to your global.css after importing @heroui/styles
  * Only includes variables users need to customize
@@ -36,6 +50,12 @@
   --segment: oklch(100.00% 0.0015 354.13);
   --segment-foreground: oklch(21.03% 0.0015 354.13);
   --separator: oklch(92.00% 0.0015 354.13);
+  /* Learning-activity heatmap ramp (brand pink, hue 354) — 0 = empty track. */
+  --heat-0: var(--default);
+  --heat-1: oklch(92.00% 0.0500 354.13);
+  --heat-2: oklch(85.00% 0.1000 354.13);
+  --heat-3: oklch(78.00% 0.1600 354.13);
+  --heat-4: oklch(70.03% 0.2092 354.13);
   --success: oklch(73.29% 0.1941 162.85);
   --success-foreground: oklch(21.03% 0.0059 162.85);
   --surface: oklch(100.00% 0.0008 354.13);
@@ -81,6 +101,12 @@
   --segment: oklch(39.64% 0.0015 354.13);
   --segment-foreground: oklch(99.11% 0.0015 354.13);
   --separator: oklch(25.00% 0.0015 354.13);
+  /* Learning-activity heatmap ramp (brand pink, hue 354) — 0 = empty track. */
+  --heat-0: var(--default);
+  --heat-1: oklch(35.00% 0.0600 354.13);
+  --heat-2: oklch(45.00% 0.1100 354.13);
+  --heat-3: oklch(57.00% 0.1600 354.13);
+  --heat-4: oklch(70.03% 0.2092 354.13);
   --success: oklch(73.29% 0.1941 162.85);
   --success-foreground: oklch(21.03% 0.0059 162.85);
   --surface: oklch(21.03% 0.0030 354.13);
@@ -157,6 +183,25 @@
     padding: 1rem !important;
 }
 /*
+ * Card — unify on a FULL BORDER, NO shadow (flat surface). HeroUI bakes
+ * `.card { @apply shadow-surface }` with no border, so cards read inconsistently:
+ * a plain <Card> shows a shadow, while cards that manually add `border
+ * border-default` (List Card, prereq, accordion surface) show a border. Flatten
+ * everything to a single bordered look (`--default` = same token the bordered
+ * cards already use); elevation/shadow stays only on true overlays (modal,
+ * popover, tooltip — separate recipes, untouched here). The transparent variant
+ * is intentionally frameless, so it keeps no border.
+ */
+.card {
+    border: 1px solid var(--default) !important;
+    box-shadow: none !important;
+}
+
+.card--transparent {
+    border: none !important;
+}
+
+/*
  * Ambient ember background (blocks/layout/AmbientBackground) — slow brand-pink
  * sparks drifting upward behind the whole app. Each spark sets `--drift` (its
  * horizontal wander) inline; this keyframe rises it a full viewport while fading
@@ -167,6 +212,16 @@
     10% { opacity: 1; }
     80% { opacity: 0.8; }
     100% { transform: translateY(-100vh) translateX(var(--drift, 0)); opacity: 0; }
+}
+
+/*
+ * reactionPop — staggered bounce-in for each emoji of the Facebook-style reaction
+ * selector bar (FacebookReactionSelector). Transform/opacity only; the per-emoji
+ * hover scale lives on an inner span so the two transforms never fight.
+ */
+@keyframes reactionPop {
+    0% { transform: translateY(8px) scale(0.5); opacity: 0; }
+    100% { transform: translateY(0) scale(1); opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {

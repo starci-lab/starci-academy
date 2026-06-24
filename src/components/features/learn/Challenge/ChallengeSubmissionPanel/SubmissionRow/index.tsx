@@ -172,9 +172,9 @@ export const SubmissionRow = ({
 
     return (
         <div className={cn(!inAccordion && "border-b last:border-b-0 p-3", className)}>
-            <div className="flex flex-col">
+            <div className="flex flex-col gap-3">
                 {!inAccordion ? (
-                    <>
+                    <div className="flex flex-col gap-2">
                         <div className="flex items-center gap-2 text-foreground">
                             <Typography type="body" className="font-semibold">
                                 {submission.sortIndex + 1}
@@ -183,16 +183,21 @@ export const SubmissionRow = ({
                             </Typography>
                             {IconComponent ? <IconComponent width={16} height={16} /> : null}
                         </div>
-                        <div className="h-2" />
-                    </>
-                ) : null}
-                {submission.description ? (
-                    <MarkdownContent
-                        markdown={submission.description}
-                        className="text-xs text-muted"
-                    />
-                ) : null}
-                <div className="h-3" />
+                        {submission.description ? (
+                            <MarkdownContent
+                                markdown={submission.description}
+                                className="text-xs text-muted"
+                            />
+                        ) : null}
+                    </div>
+                ) : (
+                    submission.description ? (
+                        <MarkdownContent
+                            markdown={submission.description}
+                            className="text-xs text-muted"
+                        />
+                    ) : null
+                )}
                 <TextField variant="secondary"
                     className="w-full"
                     fullWidth
@@ -214,12 +219,10 @@ export const SubmissionRow = ({
                             : errorMessage}
                     </FieldError>
                 </TextField>
-                <div className="h-3" />
                 {
                     showActiveJob && activeJobStatus !== undefined
                         ? (
                             <AIProcessingText
-                                className="mb-3"
                                 classNames={{
                                     innerPanel: "bg-overlay",
                                 }}
@@ -230,7 +233,7 @@ export const SubmissionRow = ({
                         )
                         : isLoading
                             ? (
-                                <div className="mt-3 flex items-center gap-2">
+                                <div className="flex items-center gap-2">
                                     <Spinner />
                                     <Typography type="body-sm" className="text-muted">
                                         {t("challenge.submissionModal.loading")}
@@ -273,6 +276,7 @@ export const SubmissionRow = ({
                     <div className="flex w-full items-center gap-2">
                         <Button
                             isPending={isPending}
+                            isDisabled={Boolean(errorMessage) || isInputDisabled}
                             size="lg"
                             variant="primary"
                             className="shrink-0"

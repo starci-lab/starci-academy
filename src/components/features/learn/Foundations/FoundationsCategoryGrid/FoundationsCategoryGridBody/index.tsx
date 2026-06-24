@@ -15,19 +15,9 @@ import {
     FoundationCategoryCardSkeleton,
 } from "../../FoundationCategoryCard/FoundationCategoryCardSkeleton"
 import {
-    cn,
-} from "@heroui/react"
-import {
     AsyncContent,
+    SurfaceListCard,
 } from "@/components/blocks"
-
-/**
- * Container for the joined list — the house card surface forced to `p-0` so rows
- * sit edge-to-edge with full-width dividers (the `Accordion variant="surface"`
- * look). This is NOT a functional accordion; we only borrow that surface styling.
- * (`!p-0` overrides the HeroUI `.card--default` recipe padding, not our own code.)
- */
-const LIST_CONTAINER_CLASS = "card card--default !p-0 overflow-hidden"
 
 /** Props for {@link FoundationsCategoryGridBody}. */
 export interface FoundationsCategoryGridBodyProps extends WithClassNames<undefined> {
@@ -70,25 +60,24 @@ export const FoundationsCategoryGridBody = ({
             isEmpty={!categories?.length}
             emptyContent={{ title: t("foundations.emptyCategories") }}
             skeleton={(
-                <div className={cn(LIST_CONTAINER_CLASS, className)}>
+                <SurfaceListCard className={className}>
                     {Array.from({ length: SKELETON_ROWS }).map((_, index) => (
                         <FoundationCategoryCardSkeleton
                             key={index}
                             divider={index < SKELETON_ROWS - 1}
                         />
                     ))}
-                </div>
+                </SurfaceListCard>
             )}
         >
-            <div className={cn(LIST_CONTAINER_CLASS, className)}>
-                {sortedCategories.map((category, index) => (
+            <SurfaceListCard className={className}>
+                {sortedCategories.map((category) => (
                     <FoundationCategoryCard
                         key={category.id}
                         category={category}
-                        divider={index < sortedCategories.length - 1}
                     />
                 ))}
-            </div>
+            </SurfaceListCard>
         </AsyncContent>
     )
 }

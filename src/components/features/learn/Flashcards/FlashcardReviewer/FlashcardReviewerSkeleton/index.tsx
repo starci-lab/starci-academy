@@ -4,7 +4,7 @@ import type { WithClassNames } from "@/modules/types"
 
 /**
  * Loading placeholder for the flashcard reviewer. Mirrors the real layout: a
- * progress bar, one tall borderless flashcard, and the prev/flip/next controls.
+ * progress bar, one fixed-height flashcard, and the prev/flip/next controls.
  */
 export const FlashcardReviewerSkeleton = ({ className }: WithClassNames<undefined> = {}) => {
     return (
@@ -12,8 +12,8 @@ export const FlashcardReviewerSkeleton = ({ className }: WithClassNames<undefine
             <div className="flex flex-col gap-6">
                 {/* progress bar */}
                 <Skeleton className="h-1.5 w-full rounded-full" />
-                {/* the flashcard — plain (borderless) surface */}
-                <div className="flex min-h-64 flex-col gap-3 rounded-xl bg-default/40 p-8">
+                {/* the flashcard — fixed-height bordered surface (mirrors FlipCard) */}
+                <div className="flex h-80 flex-col gap-3 rounded-2xl border border-default bg-surface p-6 sm:h-[22rem]">
                     <Skeleton.Typography type="body" width="3/4" />
                     <Skeleton.Typography type="body" width="2/3" />
                     <Skeleton.Typography type="body" width="1/2" />

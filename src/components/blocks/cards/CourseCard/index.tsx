@@ -19,6 +19,9 @@ import {
     cn,
 } from "@heroui/react"
 import {
+    PriceTag,
+} from "@/components/blocks/commerce/PriceTag"
+import {
     useLocale,
     useTranslations,
 } from "next-intl"
@@ -36,9 +39,6 @@ import {
     publicEnv,
 } from "@/resources"
 
-/** Format a VND amount with vi-VN thousands separators + the ₫ symbol (e.g. 1.500.000₫). */
-const formatVnd = (amount: number): string => `${amount.toLocaleString("vi-VN")}₫`
-
 /** Props for {@link CourseCard}. */
 export interface CourseCardProps extends WithClassNames<undefined> {
     /** The course summarised by this card (list-item data). */
@@ -52,8 +52,6 @@ export interface CourseCardProps extends WithClassNames<undefined> {
     loyaltyPriceVnd?: number | null
     /** List/original VND price struck through under the loyalty price. */
     loyaltyOriginalVnd?: number | null
-    /** Loyalty discount percent (drives the chip); 0 → no loyalty chip. */
-    loyaltyPercent?: number | null
 }
 
 /**
@@ -68,7 +66,6 @@ export const CourseCard = ({
     course,
     loyaltyPriceVnd,
     loyaltyOriginalVnd,
-    loyaltyPercent,
     className,
 }: CourseCardProps) => {
     const locale = useLocale()
@@ -89,22 +86,6 @@ export const CourseCard = ({
             (pricingPhase) => pricingPhase.phase === course.currentPhase,
         )?.price ?? course.originalPrice ?? null,
         [course.pricingPhases, course.currentPhase, course.originalPrice],
-    )
-
-    /** Whether the active price is a genuine discount off the list price. */
-    const hasDiscount = useMemo(
-        () => currentPrice != null
-            && course.originalPrice != null
-            && currentPrice < course.originalPrice,
-        [currentPrice, course.originalPrice],
-    )
-
-    /** Percent off the list price, for the discount chip. */
-    const percentOff = useMemo(
-        () => hasDiscount && course.originalPrice
-            ? Math.round((1 - (currentPrice as number) / course.originalPrice) * 100)
-            : 0,
-        [hasDiscount, currentPrice, course.originalPrice],
     )
 
     /** USD price of the active phase, falling back to the list USD price. */
@@ -148,10 +129,6 @@ export const CourseCard = ({
     const displayOriginal = useLoyalty
         ? loyaltyOriginalVnd ?? null
         : (course.originalPrice != null ? toVnd(course.originalPrice) : null)
-    const displayPercent = useLoyalty ? loyaltyPercent ?? 0 : percentOff
-    const displayHasDiscount = useLoyalty
-        ? (loyaltyPercent ?? 0) > 0 && loyaltyOriginalVnd != null
-        : hasDiscount
 
     return (
         <Card className={cn("flex flex-col overflow-hidden", className)}>
@@ -207,28 +184,15 @@ export const CourseCard = ({
                 </div>
             </Card.Content>
             <Card.Footer className="mt-auto flex flex-col gap-2">
-                {/* price block: active price + (strikethrough list + % off) when discounted */}
-                <div className="flex flex-wrap items-baseline gap-2">
-                    {displayPrice != null ? (
-                        <Typography type="h6" weight="bold">
-                            {formatVnd(displayPrice)}
-                        </Typography>
-                    ) : null}
-                    {displayHasDiscount && displayOriginal != null ? (
-                        <>
-                            <Typography type="body-sm" color="muted" className="line-through">
-                                {formatVnd(displayOriginal)}
-                            </Typography>
-                            <Chip variant="secondary" color={useLoyalty ? "success" : "danger"} size="sm">
-                                <Chip.Label>
-                                    {useLoyalty
-                                        ? t("course.loyaltyOff", { percent: displayPercent })
-                                        : `-${displayPercent}%`}
-                                </Chip.Label>
-                            </Chip>
-                        </>
-                    ) : null}
-                </div>
+                {/* price block: single-source PriceTag — discounted (bold) + struck list +
+                    real list→charge −% chip (computed by the block, never a loyalty flag) */}
+                {displayPrice != null ? (
+                    <PriceTag
+                        discounted={displayPrice}
+                        original={displayOriginal}
+                        size="sm"
+                    />
+                ) : null}
                 {formattedPriceUsd != null ? (
                     <Typography type="body-xs" color="muted">
                         {t("course.priceUsdHint", { amount: formattedPriceUsd })}

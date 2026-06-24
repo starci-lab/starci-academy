@@ -12,7 +12,10 @@ import type {
 } from "@/modules/types"
 
 /** Props for {@link FoundationsCategoryGridHeader}. */
-export type FoundationsCategoryGridHeaderProps = WithClassNames<undefined>
+export interface FoundationsCategoryGridHeaderProps extends WithClassNames<undefined> {
+    /** Breadcrumb node rendered in the PageHeader breadcrumb slot (tier-1). */
+    breadcrumb?: React.ReactNode
+}
 
 /**
  * Title + description for the foundations category hub.
@@ -23,12 +26,14 @@ export type FoundationsCategoryGridHeaderProps = WithClassNames<undefined>
  * @param props.className - Optional root class names.
  */
 export const FoundationsCategoryGridHeader = ({
+    breadcrumb,
     className,
 }: FoundationsCategoryGridHeaderProps) => {
     const t = useTranslations()
 
     return (
         <PageHeader
+            breadcrumb={breadcrumb}
             title={t("foundations.title")}
             description={t("foundations.gridDescription")}
             className={className}

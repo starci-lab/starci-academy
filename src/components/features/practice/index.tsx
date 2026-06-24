@@ -30,51 +30,53 @@ export const Practice = () => {
     const [tab, setTab] = useState<PracticeTab>(PracticeTab.Problems)
 
     return (
-        <div className="mx-auto flex max-w-5xl flex-col gap-6">
+        <div className="mx-auto flex max-w-5xl flex-col gap-10">
             <PageHeader
                 breadcrumb={<LearnBreadcrumb current={t("codingPractice.title")} />}
                 title={t("codingPractice.title")}
                 description={t("codingPractice.subtitle")}
             />
 
-            {/* the viewer's own standing — stays above both tabs */}
-            <ProgressCockpit />
+            <div className="flex flex-col gap-6">
+                {/* the viewer's own standing — stays above both tabs */}
+                <ProgressCockpit />
 
-            <Tabs
-                selectedKey={tab}
-                variant="secondary"
-                onSelectionChange={(key) => setTab(String(key) as PracticeTab)}
-            >
-                <Tabs.ListContainer>
-                    <Tabs.List aria-label={t("codingPractice.title")}>
-                        <Tabs.Tab
-                            key={PracticeTab.Problems}
-                            id={PracticeTab.Problems}
-                            className="rounded-none data-[selected=true]:border-b-2 data-[selected=true]:border-accent data-[selected=true]:text-accent"
-                        >
-                            {t("practice.tabs.problems")}
-                        </Tabs.Tab>
-                        <Tabs.Tab
-                            key={PracticeTab.Leaderboard}
-                            id={PracticeTab.Leaderboard}
-                            className="rounded-none data-[selected=true]:border-b-2 data-[selected=true]:border-accent data-[selected=true]:text-accent"
-                        >
-                            {t("practice.tabs.leaderboard")}
-                        </Tabs.Tab>
-                    </Tabs.List>
-                </Tabs.ListContainer>
-            </Tabs>
+                <Tabs
+                    selectedKey={tab}
+                    variant="secondary"
+                    onSelectionChange={(key) => setTab(String(key) as PracticeTab)}
+                >
+                    <Tabs.ListContainer>
+                        <Tabs.List aria-label={t("codingPractice.title")}>
+                            <Tabs.Tab
+                                key={PracticeTab.Problems}
+                                id={PracticeTab.Problems}
+                                className="rounded-none data-[selected=true]:border-b-2 data-[selected=true]:border-accent data-[selected=true]:text-accent"
+                            >
+                                {t("practice.tabs.problems")}
+                            </Tabs.Tab>
+                            <Tabs.Tab
+                                key={PracticeTab.Leaderboard}
+                                id={PracticeTab.Leaderboard}
+                                className="rounded-none data-[selected=true]:border-b-2 data-[selected=true]:border-accent data-[selected=true]:text-accent"
+                            >
+                                {t("practice.tabs.leaderboard")}
+                            </Tabs.Tab>
+                        </Tabs.List>
+                    </Tabs.ListContainer>
+                </Tabs>
 
-            {/* only the active view mounts, so the idle tab's query stays idle */}
-            {tab === PracticeTab.Problems ? (
-                <>
-                    {/* filter bar sticks below the navbar while scrolling the catalog */}
-                    <PracticeFilters className="sticky top-16 z-40 bg-background py-2" />
-                    <ProblemCatalog />
-                </>
-            ) : (
-                <CodingLeaderboard />
-            )}
+                {/* only the active view mounts, so the idle tab's query stays idle */}
+                {tab === PracticeTab.Problems ? (
+                    <>
+                        {/* filter bar sticks below the navbar while scrolling the catalog */}
+                        <PracticeFilters className="sticky top-16 z-40 bg-background py-2" />
+                        <ProblemCatalog />
+                    </>
+                ) : (
+                    <CodingLeaderboard />
+                )}
+            </div>
         </div>
     )
 }

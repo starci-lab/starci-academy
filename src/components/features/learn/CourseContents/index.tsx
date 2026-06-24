@@ -6,7 +6,6 @@ import React, {
 } from "react"
 import {
     Button,
-    Chip,
     Typography,
     cn,
 } from "@heroui/react"
@@ -36,6 +35,7 @@ import {
 import {
     AsyncContent,
     DifficultyChip,
+    HighlightChip,
     ListRow,
     PageHeader,
     ProgressMeter,
@@ -226,44 +226,39 @@ export const CourseContents = ({ className }: CourseContentsProps) => {
                 }}
             >
                 {outline ? (
-                    <div className="mx-auto flex max-w-3xl flex-col gap-6">
-                        {/* region A — identity + the one primary action (continue), a gap-3 cluster;
-                            the outer gap-6 sets it apart from the path region below. */}
-                        <div className="flex flex-col gap-3">
-                            {/* shared PageHeader: breadcrumb → H3 title → muted description →
-                                catalog meta chips. Same block as the public course landing header. */}
-                            <PageHeader
-                                breadcrumb={<LearnBreadcrumb />}
-                                title={courseTitle ?? outline.course.title}
-                                description={courseDescription || undefined}
-                                meta={totals.moduleCount > 0 ? (
-                                    <div className="flex flex-wrap items-center gap-2">
-                                        <Chip color="default">
-                                            <StackIcon className="size-5" />
-                                            <Chip.Label>
-                                                {t("courseContents.metaModules", { count: totals.moduleCount })}
-                                            </Chip.Label>
-                                        </Chip>
-                                        <Chip color="default">
-                                            <ClockIcon className="size-5" />
-                                            <Chip.Label>
-                                                {t("courseContents.metaHours", { hours: readingHours })}
-                                            </Chip.Label>
-                                        </Chip>
-                                        {enrollmentCount > 0 ? (
-                                            <Chip color="default">
-                                                <UsersIcon className="size-5" />
-                                                <Chip.Label>
-                                                    {t("courseContents.metaLearners", {
-                                                        count: numeral(enrollmentCount).format("0,0"),
-                                                    })}
-                                                </Chip.Label>
-                                            </Chip>
-                                        ) : null}
-                                    </div>
-                                ) : undefined}
-                            />
+                    <div className="mx-auto flex max-w-3xl flex-col gap-10">
+                        {/* tier: PageHeader (header) → content cluster, gap-10 between (page-heading debt).
+                            PageHeader is its OWN tier — NOT grouped with continue. */}
+                        {/* shared PageHeader: breadcrumb → H3 title → muted description → catalog meta chips. */}
+                        <PageHeader
+                            breadcrumb={<LearnBreadcrumb />}
+                            title={courseTitle ?? outline.course.title}
+                            description={courseDescription || undefined}
+                            meta={totals.moduleCount > 0 ? (
+                                <div className="flex flex-wrap items-center gap-2">
+                                    <HighlightChip
+                                        icon={<StackIcon className="size-5" />}
+                                        value={totals.moduleCount}
+                                        label={t("courseContents.metaModulesLabel")}
+                                    />
+                                    <HighlightChip
+                                        icon={<ClockIcon className="size-5" />}
+                                        value={`~${readingHours}`}
+                                        label={t("courseContents.metaHoursLabel")}
+                                    />
+                                    {enrollmentCount > 0 ? (
+                                        <HighlightChip
+                                            icon={<UsersIcon className="size-5" />}
+                                            value={numeral(enrollmentCount).format("0,0")}
+                                            label={t("courseContents.metaLearnersLabel")}
+                                        />
+                                    ) : null}
+                                </div>
+                            ) : undefined}
+                        />
 
+                        {/* content cluster: continue+progress · keep-going path (gap-6 between) */}
+                        <div className="flex flex-col gap-6">
                             {/* continue + progress — flat (no card frame), the honest unified meter */}
                             <div className="flex flex-col gap-3">
                                 <div className="flex items-start justify-between gap-3">
@@ -284,7 +279,7 @@ export const CourseContents = ({ className }: CourseContentsProps) => {
                                     {resumeHref ? (
                                         <Button
                                             variant="primary"
-                                            size="sm"
+                                            size="lg"
                                             className="shrink-0"
                                             onPress={onResume}
                                         >
@@ -314,64 +309,64 @@ export const CourseContents = ({ className }: CourseContentsProps) => {
                                     ].join(" · ")}
                                 </Typography>
                             </div>
-                        </div>
 
-                        {/* region B — keep-going path: the current module's lessons. The full
+                            {/* region B — keep-going path: the current module's lessons. The full
                             module → lesson tree lives in the left content-map rail, so the body
                             never re-draws it; here we only surface "where you are + what's next". */}
-                        {currentModule ? (
-                            <div className="flex flex-col gap-3">
-                                <Typography type="body-sm" weight="semibold" color="muted">
-                                    {t("courseContents.keepGoing")} · {currentModule.title}
-                                </Typography>
-                                <div className="flex flex-col gap-1">
-                                    {currentModule.lessons.map((lesson) => (
-                                        <ListRow
-                                            key={lesson.id}
-                                            className={cn("px-3", lesson.id === activeLessonId && "bg-accent/10")}
-                                            leading={lesson.id === activeLessonId ? (
-                                                <PlayIcon
-                                                    aria-hidden
-                                                    focusable="false"
-                                                    className="size-5 text-accent"
-                                                />
-                                            ) : lesson.isRead ? (
-                                                <CheckCircleIcon
-                                                    aria-label={t("courseContents.read")}
-                                                    focusable="false"
-                                                    className="size-5 text-success"
-                                                />
-                                            ) : (
-                                                <CircleIcon
-                                                    aria-label={t("courseContents.unread")}
-                                                    focusable="false"
-                                                    className="size-5 text-muted"
-                                                />
-                                            )}
-                                            title={lesson.title}
-                                            subtitle={t("content.minutesRead", {
-                                                minutes: lesson.minutesRead,
-                                            })}
-                                            onPress={() => onSelectLesson(lesson.id, currentModule.id)}
-                                            meta={(
-                                                <>
-                                                    {lesson.difficulty ? (
-                                                        <DifficultyChip difficulty={toDifficulty(lesson.difficulty)} />
-                                                    ) : null}
-                                                    {lesson.isPremium ? (
-                                                        <LockIcon
-                                                            aria-label={t("courseContents.premium")}
-                                                            focusable="false"
-                                                            className="size-5 text-muted"
-                                                        />
-                                                    ) : null}
-                                                </>
-                                            )}
-                                        />
-                                    ))}
+                            {currentModule ? (
+                                <div className="flex flex-col gap-3">
+                                    <Typography type="body-sm" weight="semibold" color="muted">
+                                        {t("courseContents.keepGoing")} · {currentModule.title}
+                                    </Typography>
+                                    <div className="flex flex-col gap-2">
+                                        {currentModule.lessons.map((lesson) => (
+                                            <ListRow
+                                                key={lesson.id}
+                                                className={cn("px-3", lesson.id === activeLessonId && "bg-accent/10")}
+                                                leading={lesson.id === activeLessonId ? (
+                                                    <PlayIcon
+                                                        aria-hidden
+                                                        focusable="false"
+                                                        className="size-5 text-accent"
+                                                    />
+                                                ) : lesson.isRead ? (
+                                                    <CheckCircleIcon
+                                                        aria-label={t("courseContents.read")}
+                                                        focusable="false"
+                                                        className="size-5 text-success"
+                                                    />
+                                                ) : (
+                                                    <CircleIcon
+                                                        aria-label={t("courseContents.unread")}
+                                                        focusable="false"
+                                                        className="size-5 text-muted"
+                                                    />
+                                                )}
+                                                title={lesson.title}
+                                                subtitle={t("content.minutesRead", {
+                                                    minutes: lesson.minutesRead,
+                                                })}
+                                                onPress={() => onSelectLesson(lesson.id, currentModule.id)}
+                                                meta={(
+                                                    <>
+                                                        {lesson.difficulty ? (
+                                                            <DifficultyChip difficulty={toDifficulty(lesson.difficulty)} />
+                                                        ) : null}
+                                                        {lesson.isPremium ? (
+                                                            <LockIcon
+                                                                aria-label={t("courseContents.premium")}
+                                                                focusable="false"
+                                                                className="size-5 text-muted"
+                                                            />
+                                                        ) : null}
+                                                    </>
+                                                )}
+                                            />
+                                        ))}
+                                    </div>
                                 </div>
-                            </div>
-                        ) : null}
+                            ) : null}
+                        </div>
                     </div>
                 ) : null}
             </AsyncContent>

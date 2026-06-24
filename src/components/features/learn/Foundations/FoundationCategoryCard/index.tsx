@@ -1,7 +1,6 @@
 "use client"
 
 import { CaretRightIcon } from "@phosphor-icons/react"
-import { cn } from "@heroui/react"
 import type { FoundationCategoryEntity, WithClassNames } from "@/modules/types"
 import React, { useCallback } from "react"
 import { useLocale } from "next-intl"
@@ -17,13 +16,11 @@ import {
 } from "@/redux/slices"
 import { FoundationCategoryThumbnail } from "../FoundationCategoryThumbnail"
 import { resolveFoundationLogo } from "../shared/foundation-logo"
-import { ListRow } from "@/components/blocks"
+import { SurfaceListCardRow } from "@/components/blocks"
 
 export interface FoundationCategoryCardProps extends WithClassNames<undefined> {
     /** Foundation category from API. */
     category: FoundationCategoryEntity
-    /** Render a bottom divider — set on every row except the last in the list. */
-    divider?: boolean
 }
 
 /**
@@ -38,7 +35,6 @@ export interface FoundationCategoryCardProps extends WithClassNames<undefined> {
  */
 export const FoundationCategoryCard = ({
     category,
-    divider = false,
     className,
 }: FoundationCategoryCardProps) => {
     const locale = useLocale()
@@ -77,7 +73,7 @@ export const FoundationCategoryCard = ({
     const logoSrc = resolveFoundationLogo(category.title)
 
     return (
-        <ListRow
+        <SurfaceListCardRow
             leading={(
                 <FoundationCategoryThumbnail
                     logoSrc={logoSrc}
@@ -95,10 +91,8 @@ export const FoundationCategoryCard = ({
                     className="size-4 text-muted"
                 />
             )}
-            divider={divider}
             onPress={onPress}
-            // flush rows (square hover + full-width divider) for the p-0 "accordion surface" container
-            className={cn("rounded-none px-3", className)}
+            className={className}
         />
     )
 }

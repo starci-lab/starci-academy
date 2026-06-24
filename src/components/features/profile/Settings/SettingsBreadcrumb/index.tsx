@@ -7,15 +7,18 @@ import type {
     ReactNode,
 } from "react"
 import {
-    Breadcrumbs,
-} from "@heroui/react"
-import {
     useLocale,
     useTranslations,
 } from "next-intl"
 import {
     useRouter,
 } from "next/navigation"
+import {
+    ResponsiveBreadcrumb,
+} from "@/components/blocks"
+import type {
+    ResponsiveBreadcrumbItem,
+} from "@/components/blocks"
 import {
     pathConfig,
 } from "@/resources"
@@ -65,20 +68,12 @@ export const SettingsBreadcrumb = ({
         ],
     )
 
-    return (
-        <Breadcrumbs>
-            <Breadcrumbs.Item onPress={onNavigateHome}>
-                {t("nav.home")}
-            </Breadcrumbs.Item>
-            <Breadcrumbs.Item onPress={onNavigateProfile}>
-                {t("nav.profile")}
-            </Breadcrumbs.Item>
-            <Breadcrumbs.Item onPress={onNavigateSettings}>
-                {t("nav.settings")}
-            </Breadcrumbs.Item>
-            <Breadcrumbs.Item>
-                {current}
-            </Breadcrumbs.Item>
-        </Breadcrumbs>
-    )
+    const items: Array<ResponsiveBreadcrumbItem> = [
+        { key: "home", label: t("nav.home"), onPress: onNavigateHome },
+        { key: "profile", label: t("nav.profile"), onPress: onNavigateProfile },
+        { key: "settings", label: t("nav.settings"), onPress: onNavigateSettings },
+        { key: "current", label: current },
+    ]
+
+    return <ResponsiveBreadcrumb items={items} />
 }

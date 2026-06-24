@@ -8,11 +8,12 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    CheckIcon,
     SealCheckIcon,
 } from "@phosphor-icons/react"
 import {
     AsyncContent,
+    CheckListCard,
+    CheckListItem,
     LabeledCard,
     Skeleton,
 } from "@/components/blocks"
@@ -72,19 +73,14 @@ export const CourseValueProps = ({ className }: CourseValuePropsProps) => {
                     retryLabel: t("courseLanding.retry"),
                 }}
             >
-                {/* List Card (xem elements/card.md §3b): surface card frameless + viền, rows
-                    px-4 py-4 + separator inset; giữ tick xanh leading. Không click. */}
-                <ul className="overflow-hidden rounded-3xl border border-default bg-surface">
+                {/* shared check-list card (elements/card.md §3b): surface list, tick-led rows */}
+                <CheckListCard>
                     {items.map((item) => (
-                        <li
-                            key={item.id}
-                            className="relative flex items-start gap-3 px-4 py-4 after:absolute after:bottom-0 after:left-[3%] after:h-px after:w-[94%] after:bg-surface-foreground/6 after:content-[''] last:after:hidden"
-                        >
-                            <CheckIcon aria-hidden focusable="false" className="size-5 shrink-0 text-success" />
+                        <CheckListItem key={item.id}>
                             <Typography type="body-sm">{item.text}</Typography>
-                        </li>
+                        </CheckListItem>
                     ))}
-                </ul>
+                </CheckListCard>
             </AsyncContent>
         </LabeledCard>
     )

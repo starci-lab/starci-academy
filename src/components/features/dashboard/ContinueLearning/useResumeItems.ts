@@ -31,6 +31,11 @@ export interface ResumeItem {
 /** Max number of resume cards shown in the hero. */
 export const RESUME_LIMIT = 3
 
+/** Most challenges allowed among the resume cards — "Tiếp tục học" is content-first
+ * (resume the lessons you're reading); an in-progress challenge is only a single
+ * nudge, never the whole slot. */
+export const MAX_RESUME_CHALLENGES = 1
+
 /** Shape returned by {@link useResumeItems}. */
 export interface UseResumeItemsResult {
     /** Readable name — chosen display name, else the part before "@". */
@@ -78,8 +83,10 @@ export const useResumeItems = (): UseResumeItemsResult => {
     )
 
     /**
-     * Resume targets, in-progress challenges first (the viewer is actively working
-     * them) then recent lessons, capped at {@link RESUME_LIMIT} and de-duplicated.
+     * Resume targets — CONTENT-FIRST: recently-read lessons lead, mixed with AT MOST
+     * {@link MAX_RESUME_CHALLENGES} in-progress challenge as a nudge (the challenge
+     * slot is reserved so it still shows even when there are plenty of lessons).
+     * De-duplicated and capped at {@link RESUME_LIMIT}.
      */
     const resumeItems = useMemo<Array<ResumeItem>>(
         () => {
@@ -88,10 +95,16 @@ export const useResumeItems = (): UseResumeItemsResult => {
                 label: ref.label,
                 kind,
             })
-            const merged = [
-                ...(inProgressChallenges.data ?? []).map(toItem("challenge")),
-                ...(learnedLessons.data ?? []).map(toItem("lesson")),
-            ]
+            // at most one in-progress challenge; lessons fill the remaining slots
+            const challenges = (inProgressChallenges.data ?? [])
+                .map(toItem("challenge"))
+                .slice(0, MAX_RESUME_CHALLENGES)
+            const lessonSlots = Math.max(0, RESUME_LIMIT - challenges.length)
+            const lessons = (learnedLessons.data ?? [])
+                .map(toItem("lesson"))
+                .slice(0, lessonSlots)
+            // lessons first (content-first), the single challenge last
+            const merged = [...lessons, ...challenges]
             const seen = new Set<string>()
             const unique = merged.filter((item) => {
                 if (seen.has(item.globalId)) {

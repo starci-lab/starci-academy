@@ -26,24 +26,27 @@ export type CourseContentsSkeletonProps = WithClassNames<undefined>
 export const CourseContentsSkeleton = ({ className }: CourseContentsSkeletonProps) => {
     return (
         <div className={className}>
-            <div className="flex flex-col gap-6">
-                {/* region A — title + description + catalog meta, then flat continue/progress */}
+            {/* mirror loaded: PageHeader (header) → content cluster, gap-10 between; cluster gap-6 */}
+            <div className="flex flex-col gap-10">
+                {/* header tier — title + description + catalog meta (PageHeader mirror) */}
                 <div className="flex flex-col gap-3">
                     <div className="flex flex-col gap-2">
                         <Skeleton.Typography type="h3" width="1/2" />
                         <Skeleton.Typography type="body-sm" width="2/3" />
                     </div>
                     <Skeleton.Typography type="body-xs" width="1/3" />
-                    <Skeleton className="h-20 w-full rounded-3xl" />
                 </div>
 
-                {/* region B — keep-going path: section label + lesson rows */}
-                <div className="flex flex-col gap-3">
-                    <Skeleton.Typography type="body-sm" width="1/3" />
-                    <div className="flex flex-col gap-1">
-                        {Array.from({ length: SKELETON_LESSON_COUNT }).map((_lesson, lessonIndex) => (
-                            <Skeleton.ListRow key={lessonIndex} withTrailing />
-                        ))}
+                {/* content cluster — flat continue/progress + keep-going path (gap-6) */}
+                <div className="flex flex-col gap-6">
+                    <Skeleton className="h-20 w-full rounded-3xl" />
+                    <div className="flex flex-col gap-3">
+                        <Skeleton.Typography type="body-sm" width="1/3" />
+                        <div className="flex flex-col gap-2">
+                            {Array.from({ length: SKELETON_LESSON_COUNT }).map((_lesson, lessonIndex) => (
+                                <Skeleton.ListRow key={lessonIndex} withTrailing />
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>

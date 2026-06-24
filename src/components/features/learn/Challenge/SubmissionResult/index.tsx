@@ -157,6 +157,12 @@ export const SubmissionResult = ({
                             selectionMode="single"
                             disallowEmptySelection
                             selectedKeys={selectedAttempt ? [selectedAttempt.id] : []}
+                            onSelectionChange={(keys) => {
+                                const key = [...keys][0]
+                                if (typeof key === "string") {
+                                    router.push(`${pathname}?submission=${challengeSubmissionId}&attempt=${key}`)
+                                }
+                            }}
                             className="gap-1 p-0"
                         >
                             {attempts.map((attempt) => (
@@ -164,7 +170,6 @@ export const SubmissionResult = ({
                                     key={attempt.id}
                                     id={attempt.id}
                                     textValue={t("submissionAttempts.attemptLine", { number: attempt.attemptNumber })}
-                                    onAction={() => router.push(`${pathname}?submission=${challengeSubmissionId}&attempt=${attempt.id}`)}
                                     className="cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent/10"
                                 >
                                     <div className="flex flex-col gap-0.5">

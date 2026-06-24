@@ -146,6 +146,16 @@
     padding-left: 0.75rem !important;
     padding-right: 0.75rem !important;
 }
+
+/*
+ * Modal gutter — HeroUI bakes `.modal__dialog { p-6 }` (24px). Standardise the
+ * dialog gutter to p-4 (16px) app-wide so every modal reads tighter; the block
+ * owns the padding (no per-modal `p-*` override on Modal.Body). The body's own
+ * `-m-[3px] p-[3px]` focus-ring breathing is untouched.
+ */
+.modal__dialog {
+    padding: 1rem !important;
+}
 /*
  * Ambient ember background (blocks/layout/AmbientBackground) — slow brand-pink
  * sparks drifting upward behind the whole app. Each spark sets `--drift` (its

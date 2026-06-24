@@ -61,3 +61,8 @@ export * from "./mutation-submit-contact"
 export * from "./mutation-ask-content-ai"
 
 export * from "./mutation-request-to-team"
+export * from "./mutation-create-community-post"
+export * from "./mutation-react-community-post"
+export * from "./mutation-create-community-post-comment"
+export * from "./mutation-react-community-post-comment"
+export * from "./mutation-send-chat-message"

@@ -1,4 +1,45 @@
 {
+    "community": {
+        "title": "Community",
+        "description": "Share what you're working on, ask for help, and learn together.",
+        "channelTabsAria": "Filter community posts by channel",
+        "channel": {
+            "all": "All",
+            "problems": "Problems",
+            "founderQa": "Ask the founder",
+            "general": "General"
+        },
+        "composerPlaceholder": "Share something with the community…",
+        "post": "Post",
+        "empty": "No posts yet. Be the first to share something.",
+        "error": "Could not load the community feed",
+        "retry": "Retry",
+        "loadMore": "Load more",
+        "comments": {
+            "placeholder": "Write a comment…",
+            "send": "Comment",
+            "loading": "Loading comments…",
+            "empty": "No comments yet. Start the conversation.",
+            "error": "Could not load comments",
+            "reply": "Reply",
+            "replyPlaceholder": "Write a reply…",
+            "viewReplies": "View {count} replies",
+            "hideReplies": "Hide replies"
+        },
+        "chat": {
+            "title": "Community chat",
+            "description": "Chat live with the community, or message the founder directly.",
+            "tabsAria": "Switch chat conversation",
+            "communityRoom": "Community",
+            "founderDm": "Founder",
+            "placeholder": "Type a message…",
+            "send": "Send",
+            "loading": "Loading messages…",
+            "empty": "No messages yet. Say hello!",
+            "error": "Could not load messages",
+            "signInRequired": "Sign in with an active membership to join the chat."
+        }
+    },
     "contact": {
         "title": "Contact",
         "intro": "StarCi is built by one person — your question reaches the person who makes it. Pick the fastest route below, or send a message.",
@@ -216,6 +257,7 @@
         "brand": "StarCi Academy",
         "home": "Home",
         "courses": "Courses",
+        "community": "Community",
         "practice": "Practice",
         "contact": "Contact",
         "logout": "Logout",
@@ -370,8 +412,8 @@
         "paywall": {
             "title": "Premium content",
             "titleNamed": "Unlock {course}",
-            "description": "You're reading a preview. Unlock to learn the whole course.",
-            "buy": "Unlock the course",
+            "description": "You're reading a preview. Enroll to learn the whole course.",
+            "buy": "Enroll in course",
             "back": "Go back",
             "loyaltyOff": "−{percent}% loyalty",
             "unlock": {
@@ -1818,13 +1860,25 @@
             "signingOut": "Signing you out…"
         }
     },
+    "priceTag": {
+        "breakdownTitle": "Price details",
+        "listPrice": "List price",
+        "phase": "Phase offer",
+        "phaseNamed": "{phase} phase",
+        "loyalty": "Member discount",
+        "youPay": "You pay"
+    },
     "payment": {
         "title": "Payment",
         "desc": "Choose a payment method to continue",
+        "currency": {
+            "vnd": "Domestic · VND",
+            "usd": "International · USD"
+        },
         "priceError": "Couldn't load the price",
         "intlNoUsd": "International methods aren't available for this order.",
         "secure": "Your payment is encrypted and secure.",
-        "noCardStored": "StarCi never stores your card details",
+        "noCardStored": "StarCi Academy never stores your card details",
         "aiPlanName": "AI plan",
         "membershipName": "StarCi membership",
         "loyalty": {

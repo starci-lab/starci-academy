@@ -2,9 +2,11 @@
 
 import React from "react"
 import {
-    Typography,
-    cn,
-} from "@heroui/react"
+    PageHeader,
+} from "@/components/blocks"
+import {
+    LearnBreadcrumb,
+} from "@/components/features/learn/shared/LearnBreadcrumb"
 import {
     useAppSelector,
 } from "@/redux"
@@ -19,10 +21,10 @@ import type {
 export type CourseHeroProps = WithClassNames<undefined>
 
 /**
- * Above-the-fold hero copy: title + the headline value proposition + trust-stats.
- * Intentionally carries NO price / CTA / cover — those live once in the sticky
- * purchase card (right column) so the page never shows two competing buy boxes.
- * Self-contained (reads the course from redux).
+ * Above-the-fold course header, built from the shared {@link PageHeader} block so
+ * it matches every other page header (breadcrumb → H3 title → muted description →
+ * stat chips). Carries NO price / CTA / cover — those live once in the sticky
+ * purchase card (right column). Self-contained (reads the course from redux).
  *
  * @param props - optional className (placement only).
  */
@@ -32,16 +34,12 @@ export const CourseHero = ({ className }: CourseHeroProps) => {
     const lead = useAppSelector((state) => state.course.entity?.valuePropositions?.[0]?.text)
 
     return (
-        <div className={cn("flex flex-col gap-6", className)}>
-            <div className="flex flex-col gap-3">
-                <Typography type="h2" weight="bold">
-                    {title}
-                </Typography>
-                <Typography type="body" color="muted">
-                    {lead ?? description}
-                </Typography>
-            </div>
-            <CourseTrustStats />
-        </div>
+        <PageHeader
+            className={className}
+            breadcrumb={<LearnBreadcrumb />}
+            title={title}
+            description={lead ?? description}
+            meta={<CourseTrustStats />}
+        />
     )
 }

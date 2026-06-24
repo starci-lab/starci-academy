@@ -8,4 +8,6 @@ export enum PublicationEvent {
     SubscribeAiLabRun = "ai_lab.subscribe_run.publication",
     /** Abort an in-flight AI Lab run (must match backend). */
     AbortAiLabRun = "ai_lab.abort_run.publication",
+    /** Join a chat conversation's room (must match backend). */
+    SubscribeCommunityChat = "community_chat.subscribe.publication",
 }

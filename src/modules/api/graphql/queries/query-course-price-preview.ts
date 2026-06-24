@@ -10,9 +10,11 @@ const query1 = gql`
       error
       data {
         originalPriceVnd
+        phasePriceVnd
         discountedPriceVnd
         discountPercent
         originalPriceUsd
+        phasePriceUsd
         discountedPriceUsd
         discountReason
         enrolledCount

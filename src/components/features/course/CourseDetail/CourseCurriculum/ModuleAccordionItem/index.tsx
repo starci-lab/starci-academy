@@ -7,7 +7,6 @@ import {
 } from "@heroui/react"
 import {
     CaretRightIcon,
-    LockSimpleIcon,
 } from "@phosphor-icons/react"
 import {
     useTranslations,
@@ -61,28 +60,22 @@ export const ModuleAccordionItem = ({ module }: ModuleAccordionItemProps) => {
         <Accordion.Item aria-label={module.title}>
             <Accordion.Heading>
                 <Accordion.Trigger>
-                    <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
-                        <Typography type="body-sm" weight="medium" truncate>
+                    <div className="flex min-w-0 flex-1 items-center justify-between gap-3">
+                        <Typography type="body-sm" weight="medium" truncate className="min-w-0">
                             {module.title}
                         </Typography>
-                        {module.contentTier ? (
-                            <StatusChip tone={TIER_TONE[module.contentTier]}>
-                                {t(`courseLanding.tier.${module.contentTier}`)}
-                            </StatusChip>
-                        ) : null}
-                        {module.isPremium ? (
-                            <StatusChip
-                                tone="accent"
-                                icon={<LockSimpleIcon aria-hidden focusable="false" className="size-3" />}
-                            >
-                                {t("courseLanding.premium")}
-                            </StatusChip>
-                        ) : null}
-                        {previews.length > 0 ? (
-                            <StatusChip tone="neutral">
-                                {t("courseLanding.previewCount", { count: previews.length })}
-                            </StatusChip>
-                        ) : null}
+                        <div className="flex shrink-0 items-center gap-2">
+                            {module.contentTier ? (
+                                <StatusChip tone={TIER_TONE[module.contentTier]}>
+                                    {t(`courseLanding.tier.${module.contentTier}`)}
+                                </StatusChip>
+                            ) : null}
+                            {previews.length > 0 ? (
+                                <StatusChip tone="neutral">
+                                    {t("courseLanding.previewCount", { count: previews.length })}
+                                </StatusChip>
+                            ) : null}
+                        </div>
                     </div>
                 </Accordion.Trigger>
             </Accordion.Heading>

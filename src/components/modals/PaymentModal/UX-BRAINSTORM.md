@@ -119,3 +119,51 @@ logo+tên+tiền tệ, spinner khi chọn. DƯỚI: **trust line** ("Thanh toán
   (fetch modal-local vì hook cũ gate theo trang), membership=i18n. `AsyncContent` cho giá. Dọn `gap-1.5`/`<div>`+class.
 - **i18n:** `payment.{discount.{enrolledCount,diligent,both}, intlNoUsd, secure, priceError, aiPlanName, membershipName}` (vi/en).
 - tsc + lint + JSON sạch (FE + BE). Chưa verify mắt (modal gate auth + cần mở từ flow mua).
+
+---
+
+## Follow-up 2026-06-24 — thumbnail summary + Interactive List Card + p-4 (CHƯA apply)
+> Thầy feedback qua screenshot (đỏ = list cổng, xanh = summary). KHÔNG đổi BE (field đã có từ §8). Chốt đỏ; summary chờ chọn A/B.
+
+### Đỏ — "Thanh toán trong nước" → **Interactive List Card** (CHỐT)
+- Hiện N `PressableCard` rời (`bg-surface` + `gap-2` + hover `bg-surface-secondary`) → rời rạc.
+- Mới: **1 khối bounded** `overflow-hidden rounded-3xl border border-default bg-surface` (da §3b List Card); mỗi cổng = `<button>` row
+  `relative flex w-full items-center gap-3 px-4 py-4 text-left outline-none transition-colors hover:bg-default focus-visible:ring-2 focus-visible:ring-accent disabled:cursor-not-allowed disabled:opacity-60`
+  + separator inset accordion `after:absolute after:bottom-0 after:left-[3%] after:h-px after:w-[94%] after:bg-surface-foreground/6 after:content-[''] last:after:hidden`.
+- = render như Accordion Card NHƯNG click được + hover từng row đổi nền `bg-default` (copy `.accordion--surface .accordion__trigger:hover`). Giữ icon/name/desc/amount/arrow/spinner/onPress/disabled.
+- Ref: Stripe Payment Element (list mode) · Shopify checkout payment list (picker = 1 list bounded, row highlight).
+
+### Xanh — order-summary card (chờ thầy chọn A/B)
+Cả 2 đều: **bỏ veil `bg-white/5` → border + INHERIT bg** (đính chính [[surface-in-surface-inner-has-border]] theo chốt mới); loyalty divider `border-white/10` → `border-default`; giá đúng (discounted bold + struck original + `−%` chip success); loyalty breakdown (icon + lý do); **thêm thumbnail** `course.entity.coverImageUrl` qua `CoverImage`.
+- **A — media object (thumbnail nhỏ ~84px trái) — ĐỀ XUẤT:** card `border border-default rounded-2xl px-4 py-3`, `[thumb 16:9] | [name + price-row + loyalty]`. Gọn, modal ngắn (giá+cổng trong tầm mắt). Ref Stripe/Shopify/Gumroad dùng thumbnail nhỏ trong summary.
+- **B — cover full-width trên đỉnh:** `CoverImage` 16:9 full → name+price+loyalty dưới. Khớp `CoursePricingRail` nhưng tốn dọc + lặp cover đang thấy sau lưng modal.
+- **Guard:** thumbnail chỉ flow course (AI/membership không cover) → `coverImageUrl ?` mới render `CoverImage`; flow khác media-object tự co về text.
+
+### Phụ — gutter modal p-6 → p-4 (global)
+- `globals.css`: `.modal__dialog { padding: 1rem !important; }` (đính chính [[modal-body-no-padding-override-heroui-idiom]] — gutter chuẩn giờ p-4). Áp MỌI modal.
+
+### Đã làm sẵn (copy fix, không defer)
+- i18n `payment.noCardStored` "StarCi" → "StarCi Academy" (vi + en).
+
+→ Thầy chọn A/B → `/starci-fe-ux-apply`. Plan kỹ thuật cũng ở BE `.claude/rules/debts/2026-06-24-header-rhythm-followups.md` §F.
+
+---
+
+## Follow-up 2026-06-24 (3) — Tooltip breakdown giá + công tắc tiền tệ VND/USD (CHƯA apply)
+> Thầy: hover giá → tooltip giải thích vì sao giảm (phase bao nhiêu + loyalty bao nhiêu); và muốn **chọn thanh toán cả VND lẫn USD** (option lựa chọn).
+
+### Vấn đề / dữ liệu
+- Sau tweak: coursePricePreview trả `originalPriceVnd` = LIST, `discountedPriceVnd` = phase×(1−loyalty) = charge, + USD tương ứng, `discountPercent` = loyalty, `discountReason`, `enrolledCount`. **Thiếu giá PHASE giữa** (list→phase→charge) để tách "giảm do phase" vs "do loyalty".
+- USD đã có (`originalPriceUsd`/`discountedPriceUsd`) nhưng hiện bị giấu sau drawer "Thanh toán quốc tế".
+
+### Hướng CHỐT
+- **Tooltip breakdown (cần 3 số):** thêm BE field **`phasePriceVnd` + `phasePriceUsd`** = `resolveAmountVnd/Usd({course})` (giá phase, chưa loyalty — đúng giá trị cũ trước tweak) → FE có list/phase/charge → tooltip tách CHÍNH XÁC: `Giá gốc → Giai đoạn [phase] −A% → Ưu đãi thành viên −B% (lý do) → Bạn trả`. (Hướng B suy `phase=charge/(1−loyalty)` có sai số — bỏ.) Tooltip HeroUI bọc PriceTag, affordance = viền dashed + icon ⓘ + `cursor-help`.
+- **Công tắc tiền tệ (segmented) "🇻🇳 Trong nước · VND | 🌐 Quốc tế · USD"** ở đầu modal → đổi: (1) giá summary + tooltip theo tiền tệ chọn, (2) danh sách cổng (domestic PayOS/Sepay ↔ international Stripe/PayPal/Crypto). **Thay link drawer cũ** (đính chính [[when-drawer]]/[[payment-modal-flat-summary-listcard-drawer]]: quốc tế giờ là 1 nhánh công tắc, không drawer). Mặc định VND (audience VN). Tab USD **disabled** khi `!hasUsd` (course chỉ VND) + tooltip "chỉ thanh toán nội địa".
+- **PriceTag** thêm prop **`currency: "VND" | "USD"`** (format theo tiền tệ; % compute giữ nguyên agnostic). Tooltip breakdown cũng theo currency đang chọn.
+
+### Ảnh hưởng
+- BE: +2 field `phasePriceVnd`/`phasePriceUsd` vào `CoursePricePreviewData` (reuse `resolveAmountVnd/Usd`, 0 logic mới).
+- FE: PriceTag + `currency`; PaymentModal thêm state `currency` (VND/USD) drive summary+gateways (bỏ drawer + intl link); tooltip breakdown block (dùng chung). PremiumGate/Paywall/Rail: tooltip breakdown VND (chưa cần công tắc — chỉ PaymentModal là nơi thật sự chọn cổng).
+- Ref: Stripe/Shopify currency switcher · Booking.com price-details tooltip · Amazon "price breakdown".
+
+→ Widget (toggle VND/USD + tooltip) đã vẽ trong chat. Thầy duyệt → `/starci-fe-ux-apply`.

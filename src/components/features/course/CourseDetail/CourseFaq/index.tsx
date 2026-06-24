@@ -61,7 +61,7 @@ export const CourseFaq = ({ className }: CourseFaqProps) => {
             className={className}
             label={t("courseLanding.faq")}
             icon={<QuestionIcon aria-hidden focusable="false" className="size-5" />}
-            flushContent
+            frameless
         >
             <AsyncContent
                 isLoading={isLoading && qnas.length === 0}
@@ -73,7 +73,8 @@ export const CourseFaq = ({ className }: CourseFaqProps) => {
                     retryLabel: t("courseLanding.retry"),
                 }}
             >
-                <Accordion variant="surface">
+                {/* Accordion Card (xem elements/card.md §3): surface accordion frameless + viền. */}
+                <Accordion variant="surface" className="overflow-hidden border border-default">
                     {qnas.map((qna) => (
                         <Accordion.Item key={qna.id} aria-label={qna.question}>
                             <Accordion.Heading>

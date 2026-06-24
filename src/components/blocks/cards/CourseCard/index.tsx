@@ -32,6 +32,9 @@ import type {
 import {
     pathConfig,
 } from "@/resources/path"
+import {
+    publicEnv,
+} from "@/resources"
 
 /** Format a VND amount with vi-VN thousands separators + the ₫ symbol (e.g. 1.500.000₫). */
 const formatVnd = (amount: number): string => `${amount.toLocaleString("vi-VN")}₫`
@@ -73,6 +76,13 @@ export const CourseCard = ({
     const t = useTranslations()
     const [coverFailed, setCoverFailed] = useState(false)
 
+    // display transform for ENTITY-derived (fallback) VND prices so the catalog matches
+    // the rest of the app: ÷ testDivisor in non-prod (USD charm is inlined below). The
+    // loyalty price (from `coursePricePreview`) is ALREADY transformed → not re-applied.
+    const divisor = publicEnv().pricing.testDivisor
+    const toVnd = (amount: number): number =>
+        divisor === 1 ? amount : Math.max(1, Math.round(amount / divisor))
+
     /** Active-phase price (falls back to the list/regular price when no phase row). */
     const currentPrice = useMemo(
         () => course.pricingPhases?.find(
@@ -108,7 +118,8 @@ export const CourseCard = ({
     /** Formatted USD price for display, or `null` to hide the USD line. */
     const formattedPriceUsd = useMemo(
         () => actualPriceUsd != null
-            ? actualPriceUsd.toLocaleString("en-US", { style: "currency", currency: "USD" })
+            // charm-round to x.99 (mirror the backend USD price)
+            ? (Math.max(1, Math.ceil(actualPriceUsd)) - 0.01).toLocaleString("en-US", { style: "currency", currency: "USD" })
             : null,
         [actualPriceUsd],
     )
@@ -131,8 +142,12 @@ export const CourseCard = ({
     // price block: prefer the viewer's loyalty price (uniform with the rest of the app)
     // when supplied, else fall back to the active-phase price.
     const useLoyalty = loyaltyPriceVnd != null
-    const displayPrice = useLoyalty ? loyaltyPriceVnd : currentPrice
-    const displayOriginal = useLoyalty ? loyaltyOriginalVnd ?? null : course.originalPrice ?? null
+    const displayPrice = useLoyalty
+        ? loyaltyPriceVnd
+        : (currentPrice != null ? toVnd(currentPrice) : null)
+    const displayOriginal = useLoyalty
+        ? loyaltyOriginalVnd ?? null
+        : (course.originalPrice != null ? toVnd(course.originalPrice) : null)
     const displayPercent = useLoyalty ? loyaltyPercent ?? 0 : percentOff
     const displayHasDiscount = useLoyalty
         ? (loyaltyPercent ?? 0) > 0 && loyaltyOriginalVnd != null

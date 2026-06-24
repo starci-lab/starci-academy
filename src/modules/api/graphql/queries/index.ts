@@ -131,3 +131,8 @@ export * from "./query-recommended-courses"
 export * from "./query-course-price-preview"
 
 export * from "./query-my-github-team-status"
+export * from "./query-community-feed"
+export * from "./query-community-post-comments"
+export * from "./query-community-chat-conversation"
+export * from "./query-my-founder-conversation"
+export * from "./query-chat-messages"

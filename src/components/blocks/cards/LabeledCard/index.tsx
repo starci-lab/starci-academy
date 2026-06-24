@@ -11,6 +11,12 @@ export interface LabeledCardProps extends WithClassNames<undefined> {
     /** Optional leading icon shown before the label. */
     icon?: ReactNode
     /**
+     * Optional secondary label pinned to the RIGHT of the label row (muted) — a
+     * passive tag, NOT an action (e.g. a currency "VND", a count, a unit). Rendered
+     * only when neither `action` nor `onSeeMore` claim the right slot.
+     */
+    labelEnd?: ReactNode
+    /**
      * When provided, renders a "see more" link on the right of the label
      * (label text + a caret that slides right on hover).
      */
@@ -59,6 +65,7 @@ export interface LabeledCardProps extends WithClassNames<undefined> {
 export const LabeledCard = ({
     label,
     icon,
+    labelEnd,
     onSeeMore,
     seeMoreLabel = "Xem thêm",
     action,
@@ -88,6 +95,8 @@ export const LabeledCard = ({
                             className="size-4 transition-transform group-hover:translate-x-1"
                         />
                     </Link>
+                ) : labelEnd != null ? (
+                    <span className="shrink-0 text-xs text-muted">{labelEnd}</span>
                 ) : null)}
             </div>
             {/* frameless = content is itself card(s) → no inner Card (avoid nesting) */}

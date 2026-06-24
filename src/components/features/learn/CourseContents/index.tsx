@@ -37,6 +37,7 @@ import {
     AsyncContent,
     DifficultyChip,
     ListRow,
+    PageHeader,
     ProgressMeter,
 } from "@/components/blocks"
 import { LearnBreadcrumb } from "../shared/LearnBreadcrumb"
@@ -229,23 +230,13 @@ export const CourseContents = ({ className }: CourseContentsProps) => {
                         {/* region A — identity + the one primary action (continue), a gap-3 cluster;
                             the outer gap-6 sets it apart from the path region below. */}
                         <div className="flex flex-col gap-3">
-                            <LearnBreadcrumb />
-
-                            {/* header identity: title + one-line description (gap-2 pair) + a
-                                static catalog meta row (chương · giờ · học viên) so the title
-                                no longer stands bare/duplicating the last breadcrumb crumb. */}
-                            <div className="flex flex-col gap-3">
-                                <div className="flex flex-col gap-2">
-                                    <Typography type="h3" weight="bold">
-                                        {courseTitle ?? outline.course.title}
-                                    </Typography>
-                                    {courseDescription ? (
-                                        <Typography type="body-sm" color="muted" className="line-clamp-2">
-                                            {courseDescription}
-                                        </Typography>
-                                    ) : null}
-                                </div>
-                                {totals.moduleCount > 0 ? (
+                            {/* shared PageHeader: breadcrumb → H3 title → muted description →
+                                catalog meta chips. Same block as the public course landing header. */}
+                            <PageHeader
+                                breadcrumb={<LearnBreadcrumb />}
+                                title={courseTitle ?? outline.course.title}
+                                description={courseDescription || undefined}
+                                meta={totals.moduleCount > 0 ? (
                                     <div className="flex flex-wrap items-center gap-2">
                                         <Chip color="default">
                                             <StackIcon className="size-5" />
@@ -270,8 +261,8 @@ export const CourseContents = ({ className }: CourseContentsProps) => {
                                             </Chip>
                                         ) : null}
                                     </div>
-                                ) : null}
-                            </div>
+                                ) : undefined}
+                            />
 
                             {/* continue + progress — flat (no card frame), the honest unified meter */}
                             <div className="flex flex-col gap-3">

@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useMemo, useState } from "react"
-import { Chip, Modal, Spinner, Typography, cn } from "@heroui/react"
+import { Modal, Spinner, Typography, cn } from "@heroui/react"
 import useSWR from "swr"
 import { ArrowRightIcon, FlameIcon, GraduationCapIcon, LockSimpleIcon } from "@phosphor-icons/react"
 import {
@@ -18,7 +18,8 @@ import { useGraphQLWithToast } from "@/modules/toast"
 import { submitCheckout } from "@/modules/payment"
 import { queryAiSubscriptionTiers } from "@/modules/api"
 import type { DiscountReason } from "@/modules/api"
-import { AsyncContent, PressableCard } from "@/components/blocks"
+import { AsyncContent, IconTile, LabeledCard, PriceTag, SegmentedControl } from "@/components/blocks"
+import type { PriceCurrency } from "@/components/blocks"
 import { useTranslations } from "next-intl"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
@@ -35,10 +36,16 @@ interface PaymentOrder {
     name: string
     /** Discounted VND price (what domestic gateways charge); undefined while loading. */
     priceVnd?: number
-    /** Original VND price (struck through when a discount applies). */
+    /** Original (list) VND price (struck through when a discount applies). */
     originalVnd?: number
+    /** Active-phase VND price before loyalty (breakdown middle step). */
+    phaseVnd?: number
     /** Discounted USD price for international gateways; null when not available. */
     priceUsd?: number | null
+    /** Original (list) USD price. */
+    originalUsd?: number | null
+    /** Active-phase USD price before loyalty. */
+    phaseUsd?: number | null
     /** Loyalty discount percent (0 when none — course flow only). */
     discountPercent: number
     /** Why the discount applies (course flow only). */
@@ -50,11 +57,12 @@ interface PaymentOrder {
 /**
  * Shared payment modal for every paid flow (course enroll · membership · AI subscription).
  *
- * Summary-first: shows WHAT the buyer gets + HOW MUCH (with the loyalty discount surfaced)
- * BEFORE the gateway choice, then groups methods into Domestic (VND) and International (USD)
- * — the latter locked when the product has no USD price — with a trust line beneath. The
- * opener stashes a {@link import("@/modules/types").PaymentContext}; this modal reads it to
- * decide which price to preview and which mutation to run on pick.
+ * Summary-first: shows WHAT the buyer gets + HOW MUCH (loyalty discount surfaced via the
+ * shared {@link PriceTag} + hover breakdown) BEFORE the gateway choice. A currency toggle
+ * (Domestic VND ↔ International USD) drives BOTH the shown price and the gateway list; the
+ * USD side appears only when the order has a USD price. The opener stashes a
+ * {@link import("@/modules/types").PaymentContext}; this modal reads it to decide which
+ * price to preview and which mutation to run on pick.
  */
 export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
     const { isOpen, setOpen, context } = usePaymentOverlayState()
@@ -62,7 +70,10 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
     const purchaseAiSubscriptionSwr = useMutatePurchaseAiSubscriptionSwr()
     const purchaseMembershipSwr = useMutatePurchaseMembershipSwr()
     const course = useAppSelector((state) => state.course.entity)
+    const coverImageUrl = useAppSelector((state) => state.course.entity?.coverImageUrl)
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentType | null>(null)
+    // chosen currency / region (drives summary price + gateway list)
+    const [currency, setCurrency] = useState<PriceCurrency>("VND")
     const t = useTranslations()
     const runGraphQL = useGraphQLWithToast()
 
@@ -109,7 +120,10 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
                 name: course?.title ?? "",
                 priceVnd: price?.discountedPriceVnd,
                 originalVnd: price?.originalPriceVnd,
+                phaseVnd: price?.phasePriceVnd,
                 priceUsd: price?.discountedPriceUsd ?? null,
+                originalUsd: price?.originalPriceUsd ?? null,
+                phaseUsd: price?.phasePriceUsd ?? null,
                 discountPercent: price?.discountPercent ?? 0,
                 discountReason: price?.discountReason ?? "none",
                 enrolledCount: price?.enrolledCount ?? 0,
@@ -137,15 +151,17 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
 
     // whether international (USD) gateways are usable for this order
     const hasUsd = isMembership || (order?.priceUsd != null)
+    // the effective currency (clamped to VND when no USD price exists)
+    const activeCurrency: PriceCurrency = hasUsd ? currency : "VND"
+    const isUsd = activeCurrency === "USD"
 
-    // method groups, each carrying its currency + whether it needs a USD price
+    // method groups, each carrying its currency
     const paymentGroups = useMemo(
         () => [
             {
                 id: "domestic",
                 label: t("payment.group.domestic"),
                 currency: "VND",
-                requiresUsd: false,
                 methods: [
                     { type: PaymentType.PayOS, name: "PayOS", description: t("payment.payos.desc"), iconUrl: assetConfig().icon().payment().payos },
                     { type: PaymentType.Sepay, name: "Sepay", description: t("payment.sepay.desc"), iconUrl: assetConfig().icon().payment().sepay },
@@ -155,7 +171,6 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
                 id: "international",
                 label: t("payment.group.international"),
                 currency: "USD",
-                requiresUsd: true,
                 methods: [
                     { type: PaymentType.Stripe, name: "Stripe", description: t("payment.stripe.desc"), iconUrl: assetConfig().icon().payment().stripe },
                     { type: PaymentType.Paypal, name: "PayPal", description: t("payment.paypal.desc"), iconUrl: assetConfig().icon().payment().paypal },
@@ -256,6 +271,59 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
         }
     }
 
+    const activeGroup = isUsd
+        ? paymentGroups.find((group) => group.id === "international")
+        : paymentGroups.find((group) => group.id === "domestic")
+
+    // summary price in the active currency
+    const summaryDiscounted = isUsd ? order?.priceUsd : order?.priceVnd
+    const summaryOriginal = isUsd ? order?.originalUsd : order?.originalVnd
+    const summaryPhase = isUsd ? order?.phaseUsd : order?.phaseVnd
+
+    /**
+     * One gateway as an INTERACTIVE LIST-CARD row — accordion-surface skin: the parent
+     * list owns `bg-surface`/border/radius, each row is a `<button>` with the accordion
+     * hover tint (`bg-default`), inset separator (hidden on the last row), focus ring and
+     * disabled state. Amount shown in the active currency.
+     */
+    const renderMethodRow = (
+        method: { type: PaymentType, name: string, description: string, iconUrl: string },
+    ) => {
+        const amountLabel = isUsd
+            ? (order?.priceUsd != null ? formatUsd(order.priceUsd) : null)
+            : (order?.priceVnd != null ? formatVnd(order.priceVnd) : null)
+        const rowPending = isMutating && selectedPaymentMethod === method.type
+        return (
+            <button
+                key={method.type}
+                type="button"
+                disabled={isMutating}
+                onClick={() => { void runCheckout(method.type) }}
+                className="relative flex w-full cursor-pointer items-center gap-3 px-4 py-4 text-left outline-none transition-colors hover:bg-default focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent disabled:cursor-not-allowed disabled:opacity-60 after:absolute after:bottom-0 after:left-[3%] after:h-px after:w-[94%] after:bg-surface-foreground/6 after:content-[''] last:after:hidden"
+            >
+                <img
+                    alt={method.name}
+                    className="h-8 w-12 shrink-0 object-contain object-left"
+                    src={method.iconUrl}
+                />
+                <div className="flex min-w-0 flex-1 flex-col">
+                    <Typography type="body-sm" weight="semibold">{method.name}</Typography>
+                    <Typography type="body-xs" color="muted" truncate>{method.description}</Typography>
+                </div>
+                <div className="flex shrink-0 items-center gap-2">
+                    {amountLabel ? (
+                        <Typography type="body-xs" color="muted">{amountLabel}</Typography>
+                    ) : null}
+                    {rowPending ? (
+                        <Spinner size="sm" />
+                    ) : (
+                        <ArrowRightIcon aria-hidden focusable="false" className="size-4 text-muted" />
+                    )}
+                </div>
+            </button>
+        )
+    }
+
     return (
         <Modal isOpen={isOpen} onOpenChange={setOpen}>
             <Modal.Backdrop>
@@ -266,43 +334,49 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
                             <Typography type="body" weight="semibold">{t("payment.title")}</Typography>
                         </Modal.Header>
                         <Modal.Body>
-                            <div className="flex flex-col gap-6">
-                                {/* order summary — what + how much (+ loyalty discount) before the method choice.
-                                    Surface-in-surface (a card ON the modal surface) → the INNER surface carries a
-                                    real `border border-default` to delineate it, plus a faint white veil for lift
-                                    (the --overlay ladder has no step lighter than the dialog). */}
-                                <div className="flex flex-col gap-2 rounded-2xl border border-default bg-white/5 px-4 py-3">
-                                    <Typography type="body-sm" weight="semibold" truncate title={order?.name}>
-                                        {order?.name}
-                                    </Typography>
-                                    <AsyncContent
-                                        isLoading={Boolean(priceLoading)}
-                                        skeleton={<div className="h-8 w-32 animate-pulse rounded-xl bg-surface" />}
-                                        error={priceError}
-                                        errorContent={{ title: t("payment.priceError") }}
-                                    >
-                                        <div className="flex flex-wrap items-baseline gap-2">
-                                            {order?.priceVnd != null ? (
-                                                <Typography type="h4" weight="bold">{formatVnd(order.priceVnd)}</Typography>
-                                            ) : isMembership ? (
-                                                <Typography type="h4" weight="bold">{t("membership.price")}</Typography>
-                                            ) : null}
-                                            {order && order.discountPercent > 0 && order.originalVnd != null ? (
-                                                <Typography type="body-sm" color="muted" className="line-through">
-                                                    {formatVnd(order.originalVnd)}
-                                                </Typography>
-                                            ) : null}
-                                            {order && order.discountPercent > 0 ? (
-                                                <Chip size="sm" variant="soft" color="success">
-                                                    <Chip.Label>{`−${order.discountPercent}%`}</Chip.Label>
-                                                </Chip>
-                                            ) : null}
+                            <div className="flex flex-col gap-3">
+                                {/* summary — FLAT (no card frame): IconTile + name + price (PriceTag with
+                                    hover breakdown) + loyalty breakdown, on the modal surface. */}
+                                <div className="flex flex-col">
+                                    <div className="flex items-center gap-3">
+                                        <IconTile
+                                            size="sm"
+                                            tone="accent"
+                                            icon={<GraduationCapIcon />}
+                                            src={isCourse ? coverImageUrl : undefined}
+                                            alt={order?.name ?? ""}
+                                        />
+                                        <div className="flex min-w-0 flex-1 flex-col">
+                                            <Typography type="body-xs" color="muted" truncate title={order?.name}>
+                                                {order?.name}
+                                            </Typography>
+                                            <AsyncContent
+                                                isLoading={Boolean(priceLoading)}
+                                                skeleton={<div className="mt-1 h-6 w-28 animate-pulse rounded-lg bg-default" />}
+                                                error={priceError}
+                                                errorContent={{ title: t("payment.priceError") }}
+                                            >
+                                                {summaryDiscounted != null ? (
+                                                    <PriceTag
+                                                        discounted={summaryDiscounted}
+                                                        original={summaryOriginal}
+                                                        currency={activeCurrency}
+                                                        size="md"
+                                                        breakdown={summaryPhase != null ? {
+                                                            phase: summaryPhase,
+                                                            loyaltyPercent: order?.discountPercent ?? 0,
+                                                        } : undefined}
+                                                    />
+                                                ) : isMembership ? (
+                                                    <Typography type="h4" weight="bold">{t("membership.price")}</Typography>
+                                                ) : null}
+                                            </AsyncContent>
                                         </div>
-                                    </AsyncContent>
-                                    {/* loyalty breakdown — WHY the discount applies (reads discountReason + enrolledCount) */}
+                                    </div>
+                                    {/* loyalty breakdown — WHY the discount applies (discountReason + enrolledCount) */}
                                     {order && order.discountPercent > 0
                                         && loyaltyReasons(order.discountReason, order.enrolledCount).length > 0 ? (
-                                            <div className="flex flex-col gap-1 border-t border-white/10 pt-2">
+                                            <div className="mt-2 flex flex-col gap-1">
                                                 {loyaltyReasons(order.discountReason, order.enrolledCount).map((row) => (
                                                     <div key={row.key} className="flex items-center gap-2">
                                                         {row.icon}
@@ -313,57 +387,32 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
                                         ) : null}
                                 </div>
 
-                                {/* method groups: domestic (VND) always; international (USD) only when the
-                                    order HAS a USD price — otherwise the whole group is hidden (no dead, locked
-                                    rows). One currency per group; the row arrow signals an off-site redirect. */}
-                                {paymentGroups
-                                    .filter((group) => !(group.requiresUsd && !hasUsd))
-                                    .map((group) => (
-                                        <div key={group.id} className="flex flex-col gap-3">
-                                            <div className="flex items-center justify-between">
-                                                <Typography type="body-xs" color="muted">{group.label}</Typography>
-                                                <Typography type="body-xs" color="muted">{group.currency}</Typography>
-                                            </div>
-                                            <div className="flex flex-col gap-2">
-                                                {group.methods.map((method) => {
-                                                    // the amount THIS gateway charges (VND domestic, USD international)
-                                                    const amountLabel = group.requiresUsd
-                                                        ? (order?.priceUsd != null ? formatUsd(order.priceUsd) : null)
-                                                        : (order?.priceVnd != null ? formatVnd(order.priceVnd) : null)
-                                                    const rowPending = isMutating && selectedPaymentMethod === method.type
-                                                    return (
-                                                        <PressableCard
-                                                            key={method.type}
-                                                            isDisabled={isMutating}
-                                                            onPress={() => { void runCheckout(method.type) }}
-                                                        >
-                                                            <div className="flex items-center gap-3">
-                                                                <img
-                                                                    alt={method.name}
-                                                                    className="h-8 w-12 shrink-0 object-contain object-left"
-                                                                    src={method.iconUrl}
-                                                                />
-                                                                <div className="flex min-w-0 flex-col">
-                                                                    <Typography type="body-sm" weight="semibold">{method.name}</Typography>
-                                                                    <Typography type="body-xs" color="muted" truncate>{method.description}</Typography>
-                                                                </div>
-                                                                <div className="ml-auto flex shrink-0 items-center gap-2">
-                                                                    {amountLabel ? (
-                                                                        <Typography type="body-xs" color="muted">{amountLabel}</Typography>
-                                                                    ) : null}
-                                                                    {rowPending ? (
-                                                                        <Spinner size="sm" />
-                                                                    ) : (
-                                                                        <ArrowRightIcon aria-hidden focusable="false" className="size-4 text-muted" />
-                                                                    )}
-                                                                </div>
-                                                            </div>
-                                                        </PressableCard>
-                                                    )
-                                                })}
-                                            </div>
+                                {/* currency / region toggle — drives the summary price + gateway list.
+                                    Only shown when the order HAS a USD price (a real choice exists). */}
+                                {hasUsd ? (
+                                    <SegmentedControl<PriceCurrency>
+                                        ariaLabel={t("payment.title")}
+                                        value={activeCurrency}
+                                        onChange={setCurrency}
+                                        items={[
+                                            { value: "VND", label: t("payment.currency.vnd") },
+                                            { value: "USD", label: t("payment.currency.usd") },
+                                        ]}
+                                    />
+                                ) : null}
+
+                                {/* gateways for the active currency — interactive list card */}
+                                {activeGroup ? (
+                                    <LabeledCard
+                                        label={activeGroup.label}
+                                        labelEnd={activeGroup.currency}
+                                        frameless
+                                    >
+                                        <div className="overflow-hidden rounded-3xl border border-default bg-surface">
+                                            {activeGroup.methods.map((method) => renderMethodRow(method))}
                                         </div>
-                                    ))}
+                                    </LabeledCard>
+                                ) : null}
 
                                 {/* trust line — secure-payment reassurance next to the action (Baymard) */}
                                 <div className="flex flex-col items-center gap-1">

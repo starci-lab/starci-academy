@@ -13,7 +13,7 @@ import {
 } from "next-intl"
 import {
     CoverImage,
-    StatusChip,
+    PriceTag,
 } from "@/components/blocks"
 import {
     useAppSelector,
@@ -49,8 +49,6 @@ export type CoursePricingRailProps = WithClassNames<undefined>
  *
  * @param props - optional className (placement only).
  */
-/** Format an integer VND amount as "1.020.000₫". */
-const formatVnd = (amount: number): string => `${amount.toLocaleString("vi-VN")}₫`
 
 export const CoursePricingRail = ({ className }: CoursePricingRailProps) => {
     const t = useTranslations()
@@ -66,7 +64,7 @@ export const CoursePricingRail = ({ className }: CoursePricingRailProps) => {
     const hasLoyalty = preview != null && preview.discountPercent > 0
 
     return (
-        <div className={cn("md:sticky md:top-20", className)}>
+        <div className={cn("md:sticky md:top-[88px] md:self-start", className)}>
             <Card>
                 <CardContent>
                     <div className="flex flex-col gap-4">
@@ -75,30 +73,31 @@ export const CoursePricingRail = ({ className }: CoursePricingRailProps) => {
                         {/* headline: price + ONE discount + ONE scarcity line.
                             When the viewer has a loyalty discount, the headline is THEIR price
                             (struck phase price + loyalty chip); otherwise the active phase price. */}
-                        <div className="flex flex-col gap-1">
+                        <div className="flex flex-col gap-2">
                             <div className="flex flex-wrap items-center gap-2">
+                                {/* single-source PriceTag — loyalty price when the viewer has one,
+                                    else the active phase price (struck vs list). USD line stays beside it. */}
                                 {hasLoyalty && preview ? (
-                                    <>
-                                        <Typography type="h3" weight="bold">
-                                            {formatVnd(preview.discountedPriceVnd)}
-                                        </Typography>
-                                        <Typography type="body-sm" color="muted" className="line-through">
-                                            {formatVnd(preview.originalPriceVnd)}
-                                        </Typography>
-                                        <StatusChip tone="success">
-                                            {t("course.loyaltyOff", { percent: preview.discountPercent })}
-                                        </StatusChip>
-                                    </>
-                                ) : (
-                                    <>
-                                        <Typography type="h3" weight="bold">
-                                            {active?.formattedPrice}
-                                        </Typography>
-                                        {active?.savePercent ? (
-                                            <StatusChip tone="success">{`-${active.savePercent}%`}</StatusChip>
-                                        ) : null}
-                                    </>
-                                )}
+                                    <PriceTag
+                                        discounted={preview.discountedPriceVnd}
+                                        original={preview.originalPriceVnd}
+                                        size="lg"
+                                        breakdown={{
+                                            phase: preview.phasePriceVnd,
+                                            loyaltyPercent: preview.discountPercent,
+                                        }}
+                                    />
+                                ) : active ? (
+                                    <PriceTag
+                                        discounted={active.priceVnd}
+                                        original={active.listPriceVnd}
+                                        size="lg"
+                                        breakdown={{
+                                            phase: active.priceVnd,
+                                            loyaltyPercent: 0,
+                                        }}
+                                    />
+                                ) : null}
                                 {active?.formattedPriceUsd ? (
                                     <Typography type="body-sm" color="muted">
                                         {active.formattedPriceUsd}

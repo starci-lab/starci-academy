@@ -1,4 +1,45 @@
 {
+    "community": {
+        "title": "Cộng đồng",
+        "description": "Chia sẻ điều bạn đang làm, hỏi khi gặp khó, cùng nhau học.",
+        "channelTabsAria": "Lọc bài cộng đồng theo kênh",
+        "channel": {
+            "all": "Tất cả",
+            "problems": "Vấn đề",
+            "founderQa": "Hỏi founder",
+            "general": "Chung"
+        },
+        "composerPlaceholder": "Chia sẻ điều gì đó với cộng đồng…",
+        "post": "Đăng",
+        "empty": "Chưa có bài nào. Hãy là người đầu tiên chia sẻ.",
+        "error": "Không tải được bảng tin cộng đồng",
+        "retry": "Thử lại",
+        "loadMore": "Tải thêm",
+        "comments": {
+            "placeholder": "Viết bình luận…",
+            "send": "Bình luận",
+            "loading": "Đang tải bình luận…",
+            "empty": "Chưa có bình luận. Bắt đầu trò chuyện nào.",
+            "error": "Không tải được bình luận",
+            "reply": "Trả lời",
+            "replyPlaceholder": "Viết trả lời…",
+            "viewReplies": "Xem {count} trả lời",
+            "hideReplies": "Ẩn trả lời"
+        },
+        "chat": {
+            "title": "Chat cộng đồng",
+            "description": "Trò chuyện trực tiếp với cộng đồng, hoặc nhắn riêng cho founder.",
+            "tabsAria": "Chuyển cuộc trò chuyện",
+            "communityRoom": "Cộng đồng",
+            "founderDm": "Founder",
+            "placeholder": "Nhập tin nhắn…",
+            "send": "Gửi",
+            "loading": "Đang tải tin nhắn…",
+            "empty": "Chưa có tin nhắn. Chào một câu nào!",
+            "error": "Không tải được tin nhắn",
+            "signInRequired": "Đăng nhập bằng tài khoản có gói member để vào chat."
+        }
+    },
     "contact": {
         "title": "Liên hệ",
         "intro": "StarCi do một người dựng nên — câu hỏi của bạn tới thẳng người làm ra nó. Chọn cách nhanh nhất bên dưới, hoặc gửi tin nhắn.",
@@ -216,6 +257,7 @@
         "brand": "StarCi Academy",
         "home": "Trang chủ",
         "courses": "Khóa học",
+        "community": "Cộng đồng",
         "practice": "Luyện Code",
         "contact": "Liên hệ",
         "logout": "Đăng xuất",
@@ -370,8 +412,8 @@
         "paywall": {
             "title": "Nội dung trả phí",
             "titleNamed": "Mở khoá {course}",
-            "description": "Bạn đang đọc thử. Mở khoá để học trọn khóa.",
-            "buy": "Mở khoá khóa học",
+            "description": "Bạn đang đọc thử. Đăng ký để học trọn khóa.",
+            "buy": "Đăng ký khóa học",
             "back": "Quay lại",
             "loyaltyOff": "−{percent}% loyalty",
             "unlock": {
@@ -1827,13 +1869,25 @@
             "signingOut": "Đang đăng xuất…"
         }
     },
+    "priceTag": {
+        "breakdownTitle": "Chi tiết giá",
+        "listPrice": "Giá gốc",
+        "phase": "Ưu đãi giai đoạn",
+        "phaseNamed": "Giai đoạn {phase}",
+        "loyalty": "Ưu đãi thành viên",
+        "youPay": "Bạn trả"
+    },
     "payment": {
         "title": "Thanh toán",
         "desc": "Chọn một phương thức để tiếp tục",
+        "currency": {
+            "vnd": "Trong nước · VND",
+            "usd": "Quốc tế · USD"
+        },
         "priceError": "Không tải được giá",
         "intlNoUsd": "Phương thức quốc tế chưa khả dụng cho đơn này.",
         "secure": "Thanh toán được mã hoá & bảo mật.",
-        "noCardStored": "StarCi không lưu thông tin thẻ của bạn",
+        "noCardStored": "StarCi Academy không lưu thông tin thẻ của bạn",
         "aiPlanName": "Gói AI",
         "membershipName": "Hội viên StarCi",
         "loyalty": {

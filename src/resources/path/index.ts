@@ -424,6 +424,16 @@ export const pathConfig = () => {
                 build,
             }
         }
+        const community = () => {
+            // community feed (posts + comments + reactions) + founder Q&A
+            const communityPath = `${localePath}/community`
+            const build = () => {
+                return communityPath
+            }
+            return {
+                build,
+            }
+        }
         const practice = () => {
             const practicePath = `${localePath}/practice`
             const build = () => {
@@ -494,6 +504,7 @@ export const pathConfig = () => {
             review,
             talents,
             blog,
+            community,
             rewards,
             league,
             kpi,

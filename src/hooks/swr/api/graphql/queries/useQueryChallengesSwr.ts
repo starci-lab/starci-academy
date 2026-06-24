@@ -36,8 +36,10 @@ export const useQueryChallengesSwr = () => {
     const contentTab = useAppSelector((state) => state.tabs.contentTab)
     const dispatch = useAppDispatch()
     return useSWR(
+        // NOT gated on `enrolled` — challenges are viewable on a free/trial lesson too
+        // (BE dropped the enroll guard, 2026-06-23). Premium lessons stay protected by
+        // the locked tab + content gate, so this only ever lists a reachable lesson's.
         authenticated
-            && enrolled
             && course?.id
             && contentId
             && contentTab === ContentTab.Challenges

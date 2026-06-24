@@ -18,7 +18,7 @@ export const useQueryChallengeSubmissionProgressSwr = () => {
     const contentTab = useAppSelector((state) => state.tabs.contentTab)
     const dispatch = useAppDispatch()
     return useSWR(
-        authenticated && enrolled && course?.id && contentTab === ContentTab.Challenges
+        authenticated && course?.id && contentTab === ContentTab.Challenges
             ? [
                 "QUERY_CHALLENGE_SUBMISSION_PROGRESS_SWR",
                 course.id,

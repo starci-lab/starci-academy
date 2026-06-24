@@ -66,17 +66,14 @@ export const CourseDetail = ({ className }: CourseDetailProps) => {
                 <AsyncContent
                     isLoading={isLoading && !course}
                     skeleton={(
-                        <div className="flex flex-col gap-10">
-                            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-                                <div className="flex flex-col gap-6">
-                                    <Skeleton.Typography type="h2" />
-                                    <Skeleton.Typography type="body" />
-                                    <Skeleton.Metric />
-                                    <Skeleton.Button />
-                                </div>
-                                <Skeleton.Card />
+                        <div className="grid grid-cols-1 items-start gap-x-6 gap-y-10 md:grid-cols-3">
+                            <div className="flex flex-col gap-3 md:col-span-2 md:col-start-1 md:row-start-1">
+                                <Skeleton.Typography type="h2" />
+                                <Skeleton.Typography type="body" />
+                                <Skeleton.Metric />
                             </div>
-                            <Skeleton.Accordion items={3} />
+                            <Skeleton.Card className="md:col-span-1 md:col-start-3 md:row-span-2 md:row-start-1" />
+                            <Skeleton.Accordion items={3} className="md:col-span-2 md:col-start-1 md:row-start-2" />
                         </div>
                     )}
                     isEmpty={!isLoading && !error && !course}
@@ -88,21 +85,25 @@ export const CourseDetail = ({ className }: CourseDetailProps) => {
                         retryLabel: t("courseLanding.retry"),
                     }}
                 >
-                    <div className="flex flex-col gap-10">
-                        <CourseHero />
-                        <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-3">
-                            {/* narrative left on desktop; the purchase card comes FIRST on mobile */}
-                            <div className="order-2 flex flex-col gap-6 md:order-1 md:col-span-2">
+                    {/* ONE grid from the top so the sticky purchase card's top lines up with the
+                        breadcrumb/header: header = row 1 (cols 1-2), card = col 3 spanning rows 1-2,
+                        narrative = row 2 (cols 1-2). Row gap = 10 (header → content, layouts/gap.md),
+                        column gap = 6. DOM order hero → card → narrative → mobile stacks
+                        header → purchase card → curriculum. */}
+                    <>
+                        <div className="grid grid-cols-1 items-start gap-x-6 gap-y-10 md:grid-cols-3">
+                            <CourseHero className="md:col-span-2 md:col-start-1 md:row-start-1" />
+                            <CoursePricingRail className="md:col-span-1 md:col-start-3 md:row-span-2 md:row-start-1" />
+                            <div className="flex flex-col gap-6 md:col-span-2 md:col-start-1 md:row-start-2">
                                 <CourseValueProps />
                                 <CourseCurriculum />
                                 <CoursePrerequisites />
                                 <CourseFaq />
                             </div>
-                            <CoursePricingRail className="order-1 md:order-2 md:col-span-1" />
                         </div>
                         {/* mobile-only sticky enroll bar (renders only with a loaded course) */}
                         <CourseMobileEnrollBar className="md:hidden" />
-                    </div>
+                    </>
                 </AsyncContent>
             </div>
         </div>

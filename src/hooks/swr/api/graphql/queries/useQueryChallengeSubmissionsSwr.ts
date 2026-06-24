@@ -20,7 +20,7 @@ export const useQueryChallengeSubmissionsSwr = () => {
     )
     const dispatch = useAppDispatch()
     const swr = useSWR(
-        authenticated && enrolled && course?.id && challengeId
+        authenticated && course?.id && challengeId
             ? [
                 "QUERY_CHALLENGE_SUBMISSIONS_SWR",
                 challengeId,

@@ -20,3 +20,7 @@ export const contentDiscussionSocket: Socket = contentDiscussionManager.socket("
 const aiLabManager = createManager()
 /** The `/ai_lab` namespace socket (playground prompt token streaming). */
 export const aiLabSocket: Socket = aiLabManager.socket("/ai_lab")
+
+const communityChatManager = createManager()
+/** The `/community_chat` namespace socket (per-conversation message realtime). */
+export const communityChatSocket: Socket = communityChatManager.socket("/community_chat")

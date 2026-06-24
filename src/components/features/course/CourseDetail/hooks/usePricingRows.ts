@@ -14,6 +14,9 @@ import {
     computePercentage,
 } from "@/modules/utils"
 import {
+    publicEnv,
+} from "@/resources"
+import {
     useAppSelector,
 } from "@/redux"
 import type {
@@ -40,19 +43,29 @@ export const usePricingRows = (): UsePricingRowsResult => {
     const course = useAppSelector((state) => state.course.entity)
 
     return useMemo<UsePricingRowsResult>(() => {
-        const listPrice = course?.originalPrice ?? 0
+        // mirror the backend display transforms so rail prices match the catalog /
+        // payment modal (which read `coursePricePreview`): VND ÷ testDivisor in
+        // non-prod; USD charm-rounded to x.99 (no divisor). Keeps every surface equal.
+        const divisor = publicEnv().pricing.testDivisor
+        const toDisplayVnd = (amount: number): number =>
+            divisor === 1 ? amount : Math.max(1, Math.round(amount / divisor))
+        const toDisplayUsd = (amount: number): number => Math.max(1, Math.ceil(amount)) - 0.01
+
+        const listPrice = toDisplayVnd(course?.originalPrice ?? 0)
         const currentPhase = course?.currentPhase ?? PricingPhase.Pioneer
         const phases = _.cloneDeep(course?.pricingPhases ?? []).sort(
             (a, b) => a.sortIndex - b.sortIndex,
         )
         const currentOrderIndex = phases.find((p) => p.phase === currentPhase)?.sortIndex ?? 0
 
-        /** Display price for a tier (phase price, else course list price). */
+        /** Display price for a tier (phase price, else course list price), test-divided. */
         const priceOf = (phase: PricingPhaseEntity): number =>
-            phase.price ?? course?.originalPrice ?? 0
-        /** USD display price for a tier, or null when neither phase nor course has one. */
-        const usdOf = (phase: PricingPhaseEntity): number | null =>
-            phase.priceUsd ?? course?.originalPriceUsd ?? null
+            toDisplayVnd(phase.price ?? course?.originalPrice ?? 0)
+        /** USD display price for a tier (charm-rounded), or null when none. */
+        const usdOf = (phase: PricingPhaseEntity): number | null => {
+            const raw = phase.priceUsd ?? course?.originalPriceUsd ?? null
+            return raw == null ? null : toDisplayUsd(raw)
+        }
         /** Discount percent of a tier price against the list price. */
         const discountOf = (tierPrice: number, refPrice: number): number => {
             if (refPrice <= 0 || tierPrice >= refPrice) {
@@ -68,6 +81,8 @@ export const usePricingRows = (): UsePricingRowsResult => {
                 id: phase.id,
                 phase: phase.phase,
                 formattedPrice: `${numeral(price).format("0,0")}₫`,
+                priceVnd: price,
+                listPriceVnd: listPrice,
                 formattedPriceUsd: usd != null ? numeral(usd).format("$0,0.00") : null,
                 savePercent: phase.price != null
                     ? computePercentage({

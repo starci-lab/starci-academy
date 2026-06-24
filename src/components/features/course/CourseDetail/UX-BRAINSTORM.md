@@ -119,3 +119,27 @@ prerequisites tô **warning-vàng** (đọc như chặn) · pricing+CTA ở side
 2. **Track riêng — feature Review**: BE entity review + `courseReviews`/`submitReview` (gate enrolled) + FE block sao →
    bật mục #6 trên landing.
 3. **`/ui-apply`** đánh bóng pixel sau khi cấu trúc xong.
+
+---
+
+## ⟳ Refinement v3 — RHYTHM / GAP pass (2026-06-24)
+Thầy soi live bản đã dựng (`CourseDetail/**`): *"trang này sai về gap"*. Trang IA đã ổn (đúng v2: narrative trái + sticky purchase card phải); **vấn đề là NHỊP DỌC lệch scale 0/2/3/4/6**.
+
+### Lỗi gap thật (audit `CourseDetail/index.tsx`)
+- L91 sections `gap-10` (40px) · L93 grid 2 cột `gap-8` (32px) · L69-70 skeleton `gap-10/gap-8` · `CoursePricingRail` L78 headline `gap-1` (4px) · L72 card interior `gap-4` · L65 mobile `pb-24` tùy tiện. → 1/4/5/8/10 đều **ngoài scale {0,2,3,4,6}** (= 0/8/12/16/24px).
+
+### Luật nhịp CHỐT (áp trang này; rút thành draft chung)
+- **`gap-6`** = giữa 2 khối / 2 vùng khác chức năng — **kể cả grid trái(narrative)↔phải(pricing)** và giữa các section (Hero/ValueProps/Curriculum/Prereq/FAQ). (gap-10/gap-8 → gap-6.)
+- **`gap-3`** = trong 1 khối (LabeledCard label↔content, item↔item, hàng card). **Pricing card interior `gap-4`→`gap-3`.**
+- **`gap-2`** = cụm con sát: **giá + chip giảm** (`gap-1`→`gap-2`), stat pair.
+- **CẤM** gap-1/5/8/10; mobile clearance cho sticky bar KHÔNG dùng `pb-24` tùy tiện → spacer/token đặt tên đo đúng chiều cao bar.
+- **Skeleton mirror đúng nhịp mới** (gap-6), không để lệch loaded.
+
+### Kèm theo (nhỏ, cùng pass)
+- **Ẩn stat = 0**: "0 Học viên" (khóa mới) → ẩn dòng, KHÔNG render "0" (phản-social-proof). Dẫn bằng stat khối-lượng (24 Module · 87 Nội dung · 276 Bài thực hành · 31 Giờ). Ref `design-for-data-that-exists-coverless-lowvolume`.
+- **Cover null → fallback gradient** (coverImageUrl thường null) — không vỡ card.
+
+### Hướng chốt = **A** (chuẩn-hoá nhịp + ẩn 0-stat + cover fallback). Rủi ro thấp, đúng "sai về gap". 
+Follow-up tùy chọn **B**: surface `livestreamSessions` (lớp live hàng tuần) + `flashcardDecks` (ôn phỏng vấn) — 2 field đang phí, mạnh "what you get". Hỏi thầy trước.
+
+### → `/ux-apply` chỉ cần: nắn gap về scale (index.tsx + CoursePricingRail + skeleton) + ẩn stat 0 + cover fallback. KHÔNG đổi IA.

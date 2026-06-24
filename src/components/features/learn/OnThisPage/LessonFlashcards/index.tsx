@@ -2,12 +2,12 @@
 
 import React from "react"
 import useSWR from "swr"
-import { Button, Label, Separator, Typography, cn } from "@heroui/react"
+import { Button, Typography } from "@heroui/react"
 import { CardsThreeIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { queryFlashcardDecksByCourse } from "@/modules/api/graphql"
-import { AsyncContent, Skeleton } from "@/components/blocks"
+import { AsyncContent, LabeledList, Skeleton } from "@/components/blocks"
 import { useAppSelector } from "@/redux"
 import { pathConfig } from "@/resources"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -43,7 +43,6 @@ export const LessonFlashcards = ({ className }: LessonFlashcardsProps) => {
     )
 
     const decks = data ?? []
-    const totalCards = decks.reduce((sum, deck) => sum + (deck.cards?.length ?? 0), 0)
 
     // open the Flashcards page for this course (deck is chosen there)
     const onReview = () => {
@@ -60,7 +59,6 @@ export const LessonFlashcards = ({ className }: LessonFlashcardsProps) => {
             isLoading={isLoading && !data}
             skeleton={
                 <div className="flex flex-col gap-3">
-                    <Separator />
                     <Skeleton.Typography type="body-sm" width="1/2" />
                     <Skeleton.Typography type="body-xs" width="3/4" />
                     <Skeleton.Button />
@@ -68,26 +66,22 @@ export const LessonFlashcards = ({ className }: LessonFlashcardsProps) => {
             }
             isEmpty={decks.length === 0}
         >
-            <div className={cn("flex flex-col gap-3", className)}>
-                <Separator />
-                <div className="flex items-center gap-2">
-                    <CardsThreeIcon className="size-5" aria-hidden focusable="false" />
-                    <Label>{t("lessonRail.flashcards.title")}</Label>
-                </div>
-                <div className="flex flex-col gap-2">
-                    {decks.map((deck) => (
-                        <Typography key={deck.id} type="body-sm" color="muted" truncate>
-                            {deck.title}
-                        </Typography>
-                    ))}
-                </div>
-                <Typography type="body-xs" color="muted">
-                    {t("lessonRail.flashcards.count", { decks: decks.length, cards: totalCards })}
-                </Typography>
-                <Button size="sm" variant="primary" className="self-start" onPress={onReview}>
-                    {t("lessonRail.flashcards.review")}
-                </Button>
-            </div>
+            <LabeledList
+                className={className}
+                icon={<CardsThreeIcon className="size-5" aria-hidden focusable="false" />}
+                label={t("lessonRail.flashcards.title")}
+                action={(
+                    <Button size="sm" variant="primary" className="self-start" onPress={onReview}>
+                        {t("lessonRail.flashcards.review")}
+                    </Button>
+                )}
+            >
+                {decks.map((deck) => (
+                    <Typography key={deck.id} type="body-sm" color="muted" truncate>
+                        {deck.title}
+                    </Typography>
+                ))}
+            </LabeledList>
         </AsyncContent>
     )
 }

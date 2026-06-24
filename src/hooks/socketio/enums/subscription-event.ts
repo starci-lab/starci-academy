@@ -15,4 +15,6 @@ export enum SubscriptionEvent {
     CommentReactionChanged = "content_discussion.comment_reaction_changed.subscription",
     /** A streamed token chunk for an AI Lab run (must match backend). */
     AiLabRunChunk = "ai_lab.run_chunk.subscription",
+    /** A chat message was created in a conversation (must match backend). */
+    ChatMessageCreated = "community_chat.message_created.subscription",
 }

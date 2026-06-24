@@ -60,7 +60,7 @@ export const CourseCurriculum = ({ className }: CourseCurriculumProps) => {
             className={className}
             label={t("courseLanding.curriculum")}
             icon={<ListChecksIcon aria-hidden focusable="false" className="size-5" />}
-            flushContent
+            frameless
         >
             <AsyncContent
                 isLoading={isLoading && modules.length === 0}
@@ -72,7 +72,10 @@ export const CourseCurriculum = ({ className }: CourseCurriculumProps) => {
                     retryLabel: t("courseLanding.retry"),
                 }}
             >
-                <Accordion variant="surface">
+                {/* Accordion Card: surface accordion đặt thẳng trên nền trang (frameless,
+                    KHÔNG lồng trong Card → tránh surface-in-surface phẳng) + viền card.
+                    Ref elements/card.md §3 + draft accordion-card-surface-on-standalone-pages. */}
+                <Accordion variant="surface" className="overflow-hidden border border-default">
                     {modules.map((module) => (
                         <ModuleAccordionItem key={module.id} module={module} />
                     ))}

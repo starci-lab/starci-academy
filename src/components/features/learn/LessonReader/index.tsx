@@ -373,6 +373,9 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
                                         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-72 bg-gradient-to-b from-transparent via-surface/70 to-surface" />
                                     ) : null}
                                 </div>
+                                {/* paywall lives INSIDE the body card, under the faded teaser
+                                    (flat — not a 2nd card). */}
+                                {isLocked ? <PremiumPaywall /> : null}
                             </CardContent>
                         </Card>
                     </div>
@@ -392,8 +395,6 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
                         ) : null}
                     </div>
                 ) : null}
-                {/* paywall sits directly under the faded teaser */}
-                {isLocked ? <PremiumPaywall /> : null}
                 {/* inline house/sponsor banner at the foot of the lesson; null
                     server-side for members + enrolled viewers, so render only
                     when present and not on full-width (sandbox / AI lab) tabs */}

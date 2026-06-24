@@ -115,3 +115,6 @@ export * from "./recommended-courses"
 export * from "./course-price-preview"
 
 export * from "./my-github-team-status"
+export * from "./community-feed"
+export * from "./community-comments"
+export * from "./chat"

@@ -30,11 +30,12 @@ export const TabTrigger = ({
     locked,
     className,
 }: TabTriggerProps) => {
+    // When gated, the lock OVERRIDES the tab's own icon (one icon, not icon + lock).
+    const Icon = locked ? LockIcon : TabIcon
     return (
         <div className={cn("flex items-center gap-2", className)}>
-            <TabIcon className="size-5" />
+            <Icon className="size-5" aria-label={locked ? label : undefined} />
             <span>{label}</span>
-            {locked ? <LockIcon className="size-5" /> : null}
         </div>
     )
 }

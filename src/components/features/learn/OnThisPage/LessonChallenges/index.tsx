@@ -2,12 +2,12 @@
 
 import React from "react"
 import useSWR from "swr"
-import { Button, Label, Separator, Typography, cn } from "@heroui/react"
+import { Button, Typography } from "@heroui/react"
 import { PuzzlePieceIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { usePathname, useRouter } from "next/navigation"
 import { GraphQLHeadersKey, queryChallenges } from "@/modules/api"
-import { AsyncContent, DifficultyChip, Skeleton } from "@/components/blocks"
+import { AsyncContent, DifficultyChip, LabeledList, Skeleton } from "@/components/blocks"
 import type { Difficulty } from "@/components/blocks"
 import { useAppDispatch, useAppSelector } from "@/redux"
 import { ContentTab, setContentTab } from "@/redux/slices"
@@ -85,7 +85,6 @@ export const LessonChallenges = ({ className }: LessonChallengesProps) => {
             isLoading={isLoading && !data}
             skeleton={
                 <div className="flex flex-col gap-3">
-                    <Separator />
                     <Skeleton.Typography type="body-sm" width="1/2" />
                     <Skeleton.Typography type="body-xs" width="3/4" />
                     <Skeleton.Button />
@@ -93,31 +92,27 @@ export const LessonChallenges = ({ className }: LessonChallengesProps) => {
             }
             isEmpty={challenges.length === 0}
         >
-            <div className={cn("flex flex-col gap-3", className)}>
-                <Separator />
-                <div className="flex items-center gap-2">
-                    <PuzzlePieceIcon className="size-5" aria-hidden focusable="false" />
-                    <Label>{t("lessonRail.challenges.title")}</Label>
-                </div>
-                <div className="flex flex-col gap-2">
-                    {challenges.map((challenge) => (
-                        <div key={challenge.id} className="flex items-center justify-between gap-2">
-                            <Typography type="body-sm" color="muted" truncate>
-                                {challenge.title}
-                            </Typography>
-                            {challenge.difficulty ? (
-                                <DifficultyChip difficulty={toDifficulty(challenge.difficulty)} />
-                            ) : null}
-                        </div>
-                    ))}
-                </div>
-                <Typography type="body-xs" color="muted">
-                    {t("lessonRail.challenges.count", { count: challenges.length })}
-                </Typography>
-                <Button size="sm" variant="primary" className="self-start" onPress={onPractice}>
-                    {t("lessonRail.challenges.practice")}
-                </Button>
-            </div>
+            <LabeledList
+                className={className}
+                icon={<PuzzlePieceIcon className="size-5" aria-hidden focusable="false" />}
+                label={t("lessonRail.challenges.title")}
+                action={(
+                    <Button size="sm" variant="primary" className="self-start" onPress={onPractice}>
+                        {t("lessonRail.challenges.practice")}
+                    </Button>
+                )}
+            >
+                {challenges.map((challenge) => (
+                    <div key={challenge.id} className="flex items-center justify-between gap-2">
+                        <Typography type="body-sm" color="muted" truncate>
+                            {challenge.title}
+                        </Typography>
+                        {challenge.difficulty ? (
+                            <DifficultyChip difficulty={toDifficulty(challenge.difficulty)} />
+                        ) : null}
+                    </div>
+                ))}
+            </LabeledList>
         </AsyncContent>
     )
 }

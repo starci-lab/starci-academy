@@ -11,7 +11,6 @@ import {
 } from "next-intl"
 import _ from "lodash"
 import {
-    DotOutlineIcon,
     ListBulletsIcon,
 } from "@phosphor-icons/react"
 import {
@@ -58,13 +57,16 @@ export const CoursePrerequisites = ({ className }: CoursePrerequisitesProps) => 
             className={className}
             label={t("courseLanding.prerequisites")}
             icon={<ListBulletsIcon aria-hidden focusable="false" className="size-5" />}
+            frameless
         >
             <AsyncContent
                 isLoading={isLoading && items.length === 0}
                 skeleton={(
-                    <div className="flex flex-col gap-3">
+                    <div className="overflow-hidden rounded-3xl border border-default bg-surface">
                         {[0, 1, 2].map((row) => (
-                            <Skeleton.Typography key={row} type="body-sm" />
+                            <div key={row} className="px-4 py-4">
+                                <Skeleton.Typography type="body-sm" />
+                            </div>
                         ))}
                     </div>
                 )}
@@ -75,10 +77,15 @@ export const CoursePrerequisites = ({ className }: CoursePrerequisitesProps) => 
                     retryLabel: t("courseLanding.retry"),
                 }}
             >
-                <ul className="flex flex-col gap-2">
+                {/* List Card: list TĨNH (không click/expand) nhưng "da" y chang Accordion surface —
+                    surface card frameless + viền, mỗi row px-4 py-4 + separator inset
+                    (bg-surface-foreground/6, left-3% w-94%, row cuối ẩn). Ref elements/card.md §3. */}
+                <ul className="overflow-hidden rounded-3xl border border-default bg-surface">
                     {items.map((item) => (
-                        <li key={item.id} className="flex items-start gap-2">
-                            <DotOutlineIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" weight="fill" />
+                        <li
+                            key={item.id}
+                            className="relative px-4 py-4 after:absolute after:bottom-0 after:left-[3%] after:h-px after:w-[94%] after:bg-surface-foreground/6 after:content-[''] last:after:hidden"
+                        >
                             <Typography type="body-sm">{item.text}</Typography>
                         </li>
                     ))}

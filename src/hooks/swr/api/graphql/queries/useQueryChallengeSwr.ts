@@ -13,7 +13,7 @@ export const useQueryChallengeSwr = () => {
     const enrolled = useAppSelector((state) => state.user.enrolled)
     const dispatch = useAppDispatch()
     const swr = useSWR(
-        authenticated && enrolled && challengeId && course?.id
+        authenticated && challengeId && course?.id
             ? [
                 "QUERY_CHALLENGE_SWR",
                 challengeId,

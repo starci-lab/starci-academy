@@ -9,7 +9,14 @@ import {
 } from "next-intl"
 import numeral from "numeral"
 import {
-    StatPair,
+    BookOpenIcon,
+    ClockIcon,
+    PuzzlePieceIcon,
+    StackIcon,
+    UsersIcon,
+} from "@phosphor-icons/react"
+import {
+    HighlightChip,
 } from "@/components/blocks"
 import {
     useAppSelector,
@@ -39,25 +46,32 @@ export const CourseTrustStats = ({ className }: CourseTrustStatsProps) => {
     const hours = Math.max(1, Math.round(totals.totalMinutes / 60))
 
     return (
-        <div className={cn("flex flex-wrap gap-x-8 gap-y-4", className)}>
-            <StatPair
-                value={numeral(enrollmentCount).format("0,0")}
-                label={t("courseLanding.stats.learners")}
-            />
-            <StatPair
+        <div className={cn("flex flex-wrap gap-2", className)}>
+            {enrollmentCount > 0 ? (
+                <HighlightChip
+                    icon={<UsersIcon aria-hidden focusable="false" className="size-4" />}
+                    value={numeral(enrollmentCount).format("0,0")}
+                    label={t("courseLanding.stats.learners")}
+                />
+            ) : null}
+            <HighlightChip
+                icon={<StackIcon aria-hidden focusable="false" className="size-4" />}
                 value={totals.moduleCount}
                 label={t("courseLanding.stats.modules")}
             />
-            <StatPair
+            <HighlightChip
+                icon={<BookOpenIcon aria-hidden focusable="false" className="size-4" />}
                 value={totals.lessonCount}
                 label={t("courseLanding.stats.lessons")}
             />
-            <StatPair
+            <HighlightChip
+                icon={<ClockIcon aria-hidden focusable="false" className="size-4" />}
                 value={hours}
                 label={t("courseLanding.stats.hours")}
             />
             {totals.challengeCount > 0 ? (
-                <StatPair
+                <HighlightChip
+                    icon={<PuzzlePieceIcon aria-hidden focusable="false" className="size-4" />}
                     value={totals.challengeCount}
                     label={t("courseLanding.stats.challenges")}
                 />

@@ -1,4 +1,6 @@
-import React from "react"
+"use client"
+
+import React, { useEffect, useState } from "react"
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -59,6 +61,12 @@ export const IconTile = ({
     size = "md",
     className,
 }: IconTileProps) => {
+    // a broken cover URL (404 / unsynced asset) falls back to the icon instead of a
+    // broken-image glyph; reset when the src changes.
+    const [failed, setFailed] = useState(false)
+    useEffect(() => setFailed(false), [src])
+    const showImage = Boolean(src) && !failed
+
     return (
         <div
             aria-hidden
@@ -66,12 +74,17 @@ export const IconTile = ({
                 "flex shrink-0 items-center justify-center overflow-hidden",
                 SIZE[size],
                 // skip the tint when a cover image fills the tile
-                src ? null : TONE[tone],
+                showImage ? null : TONE[tone],
                 className,
             )}
         >
-            {src ? (
-                <img src={src} alt={alt} className="size-full object-cover" />
+            {showImage ? (
+                <img
+                    src={src ?? undefined}
+                    alt={alt}
+                    className="size-full object-cover"
+                    onError={() => setFailed(true)}
+                />
             ) : (
                 icon
             )}

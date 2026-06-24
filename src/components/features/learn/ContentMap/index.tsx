@@ -221,7 +221,9 @@ export const ContentMap = ({ className }: ContentMapProps) => {
                     read: progress.lessonsRead,
                     total: progress.lessonsTotal,
                 }),
-                continue: continueHref ? {
+                // only when you've navigated AWAY from your current task — hide it while
+                // you're already reading that task (the button would just point at this page).
+                continue: continueHref && currentTask?.id !== activeContentId ? {
                     label: t("courseContents.resume"),
                     onPress: onContinue,
                 } : undefined,

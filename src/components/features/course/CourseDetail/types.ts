@@ -8,6 +8,10 @@ export interface CoursePriceRow {
     phase: PricingPhase
     /** Price formatted in VND (e.g. "199,000₫"). */
     formattedPrice: string
+    /** Raw VND price of this phase (feeds the shared `PriceTag`). */
+    priceVnd: number
+    /** Raw VND list price discounts are measured against (struck in `PriceTag`). */
+    listPriceVnd: number
     /** Price formatted in USD (e.g. "$9.99"), or null when none. */
     formattedPriceUsd: string | null
     /** Discount vs list price, rounded to a whole percent, or null. */

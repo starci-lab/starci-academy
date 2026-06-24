@@ -1,12 +1,11 @@
 "use client"
 
-import { LockIcon, ShoppingCartIcon, CheckCircleIcon } from "@phosphor-icons/react"
+import { ShoppingCartIcon, CheckCircleIcon } from "@phosphor-icons/react"
 import React, {
     useCallback,
 } from "react"
 import {
     Button,
-    Chip,
     Modal,
     Typography,
     cn,
@@ -23,11 +22,8 @@ import { useAppSelector } from "@/redux"
 import {
     PaymentFlow,
 } from "@/modules/types"
-import { AsyncContent } from "@/components/blocks"
+import { AsyncContent, PriceTag } from "@/components/blocks"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-
-/** Format an integer VND amount as "1.020.000₫". */
-const formatVnd = (amount: number): string => `${amount.toLocaleString("vi-VN")}₫`
 
 /**
  * Premium-gate modal: a VALUE-FIRST register/buy prompt shown when a viewer clicks
@@ -75,65 +71,64 @@ export const PremiumGateModal = ({ className }: WithClassNames<undefined>) => {
                     <Modal.Dialog className={cn(className)}>
                         <Modal.CloseTrigger />
                         <Modal.Header>
-                            <div className="flex items-center gap-2 pr-8">
-                                <LockIcon aria-hidden focusable="false" className="size-5 text-warning" />
-                                <Typography type="body" weight="semibold">
-                                    {course?.title
-                                        ? t("course.paywall.titleNamed", { course: course.title })
-                                        : t("course.paywall.title")}
-                                </Typography>
-                            </div>
-                        </Modal.Header>
-                        <Modal.Body className="gap-4">
-                            <Typography type="body-sm" color="muted">
-                                {t("course.paywall.description")}
+                            <Typography type="body" weight="semibold" className="pr-8">
+                                {course?.title
+                                    ? t("course.paywall.titleNamed", { course: course.title })
+                                    : t("course.paywall.title")}
                             </Typography>
+                        </Modal.Header>
+                        <Modal.Body>
+                            {/* info cluster (desc + unlocks + price) gap-3; the CTA is a separate
+                                action area → gap-6 from it (layouts/gap.md). */}
+                            <div className="flex flex-col gap-6">
+                                <div className="flex flex-col gap-3">
+                                    <Typography type="body-sm" color="muted">
+                                        {t("course.paywall.description")}
+                                    </Typography>
 
-                            {/* what the purchase unlocks — value before price */}
-                            <ul className="flex flex-col gap-2">
-                                {unlocks.map((item) => (
-                                    <li key={item} className="flex items-center gap-2">
-                                        <CheckCircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-success" />
-                                        <Typography type="body-sm">{item}</Typography>
-                                    </li>
-                                ))}
-                            </ul>
+                                    {/* what the purchase unlocks — value before price */}
+                                    <ul className="flex flex-col gap-2">
+                                        {unlocks.map((item) => (
+                                            <li key={item} className="flex items-center gap-2">
+                                                <CheckCircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-success" />
+                                                <Typography type="body-sm">{item}</Typography>
+                                            </li>
+                                        ))}
+                                    </ul>
 
-                            {/* loyalty-aware price anchor (struck original + % off) */}
-                            <AsyncContent
-                                isLoading={priceLoading}
-                                skeleton={<div className="h-7 w-32 animate-pulse rounded-xl bg-surface" />}
-                                error={priceSwr.error}
-                                errorContent={{ title: t("payment.priceError") }}
-                            >
-                                {price?.discountedPriceVnd != null ? (
-                                    <div className="flex flex-wrap items-baseline gap-2 border-t border-default pt-3">
-                                        <Typography type="h4" weight="bold">
-                                            {formatVnd(price.discountedPriceVnd)}
-                                        </Typography>
-                                        {price.discountPercent > 0 && price.originalPriceVnd != null ? (
-                                            <>
-                                                <Typography type="body-sm" color="muted" className="line-through">
-                                                    {formatVnd(price.originalPriceVnd)}
-                                                </Typography>
-                                                <Chip size="sm" variant="soft" color="success">
-                                                    <Chip.Label>{t("course.paywall.loyaltyOff", { percent: price.discountPercent })}</Chip.Label>
-                                                </Chip>
-                                            </>
+                                    {/* price anchor — single-source PriceTag (struck original + % off) */}
+                                    <AsyncContent
+                                        isLoading={priceLoading}
+                                        skeleton={<div className="h-7 w-32 animate-pulse rounded-xl bg-surface" />}
+                                        error={priceSwr.error}
+                                        errorContent={{ title: t("payment.priceError") }}
+                                    >
+                                        {price?.discountedPriceVnd != null ? (
+                                            <div className="border-t border-default pt-3">
+                                                <PriceTag
+                                                    discounted={price.discountedPriceVnd}
+                                                    original={price.originalPriceVnd}
+                                                    size="lg"
+                                                    breakdown={{
+                                                        phase: price.phasePriceVnd,
+                                                        loyaltyPercent: price.discountPercent,
+                                                    }}
+                                                />
+                                            </div>
                                         ) : null}
-                                    </div>
-                                ) : null}
-                            </AsyncContent>
+                                    </AsyncContent>
+                                </div>
 
-                            <Button
-                                variant="primary"
-                                size="lg"
-                                className="w-full"
-                                onPress={onBuy}
-                            >
-                                <ShoppingCartIcon aria-hidden focusable="false" className="size-5" />
-                                {t("course.paywall.buy")}
-                            </Button>
+                                <Button
+                                    variant="primary"
+                                    size="lg"
+                                    className="w-full"
+                                    onPress={onBuy}
+                                >
+                                    <ShoppingCartIcon aria-hidden focusable="false" className="size-5" />
+                                    {t("course.paywall.buy")}
+                                </Button>
+                            </div>
                         </Modal.Body>
                     </Modal.Dialog>
                 </Modal.Container>

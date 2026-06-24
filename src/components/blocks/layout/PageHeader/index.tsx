@@ -33,6 +33,12 @@ export interface PageHeaderProps extends WithClassNames<undefined> {
      * column.
      */
     actions?: ReactNode
+    /**
+     * Optional meta row placed BELOW the title/description — typically a row of
+     * stat/meta chips ("24 Module · 87 Nội dung …"). Rendered `gap-3` from the
+     * title block. Omit when the header carries no stats.
+     */
+    meta?: ReactNode
 }
 
 /**
@@ -59,10 +65,13 @@ export const PageHeader = ({
     description,
     breadcrumb,
     actions,
+    meta,
     className,
 }: PageHeaderProps) => {
     return (
-        <div className={cn("flex flex-col gap-2", className)}>
+        // outer gap-3: breadcrumb ↔ title-block ↔ meta (different header tiers);
+        // title ↔ description stay a tight gap-2 pair inside the title block.
+        <div className={cn("flex flex-col gap-3", className)}>
             {/* Breadcrumb row — rendered only when provided, sits above the main title row */}
             {breadcrumb ? (
                 <div>{breadcrumb}</div>
@@ -83,6 +92,11 @@ export const PageHeader = ({
                     <div className="shrink-0">{actions}</div>
                 ) : null}
             </div>
+
+            {/* Meta row: stat/meta chips below the title block (gap-3 from outer) */}
+            {meta ? (
+                <div>{meta}</div>
+            ) : null}
         </div>
     )
 }

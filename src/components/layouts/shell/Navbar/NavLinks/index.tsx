@@ -57,6 +57,11 @@ export const NavLinks = ({ className }: NavLinksProps) => {
                 isActive: pathname.startsWith(pathConfig().locale(locale).course().build()),
             },
             {
+                label: t("nav.community"),
+                path: pathConfig().locale().community().build(),
+                isActive: pathname.startsWith(pathConfig().locale(locale).community().build()),
+            },
+            {
                 label: t("nav.contact"),
                 path: pathConfig().locale().contact().build(),
                 isActive: pathname.startsWith(pathConfig().locale(locale).contact().build()),

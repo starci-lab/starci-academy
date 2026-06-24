@@ -62,6 +62,15 @@ export const publicEnv = () => {
             /** The Turnstile site key. Defaults to Cloudflare's always-pass testing key. */
             siteKey: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "1x00000000000000000000AA",
         },
+        pricing: {
+            /**
+             * Non-production divides every DISPLAYED course VND price by this so the
+             * catalog / rail / payment modal all show the SAME cheap test price —
+             * mirrors the backend `LOCAL_TEST_PRICE_DIVISOR` (also NODE_ENV-gated), so
+             * the shown price equals the eventual charge. `1` in production (no divide).
+             */
+            testDivisor: process.env.NODE_ENV !== "production" ? 100 : 1,
+        },
         /**
          * Debug mode. Defaults to ON (`true`) — dev affordances activate, e.g.
          * `AsyncContent` holds the skeleton for a few seconds so loading states can

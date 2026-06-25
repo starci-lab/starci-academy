@@ -5,7 +5,6 @@ import React, {
     useMemo,
 } from "react"
 import {
-    Breadcrumbs,
     Button,
     Chip,
     Typography,
@@ -31,6 +30,9 @@ import {
     PageHeader,
 } from "@/components/blocks"
 import {
+    SettingsBreadcrumb,
+} from "../Settings/SettingsBreadcrumb"
+import {
     QuotaLane,
 } from "@/components/modals/AiQuotaModal/QuotaLane"
 import {
@@ -50,28 +52,6 @@ export const AiUsage = () => {
     const locale = useLocale()
     const { data: quota } = useQueryMyAiQuotaSwr()
 
-    const onNavigateHome = useCallback(
-        () => router.push(pathConfig().locale().build()),
-        [
-            router,
-        ],
-    )
-
-    const onNavigateProfile = useCallback(
-        () => router.push(pathConfig().locale(locale).profile().build()),
-        [
-            router,
-            locale,
-        ],
-    )
-    /** Navigate to the settings root (breadcrumb parent of every settings page). */
-    const onNavigateSettings = useCallback(
-        () => router.push(pathConfig().locale(locale).profile().settings().build()),
-        [
-            router,
-            locale,
-        ],
-    )
 
     const subscriptionHref = useMemo(
         () => `${pathConfig().locale(locale).profile().build()}/ai-subscription`,
@@ -97,67 +77,55 @@ export const AiUsage = () => {
     const upsellCta = tier ? t("aiQuota.upgradeCta") : t("aiQuota.subscribeCta")
 
     return (
-        <div className="flex flex-col gap-6">
-            <Breadcrumbs>
-                <Breadcrumbs.Item onPress={onNavigateHome}>
-                    {t("nav.home")}
-                </Breadcrumbs.Item>
-                <Breadcrumbs.Item onPress={onNavigateProfile}>
-                    {t("nav.profile")}
-                </Breadcrumbs.Item>
-                <Breadcrumbs.Item onPress={onNavigateSettings}>
-                    {t("nav.settings")}
-                </Breadcrumbs.Item>
-                <Breadcrumbs.Item>
-                    <span>{t("aiQuota.fullPageTitle")}</span>
-                </Breadcrumbs.Item>
-            </Breadcrumbs>
-
+        <div className="flex flex-col gap-10">
             <PageHeader
+                breadcrumb={<SettingsBreadcrumb current={t("aiQuota.fullPageTitle")} />}
                 title={t("aiQuota.fullPageTitle")}
                 description={t("aiQuota.fullPageDescription")}
             />
+            <div className="flex flex-col gap-6">
 
-            {/* one unified credit pool (5h + week windows) — the lane it is billed under is a
+                {/* one unified credit pool (5h + week windows) — the lane it is billed under is a
                 backend concern, not a display axis. Only the tier chip sits in the label action;
                 the subscribe/upgrade CTA moved below the card into the upsell prompt. */}
-            <LabeledCard
-                label={t("aiQuota.creditPool")}
-                action={(
-                    <Chip
-                        size="sm"
-                        variant="soft"
-                        color={quota?.tier === "max" ? "warning" : "default"}
-                    >
-                        <Chip.Label>
-                            {quota?.tier
-                                ? quota.tier.toUpperCase()
-                                : t("aiQuota.freeTier")}
-                        </Chip.Label>
-                    </Chip>
-                )}
-            >
-                <QuotaLane variant={QuotaLaneVariant.Premium} />
-            </LabeledCard>
+                <LabeledCard
+                    label={t("aiQuota.creditPool")}
+                    action={(
+                        <Chip
+                            size="sm"
+                            variant="soft"
+                            color={quota?.tier === "max" ? "warning" : "default"}
+                        >
+                            <Chip.Label>
+                                {quota?.tier
+                                    ? quota.tier.toUpperCase()
+                                    : t("aiQuota.freeTier")}
+                            </Chip.Label>
+                        </Chip>
+                    )}
+                >
+                    <QuotaLane variant={QuotaLaneVariant.Premium} />
+                </LabeledCard>
 
-            {/* upsell prompt — urges free users to buy / paid users to upgrade; hidden on MAX */}
-            {showUpsell ? (
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                    <Typography type="body-sm" className="text-warning">
-                        {upsellText}
-                    </Typography>
-                    <Button
-                        variant="primary"
-                        onPress={onSubscribe}
-                        className="sm:shrink-0"
-                    >
-                        {upsellCta}
-                    </Button>
-                </div>
-            ) : null}
+                {/* upsell prompt — urges free users to buy / paid users to upgrade; hidden on MAX */}
+                {showUpsell ? (
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                        <Typography type="body-sm" className="text-warning">
+                            {upsellText}
+                        </Typography>
+                        <Button
+                            variant="primary"
+                            onPress={onSubscribe}
+                            className="sm:shrink-0"
+                        >
+                            {upsellCta}
+                        </Button>
+                    </div>
+                ) : null}
 
-            {/* usage insight — chart / by-provider / history, each its own card */}
-            <AiUsageHistory />
+                {/* usage insight — chart / by-provider / history, each its own card */}
+                <AiUsageHistory />
+            </div>
         </div>
     )
 }

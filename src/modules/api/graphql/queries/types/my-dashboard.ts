@@ -30,6 +30,8 @@ export interface QueryMyDashboardMilestoneProgressItemData {
     total: number
     /** Overall completion %, equal-weight across content/challenge/milestone (0–100). */
     completionPercent: number
+    /** True when the user has actually enrolled/paid; false for a trial (preview) placeholder. */
+    isEnrolled: boolean
 }
 
 /** One day in the last-7-days streak strip. */

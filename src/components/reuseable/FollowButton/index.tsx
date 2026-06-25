@@ -1,9 +1,9 @@
 "use client"
 
 import {
-    CircleCheck as CheckIcon,
-    Persons as PersonsIcon,
-} from "@gravity-ui/icons"
+    UserMinusIcon,
+    UserPlusIcon,
+} from "@phosphor-icons/react"
 import React from "react"
 import {
     Button,
@@ -57,9 +57,9 @@ export const FollowButton = ({
                     size="sm"
                 />
             ) : following ? (
-                <CheckIcon className="size-5" />
+                <UserMinusIcon className="size-4" />
             ) : (
-                <PersonsIcon className="size-5" />
+                <UserPlusIcon className="size-4" />
             )}
             {following ? t("follow.following") : t("follow.follow")}
         </Button>

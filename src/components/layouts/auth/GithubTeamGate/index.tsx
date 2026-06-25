@@ -2,8 +2,9 @@
 
 import React, { useCallback, useEffect, useState } from "react"
 import { useParams } from "next/navigation"
-import { Button, Modal, cn } from "@heroui/react"
+import { Alert, Button, Modal, Typography, cn } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
+import { GraduationCapIcon } from "@phosphor-icons/react"
 import { useAppSelector } from "@/redux"
 import {
     useQueryMyGithubTeamStatusSwr,
@@ -11,49 +12,46 @@ import {
     useJobNotificationsSocketIo,
     PublicationEvent,
 } from "@/hooks"
+import { IconTile } from "@/components/blocks"
 import { JobStatus } from "@/modules/types"
 import { mutateRequestToTeam } from "@/modules/api"
 import { GithubIcon } from "@/components/svg"
 
 /**
- * Hard gate that forces enrolled learners into their course GitHub team.
+ * Course GitHub-team join — NON-BLOCKING.
  *
- * Linking a GitHub identity and being a team member are SEPARATE states:
- * - not linked            → must link GitHub first (opens the link modal).
- * - linked but not in team → must request to join (enqueues the invite) and
- *   accept the invite on GitHub.
- *
- * While the viewer is enrolled in a course that maps to a team but is not yet a
- * member of every such team, a NON-DISMISSABLE modal blocks the app (no outside
- * click, no ESC, no close button). It clears itself the moment `allInTeam` flips
- * true (re-checked on focus / via the recheck button). Renders nothing otherwise.
+ * A PAID-enrolled learner (the backend scopes teams to `is_enrolled = true`, so
+ * trial viewers never see this) who is not yet in their course GitHub team gets a
+ * persistent warning banner on the learn page (the learn page stays fully usable
+ * — you just can't reach GitHub: challenges + the personal-project repo). The
+ * banner opens an opt-in, DISMISSABLE modal with the step-by-step join flow:
+ * link GitHub (if needed) → request to join → accept the invite on GitHub →
+ * re-check. The banner clears the moment every required team flips to `active`.
  */
 export const GithubTeamGate = () => {
     const t = useTranslations()
     const authenticated = useAppSelector((state) => state.keycloak.authenticated)
+    // current course cover for the modal identity tile (mirrors the enroll modal summary)
+    const coverImageUrl = useAppSelector((state) => state.course.entity?.coverImageUrl)
     const { data, mutate, isLoading } = useQueryMyGithubTeamStatusSwr()
-    const { setOpen: setLinkGithubOpen, isOpen: linkGithubOpen } = useLinkGithubOverlayState()
+    const { setOpen: setLinkGithubOpen } = useLinkGithubOverlayState()
     const [requesting, setRequesting] = useState(false)
+    // the guided modal is opt-in (opened from the banner CTA) and dismissable
+    const [modalOpen, setModalOpen] = useState(false)
     const locale = useLocale()
     const jobNotificationsSocket = useJobNotificationsSocketIo()
     const jobStatusByJobId = useAppSelector((state) => state.socketIo.jobStatusByJobId)
     // courseId -> id of the enqueued resolve-github invite job (for realtime status)
     const [jobByCourse, setJobByCourse] = useState<Record<string, string>>({})
 
-    // scope the gate to the COURSE CURRENTLY BEING STUDIED. The route segment
-    // [courseId] holds the course slug (e.g. "system-design-mastery"), which matches
-    // `team.courseSlug`. The gate is mounted under courses/[courseId]/learn, so only
-    // THIS course's team should block/show here — not every enrolled course's team
-    // (the viewer still joins each course's team lazily as they enter that course).
+    // scope to the COURSE CURRENTLY BEING STUDIED (route segment [courseId] = slug).
     const params = useParams()
     const courseSlug = Array.isArray(params.courseId) ? params.courseId[0] : params.courseId
     const courseTeams = (data?.teams ?? []).filter((entry) => entry.courseSlug === courseSlug)
     const allInCourseTeams = courseTeams.every((entry) => entry.state === "active")
 
-    // request to join THIS course's team if not invited yet. NON-BLOCKING: only the
-    // (fast) enqueue mutation is awaited; we grab the job id and subscribe to its
-    // /job_notifications room, so status flows in via Redux — no blocking refetch
-    // (the old `await mutate()` ran live GitHub calls and froze the UI).
+    // request to join THIS course's team if not invited yet (non-blocking enqueue +
+    // realtime job status via socket — see the original gate's rationale).
     const onRequest = useCallback(
         async () => {
             setRequesting(true)
@@ -87,8 +85,7 @@ export const GithubTeamGate = () => {
         [courseTeams, jobNotificationsSocket, locale],
     )
 
-    // when a tracked invite job settles (Completed/Failed), refetch team status once
-    // so the row flips to "pending" (or surfaces the error) without a manual recheck.
+    // when a tracked invite job settles, refetch team status once so the row flips.
     useEffect(() => {
         const settled = Object.entries(jobByCourse).filter(([, id]) => {
             const status = jobStatusByJobId[id]?.data?.status
@@ -107,13 +104,9 @@ export const GithubTeamGate = () => {
         })
     }, [jobStatusByJobId, jobByCourse, mutate])
 
-    // block only enrolled-with-team viewers who are not fully in their teams.
-    // YIELD while the link-GitHub overlay is open: this gate is non-dismissable and
-    // would otherwise stack ON TOP of the LinkGithubModal it opens, trapping it behind
-    // an unclickable backdrop. Hiding the gate while linking lets the link modal work;
-    // closing the link modal without linking re-shows the gate (still a hard gate).
+    // show only for a viewer with a (paid) team for THIS course that isn't fully joined
     const open = Boolean(
-        authenticated && data && courseTeams.length > 0 && !allInCourseTeams && !linkGithubOpen,
+        authenticated && data && courseTeams.length > 0 && !allInCourseTeams,
     )
     if (!open || !data) {
         return null
@@ -121,108 +114,144 @@ export const GithubTeamGate = () => {
 
     const linked = data.linked
     const hasUninvited = courseTeams.some((entry) => entry.state === "none")
-    // any in-flight invite job (tracked, not yet settled) → drives the "sending" UI
     const anySending = Object.values(jobByCourse).some((id) => {
         const status = jobStatusByJobId[id]?.data?.status
         return status !== JobStatus.Completed && status !== JobStatus.Failed
     })
 
+    // identity-tile state line (this course's team; gate is scoped to the current course)
+    const primaryTeam = courseTeams[0]
+    const primaryState = primaryTeam?.state ?? "none"
+    const primaryStateLabel = anySending
+        ? t("githubTeamGate.sending")
+        : t(`githubTeamGate.state.${primaryState}`)
+    const primaryStateColor = anySending || primaryState === "pending"
+        ? "text-warning"
+        : primaryState === "active"
+            ? "text-success"
+            : "text-muted"
+
+    /** Leading step number badge. */
+    const stepBadge = (n: number) => (
+        <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-accent/10 text-xs font-medium text-accent">
+            {n}
+        </span>
+    )
+
     return (
-        <Modal
-            isOpen={open}
-            onOpenChange={() => {
-                // intentionally inert — the gate is dismissed only by joining the team
-            }}>
-            <Modal.Backdrop
-                isDismissable={false}
-                isKeyboardDismissDisabled>
-                <Modal.Container size="sm">
-                    <Modal.Dialog>
-                        {/* no CloseTrigger → cannot be dismissed; the viewer must join the team */}
-                        <Modal.Header>
-                            <div className="flex items-center gap-2">
-                                <GithubIcon className="size-5" />
-                                <span>{t("githubTeamGate.title")}</span>
-                            </div>
-                        </Modal.Header>
-                        <Modal.Body className="flex flex-col gap-4 pb-6">
-                            {!linked ? (
-                                <>
-                                    <p className="text-sm text-default-500">
-                                        {t("githubTeamGate.linkFirst")}
-                                    </p>
-                                    <Button
-                                        variant="primary"
-                                        onPress={() => setLinkGithubOpen(true)}>
-                                        <GithubIcon className="size-4" />
-                                        {t("githubTeamGate.linkCta")}
-                                    </Button>
-                                </>
-                            ) : (
-                                <>
-                                    <p className="text-sm text-default-500">
-                                        {t("githubTeamGate.requestDescription")}
-                                    </p>
-                                    <ul className="flex flex-col gap-2">
-                                        {courseTeams.map((team) => {
-                                            const inflightJobId = jobByCourse[team.courseId]
-                                            const jobStatus = inflightJobId
-                                                ? jobStatusByJobId[inflightJobId]?.data?.status
-                                                : undefined
-                                            const sending = Boolean(inflightJobId)
-                                                && jobStatus !== JobStatus.Completed
-                                                && jobStatus !== JobStatus.Failed
-                                            return (
-                                                <li
-                                                    key={team.courseId}
-                                                    className="flex items-center justify-between rounded-medium border border-default p-3 text-sm">
-                                                    <span className="truncate">{team.courseTitle}</span>
-                                                    <span
-                                                        className={cn(
-                                                            "shrink-0 text-xs",
-                                                            sending
-                                                                ? "text-warning"
-                                                                : team.state === "active"
-                                                                    ? "text-success"
-                                                                    : team.state === "pending"
-                                                                        ? "text-warning"
-                                                                        : "text-default-500",
-                                                        )}>
-                                                        {sending
-                                                            ? t("githubTeamGate.sending")
-                                                            : t(`githubTeamGate.state.${team.state}`)}
-                                                    </span>
-                                                </li>
-                                            )
-                                        })}
-                                    </ul>
-                                    <div className="flex flex-col gap-2">
-                                        {hasUninvited ? (
-                                            <Button
-                                                variant="primary"
-                                                isDisabled={requesting || anySending}
-                                                onPress={onRequest}>
-                                                {anySending
-                                                    ? t("githubTeamGate.sending")
-                                                    : t("githubTeamGate.requestCta")}
-                                            </Button>
-                                        ) : null}
+        <>
+            {/* persistent, non-blocking warning on the learn page */}
+            <Alert status="warning" className="bg-warning/10 shadow-none">
+                <Alert.Indicator>
+                    <GithubIcon className="size-5" />
+                </Alert.Indicator>
+                <Alert.Content className="gap-1">
+                    <Alert.Title>{t("githubTeamGate.warningTitle")}</Alert.Title>
+                    <Alert.Description>{t("githubTeamGate.warningBody")}</Alert.Description>
+                </Alert.Content>
+                <button
+                    type="button"
+                    onClick={() => setModalOpen(true)}
+                    className="ml-auto shrink-0 rounded-full bg-warning px-4 py-1.5 text-sm font-medium text-warning-foreground transition-opacity hover:opacity-90">
+                    {t("githubTeamGate.openCta")}
+                </button>
+            </Alert>
+
+            {/* opt-in, DISMISSABLE guided modal */}
+            <Modal isOpen={modalOpen} onOpenChange={setModalOpen}>
+                <Modal.Backdrop>
+                    <Modal.Container size="sm">
+                        <Modal.Dialog>
+                            <Modal.CloseTrigger />
+                            <Modal.Header>
+                                <Typography type="body" weight="semibold" className="pr-8">
+                                    {t("githubTeamGate.title")}
+                                </Typography>
+                            </Modal.Header>
+                            <Modal.Body className="flex flex-col gap-4 pb-6">
+                                {!linked ? (
+                                    <>
+                                        <p className="text-sm text-default-500">
+                                            {t("githubTeamGate.linkFirst")}
+                                        </p>
                                         <Button
-                                            variant="secondary"
-                                            isDisabled={isLoading}
-                                            onPress={() => mutate()}>
-                                            {t("githubTeamGate.recheckCta")}
+                                            variant="primary"
+                                            className="self-start"
+                                            onPress={() => {
+                                                // avoid stacking on the link modal it opens
+                                                setModalOpen(false)
+                                                setLinkGithubOpen(true)
+                                            }}>
+                                            <GithubIcon className="size-4" />
+                                            {t("githubTeamGate.linkCta")}
                                         </Button>
-                                    </div>
-                                    <p className="text-xs text-default-500">
-                                        {t("githubTeamGate.acceptHint")}
-                                    </p>
-                                </>
-                            )}
-                        </Modal.Body>
-                    </Modal.Dialog>
-                </Modal.Container>
-            </Modal.Backdrop>
-        </Modal>
+                                    </>
+                                ) : (
+                                    <>
+                                        {/* course identity (FLAT — mirrors the enroll modal summary):
+                                            cover IconTile + course title + team state */}
+                                        <div className="flex items-center gap-3">
+                                            <IconTile
+                                                size="sm"
+                                                src={coverImageUrl ?? undefined}
+                                                icon={<GraduationCapIcon aria-hidden focusable="false" />}
+                                            />
+                                            <div className="flex min-w-0 flex-col">
+                                                <Typography type="body-sm" weight="semibold" truncate>
+                                                    {primaryTeam?.courseTitle}
+                                                </Typography>
+                                                <span className={cn("text-xs", primaryStateColor)}>
+                                                    {primaryStateLabel}
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        {/* step-by-step join flow */}
+                                        <ol className="flex flex-col gap-3">
+                                            <li className="flex gap-3">
+                                                {stepBadge(1)}
+                                                <div className="flex min-w-0 flex-1 flex-col gap-2">
+                                                    <p className="text-sm">{t("githubTeamGate.step1")}</p>
+                                                    {hasUninvited ? (
+                                                        <Button
+                                                            variant="primary"
+                                                            size="sm"
+                                                            className="self-start"
+                                                            isDisabled={requesting || anySending}
+                                                            onPress={onRequest}>
+                                                            {anySending
+                                                                ? t("githubTeamGate.sending")
+                                                                : t("githubTeamGate.requestCta")}
+                                                        </Button>
+                                                    ) : null}
+                                                </div>
+                                            </li>
+                                            <li className="flex gap-3">
+                                                {stepBadge(2)}
+                                                <p className="min-w-0 flex-1 text-sm">{t("githubTeamGate.step2")}</p>
+                                            </li>
+                                            <li className="flex gap-3">
+                                                {stepBadge(3)}
+                                                <div className="flex min-w-0 flex-1 flex-col gap-2">
+                                                    <p className="text-sm">{t("githubTeamGate.step3")}</p>
+                                                    <Button
+                                                        variant="secondary"
+                                                        size="sm"
+                                                        className="self-start"
+                                                        isDisabled={isLoading}
+                                                        onPress={() => mutate()}>
+                                                        {t("githubTeamGate.recheckCta")}
+                                                    </Button>
+                                                </div>
+                                            </li>
+                                        </ol>
+                                    </>
+                                )}
+                            </Modal.Body>
+                        </Modal.Dialog>
+                    </Modal.Container>
+                </Modal.Backdrop>
+            </Modal>
+        </>
     )
 }

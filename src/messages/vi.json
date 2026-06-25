@@ -412,6 +412,7 @@
         "priceUsdHint": "≈ {amount} khi thanh toán quốc tế",
         "continueLearning": "Tiếp tục học",
         "tryLearning": "Học thử",
+        "trial": "Học thử",
         "paywall": {
             "title": "Nội dung trả phí",
             "titleNamed": "Mở khoá {course}",
@@ -2403,6 +2404,12 @@
         "sending": "Đang gửi yêu cầu…",
         "recheckCta": "Tôi đã chấp nhận — kiểm tra lại",
         "acceptHint": "Sau khi gửi yêu cầu, mở GitHub và chấp nhận lời mời vào team, rồi bấm kiểm tra lại.",
+        "warningTitle": "Bạn chưa vào team GitHub của khóa",
+        "warningBody": "Chưa vào team thì không mở được nội dung premium của khóa — nội dung này nằm trong repo GitHub của khóa.",
+        "openCta": "Vào team",
+        "step1": "Bấm \"Gửi yêu cầu vào team\" bên dưới — chúng tôi sẽ gửi lời mời cho bạn.",
+        "step2": "Mở GitHub và chấp nhận lời mời: từ email mời, hoặc tại github.com/orgs/StarCi-Academy → Invitations.",
+        "step3": "Quay lại đây và bấm \"Tôi đã chấp nhận — kiểm tra lại\".",
         "state": {
             "active": "Đã vào team",
             "pending": "Đang chờ chấp nhận",
@@ -2411,9 +2418,11 @@
     },
     "landing": {
         "hero": {
-            "eyebrow": "System Design · Solution Architect",
-            "headline": "Thoát khỏi vòng lặp <crud>CRUD</crud>.<br></br>Học cách <accent>thiết kế hệ thống</accent> như một Solution Architect.",
-            "subline": "StarCi không phải bootcamp fullstack đại trà. Đây là nơi rèn tư duy kiến trúc — thứ AI chưa thay thế được, và là thứ quyết định bạn là một <b>\"thợ code\"</b> hay một <b>người thiết kế hệ thống</b>.",
+            "eyebrow": "Tự học để trở thành kỹ sư hệ thống",
+            "solveWith": "Giải bằng",
+            "headline": "Học dựng <accent>hệ thống thật</accent> — không dừng lại ở CRUD.",
+            "subline": "Lộ trình tự học từ nền tảng đến nâng cao: Fullstack, System Design và DevOps. Mỗi bài bạn đọc, tự tay dựng rồi để AI chấm ngay — khép lại bằng một capstone thực tế.",
+            "diagramCaption": "Nhìn ra nơi sẽ sập. Dựng hệ thống không bao giờ sập.",
             "ctaRoadmap": "Xem lộ trình",
             "ctaFounder": "Gặp người dựng StarCi",
             "ctaPrimary": "Xem khóa học",
@@ -2423,55 +2432,104 @@
             "learners": "Học viên",
             "lessons": "Bài học",
             "courses": "Khóa học",
-            "badges": "Huy hiệu đã trao"
+            "badges": "Huy hiệu"
         },
-        "wedge": {
-            "eyebrow": "Học thật",
-            "title": "Kiến thức ở khắp nơi. Chúng tôi rèn thứ AI không thay được.",
-            "intro": "Mỗi phần kết thúc bằng một challenge thật, được StarCi AI chấm theo tiêu chí mức production — không phải quiz, không phải giấy chứng nhận có mặt.",
+        "courses": {
+            "eyebrow": "Lộ trình",
+            "title": "Ba lộ trình. Một tư duy.",
+            "intro": "Mỗi lộ trình bắt đầu từ sơ đồ kiến trúc, học bằng đúng ngôn ngữ bạn chọn (TypeScript · Java · C# · Go). Các khóa khác có trong mục Khóa học.",
+            "view": "Vào khóa",
+            "systems": "20 hệ thống",
             "items": {
-                "content": {
-                    "title": "Tuyến nội dung, không phải tutorial",
-                    "body": "Tuyến học có cấu trúc, rèn tư duy kiến trúc — nền tảng, keyword và đánh đổi mà bạn mang sang bất kỳ stack nào."
+                "fullstack": {
+                    "tag": "FULLSTACK",
+                    "modules": "23 module",
+                    "title": "Fullstack thực chiến",
+                    "desc": "API · auth · caching · realtime · payment, kèm frontend trụ được dưới traffic thật."
                 },
-                "challenge": {
-                    "title": "Học qua challenge",
-                    "body": "Không qua bài bằng cách xem video. Mỗi phần kết bằng một challenge bạn phải tự dựng và bảo vệ được."
+                "systemDesign": {
+                    "tag": "SYSTEM DESIGN",
+                    "modules": "24 module",
+                    "title": "Hệ thống phân tán",
+                    "desc": "Sharding · replication · consensus · idempotency — thiết kế để chịu được sự cố."
                 },
-                "aiGrading": {
-                    "title": "StarCi AI chấm",
-                    "body": "Bài nộp được review theo tiêu chí production và chấm điểm — phản hồi thật, 24/7, không phải huy hiệu cho có."
+                "devops": {
+                    "tag": "DEVOPS",
+                    "modules": "35 module",
+                    "title": "Triển khai & Vận hành",
+                    "desc": "CI/CD · Docker · Kubernetes · đa cloud · observability · on-call."
                 }
             }
         },
         "roadmap": {
             "eyebrow": "Lộ trình",
-            "title": "Từ viết endpoint đến thiết kế hệ thống",
-            "intro": "Một bậc thang có chủ đích — mỗi tuyến cộng dồn vào tuyến sau, đích đến là Solution Architect.",
+            "title": "Ba lộ trình mastery — học có hệ thống",
+            "intro": "Mỗi lộ trình đi từ nền tảng đến ứng dụng (foundation → application), kèm capstone dự án thật. Học tuần tự hoặc chọn đúng track của bạn.",
             "tracks": {
                 "fullstack": {
                     "label": "Fullstack",
-                    "caption": "Dựng trọn sản phẩm"
+                    "caption": "Dựng trọn sản phẩm — backend đến frontend"
+                },
+                "systemDesign": {
+                    "label": "System Design",
+                    "caption": "Xây hệ thống quy mô lớn"
                 },
                 "devops": {
                     "label": "DevOps",
-                    "caption": "Ship và vận hành"
+                    "caption": "Triển khai & vận hành đa cloud"
+                }
+            }
+        },
+        "systems": {
+            "eyebrow": "Không phải CRUD",
+            "title": "Những hệ thống bạn tự tay dựng",
+            "intro": "Mỗi capstone là một hệ thống chạy thật ở production — không phải app to-do.",
+            "items": {
+                "newsfeed": {
+                    "name": "News Feed",
+                    "tag": "Fanout · cache",
+                    "badge": "FAN-OUT"
                 },
-                "security": {
-                    "label": "Security",
-                    "caption": "Làm cho an toàn"
+                "flashSale": {
+                    "name": "Flash Sale",
+                    "tag": "Tồn kho · idempotency",
+                    "badge": "HIGH CONTENTION"
                 },
-                "architect": {
-                    "label": "Solution Architect",
-                    "caption": "Thiết kế ở quy mô lớn"
+                "wallet": {
+                    "name": "Ví điện tử",
+                    "tag": "Ledger · Saga",
+                    "badge": "CONSISTENCY"
+                },
+                "rideHailing": {
+                    "name": "Gọi xe",
+                    "tag": "Geospatial · surge",
+                    "badge": "GEO-MATCHING"
+                },
+                "chat": {
+                    "name": "Chat thời gian thực",
+                    "tag": "WebSocket · ordering",
+                    "badge": "REALTIME"
+                },
+                "deploy": {
+                    "name": "Triển khai K8s",
+                    "tag": "Helm · GitOps",
+                    "badge": "ZERO-DOWNTIME"
                 }
             }
         },
         "founder": {
             "eyebrow": "Làm công khai",
             "title": "Vì sao có StarCi",
+            "name": "Nguyễn Văn Tự Cường",
             "role": "Founder · StarCi Academy",
-            "body1": "Mình dựng StarCi vì chán những khóa học phát cho bạn cái chứng chỉ và một stack, nhưng không bao giờ là tư duy quyết định một hệ thống sống sót ở production.",
+            "titles": "CTO @ Nivo Technology · CTO @ TEDO Technology",
+            "expertise": {
+                "systemDesign": "System Design",
+                "blockchain": "Blockchain",
+                "aiAutomation": "Tự động hóa doanh nghiệp bằng AI"
+            },
+            "quote": "Sếp Cường ơi bình tĩnh thôi, bug em còn fix được.",
+            "body1": "Mình dạy đúng thứ mình làm ở production mỗi ngày — không phải slide, mà là hệ thống thật ở tầm CTO.",
             "body2": "Mọi thứ ở đây đều làm công khai — nền tảng, chương trình, challenge. Đọc các ghi chú kỹ thuật và tự đánh giá chất lượng.",
             "github": "GitHub",
             "blog": "Đọc blog"
@@ -2481,7 +2539,8 @@
             "title": "Tuyển kỹ sư đã chứng minh được",
             "intro": "Những học viên hoàn thành bài thật và bật chế độ sẵn sàng đi làm — được đánh giá bằng thứ họ dựng, không phải bằng CV.",
             "count": "{count}+ kỹ sư đang sẵn sàng đi làm",
-            "cta": "Xem hồ sơ ứng viên"
+            "cta": "Xem hồ sơ ứng viên",
+            "partnersLabel": "Đối tác tuyển dụng"
         },
         "outcome": {
             "eyebrow": "Bạn nhận được gì",
@@ -2513,8 +2572,40 @@
             "a5": "Bật chế độ sẵn-sàng-đi-làm và bài đã chấm của bạn hiển thị tới đối tác tuyển dụng đang xem danh bạ nhân tài. Không cam kết — chỉ là tín hiệu thật."
         },
         "closing": {
-            "title": "Bạn có thể code CRUD thêm ba năm nữa. Hoặc bắt đầu nghĩ như một người thiết kế hệ thống — hôm nay.",
+            "title": "Đừng xây CRUD nữa. Bắt đầu thiết kế hệ thống.",
+            "subtitle": "Đọc → thử thách chấm AI → capstone. Tự học, bằng đúng ngôn ngữ bạn đang dùng.",
             "cta": "Xem khóa học"
+        },
+        "learnLoop": {
+            "eyebrow": "Cách học",
+            "title": "Vòng học thật sự lên tay",
+            "intro": "Không xem video thụ động — mỗi học phần là một vòng khép kín: đọc → tự dựng → AI chấm → leo hạng.",
+            "items": {
+                "read": {
+                    "step": "01",
+                    "title": "Đọc",
+                    "tag": "4 NGÔN NGỮ",
+                    "desc": "Bài đọc mạch lạc, kèm code ở cả 4 ngôn ngữ."
+                },
+                "grade": {
+                    "step": "02",
+                    "title": "Thử thách chấm AI",
+                    "tag": "PHẢN HỒI TỨC THÌ",
+                    "desc": "Tự viết code, AI chấm theo tiêu chí production."
+                },
+                "capstone": {
+                    "step": "03",
+                    "title": "Capstone",
+                    "tag": "HỆ THỐNG THẬT",
+                    "desc": "Dựng một hệ thống chạy thật ở production — không phải app demo."
+                },
+                "rank": {
+                    "step": "04",
+                    "title": "Leaderboard",
+                    "tag": "GIỮ PHONG ĐỘ",
+                    "desc": "Đối chiếu lời giải với người khác, rồi leo bảng xếp hạng."
+                }
+            }
         }
     },
     "aiLab": {
@@ -2627,7 +2718,11 @@
             "description": "Mô tả",
             "descriptionPlaceholder": "Dự án này làm gì?",
             "submit": "Ghim dự án"
-        }
+        },
+        "typeCapstone": "Capstone",
+        "typeExternal": "Dự án",
+        "verifiedByStarci": "Được StarCi xác nhận",
+        "openAria": "{title} — mở trong tab mới"
     },
     "blog": {
         "back": "Quay lại blog",
@@ -2717,11 +2812,15 @@
         "tryNow": "Thử ngay"
     },
     "bookmarks": {
-        "count": "{count, plural, other {# mục đã lưu}}",
         "noMatch": "Không có mục đã lưu nào khớp với tìm kiếm của bạn.",
-        "searchPlaceholder": "Tìm trong mục đã lưu",
-        "savedCount": "{count, plural, other {# bài đã lưu}}",
-        "otherCourse": "Khác"
+        "searchPlaceholder": "Tìm trong bookmark",
+        "heading": "Bookmark",
+        "subtitle": "Các bài học bạn đã lưu để xem lại",
+        "found": "{count, plural, other {Tìm thấy # bookmark}}",
+        "empty": "Chưa có bookmark",
+        "emptyHint": "Lưu bài học để xem lại ở đây",
+        "errorTitle": "Không tải được bookmark",
+        "premium": "Premium"
     },
     "followList": {
         "title": "Kết nối",

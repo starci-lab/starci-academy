@@ -5,7 +5,6 @@ import React, {
     useMemo,
 } from "react"
 import {
-    Breadcrumbs,
     Button,
     Card,
     Typography,
@@ -14,12 +13,8 @@ import {
     CheckCircleIcon,
 } from "@phosphor-icons/react"
 import {
-    useLocale,
     useTranslations,
 } from "next-intl"
-import {
-    useRouter,
-} from "next/navigation"
 import {
     usePaymentOverlayState,
 } from "@/hooks"
@@ -27,11 +22,11 @@ import {
     PaymentFlow,
 } from "@/modules/types"
 import {
-    pathConfig,
-} from "@/resources"
-import {
     PageHeader,
 } from "@/components/blocks"
+import {
+    SettingsBreadcrumb,
+} from "../Settings/SettingsBreadcrumb"
 
 /**
  * Community membership feature container.
@@ -45,35 +40,9 @@ import {
  */
 export const Membership = () => {
     const t = useTranslations()
-    const router = useRouter()
-    const locale = useLocale()
     // shared payment modal — opening it with the membership flow runs the purchase
     const { open: openPaymentModal } = usePaymentOverlayState()
 
-    /** Navigate to the home page (breadcrumb root). */
-    const onNavigateHome = useCallback(
-        () => router.push(pathConfig().locale().build()),
-        [
-            router,
-        ],
-    )
-
-    /** Navigate to the profile page (breadcrumb parent). */
-    const onNavigateProfile = useCallback(
-        () => router.push(pathConfig().locale(locale).profile().build()),
-        [
-            router,
-            locale,
-        ],
-    )
-    /** Navigate to the settings root (breadcrumb parent of every settings page). */
-    const onNavigateSettings = useCallback(
-        () => router.push(pathConfig().locale(locale).profile().settings().build()),
-        [
-            router,
-            locale,
-        ],
-    )
 
     /** Perk rows shown under the price — each is a translated benefit line. */
     const perks = useMemo(
@@ -103,22 +72,9 @@ export const Membership = () => {
     )
 
     return (
-        <div className="mx-auto flex max-w-2xl flex-col gap-6 p-6">
-            <Breadcrumbs>
-                <Breadcrumbs.Item onPress={onNavigateHome}>
-                    {t("nav.home")}
-                </Breadcrumbs.Item>
-                <Breadcrumbs.Item onPress={onNavigateProfile}>
-                    {t("nav.profile")}
-                </Breadcrumbs.Item>
-                <Breadcrumbs.Item onPress={onNavigateSettings}>
-                    {t("nav.settings")}
-                </Breadcrumbs.Item>
-                <Breadcrumbs.Item>
-                    <span>{t("membership.title")}</span>
-                </Breadcrumbs.Item>
-            </Breadcrumbs>
+        <div className="mx-auto flex max-w-2xl flex-col gap-10 p-6">
             <PageHeader
+                breadcrumb={<SettingsBreadcrumb current={t("membership.title")} />}
                 title={t("membership.title")}
                 description={t("membership.subtitle")}
             />

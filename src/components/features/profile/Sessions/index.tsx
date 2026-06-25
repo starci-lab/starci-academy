@@ -10,7 +10,6 @@ import React, {
     useState,
 } from "react"
 import {
-    Breadcrumbs,
     Button,
     Card,
     CardContent,
@@ -24,12 +23,12 @@ import {
     Skeleton,
 } from "@/components/blocks"
 import {
+    SettingsBreadcrumb,
+} from "../Settings/SettingsBreadcrumb"
+import {
     useLocale,
     useTranslations,
 } from "next-intl"
-import {
-    useRouter,
-} from "next/navigation"
 import {
     useQueryMySessionsSwr,
     useMutateRevokeSessionSwr,
@@ -37,9 +36,6 @@ import {
 import type {
     LoginSession,
 } from "@/modules/api"
-import {
-    pathConfig,
-} from "@/resources"
 import {
     useGraphQLWithToast,
 } from "@/modules/toast"
@@ -54,7 +50,6 @@ import {
  */
 export const Sessions = () => {
     const t = useTranslations()
-    const router = useRouter()
     const locale = useLocale()
     const {
         data: sessions,
@@ -68,29 +63,6 @@ export const Sessions = () => {
     // the session id currently being revoked (drives the per-row spinner)
     const [revokingId, setRevokingId] = useState<string | null>(null)
 
-    /** Navigate to the home page (breadcrumb root). */
-    const onNavigateHome = useCallback(
-        () => router.push(pathConfig().locale().build()),
-        [
-            router,
-        ],
-    )
-    /** Navigate to the profile hub (breadcrumb parent + back target). */
-    const onNavigateProfile = useCallback(
-        () => router.push(pathConfig().locale(locale).profile().build()),
-        [
-            router,
-            locale,
-        ],
-    )
-    /** Navigate to the settings root (breadcrumb parent of every settings page). */
-    const onNavigateSettings = useCallback(
-        () => router.push(pathConfig().locale(locale).profile().settings().build()),
-        [
-            router,
-            locale,
-        ],
-    )
 
     /** Revoke a device session, then revalidate the list. */
     const onRevoke = useCallback(
@@ -140,22 +112,9 @@ export const Sessions = () => {
     const sessionList = sessions ?? []
 
     return (
-        <div className="flex flex-col gap-6">
-            <Breadcrumbs>
-                <Breadcrumbs.Item onPress={onNavigateHome}>
-                    {t("nav.home")}
-                </Breadcrumbs.Item>
-                <Breadcrumbs.Item onPress={onNavigateProfile}>
-                    {t("nav.profile")}
-                </Breadcrumbs.Item>
-                <Breadcrumbs.Item onPress={onNavigateSettings}>
-                    {t("nav.settings")}
-                </Breadcrumbs.Item>
-                <Breadcrumbs.Item>
-                    {t("sessions.title")}
-                </Breadcrumbs.Item>
-            </Breadcrumbs>
+        <div className="flex flex-col gap-10">
             <PageHeader
+                breadcrumb={<SettingsBreadcrumb current={t("sessions.title")} />}
                 title={t("sessions.title")}
                 description={t("sessions.subtitle")}
             />

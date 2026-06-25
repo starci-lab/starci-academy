@@ -1,27 +1,20 @@
 "use client"
 
-import React, {
-    useCallback,
-} from "react"
+import React from "react"
 import {
-    Breadcrumbs,
 } from "@heroui/react"
 import {
-    useLocale,
     useTranslations,
 } from "next-intl"
-import {
-    useRouter,
-} from "next/navigation"
 import {
     useQueryAiSubscriptionTiersSwr,
 } from "@/hooks"
 import {
-    pathConfig,
-} from "@/resources"
-import {
     PageHeader,
 } from "@/components/blocks"
+import {
+    SettingsBreadcrumb,
+} from "../Settings/SettingsBreadcrumb"
 import {
     TierGrid,
 } from "./TierGrid"
@@ -40,35 +33,9 @@ import {
  */
 export const AiSubscription = () => {
     const t = useTranslations()
-    const router = useRouter()
-    const locale = useLocale()
     // need the tiers SWR here only to gate the skeleton vs grid
     const tiersSwr = useQueryAiSubscriptionTiersSwr()
 
-    /** Navigate to the home page (breadcrumb root). */
-    const onNavigateHome = useCallback(
-        () => router.push(pathConfig().locale().build()),
-        [
-            router,
-        ],
-    )
-
-    /** Navigate to the profile page (breadcrumb parent). */
-    const onNavigateProfile = useCallback(
-        () => router.push(pathConfig().locale(locale).profile().build()),
-        [
-            router,
-            locale,
-        ],
-    )
-    /** Navigate to the settings root (breadcrumb parent of every settings page). */
-    const onNavigateSettings = useCallback(
-        () => router.push(pathConfig().locale(locale).profile().settings().build()),
-        [
-            router,
-            locale,
-        ],
-    )
 
     // gate only the data-dependent tier grid; breadcrumb + header are static
     // chrome (i18n/router only) so they render immediately, outside the gate.
@@ -77,22 +44,9 @@ export const AiSubscription = () => {
     const tiersReady = !tiersSwr.isLoading && !!tiersSwr.data && !tiersSwr.error
 
     return (
-        <div className="flex flex-col gap-6">
-            <Breadcrumbs>
-                <Breadcrumbs.Item onPress={onNavigateHome}>
-                    {t("nav.home")}
-                </Breadcrumbs.Item>
-                <Breadcrumbs.Item onPress={onNavigateProfile}>
-                    {t("nav.profile")}
-                </Breadcrumbs.Item>
-                <Breadcrumbs.Item onPress={onNavigateSettings}>
-                    {t("nav.settings")}
-                </Breadcrumbs.Item>
-                <Breadcrumbs.Item>
-                    <span>{t("aiSubscription.title")}</span>
-                </Breadcrumbs.Item>
-            </Breadcrumbs>
+        <div className="flex flex-col gap-10">
             <PageHeader
+                breadcrumb={<SettingsBreadcrumb current={t("aiSubscription.title")} />}
                 title={t("aiSubscription.title")}
                 description={t("aiSubscription.subtitle")}
             />

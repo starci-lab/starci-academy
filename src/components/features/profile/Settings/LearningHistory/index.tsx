@@ -28,10 +28,14 @@ import {
     EmptyContent,
     IconTile,
     PageHeader,
-    PressableCard,
     SegmentBar,
     Skeleton,
+    SurfaceListCard,
+    SurfaceListCardItem,
 } from "@/components/blocks"
+import {
+    CourseTrialChip,
+} from "@/components/reuseable/CourseTrialChip"
 import {
     SettingsBreadcrumb,
 } from "../SettingsBreadcrumb"
@@ -101,103 +105,109 @@ export const LearningHistory = ({
     }
 
     return (
-        <div className={cn("flex flex-col gap-6", className)}>
-            <SettingsBreadcrumb current={t("profileSettings.learning.history.title")} />
+        <div className={cn("flex flex-col gap-10", className)}>
             <PageHeader
+                breadcrumb={<SettingsBreadcrumb current={t("profileSettings.learning.history.title")} />}
                 title={t("profileSettings.learning.history.title")}
                 description={t("profileSettings.learning.history.subtitle")}
             />
+            <div className="flex flex-col gap-6">
 
-            {/* search — only worth showing once there are several courses */}
-            {courses.length >= SEARCH_MIN_COURSES ? (
-                <TextField variant="secondary">
-                    <Input
-                        aria-label={t("profileSettings.learning.history.searchCourses")}
-                        placeholder={t("profileSettings.learning.history.searchCourses")}
-                        value={search}
-                        onChange={(event) => setSearch(event.target.value)}
-                    />
-                </TextField>
-            ) : null}
+                {/* search — only worth showing once there are several courses */}
+                {courses.length >= SEARCH_MIN_COURSES ? (
+                    <TextField variant="secondary">
+                        <Input
+                            aria-label={t("profileSettings.learning.history.searchCourses")}
+                            placeholder={t("profileSettings.learning.history.searchCourses")}
+                            value={search}
+                            onChange={(event) => setSearch(event.target.value)}
+                        />
+                    </TextField>
+                ) : null}
 
-            <AsyncContent
-                isLoading={!coursesSwr.data && !coursesSwr.error}
-                skeleton={(
-                    <div className="flex flex-col gap-4">
-                        {Array.from({ length: SKELETON_COURSE_COUNT }).map((_unused, row) => (
-                            <div key={row} className="flex items-center gap-3">
-                                <Skeleton className="size-12 shrink-0 rounded-xl" />
-                                <div className="flex min-w-0 flex-1 flex-col gap-2">
-                                    <div className="flex items-center justify-between gap-2">
-                                        <Skeleton.Typography type="body-sm" width="1/2" />
-                                        <Skeleton className="h-3 w-8 rounded" />
-                                    </div>
-                                    <Skeleton.ProgressBar />
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                )}
-                isEmpty={courses.length === 0}
-                emptyContent={{
-                    title: t("profileSettings.learning.history.coursesEmpty"),
-                    description: t("profileSettings.learning.history.coursesEmptyHint"),
-                    onRetry: () => { router.push(pathConfig().locale(locale).course().build()) },
-                    retryLabel: t("profileSettings.learning.history.explore"),
-                }}
-                error={!coursesSwr.data ? coursesSwr.error : undefined}
-                errorContent={{
-                    title: t("profileSettings.learning.outline.error"),
-                    onRetry: () => { void coursesSwr.mutate() },
-                    retryLabel: t("profileSettings.learning.loadMore"),
-                }}
-            >
-                {filtered.length === 0 ? (
-                    // loaded but the current search matches nothing
-                    <EmptyContent title={t("profileSettings.learning.history.noMatch")} />
-                ) : (
-                    <div className="flex flex-col gap-3">
-                        {filtered.map((course) => {
-                            const dims = [
-                                { key: "content", completed: course.contentCompleted, total: course.contentTotal },
-                                { key: "challenge", completed: course.challengeCompleted, total: course.challengeTotal },
-                                { key: "milestone", completed: course.completed, total: course.total },
-                            ]
-                            const totalTasks = dims.reduce((acc, dim) => acc + dim.total, 0)
-                            return (
-                                <PressableCard
-                                    key={course.globalId}
-                                    onPress={() => { setSelectedCourse(course.globalId) }}
-                                >
+                <AsyncContent
+                    isLoading={!coursesSwr.data && !coursesSwr.error}
+                    skeleton={(
+                        <SurfaceListCard>
+                            {Array.from({ length: SKELETON_COURSE_COUNT }).map((_unused, row) => (
+                                <SurfaceListCardItem key={row}>
                                     <div className="flex items-center gap-3">
-                                        <IconTile size="sm" src={course.thumbnailUrl} icon={<BookOpenIcon aria-hidden focusable="false" />} />
+                                        <Skeleton className="size-12 shrink-0 rounded-xl" />
                                         <div className="flex min-w-0 flex-1 flex-col gap-2">
                                             <div className="flex items-center justify-between gap-2">
-                                                <Typography type="body-sm" weight="semibold" truncate>
-                                                    {course.label}
-                                                </Typography>
-                                                <Typography type="body-xs" color="muted">
-                                                    {`${course.completionPercent}%`}
-                                                </Typography>
+                                                <Skeleton.Typography type="body-sm" width="1/2" />
+                                                <Skeleton className="h-3 w-8 rounded" />
                                             </div>
-                                            <SegmentBar
-                                                max={totalTasks || 1}
-                                                ariaLabel={`${course.label} · ${course.completionPercent}%`}
-                                                segments={dims.map((dim) => ({
-                                                    key: dim.key,
-                                                    label: t(`dashboard.courseProgress.${dim.key}`),
-                                                    value: dim.completed,
-                                                    color: DIM_COLOR[dim.key],
-                                                }))}
-                                            />
+                                            <Skeleton.ProgressBar />
                                         </div>
                                     </div>
-                                </PressableCard>
-                            )
-                        })}
-                    </div>
-                )}
-            </AsyncContent>
+                                </SurfaceListCardItem>
+                            ))}
+                        </SurfaceListCard>
+                    )}
+                    isEmpty={courses.length === 0}
+                    emptyContent={{
+                        title: t("profileSettings.learning.history.coursesEmpty"),
+                        description: t("profileSettings.learning.history.coursesEmptyHint"),
+                        onRetry: () => { router.push(pathConfig().locale(locale).course().build()) },
+                        retryLabel: t("profileSettings.learning.history.explore"),
+                    }}
+                    error={!coursesSwr.data ? coursesSwr.error : undefined}
+                    errorContent={{
+                        title: t("profileSettings.learning.outline.error"),
+                        onRetry: () => { void coursesSwr.mutate() },
+                        retryLabel: t("profileSettings.learning.loadMore"),
+                    }}
+                >
+                    {filtered.length === 0 ? (
+                    // loaded but the current search matches nothing
+                        <EmptyContent title={t("profileSettings.learning.history.noMatch")} />
+                    ) : (
+                        <SurfaceListCard>
+                            {filtered.map((course) => {
+                                const dims = [
+                                    { key: "content", completed: course.contentCompleted, total: course.contentTotal },
+                                    { key: "challenge", completed: course.challengeCompleted, total: course.challengeTotal },
+                                    { key: "milestone", completed: course.completed, total: course.total },
+                                ]
+                                const totalTasks = dims.reduce((acc, dim) => acc + dim.total, 0)
+                                return (
+                                    <SurfaceListCardItem
+                                        key={course.globalId}
+                                        onPress={() => { setSelectedCourse(course.globalId) }}
+                                        hover="underline"
+                                    >
+                                        <div className="flex items-center gap-3">
+                                            <IconTile size="sm" src={course.thumbnailUrl} icon={<BookOpenIcon aria-hidden focusable="false" />} />
+                                            <div className="flex min-w-0 flex-1 flex-col gap-2">
+                                                <div className="flex items-center justify-between gap-2">
+                                                    <Typography type="body-sm" weight="semibold" truncate className="min-w-0 flex-1 group-hover:underline">
+                                                        {course.label}
+                                                    </Typography>
+                                                    <CourseTrialChip isEnrolled={course.isEnrolled} />
+                                                    <Typography type="body-xs" color="muted">
+                                                        {`${course.completionPercent}%`}
+                                                    </Typography>
+                                                </div>
+                                                <SegmentBar
+                                                    max={totalTasks || 1}
+                                                    ariaLabel={`${course.label} · ${course.completionPercent}%`}
+                                                    segments={dims.map((dim) => ({
+                                                        key: dim.key,
+                                                        label: t(`dashboard.courseProgress.${dim.key}`),
+                                                        value: dim.completed,
+                                                        color: DIM_COLOR[dim.key],
+                                                    }))}
+                                                />
+                                            </div>
+                                        </div>
+                                    </SurfaceListCardItem>
+                                )
+                            })}
+                        </SurfaceListCard>
+                    )}
+                </AsyncContent>
+            </div>
         </div>
     )
 }

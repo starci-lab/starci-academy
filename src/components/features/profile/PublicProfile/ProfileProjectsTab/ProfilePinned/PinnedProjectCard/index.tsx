@@ -2,146 +2,138 @@
 
 import React from "react"
 import {
-    Button,
+    cn,
     Chip,
+    Typography,
 } from "@heroui/react"
 import {
-    ArrowUpIcon,
-    ArrowDownIcon,
-    TrashIcon,
-    ArrowSquareOutIcon as ExternalLinkIcon,
-    SealCheckIcon as VerifiedIcon,
+    ArrowSquareOutIcon,
+    SealCheckIcon,
+    GraduationCapIcon,
+    CodeIcon,
 } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import {
-    MediaCard,
-    StatusChip,
-} from "@/components/blocks"
 import type { QueryUserPinnedProjectItem } from "@/modules/api"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+
+/** Tech-stack chips shown inline before collapsing the rest into a "+N" chip. */
+const MAX_TECH_CHIPS = 3
 
 /** Props for {@link PinnedProjectCard}. */
 export interface PinnedProjectCardProps extends WithClassNames<undefined> {
     /** The pinned project to render (list-item data prop — store can't index it). */
     pin: QueryUserPinnedProjectItem
-    /**
-     * Owner-only management mode. When true the card renders move/remove controls
-     * instead of behaving as a plain outbound link.
-     */
-    manage?: boolean
-    /** Whether the move-up control is enabled (false for the first pin). */
-    canMoveUp?: boolean
-    /** Whether the move-down control is enabled (false for the last pin). */
-    canMoveDown?: boolean
-    /** True while a mutation touching this pin is in flight (disables controls). */
-    isBusy?: boolean
-    /** Move this pin one slot earlier. */
-    onMoveUp?: (id: string) => void
-    /** Move this pin one slot later. */
-    onMoveDown?: (id: string) => void
-    /** Remove this pin. */
-    onRemove?: (id: string) => void
 }
 
 /**
- * Presentational card for a single pinned project. In display mode the whole
- * card is an outbound link (when the pin has a URL); in `manage` mode it exposes
- * reorder + remove controls. Built on the {@link MediaCard} block — title via
- * {@link Typography}, tech stack as Chips, and a success-toned "Verified by
- * StarCi" {@link StatusChip} for verified course pins.
+ * Display-only card for one pinned project (public-profile showcase, GitHub-pinned
+ * style). Reads as a credential when the capstone is verified: a type badge
+ * (Capstone / Dự án) leads, the title links out (whole card is the outbound link),
+ * a one-line description gives context, tech chips cap at {@link MAX_TECH_CHIPS}
+ * with a "+N" overflow, and a verified course pin gets a success-toned border plus
+ * a "Verified by StarCi" footer strip — the strongest trust signal.
  *
- * Pure list-item: receives its `pin` + callbacks from the parent, holds no store.
+ * The owner's reorder/remove controls live in the manage modal (legacy card), so
+ * this card is purely presentational: a `pin` in, an outbound link out.
  *
  * @param props - {@link PinnedProjectCardProps}
  */
-export const PinnedProjectCard = ({
-    pin,
-    manage = false,
-    canMoveUp = false,
-    canMoveDown = false,
-    isBusy = false,
-    onMoveUp,
-    onMoveDown,
-    onRemove,
-    className,
-}: PinnedProjectCardProps) => {
+export const PinnedProjectCard = ({ pin, className }: PinnedProjectCardProps) => {
     const t = useTranslations()
 
-    // verified badge + tech-stack chips share the meta row
-    const meta = (
+    const isCourse = pin.type === "course"
+    const TypeIcon = isCourse ? GraduationCapIcon : CodeIcon
+    const title = pin.title ?? t("pinnedProjects.untitled")
+
+    const tech = pin.techStack ?? []
+    const visibleTech = tech.slice(0, MAX_TECH_CHIPS)
+    const overflow = tech.length - visibleTech.length
+
+    const body = (
         <>
-            {pin.isVerified ? (
-                <StatusChip
-                    tone="success"
-                    icon={<VerifiedIcon className="size-3" aria-hidden="true" focusable="false" />}
+            <div className="flex flex-col gap-2 p-4">
+                <div className="flex items-center justify-between gap-2">
+                    {/* type badge — Capstone (success) vs Dự án (muted) */}
+                    <span
+                        className={cn(
+                            "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs",
+                            isCourse
+                                ? "bg-success/10 text-success"
+                                : "border border-default text-muted",
+                        )}
+                    >
+                        <TypeIcon className="size-4" aria-hidden="true" focusable="false" />
+                        {isCourse ? t("pinnedProjects.typeCapstone") : t("pinnedProjects.typeExternal")}
+                    </span>
+                    {/* outbound affordance */}
+                    <ArrowSquareOutIcon
+                        className="size-4 shrink-0 text-muted"
+                        aria-hidden="true"
+                        focusable="false"
+                    />
+                </div>
+                <Typography
+                    type="body-sm"
+                    weight="medium"
+                    className="line-clamp-2 group-hover:underline"
                 >
-                    {t("pinnedProjects.verified")}
-                </StatusChip>
+                    {title}
+                </Typography>
+                {pin.description ? (
+                    <Typography type="body-xs" color="muted" className="line-clamp-1">
+                        {pin.description}
+                    </Typography>
+                ) : null}
+                {visibleTech.length > 0 ? (
+                    <div className="flex flex-wrap gap-2">
+                        {visibleTech.map((techName) => (
+                            <Chip key={techName} variant="soft" size="sm">
+                                <Chip.Label>{techName}</Chip.Label>
+                            </Chip>
+                        ))}
+                        {overflow > 0 ? (
+                            <Chip variant="soft" size="sm">
+                                <Chip.Label>{`+${overflow}`}</Chip.Label>
+                            </Chip>
+                        ) : null}
+                    </div>
+                ) : null}
+            </div>
+            {pin.isVerified ? (
+                <div className="flex items-center gap-2 border-t border-success/30 bg-success/10 px-4 py-2">
+                    <SealCheckIcon
+                        className="size-4 shrink-0 text-success"
+                        aria-hidden="true"
+                        focusable="false"
+                    />
+                    <Typography type="body-xs" weight="medium" className="text-success">
+                        {t("pinnedProjects.verifiedByStarci")}
+                    </Typography>
+                </div>
             ) : null}
-            {(pin.techStack ?? []).map((tech) => (
-                <Chip key={tech} variant="soft" size="sm">
-                    <Chip.Label>{tech}</Chip.Label>
-                </Chip>
-            ))}
         </>
     )
 
-    // owner controls (manage mode) — reorder + remove, no outbound navigation
-    const manageFooter = manage ? (
-        <div className="flex items-center gap-2">
-            <Button
-                size="sm"
-                variant="secondary"
-                isIconOnly
-                isDisabled={isBusy || !canMoveUp}
-                aria-label={t("pinnedProjects.moveUp")}
-                onPress={() => onMoveUp?.(pin.id)}
-            >
-                <ArrowUpIcon className="size-5" aria-hidden="true" focusable="false" />
-            </Button>
-            <Button
-                size="sm"
-                variant="secondary"
-                isIconOnly
-                isDisabled={isBusy || !canMoveDown}
-                aria-label={t("pinnedProjects.moveDown")}
-                onPress={() => onMoveDown?.(pin.id)}
-            >
-                <ArrowDownIcon className="size-5" aria-hidden="true" focusable="false" />
-            </Button>
-            {pin.url ? (
-                <Button
-                    size="sm"
-                    variant="secondary"
-                    isIconOnly
-                    aria-label={t("pinnedProjects.open")}
-                    onPress={() => window.open(pin.url as string, "_blank", "noopener,noreferrer")}
-                >
-                    <ExternalLinkIcon className="size-5" aria-hidden="true" focusable="false" />
-                </Button>
-            ) : null}
-            <Button
-                size="sm"
-                variant="danger"
-                isIconOnly
-                isPending={isBusy}
-                aria-label={t("pinnedProjects.remove")}
-                onPress={() => onRemove?.(pin.id)}
-            >
-                <TrashIcon className="size-5" aria-hidden="true" focusable="false" />
-            </Button>
-        </div>
-    ) : undefined
-
-    return (
-        <MediaCard
-            className={className}
-            title={pin.title ?? t("pinnedProjects.untitled")}
-            meta={pin.isVerified || (pin.techStack?.length ?? 0) > 0 ? meta : undefined}
-            description={pin.description ?? undefined}
-            footer={manageFooter}
-            // display mode: the whole card is the outbound link (only when it has one)
-            href={!manage && pin.url ? pin.url : undefined}
-        />
+    // bounded surface card; verified pins read as a credential (success border)
+    const cardClassName = cn(
+        "group flex flex-col overflow-hidden rounded-2xl border bg-surface",
+        pin.isVerified ? "border-success/40" : "border-default",
+        className,
     )
+
+    if (pin.url) {
+        return (
+            <a
+                href={pin.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={t("pinnedProjects.openAria", { title })}
+                className={cn(cardClassName, "cursor-pointer")}
+            >
+                {body}
+            </a>
+        )
+    }
+
+    return <div className={cardClassName}>{body}</div>
 }

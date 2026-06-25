@@ -81,6 +81,7 @@ export const ProfilePinned = ({
 
     return (
         <LabeledCard
+            frameless
             label={t("pinnedProjects.heading")}
             icon={<PinIcon className="size-5" aria-hidden="true" focusable="false" />}
             action={action}
@@ -89,10 +90,10 @@ export const ProfilePinned = ({
             <AsyncContent
                 isLoading={isLoading && !data}
                 skeleton={(
-                    // mirror the responsive two-column pinned grid (two card boxes)
+                    // mirror the responsive two-column pinned grid (bounded surface cards)
                     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                        {[0, 1].map((index) => (
-                            <Skeleton key={index} className="h-24 w-full rounded-xl" />
+                        {[0, 1, 2, 3].map((index) => (
+                            <Skeleton key={index} className="h-32 w-full rounded-2xl" />
                         ))}
                     </div>
                 )}

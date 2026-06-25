@@ -5,7 +5,6 @@ import React, {
 } from "react"
 import {
     Label,
-    Link,
     Typography,
     cn,
 } from "@heroui/react"
@@ -33,6 +32,8 @@ import {
     SegmentBar,
     Skeleton,
     StatusChip,
+    SurfaceListCard,
+    SurfaceListCardItem,
     TopicMasteryGrid,
 } from "@/components/blocks"
 import {
@@ -170,38 +171,42 @@ export const ProfileCoding = ({
                             <Skeleton key={index} className="h-24 w-full rounded-2xl" />
                         ))}
                     </div>
-                    {/* stats card: difficulty bar + topic bar + language donut */}
+                    {/* stats card: difficulty / topic / language as surface list items */}
                     <div className="flex flex-col gap-3">
                         <Skeleton.Typography type="body-sm" width="1/4" />
-                        <div className="flex flex-col gap-6">
-                            {/* difficulty bar */}
-                            <Skeleton.SegmentBar legendItems={3} />
-                            {/* topic-mastery chip grid */}
-                            <div className="flex flex-wrap gap-2">
-                                {[0, 1, 2, 3, 4, 5, 6, 7].map((chip) => (
-                                    <Skeleton key={chip} className="h-7 w-20 rounded-full" />
-                                ))}
-                            </div>
-                            {/* language bar */}
-                            <Skeleton.SegmentBar legendItems={3} />
-                        </div>
+                        <SurfaceListCard>
+                            <SurfaceListCardItem>
+                                <Skeleton.SegmentBar legendItems={3} />
+                            </SurfaceListCardItem>
+                            <SurfaceListCardItem>
+                                <div className="flex flex-wrap gap-2">
+                                    {[0, 1, 2, 3, 4, 5, 6, 7].map((chip) => (
+                                        <Skeleton key={chip} className="h-7 w-20 rounded-full" />
+                                    ))}
+                                </div>
+                            </SurfaceListCardItem>
+                            <SurfaceListCardItem>
+                                <Skeleton.SegmentBar legendItems={3} />
+                            </SurfaceListCardItem>
+                        </SurfaceListCard>
                     </div>
-                    {/* solve history list — title+date col + difficulty/topic/language chips */}
+                    {/* solve history — surface list card with item rows */}
                     <div className="flex flex-col gap-3">
                         <Skeleton.Typography type="body-sm" width="1/4" />
-                        <div className="grid grid-cols-[minmax(0,1fr)_auto_auto_auto] items-center gap-x-3 gap-y-4">
+                        <SurfaceListCard>
                             {[0, 1, 2].map((row) => (
-                                <React.Fragment key={row}>
-                                    <div className="flex min-w-0 flex-col gap-2">
-                                        <Skeleton.Typography type="body-sm" width="1/2" />
-                                        <Skeleton.Typography type="body-xs" width="1/3" />
+                                <SurfaceListCardItem key={row}>
+                                    <div className="flex items-center gap-3">
+                                        <div className="flex min-w-0 flex-1 flex-col gap-2">
+                                            <Skeleton.Typography type="body-sm" width="1/2" />
+                                            <Skeleton.Typography type="body-xs" width="1/3" />
+                                        </div>
+                                        <Skeleton.Chip />
+                                        <Skeleton.Chip />
                                     </div>
-                                    <Skeleton.Chip />
-                                    <Skeleton.Chip />
-                                    <Skeleton className="h-3 w-16 rounded" />
-                                </React.Fragment>
+                                </SurfaceListCardItem>
                             ))}
-                        </div>
+                        </SurfaceListCard>
                     </div>
                 </div>
             )}
@@ -234,68 +239,75 @@ export const ProfileCoding = ({
                     <LabeledCard
                         label={t("publicProfile.coding.statsHeading")}
                         icon={<ChartBarIcon aria-hidden focusable="false" className="size-5" />}
+                        frameless
                     >
-                        <div className="flex flex-col gap-6">
+                        <SurfaceListCard>
                             {difficultySegments.length > 0 ? (
-                                <div className="flex flex-col gap-2">
-                                    <Label>{t("publicProfile.coding.byDifficulty")}</Label>
-                                    <SegmentBar
-                                        ariaLabel={t("publicProfile.coding.byDifficulty")}
-                                        segments={difficultySegments}
-                                    />
-                                </div>
+                                <SurfaceListCardItem>
+                                    <div className="flex flex-col gap-2">
+                                        <Label>{t("publicProfile.coding.byDifficulty")}</Label>
+                                        <SegmentBar
+                                            ariaLabel={t("publicProfile.coding.byDifficulty")}
+                                            segments={difficultySegments}
+                                        />
+                                    </div>
+                                </SurfaceListCardItem>
                             ) : null}
                             {orderedDomain.length > 0 ? (
-                                <div className="flex flex-col gap-2">
-                                    <Label>{t("publicProfile.coding.byDomain")}</Label>
-                                    {/* topic mastery — all solved topics, tint deepens with count */}
-                                    <TopicMasteryGrid
-                                        ariaLabel={t("publicProfile.coding.byDomain")}
-                                        topics={orderedDomain.map((item) => ({
-                                            key: item.key,
-                                            label: domainLabel(item.key),
-                                            solved: item.solved,
-                                        }))}
-                                    />
-                                </div>
+                                <SurfaceListCardItem>
+                                    <div className="flex flex-col gap-2">
+                                        <Label>{t("publicProfile.coding.byDomain")}</Label>
+                                        {/* topic mastery — all solved topics, tint deepens with count */}
+                                        <TopicMasteryGrid
+                                            ariaLabel={t("publicProfile.coding.byDomain")}
+                                            topics={orderedDomain.map((item) => ({
+                                                key: item.key,
+                                                label: domainLabel(item.key),
+                                                solved: item.solved,
+                                            }))}
+                                        />
+                                    </div>
+                                </SurfaceListCardItem>
                             ) : null}
                             {byLanguage.length > 0 ? (
-                                <div className="flex flex-col gap-2">
-                                    <Label>{t("publicProfile.coding.byLanguage")}</Label>
-                                    {/* language → SegmentBar (one viz per metric, matches difficulty) */}
-                                    <SegmentBar
-                                        ariaLabel={t("publicProfile.coding.byLanguage")}
-                                        segments={byLanguage.map((item) => ({
-                                            key: item.key,
-                                            label: getLanguageLabel(item.key),
-                                            value: item.solved,
-                                            color: getLanguageColor(item.key),
-                                        }))}
-                                    />
-                                </div>
+                                <SurfaceListCardItem>
+                                    <div className="flex flex-col gap-2">
+                                        <Label>{t("publicProfile.coding.byLanguage")}</Label>
+                                        {/* language → SegmentBar (one viz per metric, matches difficulty) */}
+                                        <SegmentBar
+                                            ariaLabel={t("publicProfile.coding.byLanguage")}
+                                            segments={byLanguage.map((item) => ({
+                                                key: item.key,
+                                                label: getLanguageLabel(item.key),
+                                                value: item.solved,
+                                                color: getLanguageColor(item.key),
+                                            }))}
+                                        />
+                                    </div>
+                                </SurfaceListCardItem>
                             ) : null}
-                        </div>
+                        </SurfaceListCard>
                     </LabeledCard>
                 ) : null}
 
-                {/* solve history — Challenges-submission-style rows */}
+                {/* solve history — surface list card (item rows + inset separators) */}
                 {solvedHistory.length > 0 ? (
                     <LabeledCard
                         label={t("publicProfile.coding.history")}
                         icon={<ClockCounterClockwiseIcon aria-hidden focusable="false" className="size-5" />}
+                        frameless
                     >
-                        <div className="flex flex-col gap-4">
-                            {/* table-like grid → difficulty / topic / language columns line up across rows */}
-                            <div className="grid grid-cols-[minmax(0,1fr)_auto_auto_auto] items-center gap-x-3 gap-y-4">
-                                {visibleHistory.map((item, index) => {
-                                    const difficulty = CODING_DIFFICULTY_CHIP[item.difficulty]
-                                    const solvedAt = item.firstSolvedAt
-                                        ? new Date(item.firstSolvedAt).toLocaleDateString(locale)
-                                        : undefined
-                                    return (
-                                        <React.Fragment key={`${item.problemTitle}-${index}`}>
-                                            {/* col 1: title + date */}
-                                            <div className="flex min-w-0 flex-col gap-2">
+                        <SurfaceListCard>
+                            {visibleHistory.map((item, index) => {
+                                const difficulty = CODING_DIFFICULTY_CHIP[item.difficulty]
+                                const solvedAt = item.firstSolvedAt
+                                    ? new Date(item.firstSolvedAt).toLocaleDateString(locale)
+                                    : undefined
+                                return (
+                                    <SurfaceListCardItem key={`${item.problemTitle}-${index}`}>
+                                        <div className="flex items-center gap-3">
+                                            {/* title + date */}
+                                            <div className="flex min-w-0 flex-1 flex-col gap-2">
                                                 <Typography type="body-sm" weight="medium" truncate>
                                                     {item.problemTitle}
                                                 </Typography>
@@ -305,43 +317,36 @@ export const ProfileCoding = ({
                                                     </Typography>
                                                 ) : null}
                                             </div>
-                                            {/* col 2: difficulty */}
-                                            <div>
+                                            {/* difficulty · topic · languages — pushed right */}
+                                            <div className="flex shrink-0 flex-wrap items-center justify-end gap-2">
                                                 {difficulty ? (
                                                     <StatusChip tone={difficulty.tone}>
                                                         {t(difficulty.labelKey)}
                                                     </StatusChip>
                                                 ) : null}
-                                            </div>
-                                            {/* col 3: topic */}
-                                            <div>
                                                 {item.domain ? (
                                                     <StatusChip tone="neutral">
                                                         {domainLabel(item.domain)}
                                                     </StatusChip>
                                                 ) : null}
-                                            </div>
-                                            {/* col 4: languages */}
-                                            <div className="flex items-center gap-2">
                                                 {item.languages.map((language) => (
                                                     <LanguageChip key={language} language={language} />
                                                 ))}
                                             </div>
-                                        </React.Fragment>
-                                    )
-                                })}
-                            </div>
+                                        </div>
+                                    </SurfaceListCardItem>
+                                )
+                            })}
                             {hiddenHistory > 0 ? (
-                                <Link
-                                    onPress={() => setShowAllHistory((open) => !open)}
-                                    className="inline-flex w-fit cursor-pointer items-center gap-2 text-muted"
-                                >
-                                    {showAllHistory
-                                        ? t("publicProfile.coding.showLess")
-                                        : t("publicProfile.coding.showMore", { count: hiddenHistory })}
-                                </Link>
+                                <SurfaceListCardItem onPress={() => setShowAllHistory((open) => !open)}>
+                                    <span className="inline-flex items-center gap-2 text-muted">
+                                        {showAllHistory
+                                            ? t("publicProfile.coding.showLess")
+                                            : t("publicProfile.coding.showMore", { count: hiddenHistory })}
+                                    </span>
+                                </SurfaceListCardItem>
                             ) : null}
-                        </div>
+                        </SurfaceListCard>
                     </LabeledCard>
                 ) : null}
             </div>

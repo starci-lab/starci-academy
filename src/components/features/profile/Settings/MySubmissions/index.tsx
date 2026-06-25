@@ -84,9 +84,9 @@ export const MySubmissions = ({
         })
 
     return (
-        <div className={cn("flex flex-col gap-6", className)}>
-            <SettingsBreadcrumb current={t("profileSettings.learning.submissions.title")} />
+        <div className={cn("flex flex-col gap-10", className)}>
             <PageHeader
+                breadcrumb={<SettingsBreadcrumb current={t("profileSettings.learning.submissions.title")} />}
                 title={t("profileSettings.learning.submissions.title")}
                 description={t("profileSettings.learning.submissions.subtitle")}
             />

@@ -42,6 +42,7 @@ export const CoursesTab = ({
     return (
         <div className={cn("flex flex-col gap-6", className)}>
             <LabeledCard
+                frameless
                 label={t("dashboard.enrolledCourses")}
                 icon={<GraduationCapIcon aria-hidden focusable="false" className="size-5" />}
             >

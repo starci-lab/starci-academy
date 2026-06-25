@@ -32,7 +32,7 @@ export type CourseCtaButtonsProps = WithClassNames<undefined>
  */
 export const CourseCtaButtons = ({ className }: CourseCtaButtonsProps) => {
     const t = useTranslations()
-    const { isEnrolled, onEnroll, onContinueLearning } = useCourseEnrollment()
+    const { isEnrolled, onEnroll, onContinueLearning, onTryLearning } = useCourseEnrollment()
 
     if (isEnrolled) {
         return (
@@ -51,7 +51,7 @@ export const CourseCtaButtons = ({ className }: CourseCtaButtonsProps) => {
                 <RocketLaunchIcon className="size-5" />
                 {t("course.enroll")}
             </Button>
-            <Button variant="secondary" size="lg" className="w-full" onPress={onContinueLearning}>
+            <Button variant="secondary" size="lg" className="w-full" onPress={onTryLearning}>
                 <BookOpenIcon className="size-5" />
                 {t("course.tryLearning")}
             </Button>

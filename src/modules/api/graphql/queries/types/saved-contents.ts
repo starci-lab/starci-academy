@@ -21,4 +21,6 @@ export interface SavedContentsRequest {
     skip?: number
     /** Maximum number of items to return. */
     take?: number
+    /** Case-insensitive search over the saved content title. */
+    search?: string
 }

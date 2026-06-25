@@ -78,9 +78,9 @@ export const MyFeedback = ({
         })
 
     return (
-        <div className={cn("flex flex-col gap-6", className)}>
-            <SettingsBreadcrumb current={t("profileSettings.learning.feedback.title")} />
+        <div className={cn("flex flex-col gap-10", className)}>
             <PageHeader
+                breadcrumb={<SettingsBreadcrumb current={t("profileSettings.learning.feedback.title")} />}
                 title={t("profileSettings.learning.feedback.title")}
                 description={t("profileSettings.learning.feedback.subtitle")}
             />

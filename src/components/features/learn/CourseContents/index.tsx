@@ -41,6 +41,7 @@ import {
     ProgressMeter,
 } from "@/components/blocks"
 import { LearnBreadcrumb } from "../shared/LearnBreadcrumb"
+import { GithubTeamGate } from "@/components/layouts/auth/GithubTeamGate"
 import { useCourseTotals } from "../../course/CourseDetail/hooks/useCourseTotals"
 import type {
     MyCourseOutlineModule,
@@ -257,8 +258,11 @@ export const CourseContents = ({ className }: CourseContentsProps) => {
                             ) : undefined}
                         />
 
-                        {/* content cluster: continue+progress · keep-going path (gap-6 between) */}
+                        {/* content cluster: GitHub-team warning (paid; below header chips) · continue · path */}
                         <div className="flex flex-col gap-6">
+                            {/* non-blocking warning: paid learner not yet in the course GitHub team
+                                (self-hides for trial / when already in team) */}
+                            <GithubTeamGate />
                             {/* continue + progress — flat (no card frame), the honest unified meter */}
                             <div className="flex flex-col gap-3">
                                 <div className="flex items-start justify-between gap-3">

@@ -18,10 +18,11 @@ export interface FounderManifestoProps extends WithClassNames<undefined> {
 }
 
 /**
- * Founder beat: a compact, grounded manifesto with the founder's portrait, name,
- * role, the message, and real links (GitHub / blog) as proof. Tier-3 block built
- * on {@link SectionCard} — owns styling, content via props. Portrait stacks above
- * the copy on mobile, sits beside it on desktop.
+ * Founder beat: an authority card — portrait on the left, then name + role/titles,
+ * the message body (titles · expertise chips · quote · note), and real links
+ * (GitHub / blog) as proof, all flowing in the content column. Portrait stacks above
+ * the copy on mobile, sits beside it on `sm+`. Tier-3 block on {@link SectionCard} —
+ * owns styling, content via props.
  *
  * @param props - {@link FounderManifestoProps}
  */
@@ -34,21 +35,19 @@ export const FounderManifesto = ({
     className,
 }: FounderManifestoProps) => {
     return (
-        <SectionCard className={cn(className)} contentClassName="flex flex-col gap-6 md:flex-row md:items-start">
-            <div className="flex flex-col items-center gap-3 md:w-48 md:shrink-0">
-                {portrait}
-                <div className="flex flex-col items-center gap-0">
-                    <Typography type="h5" weight="semibold" align="center">
+        <SectionCard className={cn(className)} contentClassName="flex flex-col gap-5 sm:flex-row sm:items-start">
+            <div className="shrink-0">{portrait}</div>
+            <div className="flex min-w-0 flex-1 flex-col gap-3">
+                <div className="flex flex-col gap-0.5">
+                    <Typography type="h5" weight="semibold">
                         {name}
                     </Typography>
-                    <Typography type="body-xs" color="muted" align="center">
+                    <Typography type="body-xs" color="muted">
                         {role}
                     </Typography>
                 </div>
-                {links ? <div className="flex items-center gap-3">{links}</div> : null}
-            </div>
-            <div className="flex min-w-0 flex-1 flex-col gap-3">
                 {body}
+                {links ? <div className="flex flex-wrap items-center gap-3">{links}</div> : null}
             </div>
         </SectionCard>
     )

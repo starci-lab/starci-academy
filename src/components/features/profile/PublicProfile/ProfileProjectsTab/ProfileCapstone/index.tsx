@@ -2,7 +2,6 @@
 
 import React from "react"
 import {
-    Separator,
     cn,
 } from "@heroui/react"
 import {
@@ -19,6 +18,8 @@ import {
     AsyncContent,
     LabeledCard,
     Skeleton,
+    SurfaceListCard,
+    SurfaceListCardItem,
 } from "@/components/blocks"
 import {
     useProfileUsername,
@@ -69,16 +70,16 @@ export const ProfileCapstone = ({
             className={cn(className)}
             label={t("publicProfile.capstone.projectsHeading")}
             icon={<RocketIcon aria-hidden focusable="false" className="size-5" />}
+            frameless
         >
             <AsyncContent
                 isLoading={(isLoading || !userId) && !projectsData}
                 skeleton={(
                     // mirror the real list: assume 3 capstone rows, Separator between
                     // each (like the content), each row = ProjectCard's tree
-                    <div className="flex flex-col gap-6">
+                    <SurfaceListCard>
                         {[0, 1, 2].map((row) => (
-                            <React.Fragment key={row}>
-                                {row > 0 ? <Separator /> : null}
+                            <SurfaceListCardItem key={row}>
                                 <div className="flex flex-col gap-3">
                                     {/* glance row: icon tile + (title+chip+%) + bar + summary */}
                                     <div className="flex items-start gap-3">
@@ -101,9 +102,9 @@ export const ProfileCapstone = ({
                                     {/* "Xem milestone & task" disclosure Link */}
                                     <Skeleton.Typography type="body-sm" width="1/3" />
                                 </div>
-                            </React.Fragment>
+                            </SurfaceListCardItem>
                         ))}
-                    </div>
+                    </SurfaceListCard>
                 )}
                 isEmpty={projects.length === 0}
                 error={projectsError}
@@ -116,14 +117,13 @@ export const ProfileCapstone = ({
                     retryLabel: t("publicProfile.capstone.loadErrorRetry"),
                 }}
             >
-                <div className="flex flex-col gap-6">
-                    {projects.map((project, index) => (
-                        <React.Fragment key={project.courseGlobalId}>
-                            {index > 0 ? <Separator /> : null}
+                <SurfaceListCard>
+                    {projects.map((project) => (
+                        <SurfaceListCardItem key={project.courseGlobalId}>
                             <ProjectCard project={project} />
-                        </React.Fragment>
+                        </SurfaceListCardItem>
                     ))}
-                </div>
+                </SurfaceListCard>
             </AsyncContent>
         </LabeledCard>
     )

@@ -12,6 +12,7 @@ import {
 import {
     usePaymentOverlayState,
     useQueryCourseEnrollmentStatusSwr,
+    useMutateStartTrialSwr,
 } from "@/hooks"
 import {
     PaymentFlow,
@@ -29,8 +30,10 @@ export interface UseCourseEnrollmentResult {
     isEnrolled: boolean
     /** Open the payment overlay in the course-enroll flow. */
     onEnroll: () => void
-    /** Navigate into the learning experience (trial or continue). */
+    /** Navigate into the learning experience (enrolled "continue"). */
     onContinueLearning: () => void
+    /** Start a trial enrollment (best-effort), then navigate into the content ("Học thử"). */
+    onTryLearning: () => void
 }
 
 /**
@@ -46,6 +49,9 @@ export const useCourseEnrollment = (): UseCourseEnrollmentResult => {
     const { open } = usePaymentOverlayState()
     const enrollmentSwr = useQueryCourseEnrollmentStatusSwr()
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
+    // real course UUID (the startTrial mutation resolves by id, not the display slug)
+    const courseId = useAppSelector((state) => state.course.entity?.id)
+    const { trigger: startTrial } = useMutateStartTrialSwr()
 
     const isEnrolled = enrollmentSwr.data?.courseEnrollmentStatus?.data?.isEnrolled === true
 
@@ -53,18 +59,37 @@ export const useCourseEnrollment = (): UseCourseEnrollmentResult => {
         () => open({ flow: PaymentFlow.CourseEnroll }),
         [open],
     )
-    const onContinueLearning = useCallback(
+    const contentHref = useCallback(
         // land on the course-content dashboard (`/learn/content`); the module list/overview
         // surface was removed, so the learner resumes from the dashboard's "Continue" action.
-        () => router.push(
-            pathConfig().locale(locale).course(courseDisplayId).learn().content().build(),
-        ),
-        [router, locale, courseDisplayId],
+        () => pathConfig().locale(locale).course(courseDisplayId).learn().content().build(),
+        [locale, courseDisplayId],
+    )
+    const onContinueLearning = useCallback(
+        () => router.push(contentHref()),
+        [router, contentHref],
+    )
+    const onTryLearning = useCallback(
+        async () => {
+            // best-effort: record the trial enrollment so this course shows in "my courses"
+            // with progress; a failure must not block entering the content (the backend
+            // enrollment guard also establishes it on first course-scoped action).
+            try {
+                if (courseId) {
+                    await startTrial({ courseId })
+                }
+            } catch {
+                // ignore — navigate anyway
+            }
+            router.push(contentHref())
+        },
+        [courseId, startTrial, router, contentHref],
     )
 
     return {
         isEnrolled,
         onEnroll,
         onContinueLearning,
+        onTryLearning,
     }
 }

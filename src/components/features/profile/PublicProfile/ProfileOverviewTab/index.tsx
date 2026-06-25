@@ -47,6 +47,7 @@ export const ProfileOverviewTab = ({
                 icon={<GraduationCapIcon aria-hidden focusable="false" className="size-5" />}
                 onSeeMore={() => setTab("activity")}
                 seeMoreLabel={t("publicProfile.overview.seeMore")}
+                frameless
             >
                 <OverviewCourses />
             </LabeledCard>
@@ -66,6 +67,7 @@ export const ProfileOverviewTab = ({
                     onSeeMore={() => setTab("challenges")}
                     seeMoreLabel={t("publicProfile.overview.seeMore")}
                     fillHeight
+                    frameless
                 >
                     <OverviewChallengeSkills />
                 </LabeledCard>
@@ -76,6 +78,7 @@ export const ProfileOverviewTab = ({
                     onSeeMore={() => setTab("skills")}
                     seeMoreLabel={t("publicProfile.overview.seeMore")}
                     fillHeight
+                    frameless
                 >
                     <OverviewCodeSkills />
                 </LabeledCard>

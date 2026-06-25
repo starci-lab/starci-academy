@@ -4,7 +4,6 @@ import React, {
     useCallback,
 } from "react"
 import {
-    Breadcrumbs,
     Button,
     Link,
 } from "@heroui/react"
@@ -31,6 +30,9 @@ import {
 import {
     PageHeader,
 } from "@/components/blocks"
+import {
+    SettingsBreadcrumb,
+} from "../Settings/SettingsBreadcrumb"
 import {
     ByokForm,
 } from "./ByokForm"
@@ -63,29 +65,6 @@ export const AiSettings = () => {
     const { isMutating } = useMutateUpdateMyAiSettingsSwr()
     const { byokApiKey, submit } = useAiSettingsForm()
 
-    /** Navigate to the home page (breadcrumb root). */
-    const onNavigateHome = useCallback(
-        () => router.push(pathConfig().locale().build()),
-        [
-            router,
-        ],
-    )
-    /** Navigate to the profile page (breadcrumb parent + back target). */
-    const onNavigateProfile = useCallback(
-        () => router.push(pathConfig().locale(locale).profile().build()),
-        [
-            router,
-            locale,
-        ],
-    )
-    /** Navigate to the settings root (breadcrumb parent of every settings page). */
-    const onNavigateSettings = useCallback(
-        () => router.push(pathConfig().locale(locale).profile().settings().build()),
-        [
-            router,
-            locale,
-        ],
-    )
     /** Navigate to the AI subscription page (cross-link for paid models). */
     const onNavigateSubscription = useCallback(
         () => router.push(`${pathConfig().locale(locale).profile().build()}/ai-subscription`),
@@ -106,22 +85,9 @@ export const AiSettings = () => {
     const saveDisabled = isMutating || byokNeedsKey
 
     return (
-        <div className="flex flex-col gap-6">
-            <Breadcrumbs>
-                <Breadcrumbs.Item onPress={onNavigateHome}>
-                    {t("nav.home")}
-                </Breadcrumbs.Item>
-                <Breadcrumbs.Item onPress={onNavigateProfile}>
-                    {t("nav.profile")}
-                </Breadcrumbs.Item>
-                <Breadcrumbs.Item onPress={onNavigateSettings}>
-                    {t("nav.settings")}
-                </Breadcrumbs.Item>
-                <Breadcrumbs.Item>
-                    {t("aiSettings.title")}
-                </Breadcrumbs.Item>
-            </Breadcrumbs>
+        <div className="flex flex-col gap-10">
             <PageHeader
+                breadcrumb={<SettingsBreadcrumb current={t("aiSettings.title")} />}
                 title={t("aiSettings.title")}
                 description={t("aiSettings.byokSubtitle")}
             />

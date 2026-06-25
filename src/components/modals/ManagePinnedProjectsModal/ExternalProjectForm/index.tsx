@@ -6,6 +6,7 @@ import {
     Input,
     Label,
     Spinner,
+    TextArea,
     TextField,
     Typography,
 } from "@heroui/react"
@@ -47,7 +48,7 @@ export const ExternalProjectForm = ({
             className={className}
             onSubmit={onSubmit}
         >
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-3">
                 {/* title (required) */}
                 <TextField variant="secondary" isInvalid={Boolean(errors.title)}>
                     <Label htmlFor="pin-title">{t("pinnedProjects.form.title")}</Label>
@@ -57,7 +58,7 @@ export const ExternalProjectForm = ({
                         {...register("title")}
                     />
                     {errors.title ? (
-                        <Typography type="body-xs" className="text-danger">
+                        <Typography slot="errorMessage" type="body-xs" className="text-danger">
                             {t("pinnedProjects.form.titleRequired")}
                         </Typography>
                     ) : null}
@@ -72,7 +73,7 @@ export const ExternalProjectForm = ({
                         {...register("url")}
                     />
                     {errors.url ? (
-                        <Typography type="body-xs" className="text-danger">
+                        <Typography slot="errorMessage" type="body-xs" className="text-danger">
                             {t("pinnedProjects.form.urlInvalid")}
                         </Typography>
                     ) : null}
@@ -86,22 +87,22 @@ export const ExternalProjectForm = ({
                         placeholder={t("pinnedProjects.form.techStackPlaceholder")}
                         {...register("techStack")}
                     />
-                    <Typography type="body-xs" color="muted">
+                    <Typography slot="description" type="body-xs" color="muted">
                         {t("pinnedProjects.form.techStackHint")}
                     </Typography>
                 </TextField>
 
                 {/* description (optional) */}
-                <div className="flex flex-col gap-2">
+                <TextField variant="secondary">
                     <Label htmlFor="pin-description">{t("pinnedProjects.form.description")}</Label>
-                    <textarea
+                    <TextArea
                         id="pin-description"
                         rows={3}
                         placeholder={t("pinnedProjects.form.descriptionPlaceholder")}
-                        className="w-full resize-none rounded-xl bg-default/40 p-3 text-sm text-foreground outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                        className="resize-none"
                         {...register("description")}
                     />
-                </div>
+                </TextField>
 
                 <Button
                     type="submit"

@@ -412,6 +412,7 @@
         "priceUsdHint": "≈ {amount} for international payments",
         "continueLearning": "Continue Learning",
         "tryLearning": "Try for free",
+        "trial": "Trial",
         "paywall": {
             "title": "Premium content",
             "titleNamed": "Unlock {course}",
@@ -2403,6 +2404,12 @@
         "sending": "Sending request…",
         "recheckCta": "I've accepted — re-check",
         "acceptHint": "After requesting, open GitHub and accept the team invitation, then press re-check.",
+        "warningTitle": "You're not in the course GitHub team yet",
+        "warningBody": "Until you join, you can't open the course's premium content — it lives in the course GitHub repo.",
+        "openCta": "Join the team",
+        "step1": "Press \"Request to join team\" below — we'll send you the invite.",
+        "step2": "Open GitHub and accept the invitation: from the invite email, or at github.com/orgs/StarCi-Academy → Invitations.",
+        "step3": "Come back here and press \"I've accepted — re-check\".",
         "state": {
             "active": "In team",
             "pending": "Invite pending",
@@ -2411,9 +2418,11 @@
     },
     "landing": {
         "hero": {
-            "eyebrow": "System Design · Solution Architect",
-            "headline": "Break out of the <crud>CRUD</crud> loop.<br></br>Learn to <accent>design systems</accent> like a Solution Architect.",
-            "subline": "StarCi is not a generic fullstack bootcamp. It is where you train architectural thinking — what AI has not replaced, and what decides whether you are a <b>\"code monkey\"</b> or a <b>system designer</b>.",
+            "eyebrow": "Self-study to become a systems engineer",
+            "solveWith": "Solve in",
+            "headline": "Learn to build <accent>real systems</accent> — beyond CRUD.",
+            "subline": "A self-study roadmap from the basics to advanced: Fullstack, System Design, and DevOps. You read, build it yourself, get it AI-graded on the spot — and finish with a real capstone project.",
+            "diagramCaption": "Spot where it collapses. Build systems that can’t.",
             "ctaRoadmap": "See the roadmap",
             "ctaFounder": "Meet the founder of StarCi",
             "ctaPrimary": "Browse courses",
@@ -2425,53 +2434,102 @@
             "courses": "Courses",
             "badges": "Badges earned"
         },
-        "wedge": {
-            "eyebrow": "Learn for real",
-            "title": "Knowledge is everywhere. We train what AI can't replace.",
-            "intro": "Every unit ends in a real challenge, graded by StarCi AI against production-grade criteria — not a quiz, not a certificate of attendance.",
+        "courses": {
+            "eyebrow": "Tracks",
+            "title": "Three tracks. One mental model.",
+            "intro": "Each track is diagram-first — pick your language (TypeScript · Java · C# · Go). Find other courses in the catalog.",
+            "view": "Open course",
+            "systems": "20 systems",
             "items": {
-                "content": {
-                    "title": "Content tracks, not tutorials",
-                    "body": "Structured tracks that build architectural thinking — fundamentals, keywords and trade-offs you can carry to any stack."
+                "fullstack": {
+                    "tag": "FULLSTACK",
+                    "modules": "23 modules",
+                    "title": "Production Fullstack",
+                    "desc": "APIs · auth · caching · realtime · payments, plus frontends that survive real traffic."
                 },
-                "challenge": {
-                    "title": "Challenge-driven",
-                    "body": "You don't pass by watching. Each unit ends in a hands-on challenge you actually have to build and defend."
+                "systemDesign": {
+                    "tag": "SYSTEM DESIGN",
+                    "modules": "24 modules",
+                    "title": "Distributed Systems",
+                    "desc": "Sharding · replication · consensus · idempotency — design for failure."
                 },
-                "aiGrading": {
-                    "title": "Graded by StarCi AI",
-                    "body": "Submissions are reviewed against production criteria and scored — real feedback, around the clock, not a participation badge."
+                "devops": {
+                    "tag": "DEVOPS",
+                    "modules": "35 modules",
+                    "title": "Ship & Operate",
+                    "desc": "CI/CD · Docker · Kubernetes · multi-cloud · observability · on-call."
                 }
             }
         },
         "roadmap": {
             "eyebrow": "The path",
-            "title": "From writing endpoints to designing systems",
-            "intro": "A deliberate ladder — each track compounds into the next, ending in Solution Architect.",
+            "title": "Three mastery tracks — learn with structure",
+            "intro": "Each track runs foundation → application with real capstone projects. Follow in order, or pick your track.",
             "tracks": {
                 "fullstack": {
                     "label": "Fullstack",
-                    "caption": "Build the whole thing"
+                    "caption": "Build the whole product — backend to frontend"
+                },
+                "systemDesign": {
+                    "label": "System Design",
+                    "caption": "Design systems at scale"
                 },
                 "devops": {
                     "label": "DevOps",
-                    "caption": "Ship and operate it"
+                    "caption": "Ship & operate across clouds"
+                }
+            }
+        },
+        "systems": {
+            "eyebrow": "Not CRUD",
+            "title": "Real systems you build with your own hands",
+            "intro": "Every capstone is a real production system — not a to-do app.",
+            "items": {
+                "newsfeed": {
+                    "name": "News Feed",
+                    "tag": "Fanout · cache",
+                    "badge": "FAN-OUT"
                 },
-                "security": {
-                    "label": "Security",
-                    "caption": "Make it safe"
+                "flashSale": {
+                    "name": "Flash Sale",
+                    "tag": "Inventory · idempotency",
+                    "badge": "HIGH CONTENTION"
                 },
-                "architect": {
-                    "label": "Solution Architect",
-                    "caption": "Design it at scale"
+                "wallet": {
+                    "name": "E-wallet",
+                    "tag": "Ledger · Saga",
+                    "badge": "CONSISTENCY"
+                },
+                "rideHailing": {
+                    "name": "Ride-hailing",
+                    "tag": "Geospatial · surge",
+                    "badge": "GEO-MATCHING"
+                },
+                "chat": {
+                    "name": "Real-time Chat",
+                    "tag": "WebSocket · ordering",
+                    "badge": "REALTIME"
+                },
+                "deploy": {
+                    "name": "K8s Deploy",
+                    "tag": "Helm · GitOps",
+                    "badge": "ZERO-DOWNTIME"
                 }
             }
         },
         "founder": {
             "eyebrow": "Built in the open",
             "title": "Why StarCi exists",
+            "name": "Nguyễn Văn Tự Cường",
             "role": "Founder · StarCi Academy",
-            "body1": "I built StarCi because I was tired of courses that hand you a certificate and a stack, but never the thinking that decides whether a system survives production.",
+            "titles": "CTO @ Nivo Technology · CTO @ TEDO Technology",
+            "expertise": {
+                "systemDesign": "System Design",
+                "blockchain": "Blockchain",
+                "aiAutomation": "AI business automation"
+            },
+            "quote": "Relax boss — I can still fix the bug.",
+            "body1": "I teach exactly what I ship in production every day — not slides, real systems at CTO scale.",
             "body2": "Everything here is built in the open — the platform, the curriculum, the challenges. Read the engineering notes and judge the work for yourself.",
             "github": "GitHub",
             "blog": "Read the blog"
@@ -2481,7 +2539,8 @@
             "title": "Hire engineers who've proven it",
             "intro": "Learners who finished the work and opted in to be hired — vetted by what they built, not by a résumé.",
             "count": "{count}+ engineers open to work right now",
-            "cta": "Browse candidate profiles"
+            "cta": "Browse candidate profiles",
+            "partnersLabel": "Hiring partners"
         },
         "outcome": {
             "eyebrow": "What you get",
@@ -2513,8 +2572,40 @@
             "a5": "Opt in as open-to-work and your graded work becomes visible to hiring partners browsing the talent directory. No guarantees — just real signal."
         },
         "closing": {
-            "title": "You can write CRUD for three more years. Or start thinking like a system designer today.",
+            "title": "Stop building CRUD. Start designing systems.",
+            "subtitle": "Read → AI-graded challenges → capstone. Self-paced, in the language you already use.",
             "cta": "Browse courses"
+        },
+        "learnLoop": {
+            "eyebrow": "How it works",
+            "title": "A loop that actually builds skill",
+            "intro": "No passive video binging — every module is a tight read -> build -> grade -> rank loop.",
+            "items": {
+                "read": {
+                    "step": "01",
+                    "title": "Read",
+                    "tag": "4 LANGUAGES",
+                    "desc": "Structured, diagram-first lessons in 4 languages."
+                },
+                "grade": {
+                    "step": "02",
+                    "title": "AI-graded challenge",
+                    "tag": "INSTANT FEEDBACK",
+                    "desc": "Write code, scored on correctness & design."
+                },
+                "capstone": {
+                    "step": "03",
+                    "title": "Capstone",
+                    "tag": "REAL SYSTEM",
+                    "desc": "Ship a production-grade system, not a toy."
+                },
+                "rank": {
+                    "step": "04",
+                    "title": "Leaderboard",
+                    "tag": "STAY SHARP",
+                    "desc": "Compare solutions and climb the ranks."
+                }
+            }
         }
     },
     "aiLab": {
@@ -2627,7 +2718,11 @@
             "manage": "Pinned ({count}/{max})"
         },
         "untitled": "Untitled project",
-        "verified": "Verified"
+        "verified": "Verified",
+        "typeCapstone": "Capstone",
+        "typeExternal": "Project",
+        "verifiedByStarci": "Verified by StarCi",
+        "openAria": "{title} — open in new tab"
     },
     "blog": {
         "back": "Back to blog",
@@ -2717,11 +2812,15 @@
         "tryNow": "Try it now"
     },
     "bookmarks": {
-        "count": "{count, plural, one {# bookmark} other {# bookmarks}}",
         "noMatch": "No bookmarks match your search.",
         "searchPlaceholder": "Search bookmarks",
-        "savedCount": "{count, plural, one {# saved lesson} other {# saved lessons}}",
-        "otherCourse": "Other"
+        "heading": "Bookmark",
+        "subtitle": "Lessons you saved to revisit",
+        "found": "{count, plural, one {# bookmark found} other {# bookmarks found}}",
+        "empty": "No bookmarks yet",
+        "emptyHint": "Save a lesson to revisit it here",
+        "errorTitle": "Failed to load bookmarks",
+        "premium": "Premium"
     },
     "followList": {
         "title": "Connections",

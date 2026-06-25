@@ -59,9 +59,9 @@ export const ManagePinnedProjectsModal = ({
                     <Modal.Dialog className={cn(className)}>
                         <Modal.CloseTrigger />
                         <Modal.Header>
-                            <Typography.Heading level={3}>
+                            <Typography type="body" weight="semibold" className="pr-8">
                                 {t("pinnedProjects.manageTitle")}
-                            </Typography.Heading>
+                            </Typography>
                         </Modal.Header>
                         <Modal.Body>
                             <Tabs
@@ -72,18 +72,21 @@ export const ManagePinnedProjectsModal = ({
                                     <Tabs.List aria-label={t("pinnedProjects.manageTitle")}>
                                         <Tabs.Tab id="manage">
                                             {t("pinnedProjects.tabs.manage", { count: pins.length, max: MAX_PINNED_PROJECTS })}
+                                            <Tabs.Indicator />
                                         </Tabs.Tab>
                                         <Tabs.Tab id="external" isDisabled={isFull}>
                                             {t("pinnedProjects.tabs.external")}
+                                            <Tabs.Indicator />
                                         </Tabs.Tab>
                                         <Tabs.Tab id="course" isDisabled={isFull}>
                                             {t("pinnedProjects.tabs.course")}
+                                            <Tabs.Indicator />
                                         </Tabs.Tab>
                                     </Tabs.List>
                                 </Tabs.ListContainer>
 
                                 {/* manage: reorder + remove the existing pins */}
-                                <Tabs.Panel id="manage" className="pt-4">
+                                <Tabs.Panel id="manage" className="pt-3">
                                     {isLoading && pins.length === 0 ? (
                                         <div className="flex justify-center py-6">
                                             <Spinner size="lg" />
@@ -118,12 +121,12 @@ export const ManagePinnedProjectsModal = ({
                                 </Tabs.Panel>
 
                                 {/* external: free-form add form (switches back to manage on success) */}
-                                <Tabs.Panel id="external" className="pt-4">
+                                <Tabs.Panel id="external" className="pt-3">
                                     <ExternalProjectForm onSuccess={() => setTab("manage")} />
                                 </Tabs.Panel>
 
                                 {/* course: capstone pin (switches back to manage on success) */}
-                                <Tabs.Panel id="course" className="pt-4">
+                                <Tabs.Panel id="course" className="pt-3">
                                     <CourseProjectForm onSuccess={() => setTab("manage")} />
                                 </Tabs.Panel>
                             </Tabs>

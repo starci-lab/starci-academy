@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { Typography, cn } from "@heroui/react"
+import { Typography } from "@heroui/react"
 import { BookOpenIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import {
@@ -13,8 +13,12 @@ import {
     IconTile,
     SegmentBar,
     Skeleton,
+    SurfaceListCard,
+    SurfaceListCardItem,
 } from "@/components/blocks"
 import { EntityToken } from "@/components/features/dashboard/EntityToken"
+import { CourseTrialChip } from "@/components/reuseable/CourseTrialChip"
+import { useAppSelector } from "@/redux"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useProfileUsername } from "../../hooks/useProfileUsername"
 
@@ -42,6 +46,10 @@ export const OverviewCourses = ({ className }: OverviewCoursesProps) => {
     const username = useProfileUsername()
     const { data: user } = useQueryUserProfileSwr(username)
     const userId = user?.id ?? null
+    // only the profile OWNER sees the "Học thử" chip — don't broadcast "hasn't paid"
+    // for a course on someone else's public profile.
+    const viewerId = useAppSelector((state) => state.user.user?.id)
+    const isOwnProfile = Boolean(viewerId) && viewerId === userId
     const { data, isLoading, error, mutate } = useQueryUserCoursesSwr(userId)
 
     const courses = data ?? []
@@ -50,23 +58,26 @@ export const OverviewCourses = ({ className }: OverviewCoursesProps) => {
         <AsyncContent
             isLoading={(isLoading || !userId) && courses.length === 0}
             skeleton={(
-                <div className="flex flex-col gap-4">
+                // mirror the real list: surface list card with course item rows
+                <SurfaceListCard>
                     {[0, 1].map((row) => (
-                        <div key={row} className="flex items-center gap-3">
-                            {/* IconTile (md = size-16 rounded-2xl) */}
-                            <Skeleton className="size-12 shrink-0 rounded-2xl" />
-                            <div className="flex min-w-0 flex-1 flex-col gap-2">
-                                {/* title + percent row */}
-                                <div className="flex items-center justify-between gap-2">
-                                    <Skeleton.Typography type="body-sm" width="1/2" />
-                                    <Skeleton className="h-3 w-8 rounded" />
+                        <SurfaceListCardItem key={row}>
+                            <div className="flex items-center gap-3">
+                                {/* IconTile (md = size-16 rounded-2xl) */}
+                                <Skeleton className="size-12 shrink-0 rounded-2xl" />
+                                <div className="flex min-w-0 flex-1 flex-col gap-2">
+                                    {/* title + percent row */}
+                                    <div className="flex items-center justify-between gap-2">
+                                        <Skeleton.Typography type="body-sm" width="1/2" />
+                                        <Skeleton className="h-3 w-8 rounded" />
+                                    </div>
+                                    {/* SegmentBar track */}
+                                    <Skeleton.ProgressBar />
                                 </div>
-                                {/* SegmentBar track */}
-                                <Skeleton.ProgressBar />
                             </div>
-                        </div>
+                        </SurfaceListCardItem>
                     ))}
-                </div>
+                </SurfaceListCard>
             )}
             isEmpty={courses.length === 0}
             emptyContent={{ title: t("publicProfile.coursesEmpty") }}
@@ -77,7 +88,7 @@ export const OverviewCourses = ({ className }: OverviewCoursesProps) => {
                 retryLabel: t("publicProfile.loadErrorRetry"),
             }}
         >
-            <div className={cn("flex flex-col gap-4", className)}>
+            <SurfaceListCard className={className}>
                 {courses.map((item) => {
                     const dims = [
                         { key: "content", completed: item.contentCompleted, total: item.contentTotal },
@@ -88,35 +99,38 @@ export const OverviewCourses = ({ className }: OverviewCoursesProps) => {
                     const doneTasks = dims.reduce((acc, d) => acc + d.completed, 0)
                     const percent = totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : 0
                     return (
-                        <div key={item.globalId} className="flex items-center gap-3">
-                            <IconTile size="sm" src={item.thumbnailUrl} icon={<BookOpenIcon aria-hidden focusable="false" />} />
-                            <div className="flex min-w-0 flex-1 flex-col gap-2">
-                                <div className="flex items-center justify-between gap-2">
-                                    {/* course title is a link into the course */}
-                                    <EntityToken
-                                        globalId={item.globalId}
-                                        label={item.label}
-                                        className="min-w-0 flex-1 truncate"
+                        <SurfaceListCardItem key={item.globalId}>
+                            <div className="flex items-center gap-3">
+                                <IconTile size="sm" src={item.thumbnailUrl} icon={<BookOpenIcon aria-hidden focusable="false" />} />
+                                <div className="flex min-w-0 flex-1 flex-col gap-2">
+                                    <div className="flex items-center justify-between gap-2">
+                                        {/* course title is a link into the course */}
+                                        <EntityToken
+                                            globalId={item.globalId}
+                                            label={item.label}
+                                            className="min-w-0 flex-1 truncate"
+                                        />
+                                        {isOwnProfile ? <CourseTrialChip isEnrolled={item.isEnrolled} /> : null}
+                                        <Typography type="body-xs" color="muted">
+                                            {percent}%
+                                        </Typography>
+                                    </div>
+                                    <SegmentBar
+                                        max={totalTasks || 1}
+                                        ariaLabel={`${item.label} · ${percent}%`}
+                                        segments={dims.map((d) => ({
+                                            key: d.key,
+                                            label: t(`dashboard.courseProgress.${d.key}`),
+                                            value: d.completed,
+                                            color: DIM_COLOR[d.key],
+                                        }))}
                                     />
-                                    <Typography type="body-xs" color="muted">
-                                        {percent}%
-                                    </Typography>
                                 </div>
-                                <SegmentBar
-                                    max={totalTasks || 1}
-                                    ariaLabel={`${item.label} · ${percent}%`}
-                                    segments={dims.map((d) => ({
-                                        key: d.key,
-                                        label: t(`dashboard.courseProgress.${d.key}`),
-                                        value: d.completed,
-                                        color: DIM_COLOR[d.key],
-                                    }))}
-                                />
                             </div>
-                        </div>
+                        </SurfaceListCardItem>
                     )
                 })}
-            </div>
+            </SurfaceListCard>
         </AsyncContent>
     )
 }

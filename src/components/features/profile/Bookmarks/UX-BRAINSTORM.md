@@ -1,69 +1,90 @@
-# UX Brainstorm — "Đã lưu" / Bookmarks page
+# Bookmark (Saved) — UX brainstorm (2026-06-25 · Opus)
 
-> Scope: trang `/profile/bookmarks` (`Bookmarks/index.tsx` → `BookmarksList` → `BookmarkCard`). Thầy:
-> *"để ý header và breadcrumbs; render sao để XEM HẾT được; ít ra cũng có thanh search."* KHÔNG code.
+> `/profile/settings/bookmarks` → `Bookmarks` feature. Brainstorm ONLY — no code.
+> Thầy directives: (1) đổi "Saved" → "Bookmark", (2) seed bookmark, (3) search variant primary, (4) áp pattern pagination.
+> Sau khi chốt → `/starci-fe-ux-apply`.
 
-## Hiện trạng (grounded)
-- Chrome: `max-w-4xl p-6` + **plain `<Typography type="h2">` "Đã lưu"** — KHÔNG breadcrumb, KHÔNG `PageHeader`,
-  KHÔNG count, KHÔNG search. (Lệch với sibling: EditProfile dùng `Breadcrumbs` + block `PageHeader{title,description,breadcrumb,actions}`.)
-- List: `BookmarksList` → `BookmarkCard` (PressableCard to, full-width: title h5 + desc 2 dòng + "N phút đọc" + challenge count + arrow), `gap-3` dọc.
-- Data: `useQuerySavedContentsSwr()` → `savedContents(request:{})` trả `{ contents, count }`. Field/item:
-  `id, displayId, title, description, minutesRead, isPremium, challenges[].id`.
-- **CHẶN "xem hết": BE mặc định `skip=0, take=20`, FE gửi `{}` + KHÔNG phân trang** → chỉ 20 mục hiện ra, quá 20 KHÔNG tới được. Đây là lỗi chính của "xem hết".
-- Empty: `AsyncContent` + `EmptyContent`. Search: chưa có block filter inline (có `InputButtonLike` cho modal; inline thì dùng HeroUI `Input` + filter).
+## 0. Mục tiêu trang
+Trang để học viên **tìm lại nhanh** 1 bài đã lưu. Job ≤10s: gõ/lướt → thấy bài → bấm vào học tiếp. Đây là **list duyệt được có thể dài** → đúng đối tượng của "list-surface anatomy" ([[list-surface-anatomy-search-count-list-pagination]]).
 
-## Mục tiêu trang
-Kho "đã lưu để học sau" → user phải **TÌM nhanh** + **DUYỆT hết** + **mở** đúng bài. Ưu tiên: tìm (search) > duyệt hết (density + load-all) > nhất quán chrome (header/breadcrumb như sibling).
+## 1. Dữ liệu BE (verified)
+Query `savedContents(skip?: Int=0, take?: Int=20)` → `{ contents: ContentEntity[], count: number }`.
+- **Pagination native:** `skip`/`take` offset-limit. **`count` = tổng số bookmark** (đã trả sẵn) → đủ cho result-count + total pages.
+- Mỗi item (đã JOIN course): `id` · `displayId` · `title` · `description` · `minutesRead` · `isPremium` · `challenges[]` (→ count) · `module.course { id, displayId, title, coverImageUrl }`. Sort `createdAt DESC` (mới nhất trước).
+- Mutation `toggleFavourite(contentId, isFavorite)`. Bookmark = `user_contents.is_favorite = true`.
+- Chỉ **ContentEntity** bookmark được (lesson / foundation doc) — không có type khác.
 
-## IA mới
-1. **Breadcrumbs** (Trang chủ › Hồ sơ › Đã lưu) + **`PageHeader`** title "Đã lưu" + description = "**N mục đã lưu**" (dùng `count`).
-2. **Toolbar**: ô **Search** (lọc theo title/description) + (tuỳ) sort "Mới lưu / Thời lượng" + (tuỳ) filter type/premium.
-3. **List xem-hết**: hàng **gọn** (dày hơn card to) + **infinite scroll** (tải hết, không kẹt 20).
-4. States: loading=skeleton mirror hàng gọn · empty=EmptyContent + CTA "Khám phá khoá học" · error=retry.
+## 2. Hiện trạng + pain
+- **Title** = `content.saved` "Đã lưu / Saved" → thầy đổi **"Bookmark"**.
+- **Search** = `TextField variant="secondary"` (xám) đặt trên `bg-background` → blend → thầy đổi **primary** (bỏ variant = `bg-field` trắng nổi trên nền, đúng [[input-variant-by-surface-and-search-result-count]] "search trên background → no variant").
+- **Pagination** = infinite-scroll (`InfiniteScrollSentinel`) + **group theo khóa bằng Accordion** + `PressableCard` mỗi item → KHÔNG phải pattern list-surface; thầy muốn **Pagination component** (căn trái, hover, reset khi search).
+- **Search client-side** chỉ lọc trang đã tải (infinite) → không bao trùm toàn bộ bookmark; count "0 bookmarks" lấy từ `bookmarks.count`.
+- List rỗng hiện "No content yet" (`content.empty`).
 
-## Hướng (≥3)
+## 3. Ref (pattern đã có trong rules — không cần web)
+- [[list-surface-anatomy-search-count-list-pagination]]: **1 list "đủ bộ" = search · số records · list · Pagination** (4 phần dọc). Gõ search → reset trang 1. Pagination ẩn khi ≤1 trang.
+- [[list-pager-left-align-and-hover]]: pager căn **TRÁI** thẳng mép list + hover/cursor (HeroUI Pagination không tự bake).
+- [[input-variant-by-surface-and-search-result-count]]: search trên background → **no variant** (primary, trắng); count phải hàng search.
+- [[item-card-meta-inside-bounded-object]] + [[elements/card]] §3c: nhiều item đơn giản → **1 `SurfaceListCard`** (rows + separator inset), KHÔNG N `PressableCard` rời.
+- [[hover-style-matches-clickable-nature]]: row điều hướng (nav) → hover **underline title**, không fill.
 
-### Hướng A ⭐ — Library: header + search toolbar + hàng gọn + infinite scroll
-- Header/breadcrumb như sibling (`PageHeader`+`Breadcrumbs`) + count.
-- **Search inline** (HeroUI `Input`, icon kính lúp) lọc **client-side** theo title/desc trên tập đã tải (đủ cho vài chục mục; nhiều hơn → server-search, BE việc sau).
-- Card → **hàng gọn** (title + meta inline `phút đọc · N challenge · chip Premium` + arrow), bỏ desc 2 dòng (hoặc 1 dòng) → **nhiều mục/màn hình**, dễ lướt.
-- **Infinite scroll** = `useSWRInfinite` + sentinel (đúng rule async §infinite) → **xem HẾT**. **Cần BE**: `savedContents(request)` nhận `skip/take` (hoặc cursor) và FE truyền vào (hiện FE gửi `{}`).
-- ✅ Trả lời đủ 3 ý thầy, ít field mới nhất; ⚠️ cần BE mở phân trang (đừng fake).
+## 4. Các hướng
 
-### Hướng B — Grid card 2–3 cột + search
-- Cùng header+search, nhưng render **grid card** (2 cột desktop) cho "xem nhiều hơn/màn hình".
-- ✅ Trực quan; ⚠️ card vẫn tốn chỗ, text-heavy lướt kém hơn list; vẫn cần phân trang để xem hết.
+### Hướng A — List-surface anatomy phẳng + Pagination (ĐỀ XUẤT)
+Đúng directive thầy. IA dọc:
+1. **PageHeader** title "Bookmark" + breadcrumb + desc ngắn.
+2. **Search row**: input **primary** (trắng, trên background) TRÁI `w-full sm:max-w-sm` + **result-count** PHẢI ("Tìm thấy {n} bookmark", muted, từ `count`).
+3. **List**: **1 `SurfaceListCard`** — mỗi bookmark = `SurfaceListCardRow` (`leading` icon file · `title` lesson (group-hover underline, nav) · `subtitle` = **tên khóa** · `meta` = `minutesRead` + chip `Premium` nếu có + challenge count · `trailing` caret), whole-row → `displayId`. **Bỏ accordion group theo khóa** (khóa xuống subtitle).
+4. **Pagination**: page-based (`skip = (page-1)*take`), **căn trái**, hover, **reset về trang 1 khi search**, **ẩn khi ≤1 trang**. Thay `InfiniteScrollSentinel`.
 
-### Hướng C — Gom theo khoá/module (collapsible) + search
-- Group bookmark theo **khoá/module cha** (như tab Challenges gom theo course), mỗi nhóm gập được.
-- ✅ Có tổ chức; ⚠️ **cần field `module`/courseTitle per item** (query `savedContents` CHƯA trả → BE thêm), nặng hơn.
+**Pros:** đúng pattern thầy yêu cầu; search/count/pager cho list dài; 1 surface bounded (hết N PressableCard rời + card-in-card); whole-row nav rõ.
+**Cons:** mất grouping theo khóa (đổi sang subtitle); search nên chuyển **server-side** (xem §10 gap) để count + pager đúng toàn tập.
 
-## CHỐT: Hướng A
-Đáp thẳng 3 yêu cầu (header+breadcrumb · search · xem-hết) với chi phí dữ liệu thấp nhất. Density (hàng gọn) +
-infinite scroll trị "không xem hết được"; search client-side trị "tìm". Nâng cấp dần: server-search + sort-by-saved
-+ group-by-course khi cần.
+### Hướng B — Giữ group-theo-khóa (accordion) + search + count
+Giữ Accordion nhóm theo khóa, chỉ thêm search-row + count, đổi title "Bookmark" + search primary.
+**Pros:** grouping mạnh khi học nhiều khóa.
+**Cons:** **Pagination KHÔNG gắn được vào grouping** (phân trang xuyên nhóm = rối) → vẫn infinite-scroll → **trái directive "áp pagination"**. Bỏ.
 
-## Section → dữ liệu BE/DB (+ khoảng trống)
-| Phần | Field/nguồn | Trạng thái |
+### Hướng C — Phẳng + lọc khóa bằng tab/segmented + pagination
+List phẳng (như A) + 1 hàng `TabsCard`/chip lọc theo khóa (Tất cả / FS / SD / DevOps) trên search.
+**Pros:** vừa phẳng-paginate vừa lọc được theo khóa (thay grouping).
+**Cons:** thêm tầng filter; chỉ đáng khi học viên có bookmark ở **nhiều** khóa. Defer (A trước, thêm filter khóa sau nếu cần).
+
+## 5. CHỐT: Hướng A
+Đúng 4 directive thầy (rename · search primary · pagination · seed riêng). Robust, đúng [[list-surface-anatomy-search-count-list-pagination]]. Grouping theo khóa → subtitle (không mất thông tin khóa). Cần lọc khóa sau → nâng C.
+
+## 6. Field → component map (A)
+| Phần | Component | Field |
 |---|---|---|
-| Count header | `data.count` | ✅ có |
-| Search (title/desc) | `title`, `description` (client filter) | ✅ có (server-search = BE sau) |
-| Hàng gọn | `title`, `minutesRead`, `challenges.length`, `isPremium` | ✅ có |
-| Mở bài | `displayId` → route content | ✅ có |
-| **Infinite scroll** | `savedContents(request:{skip,take})` + FE `useSWRInfinite` | ⚠️ **CẦN BE mở param** (FE đang gửi `{}`, BE chốt take=20) |
-| Sort "Mới lưu" | `user_contents.created_at` (savedAt) | ⚠️ BE chưa trả → thêm nếu cần sort |
-| Group theo khoá (Hướng C) | `module`/courseTitle per content | ⚠️ BE chưa trả |
+| Header | `PageHeader` + `SettingsBreadcrumb` | title "Bookmark" (i18n mới `bookmarks.heading`), desc |
+| Search | `TextField` **bỏ variant** (primary) + `Input` | `search` |
+| Count | `Typography body-sm muted shrink-0` | `count` — "Tìm thấy {n} bookmark" |
+| List | `SurfaceListCard` + `SurfaceListCardRow` | per item |
+| Row title | `title` (group-hover underline) | nav → `displayId` |
+| Row subtitle | `module.course.title` | tên khóa |
+| Row meta | `minutesRead` + `isPremium` chip + `challenges.length` | |
+| Row leading | icon (FileText) / `IconTile` cover | |
+| Pagination | HeroUI `Pagination` (trái, hover) | `count / take` → totalPages; ẩn ≤1 |
 
-## Cắt / thêm
-- **Thêm**: Breadcrumbs, PageHeader+count, thanh Search, infinite scroll, hàng gọn.
-- **Cắt/giảm**: card to 2 dòng desc → hàng gọn 1 dòng (đỡ chiếm chỗ). Bỏ `max-w-4xl` quá hẹp nếu cần list rộng hơn.
-- Hàng = pressable **Link** (điều hướng) theo rule nav-item (drafts/nav-item-link-not-listbox), chỉ active/hover nhẹ.
+## 7. Cut / thêm / giữ
+**Cut:** Accordion group-theo-khóa; `PressableCard` rời; `InfiniteScrollSentinel`.
+**Thêm:** result-count phải search; `SurfaceListCard` rows; **Pagination** (trái, hover, reset on search, ẩn ≤1 trang).
+**Giữ:** `PageHeader`+`SettingsBreadcrumb`, `AsyncContent` (skeleton mirror rows), empty/error state.
+**Đổi:** title `content.saved` → key mới `bookmarks.heading` = "Bookmark"; search `variant="secondary"` → bỏ variant.
 
-## States / a11y
-- Loading: skeleton MIRROR hàng gọn (`Skeleton.ListRow` ×N). Empty: `EmptyContent` "Chưa lưu gì" + CTA. Error: retry `mutate`.
-- Search `Input` có `aria-label`; danh sách role=list; sentinel infinite có `disabled` khi hết trang / đang tải.
+## 8. Empty / loading / error
+- **Loading**: skeleton mirror `SurfaceListCard` (5–6 rows trong 1 bordered surface).
+- **Empty (0 bookmark)**: `EmptyContent` icon `BookmarkSimpleIcon` + "Chưa có bookmark" + hint "Lưu bài học để xem lại ở đây".
+- **Search rỗng**: `EmptyContent` "Không có bookmark khớp" (`bookmarks.noMatch` có sẵn).
+- **Error**: `AsyncContent` retry.
 
----
-*→ Thầy duyệt → `/ux-apply`. **Phụ thuộc BE**: muốn "xem hết" thật phải mở `savedContents(skip/take|cursor)` — trò nêu rõ
-sẽ cần đụng BE, không fake. Nếu chốt A, trò ghi draft rule "list trang đầy đủ (bookmark/feed/history) = header+breadcrumb
-sibling + search + infinite scroll + hàng gọn".*
+## 9. A11y
+- Row = `<a>`/onPress whole-row, `aria-label` = title; caret + meta `aria-hidden`.
+- Pager: HeroUI Pagination + `aria-label` trang; reset trang khi đổi search.
+- Search `aria-label`.
+
+## 10. BE work (CHỐT thầy 2026-06-25)
+- **✅ CHỐT: thêm BE arg `search` (server-side).** `savedContents` thêm `search?: String` → filter `content.title ILIKE %search%` (cân nhắc cả `description`) NGAY trong `findAndCount` (cùng `where` + `skip/take`) → **count + pager + kết quả đúng TOÀN BỘ bookmark** khi gõ search. `/apply` sửa **cả BE** (request DTO + handler where) **lẫn FE** (query thêm var `search`, hook page-based truyền search → reset page 1 khi search đổi). KHÔNG dùng client-filter-per-page.
+  - BE đụng: `saved-contents/graphql-types/request.ts` (thêm field `search`), `saved-contents.handler.ts` (where `content.title ILIKE`), GraphQL query FE `query-saved-contents.ts` (thêm `$search`).
+- **Pagination:** BE đã sẵn `skip/take` + `count` → FE đổi `useSWRInfinite` → `useSWR` page-based (`skip=(page-1)*take`, `take=12`); `totalPages=ceil(count/take)`; HeroUI `Pagination` trái+hover, ẩn ≤1 trang, reset page 1 khi `search` đổi (`useEffect`).
+- **✅ Seed (đã làm):** 16 `user_contents (user_id=701d03f2…, content_id, is_favorite=true)` cho account thầy (pakoohacha588), trải 4 khóa + mix premium → tổng 22 bookmark (>12 = 2 trang, test pager + search).

@@ -12,6 +12,8 @@ import {
     SegmentBar,
     Skeleton,
     StatPair,
+    SurfaceListCard,
+    SurfaceListCardItem,
 } from "@/components/blocks"
 import {
     getLanguageColor,
@@ -59,17 +61,19 @@ export const OverviewChallengeSkills = ({ className }: OverviewChallengeSkillsPr
         <AsyncContent
             isLoading={(isLoading || !userId) && challenges.length === 0}
             skeleton={(
-                <div className="flex flex-col gap-3">
-                    {/* StatPair (count + label) */}
-                    <Skeleton.Metric />
-                    {/* difficulty bar */}
-                    <Skeleton.SegmentBar legendItems={4} />
-                    {/* language label + bar */}
-                    <div className="flex flex-col gap-2">
-                        <Skeleton.Typography type="body-xs" width="1/4" />
-                        <Skeleton.SegmentBar legendItems={4} />
-                    </div>
-                </div>
+                <SurfaceListCard>
+                    <SurfaceListCardItem>
+                        <div className="flex flex-col gap-3">
+                            {/* StatPair (count + label) + difficulty bar + language */}
+                            <Skeleton.Metric />
+                            <Skeleton.SegmentBar legendItems={4} />
+                            <div className="flex flex-col gap-2">
+                                <Skeleton.Typography type="body-xs" width="1/4" />
+                                <Skeleton.SegmentBar legendItems={4} />
+                            </div>
+                        </div>
+                    </SurfaceListCardItem>
+                </SurfaceListCard>
             )}
             isEmpty={challenges.length === 0}
             emptyContent={{ title: t("publicProfile.skills.empty") }}
@@ -80,37 +84,40 @@ export const OverviewChallengeSkills = ({ className }: OverviewChallengeSkillsPr
                 retryLabel: t("publicProfile.loadErrorRetry"),
             }}
         >
-            <div className={cn("flex flex-col gap-3", className)}>
-                {/* passed count headline */}
-                <StatPair
-                    value={challenges.length}
-                    label={t("publicProfile.challengesCount")}
-                />
-                {/* difficulty distribution (4-tone) */}
-                {difficultySegments.length > 0 ? (
-                    <SegmentBar
-                        ariaLabel={`${challenges.length} ${t("publicProfile.challengesCount")}`}
-                        segments={difficultySegments}
-                    />
-                ) : null}
-                {/* language breadth — same SegmentBar + brand legend as the Challenges tab */}
-                {langs.length > 0 ? (
-                    <div className="flex flex-col gap-2">
-                        <Typography type="body-xs" color="muted">
-                            {t("publicProfile.skillsSnapshot.languagesLabel")}
-                        </Typography>
-                        <SegmentBar
-                            ariaLabel={t("publicProfile.skillsSnapshot.languagesLabel")}
-                            segments={langs.map(([lang, count]) => ({
-                                key: lang,
-                                label: getLanguageLabel(lang),
-                                value: count,
-                                color: getLanguageColor(lang),
-                            }))}
+            <SurfaceListCard className={cn("h-full", className)}>
+                <SurfaceListCardItem>
+                    <div className="flex flex-col gap-3">
+                        {/* passed count headline + difficulty distribution (4-tone) */}
+                        <StatPair
+                            value={challenges.length}
+                            label={t("publicProfile.challengesCount")}
                         />
+                        {difficultySegments.length > 0 ? (
+                            <SegmentBar
+                                ariaLabel={`${challenges.length} ${t("publicProfile.challengesCount")}`}
+                                segments={difficultySegments}
+                            />
+                        ) : null}
+                        {/* language breadth — same SegmentBar + brand legend as the Challenges tab */}
+                        {langs.length > 0 ? (
+                            <div className="flex flex-col gap-2">
+                                <Typography type="body-xs" color="muted">
+                                    {t("publicProfile.skillsSnapshot.languagesLabel")}
+                                </Typography>
+                                <SegmentBar
+                                    ariaLabel={t("publicProfile.skillsSnapshot.languagesLabel")}
+                                    segments={langs.map(([lang, count]) => ({
+                                        key: lang,
+                                        label: getLanguageLabel(lang),
+                                        value: count,
+                                        color: getLanguageColor(lang),
+                                    }))}
+                                />
+                            </div>
+                        ) : null}
                     </div>
-                ) : null}
-            </div>
+                </SurfaceListCardItem>
+            </SurfaceListCard>
         </AsyncContent>
     )
 }

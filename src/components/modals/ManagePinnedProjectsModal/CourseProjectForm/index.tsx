@@ -7,11 +7,13 @@ import {
     ListBox,
     Select,
     Spinner,
+    TextArea,
+    TextField,
     Typography,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { useSWRConfig } from "swr"
-import { CircleCheckFill as CircleCheckFillIcon } from "@gravity-ui/icons"
+import { CheckCircleIcon } from "@phosphor-icons/react"
 import {
     QUERY_USER_PINNED_PROJECTS_SWR,
     useMutatePinCourseProjectSwr,
@@ -109,7 +111,7 @@ export const CourseProjectForm = ({
             className={className}
             onSubmit={onSubmit}
         >
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-3">
                 {/* capstone picker — shows all enrollments that have a project repo */}
                 <div className="flex flex-col gap-2">
                     <Label htmlFor="course-pin-select">
@@ -164,7 +166,7 @@ export const CourseProjectForm = ({
                                             {item.isVerified ? (
                                                 <StatusChip
                                                     tone="success"
-                                                    icon={<CircleCheckFillIcon />}
+                                                    icon={<CheckCircleIcon />}
                                                 >
                                                     {t("pinnedProjects.course.verified")}
                                                 </StatusChip>
@@ -184,22 +186,21 @@ export const CourseProjectForm = ({
                     ) : null}
                 </div>
 
-                {/* optional description textarea — same styling as ExternalProjectForm */}
-                <div className="flex flex-col gap-2">
+                {/* optional description — TextField+TextArea (same skin as the other fields) */}
+                <TextField variant="secondary" isDisabled={isSubmitting}>
                     <Label htmlFor="course-pin-description">
                         {t("pinnedProjects.form.description")}
                     </Label>
-                    <textarea
+                    <TextArea
                         id="course-pin-description"
                         rows={3}
                         placeholder={t("pinnedProjects.form.descriptionPlaceholder")}
                         aria-label={t("pinnedProjects.form.description")}
-                        className="w-full resize-none rounded-xl bg-default/40 p-3 text-sm text-foreground outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                        className="resize-none"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        disabled={isSubmitting}
                     />
-                </div>
+                </TextField>
 
                 {/* submit button — disabled + pending while the mutation is in flight */}
                 <Button

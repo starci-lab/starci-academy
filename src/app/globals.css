@@ -16,6 +16,14 @@ html {
   scrollbar-gutter: stable;
 }
 
+/* A data "packet" travelling down a vertical wire — the hero architecture diagram's
+   "chảy theo dây" flow effect (orthogonal connectors). */
+@keyframes wireFlow {
+  0% { transform: translate(-50%, -6px); opacity: 0; }
+  20%, 80% { opacity: 1; }
+  100% { transform: translate(-50%, 24px); opacity: 0; }
+}
+
 /*
  * HeroUI Theme Customization
  * Add this to your global.css after importing @heroui/styles

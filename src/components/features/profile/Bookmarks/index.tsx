@@ -1,12 +1,12 @@
 "use client"
 
 import React, {
-    useMemo,
+    useEffect,
     useState,
 } from "react"
 import {
-    Accordion,
     Input,
+    Pagination,
     TextField,
     Typography,
 } from "@heroui/react"
@@ -16,16 +16,14 @@ import {
 import {
     AsyncContent,
     EmptyContent,
-    InfiniteScrollSentinel,
     PageHeader,
     Skeleton,
+    SurfaceListCard,
 } from "@/components/blocks"
 import {
-    useQuerySavedContentsInfiniteSwr,
+    SAVED_CONTENTS_PAGE_SIZE,
+    useQuerySavedContentsSwr,
 } from "@/hooks"
-import type {
-    ContentEntity,
-} from "@/modules/types"
 import {
     SettingsBreadcrumb,
 } from "../Settings/SettingsBreadcrumb"
@@ -33,160 +31,154 @@ import {
     BookmarkCard,
 } from "./BookmarkCard"
 
-/** Saved contents grouped under one course. */
-interface BookmarkGroup {
-    /** Course id (or a sentinel for contents with no resolvable course). */
-    id: string
-    /** Course title, or undefined when unknown. */
-    title?: string
-    /** The saved contents in this course. */
-    items: Array<ContentEntity>
-}
-
 /**
- * Bookmarks ("Đã lưu") page. A searchable library of the viewer's saved contents,
- * GROUPED BY COURSE: each course is a collapsible section showing how many lessons
- * are saved in it; expanding reveals the saved-lesson rows. Owns the page chrome
- * (breadcrumb + {@link PageHeader} with the total saved count), a client-side search
- * filter, and offset pagination. Data states go through {@link AsyncContent}; more
- * pages load as the {@link InfiniteScrollSentinel} scrolls into view. Mounted by
- * `/profile/bookmarks`.
+ * Bookmark page — a searchable, paginated library of the viewer's saved contents.
+ * Follows the list-surface anatomy: a primary search input balanced by the result
+ * count, one {@link SurfaceListCard} of saved-lesson rows, and a left-aligned
+ * {@link Pagination} (hidden on a single page). Search + paging are resolved
+ * server-side (`savedContents(skip, take, search)`); typing snaps back to page 1.
+ * Data states go through {@link AsyncContent}. Mounted by `/profile/bookmarks`.
  */
 export const Bookmarks = () => {
     const t = useTranslations()
+
+    // search input (debounced → server-side title filter) + 1-based page
     const [search, setSearch] = useState("")
+    const [debounced, setDebounced] = useState("")
+    const [page, setPage] = useState(1)
+
+    // debounce keystrokes before hitting the server
+    useEffect(() => {
+        const timer = setTimeout(() => setDebounced(search.trim()), 300)
+        return () => clearTimeout(timer)
+    }, [search])
+
+    // a new search shrinks the list — snap back to the first page
+    useEffect(() => {
+        setPage(1)
+    }, [debounced])
 
     const {
         data,
         isLoading,
-        isValidating,
         error,
-        size,
-        setSize,
         mutate,
-    } = useQuerySavedContentsInfiniteSwr()
+    } = useQuerySavedContentsSwr(page, debounced)
 
-    const pages = useMemo(() => data ?? [], [data])
-    // flatten all loaded pages into one list
-    const contents = useMemo(() => pages.flatMap((page) => page.contents), [pages])
-    const count = pages[0]?.count ?? 0
-    // more rows remain when we've loaded fewer than the reported total
-    const hasMore = count > 0 && contents.length < count
-    const isLoadingMore = isValidating && size > 0
-
-    // search filters the loaded items (title + description), client-side
-    const query = search.trim().toLowerCase()
-    const filtered = useMemo(
-        () => (query
-            ? contents.filter((content) =>
-                content.title?.toLowerCase().includes(query)
-                || content.description?.toLowerCase().includes(query))
-            : contents),
-        [contents, query],
-    )
-
-    // group the (filtered) saved contents by their owning course, preserving the
-    // load order so the most-recently-saved course surfaces first
-    const groups = useMemo<Array<BookmarkGroup>>(() => {
-        const byCourse = new Map<string, BookmarkGroup>()
-        for (const content of filtered) {
-            const course = content.module?.course
-            const key = course?.id ?? "__none__"
-            const existing = byCourse.get(key)
-            if (existing) {
-                existing.items.push(content)
-            } else {
-                byCourse.set(key, { id: key, title: course?.title, items: [content] })
-            }
-        }
-        return Array.from(byCourse.values())
-    }, [filtered])
+    const contents = data?.contents ?? []
+    const count = data?.count ?? 0
+    const totalPages = Math.ceil(count / SAVED_CONTENTS_PAGE_SIZE)
+    const pageNumbers = Array.from({ length: totalPages }, (_unused, index) => index + 1)
 
     return (
-        <div className="mx-auto flex max-w-4xl flex-col gap-6 p-6">
-            <SettingsBreadcrumb current={t("content.saved")} />
+        <div className="mx-auto flex max-w-4xl flex-col gap-10 p-6">
             <PageHeader
-                title={t("content.saved")}
-                description={t("bookmarks.count", { count })}
+                breadcrumb={<SettingsBreadcrumb current={t("bookmarks.heading")} />}
+                title={t("bookmarks.heading")}
+                description={t("bookmarks.subtitle")}
             />
-
-            {/* search — filters the loaded items by title / description */}
-            <TextField variant="secondary">
-                <Input
-                    aria-label={t("bookmarks.searchPlaceholder")}
-                    placeholder={t("bookmarks.searchPlaceholder")}
-                    value={search}
-                    onChange={(event) => setSearch(event.target.value)}
-                />
-            </TextField>
-
             <AsyncContent
-                isLoading={isLoading && contents.length === 0}
+                isLoading={isLoading && !data}
                 skeleton={(
-                    <div className="flex flex-col gap-2">
+                    <SurfaceListCard>
                         {[0, 1, 2, 3, 4].map((row) => (
-                            <Skeleton key={row} className="h-16 w-full rounded-large" />
+                            <div key={row} className="flex items-center gap-3 px-4 py-4">
+                                <Skeleton className="size-12 shrink-0 rounded-xl" />
+                                <div className="flex flex-1 flex-col gap-2">
+                                    <Skeleton className="h-4 w-1/2 rounded-medium" />
+                                    <Skeleton className="h-3 w-1/3 rounded-medium" />
+                                </div>
+                            </div>
                         ))}
-                    </div>
+                    </SurfaceListCard>
                 )}
-                isEmpty={contents.length === 0}
-                emptyContent={{ title: t("content.empty") }}
+                isEmpty={!debounced && count === 0}
+                emptyContent={{
+                    title: t("bookmarks.empty"),
+                    description: t("bookmarks.emptyHint"),
+                }}
                 error={error}
                 errorContent={{
-                    title: t("content.saved"),
+                    title: t("bookmarks.errorTitle"),
                     onRetry: () => { void mutate() },
                     retryLabel: t("dashboard.retry"),
                 }}
             >
-                {filtered.length === 0 ? (
-                    // loaded but the current search matches nothing
-                    <EmptyContent title={t("bookmarks.noMatch")} />
-                ) : (
-                    // grouped by course: collapse shows the per-course saved count,
-                    // expand reveals the saved-lesson rows (first course open by default)
-                    <Accordion
-                        variant="surface"
-                        defaultExpandedKeys={groups[0] ? new Set([groups[0].id]) : undefined}
-                    >
-                        {groups.map((group) => (
-                            <Accordion.Item
-                                key={group.id}
-                                id={group.id}
-                                aria-label={group.title ?? t("bookmarks.otherCourse")}
-                            >
-                                <Accordion.Heading className="min-w-0">
-                                    <Accordion.Trigger className="min-w-0 w-full">
-                                        <div className="flex w-full min-w-0 items-center justify-between gap-3 text-start">
-                                            <Typography type="body-sm" weight="semibold" truncate title={group.title}>
-                                                {group.title ?? t("bookmarks.otherCourse")}
-                                            </Typography>
-                                            <div className="flex shrink-0 items-center gap-2">
-                                                <Typography type="body-xs" color="muted">
-                                                    {t("bookmarks.savedCount", { count: group.items.length })}
-                                                </Typography>
-                                                <Accordion.Indicator />
-                                            </div>
-                                        </div>
-                                    </Accordion.Trigger>
-                                </Accordion.Heading>
-                                <Accordion.Panel>
-                                    <Accordion.Body>
-                                        <div className="flex flex-col gap-2">
-                                            {group.items.map((content) => (
-                                                <BookmarkCard key={content.id} content={content} />
-                                            ))}
-                                        </div>
-                                    </Accordion.Body>
-                                </Accordion.Panel>
-                            </Accordion.Item>
-                        ))}
-                    </Accordion>
-                )}
-                {/* grow the list as the sentinel scrolls into view */}
-                <InfiniteScrollSentinel
-                    onReach={() => setSize((current) => current + 1)}
-                    disabled={!hasMore || isLoadingMore}
-                />
+                <div className="flex flex-col gap-3">
+                    {/* search row: primary input (left, on the page background → no
+                        variant) balanced by the result count (right) */}
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                        <TextField className="w-full sm:max-w-sm">
+                            <Input
+                                type="search"
+                                aria-label={t("bookmarks.searchPlaceholder")}
+                                placeholder={t("bookmarks.searchPlaceholder")}
+                                value={search}
+                                onChange={(event) => setSearch(event.target.value)}
+                            />
+                        </TextField>
+                        <Typography type="body-sm" color="muted" className="shrink-0">
+                            {t("bookmarks.found", { count })}
+                        </Typography>
+                    </div>
+
+                    {contents.length === 0 ? (
+                        <EmptyContent title={t("bookmarks.noMatch")} />
+                    ) : (
+                        <>
+                            <SurfaceListCard>
+                                {contents.map((content) => (
+                                    <BookmarkCard key={content.id} content={content} />
+                                ))}
+                            </SurfaceListCard>
+
+                            {/* pager: left-aligned with the list, hidden on a single
+                                page. HeroUI Pagination bakes no hover/cursor → add per
+                                the rule. */}
+                            {totalPages > 1 ? (
+                                <Pagination
+                                    aria-label={t("common.pagination.navAria")}
+                                    className="justify-start"
+                                    size="sm"
+                                >
+                                    <Pagination.Content className="flex flex-wrap justify-start gap-1.5">
+                                        <Pagination.Item>
+                                            <Pagination.Previous
+                                                aria-label={t("common.pagination.previous")}
+                                                isDisabled={page <= 1}
+                                                className="cursor-pointer rounded-medium transition-colors hover:bg-default"
+                                                onPress={() => setPage((current) => Math.max(1, current - 1))}
+                                            >
+                                                <Pagination.PreviousIcon />
+                                            </Pagination.Previous>
+                                        </Pagination.Item>
+                                        {pageNumbers.map((pageNumber) => (
+                                            <Pagination.Item key={pageNumber}>
+                                                <Pagination.Link
+                                                    isActive={pageNumber === page}
+                                                    className="cursor-pointer rounded-medium transition-colors hover:bg-default data-[active=true]:hover:bg-accent"
+                                                    onPress={() => setPage(pageNumber)}
+                                                >
+                                                    {pageNumber}
+                                                </Pagination.Link>
+                                            </Pagination.Item>
+                                        ))}
+                                        <Pagination.Item>
+                                            <Pagination.Next
+                                                aria-label={t("common.pagination.next")}
+                                                isDisabled={page >= totalPages}
+                                                className="cursor-pointer rounded-medium transition-colors hover:bg-default"
+                                                onPress={() => setPage((current) => Math.min(totalPages, current + 1))}
+                                            >
+                                                <Pagination.NextIcon />
+                                            </Pagination.Next>
+                                        </Pagination.Item>
+                                    </Pagination.Content>
+                                </Pagination>
+                            ) : null}
+                        </>
+                    )}
+                </div>
             </AsyncContent>
         </div>
     )

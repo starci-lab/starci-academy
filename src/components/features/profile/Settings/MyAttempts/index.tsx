@@ -73,9 +73,9 @@ export const MyAttempts = ({
         })
 
     return (
-        <div className={cn("flex flex-col gap-6", className)}>
-            <SettingsBreadcrumb current={t("profileSettings.learning.attempts.title")} />
+        <div className={cn("flex flex-col gap-10", className)}>
             <PageHeader
+                breadcrumb={<SettingsBreadcrumb current={t("profileSettings.learning.attempts.title")} />}
                 title={t("profileSettings.learning.attempts.title")}
                 description={t("profileSettings.learning.attempts.subtitle")}
             />

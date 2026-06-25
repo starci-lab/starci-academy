@@ -16,15 +16,30 @@ export interface HeroBannerProps extends WithClassNames<undefined> {
     primary: React.ReactNode
     /** Optional secondary CTA. */
     secondary?: React.ReactNode
-    /** Optional technical keyword strip rendered under the CTAs. */
-    keywords?: ReadonlyArray<string>
+    /**
+     * Optional brand-coloured keyword strip under the CTAs (e.g. supported languages),
+     * rendered as `Chip`s. Each item carries a `className` (e.g. `bg-[hex]/10 text-[hex]`)
+     * for its brand tint so the chip reads alive, not muted.
+     */
+    keywords?: ReadonlyArray<{ label: string; className: string }>
+    /** Optional muted label before the keyword strip (e.g. "Solve in"). */
+    keywordsLabel?: React.ReactNode
+    /**
+     * Optional visual anchor (e.g. a transparent hero image). When present the hero
+     * switches to a SPLIT layout — text left, visual right (stacks on mobile: text
+     * then visual). When absent the hero stays centered single-column (honest — no
+     * fabricated visual).
+     */
+    visual?: React.ReactNode
 }
 
 /**
- * Opening hero for the public landing page: a centered, single-column positioning
- * statement with one primary + one secondary CTA and an optional keyword strip.
- * Honest by design — no fabricated metrics or fake diagram. Tier-3 block: owns
- * all styling, content via props (no i18n, no data).
+ * Opening hero for the public landing page. Two layouts driven by `visual`:
+ * - **split** (visual present): text column (left-aligned) + visual column — the
+ *   visual anchors the positioning. Stacks on mobile.
+ * - **centered** (no visual): the original single-column statement.
+ * One primary + one secondary CTA + optional keyword strip. Tier-3 block: owns all
+ * styling, content via props (no i18n, no data).
  *
  * @param props - {@link HeroBannerProps}
  */
@@ -36,42 +51,80 @@ export const HeroBanner = ({
     primary,
     secondary,
     keywords,
+    keywordsLabel,
+    visual,
     className,
 }: HeroBannerProps) => {
-    return (
-        <section className={cn("flex flex-col items-center gap-6 text-center", className)}>
-            <Chip variant="soft" color="accent" size="sm">
+    const hasVisual = Boolean(visual)
+    const align = hasVisual ? "start" : "center"
+
+    const textColumn = (
+        <div
+            className={cn(
+                "flex flex-col gap-6",
+                hasVisual ? "flex-1 items-start text-left" : "items-center text-center",
+            )}
+        >
+            <Chip size="sm" className="bg-accent/10 text-accent">
                 {eyebrowIcon}
                 <Chip.Label>{eyebrow}</Chip.Label>
             </Chip>
 
-            <Typography.Heading level={1} weight="bold" align="center" className="max-w-4xl">
+            <Typography.Heading level={1} weight="bold" align={align} className="max-w-4xl">
                 {headline}
             </Typography.Heading>
 
-            <Typography type="body" color="muted" align="center" className="max-w-2xl">
+            <Typography type="body" color="muted" align={align} className="max-w-2xl">
                 {subline}
             </Typography>
 
-            <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center">
+            <div
+                className={cn(
+                    "flex flex-col items-stretch gap-3 sm:flex-row sm:items-center",
+                    hasVisual ? "sm:justify-start" : "sm:justify-center",
+                )}
+            >
                 {primary}
                 {secondary}
             </div>
 
             {keywords && keywords.length > 0 ? (
-                <div className="flex flex-wrap items-center justify-center gap-2">
-                    {keywords.map((keyword, index) => (
-                        <React.Fragment key={keyword}>
-                            {index > 0 ? (
-                                <span aria-hidden className="select-none text-separator">·</span>
-                            ) : null}
-                            <Typography type="code" color="muted">
-                                {keyword}
-                            </Typography>
-                        </React.Fragment>
+                <div
+                    className={cn(
+                        "flex flex-wrap items-center gap-2",
+                        hasVisual ? "justify-start" : "justify-center",
+                    )}
+                >
+                    {keywordsLabel ? (
+                        <Typography type="body-xs" color="muted" className="font-mono">
+                            {keywordsLabel}
+                        </Typography>
+                    ) : null}
+                    {keywords.map((lang) => (
+                        // brand-coloured chip — the language's official colour as a bg/10 + text tint
+                        <Chip key={lang.label} size="sm" className={cn("font-mono", lang.className)}>
+                            <Chip.Label>{lang.label}</Chip.Label>
+                        </Chip>
                     ))}
                 </div>
             ) : null}
+        </div>
+    )
+
+    if (!hasVisual) {
+        return (
+            <section className={cn("flex flex-col items-center gap-6 text-center", className)}>
+                {textColumn}
+            </section>
+        )
+    }
+
+    return (
+        <section className={cn("flex flex-col items-center gap-10 lg:flex-row lg:gap-12", className)}>
+            {textColumn}
+            <div className="flex w-full max-w-md shrink-0 items-center justify-center lg:max-w-none lg:flex-1">
+                {visual}
+            </div>
         </section>
     )
 }

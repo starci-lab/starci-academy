@@ -1,22 +1,13 @@
 "use client"
 
-import React, {
-    useCallback,
-    useState,
-} from "react"
+import React from "react"
 import {
     cn,
     Link,
 } from "@heroui/react"
 import {
-    useLocale,
-} from "next-intl"
-import {
-    useRouter,
-} from "next/navigation"
-import {
-    queryResolveRoute,
-} from "@/modules/api"
+    useResolveRouteNavigation,
+} from "./useResolveRouteNavigation"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -57,49 +48,8 @@ export const EntityToken = ({
     block = false,
     className,
 }: EntityTokenProps) => {
-    const locale = useLocale()
-    const router = useRouter()
-    const [pending, setPending] = useState(false)
-    // routable via a direct path OR a resolvable global id
-    const routable = Boolean(href) || Boolean(globalId)
-
-    /** Navigate: a direct href goes straight there; else resolve the global id. */
-    const onPress = useCallback(
-        async () => {
-            // direct path — no resolve round-trip
-            if (href) {
-                router.push(href)
-                return
-            }
-            // guard: nothing to resolve, or a resolve already in flight
-            if (!globalId || pending) {
-                return
-            }
-            setPending(true)
-            try {
-                // ask the index server for this entity's canonical (locale-agnostic) path
-                const response = await queryResolveRoute({
-                    request: {
-                        globalId,
-                    },
-                })
-                const path = response.data?.resolveRoute?.data?.path
-                // prepend the active locale and navigate (no-op if unroutable)
-                if (path) {
-                    router.push(`/${locale}${path}`)
-                }
-            } finally {
-                setPending(false)
-            }
-        },
-        [
-            globalId,
-            href,
-            locale,
-            pending,
-            router,
-        ],
-    )
+    // resolve-and-navigate lives in a shared hook (also used by whole-row list items)
+    const { onPress, pending, routable } = useResolveRouteNavigation({ globalId, href })
 
     // block (left-rail row): full-width, truncated, link-style — hover underlines the
     // label (like a <Link>), no block fill; flush (no px) so it aligns with the card edge.

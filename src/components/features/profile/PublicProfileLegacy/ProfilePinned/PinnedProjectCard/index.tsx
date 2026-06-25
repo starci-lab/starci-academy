@@ -6,12 +6,12 @@ import {
     Chip,
 } from "@heroui/react"
 import {
-    ArrowUp as ArrowUpIcon,
-    ArrowDown as ArrowDownIcon,
-    TrashBin as TrashIcon,
-    ArrowUpRightFromSquare as ExternalLinkIcon,
-    SealCheck as VerifiedIcon,
-} from "@gravity-ui/icons"
+    CaretUpIcon,
+    CaretDownIcon,
+    TrashIcon,
+    ArrowSquareOutIcon as ExternalLinkIcon,
+    SealCheckIcon as VerifiedIcon,
+} from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import {
     MediaCard,
@@ -97,7 +97,7 @@ export const PinnedProjectCard = ({
                 aria-label={t("pinnedProjects.moveUp")}
                 onPress={() => onMoveUp?.(pin.id)}
             >
-                <ArrowUpIcon className="size-5" aria-hidden="true" focusable="false" />
+                <CaretUpIcon className="size-5" aria-hidden="true" focusable="false" />
             </Button>
             <Button
                 size="sm"
@@ -107,7 +107,7 @@ export const PinnedProjectCard = ({
                 aria-label={t("pinnedProjects.moveDown")}
                 onPress={() => onMoveDown?.(pin.id)}
             >
-                <ArrowDownIcon className="size-5" aria-hidden="true" focusable="false" />
+                <CaretDownIcon className="size-5" aria-hidden="true" focusable="false" />
             </Button>
             {pin.url ? (
                 <Button

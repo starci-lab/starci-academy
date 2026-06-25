@@ -3,7 +3,6 @@
 import React from "react"
 import {
     Label,
-    Separator,
     cn,
 } from "@heroui/react"
 import {
@@ -25,6 +24,8 @@ import {
     MetricCard,
     SegmentBar,
     Skeleton,
+    SurfaceListCard,
+    SurfaceListCardItem,
 } from "@/components/blocks"
 import {
     getLanguageColor,
@@ -123,23 +124,24 @@ export const ProfileChallenges = ({
                             <Skeleton key={index} className="h-24 w-full rounded-2xl" />
                         ))}
                     </div>
-                    {/* distribution card: difficulty bar + language donut */}
+                    {/* distribution card: difficulty + language as surface list items */}
                     <div className="flex flex-col gap-3">
                         <Skeleton.Typography type="body-sm" width="1/4" />
-                        <div className="flex flex-col gap-6">
-                            {/* by-difficulty bar */}
-                            <Skeleton.SegmentBar legendItems={4} />
-                            {/* by-language bar (was a donut) */}
-                            <Skeleton.SegmentBar legendItems={4} />
-                        </div>
+                        <SurfaceListCard>
+                            <SurfaceListCardItem>
+                                <Skeleton.SegmentBar legendItems={4} />
+                            </SurfaceListCardItem>
+                            <SurfaceListCardItem>
+                                <Skeleton.SegmentBar legendItems={4} />
+                            </SurfaceListCardItem>
+                        </SurfaceListCard>
                     </div>
-                    {/* submission section: collapsed course rows + shared legend at the foot */}
+                    {/* submission section — surface list card with course rows */}
                     <div className="flex flex-col gap-3">
                         <Skeleton.Typography type="body-sm" width="1/4" />
-                        <div className="flex flex-col gap-6">
+                        <SurfaceListCard>
                             {[0, 1, 2].map((row) => (
-                                <React.Fragment key={row}>
-                                    {row > 0 ? <Separator /> : null}
+                                <SurfaceListCardItem key={row}>
                                     <div className="flex flex-col gap-3">
                                         <div className="flex items-start gap-3">
                                             <Skeleton className="size-12 shrink-0 rounded-xl" />
@@ -152,9 +154,9 @@ export const ProfileChallenges = ({
                                         {/* disclosure link */}
                                         <Skeleton.Typography type="body-sm" width="1/3" />
                                     </div>
-                                </React.Fragment>
+                                </SurfaceListCardItem>
                             ))}
-                        </div>
+                        </SurfaceListCard>
                     </div>
                 </div>
             )}
@@ -186,46 +188,51 @@ export const ProfileChallenges = ({
                 <LabeledCard
                     label={t("publicProfile.challengesTab.statsHeading")}
                     icon={<ChartBarIcon aria-hidden focusable="false" className="size-5" />}
+                    frameless
                 >
-                    <div className="flex flex-col gap-6">
+                    <SurfaceListCard>
                         {difficultySegments.length > 0 ? (
-                            <div className="flex flex-col gap-2">
-                                <Label>{t("publicProfile.challengesTab.difficultyHeading")}</Label>
-                                <SegmentBar
-                                    ariaLabel={t("publicProfile.challengesTab.difficultyHeading")}
-                                    segments={difficultySegments}
-                                />
-                            </div>
+                            <SurfaceListCardItem>
+                                <div className="flex flex-col gap-2">
+                                    <Label>{t("publicProfile.challengesTab.difficultyHeading")}</Label>
+                                    <SegmentBar
+                                        ariaLabel={t("publicProfile.challengesTab.difficultyHeading")}
+                                        segments={difficultySegments}
+                                    />
+                                </div>
+                            </SurfaceListCardItem>
                         ) : null}
                         {langs.length > 0 ? (
-                            <div className="flex flex-col gap-2">
-                                <Label>{t("publicProfile.challengesTab.languageHeading")}</Label>
-                                {/* same proportion-bar primitive as difficulty above (and the
-                                    Overview tab) — length reads better than a donut's angles at
-                                    small N; brand colour + label (csharp→C#) via the shared map */}
-                                <SegmentBar
-                                    ariaLabel={t("publicProfile.challengesTab.languageHeading")}
-                                    segments={langs.map(([lang, count]) => ({
-                                        key: lang,
-                                        label: getLanguageLabel(lang),
-                                        value: count,
-                                        color: getLanguageColor(lang),
-                                    }))}
-                                />
-                            </div>
+                            <SurfaceListCardItem>
+                                <div className="flex flex-col gap-2">
+                                    <Label>{t("publicProfile.challengesTab.languageHeading")}</Label>
+                                    {/* same proportion-bar primitive as difficulty above (and the
+                                        Overview tab) — length reads better than a donut's angles at
+                                        small N; brand colour + label (csharp→C#) via the shared map */}
+                                    <SegmentBar
+                                        ariaLabel={t("publicProfile.challengesTab.languageHeading")}
+                                        segments={langs.map(([lang, count]) => ({
+                                            key: lang,
+                                            label: getLanguageLabel(lang),
+                                            value: count,
+                                            color: getLanguageColor(lang),
+                                        }))}
+                                    />
+                                </div>
+                            </SurfaceListCardItem>
                         ) : null}
-                    </div>
+                    </SurfaceListCard>
                 </LabeledCard>
 
                 {/* submission list — one collapsible row per course, shared legend at the foot */}
                 <LabeledCard
                     label={t("publicProfile.challengesTab.repoHeading")}
                     icon={<PuzzlePieceIcon aria-hidden focusable="false" className="size-5" />}
+                    frameless
                 >
-                    <div className="flex flex-col gap-6">
+                    <SurfaceListCard>
                         {groups.map((group, groupIndex) => (
-                            <React.Fragment key={group.courseTitle ?? `__ungrouped-${groupIndex}`}>
-                                {groupIndex > 0 ? <Separator /> : null}
+                            <SurfaceListCardItem key={group.courseTitle ?? `__ungrouped-${groupIndex}`}>
                                 <ChallengeCourseRow
                                     courseTitle={group.courseTitle}
                                     items={group.items}
@@ -233,9 +240,9 @@ export const ProfileChallenges = ({
                                         ? totalChallengesByCourse.get(group.courseTitle)
                                         : undefined}
                                 />
-                            </React.Fragment>
+                            </SurfaceListCardItem>
                         ))}
-                    </div>
+                    </SurfaceListCard>
                 </LabeledCard>
             </div>
         </AsyncContent>

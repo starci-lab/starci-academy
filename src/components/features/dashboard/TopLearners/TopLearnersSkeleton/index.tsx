@@ -29,10 +29,13 @@ export const TopLearnersSkeleton = ({ className }: TopLearnersSkeletonProps) => 
     <div className={cn("flex flex-col gap-3", className)}>
         <Skeleton.Typography type="body-sm" width="1/3" />
         <Card>
-            <CardContent className="flex flex-col gap-3">
+            <CardContent className="flex flex-col">
                 {Array.from({ length: SKELETON_ROWS }).map((_row, index) => (
-                    <div key={index} className="flex items-center gap-3">
-                        <Skeleton className="size-6 shrink-0 rounded-full" />
+                    <div
+                        key={index}
+                        className="flex items-center gap-3 border-b border-default py-3 first:pt-0 last:border-b-0 last:pb-0"
+                    >
+                        <Skeleton className="size-8 shrink-0 rounded-full" />
                         <Skeleton.Typography type="body-sm" width="1/2" />
                         <Skeleton className="ml-auto h-8 w-24 shrink-0 rounded-xl" />
                     </div>

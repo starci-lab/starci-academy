@@ -31,6 +31,9 @@ import {
     TabsCard,
 } from "@/components/blocks"
 import {
+    CourseTrialChip,
+} from "@/components/reuseable/CourseTrialChip"
+import {
     fromGlobalId,
 } from "@/modules/utils"
 import type {
@@ -90,8 +93,9 @@ export const CourseDetail = ({
     // the outline payload has no cover; reuse the (cached) course list to show the real
     // course logo in the header IconTile, like the hub list does — falls back to the book icon.
     const coursesSwr = useQueryMyCoursesSwr()
-    const courseThumbnailUrl = (coursesSwr.data ?? [])
-        .find((course) => course.globalId === selectedCourse)?.thumbnailUrl
+    const selectedCourseItem = (coursesSwr.data ?? [])
+        .find((course) => course.globalId === selectedCourse)
+    const courseThumbnailUrl = selectedCourseItem?.thumbnailUrl
     const query = search.trim().toLowerCase()
 
     const progress = outline?.progress
@@ -141,9 +145,10 @@ export const CourseDetail = ({
                             <IconTile size="sm" src={courseThumbnailUrl} icon={<BookOpenIcon aria-hidden focusable="false" />} />
                             <div className="flex min-w-0 flex-1 flex-col gap-2">
                                 <div className="flex items-center justify-between gap-2">
-                                    <Typography type="h5" weight="bold" truncate>
+                                    <Typography type="h5" weight="bold" truncate className="min-w-0 flex-1">
                                         {outline.course.title}
                                     </Typography>
+                                    {selectedCourseItem ? <CourseTrialChip isEnrolled={selectedCourseItem.isEnrolled} /> : null}
                                     <Typography type="body-xs" color="muted">
                                         {`${progress.completionPercent}%`}
                                     </Typography>

@@ -2,25 +2,41 @@ import { querySavedContents } from "@/modules/api"
 import { useAppSelector } from "@/redux"
 import useSWR from "swr"
 
+/** Saved-content rows per page (server-side offset pagination). */
+export const SAVED_CONTENTS_PAGE_SIZE = 12
+
 /**
- * SWR query core for the saved/favorited contents query. User-scoped — only
- * runs once the viewer is authenticated.
- * @returns the SWR query handle.
+ * Page-based SWR hook for the viewer's saved / favorited contents (the Bookmark
+ * page). Fetches one page of `savedContents(skip, take, search)` —
+ * `skip = (page - 1) × {@link SAVED_CONTENTS_PAGE_SIZE}` — so the pager and the
+ * title `search` are resolved server-side (the returned `count` is the total
+ * MATCHING rows, driving both the result count and total pages). User-scoped:
+ * keyed `null` (no fetch) until authenticated; keeps previous data so paging /
+ * searching doesn't flash a skeleton.
+ *
+ * @param page - 1-based page index.
+ * @param search - Title search term (already trimmed); empty = no filter.
+ * @returns the SWR query handle (`data` = one `SavedContentsData` page).
  */
-export const useQuerySavedContentsSwr = () => {
+export const useQuerySavedContentsSwr = (page: number, search: string) => {
     const authenticated = useAppSelector((state) => state.keycloak.authenticated)
-    // SWR to fetch user saved contents, no params needed (it takes skip=0, take=20 by default for now)
-    const swr = useSWR(
-        authenticated ? ["QUERY_SAVED_CONTENTS_SWR"] : null,
+    const term = search.trim()
+
+    return useSWR(
+        authenticated ? ["QUERY_SAVED_CONTENTS_SWR", page, term] : null,
         async () => {
             const data = await querySavedContents({
-                request: {},
+                request: {
+                    skip: (page - 1) * SAVED_CONTENTS_PAGE_SIZE,
+                    take: SAVED_CONTENTS_PAGE_SIZE,
+                    search: term || undefined,
+                },
             })
             if (!data?.data?.savedContents?.data) {
                 throw new Error("Failed to fetch saved contents")
             }
             return data.data.savedContents.data
         },
+        { keepPreviousData: true },
     )
-    return swr
 }

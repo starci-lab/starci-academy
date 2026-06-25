@@ -9,7 +9,7 @@ import { useQueryOpenToWorkUsersSwr } from "@/hooks"
 import { AvatarGroup, SectionHeading } from "@/components/blocks"
 import { pathConfig } from "@/resources/path"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { LANDING_RECRUITER_MIN } from "../constants"
+import { LANDING_HIRING_PARTNERS, LANDING_RECRUITER_MIN } from "../constants"
 
 /** Props for {@link RecruiterProof}. */
 export type RecruiterProofProps = WithClassNames<undefined>
@@ -60,6 +60,20 @@ export const RecruiterProof = ({ className }: RecruiterProofProps) => {
                     {t("landing.recruiter.cta")}
                     <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
                 </Button>
+
+                {/* Strip đối tác tuyển dụng — tên text-logo, không cần ảnh */}
+                <div className="mt-2 flex flex-col items-center gap-2">
+                    <Typography type="code" className="text-xs text-muted">
+                        {t("landing.recruiter.partnersLabel")}
+                    </Typography>
+                    <div className="flex flex-wrap justify-center gap-4">
+                        {LANDING_HIRING_PARTNERS.map((name) => (
+                            <Typography key={name} type="body-sm" weight="medium" color="muted">
+                                {name}
+                            </Typography>
+                        ))}
+                    </div>
+                </div>
             </div>
         </div>
     )

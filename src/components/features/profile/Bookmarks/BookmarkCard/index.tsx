@@ -1,22 +1,28 @@
 "use client"
 
-import { ArrowRightIcon, ClockIcon, FireIcon } from "@phosphor-icons/react"
 import React, {
     useCallback,
 } from "react"
 import {
+    Chip,
     Typography,
-    cn,
 } from "@heroui/react"
 import {
-    PressableCard,
-} from "@/components/blocks"
+    FileTextIcon,
+    ClockIcon,
+    FireIcon,
+    CaretRightIcon,
+} from "@phosphor-icons/react"
 import {
     useRouter,
 } from "next/navigation"
 import {
     useTranslations,
 } from "next-intl"
+import {
+    IconTile,
+    SurfaceListCardRow,
+} from "@/components/blocks"
 import {
     type ContentEntity,
     getContentChallengeCount,
@@ -28,20 +34,22 @@ import {
 
 /** Props for {@link BookmarkCard} (list item — per-item content data only). */
 export interface BookmarkCardProps extends WithClassNames<undefined> {
-    /** Saved content entity rendered by this card. */
+    /** Saved content entity rendered by this row. */
     content: ContentEntity
 }
 
 /**
- * One saved-content card: title, description, and read/lesson/challenge meta.
+ * One saved-content row inside the bookmark {@link SurfaceListCard}: a file icon,
+ * the lesson title (the link — underlines on hover), the owning course as a
+ * subtitle, and read-time / premium / challenge meta. The whole row navigates to
+ * the content page (the title IS the link, so hover underlines it rather than
+ * filling the row).
  *
- * List item: receives its own content entity; self-navigates to the content
- * page via the router (no open callback drilled from the parent).
- * @param props - the saved content
+ * List item: receives its own content entity and self-navigates via the router.
+ * @param props - {@link BookmarkCardProps}
  */
 export const BookmarkCard = ({
     content,
-    className,
 }: BookmarkCardProps) => {
     const t = useTranslations()
     const router = useRouter()
@@ -58,36 +66,46 @@ export const BookmarkCard = ({
             router,
         ],
     )
+
     return (
-        <PressableCard
+        <SurfaceListCardRow
+            hover="underline"
             onPress={onPress}
-            className={cn("flex flex-row items-center gap-3", className)}
-        >
-            <div className="flex min-w-0 flex-1 flex-col gap-2">
-                <Typography type="body-sm" weight="semibold" truncate>
-                    {content.title}
-                </Typography>
-                <Typography type="body-xs" color="muted" truncate>
-                    {content.description}
-                </Typography>
-                <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-2">
-                        <ClockIcon aria-hidden className="size-5 text-muted" />
+            leading={(
+                <IconTile
+                    size="sm"
+                    tone="neutral"
+                    src={content.module?.course?.coverImageUrl}
+                    icon={<FileTextIcon />}
+                    alt={content.title ?? ""}
+                />
+            )}
+            title={content.title}
+            subtitle={content.module?.course?.title}
+            meta={(
+                <>
+                    {content.isPremium ? (
+                        <Chip size="sm" variant="soft" color="warning">
+                            <Chip.Label>{t("bookmarks.premium")}</Chip.Label>
+                        </Chip>
+                    ) : null}
+                    <span className="flex items-center gap-1 text-muted">
+                        <ClockIcon aria-hidden className="size-4" />
                         <Typography type="body-xs" color="muted">
                             {t("content.minutesRead", { minutes: content.minutesRead })}
                         </Typography>
-                    </div>
-                    {challengeCount > 0 && (
-                        <div className="flex items-center gap-2">
-                            <FireIcon aria-hidden className="size-5 text-muted" />
+                    </span>
+                    {challengeCount > 0 ? (
+                        <span className="flex items-center gap-1 text-muted">
+                            <FireIcon aria-hidden className="size-4" />
                             <Typography type="body-xs" color="muted">
-                                {t("content.challengeCount", { count: challengeCount })}
+                                {challengeCount}
                             </Typography>
-                        </div>
-                    )}
-                </div>
-            </div>
-            <ArrowRightIcon aria-hidden className="size-5 shrink-0 text-muted" />
-        </PressableCard>
+                        </span>
+                    ) : null}
+                </>
+            )}
+            trailing={<CaretRightIcon aria-hidden className="size-4 text-muted" />}
+        />
     )
 }

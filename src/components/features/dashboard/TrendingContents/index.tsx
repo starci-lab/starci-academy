@@ -10,13 +10,14 @@ import {
 import {
     AsyncContent,
     LabeledCard,
+    SurfaceListCard,
 } from "@/components/blocks"
 import {
     useQueryTrendingContentsSwr,
 } from "@/hooks"
 import {
-    EntityToken,
-} from "../EntityToken"
+    TrendingRow,
+} from "./TrendingRow"
 import {
     TrendingContentsSkeleton,
 } from "./TrendingContentsSkeleton"
@@ -50,28 +51,21 @@ export const TrendingContents = ({
             isEmpty={!data || data.length === 0}
         >
             <LabeledCard
+                frameless
                 className={className}
                 label={t("dashboard.trending.title")}
                 icon={<FlameIcon aria-hidden focusable="false" className="size-5 text-accent" />}
             >
-                <div className="flex flex-col gap-3">
-                    {(data ?? []).map((item) => (
-                        <div
+                <SurfaceListCard>
+                    {(data ?? []).map((item, index) => (
+                        <TrendingRow
                             key={item.globalId}
-                            className="flex min-w-0 items-center justify-between gap-3"
-                        >
-                            <EntityToken
-                                block
-                                globalId={item.globalId}
-                                label={item.title}
-                                className="min-w-0 flex-1"
-                            />
-                            <span className="shrink-0 text-xs text-muted">
-                                {t("dashboard.trending.reads", { count: item.readCount })}
-                            </span>
-                        </div>
+                            rank={index + 1}
+                            title={item.title}
+                            globalId={item.globalId}
+                        />
                     ))}
-                </div>
+                </SurfaceListCard>
             </LabeledCard>
         </AsyncContent>
     )

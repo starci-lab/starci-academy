@@ -12,6 +12,8 @@ import {
     SegmentBar,
     Skeleton,
     StatPair,
+    SurfaceListCard,
+    SurfaceListCardItem,
 } from "@/components/blocks"
 import {
     getLanguageColor,
@@ -70,21 +72,19 @@ export const OverviewCodeSkills = ({ className }: OverviewCodeSkillsProps) => {
         <AsyncContent
             isLoading={(isLoading || !userId) && totalSolved === 0 && !data}
             skeleton={(
-                <div className="flex flex-col gap-3">
-                    {/* StatPair (total solved + label) */}
-                    <Skeleton.Metric />
-                    {/* SegmentBar (difficulty depth) — bar + legend dots */}
-                    <Skeleton.SegmentBar legendItems={2} />
-                    {/* languages label + chip row */}
-                    <div className="flex flex-col gap-2">
-                        <Skeleton.Typography type="body-xs" width="1/4" />
-                        <div className="flex flex-wrap gap-2">
-                            {[0, 1, 2, 3].map((chip) => (
-                                <Skeleton.Chip key={chip} />
-                            ))}
+                <SurfaceListCard>
+                    <SurfaceListCardItem>
+                        <div className="flex flex-col gap-3">
+                            {/* StatPair (total solved + label) + difficulty bar + language */}
+                            <Skeleton.Metric />
+                            <Skeleton.SegmentBar legendItems={2} />
+                            <div className="flex flex-col gap-2">
+                                <Skeleton.Typography type="body-xs" width="1/4" />
+                                <Skeleton.SegmentBar legendItems={4} />
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    </SurfaceListCardItem>
+                </SurfaceListCard>
             )}
             isEmpty={totalSolved === 0}
             emptyContent={{
@@ -98,41 +98,43 @@ export const OverviewCodeSkills = ({ className }: OverviewCodeSkillsProps) => {
                 retryLabel: t("publicProfile.loadErrorRetry"),
             }}
         >
-            <div className={cn("flex flex-col gap-3", className)}>
-                {/* total solved headline */}
-                <StatPair
-                    value={totalSolved}
-                    label={t("publicProfile.skillsSnapshot.solvedLabel")}
-                />
-                {/* difficulty depth — one segmented bar (easy→hard), real shares */}
-                <SegmentBar
-                    ariaLabel={`${totalSolved} ${t("publicProfile.skillsSnapshot.solvedLabel")}`}
-                    segments={byDifficulty.map((d) => ({
-                        key: d.key,
-                        label: diffLabel(d.key),
-                        value: d.solved,
-                        color: DIFF_COLOR[d.key],
-                    }))}
-                />
-
-                {/* language breadth — same SegmentBar + brand legend as the Skills tab */}
-                {orderedLanguages.length > 0 ? (
-                    <div className="flex flex-col gap-2">
-                        <Typography type="body-xs" color="muted">
-                            {t("publicProfile.skillsSnapshot.languagesLabel")}
-                        </Typography>
+            <SurfaceListCard className={cn("h-full", className)}>
+                <SurfaceListCardItem>
+                    <div className="flex flex-col gap-3">
+                        {/* total solved headline + difficulty depth (easy→hard, real shares) */}
+                        <StatPair
+                            value={totalSolved}
+                            label={t("publicProfile.skillsSnapshot.solvedLabel")}
+                        />
                         <SegmentBar
-                            ariaLabel={t("publicProfile.skillsSnapshot.languagesLabel")}
-                            segments={orderedLanguages.map((lang) => ({
-                                key: lang.key,
-                                label: getLanguageLabel(lang.key),
-                                value: lang.solved,
-                                color: getLanguageColor(lang.key),
+                            ariaLabel={`${totalSolved} ${t("publicProfile.skillsSnapshot.solvedLabel")}`}
+                            segments={byDifficulty.map((d) => ({
+                                key: d.key,
+                                label: diffLabel(d.key),
+                                value: d.solved,
+                                color: DIFF_COLOR[d.key],
                             }))}
                         />
+                        {/* language breadth — same SegmentBar + brand legend as the Skills tab */}
+                        {orderedLanguages.length > 0 ? (
+                            <div className="flex flex-col gap-2">
+                                <Typography type="body-xs" color="muted">
+                                    {t("publicProfile.skillsSnapshot.languagesLabel")}
+                                </Typography>
+                                <SegmentBar
+                                    ariaLabel={t("publicProfile.skillsSnapshot.languagesLabel")}
+                                    segments={orderedLanguages.map((lang) => ({
+                                        key: lang.key,
+                                        label: getLanguageLabel(lang.key),
+                                        value: lang.solved,
+                                        color: getLanguageColor(lang.key),
+                                    }))}
+                                />
+                            </div>
+                        ) : null}
                     </div>
-                ) : null}
-            </div>
+                </SurfaceListCardItem>
+            </SurfaceListCard>
         </AsyncContent>
     )
 }

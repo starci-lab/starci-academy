@@ -10,6 +10,8 @@ export interface SectionHeadingProps extends WithClassNames<undefined> {
     title: React.ReactNode
     /** Optional supporting line under the title. */
     intro?: React.ReactNode
+    /** Heading level — defaults to 3 (matches the app's PageHeader); pass 2 for a hero-scale moment. */
+    level?: 2 | 3
     /** Text alignment; defaults to centered (marketing sections). */
     align?: "start" | "center"
 }
@@ -26,6 +28,7 @@ export const SectionHeading = ({
     eyebrow,
     title,
     intro,
+    level = 3,
     align = "center",
     className,
 }: SectionHeadingProps) => {
@@ -44,7 +47,7 @@ export const SectionHeading = ({
                 </Chip>
             ) : null}
             <Typography.Heading
-                level={2}
+                level={level}
                 weight="bold"
                 align={centered ? "center" : "start"}
             >
@@ -52,7 +55,7 @@ export const SectionHeading = ({
             </Typography.Heading>
             {intro ? (
                 <Typography
-                    type="body"
+                    type="body-sm"
                     color="muted"
                     align={centered ? "center" : "start"}
                     className="max-w-2xl"

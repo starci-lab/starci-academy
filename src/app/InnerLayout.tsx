@@ -7,6 +7,7 @@ import {
 import { DrawerContainer } from "@/components/drawers"
 import { AmbientBackground } from "@/components/blocks"
 import { Navbar } from "@/components/features/navbar/Navbar"
+import { Footer } from "@/components/features/footer/Footer"
 import { ToastProvider } from "@heroui/react"
 import React, { PropsWithChildren, Suspense } from "react"
 import { SocketIoSideEffects } from "@/hooks/socketio"
@@ -21,6 +22,10 @@ export const InnerLayout = ({ children }: PropsWithChildren) => {
     // long-form reading. Keep it on marketing / dashboard / the rest of the app.
     const pathname = usePathname()
     const isLearnRoute = pathname?.includes("/learn") ?? false
+    // Hide the footer on the long-form reader shell and the auth flows; show it
+    // on marketing / dashboard / the rest of the app.
+    const isAuthRoute = pathname?.includes("/authentication") ?? false
+    const showFooter = !isLearnRoute && !isAuthRoute
     return (
         <Suspense>
             <NextThemesProvider 
@@ -40,6 +45,7 @@ export const InnerLayout = ({ children }: PropsWithChildren) => {
                             <ModalContainer />
                             <DrawerContainer />
                             {children}
+                            {showFooter ? <Footer /> : null}
                             <ToastProvider />
                         </SwrProvider>
                     </ReduxProvider>

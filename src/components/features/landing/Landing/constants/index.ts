@@ -6,12 +6,6 @@ export const LANDING_LOOP_STEPS = [
     "rank",
 ] as const
 
-/** Two-sided outcome cards — keys map to `landing.outcome.items.{key}.*`. */
-export const LANDING_OUTCOME_KEYS = [
-    "engineer",
-    "enterprise",
-] as const
-
 /** Mastery tracks shown on the roadmap — the 3 REAL courses (keys map to
  * `landing.roadmap.tracks.{key}.*`). Grounded: no "security"/"architect" course exists. */
 export const LANDING_TRACK_KEYS = [
@@ -43,12 +37,55 @@ export const LANDING_SYSTEM_FLOWS: Record<(typeof LANDING_SYSTEM_KEYS)[number], 
     deploy: ["Git", "CI", "Registry", "K8s"],
 }
 
+/** Short course tag per track (shown on the right of each treasure topic row). */
+export const LANDING_TRACK_TAG: Record<(typeof LANDING_COURSE_TRACKS)[number], string> = {
+    fullstack: "FS",
+    systemDesign: "SD",
+    devops: "DO",
+}
+
+/**
+ * "Kho tàng" — curated trophy lesson topics rút TỪ content thật (verifiable lesson
+ * titles), chia 2 làn: `code` (thuật toán/pattern bạn viết) vs `infra` (hệ thống/vận
+ * hành). `label` = tên bài kỹ thuật (giữ English, same vi/en như các node khác);
+ * `track` = khóa chứa bài → dùng để gắn tag + link "Vào khóa" (course thật).
+ * Nguồn: CONTENT-TREASURE-UX-BRAINSTORM.md (đào `.mount/data/courses/*`).
+ */
+export const LANDING_TREASURE_TOPICS: Record<
+    "code" | "infra",
+    ReadonlyArray<{ label: string; track: (typeof LANDING_COURSE_TRACKS)[number] }>
+> = {
+    code: [
+        { label: "Redlock & Fencing Token", track: "systemDesign" },
+        { label: "2PC vs Saga choreography", track: "systemDesign" },
+        { label: "Token bucket + Redis Lua", track: "systemDesign" },
+        { label: "Kafka exactly-once", track: "systemDesign" },
+        { label: "RAG + pgvector", track: "fullstack" },
+        { label: "Webhook idempotency & refund", track: "fullstack" },
+    ],
+    infra: [
+        { label: "K8s control plane (etcd/apiserver)", track: "devops" },
+        { label: "Argo Rollouts canary", track: "devops" },
+        { label: "SLSA & Sigstore supply-chain", track: "devops" },
+        { label: "Falco runtime security", track: "devops" },
+        { label: "OpenTelemetry / Jaeger tracing", track: "systemDesign" },
+        { label: "Terraform multi-cloud", track: "devops" },
+    ],
+}
+
 /** Founder expertise chips — keys map to `landing.founder.expertise.{key}`. */
 export const LANDING_FOUNDER_EXPERTISE = [
     "systemDesign",
     "blockchain",
     "aiAutomation",
 ] as const
+
+/**
+ * Public-repo count on the GitHub org (`StarCi-Academy`) — the one verifiable
+ * "build in the open" proof in the founder beat. Static figure (no BE field):
+ * update manually, or wire `api.github.com/orgs/StarCi-Academy`.public_repos.
+ */
+export const FOUNDER_PUBLIC_REPOS = 242
 
 /** FAQ rows — content lives at `landing.faq.q{n}` / `landing.faq.a{n}`. */
 export const LANDING_FAQ_INDEXES = [1, 2, 3, 4, 5] as const
@@ -83,40 +120,43 @@ export const LANDING_TRACK_COURSE_SLUG: Record<(typeof LANDING_COURSE_TRACKS)[nu
 }
 
 /** 4 tier (FOUNDATION → INTERMEDIATE → ADVANCED → APPLICATION) cho mỗi lộ trình — hiển thị
- * dạng cột dọc trong section Roadmap. label = micro-label kỹ thuật UPPERCASE (cho phép trên
- * landing này, render bằng Typography type="code"). topic = tóm tắt nội dung tiếng Anh kỹ thuật. */
+ * dạng cột dọc trong section Roadmap. label = nhãn tầng sentence-case (đồng bộ design-system,
+ * no-uppercase). topic = tóm tắt nội dung tiếng Anh kỹ thuật. */
 export const LANDING_ROADMAP_TIERS: Record<
     (typeof LANDING_TRACK_KEYS)[number],
     ReadonlyArray<{ label: string; topic: string }>
 > = {
     fullstack: [
-        { label: "FOUNDATION",    topic: "HTTP, REST, data modeling" },
-        { label: "INTERMEDIATE",  topic: "Auth, caching, background jobs" },
-        { label: "ADVANCED",      topic: "Queues, websockets, rate limits" },
-        { label: "APPLICATION",   topic: "Deploy, observability, payments" },
+        { label: "Foundation",    topic: "HTTP, REST, data modeling" },
+        { label: "Intermediate",  topic: "Auth, caching, background jobs" },
+        { label: "Advanced",      topic: "Queues, websockets, rate limits" },
+        { label: "Application",   topic: "Deploy, observability, payments" },
     ],
     systemDesign: [
-        { label: "FOUNDATION",    topic: "Latency, throughput, CAP" },
-        { label: "INTERMEDIATE",  topic: "Sharding, replication, indexes" },
-        { label: "ADVANCED",      topic: "Consensus, idempotency, sagas" },
-        { label: "APPLICATION",   topic: "Real systems end-to-end" },
+        { label: "Foundation",    topic: "Latency, throughput, CAP" },
+        { label: "Intermediate",  topic: "Sharding, replication, indexes" },
+        { label: "Advanced",      topic: "Consensus, idempotency, sagas" },
+        { label: "Application",   topic: "Real systems end-to-end" },
     ],
     devops: [
-        { label: "FOUNDATION",    topic: "Linux, containers, networking" },
-        { label: "INTERMEDIATE",  topic: "CI/CD, IaC, secrets" },
-        { label: "ADVANCED",      topic: "Kubernetes, autoscaling, SLOs" },
-        { label: "APPLICATION",   topic: "Progressive delivery, DR" },
+        { label: "Foundation",    topic: "Linux, containers, networking" },
+        { label: "Intermediate",  topic: "CI/CD, IaC, secrets" },
+        { label: "Advanced",      topic: "Kubernetes, autoscaling, SLOs" },
+        { label: "Application",   topic: "Progressive delivery, DR" },
     ],
 }
 
-/** Hide the recruiter-proof beat below this many open-to-work profiles. */
-export const LANDING_RECRUITER_MIN = 3
-
-/** Tên đối tác tuyển dụng hiển thị dạng text-logo (giả lập). Không cần ảnh. */
-export const LANDING_HIRING_PARTNERS = [
-    "Northwind",
-    "Aperture",
-    "Lumen",
-    "Kestrel",
-    "Vertex",
-] as const
+/**
+ * Static sample candidate shown in the talent-marketplace beat — an illustrative
+ * "engineer profile" mockup (like a product screenshot), NOT a real user. Numbers
+ * are representative of what a learner earns by finishing the work. Skill names are
+ * proper nouns (not translated); labels come from `landing.outcome.card.*`.
+ */
+export const LANDING_SAMPLE_CANDIDATE = {
+    name: "Minh Anh",
+    skills: ["TypeScript", "Go", "System Design"],
+    xp: 4820,
+    cvScore: 87,
+    challengeCount: 12,
+    challengeAvg: 84,
+} as const

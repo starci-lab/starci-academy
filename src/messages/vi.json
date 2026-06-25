@@ -277,6 +277,35 @@
         "dashboard": "Bảng điều khiển",
         "guestPrompt": "Đăng nhập để theo dõi tiến độ của bạn"
     },
+    "footer": {
+        "tagline": "Đọc → thử thách chấm AI → capstone. Học kiến trúc hệ thống bằng đúng ngôn ngữ bạn đang dùng.",
+        "exploreTitle": "Khám phá",
+        "supportTitle": "Hỗ trợ",
+        "links": {
+            "courses": "Khóa học",
+            "blog": "Blog",
+            "talents": "Talents",
+            "community": "Cộng đồng",
+            "contact": "Liên hệ",
+            "terms": "Điều khoản",
+            "privacy": "Bảo mật"
+        },
+        "madeBy": "Dựng bởi Stacy Nguyen",
+        "copyright": "© {year} StarCi Academy"
+    },
+    "legal": {
+        "contactNote": "Có câu hỏi về điều khoản hoặc dữ liệu của bạn? Liên hệ cuongnvtse160875@gmail.com.",
+        "terms": {
+            "title": "Điều khoản sử dụng",
+            "description": "Các điều khoản khi sử dụng StarCi Academy.",
+            "body": "Tài liệu điều khoản đầy đủ đang được hoàn thiện. Khi sử dụng StarCi Academy, bạn đồng ý dùng nền tảng cho mục đích học tập hợp pháp và tôn trọng quyền sở hữu của nội dung khóa học. Phiên bản chi tiết sẽ được cập nhật tại trang này."
+        },
+        "privacy": {
+            "title": "Chính sách bảo mật",
+            "description": "Cách StarCi Academy thu thập và sử dụng dữ liệu của bạn.",
+            "body": "Chính sách bảo mật đầy đủ đang được hoàn thiện. StarCi Academy chỉ thu thập dữ liệu cần thiết để vận hành việc học của bạn (tài khoản, tiến độ, bài nộp) và không bán dữ liệu cho bên thứ ba. Phiên bản chi tiết sẽ được cập nhật tại trang này."
+        }
+    },
     "search": {
         "label": "Tìm kiếm",
         "placeholder": "Tìm kiếm",
@@ -2418,8 +2447,8 @@
     },
     "landing": {
         "hero": {
-            "eyebrow": "Tự học để trở thành kỹ sư hệ thống",
-            "solveWith": "Giải bằng",
+            "eyebrow": "Từ coder lên kỹ sư hệ thống",
+            "solveWith": "Hỗ trợ",
             "headline": "Học dựng <accent>hệ thống thật</accent> — không dừng lại ở CRUD.",
             "subline": "Lộ trình tự học từ nền tảng đến nâng cao: Fullstack, System Design và DevOps. Mỗi bài bạn đọc, tự tay dựng rồi để AI chấm ngay — khép lại bằng một capstone thực tế.",
             "diagramCaption": "Nhìn ra nơi sẽ sập. Dựng hệ thống không bao giờ sập.",
@@ -2517,6 +2546,15 @@
                 }
             }
         },
+        "treasure": {
+            "eyebrow": "Kho tàng",
+            "title": "Chiều sâu đằng sau mỗi hệ thống — cả code lẫn hạ tầng",
+            "intro": "Bài học thật trong chương trình: đúng những thứ khó mà senior công nhận, ở cả code lẫn vận hành.",
+            "codeLane": "Bạn viết code gì",
+            "infraLane": "Bạn vận hành hạ tầng gì",
+            "footnote": "Vài bài tiêu biểu trong hàng nghìn bài của chương trình.",
+            "seeAll": "Xem toàn bộ chương trình"
+        },
         "founder": {
             "eyebrow": "Làm công khai",
             "title": "Vì sao có StarCi",
@@ -2548,13 +2586,23 @@
             "items": {
                 "engineer": {
                     "title": "Cho kỹ sư",
-                    "body": "Xây portfolio gồm bài đã chấm ở mức production và được hiển thị tới đối tác tuyển dụng — được headhunt bằng năng lực thật, không phải keyword."
+                    "body": "Xây portfolio gồm bài đã chấm ở mức production và được hiển thị tới đối tác tuyển dụng — được headhunt bằng năng lực thật, không phải keyword.",
+                    "cta": "Bắt đầu xây hồ sơ"
                 },
                 "enterprise": {
                     "title": "Cho doanh nghiệp",
                     "body": "Tuyển từ nguồn kỹ sư đã được vetted qua challenge thật do AI chấm. Bỏ qua nhiễu, gặp người dựng được và bảo vệ được thiết kế.",
-                    "cta": "Trở thành đối tác tuyển dụng"
+                    "cta": "Duyệt ứng viên"
                 }
+            },
+            "card": {
+                "sample": "Hồ sơ kỹ sư",
+                "role": "Kỹ sư Backend",
+                "openToWork": "Sẵn sàng đi làm",
+                "cvScore": "Điểm CV",
+                "challenges": "Challenge AI chấm",
+                "challengeValue": "{count} · TB {avg}",
+                "xp": "{xp} XP"
             }
         },
         "faq": {
@@ -2578,31 +2626,31 @@
         },
         "learnLoop": {
             "eyebrow": "Cách học",
-            "title": "Vòng học thật sự lên tay",
-            "intro": "Không xem video thụ động — mỗi học phần là một vòng khép kín: đọc → tự dựng → AI chấm → leo hạng.",
+            "title": "Học theo phương pháp chuẩn ngành",
+            "intro": "Thời AI, nhà tuyển dụng cần người tự tay làm được việc — không phải người xem hết khóa học. Nên mỗi học phần ở StarCi là một vòng quen thuộc: đọc để hiểu, tự dựng lại, để AI chấm bài, rồi từng bước leo lên bảng xếp hạng.",
             "items": {
                 "read": {
                     "step": "01",
                     "title": "Đọc",
-                    "tag": "4 NGÔN NGỮ",
+                    "tag": "4 ngôn ngữ",
                     "desc": "Bài đọc mạch lạc, kèm code ở cả 4 ngôn ngữ."
                 },
                 "grade": {
                     "step": "02",
                     "title": "Thử thách chấm AI",
-                    "tag": "PHẢN HỒI TỨC THÌ",
+                    "tag": "Phản hồi tức thì",
                     "desc": "Tự viết code, AI chấm theo tiêu chí production."
                 },
                 "capstone": {
                     "step": "03",
                     "title": "Capstone",
-                    "tag": "HỆ THỐNG THẬT",
+                    "tag": "Hệ thống thật",
                     "desc": "Dựng một hệ thống chạy thật ở production — không phải app demo."
                 },
                 "rank": {
                     "step": "04",
                     "title": "Leaderboard",
-                    "tag": "GIỮ PHONG ĐỘ",
+                    "tag": "Giữ phong độ",
                     "desc": "Đối chiếu lời giải với người khác, rồi leo bảng xếp hạng."
                 }
             }

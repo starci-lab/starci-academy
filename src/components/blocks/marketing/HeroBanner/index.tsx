@@ -96,13 +96,13 @@ export const HeroBanner = ({
                     )}
                 >
                     {keywordsLabel ? (
-                        <Typography type="body-xs" color="muted" className="font-mono">
+                        <Typography type="body-xs" color="muted">
                             {keywordsLabel}
                         </Typography>
                     ) : null}
                     {keywords.map((lang) => (
                         // brand-coloured chip — the language's official colour as a bg/10 + text tint
-                        <Chip key={lang.label} size="sm" className={cn("font-mono", lang.className)}>
+                        <Chip key={lang.label} size="sm" className={lang.className}>
                             <Chip.Label>{lang.label}</Chip.Label>
                         </Chip>
                     ))}

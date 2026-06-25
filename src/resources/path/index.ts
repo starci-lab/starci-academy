@@ -404,6 +404,26 @@ export const pathConfig = () => {
                 build,
             }
         }
+        const terms = () => {
+            // terms of service (stub page, linked from the footer)
+            const termsPath = `${localePath}/terms`
+            const build = () => {
+                return termsPath
+            }
+            return {
+                build,
+            }
+        }
+        const privacy = () => {
+            // privacy policy (stub page, linked from the footer)
+            const privacyPath = `${localePath}/privacy`
+            const build = () => {
+                return privacyPath
+            }
+            return {
+                build,
+            }
+        }
         const talents = () => {
             // talent directory: users who opted into "open to work"
             const talentsPath = `${localePath}/talents`
@@ -508,6 +528,8 @@ export const pathConfig = () => {
             rewards,
             league,
             kpi,
+            terms,
+            privacy,
         }
     }
     return {

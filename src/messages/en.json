@@ -277,6 +277,35 @@
         "dashboard": "Dashboard",
         "guestPrompt": "Sign in to track your progress"
     },
+    "footer": {
+        "tagline": "Read → AI-graded challenges → capstone. Learn system design in the language you already use.",
+        "exploreTitle": "Explore",
+        "supportTitle": "Support",
+        "links": {
+            "courses": "Courses",
+            "blog": "Blog",
+            "talents": "Talents",
+            "community": "Community",
+            "contact": "Contact",
+            "terms": "Terms",
+            "privacy": "Privacy"
+        },
+        "madeBy": "Built by Stacy Nguyen",
+        "copyright": "© {year} StarCi Academy"
+    },
+    "legal": {
+        "contactNote": "Questions about these terms or your data? Email cuongnvtse160875@gmail.com.",
+        "terms": {
+            "title": "Terms of Service",
+            "description": "The terms for using StarCi Academy.",
+            "body": "The full terms document is being finalized. By using StarCi Academy you agree to use the platform for lawful learning and to respect the ownership of course content. A detailed version will be published on this page."
+        },
+        "privacy": {
+            "title": "Privacy Policy",
+            "description": "How StarCi Academy collects and uses your data.",
+            "body": "The full privacy policy is being finalized. StarCi Academy collects only the data needed to run your learning (account, progress, submissions) and does not sell your data to third parties. A detailed version will be published on this page."
+        }
+    },
     "search": {
         "label": "Search",
         "placeholder": "Search",
@@ -2418,8 +2447,8 @@
     },
     "landing": {
         "hero": {
-            "eyebrow": "Self-study to become a systems engineer",
-            "solveWith": "Solve in",
+            "eyebrow": "From coder to systems engineer",
+            "solveWith": "Supports",
             "headline": "Learn to build <accent>real systems</accent> — beyond CRUD.",
             "subline": "A self-study roadmap from the basics to advanced: Fullstack, System Design, and DevOps. You read, build it yourself, get it AI-graded on the spot — and finish with a real capstone project.",
             "diagramCaption": "Spot where it collapses. Build systems that can’t.",
@@ -2517,6 +2546,15 @@
                 }
             }
         },
+        "treasure": {
+            "eyebrow": "Treasure trove",
+            "title": "The depth behind every system — code and infrastructure",
+            "intro": "Real lessons from the curriculum: the hard engineering seniors recognise, in both code and ops.",
+            "codeLane": "Code you write",
+            "infraLane": "Infrastructure you run",
+            "footnote": "A few highlights from thousands of lessons across the program.",
+            "seeAll": "See the full program"
+        },
         "founder": {
             "eyebrow": "Built in the open",
             "title": "Why StarCi exists",
@@ -2548,13 +2586,23 @@
             "items": {
                 "engineer": {
                     "title": "For engineers",
-                    "body": "Build a portfolio of graded, production-grade work and get surfaced to hiring partners — headhunted on merit, not keywords."
+                    "body": "Build a portfolio of graded, production-grade work and get surfaced to hiring partners — headhunted on merit, not keywords.",
+                    "cta": "Start building your portfolio"
                 },
                 "enterprise": {
                     "title": "For companies",
                     "body": "Hire from a pool of engineers vetted by real, AI-graded challenges. Skip the noise and meet builders who can defend their design.",
-                    "cta": "Become a hiring partner"
+                    "cta": "Browse candidates"
                 }
+            },
+            "card": {
+                "sample": "Engineer profile",
+                "role": "Backend engineer",
+                "openToWork": "Open to work",
+                "cvScore": "CV score",
+                "challenges": "AI-graded challenges",
+                "challengeValue": "{count} · avg {avg}",
+                "xp": "{xp} XP"
             }
         },
         "faq": {
@@ -2579,30 +2627,30 @@
         "learnLoop": {
             "eyebrow": "How it works",
             "title": "A loop that actually builds skill",
-            "intro": "No passive video binging — every module is a tight read -> build -> grade -> rank loop.",
+            "intro": "In the AI era, employers want people who can build — not people who finished a course. So every StarCi module is a familiar loop: read to understand, build it yourself, let AI grade your work, then climb the leaderboard step by step.",
             "items": {
                 "read": {
                     "step": "01",
                     "title": "Read",
-                    "tag": "4 LANGUAGES",
+                    "tag": "4 languages",
                     "desc": "Structured, diagram-first lessons in 4 languages."
                 },
                 "grade": {
                     "step": "02",
                     "title": "AI-graded challenge",
-                    "tag": "INSTANT FEEDBACK",
+                    "tag": "Instant feedback",
                     "desc": "Write code, scored on correctness & design."
                 },
                 "capstone": {
                     "step": "03",
                     "title": "Capstone",
-                    "tag": "REAL SYSTEM",
+                    "tag": "Real system",
                     "desc": "Ship a production-grade system, not a toy."
                 },
                 "rank": {
                     "step": "04",
                     "title": "Leaderboard",
-                    "tag": "STAY SHARP",
+                    "tag": "Stay sharp",
                     "desc": "Compare solutions and climb the ranks."
                 }
             }

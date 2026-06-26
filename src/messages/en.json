@@ -278,7 +278,7 @@
         "guestPrompt": "Sign in to track your progress"
     },
     "footer": {
-        "tagline": "Read → AI-graded challenges → capstone. Learn system design in the language you already use.",
+        "tagline": "Understand the fundamentals, rebuild it yourself, and master large-scale architecture — in your own programming language.",
         "exploreTitle": "Explore",
         "supportTitle": "Support",
         "links": {
@@ -290,7 +290,7 @@
             "terms": "Terms",
             "privacy": "Privacy"
         },
-        "madeBy": "Built by Stacy Nguyen",
+        "madeBy": "Built by Nguyễn Văn Tự Cường",
         "copyright": "© {year} StarCi Academy"
     },
     "legal": {
@@ -2447,10 +2447,10 @@
     },
     "landing": {
         "hero": {
-            "eyebrow": "From coder to systems engineer",
-            "solveWith": "Supports",
-            "headline": "Learn to build <accent>real systems</accent> — beyond CRUD.",
-            "subline": "A self-study roadmap from the basics to advanced: Fullstack, System Design, and DevOps. You read, build it yourself, get it AI-graded on the spot — and finish with a real capstone project.",
+            "eyebrow": "From Developer to Solution Architect",
+            "solveWith": "Any stack works",
+            "headline": "Learn <accent>systems thinking</accent> — beyond CRUD.",
+            "subline": "Built on fundamentals, sharpened by real practice — hold your own with any interviewer.",
             "diagramCaption": "Spot where it collapses. Build systems that can’t.",
             "ctaRoadmap": "See the roadmap",
             "ctaFounder": "Meet the founder of StarCi",
@@ -2458,6 +2458,9 @@
             "ctaSecondary": "Sign in"
         },
         "stats": {
+            "eyebrow": "The reality, live",
+            "title": "StarCi Academy currently has",
+            "intro": "Every metric is pulled live from the system.",
             "learners": "Learners",
             "lessons": "Lessons",
             "courses": "Courses",
@@ -2473,19 +2476,19 @@
                 "fullstack": {
                     "tag": "FULLSTACK",
                     "modules": "23 modules",
-                    "title": "Production Fullstack",
+                    "title": "Fullstack",
                     "desc": "APIs · auth · caching · realtime · payments, plus frontends that survive real traffic."
                 },
                 "systemDesign": {
                     "tag": "SYSTEM DESIGN",
                     "modules": "24 modules",
-                    "title": "Distributed Systems",
+                    "title": "System Design",
                     "desc": "Sharding · replication · consensus · idempotency — design for failure."
                 },
                 "devops": {
                     "tag": "DEVOPS",
                     "modules": "35 modules",
-                    "title": "Ship & Operate",
+                    "title": "DevOps & Cloud",
                     "desc": "CI/CD · Docker · Kubernetes · multi-cloud · observability · on-call."
                 }
             }
@@ -2550,14 +2553,40 @@
             "eyebrow": "Treasure trove",
             "title": "The depth behind every system — code and infrastructure",
             "intro": "Real lessons from the curriculum: the hard engineering seniors recognise, in both code and ops.",
-            "codeLane": "Code you write",
-            "infraLane": "Infrastructure you run",
-            "footnote": "A few highlights from thousands of lessons across the program.",
-            "seeAll": "See the full program"
+            "beaconLabel": "Tap to reshuffle",
+            "beaconTap": "Auto-reshuffles every 10s — tap to reshuffle now",
+            "graph": {
+                "cap": "Trade consistency vs availability under network partitions — choose per system.",
+                "sharding": "Split data across shards to scale writes/reads beyond one node.",
+                "saga": "Long transactions across services via compensating steps, no 2PC.",
+                "idempotency": "Same result no matter how many times a call retries.",
+                "redlock": "Distributed lock on Redis + fencing token to stop client races.",
+                "kafka": "Append-only log as source of truth: replay, decouple producers/consumers.",
+                "cdc": "Capture DB changes (Debezium) to a stream — no dual writes.",
+                "token-bucket": "Smooth rate limiting with token buckets + atomic Redis Lua.",
+                "websocket": "Two-way realtime gateway, fan-out events to thousands of clients.",
+                "tracing": "Follow one request across services to find bottlenecks (OTel/Jaeger).",
+                "nestjs": "Modular backend framework with clean DI for large APIs.",
+                "typeorm": "TypeScript ORM: entities, relations, migrations — close to SQL.",
+                "webhooks": "Receive third-party events safely: verify signature + idempotent.",
+                "payment": "Integrate payment gateways: idempotency, reconciliation, refunds.",
+                "rag": "Semantic search with pgvector, then grounded LLM answers with sources.",
+                "oauth": "Auth and authorization via OAuth2/JWT with safe refresh tokens.",
+                "jobs": "Background job queues: retry, backoff, scheduling — off the request path.",
+                "rsc": "React Server Components: render on the server, ship less JS.",
+                "k8s": "Container orchestration: self-healing, scaling, declarative rollouts.",
+                "ingress": "Route HTTP into the cluster: host/path, TLS, load balancing.",
+                "argocd": "GitOps: desired state in Git, ArgoCD syncs it to the cluster.",
+                "rollouts": "Canary/blue-green deploys that analyze metrics before full traffic.",
+                "prometheus": "Collect metrics and alert in real time for running systems.",
+                "rbac": "Role-based access in K8s: who can do what, least privilege.",
+                "terraform": "Infrastructure as code, multi-cloud, reproducible plan/apply.",
+                "falco": "Detect abnormal container runtime behavior in real time."
+            }
         },
         "founder": {
-            "eyebrow": "Built in the open",
-            "title": "Why StarCi exists",
+            "eyebrow": "The dark side of coding",
+            "title": "The blunt truth about tech",
             "name": "Nguyễn Văn Tự Cường",
             "role": "Founder · StarCi Academy",
             "titles": "CTO @ Nivo Technology · CTO @ TEDO Technology",
@@ -2570,7 +2599,16 @@
             "body1": "I teach exactly what I ship in production every day — not slides, real systems at CTO scale.",
             "body2": "Everything here is built in the open — the platform, the curriculum, the challenges. Read the engineering notes and judge the work for yourself.",
             "github": "GitHub",
-            "blog": "Read the blog"
+            "blog": "Read the blog",
+            "thesis": "Plenty of places teach coding to make you feel good and earn a certificate fast. StarCi Academy is different — I only tell the blunt truths about this industry and what real systems actually demand.",
+            "truth1": "A certificate won’t save you when the system goes down at 3 a.m.",
+            "fix1": "No easy certificates here. Challenges are designed at production level — building real experience through hands-on practice.",
+            "truth2": "Finish 100 CRUD exercises and you’re still not a systems engineer.",
+            "fix2": "Every StarCi track ends with a real capstone project, running at production scale — not on a slide.",
+            "truth3": "Most courses today are just a paywalled version of YouTube.",
+            "fix3": "We build in the open. Read the technical notes, try it, and judge the quality for yourself before deciding.",
+            "truth4": "The market today is brutal — no company pays for empty theory.",
+            "fix4": "What you train here is what large systems actually demand every day — no room for rote learning."
         },
         "recruiter": {
             "eyebrow": "For hiring teams",
@@ -2581,26 +2619,26 @@
             "partnersLabel": "Hiring partners"
         },
         "outcome": {
-            "eyebrow": "What you get",
-            "title": "Two ways this pays off",
+            "eyebrow": "Real outcomes",
+            "title": "Output for both sides",
             "items": {
                 "engineer": {
                     "title": "For engineers",
-                    "body": "Build a portfolio of graded, production-grade work and get surfaced to hiring partners — headhunted on merit, not keywords.",
+                    "body": "Build your own portfolio of production-grade projects. Your profile connects straight to hiring partners — land offers on real ability, not buzzwords on a CV.",
                     "cta": "Start building your portfolio"
                 },
                 "enterprise": {
                     "title": "For companies",
-                    "body": "Hire from a pool of engineers vetted by real, AI-graded challenges. Skip the noise and meet builders who can defend their design.",
-                    "cta": "Browse candidates"
+                    "body": "Tap a pool of candidates pre-screened by real technical challenges. Skip the inflated CVs and hire engineers who can build systems and defend their design.",
+                    "cta": "Find candidates"
                 }
             },
             "card": {
                 "sample": "Engineer profile",
-                "role": "Backend engineer",
+                "role": "StarCi Talent",
                 "openToWork": "Open to work",
                 "cvScore": "CV score",
-                "challenges": "AI-graded challenges",
+                "challenges": "System challenges",
                 "challengeValue": "{count} · avg {avg}",
                 "xp": "{xp} XP"
             }
@@ -2620,14 +2658,15 @@
             "a5": "Opt in as open-to-work and your graded work becomes visible to hiring partners browsing the talent directory. No guarantees — just real signal."
         },
         "closing": {
-            "title": "Stop building CRUD. Start designing systems.",
-            "subtitle": "Read → AI-graded challenges → capstone. Self-paced, in the language you already use.",
+            "title": "Escape the CRUD trap. Master system architecture.",
+            "subtitle": "A three-step path: grasp the fundamentals, rebuild it yourself, finish a capstone project. Level up your thinking — in the language you already use.",
             "cta": "Browse courses"
         },
+        "backToTop": "Back to top",
         "learnLoop": {
             "eyebrow": "How it works",
-            "title": "A loop that actually builds skill",
-            "intro": "In the AI era, employers want people who can build — not people who finished a course. So every StarCi module is a familiar loop: read to understand, build it yourself, let AI grade your work, then climb the leaderboard step by step.",
+            "title": "Learn the StarCi way.",
+            "intro": "In the age of AI, employers hunt for engineers who can solve real problems with their own hands — not people who just \"check off\" every course video. At StarCi Academy, we break that passive way of learning. Every module forces you into a demanding loop: read deep to grasp the essence, rebuild the architecture yourself, get instant feedback to fix your mistakes, then climb the leaderboard step by step. Here you learn to actually do the work — there's no room for hollow theory.",
             "items": {
                 "read": {
                     "step": "01",

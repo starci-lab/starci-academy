@@ -4,19 +4,20 @@ import React from "react"
 import {
     Button,
     Chip,
+    cn,
     Typography,
 } from "@heroui/react"
 import {
-    ArrowRightIcon,
     BuildingsIcon,
+    CaretRightIcon,
     CheckCircleIcon,
     LightningIcon,
     RocketLaunchIcon,
 } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
-import { IconTile, SectionHeading } from "@/components/blocks"
-import { SectionCard, UserAvatar } from "@/components/reuseable"
+import { IconTile, SectionHeading, ShowcaseMockup, SHOWCASE_THEMES } from "@/components/blocks"
+import { UserAvatar } from "@/components/reuseable"
 import { pathConfig } from "@/resources/path"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { LANDING_SAMPLE_CANDIDATE } from "../constants"
@@ -60,10 +61,11 @@ const StatLine = ({ label, value }: { label: string; value: string }) => (
 )
 
 /**
- * Static sample candidate card — an illustrative "engineer profile" mockup (like
- * a product screenshot) showing what a learner earns: open-to-work badge, CV
- * score, AI-graded challenges, skills, XP. NOT backed by an API; numbers come
- * from {@link LANDING_SAMPLE_CANDIDATE}. Labels via `landing.outcome.card.*`.
+ * Static sample candidate card — an illustrative "engineer profile" rendered as
+ * a mini browser window (ShowcaseMockup chrome + profile URL), mirroring the real
+ * public profile page: rank avatar, open-to-work badge, CV score, system
+ * challenges, skills, XP. NOT backed by an API; numbers come from
+ * {@link LANDING_SAMPLE_CANDIDATE}. Labels via `landing.outcome.card.*`.
  */
 const SampleCandidateCard = () => {
     const t = useTranslations()
@@ -71,9 +73,14 @@ const SampleCandidateCard = () => {
     const c = LANDING_SAMPLE_CANDIDATE
 
     return (
-        <SectionCard contentClassName="flex flex-col gap-3">
+        <ShowcaseMockup
+            url={`starci.academy/profile/${c.slug}`}
+            theme={SHOWCASE_THEMES.starci}
+            backdrop="glow"
+            contentClassName="flex flex-col gap-3 p-4"
+        >
             <div className="flex items-center gap-3">
-                <UserAvatar username={c.name} seed={c.name} className="size-14" />
+                <UserAvatar username={c.name} avatar={c.avatarUrl} seed={c.name} className="size-14 !rounded-full" />
                 <div className="flex min-w-0 flex-col gap-0">
                     <Typography type="body" weight="semibold" truncate>
                         {c.name}
@@ -114,7 +121,7 @@ const SampleCandidateCard = () => {
                     {t("landing.outcome.card.xp", { xp: c.xp.toLocaleString(locale) })}
                 </span>
             </div>
-        </SectionCard>
+        </ShowcaseMockup>
     )
 }
 
@@ -135,12 +142,12 @@ export const TalentMarketplace = ({ className }: TalentMarketplaceProps) => {
     const onBrowseTalents = () => router.push(pathConfig().locale(locale).talents().build())
 
     return (
-        <section className={className}>
+        <section className={cn("flex flex-col gap-16", className)}>
             <SectionHeading
                 eyebrow={t("landing.outcome.eyebrow")}
                 title={t("landing.outcome.title")}
             />
-            <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:items-center">
+            <div className="grid grid-cols-1 gap-x-12 gap-y-20 lg:grid-cols-2 lg:items-center">
                 {/* Trái — hai journey + CTA tách */}
                 <div className="flex flex-col gap-6">
                     <div className="flex flex-col gap-6">
@@ -162,7 +169,7 @@ export const TalentMarketplace = ({ className }: TalentMarketplaceProps) => {
                         </Button>
                         <Button variant="secondary" size="lg" onPress={onBrowseTalents}>
                             {t("landing.outcome.items.enterprise.cta")}
-                            <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
+                            <CaretRightIcon aria-hidden focusable="false" className="size-5" />
                         </Button>
                     </div>
                 </div>

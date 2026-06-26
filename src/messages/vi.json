@@ -278,7 +278,7 @@
         "guestPrompt": "Đăng nhập để theo dõi tiến độ của bạn"
     },
     "footer": {
-        "tagline": "Đọc → thử thách chấm AI → capstone. Học kiến trúc hệ thống bằng đúng ngôn ngữ bạn đang dùng.",
+        "tagline": "Đọc hiểu bản chất, tự tay dựng lại, làm chủ kiến trúc lớn bằng đúng ngôn ngữ lập trình của bạn.",
         "exploreTitle": "Khám phá",
         "supportTitle": "Hỗ trợ",
         "links": {
@@ -290,7 +290,7 @@
             "terms": "Điều khoản",
             "privacy": "Bảo mật"
         },
-        "madeBy": "Dựng bởi Stacy Nguyen",
+        "madeBy": "Được phát triển bởi Nguyễn Văn Tự Cường",
         "copyright": "© {year} StarCi Academy"
     },
     "legal": {
@@ -2447,10 +2447,10 @@
     },
     "landing": {
         "hero": {
-            "eyebrow": "Từ coder lên kỹ sư hệ thống",
-            "solveWith": "Hỗ trợ",
-            "headline": "Học dựng <accent>hệ thống thật</accent> — không dừng lại ở CRUD.",
-            "subline": "Lộ trình tự học từ nền tảng đến nâng cao: Fullstack, System Design và DevOps. Mỗi bài bạn đọc, tự tay dựng rồi để AI chấm ngay — khép lại bằng một capstone thực tế.",
+            "eyebrow": "From Developer to Solution Architect",
+            "solveWith": "Chấp nhận mọi stack",
+            "headline": "Học <accent>tư duy hệ thống</accent> — không dừng lại ở CRUD.",
+            "subline": "Đi từ bản chất, trình từ thực tế — tự tin đối thoại sòng phẳng với mọi Interviewer.",
             "diagramCaption": "Nhìn ra nơi sẽ sập. Dựng hệ thống không bao giờ sập.",
             "ctaRoadmap": "Xem lộ trình",
             "ctaFounder": "Gặp người dựng StarCi",
@@ -2458,6 +2458,9 @@
             "ctaSecondary": "Đăng nhập"
         },
         "stats": {
+            "eyebrow": "Thực tế tại đây",
+            "title": "StarCi Academy đang có",
+            "intro": "Tất cả các chỉ số đều được cập nhật trực tiếp từ hệ thống.",
             "learners": "Học viên",
             "lessons": "Bài học",
             "courses": "Khóa học",
@@ -2473,19 +2476,19 @@
                 "fullstack": {
                     "tag": "FULLSTACK",
                     "modules": "23 module",
-                    "title": "Fullstack thực chiến",
+                    "title": "Fullstack",
                     "desc": "API · auth · caching · realtime · payment, kèm frontend trụ được dưới traffic thật."
                 },
                 "systemDesign": {
                     "tag": "SYSTEM DESIGN",
                     "modules": "24 module",
-                    "title": "Hệ thống phân tán",
+                    "title": "System Design",
                     "desc": "Sharding · replication · consensus · idempotency — thiết kế để chịu được sự cố."
                 },
                 "devops": {
                     "tag": "DEVOPS",
                     "modules": "35 module",
-                    "title": "Triển khai & Vận hành",
+                    "title": "DevOps & Cloud",
                     "desc": "CI/CD · Docker · Kubernetes · đa cloud · observability · on-call."
                 }
             }
@@ -2550,14 +2553,40 @@
             "eyebrow": "Kho tàng",
             "title": "Chiều sâu đằng sau mỗi hệ thống — cả code lẫn hạ tầng",
             "intro": "Bài học thật trong chương trình: đúng những thứ khó mà senior công nhận, ở cả code lẫn vận hành.",
-            "codeLane": "Bạn viết code gì",
-            "infraLane": "Bạn vận hành hạ tầng gì",
-            "footnote": "Vài bài tiêu biểu trong hàng nghìn bài của chương trình.",
-            "seeAll": "Xem toàn bộ chương trình"
+            "beaconLabel": "Chạm để xáo lại",
+            "beaconTap": "Tự xáo lại mỗi 10 giây — chạm để xáo ngay",
+            "graph": {
+                "cap": "Đánh đổi nhất quán vs khả dụng khi mạng phân vùng — chọn đúng cho từng hệ.",
+                "sharding": "Chia dữ liệu ra nhiều shard để mở rộng ghi/đọc vượt một node.",
+                "saga": "Giao dịch dài qua nhiều service bằng các bước bù trừ, không cần 2PC.",
+                "idempotency": "Gọi lại nhiều lần vẫn một kết quả — chống trùng khi retry.",
+                "redlock": "Khoá phân tán trên Redis + fencing token chống race nhiều client.",
+                "kafka": "Log append-only làm nguồn sự thật: replay, tách producer/consumer.",
+                "cdc": "Bắt thay đổi DB (Debezium) đẩy ra stream — hết double-write.",
+                "token-bucket": "Giới hạn tần suất mượt bằng token bucket + Redis Lua atomic.",
+                "websocket": "Cổng realtime hai chiều, fan-out sự kiện tới hàng nghìn client.",
+                "tracing": "Lần theo một request xuyên nhiều service để tìm nút thắt (OTel/Jaeger).",
+                "nestjs": "Khung backend module hoá, DI rõ ràng cho API quy mô lớn.",
+                "typeorm": "ORM TypeScript: entity, quan hệ, migration — sát SQL khi cần.",
+                "webhooks": "Nhận sự kiện bên thứ ba an toàn: verify chữ ký + idempotent.",
+                "payment": "Tích hợp cổng thanh toán: idempotency, đối soát, hoàn tiền chuẩn.",
+                "rag": "Tìm ngữ nghĩa bằng pgvector rồi cho LLM trả lời có dẫn nguồn.",
+                "oauth": "Đăng nhập + phân quyền bằng OAuth2/JWT, refresh token an toàn.",
+                "jobs": "Hàng đợi job nền: retry, backoff, lịch chạy — tách khỏi request.",
+                "rsc": "React Server Components: render ở server, gửi ít JS xuống client.",
+                "k8s": "Điều phối container: tự phục hồi, scale, rollout khai báo.",
+                "ingress": "Định tuyến HTTP vào cluster: host/path, TLS, cân tải.",
+                "argocd": "GitOps: trạng thái mong muốn trong Git, ArgoCD đồng bộ vào cluster.",
+                "rollouts": "Canary/blue-green tự phân tích metric trước khi mở 100% traffic.",
+                "prometheus": "Thu thập metric + cảnh báo theo thời gian thực cho hệ đang chạy.",
+                "rbac": "Phân quyền theo vai trò trong K8s: ai làm gì, tối thiểu đặc quyền.",
+                "terraform": "Hạ tầng bằng mã, đa cloud, plan/apply tái lập được.",
+                "falco": "Phát hiện hành vi bất thường runtime trong container theo thời gian thực."
+            }
         },
         "founder": {
-            "eyebrow": "Làm công khai",
-            "title": "Vì sao có StarCi",
+            "eyebrow": "Góc khuất nghề code",
+            "title": "Sự thật trần trụi về ngành IT",
             "name": "Nguyễn Văn Tự Cường",
             "role": "Founder · StarCi Academy",
             "titles": "CTO @ Nivo Technology · CTO @ TEDO Technology",
@@ -2570,7 +2599,16 @@
             "body1": "Mình dạy đúng thứ mình làm ở production mỗi ngày — không phải slide, mà là hệ thống thật ở tầm CTO.",
             "body2": "Mọi thứ ở đây đều làm công khai — nền tảng, chương trình, challenge. Đọc các ghi chú kỹ thuật và tự đánh giá chất lượng.",
             "github": "GitHub",
-            "blog": "Đọc blog"
+            "blog": "Đọc blog",
+            "thesis": "Nhiều nơi dạy lập trình để bạn thấy dễ chịu và nhanh có chứng chỉ. StarCi Academy thì khác, mình chỉ nói những sự thật trần trụi về ngành và những gì hệ thống thực tế yêu cầu.",
+            "truth1": "Chứng chỉ không cứu được bạn khi hệ thống sập lúc 3 giờ sáng.",
+            "fix1": "Ở đây không có chứng chỉ dễ dãi. Challenge được thiết kế ở cấp độ production — giúp bạn tích lũy kinh nghiệm thông qua thực hành.",
+            "truth2": "Làm xong 100 bài CRUD, bạn vẫn chưa phải là kỹ sư hệ thống.",
+            "fix2": "Mỗi lộ trình tại StarCi đều khép lại bằng một dự án Capstone thực tế, vận hành ở quy mô Production chứ không nằm trên slide.",
+            "truth3": "Phần lớn khóa học hiện tại chỉ là phiên bản thu phí của YouTube.",
+            "fix3": "Tụi mình chọn cách làm công khai. Bạn cứ đọc kỹ các ghi chú kỹ thuật, tự trải nghiệm và đánh giá chất lượng trước khi quyết định.",
+            "truth4": "Thị trường hiện tại cực kỳ khắc nghiệt — không doanh nghiệp nào trả tiền cho lý thuyết suông.",
+            "fix4": "Những gì bạn được rèn luyện ở đây là thứ mà các hệ thống lớn đang thực sự yêu cầu mỗi ngày, hoàn toàn không có chỗ cho việc học vẹt."
         },
         "recruiter": {
             "eyebrow": "Cho nhà tuyển dụng",
@@ -2581,53 +2619,54 @@
             "partnersLabel": "Đối tác tuyển dụng"
         },
         "outcome": {
-            "eyebrow": "Bạn nhận được gì",
-            "title": "Hai hướng đáng giá",
+            "eyebrow": "Giá trị thực tế",
+            "title": "Đầu ra cho cả hai phía",
             "items": {
                 "engineer": {
                     "title": "Cho kỹ sư",
-                    "body": "Xây portfolio gồm bài đã chấm ở mức production và được hiển thị tới đối tác tuyển dụng — được headhunt bằng năng lực thật, không phải keyword.",
+                    "body": "Tự tay xây portfolio với những dự án đạt chuẩn production. Hồ sơ của bạn được kết nối thẳng tới các đối tác tuyển dụng — nhận offer bằng năng lực làm việc thực tế, không phải bằng từ khóa làm màu trên CV.",
                     "cta": "Bắt đầu xây hồ sơ"
                 },
                 "enterprise": {
                     "title": "Cho doanh nghiệp",
-                    "body": "Tuyển từ nguồn kỹ sư đã được vetted qua challenge thật do AI chấm. Bỏ qua nhiễu, gặp người dựng được và bảo vệ được thiết kế.",
-                    "cta": "Duyệt ứng viên"
+                    "body": "Tiếp cận nguồn ứng viên đã qua sàng lọc bằng các thử thách kỹ thuật thực tế. Bỏ qua các CV \"phóng đại\", tuyển đúng kỹ sư biết tự tay dựng hệ thống và đủ trình độ bảo vệ thiết kế của mình.",
+                    "cta": "Tìm kiếm ứng viên"
                 }
             },
             "card": {
                 "sample": "Hồ sơ kỹ sư",
-                "role": "Kỹ sư Backend",
+                "role": "StarCi Talent",
                 "openToWork": "Sẵn sàng đi làm",
                 "cvScore": "Điểm CV",
-                "challenges": "Challenge AI chấm",
+                "challenges": "Thử thách hệ thống",
                 "challengeValue": "{count} · TB {avg}",
                 "xp": "{xp} XP"
             }
         },
         "faq": {
-            "eyebrow": "Nói thẳng",
-            "title": "Hỏi thẳng — đáp thật",
+            "eyebrow": "Góc nhìn thực tế",
+            "title": "Hỏi thẳng, đáp thật",
             "q1": "Đây có phải một bootcamp nữa hứa lương cao sau 3 tháng?",
-            "a1": "Không. Chúng tôi không bán một con số lương. Chúng tôi rèn tư duy kiến trúc và chứng minh bằng challenge có chấm — phần còn lại là ở bạn và thị trường.",
+            "a1": "Không. Mình không bán những lời hứa hẹn về thu nhập hay cam kết việc làm sau vài tháng. StarCi tập trung rèn tư duy hệ thống và cách bạn tự tay giải quyết bài toán khó. Khi năng lực của bạn đạt chuẩn thông qua các thử thách thực tế, thị trường và nhà tuyển dụng sẽ tự tìm đến bạn.",
             "q2": "AI có làm những kỹ năng này lỗi thời không?",
-            "a2": "Ngược lại. AI đã viết được CRUD. Thứ nó không làm được là gánh đánh đổi, thiết kế cho quy mô và bảo vệ quyết định — đúng thứ chúng tôi rèn.",
+            "a2": "Ngược lại, kỹ năng hệ thống là thứ giúp bạn không bị đào thải. Các công cụ tự động hiện tại có thể viết code CRUD rất nhanh, nhưng chúng không thể tự thiết kế một kiến trúc chịu tải triệu user, xử lý bài toán scale, hay đứng ra bảo vệ các quyết định kỹ thuật trước hội đồng phỏng vấn và CTO. Đó mới là những gì bạn được rèn luyện ở đây.",
             "q3": "Mình mới bắt đầu. Có hợp không?",
-            "a3": "Nếu bạn đã viết được code cơ bản và muốn lên mức thiết kế hệ thống thì hợp. Nếu chưa từng code, hãy bắt đầu từ nền tảng trước.",
+            "a3": "Khóa học này thiết kế riêng cho những bạn đã có nền tảng lập trình cơ bản và muốn bứt phá lên tầm thiết kế kiến trúc hệ thống (System Design/DevOps). Nếu bạn chưa từng gõ dòng code nào, lộ trình này sẽ quá sức — bạn nên tích lũy kinh nghiệm code thực tế trước đã.",
             "q4": "AI chấm thực sự hoạt động thế nào?",
-            "a4": "Mỗi challenge được chấm theo tiêu chí mức production kèm nhận xét bằng chữ. Bạn thấy rõ vì sao đạt hoặc cần sửa gì.",
+            "a4": "Hệ thống sẽ đánh giá bài làm của bạn dựa trên các tiêu chuẩn vận hành thực tế (production-ready). Thay vì chỉ báo Đúng/Sai, bạn sẽ nhận được các nhận xét chi tiết, chỉ rõ lỗ hổng trong logic thiết kế và gợi ý cách tối ưu để bạn tự tay sửa lại cho đến khi hoàn thiện.",
             "q5": "'Headhunt' ở đây thực sự nghĩa là gì?",
-            "a5": "Bật chế độ sẵn-sàng-đi-làm và bài đã chấm của bạn hiển thị tới đối tác tuyển dụng đang xem danh bạ nhân tài. Không cam kết — chỉ là tín hiệu thật."
+            "a5": "Khi bạn tự tin với năng lực của mình và bật chế độ tìm việc, các dự án thực chiến bạn đã hoàn thành sẽ được kết nối trực tiếp đến các doanh nghiệp đối tác đang tìm kiếm kỹ sư Senior/Architect. Không có trung gian hay làm màu CV, nhà tuyển dụng đánh giá bạn trực tiếp qua chất lượng sản phẩm bạn đã tự tay dựng."
         },
         "closing": {
-            "title": "Đừng xây CRUD nữa. Bắt đầu thiết kế hệ thống.",
-            "subtitle": "Đọc → thử thách chấm AI → capstone. Tự học, bằng đúng ngôn ngữ bạn đang dùng.",
+            "title": "Vượt qua cái bẫy CRUD. Làm chủ kiến trúc hệ thống.",
+            "subtitle": "Lộ trình ba bước: Đọc hiểu bản chất, tự tay dựng lại, hoàn thiện dự án capstone. Tự nâng tầm tư duy bằng đúng ngôn ngữ lập trình bạn đang dùng.",
             "cta": "Xem khóa học"
         },
+        "backToTop": "Về đầu trang",
         "learnLoop": {
             "eyebrow": "Cách học",
-            "title": "Học theo phương pháp chuẩn ngành",
-            "intro": "Thời AI, nhà tuyển dụng cần người tự tay làm được việc — không phải người xem hết khóa học. Nên mỗi học phần ở StarCi là một vòng quen thuộc: đọc để hiểu, tự dựng lại, để AI chấm bài, rồi từng bước leo lên bảng xếp hạng.",
+            "title": "Học theo phương pháp của StarCi.",
+            "intro": "Giữa thời đại AI, nhà tuyển dụng săn tìm những kỹ sư tự tay giải quyết được bài toán thực tế — chứ không cần những người chỉ biết \"tích xanh\" hết video khóa học. Tại StarCi Academy, tụi mình đập tan lối học thụ động đó. Mỗi học phần buộc bạn phải lao vào một chu trình rèn luyện khắc nghiệt: Đọc sâu để nắm trọn bản chất, tự tay dựng lại kiến trúc, nhận đánh giá lập tức để sửa lỗi, rồi từng bước leo lên bảng xếp hạng. Học ở đây là để làm được việc thực tế, không có chỗ cho lý thuyết suông.",
             "items": {
                 "read": {
                     "step": "01",

@@ -53,23 +53,23 @@ export const LANDING_TRACK_TAG: Record<(typeof LANDING_COURSE_TRACKS)[number], s
  */
 export const LANDING_TREASURE_TOPICS: Record<
     "code" | "infra",
-    ReadonlyArray<{ label: string; track: (typeof LANDING_COURSE_TRACKS)[number] }>
+    ReadonlyArray<{ id: string; label: string; track: (typeof LANDING_COURSE_TRACKS)[number] }>
 > = {
     code: [
-        { label: "Redlock & Fencing Token", track: "systemDesign" },
-        { label: "2PC vs Saga choreography", track: "systemDesign" },
-        { label: "Token bucket + Redis Lua", track: "systemDesign" },
-        { label: "Kafka exactly-once", track: "systemDesign" },
-        { label: "RAG + pgvector", track: "fullstack" },
-        { label: "Webhook idempotency & refund", track: "fullstack" },
+        { id: "redlock", label: "Redlock & Fencing Token", track: "systemDesign" },
+        { id: "sagaChoreography", label: "2PC vs Saga choreography", track: "systemDesign" },
+        { id: "tokenBucket", label: "Token bucket + Redis Lua", track: "systemDesign" },
+        { id: "kafkaEoS", label: "Kafka exactly-once", track: "systemDesign" },
+        { id: "ragPgvector", label: "RAG + pgvector", track: "fullstack" },
+        { id: "webhookIdempotency", label: "Webhook idempotency & refund", track: "fullstack" },
     ],
     infra: [
-        { label: "K8s control plane (etcd/apiserver)", track: "devops" },
-        { label: "Argo Rollouts canary", track: "devops" },
-        { label: "SLSA & Sigstore supply-chain", track: "devops" },
-        { label: "Falco runtime security", track: "devops" },
-        { label: "OpenTelemetry / Jaeger tracing", track: "systemDesign" },
-        { label: "Terraform multi-cloud", track: "devops" },
+        { id: "k8sControlPlane", label: "K8s control plane (etcd/apiserver)", track: "devops" },
+        { id: "argoCanary", label: "Argo Rollouts canary", track: "devops" },
+        { id: "slsaSigstore", label: "SLSA & Sigstore supply-chain", track: "devops" },
+        { id: "falco", label: "Falco runtime security", track: "devops" },
+        { id: "otelJaeger", label: "OpenTelemetry / Jaeger tracing", track: "systemDesign" },
+        { id: "terraformMultiCloud", label: "Terraform multi-cloud", track: "devops" },
     ],
 }
 
@@ -86,6 +86,10 @@ export const LANDING_FOUNDER_EXPERTISE = [
  * update manually, or wire `api.github.com/orgs/StarCi-Academy`.public_repos.
  */
 export const FOUNDER_PUBLIC_REPOS = 242
+
+/** Raw-truth rows in the founder beat — content at
+ * `landing.founder.truth{n}` (the blunt truth) / `landing.founder.fix{n}` (our answer). */
+export const LANDING_FOUNDER_TRUTH_INDEXES = [1, 2, 3, 4] as const
 
 /** FAQ rows — content lives at `landing.faq.q{n}` / `landing.faq.a{n}`. */
 export const LANDING_FAQ_INDEXES = [1, 2, 3, 4, 5] as const
@@ -153,7 +157,11 @@ export const LANDING_ROADMAP_TIERS: Record<
  * proper nouns (not translated); labels come from `landing.outcome.card.*`.
  */
 export const LANDING_SAMPLE_CANDIDATE = {
-    name: "Minh Anh",
+    name: "Thảo Vân",
+    /** Profile slug (address-bar of the mockup). */
+    slug: "thao-van",
+    /** Avatar ảnh thật (lưu ở public/landing/thao-van.jpg). */
+    avatarUrl: "/landing/thao-van.jpg",
     skills: ["TypeScript", "Go", "System Design"],
     xp: 4820,
     cvScore: 87,

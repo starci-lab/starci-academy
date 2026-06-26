@@ -22,10 +22,9 @@ export const InnerLayout = ({ children }: PropsWithChildren) => {
     // long-form reading. Keep it on marketing / dashboard / the rest of the app.
     const pathname = usePathname()
     const isLearnRoute = pathname?.includes("/learn") ?? false
-    // Hide the footer on the long-form reader shell and the auth flows; show it
-    // on marketing / dashboard / the rest of the app.
-    const isAuthRoute = pathname?.includes("/authentication") ?? false
-    const showFooter = !isLearnRoute && !isAuthRoute
+    // Footer chỉ hiện ở LANDING (locale root: "/", "/vi", "/en"). Mọi trang khác
+    // (dashboard / learn / profile / auth / …) KHÔNG có footer — thầy chốt 2026-06-26.
+    const showFooter = pathname ? /^\/(?:[a-z]{2})?\/?$/.test(pathname) : false
     return (
         <Suspense>
             <NextThemesProvider 

@@ -4,27 +4,24 @@ import React, { useEffect, useRef, useState } from "react"
 import { ListBox, Typography, cn } from "@heroui/react"
 import {
     AnimatePresence,
-    animate,
     motion,
-    useMotionValue,
     useMotionValueEvent,
     useReducedMotion,
     useScroll,
-    useTransform,
 } from "framer-motion"
 import { useTranslations } from "next-intl"
 import {
     ArrowUpIcon,
     BookOpenIcon,
-    CaretRightIcon,
     CheckCircleIcon,
-    LightbulbIcon,
+    GithubLogoIcon,
+    PlayCircleIcon,
     RobotIcon,
     RocketLaunchIcon,
     TrophyIcon,
     WarningCircleIcon,
 } from "@phosphor-icons/react"
-import { LabeledCard, SectionHeading } from "@/components/blocks"
+import { SectionHeading, ShowcaseMockup, SHOWCASE_THEMES } from "@/components/blocks"
 import { UserAvatar } from "@/components/reuseable/UserAvatar"
 import { useSmViewpoint } from "@/hooks/reuseables/useSmViewpoint"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -41,73 +38,104 @@ const STEP_ICONS: Record<string, React.ReactNode> = {
     rank: <TrophyIcon aria-hidden focusable="false" />,
 }
 
-/** Tab ngôn ngữ trong visual bước "Đọc" (TS active). */
-const READ_TABS = ["TS", "Java", "C#", "Go"] as const
-
-/** Node nhỏ trong mini sơ đồ kiến trúc (Capstone). */
-const DiagramBox = ({
-    label,
-    tone,
-}: {
-    label: string
-    tone?: "accent" | "data"
-}) => (
-    <span
-        className={cn(
-            "rounded-lg border px-2.5 py-1.5 text-center font-mono text-xs",
-            tone === "accent"
-                ? "border-accent/70 bg-accent/10 font-medium text-accent"
-                : tone === "data"
-                    ? "border-success/40 bg-success/5 text-success"
-                    : "border-default bg-default text-muted",
-        )}
-    >
-        {label}
-    </span>
-)
-
-/** Đường nối dọc giữa 2 tầng trong mini sơ đồ. */
-const DiagramConn = () => <span aria-hidden className="h-3 w-px bg-default" />
+/** Address-bar của từng panel (đọc như màn hình thật của sản phẩm). */
+const STEP_URL: Record<string, string> = {
+    read: "starci.academy/learn/dead-letter-queue",
+    grade: "starci.academy/submit",
+    capstone: "the-shop · live",
+    rank: "starci.academy/leaderboard",
+}
 
 /**
- * Vòng điểm SVG — đếm số chạy lên `value` + cung tròn quét theo, khi panel "Chấm AI"
- * xuất hiện. Tôn trọng reduced-motion (hiện thẳng số/cung cuối).
+ * Bài đọc minh hoạ bước "Đọc" — CÙNG một bài (Dead Letter Queue) viết ở 4 ngôn ngữ.
+ * Mỗi tab đổi tên file + code; bấm để chuyển. Code cố ý "sâu" hơn 1 dòng cho thật.
  */
-const ScoreRing = ({ value }: { value: number }) => {
-    const reduce = useReducedMotion()
-    const radius = 26
-    const circ = 2 * Math.PI * radius
-    const count = useMotionValue(reduce ? value : 0)
-    const display = useTransform(count, (v) => Math.round(v))
+const READ_LESSON = [
+    {
+        label: "TS",
+        file: "order-consumer.ts",
+        code: `// retry; quá ngưỡng → DLQ
+async function onMessage(msg: Message) {
+  try { await handle(msg); await msg.ack() }
+  catch {
+    if (msg.attempts >= MAX) await dlq.send(msg.body)
+    else await msg.nack()
+  }
+}`,
+    },
+    {
+        label: "Java",
+        file: "OrderConsumer.java",
+        code: `// retry; quá ngưỡng → DLQ
+void onMessage(Message msg) {
+  try { handle(msg); msg.ack(); }
+  catch (Exception e) {
+    if (msg.attempts() >= MAX) dlq.send(msg.body());
+    else msg.nack();
+  }
+}`,
+    },
+    {
+        label: "C#",
+        file: "OrderConsumer.cs",
+        code: `// retry; quá ngưỡng → DLQ
+async Task OnMessage(Message msg) {
+  try { await Handle(msg); await msg.AckAsync(); }
+  catch (Exception e) {
+    if (msg.Attempts >= Max) await dlq.SendAsync(msg.Body);
+    else await msg.NackAsync();
+  }
+}`,
+    },
+    {
+        label: "Go",
+        file: "consumer.go",
+        code: `func onMessage(msg Message) {
+  err := handle(msg)
+  if err == nil { msg.Ack(); return }
+  if msg.Attempts >= Max { dlq.Send(msg.Body) } else { msg.Nack() }
+}`,
+    },
+] as const
 
-    useEffect(() => {
-        if (reduce) {
-            return
+/** Token cho tint code (comment · string · keyword) — đủ cho demo, không phải full lexer. */
+const CODE_TOKEN = /(\/\/[^\n]*)|("(?:[^"\\]|\\.)*")|\b(const|let|var|async|await|function|func|return|if|else|for|class|public|private|static|void|new|using|namespace|package|import|from|type|struct|interface|defer|throw|catch|try|final|int|Task|Exception|nil|err)\b/g
+
+/** Tô màu 1 dòng code: comment → muted · string → warning · keyword → accent. */
+const tintLine = (line: string): React.ReactNode => {
+    if (line === "") {
+        return " "
+    }
+    const out: React.ReactNode[] = []
+    let last = 0
+    let key = 0
+    let match: RegExpExecArray | null
+    CODE_TOKEN.lastIndex = 0
+    while ((match = CODE_TOKEN.exec(line)) !== null) {
+        if (match.index > last) {
+            out.push(line.slice(last, match.index))
         }
-        const controls = animate(count, value, { duration: 0.9, ease: "easeOut" })
-        return () => controls.stop()
-    }, [count, value, reduce])
+        const token = match[0]
+        const cls = match[1] ? "text-muted" : match[2] ? "text-warning" : "text-accent"
+        out.push(<span key={key++} className={cls}>{token}</span>)
+        last = match.index + token.length
+    }
+    if (last < line.length) {
+        out.push(line.slice(last))
+    }
+    return out
+}
 
+/** Khối code có số dòng + tint (mono). */
+const CodeBlock = ({ code }: { code: string }) => {
+    const lines = code.split("\n")
     return (
-        <div className="relative size-16 shrink-0">
-            <svg viewBox="0 0 64 64" className="size-16 -rotate-90" aria-hidden focusable="false">
-                <circle cx="32" cy="32" r={radius} fill="none" strokeWidth="6" style={{ stroke: "var(--default)" }} />
-                <motion.circle
-                    cx="32"
-                    cy="32"
-                    r={radius}
-                    fill="none"
-                    strokeWidth="6"
-                    strokeLinecap="round"
-                    style={{ stroke: "var(--success)" }}
-                    strokeDasharray={circ}
-                    initial={{ strokeDashoffset: circ }}
-                    animate={{ strokeDashoffset: circ * (1 - value / 100) }}
-                    transition={{ duration: 0.9, ease: "easeOut" }}
-                />
-            </svg>
-            <div className="absolute inset-0 flex items-center justify-center">
-                <motion.span className="text-lg font-semibold text-success">{display}</motion.span>
+        <div className="flex font-mono text-xs leading-relaxed">
+            <div aria-hidden className="flex flex-col items-end gap-1.5 border-r border-default/70 px-3 py-4 text-muted/60 select-none">
+                {lines.map((_, index) => <span key={index}>{index + 1}</span>)}
+            </div>
+            <div className="flex flex-col gap-1.5 overflow-x-auto px-4 py-4">
+                {lines.map((line, index) => <span key={index} className="whitespace-pre">{tintLine(line)}</span>)}
             </div>
         </div>
     )
@@ -129,6 +157,8 @@ const RANK_ROWS = [
 const StepVisual = ({ stepKey }: { stepKey: string }) => {
     const t = useTranslations()
     const reduce = useReducedMotion()
+    // ngôn ngữ đang chọn ở bước "Đọc" (tab bấm được; reset khi panel re-mount)
+    const [readLang, setReadLang] = useState(0)
 
     const childVariants = reduce
         ? { hidden: { opacity: 1 }, show: { opacity: 1 } }
@@ -140,84 +170,55 @@ const StepVisual = ({ stepKey }: { stepKey: string }) => {
 
     // Panel phải = block LabeledCard (label NGOÀI: icon bước + title · tag bên phải). Body
     // = visual của bước + 1 dòng mô tả (mỗi card "nói" thêm, không trơ visual). Stagger nhẹ.
-    const shell = (children: React.ReactNode) => (
-        <LabeledCard
-            label={t(`landing.learnLoop.items.${stepKey}.title`)}
-            icon={<span className="text-accent [&>svg]:size-5">{STEP_ICONS[stepKey]}</span>}
-            labelEnd={t(`landing.learnLoop.items.${stepKey}.tag`)}
+    const shell = (children: React.ReactNode, align: "center" | "start" = "center") => (
+        <ShowcaseMockup
+            url={STEP_URL[stepKey]}
+            aspect="video"
+            tilt="left"
+            backdrop="glow"
+            theme={SHOWCASE_THEMES.starci}
+            contentClassName={cn("flex flex-col p-4", align === "start" ? "justify-start" : "justify-center")}
         >
             <motion.div
                 variants={stagger}
                 initial="hidden"
                 animate="show"
-                className="flex flex-col gap-4"
+                className="flex flex-col gap-3"
             >
                 {children}
-                <motion.div variants={childVariants}>
-                    <Typography type="body-sm" color="muted">
-                        {t(`landing.learnLoop.items.${stepKey}.desc`)}
-                    </Typography>
-                </motion.div>
             </motion.div>
-        </LabeledCard>
+        </ShowcaseMockup>
     )
 
     if (stepKey === "read") {
         return shell(
             <>
-                <motion.div variants={childVariants} className="flex flex-col gap-2">
-                    <div className="flex flex-wrap items-center gap-2">
-                        <span className="text-sm font-semibold">Idempotency trong thanh toán</span>
-                        <span className="rounded-full bg-default px-2 py-0.5 text-xs text-muted">12 phút</span>
-                        <span className="rounded-full bg-accent/10 px-2 py-0.5 text-xs text-accent">Trung cấp</span>
-                    </div>
-                    <Typography type="body-sm" color="muted">
-                        Mỗi lần gọi thanh toán phải an toàn khi lặp lại — cùng một key chỉ tính tiền đúng một lần.
-                    </Typography>
-                </motion.div>
-                <motion.div variants={childVariants} className="flex flex-wrap gap-1.5">
-                    {READ_TABS.map((lang, index) => (
-                        <span
-                            key={lang}
+                <motion.div variants={childVariants} className="flex flex-wrap gap-4 border-b border-default text-xs">
+                    {READ_LESSON.map((item, index) => (
+                        <button
+                            key={item.label}
+                            type="button"
+                            onClick={() => setReadLang(index)}
+                            aria-pressed={index === readLang}
                             className={cn(
-                                "rounded-lg px-2.5 py-1 text-xs",
-                                index === 0 ? "bg-accent/10 font-medium text-accent" : "text-muted",
+                                "-mb-px cursor-pointer border-b-2 pb-2 transition-colors",
+                                index === readLang
+                                    ? "border-accent font-medium text-accent"
+                                    : "border-transparent text-muted hover:text-foreground",
                             )}
                         >
-                            {lang}
-                        </span>
+                            {item.label}
+                        </button>
                     ))}
                 </motion.div>
                 <motion.div variants={childVariants} className="overflow-hidden rounded-xl border border-default bg-default">
-                    <div className="flex items-center gap-1.5 border-b border-default/70 px-3 py-2">
-                        <span aria-hidden className="size-2.5 rounded-full bg-danger/60" />
-                        <span aria-hidden className="size-2.5 rounded-full bg-warning/60" />
-                        <span aria-hidden className="size-2.5 rounded-full bg-success/60" />
-                        <span className="ml-2 font-mono text-xs text-muted">order-service.ts</span>
+                    <div className="border-b border-default/70 px-3 py-1.5">
+                        <span className="font-mono text-xs text-muted">{READ_LESSON[readLang].file}</span>
                     </div>
-                    <div className="flex font-mono text-xs leading-relaxed">
-                        <div aria-hidden className="flex flex-col items-end gap-1.5 border-r border-default/70 px-3 py-4 text-muted/60 select-none">
-                            <span>1</span><span>2</span><span>3</span><span>4</span>
-                        </div>
-                        <div className="flex flex-col gap-1.5 px-4 py-4">
-                            <span>
-                                <span className="text-accent">const</span> app = <span className="text-success">express</span>()
-                            </span>
-                            <span>
-                                app.<span className="text-success">get</span>(<span className="text-warning">{"\"/health\""}</span>, handler)
-                            </span>
-                            <span>
-                                app.<span className="text-success">listen</span>(<span className="text-warning">3000</span>)
-                            </span>
-                            <span className="text-muted">{"// cùng một bài — viết bằng 4 ngôn ngữ"}</span>
-                        </div>
-                    </div>
-                </motion.div>
-                <motion.div variants={childVariants} className="flex items-start gap-2 rounded-xl bg-accent/5 px-3 py-2.5 text-sm text-muted">
-                    <LightbulbIcon aria-hidden focusable="false" className="mt-0.5 size-4 shrink-0 text-accent" />
-                    <span>Mẹo: khoá theo <span className="font-mono text-xs">idempotency-key</span> để chặn double-charge khi client retry.</span>
+                    <CodeBlock code={READ_LESSON[readLang].code} />
                 </motion.div>
             </>,
+            "start",
         )
     }
 
@@ -225,20 +226,18 @@ const StepVisual = ({ stepKey }: { stepKey: string }) => {
         const criteria = [
             { ok: true, text: "Idempotency key xử lý đúng.", pts: "+30" },
             { ok: true, text: "Retry + backoff hợp lý.", pts: "+25" },
-            { ok: true, text: "Validate payload đầy đủ.", pts: "+20" },
             { ok: false, text: "Thiếu rate-limit ở gateway.", pts: "−8" },
         ]
         return shell(
             <>
-                <motion.div variants={childVariants} className="flex items-center gap-4">
-                    <ScoreRing value={92} />
-                    <div className="flex flex-1 flex-col gap-0.5">
+                {/* verdict = HeroUI Alert style (đúng SubmissionResult): tint success + icon + điểm */}
+                <motion.div variants={childVariants} className="flex items-center gap-3 rounded-xl bg-success/10 px-3 py-2.5">
+                    <CheckCircleIcon weight="fill" aria-hidden focusable="false" className="size-7 shrink-0 text-success" />
+                    <div className="flex flex-1 flex-col">
                         <span className="text-sm font-semibold text-success">{t("submissionResult.passed")} · 92/100</span>
-                        <span className="text-xs text-muted">Xây <span className="font-mono">/payments</span> idempotent</span>
+                        <span className="text-xs text-success/80">cần ≥ 70 để qua</span>
                     </div>
-                    <span className="shrink-0 rounded-full bg-success/10 px-3 py-1 text-xs font-medium text-success">
-                        +120 XP
-                    </span>
+                    <span className="shrink-0 rounded-full bg-success/15 px-3 py-1 text-xs font-medium text-success">+120 XP</span>
                 </motion.div>
                 <motion.div variants={childVariants} className="flex flex-col gap-1.5">
                     {criteria.map((item) => (
@@ -253,44 +252,45 @@ const StepVisual = ({ stepKey }: { stepKey: string }) => {
                         </span>
                     ))}
                 </motion.div>
-                <motion.div variants={childVariants} className="rounded-xl bg-default px-3 py-2.5 text-sm italic text-muted">
-                    “Xử lý khoá tốt — nên thêm giới hạn tần suất ở gateway để chống lạm dụng.”
-                </motion.div>
             </>,
         )
     }
 
     if (stepKey === "capstone") {
+        const milestones = [
+            { label: "Dựng khung & CI", state: "done" },
+            { label: "Auth + API Gateway", state: "done" },
+            { label: "Tách service · DB-per-service", state: "active" },
+        ] as const
         return shell(
             <>
                 <motion.div variants={childVariants} className="flex items-center justify-between">
                     <span className="font-mono text-sm font-medium">the-shop</span>
-                    <span className="flex items-center gap-1.5 text-xs text-success">
-                        <span aria-hidden className="size-2 rounded-full bg-success" />
-                        live · 99.9% uptime
+                    <span className="flex items-center gap-1.5 text-xs text-muted">
+                        <GithubLogoIcon aria-hidden focusable="false" className="size-3.5" />
+                        main
                     </span>
                 </motion.div>
-                <motion.div variants={childVariants} className="flex flex-col items-center gap-1.5">
-                    <DiagramBox label="Client" />
-                    <DiagramConn />
-                    <DiagramBox label="API Gateway" tone="accent" />
-                    <DiagramConn />
-                    <div className="flex w-full justify-center gap-1.5">
-                        {["Auth", "Orders", "Payment"].map((node) => (
-                            <DiagramBox key={node} label={node} />
-                        ))}
+                <motion.div variants={childVariants} className="flex flex-col gap-1.5">
+                    <div className="flex items-center justify-between text-xs text-muted">
+                        <span>Tiến độ</span>
+                        <span>8/20 chặng · 40%</span>
                     </div>
-                    <DiagramConn />
-                    <div className="flex w-full justify-center gap-1.5">
-                        {["Postgres", "Redis", "Kafka"].map((node) => (
-                            <DiagramBox key={node} label={node} tone="data" />
-                        ))}
+                    <div className="h-1.5 overflow-hidden rounded-full bg-default">
+                        <div className="h-full rounded-full bg-accent" style={{ width: "40%" }} />
                     </div>
                 </motion.div>
-                <motion.div variants={childVariants} className="flex flex-wrap gap-1.5">
-                    {["TypeScript", "Docker", "Postgres", "Redis", "Kafka"].map((tag) => (
-                        <span key={tag} className="rounded-full bg-default px-2.5 py-1 text-xs text-muted">
-                            {tag}
+                <motion.div variants={childVariants} className="flex flex-col gap-1.5">
+                    {milestones.map((item) => (
+                        <span key={item.label} className="flex items-center gap-2 text-sm">
+                            {item.state === "done" ? (
+                                <CheckCircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-success" />
+                            ) : (
+                                <PlayCircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-accent" />
+                            )}
+                            <span className={cn("flex-1", item.state === "active" ? "font-medium text-foreground" : "text-muted")}>
+                                {item.label}
+                            </span>
                         </span>
                     ))}
                 </motion.div>
@@ -339,28 +339,81 @@ const StepVisual = ({ stepKey }: { stepKey: string }) => {
 }
 
 /** Thẻ bước cho layout tĩnh (fallback mobile / reduced-motion). */
-const StaticStep = ({ stepKey }: { stepKey: string }) => {
+/**
+ * Danh sách 4 bước (ListBox) dùng chung cho cả 2 biến thể. `active` = bước đang chọn;
+ * bấm 1 bước → `onSelect(index)` (pinned: cuộn tới đúng bước · static: set active trực
+ * tiếp). done (index < active) hiện check xanh; active = accent.
+ */
+const LoopStepList = ({ active, onSelect }: { active: number; onSelect: (index: number) => void }) => {
     const t = useTranslations()
+    const activeKey = LANDING_LOOP_STEPS[active]
     return (
-        <div className="flex flex-1 flex-col gap-3 rounded-2xl border border-default bg-surface p-5">
-            <div className="flex items-center justify-between">
-                <span className="text-sm text-muted">
-                    {t(`landing.learnLoop.items.${stepKey}.step`)}
-                </span>
-                <span className="text-muted [&>svg]:size-5">{STEP_ICONS[stepKey]}</span>
-            </div>
-            <span className="text-xs text-muted">
-                {t(`landing.learnLoop.items.${stepKey}.tag`)}
-            </span>
-            <Typography type="body" weight="semibold">
-                {t(`landing.learnLoop.items.${stepKey}.title`)}
-            </Typography>
-            <Typography type="body-sm" color="muted">
-                {t(`landing.learnLoop.items.${stepKey}.desc`)}
-            </Typography>
-        </div>
+        <ListBox
+            aria-label={t("landing.learnLoop.title")}
+            selectionMode="single"
+            disallowEmptySelection
+            selectedKeys={[activeKey]}
+            onSelectionChange={(keys) => {
+                const key = [...keys][0]
+                const index = LANDING_LOOP_STEPS.findIndex((step) => step === key)
+                if (index >= 0) {
+                    onSelect(index)
+                }
+            }}
+            className="gap-1 p-0"
+        >
+            {LANDING_LOOP_STEPS.map((key, index) => {
+                const selected = key === activeKey
+                const done = index < active
+                const stepColor = cn(
+                    "transition-colors group-data-[hovered=true]:text-accent",
+                    done ? "text-success" : selected ? "text-accent" : "text-muted",
+                )
+                return (
+                    <ListBox.Item
+                        key={key}
+                        id={key}
+                        textValue={t(`landing.learnLoop.items.${key}.title`)}
+                        className={cn(
+                            "group cursor-pointer rounded-xl px-4 py-2.5 transition-colors data-[hovered=true]:bg-accent/10",
+                            selected && "bg-accent/10",
+                        )}
+                    >
+                        <div className="flex items-center gap-3">
+                            <span className={cn("[&>svg]:size-5", stepColor)}>
+                                {done ? (
+                                    <CheckCircleIcon aria-hidden focusable="false" className="size-5" />
+                                ) : (
+                                    STEP_ICONS[key]
+                                )}
+                            </span>
+                            <Typography type="body" className="text-foreground">
+                                {t(`landing.learnLoop.items.${key}.title`)}
+                            </Typography>
+                        </div>
+                    </ListBox.Item>
+                )
+            })}
+        </ListBox>
     )
 }
+
+/** Visual panel đổi theo bước (crossfade) — dùng chung cho cả 2 biến thể. */
+const LoopPanel = ({ activeKey }: { activeKey: string }) => (
+    <div className="relative min-h-[320px]">
+        <AnimatePresence mode="wait">
+            <motion.div
+                key={activeKey}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.25 }}
+            >
+                <StepVisual stepKey={activeKey} />
+            </motion.div>
+        </AnimatePresence>
+    </div>
+)
 
 /** Heading dùng chung cho cả 2 biến thể (tĩnh + pinned). */
 const LoopHeading = () => {
@@ -374,24 +427,25 @@ const LoopHeading = () => {
     )
 }
 
-/** Layout TĨNH (mobile / reduced-motion / trước mount) — 4 thẻ ngang, KHÔNG pin/scroll. */
-const LearnLoopStatic = ({ className }: LearnLoopScrollProps) => (
-    <section className={cn("flex flex-col gap-6", className)}>
-        <LoopHeading />
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch">
-            {LANDING_LOOP_STEPS.map((key, index) => (
-                <React.Fragment key={key}>
-                    <StaticStep stepKey={key} />
-                    {index < LANDING_LOOP_STEPS.length - 1 && (
-                        <div className="hidden items-center sm:flex">
-                            <CaretRightIcon aria-hidden focusable="false" className="size-5 text-muted" />
-                        </div>
-                    )}
-                </React.Fragment>
-            ))}
-        </div>
-    </section>
-)
+/**
+ * Layout CLICK-DRIVEN (mobile / reduced-motion / trước mount) — list bấm được + panel
+ * đổi theo bước, KHÔNG scroll-hijack. Cùng list+panel với pinned, chỉ khác: bấm 1 bước
+ * = set active trực tiếp (không cuộn). Mobile: list trên · panel dưới (1 cột).
+ */
+const LearnLoopStatic = ({ className }: LearnLoopScrollProps) => {
+    const [active, setActive] = useState(0)
+    return (
+        <section className={cn("flex flex-col gap-16", className)}>
+            <LoopHeading />
+            <div className="grid items-center gap-x-12 gap-y-20 lg:grid-cols-2">
+                <div>
+                    <LoopStepList active={active} onSelect={setActive} />
+                </div>
+                <LoopPanel activeKey={LANDING_LOOP_STEPS[active]} />
+            </div>
+        </section>
+    )
+}
 
 /**
  * Biến thể PINNED (desktop) — tách riêng để `useScroll`'s target ref LUÔN gắn vào
@@ -400,7 +454,6 @@ const LearnLoopStatic = ({ className }: LearnLoopScrollProps) => (
  * đổi + thanh tiến độ; cuộn hết → `sticky` nhả. Bấm bước ở ListBox → cuộn tới đúng đó.
  */
 const LearnLoopPinned = ({ className }: LearnLoopScrollProps) => {
-    const t = useTranslations()
     const sectionRef = useRef<HTMLDivElement>(null)
     const [active, setActive] = useState(0)
 
@@ -431,92 +484,14 @@ const LearnLoopPinned = ({ className }: LearnLoopScrollProps) => {
 
     return (
         <section ref={sectionRef} className={cn("relative h-[360vh]", className)}>
-            <div className="sticky top-0 flex h-screen flex-col justify-center gap-10 py-12">
+            <div className="sticky top-0 flex h-screen flex-col justify-center gap-16 py-12">
                 <LoopHeading />
-                <div className="grid items-center gap-8 lg:grid-cols-2">
-                    {/* TRÁI — danh sách 4 bước (sạch: 1 icon-tile + title; active = accent ở chi
-                        tiết: left-bar + tile + title + mô tả mở). Scroll lái active; bấm → cuộn tới */}
+                <div className="grid items-center gap-x-12 gap-y-20 lg:grid-cols-2">
+                    {/* TRÁI — list 4 bước (scroll lái active; bấm → cuộn tới). PHẢI — visual đổi. */}
                     <div>
-                        <ListBox
-                            aria-label={t("landing.learnLoop.title")}
-                            selectionMode="single"
-                            disallowEmptySelection
-                            selectedKeys={[activeKey]}
-                            onSelectionChange={(keys) => {
-                                const key = [...keys][0]
-                                const index = LANDING_LOOP_STEPS.findIndex((step) => step === key)
-                                if (index >= 0) {
-                                    jumpToStep(index)
-                                }
-                            }}
-                            className="gap-1 p-0"
-                        >
-                            {LANDING_LOOP_STEPS.map((key, index) => {
-                                const selected = key === activeKey
-                                const done = index < active
-                                return (
-                                    <ListBox.Item
-                                        key={key}
-                                        id={key}
-                                        textValue={t(`landing.learnLoop.items.${key}.title`)}
-                                        className={cn(
-                                            "cursor-pointer rounded-2xl px-4 py-3 transition-colors data-[hovered=true]:bg-default-100",
-                                            // selected = fill bg-accent/10 (KHÔNG border trái)
-                                            selected && "bg-accent/10 data-[hovered=true]:bg-accent/10",
-                                        )}
-                                    >
-                                        <div className="flex items-start gap-3">
-                                            <span
-                                                className={cn(
-                                                    "flex size-10 shrink-0 items-center justify-center rounded-xl transition-colors [&>svg]:size-5",
-                                                    selected
-                                                        ? "bg-accent/15 text-accent"
-                                                        : done
-                                                            ? "bg-success/10 text-success"
-                                                            : "bg-default text-muted",
-                                                )}
-                                            >
-                                                {done ? (
-                                                    <CheckCircleIcon
-                                                        aria-hidden
-                                                        focusable="false"
-                                                        className="size-5"
-                                                    />
-                                                ) : (
-                                                    STEP_ICONS[key]
-                                                )}
-                                            </span>
-                                            <div className="flex min-w-0 flex-1 flex-col gap-1">
-                                                <Typography type="body" weight="semibold" className={cn(selected && "text-accent")}>
-                                                    {t(`landing.learnLoop.items.${key}.title`)}
-                                                </Typography>
-                                                {selected && (
-                                                    <Typography type="body-sm" color="muted">
-                                                        {t(`landing.learnLoop.items.${key}.desc`)}
-                                                    </Typography>
-                                                )}
-                                            </div>
-                                        </div>
-                                    </ListBox.Item>
-                                )
-                            })}
-                        </ListBox>
+                        <LoopStepList active={active} onSelect={jumpToStep} />
                     </div>
-
-                    {/* PHẢI — visual đổi theo bước (crossfade) */}
-                    <div className="relative min-h-[320px]">
-                        <AnimatePresence mode="wait">
-                            <motion.div
-                                key={activeKey}
-                                initial={{ opacity: 0, y: 12 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -12 }}
-                                transition={{ duration: 0.25 }}
-                            >
-                                <StepVisual stepKey={activeKey} />
-                            </motion.div>
-                        </AnimatePresence>
-                    </div>
+                    <LoopPanel activeKey={activeKey} />
                 </div>
             </div>
         </section>

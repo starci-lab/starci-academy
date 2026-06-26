@@ -4,47 +4,44 @@ import React from "react"
 import {
     Accordion,
     Button,
-    Chip,
     Link,
     Typography,
 } from "@heroui/react"
 import {
     ArrowRightIcon,
+    ArrowUpIcon,
+    CaretRightIcon,
     CloudArrowUpIcon,
-    CodeIcon,
     CubeIcon,
-    HardDrivesIcon,
     StackIcon,
     TreeStructureIcon,
     UserIcon,
 } from "@phosphor-icons/react"
-import { FaGithub } from "react-icons/fa6"
+import { FaFacebook, FaGithub, FaLinkedin } from "react-icons/fa6"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import {
-    FounderManifesto,
     HeroBanner,
     IconTile,
     MicroservicesDiagram,
-    RoadmapMetro,
     SectionHeading,
-    TopicLane,
+    TrackCard,
+    TruthList,
 } from "@/components/blocks"
 import { pathConfig } from "@/resources/path"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { FOUNDER_GITHUB } from "@/components/features/contact/Contact/constants"
+import { FOUNDER_FACEBOOK, FOUNDER_GITHUB, FOUNDER_LINKEDIN } from "@/components/features/contact/Contact/constants"
 import { StatStrip } from "./StatStrip"
 import { TalentMarketplace } from "./TalentMarketplace"
 import { LearnLoopScroll } from "./LearnLoopScroll"
+import { KnowledgeGraph } from "./KnowledgeGraph"
 import {
     LANDING_COURSE_TRACKS,
     LANDING_FAQ_INDEXES,
-    LANDING_FOUNDER_EXPERTISE,
+    LANDING_FOUNDER_TRUTH_INDEXES,
     LANDING_HERO_KEYWORDS,
     LANDING_ROADMAP_TIERS,
     LANDING_TRACK_COURSE_SLUG,
-    LANDING_TRACK_TAG,
-    LANDING_TREASURE_TOPICS,
 } from "./constants"
 
 /** Icon per featured course track. */
@@ -60,6 +57,13 @@ const TRACK_LINE_COLOR: Record<string, "accent" | "success" | "warning"> = {
     systemDesign: "success",
     devops: "warning",
 }
+
+/** Founder social proof links (brand-icon row in the founder beat). */
+const FOUNDER_SOCIALS = [
+    { key: "github", href: FOUNDER_GITHUB, icon: FaGithub, label: "GitHub" },
+    { key: "linkedin", href: FOUNDER_LINKEDIN, icon: FaLinkedin, label: "LinkedIn" },
+    { key: "facebook", href: FOUNDER_FACEBOOK, icon: FaFacebook, label: "Facebook" },
+] as const
 
 /** Props for {@link Landing}. */
 export type LandingProps = WithClassNames<undefined>
@@ -85,14 +89,26 @@ export const Landing = ({ className }: LandingProps) => {
     }
     const onLogin = () => router.push(pathConfig().locale(locale).authentication().build())
 
-    // Mỗi "beat" = 1 màn: min-height = viewport − navbar (dvh chống nhảy do thanh URL
-    // mobile) + căn giữa dọc. min-h (KHÔNG height cứng) → section ngắn đầy 1 màn, section
-    // dài (3 rail lộ trình, catalog…) vẫn giãn ra được, không bị cắt cụt.
+    // Back-to-top FAB — hiện sau khi cuộn qua màn đầu (scrollY > 600), click cuộn mượt về đầu.
+    const [showTop, setShowTop] = React.useState(false)
+    React.useEffect(() => {
+        const onScroll = () => setShowTop(window.scrollY > 600)
+        window.addEventListener("scroll", onScroll, { passive: true })
+        onScroll()
+        return () => window.removeEventListener("scroll", onScroll)
+    }, [])
+
+    // HERO only fills the first fold (min-height = viewport − navbar, dvh chống nhảy thanh
+    // URL mobile, căn giữa dọc). Các beat khác co theo content (bỏ min-h) → hết "nửa màn
+    // trống" + nhịp đều bằng root gap.
     const screen = "flex min-h-[calc(100dvh-4rem)] flex-col justify-center"
 
     return (
         <div className={className}>
-            <div className="mx-auto flex max-w-6xl flex-col px-4 sm:px-6 lg:px-8">
+            {/* Section-to-section rhythm: gap-24→32 (96–128px) between beats. Beats size to
+                their content (no min-h-screen except the hero), so the gap IS the real
+                whitespace — generous but not the half-empty-screen the min-h beats caused. */}
+            <div className="mx-auto flex max-w-6xl flex-col gap-24 px-4 pb-24 sm:px-6 md:gap-32 md:pb-32 lg:px-8">
                 {/* 1 — Hero */}
                 <div className={screen}>
                     <HeroBanner
@@ -109,7 +125,7 @@ export const Landing = ({ className }: LandingProps) => {
                             </Button>
                         )}
                         secondary={(
-                            <Button variant="secondary" onPress={onLogin}>
+                            <Button variant="secondary" size="lg" onPress={onLogin}>
                                 {t("landing.hero.ctaSecondary")}
                             </Button>
                         )}
@@ -123,8 +139,16 @@ export const Landing = ({ className }: LandingProps) => {
                     />
                 </div>
 
-                {/* 2 — Live proof strip (strip mỏng, có thể tự ẩn → KHÔNG ép full-screen) */}
-                <div className="py-16">
+                {/* 2 — Live proof strip + header "minh bạch": đóng khung số liệu THẬT (early,
+                    nhỏ) thành tín hiệu trung thực thay vì brag. Header → strip = gap-16 (đồng
+                    bộ các section); spacing giữa beat do root gap lo. */}
+                <div id="stats" className="flex scroll-mt-24 flex-col gap-16">
+                    <SectionHeading
+                        anchorId="stats"
+                        eyebrow={t("landing.stats.eyebrow")}
+                        title={t("landing.stats.title")}
+                        intro={t("landing.stats.intro")}
+                    />
                     <StatStrip />
                 </div>
 
@@ -136,137 +160,110 @@ export const Landing = ({ className }: LandingProps) => {
                 {/* 3 — Lộ trình: 3 track tiêu biểu. Mỗi card = identity (icon/module/tag/title/desc)
                     + tier path (foundation → application) + "Vào khóa" → course thật. Gộp từ 2
                     section cũ (Courses + Roadmap) vì track = course → tránh render lặp cùng 3 track. */}
-                <section id="courses" className="flex min-h-[calc(100dvh-4rem)] scroll-mt-20 flex-col justify-center gap-6">
+                <section id="courses" className="flex scroll-mt-24 flex-col gap-12">
                     <SectionHeading
+                        anchorId="courses"
                         eyebrow={t("landing.courses.eyebrow")}
                         title={t("landing.courses.title")}
                         intro={t("landing.courses.intro")}
                     />
-                    {/* Metro map — "ba lộ trình · một tư duy": 1 trục 4 ga dùng chung, mỗi track
-                        là 1 tuyến màu chạy qua các ga; ga cuối (Application) = đích + "Vào khóa". */}
-                    <RoadmapMetro
-                        stations={LANDING_ROADMAP_TIERS[LANDING_COURSE_TRACKS[0]].map((tier) => tier.label)}
-                        tracks={LANDING_COURSE_TRACKS.map((key) => ({
-                            key,
-                            icon: COURSE_TRACK_ICONS[key],
-                            title: t(`landing.courses.items.${key}.title`),
-                            meta: `${t(`landing.courses.items.${key}.modules`)} · ${t("landing.courses.systems")}`,
-                            color: TRACK_LINE_COLOR[key],
-                            stops: LANDING_ROADMAP_TIERS[key].map((tier) => tier.topic),
-                            viewLabel: t("landing.courses.view"),
-                            onView: () => router.push(pathConfig().locale(locale).course(LANDING_TRACK_COURSE_SLUG[key]).build()),
-                        }))}
-                    />
+                    {/* "Ba lộ trình · một tư duy": mỗi track = 1 card tự gói (identity + path 4
+                        tier DỌC foundation→application + "Vào khóa" → course thật). 3 card cạnh
+                        nhau để đọc + so; cấu trúc 4 tier đồng nhất = "một tư duy". */}
+                    <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+                        {LANDING_COURSE_TRACKS.map((key) => (
+                            <TrackCard
+                                key={key}
+                                icon={COURSE_TRACK_ICONS[key]}
+                                title={t(`landing.courses.items.${key}.title`)}
+                                meta={`${t(`landing.courses.items.${key}.modules`)} · ${t("landing.courses.systems")}`}
+                                color={TRACK_LINE_COLOR[key]}
+                                tiers={LANDING_ROADMAP_TIERS[key]}
+                                viewLabel={t("landing.courses.view")}
+                                onView={() => router.push(pathConfig().locale(locale).course(LANDING_TRACK_COURSE_SLUG[key]).build())}
+                            />
+                        ))}
+                    </div>
                 </section>
 
                 {/* Kho tàng nội dung — 2 làn code ↔ infra; mỗi chip = bài THẬT (rút từ
                     content) → bấm vào khóa chứa nó. Khoe chiều sâu chương trình. */}
-                <section className="flex min-h-[calc(100dvh-4rem)] flex-col justify-center gap-6">
+                <section id="treasure" className="flex scroll-mt-24 flex-col gap-12">
                     <SectionHeading
+                        anchorId="treasure"
                         eyebrow={t("landing.treasure.eyebrow")}
                         title={t("landing.treasure.title")}
                         intro={t("landing.treasure.intro")}
                     />
-                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                        <TopicLane
-                            icon={<CodeIcon aria-hidden focusable="false" />}
-                            title={t("landing.treasure.codeLane")}
-                            items={LANDING_TREASURE_TOPICS.code.map((topic) => ({
-                                label: topic.label,
-                                tag: LANDING_TRACK_TAG[topic.track],
-                                onPress: () => router.push(
-                                    pathConfig().locale(locale).course(LANDING_TRACK_COURSE_SLUG[topic.track]).build(),
-                                ),
-                            }))}
-                        />
-                        <TopicLane
-                            icon={<HardDrivesIcon aria-hidden focusable="false" />}
-                            title={t("landing.treasure.infraLane")}
-                            items={LANDING_TREASURE_TOPICS.infra.map((topic) => ({
-                                label: topic.label,
-                                tag: LANDING_TRACK_TAG[topic.track],
-                                onPress: () => router.push(
-                                    pathConfig().locale(locale).course(LANDING_TRACK_COURSE_SLUG[topic.track]).build(),
-                                ),
-                            }))}
-                        />
-                    </div>
-                    <div className="flex flex-wrap items-center justify-between gap-3">
-                        <Typography type="body-xs" color="muted">
-                            {t("landing.treasure.footnote")}
-                        </Typography>
-                        <Link onPress={onSeeCourses} className="inline-flex cursor-pointer items-center gap-1 text-accent">
-                            {t("landing.treasure.seeAll")}
-                            <ArrowRightIcon aria-hidden focusable="false" className="size-4" />
-                        </Link>
-                    </div>
+                    {/* Knowledge graph "kho tàng": ~26 khái niệm THẬT (node) liên kết builds-on
+                        + cross-track (d3-force live, kéo/zoom). Node màu theo track, click → khóa
+                        chứa nó. "Kiến thức lồng ghép" (vibe Qdrant, brand-themed @xyflow). */}
+                    <KnowledgeGraph />
                 </section>
 
                 {/* 5 — Founder beat */}
-                <section className="flex min-h-[calc(100dvh-4rem)] flex-col justify-center gap-6">
+                <section id="founder" className="flex scroll-mt-24 flex-col gap-12">
                     <SectionHeading
+                        anchorId="founder"
                         eyebrow={t("landing.founder.eyebrow")}
                         title={t("landing.founder.title")}
+                        intro={t("landing.founder.thesis")}
                     />
-                    <FounderManifesto
-                        portrait={(
-                            <IconTile
-                                size="lg"
-                                tone="accent"
-                                src="/landing/founder.jpg"
-                                alt={t("landing.founder.name")}
-                                icon={<UserIcon aria-hidden focusable="false" />}
-                            />
-                        )}
-                        name={t("landing.founder.name")}
-                        role={t("landing.founder.role")}
-                        body={(
+                    {/* the uncomfortable truths are the hero; the founder recedes to a
+                        byline (who's saying this), each truth anchored to a real mechanism */}
+                    <TruthList
+                        items={LANDING_FOUNDER_TRUTH_INDEXES.map((index) => ({
+                            truth: t(`landing.founder.truth${index}`),
+                            fix: t(`landing.founder.fix${index}`),
+                        }))}
+                        byline={(
                             <>
-                                {/* CTO titles (authority) + expertise chips */}
-                                <Typography type="body-sm" color="muted">
-                                    {t("landing.founder.titles")}
-                                </Typography>
-                                <div className="flex flex-wrap gap-2">
-                                    {LANDING_FOUNDER_EXPERTISE.map((key) => (
-                                        <Chip key={key} variant="soft" color="accent" size="sm">
-                                            <Chip.Label>{t(`landing.founder.expertise.${key}`)}</Chip.Label>
-                                        </Chip>
-                                    ))}
-                                </div>
-                                {/* playful founder voice — blockquote, humanizes the authority */}
-                                <blockquote className="border-l-2 border-separator pl-3">
-                                    <Typography type="body" className="italic text-foreground">
-                                        {t("landing.founder.quote")}
+                                <IconTile
+                                    size="sm"
+                                    tone="accent"
+                                    src="/landing/founder.jpg"
+                                    alt={t("landing.founder.name")}
+                                    icon={<UserIcon aria-hidden focusable="false" />}
+                                />
+                                <div className="flex min-w-0 flex-col gap-0.5">
+                                    <Typography type="body-sm" weight="semibold">
+                                        {t("landing.founder.name")}
                                     </Typography>
-                                </blockquote>
-                                <Typography type="body" color="muted">
-                                    {t("landing.founder.body1")}
-                                </Typography>
-                            </>
-                        )}
-                        links={(
-                            <>
-                                <Link href={FOUNDER_GITHUB} target="_blank" className="inline-flex items-center gap-2 text-accent">
-                                    <FaGithub aria-hidden className="size-5" />
-                                    {t("landing.founder.github")}
-                                </Link>
-                                <Link href={pathConfig().locale(locale).blog().build()} className="inline-flex items-center gap-2 text-accent">
-                                    {t("landing.founder.blog")}
-                                    <ArrowRightIcon aria-hidden focusable="false" className="size-4" />
-                                </Link>
+                                    <Typography type="body-xs" color="muted">
+                                        {t("landing.founder.titles")}
+                                    </Typography>
+                                </div>
+                                <div className="flex items-center gap-3 sm:ml-auto">
+                                    {/* social proof — brand icons (GitHub · LinkedIn · Facebook) */}
+                                    {FOUNDER_SOCIALS.map(({ key, href, icon: Icon, label }) => (
+                                        <Link
+                                            key={key}
+                                            href={href}
+                                            target="_blank"
+                                            aria-label={label}
+                                            className="text-muted transition-colors hover:text-accent"
+                                        >
+                                            <Icon aria-hidden className="size-4" />
+                                        </Link>
+                                    ))}
+                                    {/* blog = "go read + judge the quality yourself" CTA */}
+                                    <Link href={pathConfig().locale(locale).blog().build()} className="inline-flex items-center gap-2 text-accent">
+                                        {t("landing.founder.blog")}
+                                        <ArrowRightIcon aria-hidden focusable="false" className="size-4" />
+                                    </Link>
+                                </div>
                             </>
                         )}
                     />
                 </section>
 
                 {/* 6 — Two-sided talent marketplace (engineer outcome + recruiter browse, product-led) */}
-                <div className={screen}>
-                    <TalentMarketplace />
-                </div>
+                <TalentMarketplace />
 
                 {/* 9 — FAQ */}
-                <section className="flex min-h-[calc(100dvh-4rem)] flex-col justify-center gap-6">
+                <section id="faq" className="flex scroll-mt-24 flex-col gap-12">
                     <SectionHeading
+                        anchorId="faq"
                         eyebrow={t("landing.faq.eyebrow")}
                         title={t("landing.faq.title")}
                     />
@@ -293,7 +290,7 @@ export const Landing = ({ className }: LandingProps) => {
                 </section>
 
                 {/* 10 — Closing CTA */}
-                <section className="flex min-h-[calc(100dvh-4rem)] flex-col items-center justify-center gap-6">
+                <section className="flex flex-col items-center gap-6">
                     <div className="flex flex-col items-center gap-3">
                         <Typography.Heading level={2} weight="bold" align="center" className="max-w-2xl">
                             {t("landing.closing.title")}
@@ -304,10 +301,23 @@ export const Landing = ({ className }: LandingProps) => {
                     </div>
                     <Button variant="primary" size="lg" onPress={onSeeCourses}>
                         {t("landing.closing.cta")}
-                        <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
+                        <CaretRightIcon aria-hidden focusable="false" className="size-5" />
                     </Button>
                 </section>
             </div>
+
+            {/* Back-to-top FAB — float góc phải-dưới (primary accent), hiện sau khi cuộn qua màn đầu */}
+            {showTop ? (
+                <Button
+                    isIconOnly
+                    variant="primary"
+                    aria-label={t("landing.backToTop")}
+                    onPress={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                    className="fixed bottom-6 right-6 z-40 size-12 rounded-full shadow-lg"
+                >
+                    <ArrowUpIcon aria-hidden focusable="false" className="size-5" />
+                </Button>
+            ) : null}
         </div>
     )
 }

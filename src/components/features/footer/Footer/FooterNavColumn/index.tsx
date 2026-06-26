@@ -31,8 +31,8 @@ export interface FooterNavColumnProps {
 
 /**
  * One labeled column of footer links. Internal links self-navigate via the
- * locale-aware router; external links use a plain anchor. Every link is muted
- * and lifts to the foreground tone on hover (interactive affordance).
+ * locale-aware router; external links use a plain anchor. Links read at the
+ * foreground tone (clear on the dark footer) and lift to accent on hover.
  *
  * @param props - {@link FooterNavColumnProps}
  */
@@ -49,7 +49,7 @@ export const FooterNavColumn = ({ title, links }: FooterNavColumnProps) => {
                         <Link
                             key={link.key}
                             href={link.href}
-                            className="text-sm text-muted transition-colors hover:text-foreground"
+                            className="text-sm text-foreground transition-colors hover:text-accent"
                         >
                             {link.label}
                         </Link>
@@ -57,7 +57,7 @@ export const FooterNavColumn = ({ title, links }: FooterNavColumnProps) => {
                         <Link
                             key={link.key}
                             onPress={() => router.push(link.path ?? "")}
-                            className="cursor-pointer text-sm text-muted transition-colors hover:text-foreground"
+                            className="cursor-pointer text-sm text-foreground transition-colors hover:text-accent"
                         >
                             {link.label}
                         </Link>

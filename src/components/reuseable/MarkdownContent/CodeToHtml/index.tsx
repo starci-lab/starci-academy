@@ -77,7 +77,7 @@ export const CodeToHtml = ({ code, language, theme, className }: CodeToHtmlProps
     }, [isVisible, code, language, theme])
 
     return (
-        <div ref={containerRef} className={cn("w-full max-w-full overflow-hidden rounded-xl border border-default bg-default", className)}>
+        <div ref={containerRef} className={cn("w-full max-w-full overflow-hidden rounded-xl border border-default bg-background", className)}>
             {/* slim header: language label (left) + copy (right) — orients long lessons with many snippets */}
             <div className="flex items-center justify-between border-b border-default px-3 py-2">
                 <span className="font-mono text-xs uppercase text-muted">{language}</span>

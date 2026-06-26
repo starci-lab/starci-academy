@@ -42,7 +42,7 @@ const STEP_ICONS: Record<string, React.ReactNode> = {
 const STEP_URL: Record<string, string> = {
     read: "starci.academy/learn/dead-letter-queue",
     grade: "starci.academy/submit",
-    capstone: "the-shop · live",
+    capstone: "starci.academy/capstone/the-shop",
     rank: "starci.academy/leaderboard",
 }
 

@@ -184,7 +184,7 @@ export const Landing = ({ className }: LandingProps) => {
                                 key={key}
                                 icon={COURSE_TRACK_ICONS[key]}
                                 title={t(`landing.courses.items.${key}.title`)}
-                                meta={`${t(`landing.courses.items.${key}.modules`)} · ${t("landing.courses.systems")}`}
+                                meta={`${t(`landing.courses.items.${key}.modules`)} · ${t(`landing.courses.items.${key}.systems`)}`}
                                 color={TRACK_LINE_COLOR[key]}
                                 tiers={LANDING_ROADMAP_TIERS[key]}
                                 viewLabel={t("landing.courses.view")}

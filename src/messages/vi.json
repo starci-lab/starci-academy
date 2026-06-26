@@ -2447,47 +2447,50 @@
     },
     "landing": {
         "hero": {
-            "eyebrow": "From Developer to Solution Architect",
-            "solveWith": "Chấp nhận mọi stack",
-            "headline": "Học <accent>tư duy hệ thống</accent> — không dừng lại ở CRUD.",
-            "subline": "Đi từ bản chất, trình từ thực tế — tự tin đối thoại sòng phẳng với mọi Interviewer.",
-            "diagramCaption": "Nhìn ra nơi sẽ sập. Dựng hệ thống không bao giờ sập.",
+            "eyebrow": "Thực chiến cho vòng phỏng vấn",
+            "solveWith": "Chiến bằng ngôn ngữ của bạn:",
+            "headline": "Phỏng vấn kỹ thuật không phải chỗ <accent>trả bài</accent>.",
+            "subline": "Học vẹt là tạch. Ở đây bạn luyện cãi tay đôi với Interviewer về trade-off, consistency, điểm chết của hệ thống — tới khi không câu hỏi nào làm bạn đứng hình.",
+            "diagramCaption": "Nhìn ra nơi dễ sập. Thiết kế hệ thống không thể bị sập.",
             "ctaRoadmap": "Xem lộ trình",
             "ctaFounder": "Gặp người dựng StarCi",
-            "ctaPrimary": "Xem khóa học",
+            "ctaPrimary": "Xem lộ trình",
             "ctaSecondary": "Đăng nhập"
         },
         "stats": {
-            "eyebrow": "Thực tế tại đây",
-            "title": "StarCi Academy đang có",
-            "intro": "Tất cả các chỉ số đều được cập nhật trực tiếp từ hệ thống.",
-            "learners": "Học viên",
-            "lessons": "Bài học",
-            "courses": "Khóa học",
-            "badges": "Huy hiệu"
+            "eyebrow": "Số thật, không phông bạt",
+            "title": "StarCi đang có gì",
+            "intro": "Kéo thẳng từ hệ thống. Không round cho đẹp.",
+            "learners": "Kỹ sư đồng hành",
+            "lessons": "Bài học chuyên sâu",
+            "courses": "Lộ trình kiến trúc",
+            "badges": "Huy hiệu thử thách"
         },
         "courses": {
             "eyebrow": "Lộ trình",
-            "title": "Ba lộ trình. Một tư duy.",
-            "intro": "Mỗi lộ trình bắt đầu từ sơ đồ kiến trúc, học bằng đúng ngôn ngữ bạn chọn (TypeScript · Java · C# · Go). Các khóa khác có trong mục Khóa học.",
+            "title": "3 Lộ trình. 1 Tư duy Kiến trúc.",
+            "intro": "Mọi lộ trình đều bắt đầu từ sơ đồ kiến trúc thực tế, tối ưu tư duy hệ thống độc lập ngôn ngữ (TypeScript, Java, C#, Go).",
             "view": "Vào khóa",
             "systems": "20 hệ thống",
             "items": {
                 "fullstack": {
                     "tag": "FULLSTACK",
-                    "modules": "23 module",
+                    "modules": "23 Modules",
+                    "systems": "20 Hệ thống thực chiến",
                     "title": "Fullstack",
                     "desc": "API · auth · caching · realtime · payment, kèm frontend trụ được dưới traffic thật."
                 },
                 "systemDesign": {
                     "tag": "SYSTEM DESIGN",
-                    "modules": "24 module",
+                    "modules": "24 Modules",
+                    "systems": "20 Bài toán kiến trúc",
                     "title": "System Design",
                     "desc": "Sharding · replication · consensus · idempotency — thiết kế để chịu được sự cố."
                 },
                 "devops": {
                     "tag": "DEVOPS",
-                    "modules": "35 module",
+                    "modules": "35 Modules",
+                    "systems": "20 Đề án chịu tải",
                     "title": "DevOps & Cloud",
                     "desc": "CI/CD · Docker · Kubernetes · đa cloud · observability · on-call."
                 }
@@ -2550,9 +2553,9 @@
             }
         },
         "treasure": {
-            "eyebrow": "Kho tàng",
-            "title": "Chiều sâu đằng sau mỗi hệ thống — cả code lẫn hạ tầng",
-            "intro": "Bài học thật trong chương trình: đúng những thứ khó mà senior công nhận, ở cả code lẫn vận hành.",
+            "eyebrow": "Bản đồ Kiến trúc",
+            "title": "Chiều sâu kiến trúc — Làm chủ cả Code lẫn Hạ tầng",
+            "intro": "Giải quyết những bài toán hóc búa thực tế — Nơi ranh giới giữa Senior và Architect được định đoạt.",
             "beaconLabel": "Chạm để xáo lại",
             "beaconTap": "Tự xáo lại mỗi 10 giây — chạm để xáo ngay",
             "graph": {
@@ -2601,14 +2604,14 @@
             "github": "GitHub",
             "blog": "Đọc blog",
             "thesis": "Nhiều nơi dạy lập trình để bạn thấy dễ chịu và nhanh có chứng chỉ. StarCi Academy thì khác, mình chỉ nói những sự thật trần trụi về ngành và những gì hệ thống thực tế yêu cầu.",
-            "truth1": "Chứng chỉ không cứu được bạn khi hệ thống sập lúc 3 giờ sáng.",
-            "fix1": "Ở đây không có chứng chỉ dễ dãi. Challenge được thiết kế ở cấp độ production — giúp bạn tích lũy kinh nghiệm thông qua thực hành.",
-            "truth2": "Làm xong 100 bài CRUD, bạn vẫn chưa phải là kỹ sư hệ thống.",
-            "fix2": "Mỗi lộ trình tại StarCi đều khép lại bằng một dự án Capstone thực tế, vận hành ở quy mô Production chứ không nằm trên slide.",
-            "truth3": "Phần lớn khóa học hiện tại chỉ là phiên bản thu phí của YouTube.",
-            "fix3": "Tụi mình chọn cách làm công khai. Bạn cứ đọc kỹ các ghi chú kỹ thuật, tự trải nghiệm và đánh giá chất lượng trước khi quyết định.",
-            "truth4": "Thị trường hiện tại cực kỳ khắc nghiệt — không doanh nghiệp nào trả tiền cho lý thuyết suông.",
-            "fix4": "Những gì bạn được rèn luyện ở đây là thứ mà các hệ thống lớn đang thực sự yêu cầu mỗi ngày, hoàn toàn không có chỗ cho việc học vẹt."
+            "truth1": "Kinh nghiệm làm dự án lớn không cứu được bạn nếu gãy ở vòng phỏng vấn kỹ thuật.",
+            "fix1": "Nhiều người làm dự án quy mô lớn hằng ngày, nhưng khi vào phòng phỏng vấn lại không thể vẽ nổi một kiến trúc phân tán chuẩn chỉnh. Tại StarCi, bạn được học cách tư duy và phản biện kiến trúc một cách mạch lạc.",
+            "truth2": "Thuộc lòng lý thuyết Microservices, bạn vẫn tạch ngay khi Interviewer hỏi sâu về bản chất.",
+            "fix2": "Interviewer lão luyện không hỏi định nghĩa. Họ sẽ vặn vẹo về bài toán xử lý Data Consistency, sập mạng, hay lỗi Single Point of Failure. Bạn phải hiểu tận gốc để đối thoại sòng phẳng.",
+            "truth3": "Mang văn mẫu từ các bài blog nước ngoài đi phỏng vấn là cách nhanh nhất để bị \"bắt bài\".",
+            "fix3": "Mọi kiến trúc \"sách giáo khoa\" đều sụp đổ trước các case study thực tế của doanh nghiệp. Tụi mình dạy bạn cách tư duy độc lập để giải quyết mọi đề bài biến tấu của Interviewer.",
+            "truth4": "Thị trường đã hết thời thừa thãi — Không ai trả lương Senior cho một người chỉ biết \"chém gió\" keyword.",
+            "fix4": "Các công ty công nghệ hiện nay siết chặt đầu vào cực kỳ gắt. Những gì bạn được rèn luyện tại đây là năng lực kiến trúc thực chất để tự tin pass qua những vòng kiểm duyệt khắt khe nhất."
         },
         "recruiter": {
             "eyebrow": "Cho nhà tuyển dụng",
@@ -2624,12 +2627,12 @@
             "items": {
                 "engineer": {
                     "title": "Cho kỹ sư",
-                    "body": "Tự tay xây portfolio với những dự án đạt chuẩn production. Hồ sơ của bạn được kết nối thẳng tới các đối tác tuyển dụng — nhận offer bằng năng lực làm việc thực tế, không phải bằng từ khóa làm màu trên CV.",
+                    "body": "Portfolio toàn dự án chuẩn production, nối thẳng tới nhà tuyển dụng. Bạn được gọi vì thứ bạn dựng được — không phải vì mớ keyword nhồi cho dày CV.",
                     "cta": "Bắt đầu xây hồ sơ"
                 },
                 "enterprise": {
                     "title": "Cho doanh nghiệp",
-                    "body": "Tiếp cận nguồn ứng viên đã qua sàng lọc bằng các thử thách kỹ thuật thực tế. Bỏ qua các CV \"phóng đại\", tuyển đúng kỹ sư biết tự tay dựng hệ thống và đủ trình độ bảo vệ thiết kế của mình.",
+                    "body": "Bỏ qua CV phông bạt. Tuyển đúng người tự tay dựng được hệ thống và bảo vệ nổi thiết kế của mình.",
                     "cta": "Tìm kiếm ứng viên"
                 }
             },
@@ -2658,15 +2661,15 @@
             "a5": "Khi bạn tự tin với năng lực của mình và bật chế độ tìm việc, các dự án thực chiến bạn đã hoàn thành sẽ được kết nối trực tiếp đến các doanh nghiệp đối tác đang tìm kiếm kỹ sư Senior/Architect. Không có trung gian hay làm màu CV, nhà tuyển dụng đánh giá bạn trực tiếp qua chất lượng sản phẩm bạn đã tự tay dựng."
         },
         "closing": {
-            "title": "Vượt qua cái bẫy CRUD. Làm chủ kiến trúc hệ thống.",
-            "subtitle": "Lộ trình ba bước: Đọc hiểu bản chất, tự tay dựng lại, hoàn thiện dự án capstone. Tự nâng tầm tư duy bằng đúng ngôn ngữ lập trình bạn đang dùng.",
-            "cta": "Xem khóa học"
+            "title": "Hết thời code CRUD. Tới lúc làm chủ kiến trúc.",
+            "subtitle": "Ba bước: hiểu bản chất, tự tay dựng lại, đóng một capstone chạy thật. Bằng đúng ngôn ngữ bạn đang code.",
+            "cta": "Xem lộ trình"
         },
         "backToTop": "Về đầu trang",
         "learnLoop": {
-            "eyebrow": "Cách học",
+            "eyebrow": "Học kiểu thực chiến",
             "title": "Học theo phương pháp của StarCi.",
-            "intro": "Giữa thời đại AI, nhà tuyển dụng săn tìm những kỹ sư tự tay giải quyết được bài toán thực tế — chứ không cần những người chỉ biết \"tích xanh\" hết video khóa học. Tại StarCi Academy, tụi mình đập tan lối học thụ động đó. Mỗi học phần buộc bạn phải lao vào một chu trình rèn luyện khắc nghiệt: Đọc sâu để nắm trọn bản chất, tự tay dựng lại kiến trúc, nhận đánh giá lập tức để sửa lỗi, rồi từng bước leo lên bảng xếp hạng. Học ở đây là để làm được việc thực tế, không có chỗ cho lý thuyết suông.",
+            "intro": "Giữa thời đại AI, nhà tuyển dụng săn tìm những kỹ sư có năng lực tự học và tự tay giải quyết bài toán thực tế — chứ không cần những người chỉ biết xem video hết tập này qua tập khác một cách thụ động. Tại StarCi Academy, tụi mình loại bỏ hoàn toàn tư duy học thụ động đó. Xem video không giúp bạn giỏi lên, chỉ có va chạm thực tế mới làm được điều đó. Mỗi học phần tại đây buộc bạn phải lao vào một chu trình rèn luyện khắc nghiệt: Tự nghiên cứu tài liệu sâu, tự tay dựng kiến trúc, nhận đánh giá lập tức từ hệ thống để sửa lỗi, rồi từng bước leo lên bảng xếp hạng. Học ở đây là để làm được việc thực tế, không có chỗ cho lý thuyết suông.",
             "items": {
                 "read": {
                     "step": "01",

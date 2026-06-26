@@ -2447,47 +2447,50 @@
     },
     "landing": {
         "hero": {
-            "eyebrow": "From Developer to Solution Architect",
-            "solveWith": "Any stack works",
-            "headline": "Learn <accent>systems thinking</accent> — beyond CRUD.",
-            "subline": "Built on fundamentals, sharpened by real practice — hold your own with any interviewer.",
+            "eyebrow": "Built for the interview",
+            "solveWith": "Fight in your own language:",
+            "headline": "Technical interviews aren't a <accent>recital</accent>.",
+            "subline": "Rote learning gets you cut. Here you train to argue trade-offs, consistency, and a system's failure points head-to-head with the interviewer — until no question can freeze you.",
             "diagramCaption": "Spot where it collapses. Build systems that can’t.",
             "ctaRoadmap": "See the roadmap",
             "ctaFounder": "Meet the founder of StarCi",
-            "ctaPrimary": "Browse courses",
+            "ctaPrimary": "See the roadmap",
             "ctaSecondary": "Sign in"
         },
         "stats": {
-            "eyebrow": "The reality, live",
-            "title": "StarCi Academy currently has",
-            "intro": "Every metric is pulled live from the system.",
-            "learners": "Learners",
-            "lessons": "Lessons",
-            "courses": "Courses",
-            "badges": "Badges earned"
+            "eyebrow": "Real numbers, no fluff",
+            "title": "What StarCi runs on",
+            "intro": "Pulled straight from the system. No rounding for looks.",
+            "learners": "Engineers",
+            "lessons": "In-depth lessons",
+            "courses": "Architecture tracks",
+            "badges": "Challenge badges"
         },
         "courses": {
             "eyebrow": "Tracks",
-            "title": "Three tracks. One mental model.",
-            "intro": "Each track is diagram-first — pick your language (TypeScript · Java · C# · Go). Find other courses in the catalog.",
+            "title": "3 tracks. 1 architectural mindset.",
+            "intro": "Every track starts from a real architecture diagram, sharpening language-agnostic systems thinking (TypeScript, Java, C#, Go).",
             "view": "Open course",
             "systems": "20 systems",
             "items": {
                 "fullstack": {
                     "tag": "FULLSTACK",
                     "modules": "23 modules",
+                    "systems": "20 battle-tested systems",
                     "title": "Fullstack",
                     "desc": "APIs · auth · caching · realtime · payments, plus frontends that survive real traffic."
                 },
                 "systemDesign": {
                     "tag": "SYSTEM DESIGN",
                     "modules": "24 modules",
+                    "systems": "20 architecture problems",
                     "title": "System Design",
                     "desc": "Sharding · replication · consensus · idempotency — design for failure."
                 },
                 "devops": {
                     "tag": "DEVOPS",
                     "modules": "35 modules",
+                    "systems": "20 load-bearing projects",
                     "title": "DevOps & Cloud",
                     "desc": "CI/CD · Docker · Kubernetes · multi-cloud · observability · on-call."
                 }
@@ -2550,9 +2553,9 @@
             }
         },
         "treasure": {
-            "eyebrow": "Treasure trove",
-            "title": "The depth behind every system — code and infrastructure",
-            "intro": "Real lessons from the curriculum: the hard engineering seniors recognise, in both code and ops.",
+            "eyebrow": "Architecture map",
+            "title": "Architectural depth — master code and infrastructure",
+            "intro": "Solve the gnarly real-world problems — where the line between Senior and Architect is drawn.",
             "beaconLabel": "Tap to reshuffle",
             "beaconTap": "Auto-reshuffles every 10s — tap to reshuffle now",
             "graph": {
@@ -2601,14 +2604,14 @@
             "github": "GitHub",
             "blog": "Read the blog",
             "thesis": "Plenty of places teach coding to make you feel good and earn a certificate fast. StarCi Academy is different — I only tell the blunt truths about this industry and what real systems actually demand.",
-            "truth1": "A certificate won’t save you when the system goes down at 3 a.m.",
-            "fix1": "No easy certificates here. Challenges are designed at production level — building real experience through hands-on practice.",
-            "truth2": "Finish 100 CRUD exercises and you’re still not a systems engineer.",
-            "fix2": "Every StarCi track ends with a real capstone project, running at production scale — not on a slide.",
-            "truth3": "Most courses today are just a paywalled version of YouTube.",
-            "fix3": "We build in the open. Read the technical notes, try it, and judge the quality for yourself before deciding.",
-            "truth4": "The market today is brutal — no company pays for empty theory.",
-            "fix4": "What you train here is what large systems actually demand every day — no room for rote learning."
+            "truth1": "Years of shipping big projects won't save you when the technical interview falls apart.",
+            "fix1": "Plenty of people ship large-scale projects daily, yet freeze in the interview room — unable to draw a clean distributed architecture. At StarCi you learn to reason about and defend architecture clearly.",
+            "truth2": "Memorizing Microservices theory still gets you cut the moment an interviewer probes the fundamentals.",
+            "fix2": "Seasoned interviewers don't ask for definitions. They press on data consistency, network partitions, and single points of failure. You must understand it to the core to hold your own.",
+            "truth3": "Reciting templated answers from foreign blog posts is the fastest way to get caught out.",
+            "fix3": "Every \"textbook\" architecture collapses against a company's real case studies. We teach you to think independently and solve whatever variation an interviewer throws at you.",
+            "truth4": "The era of slack is over — nobody pays a Senior salary to someone who only name-drops keywords.",
+            "fix4": "Tech companies now gate entry brutally hard. What you train here is genuine architecture skill — enough to pass the most demanding screens with confidence."
         },
         "recruiter": {
             "eyebrow": "For hiring teams",
@@ -2624,12 +2627,12 @@
             "items": {
                 "engineer": {
                     "title": "For engineers",
-                    "body": "Build your own portfolio of production-grade projects. Your profile connects straight to hiring partners — land offers on real ability, not buzzwords on a CV.",
+                    "body": "A portfolio of production-grade projects, wired straight to hiring partners. You get the call for what you can build — not for keywords stuffed onto a CV.",
                     "cta": "Start building your portfolio"
                 },
                 "enterprise": {
                     "title": "For companies",
-                    "body": "Tap a pool of candidates pre-screened by real technical challenges. Skip the inflated CVs and hire engineers who can build systems and defend their design.",
+                    "body": "Skip the inflated CVs. Hire people who can actually build the system and defend the design.",
                     "cta": "Find candidates"
                 }
             },
@@ -2658,15 +2661,15 @@
             "a5": "Opt in as open-to-work and your graded work becomes visible to hiring partners browsing the talent directory. No guarantees — just real signal."
         },
         "closing": {
-            "title": "Escape the CRUD trap. Master system architecture.",
-            "subtitle": "A three-step path: grasp the fundamentals, rebuild it yourself, finish a capstone project. Level up your thinking — in the language you already use.",
-            "cta": "Browse courses"
+            "title": "Done with CRUD. Time to own the architecture.",
+            "subtitle": "Three steps: grasp the fundamentals, rebuild it yourself, ship a capstone that actually runs. In the language you already code in.",
+            "cta": "See the roadmap"
         },
         "backToTop": "Back to top",
         "learnLoop": {
-            "eyebrow": "How it works",
+            "eyebrow": "How you actually train",
             "title": "Learn the StarCi way.",
-            "intro": "In the age of AI, employers hunt for engineers who can solve real problems with their own hands — not people who just \"check off\" every course video. At StarCi Academy, we break that passive way of learning. Every module forces you into a demanding loop: read deep to grasp the essence, rebuild the architecture yourself, get instant feedback to fix your mistakes, then climb the leaderboard step by step. Here you learn to actually do the work — there's no room for hollow theory.",
+            "intro": "In the age of AI, employers hunt for engineers who can learn on their own and solve real problems by hand — not people who just binge course videos passively. At StarCi Academy, we cut that passive mindset entirely. Watching videos won't make you better; only real practice will. Every module forces you into a demanding loop: research deeply, rebuild the architecture yourself, get instant feedback to fix your mistakes, then climb the leaderboard step by step. Here you learn to do real work — there's no room for hollow theory.",
             "items": {
                 "read": {
                     "step": "01",

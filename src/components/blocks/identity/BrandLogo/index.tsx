@@ -21,7 +21,9 @@ export type BrandLogoProps = WithClassNames<undefined>
 export const BrandLogo = ({ className }: BrandLogoProps) => {
     return (
         <div className={cn("flex items-center gap-2", className)}>
-            <img src="/logo-icon.png" alt="StarCi Academy" className="size-10" />
+            {/* flame thu còn 80% (scale) nhưng GIỮ box size-10 → layout/khoảng-cách không đổi,
+                phần trong suốt quanh ngọn lửa tăng lên (thầy: lửa hơi to). */}
+            <img src="/logo-icon.png" alt="StarCi Academy" className="size-10 scale-[0.8]" />
             <div className="flex flex-col">
                 <Typography type="body" weight="bold" className="leading-tight">
                     StarCi

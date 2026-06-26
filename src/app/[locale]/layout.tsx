@@ -1,5 +1,6 @@
 import { NextIntlClientProvider } from "next-intl"
 import { getMessages } from "next-intl/server"
+import type { Metadata } from "next"
 import { AnalyticsGate } from "@/components/features/cookie-consent/AnalyticsGate"
 import { InnerLayout } from "../InnerLayout"
 import React, { PropsWithChildren } from "react"
@@ -21,6 +22,26 @@ interface LocaleRouteParams {
 interface LocaleLayoutProps extends PropsWithChildren {
     /** Promise of the resolved `[locale]` route params (Next.js App Router). */
     params: Promise<LocaleRouteParams>
+}
+
+/**
+ * Locale-level metadata: sets the OpenGraph locale so inherited (non-builder)
+ * pages still unfurl with the right `og:locale`. Per-page `generateMetadata`
+ * (via `buildPageMetadata`) overrides canonical/hreflang/title as needed.
+ *
+ * @param props.params - the awaited `[locale]` route params.
+ */
+export const generateMetadata = async ({
+    params,
+}: {
+    params: Promise<LocaleRouteParams>
+}): Promise<Metadata> => {
+    const { locale } = await params
+    return {
+        openGraph: {
+            locale: locale === "vi" ? "vi_VN" : "en_US",
+        },
+    }
 }
 
 const Layout = async ({

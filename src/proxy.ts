@@ -12,13 +12,14 @@ const intlMiddleware = createMiddleware(routing)
  * Server-readable "is logged in" signal.
  *
  * The HttpOnly `keycloak_refresh_token` is host-only on the API host, so the FE
- * edge cannot see it. The CSRF token, however, is issued with the parent-domain
- * scope (`.academy.starci.org`) and is therefore sent to this FE host too — it
- * exists exactly while a session is active, so it is the coarse auth signal the
- * gate keys off. It only decides which shell to show; the SPA still verifies the
- * real session (token refresh) once the page mounts.
+ * edge cannot see it. The BE therefore issues a parallel, JS-readable `session_hint`
+ * cookie alongside the refresh token — same lifetime, parent-domain scope
+ * (`.academy.starci.org`) — so it reaches this FE host. It exists exactly while a
+ * refresh session is active. It only decides which shell to show first; the SPA
+ * still verifies the real session (token refresh) once the page mounts, so it is
+ * never trusted for authorization.
  */
-const AUTH_SIGNAL_COOKIE = "csrf_token"
+const AUTH_SIGNAL_COOKIE = "session_hint"
 
 /**
  * Matches the marketing root only: `/`, `/vi`, `/en` (with optional trailing

@@ -2584,7 +2584,19 @@
                 "prometheus": "Collect metrics and alert in real time for running systems.",
                 "rbac": "Role-based access in K8s: who can do what, least privilege.",
                 "terraform": "Infrastructure as code, multi-cloud, reproducible plan/apply.",
-                "falco": "Detect abnormal container runtime behavior in real time."
+                "falco": "Detect abnormal container runtime behavior in real time.",
+                "consistentHashing": "Consistent hashing: add/remove nodes with minimal re-keying — the base for elastic sharding.",
+                "circuitBreaker": "Trip the circuit when a dependency keeps failing — stop cascading failures.",
+                "eventSourcing": "Store the event stream as source of truth; rebuild state by replay.",
+                "readReplica": "Read-only replicas absorb read load — at the cost of replication lag.",
+                "graphql": "Typed API: clients fetch exactly the fields they need from one endpoint.",
+                "redisCache": "Cache-aside on Redis: TTL, invalidation, stampede protection.",
+                "sse": "Server-Sent Events: lightweight one-way server push for streams.",
+                "zodValidation": "Runtime validation + inferred types with Zod at the API edge.",
+                "helm": "Package K8s manifests into reusable charts with per-env values.",
+                "autoscaling": "HPA scales pods by CPU/custom metrics — tracks real load.",
+                "serviceMesh": "A mesh layer handling mTLS, retries, and traffic-splitting between services.",
+                "grafana": "Visual dashboards + alerts on top of Prometheus metrics."
             }
         },
         "founder": {
@@ -2661,8 +2673,8 @@
             "a5": "Opt in as open-to-work and your graded work becomes visible to hiring partners browsing the talent directory. No guarantees — just real signal."
         },
         "closing": {
-            "title": "Done with CRUD. Time to own the architecture.",
-            "subtitle": "Three steps: grasp the fundamentals, rebuild it yourself, ship a capstone that actually runs. In the language you already code in.",
+            "title": "Done with CRUD. Time to build real systems.",
+            "subtitle": "Learn to do real work — sharp enough to hold your own in any technical interview. Start in the language you already code in.",
             "cta": "See the roadmap"
         },
         "backToTop": "Back to top",

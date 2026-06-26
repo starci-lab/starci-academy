@@ -1,11 +1,13 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { Button, ListBox, Typography, cn } from "@heroui/react"
 import {
     AnimatePresence,
     motion,
+    useMotionValueEvent,
     useReducedMotion,
+    useScroll,
 } from "framer-motion"
 import { useTranslations } from "next-intl"
 import {
@@ -22,6 +24,7 @@ import {
 } from "@phosphor-icons/react"
 import { SectionHeading, ShowcaseMockup, SHOWCASE_THEMES } from "@/components/blocks"
 import { UserAvatar } from "@/components/reuseable/UserAvatar"
+import { useSmViewpoint } from "@/hooks/reuseables/useSmViewpoint"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { LANDING_LOOP_STEPS } from "../constants"
 
@@ -454,11 +457,74 @@ const LearnLoopStatic = ({ className }: LearnLoopScrollProps) => {
 }
 
 /**
- * Section "Cách học" (vòng học 4 bước) — list 4 bước bấm được + panel đổi theo bước,
- * co theo content. KHÔNG scroll-pinned/full-height (chỉ Hero là min-h-screen).
+ * Biến thể PINNED (desktop) — tách riêng để `useScroll`'s target ref LUÔN gắn vào
+ * `<section>` được render (tránh "Target ref defined but not hydrated" khi nhánh
+ * fallback không gắn ref). Ghim khối giữa màn; cuộn → bước active 01→04 + visual phải
+ * đổi + thanh tiến độ; cuộn hết → `sticky` nhả. Bấm bước ở ListBox → cuộn tới đúng đó.
+ */
+const LearnLoopPinned = ({ className }: LearnLoopScrollProps) => {
+    const sectionRef = useRef<HTMLDivElement>(null)
+    const [active, setActive] = useState(0)
+
+    const { scrollYProgress } = useScroll({
+        target: sectionRef,
+        offset: ["start start", "end end"],
+    })
+    useMotionValueEvent(scrollYProgress, "change", (value) => {
+        const last = LANDING_LOOP_STEPS.length - 1
+        const index = Math.min(last, Math.max(0, Math.round(value * last)))
+        setActive(index)
+    })
+
+    /** Cuộn cửa sổ tới vị trí ứng với bước `index` (khi bấm ListBox). */
+    const jumpToStep = (index: number) => {
+        const element = sectionRef.current
+        if (!element) {
+            return
+        }
+        const last = LANDING_LOOP_STEPS.length - 1
+        const fraction = last > 0 ? index / last : 0
+        const start = element.getBoundingClientRect().top + window.scrollY
+        const distance = element.offsetHeight - window.innerHeight
+        window.scrollTo({ top: start + fraction * distance, behavior: "smooth" })
+    }
+
+    const activeKey = LANDING_LOOP_STEPS[active]
+
+    return (
+        <section ref={sectionRef} className={cn("relative h-[360vh]", className)}>
+            <div className="sticky top-0 flex h-screen flex-col justify-center gap-16 py-12">
+                <LoopHeading />
+                <div className="grid items-center gap-x-12 gap-y-20 lg:grid-cols-2">
+                    {/* TRÁI — list 4 bước (scroll lái active; bấm → cuộn tới). PHẢI — visual đổi. */}
+                    <div>
+                        <LoopStepList active={active} onSelect={jumpToStep} />
+                    </div>
+                    <LoopPanel activeKey={activeKey} />
+                </div>
+            </div>
+        </section>
+    )
+}
+
+/**
+ * Section "Cách học" (vòng học 4 bước). Desktop (sau mount, không reduced-motion) →
+ * {@link LearnLoopPinned} (scroll-pinned giống ika.xyz). Mobile / reduced-motion /
+ * trước khi mount → {@link LearnLoopStatic} (4 thẻ tĩnh, không scroll-hijack + a11y).
+ * Tách 2 biến thể để `useScroll` (trong Pinned) chỉ chạy khi `<section ref>` thật sự
+ * render — tránh lỗi "Target ref defined but not hydrated".
  *
  * @param props - optional className (placement only).
  */
-export const LearnLoopScroll = ({ className }: LearnLoopScrollProps) => (
-    <LearnLoopStatic className={className} />
-)
+export const LearnLoopScroll = ({ className }: LearnLoopScrollProps) => {
+    const reduce = useReducedMotion()
+    const { isDesktop } = useSmViewpoint()
+    const [mounted, setMounted] = useState(false)
+
+    useEffect(() => setMounted(true), [])
+
+    if (!mounted || !isDesktop || reduce) {
+        return <LearnLoopStatic className={className} />
+    }
+    return <LearnLoopPinned className={className} />
+}

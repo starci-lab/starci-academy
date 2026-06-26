@@ -1,0 +1,20 @@
+{
+  "board": { "cols": [-2, 2], "rows": [-1, 1], "cell": 2.4 },
+  "camera": { "position": [10, 9, 10], "zoom": 42 },
+  "nodes": [
+    { "id": "client", "name": "Client", "sub": "WEB · MOBILE", "cell": [-2, -1], "tone": "normal" },
+    { "id": "api", "name": "GraphQL · CQRS", "sub": "APOLLO", "cell": [0, -1], "tone": "normal" },
+    { "id": "pg", "name": "Postgres", "sub": "SOURCE OF TRUTH", "cell": [2, -1], "tone": "success" },
+    { "id": "ai", "name": "AI Grading", "sub": "BULLMQ · LLM", "cell": [-2, 1], "tone": "normal" },
+    { "id": "proj", "name": "Projections", "sub": "READ MODEL", "cell": [0, 1], "tone": "normal" },
+    { "id": "kafka", "name": "Kafka", "sub": "DEBEZIUM · CDC", "cell": [2, 1], "tone": "danger", "status": { "tone": "danger", "text": "CDC lag → stale read" } }
+  ],
+  "edges": [
+    { "from": "client", "to": "api", "tone": "normal", "flow": true },
+    { "from": "api", "to": "pg", "tone": "normal", "flow": true },
+    { "from": "ai", "to": "pg", "tone": "normal", "flow": true },
+    { "from": "pg", "to": "kafka", "tone": "danger", "flow": true },
+    { "from": "kafka", "to": "proj", "tone": "danger" },
+    { "from": "proj", "to": "api", "tone": "normal", "eventual": true }
+  ]
+}

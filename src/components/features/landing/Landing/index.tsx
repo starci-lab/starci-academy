@@ -20,6 +20,7 @@ import {
 import { FaFacebook, FaGithub, FaLinkedin } from "react-icons/fa6"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
+import dynamic from "next/dynamic"
 import {
     HeroBanner,
     IconTile,
@@ -28,6 +29,13 @@ import {
     TruthList,
 } from "@/components/blocks"
 import { MicroservicesScene } from "@/components/blocks/marketing/MicroservicesScene"
+
+/** Hero architecture diagram in real 3D (WebGL/R3F). Client-only — never SSRs;
+ * the lightweight SVG scene paints first as the loading fallback. */
+const ArchitectureScene3D = dynamic(
+    () => import("@/components/blocks/marketing/ArchitectureScene").then((m) => m.ArchitectureScene),
+    { ssr: false, loading: () => <MicroservicesScene /> },
+)
 import { pathConfig } from "@/resources/path"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { FOUNDER_FACEBOOK, FOUNDER_GITHUB, FOUNDER_LINKEDIN } from "@/components/features/contact/Contact/constants"
@@ -132,9 +140,9 @@ export const Landing = ({ className }: LandingProps) => {
                         keywords={LANDING_HERO_KEYWORDS}
                         keywordsLabel={t("landing.hero.solveWith")}
                         visual={(
-                        // coded microservices "where it breaks" topology in real 3D (R3F) — the
-                        // System Design value prop made visible (no image, no SSR).
-                            <MicroservicesScene caption={t("landing.hero.diagramCaption")} />
+                        // grounded StarCi backend topology in real 3D (R3F) — the System Design
+                        // value prop made visible (no image; client-only, SVG fallback while loading).
+                            <ArchitectureScene3D caption={t("landing.hero.diagramCaption")} />
                         )}
                     />
                 </div>

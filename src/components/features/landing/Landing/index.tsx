@@ -23,11 +23,11 @@ import { useRouter } from "next/navigation"
 import {
     HeroBanner,
     IconTile,
-    MicroservicesDiagram,
     SectionHeading,
     TrackCard,
     TruthList,
 } from "@/components/blocks"
+import { MicroservicesScene } from "@/components/blocks/marketing/MicroservicesScene"
 import { pathConfig } from "@/resources/path"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { FOUNDER_FACEBOOK, FOUNDER_GITHUB, FOUNDER_LINKEDIN } from "@/components/features/contact/Contact/constants"
@@ -132,9 +132,9 @@ export const Landing = ({ className }: LandingProps) => {
                         keywords={LANDING_HERO_KEYWORDS}
                         keywordsLabel={t("landing.hero.solveWith")}
                         visual={(
-                        // coded microservices "where it breaks" diagram — the System Design value
-                        // prop made visible (no image needed). Matches the v0 hero.
-                            <MicroservicesDiagram caption={t("landing.hero.diagramCaption")} />
+                        // coded microservices "where it breaks" topology in real 3D (R3F) — the
+                        // System Design value prop made visible (no image, no SSR).
+                            <MicroservicesScene caption={t("landing.hero.diagramCaption")} />
                         )}
                     />
                 </div>

@@ -28,13 +28,20 @@ import {
     TrackCard,
     TruthList,
 } from "@/components/blocks"
-import { MicroservicesScene } from "@/components/blocks/marketing/MicroservicesScene"
-
 /** Hero architecture diagram in real 3D (WebGL/R3F). Client-only — never SSRs;
- * the lightweight SVG scene paints first as the loading fallback. */
+ * while the WebGL chunk loads, show a neutral sized skeleton (the old fallback
+ * was a *different* SVG diagram → jarring swap to the 3D scene). */
 const ArchitectureScene3D = dynamic(
     () => import("@/components/blocks/marketing/ArchitectureScene").then((m) => m.ArchitectureScene),
-    { ssr: false, loading: () => <MicroservicesScene /> },
+    {
+        ssr: false,
+        loading: () => (
+            <div
+                aria-hidden
+                className="h-[440px] w-full animate-pulse rounded-3xl bg-default/20 sm:h-[560px]"
+            />
+        ),
+    },
 )
 import { pathConfig } from "@/resources/path"
 import type { WithClassNames } from "@/modules/types/base/class-name"

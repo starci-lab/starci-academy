@@ -1,7 +1,6 @@
 import React from "react"
-import { cn, Typography } from "@heroui/react"
-import { CaretRightIcon, XCircleIcon } from "@phosphor-icons/react"
-import { SectionCard } from "@/components/reuseable"
+import { Accordion, cn, Typography } from "@heroui/react"
+import { XCircleIcon } from "@phosphor-icons/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** One blunt truth + how the product answers it. */
@@ -31,39 +30,47 @@ export interface TruthListProps extends WithClassNames<undefined> {
  */
 export const TruthList = ({ items, byline, className }: TruthListProps) => {
     return (
-        <SectionCard className={cn(className)} contentClassName="flex flex-col gap-6">
-            <ul className="flex flex-col gap-5">
+        <div className={cn("overflow-hidden rounded-3xl border border-default bg-surface", className)}>
+            {/* Accordion Card: khung p-0 flush, accordion surface tự lo nền + separator + bo góc.
+                Mỗi sự thật = trigger (✕ + statement) bấm mở ra phần giải. KHÔNG Accordion.Indicator
+                → không caret (thầy chốt); hover trigger là affordance. */}
+            <Accordion variant="surface" className="!rounded-none [&_*]:!rounded-none">
+                {/* accordion vuông toàn bộ → khung ngoài (overflow-hidden rounded-3xl) lo bo góc;
+                    item cuối flush phẳng với byline, không bo lòi khi hover. */}
                 {items.map((item, index) => (
-                    <li key={index} className="flex gap-3">
-                        <XCircleIcon
-                            aria-hidden
-                            focusable="false"
-                            className="mt-0.5 size-4 shrink-0 text-danger"
-                        />
-                        <div className="flex min-w-0 flex-col gap-1">
-                            <Typography type="body" weight="medium">
-                                {item.truth}
-                            </Typography>
-                            {/* answer line — a caret marks "here's what we do about it" */}
-                            <div className="flex items-start gap-2">
-                                <CaretRightIcon
-                                    aria-hidden
-                                    focusable="false"
-                                    className="mt-0.5 size-4 shrink-0 text-muted"
-                                />
-                                <Typography type="body-sm" color="muted">
+                    <Accordion.Item
+                        key={index}
+                        aria-label={typeof item.truth === "string" ? item.truth : `truth-${index}`}
+                    >
+                        <Accordion.Heading>
+                            <Accordion.Trigger>
+                                <span className="flex items-start gap-3 text-left">
+                                    <XCircleIcon
+                                        aria-hidden
+                                        focusable="false"
+                                        className="mt-0.5 size-4 shrink-0 text-danger"
+                                    />
+                                    <Typography type="body" weight="medium">
+                                        {item.truth}
+                                    </Typography>
+                                </span>
+                            </Accordion.Trigger>
+                        </Accordion.Heading>
+                        <Accordion.Panel>
+                            <Accordion.Body>
+                                <Typography type="body-sm" color="muted" className="pl-7">
                                     {item.fix}
                                 </Typography>
-                            </div>
-                        </div>
-                    </li>
+                            </Accordion.Body>
+                        </Accordion.Panel>
+                    </Accordion.Item>
                 ))}
-            </ul>
+            </Accordion>
             {byline ? (
-                <div className="flex flex-wrap items-center gap-3 border-t border-default pt-5">
+                <div className="flex flex-wrap items-center gap-3 border-t border-default px-5 py-4">
                     {byline}
                 </div>
             ) : null}
-        </SectionCard>
+        </div>
     )
 }

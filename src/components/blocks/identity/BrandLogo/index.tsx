@@ -3,6 +3,7 @@ import {
     Typography,
     cn,
 } from "@heroui/react"
+import { SparkleIcon } from "@phosphor-icons/react"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -11,7 +12,7 @@ import type {
 export type BrandLogoProps = WithClassNames<undefined>
 
 /**
- * The StarCi brand lockup: the flame mark (`/logo-icon.png`) followed by the
+ * The StarCi brand lockup: a Phosphor sparkle mark (accent) followed by the
  * wordmark — "StarCi" with a smaller, uppercase, wide-tracked "ACADEMY" stacked
  * beneath. Presentational only (owns the whole look, incl. the 10px tagline that
  * has no Typography type); wrap it in a link/button where it needs to act.
@@ -21,9 +22,8 @@ export type BrandLogoProps = WithClassNames<undefined>
 export const BrandLogo = ({ className }: BrandLogoProps) => {
     return (
         <div className={cn("flex items-center gap-2", className)}>
-            {/* flame thu còn 80% (scale) nhưng GIỮ box size-10 → layout/khoảng-cách không đổi,
-                phần trong suốt quanh ngọn lửa tăng lên (thầy: lửa hơi to). */}
-            <img src="/logo-icon.png" alt="StarCi Academy" className="size-10 scale-[0.8]" />
+            {/* brand mark = Phosphor sparkle (accent, fill) size-5 — thay ngọn lửa PNG */}
+            <SparkleIcon aria-hidden focusable="false" weight="fill" className="size-5 text-accent" />
             <div className="flex flex-col">
                 <Typography type="body" weight="bold" className="leading-tight">
                     StarCi

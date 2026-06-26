@@ -35,7 +35,7 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 import { LANDING_TRACK_COURSE_SLUG } from "../constants"
 import { CONCEPT_NODE_TYPE, type ConceptNodeData, ConceptNode } from "./ConceptNode"
 import { ShuffleBeacon } from "./ShuffleBeacon"
-import { KNOWLEDGE_EDGES, KNOWLEDGE_NODES, TRACK_CONFIG, type TrackKey } from "./data"
+import { KNOWLEDGE_EDGES, KNOWLEDGE_NODES, NODE_DEGREE, TRACK_CONFIG, bubbleRadius, type TrackKey } from "./data"
 
 /** A d3-force simulation node (positions written back onto React Flow each tick). */
 interface SimNode extends SimulationNodeDatum {
@@ -43,37 +43,43 @@ interface SimNode extends SimulationNodeDatum {
     track: TrackKey
 }
 
-/** Initial React Flow nodes — seeded on a ring per track anchor so the first frame is
- * already spread (no clump-then-explode), then the live force refines it. */
+/** Initial React Flow nodes — seed quanh ANCHOR theo track (3 màu 3 góc tam giác), rải trên
+ * 1 ring nhỏ; force sau đó kéo mỗi track về góc của nó, vùng giữa các góc tự trộn lẫn. */
 const buildInitialNodes = (): Node<ConceptNodeData>[] =>
     KNOWLEDGE_NODES.map((node, index) => {
+        const cfg = TRACK_CONFIG[node.track]
         const angle = (index / KNOWLEDGE_NODES.length) * Math.PI * 2
         return {
             id: node.id,
             type: CONCEPT_NODE_TYPE,
             position: {
-                x: Math.cos(angle) * 180 + TRACK_CONFIG[node.track].anchorX,
-                y: Math.sin(angle) * 180,
+                x: cfg.anchorX + Math.cos(angle) * 130,
+                y: cfg.anchorY + Math.sin(angle) * 130,
             },
             data: { label: node.label, track: node.track },
             draggable: true,
         }
     })
 
-/** Edges — internal links faint/solid, cross-track links accent + dashed ("lồng ghép"). */
+/** Edges — TẤT CẢ là đường nối nhẹ (đặc, mảnh, mờ — như sharding↔cdc); KHÔNG dashed, KHÔNG accent. */
 const buildEdges = (): Edge[] =>
     KNOWLEDGE_EDGES.map((edge, index) => ({
         id: `e${index}`,
         source: edge.source,
         target: edge.target,
         type: "straight",
-        style: {
-            stroke: edge.cross ? "var(--accent)" : "var(--border)",
-            strokeWidth: 1,
-            strokeOpacity: edge.cross ? 0.45 : 0.5,
-            strokeDasharray: edge.cross ? "4 5" : undefined,
-        },
+        style: { stroke: "var(--border)", strokeWidth: 1, strokeOpacity: 0.22 },
     }))
+
+/** Per-node collide radius (px): bubble radius, but ≥ nửa bề rộng label (label căn GIỮA,
+ * tràn ngang ra ngoài bubble) để label đỡ chồng hàng xóm. Pad giữ chòm bubble thoáng. */
+const COLLIDE_RADIUS = new Map(
+    KNOWLEDGE_NODES.map((node) => {
+        const r = bubbleRadius(NODE_DEGREE[node.id] ?? 1)
+        const labelHalfWidth = node.label.length * 3.4
+        return [node.id, Math.max(r, labelHalfWidth) + 12] as const
+    }),
+)
 
 /** Inner flow (needs to be inside {@link ReactFlowProvider} for `useReactFlow`). */
 const KnowledgeGraphFlow = () => {
@@ -98,8 +104,8 @@ const KnowledgeGraphFlow = () => {
         simNodesRef.current.forEach((simNode) => {
             simNode.fx = null
             simNode.fy = null
-            simNode.vx = (Math.random() - 0.5) * 360
-            simNode.vy = (Math.random() - 0.5) * 360
+            simNode.vx = (Math.random() - 0.5) * 200
+            simNode.vy = (Math.random() - 0.5) * 200
         })
         simulation.alpha(1).restart()
     }, [])
@@ -127,11 +133,11 @@ const KnowledgeGraphFlow = () => {
         }))
 
         const simulation = forceSimulation(simNodes)
-            .force("charge", forceManyBody().strength(-320))
-            .force("link", forceLink<SimNode, SimulationLinkDatum<SimNode>>(simLinks).id((node) => node.id).distance(70).strength(0.22))
-            .force("x", forceX<SimNode>((node) => TRACK_CONFIG[node.track].anchorX).strength(0.09))
-            .force("y", forceY<SimNode>(0).strength(0.08))
-            .force("collide", forceCollide<SimNode>(50))
+            .force("charge", forceManyBody().strength(-100))
+            .force("link", forceLink<SimNode, SimulationLinkDatum<SimNode>>(simLinks).id((node) => node.id).distance(90).strength(0.12))
+            .force("x", forceX<SimNode>((node) => TRACK_CONFIG[node.track].anchorX).strength(0.05))
+            .force("y", forceY<SimNode>((node) => TRACK_CONFIG[node.track].anchorY).strength(0.05))
+            .force("collide", forceCollide<SimNode>((node) => COLLIDE_RADIUS.get(node.id) ?? 44))
             .alphaDecay(0.035)
         simRef.current = simulation
 
@@ -142,37 +148,18 @@ const KnowledgeGraphFlow = () => {
         }))
         simulation.on("tick", writeBack)
 
-        // Centre on the graph at a FIXED, generous zoom (big nodes) rather than fit-all
-        // (which shrinks as the 26 nodes spread). Outer nodes sit just off-frame → pan/
-        // zoom to explore (Qdrant feel). Centre on the node bounding-box midpoint.
-        const recentre = (duration: number) => {
-            let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity
-            simNodes.forEach((simNode) => {
-                minX = Math.min(minX, simNode.x ?? 0)
-                maxX = Math.max(maxX, simNode.x ?? 0)
-                minY = Math.min(minY, simNode.y ?? 0)
-                maxY = Math.max(maxY, simNode.y ?? 0)
-            })
-            void setCenter((minX + maxX) / 2, (minY + maxY) / 2, { zoom: 1.6, duration })
-        }
+        // Camera: DÍ vào giữa cụm (zoom 1.2, center 0,0) → lõi 3 màu hội tụ chiếm khung, mép
+        // cắt bớt → kéo (pan) để khám phá = cảm giác bản đồ tự nhiên.
+        const centre = (duration: number) => void setCenter(0, 0, { zoom: 1.2, duration })
 
         const fits: ReturnType<typeof setTimeout>[] = []
         if (reduce) {
-            // reduced motion → settle synchronously to a static layout (no animation)
             simulation.stop()
             simulation.tick(300)
             writeBack()
-            fits.push(setTimeout(() => recentre(0), 0))
+            fits.push(setTimeout(() => centre(0), 0))
         } else {
-            // frame once while it spreads, then re-centre on the settled layout (still big)
-            // on the first natural cooldown — but not after later drag reheats.
-            let didFinalFit = false
-            fits.push(setTimeout(() => recentre(500), 600))
-            simulation.on("end", () => {
-                if (didFinalFit) return
-                didFinalFit = true
-                recentre(500)
-            })
+            fits.push(setTimeout(() => centre(500), 600))
         }
 
         return () => {
@@ -248,17 +235,15 @@ const KnowledgeGraphFlow = () => {
             proOptions={{ hideAttribution: true }}
             nodesConnectable={false}
             elementsSelectable={false}
-            minZoom={1.6}
-            maxZoom={1.6}
-            // locked zoom: no scroll/pinch/dblclick zoom, and don't trap page scroll
-            // (wheel over the graph scrolls the page past the section).
+            minZoom={1.2}
+            maxZoom={1.2}
+            // zoom CỐ ĐỊNH; CHO PHÉP kéo (pan) khám phá — mép cụm cắt bớt = cảm giác tự nhiên
             zoomOnScroll={false}
             zoomOnPinch={false}
             zoomOnDoubleClick={false}
             preventScrolling={false}
             panOnDrag
-            // bound how far the canvas can be panned (no flinging into the void)
-            translateExtent={[[-820, -640], [820, 640]]}
+            translateExtent={[[-1000, -820], [1000, 820]]}
         >
             <Background variant={BackgroundVariant.Dots} gap={22} size={1} className="opacity-40" />
             {/* DeFi-swap-style countdown beacon (bottom-left): auto-reshuffles the graph
@@ -283,7 +268,7 @@ export type KnowledgeGraphProps = WithClassNames<undefined>
  * @param props - {@link KnowledgeGraphProps}
  */
 export const KnowledgeGraph = ({ className }: KnowledgeGraphProps) => (
-    <div className={cn("h-[460px] w-full overflow-hidden rounded-3xl border border-default bg-surface sm:h-[560px]", className)}>
+    <div className={cn("h-[460px] w-full overflow-hidden rounded-3xl border border-default bg-background sm:h-[560px]", className)}>
         <ReactFlowProvider>
             <KnowledgeGraphFlow />
         </ReactFlowProvider>

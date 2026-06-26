@@ -5,7 +5,7 @@ import { Handle, type NodeProps, Position } from "@xyflow/react"
 import { Button, Typography, cn } from "@heroui/react"
 import { ArrowRightIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import { TRACK_CONFIG, type TrackKey } from "./data"
+import { TRACK_CONFIG, NODE_DEGREE, bubbleRadius, type TrackKey } from "./data"
 import { LANDING_TRACK_TAG } from "../constants"
 
 /** React Flow node-type id for a knowledge-graph concept. */
@@ -24,16 +24,16 @@ export interface ConceptNodeData {
     [key: string]: unknown
 }
 
-/** Centred, invisible handle — edges connect node CENTRES (straight, force-graph style),
- * not edge anchors. Not user-connectable. */
+/** Centred, invisible handle — kept for layout/positioning only (no edges are drawn). */
 const centreHandleClass = "!size-0 !min-w-0 !border-0 !bg-transparent"
 const centreHandleStyle = { left: "50%", top: "50%", transform: "translate(-50%, -50%)" } as const
 
 /**
- * A glowing concept pill (coloured dot per track + label) used as a React Flow node in
- * the {@link KnowledgeGraph}. When `selected`, a small popover floats above it with a
- * one-line blurb (i18n by node id) + a "Vào khóa" CTA. The pill sits on the graph's
- * `bg-surface` panel — fill is `bg-background` so chips read against it.
+ * A glowing concept BUBBLE — a translucent track-coloured circle sized by its degree
+ * (hubs big, leaves small) + soft glow + colored ring, with the label CENTRED on it,
+ * its font scaled by the same degree (hub labels read bigger). No connecting edges —
+ * a pure constellation. When `selected`, a popover floats above with a one-line blurb
+ * (i18n by node id) + a "Vào khóa" CTA.
  *
  * @param props - React Flow {@link NodeProps} carrying {@link ConceptNodeData}.
  */
@@ -41,22 +41,32 @@ export const ConceptNode = ({ id, data }: NodeProps) => {
     const { label, track, dimmed, selected, onOpenCourse } = data as ConceptNodeData
     const t = useTranslations()
     const cfg = TRACK_CONFIG[track]
+    const degree = NODE_DEGREE[id] ?? 1
+    const r = bubbleRadius(degree)
+    const fontSize = Math.round(10 + degree * 1.3)
     return (
-        <div className="relative">
+        <div
+            className={cn("relative cursor-pointer transition-opacity duration-300", dimmed && "opacity-25")}
+            style={{ width: r * 2, height: r * 2 }}
+        >
+            {/* bubble — diameter ∝ degree; translucent track fill + colored ring + soft glow */}
             <div
-                className={cn(
-                    "flex cursor-pointer items-center gap-1.5 rounded-full border bg-background px-3 py-1.5 text-xs font-medium whitespace-nowrap text-foreground transition-opacity duration-300",
-                    cfg.ring,
-                    dimmed && "opacity-25",
-                    selected && "ring-2 ring-accent",
-                )}
-                style={{ boxShadow: `0 0 16px -4px ${cfg.glow}` }}
+                className={cn("absolute inset-0 rounded-full border", cfg.ring, selected && "ring-2 ring-accent")}
+                style={{
+                    backgroundColor: `color-mix(in oklch, ${cfg.glow} 22%, transparent)`,
+                    boxShadow: `0 0 ${Math.round(r * 0.9)}px -2px ${cfg.glow}`,
+                }}
             >
                 <Handle type="target" position={Position.Top} isConnectable={false} className={centreHandleClass} style={centreHandleStyle} />
-                <span aria-hidden className={cn("size-1.5 shrink-0 rounded-full", cfg.dot)} />
-                {label}
                 <Handle type="source" position={Position.Bottom} isConnectable={false} className={centreHandleClass} style={centreHandleStyle} />
             </div>
+            {/* label centred ON the bubble; font scales with degree (may overflow small bubbles) */}
+            <span
+                className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center font-medium whitespace-nowrap text-foreground"
+                style={{ fontSize }}
+            >
+                {label}
+            </span>
 
             {selected ? (
                 <div

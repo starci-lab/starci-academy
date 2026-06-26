@@ -1,6 +1,5 @@
 import React from "react"
 import { Accordion, cn, Typography } from "@heroui/react"
-import { XCircleIcon } from "@phosphor-icons/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** One blunt truth + how the product answers it. */
@@ -20,8 +19,8 @@ export interface TruthListProps extends WithClassNames<undefined> {
 }
 
 /**
- * A "raw truth" manifesto: a list of uncomfortable industry truths, each marked
- * with a danger ✕ and paired with a concrete "→ here's our answer" line, closed
+ * A "raw truth" manifesto: a list of uncomfortable industry truths, each paired
+ * with a concrete "→ here's our answer" line, closed
  * by an optional byline (who's saying it). Built for confrontational, grounded
  * positioning — the truths are the hero, the author recedes to a signature.
  * Tier-3 block on {@link SectionCard}; styling here, content via props.
@@ -32,7 +31,7 @@ export const TruthList = ({ items, byline, className }: TruthListProps) => {
     return (
         <div className={cn("overflow-hidden rounded-3xl border border-default bg-surface", className)}>
             {/* Accordion Card: khung p-0 flush, accordion surface tự lo nền + separator + bo góc.
-                Mỗi sự thật = trigger (✕ + statement) bấm mở ra phần giải. KHÔNG Accordion.Indicator
+                Mỗi sự thật = trigger (statement) bấm mở ra phần giải. KHÔNG Accordion.Indicator
                 → không caret (thầy chốt); hover trigger là affordance. */}
             <Accordion variant="surface" className="!rounded-none [&_*]:!rounded-none">
                 {/* accordion vuông toàn bộ → khung ngoài (overflow-hidden rounded-3xl) lo bo góc;
@@ -44,21 +43,14 @@ export const TruthList = ({ items, byline, className }: TruthListProps) => {
                     >
                         <Accordion.Heading>
                             <Accordion.Trigger>
-                                <span className="flex items-start gap-3 text-left">
-                                    <XCircleIcon
-                                        aria-hidden
-                                        focusable="false"
-                                        className="mt-0.5 size-4 shrink-0 text-danger"
-                                    />
-                                    <Typography type="body" weight="medium">
-                                        {item.truth}
-                                    </Typography>
-                                </span>
+                                <Typography type="body" weight="medium" className="text-left">
+                                    {item.truth}
+                                </Typography>
                             </Accordion.Trigger>
                         </Accordion.Heading>
                         <Accordion.Panel>
                             <Accordion.Body>
-                                <Typography type="body-sm" color="muted" className="pl-7">
+                                <Typography type="body-sm" color="muted">
                                     {item.fix}
                                 </Typography>
                             </Accordion.Body>

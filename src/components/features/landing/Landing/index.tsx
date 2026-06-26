@@ -120,10 +120,10 @@ export const Landing = ({ className }: LandingProps) => {
 
     return (
         <div className={className}>
-            {/* Section-to-section rhythm: gap-24→32 (96–128px) between beats. Beats size to
-                their content (no min-h-screen except the hero), so the gap IS the real
-                whitespace — generous but not the half-empty-screen the min-h beats caused. */}
-            <div className="mx-auto flex max-w-6xl flex-col gap-24 px-4 pb-24 sm:px-6 md:gap-32 md:pb-32 lg:px-8">
+            {/* Section-to-section rhythm: gap-16→20 (64–80px) between beats. Chỉ HERO là
+                min-h-screen; các beat khác co theo content → gap nhỏ này là khoảng trắng THẬT,
+                đủ tách section mà section ngắn (stats, learn-loop) không bị trôi giữa nửa màn trống. */}
+            <div className="mx-auto flex max-w-6xl flex-col gap-16 px-4 pb-16 sm:px-6 md:gap-20 md:pb-20 lg:px-8">
                 {/* 1 — Hero */}
                 <div className={screen}>
                     <HeroBanner

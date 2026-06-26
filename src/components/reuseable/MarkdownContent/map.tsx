@@ -52,7 +52,7 @@ const ProseText = ({
     size?: keyof typeof PROSE_SIZE
     className?: string
     children?: React.ReactNode
-}) => <As className={[PROSE_SIZE[size], className].filter(Boolean).join(" ")}>{children}</As>
+}) => React.createElement(As, { className: [PROSE_SIZE[size], className].filter(Boolean).join(" ") }, children)
 
 /**
  * Recursively flattens a React children tree to its plain-text content — used to

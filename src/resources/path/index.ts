@@ -5,7 +5,10 @@ export const pathConfig = () => {
     const locale = (locale?: Locale) => {
         const localePath = locale ? `/${locale}` : ""
         const build = () => {
-            return `${localePath}`
+            // With no locale supplied, the bare root is "" — which is an empty href the router
+            // won't navigate to. Fall back to "/" so "go home" links (logo, "Trang chủ",
+            // breadcrumbs) actually navigate to the locale root (the landing page).
+            return localePath || "/"
         }
         const profile = (username?: string) => {
             // when a username is given, point at that user's public profile

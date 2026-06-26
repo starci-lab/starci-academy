@@ -14,6 +14,7 @@ import { SocketIoSideEffects } from "@/hooks/socketio"
 import { SwrSideEffects } from "@/hooks/swr"
 import { ReduxProvider } from "@/redux"
 import { ModalContainer } from "@/components/modals"
+import { CookieConsentBanner } from "@/components/features/cookie-consent/CookieConsentBanner"
 import { UseEffects } from "@/hooks"
 import { usePathname } from "next/navigation"
 
@@ -47,6 +48,7 @@ export const InnerLayout = ({ children }: PropsWithChildren) => {
                             <DrawerContainer />
                             {children}
                             {showFooter ? <Footer /> : null}
+                            <CookieConsentBanner />
                             <ToastProvider />
                         </SwrProvider>
                     </ReduxProvider>

@@ -295,6 +295,7 @@
     },
     "legal": {
         "contactNote": "Có câu hỏi về điều khoản hoặc dữ liệu của bạn? Liên hệ cuongnvtse160875@gmail.com.",
+    "lastUpdated": "Cập nhật lần cuối: {date}",
         "terms": {
             "title": "Điều khoản sử dụng",
             "description": "Các điều khoản khi sử dụng StarCi Academy.",
@@ -329,6 +330,20 @@
             "open": "mở",
             "close": "esc đóng"
         }
+    },
+    "cookieConsent": {
+        "title": "Cookie",
+        "body": "Bọn mình dùng cookie cần thiết để bạn đăng nhập và ghi nhớ ngôn ngữ, cùng cookie phân tích (Google Analytics) để cải thiện trải nghiệm. Bạn có thể chấp nhận, từ chối, hoặc tùy chỉnh.",
+        "acceptAll": "Chấp nhận tất cả",
+        "reject": "Từ chối",
+        "customize": "Tùy chỉnh",
+        "modalTitle": "Tùy chỉnh cookie",
+        "modalBody": "Chọn loại cookie bạn cho phép. Cookie cần thiết luôn bật để hệ thống hoạt động.",
+        "necessaryLabel": "Cần thiết",
+        "necessaryHint": "Đăng nhập, bảo mật và ghi nhớ ngôn ngữ. Luôn bật.",
+        "analyticsLabel": "Phân tích",
+        "analyticsHint": "Google Analytics — đo lường ẩn danh để cải thiện sản phẩm.",
+        "save": "Lưu lựa chọn"
     },
     "courseContents": {
         "empty": "Khóa học này chưa có nội dung.",

@@ -21,6 +21,7 @@ import { PremiumGateModal } from "./PremiumGateModal"
 import { AdModal } from "./AdModal"
 import { ManagePinnedProjectsModal } from "./ManagePinnedProjectsModal"
 import { FollowListModal } from "./FollowListModal"
+import { CookieConsentModal } from "./CookieConsentModal"
 
 export const ModalContainer = () => {
     return (
@@ -46,6 +47,7 @@ export const ModalContainer = () => {
             <AdModal />
             <ManagePinnedProjectsModal />
             <FollowListModal />
+            <CookieConsentModal />
             {/* <AIProcessingModal /> */}
         </>
     )

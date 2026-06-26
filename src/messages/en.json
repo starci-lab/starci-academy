@@ -295,6 +295,7 @@
     },
     "legal": {
         "contactNote": "Questions about these terms or your data? Email cuongnvtse160875@gmail.com.",
+    "lastUpdated": "Last updated: {date}",
         "terms": {
             "title": "Terms of Service",
             "description": "The terms for using StarCi Academy.",
@@ -329,6 +330,20 @@
             "open": "to open",
             "close": "esc to close"
         }
+    },
+    "cookieConsent": {
+        "title": "Cookies",
+        "body": "We use necessary cookies to sign you in and remember your language, plus analytics cookies (Google Analytics) to improve your experience. You can accept, reject, or customize.",
+        "acceptAll": "Accept all",
+        "reject": "Reject",
+        "customize": "Customize",
+        "modalTitle": "Cookie preferences",
+        "modalBody": "Choose which cookies you allow. Necessary cookies are always on so the system works.",
+        "necessaryLabel": "Necessary",
+        "necessaryHint": "Sign-in, security and language. Always on.",
+        "analyticsLabel": "Analytics",
+        "analyticsHint": "Google Analytics — anonymous metrics to improve the product.",
+        "save": "Save choices"
     },
     "courseContents": {
         "empty": "This course has no content yet.",

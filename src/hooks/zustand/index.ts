@@ -1,4 +1,5 @@
 export * from "./overlay"
+export * from "./cookieConsent"
 export * from "./cvApply"
 export * from "./aiSettings"
 export * from "./personalProjectGithub"

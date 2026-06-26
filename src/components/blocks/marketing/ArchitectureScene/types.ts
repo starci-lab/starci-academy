@@ -13,6 +13,16 @@
  */
 export type SceneTone = "normal" | "success" | "danger"
 
+/** Visual primitive a node is rendered as (the 3D shape), independent of its {@link SceneTone}:
+ *  - `container`    → ribbed shipping-container cube (an app / service / worker)
+ *  - `database`     → cylinder drum (a datastore)
+ *  - `broker`       → stacked log plates (a message broker / queue, e.g. Kafka)
+ *  - `loadBalancer` → hex puck + hub (an edge gateway / balancer that fans out)
+ *  - `client`       → monitor on a stand (a web / mobile client device)
+ *  - `user`         → person silhouette (an end user)
+ *  Default (omitted) = `container`. */
+export type NodeKind = "container" | "database" | "broker" | "loadBalancer" | "client" | "user"
+
 /** Status badge tone (coloured text line inside a node's label frame). */
 export type StatusTone = "danger" | "warning" | "success" | "info"
 
@@ -32,6 +42,8 @@ export interface ArchitectureNode {
     sub?: string
     /** Grid cell `[col, row]`. */
     cell: [number, number]
+    /** Visual shape (default `"container"`). */
+    kind?: NodeKind
     /** Tone (default `"normal"`). */
     tone?: SceneTone
     /** Optional status line shown inside this node's label frame. */
@@ -48,6 +60,8 @@ export interface ArchitectureEdge {
     flow?: boolean
     /** Render fainter — the "eventual / async read" style. */
     eventual?: boolean
+    /** Congested traffic: forces the danger colour + 3 fast packets running at once (a jam). */
+    congested?: boolean
 }
 
 /** Square iso floor board: inclusive `[min, max]` cell range + world units per cell. */

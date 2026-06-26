@@ -2453,13 +2453,13 @@
             "subline": "Học vẹt là tạch. Ở đây bạn luyện cãi tay đôi với Interviewer về trade-off, consistency, điểm chết của hệ thống — tới khi không câu hỏi nào làm bạn đứng hình.",
             "diagramCaption": "Nhìn ra nơi dễ sập. Thiết kế hệ thống không thể bị sập.",
             "ctaRoadmap": "Xem lộ trình",
-            "ctaFounder": "Gặp người dựng StarCi",
+            "ctaFounder": "Gặp người dựng StarCi Academy",
             "ctaPrimary": "Xem lộ trình",
             "ctaSecondary": "Đăng nhập"
         },
         "stats": {
             "eyebrow": "Số thật, không phông bạt",
-            "title": "StarCi đang có gì",
+            "title": "StarCi Academy đang có gì",
             "intro": "Kéo thẳng từ hệ thống. Không round cho đẹp.",
             "learners": "Kỹ sư đồng hành",
             "lessons": "Bài học chuyên sâu",
@@ -2599,19 +2599,19 @@
                 "aiAutomation": "Tự động hóa doanh nghiệp bằng AI"
             },
             "quote": "Sếp Cường ơi bình tĩnh thôi, bug em còn fix được.",
-            "body1": "Mình dạy đúng thứ mình làm ở production mỗi ngày — không phải slide, mà là hệ thống thật ở tầm CTO.",
+            "body1": "Tôi dạy đúng thứ tôi làm ở production mỗi ngày — không phải slide, mà là hệ thống thật ở tầm CTO.",
             "body2": "Mọi thứ ở đây đều làm công khai — nền tảng, chương trình, challenge. Đọc các ghi chú kỹ thuật và tự đánh giá chất lượng.",
             "github": "GitHub",
             "blog": "Đọc blog",
-            "thesis": "Nhiều nơi dạy lập trình để bạn thấy dễ chịu và nhanh có chứng chỉ. StarCi Academy thì khác, mình chỉ nói những sự thật trần trụi về ngành và những gì hệ thống thực tế yêu cầu.",
+            "thesis": "Nhiều nơi dạy lập trình để bạn thấy dễ chịu và nhanh có chứng chỉ. StarCi Academy thì khác, tôi chỉ nói những sự thật trần trụi về ngành và những gì hệ thống thực tế yêu cầu.",
             "truth1": "Kinh nghiệm làm dự án lớn không cứu được bạn nếu gãy ở vòng phỏng vấn kỹ thuật.",
-            "fix1": "Nhiều người làm dự án quy mô lớn hằng ngày, nhưng khi vào phòng phỏng vấn lại không thể vẽ nổi một kiến trúc phân tán chuẩn chỉnh. Tại StarCi, bạn được học cách tư duy và phản biện kiến trúc một cách mạch lạc.",
+            "fix1": "Nhiều người làm dự án quy mô lớn hằng ngày, nhưng khi vào phòng phỏng vấn lại không thể vẽ nổi một kiến trúc phân tán chuẩn chỉnh. Tôi dạy bạn cách tư duy và phản biện kiến trúc cho mạch lạc.",
             "truth2": "Thuộc lòng lý thuyết Microservices, bạn vẫn tạch ngay khi Interviewer hỏi sâu về bản chất.",
-            "fix2": "Interviewer lão luyện không hỏi định nghĩa. Họ sẽ vặn vẹo về bài toán xử lý Data Consistency, sập mạng, hay lỗi Single Point of Failure. Bạn phải hiểu tận gốc để đối thoại sòng phẳng.",
+            "fix2": "Interviewer lão luyện không hỏi định nghĩa. Họ sẽ vặn vẹo về bài toán xử lý Data Consistency, sập mạng, hay lỗi Single Point of Failure. Tôi luyện cho bạn hiểu tận gốc để đối thoại sòng phẳng.",
             "truth3": "Mang văn mẫu từ các bài blog nước ngoài đi phỏng vấn là cách nhanh nhất để bị \"bắt bài\".",
-            "fix3": "Mọi kiến trúc \"sách giáo khoa\" đều sụp đổ trước các case study thực tế của doanh nghiệp. Tụi mình dạy bạn cách tư duy độc lập để giải quyết mọi đề bài biến tấu của Interviewer.",
+            "fix3": "Mọi kiến trúc \"sách giáo khoa\" đều sụp đổ trước các case study thực tế của doanh nghiệp. Tôi dạy bạn tư duy độc lập để giải quyết mọi đề bài biến tấu của Interviewer.",
             "truth4": "Thị trường đã hết thời thừa thãi — Không ai trả lương Senior cho một người chỉ biết \"chém gió\" keyword.",
-            "fix4": "Các công ty công nghệ hiện nay siết chặt đầu vào cực kỳ gắt. Những gì bạn được rèn luyện tại đây là năng lực kiến trúc thực chất để tự tin pass qua những vòng kiểm duyệt khắt khe nhất."
+            "fix4": "Các công ty công nghệ hiện nay siết chặt đầu vào cực kỳ gắt. Tôi rèn cho bạn năng lực kiến trúc thực chất để tự tin pass qua những vòng kiểm duyệt khắt khe nhất."
         },
         "recruiter": {
             "eyebrow": "Cho nhà tuyển dụng",
@@ -2650,7 +2650,7 @@
             "eyebrow": "Góc nhìn thực tế",
             "title": "Hỏi thẳng, đáp thật",
             "q1": "Đây có phải một bootcamp nữa hứa lương cao sau 3 tháng?",
-            "a1": "Không. Mình không bán những lời hứa hẹn về thu nhập hay cam kết việc làm sau vài tháng. StarCi tập trung rèn tư duy hệ thống và cách bạn tự tay giải quyết bài toán khó. Khi năng lực của bạn đạt chuẩn thông qua các thử thách thực tế, thị trường và nhà tuyển dụng sẽ tự tìm đến bạn.",
+            "a1": "Không. Tôi không bán những lời hứa hẹn về thu nhập hay cam kết việc làm sau vài tháng. StarCi Academy tập trung rèn tư duy hệ thống và cách bạn tự tay giải quyết bài toán khó. Khi năng lực của bạn đạt chuẩn thông qua các thử thách thực tế, thị trường và nhà tuyển dụng sẽ tự tìm đến bạn.",
             "q2": "AI có làm những kỹ năng này lỗi thời không?",
             "a2": "Ngược lại, kỹ năng hệ thống là thứ giúp bạn không bị đào thải. Các công cụ tự động hiện tại có thể viết code CRUD rất nhanh, nhưng chúng không thể tự thiết kế một kiến trúc chịu tải triệu user, xử lý bài toán scale, hay đứng ra bảo vệ các quyết định kỹ thuật trước hội đồng phỏng vấn và CTO. Đó mới là những gì bạn được rèn luyện ở đây.",
             "q3": "Mình mới bắt đầu. Có hợp không?",
@@ -2668,8 +2668,9 @@
         "backToTop": "Về đầu trang",
         "learnLoop": {
             "eyebrow": "Học kiểu thực chiến",
-            "title": "Học theo phương pháp của StarCi.",
-            "intro": "Giữa thời đại AI, nhà tuyển dụng săn tìm những kỹ sư có năng lực tự học và tự tay giải quyết bài toán thực tế — chứ không cần những người chỉ biết xem video hết tập này qua tập khác một cách thụ động. Tại StarCi Academy, tụi mình loại bỏ hoàn toàn tư duy học thụ động đó. Xem video không giúp bạn giỏi lên, chỉ có va chạm thực tế mới làm được điều đó. Mỗi học phần tại đây buộc bạn phải lao vào một chu trình rèn luyện khắc nghiệt: Tự nghiên cứu tài liệu sâu, tự tay dựng kiến trúc, nhận đánh giá lập tức từ hệ thống để sửa lỗi, rồi từng bước leo lên bảng xếp hạng. Học ở đây là để làm được việc thực tế, không có chỗ cho lý thuyết suông.",
+            "title": "Học theo phương pháp của StarCi Academy.",
+            "intro": "Đi phỏng vấn, không ai hỏi bạn xem hết bao nhiêu video — người ta bắt bạn giải bài và bảo vệ cách làm của mình. Nên ở StarCi Academy, bạn học bằng cách bắt tay vào làm thật, không ngồi xem.",
+            "cta": "Vào cày thử",
             "items": {
                 "read": {
                     "step": "01",

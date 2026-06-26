@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useRef, useState } from "react"
-import { ListBox, Typography, cn } from "@heroui/react"
+import { Button, ListBox, Typography, cn } from "@heroui/react"
 import {
     AnimatePresence,
     motion,
@@ -11,6 +11,7 @@ import {
 } from "framer-motion"
 import { useTranslations } from "next-intl"
 import {
+    ArrowRightIcon,
     ArrowUpIcon,
     BookOpenIcon,
     CheckCircleIcon,
@@ -418,12 +419,20 @@ const LoopPanel = ({ activeKey }: { activeKey: string }) => (
 /** Heading dùng chung cho cả 2 biến thể (tĩnh + pinned). */
 const LoopHeading = () => {
     const t = useTranslations()
+    // CTA "vào cày thử" — cuộn xuống khối Lộ trình (#courses) để chọn track + học thử.
+    const onJumpIn = () => document.getElementById("courses")?.scrollIntoView({ behavior: "smooth" })
     return (
-        <SectionHeading
-            eyebrow={t("landing.learnLoop.eyebrow")}
-            title={t("landing.learnLoop.title")}
-            intro={t("landing.learnLoop.intro")}
-        />
+        <div className="flex flex-col items-center gap-6">
+            <SectionHeading
+                eyebrow={t("landing.learnLoop.eyebrow")}
+                title={t("landing.learnLoop.title")}
+                intro={t("landing.learnLoop.intro")}
+            />
+            <Button variant="primary" size="lg" onPress={onJumpIn}>
+                {t("landing.learnLoop.cta")}
+                <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
+            </Button>
+        </div>
     )
 }
 

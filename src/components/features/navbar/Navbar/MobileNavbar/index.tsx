@@ -56,8 +56,8 @@ export const MobileNavbar = ({ className }: MobileNavbarProps) => {
         () => [
             {
                 label: t("nav.home"),
-                path: pathConfig().locale().build(),
-                isActive: pathname === pathConfig().locale(locale).build() || pathname === "/",
+                path: pathConfig().locale().home().build(),
+                isActive: pathname === "/" || pathname === pathConfig().locale().home().build(),
                 icon: () => null,
             },
             {

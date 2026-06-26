@@ -35,9 +35,9 @@ export type LogoProps = WithClassNames<undefined>
 export const Logo = ({ className }: LogoProps) => {
     const router = useRouter()
 
-    /** Navigate to the localized home route. */
+    /** Navigate to the (ungated) landing route — reachable even while signed in. */
     const onPress = useCallback(
-        () => router.push(pathConfig().locale().build()),
+        () => router.push(pathConfig().locale().home().build()),
         [
             router,
         ],

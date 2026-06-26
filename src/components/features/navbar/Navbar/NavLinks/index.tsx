@@ -48,8 +48,8 @@ export const NavLinks = ({ className }: NavLinksProps) => {
         () => [
             {
                 label: t("nav.home"),
-                path: pathConfig().locale().build(),
-                isActive: pathname === pathConfig().locale(locale).build() || pathname === "/",
+                path: pathConfig().locale().home().build(),
+                isActive: pathname === "/" || pathname === pathConfig().locale().home().build(),
             },
             {
                 label: t("nav.courses"),

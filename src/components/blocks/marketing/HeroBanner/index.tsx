@@ -74,7 +74,7 @@ export const HeroBanner = ({
                 {headline}
             </Typography.Heading>
 
-            <Typography type="body" color="muted" align={align} className="max-w-2xl">
+            <Typography type="body" color="muted" align={align} className="max-w-2xl whitespace-pre-line">
                 {subline}
             </Typography>
 

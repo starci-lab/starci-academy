@@ -2462,29 +2462,29 @@
     },
     "landing": {
         "hero": {
-            "eyebrow": "Built for the interview",
+            "eyebrow": "A practical roadmap for interviews",
             "solveWith": "Fight in your own language:",
-            "headline": "Technical interviews aren't a <accent>recital</accent>.",
-            "subline": "Rote learning gets you cut. Here you train to argue trade-offs, consistency, and a system's failure points head-to-head with the interviewer — until no question can freeze you.",
-            "diagramCaption": "Spot where it collapses. Build systems that can’t.",
+            "headline": "Knowledge & Thinking to conquer every <accent>interview</accent>",
+            "subline": "Back then, interns could start with small tasks: fixing UI, writing CRUD APIs, and boilerplate code.\nIn the AI era, those tasks are already solved in seconds.\nCompanies pay top salaries for practical Thinking & Knowledge — the part AI still cannot replace.",
+            "diagramCaption": "Spot where it breaks. Design systems that won’t break.",
             "ctaRoadmap": "See the roadmap",
             "ctaFounder": "Meet the founder of StarCi Academy",
             "ctaPrimary": "See the roadmap",
             "ctaSecondary": "Sign in"
         },
         "stats": {
-            "eyebrow": "Real numbers, no fluff",
-            "title": "What StarCi Academy runs on",
-            "intro": "Pulled straight from the system. No rounding for looks.",
-            "learners": "Engineers",
+            "eyebrow": "Real data, no fluff",
+            "title": "What StarCi Academy has",
+            "intro": "Data is updated in real time from the system.",
+            "learners": "Users",
             "lessons": "In-depth lessons",
             "courses": "Architecture tracks",
             "badges": "Challenge badges"
         },
         "courses": {
             "eyebrow": "Tracks",
-            "title": "3 tracks. 1 architectural mindset.",
-            "intro": "Every track starts from a real architecture diagram, sharpening language-agnostic systems thinking (TypeScript, Java, C#, Go).",
+            "title": "Three tracks. One industry-standard mindset.",
+            "intro": "Each track is built with strong structure and differs by level, but they share one disciplined mindset: we do not mislead learners for money. Every piece of content is carefully crafted.",
             "view": "Open course",
             "systems": "20 systems",
             "items": {
@@ -2568,9 +2568,9 @@
             }
         },
         "treasure": {
-            "eyebrow": "Architecture map",
-            "title": "Architectural depth — master code and infrastructure",
-            "intro": "Solve the gnarly real-world problems — where the line between Senior and Architect is drawn.",
+            "eyebrow": "System capability map",
+            "title": "Learn to solve real problems, not to memorize answers.",
+            "intro": "From backend to infrastructure, you train end-to-end problem-solving mindset — the thing that decides whether you survive on large projects.",
             "beaconLabel": "Tap to reshuffle",
             "beaconTap": "Auto-reshuffles every 10s — tap to reshuffle now",
             "graph": {
@@ -2631,14 +2631,14 @@
             "github": "GitHub",
             "blog": "Read the blog",
             "thesis": "Plenty of places teach coding to make you feel good and earn a certificate fast. StarCi Academy is different — I only tell the blunt truths about this industry and what real systems actually demand.",
-            "truth1": "Years of shipping big projects won't save you when the technical interview falls apart.",
-            "fix1": "Plenty of people ship large-scale projects daily, yet freeze in the interview room — unable to draw a clean distributed architecture. I teach you to reason about and defend architecture clearly.",
-            "truth2": "Memorizing Microservices theory still gets you cut the moment an interviewer probes the fundamentals.",
-            "fix2": "Seasoned interviewers don't ask for definitions. They press on data consistency, network partitions, and single points of failure. I train you to understand it to the core, enough to hold your own.",
-            "truth3": "Reciting templated answers from foreign blog posts is the fastest way to get caught out.",
-            "fix3": "Every \"textbook\" architecture collapses against a company's real case studies. I teach you to think independently and solve whatever variation an interviewer throws at you.",
-            "truth4": "The era of slack is over — nobody pays a Senior salary to someone who only name-drops keywords.",
-            "fix4": "Tech companies now gate entry brutally hard. I train you in genuine architecture skill — enough to pass the most demanding screens with confidence."
+            "truth1": "Big-project experience does not guarantee interview success.",
+            "fix1": "Many people ship large projects daily, yet still cannot draw a clear distributed architecture in interviews. I teach you to reason about architecture and defend it clearly.",
+            "truth2": "Memorizing Microservices theory still gets you rejected when you're pushed on fundamentals.",
+            "fix2": "Strong interviewers do not ask definitions. They drill into data consistency, network failures, and single points of failure. I train you to understand the root so you can hold your ground.",
+            "truth3": "Using template answers from blogs is the fastest way to get exposed in interviews.",
+            "fix3": "Textbook architectures often collapse against real business problems. I teach you independent thinking so you can handle any variation.",
+            "truth4": "The market has no room left for fluff — no one pays Senior salary for keyword name-dropping.",
+            "fix4": "Companies are tightening standards hard. I train you in real architecture capability so you can pass tough screening rounds with confidence."
         },
         "recruiter": {
             "eyebrow": "For hiring teams",
@@ -2650,21 +2650,21 @@
         },
         "outcome": {
             "eyebrow": "Real outcomes",
-            "title": "Output for both sides",
+            "title": "StarCi Academy outcomes",
             "items": {
                 "engineer": {
-                    "title": "For engineers",
-                    "body": "A portfolio of production-grade projects, wired straight to hiring partners. You get the call for what you can build — not for keywords stuffed onto a CV.",
+                    "title": "For users",
+                    "body": "You build a portfolio from real, production-grade projects, and I take it straight to hiring teams. They call you for what you can do, not for a polished CV.",
                     "cta": "Start building your portfolio"
                 },
                 "enterprise": {
                     "title": "For companies",
-                    "body": "Skip the inflated CVs. Hire people who can actually build the system and defend the design.",
+                    "body": "Skip inflated CVs. Hire people with real systems-thinking depth.",
                     "cta": "Find candidates"
                 }
             },
             "card": {
-                "sample": "Engineer profile",
+                "sample": "User profile",
                 "role": "StarCi Talent",
                 "openToWork": "Open to work",
                 "cvScore": "CV score",
@@ -2688,15 +2688,15 @@
             "a5": "Opt in as open-to-work and your graded work becomes visible to hiring partners browsing the talent directory. No guarantees — just real signal."
         },
         "closing": {
-            "title": "Done with CRUD. Time to build real systems.",
-            "subtitle": "Learn to do real work — sharp enough to hold your own in any technical interview. Start in the language you already code in.",
-            "cta": "See the roadmap"
+            "title": "No more learning just to know. Time to build real systems.",
+            "subtitle": "Train to do real work, with enough grit to clear every technical interview in the language you already use.",
+            "cta": "Start now"
         },
         "backToTop": "Back to top",
         "learnLoop": {
             "eyebrow": "How you actually train",
-            "title": "Learn the StarCi Academy way.",
-            "intro": "In an interview, nobody asks how many videos you watched — they make you solve the problem and defend your approach. So at StarCi Academy you learn by actually building, not by watching.",
+            "title": "Learn with my method.",
+            "intro": "In interviews, what matters is not years of experience, but your problem-solving mindset. I systematized the industry's core knowledge into this passion project and built an effective learning method so more people can access it and break through.",
             "cta": "Jump in",
             "items": {
                 "read": {

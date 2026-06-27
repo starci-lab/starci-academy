@@ -2462,10 +2462,10 @@
     },
     "landing": {
         "hero": {
-            "eyebrow": "Thực chiến cho vòng phỏng vấn",
+            "eyebrow": "Lộ trình thực chiến cho vòng interview",
             "solveWith": "Chiến bằng ngôn ngữ của bạn:",
-            "headline": "Phỏng vấn kỹ thuật không phải chỗ <accent>trả bài</accent>.",
-            "subline": "Học vẹt là tạch. Ở đây bạn luyện cãi tay đôi với Interviewer về trade-off, consistency, điểm chết của hệ thống — tới khi không câu hỏi nào làm bạn đứng hình.",
+            "headline": "Kiến thức & Tư duy để chinh phục mọi vòng <accent>phỏng vấn</accent>",
+            "subline": "Ngày xưa, Intern bắt đầu bằng việc vặt: sửa UI, viết CRUD, gõ boilerplate.\nNhưng thời AI, những task đó đã bị giải trong vài giây.\nDoanh nghiệp trả lương cao cho Tư duy & Kiến thức thực chiến — thứ AI chưa thay thế.",
             "diagramCaption": "Nhìn ra nơi dễ sập. Thiết kế hệ thống không thể bị sập.",
             "ctaRoadmap": "Xem lộ trình",
             "ctaFounder": "Gặp người dựng StarCi Academy",
@@ -2473,18 +2473,18 @@
             "ctaSecondary": "Đăng nhập"
         },
         "stats": {
-            "eyebrow": "Số thật, không phông bạt",
-            "title": "StarCi Academy đang có gì",
-            "intro": "Kéo thẳng từ hệ thống. Không round cho đẹp.",
-            "learners": "Kỹ sư đồng hành",
+            "eyebrow": "Số liệu thật, không phông bạt",
+            "title": "StarCi Academy đang có",
+            "intro": "Số liệu được cập nhật realtime từ hệ thống.",
+            "learners": "Người dùng",
             "lessons": "Bài học chuyên sâu",
             "courses": "Lộ trình kiến trúc",
             "badges": "Huy hiệu thử thách"
         },
         "courses": {
             "eyebrow": "Lộ trình",
-            "title": "3 Lộ trình. 1 Tư duy Kiến trúc.",
-            "intro": "Mọi lộ trình đều bắt đầu từ sơ đồ kiến trúc thực tế, tối ưu tư duy hệ thống độc lập ngôn ngữ (TypeScript, Java, C#, Go).",
+            "title": "Ba lộ trình. Một tư duy chuẩn về ngành.",
+            "intro": "Các lộ trình được xây dựng bài bản, khác nhau theo cấp độ nhưng chung một tư duy chuẩn chỉ, không dắt mũi người học vì tiền. Toàn bộ nội dung đều được biên soạn kỹ lưỡng.",
             "view": "Vào khóa",
             "systems": "20 hệ thống",
             "items": {
@@ -2568,9 +2568,9 @@
             }
         },
         "treasure": {
-            "eyebrow": "Bản đồ Kiến trúc",
-            "title": "Chiều sâu kiến trúc — Làm chủ cả Code lẫn Hạ tầng",
-            "intro": "Giải quyết những bài toán hóc búa thực tế — Nơi ranh giới giữa Senior và Architect được định đoạt.",
+            "eyebrow": "Bản đồ năng lực hệ thống",
+            "title": "Học để giải bài toán thật, không học để thuộc bài.",
+            "intro": "Từ backend đến hạ tầng, bạn luyện tư duy xử lý vấn đề đến nơi đến chốn — thứ quyết định bạn trụ được ở dự án lớn.",
             "beaconLabel": "Chạm để xáo lại",
             "beaconTap": "Tự xáo lại mỗi 10 giây — chạm để xáo ngay",
             "graph": {
@@ -2631,14 +2631,14 @@
             "github": "GitHub",
             "blog": "Đọc blog",
             "thesis": "Nhiều nơi dạy lập trình để bạn thấy dễ chịu và nhanh có chứng chỉ. StarCi Academy thì khác, tôi chỉ nói những sự thật trần trụi về ngành và những gì hệ thống thực tế yêu cầu.",
-            "truth1": "Kinh nghiệm làm dự án lớn không cứu được bạn nếu gãy ở vòng phỏng vấn kỹ thuật.",
-            "fix1": "Nhiều người làm dự án quy mô lớn hằng ngày, nhưng khi vào phòng phỏng vấn lại không thể vẽ nổi một kiến trúc phân tán chuẩn chỉnh. Tôi dạy bạn cách tư duy và phản biện kiến trúc cho mạch lạc.",
-            "truth2": "Thuộc lòng lý thuyết Microservices, bạn vẫn tạch ngay khi Interviewer hỏi sâu về bản chất.",
-            "fix2": "Interviewer lão luyện không hỏi định nghĩa. Họ sẽ vặn vẹo về bài toán xử lý Data Consistency, sập mạng, hay lỗi Single Point of Failure. Tôi luyện cho bạn hiểu tận gốc để đối thoại sòng phẳng.",
-            "truth3": "Mang văn mẫu từ các bài blog nước ngoài đi phỏng vấn là cách nhanh nhất để bị \"bắt bài\".",
-            "fix3": "Mọi kiến trúc \"sách giáo khoa\" đều sụp đổ trước các case study thực tế của doanh nghiệp. Tôi dạy bạn tư duy độc lập để giải quyết mọi đề bài biến tấu của Interviewer.",
-            "truth4": "Thị trường đã hết thời thừa thãi — Không ai trả lương Senior cho một người chỉ biết \"chém gió\" keyword.",
-            "fix4": "Các công ty công nghệ hiện nay siết chặt đầu vào cực kỳ gắt. Tôi rèn cho bạn năng lực kiến trúc thực chất để tự tin pass qua những vòng kiểm duyệt khắt khe nhất."
+            "truth1": "Kinh nghiệm dự án lớn không giúp bạn thành công khi phỏng vấn.",
+            "fix1": "Nhiều người làm dự án lớn mỗi ngày nhưng vào phỏng vấn lại không vẽ nổi kiến trúc phân tán mạch lạc. Tôi dạy bạn tư duy và phản biện kiến trúc cho rõ ràng.",
+            "truth2": "Thuộc lý thuyết Microservices vẫn tạch khi bị hỏi tới bản chất.",
+            "fix2": "Người phỏng vấn giỏi không hỏi định nghĩa. Họ xoáy vào nhất quán dữ liệu, sự cố mạng và điểm lỗi đơn. Tôi luyện bạn hiểu tận gốc để đối thoại sòng phẳng.",
+            "truth3": "Mang văn mẫu từ blog đi phỏng vấn là cách nhanh nhất để bị bắt bài.",
+            "fix3": "Kiến trúc \"sách giáo khoa\" thường vỡ trước bài toán thực tế của doanh nghiệp. Tôi dạy bạn tư duy độc lập để xử lý mọi đề biến tấu.",
+            "truth4": "Thị trường hết thời thừa thãi — không ai trả lương Senior cho người chỉ biết chém gió keyword.",
+            "fix4": "Doanh nghiệp đang siết đầu vào rất gắt. Tôi rèn cho bạn năng lực kiến trúc thực chất để tự tin qua các vòng kiểm duyệt khắt khe."
         },
         "recruiter": {
             "eyebrow": "Cho nhà tuyển dụng",
@@ -2650,21 +2650,21 @@
         },
         "outcome": {
             "eyebrow": "Giá trị thực tế",
-            "title": "Đầu ra cho cả hai phía",
+            "title": "Đầu ra của StarCi Academy",
             "items": {
                 "engineer": {
-                    "title": "Cho kỹ sư",
-                    "body": "Portfolio toàn dự án chuẩn production, nối thẳng tới nhà tuyển dụng. Bạn được gọi vì thứ bạn dựng được — không phải vì mớ keyword nhồi cho dày CV.",
+                    "title": "Cho người dùng",
+                    "body": "Bạn xây portfolio từ dự án thật, chuẩn production và tôi đưa thẳng tới nhà tuyển dụng. Họ gọi bạn vì thứ bạn làm được, không phải vì CV đẹp.",
                     "cta": "Bắt đầu xây hồ sơ"
                 },
                 "enterprise": {
                     "title": "Cho doanh nghiệp",
-                    "body": "Bỏ qua CV phông bạt. Tuyển đúng người tự tay dựng được hệ thống và bảo vệ nổi thiết kế của mình.",
+                    "body": "Bỏ qua CV phông bạt. Tuyển đúng người có đủ tầm về tư duy hệ thống.",
                     "cta": "Tìm kiếm ứng viên"
                 }
             },
             "card": {
-                "sample": "Hồ sơ kỹ sư",
+                "sample": "Hồ sơ người dùng",
                 "role": "StarCi Talent",
                 "openToWork": "Sẵn sàng đi làm",
                 "cvScore": "Điểm CV",
@@ -2688,15 +2688,15 @@
             "a5": "Khi bạn tự tin với năng lực của mình và bật chế độ tìm việc, các dự án thực chiến bạn đã hoàn thành sẽ được kết nối trực tiếp đến các doanh nghiệp đối tác đang tìm kiếm kỹ sư Senior/Architect. Không có trung gian hay làm màu CV, nhà tuyển dụng đánh giá bạn trực tiếp qua chất lượng sản phẩm bạn đã tự tay dựng."
         },
         "closing": {
-            "title": "Hết thời code CRUD. Tới lúc dựng hệ thống thật.",
-            "subtitle": "Học để làm được việc — đủ trình ngồi ngang mâm mọi vòng phỏng vấn kỹ thuật. Vào bằng đúng ngôn ngữ bạn đang code.",
-            "cta": "Xem lộ trình"
+            "title": "Không còn thời học cho biết. Đây là lúc dựng hệ thống thật.",
+            "subtitle": "Học để làm được việc, đủ bản lĩnh đi qua mọi vòng phỏng vấn kỹ thuật bằng chính ngôn ngữ bạn đang dùng.",
+            "cta": "Xúc ngay"
         },
         "backToTop": "Về đầu trang",
         "learnLoop": {
             "eyebrow": "Học kiểu thực chiến",
-            "title": "Học theo phương pháp của StarCi Academy.",
-            "intro": "Đi phỏng vấn, không ai hỏi bạn xem hết bao nhiêu video — người ta bắt bạn giải bài và bảo vệ cách làm của mình. Nên ở StarCi Academy, bạn học bằng cách bắt tay vào làm thật, không ngồi xem.",
+            "title": "Học theo phương pháp của tôi.",
+            "intro": "Đi phỏng vấn, thứ người ta quan tâm không phải số năm kinh nghiệm, mà là tư duy giải quyết vấn đề. Tôi đã hệ thống hóa kiến thức của ngành vào đứa con tâm huyết này, đồng thời xây dựng phương pháp học hiệu quả để nhiều người có thể tiếp cận và bứt phá.",
             "cta": "Vào cày thử",
             "items": {
                 "read": {

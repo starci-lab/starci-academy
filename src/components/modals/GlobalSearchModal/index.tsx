@@ -5,15 +5,12 @@ import { ArrowUpIcon, ArrowDownIcon, ArrowElbowDownLeftIcon } from "@phosphor-ic
 import React, { useEffect, useRef, useState } from "react"
 import { cn, Input, Kbd, Modal, TextField, Typography } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import {
-    useSearchOverlayState,
-} from "@/hooks"
 import debounce from "lodash/debounce"
 import { GlobalSearchContent } from "./Content"
-import { setSearchQuery } from "@/redux/slices"
-import { useAppDispatch, useAppSelector } from "@/redux"
-import type { WithClassNames } from "@/modules/types"
-
+import { useSearchOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { setSearchQuery } from "@/redux/slices/search"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link GlobalSearchModal}.

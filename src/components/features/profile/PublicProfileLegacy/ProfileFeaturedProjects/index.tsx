@@ -18,29 +18,21 @@ import {
     Hammer as HammerIcon,
 } from "@gravity-ui/icons"
 import {
-    useProfileTabStore,
-    useQueryUserPinnedProjectsSwr,
-    useQueryUserCapstoneProgressSwr,
-    useQueryUserProfileSwr,
-} from "@/hooks"
-import {
-    SectionCard,
-} from "@/components/reuseable"
-import {
-    ListRow,
-    StatusChip,
-    ProgressMeter,
-} from "@/components/blocks"
-import {
     useProfileUsername,
 } from "../useProfileUsername"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
-import type {
-    QueryUserPinnedProjectItem,
-    QueryUserCapstoneCourseProgress,
-} from "@/modules/api"
+import { useProfileTabStore } from "@/hooks/zustand/profileTab/store"
+import { useQueryUserPinnedProjectsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserPinnedProjectsSwr"
+import { useQueryUserCapstoneProgressSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCapstoneProgressSwr"
+import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
+import { SectionCard } from "@/components/reuseable/SectionCard"
+import { ListRow } from "@/components/blocks/lists/ListRow"
+import { StatusChip } from "@/components/blocks/chips/StatusChip"
+import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
+import type { QueryUserPinnedProjectItem } from "@/modules/api/graphql/queries/types/user-pinned-projects"
+import type { QueryUserCapstoneCourseProgress } from "@/modules/api/graphql/queries/types/user-capstone-progress"
 
 /** Props for {@link ProfileFeaturedProjects}. */
 export type ProfileFeaturedProjectsProps = WithClassNames<undefined>

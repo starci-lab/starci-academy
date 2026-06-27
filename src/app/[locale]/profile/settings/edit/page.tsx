@@ -1,7 +1,5 @@
 import React from "react"
-import {
-    EditProfile,
-} from "@/components/features/profile"
+import { EditProfile } from "@/components/features/profile/EditProfile"
 
 /**
  * Route `/[locale]/profile/edit` — renders the edit-profile feature.

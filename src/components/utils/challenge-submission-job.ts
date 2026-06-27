@@ -1,4 +1,4 @@
-import type { JobStatusUpdatedSocketIoMessage } from "@/modules/types"
+import type { JobStatusUpdatedSocketIoMessage } from "@/modules/types/socketio"
 
 /**
  * Resolves the latest job-status envelope for a challenge submission row.

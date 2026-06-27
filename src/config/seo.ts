@@ -22,4 +22,10 @@ export const SEO_CONFIG = {
     /** Default site description (fallback when a page has none). */
     defaultDescription:
         "StarCi Academy — học Fullstack, System Design và AI/LLM Engineering qua dự án thật, thực hành chấm điểm và lộ trình rõ ràng.",
+    /** Locales the public site is served under (mirrors the `[locale]` segment). */
+    locales: ["vi", "en"] as ReadonlyArray<string>,
+    /** Default locale — used for `x-default` hreflang + the canonical sitemap url. */
+    defaultLocale: "vi",
+    /** Default share image (relative to {@link siteUrl}); per-entity pages override with a real cover. */
+    ogImage: "/logo-lockup.png",
 } as const

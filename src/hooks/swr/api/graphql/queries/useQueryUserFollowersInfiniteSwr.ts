@@ -1,6 +1,6 @@
 import useSWRInfinite from "swr/infinite"
-import { queryUserFollowers } from "@/modules/api"
-import type { QueryFollowerUser } from "@/modules/api"
+import { queryUserFollowers } from "@/modules/api/graphql/queries/query-user-followers"
+import type { QueryFollowerUser } from "@/modules/api/graphql/queries/types/user-followers"
 
 /** Followers/following per page (the server clamps its own cap independently). Shared with the following hook + the follow-list modal so `hasMore` derives off one number. */
 export const FOLLOW_LIST_PAGE_LIMIT = 20

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react"
-import type { VideoRendererType } from "@/modules/types"
+import type { VideoRendererType } from "@/modules/types/enums/video-renderer-type"
 
 /** Visual + descriptive metadata for one renderer-type selector option. */
 export interface RendererTypeOption {

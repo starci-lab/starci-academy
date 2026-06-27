@@ -10,12 +10,11 @@ import {
     cn,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { useAppSelector } from "@/redux"
-import { useMutateAskContentAiSwr } from "@/hooks"
-import { useGraphQLWithToast } from "@/modules/toast"
-import { ChatBubble, type ChatRole } from "@/components/blocks"
-import { MarkdownContent } from "@/components/reuseable"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { useAppSelector } from "@/redux/hooks"
+import { useContentAiStream } from "@/hooks/socketio/useContentAiStream"
+import { ChatBubble, type ChatRole } from "@/components/blocks/feed/ChatBubble"
+import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 
 /** Props for {@link ContentAiChat}. */
 export type ContentAiChatProps = WithClassNames<undefined>
@@ -32,31 +31,46 @@ interface ChatMessage {
 }
 
 /**
- * Content-AI chat thread + composer (the body of the ask-AI drawer). Keeps an
- * ephemeral, client-side conversation about the content currently open and sends
- * the recent turns back as short-term memory on each `askContentAi` call. Resets
- * when the active content changes. Each question spends one AI credit server-side.
+ * Content-AI chat thread + composer (the body of the ask-AI popover/drawer).
+ * Keeps an ephemeral, client-side conversation about the content currently open
+ * and replays the recent turns as short-term memory on each question. The answer
+ * **streams** token-by-token over the `/content_ai` socket (free model only — no
+ * AI credit). Resets when the active content changes.
  *
  * @param props - {@link ContentAiChatProps}
  */
 export const ContentAiChat = ({ className }: ContentAiChatProps) => {
     const t = useTranslations()
-    const runGraphQL = useGraphQLWithToast()
     const contentId = useAppSelector((state) => state.content.id)
-    const askSwr = useMutateAskContentAiSwr()
+    const { ask, abort } = useContentAiStream()
     const [messages, setMessages] = useState<Array<ChatMessage>>([])
     const [input, setInput] = useState("")
+    const [isStreaming, setIsStreaming] = useState(false)
 
-    // a new content opens a fresh conversation
+    // a new content opens a fresh conversation (and cancels any in-flight answer)
     useEffect(() => {
+        abort()
         setMessages([])
         setInput("")
-    }, [contentId])
+        setIsStreaming(false)
+    }, [contentId, abort])
+
+    /** Append a delta to the trailing assistant bubble as the answer streams in. */
+    const appendToAssistant = useCallback((delta: string) => {
+        setMessages((prev) => {
+            const next = [...prev]
+            const last = next[next.length - 1]
+            if (last && last.role === "assistant") {
+                next[next.length - 1] = { ...last, content: last.content + delta }
+            }
+            return next
+        })
+    }, [])
 
     /** Send a question (the arg, else the current input), replaying recent turns for memory. */
-    const onSend = useCallback(async (preset?: string) => {
+    const onSend = useCallback((preset?: string) => {
         const question = (preset ?? input).trim()
-        if (!question || !contentId || askSwr.isMutating) {
+        if (!question || !contentId || isStreaming) {
             return
         }
         // prior turns become the history sent to the model
@@ -64,24 +78,36 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
             role: message.role,
             content: message.content,
         }))
-        setMessages((prev) => [...prev, { role: "user", content: question }])
+        // append the question + an empty assistant bubble the stream fills in
+        setMessages((prev) => [
+            ...prev,
+            { role: "user", content: question },
+            { role: "assistant", content: "" },
+        ])
         setInput("")
-        let answer: string | null = null
-        const ok = await runGraphQL(
-            async () => {
-                const envelope = await askSwr.trigger({ contentId, question, history })
-                if (!envelope?.success || !envelope.data) {
-                    throw new Error(envelope?.message ?? "Ask failed")
+        setIsStreaming(true)
+        ask({
+            contentId,
+            question,
+            history,
+            onDelta: appendToAssistant,
+            onDone: (error) => {
+                setIsStreaming(false)
+                if (!error) {
+                    return
                 }
-                answer = envelope.data.answer
-                return envelope
+                // surface the failure inline only when no answer streamed at all
+                setMessages((prev) => {
+                    const next = [...prev]
+                    const last = next[next.length - 1]
+                    if (last && last.role === "assistant" && last.content === "") {
+                        next[next.length - 1] = { ...last, content: t("contentAi.error") }
+                    }
+                    return next
+                })
             },
-            { showSuccessToast: false },
-        )
-        if (ok && answer) {
-            setMessages((prev) => [...prev, { role: "assistant", content: answer as string }])
-        }
-    }, [input, contentId, messages, runGraphQL, askSwr])
+        })
+    }, [input, contentId, messages, isStreaming, ask, appendToAssistant, t])
 
     return (
         <div className={cn("flex h-full flex-col gap-3", className)}>
@@ -110,7 +136,14 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                         messages.map((message, index) => (
                             <ChatBubble key={index} role={message.role}>
                                 {message.role === "assistant" ? (
-                                    <MarkdownContent markdown={message.content} />
+                                    // empty assistant bubble while waiting for the first token
+                                    message.content === "" ? (
+                                        <Typography type="body-sm" color="muted">
+                                            {t("contentAi.thinking")}
+                                        </Typography>
+                                    ) : (
+                                        <MarkdownContent markdown={message.content} />
+                                    )
                                 ) : (
                                     <Typography type="body-sm">
                                         {message.content}
@@ -119,13 +152,6 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                             </ChatBubble>
                         ))
                     )}
-                    {askSwr.isMutating ? (
-                        <ChatBubble role="assistant">
-                            <Typography type="body-sm" color="muted">
-                                {t("contentAi.thinking")}
-                            </Typography>
-                        </ChatBubble>
-                    ) : null}
                 </div>
             </ScrollShadow>
 
@@ -140,7 +166,7 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                         onKeyDown={(event) => {
                             if (event.key === "Enter") {
                                 event.preventDefault()
-                                void onSend()
+                                onSend()
                             }
                         }}
                     />
@@ -148,8 +174,8 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                 <Button
                     size="sm"
                     variant="primary"
-                    isPending={askSwr.isMutating}
-                    onPress={() => void onSend()}
+                    isPending={isStreaming}
+                    onPress={() => onSend()}
                 >
                     {t("contentAi.send")}
                 </Button>

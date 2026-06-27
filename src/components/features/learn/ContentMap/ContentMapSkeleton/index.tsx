@@ -1,12 +1,10 @@
 "use client"
 
 import React from "react"
-import {
-    Skeleton,
-} from "@/components/blocks"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /** Number of placeholder modules shown while the content-map loads. */
 const SKELETON_MODULE_COUNT = 3

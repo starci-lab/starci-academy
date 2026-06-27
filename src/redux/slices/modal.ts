@@ -1,5 +1,7 @@
-import type { ChallengeEntity, ContentEntity, JobCategory } from "@/modules/types"
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
+import type { ChallengeEntity } from "@/modules/types/entities/challenge"
+import type { ContentEntity } from "@/modules/types/entities/content"
+import type { JobCategory } from "@/modules/types/enums/job-category"
 
 /**
  * Payload carried by the AI processing modal (optional job tracking fields).

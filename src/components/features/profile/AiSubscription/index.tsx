@@ -7,12 +7,6 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    useQueryAiSubscriptionTiersSwr,
-} from "@/hooks"
-import {
-    PageHeader,
-} from "@/components/blocks"
-import {
     SettingsBreadcrumb,
 } from "../Settings/SettingsBreadcrumb"
 import {
@@ -21,6 +15,8 @@ import {
 import {
     AiSubscriptionSkeleton,
 } from "./AiSubscriptionSkeleton"
+import { useQueryAiSubscriptionTiersSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiSubscriptionTiersSwr"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
 
 /**
  * AI subscription feature container.

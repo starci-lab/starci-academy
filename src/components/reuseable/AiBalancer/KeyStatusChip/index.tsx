@@ -4,9 +4,6 @@ import React, {
     useMemo,
 } from "react"
 import {
-    AiBalancerKeyStatus,
-} from "@/modules/api/graphql/queries/enums"
-import {
     KeyStatusChipVariant,
 } from "../enums"
 import {
@@ -14,7 +11,8 @@ import {
     AI_BALANCER_KEY_STATUS_LIGHT_MAP,
 } from "../map"
 import { cn } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types"
+import { AiBalancerKeyStatus } from "@/modules/api/graphql/queries/enums/ai-balancer-key-status"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 interface KeyStatusChipProps extends WithClassNames<undefined> {
     /** Raw status string from GraphQL (`active` / `disabled` / `probing`). */

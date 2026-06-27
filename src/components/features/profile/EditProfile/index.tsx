@@ -17,25 +17,17 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    useAppSelector,
-} from "@/redux"
-import {
-    useAvatarUploadOverlayState,
-    useEditProfileForm,
-} from "@/hooks"
-import {
-    AvatarUploadButton,
-    PageHeader,
-} from "@/components/blocks"
-import {
     SettingsBreadcrumb,
 } from "../Settings/SettingsBreadcrumb"
 import {
-    WorkMode,
-} from "@/modules/types"
-import {
     AvatarUploadModal,
 } from "./AvatarUploadModal"
+import { useAppSelector } from "@/redux/hooks"
+import { useAvatarUploadOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useEditProfileForm } from "@/hooks/rhf/useEditProfileForm"
+import { AvatarUploadButton } from "@/components/blocks/identity/AvatarUploadButton"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { WorkMode } from "@/modules/types/enums/work-mode"
 
 /** Max length of the display name (mirrors the `display_name` column). */
 const DISPLAY_NAME_MAX = 100

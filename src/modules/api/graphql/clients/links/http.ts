@@ -1,7 +1,6 @@
 import { HttpLink } from "@apollo/client"
-import { publicEnv } from "@/resources/env"
-
 import { type GraphQLHeaders } from "../../types"
+import { publicEnv } from "@/resources/env/public"
 
 /**
  * Parameters for creating an HTTP link.

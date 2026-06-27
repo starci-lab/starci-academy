@@ -1,5 +1,6 @@
-import type { UserEntity, WorkMode } from "@/modules/types"
 import type { GraphQLResponse } from "../../types"
+import type { UserEntity } from "@/modules/types/entities/user"
+import type { WorkMode } from "@/modules/types/enums/work-mode"
 
 /** GraphQL `UpdateProfileRequest` body (partial update; null clears a field). */
 export interface UpdateProfileRequest {

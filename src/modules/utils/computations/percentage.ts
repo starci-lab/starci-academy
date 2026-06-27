@@ -1,5 +1,5 @@
 import Decimal from "decimal.js"
-import { publicEnv } from "@/resources/env"
+import { publicEnv } from "@/resources/env/public"
 
 export interface ComputePercentageParams {
     numerator: Decimal

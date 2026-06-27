@@ -1,10 +1,8 @@
-import {
-    mutateToggleFavorite,
-    type ToggleFavoriteRequest,
-} from "@/modules/api"
 import useSWRMutation from "swr/mutation"
-import { useAppSelector } from "@/redux"
-import { GraphQLHeadersKey } from "@/modules/api"
+import { mutateToggleFavorite } from "@/modules/api/graphql/mutations/mutation-toggle-favorite"
+import { type ToggleFavoriteRequest } from "@/modules/api/graphql/mutations/types/toggle-favorite"
+import { useAppSelector } from "@/redux/hooks"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
 
 type MutateToggleFavoriteResult = Awaited<ReturnType<typeof mutateToggleFavorite>>
 

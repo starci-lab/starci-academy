@@ -21,24 +21,18 @@ import {
     CheckCircleIcon,
     XCircleIcon,
 } from "@phosphor-icons/react"
-import {
-    AsyncContent,
-    PageHeader,
-    Skeleton,
-} from "@/components/blocks"
 import { FeedbackCard } from "@/components/modals/FeedbackDetailsModal/FeedbackCard"
-import {
-    useQuerySubmissionResultAttemptsSwr,
-    useQuerySubmissionResultFeedbacksSwr,
-} from "@/hooks"
-import { useAppSelector } from "@/redux"
 import { dayjs, getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
-import { SubmissionFeedbackSeverity } from "@/modules/types"
-import type {
-    SubmissionAttemptEntity,
-    SubmissionFeedbackEntity,
-    WithClassNames,
-} from "@/modules/types"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { useQuerySubmissionResultAttemptsSwr } from "@/hooks/swr/api/graphql/queries/useQuerySubmissionResultAttemptsSwr"
+import { useQuerySubmissionResultFeedbacksSwr } from "@/hooks/swr/api/graphql/queries/useQuerySubmissionResultFeedbacksSwr"
+import { useAppSelector } from "@/redux/hooks"
+import { SubmissionFeedbackSeverity } from "@/modules/types/enums/submission-feedback-severity"
+import type { SubmissionAttemptEntity } from "@/modules/types/entities/submission-attempt"
+import type { SubmissionFeedbackEntity } from "@/modules/types/entities/submission-feedback"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link SubmissionResult}. */
 export type SubmissionResultProps = WithClassNames<undefined>

@@ -10,9 +10,9 @@ import React, {
     type ComponentProps,
 } from "react"
 import { Input, TextField, cn } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types"
 import { AnimatePresence, motion } from "framer-motion"
 import { useTranslations } from "next-intl"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** One autocomplete suggestion shown in the dropdown. */
 export interface SearchInputSuggestion {

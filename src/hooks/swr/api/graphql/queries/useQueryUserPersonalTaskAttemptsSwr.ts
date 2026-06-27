@@ -1,10 +1,7 @@
-import {
-    defaultUserPersonalTaskAttemptsListSorts,
-    GraphQLHeadersKey,
-    queryUserPersonalTaskAttempts,
-} from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { defaultUserPersonalTaskAttemptsListSorts, queryUserPersonalTaskAttempts } from "@/modules/api/graphql/queries/query-user-personal-task-attempts"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR hook for querying paginated user personal task attempts

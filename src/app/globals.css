@@ -232,6 +232,19 @@ html {
     100% { transform: translateY(0) scale(1); opacity: 1; }
 }
 
+/* appSplashTrickle — the entry splash's 3px brand line creeping toward ~96% while
+   the app boots. Indeterminate (no real load events for a cold start) so it never
+   reaches 100; the splash simply fades out once the client has mounted. The live
+   navigation bar (TopLoader) drives its own width from JS instead. */
+@keyframes appSplashTrickle {
+    0% { width: 0%; }
+    16% { width: 38%; }
+    55% { width: 72%; }
+    82% { width: 90%; }
+    100% { width: 96%; }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .ambient-ember { animation: none !important; opacity: 0 !important; }
+    .app-splash-bar { animation: none !important; width: 40% !important; }
 }

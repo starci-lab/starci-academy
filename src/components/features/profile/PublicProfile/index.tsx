@@ -6,14 +6,6 @@ import React, {
 import {
     cn,
 } from "@heroui/react"
-import {
-    useAppSelector,
-} from "@/redux"
-import {
-    useProfileTabStore,
-    useQueryUserProfileSwr,
-    useRegisterNavbarBottomLayer,
-} from "@/hooks"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -53,6 +45,10 @@ import {
 import {
     ProfileActivityTab,
 } from "./ProfileActivityTab"
+import { useAppSelector } from "@/redux/hooks"
+import { useProfileTabStore } from "@/hooks/zustand/profileTab/store"
+import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
+import { useRegisterNavbarBottomLayer } from "@/hooks/zustand/navbarBottomLayer/store"
 
 /** Props for {@link PublicProfile}. */
 export type PublicProfileProps = WithClassNames<undefined>

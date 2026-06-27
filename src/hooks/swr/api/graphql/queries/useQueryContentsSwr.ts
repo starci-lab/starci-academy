@@ -1,10 +1,8 @@
-import {
-    GraphQLHeadersKey,  
-    queryContents,
-} from "@/modules/api"
-import { useAppDispatch, useAppSelector } from "@/redux"
 import useSWR from "swr"
-import { setContents, setContentsCount } from "@/redux/slices"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { queryContents } from "@/modules/api/graphql/queries/query-contents"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setContents, setContentsCount } from "@/redux/slices/content"
 
 /**
  * Lists module contents via `contents` and merges rows into `course.module.contents`.

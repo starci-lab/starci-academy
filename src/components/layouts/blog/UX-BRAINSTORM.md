@@ -103,3 +103,104 @@ A blend that takes Vercel's text-first scannability and adds ONE editorial ancho
 - **Pagination = load-more** (bump `offset`), not numbered pages. Lighter, fits early-stage volume.
 - **"More in {pillar}" on detail = YES** — related strip via `blogPosts(category)` minus current.
 → Ready for `/starci-fe-ux-apply blog`.
+
+---
+
+# Blog — UX brainstorm vòng 2 (2026-06-27) — REFRAME: blog NÀY = "StarCi backend, mổ xẻ"
+
+> Thầy: *"phần blog này tập trung cho hạ tầng StarCi Academy Backend thôi. Có ý gì hay hơn không?"*
+> Vòng 1 (2026-06-21) thiết kế cho 1 "blog học tập generic" với 6 pillar. Data ĐÃ ĐỔI → cần reframe.
+
+## 0. Điều ĐÃ THAY ĐỔI so với vòng 1 (data thật, 2026-06-27)
+- Vòng 1: **2 bài seed**, đều `deep-dive`, mơ hồ "blog là gì".
+- Nay: **12 bài seed, TẤT CẢ `category = codebase`** — mỗi bài là 1 deep-dive mổ xẻ **chính backend này**:
+  Redis→CQRS projection · Kafka vs RabbitMQ · mount markdown→typed DB · **"Start here: tour monorepo"** ·
+  GraphQL leaf-module convention · AI multi-provider balancer · RAG Qdrant+LangChain · LLM grading 30/70 ·
+  Keycloak + 2-device sessions · Postgres→live notification (CDC) · coding judge Judge0+BullMQ · media ffmpeg/DASH.
+- → **Danh tính thật của blog KHÔNG phải "blog" generic. Nó là 1 ẤN PHẨM KỸ THUẬT / SỔ TAY KIẾN TRÚC mã nguồn của StarCi backend** (open-source onboarding + build-in-public). Mỗi bài = 1 worked-example của chính giáo trình System Design mà StarCi bán → đây là **proof mạnh nhất ở top-of-funnel**.
+
+## 1. Pain THẬT của implement hiện tại (Direction C đã dựng)
+1. **Filter 6 pillar mà 5 cái RỖNG** (chỉ `codebase` có bài) → đúng anti-pattern [[design-for-data-that-exists-coverless-lowvolume]] (đừng render filter trỏ vào bucket rỗng). Vòng 1 đã loại Direction B vì lý do này, nhưng `CategoryFilter` VẪN show 6 chip.
+2. **Tiêu đề "Blog" generic** → bán hớ. Nội dung là kỹ thuật sâu về 1 backend thật, nhưng nhãn đọc như blog marketing.
+3. **`sourceUrl` = null** trong khi MỌI bài là "mổ xẻ codebase" → **cơ hội bị bỏ lỡ lớn nhất**. Bài phân tích code mà không link tới code thật = mất hệ số tin cậy. (Cần seed `sourceUrl` BE, hoặc trỏ repo công khai.)
+4. **Không có "Start here" anchor** — có sẵn bài *"Start here: tour monorepo"* nhưng chỉ nằm theo newest-first, không được ghim làm điểm vào.
+5. **Serif lead vỡ dấu tiếng Việt** (đã biết — [[fe-lint-no-next-img-directive-and-serif-polish]]). Lead phải sans-lớn/blockquote, KHÔNG `font-serif` tới khi có serif-face VN.
+6. **Không thấy "quan hệ với hệ thống"** — 12 bài, mỗi bài về 1 subsystem, nhưng trình bày phẳng; liên hệ tới kiến trúc thật (MicroservicesDiagram/KnowledgeGraph trên landing) vô hình.
+
+## 2. Ba hướng (xem widget mockup)
+| Dir | Pattern | Ref | Trade-off |
+|-----|---------|-----|-----------|
+| **A** ✅ | **Ấn phẩm kỹ thuật** — "Start here" ghim + lead + text-list; taxonomy = SUBSYSTEM thật; mỗi bài link source | Cloudflare deep-dive · Stripe Increment · Vercel Eng | Cải tiến thấp-rủi-ro của Direction C; trung thực nhất với data; bỏ filter rỗng |
+| **B** | **Build log / nhật ký ship** — timeline đảo ngược, mộc, gutter ngày, nhịp đều | Railway changelog · Linear | Mạnh khi cadence đều; nhưng các bài đây là deep-dive dài (≠ changelog 1-dòng) → hơi gượng |
+| **C** | **Bản đồ kiến trúc** — strip hệ thống thật (CQRS/Kafka/RAG/CDC/Auth/Media/Judge0/Mount) → chọn 1 → đọc bài về nó | Supabase · MicroservicesDiagram nội bộ | Khác biệt nhất, neo vào kiến trúc; nhưng nặng + cần map post→system (chưa có field) |
+
+### CHỐT đề xuất: **Hướng A, hấp thụ "systems strip" của C làm TAXONOMY**
+- **Vỏ A** (ấn phẩm kỹ thuật): reframe nhãn → eyebrow `ENGINEERING` + title *"Hệ thống StarCi, mổ xẻ"* / *"How we built this backend"* + subtitle "12 bài deep-dive về chính backend này — kiến trúc, đánh đổi, code thật".
+- **Thay 6-pillar-filter chết bằng "topics we write about" = SUBSYSTEM thật** (Stripe Increment "themes" framing): CQRS · Kafka · RAG/Qdrant · CDC · Keycloak · Judge0 · Media · Mount — như **nhãn định hướng** (không phải filter trỏ bucket rỗng). Vì mọi bài hiện là `codebase`, **subsystem là trục phân loại có nghĩa**, không phải 6 marketing pillar.
+- **Ghim "Start here: tour monorepo"** làm anchor điểm-vào (trên cả featured lead) — biến blog thành sổ tay onboarding.
+- **Wire `sourceUrl`** → mỗi bài có "Đọc source ↗" (cần seed BE; nếu repo chưa public → trỏ tour/monorepo). Đây là hệ số tin cậy của "mổ xẻ codebase".
+- Giữ nguyên lead + text-list + reading-progress + funnel CTA + more-in-pillar (đã tốt từ vòng 1) — chỉ ĐỔI khung định vị + taxonomy + anchor + source-link.
+- Lý do KHÔNG chọn B/C làm chính: B (changelog) sai bản chất (bài là essay dài, không phải ship-note); C (map) đẹp nhưng cần field map post→subsystem chưa tồn tại + nặng → để **v2** khi có nhiều bài + field. A đạt 90% giá trị, rủi ro thấp.
+
+## 3. Taxonomy mới (subsystem, derive từ content — KHÔNG bịa)
+- Trục phân loại = **subsystem** (suy từ slug/nội dung), thay 6 pillar generic. Cách triển khai an toàn nhất khi BE chưa có field `system`:
+  1. **Tối thiểu (FE-only, làm ngay):** strip "topics we write about" = chuỗi subsystem curated (constant), KHÔNG click-filter (chỉ framing). Không tạo bucket rỗng vì không phải filter.
+  2. **Đầy đủ (cần BE):** thêm field `system`/`area` (enum: data-cqrs · messaging · ai-rag · realtime-cdc · auth · media · coding-judge · platform-mount) vào `BlogPost` → filter thật + map post→subsystem. → mở đường cho Hướng C (bản đồ) sau.
+- 6-pillar `BlogCategory` GIỮ trong BE (career/case-study/build-in-public… cho tương lai), nhưng **FE chỉ render filter cho category/subsystem CÓ bài** (no dead chips).
+
+## 4. Section → data map (delta so với vòng 1)
+| Section mới | Source |
+|---|---|
+| Eyebrow "ENGINEERING" + title định vị | i18n curated (constant) |
+| "Topics we write about" strip | subsystem list curated (FE constant) HOẶC field `system` mới (BE) |
+| "Start here" pinned anchor | bài slug `start-here-monorepo-tour` (pin theo slug, fallback newest nếu thiếu) |
+| Source-link mỗi row/detail | `sourceUrl` (cần seed BE) |
+| Filter (nếu giữ) | chỉ render category/subsystem **có bài** (`blogPosts` non-empty) |
+
+## 5. Cut / add (vòng 2)
+- **Cut:** filter 6 pillar với 5 bucket rỗng; nhãn "Blog" generic; serif-lead (dấu VN vỡ → sans-lớn).
+- **Add:** định vị "ấn phẩm kỹ thuật / sổ tay backend"; "Start here" ghim; "topics = subsystem thật" strip; "Đọc source ↗" mỗi bài (wire `sourceUrl`); filter chỉ render khi có bài.
+- **Defer (v2, cần BE):** field `system`/`area` → filter subsystem thật + Hướng C (bản đồ kiến trúc nối MicroservicesDiagram/KnowledgeGraph); seed `sourceUrl` toàn bộ; build-log lane (Hướng B) nếu mở cadence changelog.
+
+## 6. Việc BE cần (để hướng A trọn vẹn)
+1. **Seed `sourceUrl`** cho 12 bài codebase (trỏ file/dir thật trong repo public, hoặc monorepo tour). — quan trọng nhất.
+2. (Optional v2) field `system`/`area` trên `BlogPost` + arg `system` cho `blogPosts(...)` → filter subsystem + map cho Hướng C.
+→ Thầy chọn hướng (mặc định **A + systems-strip**) → `/starci-fe-ux-apply blog`. Nếu cần `sourceUrl`/`system` → ghi task BE trước.
+
+---
+
+# Blog masthead — 3D live infra scene (CHỐT 2026-06-27: PUBLIC SHOWCASE grounded, an toàn)
+
+> Thầy: *"xúc [Hướng A]... rồi health-check các thành phần StarCi rồi vẽ threejs"* → *"công khai, public"*.
+> Đây là Hướng C (bản đồ kiến trúc) đẩy lên **3D + animated**, làm **masthead** của blog "Hệ thống StarCi, mổ xẻ".
+
+## 0. Feasibility (đã research BE + FE, 2026-06-27)
+- **BE:** chưa có health module tập trung NHƯNG **13 component đều có status truy vấn được** (Postgres ×2 · Redis ×4 [BullMQ/Throttler/Adapter/Cache] · Kafka · NATS · Qdrant · Elasticsearch · MinIO · DO Spaces · Keycloak · BullMQ · Judge0). Đã có query mẫu **`aiBalancerHealth`** (`features/api/core/graphql/queries/system/ai-balancer-health/`) + pattern SWR `refreshInterval` 10s đang chạy (`useQueryAiBalancerHealthSwr`).
+- **FE:** three.js CHƯA cài, nhưng **stub `ArchitectureScene` ĐÃ có** ở Landing (`Landing/index.tsx` `dynamic(() => import("@/components/blocks/marketing/ArchitectureScene"), { ssr:false })`, comment *"Hero architecture diagram in real 3D (WebGL/R3F)"*) — component chưa tồn tại, đang là skeleton. `@xyflow/react` đã cài + chạy (mind-map). `d3-force` chỉ transitive.
+
+## 1. CHỐT (thầy duyệt) — PUBLIC SHOWCASE grounded, KHÔNG leak prod state
+- **Public scene = GROUNDED nhưng KHÔNG phơi live up/down/latency THẬT của prod.** Phơi "Kafka down" công khai = lộ trạng thái ops = tín hiệu cho attacker. → public scene: **13 component THẬT + dây nối THẬT + animated "đang sống"** (pulse/packet flow), **luôn đọc operational** (decorative liveness), KHÔNG bind realtime down-state per-component.
+- **Live status THẬT (per-component up/down/latency) → CHỈ ở admin** (`/status` hoặc admin tool, gate auth), giống trang `aiBalancer` đang có. KHÔNG công khai.
+- **Hệ quả quan trọng:** **public masthead KHÔNG cần BE mới** — topology = constant curated (13 component thật, như cách landing systems-list curated), R3F scene animated. `systemHealthStatus` query CHỈ cần cho admin live → **defer/optional**, KHÔNG block blog hero.
+
+## 2. Tool (theo rule [[marketing-graph-viz-xyflow-d3force-not-new-webgl-lib]])
+- **3D wow-hero → R3F/three.js** (ngoại lệ "3D/GPU wow" — đây là 3D thật, không phải node-graph phẳng; LẤP đúng stub `ArchitectureScene` đã intended). Cài `three` + `@react-three/fiber` (+ `@react-three/drei`), `dynamic(ssr:false)` + lazy (bundle ~300–400KB gz → chỉ cho 1 hero, lazy).
+- **Browse map 2D (Hướng C blog) → giữ xyflow** (đã cài). KHÔNG kéo three.js vào việc 2D.
+- → 3D cho đúng 1 hero; xyflow cho phần duyệt. Không lẫn.
+
+## 3. Nó sống ở đâu (single source)
+- **Block dùng chung `blocks/marketing/ArchitectureScene`** (R3F) phục vụ CẢ: (a) **masthead blog** "Hệ thống StarCi, mổ xẻ"; (b) **Landing hero** (lấp stub đã có). 1 block, 2 nơi.
+- Scene grounded: 4 tầng từ component thật — **EDGE/API** (GraphQL API · Socket.IO · Keycloak) → **COMPUTE** (BullMQ · Judge0 · AI balancer) → **DATA** (Postgres · Redis ×4 · Qdrant · Elasticsearch · MinIO) → **BUS/CDC** (Kafka · NATS · Debezium). Packet chạy theo dây (giống `wireFlow` keyframe + `MicroservicesDiagram`), pulse "alive".
+- (Optional, sau) **admin `/status`**: cùng scene HOẶC xyflow 2D, bind `systemHealthStatus` thật (màu success/warning/danger theo status). Gate admin.
+
+## 4. Section → data
+| Phần | Nguồn |
+|---|---|
+| Topology 13 node + dây | **constant curated** (FE, grounded từ component thật — KHÔNG BE) |
+| Pulse/packet "alive" | client animation (R3F), decorative |
+| (Admin) status màu thật | `systemHealthStatus` (BE mới, defer) — ping song song 13 component |
+| Số liệu phụ (nếu muốn) | `platformStats` (đã có) |
+
+## 5. Việc BE (defer/optional — KHÔNG block public hero)
+- **`systemHealthStatus` query** (chỉ cho admin live): ping song song 13 component (Postgres `SELECT 1` · Redis `ping` ×4 · Kafka `admin.listTopics` · NATS ping · Qdrant/ES/MinIO/Keycloak HTTP health · BullMQ `getJobCounts`), trả `{ name, status, latencyMs }[]`. Copy pattern `aiBalancerHealth`. → đã lên task BE (chip), optional.
+- **Public hero KHÔNG cần BE** → có thể dựng ngay ở `/starci-fe-ux-apply` (cài three + R3F, topology constant).

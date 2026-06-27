@@ -6,11 +6,13 @@ import { Button, Typography } from "@heroui/react"
 import { CardsThreeIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
-import { queryFlashcardDecksByCourse } from "@/modules/api/graphql"
-import { AsyncContent, LabeledList, Skeleton } from "@/components/blocks"
-import { useAppSelector } from "@/redux"
-import { pathConfig } from "@/resources"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { queryFlashcardDecksByCourse } from "@/modules/api/graphql/queries/query-flashcard-decks-by-course"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { LabeledList } from "@/components/blocks/lists/LabeledList"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { useAppSelector } from "@/redux/hooks"
+import { pathConfig } from "@/resources/path"
 
 /** Props for {@link LessonFlashcards}. */
 export type LessonFlashcardsProps = WithClassNames<undefined>

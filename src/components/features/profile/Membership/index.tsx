@@ -16,17 +16,11 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    usePaymentOverlayState,
-} from "@/hooks"
-import {
-    PaymentFlow,
-} from "@/modules/types"
-import {
-    PageHeader,
-} from "@/components/blocks"
-import {
     SettingsBreadcrumb,
 } from "../Settings/SettingsBreadcrumb"
+import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { PaymentFlow } from "@/modules/types/payment"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
 
 /**
  * Community membership feature container.

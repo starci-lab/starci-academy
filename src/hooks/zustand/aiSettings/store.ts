@@ -1,7 +1,7 @@
 "use client"
 
 import { create } from "zustand"
-import { AiMode, ModelProvider } from "@/modules/api"
+import { AiMode, ModelProvider } from "@/modules/api/graphql/queries/query-my-ai-settings"
 
 /** Inline status shown after saving AI settings. */
 export interface AiSettingsSaveStatus {

@@ -1,10 +1,11 @@
 "use client"
 
 import React from "react"
-import { MarkdownContent } from "@/components/reuseable"
-import type { CodeExplainingEntity, WithClassNames } from "@/modules/types"
 import { Chip, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
+import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import type { CodeExplainingEntity } from "@/modules/types/entities/code-explaining"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 export interface ExplainingCardProps extends WithClassNames<undefined> {
     /** One code explaining row from `content.codeExplainings`. */

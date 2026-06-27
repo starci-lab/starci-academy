@@ -10,9 +10,7 @@ import {
 import {
     useRouter,
 } from "next/navigation"
-import {
-    queryResolveRoute,
-} from "@/modules/api"
+import { queryResolveRoute } from "@/modules/api/graphql/queries/query-resolve-route"
 
 /** Params for {@link useResolveRouteNavigation}. */
 export interface UseResolveRouteNavigationParams {

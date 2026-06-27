@@ -1,8 +1,6 @@
-import {
-    mutateSetKpiTarget,
-    type SetKpiTargetRequest,
-} from "@/modules/api"
 import useSWRMutation from "swr/mutation"
+import { mutateSetKpiTarget } from "@/modules/api/graphql/mutations/mutation-set-kpi-target"
+import { type SetKpiTargetRequest } from "@/modules/api/graphql/mutations/types/set-kpi-target"
 
 type MutateSetKpiTargetResult = Awaited<ReturnType<typeof mutateSetKpiTarget>>
 

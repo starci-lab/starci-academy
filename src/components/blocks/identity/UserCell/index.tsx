@@ -1,7 +1,7 @@
 import React from "react"
 import { cn, Typography } from "@heroui/react"
-import { UserAvatar } from "@/components/reuseable"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { UserAvatar } from "@/components/reuseable/UserAvatar"
 
 /** Props for {@link UserCell}. */
 export interface UserCellProps extends WithClassNames<undefined> {

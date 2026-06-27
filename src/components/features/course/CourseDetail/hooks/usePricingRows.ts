@@ -6,22 +6,14 @@ import {
 import numeral from "numeral"
 import Decimal from "decimal.js"
 import _ from "lodash"
-import {
-    PricingPhase,
-    type PricingPhaseEntity,
-} from "@/modules/types"
-import {
-    computePercentage,
-} from "@/modules/utils"
-import {
-    publicEnv,
-} from "@/resources"
-import {
-    useAppSelector,
-} from "@/redux"
 import type {
     CoursePriceRow,
 } from "../types"
+import { PricingPhase } from "@/modules/types/enums/pricing-phase"
+import { type PricingPhaseEntity } from "@/modules/types/entities/pricing-phase"
+import { computePercentage } from "@/modules/utils/computations/percentage"
+import { publicEnv } from "@/resources/env/public"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Result of {@link usePricingRows}. */
 export interface UsePricingRowsResult {

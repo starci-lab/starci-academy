@@ -11,9 +11,7 @@ import {
 import {
     PiFileCSharp,
 } from "react-icons/pi"
-import {
-    ProgrammingLanguage,
-} from "@/modules/types"
+import { ProgrammingLanguage } from "@/modules/types/enums/programming-language"
 
 /** Brand icon per default programming-language tab ([react-icons](https://react-icons.github.io/react-icons/)). */
 export const programmingLanguageIconMap: Record<ProgrammingLanguage, IconType> = {

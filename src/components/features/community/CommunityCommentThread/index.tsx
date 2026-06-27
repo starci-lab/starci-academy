@@ -8,13 +8,11 @@ import {
     Typography,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { AsyncContent } from "@/components/blocks"
-import {
-    useMutateCreateCommunityPostCommentSwr,
-    useQueryCommunityPostCommentsSwr,
-} from "@/hooks"
-import { useGraphQLWithToast } from "@/modules/toast"
 import { CommunityCommentItem } from "../CommunityCommentItem"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { useMutateCreateCommunityPostCommentSwr } from "@/hooks/swr/api/graphql/mutations/useMutateCreateCommunityPostCommentSwr"
+import { useQueryCommunityPostCommentsSwr } from "@/hooks/swr/api/graphql/queries/useQueryCommunityPostCommentsSwr"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
 
 /** Props for the {@link CommunityCommentThread} feature. */
 export interface CommunityCommentThreadProps {

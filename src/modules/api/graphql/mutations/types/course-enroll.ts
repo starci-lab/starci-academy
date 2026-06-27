@@ -1,5 +1,5 @@
-﻿import type { PaymentType } from "@/modules/types"
-import type { GraphQLResponse, QueryVariables } from "../../types"
+﻿import type { GraphQLResponse, QueryVariables } from "../../types"
+import type { PaymentType } from "@/modules/types/enums/payment-type"
 
 /** Payload inside `courseEnroll.data` after the standard API wrapper. */
 export interface CourseEnrollData {

@@ -7,20 +7,16 @@ import {
     PushPinIcon as PinIcon,
     PencilIcon,
 } from "@phosphor-icons/react"
-import {
-    usePinnedProjectsOverlayState,
-    useQueryUserPinnedProjectsSwr,
-    useQueryUserProfileSwr,
-} from "@/hooks"
-import { useAppSelector } from "@/redux"
-import {
-    AsyncContent,
-    LabeledCard,
-    Skeleton,
-} from "@/components/blocks"
 import { useProfileUsername } from "../../hooks/useProfileUsername"
 import { PinnedProjectCard } from "./PinnedProjectCard"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { usePinnedProjectsOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useQueryUserPinnedProjectsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserPinnedProjectsSwr"
+import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
+import { useAppSelector } from "@/redux/hooks"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /** Props for {@link ProfilePinned}. */
 export type ProfilePinnedProps = WithClassNames<undefined>

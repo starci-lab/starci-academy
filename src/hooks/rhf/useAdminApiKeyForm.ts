@@ -4,8 +4,8 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { useRouter } from "next/navigation"
-import { useAppDispatch } from "@/redux"
-import { setAdminApiKey } from "@/redux/slices"
+import { useAppDispatch } from "@/redux/hooks"
+import { setAdminApiKey } from "@/redux/slices/admin"
 
 /** Zod schema for the admin API key form. */
 export const adminApiKeySchema = z.object({

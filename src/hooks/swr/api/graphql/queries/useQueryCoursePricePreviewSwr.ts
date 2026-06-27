@@ -1,7 +1,7 @@
-import { queryCoursePricePreview } from "@/modules/api"
-import type { QueryCoursePricePreviewData } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { queryCoursePricePreview } from "@/modules/api/graphql/queries/query-course-price-preview"
+import type { QueryCoursePricePreviewData } from "@/modules/api/graphql/queries/types/course-price-preview"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR wrapper for {@link queryCoursePricePreview}. `data` is the viewer's pre-checkout

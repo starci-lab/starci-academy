@@ -3,10 +3,9 @@ import { useTranslations } from "next-intl"
 import React from "react"
 import { GlobalSearchContentBlock } from "./Block"
 import { GlobalSearchEmpty } from "./Empty"
-import { useAppSelector } from "@/redux"
 import { ScrollShadow } from "@heroui/react"
-import type { AutocompleteGlobalSearchItem } from "@/modules/api"
-
+import { useAppSelector } from "@/redux/hooks"
+import type { AutocompleteGlobalSearchItem } from "@/modules/api/graphql/queries/types/autocomplete-global-search"
 
 /** Entity bucket a pressed search item belongs to — drives how its href is built. */
 type GlobalSearchKind = "course" | "module" | "content" | "challenge" | "flashcardDeck" | "milestone" | "milestoneTask"

@@ -2,8 +2,8 @@ import React, { cache } from "react"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { PublicArticle } from "@/components/features/content/PublicArticle"
-import { queryPublicContent } from "@/modules/api"
 import { SEO_CONFIG } from "@/config/seo"
+import { queryPublicContent } from "@/modules/api/graphql/queries/query-public-content"
 
 /** Route params for `/[locale]/contents/[contentId]`. */
 interface ContentRouteParams {

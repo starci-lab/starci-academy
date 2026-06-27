@@ -6,10 +6,10 @@ import {
     Link,
     ScrollShadow,
 } from "@heroui/react"
-import { MarkdownContent } from "@/components/reuseable"
-import { useAppSelector } from "@/redux"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types"
+import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { useAppSelector } from "@/redux/hooks"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Detail half of the CV-attempts drawer master-detail: the full AI analysis for the selected

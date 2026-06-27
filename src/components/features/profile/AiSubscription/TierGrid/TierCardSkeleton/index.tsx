@@ -6,15 +6,11 @@ import {
     Skeleton,
 } from "@heroui/react"
 import {
-    SkeletonParagraph,
-    SkeletonText,
-} from "@/components/reuseable"
-import type {
-    WithClassNames,
-} from "@/modules/types"
-import {
     cn,
 } from "@heroui/react"
+import { SkeletonParagraph } from "@/components/reuseable/SkeletonParagraph"
+import { SkeletonText } from "@/components/reuseable/SkeletonText"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 export type TierCardSkeletonProps = WithClassNames<undefined>
 

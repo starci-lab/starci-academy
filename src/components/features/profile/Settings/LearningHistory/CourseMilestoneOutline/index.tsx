@@ -17,32 +17,21 @@ import {
     CircleIcon,
     CircleHalfIcon,
 } from "@phosphor-icons/react"
-import {
-    useQueryMyCourseOutlineSwr,
-} from "@/hooks"
-import {
-    AsyncContent,
-    EmptyContent,
-    ListRow,
-    Skeleton,
-    StatusChip,
-} from "@/components/blocks"
-import type {
-    StatusChipTone,
-} from "@/components/blocks"
-import {
-    fromGlobalId,
-} from "@/modules/utils"
-import type {
-    MyCourseOutlineMilestone,
-    MyCourseOutlinePayload,
-} from "@/modules/api"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 import {
     useSelectedCourse,
 } from "../hooks/useSelectedCourse"
+import { useQueryMyCourseOutlineSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCourseOutlineSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { EmptyContent } from "@/components/blocks/async/EmptyContent"
+import { ListRow } from "@/components/blocks/lists/ListRow"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { StatusChip } from "@/components/blocks/chips/StatusChip"
+import type { StatusChipTone } from "@/components/blocks/chips/StatusChip"
+import { fromGlobalId } from "@/modules/utils/globalId"
+import type { MyCourseOutlineMilestone, MyCourseOutlinePayload } from "@/modules/api/graphql/queries/types/my-course-outline"
 
 /** Props for {@link CourseMilestoneOutline}. */
 export interface CourseMilestoneOutlineProps extends WithClassNames<undefined> {

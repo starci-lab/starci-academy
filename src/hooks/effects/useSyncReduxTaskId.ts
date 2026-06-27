@@ -1,7 +1,7 @@
-import { useAppDispatch } from "@/redux"
 import { useEffect } from "react"
 import { useParams, usePathname } from "next/navigation"
-import { setSelectedTaskId } from "@/redux/slices"
+import { useAppDispatch } from "@/redux/hooks"
+import { setSelectedTaskId } from "@/redux/slices/milestone"
 
 /**
  * Syncs `milestone.selectedTaskId` from the URL `tasks/[taskId]` segment.

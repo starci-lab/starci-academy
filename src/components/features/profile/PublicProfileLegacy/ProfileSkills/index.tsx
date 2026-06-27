@@ -10,22 +10,6 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    useQueryUserCodingSkillsSwr,
-    useQueryUserProfileSwr,
-} from "@/hooks"
-import type {
-    QueryUserCodingSkillCount,
-} from "@/modules/api"
-import {
-    SectionCard,
-} from "@/components/reuseable"
-import {
-    DifficultyChip,
-    EmptyState,
-    ProgressMeter,
-    type Difficulty,
-} from "@/components/blocks"
-import {
     useProfileUsername,
 } from "../useProfileUsername"
 import {
@@ -34,6 +18,13 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useQueryUserCodingSkillsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCodingSkillsSwr"
+import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
+import type { QueryUserCodingSkillCount } from "@/modules/api/graphql/queries/types/user-coding-skills"
+import { SectionCard } from "@/components/reuseable/SectionCard"
+import { DifficultyChip, type Difficulty } from "@/components/blocks/chips/DifficultyChip"
+import { EmptyState } from "@/components/blocks/feedback/EmptyState"
+import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
 
 /** Props for {@link ProfileSkills}. */
 export type ProfileSkillsProps = WithClassNames<undefined>

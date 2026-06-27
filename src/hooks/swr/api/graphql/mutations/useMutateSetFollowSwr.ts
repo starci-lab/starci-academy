@@ -1,8 +1,6 @@
-import {
-    mutateSetFollow,
-    type SetFollowRequest,
-} from "@/modules/api"
 import useSWRMutation from "swr/mutation"
+import { mutateSetFollow } from "@/modules/api/graphql/mutations/mutation-set-follow"
+import { type SetFollowRequest } from "@/modules/api/graphql/mutations/types/set-follow"
 
 type MutateSetFollowResult = Awaited<ReturnType<typeof mutateSetFollow>>
 

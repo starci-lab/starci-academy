@@ -12,8 +12,7 @@ import {
 import { useCallback, useMemo } from "react"
 import { AUTO_QUALITY_INDEX } from "../constants"
 import type { QualityLevel } from "../types"
-import type { WithClassNames } from "@/modules/types"
-
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link QualitySelector}. */
 export interface QualitySelectorProps extends WithClassNames<undefined> {

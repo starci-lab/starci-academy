@@ -7,7 +7,7 @@ import * as runtime from "react/jsx-runtime"
 import remarkGfm from "remark-gfm"
 import { cn, Spinner } from "@heroui/react"
 import { heroUiMdxComponents } from "../mdxComponents"
-import type { WithClassNames } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Compiled MDX module exposes its content as the default export. */
 type MdxContentComponent = React.ComponentType<{

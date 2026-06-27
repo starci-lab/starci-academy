@@ -9,18 +9,16 @@ import { Skeleton, Typography } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import type { HeadhuntingCompanySuggestionItem } from "@/modules/api/graphql"
-import { pathConfig } from "@/resources"
-import { useAppSelector } from "@/redux"
-import {
-    useQueryHeadhunterCompaniesSwr,
-    useQueryHeadhuntersSwr,
-    useQueryHeadhuntingCompanySuggestionsSwr,
-} from "@/hooks"
-import { PageHeader } from "@/components/blocks"
-import { SearchInput } from "@/components/reuseable"
 import { ConsultantGrid } from "./ConsultantGrid"
 import { HeadhuntingsBreadcrumbs } from "./HeadhuntingsBreadcrumbs"
+import type { HeadhuntingCompanySuggestionItem } from "@/modules/api/graphql/queries/types/headhunting-company-suggestions"
+import { pathConfig } from "@/resources/path"
+import { useAppSelector } from "@/redux/hooks"
+import { useQueryHeadhunterCompaniesSwr } from "@/hooks/swr/api/graphql/queries/useQueryHeadhunterCompaniesSwr"
+import { useQueryHeadhuntersSwr } from "@/hooks/swr/api/graphql/queries/useQueryHeadhuntersSwr"
+import { useQueryHeadhuntingCompanySuggestionsSwr } from "@/hooks/swr/api/graphql/queries/useQueryHeadhuntingCompanySuggestionsSwr"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { SearchInput } from "@/components/reuseable/SearchInput"
 
 /** Debounce window (ms) before a typed search hits the suggestions backend. */
 const SEARCH_DEBOUNCE_MS = 350

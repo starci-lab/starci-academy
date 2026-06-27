@@ -1,12 +1,10 @@
-import {
-    GraphQLHeadersKey,
-    queryTemplateCvs,
-} from "@/modules/api"
-import { useAppDispatch } from "@/redux"
-import { setTemplateCvs } from "@/redux/slices"
 import { useLocale } from "next-intl"
 import { usePathname } from "next/navigation"
 import useSWR from "swr"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { queryTemplateCvs } from "@/modules/api/graphql/queries/query-template-cvs"
+import { useAppDispatch } from "@/redux/hooks"
+import { setTemplateCvs } from "@/redux/slices/template-cvs"
 
 /**
  * SWR query core for the template CVs query.

@@ -19,23 +19,17 @@ import {
 import {
     useSWRConfig,
 } from "swr"
-import {
-    useQueryMyDailyQuestSwr,
-    useMutateClaimDailyQuestRewardSwr,
-} from "@/hooks"
-import {
-    AsyncContent,
-    Skeleton,
-} from "@/components/blocks"
-import {
-    useGraphQLWithToast,
-} from "@/modules/toast"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 import {
     DAILY_QUEST_ICON_MAP,
 } from "./map"
+import { useQueryMyDailyQuestSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyDailyQuestSwr"
+import { useMutateClaimDailyQuestRewardSwr } from "@/hooks/swr/api/graphql/mutations/useMutateClaimDailyQuestRewardSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
 
 /** Props for {@link DailyQuest}. */
 export type DailyQuestProps = WithClassNames<undefined>

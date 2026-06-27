@@ -2,8 +2,8 @@
 
 import React from "react"
 import { Skeleton, cn } from "@heroui/react"
-import { SkeletonText } from "@/components/reuseable"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { SkeletonText } from "@/components/reuseable/SkeletonText"
 
 /** Number of placeholder task rows shown in the keep-going path. */
 const SKELETON_TASK_COUNT = 4

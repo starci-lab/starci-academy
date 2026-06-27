@@ -1,6 +1,6 @@
-import { queryMyAiQuota } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { queryMyAiQuota } from "@/modules/api/graphql/queries/query-my-ai-quota"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR query wrapper for {@link queryMyAiQuota}. `data` is the unwrapped quota

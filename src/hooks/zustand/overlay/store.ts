@@ -1,8 +1,8 @@
 "use client"
 
 import { create } from "zustand"
-import type { PaymentContext } from "@/modules/types"
-import type { QueryActiveAdvertisementData } from "@/modules/api"
+import type { PaymentContext } from "@/modules/types/payment"
+import type { QueryActiveAdvertisementData } from "@/modules/api/graphql/queries/types/active-advertisement"
 
 /** Which side of the follow graph the follow-list modal opens on. */
 export type FollowListTab = "followers" | "following"
@@ -29,6 +29,7 @@ export type OverlayKey =
     | "challenge"
     | "content"
     | "contentAiChat"
+    | "cookiePreferences"
     | "cvPreview"
     | "cvReviewLevelDetails"
     | "cvSubmissionAttemptsDrawer"
@@ -62,6 +63,7 @@ const OVERLAY_KEYS: ReadonlyArray<OverlayKey> = [
     "challenge",
     "content",
     "contentAiChat",
+    "cookiePreferences",
     "cvPreview",
     "cvReviewLevelDetails",
     "cvSubmissionAttemptsDrawer",

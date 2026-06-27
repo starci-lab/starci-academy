@@ -7,10 +7,10 @@ import {
 import {
     Icon,
 } from "@iconify/react"
-import type { WithClassNames } from "@/modules/types"
 import {
     BadgeImage,
 } from "../BadgeImage"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Weekly-league tiers, lowest → highest. Mirrors the backend `LeagueTier` enum.

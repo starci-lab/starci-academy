@@ -1,7 +1,7 @@
-import { queryContentStatus } from "@/modules/api"
-import { useAppDispatch, useAppSelector } from "@/redux"
 import useSWR from "swr"
-import { setContentIsRead, setContentIsFavorite } from "@/redux/slices"
+import { queryContentStatus } from "@/modules/api/graphql/queries/query-content-status"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setContentIsRead, setContentIsFavorite } from "@/redux/slices/content"
 
 /**
  * Singleton SWR for `contentStatus(request: { contentId })` — fetches user's read/favorite status.

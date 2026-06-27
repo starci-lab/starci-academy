@@ -10,18 +10,12 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import type {
-    AiBalancerProviderHealth,
-} from "@/modules/api"
-import {
-    ModelProvider,
-} from "@/modules/api"
-import type {
-    WithClassNames,
-} from "@/modules/types"
 import {
     KeyRow,
 } from "./KeyRow"
+import type { AiBalancerProviderHealth } from "@/modules/api/graphql/queries/types/ai-balancer-health"
+import { ModelProvider } from "@/modules/api/graphql/queries/query-my-ai-settings"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 interface ProviderSectionProps extends WithClassNames<undefined> {
     /** Provider aggregate from GraphQL. */

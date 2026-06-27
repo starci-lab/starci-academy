@@ -1,10 +1,8 @@
-import {
-    GraphQLHeadersKey,
-    mutateSyncIdealText,
-    type SyncIdealTextRequest,
-} from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWRMutation from "swr/mutation"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { mutateSyncIdealText } from "@/modules/api/graphql/mutations/mutation-sync-ideal-text"
+import { type SyncIdealTextRequest } from "@/modules/api/graphql/mutations/types/sync-ideal-text"
+import { useAppSelector } from "@/redux/hooks"
 
 type MutateSyncIdealTextResult = Awaited<
     ReturnType<typeof mutateSyncIdealText>

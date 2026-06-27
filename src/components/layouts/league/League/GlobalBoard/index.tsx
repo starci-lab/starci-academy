@@ -11,23 +11,17 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    useQueryGlobalLeaderboardSwr,
-} from "@/hooks"
-import {
-    useAppSelector,
-} from "@/redux"
-import {
     pathConfig,
 } from "@/resources/path"
 import {
     UserAvatar,
 } from "@/components/reuseable/UserAvatar"
 import type {
-    QueryGlobalLeaderboardEntryData,
-} from "@/modules/api"
-import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useQueryGlobalLeaderboardSwr } from "@/hooks/swr/api/graphql/queries/useQueryGlobalLeaderboardSwr"
+import { useAppSelector } from "@/redux/hooks"
+import type { QueryGlobalLeaderboardEntryData } from "@/modules/api/graphql/queries/types/league"
 
 /** Props for {@link GlobalBoard}. */
 export type GlobalBoardProps = WithClassNames<undefined>

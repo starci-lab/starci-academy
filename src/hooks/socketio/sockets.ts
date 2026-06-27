@@ -24,3 +24,7 @@ export const aiLabSocket: Socket = aiLabManager.socket("/ai_lab")
 const communityChatManager = createManager()
 /** The `/community_chat` namespace socket (per-conversation message realtime). */
 export const communityChatSocket: Socket = communityChatManager.socket("/community_chat")
+
+const contentAiManager = createManager()
+/** The `/content_ai` namespace socket (grounded lesson Q&A answer token streaming). */
+export const contentAiSocket: Socket = contentAiManager.socket("/content_ai")

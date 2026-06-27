@@ -1,7 +1,7 @@
-import { queryCourseEnrollmentStatus } from "@/modules/api"
-import { useAppDispatch, useAppSelector } from "@/redux"
-import { setEnrolled, setEnrollment } from "@/redux/slices"
 import useSWR from "swr"
+import { queryCourseEnrollmentStatus } from "@/modules/api/graphql/queries/query-course-enrollment-status"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setEnrolled, setEnrollment } from "@/redux/slices/user"
 
 /**
  * The core function to query course enrollment status with SWR.

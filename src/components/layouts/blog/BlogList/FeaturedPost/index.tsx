@@ -4,8 +4,8 @@ import React from "react"
 import { Chip } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { Link } from "@/i18n/navigation"
-import { type QueryBlogPostListItem } from "@/modules/api/graphql"
 import { CATEGORY_COLOR } from "../../shared/category"
+import { type QueryBlogPostListItem } from "@/modules/api/graphql/queries/types/blog"
 
 /** Props for {@link FeaturedPost}. */
 export interface FeaturedPostProps {

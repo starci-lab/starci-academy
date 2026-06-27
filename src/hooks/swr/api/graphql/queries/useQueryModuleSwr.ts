@@ -1,8 +1,9 @@
-import { GraphQLHeadersKey, queryModule } from "@/modules/api"
-import { useAppDispatch, useAppSelector } from "@/redux"
-import { setModule } from "@/redux/slices"
 import { useParams } from "next/navigation"
 import useSWR from "swr"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { queryModule } from "@/modules/api/graphql/queries/query-module"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setModule } from "@/redux/slices/module"
 
 /**
  * Loads module shell (`ref/queries/modules/module`).

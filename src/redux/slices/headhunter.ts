@@ -1,11 +1,9 @@
-import type {
-    ConsultantEntity,
-    HeadhuntingCompanyEntity,
-} from "@/modules/types"
 import {
     createSlice,
     type PayloadAction,
 } from "@reduxjs/toolkit"
+import type { ConsultantEntity } from "@/modules/types/entities/consultant"
+import type { HeadhuntingCompanyEntity } from "@/modules/types/entities/headhunting-company"
 
 /**
  * Redux state for the Headhunter / Headhunting section (companies + consultants).

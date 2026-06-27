@@ -19,39 +19,23 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    useQueryMilestonesSwr,
-    useQueryMilestoneTaskProgressSwr,
-} from "@/hooks"
-import {
-    useAppSelector,
-    useAppDispatch,
-} from "@/redux"
-import {
-    setSelectedTaskId,
-} from "@/redux/slices"
-import {
-    OutlineRail,
-} from "@/components/blocks"
-import type {
-    OutlineRailGroup,
-} from "@/components/blocks"
-import type {
-    MilestoneEntity,
-    WithClassNames,
-} from "@/modules/types"
-import {
     pathConfig,
 } from "@/resources/path"
-import {
-    buildMilestoneTaskProgressLookup,
-    isPersonalProjectTaskActionUnlocked,
-} from "@/components/utils"
 import {
     MilestoneIndexStrip,
 } from "./MilestoneIndexStrip"
 import {
     MilestoneOutlineSkeleton,
 } from "./MilestoneOutlineSkeleton"
+import { useQueryMilestonesSwr } from "@/hooks/swr/api/graphql/queries/useQueryMilestonesSwr"
+import { useQueryMilestoneTaskProgressSwr } from "@/hooks/swr/api/graphql/queries/useQueryMilestoneTaskProgressSwr"
+import { useAppSelector, useAppDispatch } from "@/redux/hooks"
+import { setSelectedTaskId } from "@/redux/slices/milestone"
+import { OutlineRail } from "@/components/blocks/navigation/OutlineRail"
+import type { OutlineRailGroup } from "@/components/blocks/navigation/OutlineRail"
+import type { MilestoneEntity } from "@/modules/types/entities/milestone"
+import type { WithClassNames } from "@/modules/types/base/class-name"
+import { buildMilestoneTaskProgressLookup, isPersonalProjectTaskActionUnlocked } from "@/components/utils/task-lookup"
 
 /**
  * Props for {@link MilestoneOutline}.

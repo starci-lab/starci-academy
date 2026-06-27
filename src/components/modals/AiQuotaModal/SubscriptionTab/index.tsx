@@ -15,18 +15,14 @@ import {
     useRouter,
 } from "next/navigation"
 import {
-    useAiQuotaOverlayState,
-    useQueryMyAiQuotaSwr,
-} from "@/hooks"
-import {
-    pathConfig,
-} from "@/resources"
-import {
     QuotaLane,
 } from "../QuotaLane"
 import {
     QuotaLaneVariant,
 } from "../types"
+import { useAiQuotaOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useQueryMyAiQuotaSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiQuotaSwr"
+import { pathConfig } from "@/resources/path"
 
 /**
  * AI quota modal — subscription tab (Premium lane + subscribe CTA).

@@ -2,8 +2,8 @@
 // injected by the `use*WithToast` hooks (see ./hooks) so this core stays free of
 // React / i18n and is safe to call from anywhere. English fallbacks keep it working
 // when no localized messages are supplied.
-import { GraphQLResponse } from "@/modules/api"
 import { toast } from "@heroui/react"
+import { GraphQLResponse } from "@/modules/api/graphql/types"
 
 /** Localized labels used by the toast helpers. Resolved from i18n by the `use*WithToast` hooks. */
 export interface ToastMessages {

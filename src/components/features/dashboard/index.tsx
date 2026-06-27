@@ -7,10 +7,6 @@ import {
     cn,
 } from "@heroui/react"
 import {
-    useDashboardTabStore,
-    useRegisterNavbarBottomLayer,
-} from "@/hooks"
-import {
     useDashboardTabUrlSync,
 } from "./hooks/useDashboardTabUrlSync"
 import {
@@ -34,6 +30,8 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useDashboardTabStore } from "@/hooks/zustand/dashboardTab/store"
+import { useRegisterNavbarBottomLayer } from "@/hooks/zustand/navbarBottomLayer/store"
 
 /** Props for {@link Dashboard}. */
 export type DashboardProps = WithClassNames<undefined>

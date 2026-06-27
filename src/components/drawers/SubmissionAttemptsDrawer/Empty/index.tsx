@@ -2,8 +2,8 @@
 
 import React from "react"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types"
 import { cn } from "@heroui/react"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for the submission attempts empty state.

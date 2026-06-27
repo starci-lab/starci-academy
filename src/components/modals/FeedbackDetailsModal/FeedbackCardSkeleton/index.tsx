@@ -2,7 +2,7 @@
 
 import React from "react"
 import { Card, cn, Skeleton } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link FeedbackCardSkeleton}.
@@ -15,7 +15,7 @@ type FeedbackCardSkeletonProps = WithClassNames<undefined>
  */
 export const FeedbackCardSkeleton = ({ className }: FeedbackCardSkeletonProps) => {
     return (
-        <Card className={cn("w-full border border-divider bg-transparent p-0 shadow-none", className)}>
+        <Card className={cn("w-full border border-default bg-surface p-0 shadow-none", className)}>
             <Card.Content>
                 <div className="p-3">
                     <div className="flex items-center justify-between gap-3">

@@ -1,7 +1,7 @@
-import { useAppDispatch } from "@/redux"
 import { useEffect } from "react"
 import { useParams, usePathname } from "next/navigation"
-import { setSelectedMilestoneId } from "@/redux/slices"
+import { useAppDispatch } from "@/redux/hooks"
+import { setSelectedMilestoneId } from "@/redux/slices/milestone"
 
 /**
  * Syncs `milestone.selectedMilestoneId` from the `[milestoneId]` route param into Redux on navigation.

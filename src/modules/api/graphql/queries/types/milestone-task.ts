@@ -1,5 +1,5 @@
-import type { MilestoneTaskEntity } from "@/modules/types"
 import type { GraphQLResponse, QueryVariables } from "../../types"
+import type { MilestoneTaskEntity } from "@/modules/types/entities/milestone"
 
 /** Request body for the `task` GraphQL query (milestone task by id). */
 export interface MilestoneTaskQueryRequest {

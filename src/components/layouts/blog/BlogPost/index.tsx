@@ -8,11 +8,11 @@ import { useParams } from "next/navigation"
 import { Link } from "@/i18n/navigation"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { queryBlogPost } from "@/modules/api/graphql"
 import { CATEGORY_COLOR } from "../shared/category"
 import { ReadingProgress } from "./ReadingProgress"
 import { RelatedPosts } from "./RelatedPosts"
 import { BlogPostSkeleton } from "./BlogPostSkeleton"
+import { queryBlogPost } from "@/modules/api/graphql/queries/query-blog-post"
 
 /**
  * Public `/blog/[slug]` article. Reads the slug from the route, fetches the

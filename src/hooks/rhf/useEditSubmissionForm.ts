@@ -2,15 +2,14 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { debounce } from "lodash"
-import { ChallengeSubmissionEntity, SubmissionType } from "@/modules/types"
-import { useAppDispatch, useAppSelector } from "@/redux"
-import { setLoadingChallengeSubmissionIds } from "@/redux/slices"
-import {
-    useChallengeOverlayState,
-    useMutateSyncChallengeSubmissionSwr,
-    useQueryChallengeSubmissionsSwr,
-} from "@/hooks"
-import { useGraphQLWithToast } from "@/modules/toast"
+import { ChallengeSubmissionEntity } from "@/modules/types/entities/challenge-submission"
+import { SubmissionType } from "@/modules/types/enums/submission-type"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setLoadingChallengeSubmissionIds } from "@/redux/slices/challenge"
+import { useChallengeOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useMutateSyncChallengeSubmissionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSyncChallengeSubmissionSwr"
+import { useQueryChallengeSubmissionsSwr } from "@/hooks/swr/api/graphql/queries/useQueryChallengeSubmissionsSwr"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
 
 /** GitHub URL regex. */
 const GITHUB_REGEX = /^https:\/\/(www\.)?github\.com\/[A-Za-z0-9_.-]+(\/[A-Za-z0-9_.-]+)?(\/)?$/

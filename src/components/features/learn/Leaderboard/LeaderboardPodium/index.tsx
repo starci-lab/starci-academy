@@ -4,9 +4,9 @@ import React from "react"
 import { Typography, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { CrownIcon } from "@phosphor-icons/react"
-import { UserAvatar } from "@/components/reuseable"
-import type { WithClassNames } from "@/modules/types"
 import { categoryEntryXp, type LeaderboardCategoryKey, type RankedLeaderboardEntry } from "../categories"
+import { UserAvatar } from "@/components/reuseable/UserAvatar"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link LeaderboardPodium}. */
 export interface LeaderboardPodiumProps extends WithClassNames<undefined> {

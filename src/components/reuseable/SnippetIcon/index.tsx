@@ -6,8 +6,7 @@ import React, { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 
 import { cn } from "@heroui/react"
-import { WithClassNames } from "@/modules/types"
-
+import { WithClassNames } from "@/modules/types/base/class-name"
 
 export interface SnippetIconProps extends WithClassNames<{
   copyIcon?: string

@@ -1,8 +1,6 @@
-import {
-    mutateReorderPinnedProjects,
-    type ReorderPinnedProjectsRequest,
-} from "@/modules/api"
 import useSWRMutation from "swr/mutation"
+import { mutateReorderPinnedProjects } from "@/modules/api/graphql/mutations/mutation-reorder-pinned-projects"
+import { type ReorderPinnedProjectsRequest } from "@/modules/api/graphql/mutations/types/pinned-projects"
 
 type MutateReorderPinnedProjectsResult = Awaited<ReturnType<typeof mutateReorderPinnedProjects>>
 

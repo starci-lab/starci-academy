@@ -15,23 +15,15 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import type {
-    AiSubscriptionTier,
-} from "@/modules/api"
-import {
-    usePaymentOverlayState,
-} from "@/hooks"
-import {
-    PaymentFlow,
-    type WithClassNames,
-} from "@/modules/types"
-import {
-    TierLevelIcon,
-} from "@/components/svg"
 import {
     formatVnd,
     formatUsd,
 } from "../../utils"
+import type { AiSubscriptionTier } from "@/modules/api/graphql/queries/types/ai-subscription-tiers"
+import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { PaymentFlow } from "@/modules/types/payment"
+import { type WithClassNames } from "@/modules/types/base/class-name"
+import { TierLevelIcon } from "@/components/svg/TierLevelIcon"
 
 /** Props for {@link TierCard} (list item — per-item tier data only). */
 export interface TierCardProps extends WithClassNames<undefined> {

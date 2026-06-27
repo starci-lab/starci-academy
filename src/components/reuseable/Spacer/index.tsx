@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import type { WithClassNames } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 const spacingScale: Record<number, string> = {
     0.5: "0.125rem",

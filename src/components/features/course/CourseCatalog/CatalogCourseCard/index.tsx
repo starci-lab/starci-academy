@@ -1,9 +1,9 @@
 "use client"
 
 import React from "react"
-import { CourseCard } from "@/components/blocks"
-import { useQueryCoursePricePreviewSwr } from "@/hooks"
-import type { CourseEntity } from "@/modules/types"
+import { CourseCard } from "@/components/blocks/cards/CourseCard"
+import { useQueryCoursePricePreviewSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursePricePreviewSwr"
+import type { CourseEntity } from "@/modules/types/entities/course"
 
 /** Props for {@link CatalogCourseCard}. */
 export interface CatalogCourseCardProps {

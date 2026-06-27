@@ -6,9 +6,7 @@ import {
     Button,
     cn,
 } from "@heroui/react"
-import type {
-    WithClassNames,
-} from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link DetailRow}. */
 export interface DetailRowProps extends WithClassNames<undefined> {

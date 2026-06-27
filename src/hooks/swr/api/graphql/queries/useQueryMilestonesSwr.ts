@@ -1,7 +1,8 @@
-import { GraphQLHeadersKey, queryMilestones } from "@/modules/api"
-import { useAppSelector, useAppDispatch } from "@/redux"
-import { setMilestones } from "@/redux/slices"
 import useSWR from "swr"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { queryMilestones } from "@/modules/api/graphql/queries/query-milestones"
+import { useAppSelector, useAppDispatch } from "@/redux/hooks"
+import { setMilestones } from "@/redux/slices/milestone"
 
 /**
  * SWR query core for the milestones list query.

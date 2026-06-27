@@ -1,7 +1,7 @@
-import { querySuggestedUsers } from "@/modules/api"
-import type { QuerySuggestedUserData } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { querySuggestedUsers } from "@/modules/api/graphql/queries/query-suggested-users"
+import type { QuerySuggestedUserData } from "@/modules/api/graphql/queries/types/suggested-users"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR wrapper for {@link querySuggestedUsers}. `data` is the list of users

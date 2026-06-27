@@ -1,14 +1,10 @@
-import {
-    AiMode,
-    AiModelCategory,
-    type AiGradableModel,
-} from "@/modules/api"
-import type {
-    UserChallengeSubmissionEntity,
-} from "@/modules/types"
 import type {
     ChallengeGradeSelection,
 } from "../types"
+import { AiMode } from "@/modules/api/graphql/queries/query-my-ai-settings"
+import { AiModelCategory } from "@/modules/api/graphql/queries/query-ai-models"
+import { type AiGradableModel } from "@/modules/api/graphql/queries/types/ai-models"
+import type { UserChallengeSubmissionEntity } from "@/modules/types/entities/user-challenge-submission"
 
 /** The free Auto lane — balancer picks a complimentary model, no model chosen. */
 export const AUTO_GRADE_SELECTION: ChallengeGradeSelection = {

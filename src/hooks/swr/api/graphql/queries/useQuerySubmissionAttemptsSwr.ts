@@ -1,15 +1,10 @@
-import {
-    defaultSubmissionAttemptsListSorts,
-    GraphQLHeadersKey,
-    querySubmissionAttempts,
-} from "@/modules/api"
-import { useSubmissionAttemptsOverlayState } from "@/hooks"
-import { useAppDispatch, useAppSelector } from "@/redux"
 import useSWR from "swr"
-import { 
-    setSubmissionAttempts, 
-    setSubmissionAttemptsCount 
-} from "@/redux/slices"
+import { defaultSubmissionAttemptsListSorts, querySubmissionAttempts } from "@/modules/api/graphql/queries/query-submission-attempts"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { useSubmissionAttemptsOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setSubmissionAttempts, setSubmissionAttemptsCount } from "@/redux/slices/submission-attempt"
+
 /**
  * Lists submission requirements for the focused challenge (`challengeSubmissions`).
  * Runs when `challenge.id` (or loaded `challenge.entity.id`) and course context exist.

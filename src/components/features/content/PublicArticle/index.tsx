@@ -1,7 +1,7 @@
 import React from "react"
 import { Typography } from "@heroui/react"
-import { MarkdownContent } from "@/components/reuseable"
-import type { ContentEntity } from "@/modules/types"
+import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import type { ContentEntity } from "@/modules/types/entities/content"
 
 /** Props for {@link PublicArticle}. */
 export interface PublicArticleProps {

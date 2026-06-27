@@ -1,7 +1,7 @@
 "use client"
-
-import { HeadhuntingCompany } from "@/components/features/careers/Headhunting"
 import React from "react"
+import { HeadhuntingCompany } from "@/components/features/careers/Headhunting/HeadhuntingCompany"
+
 /**
  * Course / headhunting-companies / [companyId] — company profile and consultants.
  */

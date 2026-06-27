@@ -6,21 +6,17 @@ import {
     cn,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import {
-    useQueryUserCodingProgressSwr,
-    useQueryUserCodingRankSwr,
-    useQueryUserCodingSkillsSwr,
-} from "@/hooks"
-import {
-    AsyncContent,
-    MetricCard,
-    SegmentBar,
-    Skeleton,
-} from "@/components/blocks"
-import { useAppSelector } from "@/redux"
-import { CodingDifficulty } from "@/modules/api/graphql"
 import { CODING_DIFFICULTY_META } from "../constants"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { useQueryUserCodingProgressSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCodingProgressSwr"
+import { useQueryUserCodingRankSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCodingRankSwr"
+import { useQueryUserCodingSkillsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCodingSkillsSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { MetricCard } from "@/components/blocks/stats/MetricCard"
+import { SegmentBar } from "@/components/blocks/stats/SegmentBar"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { useAppSelector } from "@/redux/hooks"
+import { CodingDifficulty } from "@/modules/api/graphql/queries/types/coding"
 
 /** Props for {@link ProgressCockpit}. */
 export type ProgressCockpitProps = WithClassNames<undefined>

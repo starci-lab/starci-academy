@@ -11,12 +11,8 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import {
-    TierLevelIcon,
-} from "@/components/svg"
-import type {
-    WithClassNames,
-} from "@/modules/types"
+import { TierLevelIcon } from "@/components/svg/TierLevelIcon"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Free-tier base credit allowance — mirrors the backend free auto quota default

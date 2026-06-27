@@ -5,7 +5,21 @@ export const pathConfig = () => {
     const locale = (locale?: Locale) => {
         const localePath = locale ? `/${locale}` : ""
         const build = () => {
-            return `${localePath}`
+            // With no locale supplied, the bare root is "" — which is an empty href the router
+            // won't navigate to. Fall back to "/" so "go home" links (breadcrumbs) navigate to
+            // the locale root. NOTE: the root `/` is GitHub-style gated by the proxy (logged-in
+            // visitors are bounced to the dashboard); use `home()` below to reach the landing
+            // page on purpose without being gated.
+            return localePath || "/"
+        }
+        /** The marketing landing at an explicit, UNGATED url (`/home`) — proxy never bounces it,
+         *  so the logo / "Trang chủ" reach the landing even while signed in. */
+        const home = () => {
+            const homePath = `${localePath}/home`
+            const build = () => homePath
+            return {
+                build,
+            }
         }
         const profile = (username?: string) => {
             // when a username is given, point at that user's public profile
@@ -404,6 +418,26 @@ export const pathConfig = () => {
                 build,
             }
         }
+        const terms = () => {
+            // terms of service (stub page, linked from the footer)
+            const termsPath = `${localePath}/terms`
+            const build = () => {
+                return termsPath
+            }
+            return {
+                build,
+            }
+        }
+        const privacy = () => {
+            // privacy policy (stub page, linked from the footer)
+            const privacyPath = `${localePath}/privacy`
+            const build = () => {
+                return privacyPath
+            }
+            return {
+                build,
+            }
+        }
         const talents = () => {
             // talent directory: users who opted into "open to work"
             const talentsPath = `${localePath}/talents`
@@ -494,6 +528,7 @@ export const pathConfig = () => {
         }
         return {
             build,
+            home,
             course,
             profile,
             authentication,
@@ -508,6 +543,8 @@ export const pathConfig = () => {
             rewards,
             league,
             kpi,
+            terms,
+            privacy,
         }
     }
     return {

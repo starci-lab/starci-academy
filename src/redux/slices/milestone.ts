@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
-import type { MilestoneEntity, MilestoneTaskEntity } from "@/modules/types"
+import type { MilestoneEntity, MilestoneTaskEntity } from "@/modules/types/entities/milestone"
 
 /**
  * Redux state for milestone progress and task selection.

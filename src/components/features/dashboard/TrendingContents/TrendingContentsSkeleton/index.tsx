@@ -7,15 +7,12 @@ import {
 import {
     FlameIcon,
 } from "@phosphor-icons/react"
-import {
-    LabeledCard,
-    Skeleton,
-    SurfaceListCard,
-    SurfaceListCardItem,
-} from "@/components/blocks"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 
 /** Number of placeholder rows shown while trending contents load. */
 const SKELETON_ROW_COUNT = 5

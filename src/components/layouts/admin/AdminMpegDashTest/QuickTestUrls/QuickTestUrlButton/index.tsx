@@ -3,7 +3,7 @@
 import React, { useCallback } from "react"
 import { cn } from "@heroui/react"
 import type { QuickTestUrl } from "../../types"
-import type { WithClassNames } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 export interface QuickTestUrlButtonProps extends WithClassNames<undefined> {
     /** Preset to render. */

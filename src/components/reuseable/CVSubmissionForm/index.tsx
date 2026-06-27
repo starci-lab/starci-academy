@@ -14,13 +14,13 @@ import type {
 import type {
     CvSubmissionFormValues,
 } from "@/types"
-import type { WithClassNames } from "@/modules/types"
 import {
     CV_SUBMISSION_VALIDATION_SCHEMA,
 } from "./constants"
 import {
     CvSubmissionFields,
 } from "./CvSubmissionFields"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link CVSubmissionForm}. */
 export interface CVSubmissionFormProps extends WithClassNames<undefined> {

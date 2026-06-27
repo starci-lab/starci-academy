@@ -13,26 +13,18 @@ import {
     TrophyIcon,
 } from "@phosphor-icons/react"
 import {
-    useQueryUserAchievementsSwr,
-    useQueryUserProfileSwr,
-} from "@/hooks"
-import {
     useProfileUsername,
 } from "../../hooks/useProfileUsername"
-import {
-    MascotBadge,
-} from "@/components/reuseable"
-import {
-    AsyncContent,
-    LabeledCard,
-    Skeleton,
-} from "@/components/blocks"
-import {
-    getRank,
-} from "@/modules/utils"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useQueryUserAchievementsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserAchievementsSwr"
+import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
+import { MascotBadge } from "@/components/reuseable/MascotBadge"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { getRank } from "@/modules/utils/rank"
 
 /** One labelled achievement bucket: a group key plus the badge slugs it holds. */
 interface AchievementGroup {

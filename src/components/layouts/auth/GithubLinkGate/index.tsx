@@ -1,9 +1,9 @@
 "use client"
 
 import { useEffect } from "react"
-import { useAppSelector } from "@/redux"
-import { useLinkGithubOverlayState } from "@/hooks"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { useAppSelector } from "@/redux/hooks"
+import { useLinkGithubOverlayState } from "@/hooks/zustand/overlay/hooks"
 
 /** Session-storage key marking that the soft GitHub-link prompt already fired this session. */
 const SESSION_PROMPT_KEY = "linkGithubPrompted"

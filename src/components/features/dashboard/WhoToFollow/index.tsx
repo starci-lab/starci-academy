@@ -15,16 +15,6 @@ import {
     UserPlusIcon,
 } from "@phosphor-icons/react"
 import {
-    useMutateSetFollowSwr,
-    useQuerySuggestedUsersSwr,
-} from "@/hooks"
-import {
-    AsyncContent,
-} from "@/components/blocks"
-import {
-    SectionCard,
-} from "@/components/reuseable"
-import {
     FollowButton,
 } from "@/components/reuseable/FollowButton"
 import {
@@ -39,6 +29,10 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useMutateSetFollowSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSetFollowSwr"
+import { useQuerySuggestedUsersSwr } from "@/hooks/swr/api/graphql/queries/useQuerySuggestedUsersSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { SectionCard } from "@/components/reuseable/SectionCard"
 
 /** Props for {@link WhoToFollow}. */
 export type WhoToFollowProps = WithClassNames<undefined>

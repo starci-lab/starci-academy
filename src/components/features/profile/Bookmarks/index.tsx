@@ -14,22 +14,17 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    AsyncContent,
-    EmptyContent,
-    PageHeader,
-    Skeleton,
-    SurfaceListCard,
-} from "@/components/blocks"
-import {
-    SAVED_CONTENTS_PAGE_SIZE,
-    useQuerySavedContentsSwr,
-} from "@/hooks"
-import {
     SettingsBreadcrumb,
 } from "../Settings/SettingsBreadcrumb"
 import {
     BookmarkCard,
 } from "./BookmarkCard"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { EmptyContent } from "@/components/blocks/async/EmptyContent"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { SurfaceListCard } from "@/components/blocks/cards/SurfaceListCard"
+import { SAVED_CONTENTS_PAGE_SIZE, useQuerySavedContentsSwr } from "@/hooks/swr/api/graphql/queries/useQuerySavedContentsSwr"
 
 /**
  * Bookmark page — a searchable, paginated library of the viewer's saved contents.

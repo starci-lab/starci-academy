@@ -1,10 +1,8 @@
 "use client"
 
 import useSWR from "swr"
-import {
-    queryMyCodingProgress,
-    type MyCodingProgress,
-} from "@/modules/api/graphql"
+import { queryMyCodingProgress } from "@/modules/api/graphql/queries/query-my-coding-progress"
+import { type MyCodingProgress } from "@/modules/api/graphql/queries/types/coding"
 
 /**
  * SWR hook for the signed-in user's coding-practice status (solved / attempted /

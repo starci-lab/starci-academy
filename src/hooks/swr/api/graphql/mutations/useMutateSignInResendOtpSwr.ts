@@ -1,9 +1,7 @@
-import type { AbortableRequest } from "@/modules/api"
-import {
-    mutateSignInResendOtp,
-    type SignInResendOtpRequest,
-} from "@/modules/api"
 import useSWRMutation from "swr/mutation"
+import type { AbortableRequest } from "@/modules/api/graphql/types"
+import { mutateSignInResendOtp } from "@/modules/api/graphql/mutations/mutation-sign-in-resend-otp"
+import { type SignInResendOtpRequest } from "@/modules/api/graphql/mutations/types/sign-in-resend-otp"
 
 type MutateSignInResendOtpResult = Awaited<ReturnType<typeof mutateSignInResendOtp>>
 

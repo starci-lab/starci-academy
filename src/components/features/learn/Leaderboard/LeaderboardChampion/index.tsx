@@ -4,9 +4,9 @@ import React from "react"
 import { Chip, Typography, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { CrownIcon } from "@phosphor-icons/react"
-import { UserAvatar } from "@/components/reuseable"
-import type { CourseLeaderboardEntry } from "@/modules/api/graphql"
-import type { WithClassNames } from "@/modules/types"
+import { UserAvatar } from "@/components/reuseable/UserAvatar"
+import type { CourseLeaderboardEntry } from "@/modules/api/graphql/queries/types/course-leaderboard"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link LeaderboardChampion}. */
 export interface LeaderboardChampionProps extends WithClassNames<undefined> {

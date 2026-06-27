@@ -4,12 +4,13 @@ import React from "react"
 import { Typography } from "@heroui/react"
 import { SealCheckIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import { ReactionType } from "@/modules/api"
-import type { QueryCommunityCommentNode } from "@/modules/api"
 import { getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
-import type { WithClassNames } from "@/modules/types"
 import { ReactionBar } from "../ReactionBar"
-import { MarkdownContent, UserAvatar } from "@/components/reuseable"
+import { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
+import type { QueryCommunityCommentNode } from "@/modules/api/graphql/queries/types/community-comments"
+import type { WithClassNames } from "@/modules/types/base/class-name"
+import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { UserAvatar } from "@/components/reuseable/UserAvatar"
 
 /** Props for the {@link CommunityCommentRow} block. */
 export interface CommunityCommentRowProps extends WithClassNames<undefined> {

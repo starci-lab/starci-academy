@@ -5,15 +5,16 @@ import useSWR from "swr"
 import { Chip, Typography } from "@heroui/react"
 import { ChartLineUpIcon, FlameIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import {
-    queryFlashcardDecksByCourse,
-    queryMyDueFlashcards,
-    queryMyFlashcardStats,
-} from "@/modules/api/graphql"
-import { AsyncContent, LabeledCard, SegmentBar, Skeleton } from "@/components/blocks"
-import { useAppSelector } from "@/redux"
 import { DUE_REVIEW_LIMIT } from "../constants"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { queryFlashcardDecksByCourse } from "@/modules/api/graphql/queries/query-flashcard-decks-by-course"
+import { queryMyDueFlashcards } from "@/modules/api/graphql/queries/query-my-due-flashcards"
+import { queryMyFlashcardStats } from "@/modules/api/graphql/queries/query-my-flashcard-stats"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { SegmentBar } from "@/components/blocks/stats/SegmentBar"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Props for {@link FlashcardStatsStrip}. */
 export type FlashcardStatsStripProps = WithClassNames<undefined>

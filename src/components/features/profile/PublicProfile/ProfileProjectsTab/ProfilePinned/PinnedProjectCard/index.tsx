@@ -13,8 +13,8 @@ import {
     CodeIcon,
 } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import type { QueryUserPinnedProjectItem } from "@/modules/api"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import type { QueryUserPinnedProjectItem } from "@/modules/api/graphql/queries/types/user-pinned-projects"
 
 /** Tech-stack chips shown inline before collapsing the rest into a "+N" chip. */
 const MAX_TECH_CHIPS = 3

@@ -5,7 +5,6 @@
 // directly, so every toast message is localized.
 import { useCallback, useMemo } from "react"
 import { useTranslations } from "next-intl"
-import type { GraphQLResponse } from "@/modules/api"
 import {
     runGraphQLWithToast,
     runRestWithToast,
@@ -13,6 +12,7 @@ import {
     type RunRestWithToastOptions,
     type ToastMessages,
 } from "./api"
+import type { GraphQLResponse } from "@/modules/api/graphql/types"
 
 /** Resolve the localized {@link ToastMessages} from the `toast` i18n namespace. */
 const useToastMessages = (): ToastMessages => {

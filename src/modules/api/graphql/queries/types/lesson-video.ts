@@ -1,5 +1,5 @@
-import type { LessonVideoEntity } from "@/modules/types"
 import type { GraphQLResponse } from "../../types"
+import type { LessonVideoEntity } from "@/modules/types/entities/lesson-video"
 
 /** Apollo response shape for the `lessonVideo` query. */
 export interface QueryLessonVideoResponse {

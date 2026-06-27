@@ -11,15 +11,13 @@ import {
     CaretLeftIcon,
     CaretRightIcon,
 } from "@phosphor-icons/react"
-import {
-    PressableCard,
-} from "@/components/blocks"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 import {
     useLessonNavigation,
 } from "../hooks/useLessonNavigation"
+import { PressableCard } from "@/components/blocks/cards/PressableCard"
 
 /** Props for {@link LessonPager}. */
 export type LessonPagerProps = WithClassNames<undefined>

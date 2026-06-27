@@ -18,19 +18,15 @@ import {
     useRouter,
 } from "next/navigation"
 import {
-    useQueryMyWeeklyStatsSwr,
-} from "@/hooks"
-import {
-    AsyncContent,
-    InfoTooltip,
-    Skeleton,
-} from "@/components/blocks"
-import {
     pathConfig,
 } from "@/resources/path"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useQueryMyWeeklyStatsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyWeeklyStatsSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { InfoTooltip } from "@/components/blocks/feedback/InfoTooltip"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /** Props for {@link StreakStrip}. */
 export type StreakStripProps = WithClassNames<undefined>
@@ -111,14 +107,13 @@ export const StreakStrip = ({
                     {hasAny ? (
                         <div className="flex items-center gap-2">
                             <FlameIcon aria-hidden focusable="false" className="size-5 shrink-0 text-accent" />
-                            <Typography type="body-sm" weight="medium">
-                                <InfoTooltip
-                                    title={t("dashboard.streakLabel")}
-                                    description={t("dashboard.streak.help")}
-                                >
-                                    {t("dashboard.streak.current", { count: streak })}
-                                </InfoTooltip>
-                            </Typography>
+                            <InfoTooltip
+                                className="text-sm font-medium"
+                                title={t("dashboard.streakLabel")}
+                                description={t("dashboard.streak.help")}
+                            >
+                                {t("dashboard.streak.current", { count: streak })}
+                            </InfoTooltip>
                             <Chip color="accent" variant="soft" size="sm">
                                 <Chip.Label>{t("dashboard.streak.longest", { count: longest })}</Chip.Label>
                             </Chip>

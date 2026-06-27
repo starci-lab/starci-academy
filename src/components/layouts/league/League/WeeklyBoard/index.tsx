@@ -11,21 +11,15 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    useQueryMyLeagueSwr,
-} from "@/hooks"
-import {
-    useAppSelector,
-} from "@/redux"
-import {
-    LeagueRow,
-} from "@/components/reuseable"
-import {
     LeagueTier,
     LeagueTierBadge,
 } from "@/components/reuseable/LeagueTierBadge"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useQueryMyLeagueSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyLeagueSwr"
+import { useAppSelector } from "@/redux/hooks"
+import { LeagueRow } from "@/components/reuseable/LeagueRow"
 
 /** Props for {@link WeeklyBoard}. */
 export type WeeklyBoardProps = WithClassNames<undefined>

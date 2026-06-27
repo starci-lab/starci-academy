@@ -4,7 +4,8 @@ import React from "react"
 import { cn } from "@heroui/react"
 import { useCallback } from "react"
 import type { RendererTypeOption } from "../../types"
-import type { VideoRendererType, WithClassNames } from "@/modules/types"
+import type { VideoRendererType } from "@/modules/types/enums/video-renderer-type"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 export interface RendererTypeButtonProps extends WithClassNames<undefined> {
     /** Option metadata to render. */

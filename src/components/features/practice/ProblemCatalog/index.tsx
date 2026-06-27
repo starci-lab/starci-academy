@@ -9,15 +9,6 @@ import {
     cn,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import {
-    AsyncContent,
-    Skeleton,
-} from "@/components/blocks"
-import {
-    CODING_DOMAIN_ORDER,
-    type CodingDomain,
-    type CodingProblem,
-} from "@/modules/api/graphql"
 import { usePracticeFilters } from "../hooks/usePracticeFilters"
 import { useCodingProblemsSwr } from "../hooks/useCodingProblemsSwr"
 import { useMyCodingProgressSwr } from "../hooks/useMyCodingProgressSwr"
@@ -28,6 +19,9 @@ import {
 } from "../utils"
 import { ProblemRow } from "./ProblemRow"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { CODING_DOMAIN_ORDER, type CodingDomain, type CodingProblem } from "@/modules/api/graphql/queries/types/coding"
 
 /** Props for {@link ProblemCatalog}. */
 export type ProblemCatalogProps = WithClassNames<undefined>

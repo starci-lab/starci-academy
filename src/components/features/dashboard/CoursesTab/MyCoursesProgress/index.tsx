@@ -5,20 +5,15 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    useQueryMyCoursesSwr,
-} from "@/hooks"
-import {
-    AsyncContent,
-    Skeleton,
-    SurfaceListCard,
-    SurfaceListCardItem,
-} from "@/components/blocks"
-import {
     CourseRow,
 } from "./CourseRow"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useQueryMyCoursesSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCoursesSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 
 /** Props for {@link MyCoursesProgress}. */
 export type MyCoursesProgressProps = WithClassNames<undefined>

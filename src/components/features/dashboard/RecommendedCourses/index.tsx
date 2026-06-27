@@ -14,15 +14,6 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    useQueryRecommendedCoursesSwr,
-} from "@/hooks"
-import {
-    AsyncContent,
-    IconTile,
-    LabeledCard,
-    Skeleton,
-} from "@/components/blocks"
-import {
     EntityToken,
 } from "@/components/features/dashboard/EntityToken"
 import {
@@ -31,6 +22,11 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useQueryRecommendedCoursesSwr } from "@/hooks/swr/api/graphql/queries/useQueryRecommendedCoursesSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { IconTile } from "@/components/blocks/identity/IconTile"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /** Props for {@link RecommendedCourses}. */
 export type RecommendedCoursesProps = WithClassNames<undefined>

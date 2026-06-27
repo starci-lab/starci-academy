@@ -1,10 +1,8 @@
-import {
-    GraphQLHeadersKey,
-    mutateSubmitPersonalGithubUrl,
-    type SubmitPersonalGithubUrlRequest,
-} from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWRMutation from "swr/mutation"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { mutateSubmitPersonalGithubUrl } from "@/modules/api/graphql/mutations/mutation-submit-personal-github-url"
+import { type SubmitPersonalGithubUrlRequest } from "@/modules/api/graphql/mutations/types/submit-personal-github-url"
+import { useAppSelector } from "@/redux/hooks"
 
 type MutateSubmitPersonalGithubUrlResult = Awaited<
     ReturnType<typeof mutateSubmitPersonalGithubUrl>

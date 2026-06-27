@@ -12,10 +12,10 @@
  * - {@link useSignUpForm} — submit branches + `challengeId` / `otp` values.
  */
 import React from "react"
-import { useAppSelector } from "@/redux"
-import { SignUpState } from "@/redux/slices"
 import { RegistrationState } from "./RegistrationState"
 import { OtpState } from "./OtpState"
+import { useAppSelector } from "@/redux/hooks"
+import { SignUpState } from "@/redux/slices/state"
 
 /**
  * Renders the active sign-up step from `signUpState`.

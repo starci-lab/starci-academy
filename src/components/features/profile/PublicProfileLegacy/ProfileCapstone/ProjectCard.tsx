@@ -24,11 +24,9 @@ import {
     EntityToken,
 } from "@/components/features/dashboard/EntityToken"
 import type {
-    QueryUserCapstoneCourseProgress,
-} from "@/modules/api"
-import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import type { QueryUserCapstoneCourseProgress } from "@/modules/api/graphql/queries/types/user-capstone-progress"
 
 /** Props for {@link ProjectCard}. */
 export interface ProjectCardProps extends WithClassNames<undefined> {

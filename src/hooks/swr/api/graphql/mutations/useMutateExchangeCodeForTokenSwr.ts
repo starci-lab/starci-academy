@@ -1,10 +1,9 @@
-import {
-    AbortableRequest,
-    mutateExchangeCodeForToken,
-    type ExchangeCodeForTokenRequest,
-} from "@/modules/api"
-import { LocalStorage, LocalStorageId } from "@/modules/storage"
 import useSWRMutation from "swr/mutation"
+import { AbortableRequest } from "@/modules/api/graphql/types"
+import { mutateExchangeCodeForToken } from "@/modules/api/graphql/mutations/mutation-exchange-code-for-token"
+import { type ExchangeCodeForTokenRequest } from "@/modules/api/graphql/mutations/types/exchange-code-for-token"
+import { LocalStorage } from "@/modules/storage/local/storage"
+import { LocalStorageId } from "@/modules/storage/local/enums/id"
 
 type MutateExchangeCodeForTokenResult = Awaited<
     ReturnType<typeof mutateExchangeCodeForToken>

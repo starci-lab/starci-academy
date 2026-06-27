@@ -2,16 +2,11 @@
 
 import { useCallback, useEffect, useRef } from "react"
 import { useTranslations } from "next-intl"
-import {
-    AiMode,
-    ModelProvider,
-    type UpdateMyAiSettingsRequest,
-} from "@/modules/api"
-import {
-    useQueryMyAiSettingsSwr,
-    useMutateUpdateMyAiSettingsSwr,
-} from "@/hooks/swr"
 import { useAiSettingsStore } from "./store"
+import { AiMode, ModelProvider } from "@/modules/api/graphql/queries/query-my-ai-settings"
+import { type UpdateMyAiSettingsRequest } from "@/modules/api/graphql/mutations/types/update-my-ai-settings"
+import { useQueryMyAiSettingsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiSettingsSwr"
+import { useMutateUpdateMyAiSettingsSwr } from "@/hooks/swr/api/graphql/mutations/useMutateUpdateMyAiSettingsSwr"
 
 /**
  * Form hook for AI settings — state SHARED via {@link useAiSettingsStore} (4 components read/write).

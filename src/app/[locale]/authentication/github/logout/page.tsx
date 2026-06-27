@@ -1,8 +1,6 @@
 import React from "react"
-import {
-    OauthRedirect,
-    OauthAction,
-} from "@/components/layouts/auth"
+import { OauthRedirect } from "@/components/layouts/auth/OauthRedirect"
+import { OauthAction } from "@/components/layouts/auth/OauthRedirect/enums/oauth-action"
 
 /**
  * Route `/[locale]/authentication/github/logout` — OAuth redirect landing after

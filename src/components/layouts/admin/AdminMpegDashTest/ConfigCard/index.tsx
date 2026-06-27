@@ -4,7 +4,8 @@ import React from "react"
 import { Card, CardContent, Input, cn } from "@heroui/react"
 import { RENDERER_TYPE_OPTIONS } from "../map"
 import { RendererTypeButton } from "./RendererTypeButton"
-import type { VideoRendererType, WithClassNames } from "@/modules/types"
+import type { VideoRendererType } from "@/modules/types/enums/video-renderer-type"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 export interface ConfigCardProps extends WithClassNames<undefined> {
     /** Current URL value. */

@@ -3,17 +3,11 @@
 import {
     useMemo,
 } from "react"
-import {
-    useAppSelector,
-} from "@/redux"
-import {
-    useQueryMyCoursesSwr,
-    useQueryMyInProgressChallengesSwr,
-    useQueryMyLearnedLessonsSwr,
-} from "@/hooks"
-import type {
-    QueryMyDashboardRefItemData,
-} from "@/modules/api"
+import { useAppSelector } from "@/redux/hooks"
+import { useQueryMyCoursesSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCoursesSwr"
+import { useQueryMyInProgressChallengesSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyInProgressChallengesSwr"
+import { useQueryMyLearnedLessonsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyLearnedLessonsSwr"
+import type { QueryMyDashboardRefItemData } from "@/modules/api/graphql/queries/types/my-dashboard"
 
 /** Kind of resume target — drives the chip icon + label. */
 export type ResumeKind = "challenge" | "lesson"

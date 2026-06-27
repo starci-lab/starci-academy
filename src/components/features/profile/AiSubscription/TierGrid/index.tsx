@@ -2,13 +2,6 @@
 
 import React from "react"
 import {
-    useQueryAiSubscriptionTiersSwr,
-    useQueryMyAiSettingsSwr,
-} from "@/hooks"
-import type {
-    WithClassNames,
-} from "@/modules/types"
-import {
     cn,
 } from "@heroui/react"
 import {
@@ -17,6 +10,9 @@ import {
 import {
     TierCard,
 } from "./TierCard"
+import { useQueryAiSubscriptionTiersSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiSubscriptionTiersSwr"
+import { useQueryMyAiSettingsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiSettingsSwr"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link TierGrid}. */
 export type TierGridProps = WithClassNames<undefined>

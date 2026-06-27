@@ -1,13 +1,10 @@
 "use client"
-
-import {
-    GraphQLHeadersKey,
-    mutateReviewCv,
-    type ReviewCvRequest,
-} from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import { useLocale } from "next-intl"
 import useSWRMutation from "swr/mutation"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { mutateReviewCv } from "@/modules/api/graphql/mutations/mutation-review-cv"
+import { type ReviewCvRequest } from "@/modules/api/graphql/mutations/types/review-cv"
+import { useAppSelector } from "@/redux/hooks"
 
 type MutateReviewCvResult = Awaited<ReturnType<typeof mutateReviewCv>>
 

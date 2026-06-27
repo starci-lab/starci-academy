@@ -1,8 +1,6 @@
-import {
-    mutatePurchaseAiSubscription,
-    type PurchaseAiSubscriptionRequest,
-} from "@/modules/api"
 import useSWRMutation from "swr/mutation"
+import { mutatePurchaseAiSubscription } from "@/modules/api/graphql/mutations/mutation-purchase-ai-subscription"
+import { type PurchaseAiSubscriptionRequest } from "@/modules/api/graphql/mutations/types/purchase-ai-subscription"
 
 type MutatePurchaseAiSubscriptionResult = Awaited<ReturnType<typeof mutatePurchaseAiSubscription>>
 

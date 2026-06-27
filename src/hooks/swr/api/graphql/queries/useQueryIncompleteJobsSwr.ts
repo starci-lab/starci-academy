@@ -1,10 +1,8 @@
-import {
-    GraphQLHeadersKey,
-    queryIncompleteJobs,
-} from "@/modules/api"
-import { useAppDispatch, useAppSelector } from "@/redux"
-import { setIncompleteJobs } from "@/redux/slices"
 import useSWR from "swr"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { queryIncompleteJobs } from "@/modules/api/graphql/queries/query-incomplete-jobs"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setIncompleteJobs } from "@/redux/slices/job"
 
 /**
  * Fetches incomplete jobs for the enrolled course using `X-Course-Id`,

@@ -10,20 +10,16 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    useQueryMyContributionCalendarSwr,
-} from "@/hooks"
-import {
     ContributionCalendarView,
 } from "@/components/reuseable/ContributionCalendarView"
-import {
-    AsyncContent,
-} from "@/components/blocks"
 import {
     OverviewContributionsSkeleton,
 } from "./OverviewContributionsSkeleton"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useQueryMyContributionCalendarSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyContributionCalendarSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 
 /** Props for {@link OverviewContributions}. */
 export type OverviewContributionsProps = WithClassNames<undefined>

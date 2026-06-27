@@ -1,10 +1,8 @@
-import type {
-    PersonalProjectTaskEntity,
-} from "@/modules/types"
 import {
     createSlice,
     type PayloadAction,
 } from "@reduxjs/toolkit"
+import type { PersonalProjectTaskEntity } from "@/modules/types/entities/personal-project-task"
 
 /**
  * The slice for personal project tasks (Trello board columns).

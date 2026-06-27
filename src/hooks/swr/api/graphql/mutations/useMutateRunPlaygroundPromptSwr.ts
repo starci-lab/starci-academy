@@ -1,11 +1,9 @@
 
-import {
-    GraphQLHeadersKey,
-    mutateRunPlaygroundPrompt,
-    type RunPlaygroundPromptInput,
-} from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWRMutation from "swr/mutation"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { mutateRunPlaygroundPrompt } from "@/modules/api/graphql/mutations/mutation-run-playground-prompt"
+import { type RunPlaygroundPromptInput } from "@/modules/api/graphql/mutations/types/run-playground-prompt"
+import { useAppSelector } from "@/redux/hooks"
 
 type MutateRunPlaygroundPromptResult = Awaited<
     ReturnType<typeof mutateRunPlaygroundPrompt>

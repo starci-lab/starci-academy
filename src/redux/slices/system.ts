@@ -1,8 +1,8 @@
-import type { SystemConfigData } from "@/modules/types"
 import {
     createSlice,
     type PayloadAction,
 } from "@reduxjs/toolkit"
+import type { SystemConfigData } from "@/modules/types/system-config"
 
 /**
  * App-wide system settings from the API (`querySystemConfig` / mounted `app.json`).

@@ -1,10 +1,8 @@
-import type {
-    ContentEntity,
-} from "@/modules/types"
 import {
     createSlice,
     type PayloadAction,
 } from "@reduxjs/toolkit"
+import type { ContentEntity } from "@/modules/types/entities/content"
 
 /**
  * Client state for the active content entity and the paginated content list.

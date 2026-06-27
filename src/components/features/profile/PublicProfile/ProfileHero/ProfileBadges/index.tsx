@@ -9,27 +9,19 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import {
-    useQueryUserAchievementsSwr,
-    useQueryUserProfileSwr,
-} from "@/hooks"
-import {
-    AsyncContent,
-    InfoTooltip,
-    Skeleton,
-} from "@/components/blocks"
-import {
-    MascotBadge,
-} from "@/components/reuseable"
-import {
-    getRank,
-} from "@/modules/utils"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 import {
     useProfileUsername,
 } from "../../hooks/useProfileUsername"
+import { useQueryUserAchievementsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserAchievementsSwr"
+import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { InfoTooltip } from "@/components/blocks/feedback/InfoTooltip"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { MascotBadge } from "@/components/reuseable/MascotBadge"
+import { getRank } from "@/modules/utils/rank"
 
 /** How many medals to show before the "+N" overflow. */
 const MAX_BADGES = 6

@@ -1,9 +1,6 @@
-import {
-    keycloakRegister,
-    type KeycloakRegisterRequest,
-    type KeycloakRegisterResponse,
-} from "@/modules/api"
 import useSWRMutation from "swr/mutation"
+import { keycloakRegister } from "@/modules/api/rest/keycloak-auth/register"
+import { type KeycloakRegisterRequest, type KeycloakRegisterResponse } from "@/modules/api/rest/keycloak-auth/types"
 
 /**
  * SWR mutation wrapper for {@link keycloakRegister}.

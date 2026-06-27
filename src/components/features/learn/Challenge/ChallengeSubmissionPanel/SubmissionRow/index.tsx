@@ -18,22 +18,8 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    JobCategory,
-} from "@/modules/types"
-import {
-    AiMode,
-} from "@/modules/api"
-import {
     useSystemAiAutoConfig,
 } from "@/hooks/useSystemAiAutoConfig"
-import {
-    AIProcessingText,
-    MarkdownContent,
-} from "@/components/reuseable"
-import type {
-    AiGradableModel,
-} from "@/modules/api"
-import type { WithClassNames } from "@/modules/types"
 import type {
     ChallengeGradeSelection,
     ChallengeSubmissionRowViewModel,
@@ -51,6 +37,12 @@ import {
 import {
     LastAttemptResult,
 } from "./LastAttemptResult"
+import { JobCategory } from "@/modules/types/enums/job-category"
+import { AiMode } from "@/modules/api/graphql/queries/query-my-ai-settings"
+import { AIProcessingText } from "@/components/reuseable/AIProcessingText"
+import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import type { AiGradableModel } from "@/modules/api/graphql/queries/types/ai-models"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link SubmissionRow}. */
 export interface SubmissionRowProps extends WithClassNames<undefined> {

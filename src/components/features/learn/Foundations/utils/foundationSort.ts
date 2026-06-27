@@ -1,4 +1,4 @@
-import type { FoundationEntity } from "@/modules/types"
+import type { FoundationEntity } from "@/modules/types/entities/foundation"
 
 const STARCI_AUTHOR_PATTERN = /starci/i
 

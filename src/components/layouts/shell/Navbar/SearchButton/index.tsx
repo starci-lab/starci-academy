@@ -10,12 +10,8 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import {
-    useSearchOverlayState,
-} from "@/hooks"
-import type {
-    WithClassNames,
-} from "@/modules/types"
+import { useSearchOverlayState } from "@/hooks/zustand/overlay/hooks"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link SearchButton}.

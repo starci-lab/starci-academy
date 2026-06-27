@@ -1,13 +1,11 @@
 import {
-    KeycloakIdentityProvider,
-} from "@/modules/api"
-import {
     GoogleIcon,
     GithubIcon,
 } from "../../../../svg"
 import type {
     OauthButtonItem,
 } from "./types"
+import { KeycloakIdentityProvider } from "@/modules/api/graphql/mutations/types/exchange-code-for-token"
 
 /**
  * Ordered catalog of OAuth shortcut buttons shown on the sign-in step.

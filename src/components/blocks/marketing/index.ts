@@ -1,7 +1,0 @@
-export * from "./SectionHeading"
-export * from "./PitchCard"
-export * from "./HeroBanner"
-export * from "./FounderManifesto"
-export * from "./TrackLadder"
-export * from "./ArchitectureFlow"
-export * from "./MicroservicesDiagram"

@@ -4,11 +4,11 @@ import React, { useState } from "react"
 import { Link, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
-import { ReactionType, type CommentNode } from "@/modules/api"
-import type { WithClassNames } from "@/modules/types"
 import { UserAvatar } from "../UserAvatar"
 import { ReactionBar } from "./ReactionBar"
 import { CommentComposer } from "./CommentComposer"
+import { ReactionType, type CommentNode } from "@/modules/api/graphql/queries/types/discussion"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Callbacks shared down the comment tree. */
 export interface CommentItemCallbacks {

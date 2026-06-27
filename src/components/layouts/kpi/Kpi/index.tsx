@@ -15,25 +15,16 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    useQueryMyKpisSwr,
-    useMutateSetKpiTargetSwr,
-} from "@/hooks"
-import type {
-    KpiKey,
-    QueryKpiItemData,
-} from "@/modules/api"
-import {
-    useGraphQLWithToast,
-} from "@/modules/toast"
-import {
-    InfoTooltip,
-} from "@/components/blocks"
-import {
     KPI_META,
 } from "../kpiMeta"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useQueryMyKpisSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyKpisSwr"
+import { useMutateSetKpiTargetSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSetKpiTargetSwr"
+import type { KpiKey, QueryKpiItemData } from "@/modules/api/graphql/queries/types/my-kpis"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
+import { InfoTooltip } from "@/components/blocks/feedback/InfoTooltip"
 
 /** Props for {@link Kpi}. */
 export type KpiProps = WithClassNames<undefined>

@@ -3,7 +3,7 @@
 import React from "react"
 import { cn, Slider } from "@heroui/react"
 import { useCallback } from "react"
-import type { WithClassNames } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link SeekBar}. */
 export interface SeekBarProps extends WithClassNames<undefined> {

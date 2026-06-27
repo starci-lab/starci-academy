@@ -4,12 +4,10 @@ import React from "react"
 import {
     cn,
 } from "@heroui/react"
-import {
-    Skeleton,
-} from "@/components/blocks"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /** Representative week columns shown (the real grid is ~53, draggable past the viewport). */
 const WEEK_COLUMNS = 26

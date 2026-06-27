@@ -3,7 +3,7 @@
 import React from "react"
 import { cn } from "@heroui/react"
 import type { ReactionDescriptor } from "./constants"
-import type { WithClassNames } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Visual size for {@link ReactionEmoji}. */
 export type ReactionEmojiSize = "xs" | "sm" | "md" | "lg"

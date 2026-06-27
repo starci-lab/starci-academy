@@ -2,6 +2,7 @@
 
 import { useAiLabSocketIoLifecycle } from "./useAiLabSocketIoLifecycle"
 import { useCommunityChatSocketIoLifecycle } from "./useCommunityChatSocketIoLifecycle"
+import { useContentAiSocketIoLifecycle } from "./useContentAiSocketIoLifecycle"
 import { useContentDiscussionSocketIoLifecycle } from "./useContentDiscussionSocketIoLifecycle"
 import { useJobNotificationsSocketIoLifecycle } from "./useJobNotificationsSocketIoLifecycle"
 
@@ -17,5 +18,6 @@ export const SocketIoSideEffects = () => {
     useContentDiscussionSocketIoLifecycle()
     useAiLabSocketIoLifecycle()
     useCommunityChatSocketIoLifecycle()
+    useContentAiSocketIoLifecycle()
     return null
 }

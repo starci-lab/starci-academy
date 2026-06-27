@@ -1,9 +1,7 @@
 "use client"
 
 import React from "react"
-import {
-    TalentDirectory,
-} from "@/components/features/careers/Headhunting"
+import { TalentDirectory } from "@/components/features/careers/Headhunting/TalentDirectory"
 
 /**
  * Route `/[locale]/talents` — the talent directory: users who opted into

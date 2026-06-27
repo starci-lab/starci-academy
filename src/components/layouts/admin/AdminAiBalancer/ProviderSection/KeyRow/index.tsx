@@ -7,19 +7,11 @@ import {
     useLocale,
     useTranslations,
 } from "next-intl"
-import type {
-    AiBalancerKeyHealth,
-} from "@/modules/api"
-import {
-    AiBalancerKeyStatus,
-} from "@/modules/api"
-import type {
-    WithClassNames,
-} from "@/modules/types"
-import {
-    KeyStatusChip,
-    formatBalancerTimestamp,
-} from "@/components/reuseable/AiBalancer"
+import type { AiBalancerKeyHealth } from "@/modules/api/graphql/queries/types/ai-balancer-health"
+import { AiBalancerKeyStatus } from "@/modules/api/graphql/queries/enums/ai-balancer-key-status"
+import type { WithClassNames } from "@/modules/types/base/class-name"
+import { KeyStatusChip } from "@/components/reuseable/AiBalancer/KeyStatusChip"
+import { formatBalancerTimestamp } from "@/components/reuseable/AiBalancer/utils/format-timestamp"
 
 interface KeyRowProps extends WithClassNames<undefined> {
     /** Key health row from GraphQL. */

@@ -1,4 +1,4 @@
-import type { CourseLeaderboardEntry, CourseLeaderboardMyRank } from "@/modules/api/graphql"
+import type { CourseLeaderboardEntry, CourseLeaderboardMyRank } from "@/modules/api/graphql/queries/types/course-leaderboard"
 
 /** XP awarded per lesson read (mirrors backend leaderboard scoring). */
 export const READING_XP = 3

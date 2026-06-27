@@ -3,8 +3,9 @@
 import React from "react"
 import useSWR from "swr"
 import { useLocale, useTranslations } from "next-intl"
-import { queryBlogPosts, BlogCategory } from "@/modules/api/graphql"
 import { PostRow } from "../../shared/PostRow"
+import { queryBlogPosts } from "@/modules/api/graphql/queries/query-blog-posts"
+import { BlogCategory } from "@/modules/api/graphql/queries/types/blog"
 
 /** How many related posts to surface at most. */
 const MAX_RELATED = 3

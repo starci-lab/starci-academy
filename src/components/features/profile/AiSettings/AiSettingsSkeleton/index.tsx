@@ -4,12 +4,8 @@ import React from "react"
 import {
     cn,
 } from "@heroui/react"
-import {
-    Skeleton,
-} from "@/components/blocks"
-import type {
-    WithClassNames,
-} from "@/modules/types"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 export type AiSettingsSkeletonProps = WithClassNames<undefined>
 

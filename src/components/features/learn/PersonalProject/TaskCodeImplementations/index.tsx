@@ -3,10 +3,10 @@
 import React, { useMemo } from "react"
 import { cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { usePersonalProjectGithubForm } from "@/hooks/zustand"
-import { useAppSelector } from "@/redux"
 import { ImplementationCard } from "@/components/features/learn/LessonReader/CodeImplementationBody/ImplementationCard"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { usePersonalProjectGithubForm } from "@/hooks/zustand/personalProjectGithub/usePersonalProjectGithubForm"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Props for {@link TaskCodeImplementations}. */
 export type TaskCodeImplementationsProps = WithClassNames<undefined>

@@ -8,7 +8,7 @@ import {
 import {
     skeletonTextSizeMap,
 } from "./map"
-import type { WithClassNames } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Typography token of the text the skeleton bar stands in for. Each token maps

@@ -4,11 +4,12 @@ import React from "react"
 import { Chip, Typography, cn } from "@heroui/react"
 import useSWR from "swr"
 import { useTranslations } from "next-intl"
-import { useAppSelector } from "@/redux"
-import { queryCodingLeaderboard } from "@/modules/api/graphql"
-import { AsyncContent, Skeleton } from "@/components/blocks"
-import { UserAvatar } from "@/components/reuseable"
-import type { WithClassNames } from "@/modules/types"
+import { useAppSelector } from "@/redux/hooks"
+import { queryCodingLeaderboard } from "@/modules/api/graphql/queries/query-coding-leaderboard"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { UserAvatar } from "@/components/reuseable/UserAvatar"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Max ranked users to pull for the board (backend caps this too). */
 const LEADERBOARD_LIMIT = 50

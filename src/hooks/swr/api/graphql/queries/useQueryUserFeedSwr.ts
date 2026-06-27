@@ -1,6 +1,6 @@
 import useSWRInfinite from "swr/infinite"
-import { queryUserFeed } from "@/modules/api"
-import type { QueryMyFeedResponseData } from "@/modules/api"
+import { queryUserFeed } from "@/modules/api/graphql/queries/query-user-feed"
+import type { QueryMyFeedResponseData } from "@/modules/api/graphql/queries/types/my-feed"
 
 /** Items per timeline page. */
 const PAGE_LIMIT = 20

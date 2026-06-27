@@ -1,11 +1,9 @@
-import { 
-    publicEnv 
-} from "@/resources/env"
 import type { 
     AdminPresignedUrlRequest, 
     AdminPresignedUrlResponse 
 } from "./types"
 import axios from "axios"
+import { publicEnv } from "@/resources/env/public"
 
 /**
  * Params for the admin presigned URL REST call.

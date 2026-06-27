@@ -10,8 +10,13 @@ export interface SectionHeadingProps extends WithClassNames<undefined> {
     title: React.ReactNode
     /** Optional supporting line under the title. */
     intro?: React.ReactNode
+    /** Heading level — defaults to 3 (matches the app's PageHeader); pass 2 for a hero-scale moment. */
+    level?: 2 | 3
     /** Text alignment; defaults to centered (marketing sections). */
     align?: "start" | "center"
+    /** When set, renders a "#" deep-link next to the title (→ `#${anchorId}`) so each
+     * section is referenceable. The section wrapper must carry that `id` + a `scroll-mt-*`. */
+    anchorId?: string
 }
 
 /**
@@ -26,7 +31,9 @@ export const SectionHeading = ({
     eyebrow,
     title,
     intro,
+    level = 3,
     align = "center",
+    anchorId,
     className,
 }: SectionHeadingProps) => {
     const centered = align === "center"
@@ -43,16 +50,28 @@ export const SectionHeading = ({
                     <Chip.Label>{eyebrow}</Chip.Label>
                 </Chip>
             ) : null}
-            <Typography.Heading
-                level={2}
-                weight="bold"
-                align={centered ? "center" : "start"}
-            >
-                {title}
-            </Typography.Heading>
+            <div className={cn("flex items-center gap-2", centered && "justify-center")}>
+                <Typography.Heading
+                    level={level}
+                    weight="bold"
+                    align={centered ? "center" : "start"}
+                >
+                    {title}
+                </Typography.Heading>
+                {anchorId ? (
+                    // "#" deep-link to this section (ref-able). Quiet by default, accent on hover.
+                    <a
+                        href={`#${anchorId}`}
+                        aria-label={`#${anchorId}`}
+                        className="text-xl leading-none text-muted opacity-50 transition hover:text-accent hover:opacity-100"
+                    >
+                        #
+                    </a>
+                ) : null}
+            </div>
             {intro ? (
                 <Typography
-                    type="body"
+                    type="body-sm"
                     color="muted"
                     align={centered ? "center" : "start"}
                     className="max-w-2xl"

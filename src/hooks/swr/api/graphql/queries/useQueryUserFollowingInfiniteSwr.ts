@@ -1,7 +1,7 @@
 import useSWRInfinite from "swr/infinite"
-import { queryUserFollowing } from "@/modules/api"
-import type { QueryFollowerUser } from "@/modules/api"
 import { FOLLOW_LIST_PAGE_LIMIT } from "./useQueryUserFollowersInfiniteSwr"
+import { queryUserFollowing } from "@/modules/api/graphql/queries/query-user-following"
+import type { QueryFollowerUser } from "@/modules/api/graphql/queries/types/user-followers"
 
 /** Following rows per page — shared with the followers hook + modal. */
 const PAGE_LIMIT = FOLLOW_LIST_PAGE_LIMIT

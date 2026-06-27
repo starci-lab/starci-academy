@@ -1,7 +1,5 @@
 import React from "react"
-import {
-    AiSubscription,
-} from "@/components/features/profile"
+import { AiSubscription } from "@/components/features/profile/AiSubscription"
 
 /**
  * Route `/[locale]/profile/ai-subscription` — renders the AI subscription

@@ -1,5 +1,5 @@
-import { queryUserCapstoneProgress } from "@/modules/api"
 import useSWR from "swr"
+import { queryUserCapstoneProgress } from "@/modules/api/graphql/queries/query-user-capstone-progress"
 
 /**
  * SWR hook for a user's per-course personal-project capstone progress by id.

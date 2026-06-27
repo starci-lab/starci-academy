@@ -14,13 +14,10 @@ import {
     ResponsiveContainer,
     Tooltip,
 } from "recharts"
-import {
-    getLanguageColor,
-    getLanguageLabel,
-} from "@/modules/utils"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { getLanguageColor, getLanguageLabel } from "@/modules/utils/language"
 
 /** One language slice: its key + count. */
 export interface LanguageDonutItem {

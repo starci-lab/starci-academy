@@ -20,7 +20,7 @@ import type {
 import type {
     CvSubmissionFormValues,
 } from "@/types"
-import type { WithClassNames } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link CvSubmissionFields}. */
 export interface CvSubmissionFieldsProps extends WithClassNames<undefined> {

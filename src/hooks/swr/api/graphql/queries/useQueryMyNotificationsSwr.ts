@@ -1,7 +1,7 @@
-import { queryMyNotifications } from "@/modules/api"
-import type { QueryMyNotificationsData } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { queryMyNotifications } from "@/modules/api/graphql/queries/query-my-notifications"
+import type { QueryMyNotificationsData } from "@/modules/api/graphql/queries/types/notifications"
+import { useAppSelector } from "@/redux/hooks"
 
 /** How many recent notifications the bell list fetches at once. */
 const BELL_LIMIT = 20

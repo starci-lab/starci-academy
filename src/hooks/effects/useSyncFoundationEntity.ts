@@ -1,7 +1,7 @@
-import { useAppDispatch, useAppSelector } from "@/redux"
-import { setFoundation } from "@/redux/slices"
 import { useEffect } from "react"
 import { usePathname } from "next/navigation"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setFoundation } from "@/redux/slices/foundation"
 
 /**
  * Resolves the active foundation entity from the loaded list and URL id.

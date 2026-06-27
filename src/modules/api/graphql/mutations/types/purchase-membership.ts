@@ -1,5 +1,5 @@
-import type { PaymentType } from "@/modules/types"
 import type { GraphQLResponse } from "../../types"
+import type { PaymentType } from "@/modules/types/enums/payment-type"
 
 /** Payload inside `purchaseMembership.data` after the standard API wrapper. */
 export interface PurchaseMembershipData {

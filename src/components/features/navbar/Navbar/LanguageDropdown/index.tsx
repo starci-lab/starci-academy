@@ -10,8 +10,8 @@ import {
 } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { usePathname, useRouter } from "@/i18n/navigation"
-import { languages } from "@/resources/constants"
-import type { WithClassNames } from "@/modules/types"
+import { languages } from "@/resources/constants/lang"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link LanguageDropdown}.

@@ -1,6 +1,6 @@
-import { queryAiSubscriptionTiers } from "@/modules/api"
 import { usePathname } from "next/navigation"
 import useSWR from "swr"
+import { queryAiSubscriptionTiers } from "@/modules/api/graphql/queries/query-ai-subscription-tiers"
 
 /**
  * SWR query wrapper for {@link queryAiSubscriptionTiers}. `data` is the tier

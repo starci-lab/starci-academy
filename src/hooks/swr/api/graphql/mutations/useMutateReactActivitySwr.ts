@@ -1,8 +1,6 @@
-import {
-    mutateReactActivity,
-    type ReactActivityRequest,
-} from "@/modules/api"
 import useSWRMutation from "swr/mutation"
+import { mutateReactActivity } from "@/modules/api/graphql/mutations/mutation-react-activity"
+import { type ReactActivityRequest } from "@/modules/api/graphql/mutations/types/react-activity"
 
 type MutateReactActivityResult = Awaited<ReturnType<typeof mutateReactActivity>>
 

@@ -1,5 +1,5 @@
-import type { HeadhuntingCompanyEntity } from "@/modules/types"
 import type { GraphQLResponse } from "../../types"
+import type { HeadhuntingCompanyEntity } from "@/modules/types/entities/headhunting-company"
 
 /** Request body for the `headhuntingCompany` query (mirrors GraphQL `HeadhuntingCompanyRequest`). */
 export interface HeadhuntingCompanyRequest {

@@ -1,6 +1,6 @@
-import { useAppDispatch, useAppSelector } from "@/redux"
-import { setFoundation, setFoundationCategory, setFoundations } from "@/redux/slices"
 import { useEffect } from "react"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setFoundation, setFoundationCategory, setFoundations } from "@/redux/slices/foundation"
 
 /**
  * Resolves the active foundation category entity from loaded categories + category id.

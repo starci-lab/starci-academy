@@ -1,4 +1,4 @@
-import type { CodingDifficulty, CodingDomain } from "@/modules/api/graphql"
+import type { CodingDifficulty, CodingDomain } from "@/modules/api/graphql/queries/types/coding"
 
 /**
  * Per-problem solve status overlaid from `myCodingProgress`:

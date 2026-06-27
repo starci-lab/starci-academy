@@ -6,9 +6,7 @@ import {
     Code as CodingIcon,
     Layers as FlashcardIcon,
 } from "@gravity-ui/icons"
-import type {
-    KpiKey,
-} from "@/modules/api"
+import type { KpiKey } from "@/modules/api/graphql/queries/types/my-kpis"
 
 /** Display metadata for one weekly KPI (icon · i18n label · preset targets). */
 export interface KpiMeta {

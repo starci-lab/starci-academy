@@ -10,9 +10,7 @@ import {
 import {
     resolveQuotaBarFillTone,
 } from "../utils"
-import type {
-    WithClassNames,
-} from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link QuotaBar}. */
 export interface QuotaBarProps extends WithClassNames<undefined> {

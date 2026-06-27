@@ -1,10 +1,8 @@
-import type {
-    LessonVideoEntity,
-} from "@/modules/types"
 import {
     createSlice,
     type PayloadAction,
 } from "@reduxjs/toolkit"
+import type { LessonVideoEntity } from "@/modules/types/entities/lesson-video"
 
 /**
  * Client state for the active lesson video entity and the paginated lesson video list.

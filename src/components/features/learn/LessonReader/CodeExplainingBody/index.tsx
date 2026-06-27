@@ -2,14 +2,14 @@
 
 import React, { useMemo } from "react"
 import { cn } from "@heroui/react"
-import { useAppSelector } from "@/redux"
-import type { WithClassNames } from "@/modules/types"
-import { getContentCodeExplainings } from "@/modules/types"
-import { AsyncContent } from "@/components/blocks"
-import { useQueryContentSwr } from "@/hooks"
 import { CodeBodySkeleton } from "../CodeBodySkeleton"
 import { ExplainingCard } from "./ExplainingCard"
 import { CodeExplainingEmpty } from "./Empty"
+import { useAppSelector } from "@/redux/hooks"
+import type { WithClassNames } from "@/modules/types/base/class-name"
+import { getContentCodeExplainings } from "@/modules/types/entities/content"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { useQueryContentSwr } from "@/hooks/swr/api/graphql/queries/useQueryContentSwr"
 
 export type CodeExplainingBodyProps = WithClassNames<undefined>
 

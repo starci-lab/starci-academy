@@ -1,5 +1,5 @@
-import type { SubmissionAttemptEntity } from "@/modules/types"
 import type { GraphQLResponse, PaginationFilters, SortInput } from "../../types"
+import type { SubmissionAttemptEntity } from "@/modules/types/entities/submission-attempt"
 
 /** Paginated payload inside `userChallengeSubmissionAttempts.data`. */
 export interface QuerySubmissionAttemptsPayload {

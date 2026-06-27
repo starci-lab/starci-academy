@@ -13,12 +13,8 @@ import {
 import {
     useRouter,
 } from "@/i18n/navigation"
-import {
-    BrandLogo,
-} from "@/components/blocks"
-import type {
-    WithClassNames,
-} from "@/modules/types"
+import { BrandLogo } from "@/components/blocks/identity/BrandLogo"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link Logo}.
@@ -35,9 +31,9 @@ export type LogoProps = WithClassNames<undefined>
 export const Logo = ({ className }: LogoProps) => {
     const router = useRouter()
 
-    /** Navigate to the localized home route. */
+    /** Navigate to the (ungated) landing route — reachable even while signed in. */
     const onPress = useCallback(
-        () => router.push(pathConfig().locale().build()),
+        () => router.push(pathConfig().locale().home().build()),
         [
             router,
         ],

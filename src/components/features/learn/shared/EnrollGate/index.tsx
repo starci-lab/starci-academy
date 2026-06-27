@@ -4,9 +4,9 @@ import React, { useCallback } from "react"
 import { Button, Typography } from "@heroui/react"
 import { LockKeyIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import { usePaymentOverlayState } from "@/hooks"
-import { PaymentFlow } from "@/modules/types"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { PaymentFlow } from "@/modules/types/payment"
 
 /** Props for {@link EnrollGate}. */
 export interface EnrollGateProps extends WithClassNames<undefined> {

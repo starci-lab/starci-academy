@@ -16,12 +16,10 @@ import {
     AnimatePresence,
     motion,
 } from "framer-motion"
-import {
-    ReactionType,
-} from "@/modules/api"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
 
 /** The six reactions + their emoji glyph, in display order. */
 const REACTIONS: ReadonlyArray<{ type: ReactionType, emoji: string }> = [

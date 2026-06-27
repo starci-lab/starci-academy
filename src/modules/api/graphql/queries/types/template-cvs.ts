@@ -1,5 +1,5 @@
-import type { TemplateCVEntity } from "@/modules/types"
 import type { GraphQLResponse } from "../../types"
+import type { TemplateCVEntity } from "@/modules/types/entities/template-cv"
 
 /** Apollo response shape for the `templateCvs` query. */
 export interface QueryTemplateCvsResponse {

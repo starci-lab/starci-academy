@@ -2,8 +2,6 @@
 
 import { ClockIcon, FlameIcon, TargetIcon } from "@phosphor-icons/react"
 import _ from "lodash"
-import { CheckListCard, CheckListItem, LabeledCard, PageHeader, ResponsiveBreadcrumb } from "@/components/blocks"
-import type { ResponsiveBreadcrumbItem } from "@/components/blocks"
 import React, {
     useMemo,
 } from "react"
@@ -19,17 +17,16 @@ import {
     useRouter,
 } from "next/navigation"
 import {
-    useAppSelector,
-} from "@/redux"
-import {
-    getContentChallengeCount,
-} from "@/modules/types"
-import {
-    pathConfig,
-} from "@/resources"
-import {
     ReadBadge,
 } from "../ReadBadge"
+import { CheckListCard, CheckListItem } from "@/components/blocks/cards/CheckListCard"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { ResponsiveBreadcrumb } from "@/components/blocks/navigation/ResponsiveBreadcrumb"
+import type { ResponsiveBreadcrumbItem } from "@/components/blocks/navigation/ResponsiveBreadcrumb"
+import { useAppSelector } from "@/redux/hooks"
+import { getContentChallengeCount } from "@/modules/types/entities/content"
+import { pathConfig } from "@/resources/path"
 
 /**
  * Title, description and meta-chip row (reading time, challenges, read state)

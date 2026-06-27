@@ -1,15 +1,14 @@
 "use client"
 
 import { CheckCircleIcon, LightbulbIcon, MapPinIcon, WarningCircleIcon } from "@phosphor-icons/react"
-import { MarkdownContent } from "@/components/reuseable"
-import type { SubmissionFeedbackEntity } from "@/modules/types"
-import { SubmissionFeedbackSeverity } from "@/modules/types"
-import { buildGithubFileUrl } from "@/modules/utils"
 import { Card, Chip, cn, Link } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import React, { useMemo } from "react"
-import type { WithClassNames } from "@/modules/types"
-
+import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import type { SubmissionFeedbackEntity } from "@/modules/types/entities/submission-feedback"
+import { SubmissionFeedbackSeverity } from "@/modules/types/enums/submission-feedback-severity"
+import { buildGithubFileUrl } from "@/modules/utils/github-file-url"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link FeedbackCard}.
@@ -159,7 +158,7 @@ export const FeedbackCard = (props: FeedbackCardProps) => {
     }
 
     return (
-        <Card className={cn("border border-divider bg-transparent p-0 shadow-none", className)}>
+        <Card className={cn("border border-default bg-surface p-0 shadow-none", className)}>
             <Card.Content>{inner}</Card.Content>
         </Card>
     )

@@ -13,16 +13,12 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import {
-    AIProcessingText,
-    MarkdownContent,
-    StarCiAIBadge,
-} from "@/components/reuseable"
-import {
-    JobCategory,
-    JobStatus,
-} from "@/modules/types"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { AIProcessingText } from "@/components/reuseable/AIProcessingText"
+import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { StarCiAIBadge } from "@/components/reuseable/StarCiAIBadge"
+import { JobCategory } from "@/modules/types/enums/job-category"
+import { JobStatus } from "@/modules/types/enums/job-status"
 
 /** Props for {@link FeedbackSection}. */
 export interface FeedbackSectionProps extends WithClassNames<undefined> {

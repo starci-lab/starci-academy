@@ -1,7 +1,7 @@
-import { queryMyDueFlashcards } from "@/modules/api"
-import type { QueryMyDueFlashcardsData } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { queryMyDueFlashcards } from "@/modules/api/graphql/queries/query-my-due-flashcards"
+import type { QueryMyDueFlashcardsData } from "@/modules/api/graphql/queries/types/my-due-flashcards"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR wrapper for {@link queryMyDueFlashcards}. `data` is the viewer's due-card

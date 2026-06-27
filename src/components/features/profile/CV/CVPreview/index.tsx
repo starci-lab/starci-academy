@@ -11,13 +11,11 @@ import {
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import dynamic from "next/dynamic"
-import { useAppSelector } from "@/redux"
-import {
-    useCvPreviewOverlayState,
-    useQueryCvUrlSwr,
-} from "@/hooks"
-import { useCvApplyStore } from "@/hooks/zustand"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { useAppSelector } from "@/redux/hooks"
+import { useCvPreviewOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useQueryCvUrlSwr } from "@/hooks/swr/api/graphql/queries/useQueryCvUrlSwr"
+import { useCvApplyStore } from "@/hooks/zustand/cvApply/store"
 
 const PDFView = dynamic(
     () => import("@/components/reuseable/PDFView").then((module) => module.PDFView),

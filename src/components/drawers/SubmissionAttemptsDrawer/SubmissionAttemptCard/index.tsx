@@ -3,12 +3,13 @@
 import React, { useCallback, useMemo } from "react"
 import { Button, Card, Chip, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { Spacer } from "@/components/reuseable"
-import type { SubmissionAttemptEntity, WithClassNames } from "@/modules/types"
 import { dayjs, getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
-import { useAppDispatch, useAppSelector } from "@/redux"
-import { setSubmissionAttemptId } from "@/redux/slices"
-import { useFeedbackDetailsOverlayState } from "@/hooks"
+import { Spacer } from "@/components/reuseable/Spacer"
+import type { SubmissionAttemptEntity } from "@/modules/types/entities/submission-attempt"
+import type { WithClassNames } from "@/modules/types/base/class-name"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setSubmissionAttemptId } from "@/redux/slices/submission-attempt"
+import { useFeedbackDetailsOverlayState } from "@/hooks/zustand/overlay/hooks"
 
 /**
  * Props for a single submission-attempt card.

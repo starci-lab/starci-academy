@@ -5,9 +5,10 @@ import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { cn, ListBox, Typography } from "@heroui/react"
 import { FlameIcon } from "@phosphor-icons/react"
-import { useQueryRecommendedCoursesSwr, useSearchOverlayState } from "@/hooks"
 import { pathConfig } from "@/resources/path"
-import { WithClassNames } from "@/modules/types"
+import { useQueryRecommendedCoursesSwr } from "@/hooks/swr/api/graphql/queries/useQueryRecommendedCoursesSwr"
+import { useSearchOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link GlobalSearchEmpty}. */
 export interface GlobalSearchEmptyProps extends WithClassNames<undefined> {

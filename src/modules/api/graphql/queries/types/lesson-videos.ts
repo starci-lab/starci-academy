@@ -1,5 +1,5 @@
-import type { LessonVideoEntity } from "@/modules/types"
 import type { GraphQLResponse, PaginationFilters, SortInput } from "../../types"
+import type { LessonVideoEntity } from "@/modules/types/entities/lesson-video"
 
 /** Paginated payload inside `lessonVideos.data`. */
 export interface QueryLessonVideosPayload {

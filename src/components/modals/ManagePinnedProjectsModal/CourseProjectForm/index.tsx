@@ -14,15 +14,13 @@ import {
 import { useTranslations } from "next-intl"
 import { useSWRConfig } from "swr"
 import { CheckCircleIcon } from "@phosphor-icons/react"
-import {
-    QUERY_USER_PINNED_PROJECTS_SWR,
-    useMutatePinCourseProjectSwr,
-    useQueryMyPinnableCapstonesSwr,
-} from "@/hooks"
-import { StatusChip } from "@/components/blocks"
-import { useGraphQLWithToast } from "@/modules/toast"
-import { useAppSelector } from "@/redux"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { QUERY_USER_PINNED_PROJECTS_SWR } from "@/hooks/swr/api/graphql/queries/useQueryUserPinnedProjectsSwr"
+import { useMutatePinCourseProjectSwr } from "@/hooks/swr/api/graphql/mutations/useMutatePinCourseProjectSwr"
+import { useQueryMyPinnableCapstonesSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyPinnableCapstonesSwr"
+import { StatusChip } from "@/components/blocks/chips/StatusChip"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Props for {@link CourseProjectForm}. */
 export interface CourseProjectFormProps extends WithClassNames<undefined> {

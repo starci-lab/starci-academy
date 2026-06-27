@@ -1,11 +1,8 @@
-import {
-    defaultChallengeSubmissionsSorts,
-    GraphQLHeadersKey,
-    queryChallengeSubmissions,
-} from "@/modules/api"
-import { useAppDispatch, useAppSelector } from "@/redux"
 import useSWR from "swr"
-import { setChallengeSubmissions } from "@/redux/slices"
+import { defaultChallengeSubmissionsSorts, queryChallengeSubmissions } from "@/modules/api/graphql/queries/query-challenge-submissions"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setChallengeSubmissions } from "@/redux/slices/challenge"
 
 /**
  * Lists submission requirements for the focused challenge (`challengeSubmissions`).

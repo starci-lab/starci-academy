@@ -1,7 +1,7 @@
 import type { GraphQLResponse } from "../../types"
-import type { AiActiveModel } from "@/modules/types"
 import type { ModelProvider } from "../query-my-ai-settings"
 import type { AiModelCategory } from "../query-ai-models"
+import type { AiActiveModel } from "@/modules/types/ai-model"
 
 /** One selectable model for the grading picker (mirrors backend `AiGradableModelData`). */
 export interface AiGradableModel {

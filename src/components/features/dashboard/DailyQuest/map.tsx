@@ -4,9 +4,7 @@ import {
     PuzzlePieceIcon,
     CardsIcon,
 } from "@phosphor-icons/react"
-import type {
-    DailyQuestKey,
-} from "@/modules/api"
+import type { DailyQuestKey } from "@/modules/api/graphql/queries/types/my-daily-quest"
 
 /** Phosphor icon per daily-quest task key. */
 export const DAILY_QUEST_ICON_MAP: Record<DailyQuestKey, React.ReactNode> = {

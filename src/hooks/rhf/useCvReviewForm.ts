@@ -5,17 +5,13 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { useMemo } from "react"
 import { useLocale, useTranslations } from "next-intl"
-import {
-    PublicationEvent,
-    useJobNotificationsSocketIo,
-} from "@/hooks/socketio"
-import { useMutateReviewCvSwr } from "@/hooks/swr"
-import type {
-    GraphQLResponse,
-    ReviewCvResponseData,
-} from "@/modules/api"
-import { useAppSelector } from "@/redux"
-import { useGraphQLWithToast } from "@/modules/toast"
+import { PublicationEvent } from "@/hooks/socketio/enums/publication-event"
+import { useJobNotificationsSocketIo } from "@/hooks/socketio/useJobNotificationsSocketIo"
+import { useMutateReviewCvSwr } from "@/hooks/swr/api/graphql/mutations/useMutateReviewCvSwr"
+import type { GraphQLResponse } from "@/modules/api/graphql/types"
+import type { ReviewCvResponseData } from "@/modules/api/graphql/mutations/types/review-cv"
+import { useAppSelector } from "@/redux/hooks"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
 
 /** Form values for the CV review. */
 export interface CvReviewFormValues {

@@ -6,9 +6,7 @@ import {
     cn,
     Typography,
 } from "@heroui/react"
-import {
-    useAiSettingsForm,
-} from "@/hooks/zustand"
+import { useAiSettingsForm } from "@/hooks/zustand/aiSettings/useAiSettingsForm"
 
 /**
  * Inline success/error line shown after a save/remove action.

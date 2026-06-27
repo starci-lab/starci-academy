@@ -1,5 +1,5 @@
-import { queryUserAchievements } from "@/modules/api"
 import useSWR from "swr"
+import { queryUserAchievements } from "@/modules/api/graphql/queries/query-user-achievements"
 
 /**
  * SWR hook for a user's achievements (badge wall) by id. Public — works for

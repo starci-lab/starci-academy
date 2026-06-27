@@ -1,8 +1,6 @@
-import {
-    mutatePinExternalProject,
-    type PinExternalProjectRequest,
-} from "@/modules/api"
 import useSWRMutation from "swr/mutation"
+import { mutatePinExternalProject } from "@/modules/api/graphql/mutations/mutation-pin-external-project"
+import { type PinExternalProjectRequest } from "@/modules/api/graphql/mutations/types/pinned-projects"
 
 type MutatePinExternalProjectResult = Awaited<ReturnType<typeof mutatePinExternalProject>>
 

@@ -12,15 +12,13 @@ import {
 import {
     LockIcon,
 } from "@phosphor-icons/react"
-import {
-    EmptyState,
-} from "@/components/blocks"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 import {
     ProfileHero,
 } from "../ProfileHero"
+import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 
 /** Props for {@link ProfileLockedState}. */
 export type ProfileLockedStateProps = WithClassNames<undefined>

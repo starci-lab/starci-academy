@@ -1,7 +1,7 @@
-import { queryWeeklyChallenge } from "@/modules/api"
-import type { QueryWeeklyChallengeData } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { queryWeeklyChallenge } from "@/modules/api/graphql/queries/query-weekly-challenge"
+import type { QueryWeeklyChallengeData } from "@/modules/api/graphql/queries/types/weekly-challenge"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR wrapper for {@link queryWeeklyChallenge}. `data` is the featured weekly

@@ -13,10 +13,8 @@ import {
 import {
     useRouter,
 } from "@/i18n/navigation"
-import { LogoMark } from "@/components/svg"
-import type {
-    WithClassNames,
-} from "@/modules/types"
+import { LogoMark } from "@/components/svg/LogoMark"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link Logo}.

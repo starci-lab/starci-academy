@@ -24,15 +24,8 @@ import {
     useRouter,
 } from "@/i18n/navigation"
 import {
-    useNavbarBottomLayerStore,
-    useSearchOverlayState,
-} from "@/hooks"
-import {
     pathConfig,
 } from "@/resources/path"
-import type {
-    WithClassNames,
-} from "@/modules/types"
 import type {
     NavbarItem,
 } from "./types"
@@ -57,6 +50,9 @@ import {
 import {
     DarkLightModeSwitch,
 } from "./AccountMenuDropdown/DarkLightModeSwitch"
+import { useNavbarBottomLayerStore } from "@/hooks/zustand/navbarBottomLayer/store"
+import { useSearchOverlayState } from "@/hooks/zustand/overlay/hooks"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link Navbar}.
@@ -102,8 +98,8 @@ export const Navbar = ({ className }: NavbarProps) => {
         () => [
             {
                 label: t("nav.home"),
-                path: pathConfig().locale().build(),
-                isActive: pathname === pathConfig().locale(locale).build() || pathname === "/",
+                path: pathConfig().locale().home().build(),
+                isActive: pathname === "/" || pathname === pathConfig().locale().home().build(),
             },
             {
                 label: t("nav.courses"),

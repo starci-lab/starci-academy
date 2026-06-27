@@ -1,8 +1,11 @@
-import { queryMe } from "@/modules/api"
-import { useAppDispatch, useAppSelector } from "@/redux"
 import useSWR from "swr"
-import { setAuthenticated, setUser } from "@/redux/slices"
-import { LocalStorage, LocalStorageId } from "@/modules/storage"
+import { queryMe } from "@/modules/api/graphql/queries/query-me"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setAuthenticated } from "@/redux/slices/keycloak"
+import { setUser } from "@/redux/slices/user"
+import { LocalStorage } from "@/modules/storage/local/storage"
+import { LocalStorageId } from "@/modules/storage/local/enums/id"
+
 /**
  * The core function to query courses with SWR.
  */

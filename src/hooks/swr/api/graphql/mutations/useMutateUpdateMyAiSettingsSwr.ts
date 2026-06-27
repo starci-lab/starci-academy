@@ -1,8 +1,6 @@
-import {
-    mutateUpdateMyAiSettings,
-    type UpdateMyAiSettingsRequest,
-} from "@/modules/api"
 import useSWRMutation from "swr/mutation"
+import { mutateUpdateMyAiSettings } from "@/modules/api/graphql/mutations/mutation-update-my-ai-settings"
+import { type UpdateMyAiSettingsRequest } from "@/modules/api/graphql/mutations/types/update-my-ai-settings"
 
 type MutateUpdateMyAiSettingsResult = Awaited<ReturnType<typeof mutateUpdateMyAiSettings>>
 

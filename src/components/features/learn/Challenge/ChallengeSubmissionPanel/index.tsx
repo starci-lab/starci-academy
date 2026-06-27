@@ -8,35 +8,10 @@ import React, {
 } from "react"
 import { Accordion, Chip, Typography, cn } from "@heroui/react"
 import { CheckCircleIcon, CircleIcon, XCircleIcon } from "@phosphor-icons/react"
-import {
-    PublicationEvent,
-    useAiQuotaOverlayState,
-    useEditSubmissionForm,
-    useJobNotificationsSocketIo,
-    useMutateSubmitChallengeSubmissionSwr,
-    useMutateSyncChallengeSubmissionSwr,
-    useQueryAiModelsSwr,
-    useQueryMyAiSettingsSwr,
-    useQueryMyCreditUsageSwr,
-} from "@/hooks"
-import type { AiGradableModel } from "@/modules/api"
 import { useLocale, useTranslations } from "next-intl"
 import { usePathname, useRouter } from "next/navigation"
-import {
-    ChallengeSubmissionEntity,
-    JobCategory,
-    JobStatus,
-    UserChallengeSubmissionEntity,
-    WithClassNames,
-} from "@/modules/types"
 import { FormikErrors, FormikTouched } from "formik"
-import {
-    setChallengeSubmissionJobId,
-} from "@/redux/slices"
-import { useAppDispatch, useAppSelector } from "@/redux"
-import { useGraphQLWithToast } from "@/modules/toast"
 import _ from "lodash"
-import { resolveChallengeSubmissionJobEnvelope } from "@/components/utils"
 import type {
     ChallengeGradeSelection,
     ChallengeSubmissionRowViewModel,
@@ -44,6 +19,25 @@ import type {
 import { SUBMISSION_ICON_MAP } from "./map"
 import { AUTO_GRADE_SELECTION, resolveInitialGradeSelection } from "./utils"
 import { SubmissionRow } from "./SubmissionRow"
+import { PublicationEvent } from "@/hooks/socketio/enums/publication-event"
+import { useAiQuotaOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useEditSubmissionForm } from "@/hooks/rhf/useEditSubmissionForm"
+import { useJobNotificationsSocketIo } from "@/hooks/socketio/useJobNotificationsSocketIo"
+import { useMutateSubmitChallengeSubmissionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSubmitChallengeSubmissionSwr"
+import { useMutateSyncChallengeSubmissionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSyncChallengeSubmissionSwr"
+import { useQueryAiModelsSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiModelsSwr"
+import { useQueryMyAiSettingsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiSettingsSwr"
+import { useQueryMyCreditUsageSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCreditUsageSwr"
+import type { AiGradableModel } from "@/modules/api/graphql/queries/types/ai-models"
+import { ChallengeSubmissionEntity } from "@/modules/types/entities/challenge-submission"
+import { JobCategory } from "@/modules/types/enums/job-category"
+import { JobStatus } from "@/modules/types/enums/job-status"
+import { UserChallengeSubmissionEntity } from "@/modules/types/entities/user-challenge-submission"
+import { WithClassNames } from "@/modules/types/base/class-name"
+import { setChallengeSubmissionJobId } from "@/redux/slices/challenge"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
+import { resolveChallengeSubmissionJobEnvelope } from "@/components/utils/challenge-submission-job"
 
 /** Props for {@link ChallengeSubmissionPanel} — state comes from Formik and Redux. */
 type ChallengeSubmissionPanelProps = WithClassNames<undefined> & {

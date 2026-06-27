@@ -16,26 +16,18 @@ import {
     Xmark as XmarkIcon,
 } from "@gravity-ui/icons"
 import {
-    useAppSelector,
-} from "@/redux"
-import {
-    useMutateUpdateProfileSwr,
-    useQueryUserAchievementsSwr,
-    useQueryUserProfileSwr,
-} from "@/hooks"
-import {
     useProfileUsername,
 } from "../useProfileUsername"
-import {
-    MascotBadge,
-    UserAvatar,
-} from "@/components/reuseable"
-import {
-    getRank,
-} from "@/modules/utils"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useAppSelector } from "@/redux/hooks"
+import { useMutateUpdateProfileSwr } from "@/hooks/swr/api/graphql/mutations/useMutateUpdateProfileSwr"
+import { useQueryUserAchievementsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserAchievementsSwr"
+import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
+import { MascotBadge } from "@/components/reuseable/MascotBadge"
+import { UserAvatar } from "@/components/reuseable/UserAvatar"
+import { getRank } from "@/modules/utils/rank"
 
 /** Props for {@link FeaturedMascotAvatar}. */
 export type FeaturedMascotAvatarProps = WithClassNames<undefined>

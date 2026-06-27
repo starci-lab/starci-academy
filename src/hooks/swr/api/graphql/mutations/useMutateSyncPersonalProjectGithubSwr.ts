@@ -1,10 +1,8 @@
-import {
-    GraphQLHeadersKey,
-    mutateSyncPersonalProjectGithub,
-    type SyncPersonalProjectGithubRequest,
-} from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWRMutation from "swr/mutation"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { mutateSyncPersonalProjectGithub } from "@/modules/api/graphql/mutations/mutation-sync-personal-project-github"
+import { type SyncPersonalProjectGithubRequest } from "@/modules/api/graphql/mutations/types/sync-personal-project-github"
+import { useAppSelector } from "@/redux/hooks"
 
 type MutateSyncPersonalProjectGithubResult = Awaited<
     ReturnType<typeof mutateSyncPersonalProjectGithub>

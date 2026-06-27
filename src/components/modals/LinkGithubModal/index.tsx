@@ -1,11 +1,11 @@
-import { GithubIcon } from "@/components/svg"
-import { useLinkGithubOverlayState } from "@/hooks"
 import { Button, cn, Modal } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import React from "react"
 import { useRouter } from "next/navigation"
-import { githubRedirect } from "@/modules/api"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { GithubIcon } from "@/components/svg/GithubIcon"
+import { useLinkGithubOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { githubRedirect } from "@/modules/api/redirect/github"
 
 export const LinkGithubModal = ({ className }: WithClassNames<undefined>) => {
     const { isOpen, setOpen } = useLinkGithubOverlayState()

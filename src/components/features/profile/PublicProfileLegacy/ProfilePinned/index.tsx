@@ -11,20 +11,16 @@ import {
     Plus as PlusIcon,
     Pencil as PencilIcon,
 } from "@gravity-ui/icons"
-import {
-    usePinnedProjectsOverlayState,
-    useQueryUserPinnedProjectsSwr,
-    useQueryUserProfileSwr,
-} from "@/hooks"
-import { useAppSelector } from "@/redux"
-import {
-    EmptyState,
-    ErrorState,
-} from "@/components/blocks"
-import { SectionCard } from "@/components/reuseable"
 import { useProfileUsername } from "../useProfileUsername"
 import { PinnedProjectCard } from "./PinnedProjectCard"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { usePinnedProjectsOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useQueryUserPinnedProjectsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserPinnedProjectsSwr"
+import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
+import { useAppSelector } from "@/redux/hooks"
+import { EmptyState } from "@/components/blocks/feedback/EmptyState"
+import { ErrorState } from "@/components/blocks/feedback/ErrorState"
+import { SectionCard } from "@/components/reuseable/SectionCard"
 
 /** Props for {@link ProfilePinned}. */
 export type ProfilePinnedProps = WithClassNames<undefined>

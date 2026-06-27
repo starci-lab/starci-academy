@@ -2,7 +2,7 @@ import {
     createSlice,
     type PayloadAction,
 } from "@reduxjs/toolkit"
-import type { CvUrlPayload } from "@/modules/types"
+import type { CvUrlPayload } from "@/modules/types/cv-upload"
 
 /**
  * Redux state for the current user's CV presigned view URL (`cvUrl` query).

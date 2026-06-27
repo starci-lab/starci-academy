@@ -2,10 +2,10 @@
 
 import React from "react"
 import { cn, Modal, ScrollShadow } from "@heroui/react"
-import { MarkdownContent } from "@/components/reuseable"
-import { useContentOverlayState } from "@/hooks"
-import { useAppSelector } from "@/redux"
-import { WithClassNames } from "@/modules/types"
+import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { useContentOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useAppSelector } from "@/redux/hooks"
+import { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link ContentModal}. */
 type ContentModalProps = WithClassNames<undefined>

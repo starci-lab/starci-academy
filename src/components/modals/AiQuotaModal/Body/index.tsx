@@ -2,12 +2,6 @@
 
 import React from "react"
 import {
-    useAppSelector,
-} from "@/redux"
-import {
-    AiQuotaTab,
-} from "@/redux/slices"
-import {
     AiQuotaAutoTab,
 } from "../AutoTab"
 import {
@@ -16,6 +10,8 @@ import {
 import {
     AiQuotaSubscriptionTab,
 } from "../SubscriptionTab"
+import { useAppSelector } from "@/redux/hooks"
+import { AiQuotaTab } from "@/redux/slices/tabs"
 
 /**
  * AI quota modal body — renders the active tab panel from Redux.

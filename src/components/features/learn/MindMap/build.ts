@@ -1,4 +1,3 @@
-import type { CourseEntity } from "@/modules/types"
 import { Edge, Node } from "@xyflow/react"
 import {
     COURSE_ROOT_NODE_TYPE,
@@ -7,6 +6,7 @@ import {
 } from "./RootNode"
 import { COURSE_MODULE_NODE_TYPE } from "./ModuleNode"
 import { EMPTY_MIND_MAP_PROGRESS, type MindMapProgress } from "./progress"
+import type { CourseEntity } from "@/modules/types/entities/course"
 
 /** Resolved UI theme used for mind-map edge / node contrast. */
 export type MindMapThemeMode = "light" | "dark"

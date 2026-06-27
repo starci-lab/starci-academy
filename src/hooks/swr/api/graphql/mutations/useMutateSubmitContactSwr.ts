@@ -1,8 +1,6 @@
-import {
-    mutateSubmitContact,
-    type SubmitContactRequest,
-} from "@/modules/api"
 import useSWRMutation from "swr/mutation"
+import { mutateSubmitContact } from "@/modules/api/graphql/mutations/mutation-submit-contact"
+import { type SubmitContactRequest } from "@/modules/api/graphql/mutations/types/contact"
 
 type MutateSubmitContactResult = Awaited<ReturnType<typeof mutateSubmitContact>>
 

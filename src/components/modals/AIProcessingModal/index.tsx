@@ -6,14 +6,12 @@ import React, {
     useMemo,
 } from "react"
 import { cn, Modal } from "@heroui/react"
-import { useAppSelector } from "@/redux"
-import {
-    JobStatus,
-    WithClassNames,
-} from "@/modules/types"
 import { useTranslations } from "next-intl"
-import { useAIProcessingOverlayState } from "@/hooks"
-import { resolveAiProcessingCopy } from "@/components/utils"
+import { useAppSelector } from "@/redux/hooks"
+import { JobStatus } from "@/modules/types/enums/job-status"
+import { WithClassNames } from "@/modules/types/base/class-name"
+import { useAIProcessingOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { resolveAiProcessingCopy } from "@/components/utils/ai"
 
 /** Props for {@link AIProcessingModal}. */
 type AIProcessingModalProps = WithClassNames<undefined>

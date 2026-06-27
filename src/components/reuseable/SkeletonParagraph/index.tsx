@@ -5,7 +5,7 @@ import {
     SkeletonText,
     type SkeletonTextSize,
 } from "../SkeletonText"
-import type { WithClassNames } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Stepped widths cycled across paragraph lines so the block reads like real

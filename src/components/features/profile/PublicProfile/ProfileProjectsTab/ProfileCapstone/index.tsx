@@ -11,17 +11,6 @@ import {
     RocketIcon,
 } from "@phosphor-icons/react"
 import {
-    useQueryUserCapstoneProgressSwr,
-    useQueryUserProfileSwr,
-} from "@/hooks"
-import {
-    AsyncContent,
-    LabeledCard,
-    Skeleton,
-    SurfaceListCard,
-    SurfaceListCardItem,
-} from "@/components/blocks"
-import {
     useProfileUsername,
 } from "../../hooks/useProfileUsername"
 import {
@@ -30,6 +19,12 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useQueryUserCapstoneProgressSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCapstoneProgressSwr"
+import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 
 /** Props for {@link ProfileCapstone}. */
 export type ProfileCapstoneProps = WithClassNames<undefined>

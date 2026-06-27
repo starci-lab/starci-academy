@@ -1,4 +1,4 @@
-import { ReactionType } from "@/modules/api"
+import { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
 
 /** A reaction kind's emoji + Facebook Emoji type + i18n label key. */
 export interface ReactionDescriptor {

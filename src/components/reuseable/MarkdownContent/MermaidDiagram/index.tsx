@@ -5,8 +5,7 @@ import React, { useId, useState } from "react"
 import mermaid from "mermaid"
 import useSWR from "swr"
 import { Modal, cn } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types"
-
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link MermaidDiagram}. */
 export interface MermaidDiagramProps extends WithClassNames<undefined> {

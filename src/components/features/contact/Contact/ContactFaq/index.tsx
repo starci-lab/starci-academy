@@ -10,9 +10,9 @@ import {
     useLocale,
     useTranslations,
 } from "next-intl"
-import { LabeledCard } from "@/components/blocks"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { CONTACT_FAQ_INDEXES } from "../constants"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 
 /** Props for {@link ContactFaq}. */
 export type ContactFaqProps = WithClassNames<undefined>

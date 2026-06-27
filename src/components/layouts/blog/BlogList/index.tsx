@@ -6,11 +6,12 @@ import { Button } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { queryBlogPosts, BlogCategory } from "@/modules/api/graphql"
 import { CategoryFilter } from "./CategoryFilter"
 import { FeaturedPost } from "./FeaturedPost"
 import { PostRow } from "../shared/PostRow"
 import { BlogListSkeleton } from "./BlogListSkeleton"
+import { queryBlogPosts } from "@/modules/api/graphql/queries/query-blog-posts"
+import { BlogCategory } from "@/modules/api/graphql/queries/types/blog"
 
 /** Posts fetched per page / "load more" step (mirrors the backend default). */
 const PAGE_SIZE = 12

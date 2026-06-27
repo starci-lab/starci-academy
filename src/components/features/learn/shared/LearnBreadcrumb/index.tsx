@@ -4,10 +4,10 @@ import React from "react"
 import type { ReactNode } from "react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
-import { ResponsiveBreadcrumb } from "@/components/blocks"
-import type { ResponsiveBreadcrumbItem } from "@/components/blocks"
-import { pathConfig } from "@/resources"
-import { useAppSelector } from "@/redux"
+import { ResponsiveBreadcrumb } from "@/components/blocks/navigation/ResponsiveBreadcrumb"
+import type { ResponsiveBreadcrumbItem } from "@/components/blocks/navigation/ResponsiveBreadcrumb"
+import { pathConfig } from "@/resources/path"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Props for {@link LearnBreadcrumb}. */
 export interface LearnBreadcrumbProps {

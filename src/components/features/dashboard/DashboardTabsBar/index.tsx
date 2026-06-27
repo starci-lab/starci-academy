@@ -9,11 +9,11 @@ import {
     TrophyIcon,
 } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import { ExtendedTabs } from "@/components/blocks"
-import { useDashboardTabStore } from "@/hooks"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { DASHBOARD_TABS } from "../types"
 import type { DashboardTab } from "../types"
+import { ExtendedTabs } from "@/components/blocks/navigation/ExtendedTabs"
+import { useDashboardTabStore } from "@/hooks/zustand/dashboardTab/store"
 
 /** Leading icon shown on each dashboard tab, keyed by tab id. */
 const TAB_ICONS: Record<DashboardTab, typeof HouseIcon> = {

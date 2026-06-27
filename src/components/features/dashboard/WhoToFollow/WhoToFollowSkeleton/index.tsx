@@ -7,15 +7,11 @@ import {
 import {
     UserPlusIcon,
 } from "@phosphor-icons/react"
-import {
-    Skeleton,
-} from "@/components/blocks"
-import {
-    SectionCard,
-} from "@/components/reuseable"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { SectionCard } from "@/components/reuseable/SectionCard"
 
 /** Number of placeholder suggestion rows shown while suggestions load. */
 const SKELETON_ROW_COUNT = 4

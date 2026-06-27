@@ -1,5 +1,5 @@
-import { publicEnv } from "@/resources/env"
 import { Manager } from "socket.io-client"
+import { publicEnv } from "@/resources/env/public"
 
 /**
  * Creates a single Socket.IO {@link Manager} for the API WebSocket base URL.

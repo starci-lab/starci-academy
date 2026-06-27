@@ -1,13 +1,4 @@
 "use client"
-
-import type { UserMilestoneTaskAttemptFeedbackEntity } from "@/modules/types"
-import {
-    defaultUserMilestoneTaskFeedbacksListSorts,
-    GraphQLHeadersKey,
-    queryUserMilestoneTaskFeedbacks,
-} from "@/modules/api"
-import { useUserMilestoneTaskFeedbacksModalOverlayState } from "@/hooks"
-import { useAppSelector } from "@/redux"
 import { cn, Modal, ScrollShadow } from "@heroui/react"
 import React, { useMemo } from "react"
 import { useTranslations } from "next-intl"
@@ -15,6 +6,11 @@ import useSWR from "swr"
 import { MilestoneFeedbackCard } from "./MilestoneFeedbackCard"
 import { MilestoneFeedbackCardSkeleton } from "./MilestoneFeedbackCardSkeleton"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import type { UserMilestoneTaskAttemptFeedbackEntity } from "@/modules/types/entities/user-milestone-task"
+import { defaultUserMilestoneTaskFeedbacksListSorts, queryUserMilestoneTaskFeedbacks } from "@/modules/api/graphql/queries/query-user-milestone-task-feedbacks"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { useUserMilestoneTaskFeedbacksModalOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useAppSelector } from "@/redux/hooks"
 
 const FEEDBACK_PAGE_LIMIT = 100
 

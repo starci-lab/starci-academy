@@ -4,8 +4,7 @@ import { CloudArrowUpIn as CloudArrowUpIcon } from "@gravity-ui/icons"
 import React, { useCallback } from "react"
 import { cn } from "@heroui/react"
 import { useDropzone } from "react-dropzone"
-import type { WithClassNames } from "@/modules/types"
-
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for Dropzone component.

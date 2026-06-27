@@ -1,5 +1,5 @@
 import React from "react"
-import { CommunityChat } from "@/components/features/community"
+import { CommunityChat } from "@/components/features/community/CommunityChat"
 
 /**
  * Route `/[locale]/community/chat` — the member-only community chat surface

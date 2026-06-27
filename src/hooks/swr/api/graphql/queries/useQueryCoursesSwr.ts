@@ -1,7 +1,7 @@
-import { queryCourses } from "@/modules/api"
-import { useAppDispatch } from "@/redux"
-import { setCourses } from "@/redux/slices"
 import useSWR from "swr"
+import { queryCourses } from "@/modules/api/graphql/queries/query-courses"
+import { useAppDispatch } from "@/redux/hooks"
+import { setCourses } from "@/redux/slices/course"
 
 /** Params for {@link useQueryCoursesSwr} — server-side search + pagination (ES-backed, scales). */
 export interface UseQueryCoursesSwrParams {

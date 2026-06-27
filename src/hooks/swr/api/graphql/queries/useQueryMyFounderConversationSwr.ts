@@ -1,6 +1,6 @@
 import useSWR from "swr"
-import { queryMyFounderConversation } from "@/modules/api"
-import { useAppSelector } from "@/redux"
+import { queryMyFounderConversation } from "@/modules/api/graphql/queries/query-my-founder-conversation"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR hook resolving the viewer's private founder DM conversation handle. Gated on

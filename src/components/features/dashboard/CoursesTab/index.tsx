@@ -11,9 +11,6 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    LabeledCard,
-} from "@/components/blocks"
-import {
     MyCoursesProgress,
 } from "./MyCoursesProgress"
 import {
@@ -25,6 +22,7 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 
 /** Props for {@link CoursesTab}. */
 export type CoursesTabProps = WithClassNames<undefined>

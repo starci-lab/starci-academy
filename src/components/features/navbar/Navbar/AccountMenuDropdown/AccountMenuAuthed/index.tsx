@@ -14,12 +14,10 @@ import {
 } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
-import {
-    useAccountMenuOverlayState,
-    useMutateSignOutSwr,
-} from "@/hooks"
 import { pathConfig } from "@/resources/path"
-import type { WithClassNames } from "@/modules/types"
+import { useAccountMenuOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useMutateSignOutSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSignOutSwr"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link AccountMenuAuthed}. */
 export type AccountMenuAuthedProps = WithClassNames<undefined>

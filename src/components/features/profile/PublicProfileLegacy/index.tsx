@@ -16,13 +16,6 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    useAppSelector,
-} from "@/redux"
-import {
-    useProfileTabStore,
-    useQueryUserProfileSwr,
-} from "@/hooks"
-import {
     useProfileUsername,
 } from "./useProfileUsername"
 import type {
@@ -70,6 +63,9 @@ import {
 import {
     ProfileSolvedChallenges,
 } from "./ProfileSolvedChallenges"
+import { useAppSelector } from "@/redux/hooks"
+import { useProfileTabStore } from "@/hooks/zustand/profileTab/store"
+import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
 
 /** Leading icon shown on each profile tab, keyed by tab id. */
 const TAB_ICONS: Record<ProfileTab, typeof OverviewIcon> = {

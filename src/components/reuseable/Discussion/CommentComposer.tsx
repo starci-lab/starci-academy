@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from "react"
 import { Button, TextArea, TextField, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types"
 import { UserAvatar } from "../UserAvatar"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link CommentComposer}. */
 export interface CommentComposerProps extends WithClassNames<undefined> {

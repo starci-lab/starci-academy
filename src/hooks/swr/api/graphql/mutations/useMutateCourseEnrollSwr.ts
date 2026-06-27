@@ -1,8 +1,6 @@
-import {
-    mutateCourseEnroll,
-    type CourseEnrollRequest,
-} from "@/modules/api"
 import useSWRMutation from "swr/mutation"
+import { mutateCourseEnroll } from "@/modules/api/graphql/mutations/mutation-course-enroll"
+import { type CourseEnrollRequest } from "@/modules/api/graphql/mutations/types/course-enroll"
 
 type MutateCourseEnrollResult = Awaited<ReturnType<typeof mutateCourseEnroll>>
 

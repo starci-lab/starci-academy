@@ -1,20 +1,19 @@
 import { useEffect, useRef, useState } from "react"
 import EventEmitter2 from "eventemitter2"
-import { useAppDispatch, useAppSelector } from "@/redux"
 import { useLocale } from "next-intl"
-import {
-    applyIncompleteJobStatus,
-    setAiProcessingModalData,
-    setJobStatusMessageForJob,
-} from "@/redux/slices"
-import type { JobStatusUpdatedSocketIoMessage } from "@/modules/types"
 import {
     SubscribeJobNotificationSocketIoPayload,
 } from "./types"
 import { PublicationEvent, SubscriptionEvent } from "./enums"
 import { jobNotificationsSocket } from "./sockets"
-import { LocalStorage, LocalStorageId } from "@/modules/storage"
-import { sleep } from "@/modules/utils"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { applyIncompleteJobStatus } from "@/redux/slices/job"
+import { setAiProcessingModalData } from "@/redux/slices/modal"
+import { setJobStatusMessageForJob } from "@/redux/slices/socketio"
+import type { JobStatusUpdatedSocketIoMessage } from "@/modules/types/socketio"
+import { LocalStorage } from "@/modules/storage/local/storage"
+import { LocalStorageId } from "@/modules/storage/local/enums/id"
+import { sleep } from "@/modules/utils/misc"
 
 /** Fan-out for listeners that are not couched in Redux. */
 export const jobNotificationsSocketIoEventEmitter = new EventEmitter2()

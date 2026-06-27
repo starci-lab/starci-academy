@@ -1,6 +1,6 @@
 import useSWR from "swr"
-import { queryCommunityChatConversation } from "@/modules/api"
-import { useAppSelector } from "@/redux"
+import { queryCommunityChatConversation } from "@/modules/api/graphql/queries/query-community-chat-conversation"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR hook resolving the global community chat conversation handle (id + type).

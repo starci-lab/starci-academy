@@ -1,16 +1,13 @@
 "use client"
-
-import {
-    LessonVideoType,
-    VideoHostPlatform,
-    VideoRendererType,
-    type WithClassNames,
-} from "@/modules/types"
 import { cn } from "@heroui/react"
 import React, { useMemo } from "react"
 import { StandardPlayer } from "./Standard"
 import { MpegDashPlayer } from "./MpegDash"
 import { YoutubePlayer } from "./Youtube"
+import { LessonVideoType } from "@/modules/types/enums/lesson-video-type"
+import { VideoHostPlatform } from "@/modules/types/enums/video-host-platform"
+import { VideoRendererType } from "@/modules/types/enums/video-renderer-type"
+import { type WithClassNames } from "@/modules/types/base/class-name"
 
 // ---------------------------------------------------------------------------
 // Resolve which sub-player to use

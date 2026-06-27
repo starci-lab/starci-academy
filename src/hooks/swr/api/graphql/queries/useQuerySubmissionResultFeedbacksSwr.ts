@@ -1,10 +1,7 @@
 import useSWR from "swr"
-import {
-    defaultSubmissionFeedbacksListSorts,
-    GraphQLHeadersKey,
-    querySubmissionFeedbacks,
-} from "@/modules/api"
-import { useAppSelector } from "@/redux"
+import { defaultSubmissionFeedbacksListSorts, querySubmissionFeedbacks } from "@/modules/api/graphql/queries/query-submission-feedbacks"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * Page-friendly variant of the submission-feedbacks query for the dedicated result

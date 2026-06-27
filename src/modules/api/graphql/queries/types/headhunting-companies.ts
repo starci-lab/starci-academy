@@ -1,5 +1,5 @@
-import type { HeadhuntingCompanyEntity } from "@/modules/types"
 import type { GraphQLResponse } from "../../types"
+import type { HeadhuntingCompanyEntity } from "@/modules/types/entities/headhunting-company"
 
 /** Apollo response shape for the `headhuntingCompanies` query. */
 export interface QueryHeadhuntingCompaniesResponse {

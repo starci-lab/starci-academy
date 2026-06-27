@@ -10,7 +10,7 @@ import {
 
     useTranslations,
 } from "next-intl"
-import type { WithClassNames } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 export type StarCiAIBadgeProps = WithClassNames<{
     /** Extra classes on the sparkle icon (default `size-5`). */

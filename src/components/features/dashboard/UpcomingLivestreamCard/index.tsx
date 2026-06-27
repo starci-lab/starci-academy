@@ -17,17 +17,13 @@ import {
     Video as VideoIcon,
 } from "@gravity-ui/icons"
 import {
-    useQueryMyUpcomingLivestreamsSwr,
-} from "@/hooks"
-import {
-    SectionCard,
-} from "@/components/reuseable"
-import {
     pathConfig,
 } from "@/resources/path"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useQueryMyUpcomingLivestreamsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyUpcomingLivestreamsSwr"
+import { SectionCard } from "@/components/reuseable/SectionCard"
 
 /** How many upcoming sessions to list (the soonest plus a few more). */
 const MAX_ROWS = 3

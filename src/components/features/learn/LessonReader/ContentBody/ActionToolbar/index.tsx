@@ -7,9 +7,7 @@ import {
     Spinner,
     cn,
 } from "@heroui/react"
-import type {
-    WithClassNames,
-} from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link ActionToolbar}. */
 export interface ActionToolbarProps extends WithClassNames<undefined> {

@@ -1,8 +1,8 @@
-import type { AiActiveModel } from "@/modules/types"
 import {
     createSlice,
     type PayloadAction,
 } from "@reduxjs/toolkit"
+import type { AiActiveModel } from "@/modules/types/ai-model"
 
 /**
  * Redux state for the AI models available to the current user.

@@ -1,7 +1,7 @@
-import { queryMyLearnedLessons } from "@/modules/api"
-import type { QueryMyDashboardRefItemData } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { queryMyLearnedLessons } from "@/modules/api/graphql/queries/query-my-learned-lessons"
+import type { QueryMyDashboardRefItemData } from "@/modules/api/graphql/queries/types/my-dashboard"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR wrapper for {@link queryMyLearnedLessons}. `data` is the viewer's recently

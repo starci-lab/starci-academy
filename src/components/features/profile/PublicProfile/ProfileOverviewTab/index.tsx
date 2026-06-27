@@ -9,13 +9,13 @@ import {
     CodeIcon,
 } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import { useProfileTabStore } from "@/hooks"
-import { LabeledCard } from "@/components/blocks"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { OverviewCourses } from "./OverviewCourses"
 import { OverviewContributions } from "./OverviewContributions"
 import { OverviewChallengeSkills } from "./OverviewChallengeSkills"
 import { OverviewCodeSkills } from "./OverviewCodeSkills"
+import { useProfileTabStore } from "@/hooks/zustand/profileTab/store"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 
 /** Props for {@link ProfileOverviewTab}. */
 export type ProfileOverviewTabProps = WithClassNames<undefined>

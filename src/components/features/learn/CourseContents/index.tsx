@@ -26,26 +26,9 @@ import {
     StackIcon,
     UsersIcon,
 } from "@phosphor-icons/react"
-import {
-    useAppSelector,
-} from "@/redux"
-import {
-    useQueryMyCourseOutlineSwr,
-} from "@/hooks"
-import {
-    AsyncContent,
-    DifficultyChip,
-    HighlightChip,
-    ListRow,
-    PageHeader,
-    ProgressMeter,
-} from "@/components/blocks"
 import { LearnBreadcrumb } from "../shared/LearnBreadcrumb"
 import { GithubTeamGate } from "@/components/layouts/auth/GithubTeamGate"
 import { useCourseTotals } from "../../course/CourseDetail/hooks/useCourseTotals"
-import type {
-    MyCourseOutlineModule,
-} from "@/modules/api"
 import {
     pathConfig,
 } from "@/resources/path"
@@ -59,6 +42,15 @@ import {
 import {
     CourseContentsSkeleton,
 } from "./CourseContentsSkeleton"
+import { useAppSelector } from "@/redux/hooks"
+import { useQueryMyCourseOutlineSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCourseOutlineSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { DifficultyChip } from "@/components/blocks/chips/DifficultyChip"
+import { HighlightChip } from "@/components/blocks/chips/HighlightChip"
+import { ListRow } from "@/components/blocks/lists/ListRow"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
+import type { MyCourseOutlineModule } from "@/modules/api/graphql/queries/types/my-course-outline"
 
 /** Props for {@link CourseContents}. */
 export type CourseContentsProps = WithClassNames<undefined>

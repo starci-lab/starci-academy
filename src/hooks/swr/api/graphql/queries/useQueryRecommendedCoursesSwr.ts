@@ -1,7 +1,7 @@
-import { queryRecommendedCourses } from "@/modules/api"
-import type { QueryRecommendedCoursesData } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { queryRecommendedCourses } from "@/modules/api/graphql/queries/query-recommended-courses"
+import type { QueryRecommendedCoursesData } from "@/modules/api/graphql/queries/types/recommended-courses"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR wrapper for {@link queryRecommendedCourses}. `data` is the viewer's

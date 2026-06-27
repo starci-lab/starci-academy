@@ -21,27 +21,11 @@ import {
     BookOpenIcon,
 } from "@phosphor-icons/react"
 import {
-    useQueryMyCoursesSwr,
-} from "@/hooks"
-import {
-    AsyncContent,
-    EmptyContent,
-    IconTile,
-    PageHeader,
-    SegmentBar,
-    Skeleton,
-    SurfaceListCard,
-    SurfaceListCardItem,
-} from "@/components/blocks"
-import {
     CourseTrialChip,
 } from "@/components/reuseable/CourseTrialChip"
 import {
     SettingsBreadcrumb,
 } from "../SettingsBreadcrumb"
-import {
-    pathConfig,
-} from "@/resources"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -51,6 +35,15 @@ import {
 import {
     CourseDetail,
 } from "./CourseDetail"
+import { useQueryMyCoursesSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCoursesSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { EmptyContent } from "@/components/blocks/async/EmptyContent"
+import { IconTile } from "@/components/blocks/identity/IconTile"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { SegmentBar } from "@/components/blocks/stats/SegmentBar"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { pathConfig } from "@/resources/path"
 
 /** Props for {@link LearningHistory}. */
 export type LearningHistoryProps = WithClassNames<undefined>

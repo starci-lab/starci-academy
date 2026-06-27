@@ -8,9 +8,9 @@ import { useLocale } from "next-intl"
 import { CheckCircleIcon } from "@phosphor-icons/react"
 
 import { COURSE_MODULE_SLOT_NODE_TYPE, SLOT_NODE_HEIGHT, SLOT_NODE_WIDTH } from "../moduleExpansion"
-import { useAppSelector } from "@/redux"
-import { useAuthenticationOverlayState } from "@/hooks"
 import { pathConfig } from "@/resources/path"
+import { useAppSelector } from "@/redux/hooks"
+import { useAuthenticationOverlayState } from "@/hooks/zustand/overlay/hooks"
 
 export type CourseModuleSlotNodeData = {
     /** Parent `courseModule` node id this lesson belongs to. */

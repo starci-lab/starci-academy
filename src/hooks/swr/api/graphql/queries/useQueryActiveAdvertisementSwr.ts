@@ -1,6 +1,6 @@
-import { queryActiveAdvertisement } from "@/modules/api"
-import type { QueryActiveAdvertisementRequest } from "@/modules/api"
 import useSWR from "swr"
+import { queryActiveAdvertisement } from "@/modules/api/graphql/queries/query-active-advertisement"
+import type { QueryActiveAdvertisementRequest } from "@/modules/api/graphql/queries/types/active-advertisement"
 
 /**
  * SWR query wrapper for {@link queryActiveAdvertisement}. `data` is the active

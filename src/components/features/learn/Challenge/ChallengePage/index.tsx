@@ -3,10 +3,10 @@
 import React, { useEffect } from "react"
 import { useParams } from "next/navigation"
 import { useRouter } from "@/i18n/navigation"
-import { useAppDispatch } from "@/redux"
-import { setChallengeId } from "@/redux/slices"
-import { useChallengeOverlayState } from "@/hooks"
 import { ChallengeView } from "../ChallengeView"
+import { useAppDispatch } from "@/redux/hooks"
+import { setChallengeId } from "@/redux/slices/challenge"
+import { useChallengeOverlayState } from "@/hooks/zustand/overlay/hooks"
 
 /**
  * Full-page host for a single challenge — route

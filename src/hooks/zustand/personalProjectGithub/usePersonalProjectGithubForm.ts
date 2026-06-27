@@ -3,21 +3,17 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { debounce } from "lodash"
 import { useLocale, useTranslations } from "next-intl"
-import { useAppDispatch, useAppSelector } from "@/redux"
 import { SidebarTab } from "@/redux/slices/sidebar"
-import { addMilestoneTaskIdToJobId } from "@/redux/slices"
-import { useGraphQLWithToast } from "@/modules/toast"
-import {
-    useMutateReviewPersonalProjectTaskSwr,
-    useMutateSyncPersonalProjectGithubBranchSwr,
-    useMutateSyncPersonalProjectGithubSwr,
-    useQueryCourseEnrollmentStatusSwr,
-} from "@/hooks/swr"
-import {
-    PublicationEvent,
-    useJobNotificationsSocketIo,
-} from "@/hooks/socketio"
 import { usePersonalProjectGithubStore, type PersonalProjectGithubAutosaveStatus } from "./store"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { addMilestoneTaskIdToJobId } from "@/redux/slices/milestone"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
+import { useMutateReviewPersonalProjectTaskSwr } from "@/hooks/swr/api/graphql/mutations/useMutateReviewPersonalProjectTaskSwr"
+import { useMutateSyncPersonalProjectGithubBranchSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSyncPersonalProjectGithubBranchSwr"
+import { useMutateSyncPersonalProjectGithubSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSyncPersonalProjectGithubSwr"
+import { useQueryCourseEnrollmentStatusSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseEnrollmentStatusSwr"
+import { PublicationEvent } from "@/hooks/socketio/enums/publication-event"
+import { useJobNotificationsSocketIo } from "@/hooks/socketio/useJobNotificationsSocketIo"
 
 /** GitHub repo regex (aligned with the challenge submission rule). */
 const GITHUB_REGEX = /^https:\/\/(www\.)?github\.com\/[A-Za-z0-9_.-]+(\/[A-Za-z0-9_.-]+)?(\/)?$/

@@ -25,27 +25,16 @@ import {
 import {
     useRouter,
 } from "next/navigation"
-import {
-    mutateMarkAllNotificationsAsRead,
-    mutateMarkNotificationAsRead,
-    queryResolveRoute,
-} from "@/modules/api"
-import type {
-    QueryNotificationData,
-    QueryNotificationTargetData,
-} from "@/modules/api"
-import {
-    useQueryMyNotificationsSwr,
-} from "@/hooks"
-import {
-    useAppSelector,
-} from "@/redux"
-import {
-    useGraphQLWithToast,
-} from "@/modules/toast"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { mutateMarkAllNotificationsAsRead } from "@/modules/api/graphql/mutations/mutation-mark-all-notifications-as-read"
+import { mutateMarkNotificationAsRead } from "@/modules/api/graphql/mutations/mutation-mark-notification-as-read"
+import { queryResolveRoute } from "@/modules/api/graphql/queries/query-resolve-route"
+import type { QueryNotificationData, QueryNotificationTargetData } from "@/modules/api/graphql/queries/types/notifications"
+import { useQueryMyNotificationsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyNotificationsSwr"
+import { useAppSelector } from "@/redux/hooks"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
 
 /** Largest unread count rendered verbatim on the badge before showing "9+". */
 const MAX_BADGE = 9

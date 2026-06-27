@@ -1,6 +1,6 @@
-import { queryUserXp } from "@/modules/api"
-import type { QueryUserXpData } from "@/modules/api"
 import useSWR from "swr"
+import { queryUserXp } from "@/modules/api/graphql/queries/query-user-xp"
+import type { QueryUserXpData } from "@/modules/api/graphql/queries/types/user-xp"
 
 /**
  * SWR hook for a user's per-source XP breakdown (challenge / milestone / coding /

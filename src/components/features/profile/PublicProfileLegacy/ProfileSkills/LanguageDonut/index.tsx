@@ -18,11 +18,9 @@ import {
     Tooltip,
 } from "recharts"
 import type {
-    QueryUserCodingSkillCount,
-} from "@/modules/api"
-import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import type { QueryUserCodingSkillCount } from "@/modules/api/graphql/queries/types/user-coding-skills"
 
 /** Props for {@link LanguageDonut}. */
 export interface LanguageDonutProps extends WithClassNames<undefined> {

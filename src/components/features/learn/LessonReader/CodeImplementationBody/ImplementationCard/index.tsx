@@ -1,10 +1,11 @@
 "use client"
 
 import React from "react"
-import { MarkdownContent } from "@/components/reuseable"
-import type { CodeImplementationEntity, WithClassNames } from "@/modules/types"
 import { Chip, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
+import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import type { CodeImplementationEntity } from "@/modules/types/entities/code-implementation"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 export interface ImplementationCardProps extends WithClassNames<undefined> {
     /** One implementation guide row from `content.codeImplementations`. */

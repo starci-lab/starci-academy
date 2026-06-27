@@ -1,6 +1,6 @@
-import { querySavedContents } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { querySavedContents } from "@/modules/api/graphql/queries/query-saved-contents"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Saved-content rows per page (server-side offset pagination). */
 export const SAVED_CONTENTS_PAGE_SIZE = 12

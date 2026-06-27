@@ -14,21 +14,8 @@ import {
     useRouter,
 } from "next/navigation"
 import {
-    useAppSelector,
-} from "@/redux"
-import {
-    useQueryUserProfileSwr,
-} from "@/hooks"
-import {
     useProfileUsername,
 } from "../useProfileUsername"
-import {
-    pathConfig,
-} from "@/resources"
-import {
-    MarkdownContent,
-    SectionCard,
-} from "@/components/reuseable"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -41,6 +28,11 @@ import {
 import {
     ProfileSkillsSnapshot,
 } from "../ProfileSkillsSnapshot"
+import { useAppSelector } from "@/redux/hooks"
+import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
+import { pathConfig } from "@/resources/path"
+import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { SectionCard } from "@/components/reuseable/SectionCard"
 
 /** Props for {@link ProfileOverviewTab}. */
 export type ProfileOverviewTabProps = WithClassNames<undefined>

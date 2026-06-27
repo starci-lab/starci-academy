@@ -1,5 +1,5 @@
-import { publicEnv } from "@/resources/env"
 import { RetryLink } from "@apollo/client/link/retry"
+import { publicEnv } from "@/resources/env/public"
 
 /**
  * Retries failed operations with jittered exponential backoff.

@@ -1,6 +1,6 @@
-import { queryUserContributionCalendar } from "@/modules/api"
-import type { QueryMyContributionDayData } from "@/modules/api"
 import useSWR from "swr"
+import { queryUserContributionCalendar } from "@/modules/api/graphql/queries/query-user-contribution-calendar"
+import type { QueryMyContributionDayData } from "@/modules/api/graphql/queries/types/my-dashboard"
 
 /**
  * SWR hook for a user's contribution calendar (active days for one year), by id.

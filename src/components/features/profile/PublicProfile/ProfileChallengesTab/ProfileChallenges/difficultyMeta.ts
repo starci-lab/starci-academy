@@ -1,5 +1,5 @@
-import type { Difficulty } from "@/components/blocks"
-import type { QueryUserSolvedChallengeItemData } from "@/modules/api"
+import type { Difficulty } from "@/components/blocks/chips/DifficultyChip"
+import type { QueryUserSolvedChallengeItemData } from "@/modules/api/graphql/queries/types/user-solved-challenges"
 
 /** Color + display level per raw challenge difficulty (the 4-tone difficulty scale). */
 interface DifficultyMeta {

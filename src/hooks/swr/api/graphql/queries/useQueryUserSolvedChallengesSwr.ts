@@ -1,5 +1,5 @@
-import { queryUserSolvedChallenges } from "@/modules/api"
 import useSWR from "swr"
+import { queryUserSolvedChallenges } from "@/modules/api/graphql/queries/query-user-solved-challenges"
 
 /**
  * SWR hook for a user's passed challenge submissions (with their submitted link),

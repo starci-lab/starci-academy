@@ -1,5 +1,5 @@
-import type { FoundationEntity } from "@/modules/types"
 import type { PaginationFilters, SortInput } from "../../types"
+import type { FoundationEntity } from "@/modules/types/entities/foundation"
 
 /** Paginated payload inside `foundations.data`. */
 export interface QueryFoundationsPayload {

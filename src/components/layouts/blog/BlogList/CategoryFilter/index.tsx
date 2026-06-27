@@ -3,8 +3,8 @@
 import React from "react"
 import { Chip, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { BlogCategory } from "@/modules/api/graphql"
 import { CATEGORY_FILTERS, CATEGORY_COLOR } from "../../shared/category"
+import { BlogCategory } from "@/modules/api/graphql/queries/types/blog"
 
 /** Props for {@link CategoryFilter}. */
 export interface CategoryFilterProps {

@@ -9,28 +9,22 @@ import React, {
 import useSWR from "swr"
 import useSWRInfinite from "swr/infinite"
 import { useLocale } from "next-intl"
-import { useAppSelector } from "@/redux"
-import { Discussion } from "@/components/reuseable"
-import {
-    GraphQLHeadersKey,
-    mutateCreateComment,
-    mutateDeleteComment,
-    mutateReactToComment,
-    mutateUpdateComment,
-    queryContentComments,
-    queryContentReactions,
-    ReactionType,
-    type CommentNode,
-    type GraphQLHeaders,
-} from "@/modules/api"
-import {
-    contentDiscussionSocketIoEventEmitter,
-    PublicationEvent,
-    SubscriptionEvent,
-    useContentDiscussionSocketIo,
-    type SubscribeContentDiscussionSocketIoPayload,
-} from "@/hooks"
-import type { WithClassNames } from "@/modules/types"
+import { useAppSelector } from "@/redux/hooks"
+import { Discussion } from "@/components/reuseable/Discussion"
+import { GraphQLHeadersKey, type GraphQLHeaders } from "@/modules/api/graphql/types"
+import { mutateCreateComment } from "@/modules/api/graphql/mutations/mutation-create-comment"
+import { mutateDeleteComment } from "@/modules/api/graphql/mutations/mutation-delete-comment"
+import { mutateReactToComment } from "@/modules/api/graphql/mutations/mutation-react-to-comment"
+import { mutateUpdateComment } from "@/modules/api/graphql/mutations/mutation-update-comment"
+import { queryContentComments } from "@/modules/api/graphql/queries/query-content-comments"
+import { queryContentReactions } from "@/modules/api/graphql/queries/query-content-reactions"
+import { ReactionType, type CommentNode } from "@/modules/api/graphql/queries/types/discussion"
+import { contentDiscussionSocketIoEventEmitter } from "@/hooks/socketio/useContentDiscussionSocketIoLifecycle"
+import { PublicationEvent } from "@/hooks/socketio/enums/publication-event"
+import { SubscriptionEvent } from "@/hooks/socketio/enums/subscription-event"
+import { useContentDiscussionSocketIo } from "@/hooks/socketio/useContentDiscussionSocketIo"
+import { type SubscribeContentDiscussionSocketIoPayload } from "@/hooks/socketio/types/content-discussion"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Page size for a parent's replies (loaded in one shot per parent). */
 const REPLIES_LIMIT = 50

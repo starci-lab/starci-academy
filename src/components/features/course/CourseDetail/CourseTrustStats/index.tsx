@@ -16,17 +16,13 @@ import {
     UsersIcon,
 } from "@phosphor-icons/react"
 import {
-    HighlightChip,
-} from "@/components/blocks"
-import {
-    useAppSelector,
-} from "@/redux"
-import {
     useCourseTotals,
 } from "../hooks/useCourseTotals"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { HighlightChip } from "@/components/blocks/chips/HighlightChip"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Props for {@link CourseTrustStats}. */
 export type CourseTrustStatsProps = WithClassNames<undefined>

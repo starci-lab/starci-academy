@@ -14,17 +14,10 @@ import {
     cn,
 } from "@heroui/react"
 import type {
-    QueryActiveAdvertisementData,
-    AdvertisementImageMedia,
-    AdvertisementVideoMedia,
-    AdvertisementCarouselMedia,
-} from "@/modules/api"
-import {
-    AdvertisementMediaType,
-} from "@/modules/api"
-import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import type { QueryActiveAdvertisementData, AdvertisementImageMedia, AdvertisementVideoMedia, AdvertisementCarouselMedia } from "@/modules/api/graphql/queries/types/active-advertisement"
+import { AdvertisementMediaType } from "@/modules/api/graphql/queries/types/active-advertisement"
 
 /** Props for {@link AdBanner}. */
 export interface AdBannerProps extends WithClassNames<undefined> {

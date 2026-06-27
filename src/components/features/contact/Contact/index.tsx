@@ -5,15 +5,13 @@ import {
     Typography,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import {
-    LabeledCard,
-    PageContainer,
-    PageHeader,
-} from "@/components/blocks"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { ContactChannels } from "./ContactChannels"
 import { ContactForm } from "./ContactForm"
 import { ContactFaq } from "./ContactFaq"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { PageContainer } from "@/components/blocks/layout/PageContainer"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
 
 /** Props for {@link Contact}. */
 export type ContactProps = WithClassNames<undefined>

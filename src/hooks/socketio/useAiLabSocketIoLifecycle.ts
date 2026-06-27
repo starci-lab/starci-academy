@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react"
-import { useAppDispatch, useAppSelector } from "@/redux"
-import { appendAiLabRunChunk } from "@/redux/slices"
 import type { AiLabRunChunkSocketIoMessage } from "./types"
 import { SubscriptionEvent } from "./enums"
 import { aiLabSocket } from "./sockets"
-import { LocalStorage, LocalStorageId } from "@/modules/storage"
-import { sleep } from "@/modules/utils"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { appendAiLabRunChunk } from "@/redux/slices/socketio"
+import { LocalStorage } from "@/modules/storage/local/storage"
+import { LocalStorageId } from "@/modules/storage/local/enums/id"
+import { sleep } from "@/modules/utils/misc"
 
 /**
  * Lifecycle hook for the `/ai_lab` namespace — runs ONCE in {@link SocketIoSideEffects}.

@@ -16,17 +16,6 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    useMutateSetFollowSwr,
-    useQueryGlobalLeaderboardSwr,
-} from "@/hooks"
-import {
-    useAppSelector,
-} from "@/redux"
-import {
-    AsyncContent,
-    LabeledCard,
-} from "@/components/blocks"
-import {
     FollowButton,
 } from "@/components/reuseable/FollowButton"
 import {
@@ -44,6 +33,11 @@ import type {
 import {
     TopLearnersSkeleton,
 } from "./TopLearnersSkeleton"
+import { useMutateSetFollowSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSetFollowSwr"
+import { useQueryGlobalLeaderboardSwr } from "@/hooks/swr/api/graphql/queries/useQueryGlobalLeaderboardSwr"
+import { useAppSelector } from "@/redux/hooks"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 
 /** How many leaders to show. */
 const TOP_N = 5

@@ -1,9 +1,7 @@
-import { 
-    AbortableRequest,
-    mutateGenerateSubmitCvPresignUrl, 
-    type GenerateSubmitCvPresignUrlRequest 
-} from "@/modules/api"
 import useSWRMutation from "swr/mutation"
+import { AbortableRequest } from "@/modules/api/graphql/types"
+import { mutateGenerateSubmitCvPresignUrl } from "@/modules/api/graphql/mutations/mutation-generate-submit-cv-presign-url"
+import { type GenerateSubmitCvPresignUrlRequest } from "@/modules/api/graphql/mutations/types/generate-submit-cv-presign-url"
 
 type MutateGenerateSubmitCvPresignUrlResult = Awaited<ReturnType<typeof mutateGenerateSubmitCvPresignUrl>>
 

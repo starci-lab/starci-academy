@@ -22,44 +22,8 @@ import {
     useSearchParams,
 } from "next/navigation"
 import {
-    useAppDispatch,
-    useAppSelector,
-} from "@/redux"
-import {
-    type WithClassNames,
-    DEFAULT_PROGRAMMING_LANGUAGES,
-    isProgrammingLangAvailable,
-    listContentBodyLangs,
-    resolveActiveProgrammingLang,
-} from "@/modules/types"
-import {
-    programmingLanguageIconMap,
-} from "@/components/reuseable"
-import type {
-    TabsCardGroup,
-} from "@/components/blocks"
-import {
-    AsyncContent,
-} from "@/components/blocks"
-import {
-    useQueryContentSwr,
-    useQueryContentStatusSwr,
-    usePremiumGateOverlayState,
-    useAdModalOverlayState,
-    useQueryActiveAdvertisementSwr,
-    useQueryAiLabPlaygroundSwr,
-} from "@/hooks"
-import {
-    AdvertisementPlacement,
-} from "@/modules/api"
-import {
     AdBanner,
 } from "@/components/features/dashboard/AdBanner"
-import {
-    ContentTab,
-    setContentTab,
-    setContentSelectedProgrammingLang,
-} from "@/redux/slices"
 import type {
     ContentTabItem,
 } from "./types"
@@ -102,6 +66,21 @@ import {
 import {
     PremiumPaywall,
 } from "./PremiumPaywall"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { type WithClassNames } from "@/modules/types/base/class-name"
+import { DEFAULT_PROGRAMMING_LANGUAGES, isProgrammingLangAvailable, resolveActiveProgrammingLang } from "@/modules/types/utils/programming-language"
+import { listContentBodyLangs } from "@/modules/types/entities/content-body"
+import { programmingLanguageIconMap } from "@/components/reuseable/ProgrammingLanguageTabs/map"
+import type { TabsCardGroup } from "@/components/blocks/navigation/TabsCard"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { useQueryContentSwr } from "@/hooks/swr/api/graphql/queries/useQueryContentSwr"
+import { useQueryContentStatusSwr } from "@/hooks/swr/api/graphql/queries/useQueryContentStatusSwr"
+import { usePremiumGateOverlayState, useAdModalOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useQueryActiveAdvertisementSwr } from "@/hooks/swr/api/graphql/queries/useQueryActiveAdvertisementSwr"
+import { useQueryAiLabPlaygroundSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiLabPlaygroundSwr"
+import { AdvertisementPlacement } from "@/modules/api/graphql/queries/types/active-advertisement"
+import { ContentTab, setContentTab } from "@/redux/slices/tabs"
+import { setContentSelectedProgrammingLang } from "@/redux/slices/content"
 
 export type LessonReaderProps = WithClassNames<undefined>
 

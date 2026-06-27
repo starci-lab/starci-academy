@@ -12,19 +12,13 @@ import {
     useTranslations,
 } from "next-intl"
 import _ from "lodash"
-import {
-    StatusChip,
-} from "@/components/blocks"
-import {
-    MarkdownContent,
-} from "@/components/reuseable"
-import {
-    CourseContentTier,
-    type ModuleEntity,
-} from "@/modules/types"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { StatusChip } from "@/components/blocks/chips/StatusChip"
+import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { CourseContentTier } from "@/modules/types/enums/course-content-tier"
+import { type ModuleEntity } from "@/modules/types/entities/module"
 
 /** Chip tone per learning tier (foundation → advanced reads easy → hard). */
 const TIER_TONE: Record<CourseContentTier, "success" | "warning" | "danger"> = {

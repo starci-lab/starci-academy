@@ -10,24 +10,7 @@ import {
     useLocale,
     useTranslations,
 } from "next-intl"
-import {
-    useAppSelector,
-} from "@/redux"
-import {
-    useCvReviewLevelDetailsOverlayState,
-    useCvSubmissionAttemptsDrawerOverlayState,
-    useCvUpdateOverlayState,
-    useQueryCvUrlSwr,
-    useQueryTemplateCvsSwr,
-} from "@/hooks"
-import { useCvApplyStore } from "@/hooks/zustand"
-import { useCvReviewForm } from "@/hooks/rhf"
-import {
-    JobCategory,
-    JobStatus,
-} from "@/modules/types"
 import { dayjs } from "@/modules/dayjs"
-import { getFileNameFromUrl } from "@/utils"
 import {
     CvFileCard,
 } from "./CvFileCard"
@@ -39,6 +22,15 @@ import {
 } from "./FeedbackSection"
 
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { useAppSelector } from "@/redux/hooks"
+import { useCvReviewLevelDetailsOverlayState, useCvSubmissionAttemptsDrawerOverlayState, useCvUpdateOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useQueryCvUrlSwr } from "@/hooks/swr/api/graphql/queries/useQueryCvUrlSwr"
+import { useQueryTemplateCvsSwr } from "@/hooks/swr/api/graphql/queries/useQueryTemplateCvsSwr"
+import { useCvApplyStore } from "@/hooks/zustand/cvApply/store"
+import { useCvReviewForm } from "@/hooks/rhf/useCvReviewForm"
+import { JobCategory } from "@/modules/types/enums/job-category"
+import { JobStatus } from "@/modules/types/enums/job-status"
+import { getFileNameFromUrl } from "@/utils/filename"
 
 /** Props for {@link CVUpload}. */
 export type CVUploadProps = WithClassNames<undefined>

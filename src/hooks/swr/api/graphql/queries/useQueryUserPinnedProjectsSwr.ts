@@ -1,5 +1,5 @@
-import { queryUserPinnedProjects } from "@/modules/api"
 import useSWR from "swr"
+import { queryUserPinnedProjects } from "@/modules/api/graphql/queries/query-user-pinned-projects"
 
 /** SWR cache key prefix for the user-pinned-projects query. */
 export const QUERY_USER_PINNED_PROJECTS_SWR = "QUERY_USER_PINNED_PROJECTS_SWR"

@@ -4,16 +4,14 @@ import { useCallback, useEffect, useMemo } from "react"
 import { useTranslations } from "next-intl"
 import validator from "validator"
 import _ from "lodash"
-import {
-    useAuthenticationOverlayState,
-    useMutateSignInInitSwr,
-    useMutateSignInVerifyOtpSwr,
-    useQueryCheckEmailExistsSwr,
-} from "@/hooks"
-import { useGraphQLWithToast } from "@/modules/toast"
-import { useAppDispatch, useAppSelector } from "@/redux"
-import { resetSignInState, setSignInState, SignInState } from "@/redux/slices"
 import { useSignInStore } from "./store"
+import { useAuthenticationOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useMutateSignInInitSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSignInInitSwr"
+import { useMutateSignInVerifyOtpSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSignInVerifyOtpSwr"
+import { useQueryCheckEmailExistsSwr } from "@/hooks/swr/api/graphql/queries/useQueryCheckEmailExistsSwr"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { resetSignInState, setSignInState, SignInState } from "@/redux/slices/state"
 
 /**
  * Sign-in form hook (replaces the formik singleton) — state SHARED via {@link useSignInStore} so it

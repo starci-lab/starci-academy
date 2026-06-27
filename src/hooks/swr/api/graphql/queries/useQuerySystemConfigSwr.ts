@@ -1,7 +1,7 @@
-import { querySystemConfig } from "@/modules/api"
-import { useAppDispatch } from "@/redux"
-import { setSystemConfig } from "@/redux/slices"
 import useSWR from "swr"
+import { querySystemConfig } from "@/modules/api/graphql/queries/query-system-config"
+import { useAppDispatch } from "@/redux/hooks"
+import { setSystemConfig } from "@/redux/slices/system"
 
 /**
  * Loads system config and hydrates `state.system.config`.

@@ -3,13 +3,16 @@
 import { Clock as ClockIcon, Link as LinkIcon } from "@gravity-ui/icons"
 import React from "react"
 import { Chip, cn, Link, Modal } from "@heroui/react"
-import { useLessonVideoOverlayState } from "@/hooks"
-import { useAppSelector } from "@/redux"
 import { dayjs } from "@/modules/dayjs"
-import { HostPlatformChip, LessonVideoKindChip, Spacer, VideoRenderer } from "@/components/reuseable"
-import { LessonVideoKind, VideoHostPlatform } from "@/modules/types"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-
+import { useLessonVideoOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useAppSelector } from "@/redux/hooks"
+import { HostPlatformChip } from "@/components/reuseable/HostPlatformChip"
+import { LessonVideoKindChip } from "@/components/reuseable/LessonVideoKindChip"
+import { Spacer } from "@/components/reuseable/Spacer"
+import { VideoRenderer } from "@/components/reuseable/VideoRenderer"
+import { LessonVideoKind } from "@/modules/types/enums/lesson-video-kind"
+import { VideoHostPlatform } from "@/modules/types/enums/video-host-platform"
 
 /**
  * Full-screen lesson video dialog with metadata and external link.

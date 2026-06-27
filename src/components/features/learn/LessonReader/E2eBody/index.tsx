@@ -2,12 +2,10 @@
 
 import React, { useMemo, useState } from "react"
 import { Accordion } from "@heroui/react"
-import { useAppSelector } from "@/redux"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
-import {
-    ProgrammingLanguageTabs,
-    ProgrammingLanguageTabsVariant,
-} from "@/components/reuseable/ProgrammingLanguageTabs"
+import { useAppSelector } from "@/redux/hooks"
+import { ProgrammingLanguageTabs } from "@/components/reuseable/ProgrammingLanguageTabs"
+import { ProgrammingLanguageTabsVariant } from "@/components/reuseable/ProgrammingLanguageTabs/enums/programming-language-tabs-variant"
 
 /** One captured E2E flow (shape mirrors the seeded content.e2eFlows jsonb). */
 interface E2eFlow {

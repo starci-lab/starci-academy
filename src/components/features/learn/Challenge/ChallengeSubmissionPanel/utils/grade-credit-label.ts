@@ -1,9 +1,6 @@
 import type {
     useTranslations,
 } from "next-intl"
-import {
-    AiMode,
-} from "@/modules/api"
 import type {
     QueryMyCreditUsageResponseData,
 } from "@/modules/api/graphql/queries/types/my-credit-usage"
@@ -13,6 +10,7 @@ import {
 import type {
     GradeCreditDisplay,
 } from "../types/grade-credit-display"
+import { AiMode } from "@/modules/api/graphql/queries/query-my-ai-settings"
 
 /** Params for {@link resolveGradeCreditDisplay}. */
 export interface ResolveGradeCreditDisplayParams {

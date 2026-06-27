@@ -3,8 +3,8 @@
 import React from "react"
 import { Button, cn } from "@heroui/react"
 import { CameraIcon } from "@phosphor-icons/react"
-import { UserAvatar } from "@/components/reuseable"
-import type { WithClassNames } from "@/modules/types"
+import { UserAvatar } from "@/components/reuseable/UserAvatar"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link AvatarUploadButton}. */
 export interface AvatarUploadButtonProps extends WithClassNames<undefined> {

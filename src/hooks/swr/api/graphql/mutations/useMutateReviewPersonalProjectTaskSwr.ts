@@ -1,10 +1,8 @@
-import {
-    GraphQLHeadersKey,
-    mutateReviewPersonalProjectTask,
-    type ReviewPersonalProjectTaskRequest,
-} from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWRMutation from "swr/mutation"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { mutateReviewPersonalProjectTask } from "@/modules/api/graphql/mutations/mutation-review-personal-project-for-task"
+import { type ReviewPersonalProjectTaskRequest } from "@/modules/api/graphql/mutations/types/review-personal-project-for-task"
+import { useAppSelector } from "@/redux/hooks"
 
 type MutateReviewPersonalProjectTaskResult = Awaited<
     ReturnType<typeof mutateReviewPersonalProjectTask>

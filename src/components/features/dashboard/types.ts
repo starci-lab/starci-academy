@@ -1,4 +1,4 @@
-import type { DashboardTab } from "@/hooks"
+import type { DashboardTab } from "@/hooks/zustand/dashboardTab/store"
 
 /** Re-export the canonical tab union (owned by the shared dashboard tab store). */
 export type { DashboardTab }

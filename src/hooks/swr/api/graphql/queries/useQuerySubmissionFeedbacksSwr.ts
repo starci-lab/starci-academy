@@ -1,15 +1,9 @@
-import { useFeedbackDetailsOverlayState } from "@/hooks"
-import { 
-    defaultSubmissionFeedbacksListSorts, 
-    GraphQLHeadersKey, 
-    querySubmissionFeedbacks 
-} from "@/modules/api"
-import { useAppDispatch, useAppSelector } from "@/redux"
-import { 
-    setSubmissionFeedbacks, 
-    setSubmissionFeedbacksCount 
-} from "@/redux/slices"
 import useSWR from "swr"
+import { useFeedbackDetailsOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { defaultSubmissionFeedbacksListSorts, querySubmissionFeedbacks } from "@/modules/api/graphql/queries/query-submission-feedbacks"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setSubmissionFeedbacks, setSubmissionFeedbacksCount } from "@/redux/slices/submission-feedback"
 
 /**
  * Lists submission feedbacks for the focused challenge submission (`challengeSubmissions`).

@@ -1,13 +1,8 @@
-import { useAppDispatch } from "@/redux"
 import { useLayoutEffect, useRef } from "react"
 import { useParams, usePathname } from "next/navigation"
-import {
-    setChallengeCount,
-    setChallengePageNumber,
-    setChallenges,
-    setContent,
-    setContentId,
-} from "@/redux/slices"
+import { useAppDispatch } from "@/redux/hooks"
+import { setChallengeCount, setChallengePageNumber, setChallenges } from "@/redux/slices/challenge"
+import { setContent, setContentId } from "@/redux/slices/content"
 
 /**
  * Syncs `content.id` from the `[contentId]` route param into Redux on navigation.

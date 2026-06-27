@@ -1,5 +1,5 @@
 import type { SandpackFiles } from "@codesandbox/sandpack-react"
-import type { CodeExplainingEntity } from "@/modules/types"
+import type { CodeExplainingEntity } from "@/modules/types/entities/code-explaining"
 
 /** Languages treated as renderable React/TSX. */
 export const REACT_LANGS = new Set(["tsx", "jsx", "react"])

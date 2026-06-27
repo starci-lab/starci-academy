@@ -26,19 +26,13 @@ import {
     XAxis,
     YAxis,
 } from "recharts"
-import {
-    useQueryMyCreditUsageHistoryInfiniteSwr,
-} from "@/hooks"
-import {
-    AsyncContent,
-    InfiniteScrollSentinel,
-    LabeledCard,
-    SegmentBar,
-    Skeleton,
-} from "@/components/blocks"
-import type {
-    WithClassNames,
-} from "@/modules/types"
+import { useQueryMyCreditUsageHistoryInfiniteSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCreditUsageHistoryInfiniteSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { InfiniteScrollSentinel } from "@/components/blocks/async/InfiniteScrollSentinel"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { SegmentBar } from "@/components/blocks/stats/SegmentBar"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Days shown in the per-day spend chart (matches the chart title copy). */
 const CHART_DAYS = 14

@@ -3,14 +3,15 @@
 import React, { useMemo } from "react"
 import { Pagination, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { useAppDispatch, useAppSelector } from "@/redux"
-import { WithClassNames } from "@/modules/types"
-import { AsyncContent, LabeledCard } from "@/components/blocks"
-import { useQueryChallengesSwr } from "@/hooks"
-import { setChallengePageNumber } from "@/redux/slices"
 import { ChallengeCard } from "./ChallengeCard"
 import { ChallengeCardSkeleton } from "./ChallengeCardSkeleton"
 import _ from "lodash"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { WithClassNames } from "@/modules/types/base/class-name"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { useQueryChallengesSwr } from "@/hooks/swr/api/graphql/queries/useQueryChallengesSwr"
+import { setChallengePageNumber } from "@/redux/slices/challenge"
 
 export type ChallengeBodyProps = WithClassNames<undefined>
 

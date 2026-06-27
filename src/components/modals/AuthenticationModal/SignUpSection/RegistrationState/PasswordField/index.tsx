@@ -13,7 +13,7 @@ import {
     Link,
     TextField,
 } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link PasswordField}. */
 export interface PasswordFieldProps extends WithClassNames<undefined> {

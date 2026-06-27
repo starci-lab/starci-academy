@@ -1,7 +1,7 @@
-import { useAppDispatch } from "@/redux"
 import { useEffect } from "react"
 import { useParams, usePathname } from "next/navigation"
-import { setPublicContentDisplayId } from "@/redux/slices"
+import { useAppDispatch } from "@/redux/hooks"
+import { setPublicContentDisplayId } from "@/redux/slices/public-content"
 
 /**
  * Syncs `publicContent.displayId` from the `[contentId]` route param into Redux on navigation.

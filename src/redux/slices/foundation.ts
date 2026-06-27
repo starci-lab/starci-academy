@@ -1,11 +1,9 @@
-import type {
-    FoundationCategoryEntity,
-    FoundationEntity,
-} from "@/modules/types"
 import {
     createSlice,
     type PayloadAction,
 } from "@reduxjs/toolkit"
+import type { FoundationCategoryEntity } from "@/modules/types/entities/foundation-category"
+import type { FoundationEntity } from "@/modules/types/entities/foundation"
 
 /**
  * Redux state for the Foundations section (categories + paginated foundation list).

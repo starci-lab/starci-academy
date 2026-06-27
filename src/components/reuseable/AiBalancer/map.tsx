@@ -1,11 +1,6 @@
 import type { IconComponent } from "@/types"
 import { CircleCheck as CheckCircleIcon, CircleXmark as XCircleIcon, Stopwatch as HourglassIcon } from "@gravity-ui/icons"
-
-
-import {
-
-    AiBalancerKeyStatus,
-} from "@/modules/api/graphql/queries/enums"
+import { AiBalancerKeyStatus } from "@/modules/api/graphql/queries/enums/ai-balancer-key-status"
 
 /** Visual token for one balancer key status badge. */
 export interface AiBalancerKeyStatusVisual {

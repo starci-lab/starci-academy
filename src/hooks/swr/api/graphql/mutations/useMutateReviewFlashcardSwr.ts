@@ -1,8 +1,6 @@
-import {
-    mutateReviewFlashcard,
-    type ReviewFlashcardRequest,
-} from "@/modules/api"
 import useSWRMutation from "swr/mutation"
+import { mutateReviewFlashcard } from "@/modules/api/graphql/mutations/mutation-review-flashcard"
+import { type ReviewFlashcardRequest } from "@/modules/api/graphql/mutations/types/review-flashcard"
 
 type MutateReviewFlashcardResult = Awaited<ReturnType<typeof mutateReviewFlashcard>>
 

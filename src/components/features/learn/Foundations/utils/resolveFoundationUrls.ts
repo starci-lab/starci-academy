@@ -1,6 +1,4 @@
-import {
-    publicEnv,
-} from "@/resources"
+import { publicEnv } from "@/resources/env/public"
 
 /**
  * Builds the public HTTP URL for a mount foundations file (external-link kind).

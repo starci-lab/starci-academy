@@ -12,28 +12,20 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    useAppSelector,
-} from "@/redux"
-import {
-    LeagueRow,
-} from "@/components/reuseable"
-import {
     LeagueTier,
     LeagueTierBadge,
 } from "@/components/reuseable/LeagueTierBadge"
 import {
-    InfoTooltip,
-    LabeledCard,
-} from "@/components/blocks"
-import {
     pathConfig,
 } from "@/resources/path"
 import type {
-    QueryMyLeagueData,
-} from "@/modules/api"
-import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useAppSelector } from "@/redux/hooks"
+import { LeagueRow } from "@/components/reuseable/LeagueRow"
+import { InfoTooltip } from "@/components/blocks/feedback/InfoTooltip"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import type { QueryMyLeagueData } from "@/modules/api/graphql/queries/types/league"
 
 /** How many top-of-cohort rows to show before truncating (no inner scroll). */
 const TOP_ROWS = 5

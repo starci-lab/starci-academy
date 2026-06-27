@@ -3,10 +3,10 @@
 import React from "react"
 import { cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { ReactionType } from "@/modules/api"
-import type { WithClassNames } from "@/modules/types"
 import { REACTIONS } from "./constants"
 import { ReactionEmoji } from "./ReactionEmoji"
+import { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link FacebookReactionSelector}. */
 export interface FacebookReactionSelectorProps extends WithClassNames<undefined> {

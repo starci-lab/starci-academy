@@ -1,10 +1,6 @@
 import type React from "react"
-import type {
-    KeycloakIdentityProvider,
-} from "@/modules/api"
-import type {
-    WithClassNames,
-} from "@/modules/types"
+import type { KeycloakIdentityProvider } from "@/modules/api/graphql/mutations/types/exchange-code-for-token"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * One OAuth shortcut button rendered above the credentials form.

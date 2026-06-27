@@ -12,11 +12,9 @@ import {
     useTranslations,
 } from "next-intl"
 import type {
-    KeycloakIdentityProvider,
-} from "@/modules/api"
-import type {
     OauthButtonItem,
 } from "../types"
+import type { KeycloakIdentityProvider } from "@/modules/api/graphql/mutations/types/exchange-code-for-token"
 
 /** Props for {@link OauthButtons}. */
 export interface OauthButtonsProps extends WithClassNames<undefined> {

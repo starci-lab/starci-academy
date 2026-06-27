@@ -17,35 +17,27 @@ import {
     ClockCounterClockwiseIcon,
 } from "@phosphor-icons/react"
 import {
-    useQueryUserCodingHistorySwr,
-    useQueryUserCodingProgressSwr,
-    useQueryUserCodingRankSwr,
-    useQueryUserCodingSkillsSwr,
-    useQueryUserProfileSwr,
-    useQueryUserXpSwr,
-} from "@/hooks"
-import {
-    AsyncContent,
-    LabeledCard,
-    LanguageChip,
-    MetricCard,
-    SegmentBar,
-    Skeleton,
-    StatusChip,
-    SurfaceListCard,
-    SurfaceListCardItem,
-    TopicMasteryGrid,
-} from "@/components/blocks"
-import {
-    getLanguageColor,
-    getLanguageLabel,
-} from "@/modules/utils"
-import {
     useProfileUsername,
 } from "../../hooks/useProfileUsername"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useQueryUserCodingHistorySwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCodingHistorySwr"
+import { useQueryUserCodingProgressSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCodingProgressSwr"
+import { useQueryUserCodingRankSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCodingRankSwr"
+import { useQueryUserCodingSkillsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCodingSkillsSwr"
+import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
+import { useQueryUserXpSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserXpSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { LanguageChip } from "@/components/blocks/chips/LanguageChip"
+import { MetricCard } from "@/components/blocks/stats/MetricCard"
+import { SegmentBar } from "@/components/blocks/stats/SegmentBar"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { StatusChip } from "@/components/blocks/chips/StatusChip"
+import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { TopicMasteryGrid } from "@/components/blocks/stats/TopicMasteryGrid"
+import { getLanguageColor, getLanguageLabel } from "@/modules/utils/language"
 
 /** Solve-history rows shown before the "see more" link kicks in. */
 const INITIAL_HISTORY = 6

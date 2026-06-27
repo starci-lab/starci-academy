@@ -5,9 +5,7 @@ import {
     ScrollShadow,
     Skeleton,
 } from "@heroui/react"
-import {
-    SkeletonText,
-} from "@/components/reuseable"
+import { SkeletonText } from "@/components/reuseable/SkeletonText"
 
 /** Number of placeholder attempt cards shown while the list loads. */
 const SKELETON_CARD_COUNT = 5

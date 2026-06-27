@@ -4,12 +4,8 @@ import React from "react"
 import {
     useTranslations,
 } from "next-intl"
-import {
-    PageHeader,
-} from "@/components/blocks"
-import type {
-    WithClassNames,
-} from "@/modules/types"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link FoundationsCategoryGridHeader}. */
 export interface FoundationsCategoryGridHeaderProps extends WithClassNames<undefined> {

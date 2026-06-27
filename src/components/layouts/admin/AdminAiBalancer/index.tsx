@@ -15,12 +15,6 @@ import {
     useRouter,
 } from "next/navigation"
 import {
-    useQueryAiBalancerHealthSwr,
-} from "@/hooks"
-import {
-    useAppSelector,
-} from "@/redux"
-import {
     TopBar,
 } from "./TopBar"
 import {
@@ -29,6 +23,8 @@ import {
 import {
     AdminAiBalancerSkeleton,
 } from "./AdminAiBalancerSkeleton"
+import { useQueryAiBalancerHealthSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiBalancerHealthSwr"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * Admin dashboard for live AI balancer API key health (Redis ping cache + pool).

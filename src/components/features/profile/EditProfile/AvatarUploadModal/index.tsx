@@ -9,15 +9,11 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import {
-    useAvatarUploadOverlayState,
-} from "@/hooks"
-import {
-    ImageDropzone,
-} from "@/components/blocks"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useAvatarUploadOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { ImageDropzone } from "@/components/blocks/identity/ImageDropzone"
 
 /** Props for {@link AvatarUploadModal}. */
 export interface AvatarUploadModalProps extends WithClassNames<undefined> {

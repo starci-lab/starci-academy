@@ -1,9 +1,6 @@
-import {
-    adminProcessVideo,
-    type AdminProcessVideoParams,
-    type AdminProcessVideoResponse,
-} from "@/modules/api"
 import useSWRMutation from "swr/mutation"
+import { adminProcessVideo, type AdminProcessVideoParams } from "@/modules/api/rest/admin-process-video/process-video"
+import { type AdminProcessVideoResponse } from "@/modules/api/rest/admin-process-video/types"
 
 /**
  * SWR mutation wrapper for {@link adminProcessVideo}.

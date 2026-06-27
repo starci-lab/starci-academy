@@ -1,6 +1,6 @@
-import { queryUserCodingRank } from "@/modules/api"
-import type { QueryUserCodingRankData } from "@/modules/api"
 import useSWR from "swr"
+import { queryUserCodingRank } from "@/modules/api/graphql/queries/query-user-coding-rank"
+import type { QueryUserCodingRankData } from "@/modules/api/graphql/queries/types/user-coding-rank"
 
 /**
  * SWR hook for a user's coding standing — global rank + percentile by solved count,

@@ -1,5 +1,5 @@
-import type { ContentEntity } from "@/modules/types"
 import type { GraphQLResponse } from "../../types"
+import type { ContentEntity } from "@/modules/types/entities/content"
 
 /** Payload inside `savedContents.data` after the standard API wrapper. */
 export interface SavedContentsData {

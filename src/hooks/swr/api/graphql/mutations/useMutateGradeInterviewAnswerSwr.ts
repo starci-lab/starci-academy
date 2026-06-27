@@ -1,11 +1,8 @@
-import {
-    GraphQLHeadersKey,
-    mutateGradeInterviewAnswer,
-    type GradeInterviewAnswerRequest,
-    type GraphQLHeaders,
-} from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWRMutation from "swr/mutation"
+import { GraphQLHeadersKey, type GraphQLHeaders } from "@/modules/api/graphql/types"
+import { mutateGradeInterviewAnswer } from "@/modules/api/graphql/mutations/mutation-grade-interview-answer"
+import { type GradeInterviewAnswerRequest } from "@/modules/api/graphql/mutations/types/grade-interview-answer"
+import { useAppSelector } from "@/redux/hooks"
 
 type MutateGradeInterviewAnswerResult = Awaited<
     ReturnType<typeof mutateGradeInterviewAnswer>

@@ -13,10 +13,10 @@ import {
 } from "next-intl"
 import { usePathname, useRouter } from "@/i18n/navigation"
 import { pathConfig } from "@/resources/path"
-import type { WithClassNames } from "@/modules/types"
 import {
     DarkLightModeSwitch,
 } from "../AccountMenuDropdown/DarkLightModeSwitch"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * One entry rendered in the mobile navigation menu.
@@ -56,8 +56,8 @@ export const MobileNavbar = ({ className }: MobileNavbarProps) => {
         () => [
             {
                 label: t("nav.home"),
-                path: pathConfig().locale().build(),
-                isActive: pathname === pathConfig().locale(locale).build() || pathname === "/",
+                path: pathConfig().locale().home().build(),
+                isActive: pathname === "/" || pathname === pathConfig().locale().home().build(),
                 icon: () => null,
             },
             {

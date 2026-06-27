@@ -6,19 +6,18 @@ import { Button, Typography, cn } from "@heroui/react"
 import { CheckCircleIcon, CursorClickIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
-import { mutateReviewFlashcard, queryMyDueFlashcards } from "@/modules/api/graphql"
-import {
-    AsyncContent,
-    EmptyState,
-    FlipCard,
-    ProgressMeter,
-    RatingBar,
-} from "@/components/blocks"
-import { useGraphQLWithToast } from "@/modules/toast"
-import { useAppSelector } from "@/redux"
 import { DUE_REVIEW_LIMIT, SM2_GRADES } from "../constants"
 import { DueReviewSkeleton } from "./DueReviewSkeleton"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { mutateReviewFlashcard } from "@/modules/api/graphql/mutations/mutation-review-flashcard"
+import { queryMyDueFlashcards } from "@/modules/api/graphql/queries/query-my-due-flashcards"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { EmptyState } from "@/components/blocks/feedback/EmptyState"
+import { FlipCard } from "@/components/blocks/cards/FlipCard"
+import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
+import { RatingBar } from "@/components/blocks/buttons/RatingBar"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Props for {@link DueReview}. */
 export interface DueReviewProps extends WithClassNames<undefined> {

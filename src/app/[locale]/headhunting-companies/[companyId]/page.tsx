@@ -3,8 +3,8 @@
 import { useLocale } from "next-intl"
 import { useParams, useRouter } from "next/navigation"
 import { useEffect } from "react"
-import { useAppSelector } from "@/redux"
-import { pathConfig } from "@/resources"
+import { useAppSelector } from "@/redux/hooks"
+import { pathConfig } from "@/resources/path"
 
 /**
  * Redirect legacy `/headhunting-companies/[companyId]` to course-scoped route.

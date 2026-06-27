@@ -11,19 +11,10 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import {
-    useCvReviewLevelDetailsOverlayState,
-} from "@/hooks"
-import {
-    useAppDispatch,
-    useAppSelector,
-} from "@/redux"
-import {
-    setSelectedCvReviewTemplateId,
-} from "@/redux/slices"
-import {
-    WithClassNames,
-} from "@/modules/types"
+import { useCvReviewLevelDetailsOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setSelectedCvReviewTemplateId } from "@/redux/slices/cv-review-level"
+import { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * One selectable CV rubric template row in the modal.

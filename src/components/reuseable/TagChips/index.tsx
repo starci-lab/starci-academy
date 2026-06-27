@@ -3,7 +3,7 @@
 import { Chip, ScrollShadow, Tooltip } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import React, { useMemo, useState } from "react"
-import { WithClassNames } from "@/modules/types"
+import { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link TagChips}.

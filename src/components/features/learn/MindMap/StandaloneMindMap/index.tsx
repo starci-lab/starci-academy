@@ -2,10 +2,10 @@
 
 import React from "react"
 import { Skeleton, cn } from "@heroui/react"
-import { useAppSelector } from "@/redux"
-import { useQueryCourseSwr } from "@/hooks"
 import { MindMapCanvas } from "../MindMapCanvas"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { useAppSelector } from "@/redux/hooks"
+import { useQueryCourseSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseSwr"
 
 /** Props for {@link StandaloneMindMap}. */
 export type StandaloneMindMapProps = WithClassNames<undefined>

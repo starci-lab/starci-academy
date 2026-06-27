@@ -12,16 +12,6 @@ import {
     BookOpenIcon,
 } from "@phosphor-icons/react"
 import {
-    PriceTag,
-    StickyBottomBar,
-} from "@/components/blocks"
-import {
-    useAppSelector,
-} from "@/redux"
-import {
-    useQueryCoursePricePreviewSwr,
-} from "@/hooks"
-import {
     usePricingRows,
 } from "../hooks/usePricingRows"
 import {
@@ -30,6 +20,10 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { PriceTag } from "@/components/blocks/commerce/PriceTag"
+import { StickyBottomBar } from "@/components/blocks/layout/StickyBottomBar"
+import { useAppSelector } from "@/redux/hooks"
+import { useQueryCoursePricePreviewSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursePricePreviewSwr"
 
 /** Props for {@link CourseMobileEnrollBar}. */
 export type CourseMobileEnrollBarProps = WithClassNames<undefined>

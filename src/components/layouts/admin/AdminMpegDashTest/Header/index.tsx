@@ -4,8 +4,7 @@ import { ArrowLeft as ArrowLeftIcon } from "@gravity-ui/icons"
 import React, { useCallback } from "react"
 import { Button, cn } from "@heroui/react"
 import { useRouter } from "next/navigation"
-import type { WithClassNames } from "@/modules/types"
-
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Page header for the video renderer test tool: back button + title.

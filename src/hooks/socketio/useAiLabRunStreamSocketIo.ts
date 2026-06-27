@@ -1,17 +1,13 @@
 import { useCallback } from "react"
 import { useLocale } from "next-intl"
-import { useAppDispatch, useAppSelector } from "@/redux"
-import {
-    resetAiLabRun,
-    startAiLabRun,
-    type AiLabRunStreamState,
-} from "@/redux/slices"
 import type {
     AbortAiLabRunSocketIoPayload,
     SubscribeAiLabRunSocketIoPayload,
 } from "./types"
 import { PublicationEvent } from "./enums"
 import { aiLabSocket } from "./sockets"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { resetAiLabRun, startAiLabRun, type AiLabRunStreamState } from "@/redux/slices/socketio"
 
 /** What {@link useAiLabRunStreamSocketIo} returns to a playground component. */
 export interface AiLabRunStreamControls {

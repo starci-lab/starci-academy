@@ -1,11 +1,9 @@
-import { 
-    publicEnv 
-} from "@/resources/env"
 import type { 
     AdminProcessVideoRequest, 
     AdminProcessVideoResponse 
 } from "./types"
 import axios from "axios"
+import { publicEnv } from "@/resources/env/public"
 
 /**
  * Params for the admin process-video REST call.

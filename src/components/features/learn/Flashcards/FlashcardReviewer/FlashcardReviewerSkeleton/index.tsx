@@ -1,6 +1,6 @@
 import React from "react"
-import { Skeleton } from "@/components/blocks"
-import type { WithClassNames } from "@/modules/types"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Loading placeholder for the flashcard reviewer. Mirrors the real layout: a

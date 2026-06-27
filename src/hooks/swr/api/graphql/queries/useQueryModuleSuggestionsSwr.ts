@@ -1,13 +1,11 @@
 import {
-    GraphQLHeadersKey,
-    queryModuleSuggestions,
-} from "@/modules/api"
-import {
     useEntitySuggestionsSwr,
     type EntitySuggestionsFetchParams,
     type EntitySuggestionItem,
 } from "./useEntitySuggestionsSwr"
 import type { SWRConfiguration } from "swr"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { queryModuleSuggestions } from "@/modules/api/graphql/queries/query-module-suggestions"
 
 /** Cache-key prefix namespacing module suggestions in the SWR cache. */
 const SWR_KEY = "QUERY_MODULE_SUGGESTIONS_SWR"

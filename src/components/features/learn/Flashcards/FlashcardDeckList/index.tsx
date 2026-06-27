@@ -12,11 +12,14 @@ import {
     Typography,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { queryFlashcardDecksByCourse } from "@/modules/api/graphql"
-import { AsyncContent, ProgressMeter } from "@/components/blocks"
-import { ChallengeDifficulty, type FlashcardDeckEntity, type WithClassNames } from "@/modules/types"
-import { useAppSelector } from "@/redux"
 import { FlashcardDeckListSkeleton } from "./FlashcardDeckListSkeleton"
+import { queryFlashcardDecksByCourse } from "@/modules/api/graphql/queries/query-flashcard-decks-by-course"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
+import { ChallengeDifficulty } from "@/modules/types/enums/challenge-difficulty"
+import { type FlashcardDeckEntity } from "@/modules/types/entities/flashcard-deck"
+import { type WithClassNames } from "@/modules/types/base/class-name"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Decks shown per page in the topic list before the pager kicks in. */
 const DECKS_PER_PAGE = 8

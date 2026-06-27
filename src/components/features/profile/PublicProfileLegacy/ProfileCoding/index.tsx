@@ -10,26 +10,19 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    useQueryUserCodingHistorySwr,
-    useQueryUserCodingProgressSwr,
-    useQueryUserProfileSwr,
-} from "@/hooks"
-import {
-    SectionCard,
-} from "@/components/reuseable"
-import {
-    DifficultyChip,
-    ListRow,
-    MetricCard,
-    StatusChip,
-    type Difficulty,
-} from "@/components/blocks"
-import {
     useProfileUsername,
 } from "../useProfileUsername"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useQueryUserCodingHistorySwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCodingHistorySwr"
+import { useQueryUserCodingProgressSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCodingProgressSwr"
+import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
+import { SectionCard } from "@/components/reuseable/SectionCard"
+import { DifficultyChip, type Difficulty } from "@/components/blocks/chips/DifficultyChip"
+import { ListRow } from "@/components/blocks/lists/ListRow"
+import { MetricCard } from "@/components/blocks/stats/MetricCard"
+import { StatusChip } from "@/components/blocks/chips/StatusChip"
 
 /** Props for {@link ProfileCoding}. */
 export type ProfileCodingProps = WithClassNames<undefined>

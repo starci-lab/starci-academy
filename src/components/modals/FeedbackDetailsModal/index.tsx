@@ -2,13 +2,14 @@
 
 import React, { useMemo } from "react"
 import { cn, Modal, ScrollShadow } from "@heroui/react"
-import { useFeedbackDetailsOverlayState, useQuerySubmissionFeedbacksSwr } from "@/hooks"
-import { useAppSelector } from "@/redux"
 import { FeedbackCard } from "./FeedbackCard"
 import { useTranslations } from "next-intl"
 import { FeedbackDetailsEmpty } from "./Empty"
 import { FeedbackCardSkeleton } from "./FeedbackCardSkeleton"
-import type { WithClassNames } from "@/modules/types"
+import { useFeedbackDetailsOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useQuerySubmissionFeedbacksSwr } from "@/hooks/swr/api/graphql/queries/useQuerySubmissionFeedbacksSwr"
+import { useAppSelector } from "@/redux/hooks"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link FeedbackDetailsModal}.

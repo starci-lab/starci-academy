@@ -1,13 +1,8 @@
 import type { IconComponent } from "@/types"
-import type {
-    AiMode,
-    ModelProvider,
-} from "@/modules/api"
-import type {
-    ChallengeSubmissionEntity,
-    JobStatus,
-    SubmissionType,
-} from "@/modules/types"
+import type { AiMode, ModelProvider } from "@/modules/api/graphql/queries/query-my-ai-settings"
+import type { ChallengeSubmissionEntity } from "@/modules/types/entities/challenge-submission"
+import type { JobStatus } from "@/modules/types/enums/job-status"
+import type { SubmissionType } from "@/modules/types/enums/submission-type"
 
 /** Lookup from a submission link type to the brand icon shown beside its title. */
 export type SubmissionIconMap = Record<SubmissionType, IconComponent>

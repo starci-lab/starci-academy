@@ -1,7 +1,7 @@
-import { queryMyRewardWallet } from "@/modules/api"
-import type { QueryMyRewardWalletData } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { queryMyRewardWallet } from "@/modules/api/graphql/queries/query-my-reward-wallet"
+import type { QueryMyRewardWalletData } from "@/modules/api/graphql/queries/types/my-reward-wallet"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR wrapper for {@link queryMyRewardWallet}. `data` is the viewer's reward

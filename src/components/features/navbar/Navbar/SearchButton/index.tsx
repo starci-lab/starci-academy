@@ -8,15 +8,9 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import {
-    useSearchOverlayState,
-} from "@/hooks"
-import {
-    InputButtonLike,
-} from "@/components/blocks"
-import type {
-    WithClassNames,
-} from "@/modules/types"
+import { useSearchOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { InputButtonLike } from "@/components/blocks/buttons/InputButtonLike"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link SearchButton}.

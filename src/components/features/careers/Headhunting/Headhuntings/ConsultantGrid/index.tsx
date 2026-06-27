@@ -3,11 +3,11 @@
 import React, { useMemo } from "react"
 import { cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { useAppSelector } from "@/redux"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { AsyncContent } from "@/components/blocks"
 import { ConsultantCard } from "../ConsultantCard"
 import { ConsultantCardSkeleton } from "../ConsultantCardSkeleton"
+import { useAppSelector } from "@/redux/hooks"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 
 /** Number of placeholder cards shown while the consultant list loads. */
 const SKELETON_COUNT = 6

@@ -14,10 +14,6 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    useQueryMyAiQuotaSwr,
-    useQueryMyCreditUsageSwr,
-} from "@/hooks"
-import {
     QuotaBar,
 } from "../QuotaBar"
 import {
@@ -29,6 +25,8 @@ import type {
 import {
     QuotaLaneVariant,
 } from "../types"
+import { useQueryMyAiQuotaSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiQuotaSwr"
+import { useQueryMyCreditUsageSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCreditUsageSwr"
 
 /** Props for {@link QuotaLane}. */
 export interface QuotaLaneProps extends WithClassNames<undefined> {

@@ -2,13 +2,14 @@
 
 import React from "react"
 import { cn, Modal, ScrollShadow } from "@heroui/react"
-import { MarkdownContent } from "@/components/reuseable"
 import { VideoRenderer } from "@/components/reuseable/VideoRenderer"
-import { resolveFoundationMountFileUrl } from "@/components/features/learn/Foundations/utils"
-import { useFoundationOverlayState } from "@/hooks"
-import { FoundationKind, VideoHostPlatform } from "@/modules/types"
-import { useAppSelector } from "@/redux"
-import type { WithClassNames } from "@/modules/types"
+import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { resolveFoundationMountFileUrl } from "@/components/features/learn/Foundations/utils/resolveFoundationUrls"
+import { useFoundationOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { FoundationKind } from "@/modules/types/enums/foundation-kind"
+import { VideoHostPlatform } from "@/modules/types/enums/video-host-platform"
+import { useAppSelector } from "@/redux/hooks"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link FoundationModal}.

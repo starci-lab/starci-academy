@@ -1,10 +1,10 @@
 import React from "react"
 import { cn, Table } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types"
 import {
     flattenMarkdownTableHeaderChildren,
     isMarkdownHeaderTableRowNode,
 } from "./utils"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Builds a HeroUI header column from a rendered `th`/`Table.Column` or body `Table.Cell`.

@@ -374,6 +374,7 @@
         "ask": "Hỏi AI",
         "send": "Gửi",
         "thinking": "Đang trả lời…",
+        "error": "Xin lỗi, mình chưa trả lời được. Hãy thử lại sau.",
         "suggestions": {
             "summarize": "Tóm tắt bài này trong 3 ý chính",
             "hardest": "Giải thích phần khó nhất",
@@ -1174,6 +1175,13 @@
             "problems": "Bài tập",
             "leaderboard": "Bảng xếp hạng"
         },
+        "rail": {
+            "modeAria": "Chế độ luyện tập",
+            "topicsLabel": "Chủ đề",
+            "topicsAria": "Chọn chủ đề",
+            "searchTopic": "Tìm chủ đề…",
+            "searchTopicEmpty": "Không có chủ đề khớp “{query}”"
+        },
         "leaderboard": {
             "you": "Bạn",
             "solved": "Đã giải {count} bài",
@@ -1373,6 +1381,14 @@
             "levelLabel": "Cấp độ câu hỏi",
             "historyTitle": "Tiến độ phỏng vấn của bạn",
             "historyAnswered": "Đã luyện {count} câu",
+            "modeLabel": "Kiểu luyện",
+            "modeQuick": "Nhanh · 5 câu",
+            "modeDeep": "Sâu · 10 câu",
+            "modeWeak": "Điểm yếu",
+            "modeLadder": "Leo cấp",
+            "comingSoon": "Sắp có",
+            "readinessTitle": "Độ sẵn sàng",
+            "readinessEmpty": "Phỏng vấn câu đầu tiên để theo dõi độ sẵn sàng.",
             "pickHint": "Chọn 1 bộ thẻ ở danh sách bên trái để bắt đầu phiên phỏng vấn.",
             "gateTitle": "Phỏng vấn thử dành cho học viên",
             "gateDescription": "Đăng ký khóa học để luyện phỏng vấn với AI — chấm điểm và góp ý sau mỗi câu trả lời."
@@ -1400,6 +1416,7 @@
         "subscribeToGrade": "Đăng ký gói trả phí để chấm bài bằng model này",
         "modelUnavailable": "Model tạm không khả dụng (không có key hoạt động)",
         "categories": {
+            "free": "Miễn phí",
             "economy": "Tiết kiệm",
             "balanced": "Cân bằng",
             "premium": "Premium"
@@ -2038,6 +2055,7 @@
         }
     },
     "common": {
+        "loading": "Đang tải…",
         "tagsMore": "+{count}",
         "tagsMenuAria": "Tất cả thẻ",
         "pagination": {
@@ -2432,7 +2450,10 @@
             "learners": "Học viên",
             "lessons": "Bài học",
             "courses": "Khóa học",
-            "badges": "Huy hiệu"
+            "badges": "Huy hiệu",
+            "eyebrow": "Số liệu thật, không phông bạt",
+            "title": "StarCi Academy đang có",
+            "intro": "Số liệu được cập nhật realtime từ hệ thống."
         },
         "courses": {
             "eyebrow": "Lộ trình",
@@ -2445,19 +2466,22 @@
                     "tag": "FULLSTACK",
                     "modules": "23 module",
                     "title": "Fullstack thực chiến",
-                    "desc": "API · auth · caching · realtime · payment, kèm frontend trụ được dưới traffic thật."
+                    "desc": "API · auth · caching · realtime · payment, kèm frontend trụ được dưới traffic thật.",
+                    "systems": "20 Hệ thống thực chiến"
                 },
                 "systemDesign": {
                     "tag": "SYSTEM DESIGN",
                     "modules": "24 module",
                     "title": "Hệ thống phân tán",
-                    "desc": "Sharding · replication · consensus · idempotency — thiết kế để chịu được sự cố."
+                    "desc": "Sharding · replication · consensus · idempotency — thiết kế để chịu được sự cố.",
+                    "systems": "20 Bài toán kiến trúc"
                 },
                 "devops": {
                     "tag": "DEVOPS",
                     "modules": "35 module",
                     "title": "Triển khai & Vận hành",
-                    "desc": "CI/CD · Docker · Kubernetes · đa cloud · observability · on-call."
+                    "desc": "CI/CD · Docker · Kubernetes · đa cloud · observability · on-call.",
+                    "systems": "20 Đề án chịu tải"
                 }
             }
         },
@@ -2532,7 +2556,16 @@
             "body1": "Mình dạy đúng thứ mình làm ở production mỗi ngày — không phải slide, mà là hệ thống thật ở tầm CTO.",
             "body2": "Mọi thứ ở đây đều làm công khai — nền tảng, chương trình, challenge. Đọc các ghi chú kỹ thuật và tự đánh giá chất lượng.",
             "github": "GitHub",
-            "blog": "Đọc blog"
+            "blog": "Đọc blog",
+            "thesis": "Nhiều nơi dạy lập trình để bạn thấy dễ chịu và nhanh có chứng chỉ. StarCi Academy thì khác, tôi chỉ nói những sự thật trần trụi về ngành và những gì hệ thống thực tế yêu cầu.",
+            "truth1": "Kinh nghiệm dự án lớn không giúp bạn thành công khi phỏng vấn.",
+            "fix1": "Nhiều người làm dự án lớn mỗi ngày nhưng vào phỏng vấn lại không vẽ nổi kiến trúc phân tán mạch lạc. Tôi dạy bạn tư duy và phản biện kiến trúc cho rõ ràng.",
+            "truth2": "Thuộc lý thuyết Microservices vẫn tạch khi bị hỏi tới bản chất.",
+            "fix2": "Người phỏng vấn giỏi không hỏi định nghĩa. Họ xoáy vào nhất quán dữ liệu, sự cố mạng và điểm lỗi đơn. Tôi luyện bạn hiểu tận gốc để đối thoại sòng phẳng.",
+            "truth3": "Mang văn mẫu từ blog đi phỏng vấn là cách nhanh nhất để bị bắt bài.",
+            "fix3": "Kiến trúc \"sách giáo khoa\" thường vỡ trước bài toán thực tế của doanh nghiệp. Tôi dạy bạn tư duy độc lập để xử lý mọi đề biến tấu.",
+            "truth4": "Thị trường hết thời thừa thãi — không ai trả lương Senior cho người chỉ biết chém gió keyword.",
+            "fix4": "Doanh nghiệp đang siết đầu vào rất gắt. Tôi rèn cho bạn năng lực kiến trúc thực chất để tự tin qua các vòng kiểm duyệt khắt khe."
         },
         "recruiter": {
             "eyebrow": "Cho nhà tuyển dụng",
@@ -2548,13 +2581,23 @@
             "items": {
                 "engineer": {
                     "title": "Cho kỹ sư",
-                    "body": "Xây portfolio gồm bài đã chấm ở mức production và được hiển thị tới đối tác tuyển dụng — được headhunt bằng năng lực thật, không phải keyword."
+                    "body": "Xây portfolio gồm bài đã chấm ở mức production và được hiển thị tới đối tác tuyển dụng — được headhunt bằng năng lực thật, không phải keyword.",
+                    "cta": "Bắt đầu xây hồ sơ"
                 },
                 "enterprise": {
                     "title": "Cho doanh nghiệp",
                     "body": "Tuyển từ nguồn kỹ sư đã được vetted qua challenge thật do AI chấm. Bỏ qua nhiễu, gặp người dựng được và bảo vệ được thiết kế.",
                     "cta": "Trở thành đối tác tuyển dụng"
                 }
+            },
+            "card": {
+                "sample": "Hồ sơ người dùng",
+                "role": "StarCi Talent",
+                "openToWork": "Sẵn sàng đi làm",
+                "cvScore": "Điểm CV",
+                "challenges": "Thử thách hệ thống",
+                "challengeValue": "{count} · TB {avg}",
+                "xp": "{xp} XP"
             }
         },
         "faq": {
@@ -2605,8 +2648,57 @@
                     "tag": "GIỮ PHONG ĐỘ",
                     "desc": "Đối chiếu lời giải với người khác, rồi leo bảng xếp hạng."
                 }
+            },
+            "cta": "Vào cày thử"
+        },
+        "treasure": {
+            "eyebrow": "Bản đồ năng lực hệ thống",
+            "title": "Học để giải bài toán thật, không học để thuộc bài.",
+            "intro": "Từ backend đến hạ tầng, bạn luyện tư duy xử lý vấn đề đến nơi đến chốn — thứ quyết định bạn trụ được ở dự án lớn.",
+            "beaconLabel": "Chạm để xáo lại",
+            "beaconTap": "Tự xáo lại mỗi 10 giây — chạm để xáo ngay",
+            "graph": {
+                "cap": "Đánh đổi nhất quán vs khả dụng khi mạng phân vùng — chọn đúng cho từng hệ.",
+                "sharding": "Chia dữ liệu ra nhiều shard để mở rộng ghi/đọc vượt một node.",
+                "saga": "Giao dịch dài qua nhiều service bằng các bước bù trừ, không cần 2PC.",
+                "idempotency": "Gọi lại nhiều lần vẫn một kết quả — chống trùng khi retry.",
+                "redlock": "Khoá phân tán trên Redis + fencing token chống race nhiều client.",
+                "kafka": "Log append-only làm nguồn sự thật: replay, tách producer/consumer.",
+                "cdc": "Bắt thay đổi DB (Debezium) đẩy ra stream — hết double-write.",
+                "token-bucket": "Giới hạn tần suất mượt bằng token bucket + Redis Lua atomic.",
+                "websocket": "Cổng realtime hai chiều, fan-out sự kiện tới hàng nghìn client.",
+                "tracing": "Lần theo một request xuyên nhiều service để tìm nút thắt (OTel/Jaeger).",
+                "nestjs": "Khung backend module hoá, DI rõ ràng cho API quy mô lớn.",
+                "typeorm": "ORM TypeScript: entity, quan hệ, migration — sát SQL khi cần.",
+                "webhooks": "Nhận sự kiện bên thứ ba an toàn: verify chữ ký + idempotent.",
+                "payment": "Tích hợp cổng thanh toán: idempotency, đối soát, hoàn tiền chuẩn.",
+                "rag": "Tìm ngữ nghĩa bằng pgvector rồi cho LLM trả lời có dẫn nguồn.",
+                "oauth": "Đăng nhập + phân quyền bằng OAuth2/JWT, refresh token an toàn.",
+                "jobs": "Hàng đợi job nền: retry, backoff, lịch chạy — tách khỏi request.",
+                "rsc": "React Server Components: render ở server, gửi ít JS xuống client.",
+                "k8s": "Điều phối container: tự phục hồi, scale, rollout khai báo.",
+                "ingress": "Định tuyến HTTP vào cluster: host/path, TLS, cân tải.",
+                "argocd": "GitOps: trạng thái mong muốn trong Git, ArgoCD đồng bộ vào cluster.",
+                "rollouts": "Canary/blue-green tự phân tích metric trước khi mở 100% traffic.",
+                "prometheus": "Thu thập metric + cảnh báo theo thời gian thực cho hệ đang chạy.",
+                "rbac": "Phân quyền theo vai trò trong K8s: ai làm gì, tối thiểu đặc quyền.",
+                "terraform": "Hạ tầng bằng mã, đa cloud, plan/apply tái lập được.",
+                "falco": "Phát hiện hành vi bất thường runtime trong container theo thời gian thực.",
+                "consistentHashing": "Băm nhất quán: thêm/bớt node ít phải xáo lại key — nền cho sharding co giãn.",
+                "circuitBreaker": "Ngắt mạch khi service phụ thuộc lỗi liên tục — chặn lỗi lan dây chuyền.",
+                "eventSourcing": "Lưu chuỗi sự kiện làm nguồn sự thật; dựng lại state bằng replay.",
+                "readReplica": "Bản sao chỉ-đọc gánh tải đọc — đánh đổi độ trễ replication.",
+                "graphql": "API kiểu hoá: client lấy đúng field cần qua một endpoint.",
+                "redisCache": "Cache-aside trên Redis: TTL, invalidation, chống cache stampede.",
+                "sse": "Server-Sent Events: server đẩy một chiều, nhẹ hơn WebSocket cho stream.",
+                "zodValidation": "Validate + suy kiểu runtime bằng Zod ở biên API.",
+                "helm": "Đóng gói manifest K8s thành chart tái dùng + values theo môi trường.",
+                "autoscaling": "HPA tự co giãn pod theo CPU/metric — bám tải thật.",
+                "serviceMesh": "Lớp mesh lo mTLS, retry, chia traffic giữa service (Istio/Linkerd).",
+                "grafana": "Dashboard + cảnh báo trực quan trên metric Prometheus."
             }
-        }
+        },
+        "backToTop": "Về đầu trang"
     },
     "aiLab": {
         "tabs": {
@@ -2857,5 +2949,49 @@
         "pick": "Chọn linh vật",
         "clear": "Bỏ ghim linh vật",
         "empty": "Đạt thành tích để ghim linh vật."
+    },
+    "footer": {
+        "tagline": "Học bằng cách tự tay dựng hệ thống thật — đủ trình cho mọi vòng phỏng vấn kỹ thuật.",
+        "exploreTitle": "Khám phá",
+        "supportTitle": "Hỗ trợ",
+        "links": {
+            "courses": "Khóa học",
+            "blog": "Blog",
+            "talents": "Talents",
+            "community": "Cộng đồng",
+            "contact": "Liên hệ",
+            "terms": "Điều khoản",
+            "privacy": "Bảo mật"
+        },
+        "madeBy": "Được phát triển bởi Nguyễn Văn Tự Cường",
+        "copyright": "© {year} StarCi Academy"
+    },
+    "legal": {
+        "contactNote": "Có câu hỏi về điều khoản hoặc dữ liệu của bạn? Liên hệ cuongnvtse160875@gmail.com.",
+        "lastUpdated": "Cập nhật lần cuối: {date}",
+        "terms": {
+            "title": "Điều khoản sử dụng",
+            "description": "Các điều khoản khi sử dụng StarCi Academy.",
+            "body": "Tài liệu điều khoản đầy đủ đang được hoàn thiện. Khi sử dụng StarCi Academy, bạn đồng ý dùng nền tảng cho mục đích học tập hợp pháp và tôn trọng quyền sở hữu của nội dung khóa học. Phiên bản chi tiết sẽ được cập nhật tại trang này."
+        },
+        "privacy": {
+            "title": "Chính sách bảo mật",
+            "description": "Cách StarCi Academy thu thập và sử dụng dữ liệu của bạn.",
+            "body": "Chính sách bảo mật đầy đủ đang được hoàn thiện. StarCi Academy chỉ thu thập dữ liệu cần thiết để vận hành việc học của bạn (tài khoản, tiến độ, bài nộp) và không bán dữ liệu cho bên thứ ba. Phiên bản chi tiết sẽ được cập nhật tại trang này."
+        }
+    },
+    "cookieConsent": {
+        "title": "Cookie",
+        "body": "Bọn mình dùng cookie cần thiết để bạn đăng nhập và ghi nhớ ngôn ngữ, cùng cookie phân tích (Google Analytics) để cải thiện trải nghiệm. Bạn có thể chấp nhận, từ chối, hoặc tùy chỉnh.",
+        "acceptAll": "Chấp nhận tất cả",
+        "reject": "Từ chối",
+        "customize": "Tùy chỉnh",
+        "modalTitle": "Tùy chỉnh cookie",
+        "modalBody": "Chọn loại cookie bạn cho phép. Cookie cần thiết luôn bật để hệ thống hoạt động.",
+        "necessaryLabel": "Cần thiết",
+        "necessaryHint": "Đăng nhập, bảo mật và ghi nhớ ngôn ngữ. Luôn bật.",
+        "analyticsLabel": "Phân tích",
+        "analyticsHint": "Google Analytics — đo lường ẩn danh để cải thiện sản phẩm.",
+        "save": "Lưu lựa chọn"
     }
 }

@@ -1,7 +1,9 @@
-import { GraphQLHeadersKey, queryLessonVideo } from "@/modules/api"
-import { useAppDispatch, useAppSelector } from "@/redux"
 import useSWR from "swr"
-import { setLessonVideo } from "@/redux/slices"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { queryLessonVideo } from "@/modules/api/graphql/queries/query-lesson-video"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setLessonVideo } from "@/redux/slices/lession-video"
+
 /**
  * Singleton SWR for `lessonVideo(request: { id })` — id from `lessonVideo.id` (`setLessonVideoId`).
  */

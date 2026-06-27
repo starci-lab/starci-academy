@@ -9,18 +9,14 @@ import {
     Typography,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import {
-    AsyncContent,
-    CommunityCommentRow,
-} from "@/components/blocks"
-import { ReactionType } from "@/modules/api"
-import type { QueryCommunityCommentNode } from "@/modules/api"
-import {
-    useMutateCreateCommunityPostCommentSwr,
-    useMutateReactCommunityPostCommentSwr,
-    useQueryCommunityPostCommentsSwr,
-} from "@/hooks"
-import { useGraphQLWithToast } from "@/modules/toast"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { CommunityCommentRow } from "@/components/blocks/feed/CommunityCommentRow"
+import { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
+import type { QueryCommunityCommentNode } from "@/modules/api/graphql/queries/types/community-comments"
+import { useMutateCreateCommunityPostCommentSwr } from "@/hooks/swr/api/graphql/mutations/useMutateCreateCommunityPostCommentSwr"
+import { useMutateReactCommunityPostCommentSwr } from "@/hooks/swr/api/graphql/mutations/useMutateReactCommunityPostCommentSwr"
+import { useQueryCommunityPostCommentsSwr } from "@/hooks/swr/api/graphql/queries/useQueryCommunityPostCommentsSwr"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
 
 /** Props for the {@link CommunityCommentItem} feature. */
 export interface CommunityCommentItemProps {

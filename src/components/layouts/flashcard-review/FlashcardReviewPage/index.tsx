@@ -23,22 +23,16 @@ import {
     CircleCheck as CircleCheckIcon,
 } from "@gravity-ui/icons"
 import {
-    useMutateReviewFlashcardSwr,
-    useQueryMyDueFlashcardsSwr,
-} from "@/hooks"
-import {
     pathConfig,
 } from "@/resources/path"
-import {
-    useGraphQLWithToast,
-} from "@/modules/toast"
-import type {
-    GraphQLResponse,
-    ReviewFlashcardData,
-} from "@/modules/api"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useMutateReviewFlashcardSwr } from "@/hooks/swr/api/graphql/mutations/useMutateReviewFlashcardSwr"
+import { useQueryMyDueFlashcardsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyDueFlashcardsSwr"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
+import type { GraphQLResponse } from "@/modules/api/graphql/types"
+import type { ReviewFlashcardData } from "@/modules/api/graphql/mutations/types/review-flashcard"
 
 /** Props for {@link FlashcardReviewPage}. */
 export type FlashcardReviewPageProps = WithClassNames<undefined>

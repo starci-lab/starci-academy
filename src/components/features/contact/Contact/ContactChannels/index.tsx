@@ -12,10 +12,6 @@ import {
     ClockIcon,
 } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import {
-    IconTile,
-    LabeledCard,
-} from "@/components/blocks"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { FounderCard } from "./FounderCard"
 import {
@@ -23,6 +19,8 @@ import {
     CONTACT_PHONE,
     CONTACT_PHONE_TEL,
 } from "../constants"
+import { IconTile } from "@/components/blocks/identity/IconTile"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 
 /** Props for {@link ContactChannels}. */
 export type ContactChannelsProps = WithClassNames<undefined>

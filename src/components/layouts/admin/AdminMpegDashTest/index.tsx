@@ -2,12 +2,13 @@
 
 import React, { useCallback, useState } from "react"
 import { cn } from "@heroui/react"
-import { VideoRendererType, type WithClassNames } from "@/modules/types"
 import { AdminMpegDashTestHeader } from "./Header"
 import { ConfigCard } from "./ConfigCard"
 import { PreviewCard } from "./PreviewCard"
 import { QuickTestUrls } from "./QuickTestUrls"
 import type { QuickTestUrl } from "./types"
+import { VideoRendererType } from "@/modules/types/enums/video-renderer-type"
+import { type WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Admin tool page for testing the VideoRenderer with all 3 renderer types.

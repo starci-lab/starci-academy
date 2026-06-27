@@ -1,7 +1,7 @@
-import { useAppDispatch } from "@/redux"
-import { setFoundationId } from "@/redux/slices"
 import { useEffect } from "react"
 import { useParams, usePathname } from "next/navigation"
+import { useAppDispatch } from "@/redux/hooks"
+import { setFoundationId } from "@/redux/slices/foundation"
 
 /**
  * Syncs foundation item id from the learn foundations detail route param.

@@ -2,20 +2,16 @@
 
 import React from "react"
 import {
-    PageHeader,
-} from "@/components/blocks"
-import {
     LearnBreadcrumb,
 } from "@/components/features/learn/shared/LearnBreadcrumb"
-import {
-    useAppSelector,
-} from "@/redux"
 import {
     CourseTrustStats,
 } from "../CourseTrustStats"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Props for {@link CourseHero}. */
 export type CourseHeroProps = WithClassNames<undefined>

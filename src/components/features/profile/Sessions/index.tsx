@@ -18,27 +18,19 @@ import {
     Typography,
 } from "@heroui/react"
 import {
-    AsyncContent,
-    PageHeader,
-    Skeleton,
-} from "@/components/blocks"
-import {
     SettingsBreadcrumb,
 } from "../Settings/SettingsBreadcrumb"
 import {
     useLocale,
     useTranslations,
 } from "next-intl"
-import {
-    useQueryMySessionsSwr,
-    useMutateRevokeSessionSwr,
-} from "@/hooks"
-import type {
-    LoginSession,
-} from "@/modules/api"
-import {
-    useGraphQLWithToast,
-} from "@/modules/toast"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { useQueryMySessionsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMySessionsSwr"
+import { useMutateRevokeSessionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateRevokeSessionSwr"
+import type { LoginSession } from "@/modules/api/graphql/queries/types/my-sessions"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
 
 /**
  * Sessions / devices feature container.

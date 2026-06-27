@@ -1,12 +1,8 @@
-import {
-    queryAiBalancerHealth,
-    AI_BALANCER_HEALTH_REFRESH_MS,
-} from "@/modules/api"
-import {
-    useAppSelector,
-} from "@/redux"
 import { usePathname } from "next/navigation"
 import useSWR from "swr"
+import { queryAiBalancerHealth } from "@/modules/api/graphql/queries/query-ai-balancer-health"
+import { AI_BALANCER_HEALTH_REFRESH_MS } from "@/modules/api/graphql/queries/constants/ai-balancer-health"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Admin AI balancer page path — only here do we need to poll health. */
 const AI_BALANCER_PATH = "/admin/tools/ai-balancer"

@@ -3,21 +3,11 @@
 import React, {
     useMemo,
 } from "react"
-import { useAppSelector } from "@/redux"
 import {
     Typography,
     cn,
 } from "@heroui/react"
-import {
-    AsyncContent,
-} from "@/components/blocks"
-import {
-    RichText,
-} from "@/components/reuseable"
 import { useTranslations } from "next-intl"
-import {
-    useQueryMilestoneTaskSwr,
-} from "@/hooks"
 import {
     TaskSkeleton,
 } from "./TaskSkeleton"
@@ -34,6 +24,10 @@ import {
     TaskCodeImplementations,
 } from "./TaskCodeImplementations"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { useAppSelector } from "@/redux/hooks"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { RichText } from "@/components/reuseable/RichText"
+import { useQueryMilestoneTaskSwr } from "@/hooks/swr/api/graphql/queries/useQueryMilestoneTaskSwr"
 
 /** Props for {@link Task}. */
 export type TaskProps = WithClassNames<undefined>

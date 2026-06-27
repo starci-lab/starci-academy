@@ -4,8 +4,7 @@ import type { IconComponent } from "@/types"
 import { LockIcon } from "@phosphor-icons/react"
 import React from "react"
 import { cn } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types"
-
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link TabTrigger}. */
 export interface TabTriggerProps extends WithClassNames<undefined> {

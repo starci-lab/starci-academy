@@ -9,15 +9,25 @@ import {
 } from "@phosphor-icons/react"
 import { Typography } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
-import { useQueryPlatformStatsSwr } from "@/hooks"
-import { AsyncContent, Skeleton } from "@/components/blocks"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { useQueryPlatformStatsSwr } from "@/hooks/swr/api/graphql/queries/useQueryPlatformStatsSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /** Props for {@link StatStrip}. */
 export type StatStripProps = WithClassNames<undefined>
 
 /** How long a figure counts up from 0 → its value (ms). */
 const COUNT_DURATION = 1500
+
+/** Fallback figures when the public stats query fails — show 99 for every counter
+ * (teacher's choice) so the proof strip still renders instead of vanishing. */
+const FALLBACK_STATS = {
+    totalLearners: 99,
+    totalLessons: 99,
+    totalCourses: 99,
+    totalBadgesEarned: 99,
+} as const
 
 /**
  * Counts a number from 0 → `target` the first time it scrolls into view, eased
@@ -98,8 +108,8 @@ const Stat = ({ icon, value, label }: { icon: React.ReactNode, value: number, la
  * Live platform proof strip — four real counters (learners / lessons / courses /
  * badges) from the public `platformStats` query, rendered EDITORIAL: a small icon
  * over a number that counts up from 0 over a small label, separated by vertical
- * dividers (no metric cards) so the figures carry it. Honest by design: on error
- * it hides entirely rather than rendering a strip of zeros.
+ * dividers (no metric cards) so the figures carry it. On fetch error it falls back
+ * to 99 for every figure (so the strip still renders).
  *
  * @param props - optional className (placement only).
  */
@@ -107,15 +117,13 @@ export const StatStrip = ({ className }: StatStripProps) => {
     const t = useTranslations()
     const { data, isLoading, error } = useQueryPlatformStatsSwr()
 
-    // Never present zeros as proof — drop the whole strip when the fetch fails.
-    if (error) {
-        return null
-    }
+    // On fetch error, fall back to 99 for every figure instead of hiding the strip.
+    const stats = error ? FALLBACK_STATS : data
 
     return (
         <div className={className}>
             <AsyncContent
-                isLoading={isLoading && !data}
+                isLoading={isLoading && !data && !error}
                 skeleton={(
                     <div className="grid grid-cols-2 gap-y-8 md:grid-cols-4 md:gap-0">
                         {[0, 1, 2, 3].map((cell) => (
@@ -128,26 +136,26 @@ export const StatStrip = ({ className }: StatStripProps) => {
                     </div>
                 )}
             >
-                {data ? (
+                {stats ? (
                     <div className="grid grid-cols-2 gap-y-8 md:grid-cols-4 md:gap-0">
                         <Stat
                             icon={<UsersIcon aria-hidden focusable="false" />}
-                            value={data.totalLearners}
+                            value={stats.totalLearners}
                             label={t("landing.stats.learners")}
                         />
                         <Stat
                             icon={<BookOpenIcon aria-hidden focusable="false" />}
-                            value={data.totalLessons}
+                            value={stats.totalLessons}
                             label={t("landing.stats.lessons")}
                         />
                         <Stat
                             icon={<StackIcon aria-hidden focusable="false" />}
-                            value={data.totalCourses}
+                            value={stats.totalCourses}
                             label={t("landing.stats.courses")}
                         />
                         <Stat
                             icon={<MedalIcon aria-hidden focusable="false" />}
-                            value={data.totalBadgesEarned}
+                            value={stats.totalBadgesEarned}
                             label={t("landing.stats.badges")}
                         />
                     </div>

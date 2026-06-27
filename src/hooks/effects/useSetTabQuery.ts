@@ -1,7 +1,7 @@
-import { useAppDispatch, useAppSelector } from "@/redux"
-import { ContentTab, setContentTab } from "@/redux/slices"
 import { useSearchParams } from "next/navigation"
 import { useEffect } from "react"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { ContentTab, setContentTab } from "@/redux/slices/tabs"
 
 /**
  * URL → Redux for the content tab (deep link + browser back/forward).

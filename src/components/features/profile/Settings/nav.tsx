@@ -10,9 +10,7 @@ import {
     StarIcon as MembershipIcon,
     GraduationCapIcon as CourseHistoryIcon,
 } from "@phosphor-icons/react"
-import {
-    pathConfig,
-} from "@/resources"
+import { pathConfig } from "@/resources/path"
 
 /** One settings destination. */
 export interface SettingsNavItem {

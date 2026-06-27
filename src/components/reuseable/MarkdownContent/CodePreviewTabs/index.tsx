@@ -3,7 +3,7 @@
 import React, { useState } from "react"
 import { Tabs, cn } from "@heroui/react"
 import { Code, LayoutSplitSideContentLeft } from "@gravity-ui/icons"
-import type { WithClassNames } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link CodePreviewTabs}. */
 export interface CodePreviewTabsProps extends WithClassNames<undefined> {

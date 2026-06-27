@@ -1,11 +1,10 @@
-import { 
-    publicEnv 
-} from "@/resources"
 import type { 
     KeycloakRegisterRequest, 
     KeycloakRegisterResponse 
 } from "./types"
 import axios from "axios"
+import { publicEnv } from "@/resources/env/public"
+
 /**
  * Calls the register endpoint to create a new Keycloak user.
  *

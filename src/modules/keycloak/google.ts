@@ -1,5 +1,5 @@
-import { publicEnv } from "@/resources"
 import { generateChallenge } from "./generate"
+import { publicEnv } from "@/resources/env/public"
 
 export const redirectToGoogleAuthentication = async () => {
     const { url: keycloakUrl, realm, clientId } = publicEnv().keycloak

@@ -5,17 +5,15 @@ import { useParams } from "next/navigation"
 import { Alert, Button, Modal, Typography, cn } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { GraduationCapIcon } from "@phosphor-icons/react"
-import { useAppSelector } from "@/redux"
-import {
-    useQueryMyGithubTeamStatusSwr,
-    useLinkGithubOverlayState,
-    useJobNotificationsSocketIo,
-    PublicationEvent,
-} from "@/hooks"
-import { IconTile } from "@/components/blocks"
-import { JobStatus } from "@/modules/types"
-import { mutateRequestToTeam } from "@/modules/api"
-import { GithubIcon } from "@/components/svg"
+import { useAppSelector } from "@/redux/hooks"
+import { useQueryMyGithubTeamStatusSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyGithubTeamStatusSwr"
+import { useLinkGithubOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useJobNotificationsSocketIo } from "@/hooks/socketio/useJobNotificationsSocketIo"
+import { PublicationEvent } from "@/hooks/socketio/enums/publication-event"
+import { IconTile } from "@/components/blocks/identity/IconTile"
+import { JobStatus } from "@/modules/types/enums/job-status"
+import { mutateRequestToTeam } from "@/modules/api/graphql/mutations/mutation-request-to-team"
+import { GithubIcon } from "@/components/svg/GithubIcon"
 
 /**
  * Course GitHub-team join — NON-BLOCKING.

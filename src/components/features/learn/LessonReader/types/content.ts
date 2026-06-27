@@ -1,9 +1,7 @@
 import type {
     ReactNode,
 } from "react"
-import type {
-    ContentTab,
-} from "@/redux/slices"
+import type { ContentTab } from "@/redux/slices/tabs"
 
 /**
  * One entry in the {@link LessonReader} tab bar: which redux {@link ContentTab} it

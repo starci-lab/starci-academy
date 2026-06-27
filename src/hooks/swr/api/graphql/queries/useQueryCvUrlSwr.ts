@@ -1,8 +1,8 @@
-import { queryCvUrl } from "@/modules/api"
-import { useAppDispatch, useAppSelector } from "@/redux"
 import { setCvUrl } from "@/redux/slices/cv-url"
 import { usePathname } from "next/navigation"
 import useSWR from "swr"
+import { queryCvUrl } from "@/modules/api/graphql/queries/query-cv-url"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 
 /**
  * Fetches the presigned CV view URL for the Keycloak user and mirrors it into Redux.

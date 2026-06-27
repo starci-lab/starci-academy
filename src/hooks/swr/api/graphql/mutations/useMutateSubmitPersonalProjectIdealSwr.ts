@@ -1,10 +1,8 @@
-import {
-    GraphQLHeadersKey,
-    mutateSubmitPersonalProjectIdeal,
-    type SubmitPersonalProjectIdealRequest,
-} from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWRMutation from "swr/mutation"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { mutateSubmitPersonalProjectIdeal } from "@/modules/api/graphql/mutations/mutation-submit-personal-project-ideal"
+import { type SubmitPersonalProjectIdealRequest } from "@/modules/api/graphql/mutations/types/submit-personal-project-ideal"
+import { useAppSelector } from "@/redux/hooks"
 
 type MutateSubmitPersonalProjectIdealResult = Awaited<
     ReturnType<typeof mutateSubmitPersonalProjectIdeal>

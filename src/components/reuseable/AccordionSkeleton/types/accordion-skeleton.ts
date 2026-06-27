@@ -1,6 +1,6 @@
 import type { ReactNode } from "react"
 import type { SkeletonTextSize } from "../../SkeletonText"
-import type { WithClassNames } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Visual variant aligned with HeroUI `Accordion`. */
 export type AccordionSkeletonVariant = "default" | "surface"

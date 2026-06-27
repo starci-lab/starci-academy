@@ -2,8 +2,8 @@
 
 import React from "react"
 import { cn } from "@heroui/react"
-import { Skeleton } from "@/components/blocks"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /** Number of placeholder brief sections shown while the challenge loads. */
 const SKELETON_SECTION_COUNT = 3

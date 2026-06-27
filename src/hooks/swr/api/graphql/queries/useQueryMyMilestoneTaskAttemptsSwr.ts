@@ -1,6 +1,6 @@
-import { queryMyMilestoneTaskAttempts } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { queryMyMilestoneTaskAttempts } from "@/modules/api/graphql/queries/query-my-milestone-task-attempts"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Default page size for the attempts list. */
 export const MY_MILESTONE_TASK_ATTEMPTS_LIMIT = 20

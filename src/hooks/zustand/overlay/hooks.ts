@@ -1,9 +1,9 @@
 "use client"
 
 import { useCallback } from "react"
-import type { PaymentContext } from "@/modules/types"
-import type { QueryActiveAdvertisementData } from "@/modules/api"
 import { useOverlayStore, type OverlayKey, type FollowListContext } from "./store"
+import type { PaymentContext } from "@/modules/types/payment"
+import type { QueryActiveAdvertisementData } from "@/modules/api/graphql/queries/types/active-advertisement"
 
 /**
  * Return shape of an overlay accessor — matches HeroUI's `UseOverlayStateReturn`
@@ -58,6 +58,8 @@ export const useChallengeOverlayState = () => useOverlayHandle("challenge")
 export const useContentOverlayState = () => useOverlayHandle("content")
 /** Content AI chat drawer overlay state (ask StarCi AI about the current content). */
 export const useContentAiChatOverlayState = () => useOverlayHandle("contentAiChat")
+/** Cookie preferences modal overlay state ("Tùy chỉnh" granular cookie consent). */
+export const useCookiePreferencesOverlayState = () => useOverlayHandle("cookiePreferences")
 /** CV preview overlay state. */
 export const useCvPreviewOverlayState = () => useOverlayHandle("cvPreview")
 /** CV review level details overlay state. */

@@ -1,9 +1,6 @@
 "use client"
 
 import React from "react"
-import type {
-    WithClassNames,
-} from "@/modules/types"
 import {
     cn,
 } from "@heroui/react"
@@ -13,6 +10,7 @@ import {
 import {
     TierCardSkeleton,
 } from "../TierGrid/TierCardSkeleton"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 export type AiSubscriptionSkeletonProps = WithClassNames<undefined>
 

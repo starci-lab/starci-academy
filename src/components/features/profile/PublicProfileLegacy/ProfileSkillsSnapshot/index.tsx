@@ -7,23 +7,17 @@ import {
     Typography,
 } from "@heroui/react"
 import {
-    useQueryUserCodingSkillsSwr,
-    useQueryUserProfileSwr,
-    useProfileTabStore,
-} from "@/hooks"
-import {
-    SectionCard,
-} from "@/components/reuseable"
-import {
-    StatPair,
-    StatusChip,
-} from "@/components/blocks"
-import {
     useProfileUsername,
 } from "../useProfileUsername"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useQueryUserCodingSkillsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCodingSkillsSwr"
+import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
+import { useProfileTabStore } from "@/hooks/zustand/profileTab/store"
+import { SectionCard } from "@/components/reuseable/SectionCard"
+import { StatPair } from "@/components/blocks/stats/StatPair"
+import { StatusChip } from "@/components/blocks/chips/StatusChip"
 
 /** Props for {@link ProfileSkillsSnapshot}. */
 export type ProfileSkillsSnapshotProps = WithClassNames<undefined>

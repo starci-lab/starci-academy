@@ -17,21 +17,6 @@ import {
     useRouter,
 } from "next/navigation"
 import {
-    useAppSelector,
-} from "@/redux"
-import {
-    useQueryMyCourseOutlineSwr,
-} from "@/hooks"
-import {
-    OutlineRail,
-} from "@/components/blocks"
-import type {
-    OutlineRailGroup,
-} from "@/components/blocks"
-import type {
-    MyCourseOutlineModule,
-} from "@/modules/api"
-import {
     pathConfig,
 } from "@/resources/path"
 import type {
@@ -40,6 +25,11 @@ import type {
 import {
     ContentMapSkeleton,
 } from "./ContentMapSkeleton"
+import { useAppSelector } from "@/redux/hooks"
+import { useQueryMyCourseOutlineSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCourseOutlineSwr"
+import { OutlineRail } from "@/components/blocks/navigation/OutlineRail"
+import type { OutlineRailGroup } from "@/components/blocks/navigation/OutlineRail"
+import type { MyCourseOutlineModule } from "@/modules/api/graphql/queries/types/my-course-outline"
 
 /** Props for {@link ContentMap}. */
 export type ContentMapProps = WithClassNames<undefined>

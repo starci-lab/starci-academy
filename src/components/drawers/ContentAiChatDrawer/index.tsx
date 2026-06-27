@@ -5,10 +5,10 @@ import {
     Drawer,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { useAppSelector } from "@/redux"
-import { useContentAiChatOverlayState } from "@/hooks"
 import { useSmViewpoint } from "@/hooks/reuseables/useSmViewpoint"
 import { ContentAiChat } from "@/components/features/learn/ContentAiChat"
+import { useAppSelector } from "@/redux/hooks"
+import { useContentAiChatOverlayState } from "@/hooks/zustand/overlay/hooks"
 
 /**
  * Global "ask StarCi AI" chat drawer — the PANEL half of the content-AI feature

@@ -1,81 +1,96 @@
 "use client"
 
-import React, { useState } from "react"
-import { Tabs } from "@heroui/react"
+import React from "react"
 import { useTranslations } from "next-intl"
-import { PageHeader } from "@/components/blocks"
-import { LearnBreadcrumb } from "../learn/shared/LearnBreadcrumb"
+import { useRouter } from "next/navigation"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { ResizableRail } from "@/components/blocks/layout/ResizableRail"
+import { ResponsiveBreadcrumb } from "@/components/blocks/navigation/ResponsiveBreadcrumb"
+import { pathConfig } from "@/resources/path"
+import { PracticeRail } from "./PracticeRail"
+import { PracticeMobileNav } from "./PracticeRail/PracticeMobileNav"
 import { ProgressCockpit } from "./ProgressCockpit"
 import { PracticeFilters } from "./PracticeFilters"
 import { ProblemCatalog } from "./ProblemCatalog"
 import { CodingLeaderboard } from "./CodingLeaderboard"
-
-/** The two views under the practice cockpit. */
-enum PracticeTab {
-    Problems = "problems",
-    Leaderboard = "leaderboard",
-}
+import { usePracticeView } from "./hooks/usePracticeView"
 
 /**
- * `/practice` — the LeetCode-style coding-practice page. Composes, top to bottom:
- * a {@link PageHeader}, the {@link ProgressCockpit} (the viewer's solve standing,
- * shown for BOTH tabs), then a tab switcher between two peer views — **Problems**
- * (the {@link PracticeFilters} bar + {@link ProblemCatalog}, the default) and the
- * global **Leaderboard** ({@link CodingLeaderboard}, ranked by problems solved).
- * Pure composition — each child reads its own SWR / filter state; this root only
- * places them and owns the local tab state.
+ * `/practice` — the LeetCode-style coding-practice page, laid out docs-style: a
+ * persistent left {@link PracticeRail} (the mode switch Problems ⇄ Leaderboard +
+ * the course-domain topics as a nav list) beside a padded work pane. The rail and
+ * the pane share one source of truth through the URL (the {@link usePracticeView}
+ * mode + the {@link PracticeFilters} topic), so navigation is shareable. Below
+ * `lg` the rail folds into the in-pane {@link PracticeMobileNav} chip rows.
+ *
+ * The pane stacks: a {@link PageHeader}, the {@link ProgressCockpit} (the viewer's
+ * solve standing, shown for BOTH views), then the active view — **Problems** (the
+ * {@link PracticeFilters} bar + {@link ProblemCatalog}) or the global
+ * **Leaderboard** ({@link CodingLeaderboard}). Pure composition — each child reads
+ * its own SWR / URL state; this root only places them and owns the shell.
  */
 export const Practice = () => {
     const t = useTranslations()
-    const [tab, setTab] = useState<PracticeTab>(PracticeTab.Problems)
+    const router = useRouter()
+    const { view } = usePracticeView()
 
     return (
-        <div className="mx-auto flex max-w-5xl flex-col gap-10">
-            <PageHeader
-                breadcrumb={<LearnBreadcrumb current={t("codingPractice.title")} />}
-                title={t("codingPractice.title")}
-                description={t("codingPractice.subtitle")}
-            />
+        // single column on mobile/tablet; rail + content side-by-side from lg up
+        <div className="flex w-full flex-col items-start lg:flex-row">
+            {/* docs-style left rail — sticks under the navbar, viewport-tall, drag-resizable */}
+            <ResizableRail
+                className="hidden shrink-0 lg:sticky lg:top-16 lg:flex lg:h-[calc(100dvh-4rem)] lg:flex-col lg:self-start"
+                storageKey="starci.practice.rail.width"
+                defaultWidth={300}
+                minWidth={256}
+                maxWidth={420}
+                ariaLabel={t("practice.rail.modeAria")}
+            >
+                <PracticeRail className="min-h-0 lg:flex-1" />
+            </ResizableRail>
 
-            <div className="flex flex-col gap-6">
-                {/* the viewer's own standing — stays above both tabs */}
-                <ProgressCockpit />
+            {/* content column — owns the canonical p-6 reading padding */}
+            <div className="min-h-0 min-w-0 flex-1 p-6">
+                <div className="mx-auto flex max-w-5xl flex-col gap-10">
+                    <PageHeader
+                        breadcrumb={(
+                            <ResponsiveBreadcrumb
+                                items={[
+                                    {
+                                        key: "home",
+                                        label: t("nav.home"),
+                                        onPress: () => router.push(pathConfig().locale().build()),
+                                    },
+                                    {
+                                        key: "current",
+                                        label: t("codingPractice.title"),
+                                    },
+                                ]}
+                            />
+                        )}
+                        title={t("codingPractice.title")}
+                        description={t("codingPractice.subtitle")}
+                    />
 
-                <Tabs
-                    selectedKey={tab}
-                    variant="secondary"
-                    onSelectionChange={(key) => setTab(String(key) as PracticeTab)}
-                >
-                    <Tabs.ListContainer>
-                        <Tabs.List aria-label={t("codingPractice.title")}>
-                            <Tabs.Tab
-                                key={PracticeTab.Problems}
-                                id={PracticeTab.Problems}
-                                className="rounded-none data-[selected=true]:border-b-2 data-[selected=true]:border-accent data-[selected=true]:text-accent"
-                            >
-                                {t("practice.tabs.problems")}
-                            </Tabs.Tab>
-                            <Tabs.Tab
-                                key={PracticeTab.Leaderboard}
-                                id={PracticeTab.Leaderboard}
-                                className="rounded-none data-[selected=true]:border-b-2 data-[selected=true]:border-accent data-[selected=true]:text-accent"
-                            >
-                                {t("practice.tabs.leaderboard")}
-                            </Tabs.Tab>
-                        </Tabs.List>
-                    </Tabs.ListContainer>
-                </Tabs>
+                    <div className="flex flex-col gap-6">
+                        {/* mobile: mode + topic chips (the rail is desktop-only) */}
+                        <PracticeMobileNav />
 
-                {/* only the active view mounts, so the idle tab's query stays idle */}
-                {tab === PracticeTab.Problems ? (
-                    <>
-                        {/* filter bar sticks below the navbar while scrolling the catalog */}
-                        <PracticeFilters className="sticky top-16 z-40 bg-background py-2" />
-                        <ProblemCatalog />
-                    </>
-                ) : (
-                    <CodingLeaderboard />
-                )}
+                        {/* the viewer's own standing — stays above both views */}
+                        <ProgressCockpit />
+
+                        {/* only the active view mounts, so the idle one's query stays idle */}
+                        {view === "problems" ? (
+                            <>
+                                {/* filter bar sticks below the navbar while scrolling the catalog */}
+                                <PracticeFilters className="sticky top-16 z-40 bg-background py-2" />
+                                <ProblemCatalog />
+                            </>
+                        ) : (
+                            <CodingLeaderboard />
+                        )}
+                    </div>
+                </div>
             </div>
         </div>
     )

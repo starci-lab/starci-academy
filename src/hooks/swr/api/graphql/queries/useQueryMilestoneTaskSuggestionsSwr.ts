@@ -1,13 +1,11 @@
 import {
-    GraphQLHeadersKey,
-    queryMilestoneTaskSuggestions,
-} from "@/modules/api"
-import {
     useEntitySuggestionsSwr,
     type EntitySuggestionsFetchParams,
     type EntitySuggestionItem,
 } from "./useEntitySuggestionsSwr"
 import type { SWRConfiguration } from "swr"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { queryMilestoneTaskSuggestions } from "@/modules/api/graphql/queries/query-milestone-task-suggestions"
 
 /** Cache-key prefix namespacing milestone task suggestions in the SWR cache. */
 const SWR_KEY = "QUERY_MILESTONE_TASK_SUGGESTIONS_SWR"

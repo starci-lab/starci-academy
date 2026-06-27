@@ -1,7 +1,8 @@
-import { GraphQLHeadersKey, queryModules } from "@/modules/api"
-import { useAppSelector, useAppDispatch } from "@/redux"
-import { setModules } from "@/redux/slices"
 import useSWR from "swr"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { queryModules } from "@/modules/api/graphql/queries/query-modules"
+import { useAppSelector, useAppDispatch } from "@/redux/hooks"
+import { setModules } from "@/redux/slices/module"
 
 /**
  * Lists all modules for the current course via `modules` ES query.

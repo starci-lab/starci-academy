@@ -17,27 +17,19 @@ import { useLocale, useTranslations } from "next-intl"
 import { useTheme } from "next-themes"
 import { useParams } from "next/navigation"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
-import {
-    queryCodingProblem,
-    queryCodingProblemHint,
-    queryMyCodingSubmissions,
-    mutateSubmitCodingSolution,
-    mutateRevealCodingSolution,
-    CodingDifficulty,
-    CodingLanguage,
-    CodingVerdict,
-    type CodingProblem,
-    type CodingProblemSolution,
-    type CodingSubmission,
-} from "@/modules/api/graphql"
-import {
-    useJobNotificationsSocketIo,
-    PublicationEvent,
-} from "@/hooks/socketio"
-import { JobCategory, JobStatus } from "@/modules/types"
 import { AIProcessingText } from "@/components/reuseable/AIProcessingText"
-import { useAppSelector } from "@/redux"
 import { PracticeProblemSkeleton } from "./PracticeProblemSkeleton"
+import { queryCodingProblem } from "@/modules/api/graphql/queries/query-coding-problem"
+import { queryCodingProblemHint } from "@/modules/api/graphql/queries/query-coding-problem-hint"
+import { queryMyCodingSubmissions } from "@/modules/api/graphql/queries/query-my-coding-submissions"
+import { mutateSubmitCodingSolution } from "@/modules/api/graphql/mutations/mutation-submit-coding-solution"
+import { mutateRevealCodingSolution } from "@/modules/api/graphql/mutations/mutation-reveal-coding-solution"
+import { CodingDifficulty, CodingLanguage, CodingVerdict, type CodingProblem, type CodingProblemSolution, type CodingSubmission } from "@/modules/api/graphql/queries/types/coding"
+import { useJobNotificationsSocketIo } from "@/hooks/socketio/useJobNotificationsSocketIo"
+import { PublicationEvent } from "@/hooks/socketio/enums/publication-event"
+import { JobCategory } from "@/modules/types/enums/job-category"
+import { JobStatus } from "@/modules/types/enums/job-status"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Props for {@link PracticeProblem}. */
 export type PracticeProblemProps = Record<string, never>

@@ -2,8 +2,8 @@
 
 import { cn } from "@heroui/react"
 import React from "react"
-import { Skeleton } from "@/components/blocks"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /** Props for {@link FoundationCategoryCardSkeleton}. */
 export interface FoundationCategoryCardSkeletonProps extends WithClassNames<undefined> {

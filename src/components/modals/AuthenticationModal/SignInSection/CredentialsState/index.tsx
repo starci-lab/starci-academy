@@ -21,30 +21,23 @@ import {
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
-import { useAppDispatch } from "@/redux"
-import {
-    AuthenticationModalTab,
-    setAuthenticationModalTab,
-} from "@/redux/slices"
-import { useSignInForm } from "@/hooks"
-import {
-    KeycloakIdentityProvider,
-    keycloakRedirect,
-} from "@/modules/api"
-import {
-    SessionStorage,
-    SessionStorageId,
-    type SessionStorageOauthIdpHint,
-} from "@/modules/storage"
-import type { WithClassNames } from "@/modules/types"
 import { OAUTH_BUTTON_ITEMS } from "./map"
 import { OauthButtons } from "./OauthButtons"
 import { EmailField } from "./EmailField"
 import { PasswordField } from "./PasswordField"
 import { RememberMeRow } from "./RememberMeRow"
 import { SignUpPrompt } from "./SignUpPrompt"
-import { Turnstile } from "@/components/reuseable"
-import { publicEnv } from "@/resources"
+import { useAppDispatch } from "@/redux/hooks"
+import { AuthenticationModalTab, setAuthenticationModalTab } from "@/redux/slices/tabs"
+import { useSignInForm } from "@/hooks/zustand/signIn/useSignInForm"
+import { KeycloakIdentityProvider } from "@/modules/api/graphql/mutations/types/exchange-code-for-token"
+import { keycloakRedirect } from "@/modules/api/redirect/keycloak"
+import { SessionStorage } from "@/modules/storage/session/storage"
+import { SessionStorageId } from "@/modules/storage/session/enums/id"
+import { type SessionStorageOauthIdpHint } from "@/modules/storage/session/types/oauth-idp-hint"
+import type { WithClassNames } from "@/modules/types/base/class-name"
+import { Turnstile } from "@/components/reuseable/Turnstile"
+import { publicEnv } from "@/resources/env/public"
 
 /** Props for {@link CredentialsState}; no own props (singleton-driven). */
 export type CredentialsStateProps = WithClassNames<undefined>

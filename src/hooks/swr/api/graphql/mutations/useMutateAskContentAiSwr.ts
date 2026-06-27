@@ -1,10 +1,8 @@
-import {
-    GraphQLHeadersKey,
-    mutateAskContentAi,
-    type AskContentAiRequest,
-} from "@/modules/api"
 import useSWRMutation from "swr/mutation"
-import { useAppSelector } from "@/redux"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { mutateAskContentAi } from "@/modules/api/graphql/mutations/mutation-ask-content-ai"
+import { type AskContentAiRequest } from "@/modules/api/graphql/mutations/types/ask-content-ai"
+import { useAppSelector } from "@/redux/hooks"
 
 type MutateAskContentAiResult = Awaited<ReturnType<typeof mutateAskContentAi>>
 

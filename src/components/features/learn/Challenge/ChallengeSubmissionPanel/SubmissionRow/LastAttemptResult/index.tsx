@@ -9,8 +9,9 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import { SubmissionFeedbackSeverity } from "@/modules/types"
-import type { SubmissionFeedbackEntity, WithClassNames } from "@/modules/types"
+import { SubmissionFeedbackSeverity } from "@/modules/types/enums/submission-feedback-severity"
+import type { SubmissionFeedbackEntity } from "@/modules/types/entities/submission-feedback"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link LastAttemptResult}. */
 export interface LastAttemptResultProps extends WithClassNames<undefined> {

@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react"
 import EventEmitter2 from "eventemitter2"
-import { useAppSelector } from "@/redux"
 import { SubscriptionEvent } from "./enums"
 import { communityChatSocket } from "./sockets"
-import { LocalStorage, LocalStorageId } from "@/modules/storage"
-import { sleep } from "@/modules/utils"
+import { useAppSelector } from "@/redux/hooks"
+import { LocalStorage } from "@/modules/storage/local/storage"
+import { LocalStorageId } from "@/modules/storage/local/enums/id"
+import { sleep } from "@/modules/utils/misc"
 
 /** Fan-out for community-chat events to (non-Redux) component listeners. */
 export const communityChatSocketIoEventEmitter = new EventEmitter2()

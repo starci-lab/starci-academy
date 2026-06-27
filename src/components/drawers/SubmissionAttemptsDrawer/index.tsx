@@ -2,19 +2,16 @@
 
 import React, { useMemo } from "react"
 import { cn, Drawer, Pagination, ScrollShadow } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types"
-import { useSubmissionAttemptsOverlayState } from "@/hooks"
 import { useSmViewpoint } from "@/hooks/reuseables/useSmViewpoint"
-import { useAppDispatch, useAppSelector } from "@/redux"
-import {
-    setActiveChallengeSubmissionId,
-    setSubmissionAttemptsPageNumber,
-} from "@/redux/slices"
 import { useTranslations } from "next-intl"
 import { SubmissionAttemptCard } from "./SubmissionAttemptCard"
-import { useQuerySubmissionAttemptsSwr } from "@/hooks"
 import { SubmissionAttemptCardSkeleton } from "./SubmissionAttempCardSkeleton"
 import { Empty } from "./Empty"
+import type { WithClassNames } from "@/modules/types/base/class-name"
+import { useSubmissionAttemptsOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setActiveChallengeSubmissionId, setSubmissionAttemptsPageNumber } from "@/redux/slices/submission-attempt"
+import { useQuerySubmissionAttemptsSwr } from "@/hooks/swr/api/graphql/queries/useQuerySubmissionAttemptsSwr"
 
 /** Props for {@link SubmissionAttemptsDrawer}. Container — only layout className. */
 export type SubmissionAttemptsDrawerProps = WithClassNames<undefined>

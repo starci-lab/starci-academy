@@ -10,32 +10,20 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import {
-    AIProcessingText,
-} from "@/components/reuseable"
-import {
-    JobCategory,
-    JobStatus,
-} from "@/modules/types"
-import {
-    usePersonalProjectGithubForm,
-    usePersonalProjectTaskAttemptsDrawerOverlayState,
-    useUserMilestoneTaskFeedbacksModalOverlayState,
-    useQueryMilestoneTaskProgressSwr,
-    useQueryUserPersonalTaskAttemptsSwr,
-    useMutateSyncPersonalProjectGithubSwr,
-    useMutateSyncPersonalProjectGithubBranchSwr,
-} from "@/hooks"
-import {
-    useAppSelector,
-} from "@/redux"
-import {
-    buildMilestoneTaskProgressLookup,
-    isPersonalProjectTaskActionUnlocked,
-} from "@/components/utils"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { AIProcessingText } from "@/components/reuseable/AIProcessingText"
+import { JobCategory } from "@/modules/types/enums/job-category"
+import { JobStatus } from "@/modules/types/enums/job-status"
+import { usePersonalProjectGithubForm } from "@/hooks/zustand/personalProjectGithub/usePersonalProjectGithubForm"
+import { usePersonalProjectTaskAttemptsDrawerOverlayState, useUserMilestoneTaskFeedbacksModalOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useQueryMilestoneTaskProgressSwr } from "@/hooks/swr/api/graphql/queries/useQueryMilestoneTaskProgressSwr"
+import { useQueryUserPersonalTaskAttemptsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserPersonalTaskAttemptsSwr"
+import { useMutateSyncPersonalProjectGithubSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSyncPersonalProjectGithubSwr"
+import { useMutateSyncPersonalProjectGithubBranchSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSyncPersonalProjectGithubBranchSwr"
+import { useAppSelector } from "@/redux/hooks"
+import { buildMilestoneTaskProgressLookup, isPersonalProjectTaskActionUnlocked } from "@/components/utils/task-lookup"
 
 /** Props for {@link TaskActions}. */
 export type TaskActionsProps = WithClassNames<undefined>

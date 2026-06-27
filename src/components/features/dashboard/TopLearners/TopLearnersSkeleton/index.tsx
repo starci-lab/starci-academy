@@ -6,12 +6,10 @@ import {
     CardContent,
     cn,
 } from "@heroui/react"
-import {
-    Skeleton,
-} from "@/components/blocks"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /** Number of placeholder rows (mirrors the loaded top-N). */
 const SKELETON_ROWS = 5

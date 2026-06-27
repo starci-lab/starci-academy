@@ -1,4 +1,4 @@
-import { BlogCategory } from "@/modules/api/graphql"
+import { BlogCategory } from "@/modules/api/graphql/queries/types/blog"
 
 /**
  * Editorial-pillar filter order for the `/blog` listing (`null` = "All").

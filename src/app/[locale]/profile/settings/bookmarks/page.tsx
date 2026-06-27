@@ -1,7 +1,5 @@
 import React from "react"
-import {
-    Bookmarks,
-} from "@/components/features/profile"
+import { Bookmarks } from "@/components/features/profile/Bookmarks"
 
 /**
  * Route `/[locale]/profile/bookmarks` — renders the saved-content (bookmarks)

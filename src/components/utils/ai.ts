@@ -1,5 +1,5 @@
-import { JobStatus } from "@/modules/types"
-import { JobCategory } from "@/modules/types"
+import { JobStatus } from "@/modules/types/enums/job-status"
+import { JobCategory } from "@/modules/types/enums/job-category"
 
 /**
  * Resolves `aiProcessing.*` title/description for a category + status (same keys as {@link AIProcessingModal}).

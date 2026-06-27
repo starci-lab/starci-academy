@@ -8,8 +8,8 @@ import {
 } from "@heroui/react"
 import { truncate } from "lodash"
 import { UserAvatar } from "@/components/reuseable/UserAvatar"
-import { useAppSelector } from "@/redux"
-import type { WithClassNames } from "@/modules/types"
+import { useAppSelector } from "@/redux/hooks"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link UserSummary}.

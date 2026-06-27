@@ -3,13 +3,13 @@
 import React from "react"
 import { cn, Modal } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
-import { useLanguageOverlayState } from "@/hooks"
 import { useRouter } from "@/i18n/navigation"
 import { usePathname } from "@/i18n/navigation"
-import { Spacer } from "@/components/reuseable"
 import { LanguageCard } from "./LanguageCard"
-import { languages } from "@/resources"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { useLanguageOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { Spacer } from "@/components/reuseable/Spacer"
+import { languages } from "@/resources/constants/lang"
 
 /**
  * LanguageModal is a modal component that is used to display the language selection.

@@ -1,4 +1,4 @@
-import type { ProfileTab } from "@/hooks"
+import type { ProfileTab } from "@/hooks/zustand/profileTab/store"
 
 /** Re-export the canonical tab union (owned by the shared tab store). */
 export type { ProfileTab }

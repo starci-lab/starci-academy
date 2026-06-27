@@ -1,10 +1,8 @@
-import type {
-    ModuleEntity,
-} from "@/modules/types"
 import {
     createSlice,
     type PayloadAction,
 } from "@reduxjs/toolkit"
+import type { ModuleEntity } from "@/modules/types/entities/module"
 
 /**
  * Client state for the active course module and paginated module list.

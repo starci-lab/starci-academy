@@ -1,13 +1,12 @@
 "use client"
 
 import { DiamondExclamation as RadioactiveIcon, MapPin as MapPinLineIcon } from "@gravity-ui/icons"
-import type { UserMilestoneTaskAttemptFeedbackEntity } from "@/modules/types"
-import { MilestoneSeverity } from "@/modules/types"
 import { Card, Chip, cn } from "@heroui/react"
 import React from "react"
 import { useTranslations } from "next-intl"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-
+import type { UserMilestoneTaskAttemptFeedbackEntity } from "@/modules/types/entities/user-milestone-task"
+import { MilestoneSeverity } from "@/modules/types/enums/milestone-severity"
 
 /**
  * Props for {@link MilestoneFeedbackCard}.

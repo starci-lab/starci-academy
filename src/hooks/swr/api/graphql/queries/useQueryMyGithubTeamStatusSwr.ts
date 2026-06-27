@@ -1,6 +1,6 @@
-import { queryMyGithubTeamStatus } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { queryMyGithubTeamStatus } from "@/modules/api/graphql/queries/query-my-github-team-status"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR core for the viewer's GitHub link + team-membership status. Runs only when

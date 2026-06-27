@@ -5,10 +5,10 @@ import {
     Drawer,
     ScrollShadow,
 } from "@heroui/react"
-import { useAppSelector } from "@/redux"
-import { useE2eResultOverlayState } from "@/hooks"
 import { useSmViewpoint } from "@/hooks/reuseables/useSmViewpoint"
 import { E2eBody } from "@/components/features/learn/LessonReader/E2eBody"
+import { useAppSelector } from "@/redux/hooks"
+import { useE2eResultOverlayState } from "@/hooks/zustand/overlay/hooks"
 
 /**
  * Global E2E-result drawer — the PANEL half of the lesson "view E2E proof" feature

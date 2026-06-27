@@ -20,14 +20,12 @@ import {
 import {
     PlayIcon,
 } from "@phosphor-icons/react"
-import {
-    AsyncContent,
-    ContentMapRow,
-    ProgressMeter,
-} from "@/components/blocks"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { ContentMapRow } from "@/components/blocks/navigation/ContentMapRow"
+import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
 
 /** One selectable row inside an {@link OutlineRailGroup}. */
 export interface OutlineRailItem {

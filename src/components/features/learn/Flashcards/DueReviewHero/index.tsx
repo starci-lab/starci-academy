@@ -5,11 +5,13 @@ import useSWR from "swr"
 import { Button, Typography } from "@heroui/react"
 import { CardsThreeIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import { queryMyDueFlashcards } from "@/modules/api/graphql"
-import { AsyncContent, LabeledCard, Skeleton } from "@/components/blocks"
-import { useAppSelector } from "@/redux"
 import { DUE_REVIEW_LIMIT } from "../constants"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { queryMyDueFlashcards } from "@/modules/api/graphql/queries/query-my-due-flashcards"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Props for {@link DueReviewHero}. */
 export interface DueReviewHeroProps extends WithClassNames<undefined> {

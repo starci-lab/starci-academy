@@ -1,8 +1,8 @@
 "use client"
 
 import React from "react"
-import { ResponsiveBreadcrumb } from "@/components/blocks"
 import { useHeadhuntingsBreadcrumbs } from "../../hooks"
+import { ResponsiveBreadcrumb } from "@/components/blocks/navigation/ResponsiveBreadcrumb"
 
 /**
  * Breadcrumb trail for the headhuntings list page.

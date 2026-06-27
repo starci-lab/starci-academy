@@ -1,7 +1,7 @@
 import { useEffect } from "react"
-import { useAppDispatch } from "@/redux"
-import { setContent } from "@/redux/slices"
-import { useQueryContentSwr } from "@/hooks/swr"
+import { useAppDispatch } from "@/redux/hooks"
+import { setContent } from "@/redux/slices/content"
+import { useQueryContentSwr } from "@/hooks/swr/api/graphql/queries/useQueryContentSwr"
 
 /**
  * Mirrors the content SWR result into Redux `content.entity` so every Redux reader stays in sync —

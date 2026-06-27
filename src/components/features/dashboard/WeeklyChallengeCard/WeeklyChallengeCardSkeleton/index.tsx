@@ -7,13 +7,11 @@ import {
 import {
     FlameIcon,
 } from "@phosphor-icons/react"
-import {
-    LabeledCard,
-    Skeleton,
-} from "@/components/blocks"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /** Recent-finisher rows shown while the weekly challenge loads. */
 const SKELETON_ROW_COUNT = 3

@@ -3,7 +3,6 @@
 import { CaretDownIcon, LockIcon, SparkleIcon, WarningCircleIcon } from "@phosphor-icons/react"
 import React from "react"
 import {
-    Chip,
     Dropdown,
     DropdownItem,
     DropdownMenu,
@@ -17,25 +16,15 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import {
-    AiMode,
-    AiModelCategory,
-    type AiGradableModel,
-} from "@/modules/api"
-import type {
-    WithClassNames,
-} from "@/modules/types"
 import type {
 
     ChallengeGradeSelection,
 } from "../types"
-
-/** HeroUI {@link Chip} color per model cost/quality category. */
-const CATEGORY_CHIP_COLOR: Record<AiModelCategory, "success" | "default" | "warning"> = {
-    [AiModelCategory.Economy]: "success",
-    [AiModelCategory.Balanced]: "default",
-    [AiModelCategory.Premium]: "warning",
-}
+import { AiMode } from "@/modules/api/graphql/queries/query-my-ai-settings"
+import { AiModelCategory } from "@/modules/api/graphql/queries/query-ai-models"
+import { type AiGradableModel } from "@/modules/api/graphql/queries/types/ai-models"
+import type { WithClassNames } from "@/modules/types/base/class-name"
+import { AiCategoryChip } from "@/components/blocks/chips/AiCategoryChip"
 
 /** Props for {@link GradeModelDropdown}. */
 export type GradeModelDropdownProps = WithClassNames<undefined> & {
@@ -111,21 +100,17 @@ export const GradeModelDropdown = ({
                             </div>
                         </DropdownItem>
                     </DropdownSection>
-                    {/* Premium lane — one entry per catalog model, with a category chip.
-                        Without a subscription every model is locked: pressing routes to the
-                        subscription page and hovering explains why (Auto lane stays free). */}
+                    {/* One entry per catalog model, with a category chip. Free + Economy
+                        models grade without a plan; Balanced + Premium are locked without a
+                        subscription (pressing routes to the subscription page). */}
                     <DropdownSection className="border-t border-divider pt-1 mt-1">
                         {models.map((model) => {
                             const key = `${model.provider}:${model.model}`
-                            const categoryChip = (
-                                <Chip
-                                    size="sm"
-                                    color={CATEGORY_CHIP_COLOR[model.category]}
-                                    variant="soft"
-                                >
-                                    {t(`aiSettings.categories.${model.category}`)}
-                                </Chip>
-                            )
+                            const categoryChip = <AiCategoryChip category={model.category} />
+                            // Free + Economy are usable without a plan; Balanced + Premium
+                            // require a paid subscription.
+                            const requiresPlan = model.category === AiModelCategory.Balanced
+                                || model.category === AiModelCategory.Premium
                             if (!model.available) {
                                 // DISABLED (not locked): model/provider tạm không khả dụng (vd key
                                 // không hợp lệ / provider down) → icon CẢNH BÁO, KHÔNG phải ổ khoá.
@@ -151,7 +136,7 @@ export const GradeModelDropdown = ({
                                     </DropdownItem>
                                 )
                             }
-                            if (!canPremium) {
+                            if (requiresPlan && !canPremium) {
                                 return (
                                     <DropdownItem
                                         key={key}
@@ -180,7 +165,7 @@ export const GradeModelDropdown = ({
                                     key={key}
                                     textValue={model.model}
                                     onPress={() => onSelect({
-                                        mode: AiMode.Premium,
+                                        mode: canPremium ? AiMode.Premium : AiMode.Auto,
                                         model: model.model,
                                         provider: model.provider,
                                     })}

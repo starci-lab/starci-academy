@@ -1,7 +1,7 @@
-import { queryPublicContent } from "@/modules/api"
-import { useAppDispatch, useAppSelector } from "@/redux"
 import useSWR from "swr"
-import { setPublicContent } from "@/redux/slices"
+import { queryPublicContent } from "@/modules/api/graphql/queries/query-public-content"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setPublicContent } from "@/redux/slices/public-content"
 
 /**
  * Singleton SWR for `publicContent(request: { displayId })` — no auth required.

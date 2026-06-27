@@ -1,8 +1,8 @@
-import type { TemplateCVEntity } from "@/modules/types"
 import {
     createSlice,
     type PayloadAction,
 } from "@reduxjs/toolkit"
+import type { TemplateCVEntity } from "@/modules/types/entities/template-cv"
 
 /**
  * Redux mirror of the `templateCvs` GraphQL query (rubric rows for CV review).

@@ -1209,6 +1209,13 @@
             "problems": "Problems",
             "leaderboard": "Leaderboard"
         },
+        "rail": {
+            "modeAria": "Practice mode",
+            "topicsLabel": "Topics",
+            "topicsAria": "Select topic",
+            "searchTopic": "Search topics…",
+            "searchTopicEmpty": "No topics match “{query}”"
+        },
         "leaderboard": {
             "you": "You",
             "solved": "{count} solved",

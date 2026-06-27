@@ -15,9 +15,6 @@ import {
     RowsIcon,
     SquaresFourIcon,
 } from "@phosphor-icons/react"
-import {
-    CODING_DOMAIN_ORDER,
-} from "@/modules/api/graphql"
 import { usePracticeFilters } from "../hooks/usePracticeFilters"
 import {
     CODING_DIFFICULTY_META,
@@ -27,7 +24,6 @@ import {
 } from "../constants"
 import type {
     DifficultyFilter,
-    DomainFilter,
     SortKey,
     StatusFilter,
 } from "../types"
@@ -38,10 +34,11 @@ export type PracticeFiltersProps = WithClassNames<undefined>
 
 /**
  * The practice catalog filter bar — a title search box plus difficulty / status
- * filter chips (HeroUI Buttons, secondary when active / ghost when not), a domain
- * dropdown (`Select`, since there are 20 domains), a sort `Select`, and a
- * group-by-domain toggle. Reads + writes the URL-backed filter state itself
- * ({@link usePracticeFilters}); composes blocks + HeroUI only.
+ * filter chips (HeroUI Buttons, secondary when active / ghost when not), a sort
+ * `Select`, and a group-by-domain toggle. The topic (domain) filter lives in the
+ * {@link import("../PracticeRail").PracticeRail} sidebar, not here. Reads + writes
+ * the URL-backed filter state itself ({@link usePracticeFilters}); composes blocks
+ * + HeroUI only.
  *
  * @param props - optional className for the root element.
  */
@@ -101,47 +98,8 @@ export const PracticeFilters = ({
                 </div>
             </div>
 
-            {/* domain + sort dropdowns + group toggle */}
+            {/* sort dropdown + group toggle */}
             <div className="flex flex-wrap items-center gap-3">
-                {/* domain dropdown — 20 values, too many for chips */}
-                <div className="flex flex-col gap-2">
-                    <Label className="sr-only">{t("practice.filters.domainAria")}</Label>
-                    <Select.Root<{ id: string }, "single">
-                        aria-label={t("practice.filters.domainAria")}
-                        selectedKey={filters.domain}
-                        onSelectionChange={(key) => setFilters({ domain: String(key) as DomainFilter })}
-                    >
-                        <Select.Trigger aria-label={t("practice.filters.domainAria")} className="w-fit min-w-44">
-                            <Select.Value>
-                                {() => (
-                                    <Typography type="body-sm">
-                                        {filters.domain === "all"
-                                            ? t("practice.filters.allDomains")
-                                            : t(`codingPractice.domain.${filters.domain}`)}
-                                    </Typography>
-                                )}
-                            </Select.Value>
-                            <Select.Indicator />
-                        </Select.Trigger>
-                        <Select.Popover>
-                            <ListBox.Root aria-label={t("practice.filters.domainAria")}>
-                                <ListBox.Item id="all" textValue={t("practice.filters.allDomains")}>
-                                    {t("practice.filters.allDomains")}
-                                </ListBox.Item>
-                                {CODING_DOMAIN_ORDER.map((domain) => (
-                                    <ListBox.Item
-                                        key={domain}
-                                        id={domain}
-                                        textValue={t(`codingPractice.domain.${domain}`)}
-                                    >
-                                        {t(`codingPractice.domain.${domain}`)}
-                                    </ListBox.Item>
-                                ))}
-                            </ListBox.Root>
-                        </Select.Popover>
-                    </Select.Root>
-                </div>
-
                 {/* sort dropdown */}
                 <div className="flex flex-col gap-2">
                     <Label className="sr-only">{t("practice.filters.sortAria")}</Label>

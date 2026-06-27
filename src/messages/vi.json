@@ -1218,6 +1218,13 @@
             "problems": "Bài tập",
             "leaderboard": "Bảng xếp hạng"
         },
+        "rail": {
+            "modeAria": "Chế độ luyện tập",
+            "topicsLabel": "Chủ đề",
+            "topicsAria": "Chọn chủ đề",
+            "searchTopic": "Tìm chủ đề…",
+            "searchTopicEmpty": "Không có chủ đề khớp “{query}”"
+        },
         "leaderboard": {
             "you": "Bạn",
             "solved": "Đã giải {count} bài",

@@ -1,7 +1,7 @@
 "use client"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useLayoutEffect, useRef } from "react"
-import { useMutateExchangeCodeForTokenSwr } from "../swr"
+import { useMutateExchangeCodeForTokenSwr } from "@/hooks/swr/api/graphql/mutations/useMutateExchangeCodeForTokenSwr"
 import { KeycloakIdentityProvider } from "@/modules/api/graphql/mutations/types/exchange-code-for-token"
 import { setAccessToken, setAuthenticated } from "@/redux/slices/keycloak"
 import { useAppDispatch } from "@/redux/hooks"

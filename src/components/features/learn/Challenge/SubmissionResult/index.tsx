@@ -89,9 +89,9 @@ const FindingAccordionItem = ({
                             className="min-w-0 flex-1 text-sm [&_p]:m-0 [&_p]:line-clamp-1"
                         />
                         {feedback.location ? (
-                            <span className="hidden max-w-[34%] shrink-0 truncate rounded bg-default px-1.5 py-0.5 text-xs text-muted sm:inline">
-                                {feedback.location}
-                            </span>
+                            <Chip size="sm" className="hidden max-w-[34%] shrink-0 sm:inline-flex">
+                                <Chip.Label className="truncate">{feedback.location}</Chip.Label>
+                            </Chip>
                         ) : null}
                         <Accordion.Indicator />
                     </div>
@@ -357,7 +357,7 @@ export const SubmissionResult = ({
                         </LabeledCard>
 
                         {/* findings — a labeled accordion card (each finding expands) */}
-                        <LabeledCard label={t("submissionResult.feedbackLabel")}>
+                        <LabeledCard label={t("submissionResult.feedbackLabel")} frameless>
                             <AsyncContent
                                 isLoading={feedbacksLoading}
                                 skeleton={<Skeleton className="h-40 w-full rounded-2xl" />}
@@ -370,10 +370,11 @@ export const SubmissionResult = ({
                                     retryLabel: t("submissionResult.retry"),
                                 }}
                             >
-                                {/* surface-in-surface → border (the card is a surface). */}
+                                {/* Accordion Card: the surface accordion IS the card (frameless
+                                    label outside, p-0) — surface bakes bg + radius + separators. */}
                                 <Accordion
                                     variant="surface"
-                                    className="overflow-hidden rounded-2xl border border-default"
+                                    className="overflow-hidden border border-default"
                                     allowsMultipleExpanded
                                 >
                                     {sortedFeedbacks.map((feedback) => (

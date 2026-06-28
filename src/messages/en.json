@@ -2283,6 +2283,7 @@
         "rewardBalance": "{count} pts",
         "dueCount": "{count} due",
         "feedTabsAria": "Activity feed",
+        "feedFilterAria": "Filter activity feed",
         "feedFilter": {
             "all": "All",
             "courses": "Courses",

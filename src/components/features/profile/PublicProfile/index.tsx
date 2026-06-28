@@ -1,11 +1,23 @@
 "use client"
 
 import React, {
+    useEffect,
     useMemo,
 } from "react"
 import {
     cn,
 } from "@heroui/react"
+import {
+    useLocale,
+} from "next-intl"
+import {
+    useParams,
+    useRouter,
+    useSearchParams,
+} from "next/navigation"
+import {
+    pathConfig,
+} from "@/resources"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -81,6 +93,24 @@ export const PublicProfile = ({
     const { tab } = useProfileTabStore()
     // keep the open tab in the URL query (`?tab=`) — shareable + back/forward
     useProfileTabUrlSync()
+
+    // canonicalize the URL to `/profile/<username>` — a legacy/email-addressed
+    // link (e.g. `/profile/<email>`) still resolves on the backend, but once the
+    // user loads we replace the URL with their real username (GitHub-style), so
+    // the address bar never lingers on an email or any non-canonical handle.
+    const router = useRouter()
+    const locale = useLocale()
+    const routeUsername = useParams().username
+    const searchParams = useSearchParams()
+    useEffect(() => {
+        const segment = routeUsername ? String(routeUsername) : null
+        if (!segment || !user?.username || segment === user.username) {
+            return
+        }
+        const query = searchParams.toString()
+        const target = pathConfig().locale(locale).profile(user.username).build()
+        router.replace(query ? `${target}?${query}` : target)
+    }, [routeUsername, user?.username, locale, searchParams, router])
 
     const isSelf = !!viewer && !!user?.id && viewer.id === user.id
     // locked profile viewed by a non-owner → hero + "private" notice, tabs withheld

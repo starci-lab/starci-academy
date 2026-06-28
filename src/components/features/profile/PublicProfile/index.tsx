@@ -17,7 +17,7 @@ import {
 } from "next/navigation"
 import {
     pathConfig,
-} from "@/resources"
+} from "@/resources/path"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"

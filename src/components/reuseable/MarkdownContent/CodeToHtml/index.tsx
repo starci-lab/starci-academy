@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react"
 import { codeToHtml } from "shiki"
 import { cn } from "@heroui/react"
 import { SnippetIcon } from "../../SnippetIcon"
-import type { WithClassNames } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link CodeToHtml}. */
 export interface CodeToHtmlProps extends WithClassNames<undefined> {

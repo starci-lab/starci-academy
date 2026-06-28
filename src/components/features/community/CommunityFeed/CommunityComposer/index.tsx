@@ -9,9 +9,9 @@ import {
     TextField,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { CommunityChannel } from "@/modules/api"
-import { useMutateCreateCommunityPostSwr } from "@/hooks"
-import { useGraphQLWithToast } from "@/modules/toast"
+import { CommunityChannel } from "@/modules/api/graphql/queries/types/community-feed"
+import { useMutateCreateCommunityPostSwr } from "@/hooks/swr/api/graphql/mutations/useMutateCreateCommunityPostSwr"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
 
 /** Props for the {@link CommunityComposer} sub-component. */
 export interface CommunityComposerProps {

@@ -11,7 +11,6 @@ import {
     TrophyIcon,
 } from "@phosphor-icons/react"
 import type { Icon } from "@phosphor-icons/react"
-import type { WithClassNames } from "@/modules/types"
 import {
     CATEGORY_COLOR,
     categoryMyXp,
@@ -19,6 +18,7 @@ import {
     type LeaderboardCategoryKey,
 } from "../categories"
 import { useLeaderboardSwr } from "../useLeaderboardSwr"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** One row in the category rail. */
 interface RailItem {

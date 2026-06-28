@@ -4,23 +4,18 @@ import React from "react"
 import { Typography } from "@heroui/react"
 import { BookOpenIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import {
-    useQueryUserCoursesSwr,
-    useQueryUserProfileSwr,
-} from "@/hooks"
-import {
-    AsyncContent,
-    IconTile,
-    SegmentBar,
-    Skeleton,
-    SurfaceListCard,
-    SurfaceListCardItem,
-} from "@/components/blocks"
 import { EntityToken } from "@/components/features/dashboard/EntityToken"
 import { CourseTrialChip } from "@/components/reuseable/CourseTrialChip"
-import { useAppSelector } from "@/redux"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useProfileUsername } from "../../hooks/useProfileUsername"
+import { useQueryUserCoursesSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCoursesSwr"
+import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { IconTile } from "@/components/blocks/identity/IconTile"
+import { SegmentBar } from "@/components/blocks/stats/SegmentBar"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Props for {@link OverviewCourses}. */
 export type OverviewCoursesProps = WithClassNames<undefined>

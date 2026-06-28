@@ -1,7 +1,7 @@
-import { useAppDispatch } from "@/redux"
-import { setFoundationCategoryId } from "@/redux/slices"
 import { useEffect } from "react"
 import { useParams, usePathname } from "next/navigation"
+import { useAppDispatch } from "@/redux/hooks"
+import { setFoundationCategoryId } from "@/redux/slices/foundation"
 
 /**
  * Syncs foundation category id from route params; clears on the hub page.

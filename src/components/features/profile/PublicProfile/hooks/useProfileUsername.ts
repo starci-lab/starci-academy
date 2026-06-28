@@ -3,9 +3,7 @@
 import {
     useParams,
 } from "next/navigation"
-import {
-    useAppSelector,
-} from "@/redux"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * Resolve the target username of the profile being viewed.

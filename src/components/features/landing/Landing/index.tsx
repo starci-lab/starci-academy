@@ -21,13 +21,6 @@ import { FaFacebook, FaGithub, FaLinkedin } from "react-icons/fa6"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import dynamic from "next/dynamic"
-import {
-    HeroBanner,
-    IconTile,
-    SectionHeading,
-    TrackCard,
-    TruthList,
-} from "@/components/blocks"
 /** Hero architecture diagram in real 3D (WebGL/R3F). Client-only — never SSRs;
  * while the WebGL chunk loads, show a neutral sized skeleton (the old fallback
  * was a *different* SVG diagram → jarring swap to the 3D scene). */
@@ -58,6 +51,11 @@ import {
     LANDING_ROADMAP_TIERS,
     LANDING_TRACK_COURSE_SLUG,
 } from "./constants"
+import { HeroBanner } from "@/components/blocks/marketing/HeroBanner"
+import { IconTile } from "@/components/blocks/identity/IconTile"
+import { SectionHeading } from "@/components/blocks/marketing/SectionHeading"
+import { TrackCard } from "@/components/blocks/marketing/TrackCard"
+import { TruthList } from "@/components/blocks/marketing/TruthList"
 
 /** Icon per featured course track. */
 const COURSE_TRACK_ICONS: Record<string, React.ReactNode> = {

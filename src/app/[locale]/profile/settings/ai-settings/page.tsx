@@ -1,7 +1,5 @@
 import React from "react"
-import {
-    AiSettings,
-} from "@/components/features/profile"
+import { AiSettings } from "@/components/features/profile/AiSettings"
 
 /**
  * Route `/[locale]/profile/ai-settings` — renders the AI settings feature.

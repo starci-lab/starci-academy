@@ -1,16 +1,12 @@
-import {
-    GraphQLHeadersKey,
-    queryFoundationCategorySuggestions,
-} from "@/modules/api"
-import {
-    useAppSelector,
-} from "@/redux"
 import { usePathname } from "next/navigation"
 import {
     useEntitySuggestionsSwr,
     type EntitySuggestionsFetchParams,
     type EntitySuggestionItem,
 } from "./useEntitySuggestionsSwr"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { queryFoundationCategorySuggestions } from "@/modules/api/graphql/queries/query-foundation-category-suggestions"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Max suggestions requested for the foundation autocomplete dropdown. */
 const SUGGESTIONS_LIMIT = 8

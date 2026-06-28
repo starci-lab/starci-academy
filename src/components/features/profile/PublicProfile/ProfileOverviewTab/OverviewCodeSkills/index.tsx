@@ -3,24 +3,16 @@
 import React from "react"
 import { Typography, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import {
-    useQueryUserCodingSkillsSwr,
-    useQueryUserProfileSwr,
-} from "@/hooks"
-import {
-    AsyncContent,
-    SegmentBar,
-    Skeleton,
-    StatPair,
-    SurfaceListCard,
-    SurfaceListCardItem,
-} from "@/components/blocks"
-import {
-    getLanguageColor,
-    getLanguageLabel,
-} from "@/modules/utils"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useProfileUsername } from "../../hooks/useProfileUsername"
+import { useQueryUserCodingSkillsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCodingSkillsSwr"
+import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { SegmentBar } from "@/components/blocks/stats/SegmentBar"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { StatPair } from "@/components/blocks/stats/StatPair"
+import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { getLanguageColor, getLanguageLabel } from "@/modules/utils/language"
 
 /** Props for {@link OverviewCodeSkills}. */
 export type OverviewCodeSkillsProps = WithClassNames<undefined>

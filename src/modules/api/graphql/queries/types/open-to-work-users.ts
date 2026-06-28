@@ -1,5 +1,5 @@
-import type { UserEntity } from "@/modules/types"
 import type { GraphQLResponse } from "../../types"
+import type { UserEntity } from "@/modules/types/entities/user"
 
 /** Variables for the `openToWorkUsers` query. */
 export interface QueryOpenToWorkUsersRequest {

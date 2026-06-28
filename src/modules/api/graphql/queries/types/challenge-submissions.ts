@@ -1,5 +1,5 @@
-import type { ChallengeSubmissionEntity } from "@/modules/types"
 import type { GraphQLResponse, SortInput } from "../../types"
+import type { ChallengeSubmissionEntity } from "@/modules/types/entities/challenge-submission"
 
 /** Inner payload: list of submission rows for one challenge. */
 export interface ChallengeSubmissionsPayload {

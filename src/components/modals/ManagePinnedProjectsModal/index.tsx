@@ -9,16 +9,16 @@ import {
     cn,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { usePinnedProjectsOverlayState } from "@/hooks"
 import {
     MAX_PINNED_PROJECTS,
     usePinnedProjectsManager,
 } from "@/components/features/profile/PublicProfileLegacy/ProfilePinned/hooks/usePinnedProjectsManager"
 import { PinnedProjectCard } from "@/components/features/profile/PublicProfileLegacy/ProfilePinned/PinnedProjectCard"
-import { EmptyState } from "@/components/blocks"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { ExternalProjectForm } from "./ExternalProjectForm"
 import { CourseProjectForm } from "./CourseProjectForm"
+import { usePinnedProjectsOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 
 /** Tabs inside the manage-pinned-projects modal. */
 type ManagePinsTab = "manage" | "external" | "course"

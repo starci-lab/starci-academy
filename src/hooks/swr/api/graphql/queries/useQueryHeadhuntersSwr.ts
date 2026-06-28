@@ -1,22 +1,11 @@
-import {
-    GraphQLHeadersKey,
-    defaultConsultantsListLimit,
-    defaultConsultantsListSorts,
-    queryConsultants,
-} from "@/modules/api"
-import type { ConsultantEntity } from "@/modules/types"
-import {
-    useAppDispatch,
-    useAppSelector,
-} from "@/redux"
-import {
-    setHeadhunter,
-    setHeadhunters,
-    setHeadhuntersCount,
-} from "@/redux/slices"
 import { useLocale } from "next-intl"
 import { usePathname } from "next/navigation"
 import useSWR from "swr"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { defaultConsultantsListLimit, defaultConsultantsListSorts, queryConsultants } from "@/modules/api/graphql/queries/query-consultants"
+import type { ConsultantEntity } from "@/modules/types/entities/consultant"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setHeadhunter, setHeadhunters, setHeadhuntersCount } from "@/redux/slices/headhunter"
 
 /**
  * Loads consultants for all companies and merges into Redux `headhunter.entities`.

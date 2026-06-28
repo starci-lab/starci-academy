@@ -10,15 +10,12 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import {
-    usePaymentOverlayState,
-    useQueryCoursePricePreviewSwr,
-} from "@/hooks"
-import {
-    PaymentFlow,
-} from "@/modules/types"
-import { useAppSelector } from "@/redux"
-import { AsyncContent, PriceTag } from "@/components/blocks"
+import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useQueryCoursePricePreviewSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursePricePreviewSwr"
+import { PaymentFlow } from "@/modules/types/payment"
+import { useAppSelector } from "@/redux/hooks"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { PriceTag } from "@/components/blocks/commerce/PriceTag"
 
 /**
  * Medium-style inline paywall for a premium ("trial read") lesson the viewer has

@@ -3,8 +3,8 @@
 import React from "react"
 import { Typography, cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { SectionCard } from "@/components/reuseable"
-import { ProgressMeter } from "@/components/blocks/stats"
+import { SectionCard } from "@/components/reuseable/SectionCard"
+import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
 
 /**
  * Props for the {@link ContinueCard} block.

@@ -8,9 +8,9 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import { useQueryUserCvSubmissionAttemptsSwr } from "@/hooks"
 import { MAX_VISIBLE_PAGES } from "../constants"
-import type { WithClassNames } from "@/modules/types"
+import { useQueryUserCvSubmissionAttemptsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCvSubmissionAttemptsSwr"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link AttemptsPagination}. Container — only layout className. */
 export type AttemptsPaginationProps = WithClassNames<undefined>

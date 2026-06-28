@@ -6,15 +6,13 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { useTranslations } from "next-intl"
 import axios from "axios"
-import { useAppDispatch, useAppSelector } from "@/redux"
-import { setUser } from "@/redux/slices"
-import {
-    useMutateGenerateAvatarPresignUrlSwr,
-    useMutateUpdateProfileSwr,
-    useMutateVerifyAvatarPresignUrlSwr,
-} from "@/hooks/swr"
-import { useGraphQLWithToast, useRestWithToast } from "@/modules/toast"
-import { WorkMode } from "@/modules/types"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setUser } from "@/redux/slices/user"
+import { useMutateGenerateAvatarPresignUrlSwr } from "@/hooks/swr/api/graphql/mutations/useMutateGenerateAvatarPresignUrlSwr"
+import { useMutateUpdateProfileSwr } from "@/hooks/swr/api/graphql/mutations/useMutateUpdateProfileSwr"
+import { useMutateVerifyAvatarPresignUrlSwr } from "@/hooks/swr/api/graphql/mutations/useMutateVerifyAvatarPresignUrlSwr"
+import { useGraphQLWithToast, useRestWithToast } from "@/modules/toast/hooks"
+import { WorkMode } from "@/modules/types/enums/work-mode"
 
 /** Max length of the display name (mirrors the `display_name` column). */
 const DISPLAY_NAME_MAX = 100

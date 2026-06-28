@@ -8,9 +8,9 @@ import {
     cn,
 } from "@heroui/react"
 import { UserAvatar } from "@/components/reuseable/UserAvatar"
-import { useAppSelector } from "@/redux"
-import { useAccountMenuOverlayState } from "@/hooks"
-import type { WithClassNames } from "@/modules/types"
+import { useAppSelector } from "@/redux/hooks"
+import { useAccountMenuOverlayState } from "@/hooks/zustand/overlay/hooks"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link AccountTrigger}.

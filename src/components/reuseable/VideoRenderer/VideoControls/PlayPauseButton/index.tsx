@@ -3,8 +3,7 @@
 import { Pause as PauseIcon, Play as PlayIcon } from "@gravity-ui/icons"
 import React from "react"
 import { Button, cn } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types"
-
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link PlayPauseButton}. */
 export interface PlayPauseButtonProps extends WithClassNames<undefined> {

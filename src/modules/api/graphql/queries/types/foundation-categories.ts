@@ -1,5 +1,5 @@
-import type { FoundationCategoryEntity } from "@/modules/types"
 import type { GraphQLResponse } from "../../types"
+import type { FoundationCategoryEntity } from "@/modules/types/entities/foundation-category"
 
 /** Pagination + search request for the `foundationCategories` query. */
 export interface QueryFoundationCategoriesRequest {

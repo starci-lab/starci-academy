@@ -6,11 +6,9 @@ import React, {
 import {
     useTranslations,
 } from "next-intl"
-import {
-    AccordionSkeleton,
-    SkeletonText,
-} from "@/components/reuseable"
-import type { WithClassNames } from "@/modules/types"
+import { AccordionSkeleton } from "@/components/reuseable/AccordionSkeleton"
+import { SkeletonText } from "@/components/reuseable/SkeletonText"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link MilestoneOutlineSkeleton}. */
 export interface MilestoneOutlineSkeletonProps extends WithClassNames<undefined> {

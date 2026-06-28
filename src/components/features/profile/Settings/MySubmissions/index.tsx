@@ -22,17 +22,6 @@ import {
     FaGithub,
 } from "react-icons/fa6"
 import {
-    useQueryMyChallengeSubmissionsSwr,
-    MY_CHALLENGE_SUBMISSIONS_LIMIT,
-} from "@/hooks"
-import {
-    AsyncContent,
-    LabeledCard,
-    ListRow,
-    PageHeader,
-    Skeleton,
-} from "@/components/blocks"
-import {
     SettingsBreadcrumb,
 } from "../SettingsBreadcrumb"
 import {
@@ -41,6 +30,12 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useQueryMyChallengeSubmissionsSwr, MY_CHALLENGE_SUBMISSIONS_LIMIT } from "@/hooks/swr/api/graphql/queries/useQueryMyChallengeSubmissionsSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { ListRow } from "@/components/blocks/lists/ListRow"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /** Props for {@link MySubmissions}. */
 export type MySubmissionsProps = WithClassNames<undefined>

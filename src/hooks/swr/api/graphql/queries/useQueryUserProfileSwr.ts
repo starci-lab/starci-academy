@@ -1,5 +1,5 @@
-import { queryUserProfile } from "@/modules/api"
 import useSWR from "swr"
+import { queryUserProfile } from "@/modules/api/graphql/queries/query-user-profile"
 
 /**
  * SWR query wrapper for {@link queryUserProfile}. `data` is the unwrapped public

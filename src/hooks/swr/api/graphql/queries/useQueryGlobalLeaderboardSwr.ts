@@ -1,7 +1,7 @@
-import { queryGlobalLeaderboard } from "@/modules/api"
-import type { QueryGlobalLeaderboardData } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { queryGlobalLeaderboard } from "@/modules/api/graphql/queries/query-global-leaderboard"
+import type { QueryGlobalLeaderboardData } from "@/modules/api/graphql/queries/types/league"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR wrapper for {@link queryGlobalLeaderboard}. `data` is the global points

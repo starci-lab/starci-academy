@@ -1,10 +1,9 @@
-import {
-    GraphQLHeadersKey,
-    queryChallengeSubmissionProgress,
-} from "@/modules/api"
-import { useAppDispatch, useAppSelector } from "@/redux"
 import useSWR from "swr"
-import { ContentTab, setChallengeCompletionTasks } from "@/redux/slices"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { queryChallengeSubmissionProgress } from "@/modules/api/graphql/queries/query-challenge-submission-progress"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { ContentTab } from "@/redux/slices/tabs"
+import { setChallengeCompletionTasks } from "@/redux/slices/challenge"
 
 /**
  * Fetches the signed-in user's challenge submission progress for the active course

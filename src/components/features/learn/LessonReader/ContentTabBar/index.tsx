@@ -7,16 +7,6 @@ import React, {
 import {
     cn,
 } from "@heroui/react"
-import {
-    TabsCard,
-    type TabsCardGroup,
-} from "@/components/blocks"
-import type {
-    ContentTab,
-} from "@/redux/slices"
-import type {
-    WithClassNames,
-} from "@/modules/types"
 import type {
     ContentTabItem,
 } from "../types"
@@ -26,6 +16,9 @@ import {
 import {
     TabTrigger,
 } from "./TabTrigger"
+import { TabsCard, type TabsCardGroup } from "@/components/blocks/navigation/TabsCard"
+import type { ContentTab } from "@/redux/slices/tabs"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link ContentTabBar}. */
 export interface ContentTabBarProps extends WithClassNames<undefined> {

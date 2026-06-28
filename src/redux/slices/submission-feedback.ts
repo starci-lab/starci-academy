@@ -2,7 +2,7 @@ import {
     createSlice,
     type PayloadAction,
 } from "@reduxjs/toolkit"
-import type { SubmissionFeedbackEntity } from "@/modules/types"
+import type { SubmissionFeedbackEntity } from "@/modules/types/entities/submission-feedback"
 
 /**
  * Client state for the submission feedback list scoped to a submission attempt.

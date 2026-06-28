@@ -1,7 +1,7 @@
-import { queryMyLeague } from "@/modules/api"
-import type { QueryMyLeagueData } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { queryMyLeague } from "@/modules/api/graphql/queries/query-my-league"
+import type { QueryMyLeagueData } from "@/modules/api/graphql/queries/types/league"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR wrapper for {@link queryMyLeague}. `data` is the viewer's weekly-league

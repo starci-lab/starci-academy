@@ -1,7 +1,5 @@
-import {
-    mutateSetupTwoFactor,
-} from "@/modules/api"
 import useSWRMutation from "swr/mutation"
+import { mutateSetupTwoFactor } from "@/modules/api/graphql/mutations/mutation-setup-two-factor"
 
 type MutateSetupTwoFactorResult = Awaited<ReturnType<typeof mutateSetupTwoFactor>>
 

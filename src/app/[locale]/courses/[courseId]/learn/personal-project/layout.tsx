@@ -1,8 +1,8 @@
 "use client"
 
 import React from "react"
-import { useQueryMilestonesSwr } from "@/hooks"
 import { PersonalProjectWorkspace } from "@/components/features/learn/PersonalProject/PersonalProjectWorkspace"
+import { useQueryMilestonesSwr } from "@/hooks/swr/api/graphql/queries/useQueryMilestonesSwr"
 
 const Layout = () => {
     // Load the milestones list here (not only inside MilestoneSidebar): the milestone

@@ -13,11 +13,6 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    useQueryUserContributionCalendarSwr,
-    useQueryUserProfileSwr,
-    useQueryUserWeeklyStatsSwr,
-} from "@/hooks"
-import {
     useProfileUsername,
 } from "../useProfileUsername"
 import {
@@ -26,6 +21,9 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useQueryUserContributionCalendarSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserContributionCalendarSwr"
+import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
+import { useQueryUserWeeklyStatsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserWeeklyStatsSwr"
 
 /** Props for {@link ProfileContributions}. */
 export type ProfileContributionsProps = WithClassNames<undefined>

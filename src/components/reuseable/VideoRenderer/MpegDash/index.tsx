@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react"
 import { cn } from "@heroui/react"
 import { VideoControls, type QualityLevel } from "../VideoControls"
 import type { MediaPlayerClass } from "dashjs"
-import type { WithClassNames } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 export interface MpegDashPlayerProps extends WithClassNames<undefined> {
     /** URL pointing to an MPEG-DASH .mpd manifest. */

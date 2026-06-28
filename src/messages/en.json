@@ -417,13 +417,40 @@
         "placeholder": "Ask about this content...",
         "ask": "Ask AI",
         "send": "Send",
+        "pickModel": "Pick model",
+        "clear": "Clear chat",
+        "clearHint": "Delete this lesson's whole conversation.",
+        "clearAction": "Clear",
+        "settings": "Settings",
+        "modelLabel": "Reply model",
         "thinking": "Thinking…",
+        "error": "Sorry, I couldn't answer that. Please try again.",
         "suggestions": {
             "summarize": "Summarize this lesson in 3 key points",
             "hardest": "Explain the hardest part",
             "example": "Give me a real-world example",
             "remember": "What should I remember from this?"
-        }
+        },
+        "askAboutSelection": "Ask AI about this",
+        "selectionHintTitle": "Ask AI about any passage",
+        "selectionHint": "Highlight a passage in the lesson and an ask-AI button appears.",
+        "dismissHint": "Dismiss tip",
+        "new": "New",
+        "clearSelection": "Clear selection",
+        "aboutPassage": "About the passage “{passage}”:",
+        "selectionSuggestions": {
+            "explain": "Explain this passage",
+            "example": "Give an example",
+            "simplify": "Explain it more simply"
+        },
+        "conversations": "Conversations",
+        "chatHistory": "Chat history",
+        "newConversation": "New conversation",
+        "untitled": "Untitled",
+        "searchConversations": "Search conversations…",
+        "noConversations": "No conversations yet",
+        "deleteConversation": "Delete conversation",
+        "turnsCount": "{count} messages"
     },
     "contentActions": {
         "title": "Actions"
@@ -742,6 +769,8 @@
                 "settingsTitle": "Grading settings",
                 "langFieldTitle": "Grading language",
                 "langFieldHint": "Your backend is graded against this language's approach criteria.",
+                "modelFieldTitle": "Grading model",
+                "modelFieldHint": "Pick the AI model that grades your project — Economy tier and up.",
                 "repoFieldTitle": "GitHub URL",
                 "branchFieldTitle": "Branch to review",
                 "branchPlaceholder": "main",
@@ -1079,11 +1108,31 @@
         "backToChallenge": "Back to challenge",
         "title": "Submission result",
         "passNeeded": "need {score} to pass",
+        "gradedBy": "graded by",
+        "history": "Submission history",
+        "resultLabel": "Result",
+        "feedbackLabel": "Feedback",
         "attempts": "Attempts",
         "passed": "Passed",
         "failed": "Not passed",
         "emptyAttempts": "No attempts yet",
         "emptyAttemptsHint": "Submit your work to see the grading result here.",
+        "noFeedback": "No detailed feedback for this attempt.",
+        "error": "Couldn't load the result.",
+        "retry": "Retry"
+    },
+    "personalProjectResult": {
+        "backToTask": "Back to project",
+        "title": "Grading result",
+        "history": "Submission history",
+        "resultLabel": "Result",
+        "feedbackLabel": "Feedback",
+        "attempts": "Attempts",
+        "passed": "Passed",
+        "failed": "Not passed",
+        "viewRepo": "View repo",
+        "emptyAttempts": "No attempts yet",
+        "emptyAttemptsHint": "Evaluate your progress to see the grading result here.",
         "noFeedback": "No detailed feedback for this attempt.",
         "error": "Couldn't load the result.",
         "retry": "Retry"
@@ -1415,6 +1464,14 @@
             "levelLabel": "Question level",
             "historyTitle": "Your interview progress",
             "historyAnswered": "{count} questions practiced",
+            "modeLabel": "Practice mode",
+            "modeQuick": "Quick · 5",
+            "modeDeep": "Deep · 10",
+            "modeWeak": "Weak spots",
+            "modeLadder": "Level ladder",
+            "comingSoon": "Coming soon",
+            "readinessTitle": "Your readiness",
+            "readinessEmpty": "Answer your first question to track readiness.",
             "pickHint": "Pick a deck from the list on the left to start a mock interview.",
             "gateTitle": "Mock interview is for enrolled learners",
             "gateDescription": "Enroll in the course to practice with the AI interviewer — a score and feedback after every answer."
@@ -1442,6 +1499,7 @@
         "subscribeToGrade": "Subscribe to a paid plan to grade with this model",
         "modelUnavailable": "This model is temporarily unavailable (no working key)",
         "categories": {
+            "free": "Free",
             "economy": "Economy",
             "balanced": "Balanced",
             "premium": "Premium"
@@ -2080,6 +2138,7 @@
         }
     },
     "common": {
+        "loading": "Loading…",
         "tagsMore": "+{count}",
         "tagsMenuAria": "All tags",
         "pagination": {
@@ -2730,8 +2789,57 @@
                     "tag": "Stay sharp",
                     "desc": "Compare solutions and climb the ranks."
                 }
+            },
+            "cta": "Jump in"
+        },
+        "treasure": {
+            "eyebrow": "System capability map",
+            "title": "Learn to solve real problems, not to memorize answers.",
+            "intro": "From backend to infrastructure, you train end-to-end problem-solving mindset — the thing that decides whether you survive on large projects.",
+            "beaconLabel": "Tap to reshuffle",
+            "beaconTap": "Auto-reshuffles every 10s — tap to reshuffle now",
+            "graph": {
+                "cap": "Trade consistency vs availability under network partitions — choose per system.",
+                "sharding": "Split data across shards to scale writes/reads beyond one node.",
+                "saga": "Long transactions across services via compensating steps, no 2PC.",
+                "idempotency": "Same result no matter how many times a call retries.",
+                "redlock": "Distributed lock on Redis + fencing token to stop client races.",
+                "kafka": "Append-only log as source of truth: replay, decouple producers/consumers.",
+                "cdc": "Capture DB changes (Debezium) to a stream — no dual writes.",
+                "token-bucket": "Smooth rate limiting with token buckets + atomic Redis Lua.",
+                "websocket": "Two-way realtime gateway, fan-out events to thousands of clients.",
+                "tracing": "Follow one request across services to find bottlenecks (OTel/Jaeger).",
+                "nestjs": "Modular backend framework with clean DI for large APIs.",
+                "typeorm": "TypeScript ORM: entities, relations, migrations — close to SQL.",
+                "webhooks": "Receive third-party events safely: verify signature + idempotent.",
+                "payment": "Integrate payment gateways: idempotency, reconciliation, refunds.",
+                "rag": "Semantic search with pgvector, then grounded LLM answers with sources.",
+                "oauth": "Auth and authorization via OAuth2/JWT with safe refresh tokens.",
+                "jobs": "Background job queues: retry, backoff, scheduling — off the request path.",
+                "rsc": "React Server Components: render on the server, ship less JS.",
+                "k8s": "Container orchestration: self-healing, scaling, declarative rollouts.",
+                "ingress": "Route HTTP into the cluster: host/path, TLS, load balancing.",
+                "argocd": "GitOps: desired state in Git, ArgoCD syncs it to the cluster.",
+                "rollouts": "Canary/blue-green deploys that analyze metrics before full traffic.",
+                "prometheus": "Collect metrics and alert in real time for running systems.",
+                "rbac": "Role-based access in K8s: who can do what, least privilege.",
+                "terraform": "Infrastructure as code, multi-cloud, reproducible plan/apply.",
+                "falco": "Detect abnormal container runtime behavior in real time.",
+                "consistentHashing": "Consistent hashing: add/remove nodes with minimal re-keying — the base for elastic sharding.",
+                "circuitBreaker": "Trip the circuit when a dependency keeps failing — stop cascading failures.",
+                "eventSourcing": "Store the event stream as source of truth; rebuild state by replay.",
+                "readReplica": "Read-only replicas absorb read load — at the cost of replication lag.",
+                "graphql": "Typed API: clients fetch exactly the fields they need from one endpoint.",
+                "redisCache": "Cache-aside on Redis: TTL, invalidation, stampede protection.",
+                "sse": "Server-Sent Events: lightweight one-way server push for streams.",
+                "zodValidation": "Runtime validation + inferred types with Zod at the API edge.",
+                "helm": "Package K8s manifests into reusable charts with per-env values.",
+                "autoscaling": "HPA scales pods by CPU/custom metrics — tracks real load.",
+                "serviceMesh": "A mesh layer handling mTLS, retries, and traffic-splitting between services.",
+                "grafana": "Visual dashboards + alerts on top of Prometheus metrics."
             }
-        }
+        },
+        "backToTop": "Back to top"
     },
     "aiLab": {
         "tabs": {
@@ -2869,8 +2977,13 @@
         "readingMinutes": "{minutes} min read",
         "relatedTitle": "More in {category}",
         "retry": "Try again",
-        "subtitle": "Engineering deep-dives, build-in-public notes, and career guidance.",
-        "title": "Blog",
+        "subtitle": "Deep technical analysis of the very infrastructure that runs StarCi — architecture, trade-offs, and real code.",
+        "title": "The StarCi backend, taken apart",
+        "masthead": {
+            "caption": "The real StarCi backend architecture — drag to orbit."
+        },
+        "startHere": "Start here",
+        "topics": "Topics",
         "viewSource": "View on GitHub",
         "categories": {
             "all": "All",
@@ -2982,5 +3095,81 @@
         "junior": "Junior",
         "middle": "Mid",
         "senior": "Senior"
+    },
+    "footer": {
+        "tagline": "Learn by building real systems with your own hands — sharp enough for any technical interview.",
+        "exploreTitle": "Explore",
+        "supportTitle": "Support",
+        "links": {
+            "courses": "Courses",
+            "blog": "Blog",
+            "talents": "Talents",
+            "community": "Community",
+            "contact": "Contact",
+            "terms": "Terms",
+            "privacy": "Privacy"
+        },
+        "madeBy": "Built by Nguyễn Văn Tự Cường",
+        "copyright": "© {year} StarCi Academy"
+    },
+    "legal": {
+        "contactNote": "Questions about these terms or your data? Email cuongnvtse160875@gmail.com.",
+        "lastUpdated": "Last updated: {date}",
+        "terms": {
+            "title": "Terms of Service",
+            "description": "The terms for using StarCi Academy.",
+            "body": "The full terms document is being finalized. By using StarCi Academy you agree to use the platform for lawful learning and to respect the ownership of course content. A detailed version will be published on this page."
+        },
+        "privacy": {
+            "title": "Privacy Policy",
+            "description": "How StarCi Academy collects and uses your data.",
+            "body": "The full privacy policy is being finalized. StarCi Academy collects only the data needed to run your learning (account, progress, submissions) and does not sell your data to third parties. A detailed version will be published on this page."
+        }
+    },
+    "cookieConsent": {
+        "title": "Cookies",
+        "body": "We use necessary cookies to sign you in and remember your language, plus analytics cookies (Google Analytics) to improve your experience. You can accept, reject, or customize.",
+        "acceptAll": "Accept all",
+        "reject": "Reject",
+        "customize": "Customize",
+        "modalTitle": "Cookie preferences",
+        "modalBody": "Choose which cookies you allow. Necessary cookies are always on so the system works.",
+        "necessaryLabel": "Necessary",
+        "necessaryHint": "Sign-in, security and language. Always on.",
+        "analyticsLabel": "Analytics",
+        "analyticsHint": "Google Analytics — anonymous metrics to improve the product.",
+        "save": "Save choices"
+    },
+    "socketStatus": {
+        "reconnecting": "Connection lost — reconnecting…",
+        "reconnected": "Reconnected"
+    },
+    "status": {
+        "title": "System status",
+        "subtitle": "Live health of the StarCi Academy platform — built in public, no login required.",
+        "refresh": "Refresh",
+        "overall": "{up}/{total} components healthy",
+        "infraHeading": "Infrastructure",
+        "aiKeysHeading": "AI keys",
+        "latency": "{ms}ms",
+        "checked": "Checked {ago}",
+        "noKeys": "No keys configured.",
+        "aiKeyGroupHeader": "{models} · {provider} · {healthy}/{total} keys",
+        "componentStatus": {
+            "up": "Operational",
+            "degraded": "Degraded",
+            "down": "Down"
+        },
+        "error": {
+            "title": "Could not load status",
+            "description": "We couldn’t reach the status endpoint. Please try again.",
+            "retry": "Try again"
+        },
+        "empty": {
+            "infraTitle": "No components reported",
+            "infraDescription": "No infrastructure components are being probed right now.",
+            "aiTitle": "No AI keys reported",
+            "aiDescription": "No AI key groups are configured right now."
+        }
     }
 }

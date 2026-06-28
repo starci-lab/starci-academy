@@ -4,20 +4,16 @@ import React from "react"
 import {
     useTranslations,
 } from "next-intl"
-import type {
-    FoundationCategoryEntity,
-    WithClassNames,
-} from "@/modules/types"
 import {
     FoundationCategoryCard,
 } from "../../FoundationCategoryCard"
 import {
     FoundationCategoryCardSkeleton,
 } from "../../FoundationCategoryCard/FoundationCategoryCardSkeleton"
-import {
-    AsyncContent,
-    SurfaceListCard,
-} from "@/components/blocks"
+import type { FoundationCategoryEntity } from "@/modules/types/entities/foundation-category"
+import type { WithClassNames } from "@/modules/types/base/class-name"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { SurfaceListCard } from "@/components/blocks/cards/SurfaceListCard"
 
 /** Props for {@link FoundationsCategoryGridBody}. */
 export interface FoundationsCategoryGridBodyProps extends WithClassNames<undefined> {

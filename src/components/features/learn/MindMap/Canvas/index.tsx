@@ -16,8 +16,6 @@ import {
 import { FrameCornersIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useTheme } from "next-themes"
-import { useAppSelector } from "@/redux"
-import { useQueryMyCourseOutlineSwr } from "@/hooks"
 import { build } from "../build"
 import type { MindMapThemeMode } from "../build"
 import { computeMindMapProgress, resolveContentHref } from "../progress"
@@ -30,6 +28,8 @@ import { COURSE_ROOT_NODE_TYPE, CourseRootNode } from "../RootNode"
 import { MindMapFullscreenButton } from "../MindMapFullscreenButton"
 import { MindMapContinueButton } from "../MindMapContinueButton"
 import { MindMapLegend } from "../MindMapLegend"
+import { useAppSelector } from "@/redux/hooks"
+import { useQueryMyCourseOutlineSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCourseOutlineSwr"
 
 /**
  * Inner canvas: syncs graph from Redux course + highlights active module; follows app light/dark theme.

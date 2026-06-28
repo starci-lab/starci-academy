@@ -15,31 +15,23 @@ import {
     useRouter,
 } from "next/navigation"
 import {
-    useFollowListOverlayState,
-    useQueryUserProfileSwr,
-    useQueryUserFollowersInfiniteSwr,
-    useQueryUserFollowingInfiniteSwr,
-} from "@/hooks"
-import {
     FOLLOW_LIST_PAGE_LIMIT,
 } from "@/hooks/swr/api/graphql/queries/useQueryUserFollowersInfiniteSwr"
 import type {
     FollowListTab,
 } from "@/hooks/zustand/overlay/store"
-import {
-    AsyncContent,
-    InfiniteScrollSentinel,
-    Skeleton,
-} from "@/components/blocks"
-import {
-    UserAvatar,
-} from "@/components/reuseable"
-import {
-    pathConfig,
-} from "@/resources"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useFollowListOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
+import { useQueryUserFollowersInfiniteSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserFollowersInfiniteSwr"
+import { useQueryUserFollowingInfiniteSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserFollowingInfiniteSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { InfiniteScrollSentinel } from "@/components/blocks/async/InfiniteScrollSentinel"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { UserAvatar } from "@/components/reuseable/UserAvatar"
+import { pathConfig } from "@/resources/path"
 
 /** The two follow-graph directions, in tab order. */
 const TABS: ReadonlyArray<FollowListTab> = ["followers", "following"]

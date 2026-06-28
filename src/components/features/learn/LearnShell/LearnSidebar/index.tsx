@@ -8,11 +8,6 @@ import {
     LockSimpleIcon,
 } from "@phosphor-icons/react"
 import {
-    CollapsibleSidebar,
-    SidebarNavGroup,
-    SidebarNavItem,
-} from "@/components/blocks"
-import {
     useSidebarNavItems,
 } from "../hooks/useSidebarNavItems"
 import type {
@@ -21,6 +16,9 @@ import type {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { CollapsibleSidebar } from "@/components/blocks/navigation/CollapsibleSidebar"
+import { SidebarNavGroup } from "@/components/blocks/navigation/SidebarNavGroup"
+import { SidebarNavItem } from "@/components/blocks/navigation/SidebarNavItem"
 
 /** localStorage key persisting the learn course-nav collapsed flag. */
 const SIDEBAR_STORAGE_KEY = "starci.learn.sidebar.collapsed"

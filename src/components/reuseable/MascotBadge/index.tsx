@@ -8,14 +8,12 @@ import {
     Medal as MedalIcon,
 } from "@gravity-ui/icons"
 import {
-    getRank,
-} from "@/modules/utils"
-import {
     BadgeImage,
 } from "@/components/reuseable/BadgeImage"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { getRank } from "@/modules/utils/rank"
 
 /** Props for {@link MascotBadge}. */
 export interface MascotBadgeProps extends WithClassNames<undefined> {

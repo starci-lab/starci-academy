@@ -1,7 +1,8 @@
-import { GraphQLHeadersKey, queryChallenge } from "@/modules/api"
-import { useAppDispatch, useAppSelector } from "@/redux"
 import useSWR from "swr"
-import { setChallenge } from "@/redux/slices"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { queryChallenge } from "@/modules/api/graphql/queries/query-challenge"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setChallenge } from "@/redux/slices/challenge"
 
 /**
  * Singleton SWR for `challenge(request: { id })` — id from `challenge.id` (`setChallengeId`).

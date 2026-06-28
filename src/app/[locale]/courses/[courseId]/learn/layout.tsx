@@ -5,16 +5,18 @@ import { useSelectedLayoutSegments } from "next/navigation"
 import { Spinner } from "@heroui/react"
 import { LearnShell } from "@/components/features/learn/LearnShell"
 import { ContentMap } from "@/components/features/learn/ContentMap"
-import { ResizableRail } from "@/components/blocks"
 import { MilestoneOutline } from "@/components/features/learn/MilestoneOutline"
 import { LeaderboardCategoryRail } from "@/components/features/learn/Leaderboard/LeaderboardCategoryRail"
 import { FlashcardStudyRail } from "@/components/features/learn/Flashcards/FlashcardStudyRail"
 import { OnThisPage } from "@/components/features/learn/OnThisPage"
 import { ContentAiFab } from "@/components/features/learn/ContentAiFab"
+import { ContentAiSelectionAsk } from "@/components/features/learn/ContentAiSelectionAsk"
 import { EnrollGate } from "@/components/features/learn/shared/EnrollGate"
 import { GithubLinkGate } from "@/components/layouts/auth/GithubLinkGate"
-import { useQueryCourseSwr, useQueryCourseEnrollmentStatusSwr } from "@/hooks"
-import { useAppSelector } from "@/redux"
+import { ResizableRail } from "@/components/blocks/layout/ResizableRail"
+import { useQueryCourseSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseSwr"
+import { useQueryCourseEnrollmentStatusSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseEnrollmentStatusSwr"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * Learn surfaces that require enrollment. Only the capstone (personal-project) is gated:
@@ -165,6 +167,8 @@ export const Layout = ({ children }: PropsWithChildren) => {
             <GithubLinkGate />
             {/* floating "ask StarCi AI" mascot button (self-hides when no content is open) */}
             <ContentAiFab />
+            {/* "ask AI about this passage" button on lesson-article text selection */}
+            <ContentAiSelectionAsk />
             <LearnShell
                 leftRail={showSurface ? leftRail : undefined}
                 rightRail={showSurface ? rightRail : undefined}

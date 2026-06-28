@@ -17,30 +17,20 @@ import {
     useRouter,
 } from "next/navigation"
 import {
-    useQueryMyAiQuotaSwr,
-} from "@/hooks"
-import {
-    pathConfig,
-} from "@/resources"
-import {
-    AiSubTier,
-} from "@/modules/api"
-import {
-    LabeledCard,
-    PageHeader,
-} from "@/components/blocks"
-import {
     SettingsBreadcrumb,
 } from "../Settings/SettingsBreadcrumb"
 import {
     QuotaLane,
 } from "@/components/modals/AiQuotaModal/QuotaLane"
 import {
-    QuotaLaneVariant,
-} from "@/components/modals/AiQuotaModal/types"
-import {
     AiUsageHistory,
 } from "./AiUsageHistory"
+import { useQueryMyAiQuotaSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiQuotaSwr"
+import { pathConfig } from "@/resources/path"
+import { AiSubTier } from "@/modules/api/graphql/queries/query-my-ai-settings"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { QuotaLaneVariant } from "@/components/modals/AiQuotaModal/types/quota-lane-variant"
 
 /**
  * Full AI quota / usage page — Auto + Premium lanes and usage history.

@@ -10,8 +10,8 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import { useMutateSignOutSwr } from "@/hooks"
-import type { WithClassNames } from "@/modules/types"
+import { useMutateSignOutSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSignOutSwr"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link LogoutMenu}.

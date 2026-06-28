@@ -1,8 +1,6 @@
-import {
-    mutateRevokeSession,
-    type RevokeSessionRequest,
-} from "@/modules/api"
 import useSWRMutation from "swr/mutation"
+import { mutateRevokeSession } from "@/modules/api/graphql/mutations/mutation-revoke-session"
+import { type RevokeSessionRequest } from "@/modules/api/graphql/mutations/types/revoke-session"
 
 type MutateRevokeSessionResult = Awaited<ReturnType<typeof mutateRevokeSession>>
 

@@ -17,15 +17,6 @@ import {
     LinkIcon,
     PuzzlePieceIcon,
 } from "@phosphor-icons/react"
-import {
-    DifficultyChip,
-    IconTile,
-    LanguageChip,
-    SegmentBar,
-} from "@/components/blocks"
-import type {
-    QueryUserSolvedChallengeItemData,
-} from "@/modules/api"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -34,6 +25,11 @@ import {
     difficultyLevel,
 } from "../difficultyMeta"
 import { dayjs } from "@/modules/dayjs"
+import { DifficultyChip } from "@/components/blocks/chips/DifficultyChip"
+import { IconTile } from "@/components/blocks/identity/IconTile"
+import { LanguageChip } from "@/components/blocks/chips/LanguageChip"
+import { SegmentBar } from "@/components/blocks/stats/SegmentBar"
+import type { QueryUserSolvedChallengeItemData } from "@/modules/api/graphql/queries/types/user-solved-challenges"
 
 /** Submission rows shown before the "see more" link kicks in. */
 const INITIAL_ROWS = 3

@@ -1,11 +1,12 @@
-import { useEffect, useRef, useState } from "react"
-import { useAppDispatch, useAppSelector } from "@/redux"
-import { appendAiLabRunChunk } from "@/redux/slices"
+import { useEffect } from "react"
 import type { AiLabRunChunkSocketIoMessage } from "./types"
 import { SubscriptionEvent } from "./enums"
 import { aiLabSocket } from "./sockets"
-import { LocalStorage, LocalStorageId } from "@/modules/storage"
-import { sleep } from "@/modules/utils"
+import { useSocketConnectionStore } from "./connectionStore"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { appendAiLabRunChunk } from "@/redux/slices/socketio"
+import { LocalStorage } from "@/modules/storage/local/storage"
+import { LocalStorageId } from "@/modules/storage/local/enums/id"
 
 /**
  * Lifecycle hook for the `/ai_lab` namespace — runs ONCE in {@link SocketIoSideEffects}.
@@ -17,17 +18,13 @@ import { sleep } from "@/modules/utils"
 export const useAiLabSocketIoLifecycle = () => {
     const authenticated = useAppSelector((state) => state.keycloak.authenticated)
     const dispatch = useAppDispatch()
-    const [numReconnect, setNumReconnect] = useState(0)
-
-    /** Whether still mounted — blocks setState after unmount (the `disconnect` handler runs after `await sleep`). */
-    const mountedRef = useRef(true)
-    useEffect(() => () => { mountedRef.current = false }, [])
 
     /** Wire connect / disconnect / chunk listeners and merge chunks into Redux. */
     useEffect(() => {
         const socket = aiLabSocket
         const onConnect = () => {
             console.log("[AI Lab Socket] Connected.")
+            useSocketConnectionStore.getState().setStatus("ai_lab", "connected")
         }
         const onChunk = (message: AiLabRunChunkSocketIoMessage) => {
             const data = message.data
@@ -36,16 +33,13 @@ export const useAiLabSocketIoLifecycle = () => {
             }
             dispatch(appendAiLabRunChunk({ message: data }))
         }
-        const onDisconnect = async (reason: string) => {
+        const onDisconnect = (reason: string) => {
             console.log(`[AI Lab Socket] Disconnected — reason: ${reason}`)
-            await sleep(3000)
-            if (!mountedRef.current) {
-                return
-            }
-            setNumReconnect((prev) => prev + 1)
+            useSocketConnectionStore.getState().setStatus("ai_lab", "disconnected")
         }
         const onConnectError = (err: Error) => {
             console.error("[AI Lab Socket] Connection error:", err.message)
+            useSocketConnectionStore.getState().setStatus("ai_lab", "disconnected")
         }
         socket.on("connect", onConnect)
         socket.on(SubscriptionEvent.AiLabRunChunk, onChunk)
@@ -67,14 +61,11 @@ export const useAiLabSocketIoLifecycle = () => {
         if (aiLabSocket.connected) {
             aiLabSocket.disconnect()
         }
-        aiLabSocket.auth = {
+        aiLabSocket.auth = (cb) => cb({
             token: LocalStorage.getItemAsString(
                 LocalStorageId.KeycloakAccessToken,
             ),
-        }
+        })
         aiLabSocket.connect()
-    }, [
-        authenticated,
-        numReconnect,
-    ])
+    }, [authenticated])
 }

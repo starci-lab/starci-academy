@@ -16,20 +16,17 @@ import {
     Spinner,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { useAppDispatch } from "@/redux"
-import {
-    AuthenticationModalTab,
-    resetSignUpState,
-    setAuthenticationModalTab,
-} from "@/redux/slices"
-import { useSignUpForm } from "@/hooks"
-import type { WithClassNames } from "@/modules/types"
 import { EmailField } from "./EmailField"
 import { PasswordField } from "./PasswordField"
 import { AgreeToTermsRow } from "./AgreeToTermsRow"
 import { SignInPrompt } from "./SignInPrompt"
-import { Turnstile } from "@/components/reuseable"
-import { publicEnv } from "@/resources"
+import { useAppDispatch } from "@/redux/hooks"
+import { AuthenticationModalTab, setAuthenticationModalTab } from "@/redux/slices/tabs"
+import { resetSignUpState } from "@/redux/slices/state"
+import { useSignUpForm } from "@/hooks/zustand/signUp/useSignUpForm"
+import type { WithClassNames } from "@/modules/types/base/class-name"
+import { Turnstile } from "@/components/reuseable/Turnstile"
+import { publicEnv } from "@/resources/env/public"
 
 /** Props for {@link RegistrationState}; no own props (singleton-driven). */
 export type RegistrationStateProps = WithClassNames<undefined>

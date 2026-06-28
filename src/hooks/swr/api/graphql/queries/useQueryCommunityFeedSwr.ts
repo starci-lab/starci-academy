@@ -1,6 +1,6 @@
 import useSWRInfinite from "swr/infinite"
-import { queryCommunityFeed } from "@/modules/api"
-import type { CommunityChannel, QueryCommunityFeedResponseData } from "@/modules/api"
+import { queryCommunityFeed } from "@/modules/api/graphql/queries/query-community-feed"
+import type { CommunityChannel, QueryCommunityFeedResponseData } from "@/modules/api/graphql/queries/types/community-feed"
 
 /** Items per feed page. */
 const PAGE_LIMIT = 10

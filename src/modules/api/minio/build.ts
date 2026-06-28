@@ -1,4 +1,4 @@
-import { publicEnv } from "@/resources"
+import { publicEnv } from "@/resources/env/public"
 
 /**
  * Builds the URL for a Minio object.

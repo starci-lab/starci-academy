@@ -9,12 +9,10 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    useAdModalOverlayState,
-} from "@/hooks"
-import {
     AdBanner,
 } from "@/components/features/dashboard/AdBanner"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { useAdModalOverlayState } from "@/hooks/zustand/overlay/hooks"
 
 /**
  * Interstitial ad modal — shown immediately when a non-enrolled, non-member

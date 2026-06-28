@@ -1,8 +1,8 @@
-import { useAppDispatch } from "@/redux"
-import { setSidebar, SidebarTab } from "@/redux/slices"
 import { useLocale } from "next-intl"
 import { usePathname } from "next/navigation"
 import { useEffect, useRef } from "react"
+import { useAppDispatch } from "@/redux/hooks"
+import { setSidebar, SidebarTab } from "@/redux/slices/sidebar"
 
 /**
  * useSidebar is a hook that is used to navigate to the correct path based on the sidebar state.

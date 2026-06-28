@@ -1,6 +1,6 @@
-import { useAppSelector } from "@/redux"
 import { useReactFlow } from "@xyflow/react"
 import { useEffect } from "react"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Default zoom when landing on the "you are here" module — readable, not the tiny fit-all. */
 const CURRENT_MODULE_ZOOM = 1.2

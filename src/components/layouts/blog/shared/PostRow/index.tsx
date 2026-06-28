@@ -4,7 +4,7 @@ import React from "react"
 import { Chip } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { Link } from "@/i18n/navigation"
-import { type QueryBlogPostListItem } from "@/modules/api/graphql"
+import { type QueryBlogPostListItem } from "@/modules/api/graphql/queries/types/blog"
 
 /** Props for {@link PostRow}. */
 export interface PostRowProps {
@@ -24,7 +24,7 @@ export const PostRow = ({ post, formattedDate }: PostRowProps) => {
     return (
         <Link
             href={`/blog/${post.slug}`}
-            className="group flex cursor-pointer flex-col gap-1.5 border-b border-default py-4 last:border-b-0"
+            className="group flex cursor-pointer flex-col gap-2 border-b border-default py-4 last:border-b-0"
         >
             <h3 className="text-lg font-semibold text-foreground group-hover:underline">
                 {post.title}

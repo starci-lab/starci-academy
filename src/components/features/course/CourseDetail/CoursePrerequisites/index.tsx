@@ -13,22 +13,15 @@ import _ from "lodash"
 import {
     ListBulletsIcon,
 } from "@phosphor-icons/react"
-import {
-    AsyncContent,
-    CheckListCard,
-    CheckListItem,
-    LabeledCard,
-    Skeleton,
-} from "@/components/blocks"
-import {
-    useQueryCourseSwr,
-} from "@/hooks"
-import {
-    useAppSelector,
-} from "@/redux"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { CheckListCard, CheckListItem } from "@/components/blocks/cards/CheckListCard"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { useQueryCourseSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseSwr"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Props for {@link CoursePrerequisites}. */
 export type CoursePrerequisitesProps = WithClassNames<undefined>

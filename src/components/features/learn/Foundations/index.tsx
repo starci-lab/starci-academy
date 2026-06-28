@@ -16,22 +16,6 @@ import {
 import {
     Typography,
 } from "@heroui/react"
-import {
-    pathConfig,
-} from "@/resources"
-import {
-    useAppDispatch,
-    useAppSelector,
-} from "@/redux"
-import {
-    setFoundationLimit,
-    setFoundationPageNumber,
-    setFoundationSearch,
-} from "@/redux/slices"
-import {
-    useQueryFoundationCategoriesSwr,
-    useQueryFoundationsSwr,
-} from "@/hooks"
 import type {
     FoundationsBreadcrumbItem,
 } from "./types"
@@ -44,11 +28,14 @@ import {
 import {
     FoundationsList,
 } from "./FoundationsList"
-import {
-    Pagination,
-    SearchInput,
-    SkeletonText,
-} from "@/components/reuseable"
+import { pathConfig } from "@/resources/path"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setFoundationLimit, setFoundationPageNumber, setFoundationSearch } from "@/redux/slices/foundation"
+import { useQueryFoundationCategoriesSwr } from "@/hooks/swr/api/graphql/queries/useQueryFoundationCategoriesSwr"
+import { useQueryFoundationsSwr } from "@/hooks/swr/api/graphql/queries/useQueryFoundationsSwr"
+import { Pagination } from "@/components/reuseable/Pagination"
+import { SearchInput } from "@/components/reuseable/SearchInput"
+import { SkeletonText } from "@/components/reuseable/SkeletonText"
 
 export { FoundationsCategoryGridLayout } from "./FoundationsCategoryGrid"
 export { FoundationResourceLayout } from "./FoundationResourceLayout"

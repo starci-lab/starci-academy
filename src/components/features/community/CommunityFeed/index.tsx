@@ -5,23 +5,20 @@ import { Button } from "@heroui/react"
 import type { Key } from "react"
 import { ChatCircleIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import {
-    AsyncContent,
-    PageContainer,
-    PageHeader,
-    TabsCard,
-} from "@/components/blocks"
-import {
-    useMutateReactCommunityPostSwr,
-    useQueryCommunityFeedSwr,
-} from "@/hooks"
-import { CommunityChannel, ReactionType } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import { useRouter } from "@/i18n/navigation"
 import { pathConfig } from "@/resources/path"
 import { CommunityComposer } from "./CommunityComposer"
 import { CommunityFeedSkeleton } from "./CommunityFeedSkeleton"
 import { CommunityPost } from "../CommunityPost"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { PageContainer } from "@/components/blocks/layout/PageContainer"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { TabsCard } from "@/components/blocks/navigation/TabsCard"
+import { useMutateReactCommunityPostSwr } from "@/hooks/swr/api/graphql/mutations/useMutateReactCommunityPostSwr"
+import { useQueryCommunityFeedSwr } from "@/hooks/swr/api/graphql/queries/useQueryCommunityFeedSwr"
+import { CommunityChannel } from "@/modules/api/graphql/queries/types/community-feed"
+import { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Sentinel tab key for the unfiltered "all channels" feed. */
 const ALL_KEY = "all"

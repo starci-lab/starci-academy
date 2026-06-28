@@ -1,5 +1,5 @@
-import type { LivestreamSessionEntity } from "@/modules/types"
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
+import type { LivestreamSessionEntity } from "@/modules/types/entities/livestream-session"
 
 /**
  * Livestream session list for the current course (Learn tab calendar).

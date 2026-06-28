@@ -1,7 +1,4 @@
-import type {
-    AiMode,
-    ModelProvider,
-} from "@/modules/api"
+import type { AiMode, ModelProvider } from "@/modules/api/graphql/queries/query-my-ai-settings"
 
 /**
  * A grading/run lane + concrete model the user picked in the AI Lab.

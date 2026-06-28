@@ -22,26 +22,16 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    useAppSelector,
-} from "@/redux"
-import {
-    useQueryUserSwr,
-    useMutateSetupTwoFactorSwr,
-    useMutateConfirmTwoFactorSwr,
-    useMutateDisableTwoFactorSwr,
-} from "@/hooks"
-import type {
-    SetupTwoFactorData,
-} from "@/modules/api"
-import {
-    QRCode,
-} from "@/components/reuseable"
-import {
-    PageHeader,
-} from "@/components/blocks"
-import {
     SettingsBreadcrumb,
 } from "../Settings/SettingsBreadcrumb"
+import { useAppSelector } from "@/redux/hooks"
+import { useQueryUserSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserSwr"
+import { useMutateSetupTwoFactorSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSetupTwoFactorSwr"
+import { useMutateConfirmTwoFactorSwr } from "@/hooks/swr/api/graphql/mutations/useMutateConfirmTwoFactorSwr"
+import { useMutateDisableTwoFactorSwr } from "@/hooks/swr/api/graphql/mutations/useMutateDisableTwoFactorSwr"
+import type { SetupTwoFactorData } from "@/modules/api/graphql/mutations/types/two-factor"
+import { QRCode } from "@/components/reuseable/QRCode"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
 
 /** Inline status shown after a 2FA action. */
 interface SecurityStatus {

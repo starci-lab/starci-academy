@@ -1,10 +1,7 @@
-import {
-    defaultUserPersonalTaskAttemptFeedbacksListSorts,
-    GraphQLHeadersKey,
-    queryUserPersonalTaskAttemptFeedbacks,
-} from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { defaultUserPersonalTaskAttemptFeedbacksListSorts, queryUserPersonalTaskAttemptFeedbacks } from "@/modules/api/graphql/queries/query-user-personal-task-attempt-feedbacks"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR hook for querying paginated feedbacks for a specific

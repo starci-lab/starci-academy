@@ -1,20 +1,19 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect } from "react"
 import EventEmitter2 from "eventemitter2"
-import { useAppDispatch, useAppSelector } from "@/redux"
 import { useLocale } from "next-intl"
-import {
-    applyIncompleteJobStatus,
-    setAiProcessingModalData,
-    setJobStatusMessageForJob,
-} from "@/redux/slices"
-import type { JobStatusUpdatedSocketIoMessage } from "@/modules/types"
 import {
     SubscribeJobNotificationSocketIoPayload,
 } from "./types"
 import { PublicationEvent, SubscriptionEvent } from "./enums"
 import { jobNotificationsSocket } from "./sockets"
-import { LocalStorage, LocalStorageId } from "@/modules/storage"
-import { sleep } from "@/modules/utils"
+import { useSocketConnectionStore } from "./connectionStore"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { applyIncompleteJobStatus } from "@/redux/slices/job"
+import { setAiProcessingModalData } from "@/redux/slices/modal"
+import { setJobStatusMessageForJob } from "@/redux/slices/socketio"
+import type { JobStatusUpdatedSocketIoMessage } from "@/modules/types/socketio"
+import { LocalStorage } from "@/modules/storage/local/storage"
+import { LocalStorageId } from "@/modules/storage/local/enums/id"
 
 /** Fan-out for listeners that are not couched in Redux. */
 export const jobNotificationsSocketIoEventEmitter = new EventEmitter2()
@@ -30,17 +29,13 @@ export const useJobNotificationsSocketIoLifecycle = () => {
     const dispatch = useAppDispatch()
     const incompleteJobs = useAppSelector((state) => state.job.incompleteJobs)
     const locale = useLocale()
-    const [numReconnect, setNumReconnect] = useState(0)
-
-    /** Whether still mounted — blocks setState after unmount (the `disconnect` handler runs after `await sleep`). */
-    const mountedRef = useRef(true)
-    useEffect(() => () => { mountedRef.current = false }, [])
 
     /** Wire connect / disconnect / message listeners. */
     useEffect(() => {
         const socket = jobNotificationsSocket
         const onConnect = () => {
             console.log("[Job notifications Socket] Connected.")
+            useSocketConnectionStore.getState().setStatus("job_notifications", "connected")
         }
         const onMessage = (message: JobStatusUpdatedSocketIoMessage) => {
             jobNotificationsSocketIoEventEmitter.emit(
@@ -48,16 +43,13 @@ export const useJobNotificationsSocketIoLifecycle = () => {
                 message,
             )
         }
-        const onDisconnect = async (reason: string) => {
+        const onDisconnect = (reason: string) => {
             console.log(`[Job notifications Socket] Disconnected — reason: ${reason}`)
-            await sleep(3000)
-            if (!mountedRef.current) {
-                return
-            }
-            setNumReconnect((prev) => prev + 1)
+            useSocketConnectionStore.getState().setStatus("job_notifications", "disconnected")
         }
         const onConnectError = (err: Error) => {
             console.error("[Job notifications Socket] Connection error:", err.message)
+            useSocketConnectionStore.getState().setStatus("job_notifications", "disconnected")
         }
         socket.on("connect", onConnect)
         socket.on(SubscriptionEvent.JobStatusUpdated, onMessage)
@@ -79,16 +71,13 @@ export const useJobNotificationsSocketIoLifecycle = () => {
         if (jobNotificationsSocket.connected) {
             jobNotificationsSocket.disconnect()
         }
-        jobNotificationsSocket.auth = {
+        jobNotificationsSocket.auth = (cb) => cb({
             token: LocalStorage.getItemAsString(
                 LocalStorageId.KeycloakAccessToken,
             ),
-        }
+        })
         jobNotificationsSocket.connect()
-    }, [
-        authenticated,
-        numReconnect,
-    ])
+    }, [authenticated])
 
     /** Emit `SubscribeJobNotification` for each row in `incompleteJobs` (from GraphQL + Redux). */
     useEffect(() => {

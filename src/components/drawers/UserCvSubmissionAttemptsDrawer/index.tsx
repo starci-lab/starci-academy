@@ -12,21 +12,8 @@ import {
     Drawer,
     Link,
 } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types"
-import {
-    useCvSubmissionAttemptsDrawerOverlayState,
-    useQueryUserCvSubmissionAttemptsSwr,
-} from "@/hooks"
 import { useSmViewpoint } from "@/hooks/reuseables/useSmViewpoint"
-import {
-    useAppDispatch,
-    useAppSelector,
-} from "@/redux"
-import {
-    clearSelectedCvSubmissionAttemptAnalysis,
-} from "@/redux/slices"
 import { dayjs } from "@/modules/dayjs"
-import { getFileNameFromUrl } from "@/utils"
 import {
     useLocale,
     useTranslations,
@@ -53,6 +40,12 @@ import {
 import {
     CvAttemptAnalysisView,
 } from "./CvAttemptAnalysisView"
+import type { WithClassNames } from "@/modules/types/base/class-name"
+import { useCvSubmissionAttemptsDrawerOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useQueryUserCvSubmissionAttemptsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCvSubmissionAttemptsSwr"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { clearSelectedCvSubmissionAttemptAnalysis } from "@/redux/slices/cv-submission-attempt-analysis"
+import { getFileNameFromUrl } from "@/utils/filename"
 
 /** Props for {@link UserCvSubmissionAttemptsDrawer}. Container — only layout className. */
 export type UserCvSubmissionAttemptsDrawerProps = WithClassNames<undefined>

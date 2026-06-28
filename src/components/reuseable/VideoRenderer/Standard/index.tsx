@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react"
 import { cn } from "@heroui/react"
 import { VideoControls } from "../VideoControls"
-import type { WithClassNames } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 export interface StandardPlayerProps extends WithClassNames<undefined> {
     /** Direct video URL (mp4, webm, ogg). */

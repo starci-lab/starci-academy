@@ -3,11 +3,13 @@
 import { ArrowSquareOutIcon } from "@phosphor-icons/react"
 import { Button, Card, CardContent, cn } from "@heroui/react"
 import React from "react"
-import { MarkdownContent } from "@/components/reuseable"
 import { VideoRenderer } from "@/components/reuseable/VideoRenderer"
-import { FoundationKind, VideoHostPlatform } from "@/modules/types"
-import type { FoundationEntity, WithClassNames } from "@/modules/types"
 import { resolveFoundationMountFileUrl } from "../utils"
+import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { FoundationKind } from "@/modules/types/enums/foundation-kind"
+import { VideoHostPlatform } from "@/modules/types/enums/video-host-platform"
+import type { FoundationEntity } from "@/modules/types/entities/foundation"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link FoundationResourceBody}. */
 export interface FoundationResourceBodyProps extends WithClassNames<undefined> {

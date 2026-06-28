@@ -4,7 +4,7 @@ import { Switch, cn } from "@heroui/react"
 
 import { useTheme } from "next-themes"
 import React from "react"
-import type { WithClassNames } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link DarkLightModeSwitch}.

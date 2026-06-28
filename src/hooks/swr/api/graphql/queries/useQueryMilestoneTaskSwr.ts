@@ -1,11 +1,10 @@
 
 import useSWR from "swr"
-import {
-    GraphQLHeadersKey,
-    queryMilestoneTask,
-} from "@/modules/api"
-import { useAppDispatch, useAppSelector } from "@/redux"
-import { setSelectedTaskDetail } from "@/redux/slices"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { queryMilestoneTask } from "@/modules/api/graphql/queries/query-milestone-task"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setSelectedTaskDetail } from "@/redux/slices/milestone"
+
 /**
  * Fetches one milestone task by `selectedTaskId` and hydrates `milestone.selectedTaskDetail` in Redux.
  * UI reads task fields from Redux; use `useQueryMilestoneTaskSwr` for loading/error only.

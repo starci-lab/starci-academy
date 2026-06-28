@@ -9,27 +9,21 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    useQueryUserCoursesSwr,
-    useQueryUserProfileSwr,
-} from "@/hooks"
-import {
     useProfileUsername,
 } from "../useProfileUsername"
 import {
     EntityToken,
 } from "@/components/features/dashboard/EntityToken"
-import {
-    SectionCard,
-} from "@/components/reuseable"
-import {
-    EmptyState,
-    ErrorState,
-    ProgressMeter,
-    StatusChip,
-} from "@/components/blocks"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useQueryUserCoursesSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCoursesSwr"
+import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
+import { SectionCard } from "@/components/reuseable/SectionCard"
+import { EmptyState } from "@/components/blocks/feedback/EmptyState"
+import { ErrorState } from "@/components/blocks/feedback/ErrorState"
+import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
+import { StatusChip } from "@/components/blocks/chips/StatusChip"
 
 /** Props for {@link ProfileCourses}. */
 export type ProfileCoursesProps = WithClassNames<undefined>

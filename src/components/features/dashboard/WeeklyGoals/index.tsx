@@ -16,19 +16,8 @@ import {
     useRouter,
 } from "next/navigation"
 import {
-    useQueryMyKpisSwr,
-} from "@/hooks"
-import {
-    AsyncContent,
-    Skeleton,
-} from "@/components/blocks"
-import {
     pathConfig,
 } from "@/resources/path"
-import type {
-    KpiKey,
-    QueryKpiItemData,
-} from "@/modules/api"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -37,6 +26,10 @@ import {
     KPI_ICON_MAP,
     KPI_ORDER,
 } from "./map"
+import { useQueryMyKpisSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyKpisSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import type { KpiKey, QueryKpiItemData } from "@/modules/api/graphql/queries/types/my-kpis"
 
 /** Props for {@link WeeklyGoals}. */
 export type WeeklyGoalsProps = WithClassNames<undefined>

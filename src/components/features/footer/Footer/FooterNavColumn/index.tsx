@@ -4,66 +4,84 @@ import React from "react"
 import {
     Link,
     Typography,
+    cn,
 } from "@heroui/react"
 import {
     useRouter,
 } from "@/i18n/navigation"
+import type {
+    WithClassNames,
+} from "@/modules/types/base/class-name"
 
-/** A single footer link — internal (`path`, locale-routed) or external (`href`). */
+/** A single footer link: an internal `path` (locale-aware push) OR an external
+ *  `href` (mailto / off-site) — exactly one is set. */
 export interface FooterNavLink {
     /** Stable React key. */
     key: string
     /** Visible label. */
     label: string
-    /** Locale-aware in-app path (mutually exclusive with `href`). */
+    /** Internal route, locale-aware — pushed through the i18n router. */
     path?: string
-    /** External / protocol href like `mailto:` (mutually exclusive with `path`). */
+    /** External / mailto href — rendered as a plain anchor. */
     href?: string
 }
 
 /** Props for {@link FooterNavColumn}. */
-export interface FooterNavColumnProps {
-    /** Quiet column heading (e.g. "Khám phá"). */
+export interface FooterNavColumnProps extends WithClassNames<undefined> {
+    /** Quiet column heading (e.g. "Khám phá", "Hỗ trợ"). */
     title: string
-    /** Links rendered as a muted vertical list. */
+    /** Links stacked under the heading. */
     links: ReadonlyArray<FooterNavLink>
 }
 
 /**
- * One labeled column of footer links. Internal links self-navigate via the
- * locale-aware router; external links use a plain anchor. Links read at the
- * foreground tone (clear on the dark footer) and lift to accent on hover.
+ * FooterNavColumn — one quiet column of the global {@link Footer}: a small muted
+ * heading over a vertical stack of links. Internal links (`path`) route through
+ * the locale-aware router (so the top loader picks them up); external / mailto
+ * links (`href`) render as plain anchors.
  *
- * @param props - {@link FooterNavColumnProps}
+ * `"use client"` for the router press handler. Presentational otherwise — owns its
+ * spacing / typography; the caller supplies labels + targets.
+ *
+ * @param props - column `title`, `links`, and optional className (placement).
  */
-export const FooterNavColumn = ({ title, links }: FooterNavColumnProps) => {
+export const FooterNavColumn = ({
+    title,
+    links,
+    className,
+}: FooterNavColumnProps) => {
     const router = useRouter()
+
     return (
-        <div className="flex flex-col gap-3">
-            <Typography type="body-xs" color="muted">
+        <div className={cn("flex flex-col gap-3", className)}>
+            <Typography type="body-sm" weight="semibold">
                 {title}
             </Typography>
-            <div className="flex flex-col gap-2">
-                {links.map((link) =>
-                    link.href ? (
-                        <Link
-                            key={link.key}
-                            href={link.href}
-                            className="text-sm text-foreground transition-colors hover:text-accent"
-                        >
-                            {link.label}
-                        </Link>
-                    ) : (
-                        <Link
-                            key={link.key}
-                            onPress={() => router.push(link.path ?? "")}
-                            className="cursor-pointer text-sm text-foreground transition-colors hover:text-accent"
-                        >
-                            {link.label}
-                        </Link>
-                    ),
-                )}
-            </div>
+            <ul className="flex flex-col gap-2">
+                {links.map((link) => (
+                    <li key={link.key}>
+                        {link.href ? (
+                            <Link
+                                href={link.href}
+                                className="text-sm text-muted transition-colors hover:text-foreground"
+                            >
+                                {link.label}
+                            </Link>
+                        ) : (
+                            <Link
+                                onPress={() => {
+                                    if (link.path) {
+                                        router.push(link.path)
+                                    }
+                                }}
+                                className="cursor-pointer text-sm text-muted transition-colors hover:text-foreground"
+                            >
+                                {link.label}
+                            </Link>
+                        )}
+                    </li>
+                ))}
+            </ul>
         </div>
     )
 }

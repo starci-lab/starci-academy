@@ -1,5 +1,5 @@
-import type { ContentEntity } from "@/modules/types"
 import type { GraphQLResponse } from "../../types"
+import type { ContentEntity } from "@/modules/types/entities/content"
 
 /** Apollo response shape for the `content` query. */
 export interface QueryContentResponse {

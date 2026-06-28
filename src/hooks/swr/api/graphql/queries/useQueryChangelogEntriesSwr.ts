@@ -1,5 +1,5 @@
-import { queryChangelogEntries } from "@/modules/api"
 import useSWR from "swr"
+import { queryChangelogEntries } from "@/modules/api/graphql/queries/query-changelog-entries"
 
 /**
  * SWR query wrapper for {@link queryChangelogEntries}. `data` is the recent

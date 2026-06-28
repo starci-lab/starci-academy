@@ -16,11 +16,9 @@ import {
     useTranslations,
 } from "next-intl"
 import type {
-    QueryMyContributionDayData,
-} from "@/modules/api"
-import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import type { QueryMyContributionDayData } from "@/modules/api/graphql/queries/types/my-dashboard"
 
 /** Props for {@link ContributionCalendarView}. */
 export interface ContributionCalendarViewProps extends WithClassNames<undefined> {

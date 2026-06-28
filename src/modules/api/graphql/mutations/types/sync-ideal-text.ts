@@ -1,5 +1,5 @@
-﻿import type { EnrollmentEntity } from "@/modules/types"
-import type { GraphQLResponse } from "../../types"
+﻿import type { GraphQLResponse } from "../../types"
+import type { EnrollmentEntity } from "@/modules/types/entities/enrollment"
 
 /** Request for `syncIdealText`. */
 export interface SyncIdealTextRequest {

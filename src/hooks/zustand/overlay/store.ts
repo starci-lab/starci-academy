@@ -1,8 +1,8 @@
 "use client"
 
 import { create } from "zustand"
-import type { PaymentContext } from "@/modules/types"
-import type { QueryActiveAdvertisementData } from "@/modules/api"
+import type { PaymentContext } from "@/modules/types/payment"
+import type { QueryActiveAdvertisementData } from "@/modules/api/graphql/queries/types/active-advertisement"
 
 /** Which side of the follow graph the follow-list modal opens on. */
 export type FollowListTab = "followers" | "following"
@@ -29,6 +29,7 @@ export type OverlayKey =
     | "challenge"
     | "content"
     | "contentAiChat"
+    | "contentAiSettings"
     | "cookiePreferences"
     | "cvPreview"
     | "cvReviewLevelDetails"
@@ -50,7 +51,6 @@ export type OverlayKey =
     | "search"
     | "share"
     | "submissionAttempts"
-    | "userMilestoneTaskFeedbacksModal"
 
 /** Every key — used to build the initial state (all overlays default to closed). */
 const OVERLAY_KEYS: ReadonlyArray<OverlayKey> = [
@@ -63,6 +63,7 @@ const OVERLAY_KEYS: ReadonlyArray<OverlayKey> = [
     "challenge",
     "content",
     "contentAiChat",
+    "contentAiSettings",
     "cookiePreferences",
     "cvPreview",
     "cvReviewLevelDetails",
@@ -84,7 +85,6 @@ const OVERLAY_KEYS: ReadonlyArray<OverlayKey> = [
     "search",
     "share",
     "submissionAttempts",
-    "userMilestoneTaskFeedbacksModal",
 ]
 
 /** Overlay store shape: the open map plus per-key actions. */
@@ -97,6 +97,16 @@ interface OverlayStoreState {
     adModalContext: QueryActiveAdvertisementData | null
     /** Follow-list modal payload (whose graph + which tab). */
     followListContext: FollowListContext | null
+    /** Content-AI selected model — shared between the chat composer + the settings modal. */
+    contentAiSelectedModel: string | null
+    /** Bumped by the settings modal after clearing history → signals the chat to reset its thread. */
+    contentAiClearNonce: number
+    /** Lesson passage the learner highlighted to ask about ("ask AI about this passage"). */
+    contentAiSelection: string | null
+    /** Surrounding context of the highlighted passage (the containing paragraph) —
+     * sent to the model as HIDDEN grounding so it can reason about a short selection,
+     * NOT shown in the chat thread. */
+    contentAiSelectionContext: string | null
     /** Set the open state of an overlay (used by `onOpenChange`). */
     setOpenFor: (key: OverlayKey, isOpen: boolean) => void
     /** Open an overlay. */
@@ -111,6 +121,12 @@ interface OverlayStoreState {
     setAdModalContext: (context: QueryActiveAdvertisementData | null) => void
     /** Stash the follow-list modal payload. */
     setFollowListContext: (context: FollowListContext | null) => void
+    /** Set the content-AI selected model. */
+    setContentAiSelectedModel: (model: string | null) => void
+    /** Signal the chat thread to reset (after the settings modal clears the saved history). */
+    signalContentAiCleared: () => void
+    /** Set (or clear) the highlighted passage + its surrounding context (hidden grounding). */
+    setContentAiSelection: (passage: string | null, context?: string | null) => void
 }
 
 /** Initial open map — every overlay closed. */
@@ -136,6 +152,10 @@ export const useOverlayStore = create<OverlayStoreState>((set) => ({
     paymentContext: null,
     adModalContext: null,
     followListContext: null,
+    contentAiSelectedModel: null,
+    contentAiClearNonce: 0,
+    contentAiSelection: null,
+    contentAiSelectionContext: null,
     setOpenFor: (key, isOpen) =>
         set((state) => ({ openMap: { ...state.openMap, [key]: isOpen } })),
     openOverlay: (key) =>
@@ -147,4 +167,11 @@ export const useOverlayStore = create<OverlayStoreState>((set) => ({
     setPaymentContext: (context) => set({ paymentContext: context }),
     setAdModalContext: (context) => set({ adModalContext: context }),
     setFollowListContext: (context) => set({ followListContext: context }),
+    setContentAiSelectedModel: (model) => set({ contentAiSelectedModel: model }),
+    signalContentAiCleared: () =>
+        set((state) => ({ contentAiClearNonce: state.contentAiClearNonce + 1 })),
+    setContentAiSelection: (passage, context) => set({
+        contentAiSelection: passage,
+        contentAiSelectionContext: passage ? (context ?? null) : null,
+    }),
 }))

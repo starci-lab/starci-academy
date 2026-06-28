@@ -5,23 +5,15 @@ import {
     cn,
 } from "@heroui/react"
 import {
-    useAppSelector,
-} from "@/redux"
-import {
-    useQueryAiLabPlaygroundSwr,
-} from "@/hooks"
-import type {
-    AiLabPlaygroundData,
-} from "@/modules/api"
-import type {
-    WithClassNames,
-} from "@/modules/types"
-import {
     PromptPlayground,
 } from "./PromptPlayground"
 import {
     EvalChallengePanel,
 } from "./EvalChallengePanel"
+import { useAppSelector } from "@/redux/hooks"
+import { useQueryAiLabPlaygroundSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiLabPlaygroundSwr"
+import type { AiLabPlaygroundData } from "@/modules/api/graphql/queries/types/ai-lab-playground"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 export type AiLabBodyProps = WithClassNames<undefined>
 

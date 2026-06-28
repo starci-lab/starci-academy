@@ -1,13 +1,10 @@
 "use client"
 
 import { useCallback } from "react"
-import { useHeadhunterOverlayState } from "@/hooks"
-import type { ConsultantEntity } from "@/modules/types"
-import { useAppDispatch } from "@/redux"
-import {
-    setHeadhunter,
-    setHeadhunterId,
-} from "@/redux/slices"
+import { useHeadhunterOverlayState } from "@/hooks/zustand/overlay/hooks"
+import type { ConsultantEntity } from "@/modules/types/entities/consultant"
+import { useAppDispatch } from "@/redux/hooks"
+import { setHeadhunter, setHeadhunterId } from "@/redux/slices/headhunter"
 
 /**
  * Selects a headhunter in Redux and opens the profile modal.

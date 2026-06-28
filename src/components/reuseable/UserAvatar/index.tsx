@@ -3,7 +3,7 @@
 import React from "react"
 import { Avatar, AvatarFallback, AvatarImage, cn } from "@heroui/react"
 import { dicebearAvatarUrl } from "@/utils/avatar"
-import type { WithClassNames } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link UserAvatar}. */
 export interface UserAvatarProps extends WithClassNames<undefined> {

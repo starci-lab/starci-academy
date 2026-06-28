@@ -15,9 +15,6 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    LabeledCard,
-} from "@/components/blocks"
-import {
     ContinueLearning,
 } from "../ContinueLearning"
 import {
@@ -41,6 +38,7 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 
 /** Props for {@link OverviewTab}. */
 export type OverviewTabProps = WithClassNames<undefined>

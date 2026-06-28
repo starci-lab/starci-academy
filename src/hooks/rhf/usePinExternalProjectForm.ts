@@ -6,12 +6,10 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { useTranslations } from "next-intl"
 import { useSWRConfig } from "swr"
-import { useAppSelector } from "@/redux"
-import {
-    QUERY_USER_PINNED_PROJECTS_SWR,
-    useMutatePinExternalProjectSwr,
-} from "@/hooks/swr"
-import { useGraphQLWithToast } from "@/modules/toast"
+import { useAppSelector } from "@/redux/hooks"
+import { QUERY_USER_PINNED_PROJECTS_SWR } from "@/hooks/swr/api/graphql/queries/useQueryUserPinnedProjectsSwr"
+import { useMutatePinExternalProjectSwr } from "@/hooks/swr/api/graphql/mutations/useMutatePinExternalProjectSwr"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
 
 /** Max length of the external-pin title (mirrors the entity column). */
 const TITLE_MAX = 255

@@ -1,9 +1,9 @@
-import type { IncompleteJobsItem } from "@/modules/types"
-import { JobStatus } from "@/modules/types"
 import {
     createSlice,
     type PayloadAction,
 } from "@reduxjs/toolkit"
+import type { IncompleteJobsItem } from "@/modules/types/incomplete-job"
+import { JobStatus } from "@/modules/types/enums/job-status"
 
 /**
  * Job-related client state: in-flight / incomplete work keyed by API snapshots.

@@ -4,11 +4,6 @@ import React, { useMemo } from "react"
 import {
     useTranslations,
 } from "next-intl"
-import type {
-    WithClassNames,
-} from "@/modules/types"
-import { useAppSelector } from "@/redux"
-import { useQueryFoundationsSwr } from "@/hooks"
 import {
     FoundationCard,
 } from "../FoundationCard"
@@ -18,10 +13,11 @@ import {
 import {
     compareFoundations,
 } from "../utils"
-import {
-    AsyncContent,
-    SurfaceListCard,
-} from "@/components/blocks"
+import type { WithClassNames } from "@/modules/types/base/class-name"
+import { useAppSelector } from "@/redux/hooks"
+import { useQueryFoundationsSwr } from "@/hooks/swr/api/graphql/queries/useQueryFoundationsSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { SurfaceListCard } from "@/components/blocks/cards/SurfaceListCard"
 
 /** Props for {@link FoundationsList}. */
 export type FoundationsListProps = WithClassNames<undefined>

@@ -3,11 +3,13 @@
 import React from "react"
 import { Skeleton, Typography } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
-import { useQueryOpenToWorkUsersSwr } from "@/hooks"
-import { pathConfig } from "@/resources"
-import { AsyncContent, PageHeader, PressableCard } from "@/components/blocks"
 import { UserAvatar } from "@/components/reuseable/UserAvatar"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { useQueryOpenToWorkUsersSwr } from "@/hooks/swr/api/graphql/queries/useQueryOpenToWorkUsersSwr"
+import { pathConfig } from "@/resources/path"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { PressableCard } from "@/components/blocks/cards/PressableCard"
 
 /** Number of placeholder cards shown while the directory loads. */
 const SKELETON_COUNT = 6

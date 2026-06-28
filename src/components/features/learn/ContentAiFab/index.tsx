@@ -8,19 +8,14 @@ import {
     Typography,
     cn,
 } from "@heroui/react"
+import { SparkleIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import { useAppSelector } from "@/redux"
-import { useContentAiChatOverlayState } from "@/hooks"
 import { useSmViewpoint } from "@/hooks/reuseables/useSmViewpoint"
-import { FloatingActionButton } from "@/components/blocks"
 import { ContentAiChat } from "@/components/features/learn/ContentAiChat"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-
-/**
- * Mascot image for the AI FAB. TODO: swap for the dedicated AI-assistant mascot
- * asset (a transparent PNG whose head can poke out above the circle).
- */
-const FAB_MASCOT_SRC = "/logo-icon.png"
+import { useAppSelector } from "@/redux/hooks"
+import { useContentAiChatOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { FloatingActionButton } from "@/components/blocks/buttons/FloatingActionButton"
 
 /** localStorage key for the FAB's persisted vertical position (px from viewport bottom). */
 const STORAGE_KEY = "contentAiFabBottom"
@@ -133,9 +128,11 @@ export const ContentAiFab = ({ className }: ContentAiFabProps) => {
             <FloatingActionButton
                 onPress={open}
                 ariaLabel={t("contentAi.ask")}
-                imageSrc={FAB_MASCOT_SRC}
                 className={className}
-            />
+            >
+                {/* sparkle = AI intent; the wrapped isIconOnly button sizes the svg */}
+                <SparkleIcon />
+            </FloatingActionButton>
         )
     }
 
@@ -151,17 +148,12 @@ export const ContentAiFab = ({ className }: ContentAiFabProps) => {
                 onPointerUp={onPointerUp}
                 style={{ bottom }}
                 className={cn(
-                    "fixed right-4 z-40 size-14 touch-none rounded-full shadow-lg",
+                    "fixed right-4 z-40 touch-none rounded-full shadow-lg",
                     className,
                 )}
             >
-                {/* mascot pokes its head out above the circle (image taller than the button) */}
-                <img
-                    src={FAB_MASCOT_SRC}
-                    alt=""
-                    aria-hidden
-                    className="pointer-events-none absolute -top-5 left-1/2 h-[4.5rem] w-auto -translate-x-1/2 object-contain drop-shadow"
-                />
+                {/* sparkle = AI intent; the isIconOnly button sizes the svg itself */}
+                <SparkleIcon />
             </Button>
             <PopoverContent placement="left bottom" className="w-[380px] p-0">
                 <div className="p-3">
@@ -169,7 +161,7 @@ export const ContentAiFab = ({ className }: ContentAiFabProps) => {
                         {contentTitle ?? t("contentAi.title")}
                     </Typography>
                 </div>
-                <div className="p-3">
+                <div className="p-3 pt-0">
                     <ContentAiChat />
                 </div>
             </PopoverContent>

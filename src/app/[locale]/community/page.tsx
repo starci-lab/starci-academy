@@ -1,5 +1,5 @@
 import React from "react"
-import { CommunityFeed } from "@/components/features/community"
+import { CommunityFeed } from "@/components/features/community/CommunityFeed"
 
 /**
  * Route `/[locale]/community` — the public community feed (posts + reactions).

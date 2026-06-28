@@ -1,8 +1,6 @@
-import {
-    mutateConfirmTwoFactor,
-    type ConfirmTwoFactorRequest,
-} from "@/modules/api"
 import useSWRMutation from "swr/mutation"
+import { mutateConfirmTwoFactor } from "@/modules/api/graphql/mutations/mutation-confirm-two-factor"
+import { type ConfirmTwoFactorRequest } from "@/modules/api/graphql/mutations/types/two-factor"
 
 type MutateConfirmTwoFactorResult = Awaited<ReturnType<typeof mutateConfirmTwoFactor>>
 

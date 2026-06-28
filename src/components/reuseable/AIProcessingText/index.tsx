@@ -7,17 +7,11 @@ import {
     useReducedMotion,
 } from "framer-motion"
 import { useTranslations } from "next-intl"
-import {
-    JobCategory,
-    JobStatus,
-    WithClassNames,
-} from "@/modules/types"
-
-import {
-    resolveAiProcessingCopy,
-} from "@/components/utils"
 import { cn } from "@heroui/react"
-
+import { JobCategory } from "@/modules/types/enums/job-category"
+import { JobStatus } from "@/modules/types/enums/job-status"
+import { WithClassNames } from "@/modules/types/base/class-name"
+import { resolveAiProcessingCopy } from "@/components/utils/ai"
 
 export interface AIProcessingTextProps extends WithClassNames<{
     innerPanel?: string

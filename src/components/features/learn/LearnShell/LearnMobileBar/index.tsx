@@ -7,14 +7,12 @@ import {
 import React, { useEffect, useState } from "react"
 import { Button, cn, Drawer, ScrollShadow } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import {
-    SidebarNavItem,
-} from "@/components/blocks"
 import { ContentMap } from "@/components/features/learn/ContentMap"
 import {
     useSidebarNavItems,
 } from "../hooks/useSidebarNavItems"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { SidebarNavItem } from "@/components/blocks/navigation/SidebarNavItem"
 
 /** Props for {@link LearnMobileBar}. */
 export type LearnMobileBarProps = WithClassNames<undefined>

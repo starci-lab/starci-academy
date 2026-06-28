@@ -3,7 +3,7 @@
 import React, { useMemo } from "react"
 import { cn } from "@heroui/react"
 import { formatTime } from "../utils"
-import type { WithClassNames } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link TimeDisplay}. */
 export interface TimeDisplayProps extends WithClassNames<undefined> {

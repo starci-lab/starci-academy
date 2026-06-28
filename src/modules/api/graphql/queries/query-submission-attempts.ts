@@ -39,6 +39,8 @@ const query1 = gql`
           shortFeedback
           processedAt
           submissionUrl
+          servedModel
+          servedProvider
         }
       }
     }

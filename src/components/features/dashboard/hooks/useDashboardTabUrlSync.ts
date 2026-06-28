@@ -10,14 +10,12 @@ import {
     useSearchParams,
 } from "next/navigation"
 import {
-    useDashboardTabStore,
-} from "@/hooks"
-import {
     DASHBOARD_TABS,
 } from "../types"
 import type {
     DashboardTab,
 } from "../types"
+import { useDashboardTabStore } from "@/hooks/zustand/dashboardTab/store"
 
 /** Query-string key the active dashboard tab is mirrored to (`/dashboard?tab=...`). */
 const TAB_QUERY_KEY = "tab"

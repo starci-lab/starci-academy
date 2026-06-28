@@ -1,13 +1,10 @@
 import React, { cache } from "react"
 import type { Metadata } from "next"
 import { CourseDetail } from "@/components/features/course/CourseDetail"
-import { publicEnv } from "@/resources"
 import { SEO_CONFIG } from "@/config/seo"
-import {
-    JsonLd,
-    buildPageMetadata,
-    courseSchema,
-} from "@/modules/seo"
+import { publicEnv } from "@/resources/env/public"
+import { JsonLd, courseSchema } from "@/modules/seo/jsonLd"
+import { buildPageMetadata } from "@/modules/seo/buildMetadata"
 
 /** Route params for `/[locale]/courses/[courseId]`. */
 interface CourseParams {

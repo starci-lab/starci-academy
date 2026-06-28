@@ -18,31 +18,21 @@ import {
     PulseIcon,
 } from "@phosphor-icons/react"
 import {
-    queryResolveRoute,
-} from "@/modules/api"
-import type {
-    ReactionType,
-} from "@/modules/api"
-import {
-    useQueryUserFeedSwr,
-    useQueryUserProfileSwr,
-    useMutateReactActivitySwr,
-} from "@/hooks"
-import {
-    useAppSelector,
-} from "@/redux"
-import {
     useProfileUsername,
 } from "../../hooks/useProfileUsername"
-import {
-    ActivityFeed,
-    AsyncContent,
-    LabeledCard,
-    Skeleton,
-} from "@/components/blocks"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { queryResolveRoute } from "@/modules/api/graphql/queries/query-resolve-route"
+import type { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
+import { useQueryUserFeedSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserFeedSwr"
+import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
+import { useMutateReactActivitySwr } from "@/hooks/swr/api/graphql/mutations/useMutateReactActivitySwr"
+import { useAppSelector } from "@/redux/hooks"
+import { ActivityFeed } from "@/components/blocks/feed/ActivityFeed"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /** Props for {@link ProfileActivity}. */
 export type ProfileActivityProps = WithClassNames<undefined>

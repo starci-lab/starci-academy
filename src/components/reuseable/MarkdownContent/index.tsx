@@ -7,8 +7,8 @@ import remarkDirective from "remark-directive"
 import { cn } from "@heroui/react"
 import { useTheme } from "next-themes"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types"
 import { buildMarkdownRenderers } from "./map"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 // Re-export the colocated sub-renderers so the reuseable barrel surface stays identical.
 export * from "./CodeToHtml"

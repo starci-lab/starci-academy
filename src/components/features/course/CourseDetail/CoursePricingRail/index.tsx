@@ -12,16 +12,6 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    CoverImage,
-    PriceTag,
-} from "@/components/blocks"
-import {
-    useAppSelector,
-} from "@/redux"
-import {
-    useQueryCoursePricePreviewSwr,
-} from "@/hooks"
-import {
     CourseCtaButtons,
 } from "../CourseCtaButtons"
 import {
@@ -36,6 +26,10 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { CoverImage } from "@/components/blocks/media/CoverImage"
+import { PriceTag } from "@/components/blocks/commerce/PriceTag"
+import { useAppSelector } from "@/redux/hooks"
+import { useQueryCoursePricePreviewSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursePricePreviewSwr"
 
 /** Props for {@link CoursePricingRail}. */
 export type CoursePricingRailProps = WithClassNames<undefined>

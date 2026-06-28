@@ -8,12 +8,8 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import type {
-    QueryAiLabEvalCaseResultData,
-} from "@/modules/api"
-import type {
-    WithClassNames,
-} from "@/modules/types"
+import type { QueryAiLabEvalCaseResultData } from "@/modules/api/graphql/queries/types/ai-lab-eval-result"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link CaseResultRow}. */
 export type CaseResultRowProps = WithClassNames<undefined> & {

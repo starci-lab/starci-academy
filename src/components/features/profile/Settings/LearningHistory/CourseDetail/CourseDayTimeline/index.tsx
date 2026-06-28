@@ -17,33 +17,25 @@ import {
     PuzzlePieceIcon,
 } from "@phosphor-icons/react"
 import {
-    CourseLearningEventType,
-} from "@/modules/api"
-import type {
-    CourseLearningHistoryItemData,
-} from "@/modules/api"
-import {
-    useQueryCourseLearningHistorySwr,
-} from "@/hooks"
-import {
     formatDateTime,
     getTimeAgoLabel,
     getTimeAgoMessage,
 } from "@/modules/dayjs"
-import {
-    AsyncContent,
-    DifficultyChip,
-    EmptyContent,
-    IconTile,
-    ListRow,
-    Skeleton,
-} from "@/components/blocks"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 import {
     toDifficulty,
 } from "../../CourseOutline/map"
+import { CourseLearningEventType } from "@/modules/api/graphql/queries/types/course-learning-history"
+import type { CourseLearningHistoryItemData } from "@/modules/api/graphql/queries/types/course-learning-history"
+import { useQueryCourseLearningHistorySwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseLearningHistorySwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { DifficultyChip } from "@/components/blocks/chips/DifficultyChip"
+import { EmptyContent } from "@/components/blocks/async/EmptyContent"
+import { IconTile } from "@/components/blocks/identity/IconTile"
+import { ListRow } from "@/components/blocks/lists/ListRow"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /** Props for {@link CourseDayTimeline}. */
 export interface CourseDayTimelineProps extends WithClassNames<undefined> {

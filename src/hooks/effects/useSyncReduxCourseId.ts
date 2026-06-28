@@ -1,7 +1,7 @@
-import { useAppDispatch } from "@/redux"
 import { useEffect } from "react"
 import { useParams, usePathname } from "next/navigation"
-import { setCourseDisplayId } from "@/redux/slices"
+import { useAppDispatch } from "@/redux/hooks"
+import { setCourseDisplayId } from "@/redux/slices/course"
 
 /**
  * Syncs `course.displayId` from the `[courseId]` route param into Redux on navigation.

@@ -14,36 +14,12 @@ import {
     toast,
 } from "@heroui/react"
 import {
-    useGraphQLWithToast,
-} from "@/modules/toast"
-import {
     useLocale,
     useTranslations,
 } from "next-intl"
 import {
     useRouter,
 } from "next/navigation"
-import {
-    AiMode,
-    type AiGradableModel,
-    type GraphQLResponse,
-    type SubmitEvalChallengeData,
-} from "@/modules/api"
-import {
-    JobStatus,
-    type WithClassNames,
-} from "@/modules/types"
-import {
-    PublicationEvent,
-    useJobNotificationsSocketIo,
-    useMutateSubmitEvalChallengeSwr,
-    useQueryAiLabEvalResultSwr,
-    useQueryAiModelsSwr,
-    useQueryMyAiSettingsSwr,
-} from "@/hooks"
-import {
-    useAppSelector,
-} from "@/redux"
 import {
     LaneModelPicker,
 } from "../LaneModelPicker"
@@ -57,6 +33,20 @@ import type {
     AiLabModelSelection,
     AiLabParamsForm,
 } from "../types"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
+import { AiMode } from "@/modules/api/graphql/queries/query-my-ai-settings"
+import { type AiGradableModel } from "@/modules/api/graphql/queries/types/ai-models"
+import { type GraphQLResponse } from "@/modules/api/graphql/types"
+import { type SubmitEvalChallengeData } from "@/modules/api/graphql/mutations/types/submit-eval-challenge"
+import { JobStatus } from "@/modules/types/enums/job-status"
+import { type WithClassNames } from "@/modules/types/base/class-name"
+import { PublicationEvent } from "@/hooks/socketio/enums/publication-event"
+import { useJobNotificationsSocketIo } from "@/hooks/socketio/useJobNotificationsSocketIo"
+import { useMutateSubmitEvalChallengeSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSubmitEvalChallengeSwr"
+import { useQueryAiLabEvalResultSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiLabEvalResultSwr"
+import { useQueryAiModelsSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiModelsSwr"
+import { useQueryMyAiSettingsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiSettingsSwr"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Props for {@link EvalChallengePanel}. */
 export type EvalChallengePanelProps = WithClassNames<undefined> & {

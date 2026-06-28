@@ -1,5 +1,5 @@
-import type { ConsultantEntity } from "@/modules/types"
 import type { GraphQLResponse, PaginationFilters, SortInput } from "../../types"
+import type { ConsultantEntity } from "@/modules/types/entities/consultant"
 
 /** Paginated payload inside `consultants.data`. */
 export interface QueryConsultantsPayload {

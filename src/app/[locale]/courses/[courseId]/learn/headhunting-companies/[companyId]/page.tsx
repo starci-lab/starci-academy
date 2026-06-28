@@ -3,7 +3,7 @@
 import { useLocale } from "next-intl"
 import { useParams, useRouter } from "next/navigation"
 import { useEffect } from "react"
-import { pathConfig } from "@/resources"
+import { pathConfig } from "@/resources/path"
 
 /**
  * Redirect legacy `/learn/headhunting-companies/[companyId]` to course-level route.

@@ -1,16 +1,8 @@
 import useSWR from "swr"
-import {
-    useAppSelector,
-} from "@/redux"
-import {
-    AiQuotaTab,
-} from "@/redux/slices"
-import {
-    queryMyCreditUsageHistory,
-} from "@/modules/api"
-import {
-    useAiQuotaOverlayState,
-} from "@/hooks"
+import { useAppSelector } from "@/redux/hooks"
+import { AiQuotaTab } from "@/redux/slices/tabs"
+import { queryMyCreditUsageHistory } from "@/modules/api/graphql/queries/query-my-credit-usage-history"
+import { useAiQuotaOverlayState } from "@/hooks/zustand/overlay/hooks"
 
 /** Params for {@link useAiQuotaHistorySwr}. */
 export interface UseAiQuotaHistorySwrParams {

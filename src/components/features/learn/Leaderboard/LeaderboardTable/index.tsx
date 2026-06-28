@@ -4,8 +4,6 @@ import React from "react"
 import { Chip, Typography, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { CrownIcon } from "@phosphor-icons/react"
-import { UserAvatar } from "@/components/reuseable"
-import type { WithClassNames } from "@/modules/types"
 import {
     CATEGORY_COLOR,
     MILESTONE_XP,
@@ -14,6 +12,8 @@ import {
     type LeaderboardCategoryKey,
     type RankedLeaderboardEntry,
 } from "../categories"
+import { UserAvatar } from "@/components/reuseable/UserAvatar"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link XpSegmentBar}. */
 interface XpSegmentBarProps {

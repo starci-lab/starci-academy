@@ -28,16 +28,12 @@ import {
 import {
     useRouter,
 } from "next/navigation"
-import type {
-    CourseEntity,
-    WithClassNames,
-} from "@/modules/types"
 import {
     pathConfig,
 } from "@/resources/path"
-import {
-    publicEnv,
-} from "@/resources"
+import type { CourseEntity } from "@/modules/types/entities/course"
+import type { WithClassNames } from "@/modules/types/base/class-name"
+import { publicEnv } from "@/resources/env/public"
 
 /** Props for {@link CourseCard}. */
 export interface CourseCardProps extends WithClassNames<undefined> {

@@ -1,5 +1,5 @@
-import type { MilestoneEntity } from "@/modules/types"
 import type { GraphQLResponse } from "../../types"
+import type { MilestoneEntity } from "@/modules/types/entities/milestone"
 
 /** Apollo variables for `milestones(request: MilestonesRequest!)`. */
 export interface QueryMilestonesRequest {

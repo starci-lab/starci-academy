@@ -7,9 +7,9 @@ import {
 import React from "react"
 import { cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { useAppDispatch, useAppSelector } from "@/redux"
-import { toggleRightCollapsed } from "@/redux/slices"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { toggleRightCollapsed } from "@/redux/slices/sidebar"
 
 /** Props for {@link LearnPanelToggles}. */
 export type LearnPanelTogglesProps = WithClassNames<undefined>

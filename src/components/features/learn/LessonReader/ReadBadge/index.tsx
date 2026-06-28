@@ -4,10 +4,9 @@ import { CheckCircleIcon } from "@phosphor-icons/react"
 import React from "react"
 import { Chip, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { useAppSelector } from "@/redux"
 import type { ChipProps } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * Props for {@link ReadBadge}.

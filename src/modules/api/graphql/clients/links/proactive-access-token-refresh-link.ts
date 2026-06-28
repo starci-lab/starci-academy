@@ -1,10 +1,11 @@
-import { LocalStorage, LocalStorageId } from "@/modules/storage"
 import { ApolloLink } from "@apollo/client"
 import { Observable } from "@apollo/client/utilities"
 import { Subscription } from "rxjs"
 import jwt from "jsonwebtoken"
 import { dayjs } from "@/modules/dayjs"
 import { mutateRefreshToken } from "./refresh-token"
+import { LocalStorage } from "@/modules/storage/local/storage"
+import { LocalStorageId } from "@/modules/storage/local/enums/id"
 
 /**
  * Returns `true` when the access token is within `minValiditySeconds` of expiring.

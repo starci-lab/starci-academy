@@ -3,11 +3,6 @@
 import React from "react"
 import useSWR from "swr"
 import { useTranslations } from "next-intl"
-import { type WithClassNames } from "@/modules/types"
-import { PageHeader } from "@/components/blocks"
-import { useAppSelector } from "@/redux"
-import { useQueryCourseEnrollmentStatusSwr } from "@/hooks"
-import { queryFlashcardDeck } from "@/modules/api/graphql"
 import { EnrollGate } from "../shared/EnrollGate"
 import { LearnBreadcrumb } from "../shared/LearnBreadcrumb"
 import { FlashcardReviewer } from "./FlashcardReviewer"
@@ -16,6 +11,11 @@ import { DueReview } from "./DueReview"
 import { DueReviewHero } from "./DueReviewHero"
 import { FlashcardStatsStrip } from "./FlashcardStatsStrip"
 import { useFlashcardNav } from "./useFlashcardNav"
+import { type WithClassNames } from "@/modules/types/base/class-name"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { useAppSelector } from "@/redux/hooks"
+import { useQueryCourseEnrollmentStatusSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseEnrollmentStatusSwr"
+import { queryFlashcardDeck } from "@/modules/api/graphql/queries/query-flashcard-deck"
 
 /** Props for {@link Flashcards}. */
 export type FlashcardsProps = WithClassNames<undefined>

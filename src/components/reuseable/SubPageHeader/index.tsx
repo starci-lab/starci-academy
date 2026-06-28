@@ -9,10 +9,7 @@ import {
 import {
     Button,
 } from "@heroui/react"
-import type {
-
-    WithClassNames,
-} from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 export interface SubPageHeaderProps extends WithClassNames<undefined> {
     /** Page title shown beside the back button. */

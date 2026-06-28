@@ -19,9 +19,6 @@ import {
     pathConfig,
 } from "@/resources/path"
 import {
-    AsyncContent,
-} from "@/components/blocks"
-import {
     ResumeCard,
 } from "./ResumeCard"
 import {
@@ -33,6 +30,7 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 
 /** Props for {@link ContinueLearning}. */
 export type ContinueLearningProps = WithClassNames<undefined>

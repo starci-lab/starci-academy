@@ -2,19 +2,18 @@
 
 import { CaretRightIcon, StackIcon } from "@phosphor-icons/react"
 import { Chip } from "@heroui/react"
-import { FoundationKind } from "@/modules/types"
-import type { FoundationEntity, WithClassNames } from "@/modules/types"
 import React, { useCallback } from "react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
-import { pathConfig } from "@/resources"
-import { useAppDispatch, useAppSelector } from "@/redux"
-import {
-    setFoundation,
-    setFoundationId,
-} from "@/redux/slices"
-import { IconTile, SurfaceListCardRow } from "@/components/blocks"
 import { resolveFoundationMountFileUrl } from "../utils"
+import { FoundationKind } from "@/modules/types/enums/foundation-kind"
+import type { FoundationEntity } from "@/modules/types/entities/foundation"
+import type { WithClassNames } from "@/modules/types/base/class-name"
+import { pathConfig } from "@/resources/path"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setFoundation, setFoundationId } from "@/redux/slices/foundation"
+import { IconTile } from "@/components/blocks/identity/IconTile"
+import { SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
 
 export interface FoundationCardProps extends WithClassNames<undefined> {
     /** Foundation resource row from API. */

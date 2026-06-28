@@ -1,9 +1,6 @@
-import {
-    adminPresignedUrl,
-    type AdminPresignedUrlParams,
-    type AdminPresignedUrlResponse,
-} from "@/modules/api"
 import useSWRMutation from "swr/mutation"
+import { adminPresignedUrl, type AdminPresignedUrlParams } from "@/modules/api/rest/admin-presigned-url/presigned-url"
+import { type AdminPresignedUrlResponse } from "@/modules/api/rest/admin-presigned-url/types"
 
 /**
  * SWR mutation wrapper for {@link adminPresignedUrl}.

@@ -29,10 +29,10 @@
  * - Keys under `auth.signIn.*` in `src/messages/en.json` and `vi.json`.
  */
 import React from "react"
-import { useAppSelector } from "@/redux"
-import { SignInState } from "@/redux/slices"
 import { CredentialsState } from "./CredentialsState"
 import { OtpState } from "./OtpState"
+import { useAppSelector } from "@/redux/hooks"
+import { SignInState } from "@/redux/slices/state"
 
 /**
  * Renders the sign-in flow step (`Credentials` or `OTP`) based on `signInState`.

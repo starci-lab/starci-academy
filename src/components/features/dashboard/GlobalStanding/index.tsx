@@ -14,13 +14,6 @@ import {
     useRouter,
 } from "next/navigation"
 import {
-    useQueryGlobalLeaderboardSwr,
-} from "@/hooks"
-import {
-    AsyncContent,
-    LabeledCard,
-} from "@/components/blocks"
-import {
     pathConfig,
 } from "@/resources/path"
 import type {
@@ -29,6 +22,9 @@ import type {
 import {
     GlobalStandingSkeleton,
 } from "./GlobalStandingSkeleton"
+import { useQueryGlobalLeaderboardSwr } from "@/hooks/swr/api/graphql/queries/useQueryGlobalLeaderboardSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 
 /** Props for {@link GlobalStanding}. */
 export type GlobalStandingProps = WithClassNames<undefined>

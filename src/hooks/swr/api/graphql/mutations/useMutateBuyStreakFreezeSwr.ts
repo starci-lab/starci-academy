@@ -1,7 +1,5 @@
-import {
-    mutateBuyStreakFreeze,
-} from "@/modules/api"
 import useSWRMutation from "swr/mutation"
+import { mutateBuyStreakFreeze } from "@/modules/api/graphql/mutations/mutation-buy-streak-freeze"
 
 type MutateBuyStreakFreezeResult = Awaited<ReturnType<typeof mutateBuyStreakFreeze>>
 

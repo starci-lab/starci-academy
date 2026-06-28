@@ -1,8 +1,8 @@
 "use client"
 
 import useSWR from "swr"
-import { useAppSelector } from "@/redux"
-import { queryCourseLeaderboard } from "@/modules/api/graphql"
+import { useAppSelector } from "@/redux/hooks"
+import { queryCourseLeaderboard } from "@/modules/api/graphql/queries/query-course-leaderboard"
 
 /**
  * The course-leaderboard fetch, keyed by course id. Shared by the page (board) and

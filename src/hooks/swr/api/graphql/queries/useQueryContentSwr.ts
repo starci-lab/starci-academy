@@ -1,7 +1,8 @@
-import { GraphQLHeadersKey, queryContent } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import { useParams } from "next/navigation"
 import useSWR from "swr"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { queryContent } from "@/modules/api/graphql/queries/query-content"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * Singleton SWR for `content(request: { id })`.

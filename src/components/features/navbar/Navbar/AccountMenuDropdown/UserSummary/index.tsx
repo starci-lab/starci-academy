@@ -1,9 +1,9 @@
 "use client"
 
 import React from "react"
-import { UserCell } from "@/components/blocks"
-import { useAppSelector } from "@/redux"
-import type { WithClassNames } from "@/modules/types"
+import { UserCell } from "@/components/blocks/identity/UserCell"
+import { useAppSelector } from "@/redux/hooks"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link UserSummary}.

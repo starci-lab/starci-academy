@@ -7,14 +7,10 @@ import {
     useLocale,
 } from "next-intl"
 import {
-    useAppSelector,
-} from "@/redux"
-import {
-    useQueryMyCourseOutlineSwr,
-} from "@/hooks"
-import {
     pathConfig,
 } from "@/resources/path"
+import { useAppSelector } from "@/redux/hooks"
+import { useQueryMyCourseOutlineSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCourseOutlineSwr"
 
 /** A neighbouring lesson in the linear course order. */
 export interface AdjacentLesson {

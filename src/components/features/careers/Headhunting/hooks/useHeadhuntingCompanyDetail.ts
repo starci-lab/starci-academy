@@ -2,19 +2,12 @@
 
 import { useEffect, useMemo } from "react"
 import { useParams } from "next/navigation"
-import { useAppDispatch, useAppSelector } from "@/redux"
-import {
-    setHeadhunterCompany,
-    setHeadhunterCompanyId,
-} from "@/redux/slices"
-import {
-    useQueryHeadhunterCompaniesSwr,
-    useQueryHeadhuntersSwr,
-} from "@/hooks"
-import type {
-    ConsultantEntity,
-    HeadhuntingCompanyEntity,
-} from "@/modules/types"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setHeadhunterCompany, setHeadhunterCompanyId } from "@/redux/slices/headhunter"
+import { useQueryHeadhunterCompaniesSwr } from "@/hooks/swr/api/graphql/queries/useQueryHeadhunterCompaniesSwr"
+import { useQueryHeadhuntersSwr } from "@/hooks/swr/api/graphql/queries/useQueryHeadhuntersSwr"
+import type { ConsultantEntity } from "@/modules/types/entities/consultant"
+import type { HeadhuntingCompanyEntity } from "@/modules/types/entities/headhunting-company"
 
 /** Resolved state for the headhunting company detail page. */
 export interface UseHeadhuntingCompanyDetailResult {

@@ -9,14 +9,10 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import {
-    MarkdownContent,
-} from "@/components/reuseable"
-import {
-    useAppSelector,
-} from "@/redux"
 import _ from "lodash"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Props for {@link TaskCriteriaList}. */
 export type TaskCriteriaListProps = WithClassNames<undefined>

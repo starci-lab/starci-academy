@@ -4,15 +4,13 @@ import { SiFacebook as FacebookLogoIcon, SiTelegram as TelegramLogoIcon, SiX as 
 import { FaLinkedin as LinkedinLogoIcon } from "react-icons/fa6"
 import React, { useMemo } from "react"
 import { cn, Modal, Surface } from "@heroui/react"
-import { useShareOverlayState } from "@/hooks"
-import { useAppSelector } from "@/redux"
-import { QRCode } from "@/components/reuseable"
 import { pathConfig } from "@/resources/path"
 import { useTranslations } from "next-intl"
-import {
-    SnippetIcon
-} from "@/components/reuseable"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { useShareOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useAppSelector } from "@/redux/hooks"
+import { QRCode } from "@/components/reuseable/QRCode"
+import { SnippetIcon } from "@/components/reuseable/SnippetIcon"
 
 export const ShareModal = ({ className }: WithClassNames<undefined>) => {
     const t = useTranslations()

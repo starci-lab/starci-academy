@@ -15,15 +15,11 @@ import {
 import {
     useRouter,
 } from "next/navigation"
-import {
-    useQueryMyAiQuotaSwr,
-} from "@/hooks"
-import {
-    AiSubTier,
-} from "@/modules/api"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useQueryMyAiQuotaSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiQuotaSwr"
+import { AiSubTier } from "@/modules/api/graphql/queries/query-my-ai-settings"
 
 /** Props for {@link AiQuotaCard}. */
 export type AiQuotaCardProps = WithClassNames<undefined>

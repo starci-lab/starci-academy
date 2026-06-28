@@ -1,5 +1,5 @@
-import { queryUserFollowers } from "@/modules/api"
 import useSWR from "swr"
+import { queryUserFollowers } from "@/modules/api/graphql/queries/query-user-followers"
 
 /**
  * SWR query wrapper for {@link queryUserFollowers}. `data` is the visible

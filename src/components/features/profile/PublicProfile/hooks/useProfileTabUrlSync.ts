@@ -10,14 +10,12 @@ import {
     useSearchParams,
 } from "next/navigation"
 import {
-    useProfileTabStore,
-} from "@/hooks"
-import {
     PROFILE_TABS,
 } from "../types"
 import type {
     ProfileTab,
 } from "../types"
+import { useProfileTabStore } from "@/hooks/zustand/profileTab/store"
 
 /** Query-string key the active profile tab is mirrored to (`/profile?tab=...`). */
 const TAB_QUERY_KEY = "tab"

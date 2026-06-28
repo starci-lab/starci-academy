@@ -10,12 +10,6 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import {
-    useAppSelector,
-} from "@/redux"
-import {
-    ContentTab,
-} from "@/redux/slices"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -31,6 +25,8 @@ import {
 import {
     ContentActions,
 } from "./ContentActions"
+import { useAppSelector } from "@/redux/hooks"
+import { ContentTab } from "@/redux/slices/tabs"
 
 /** Props for {@link OnThisPage}. */
 export interface OnThisPageProps extends WithClassNames<undefined> {

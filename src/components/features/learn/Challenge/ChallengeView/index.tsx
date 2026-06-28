@@ -3,22 +3,22 @@
 import { ArrowLeftIcon, CaretRightIcon, GearSixIcon, TrophyIcon, FlameIcon, LightbulbIcon } from "@phosphor-icons/react"
 import React, { useEffect, useMemo, useState } from "react"
 import { Accordion, Button, Chip, Drawer, Input, Label, Link, ScrollShadow, Spinner, Tabs, TextField, Typography, cn } from "@heroui/react"
-import { MarkdownContent, Score } from "@/components/reuseable"
-import { useMutateSyncPersonalProjectGithubSwr } from "@/hooks"
-import { useGraphQLWithToast } from "@/modules/toast"
-import { CheckListCard, CheckListItem, LabeledCard, PageHeader } from "@/components/blocks"
 import { ChallengeViewSkeleton } from "./ChallengeViewSkeleton"
 import { ChallengeSubmissionPanel } from "../ChallengeSubmissionPanel"
 import { useTranslations } from "next-intl"
-import { useAppSelector } from "@/redux"
-import { difficultyPalette } from "@/components/pallettes"
-import {
-    ChallengeDifficulty,
-    listChallengeProgrammingLangs,
-    resolveActiveProgrammingLang,
-    resolveChallengeSectionRows,
-    type WithClassNames,
-} from "@/modules/types"
+import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { Score } from "@/components/reuseable/Score"
+import { useMutateSyncPersonalProjectGithubSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSyncPersonalProjectGithubSwr"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
+import { CheckListCard, CheckListItem } from "@/components/blocks/cards/CheckListCard"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { useAppSelector } from "@/redux/hooks"
+import { difficultyPalette } from "@/components/pallettes/difficulty"
+import { ChallengeDifficulty } from "@/modules/types/enums/challenge-difficulty"
+import { listChallengeProgrammingLangs, resolveChallengeSectionRows } from "@/modules/types/utils/challenge-section"
+import { resolveActiveProgrammingLang } from "@/modules/types/utils/programming-language"
+import { type WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link ChallengeView}. */
 export type ChallengeViewProps = WithClassNames<undefined> & {

@@ -1,7 +1,7 @@
-import { queryMyCourses } from "@/modules/api"
-import type { QueryMyDashboardMilestoneProgressItemData } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { queryMyCourses } from "@/modules/api/graphql/queries/query-my-courses"
+import type { QueryMyDashboardMilestoneProgressItemData } from "@/modules/api/graphql/queries/types/my-dashboard"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR wrapper for {@link queryMyCourses}. `data` is every joined course with its

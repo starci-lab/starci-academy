@@ -13,22 +13,16 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    useQueryUserProfileSwr,
-    useQueryUserSolvedChallengesSwr,
-} from "@/hooks"
-import {
-    SectionCard,
-} from "@/components/reuseable"
-import {
-    ListRow,
-    StatPair,
-} from "@/components/blocks"
-import {
     useProfileUsername,
 } from "../useProfileUsername"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
+import { useQueryUserSolvedChallengesSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserSolvedChallengesSwr"
+import { SectionCard } from "@/components/reuseable/SectionCard"
+import { ListRow } from "@/components/blocks/lists/ListRow"
+import { StatPair } from "@/components/blocks/stats/StatPair"
 
 /** Maximum number of solved-challenge rows shown before the list is capped. */
 const MAX_LIST_ROWS = 6

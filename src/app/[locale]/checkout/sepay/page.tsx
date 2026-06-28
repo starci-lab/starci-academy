@@ -1,7 +1,5 @@
 import React from "react"
-import {
-    SepayCheckout,
-} from "@/components/layouts/checkout"
+import { SepayCheckout } from "@/components/layouts/checkout/SepayCheckout"
 
 /**
  * Route `/[locale]/checkout/sepay` — renders the SePay QR checkout flow.

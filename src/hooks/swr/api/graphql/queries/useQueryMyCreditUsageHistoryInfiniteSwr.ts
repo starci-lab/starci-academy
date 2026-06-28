@@ -1,7 +1,7 @@
 import useSWRInfinite from "swr/infinite"
-import { queryMyCreditUsageHistory } from "@/modules/api"
-import type { QueryMyCreditUsageHistoryResponseData } from "@/modules/api"
-import { useAppSelector } from "@/redux"
+import { queryMyCreditUsageHistory } from "@/modules/api/graphql/queries/query-my-credit-usage-history"
+import type { QueryMyCreditUsageHistoryResponseData } from "@/modules/api/graphql/queries/types/my-credit-usage-history"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Charge rows per page (offset pagination). */
 export const CREDIT_USAGE_HISTORY_PAGE_LIMIT = 20

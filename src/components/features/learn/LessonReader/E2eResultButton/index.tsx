@@ -2,8 +2,8 @@
 
 import React from "react"
 import { Link } from "@heroui/react"
-import { useAppSelector } from "@/redux"
-import { useE2eResultOverlayState } from "@/hooks"
+import { useAppSelector } from "@/redux/hooks"
+import { useE2eResultOverlayState } from "@/hooks/zustand/overlay/hooks"
 
 /** Minimal flow shape needed for the trigger label (full shape lives in E2eBody). */
 interface E2eFlowLite {

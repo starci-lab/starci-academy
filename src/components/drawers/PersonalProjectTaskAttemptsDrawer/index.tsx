@@ -9,20 +9,18 @@ import {
     Drawer,
     ScrollShadow,
 } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types"
-import {
-    usePersonalProjectTaskAttemptsDrawerOverlayState,
-    useQueryUserPersonalTaskAttemptsSwr,
-} from "@/hooks"
 import { useSmViewpoint } from "@/hooks/reuseables/useSmViewpoint"
 import { dayjs } from "@/modules/dayjs"
-import type { UserMilestoneTaskAttemptEntity } from "@/modules/types"
 import {
     useLocale,
     useTranslations,
 } from "next-intl"
 import { PersonalProjectAttemptCard } from "./PersonalProjectAttemptCard"
 import { PersonalProjectAttemptsSkeleton } from "./PersonalProjectAttemptsSkeleton"
+import type { WithClassNames } from "@/modules/types/base/class-name"
+import { usePersonalProjectTaskAttemptsDrawerOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useQueryUserPersonalTaskAttemptsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserPersonalTaskAttemptsSwr"
+import type { UserMilestoneTaskAttemptEntity } from "@/modules/types/entities/user-milestone-task"
 
 type AttemptRow = {
     /** Stable row key. */

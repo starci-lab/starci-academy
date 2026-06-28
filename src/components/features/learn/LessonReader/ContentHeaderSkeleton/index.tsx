@@ -4,10 +4,8 @@ import React from "react"
 import {
     Skeleton,
 } from "@heroui/react"
-import {
-    SkeletonText,
-    SkeletonParagraph,
-} from "@/components/reuseable"
+import { SkeletonText } from "@/components/reuseable/SkeletonText"
+import { SkeletonParagraph } from "@/components/reuseable/SkeletonParagraph"
 
 /**
  * Placeholder for the content header (title, description, meta chips) shown

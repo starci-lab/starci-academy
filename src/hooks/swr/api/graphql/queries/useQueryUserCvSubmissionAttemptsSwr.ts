@@ -1,11 +1,8 @@
-import {
-    defaultUserCvSubmissionAttemptsSorts,
-    queryUserCvSubmissionAttempts,
-} from "@/modules/api"
-import { useCvSubmissionAttemptsDrawerOverlayState } from "@/hooks"
-import { useAppSelector } from "@/redux"
 import { useState } from "react"
 import useSWR from "swr"
+import { defaultUserCvSubmissionAttemptsSorts, queryUserCvSubmissionAttempts } from "@/modules/api/graphql/queries/query-user-cv-submission-attempts"
+import { useCvSubmissionAttemptsDrawerOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useAppSelector } from "@/redux/hooks"
 
 export const USER_CV_SUBMISSION_ATTEMPTS_PAGE_SIZE = 5
 

@@ -16,11 +16,13 @@ import {
 } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
-import { IconTile, SectionHeading, ShowcaseMockup, SHOWCASE_THEMES } from "@/components/blocks"
-import { UserAvatar } from "@/components/reuseable"
 import { pathConfig } from "@/resources/path"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { LANDING_SAMPLE_CANDIDATE } from "../constants"
+import { IconTile } from "@/components/blocks/identity/IconTile"
+import { SectionHeading } from "@/components/blocks/marketing/SectionHeading"
+import { ShowcaseMockup, SHOWCASE_THEMES } from "@/components/blocks/marketing/ShowcaseMockup"
+import { UserAvatar } from "@/components/reuseable/UserAvatar"
 
 /** Props for {@link TalentMarketplace}. */
 export type TalentMarketplaceProps = WithClassNames<undefined>

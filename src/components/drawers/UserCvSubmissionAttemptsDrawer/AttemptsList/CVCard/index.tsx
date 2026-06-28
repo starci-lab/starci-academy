@@ -10,10 +10,9 @@ import {
     Link,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { useAppDispatch } from "@/redux"
-import { setSelectedCvSubmissionAttemptAnalysis } from "@/redux/slices"
-import type { WithClassNames } from "@/modules/types"
-
+import { useAppDispatch } from "@/redux/hooks"
+import { setSelectedCvSubmissionAttemptAnalysis } from "@/redux/slices/cv-submission-attempt-analysis"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link CVCard}. */
 export interface CVCardProps extends WithClassNames<undefined> {

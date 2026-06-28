@@ -1,11 +1,9 @@
-import {
-    queryCheckEmailExists,
-    type CheckEmailExistsData,
-    type CheckEmailExistsRequest,
-    AbortableRequest
-} from "@/modules/api"
 import useSWRMutation from "swr/mutation"
 import validator from "validator"
+import { queryCheckEmailExists } from "@/modules/api/graphql/queries/query-check-email-exists"
+import { type CheckEmailExistsData, type CheckEmailExistsRequest } from "@/modules/api/graphql/queries/types/check-email-exists"
+import { AbortableRequest } from "@/modules/api/graphql/types"
+
 /**
  * SWR mutation: bloom-filter `checkEmailExists` (public GraphQL, no auth).
  * Call `trigger({ email })` when you need a result (e.g. after blur or before submit).

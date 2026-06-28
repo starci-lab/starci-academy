@@ -1,7 +1,7 @@
 import React from "react"
 import { Typography, cn } from "@heroui/react"
-import { getLanguageColor, getLanguageLabel } from "@/modules/utils"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { getLanguageColor, getLanguageLabel } from "@/modules/utils/language"
 
 /** Props for {@link LanguageChip}. */
 export interface LanguageChipProps extends WithClassNames<undefined> {

@@ -1,7 +1,7 @@
-import { queryMyInProgressChallenges } from "@/modules/api"
-import type { QueryMyDashboardRefItemData } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { queryMyInProgressChallenges } from "@/modules/api/graphql/queries/query-my-in-progress-challenges"
+import type { QueryMyDashboardRefItemData } from "@/modules/api/graphql/queries/types/my-dashboard"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR wrapper for {@link queryMyInProgressChallenges}. `data` is the challenges

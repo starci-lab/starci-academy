@@ -1,9 +1,9 @@
 "use client"
 
 import React, { useEffect, useRef } from "react"
-import { publicEnv } from "@/resources"
 import { cn } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types"
+import { publicEnv } from "@/resources/env/public"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 export interface TurnstileProps extends WithClassNames<undefined> {
     /** Callback triggered when Turnstile successfully validates the visitor. */

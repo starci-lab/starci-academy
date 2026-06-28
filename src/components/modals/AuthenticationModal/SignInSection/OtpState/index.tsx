@@ -11,8 +11,9 @@
 import React from "react"
 import { Button, cn, FieldError, InputOTP, Link, Modal, Spinner, TextField } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { useMutateSignInResendOtpSwr, useSignInForm } from "@/hooks"
-import { useGraphQLWithToast } from "@/modules/toast"
+import { useMutateSignInResendOtpSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSignInResendOtpSwr"
+import { useSignInForm } from "@/hooks/zustand/signIn/useSignInForm"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
 
 /**
  * OTPState component.

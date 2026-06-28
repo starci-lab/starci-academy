@@ -18,17 +18,6 @@ import {
     ListChecksIcon,
 } from "@phosphor-icons/react"
 import {
-    useQueryMyMilestoneTaskAttemptsSwr,
-    MY_MILESTONE_TASK_ATTEMPTS_LIMIT,
-} from "@/hooks"
-import {
-    AsyncContent,
-    LabeledCard,
-    ListRow,
-    PageHeader,
-    Skeleton,
-} from "@/components/blocks"
-import {
     SettingsBreadcrumb,
 } from "../SettingsBreadcrumb"
 import {
@@ -37,6 +26,12 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useQueryMyMilestoneTaskAttemptsSwr, MY_MILESTONE_TASK_ATTEMPTS_LIMIT } from "@/hooks/swr/api/graphql/queries/useQueryMyMilestoneTaskAttemptsSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { ListRow } from "@/components/blocks/lists/ListRow"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /** Props for {@link MyAttempts}. */
 export type MyAttemptsProps = WithClassNames<undefined>

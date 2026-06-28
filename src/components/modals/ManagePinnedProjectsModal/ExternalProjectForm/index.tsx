@@ -11,8 +11,8 @@ import {
     Typography,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { usePinExternalProjectForm } from "@/hooks"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { usePinExternalProjectForm } from "@/hooks/rhf/usePinExternalProjectForm"
 
 /** Props for {@link ExternalProjectForm}. */
 export interface ExternalProjectFormProps extends WithClassNames<undefined> {

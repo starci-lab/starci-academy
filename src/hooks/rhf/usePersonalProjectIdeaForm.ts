@@ -5,12 +5,10 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { useTranslations } from "next-intl"
 import { useMemo } from "react"
-import {
-    useMutateSubmitPersonalProjectIdealSwr,
-    useQueryCourseEnrollmentStatusSwr,
-} from "@/hooks/swr"
-import { useAppSelector } from "@/redux"
-import { useGraphQLWithToast } from "@/modules/toast"
+import { useMutateSubmitPersonalProjectIdealSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSubmitPersonalProjectIdealSwr"
+import { useQueryCourseEnrollmentStatusSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseEnrollmentStatusSwr"
+import { useAppSelector } from "@/redux/hooks"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
 
 /** Form values for the personal-project idea. */
 export interface PersonalProjectIdeaFormValues {

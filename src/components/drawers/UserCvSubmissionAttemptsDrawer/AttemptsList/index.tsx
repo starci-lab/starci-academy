@@ -6,10 +6,10 @@ import {
     ScrollShadow,
 } from "@heroui/react"
 import type { AttemptRow } from "../types"
-import type { WithClassNames } from "@/modules/types"
 import {
     CVCard,
 } from "./CVCard"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link AttemptsList}. */
 export interface AttemptsListProps extends WithClassNames<undefined> {

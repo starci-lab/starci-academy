@@ -1,7 +1,7 @@
-import { queryMyContributionCalendar } from "@/modules/api"
-import type { QueryMyContributionDayData } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { queryMyContributionCalendar } from "@/modules/api/graphql/queries/query-my-contribution-calendar"
+import type { QueryMyContributionDayData } from "@/modules/api/graphql/queries/types/my-dashboard"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR wrapper for {@link queryMyContributionCalendar}. `data` is the viewer's

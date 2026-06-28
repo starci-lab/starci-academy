@@ -1,4 +1,4 @@
-import { ChallengeDifficulty } from "@/modules/types"
+import { ChallengeDifficulty } from "@/modules/types/enums/challenge-difficulty"
 
 /**
  * Palette of difficulty colors.

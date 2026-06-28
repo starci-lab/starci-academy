@@ -1,6 +1,6 @@
-import { queryMyChallengeSubmissions } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { queryMyChallengeSubmissions } from "@/modules/api/graphql/queries/query-my-challenge-submissions"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Default page size for the submissions list. */
 export const MY_CHALLENGE_SUBMISSIONS_LIMIT = 20

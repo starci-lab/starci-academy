@@ -2,7 +2,7 @@ import {
     createSlice,
     type PayloadAction,
 } from "@reduxjs/toolkit"
-import type { SubmissionAttemptEntity } from "@/modules/types"
+import type { SubmissionAttemptEntity } from "@/modules/types/entities/submission-attempt"
 
 /**
  * Client state for paginated submission attempts scoped to a challenge submission.

@@ -7,9 +7,7 @@ import {
     CheckCircleIcon,
     FlaskIcon,
 } from "@phosphor-icons/react"
-import {
-    ContentTab,
-} from "@/redux/slices"
+import { ContentTab } from "@/redux/slices/tabs"
 
 /**
  * Icon component rendered on each {@link ContentTab} trigger.

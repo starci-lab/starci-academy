@@ -6,9 +6,7 @@ import {
     CodeIcon,
     CardsIcon,
 } from "@phosphor-icons/react"
-import type {
-    KpiKey,
-} from "@/modules/api"
+import type { KpiKey } from "@/modules/api/graphql/queries/types/my-kpis"
 
 /**
  * Phosphor icon per weekly-KPI key (dashboard runs phosphor `*Icon`; the legacy

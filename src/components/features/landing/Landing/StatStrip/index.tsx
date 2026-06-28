@@ -9,9 +9,10 @@ import {
 } from "@phosphor-icons/react"
 import { Typography } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
-import { useQueryPlatformStatsSwr } from "@/hooks"
-import { AsyncContent, Skeleton } from "@/components/blocks"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { useQueryPlatformStatsSwr } from "@/hooks/swr/api/graphql/queries/useQueryPlatformStatsSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /** Props for {@link StatStrip}. */
 export type StatStripProps = WithClassNames<undefined>

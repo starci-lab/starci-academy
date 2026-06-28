@@ -3,11 +3,11 @@
 import React, { useState } from "react"
 import { Button, Popover, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { ReactionType, type ReactionSummary } from "@/modules/api"
-import type { WithClassNames } from "@/modules/types"
 import { REACTION_BY_TYPE } from "./constants"
 import { ReactionEmoji } from "./ReactionEmoji"
 import { FacebookReactionSelector } from "./FacebookReactionSelector"
+import { ReactionType, type ReactionSummary } from "@/modules/api/graphql/queries/types/discussion"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link ReactionBar}. */
 export interface ReactionBarProps extends WithClassNames<undefined> {

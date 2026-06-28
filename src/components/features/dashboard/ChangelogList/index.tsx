@@ -10,23 +10,16 @@ import {
     cn,
 } from "@heroui/react"
 import {
-    useQueryChangelogEntriesSwr,
-} from "@/hooks"
-import {
-    ChangelogCategory,
-} from "@/modules/api"
-import {
-    AsyncContent,
-    LabeledCard,
-    SurfaceListCard,
-    SurfaceListCardItem,
-} from "@/components/blocks"
-import {
     ChangelogListSkeleton,
 } from "./ChangelogListSkeleton"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useQueryChangelogEntriesSwr } from "@/hooks/swr/api/graphql/queries/useQueryChangelogEntriesSwr"
+import { ChangelogCategory } from "@/modules/api/graphql/queries/types/changelog-entries"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 
 /** Props for {@link ChangelogList}. */
 export interface ChangelogListProps extends WithClassNames<undefined> {

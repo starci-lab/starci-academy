@@ -1,15 +1,9 @@
-import {
-    GraphQLHeadersKey,
-    defaultLivestreamSessionsListSorts,
-    queryLivestreamSessions,
-} from "@/modules/api"
-import { useAppDispatch, useAppSelector } from "@/redux"
 import { usePathname } from "next/navigation"
 import useSWR from "swr"
-import {
-    setLivestreamSessions,
-    setLivestreamSessionsCount,
-} from "@/redux/slices"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { defaultLivestreamSessionsListSorts, queryLivestreamSessions } from "@/modules/api/graphql/queries/query-livestream-sessions"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setLivestreamSessions, setLivestreamSessionsCount } from "@/redux/slices/livestream-session"
 
 /**
  * Lists course livestream sessions via `livestreamSessions` (enrolled + course id).

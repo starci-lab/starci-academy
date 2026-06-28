@@ -1,9 +1,10 @@
 "use client"
 
 import { Chip, Typography, cn } from "@heroui/react"
-import type { FoundationEntity, WithClassNames } from "@/modules/types"
 import { useTranslations } from "next-intl"
 import React, { useMemo } from "react"
+import type { FoundationEntity } from "@/modules/types/entities/foundation"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 export interface FoundationMetaProps extends WithClassNames<undefined> {
     /** Foundation row to render metadata chips for. */

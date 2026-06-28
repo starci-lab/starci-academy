@@ -2,8 +2,8 @@
 
 import React from "react"
 import { useTranslations } from "next-intl"
-import { WithClassNames } from "@/modules/types"
 import { cn } from "@heroui/react"
+import { WithClassNames } from "@/modules/types/base/class-name"
 
 export type LessonBodyEmptyProps = WithClassNames<undefined>
 

@@ -1,11 +1,9 @@
-import {
-    GraphQLHeadersKey,
-    defaultLessonVideosListSorts,
-    queryLessonVideos,
-} from "@/modules/api"
-import { useAppDispatch, useAppSelector } from "@/redux"
 import useSWR from "swr"
-import { ContentTab, setLessonVideoCount, setLessonVideos } from "@/redux/slices"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { defaultLessonVideosListSorts, queryLessonVideos } from "@/modules/api/graphql/queries/query-lesson-videos"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { ContentTab } from "@/redux/slices/tabs"
+import { setLessonVideoCount, setLessonVideos } from "@/redux/slices/lession-video"
 
 /**
  * Lists module lesson videos via `lessonVideos` and merges into `course.module.lessonVideos`.

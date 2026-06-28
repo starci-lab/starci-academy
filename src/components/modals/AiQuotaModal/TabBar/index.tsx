@@ -12,17 +12,11 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    useAppDispatch,
-    useAppSelector,
-} from "@/redux"
-import {
-    AiQuotaTab,
-    setAiQuotaTab,
-} from "@/redux/slices"
-import {
     AI_QUOTA_TAB_LABEL_KEY_MAP,
     AI_QUOTA_TAB_ORDER,
 } from "../map"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { AiQuotaTab, setAiQuotaTab } from "@/redux/slices/tabs"
 
 /** One tab entry in the AI quota modal tab bar. */
 interface AiQuotaTabBarItem {

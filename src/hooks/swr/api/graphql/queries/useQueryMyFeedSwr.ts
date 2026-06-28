@@ -1,7 +1,8 @@
 import useSWRInfinite from "swr/infinite"
-import { queryMyFeed, MyFeedTab, MyFeedCategory } from "@/modules/api"
-import type { QueryMyFeedResponseData } from "@/modules/api"
-import { useAppSelector } from "@/redux"
+import { queryMyFeed } from "@/modules/api/graphql/queries/query-my-feed"
+import { MyFeedTab, MyFeedCategory } from "@/modules/api/graphql/queries/types/my-feed"
+import type { QueryMyFeedResponseData } from "@/modules/api/graphql/queries/types/my-feed"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Items per feed page. */
 const PAGE_LIMIT = 5

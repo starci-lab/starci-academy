@@ -1,9 +1,9 @@
 "use client"
 
 import { useCallback } from "react"
-import type { PaymentContext } from "@/modules/types"
-import type { QueryActiveAdvertisementData } from "@/modules/api"
 import { useOverlayStore, type OverlayKey, type FollowListContext } from "./store"
+import type { PaymentContext } from "@/modules/types/payment"
+import type { QueryActiveAdvertisementData } from "@/modules/api/graphql/queries/types/active-advertisement"
 
 /**
  * Return shape of an overlay accessor — matches HeroUI's `UseOverlayStateReturn`
@@ -58,6 +58,8 @@ export const useChallengeOverlayState = () => useOverlayHandle("challenge")
 export const useContentOverlayState = () => useOverlayHandle("content")
 /** Content AI chat drawer overlay state (ask StarCi AI about the current content). */
 export const useContentAiChatOverlayState = () => useOverlayHandle("contentAiChat")
+/** Content AI settings modal overlay state (model picker + clear history). */
+export const useContentAiSettingsOverlayState = () => useOverlayHandle("contentAiSettings")
 /** Cookie preferences modal overlay state ("Tùy chỉnh" granular cookie consent). */
 export const useCookiePreferencesOverlayState = () => useOverlayHandle("cookiePreferences")
 /** CV preview overlay state. */
@@ -160,5 +162,48 @@ export const useSearchOverlayState = () => useOverlayHandle("search")
 export const useShareOverlayState = () => useOverlayHandle("share")
 /** Submission attempts overlay state. */
 export const useSubmissionAttemptsOverlayState = () => useOverlayHandle("submissionAttempts")
-/** User milestone task feedbacks modal overlay state. */
-export const useUserMilestoneTaskFeedbacksModalOverlayState = () => useOverlayHandle("userMilestoneTaskFeedbacksModal")
+
+/**
+ * Shared content-AI model selection — the chat composer and the settings modal
+ * read/write the same selected model so both dropdowns stay in sync.
+ * @returns the selected model and its setter.
+ */
+export const useContentAiSelectedModel = (): {
+    readonly selectedModel: string | null
+    setSelectedModel: (model: string | null) => void
+} => {
+    const selectedModel = useOverlayStore((state) => state.contentAiSelectedModel)
+    const setSelectedModel = useOverlayStore((state) => state.setContentAiSelectedModel)
+    return { selectedModel, setSelectedModel }
+}
+
+/**
+ * Content-AI "history cleared" signal — the settings modal bumps the nonce after
+ * clearing the saved conversation; the chat watches it to reset its live thread.
+ * @returns the current nonce and a function to bump it.
+ */
+export const useContentAiClearSignal = (): {
+    readonly clearNonce: number
+    signalCleared: () => void
+} => {
+    const clearNonce = useOverlayStore((state) => state.contentAiClearNonce)
+    const signalCleared = useOverlayStore((state) => state.signalContentAiCleared)
+    return { clearNonce, signalCleared }
+}
+
+/**
+ * Highlighted lesson passage the learner wants to ask about — set by the
+ * "ask AI about this passage" floating button, read by the chat composer to
+ * scope the next question. Cleared after the question is sent or the chat closes.
+ * @returns the selected passage and its setter.
+ */
+export const useContentAiSelection = (): {
+    readonly selection: string | null
+    readonly selectionContext: string | null
+    setSelection: (passage: string | null, context?: string | null) => void
+} => {
+    const selection = useOverlayStore((state) => state.contentAiSelection)
+    const selectionContext = useOverlayStore((state) => state.contentAiSelectionContext)
+    const setSelection = useOverlayStore((state) => state.setContentAiSelection)
+    return { selection, selectionContext, setSelection }
+}

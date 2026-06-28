@@ -16,14 +16,12 @@ import {
     Layers as LayersIcon,
 } from "@gravity-ui/icons"
 import {
-    useQueryMyDueFlashcardsSwr,
-} from "@/hooks"
-import {
     pathConfig,
 } from "@/resources/path"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useQueryMyDueFlashcardsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyDueFlashcardsSwr"
 
 /** Props for {@link FlashcardReview}. */
 export type FlashcardReviewProps = WithClassNames<undefined>

@@ -16,22 +16,16 @@ import {
     useRouter,
 } from "next/navigation"
 import {
-    queryResolveRoute,
-} from "@/modules/api"
-import {
-    useQueryUserFeedSwr,
-    useQueryUserProfileSwr,
-} from "@/hooks"
-import {
     useProfileUsername,
 } from "../useProfileUsername"
-import {
-    ActivityFeed,
-    ErrorState,
-} from "@/components/blocks"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { queryResolveRoute } from "@/modules/api/graphql/queries/query-resolve-route"
+import { useQueryUserFeedSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserFeedSwr"
+import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
+import { ActivityFeed } from "@/components/blocks/feed/ActivityFeed"
+import { ErrorState } from "@/components/blocks/feedback/ErrorState"
 
 /** Props for {@link ProfileActivity}. */
 export type ProfileActivityProps = WithClassNames<undefined>

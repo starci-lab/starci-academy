@@ -1,5 +1,5 @@
-import type { ChallengeEntity } from "@/modules/types"
 import type { GraphQLResponse } from "../../types"
+import type { ChallengeEntity } from "@/modules/types/entities/challenge"
 
 /** Apollo response shape for the `challenge` query. */
 export interface QueryChallengeResponse {

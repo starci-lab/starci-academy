@@ -3,9 +3,9 @@
 import { useMemo } from "react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
-import { pathConfig } from "@/resources"
-import { useAppSelector } from "@/redux"
 import type { HeadhuntingBreadcrumbItem } from "../types"
+import { pathConfig } from "@/resources/path"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * Builds the breadcrumb trail for the headhunting company detail page.

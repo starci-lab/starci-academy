@@ -23,12 +23,10 @@ import {
     PuzzlePieceIcon,
     BookOpenIcon,
 } from "@phosphor-icons/react"
-import {
-    queryResolveRoute,
-} from "@/modules/api"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { queryResolveRoute } from "@/modules/api/graphql/queries/query-resolve-route"
 
 /** Kind of resume target — drives the chip icon + label. */
 export type ResumeKind = "challenge" | "lesson"

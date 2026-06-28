@@ -1,5 +1,5 @@
-import type { ContentEntity } from "@/modules/types"
 import type { GraphQLResponse, PaginationFilters, SortInput } from "../../types"
+import type { ContentEntity } from "@/modules/types/entities/content"
 
 /** Paginated payload inside `contents.data`. */
 export interface QueryContentsPayload {

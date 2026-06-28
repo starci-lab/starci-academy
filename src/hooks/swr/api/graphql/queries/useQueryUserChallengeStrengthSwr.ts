@@ -1,6 +1,6 @@
-import { queryUserChallengeStrength } from "@/modules/api"
-import type { QueryUserChallengeStrengthData } from "@/modules/api"
 import useSWR from "swr"
+import { queryUserChallengeStrength } from "@/modules/api/graphql/queries/query-user-challenge-strength"
+import type { QueryUserChallengeStrengthData } from "@/modules/api/graphql/queries/types/user-challenge-strength"
 
 /**
  * SWR hook for a user's difficulty-weighted challenge-strength stats (global

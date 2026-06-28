@@ -2,12 +2,13 @@
 
 import React, { useMemo } from "react"
 import { useTheme } from "next-themes"
-import { useAppSelector } from "@/redux"
-import { useQueryContentSwr, useRepoSandpackFiles } from "@/hooks"
 import { SandpackPanel } from "@/components/reuseable/SandpackPanel"
-import { AsyncContent } from "@/components/blocks"
 import { CodeBodySkeleton } from "../CodeBodySkeleton"
 import type { SandpackFiles } from "@codesandbox/sandpack-react"
+import { useAppSelector } from "@/redux/hooks"
+import { useQueryContentSwr } from "@/hooks/swr/api/graphql/queries/useQueryContentSwr"
+import { useRepoSandpackFiles } from "@/hooks/useRepoSandpackFiles"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 
 /**
  * Tailwind v4 theme registered at runtime in the preview iframe. `@tailwindcss/browser`

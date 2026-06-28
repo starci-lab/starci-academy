@@ -2,23 +2,26 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import useSWR from "swr"
-import { Button, Card, CardContent, Chip, Spinner, Typography, cn } from "@heroui/react"
-import { ListNumbersIcon, MicrophoneIcon, RobotIcon } from "@phosphor-icons/react"
+import { Button, Card, CardContent, Chip, Label, Spinner, Typography, cn } from "@heroui/react"
+import { LightningIcon, ListNumbersIcon, MicrophoneIcon, RobotIcon, StackIcon, StairsIcon, TargetIcon } from "@phosphor-icons/react"
 import { useTranslations, useLocale } from "next-intl"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { SegmentedControl } from "@/components/blocks/navigation/SegmentedControl"
-import { queryDrawInterviewCard, queryMyInterviewHistory } from "@/modules/api/graphql"
-import type {
-    InterviewCardData,
-    InterviewGradeResultData,
-    GraphQLHeaders,
-} from "@/modules/api"
-import { GraphQLHeadersKey, InterviewVerdict } from "@/modules/api"
-import { useMutateGradeInterviewAnswerSwr } from "@/hooks"
-import { useSpeechRecognition } from "@/hooks"
-import { useGraphQLWithToast } from "@/modules/toast"
+import { SelectableCardGroup } from "@/components/blocks/navigation/SelectableCardGroup"
+import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { InterviewSessionSkeleton } from "./InterviewSessionSkeleton"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { queryDrawInterviewCard } from "@/modules/api/graphql/queries/query-draw-interview-card"
+import { queryMyInterviewHistory } from "@/modules/api/graphql/queries/query-my-interview-history"
+import type { InterviewCardData } from "@/modules/api/graphql/queries/types/draw-interview-card"
+import type { InterviewGradeResultData } from "@/modules/api/graphql/mutations/types/grade-interview-answer"
+import type { GraphQLHeaders } from "@/modules/api/graphql/types"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { InterviewVerdict } from "@/modules/api/graphql/mutations/types/grade-interview-answer"
+import { useMutateGradeInterviewAnswerSwr } from "@/hooks/swr/api/graphql/mutations/useMutateGradeInterviewAnswerSwr"
+import { useSpeechRecognition } from "@/hooks/useSpeechRecognition"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
 
 /** Props for {@link InterviewSession}. */
 export interface InterviewSessionProps extends WithClassNames<undefined> {
@@ -39,8 +42,13 @@ interface InterviewTurn {
     tags: Array<string>
 }
 
-/** How many questions one session runs. */
-const SESSION_LENGTH = 5
+/** Practice modes that change how a session runs. `quick`/`deep` only differ in
+ * length and ship now; `weak` (drill weak tags) + `ladder` (level progression)
+ * need backend support (tag-filtered draw / per-level history) → shown coming-soon. */
+type InterviewMode = "quick" | "deep"
+
+/** Question count per practice mode. */
+const MODE_LENGTH: Record<InterviewMode, number> = { quick: 5, deep: 10 }
 
 /** Seniority levels offered at setup (mirrors the backend `FlashcardLevel` enum). */
 const LEVELS = ["junior", "middle", "senior", "staff"] as const
@@ -58,8 +66,8 @@ const PANEL_CLASS = "flex flex-col gap-3 rounded-xl bg-default/40 p-8"
 
 /**
  * Voice mock-interview over a deck, run as a fixed-length session: the learner
- * optionally picks a seniority level, then answers {@link SESSION_LENGTH}
- * questions aloud (model answer withheld server-side). Each answer is transcribed
+ * optionally picks a practice mode + seniority level, then answers a fixed
+ * number of questions aloud (model answer withheld server-side). Each answer is transcribed
  * client-side and graded into a pass/borderline/fail verdict with concrete
  * feedback; at the end a summary aggregates the average score, the verdict
  * breakdown, and the weakest topics (tags of the questions not passed) so the
@@ -96,6 +104,10 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
     const [phase, setPhase] = useState<InterviewPhase>("setup")
     // chosen seniority level (null = any level)
     const [level, setLevel] = useState<string | null>(null)
+    // chosen practice mode → drives the session length
+    const [mode, setMode] = useState<InterviewMode>("quick")
+    // how many questions this session runs (derived from the mode)
+    const sessionLength = MODE_LENGTH[mode]
     // zero-based index of the current question within the session
     const [index, setIndex] = useState(0)
     // the currently drawn question (null while drawing / on draw failure)
@@ -224,17 +236,21 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
 
     // advance to the next question, or end the session after the last one
     const advance = useCallback(() => {
-        if (index < SESSION_LENGTH - 1) {
+        if (index < sessionLength - 1) {
             setIndex((previous) => previous + 1)
         } else {
             // session done — the attempts are now persisted, so refresh history
             void refreshHistory()
             setPhase("summary")
         }
-    }, [index, refreshHistory])
+    }, [index, sessionLength, refreshHistory])
 
-    // ── SETUP ────────────────────────────────────────────────────────────
+    // ── SETUP — readiness hub (single column, no bento split) ────────────
     if (phase === "setup") {
+        // weak/ladder need backend (tag-filtered draw / per-level history) → coming-soon
+        const comingSoonBadge = (
+            <span className="text-xs text-muted">{t("flashcard.interview.comingSoon")}</span>
+        )
         return (
             <div className={cn("flex flex-col gap-6", className)}>
                 <Card>
@@ -258,7 +274,7 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                         <div className="flex flex-wrap items-center gap-2">
                             <Chip size="sm" variant="soft" color="default">
                                 <ListNumbersIcon className="size-4" aria-hidden focusable="false" />
-                                {t("flashcard.interview.expectCount", { total: SESSION_LENGTH })}
+                                {t("flashcard.interview.expectCount", { total: sessionLength })}
                             </Chip>
                             <Chip size="sm" variant="soft" color="default">
                                 <MicrophoneIcon className="size-4" aria-hidden focusable="false" />
@@ -270,11 +286,106 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                             </Chip>
                         </div>
 
-                        {/* seniority level — single-select SETTING → block segmented (not underline) */}
+                        {/* readiness — compact full-width strip (not a side column) */}
                         <div className="flex flex-col gap-2">
-                            <Typography type="body-xs" weight="medium" color="muted">
-                                {t("flashcard.interview.levelLabel")}
-                            </Typography>
+                            <Label>{t("flashcard.interview.readinessTitle")}</Label>
+                            {history === undefined ? (
+                                <div className="flex items-center gap-3">
+                                    <Skeleton.Typography type="h4" width="1/4" />
+                                    <Skeleton.Meter className="flex-1" />
+                                </div>
+                            ) : history && history.totalAnswered > 0 ? (
+                                <div className="flex flex-col gap-3">
+                                    <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+                                        <div className="flex items-baseline gap-2">
+                                            <Typography className="text-2xl font-medium text-foreground">
+                                                {history.averageScore}
+                                            </Typography>
+                                            <Typography type="body-xs" color="muted">
+                                                {`/100 · ${t("flashcard.interview.bestScore").toLowerCase()} ${history.bestScore}`}
+                                            </Typography>
+                                        </div>
+                                        <ProgressMeter value={history.averageScore} max={100} className="min-w-40 flex-1" />
+                                    </div>
+                                    {/* verdict breakdown — pass / borderline / fail counts */}
+                                    <div className="flex flex-wrap items-center gap-2">
+                                        <Chip size="sm" variant="soft" color="success">
+                                            {`${t("flashcard.interview.pass")} · ${history.passCount}`}
+                                        </Chip>
+                                        <Chip size="sm" variant="soft" color="warning">
+                                            {`${t("flashcard.interview.borderline")} · ${history.borderlineCount}`}
+                                        </Chip>
+                                        <Chip size="sm" variant="soft" color="danger">
+                                            {`${t("flashcard.interview.fail")} · ${history.failCount}`}
+                                        </Chip>
+                                    </div>
+                                    {/* weak topics to revisit (tag-filtered drill ships next round) */}
+                                    {history.weakTags.length > 0 ? (
+                                        <div className="flex flex-wrap items-center gap-2">
+                                            {history.weakTags.map((tag) => (
+                                                <Chip key={tag} size="sm" variant="soft" color="default">
+                                                    {tag}
+                                                </Chip>
+                                            ))}
+                                        </div>
+                                    ) : null}
+                                </div>
+                            ) : (
+                                // never interviewed yet → meter at 0 + nudge (don't self-hide)
+                                <div className="flex flex-wrap items-center gap-3">
+                                    <ProgressMeter value={0} max={100} className="min-w-40 flex-1" />
+                                    <Typography type="body-sm" color="muted">
+                                        {t("flashcard.interview.readinessEmpty")}
+                                    </Typography>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* practice mode — selectable surface cards (one lights up) */}
+                        <div className="flex flex-col gap-2">
+                            <Label>{t("flashcard.interview.modeLabel")}</Label>
+                            <SelectableCardGroup
+                                ariaLabel={t("flashcard.interview.modeLabel")}
+                                value={mode}
+                                onChange={(next) => {
+                                    // only quick/deep are selectable (weak/ladder disabled)
+                                    if (next === "quick" || next === "deep") {
+                                        setMode(next)
+                                    }
+                                }}
+                                columns={2}
+                                items={[
+                                    {
+                                        value: "quick",
+                                        label: t("flashcard.interview.modeQuick"),
+                                        icon: <LightningIcon className="size-4" />,
+                                    },
+                                    {
+                                        value: "deep",
+                                        label: t("flashcard.interview.modeDeep"),
+                                        icon: <StackIcon className="size-4" />,
+                                    },
+                                    {
+                                        value: "weak",
+                                        label: t("flashcard.interview.modeWeak"),
+                                        icon: <TargetIcon className="size-4" />,
+                                        isDisabled: true,
+                                        badge: comingSoonBadge,
+                                    },
+                                    {
+                                        value: "ladder",
+                                        label: t("flashcard.interview.modeLadder"),
+                                        icon: <StairsIcon className="size-4" />,
+                                        isDisabled: true,
+                                        badge: comingSoonBadge,
+                                    },
+                                ]}
+                            />
+                        </div>
+
+                        {/* seniority level — group label uses <Label> + block segmented */}
+                        <div className="flex flex-col gap-2">
+                            <Label>{t("flashcard.interview.levelLabel")}</Label>
                             <SegmentedControl
                                 ariaLabel={t("flashcard.interview.levelLabel")}
                                 value={level ?? "all"}
@@ -288,64 +399,6 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                                 ]}
                             />
                         </div>
-
-                        {/* cross-session history (auto-hides until first attempt) */}
-                        {history && history.totalAnswered > 0 ? (
-                            <div className="flex flex-col gap-3 border-t border-default pt-4">
-                                <Typography type="body-xs" weight="medium" color="muted">
-                                    {t("flashcard.interview.historyTitle")}
-                                </Typography>
-                                <div className="flex flex-wrap items-center gap-6">
-                                    <div className="flex flex-col">
-                                        <Typography type="body-xs" color="muted">
-                                            {t("flashcard.interview.avgScore")}
-                                        </Typography>
-                                        <Typography className="text-xl font-medium text-foreground">
-                                            {history.averageScore}
-                                        </Typography>
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <Typography type="body-xs" color="muted">
-                                            {t("flashcard.interview.bestScore")}
-                                        </Typography>
-                                        <Typography className="text-xl font-medium text-success">
-                                            {history.bestScore}
-                                        </Typography>
-                                    </div>
-                                    <Typography type="body-sm" color="muted">
-                                        {t("flashcard.interview.historyAnswered", {
-                                            count: history.totalAnswered,
-                                        })}
-                                    </Typography>
-                                </div>
-                                {/* verdict breakdown — pass / borderline / fail counts */}
-                                <div className="flex flex-wrap items-center gap-2">
-                                    <Chip size="sm" variant="soft" color="success">
-                                        {`${t("flashcard.interview.pass")} · ${history.passCount}`}
-                                    </Chip>
-                                    <Chip size="sm" variant="soft" color="warning">
-                                        {`${t("flashcard.interview.borderline")} · ${history.borderlineCount}`}
-                                    </Chip>
-                                    <Chip size="sm" variant="soft" color="danger">
-                                        {`${t("flashcard.interview.fail")} · ${history.failCount}`}
-                                    </Chip>
-                                </div>
-                                {history.weakTags.length > 0 ? (
-                                    <div className="flex flex-col gap-2">
-                                        <Typography type="body-xs" weight="medium" color="muted">
-                                            {t("flashcard.interview.weakTags")}
-                                        </Typography>
-                                        <div className="flex flex-wrap items-center gap-2">
-                                            {history.weakTags.map((tag) => (
-                                                <Chip key={tag} size="sm" variant="soft" color="default">
-                                                    {tag}
-                                                </Chip>
-                                            ))}
-                                        </div>
-                                    </div>
-                                ) : null}
-                            </div>
-                        ) : null}
 
                         {/* primary CTA — loud, mic-led (one primary action) */}
                         <Button variant="primary" size="lg" className="self-start" onPress={startSession}>
@@ -396,7 +449,7 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                         <Typography type="body-sm" color="muted">
                             {t("flashcard.interview.progress", {
                                 current: answered,
-                                total: SESSION_LENGTH,
+                                total: sessionLength,
                             })}
                         </Typography>
                     </div>
@@ -489,7 +542,7 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
     // whether anything has been transcribed yet (gates the submit button)
     const hasTranscript = transcript.trim().length > 0
     // the action shown after grading: advance, or finish on the last question
-    const isLastQuestion = index >= SESSION_LENGTH - 1
+    const isLastQuestion = index >= sessionLength - 1
 
     return (
         <div className={cn("flex flex-col gap-6", className)}>
@@ -498,7 +551,7 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                 <Typography type="body-sm" weight="medium" color="muted">
                     {t("flashcard.interview.progress", {
                         current: index + 1,
-                        total: SESSION_LENGTH,
+                        total: sessionLength,
                     })}
                 </Typography>
                 {(card.level || (card.tags?.length ?? 0) > 0) ? (

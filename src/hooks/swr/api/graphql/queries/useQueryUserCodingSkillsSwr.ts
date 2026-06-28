@@ -1,5 +1,5 @@
-import { queryUserCodingSkills } from "@/modules/api"
 import useSWR from "swr"
+import { queryUserCodingSkills } from "@/modules/api/graphql/queries/query-user-coding-skills"
 
 /**
  * SWR hook for a user's solved-coding breakdown (by language + difficulty) by id.

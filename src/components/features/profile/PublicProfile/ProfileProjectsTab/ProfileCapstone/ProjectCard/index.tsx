@@ -18,19 +18,15 @@ import {
     RocketIcon,
     SealCheckIcon,
 } from "@phosphor-icons/react"
-import {
-    IconTile,
-    ListRow,
-    ProgressMeter,
-    SegmentBar,
-    StatusChip,
-} from "@/components/blocks"
-import type {
-    QueryUserCapstoneCourseProgress,
-} from "@/modules/api"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { IconTile } from "@/components/blocks/identity/IconTile"
+import { ListRow } from "@/components/blocks/lists/ListRow"
+import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
+import { SegmentBar } from "@/components/blocks/stats/SegmentBar"
+import { StatusChip } from "@/components/blocks/chips/StatusChip"
+import type { QueryUserCapstoneCourseProgress } from "@/modules/api/graphql/queries/types/user-capstone-progress"
 
 /** Milestones shown before the "see more" link is offered (rest is long). */
 const INITIAL_MILESTONES = 2

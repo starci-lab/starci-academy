@@ -18,23 +18,15 @@ import {
     Snowflake as SnowflakeIcon,
     ShoppingBag as ShoppingBagIcon,
 } from "@gravity-ui/icons"
-import {
-    useMutateRedeemRewardSwr,
-    useQueryMyRewardWalletSwr,
-    useQueryRewardsSwr,
-} from "@/hooks"
-import {
-    useGraphQLWithToast,
-} from "@/modules/toast"
-import {
-    SectionCard,
-} from "@/components/reuseable"
-import type {
-    QueryRewardData,
-} from "@/modules/api"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useMutateRedeemRewardSwr } from "@/hooks/swr/api/graphql/mutations/useMutateRedeemRewardSwr"
+import { useQueryMyRewardWalletSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyRewardWalletSwr"
+import { useQueryRewardsSwr } from "@/hooks/swr/api/graphql/queries/useQueryRewardsSwr"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
+import { SectionCard } from "@/components/reuseable/SectionCard"
+import type { QueryRewardData } from "@/modules/api/graphql/queries/types/rewards"
 
 /** The streak-freeze reward key (drives its distinct icon). */
 const STREAK_FREEZE_KEY = "streakFreeze"

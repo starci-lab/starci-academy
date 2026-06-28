@@ -8,14 +8,6 @@ import {
     FlameIcon,
 } from "@phosphor-icons/react"
 import {
-    AsyncContent,
-    LabeledCard,
-    SurfaceListCard,
-} from "@/components/blocks"
-import {
-    useQueryTrendingContentsSwr,
-} from "@/hooks"
-import {
     TrendingRow,
 } from "./TrendingRow"
 import {
@@ -24,6 +16,10 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { SurfaceListCard } from "@/components/blocks/cards/SurfaceListCard"
+import { useQueryTrendingContentsSwr } from "@/hooks/swr/api/graphql/queries/useQueryTrendingContentsSwr"
 
 /** Props for {@link TrendingContents}. */
 export type TrendingContentsProps = WithClassNames<undefined>

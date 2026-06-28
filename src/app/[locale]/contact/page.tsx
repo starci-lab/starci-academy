@@ -1,7 +1,7 @@
 import React from "react"
 import type { Metadata } from "next"
 import { Contact } from "@/components/features/contact/Contact"
-import { buildPageMetadata } from "@/modules/seo"
+import { buildPageMetadata } from "@/modules/seo/buildMetadata"
 
 /** Route params for `/[locale]/contact`. */
 interface ContactParams {

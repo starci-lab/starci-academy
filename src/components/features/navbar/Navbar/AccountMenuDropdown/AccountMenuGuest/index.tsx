@@ -10,14 +10,11 @@ import {
     UserPlusIcon,
 } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import { useAppDispatch } from "@/redux"
-import { setAuthenticationModalTab } from "@/redux/slices"
 import { AuthenticationModalTab } from "@/redux/slices/tabs"
-import {
-    useAccountMenuOverlayState,
-    useAuthenticationOverlayState,
-} from "@/hooks"
-import type { WithClassNames } from "@/modules/types"
+import { useAppDispatch } from "@/redux/hooks"
+import { setAuthenticationModalTab } from "@/redux/slices/tabs"
+import { useAccountMenuOverlayState, useAuthenticationOverlayState } from "@/hooks/zustand/overlay/hooks"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link AccountMenuGuest}. */
 export type AccountMenuGuestProps = WithClassNames<undefined>

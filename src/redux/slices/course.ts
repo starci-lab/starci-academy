@@ -1,10 +1,8 @@
-import type {
-    CourseEntity,
-} from "@/modules/types"
 import {
     createSlice,
     type PayloadAction,
 } from "@reduxjs/toolkit"
+import type { CourseEntity } from "@/modules/types/entities/course"
 
 /**
  * Client state for the currently active course and the full course catalogue.

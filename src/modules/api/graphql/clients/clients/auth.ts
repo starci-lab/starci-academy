@@ -14,8 +14,10 @@ import {
     defaultOptions,
     createProactiveAccessTokenRefreshLink
 } from "../links"
-import { LocalStorage, LocalStorageId } from "@/modules/storage"
 import { type GraphQLHeaders } from "../../types"
+import { LocalStorage } from "@/modules/storage/local/storage"
+import { LocalStorageId } from "@/modules/storage/local/enums/id"
+
 /**
  * Authenticated Apollo client for GraphQL operations.
  *

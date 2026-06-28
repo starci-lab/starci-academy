@@ -1,7 +1,5 @@
-import {
-    mutateClaimDailyQuestReward,
-} from "@/modules/api"
 import useSWRMutation from "swr/mutation"
+import { mutateClaimDailyQuestReward } from "@/modules/api/graphql/mutations/mutation-claim-daily-quest-reward"
 
 type MutateClaimDailyQuestRewardResult = Awaited<ReturnType<typeof mutateClaimDailyQuestReward>>
 

@@ -3,12 +3,10 @@
 import {
     useMemo,
 } from "react"
-import {
-    useAppSelector,
-} from "@/redux"
 import type {
     CourseTotals,
 } from "../types"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * Derives marketing trust-stats from the loaded course tree — module / lesson /

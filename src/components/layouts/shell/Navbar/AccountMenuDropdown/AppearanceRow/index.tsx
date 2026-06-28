@@ -7,12 +7,10 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import type {
-    WithClassNames,
-} from "@/modules/types"
 import {
     DarkLightModeSwitch,
 } from "../DarkLightMode"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link AppearanceRow}.

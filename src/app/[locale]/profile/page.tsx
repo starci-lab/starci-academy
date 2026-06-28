@@ -11,14 +11,10 @@ import {
     useSearchParams,
 } from "next/navigation"
 import {
-    useAppSelector,
-} from "@/redux"
-import {
-    pathConfig,
-} from "@/resources"
-import {
     PublicProfile,
 } from "@/components/features/profile/PublicProfile"
+import { useAppSelector } from "@/redux/hooks"
+import { pathConfig } from "@/resources/path"
 
 /**
  * Route `/[locale]/profile` — the signed-in user's own profile. Canonicalizes the

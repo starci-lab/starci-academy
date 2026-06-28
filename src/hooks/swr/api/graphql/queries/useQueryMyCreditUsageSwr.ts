@@ -1,6 +1,6 @@
-import { queryMyCreditUsage } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { queryMyCreditUsage } from "@/modules/api/graphql/queries/query-my-credit-usage"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR query wrapper for {@link queryMyCreditUsage}. `data` is the unwrapped

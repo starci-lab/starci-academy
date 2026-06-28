@@ -1,27 +1,33 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useMemo, useState } from "react"
 import useSWR from "swr"
 import { Button } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { queryBlogPosts, BlogCategory } from "@/modules/api/graphql"
+import { Masthead } from "./Masthead"
+import { TopicsStrip } from "./TopicsStrip"
+import { StartHereAnchor } from "./StartHereAnchor"
 import { CategoryFilter } from "./CategoryFilter"
 import { FeaturedPost } from "./FeaturedPost"
 import { PostRow } from "../shared/PostRow"
 import { BlogListSkeleton } from "./BlogListSkeleton"
+import { queryBlogPosts } from "@/modules/api/graphql/queries/query-blog-posts"
+import { BlogCategory } from "@/modules/api/graphql/queries/types/blog"
 
 /** Posts fetched per page / "load more" step (mirrors the backend default). */
 const PAGE_SIZE = 12
 
+/** Slug of the pinned "start here" entry point (the backend monorepo tour). */
+const START_HERE_SLUG = "start-here-monorepo-tour"
+
 /**
- * Public `/blog` listing (Direction C — featured lead + typographic list).
- *
- * Fetches published posts via SWR (re-keyed by the active pillar + grown limit),
- * then renders an editorial lead (newest post) above a text-first list with
- * load-more pagination. Cover images are used only when present — the layout is
- * built for the coverless reality of the content.
+ * Public `/blog` — reframed as StarCi's engineering publication ("the backend, taken apart"):
+ * an operational 3D infra masthead → reframed header → a real-subsystem topics strip → a pinned
+ * "start here" anchor → editorial lead → text-first list. The pillar filter only appears once
+ * more than one pillar actually has posts (today every post is a `codebase` deep-dive, so it
+ * stays hidden — no dead buckets). Cover images are used only when present.
  */
 export const BlogList = () => {
     const t = useTranslations("blog")
@@ -53,9 +59,23 @@ export const BlogList = () => {
         })
 
     const posts = data ?? []
-    const [featured, ...rest] = posts
+
+    // pin the "start here" tour only on the unfiltered view, and drop it from the
+    // chronological flow so it isn't shown twice
+    const pinned = category === null ? posts.find((post) => post.slug === START_HERE_SLUG) ?? null : null
+    const flow = pinned ? posts.filter((post) => post.slug !== pinned.slug) : posts
+    const [featured, ...rest] = flow
+
     // a full page came back → there may be more to load
     const hasMore = posts.length >= limit
+
+    // only the pillars that actually have posts — never render a filter into an empty
+    // bucket. With a single pillar present the row is pointless, so the caller hides it.
+    const availableCategories = useMemo(
+        () => Array.from(new Set(posts.map((post) => post.category))),
+        [posts],
+    )
+    const showFilter = availableCategories.length >= 2
 
     // switching pillar resets pagination back to the first page
     const changeCategory = (next: BlogCategory | null) => {
@@ -65,12 +85,23 @@ export const BlogList = () => {
 
     return (
         <div className="mx-auto flex max-w-3xl flex-col gap-6 p-6">
-            {/* zone A — identity */}
+            {/* masthead — operational 3D showcase of the real backend (the blog's subject) */}
+            <Masthead />
+
+            {/* identity — reframed as an engineering publication */}
             <PageHeader title={t("title")} description={t("subtitle")} />
 
-            {/* zone B — browse (filter + results, one cohesive cluster) */}
+            {/* browse — topics framing + (optional) filter + results, one cluster */}
             <div className="flex flex-col gap-3">
-                <CategoryFilter value={category} onChange={changeCategory} />
+                <TopicsStrip />
+
+                {showFilter && (
+                    <CategoryFilter
+                        value={category}
+                        onChange={changeCategory}
+                        categories={availableCategories}
+                    />
+                )}
 
                 <AsyncContent
                     isLoading={isLoading && posts.length === 0}
@@ -100,6 +131,7 @@ export const BlogList = () => {
                     }
                 >
                     <div className="flex flex-col gap-3">
+                        {pinned && <StartHereAnchor post={pinned} />}
                         {featured && (
                             <FeaturedPost
                                 post={featured}

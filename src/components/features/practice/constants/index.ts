@@ -1,9 +1,9 @@
-import { CodingDifficulty } from "@/modules/api/graphql"
 import type {
     DifficultyFilter,
     SortKey,
     StatusFilter,
 } from "../types"
+import { CodingDifficulty } from "@/modules/api/graphql/queries/types/coding"
 
 /**
  * Page size requested from `codingProblems`. Phase 1 loads the whole catalog in

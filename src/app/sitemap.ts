@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next"
 import { SEO_CONFIG } from "@/config/seo"
-import { publicEnv } from "@/resources"
+import { publicEnv } from "@/resources/env/public"
 
 const LOCALES = SEO_CONFIG.locales
 const CANON = SEO_CONFIG.defaultLocale

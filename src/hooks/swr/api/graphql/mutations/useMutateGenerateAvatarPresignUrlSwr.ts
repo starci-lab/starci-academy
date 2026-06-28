@@ -1,9 +1,7 @@
-import {
-    AbortableRequest,
-    mutateGenerateAvatarPresignUrl,
-    type GenerateAvatarPresignUrlRequest,
-} from "@/modules/api"
 import useSWRMutation from "swr/mutation"
+import { AbortableRequest } from "@/modules/api/graphql/types"
+import { mutateGenerateAvatarPresignUrl } from "@/modules/api/graphql/mutations/mutation-generate-avatar-presign-url"
+import { type GenerateAvatarPresignUrlRequest } from "@/modules/api/graphql/mutations/types/generate-avatar-presign-url"
 
 type MutateGenerateAvatarPresignUrlResult = Awaited<ReturnType<typeof mutateGenerateAvatarPresignUrl>>
 

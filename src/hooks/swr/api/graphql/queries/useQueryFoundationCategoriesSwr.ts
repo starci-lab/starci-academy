@@ -1,18 +1,10 @@
-import {
-    GraphQLHeadersKey,
-    queryFoundationCategories,
-} from "@/modules/api"
-import {
-    useAppDispatch,
-    useAppSelector,
-} from "@/redux"
-import {
-    setFoundationCategories,
-    setFoundationCategory,
-} from "@/redux/slices"
 import { useLocale } from "next-intl"
 import { usePathname } from "next/navigation"
 import useSWR from "swr"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { queryFoundationCategories } from "@/modules/api/graphql/queries/query-foundation-categories"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setFoundationCategories, setFoundationCategory } from "@/redux/slices/foundation"
 
 /** Params for {@link useQueryFoundationCategoriesSwr}. */
 export interface UseQueryFoundationCategoriesParams {

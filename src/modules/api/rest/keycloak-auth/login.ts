@@ -1,11 +1,9 @@
-import { 
-    publicEnv 
-} from "@/resources/env"
 import type { 
     KeycloakLoginRequest, 
     KeycloakLoginResponse 
 } from "./types"
 import axios from "axios"
+import { publicEnv } from "@/resources/env/public"
 
 /**
  * Calls the login endpoint and returns token data.

@@ -10,11 +10,11 @@ import {
     PulseIcon,
 } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import { ExtendedTabs } from "@/components/blocks"
-import { useProfileTabStore } from "@/hooks"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { PROFILE_TABS } from "../types"
 import type { ProfileTab } from "../types"
+import { ExtendedTabs } from "@/components/blocks/navigation/ExtendedTabs"
+import { useProfileTabStore } from "@/hooks/zustand/profileTab/store"
 
 /** Leading icon shown on each profile tab, keyed by tab id. */
 const TAB_ICONS: Record<ProfileTab, typeof HouseIcon> = {

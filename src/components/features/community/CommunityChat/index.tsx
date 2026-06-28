@@ -4,17 +4,13 @@ import React, { useMemo, useState } from "react"
 import { Typography } from "@heroui/react"
 import type { Key } from "react"
 import { useTranslations } from "next-intl"
-import {
-    PageContainer,
-    PageHeader,
-    TabsCard,
-} from "@/components/blocks"
-import {
-    useQueryCommunityChatConversationSwr,
-    useQueryMyFounderConversationSwr,
-} from "@/hooks"
-import { useAppSelector } from "@/redux"
 import { ChatPane } from "./ChatPane"
+import { PageContainer } from "@/components/blocks/layout/PageContainer"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { TabsCard } from "@/components/blocks/navigation/TabsCard"
+import { useQueryCommunityChatConversationSwr } from "@/hooks/swr/api/graphql/queries/useQueryCommunityChatConversationSwr"
+import { useQueryMyFounderConversationSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyFounderConversationSwr"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Which conversation the chat surface is showing. */
 type ChatTab = "community" | "founder"

@@ -13,19 +13,13 @@ import {
 import {
     Snowflake as SnowflakeIcon,
 } from "@gravity-ui/icons"
-import {
-    useMutateRedeemRewardSwr,
-    useQueryMyWeeklyStatsSwr,
-} from "@/hooks"
-import {
-    useGraphQLWithToast,
-} from "@/modules/toast"
-import {
-    SectionCard,
-} from "@/components/reuseable"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useMutateRedeemRewardSwr } from "@/hooks/swr/api/graphql/mutations/useMutateRedeemRewardSwr"
+import { useQueryMyWeeklyStatsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyWeeklyStatsSwr"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
+import { SectionCard } from "@/components/reuseable/SectionCard"
 
 /** Maximum number of streak freezes a user may own. */
 const MAX_FREEZES = 3

@@ -11,9 +11,9 @@ import {
     Typography,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { usePersonalProjectGithubForm } from "@/hooks/zustand"
-import type { PersonalProjectGithubAutosaveStatus } from "@/hooks/zustand"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { usePersonalProjectGithubForm } from "@/hooks/zustand/personalProjectGithub/usePersonalProjectGithubForm"
+import type { PersonalProjectGithubAutosaveStatus } from "@/hooks/zustand/personalProjectGithub/store"
 
 /** Props for {@link PersonalProjectSubmission}. */
 export type PersonalProjectSubmissionProps = WithClassNames<undefined>

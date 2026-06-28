@@ -1,11 +1,9 @@
 
-import {
-    GraphQLHeadersKey,
-    mutateSubmitChallengeSubmission,
-    type SubmitChallengeSubmissionRequest,
-} from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWRMutation from "swr/mutation"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { mutateSubmitChallengeSubmission } from "@/modules/api/graphql/mutations/mutation-submit-challenge-submission"
+import { type SubmitChallengeSubmissionRequest } from "@/modules/api/graphql/mutations/types/submit-challenge-submission"
+import { useAppSelector } from "@/redux/hooks"
 
 type MutateSubmitChallengeSubmissionResult = Awaited<
     ReturnType<typeof mutateSubmitChallengeSubmission>

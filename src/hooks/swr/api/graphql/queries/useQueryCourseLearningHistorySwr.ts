@@ -1,7 +1,7 @@
 import useSWRInfinite from "swr/infinite"
-import { queryCourseLearningHistory } from "@/modules/api"
-import type { CourseLearningHistoryResponseData } from "@/modules/api"
-import { useAppSelector } from "@/redux"
+import { queryCourseLearningHistory } from "@/modules/api/graphql/queries/query-course-learning-history"
+import type { CourseLearningHistoryResponseData } from "@/modules/api/graphql/queries/types/course-learning-history"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Events per learning-history page. */
 const PAGE_LIMIT = 20

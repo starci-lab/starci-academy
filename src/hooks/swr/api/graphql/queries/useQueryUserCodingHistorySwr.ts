@@ -1,5 +1,5 @@
-import { queryUserCodingHistory } from "@/modules/api"
 import useSWR from "swr"
+import { queryUserCodingHistory } from "@/modules/api/graphql/queries/query-user-coding-history"
 
 /**
  * SWR hook for a user's solved coding problems + languages used, by id. Public.

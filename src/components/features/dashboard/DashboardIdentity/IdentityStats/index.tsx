@@ -13,14 +13,12 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import {
-    useQueryMyWeeklyStatsSwr,
-    useQueryMyAiQuotaSwr,
-    useQueryMyRewardWalletSwr,
-} from "@/hooks"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useQueryMyWeeklyStatsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyWeeklyStatsSwr"
+import { useQueryMyAiQuotaSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiQuotaSwr"
+import { useQueryMyRewardWalletSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyRewardWalletSwr"
 
 /** Props for {@link IdentityStats}. */
 export type IdentityStatsProps = WithClassNames<undefined>

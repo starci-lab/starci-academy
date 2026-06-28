@@ -19,33 +19,6 @@ import {
     useRouter,
 } from "next/navigation"
 import {
-    AiMode,
-    type AiGradableModel,
-    type AiLabPlaygroundData,
-    type GraphQLResponse,
-    type RunPlaygroundPromptData,
-} from "@/modules/api"
-import type {
-    WithClassNames,
-} from "@/modules/types"
-import {
-    useAiLabRunStreamSocketIo,
-    useMutateRunPlaygroundPromptSwr,
-    useQueryAiModelsSwr,
-    useQueryMyAiQuotaSwr,
-    useQueryMyAiSettingsSwr,
-    useQueryMyAiLabRunsSwr,
-} from "@/hooks"
-import {
-    AiLabRunStatus,
-} from "@/hooks/socketio/types"
-import {
-    MarkdownContent,
-} from "@/components/reuseable"
-import {
-    useGraphQLWithToast,
-} from "@/modules/toast"
-import {
     LaneModelPicker,
 } from "../LaneModelPicker"
 import {
@@ -55,6 +28,21 @@ import type {
     AiLabModelSelection,
     AiLabParamsForm,
 } from "../types"
+import { AiMode } from "@/modules/api/graphql/queries/query-my-ai-settings"
+import { type AiGradableModel } from "@/modules/api/graphql/queries/types/ai-models"
+import { type AiLabPlaygroundData } from "@/modules/api/graphql/queries/types/ai-lab-playground"
+import { type GraphQLResponse } from "@/modules/api/graphql/types"
+import { type RunPlaygroundPromptData } from "@/modules/api/graphql/mutations/types/run-playground-prompt"
+import type { WithClassNames } from "@/modules/types/base/class-name"
+import { useAiLabRunStreamSocketIo } from "@/hooks/socketio/useAiLabRunStreamSocketIo"
+import { useMutateRunPlaygroundPromptSwr } from "@/hooks/swr/api/graphql/mutations/useMutateRunPlaygroundPromptSwr"
+import { useQueryAiModelsSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiModelsSwr"
+import { useQueryMyAiQuotaSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiQuotaSwr"
+import { useQueryMyAiSettingsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiSettingsSwr"
+import { useQueryMyAiLabRunsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiLabRunsSwr"
+import { AiLabRunStatus } from "@/hooks/socketio/types/ai-lab"
+import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
 
 /** Props for {@link PromptPlayground}. */
 export type PromptPlaygroundProps = WithClassNames<undefined> & {

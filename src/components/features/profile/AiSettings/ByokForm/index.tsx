@@ -20,16 +20,12 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    useQueryMyAiSettingsSwr,
-    useMutateUpdateMyAiSettingsSwr,
-} from "@/hooks"
-import {
-    useAiSettingsForm,
-    type AiSettingsSaveStatus,
-} from "@/hooks/zustand"
-import {
     BYOK_PROVIDERS,
 } from "../constants"
+import { useQueryMyAiSettingsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiSettingsSwr"
+import { useMutateUpdateMyAiSettingsSwr } from "@/hooks/swr/api/graphql/mutations/useMutateUpdateMyAiSettingsSwr"
+import { useAiSettingsForm } from "@/hooks/zustand/aiSettings/useAiSettingsForm"
+import { type AiSettingsSaveStatus } from "@/hooks/zustand/aiSettings/store"
 
 /**
  * BYOK panel — stored-key hint + provider picker + API key input.

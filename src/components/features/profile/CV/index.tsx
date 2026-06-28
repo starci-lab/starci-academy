@@ -15,15 +15,11 @@ import {
 import {
     useRouter,
 } from "next/navigation"
-import {
-    pathConfig,
-} from "@/resources"
-import {
-    useQueryCvUrlSwr,
-} from "@/hooks"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { CVUpload } from "./CVUpload"
 import { CVPreview } from "./CVPreview"
+import { pathConfig } from "@/resources/path"
+import { useQueryCvUrlSwr } from "@/hooks/swr/api/graphql/queries/useQueryCvUrlSwr"
 
 /** One breadcrumb row for the CV page. */
 type CvBreadcrumbItem = {

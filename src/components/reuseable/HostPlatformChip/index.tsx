@@ -2,7 +2,6 @@
 
 import React, { useMemo } from "react"
 import { Chip, cn } from "@heroui/react"
-import { VideoHostPlatform } from "@/modules/types"
 import { useTranslations } from "next-intl"
 import {
     SiGoogledrive,
@@ -10,7 +9,8 @@ import {
     SiVimeo,
     SiCloudflare
 } from "@icons-pack/react-simple-icons"
-import type { WithClassNames } from "@/modules/types"
+import { VideoHostPlatform } from "@/modules/types/enums/video-host-platform"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * The props for the HostPlatformChip component.

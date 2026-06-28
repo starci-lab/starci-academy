@@ -17,24 +17,6 @@ import {
     LockIcon,
     PuzzlePieceIcon,
 } from "@phosphor-icons/react"
-import {
-    useQueryMyCourseOutlineSwr,
-} from "@/hooks"
-import {
-    AsyncContent,
-    DifficultyChip,
-    EmptyContent,
-    ListRow,
-    Skeleton,
-    StatusChip,
-} from "@/components/blocks"
-import {
-    fromGlobalId,
-} from "@/modules/utils"
-import type {
-    MyCourseOutlineModule,
-    MyCourseOutlinePayload,
-} from "@/modules/api"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -46,6 +28,15 @@ import {
     toDifficulty,
     toStatusTone,
 } from "./map"
+import { useQueryMyCourseOutlineSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCourseOutlineSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { DifficultyChip } from "@/components/blocks/chips/DifficultyChip"
+import { EmptyContent } from "@/components/blocks/async/EmptyContent"
+import { ListRow } from "@/components/blocks/lists/ListRow"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { StatusChip } from "@/components/blocks/chips/StatusChip"
+import { fromGlobalId } from "@/modules/utils/globalId"
+import type { MyCourseOutlineModule, MyCourseOutlinePayload } from "@/modules/api/graphql/queries/types/my-course-outline"
 
 /** Props for {@link CourseOutline}. */
 export interface CourseOutlineProps extends WithClassNames<undefined> {

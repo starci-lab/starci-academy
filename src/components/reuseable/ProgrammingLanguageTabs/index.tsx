@@ -11,11 +11,6 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import {
-    DEFAULT_PROGRAMMING_LANGUAGES,
-    isProgrammingLangAvailable,
-    resolveActiveProgrammingLang,
-} from "@/modules/types"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import {
     PROGRAMMING_LANGUAGE_TABS_INDICATOR_CLASS_NAME,
@@ -31,6 +26,7 @@ import {
 import {
     programmingLanguageIconMap,
 } from "./map"
+import { DEFAULT_PROGRAMMING_LANGUAGES, isProgrammingLangAvailable, resolveActiveProgrammingLang } from "@/modules/types/utils/programming-language"
 
 /**
  * Props for {@link ProgrammingLanguageTabs}.

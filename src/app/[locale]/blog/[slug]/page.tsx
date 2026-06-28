@@ -1,13 +1,10 @@
 import React, { cache } from "react"
 import type { Metadata } from "next"
-import { BlogPost } from "@/components/layouts/blog"
-import { publicEnv } from "@/resources"
 import { SEO_CONFIG } from "@/config/seo"
-import {
-    JsonLd,
-    articleSchema,
-    buildPageMetadata,
-} from "@/modules/seo"
+import { BlogPost } from "@/components/layouts/blog/BlogPost"
+import { publicEnv } from "@/resources/env/public"
+import { JsonLd, articleSchema } from "@/modules/seo/jsonLd"
+import { buildPageMetadata } from "@/modules/seo/buildMetadata"
 
 /** Route params for `/[locale]/blog/[slug]`. */
 interface BlogParams {

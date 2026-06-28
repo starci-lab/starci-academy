@@ -98,3 +98,96 @@ tab=interview →
 ### Áp (sau khi thầy duyệt)
 - `InterviewSession` setup: bọc trong **1 card** (`<Card><CardContent>`), thêm hero mic + headline `setupTitle` + 3 chip kỳ vọng; **level `TabsCard` → `SegmentedControl`** (block); stats row giữ (best/avg/đã luyện + breakdown chip) trong card; CTA "Bắt đầu phỏng vấn" `size="lg"` + icon mic.
 - Block `SegmentedControl` (`blocks/navigation/SegmentedControl`) nhận `{items:[{value,label}], value, onChange, ariaLabel}` — generic, đã có.
+
+---
+
+## VÒNG 3 — 2026-06-27: "đơn giản quá + UI lệch → thêm tính năng, sáng tạo lên"
+> Thầy: *"thêm tính năng chứ này có đơn giản quá không, với ui ux lệch quá — sáng tạo lên"*. Vòng 2 đã làm setup gọn (card + hero + 3 chip + segmented + CTA) NHƯNG: vẫn là wizard 1 bước, **nửa phải trống hoác** ("lệch"), và **đổ đi gần hết data giàu của BE**.
+
+### Phát hiện: BE đã giàu, UI mới xài ~10%
+Inventory lại (FE+BE+DB) → data đã có sẵn, chưa render:
+| Nguồn | Field CHƯA dùng | Cơ hội |
+|---|---|---|
+| `gradeInterviewAnswer` | **`followUpQuestion`** · `modelAnswerHint` · `strengths[]`/`gaps[]` | đào sâu ADAPTIVE + scorecard |
+| `myInterviewHistory` | **`weakTags[]`** · `bestScore` · pass/borderline/fail · `lastAttemptAt` | readiness hub + drill |
+| `FlashcardCardEntity` | `level` (junior→staff) · `tags[]` · `answer`/`explanation` | thang cấp độ · reveal model answer |
+| DB `InterviewAttemptEntity` | mỗi attempt: score/verdict/level/tags/createdAt | timeline "xem lại câu đã trả lời" |
+| SRS `reviewFlashcard`/`myDueFlashcards` | — | **nối interview→flashcard** (câu trượt → ôn thẻ) |
+
+### 3 hướng (widget đã vẽ — `show_widget interview_redesign_directions`)
+- **A — Readiness Hub (ĐỀ XUẤT chính):** trang chờ thành **bento 2 cột** = (trái) hero + **mode picker** (Nhanh 5 / Sâu 10 / Điểm yếu / Leo cấp) + cấp độ segmented + CTA pink `lg`; (phải) **ring độ sẵn sàng** (`averageScore`/`bestScore`) + **thang cấp độ** (Junior/Mid/Senior/Staff) + **chủ đề cần ôn** (`weakTags` → chip drill). → sửa "đơn giản" (+mode/+readiness/+drill/+ladder) & "lệch" (dùng hết bề ngang bằng khối CÓ NGHĨA). User mới: ring 0% + nudge (không ẩn câm).
+- **B — Phòng phỏng vấn nhập vai (in-session):** panel giám khảo (persona + câu + chip level/tag) | panel trả lời (mic + waveform + transcript live); sau chấm = **scorecard** (ring verdict + strengths/gaps 2 cột) + **`followUpQuestion` thành bước THẬT** ("Trả lời tiếp →") = adaptive (Skillora). Data đã có, chỉ chưa render như 1 bước.
+- **C — Vòng khép kín interview↔flashcard:** trượt câu → "Thêm vào ôn tập" → câu (vốn là flashcard card) vào hàng đợi Học thẻ đến hạn (`reviewFlashcard`) → master → tái phỏng vấn → đạt. Nối 2 mode đang rời.
+
+### Chốt
+- **A + C** trước (A sửa đúng trang thầy chỉ; C = chiều sâu, low-BE). **B** vòng sau (đẹp nhất, đụng nhiều state in-session + cần persona).
+- Giữ design-system StarCi (surface card + token + segmented + pink) — KHÔNG bê glassmorphism/orbs của ref. "Sáng tạo" = readiness ladder + drill + adaptive follow-up + loop SRS, KHÔNG phải hiệu ứng. Grounded, không vanity ([[progress-block-growing-quantity-headline-not-vanity-strip]]).
+
+### BE add nhỏ (HỎI THẦY — không entity mới, chỉ mở rộng query)
+1. `myInterviewHistory` breakdown theo `level` → cho thang cấp độ.
+2. `drawInterviewCard` filter theo `tag` → mode "Điểm yếu" (drill weakTags) + "Leo cấp".
+3. Expose `answer`/`explanation` post-grade → reveal model answer.
+4. Query list `InterviewAttemptEntity` → timeline xem lại.
+→ Lựa chọn: làm A bằng **data hiện có trước** (ring `averageScore`/`bestScore` + `weakTags` chip + mode Nhanh/Sâu) — thang-cấp-độ + tag-drill để vòng sau khi thầy duyệt BE add.
+
+### Refs vòng 3
+- [Google Interview Warmup](https://grow.google/) (RIP 2026-04 — model 5-câu/voice ta đang copy) · [Skillora](https://skillora.ai/) (adaptive follow-up + scorecard nhiều chiều) · [Exponent](https://www.tryexponent.com/practice) · [Huru](https://huru.ai/) · [Final Round AI](https://www.finalroundai.com/blog/best-ai-interview-practice-tools).
+
+### ✅ CHỐT (thầy 2026-06-27) — làm Hướng A
+- **Hướng A — Readiness Hub** (bento 2 cột). Bắt đầu bằng **data hiện có** (ring `averageScore`/`bestScore` + `weakTags` chip drill + mode Nhanh/Sâu/Điểm yếu/Leo cấp + cấp độ segmented); thang-cấp-độ + tag-drill chờ BE-add vòng sau.
+- **DIRECTIVE UI:** nhãn "Kiểu luyện" + "Cấp độ" = block **`<Label>`** (HeroUI), KHÔNG `text-sm text-muted`/`text-xs text-muted` tay. Thầy: *"kiểu luyện cấp độ dùng Label nhé, không dùng text-sm text-muted"*. → rule: [[control-group-label-uses-label-block]] + `elements/label.md` §1b.
+- Cấp độ giữ `SegmentedControl` (block, không underline — vòng 2). CTA "Bắt đầu phỏng vấn" `size="lg"` + icon mic.
+- Next: `/starci-fe-ux-apply` để dựng.
+
+### ĐÃ ÁP DỤNG 2026-06-27 (FE) — `/starci-fe-ux-apply`
+- `InterviewSession` setup → **bento 2 cột** (`lg:grid-cols-[1.5fr_1fr]`):
+  - **Trái** (Card): hero mic + 3 chip kỳ vọng + **Kiểu luyện** (`<Label>` + tile grid 2×2: Nhanh·5 / Sâu·10 bấm được, Điểm yếu / Leo cấp **disabled "Sắp có"**) + **Cấp độ** (`<Label>` + `SegmentedControl`) + CTA `lg` mic.
+  - **Phải** (Card): **Độ sẵn sàng** (`<Label>` + headline `averageScore` + `ProgressMeter` + breakdown chip pass/borderline/fail) + **Chủ đề cần ôn** (`weakTags` chip, `border-t`). Loading = `Skeleton.Typography`+`Skeleton.Meter`; user mới (0 attempt) = meter 0 + nudge `readinessEmpty` (không ẩn câm).
+- **Mode driver:** `SESSION_LENGTH` cố định → `mode` state (`quick`5 / `deep`10) → `sessionLength` (đổi expectCount + progress + isLastQuestion + advance).
+- **Nhãn group = `<Label>`** (Kiểu luyện · Cấp độ · Độ sẵn sàng · Chủ đề cần ôn) — KHÔNG `text-sm/xs text-muted` (per [[control-group-label-uses-label-block]] · `elements/label.md` §1b).
+- i18n thêm `flashcard.interview.{modeLabel,modeQuick,modeDeep,modeWeak,modeLadder,comingSoon,readinessTitle,readinessEmpty}` (vi+en). tsc + eslint + JSON sạch (baseline landing/blog WIP không liên quan).
+- **Vòng sau (chờ BE-add):** mode Điểm yếu (tag-filter draw) + Leo cấp (per-level history) đang disabled "Sắp có"; weakTags chip hiện display-only (chưa drill). Active khi BE mở 4 query đã ghi ở §"BE add nhỏ".
+
+---
+
+## VÒNG 4 — 2026-06-27: bỏ chia đôi cột hẹp (1 cột) + block dùng chung `SelectableCardGroup` (HeroUI RadioGroup)
+> Thầy: *"layout nhỏ rồi còn chia nữa; kiểu selectable card theo dạng tabs? 1 đống card chọn 1 cái sáng lên — nền tảng chưa có. Đọc code heroui rồi đề xuất component chung."*
+
+### Pain
+- **Bento 2 cột trong cột `max-w-3xl` (768px) = chia cái đã hẹp** → setup bị bóp, panel readiness bên phải hẹp/trống → "nhỏ rồi còn chia". Bố cục split chỉ hợp khi container RỘNG; 768px thì KHÔNG.
+- **Mode tiles vòng 3 = `<button aria-pressed>` tự chế** (button-group toggle), KHÔNG phải single-select radio thật → a11y yếu (không arrow-key roving, role sai) + style lặp ở feature. Nền tảng **chưa có** component "chọn 1 card trong N".
+
+### Đọc HeroUI (grounded — `node_modules/@heroui/react/dist/components`)
+- Có sẵn: **`radio` + `radio-group`** (built trên `react-aria-components` `RadioGroup`/`Radio`). Cũng có `progress-circle` (RING native cho readiness), `button-group`, `tag-group`, `list-box`.
+- `RadioRoot` (radio.js): `className: composeTwRenderProps(className, slots.base())` → **className NHẬN HÀM** `(values) => string` với `values.isSelected/isFocusVisible/isDisabled`; root mang **`data-selected="true"`**. → 1 `<Radio>` style được thành CARD: `data-[selected=true]:border-accent data-[selected=true]:bg-accent/10`, content tuỳ ý (icon + label + mô tả + badge), KHÔNG cần dot indicator.
+- Đây là primitive ĐÚNG cho "chọn 1 trong N card sáng lên": RadioGroup = role radiogroup + arrow-key + single-select chuẩn. Hơn hẳn button-grid tự chế.
+
+### ★ Đề xuất block chung — `blocks/navigation/SelectableCardGroup`
+- **API:** `{ items: Array<{ value: T, label, description?, icon?, isDisabled?, badge? }>, value, onChange, ariaLabel, columns?: 1|2|3, className? }`.
+- **Impl:** bọc HeroUI `RadioGroup` (`value`/`onChange` controlled, `aria-label`) + map item → `<Radio value isDisabled>` với className-hàm:
+  - base: `flex items-center gap-2 rounded-xl border border-default px-3 py-3 text-sm cursor-pointer transition-colors hover:bg-default`
+  - `isSelected` → `border-accent bg-accent/10 font-medium text-accent`
+  - `isDisabled` → `cursor-not-allowed opacity-60 hover:bg-transparent` + render `badge` (vd "Sắp có") góc phải
+  - `isFocusVisible` → `ring-2 ring-accent`
+  - RadioGroup root className = `grid gap-2` + `columns` → `grid-cols-{n}`.
+- **Khác `SegmentedControl`** (pill nhỏ, 1 hàng, chọn setting gọn) — `SelectableCardGroup` = card TO (icon + mô tả + badge), cho lựa chọn "nặng" hơn. **Khác `TabsCard`** (underline nav, đổi panel). Đây là single-select CONTROL dạng card.
+- **Tái dùng:** kiểu luyện (interview) · cổng thanh toán (PaymentModal — hiện là list-card interactive tự chế, có thể chuyển) · chọn gói · bất kỳ "chọn 1 trong N card". 1 nguồn render ([[single-source-render]]).
+- **Skeleton:** repo đã có `Skeleton/RadioGroup` → mirror.
+
+### Layout fix — 1 CỘT (bỏ bento)
+- `InterviewSession` setup về **1 cột** (full `max-w-3xl`), 1 Card, các section ngăn bằng gap/divider:
+  hero → chip kỳ vọng → **readiness STRIP ngang** (full-width: ring `progress-circle` avg + cao nhất + breakdown chip — KHÔNG phải cột phải) → **Kiểu luyện** (`<Label>` + `SelectableCardGroup` columns=2) → **Cấp độ** (`<Label>` + SegmentedControl) → CTA `lg`.
+- Readiness từ "cột phải hẹp" → "strip ngang gọn" → hết bóp. User mới: strip 0 + nudge (không ẩn câm).
+- **Hỏi thầy:** readiness strip đặt TRÊN (status header, dưới chip kỳ vọng) hay DƯỚI CTA? (đề xuất: TRÊN — "đang ở đâu" rồi mới "cấu hình + bắt đầu").
+
+### Refs
+- HeroUI v3 RadioGroup/Radio (react-aria-components) — card-as-radio pattern (React Aria "RadioGroup" cards example) · [[single-select-among-options-use-tabs]] (phân biệt: setting nhỏ → segmented; card group → SelectableCardGroup) · [[control-group-label-uses-label-block]] (nhãn group = Label).
+
+### Chốt (thầy duyệt 2026-06-27)
+- Da card = **list-card surface** (`bg-surface` + `border-default`). **Selected = `bg-accent/10` + `border-accent`, CHỮ GIỮ `text-foreground` (đen) — KHÔNG `text-accent`** (thầy: *"text giữ màu đen tạm"*). Rule: [[selectable-card-group-surface-select-state]].
+
+### ĐÃ ÁP DỤNG 2026-06-27 (FE)
+- **Block mới `blocks/navigation/SelectableCardGroup`** (HeroUI `RadioGroup`/`Radio`): item `{value,label,description?,icon?,isDisabled?,badge?}` + `value/onChange/ariaLabel/columns`. Card-visual ở **inner `<div>`** (style theo render-prop `isSelected/isDisabled/isFocusVisible`) → KHÔNG fight `.radio` base unlayered (`flex items-start gap-3`). Selected `bg-accent/10 border-accent` (chữ foreground); disabled `opacity-60` + badge; focus `ring-2 ring-accent`. Da `rounded-xl border bg-surface`.
+- `InterviewSession` setup → **1 CỘT** (bỏ bento `lg:grid-cols`): hero → chip kỳ vọng → **readiness STRIP ngang** (avg + `ProgressMeter` flex-1 + breakdown + weakTags, full-width) → **Kiểu luyện** = `SelectableCardGroup` columns=2 (thay button-grid tự chế) → **Cấp độ** SegmentedControl → CTA `lg`. Readiness đặt TRÊN (status header).
+- tsc + eslint sạch (block + feature). i18n không đổi (đã thêm vòng 3).
+- **Còn ngỏ:** thầy chưa chốt readiness TRÊN vs DƯỚI CTA — tạm để TRÊN, đổi dễ. weak/ladder vẫn disabled "Sắp có" (chờ BE-add).

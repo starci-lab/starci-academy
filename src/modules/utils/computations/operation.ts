@@ -1,11 +1,9 @@
-import {
-    publicEnv 
-} from "@/resources/env"
 import BN from "bn.js"
 import Decimal from "decimal.js"
 import {
     pow10 
 } from "./pow-10"
+import { publicEnv } from "@/resources/env/public"
 
 export interface BnMulDecimalParams {
     // the amount to convert to a decimal

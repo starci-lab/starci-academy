@@ -1,7 +1,7 @@
-import { queryMyDailyQuest } from "@/modules/api"
-import type { QueryMyDailyQuestData } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { queryMyDailyQuest } from "@/modules/api/graphql/queries/query-my-daily-quest"
+import type { QueryMyDailyQuestData } from "@/modules/api/graphql/queries/types/my-daily-quest"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR wrapper for {@link queryMyDailyQuest}. `data` is the viewer's daily quest

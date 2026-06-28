@@ -8,23 +8,16 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    useQueryUserAchievementsSwr,
-    useQueryUserProfileSwr,
-} from "@/hooks"
-import {
     useProfileUsername,
 } from "../useProfileUsername"
-import {
-    RankBadge,
-    UserAvatar,
-} from "@/components/reuseable"
-import {
-    rankInfo,
-    resolveSeniorityRank,
-} from "@/modules/utils"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useQueryUserAchievementsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserAchievementsSwr"
+import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
+import { RankBadge } from "@/components/reuseable/RankBadge"
+import { UserAvatar } from "@/components/reuseable/UserAvatar"
+import { rankInfo, resolveSeniorityRank } from "@/modules/utils/rank"
 
 /** Props for {@link ProfileRankAvatar}. */
 export type ProfileRankAvatarProps = WithClassNames<undefined>

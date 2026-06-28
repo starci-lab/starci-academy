@@ -1,8 +1,6 @@
-import {
-    mutateReactCommunityPostComment,
-    type ReactCommunityPostCommentRequest,
-} from "@/modules/api"
 import useSWRMutation from "swr/mutation"
+import { mutateReactCommunityPostComment } from "@/modules/api/graphql/mutations/mutation-react-community-post-comment"
+import { type ReactCommunityPostCommentRequest } from "@/modules/api/graphql/mutations/types/community-comments"
 
 type MutateReactCommunityPostCommentResult =
     Awaited<ReturnType<typeof mutateReactCommunityPostComment>>

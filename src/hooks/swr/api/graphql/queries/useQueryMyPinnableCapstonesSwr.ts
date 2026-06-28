@@ -1,7 +1,7 @@
-import { queryMyPinnableCapstones } from "@/modules/api"
-import type { QueryMyPinnableCapstoneItemData } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { queryMyPinnableCapstones } from "@/modules/api/graphql/queries/query-my-pinnable-capstones"
+import type { QueryMyPinnableCapstoneItemData } from "@/modules/api/graphql/queries/types/my-pinnable-capstones"
+import { useAppSelector } from "@/redux/hooks"
 
 /** SWR cache key for the current user's pinnable capstones. */
 export const QUERY_MY_PINNABLE_CAPSTONES_SWR = "QUERY_MY_PINNABLE_CAPSTONES_SWR"

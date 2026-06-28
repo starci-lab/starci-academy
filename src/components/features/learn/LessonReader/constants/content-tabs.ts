@@ -1,6 +1,4 @@
-import {
-    ContentTab,
-} from "@/redux/slices"
+import { ContentTab } from "@/redux/slices/tabs"
 
 /**
  * Content detail tabs hidden for SCHEMA V2 lessons (`verified` set).

@@ -1,7 +1,7 @@
-import { queryMyUpcomingLivestreams } from "@/modules/api"
-import type { QueryMyUpcomingLivestreamData } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { queryMyUpcomingLivestreams } from "@/modules/api/graphql/queries/query-my-upcoming-livestreams"
+import type { QueryMyUpcomingLivestreamData } from "@/modules/api/graphql/queries/types/my-upcoming-livestreams"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR wrapper for {@link queryMyUpcomingLivestreams}. `data` is the viewer's

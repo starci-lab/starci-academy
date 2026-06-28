@@ -19,11 +19,9 @@ import {
     pathConfig,
 } from "@/resources/path"
 import type {
-    QueryMyLeagueEntryData,
-} from "@/modules/api"
-import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import type { QueryMyLeagueEntryData } from "@/modules/api/graphql/queries/types/league"
 
 /** Props for {@link LeagueRow}. */
 export interface LeagueRowProps extends WithClassNames<undefined> {

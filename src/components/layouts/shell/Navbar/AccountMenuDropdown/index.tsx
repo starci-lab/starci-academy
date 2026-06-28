@@ -7,17 +7,15 @@ import {
     Separator,
     cn,
 } from "@heroui/react"
-import {
-    useAccountMenuOverlayState,
-} from "@/hooks"
-import { useAppSelector } from "@/redux"
-import type { WithClassNames } from "@/modules/types"
 import { AccountTrigger } from "./AccountTrigger"
 import { UserSummary } from "./UserSummary"
 import { AuthActions } from "./AuthActions"
 import { MenuList } from "./MenuList"
 import { AppearanceRow } from "./AppearanceRow"
 import { LogoutMenu } from "./LogoutMenu"
+import { useAccountMenuOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useAppSelector } from "@/redux/hooks"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link AccountMenuDropdown}.

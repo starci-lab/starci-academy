@@ -14,15 +14,11 @@ import {
     useTranslations,
 } from "next-intl"
 import { useRouter } from "next/navigation"
-import { useAppSelector } from "@/redux"
-import { languages } from "@/resources/constants"
 import { pathConfig } from "@/resources/path"
-import {
-    useAccountMenuOverlayState,
-    useLanguageOverlayState,
-    useLinkGithubOverlayState,
-} from "@/hooks"
-import type { WithClassNames } from "@/modules/types"
+import { useAppSelector } from "@/redux/hooks"
+import { languages } from "@/resources/constants/lang"
+import { useAccountMenuOverlayState, useLanguageOverlayState, useLinkGithubOverlayState } from "@/hooks/zustand/overlay/hooks"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link MenuList}.

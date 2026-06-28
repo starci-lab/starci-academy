@@ -1,5 +1,5 @@
-import type { ModuleEntity } from "@/modules/types"
 import type { GraphQLResponse } from "../../types"
+import type { ModuleEntity } from "@/modules/types/entities/module"
 
 /** Apollo response shape for the `module` query. */
 export interface QueryModuleResponse {

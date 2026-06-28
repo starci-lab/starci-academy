@@ -1,8 +1,8 @@
 "use client"
 
 import React from "react"
-import type { WithClassNames } from "@/modules/types"
 import { ContentBodyV2 } from "./ContentBodyV2"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 export type ContentBodyProps = WithClassNames<undefined>
 

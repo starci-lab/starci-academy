@@ -12,11 +12,6 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    IconTile,
-    SegmentBar,
-    SurfaceListCardItem,
-} from "@/components/blocks"
-import {
     CourseTrialChip,
 } from "@/components/reuseable/CourseTrialChip"
 import {
@@ -25,6 +20,9 @@ import {
 import type {
     QueryMyDashboardMilestoneProgressItemData,
 } from "@/modules/api/graphql/queries/types/my-dashboard"
+import { IconTile } from "@/components/blocks/identity/IconTile"
+import { SegmentBar } from "@/components/blocks/stats/SegmentBar"
+import { SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 
 /** Segment colour per course progress dimension. */
 const DIM_COLOR: Record<string, string> = {

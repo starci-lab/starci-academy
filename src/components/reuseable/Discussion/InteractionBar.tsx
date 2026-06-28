@@ -3,9 +3,9 @@
 import { EyeIcon } from "@phosphor-icons/react"
 import React from "react"
 import { cn } from "@heroui/react"
-import { ReactionType, type ReactionSummary } from "@/modules/api"
-import type { WithClassNames } from "@/modules/types"
 import { ReactionBar } from "./ReactionBar"
+import { ReactionType, type ReactionSummary } from "@/modules/api/graphql/queries/types/discussion"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link InteractionBar}. */
 export interface InteractionBarProps extends WithClassNames<undefined> {

@@ -13,10 +13,10 @@ import {
 } from "next-intl"
 import { usePathname, useRouter } from "@/i18n/navigation"
 import { pathConfig } from "@/resources/path"
-import type { WithClassNames } from "@/modules/types"
 import {
     DarkLightModeSwitch,
 } from "../AccountMenuDropdown/DarkLightModeSwitch"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * One entry rendered in the mobile navigation menu.

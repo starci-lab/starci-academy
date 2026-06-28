@@ -25,25 +25,6 @@ import {
     MapPinIcon,
     PaperPlaneTiltIcon,
 } from "@phosphor-icons/react"
-import {
-    WorkMode,
-} from "@/modules/types"
-import {
-    useAppSelector,
-} from "@/redux"
-import {
-    useQueryUserProfileSwr,
-} from "@/hooks"
-import {
-    pathConfig,
-} from "@/resources"
-import {
-    FollowButton,
-} from "@/components/reuseable"
-import {
-    AsyncContent,
-    StatusChip,
-} from "@/components/blocks"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -68,6 +49,13 @@ import {
 import {
     ProfileHeroSkeleton,
 } from "./ProfileHeroSkeleton"
+import { WorkMode } from "@/modules/types/enums/work-mode"
+import { useAppSelector } from "@/redux/hooks"
+import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
+import { pathConfig } from "@/resources/path"
+import { FollowButton } from "@/components/reuseable/FollowButton"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { StatusChip } from "@/components/blocks/chips/StatusChip"
 
 /** Props for {@link ProfileHero}. */
 export type ProfileHeroProps = WithClassNames<undefined>

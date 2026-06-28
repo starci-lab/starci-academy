@@ -20,21 +20,16 @@ import {
     ChatCircleIcon,
 } from "@phosphor-icons/react"
 import {
-    useQueryMyLearningFeedbacksSwr,
-    MY_LEARNING_FEEDBACKS_LIMIT,
-} from "@/hooks"
-import {
-    AsyncContent,
-    LabeledCard,
-    PageHeader,
-    Skeleton,
-} from "@/components/blocks"
-import {
     SettingsBreadcrumb,
 } from "../SettingsBreadcrumb"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useQueryMyLearningFeedbacksSwr, MY_LEARNING_FEEDBACKS_LIMIT } from "@/hooks/swr/api/graphql/queries/useQueryMyLearningFeedbacksSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /** Props for {@link MyFeedback}. */
 export type MyFeedbackProps = WithClassNames<undefined>

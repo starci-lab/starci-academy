@@ -4,24 +4,27 @@ import React, { useMemo, useState } from "react"
 import { Modal, Spinner, Typography, cn } from "@heroui/react"
 import useSWR from "swr"
 import { ArrowRightIcon, FlameIcon, GraduationCapIcon, LockSimpleIcon } from "@phosphor-icons/react"
-import {
-    useMutateCourseEnrollSwr,
-    useMutatePurchaseAiSubscriptionSwr,
-    useMutatePurchaseMembershipSwr,
-    usePaymentOverlayState,
-    useQueryCoursePricePreviewSwr,
-} from "@/hooks"
-import { useAppSelector } from "@/redux"
-import { PaymentFlow, PaymentType } from "@/modules/types"
-import { assetConfig } from "@/resources"
-import { useGraphQLWithToast } from "@/modules/toast"
-import { submitCheckout } from "@/modules/payment"
-import { queryAiSubscriptionTiers } from "@/modules/api"
-import type { DiscountReason } from "@/modules/api"
-import { AsyncContent, IconTile, LabeledCard, PriceTag, SegmentedControl } from "@/components/blocks"
-import type { PriceCurrency } from "@/components/blocks"
 import { useTranslations } from "next-intl"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { useMutateCourseEnrollSwr } from "@/hooks/swr/api/graphql/mutations/useMutateCourseEnrollSwr"
+import { useMutatePurchaseAiSubscriptionSwr } from "@/hooks/swr/api/graphql/mutations/useMutatePurchaseAiSubscriptionSwr"
+import { useMutatePurchaseMembershipSwr } from "@/hooks/swr/api/graphql/mutations/useMutatePurchaseMembershipSwr"
+import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useQueryCoursePricePreviewSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursePricePreviewSwr"
+import { useAppSelector } from "@/redux/hooks"
+import { PaymentFlow } from "@/modules/types/payment"
+import { PaymentType } from "@/modules/types/enums/payment-type"
+import { assetConfig } from "@/resources/assets"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
+import { submitCheckout } from "@/modules/payment/submit-checkout"
+import { queryAiSubscriptionTiers } from "@/modules/api/graphql/queries/query-ai-subscription-tiers"
+import type { DiscountReason } from "@/modules/api/graphql/queries/types/recommended-courses"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { IconTile } from "@/components/blocks/identity/IconTile"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { PriceTag } from "@/components/blocks/commerce/PriceTag"
+import { SegmentedControl } from "@/components/blocks/navigation/SegmentedControl"
+import type { PriceCurrency } from "@/components/blocks/commerce/PriceTag"
 
 /** Format an integer VND amount as "1.275.000₫". */
 const formatVnd = (amount: number): string => `${amount.toLocaleString("vi-VN")}₫`

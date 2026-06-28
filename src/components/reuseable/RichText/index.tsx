@@ -2,7 +2,7 @@
 
 import React, { type ReactNode } from "react"
 import { Typography, cn } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Typography scale token (mirrors HeroUI `Typography` `type`). */
 type TypographySize = React.ComponentProps<typeof Typography>["type"]

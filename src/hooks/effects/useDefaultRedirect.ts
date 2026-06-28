@@ -1,8 +1,8 @@
-import { useAppSelector } from "@/redux"
 import { pathConfig } from "@/resources/path"
 import { useLocale } from "next-intl"
 import { usePathname, useRouter } from "next/navigation"
 import { useEffect } from "react"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * Graceful fallback for the removed module index/overview. `/learn/content/modules`

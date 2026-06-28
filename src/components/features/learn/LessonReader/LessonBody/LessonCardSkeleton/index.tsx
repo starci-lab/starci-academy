@@ -2,7 +2,7 @@
 
 import React from "react"
 import { Skeleton, cn } from "@heroui/react"
-import { WithClassNames } from "@/modules/types"
+import { WithClassNames } from "@/modules/types/base/class-name"
 
 export type LessonCardSkeletonProps = WithClassNames<undefined>
 

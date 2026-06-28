@@ -1,6 +1,6 @@
-import { queryAiLabEvalResult } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { queryAiLabEvalResult } from "@/modules/api/graphql/queries/query-ai-lab-eval-result"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR query wrapper for {@link queryAiLabEvalResult}. `data` is the unwrapped eval

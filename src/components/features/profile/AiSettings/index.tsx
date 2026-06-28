@@ -18,19 +18,6 @@ import {
     Typography,
 } from "@heroui/react"
 import {
-    useQueryMyAiSettingsSwr,
-    useMutateUpdateMyAiSettingsSwr,
-} from "@/hooks"
-import {
-    useAiSettingsForm,
-} from "@/hooks/zustand"
-import {
-    pathConfig,
-} from "@/resources"
-import {
-    PageHeader,
-} from "@/components/blocks"
-import {
     SettingsBreadcrumb,
 } from "../Settings/SettingsBreadcrumb"
 import {
@@ -42,6 +29,11 @@ import {
 import {
     AiSettingsSkeleton,
 } from "./AiSettingsSkeleton"
+import { useQueryMyAiSettingsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiSettingsSwr"
+import { useMutateUpdateMyAiSettingsSwr } from "@/hooks/swr/api/graphql/mutations/useMutateUpdateMyAiSettingsSwr"
+import { useAiSettingsForm } from "@/hooks/zustand/aiSettings/useAiSettingsForm"
+import { pathConfig } from "@/resources/path"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
 
 /**
  * AI settings feature container.

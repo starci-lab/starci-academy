@@ -8,10 +8,6 @@ import {
 import { CaretRightIcon, GearSixIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import {
-    LabeledCard,
-} from "@/components/blocks"
-import { usePersonalProjectGithubStore } from "@/hooks/zustand"
-import {
     PersonalProjectSubmission,
 } from "../PersonalProjectSubmission"
 import {
@@ -24,6 +20,8 @@ import {
     TaskResults,
 } from "../TaskResults"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { usePersonalProjectGithubStore } from "@/hooks/zustand/personalProjectGithub/store"
 
 /** Props for {@link TaskSubmissionPanel}. */
 export type TaskSubmissionPanelProps = WithClassNames<undefined>

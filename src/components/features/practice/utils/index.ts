@@ -1,9 +1,9 @@
-import type { CodingProblem, MyCodingProgress } from "@/modules/api/graphql"
 import { DIFFICULTY_ORDER } from "../constants"
 import type {
     PracticeFilters,
     ProblemStatus,
 } from "../types"
+import type { CodingProblem, MyCodingProgress } from "@/modules/api/graphql/queries/types/coding"
 
 /**
  * Derive a problem's solve status from the user's progress: solved when its id is

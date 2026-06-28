@@ -9,7 +9,7 @@ import {
 import {
     publicEnv,
 } from "@/resources/env/public"
-import type { WithClassNames } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link BadgeImage}. */
 export interface BadgeImageProps extends WithClassNames<undefined> {

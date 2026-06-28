@@ -1,6 +1,6 @@
-import { queryPlatformStats } from "@/modules/api"
-import type { PlatformStatsData } from "@/modules/api"
 import useSWR from "swr"
+import { queryPlatformStats } from "@/modules/api/graphql/queries/query-platform-stats"
+import type { PlatformStatsData } from "@/modules/api/graphql/queries/types/platform-stats"
 
 /**
  * Loads public platform-wide counters (learners / lessons / courses / badges)

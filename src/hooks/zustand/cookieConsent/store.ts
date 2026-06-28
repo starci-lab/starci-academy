@@ -2,23 +2,18 @@
 
 import { create } from "zustand"
 
-/** Cookie name persisting the visitor's consent choice (server-readable, scoped to the app). */
-const CONSENT_COOKIE = "starci_cookie_consent"
-/** Bump to re-prompt every visitor when the cookie categories change. */
-const CONSENT_VERSION = 1
-/** 180 days — re-ask after this so consent stays fresh (GDPR/PDPD hygiene). */
-const CONSENT_MAX_AGE_SECONDS = 60 * 60 * 24 * 180
+/** First-party cookie that persists the visitor's choice. */
+const CONSENT_COOKIE = "starci-cookie-consent"
+/** Remember the choice for a year. */
+const ONE_YEAR_SECONDS = 60 * 60 * 24 * 365
 
-/** Shape stored in the consent cookie. */
-interface ConsentCookiePayload {
-    /** Cookie schema version. */
-    v: number
-    /** Whether analytics (Google Analytics) is allowed. Necessary cookies are always on. */
+/** Persisted shape of the consent cookie. `necessary` is implicit (always on). */
+interface ConsentValue {
     analytics: boolean
 }
 
-/** Read the consent cookie → the allowed-analytics flag, or null when undecided / stale version. */
-const readConsentCookie = (): boolean | null => {
+/** Read the consent cookie (client only); null when absent / unreadable. */
+const readConsentCookie = (): ConsentValue | null => {
     if (typeof document === "undefined") {
         return null
     }
@@ -29,74 +24,69 @@ const readConsentCookie = (): boolean | null => {
         return null
     }
     try {
-        const payload = JSON.parse(decodeURIComponent(match.slice(CONSENT_COOKIE.length + 1))) as ConsentCookiePayload
-        if (payload.v !== CONSENT_VERSION) {
-            return null
-        }
-        return Boolean(payload.analytics)
+        const raw = decodeURIComponent(match.slice(CONSENT_COOKIE.length + 1))
+        const parsed = JSON.parse(raw) as Partial<ConsentValue>
+        return { analytics: Boolean(parsed.analytics) }
     } catch {
         return null
     }
 }
 
-/** Persist the consent choice to the cookie (affirmative action — only written on an explicit choice). */
-const writeConsentCookie = (analytics: boolean): void => {
+/** Persist the consent cookie (client only). */
+const writeConsentCookie = (value: ConsentValue): void => {
     if (typeof document === "undefined") {
         return
     }
-    const payload: ConsentCookiePayload = { v: CONSENT_VERSION, analytics }
-    document.cookie = `${CONSENT_COOKIE}=${encodeURIComponent(JSON.stringify(payload))}; path=/; max-age=${CONSENT_MAX_AGE_SECONDS}; SameSite=Lax`
-}
-
-/** Cookie-consent store: the committed choice + actions. The modal keeps its OWN draft toggle. */
-interface CookieConsentState {
-    /**
-     * Whether the visitor has made a choice yet.
-     * `null` = not hydrated (SSR / first paint), `false` = undecided (show banner), `true` = decided.
-     */
-    decided: boolean | null
-    /** Committed: whether analytics is allowed. */
-    analyticsAllowed: boolean
-    /** Read the cookie once into state (idempotent — call from the banner / analytics gate on mount). */
-    hydrate: () => void
-    /** Accept every category. */
-    acceptAll: () => void
-    /** Reject everything except necessary. */
-    rejectAll: () => void
-    /** Commit a granular choice (from the preferences modal). */
-    save: (analytics: boolean) => void
+    const encoded = encodeURIComponent(JSON.stringify(value))
+    document.cookie = `${CONSENT_COOKIE}=${encoded}; path=/; max-age=${ONE_YEAR_SECONDS}; samesite=lax`
 }
 
 /**
- * Single source of truth for cookie consent. The banner shows when `decided === false`; the analytics
- * gate renders Google Analytics only when `decided && analyticsAllowed`. Scripts stay blocked until the
- * visitor makes an affirmative choice (GDPR / VN PDPD), and the choice persists in {@link CONSENT_COOKIE}.
+ * Cookie-consent store (GDPR / VN PDPD). Holds the visitor's committed choice and
+ * exposes the imperative commits used by the banner + preferences modal. The
+ * choice is persisted in a first-party cookie (`starci-cookie-consent`) read once
+ * via {@link CookieConsentStoreState.hydrate}; analytics scripts are gated on
+ * `decided && analyticsAllowed` (see AnalyticsGate), so nothing loads before an
+ * affirmative choice. `decided` starts `null` so the banner / GA render nothing
+ * pre-hydration (no SSR mismatch).
  */
-export const useCookieConsentStore = create<CookieConsentState>((set, get) => ({
-    decided: null,
-    analyticsAllowed: false,
-    hydrate: () => {
-        // idempotent: only read the cookie the first time
-        if (get().decided !== null) {
-            return
-        }
-        const stored = readConsentCookie()
-        if (stored === null) {
-            set({ decided: false, analyticsAllowed: false })
-            return
-        }
-        set({ decided: true, analyticsAllowed: stored })
-    },
-    acceptAll: () => {
-        writeConsentCookie(true)
-        set({ decided: true, analyticsAllowed: true })
-    },
-    rejectAll: () => {
-        writeConsentCookie(false)
-        set({ decided: true, analyticsAllowed: false })
-    },
-    save: (analytics: boolean) => {
-        writeConsentCookie(analytics)
-        set({ decided: true, analyticsAllowed: analytics })
-    },
-}))
+interface CookieConsentStoreState {
+    /** null = not hydrated yet, false = no choice made (show banner), true = decided. */
+    decided: boolean | null
+    /** Whether the visitor allowed analytics cookies. */
+    analyticsAllowed: boolean
+    /** Read the persisted choice once (idempotent — no-op after the first decision). */
+    hydrate: () => void
+    /** Accept every category. */
+    acceptAll: () => void
+    /** Reject every optional category (necessary stays on). */
+    rejectAll: () => void
+    /** Commit a granular choice from the preferences modal. */
+    save: (analyticsAllowed: boolean) => void
+}
+
+/** Shared cookie-consent store. */
+export const useCookieConsentStore = create<CookieConsentStoreState>((set, get) => {
+    const commit = (analyticsAllowed: boolean) => {
+        writeConsentCookie({ analytics: analyticsAllowed })
+        set({ decided: true, analyticsAllowed })
+    }
+    return {
+        decided: null,
+        analyticsAllowed: false,
+        hydrate: () => {
+            if (get().decided !== null) {
+                return
+            }
+            const stored = readConsentCookie()
+            set(
+                stored
+                    ? { decided: true, analyticsAllowed: stored.analytics }
+                    : { decided: false, analyticsAllowed: false },
+            )
+        },
+        acceptAll: () => commit(true),
+        rejectAll: () => commit(false),
+        save: (analyticsAllowed) => commit(analyticsAllowed),
+    }
+})

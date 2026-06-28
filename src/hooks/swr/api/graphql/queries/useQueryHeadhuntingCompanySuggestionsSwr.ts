@@ -1,13 +1,11 @@
 import {
-    GraphQLHeadersKey,
-    queryHeadhuntingCompanySuggestions,
-} from "@/modules/api"
-import {
     useEntitySuggestionsSwr,
     type EntitySuggestionsFetchParams,
     type EntitySuggestionItem,
 } from "./useEntitySuggestionsSwr"
 import type { SWRConfiguration } from "swr"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { queryHeadhuntingCompanySuggestions } from "@/modules/api/graphql/queries/query-headhunting-company-suggestions"
 
 /** Cache-key prefix namespacing headhunting company suggestions in the SWR cache. */
 const SWR_KEY = "QUERY_HEADHUNTING_COMPANY_SUGGESTIONS_SWR"

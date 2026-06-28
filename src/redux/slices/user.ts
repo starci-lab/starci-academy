@@ -1,11 +1,9 @@
-import type {
-    EnrollmentEntity,
-    UserEntity,
-} from "@/modules/types"
 import {
     createSlice,
     type PayloadAction,
 } from "@reduxjs/toolkit"
+import type { EnrollmentEntity } from "@/modules/types/entities/enrollment"
+import type { UserEntity } from "@/modules/types/entities/user"
 
 /**
  * Client state for the authenticated user and their course enrollment.

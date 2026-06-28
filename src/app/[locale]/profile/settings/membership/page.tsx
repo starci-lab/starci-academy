@@ -1,7 +1,5 @@
 import React from "react"
-import {
-    Membership,
-} from "@/components/features/profile"
+import { Membership } from "@/components/features/profile/Membership"
 
 /**
  * Route `/[locale]/profile/membership` — renders the community membership

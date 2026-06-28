@@ -6,13 +6,9 @@ import {
     Typography,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import {
-    StickyBottomBar,
-} from "@/components/blocks"
-import {
-    useCookieConsentStore,
-    useCookiePreferencesOverlayState,
-} from "@/hooks/zustand"
+import { StickyBottomBar } from "@/components/blocks/layout/StickyBottomBar"
+import { useCookieConsentStore } from "@/hooks/zustand/cookieConsent/store"
+import { useCookiePreferencesOverlayState } from "@/hooks/zustand/overlay/hooks"
 
 /**
  * Cookie consent banner — the non-blocking bottom bar shown until the visitor makes a choice.

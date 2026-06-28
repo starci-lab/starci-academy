@@ -6,7 +6,7 @@ import {
     Skeleton,
     cn,
 } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Loading placeholder mirroring {@link import("../CourseCard").CourseCard}'s layout

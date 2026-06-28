@@ -13,12 +13,8 @@ import {
 import {
     useRouter,
 } from "@/i18n/navigation"
-import {
-    BrandLogo,
-} from "@/components/blocks"
-import type {
-    WithClassNames,
-} from "@/modules/types"
+import { BrandLogo } from "@/components/blocks/identity/BrandLogo"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link Logo}.

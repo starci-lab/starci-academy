@@ -2,14 +2,10 @@
 
 import React from "react"
 import type {
-    WithClassNames,
-} from "@/modules/types"
-import {
-    ResponsiveBreadcrumb,
-} from "@/components/blocks"
-import type {
     FoundationsBreadcrumbItem,
 } from "../../types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
+import { ResponsiveBreadcrumb } from "@/components/blocks/navigation/ResponsiveBreadcrumb"
 
 /** Props for {@link FoundationsBreadcrumbs}. */
 export interface FoundationsBreadcrumbsProps extends WithClassNames<undefined> {

@@ -2,13 +2,11 @@
 
 import React from "react"
 import { Button, cn, Modal } from "@heroui/react"
-import {
-    useCvUpdateOverlayState,
-} from "@/hooks"
-import { useCvApplyForm } from "@/hooks/zustand"
 import { useTranslations } from "next-intl"
-import { Dropzone } from "@/components/reuseable"
-import type { WithClassNames } from "@/modules/types"
+import { useCvUpdateOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useCvApplyForm } from "@/hooks/zustand/cvApply/useCvApplyForm"
+import { Dropzone } from "@/components/reuseable/Dropzone"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link CvUpdateModal}.

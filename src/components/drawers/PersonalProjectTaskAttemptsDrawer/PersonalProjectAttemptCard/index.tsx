@@ -5,8 +5,7 @@ import React from "react"
 import { Chip, cn } from "@heroui/react"
 
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types"
-
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 export interface PersonalProjectAttemptCardProps extends WithClassNames<undefined> {
     /** Attempt sequence from API. */

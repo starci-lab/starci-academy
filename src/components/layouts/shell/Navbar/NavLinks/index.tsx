@@ -19,11 +19,9 @@ import {
     pathConfig,
 } from "@/resources/path"
 import type {
-    WithClassNames,
-} from "@/modules/types"
-import type {
     NavbarItem,
 } from "../types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link NavLinks}.

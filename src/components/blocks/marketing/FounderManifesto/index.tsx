@@ -1,7 +1,7 @@
 import React from "react"
 import { cn, Typography } from "@heroui/react"
-import { SectionCard } from "@/components/reuseable"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { SectionCard } from "@/components/reuseable/SectionCard"
 
 /** Props for the {@link FounderManifesto} block. */
 export interface FounderManifestoProps extends WithClassNames<undefined> {

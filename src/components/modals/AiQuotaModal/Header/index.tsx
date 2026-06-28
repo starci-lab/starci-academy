@@ -8,9 +8,7 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import {
-    useQueryMyAiQuotaSwr,
-} from "@/hooks"
+import { useQueryMyAiQuotaSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiQuotaSwr"
 
 /**
  * AI quota modal title row — tier chip from `myAiQuota` when subscribed.

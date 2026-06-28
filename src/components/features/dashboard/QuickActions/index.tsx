@@ -25,18 +25,14 @@ import {
     BriefcaseIcon,
 } from "@phosphor-icons/react"
 import {
-    useAppSelector,
-} from "@/redux"
-import {
-    useQueryMyRewardWalletSwr,
-    useQueryMyDueFlashcardsSwr,
-} from "@/hooks"
-import {
     pathConfig,
 } from "@/resources/path"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useAppSelector } from "@/redux/hooks"
+import { useQueryMyRewardWalletSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyRewardWalletSwr"
+import { useQueryMyDueFlashcardsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyDueFlashcardsSwr"
 
 /** Props for {@link QuickActions}. */
 export type QuickActionsProps = WithClassNames<undefined>

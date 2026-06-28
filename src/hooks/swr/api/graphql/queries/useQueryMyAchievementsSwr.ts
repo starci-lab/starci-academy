@@ -1,7 +1,7 @@
-import { queryMyAchievements } from "@/modules/api"
-import type { QueryMyAchievementsData } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { queryMyAchievements } from "@/modules/api/graphql/queries/query-my-achievements"
+import type { QueryMyAchievementsData } from "@/modules/api/graphql/queries/types/achievements"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Empty payload used until the query resolves / when unauthenticated. */
 const EMPTY: QueryMyAchievementsData = {

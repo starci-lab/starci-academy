@@ -1,5 +1,5 @@
-import type { SystemConfigData } from "@/modules/types"
 import type { GraphQLResponse } from "../../types"
+import type { SystemConfigData } from "@/modules/types/system-config"
 
 /** Apollo response shape for the `systemConfig` query. */
 export interface QuerySystemConfigResponse {

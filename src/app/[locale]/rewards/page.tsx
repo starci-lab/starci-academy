@@ -1,5 +1,5 @@
 import React from "react"
-import { RewardsPage } from "@/components/layouts/rewards"
+import { RewardsPage } from "@/components/layouts/rewards/RewardsPage"
 
 /**
  * Route `/[locale]/rewards` — the "điểm quà" gifts store. Thin route file: mounts

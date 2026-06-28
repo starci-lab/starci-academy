@@ -9,20 +9,12 @@ import {
 import {
     useRouter,
 } from "next/navigation"
-import {
-    usePaymentOverlayState,
-    useQueryCourseEnrollmentStatusSwr,
-    useMutateStartTrialSwr,
-} from "@/hooks"
-import {
-    PaymentFlow,
-} from "@/modules/types"
-import {
-    useAppSelector,
-} from "@/redux"
-import {
-    pathConfig,
-} from "@/resources"
+import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useQueryCourseEnrollmentStatusSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseEnrollmentStatusSwr"
+import { useMutateStartTrialSwr } from "@/hooks/swr/api/graphql/mutations/useMutateStartTrialSwr"
+import { PaymentFlow } from "@/modules/types/payment"
+import { useAppSelector } from "@/redux/hooks"
+import { pathConfig } from "@/resources/path"
 
 /** Result of {@link useCourseEnrollment}. */
 export interface UseCourseEnrollmentResult {

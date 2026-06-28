@@ -2,7 +2,7 @@
 
 import React from "react"
 import { cn } from "@heroui/react"
-import { useParams } from "next/navigation"
+import { useParams, usePathname } from "next/navigation"
 import { Task } from ".."
 import {
     TaskBreadcrumb,
@@ -13,6 +13,9 @@ import {
 import {
     PersonalProjectDashboard,
 } from "../PersonalProjectDashboard"
+import {
+    PersonalProjectTaskResult,
+} from "../TaskResult"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link PersonalProjectWorkspace}. */
@@ -39,12 +42,19 @@ export const PersonalProjectWorkspace = ({
     className,
 }: PersonalProjectWorkspaceProps = {}) => {
     const params = useParams()
+    const pathname = usePathname()
     const taskId = typeof params?.taskId === "string" ? params.taskId : undefined
 
     // no task in the URL (`/personal-project` index) → the project dashboard
     // (overview), not an empty column; a task route → the read-left / act-right split.
     if (!taskId) {
         return <PersonalProjectDashboard className={className} />
+    }
+
+    // `…/tasks/[taskId]/result` → the grading result page (full content column; the
+    // milestone left-rail from the shell stays). The brief/panel split is for the task itself.
+    if (/\/result\/?$/.test(pathname)) {
+        return <PersonalProjectTaskResult className={className} />
     }
 
     return (

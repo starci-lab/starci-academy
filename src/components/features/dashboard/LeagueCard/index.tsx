@@ -1,12 +1,6 @@
 "use client"
 
 import React from "react"
-import {
-    useQueryMyLeagueSwr,
-} from "@/hooks"
-import {
-    AsyncContent,
-} from "@/components/blocks"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -16,6 +10,8 @@ import {
 import {
     LeagueCardContent,
 } from "./LeagueCardContent"
+import { useQueryMyLeagueSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyLeagueSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 
 /** Props for {@link LeagueCard}. */
 export interface LeagueCardProps extends WithClassNames<undefined> {

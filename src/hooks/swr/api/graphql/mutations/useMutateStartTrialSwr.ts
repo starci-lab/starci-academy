@@ -1,8 +1,6 @@
-import {
-    mutateStartTrial,
-    type StartTrialRequest,
-} from "@/modules/api"
 import useSWRMutation from "swr/mutation"
+import { mutateStartTrial } from "@/modules/api/graphql/mutations/mutation-start-trial"
+import { type StartTrialRequest } from "@/modules/api/graphql/mutations/types/start-trial"
 
 type MutateStartTrialResult = Awaited<ReturnType<typeof mutateStartTrial>>
 

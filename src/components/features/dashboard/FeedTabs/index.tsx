@@ -25,31 +25,22 @@ import {
     UsersIcon,
 } from "@phosphor-icons/react"
 import {
-    ActivityFeed,
-    AsyncContent,
-    TabsCard,
-} from "@/components/blocks"
-import {
     TrendingContents,
 } from "../TrendingContents"
 import {
     FeedTabsSkeleton,
 } from "./FeedTabsSkeleton"
-import {
-    useQueryMyFeedSwr,
-    useMutateReactActivitySwr,
-} from "@/hooks"
-import {
-    MyFeedTab,
-    MyFeedCategory,
-    queryResolveRoute,
-} from "@/modules/api"
-import type {
-    ReactionType,
-} from "@/modules/api"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { ActivityFeed } from "@/components/blocks/feed/ActivityFeed"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { TabsCard } from "@/components/blocks/navigation/TabsCard"
+import { useQueryMyFeedSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyFeedSwr"
+import { useMutateReactActivitySwr } from "@/hooks/swr/api/graphql/mutations/useMutateReactActivitySwr"
+import { MyFeedTab, MyFeedCategory } from "@/modules/api/graphql/queries/types/my-feed"
+import { queryResolveRoute } from "@/modules/api/graphql/queries/query-resolve-route"
+import type { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
 
 /** Props for {@link FeedTabs}. */
 export type FeedTabsProps = WithClassNames<undefined>

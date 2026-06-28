@@ -1,7 +1,7 @@
-import { queryMyKpis } from "@/modules/api"
-import type { QueryMyKpisData } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { queryMyKpis } from "@/modules/api/graphql/queries/query-my-kpis"
+import type { QueryMyKpisData } from "@/modules/api/graphql/queries/types/my-kpis"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR wrapper for {@link queryMyKpis}. `data` is the viewer's weekly KPIs

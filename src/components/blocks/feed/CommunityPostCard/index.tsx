@@ -12,12 +12,13 @@ import {
     SealCheckIcon,
 } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import { ReactionType } from "@/modules/api"
-import type { QueryCommunityFeedItemData } from "@/modules/api"
 import { getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
-import type { WithClassNames } from "@/modules/types"
-import { UserAvatar, MarkdownContent } from "@/components/reuseable"
 import { ReactionBar } from "../ReactionBar"
+import { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
+import type { QueryCommunityFeedItemData } from "@/modules/api/graphql/queries/types/community-feed"
+import type { WithClassNames } from "@/modules/types/base/class-name"
+import { UserAvatar } from "@/components/reuseable/UserAvatar"
+import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 
 /** Props for the {@link CommunityPostCard} block. */
 export interface CommunityPostCardProps extends WithClassNames<undefined> {

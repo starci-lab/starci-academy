@@ -1,8 +1,6 @@
-import {
-    mutateSendChatMessage,
-    type SendChatMessageRequest,
-} from "@/modules/api"
 import useSWRMutation from "swr/mutation"
+import { mutateSendChatMessage } from "@/modules/api/graphql/mutations/mutation-send-chat-message"
+import { type SendChatMessageRequest } from "@/modules/api/graphql/mutations/types/chat"
 
 type MutateSendChatMessageResult = Awaited<ReturnType<typeof mutateSendChatMessage>>
 

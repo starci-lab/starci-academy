@@ -9,19 +9,13 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    Score,
-    StarCiAIBadge,
-} from "@/components/reuseable"
-import {
-    AsyncContent,
-} from "@/components/blocks"
-import {
-    useQueryUserPersonalTaskAttemptsSwr,
-} from "@/hooks"
-import {
     TaskResultsSkeleton,
 } from "../TaskResultsSkeleton"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { Score } from "@/components/reuseable/Score"
+import { StarCiAIBadge } from "@/components/reuseable/StarCiAIBadge"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { useQueryUserPersonalTaskAttemptsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserPersonalTaskAttemptsSwr"
 
 /** Props for {@link TaskResults}. */
 export type TaskResultsProps = WithClassNames<undefined>

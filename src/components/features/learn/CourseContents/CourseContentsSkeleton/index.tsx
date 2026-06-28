@@ -1,12 +1,10 @@
 "use client"
 
 import React from "react"
-import {
-    Skeleton,
-} from "@/components/blocks"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /** Number of placeholder lesson rows shown in the keep-going path. */
 const SKELETON_LESSON_COUNT = 4

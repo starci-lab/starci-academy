@@ -1,5 +1,5 @@
 import useSWR from "swr"
-import { queryCommunityPostComments } from "@/modules/api"
+import { queryCommunityPostComments } from "@/modules/api/graphql/queries/query-community-post-comments"
 
 /** Page size for the comment list. */
 const PAGE_LIMIT = 50

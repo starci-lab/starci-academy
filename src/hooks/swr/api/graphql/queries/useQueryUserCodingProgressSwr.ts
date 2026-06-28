@@ -1,5 +1,5 @@
-import { queryUserCodingProgress } from "@/modules/api"
 import useSWR from "swr"
+import { queryUserCodingProgress } from "@/modules/api/graphql/queries/query-user-coding-progress"
 
 /**
  * SWR hook for a user's coding-practice status (solved/attempted/revealed ids +

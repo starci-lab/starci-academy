@@ -24,13 +24,6 @@ import {
     UserPlusIcon,
 } from "@phosphor-icons/react"
 import {
-    ActivityType,
-} from "@/modules/api"
-import type {
-    QueryMyFeedItemData,
-    ReactionType,
-} from "@/modules/api"
-import {
     formatDateTime,
     getTimeAgoLabel,
     getTimeAgoMessage,
@@ -50,6 +43,9 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { ActivityType } from "@/modules/api/graphql/queries/types/my-feed"
+import type { QueryMyFeedItemData } from "@/modules/api/graphql/queries/types/my-feed"
+import type { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
 
 /** Activity-type → badge icon (phosphor `*Icon`) shown over the actor avatar. */
 const TYPE_ICON: Record<ActivityType, typeof BookOpenIcon> = {
@@ -146,7 +142,10 @@ export const ActivityFeed = ({
             const now = new Date()
             const todayMs = startOfDayMs(now)
             const dayMs = 86_400_000
-            const groups: Array<DayGroup> = []
+            // bucket by day key into an insertion-ordered Map so a given day appears
+            // exactly once even when items aren't strictly day-monotonic (a later item
+            // on an already-seen day appends to its group → no duplicate React keys)
+            const groupByKey = new Map<string, DayGroup>()
             for (const row of rows) {
                 const at = new Date(row.head.at)
                 const dayMsValue = startOfDayMs(at)
@@ -163,14 +162,14 @@ export const ActivityFeed = ({
                     })
                 }
                 const key = String(dayMsValue)
-                const last = groups[groups.length - 1]
-                if (last && last.key === key) {
-                    last.rows.push(row)
+                const existing = groupByKey.get(key)
+                if (existing) {
+                    existing.rows.push(row)
                 } else {
-                    groups.push({ key, label, rows: [row] })
+                    groupByKey.set(key, { key, label, rows: [row] })
                 }
             }
-            return groups
+            return Array.from(groupByKey.values())
         },
         [
             items,

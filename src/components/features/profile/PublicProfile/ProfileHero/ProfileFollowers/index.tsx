@@ -8,10 +8,6 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import {
-    useFollowListOverlayState,
-    useQueryUserProfileSwr,
-} from "@/hooks"
 import type {
     FollowListTab,
 } from "@/hooks/zustand/overlay/store"
@@ -21,6 +17,8 @@ import type {
 import {
     useProfileUsername,
 } from "../../hooks/useProfileUsername"
+import { useFollowListOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
 
 /** Props for {@link ProfileFollowers}. */
 export type ProfileFollowersProps = WithClassNames<undefined>

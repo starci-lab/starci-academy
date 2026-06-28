@@ -1,5 +1,5 @@
-import { publicEnv } from "@/resources/env"
 import axios from "axios"
+import { publicEnv } from "@/resources/env/public"
 
 /**
  * Calls the logout endpoint to clear the server-side session (refresh cookie).

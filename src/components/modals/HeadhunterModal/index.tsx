@@ -3,14 +3,14 @@
 import { House as BuildingsIcon, Smartphone as PhoneIcon } from "@gravity-ui/icons"
 import { FaLinkedin as LinkedinLogoIcon } from "react-icons/fa6"
 import { Button, cn, Link, Modal } from "@heroui/react"
-import { ConsultantAvatar } from "@/components/features/careers/Headhunting"
-import { useHeadhunterOverlayState } from "@/hooks"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
-import { pathConfig } from "@/resources"
-import { useAppSelector } from "@/redux"
 import React from "react"
-import type { WithClassNames } from "@/modules/types"
+import { ConsultantAvatar } from "@/components/features/careers/Headhunting/Headhuntings/ConsultantAvatar"
+import { useHeadhunterOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { pathConfig } from "@/resources/path"
+import { useAppSelector } from "@/redux/hooks"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link HeadhunterModal}.

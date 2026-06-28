@@ -8,11 +8,9 @@ import {
     useTranslations,
 } from "next-intl"
 import type {
-    WithClassNames,
-} from "@/modules/types"
-import type {
     AiLabParamsForm,
 } from "../types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link ParamControls}. */
 export type ParamControlsProps = WithClassNames<undefined> & {

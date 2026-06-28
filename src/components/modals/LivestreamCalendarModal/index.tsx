@@ -2,20 +2,17 @@
 
 import { Clock as ClockIcon } from "@gravity-ui/icons"
 import { Calendar, Chip, cn, Modal } from "@heroui/react"
-import {
-    useLivestreamCalendarOverlayState,
-} from "@/hooks"
-import type { LivestreamSessionEntity } from "@/modules/types"
-import { DayOfWeek } from "@/modules/types"
-import { useAppSelector } from "@/redux"
 import { CalendarDate, getLocalTimeZone, today } from "@internationalized/date"
 import type { DateValue } from "@heroui/react/rac"
-import { Spacer } from "@/components/reuseable"
 import { useFormatter, useTranslations } from "next-intl"
 import React, { useMemo } from "react"
 import dayjs from "dayjs"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-
+import { useLivestreamCalendarOverlayState } from "@/hooks/zustand/overlay/hooks"
+import type { LivestreamSessionEntity } from "@/modules/types/entities/livestream-session"
+import { DayOfWeek } from "@/modules/types/enums/day-of-week"
+import { useAppSelector } from "@/redux/hooks"
+import { Spacer } from "@/components/reuseable/Spacer"
 
 /** JS `Date#getDay()` (0 = Sunday … 6 = Saturday). */
 export const dayOfWeekToNumber: Record<DayOfWeek, number> = {

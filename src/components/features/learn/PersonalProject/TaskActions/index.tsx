@@ -11,31 +11,23 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    AIProcessingText,
-} from "@/components/reuseable"
-import {
-    JobCategory,
-    JobStatus,
-} from "@/modules/types"
-import {
-    usePersonalProjectGithubForm,
-    usePersonalProjectTaskAttemptsDrawerOverlayState,
-    useUserMilestoneTaskFeedbacksModalOverlayState,
-    useQueryMilestoneTaskProgressSwr,
-    useQueryUserPersonalTaskAttemptsSwr,
-    useMutateSyncPersonalProjectGithubSwr,
-    useMutateSyncPersonalProjectGithubBranchSwr,
-} from "@/hooks"
-import {
-    useAppSelector,
-} from "@/redux"
-import {
-    buildMilestoneTaskProgressLookup,
-    isPersonalProjectTaskActionUnlocked,
-} from "@/components/utils"
+    usePathname,
+    useRouter,
+} from "next/navigation"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { AIProcessingText } from "@/components/reuseable/AIProcessingText"
+import { JobCategory } from "@/modules/types/enums/job-category"
+import { JobStatus } from "@/modules/types/enums/job-status"
+import { usePersonalProjectGithubForm } from "@/hooks/zustand/personalProjectGithub/usePersonalProjectGithubForm"
+import { usePersonalProjectTaskAttemptsDrawerOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useQueryMilestoneTaskProgressSwr } from "@/hooks/swr/api/graphql/queries/useQueryMilestoneTaskProgressSwr"
+import { useQueryUserPersonalTaskAttemptsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserPersonalTaskAttemptsSwr"
+import { useMutateSyncPersonalProjectGithubSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSyncPersonalProjectGithubSwr"
+import { useMutateSyncPersonalProjectGithubBranchSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSyncPersonalProjectGithubBranchSwr"
+import { useAppSelector } from "@/redux/hooks"
+import { buildMilestoneTaskProgressLookup, isPersonalProjectTaskActionUnlocked } from "@/components/utils/task-lookup"
 
 /** Props for {@link TaskActions}. */
 export type TaskActionsProps = WithClassNames<undefined>
@@ -51,12 +43,13 @@ export const TaskActions = ({
     className,
 }: TaskActionsProps = {}) => {
     const t = useTranslations()
+    const router = useRouter()
+    const pathname = usePathname()
     const reviewGithubForm = usePersonalProjectGithubForm()
     const syncGithubSwr = useMutateSyncPersonalProjectGithubSwr()
     const syncBranchSwr = useMutateSyncPersonalProjectGithubBranchSwr()
     const progressSwr = useQueryMilestoneTaskProgressSwr()
     const personalProjectAttemptsDrawer = usePersonalProjectTaskAttemptsDrawerOverlayState()
-    const milestoneTaskFeedbacksModal = useUserMilestoneTaskFeedbacksModalOverlayState()
     const attemptsSwr = useQueryUserPersonalTaskAttemptsSwr()
 
     const selectedTaskId = useAppSelector((state) => state.milestone.selectedTaskId)
@@ -153,10 +146,10 @@ export const TaskActions = ({
         [reviewGithubForm],
     )
 
-    /** Open the milestone task feedback details modal. */
+    /** Go to the dedicated task result page (replaces the old feedback modal). */
     const onOpenFeedbacks = useCallback(
-        () => milestoneTaskFeedbacksModal.setOpen(true),
-        [milestoneTaskFeedbacksModal],
+        () => router.push(`${pathname}/result`),
+        [router, pathname],
     )
 
     /** Open the personal project attempts drawer. */

@@ -1,5 +1,5 @@
-import type { UserMilestoneTaskAttemptFeedbackEntity } from "@/modules/types"
 import type { GraphQLResponse, PaginationFilters, SortInput } from "../../types"
+import type { UserMilestoneTaskAttemptFeedbackEntity } from "@/modules/types/entities/user-milestone-task"
 
 /** Paginated payload inside `userMilestoneTaskFeedbacks.data`. */
 export interface QueryUserMilestoneTaskFeedbacksPayload {

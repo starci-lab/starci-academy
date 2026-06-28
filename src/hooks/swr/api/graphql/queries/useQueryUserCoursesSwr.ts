@@ -1,5 +1,5 @@
-import { queryUserCourses } from "@/modules/api"
 import useSWR from "swr"
+import { queryUserCourses } from "@/modules/api/graphql/queries/query-user-courses"
 
 /**
  * SWR hook for a user's joined courses (with milestone progress) by id. Public —

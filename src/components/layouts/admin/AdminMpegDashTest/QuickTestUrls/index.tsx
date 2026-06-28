@@ -5,7 +5,7 @@ import { Card, CardContent, cn } from "@heroui/react"
 import { QUICK_TEST_URLS } from "../constants"
 import { QuickTestUrlButton } from "./QuickTestUrlButton"
 import type { QuickTestUrl } from "../types"
-import type { WithClassNames } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 export interface QuickTestUrlsProps extends WithClassNames<undefined> {
     /** Loads a preset's URL + renderer type into the tool. */

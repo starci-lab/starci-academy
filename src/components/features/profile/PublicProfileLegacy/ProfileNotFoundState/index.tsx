@@ -13,12 +13,10 @@ import {
 import {
     useRouter,
 } from "next/navigation"
-import {
-    pathConfig,
-} from "@/resources"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { pathConfig } from "@/resources/path"
 
 /** Props for {@link ProfileNotFoundState}. */
 export type ProfileNotFoundStateProps = WithClassNames<undefined>

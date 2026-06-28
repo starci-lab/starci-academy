@@ -1,5 +1,5 @@
-import type { IncompleteJobsItem } from "@/modules/types"
 import type { GraphQLResponse } from "../../types"
+import type { IncompleteJobsItem } from "@/modules/types/incomplete-job"
 
 /** Payload of `incompletedJobs` when successful. */
 export interface IncompleteJobsData {

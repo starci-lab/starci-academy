@@ -1,5 +1,5 @@
-import type { SubmissionFeedbackEntity } from "@/modules/types"
 import type { GraphQLResponse, PaginationFilters, SortInput } from "../../types"
+import type { SubmissionFeedbackEntity } from "@/modules/types/entities/submission-feedback"
 
 /** Paginated payload inside `userChallengeSubmissionFeedbacks.data`. */
 export interface QuerySubmissionFeedbacksPayload {

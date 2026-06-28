@@ -8,8 +8,9 @@
 import React from "react"
 import { Button, cn, FieldError, InputOTP, Link, Modal, Spinner, TextField } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { useMutateSignUpResendOtpSwr, useSignUpForm } from "@/hooks"
-import { useGraphQLWithToast } from "@/modules/toast"
+import { useMutateSignUpResendOtpSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSignUpResendOtpSwr"
+import { useSignUpForm } from "@/hooks/zustand/signUp/useSignUpForm"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
 
 /**
  * OTP entry for completing GraphQL sign-up (mirrors sign-in `OTPState`).

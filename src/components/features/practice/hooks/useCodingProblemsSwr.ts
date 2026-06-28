@@ -1,11 +1,9 @@
 "use client"
 
 import useSWR from "swr"
-import {
-    queryCodingProblems,
-    type CodingProblem,
-} from "@/modules/api/graphql"
 import { PROBLEMS_PAGE_LIMIT } from "../constants"
+import { queryCodingProblems } from "@/modules/api/graphql/queries/query-coding-problems"
+import { type CodingProblem } from "@/modules/api/graphql/queries/types/coding"
 
 /**
  * SWR hook loading the full coding-problem catalog in one page. Phase 1 filters,

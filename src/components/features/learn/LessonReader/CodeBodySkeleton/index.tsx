@@ -5,12 +5,8 @@ import {
     Skeleton,
     cn,
 } from "@heroui/react"
-import {
-    SkeletonText,
-} from "@/components/reuseable"
-import type {
-    WithClassNames,
-} from "@/modules/types"
+import { SkeletonText } from "@/components/reuseable/SkeletonText"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link CodeBodySkeleton}. */
 export interface CodeBodySkeletonProps extends WithClassNames<undefined> {

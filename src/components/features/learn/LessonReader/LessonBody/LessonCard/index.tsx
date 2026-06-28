@@ -2,7 +2,8 @@
 
 import React from "react"
 import { Card, CardContent, Link, cn } from "@heroui/react"
-import type { LessonVideoEntity, WithClassNames } from "@/modules/types"
+import type { LessonVideoEntity } from "@/modules/types/entities/lesson-video"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 export interface LessonCardProps extends WithClassNames<undefined> {
     /** Lesson video row for lesson tab. */

@@ -1,8 +1,8 @@
-import { queryAiModels } from "@/modules/api"
-import { useAppDispatch, useAppSelector } from "@/redux"
-import { setAiModels } from "@/redux/slices"
 import { usePathname } from "next/navigation"
 import useSWR from "swr"
+import { queryAiModels } from "@/modules/api/graphql/queries/query-ai-models"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setAiModels } from "@/redux/slices/ai-models"
 
 /**
  * SWR query core for the AI models query. Returns the viewer's tier-scoped model

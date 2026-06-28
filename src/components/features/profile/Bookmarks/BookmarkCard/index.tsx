@@ -20,17 +20,12 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    IconTile,
-    SurfaceListCardRow,
-} from "@/components/blocks"
-import {
-    type ContentEntity,
-    getContentChallengeCount,
-    type WithClassNames,
-} from "@/modules/types"
-import {
     pathConfig,
 } from "@/resources/path"
+import { IconTile } from "@/components/blocks/identity/IconTile"
+import { SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
+import { type ContentEntity, getContentChallengeCount } from "@/modules/types/entities/content"
+import { type WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link BookmarkCard} (list item — per-item content data only). */
 export interface BookmarkCardProps extends WithClassNames<undefined> {

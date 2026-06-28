@@ -1,20 +1,12 @@
 import {
-    GraphQLHeadersKey,
-    queryChallenges,
-} from "@/modules/api"
-import {
-    useAppDispatch,
-    useAppSelector,
-} from "@/redux"
-import {
     useParams,
 } from "next/navigation"
 import useSWR from "swr"
-import {
-    ContentTab,
-    setChallengeCount,
-    setChallenges,
-} from "@/redux/slices"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { queryChallenges } from "@/modules/api/graphql/queries/query-challenges"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { ContentTab } from "@/redux/slices/tabs"
+import { setChallengeCount, setChallenges } from "@/redux/slices/challenge"
 
 /**
  * Lists challenges for the active lesson (`challenges` query).

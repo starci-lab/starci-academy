@@ -11,24 +11,16 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    useQueryUserAchievementsSwr,
-    useQueryUserProfileSwr,
-} from "@/hooks"
-import {
     useProfileUsername,
 } from "../useProfileUsername"
-import {
-    MascotBadge,
-} from "@/components/reuseable"
-import {
-    EmptyState,
-} from "@/components/blocks"
-import {
-    getRank,
-} from "@/modules/utils"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useQueryUserAchievementsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserAchievementsSwr"
+import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
+import { MascotBadge } from "@/components/reuseable/MascotBadge"
+import { EmptyState } from "@/components/blocks/feedback/EmptyState"
+import { getRank } from "@/modules/utils/rank"
 
 /** One labelled achievement bucket: a group key plus the badge slugs it holds. */
 interface AchievementGroup {

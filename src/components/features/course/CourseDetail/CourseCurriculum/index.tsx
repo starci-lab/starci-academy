@@ -14,22 +14,16 @@ import {
     ListChecksIcon,
 } from "@phosphor-icons/react"
 import {
-    AsyncContent,
-    LabeledCard,
-    Skeleton,
-} from "@/components/blocks"
-import {
-    useQueryCourseSwr,
-} from "@/hooks"
-import {
-    useAppSelector,
-} from "@/redux"
-import {
     ModuleAccordionItem,
 } from "./ModuleAccordionItem"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { useQueryCourseSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseSwr"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Props for {@link CourseCurriculum}. */
 export type CourseCurriculumProps = WithClassNames<undefined>

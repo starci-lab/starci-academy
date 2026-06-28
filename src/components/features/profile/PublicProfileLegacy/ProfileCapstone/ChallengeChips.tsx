@@ -16,11 +16,9 @@ import {
     SiGithub,
 } from "@icons-pack/react-simple-icons"
 import type {
-    QueryUserSolvedChallengeItemData,
-} from "@/modules/api"
-import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import type { QueryUserSolvedChallengeItemData } from "@/modules/api/graphql/queries/types/user-solved-challenges"
 
 /** Maximum number of challenge chips rendered before the overflow pill. */
 const MAX_VISIBLE_CHIPS = 12

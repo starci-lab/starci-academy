@@ -25,9 +25,7 @@ import {
 import {
     useAiQuotaHistorySwr,
 } from "../hooks"
-import type {
-    WithClassNames,
-} from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** One day bucket for the usage history chart. */
 interface AiQuotaHistoryChartPoint {

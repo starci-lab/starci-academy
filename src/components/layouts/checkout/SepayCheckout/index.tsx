@@ -20,9 +20,6 @@ import {
     useRouter,
 } from "@/i18n/navigation"
 import {
-    pathConfig,
-} from "@/resources"
-import {
     EnrolledSuccess,
 } from "./EnrolledSuccess"
 import {
@@ -31,6 +28,7 @@ import {
 import {
     OrderSummary,
 } from "./OrderSummary"
+import { pathConfig } from "@/resources/path"
 
 /** How often (ms) to re-poll the enrollment status while waiting for payment. */
 const POLL_INTERVAL_MS = 5000

@@ -1,10 +1,8 @@
-import type {
-    ContentEntity,
-} from "@/modules/types"
 import {
     createSlice,
     type PayloadAction,
 } from "@reduxjs/toolkit"
+import type { ContentEntity } from "@/modules/types/entities/content"
 
 /**
  * The slice for public content (non-premium, shareable content).

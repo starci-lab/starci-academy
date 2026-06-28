@@ -7,12 +7,6 @@ import {
     cn,
 } from "@heroui/react"
 import {
-    useSearchOverlayState,
-} from "@/hooks"
-import type {
-    WithClassNames,
-} from "@/modules/types"
-import {
     Logo,
 } from "./Logo"
 import {
@@ -27,6 +21,8 @@ import {
 import {
     NotificationBell,
 } from "./NotificationBell"
+import { useSearchOverlayState } from "@/hooks/zustand/overlay/hooks"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link Navbar}.

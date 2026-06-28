@@ -1,7 +1,7 @@
-import { queryTrendingContents } from "@/modules/api"
-import type { QueryTrendingContentItemData } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { queryTrendingContents } from "@/modules/api/graphql/queries/query-trending-contents"
+import type { QueryTrendingContentItemData } from "@/modules/api/graphql/queries/types/trending-contents"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR wrapper for {@link queryTrendingContents}. `data` is the lessons read most

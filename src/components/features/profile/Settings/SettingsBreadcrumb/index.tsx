@@ -13,15 +13,9 @@ import {
 import {
     useRouter,
 } from "next/navigation"
-import {
-    ResponsiveBreadcrumb,
-} from "@/components/blocks"
-import type {
-    ResponsiveBreadcrumbItem,
-} from "@/components/blocks"
-import {
-    pathConfig,
-} from "@/resources"
+import { ResponsiveBreadcrumb } from "@/components/blocks/navigation/ResponsiveBreadcrumb"
+import type { ResponsiveBreadcrumbItem } from "@/components/blocks/navigation/ResponsiveBreadcrumb"
+import { pathConfig } from "@/resources/path"
 
 /** Props for {@link SettingsBreadcrumb}. */
 export interface SettingsBreadcrumbProps {

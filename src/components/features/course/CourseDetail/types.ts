@@ -1,4 +1,4 @@
-import type { PricingPhase } from "@/modules/types"
+import type { PricingPhase } from "@/modules/types/enums/pricing-phase"
 
 /** One pricing-phase row rendered in the conversion rail. */
 export interface CoursePriceRow {

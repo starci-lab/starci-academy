@@ -17,23 +17,13 @@ import {
     useRouter,
 } from "next/navigation"
 import {
-    useAppDispatch,
-    useAppSelector,
-} from "@/redux"
-import {
-    setSelectedTaskId,
-} from "@/redux/slices"
-import {
-    useQueryMilestoneTaskProgressSwr,
-} from "@/hooks"
-import {
-    buildMilestoneTaskProgressLookup,
-    isPersonalProjectTaskActionUnlocked,
-} from "@/components/utils"
-import {
     pathConfig,
 } from "@/resources/path"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setSelectedTaskId } from "@/redux/slices/milestone"
+import { useQueryMilestoneTaskProgressSwr } from "@/hooks/swr/api/graphql/queries/useQueryMilestoneTaskProgressSwr"
+import { buildMilestoneTaskProgressLookup, isPersonalProjectTaskActionUnlocked } from "@/components/utils/task-lookup"
 
 /** Props for {@link TaskLockedAlert}. */
 export type TaskLockedAlertProps = WithClassNames<undefined>

@@ -13,19 +13,6 @@ import {
 import {
     Lock as LockIcon,
 } from "@gravity-ui/icons"
-import {
-    EmptyState,
-} from "@/components/blocks"
-import {
-    useAppSelector,
-} from "@/redux"
-import {
-    useQueryUserProfileSwr,
-} from "@/hooks"
-import {
-    FollowButton,
-    UserAvatar,
-} from "@/components/reuseable"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -35,6 +22,11 @@ import {
 import {
     useProfileFollow,
 } from "../useProfileFollow"
+import { EmptyState } from "@/components/blocks/feedback/EmptyState"
+import { useAppSelector } from "@/redux/hooks"
+import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
+import { FollowButton } from "@/components/reuseable/FollowButton"
+import { UserAvatar } from "@/components/reuseable/UserAvatar"
 
 /** Props for {@link ProfileLockedState}. */
 export type ProfileLockedStateProps = WithClassNames<undefined>

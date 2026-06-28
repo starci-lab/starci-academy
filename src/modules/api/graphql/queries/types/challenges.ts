@@ -1,5 +1,5 @@
-import type { ChallengeEntity } from "@/modules/types"
 import type { GraphQLResponse, PaginationFilters, SortInput } from "../../types"
+import type { ChallengeEntity } from "@/modules/types/entities/challenge"
 
 /** Paginated payload inside `challenges.data`. */
 export interface QueryChallengesPayload {

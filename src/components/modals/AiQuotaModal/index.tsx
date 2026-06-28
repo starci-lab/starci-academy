@@ -8,18 +8,6 @@ import {
     Modal,
 } from "@heroui/react"
 import {
-    useAiQuotaOverlayState,
-} from "@/hooks"
-import {
-    useAppDispatch,
-} from "@/redux"
-import {
-    resetAiQuotaTab,
-} from "@/redux/slices"
-import {
-    WithClassNames,
-} from "@/modules/types"
-import {
     AiQuotaBody,
 } from "./Body"
 import {
@@ -31,6 +19,10 @@ import {
 import {
     AiQuotaTabBar,
 } from "./TabBar"
+import { useAiQuotaOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useAppDispatch } from "@/redux/hooks"
+import { resetAiQuotaTab } from "@/redux/slices/tabs"
+import { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link AiQuotaModal}. */
 type AiQuotaModalProps = WithClassNames<undefined>

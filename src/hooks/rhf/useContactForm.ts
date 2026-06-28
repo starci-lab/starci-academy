@@ -5,9 +5,9 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { useTranslations } from "next-intl"
-import { useMutateSubmitContactSwr } from "@/hooks/swr"
-import { useGraphQLWithToast } from "@/modules/toast"
-import type { ContactCategory } from "@/modules/api"
+import { useMutateSubmitContactSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSubmitContactSwr"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
+import type { ContactCategory } from "@/modules/api/graphql/mutations/types/contact"
 
 /** Max lengths (mirror the contact-form expectations). */
 const NAME_MAX = 100

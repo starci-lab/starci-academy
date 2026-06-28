@@ -1,7 +1,7 @@
-import { useAppDispatch } from "@/redux"
 import { useLayoutEffect } from "react"
 import { useParams, usePathname } from "next/navigation"
-import { setModuleId } from "@/redux/slices"
+import { useAppDispatch } from "@/redux/hooks"
+import { setModuleId } from "@/redux/slices/module"
 
 /**
  * Syncs `module.id` from the `[moduleId]` route param into Redux on navigation.

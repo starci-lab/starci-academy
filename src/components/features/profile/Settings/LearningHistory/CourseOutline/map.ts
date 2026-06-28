@@ -1,5 +1,5 @@
-import type { Difficulty } from "@/components/blocks"
-import type { StatusChipTone } from "@/components/blocks"
+import type { Difficulty } from "@/components/blocks/chips/DifficultyChip"
+import type { StatusChipTone } from "@/components/blocks/chips/StatusChip"
 
 /**
  * Normalize a raw difficulty string (lessons: beginner | intermediate |

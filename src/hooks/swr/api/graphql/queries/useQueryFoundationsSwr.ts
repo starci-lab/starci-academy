@@ -1,21 +1,11 @@
-import {
-    defaultFoundationsListLimit,
-    defaultFoundationsListSorts,
-    GraphQLHeadersKey,
-    queryFoundations,
-} from "@/modules/api"
-import {
-    useAppDispatch,
-    useAppSelector,
-} from "@/redux"
-import {
-    setFoundations,
-    setFoundationsCount,
-} from "@/redux/slices"
 import { useLocale } from "next-intl"
 import { usePathname } from "next/navigation"
 import { useEffect } from "react"
 import useSWR from "swr"
+import { defaultFoundationsListLimit, defaultFoundationsListSorts, queryFoundations } from "@/modules/api/graphql/queries/query-foundations"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setFoundations, setFoundationsCount } from "@/redux/slices/foundation"
 
 /**
  * Lists foundations for the selected category via `foundations` and stores rows in Redux.

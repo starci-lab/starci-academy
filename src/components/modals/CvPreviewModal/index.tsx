@@ -4,9 +4,9 @@ import React, { useEffect, useMemo } from "react"
 import { cn, Modal } from "@heroui/react"
 import dynamic from "next/dynamic"
 import { useTranslations } from "next-intl"
-import { useCvPreviewOverlayState } from "@/hooks"
-import { useCvApplyStore } from "@/hooks/zustand"
-import { WithClassNames } from "@/modules/types"
+import { useCvPreviewOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useCvApplyStore } from "@/hooks/zustand/cvApply/store"
+import { WithClassNames } from "@/modules/types/base/class-name"
 
 const PDFView = dynamic(
     () => import("@/components/reuseable/PDFView").then((module) => module.PDFView),

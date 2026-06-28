@@ -2,9 +2,7 @@
 
 import React, { useEffect } from "react"
 import { GoogleAnalytics } from "@next/third-parties/google"
-import {
-    useCookieConsentStore,
-} from "@/hooks/zustand"
+import { useCookieConsentStore } from "@/hooks/zustand/cookieConsent/store"
 
 /** Props for {@link AnalyticsGate}. */
 export interface AnalyticsGateProps {

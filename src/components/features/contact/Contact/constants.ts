@@ -1,4 +1,4 @@
-import type { ContactCategory } from "@/modules/api"
+import type { ContactCategory } from "@/modules/api/graphql/mutations/types/contact"
 
 /** Real contact channels (see memory: starci-real-contact-channels). */
 export const CONTACT_EMAIL = "cuongnvtse160875@gmail.com"

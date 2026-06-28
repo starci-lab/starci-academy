@@ -1,7 +1,7 @@
-import { queryCourse } from "@/modules/api"
-import { useAppDispatch, useAppSelector } from "@/redux"
-import { setCourse } from "@/redux/slices"
 import useSWR from "swr"
+import { queryCourse } from "@/modules/api/graphql/queries/query-course"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setCourse } from "@/redux/slices/course"
 
 /**
  * Loads course by URL `displayId` slug; hydrates Redux with entity including internal `id`.

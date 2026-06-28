@@ -1,12 +1,11 @@
-import { 
-    mutateSignInVerifyOtp, 
-    type SignInVerifyOtpRequest 
-} from "@/modules/api"
-import { setAccessToken, setAuthenticated } from "@/redux/slices"
-import { useAppDispatch } from "@/redux"
-import { LocalStorage, LocalStorageId } from "@/modules/storage"
 import useSWRMutation from "swr/mutation"
-import type { AbortableRequest } from "@/modules/api"
+import { mutateSignInVerifyOtp } from "@/modules/api/graphql/mutations/mutation-sign-in-verify-otp"
+import { type SignInVerifyOtpRequest } from "@/modules/api/graphql/mutations/types/sign-in-verify-otp"
+import { setAccessToken, setAuthenticated } from "@/redux/slices/keycloak"
+import { useAppDispatch } from "@/redux/hooks"
+import { LocalStorage } from "@/modules/storage/local/storage"
+import { LocalStorageId } from "@/modules/storage/local/enums/id"
+import type { AbortableRequest } from "@/modules/api/graphql/types"
 
 type MutateSignInVerifyOtpResult = Awaited<ReturnType<typeof mutateSignInVerifyOtp>>
 

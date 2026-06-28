@@ -15,14 +15,16 @@ import {
 } from "@phosphor-icons/react"
 import React, { useMemo } from "react"
 import { Button, Chip, cn } from "@heroui/react"
-import { ChallengeDifficulty, type ChallengeEntity, type WithClassNames } from "@/modules/types"
-import type { ChallengeProgressStatus } from "@/modules/api"
 import { useTranslations } from "next-intl"
-import { difficultyPalette } from "@/components/pallettes"
 import { useParams } from "next/navigation"
 import { useRouter } from "@/i18n/navigation"
-import { useAppSelector } from "@/redux"
-import { MarkdownContent } from "@/components/reuseable"
+import { ChallengeDifficulty } from "@/modules/types/enums/challenge-difficulty"
+import { type ChallengeEntity } from "@/modules/types/entities/challenge"
+import { type WithClassNames } from "@/modules/types/base/class-name"
+import type { ChallengeProgressStatus } from "@/modules/api/graphql/queries/types/challenge-submission-progress"
+import { difficultyPalette } from "@/components/pallettes/difficulty"
+import { useAppSelector } from "@/redux/hooks"
+import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 
 /** i18n key for each difficulty tier label (covers all 5 BE tiers). */
 const DIFFICULTY_LABEL_KEY: Record<ChallengeDifficulty, string> = {

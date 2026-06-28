@@ -1,18 +1,11 @@
 import type { Locale } from "next-intl"
-import type {
-    Difficulty,
-    StatusChipTone,
-} from "@/components/blocks"
-import type {
-    MyCourseOutlineCurrentTask,
-    MyCourseOutlineModule,
-} from "@/modules/api"
-import {
-    ContentTab,
-} from "@/redux/slices"
 import {
     pathConfig,
 } from "@/resources/path"
+import type { Difficulty } from "@/components/blocks/chips/DifficultyChip"
+import type { StatusChipTone } from "@/components/blocks/chips/StatusChip"
+import type { MyCourseOutlineCurrentTask, MyCourseOutlineModule } from "@/modules/api/graphql/queries/types/my-course-outline"
+import { ContentTab } from "@/redux/slices/tabs"
 
 /**
  * Normalize a raw difficulty string (lessons: beginner | intermediate |

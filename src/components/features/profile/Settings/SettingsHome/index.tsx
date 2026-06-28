@@ -17,21 +17,6 @@ import {
     useRouter,
 } from "next/navigation"
 import {
-    IconTile,
-    PageHeader,
-    PressableCard,
-} from "@/components/blocks"
-import {
-    GithubIcon,
-    GoogleIcon,
-} from "@/components/svg"
-import {
-    useAppSelector,
-} from "@/redux"
-import {
-    AuthenticationType,
-} from "@/modules/types"
-import {
     SettingsBreadcrumb,
 } from "../SettingsBreadcrumb"
 import {
@@ -40,6 +25,13 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { IconTile } from "@/components/blocks/identity/IconTile"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { PressableCard } from "@/components/blocks/cards/PressableCard"
+import { GithubIcon } from "@/components/svg/GithubIcon"
+import { GoogleIcon } from "@/components/svg/GoogleIcon"
+import { useAppSelector } from "@/redux/hooks"
+import { AuthenticationType } from "@/modules/types/enums/authentication-type"
 
 /** Props for {@link SettingsHome}. */
 export type SettingsHomeProps = WithClassNames<undefined>

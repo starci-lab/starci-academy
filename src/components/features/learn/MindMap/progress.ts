@@ -1,10 +1,6 @@
 import type { Locale } from "next-intl"
-import type {
-    MyCourseOutlineCurrentTask,
-    MyCourseOutlineModule,
-    MyCourseOutlinePayload,
-} from "@/modules/api"
 import { pathConfig } from "@/resources/path"
+import type { MyCourseOutlineCurrentTask, MyCourseOutlineModule, MyCourseOutlinePayload } from "@/modules/api/graphql/queries/types/my-course-outline"
 
 /** Coarse completion state of a module, used to tint its mind-map node. */
 export type MindMapModuleStatus = "done" | "inProgress" | "notStarted"

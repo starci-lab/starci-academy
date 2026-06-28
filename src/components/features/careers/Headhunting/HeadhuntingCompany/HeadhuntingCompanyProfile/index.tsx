@@ -3,9 +3,9 @@
 import React, { useMemo } from "react"
 import { Link, Typography } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { useAppSelector } from "@/redux"
 import type { HeadhuntingCompanyContactLink } from "../../types"
 import { buildHeadhuntingCompanyContactLinks } from "../../utils"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * Company profile block: logo, title, description, and contact links.

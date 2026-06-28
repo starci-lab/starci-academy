@@ -1,12 +1,10 @@
 "use client"
 
 import React from "react"
-import {
-    Skeleton,
-} from "@/components/blocks"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /** Date-grouped activity rows shown while the feed loads. */
 const SKELETON_GROUP_COUNT = 2

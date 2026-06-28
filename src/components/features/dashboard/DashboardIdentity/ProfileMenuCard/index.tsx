@@ -17,21 +17,14 @@ import {
     UserAvatar,
 } from "@/components/reuseable/UserAvatar"
 import {
-    useAppSelector,
-} from "@/redux"
-import {
     pathConfig,
 } from "@/resources/path"
-import {
-    useQueryUserAchievementsSwr,
-} from "@/hooks"
-import {
-    rankInfo,
-    resolveSeniorityRank,
-} from "@/modules/utils"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useAppSelector } from "@/redux/hooks"
+import { useQueryUserAchievementsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserAchievementsSwr"
+import { rankInfo, resolveSeniorityRank } from "@/modules/utils/rank"
 
 /** Props for {@link ProfileMenuCard}. */
 export type ProfileMenuCardProps = WithClassNames<undefined>

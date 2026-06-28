@@ -4,15 +4,9 @@ import React from "react"
 import {
     useTranslations,
 } from "next-intl"
-import {
-    useAppSelector,
-} from "@/redux"
-import {
-    PageHeader,
-} from "@/components/blocks"
-import type {
-    WithClassNames,
-} from "@/modules/types"
+import { useAppSelector } from "@/redux/hooks"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link FoundationsLearnHeader}. */
 export interface FoundationsLearnHeaderProps extends WithClassNames<undefined> {

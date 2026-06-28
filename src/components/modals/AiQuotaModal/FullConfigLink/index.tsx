@@ -14,12 +14,8 @@ import {
 import {
     useRouter,
 } from "next/navigation"
-import {
-    useAiQuotaOverlayState,
-} from "@/hooks"
-import {
-    pathConfig,
-} from "@/resources"
+import { useAiQuotaOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { pathConfig } from "@/resources/path"
 
 /**
  * Link to the full AI usage / quota page (`/profile/ai-usage`).

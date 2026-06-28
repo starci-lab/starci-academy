@@ -1,6 +1,4 @@
-import {
-    AiQuotaTab,
-} from "@/redux/slices"
+import { AiQuotaTab } from "@/redux/slices/tabs"
 
 /** Ordered tabs shown in the AI quota modal. */
 export const AI_QUOTA_TAB_ORDER: Array<AiQuotaTab> = [

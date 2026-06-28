@@ -5,16 +5,6 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    AsyncContent,
-    Skeleton,
-} from "@/components/blocks"
-import {
-    useQueryCourseSwr,
-} from "@/hooks"
-import {
-    useAppSelector,
-} from "@/redux"
-import {
     CourseHero,
 } from "./CourseHero"
 import {
@@ -38,6 +28,10 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { useQueryCourseSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseSwr"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Props for {@link CourseDetail}. */
 export type CourseDetailProps = WithClassNames<undefined>

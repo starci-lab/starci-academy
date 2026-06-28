@@ -1,5 +1,5 @@
-import type { CourseEntity } from "@/modules/types"
 import type { GraphQLResponse } from "../../types"
+import type { CourseEntity } from "@/modules/types/entities/course"
 
 /** Apollo variables for `course(request: CourseRequest!)`. */
 export interface QueryCourseRequest {

@@ -4,18 +4,14 @@ import React, { useState } from "react"
 import { Typography, cn } from "@heroui/react"
 import { FlameIcon as FireIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import {
-    useQueryUserContributionCalendarSwr,
-    useQueryUserProfileSwr,
-    useQueryUserWeeklyStatsSwr,
-} from "@/hooks"
 import { ContributionCalendarView } from "@/components/reuseable/ContributionCalendarView"
-import {
-    AsyncContent,
-    Skeleton,
-} from "@/components/blocks"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useProfileUsername } from "../../hooks/useProfileUsername"
+import { useQueryUserContributionCalendarSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserContributionCalendarSwr"
+import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
+import { useQueryUserWeeklyStatsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserWeeklyStatsSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /** Props for {@link OverviewContributions}. */
 export type OverviewContributionsProps = WithClassNames<undefined>

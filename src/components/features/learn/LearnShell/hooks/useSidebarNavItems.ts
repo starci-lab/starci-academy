@@ -20,22 +20,14 @@ import {
     useRouter,
 } from "next/navigation"
 import {
-    useAppDispatch,
-    useAppSelector,
-} from "@/redux"
-import {
-    SidebarTab,
-    setSidebar,
-} from "@/redux/slices"
-import {
     pathConfig,
 } from "@/resources/path"
-import {
-    useQueryCourseEnrollmentStatusSwr,
-} from "@/hooks"
 import type {
     LearnNavItem,
 } from "../types"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { SidebarTab, setSidebar } from "@/redux/slices/sidebar"
+import { useQueryCourseEnrollmentStatusSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseEnrollmentStatusSwr"
 
 /**
  * Result of {@link useSidebarNavItems}.

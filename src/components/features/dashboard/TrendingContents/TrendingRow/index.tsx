@@ -5,11 +5,9 @@ import {
     cn,
 } from "@heroui/react"
 import {
-    SurfaceListCardRow,
-} from "@/components/blocks"
-import {
     useResolveRouteNavigation,
 } from "../../EntityToken/useResolveRouteNavigation"
+import { SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
 
 /** Props for {@link TrendingRow}. */
 export interface TrendingRowProps {

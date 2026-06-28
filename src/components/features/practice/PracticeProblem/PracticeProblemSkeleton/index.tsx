@@ -6,10 +6,8 @@ import {
     CardContent,
     Skeleton,
 } from "@heroui/react"
-import {
-    SkeletonParagraph,
-    SkeletonText,
-} from "@/components/reuseable"
+import { SkeletonParagraph } from "@/components/reuseable/SkeletonParagraph"
+import { SkeletonText } from "@/components/reuseable/SkeletonText"
 
 /**
  * Loading placeholder for {@link PracticeProblem}. Mirrors the two-column detail:

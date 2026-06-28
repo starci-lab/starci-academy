@@ -1,6 +1,6 @@
-import { queryMySessions } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { queryMySessions } from "@/modules/api/graphql/queries/query-my-sessions"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR query wrapper for {@link queryMySessions}. `data` is the unwrapped array

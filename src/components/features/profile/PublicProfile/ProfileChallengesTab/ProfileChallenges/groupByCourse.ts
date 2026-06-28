@@ -1,4 +1,4 @@
-import type { QueryUserSolvedChallengeItemData } from "@/modules/api"
+import type { QueryUserSolvedChallengeItemData } from "@/modules/api/graphql/queries/types/user-solved-challenges"
 
 /** One course group: its title (or null for ungrouped) and the rows under it. */
 export interface ChallengeCourseGroup {

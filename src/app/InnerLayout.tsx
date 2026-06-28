@@ -1,22 +1,23 @@
 "use client"
-import {
-    HeroUIProvider,
-    NextThemesProvider,
-    SwrProvider,
-} from "@/components/providers"
-import { DrawerContainer } from "@/components/drawers"
-import { AmbientBackground } from "@/components/blocks"
 import { Navbar } from "@/components/features/navbar/Navbar"
 import { Footer } from "@/components/features/footer/Footer"
 import { ToastProvider } from "@heroui/react"
 import React, { PropsWithChildren, Suspense } from "react"
-import { SocketIoSideEffects } from "@/hooks/socketio"
-import { SwrSideEffects } from "@/hooks/swr"
-import { ReduxProvider } from "@/redux"
-import { ModalContainer } from "@/components/modals"
 import { CookieConsentBanner } from "@/components/features/cookie-consent/CookieConsentBanner"
-import { UseEffects } from "@/hooks"
 import { usePathname } from "next/navigation"
+import { HeroUIProvider } from "@/components/providers/HeroUIProvider"
+import { NextThemesProvider } from "@/components/providers/NextThemesProvider"
+import { SwrProvider } from "@/components/providers/SwrProvider"
+import { DrawerContainer } from "@/components/drawers/DrawerContainer"
+import { AmbientBackground } from "@/components/blocks/layout/AmbientBackground"
+import { TopLoader } from "@/components/blocks/layout/TopLoader"
+import { AppSplash } from "@/components/blocks/layout/AppSplash"
+import { SocketConnectionStatus } from "@/components/blocks/layout/SocketConnectionStatus"
+import { SocketIoSideEffects } from "@/hooks/socketio/SocketIoSideEffects"
+import { SwrSideEffects } from "@/hooks/swr/SwrSideEffects"
+import { ReduxProvider } from "@/redux/ReduxProvider"
+import { ModalContainer } from "@/components/modals/ModalContainer"
+import { UseEffects } from "@/hooks/effects/UseEffects"
 
 export const InnerLayout = ({ children }: PropsWithChildren) => {
     // Suppress the drifting ember background on Learn routes — it competes with
@@ -42,8 +43,11 @@ export const InnerLayout = ({ children }: PropsWithChildren) => {
                             <SwrSideEffects />
                             <SocketIoSideEffects />
                             <UseEffects />
+                            <AppSplash />
+                            <TopLoader />
                             {!isLearnRoute ? <AmbientBackground /> : null}
                             <Navbar />
+                            <SocketConnectionStatus />
                             <ModalContainer />
                             <DrawerContainer />
                             {children}

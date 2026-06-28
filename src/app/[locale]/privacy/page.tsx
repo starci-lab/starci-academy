@@ -2,7 +2,7 @@ import React from "react"
 import type { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 import { LegalPage } from "@/components/features/legal/LegalPage"
-import { buildPageMetadata } from "@/modules/seo"
+import { buildPageMetadata } from "@/modules/seo/buildMetadata"
 
 /** Route params for `/[locale]/privacy`. */
 interface PrivacyParams {

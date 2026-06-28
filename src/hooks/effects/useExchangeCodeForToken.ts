@@ -1,24 +1,16 @@
 "use client"
-
-import {
-    KeycloakIdentityProvider,
-} from "@/modules/api"
-import {
-    setAccessToken,
-    setAuthenticated,
-} from "@/redux/slices"
-import { useAppDispatch } from "@/redux"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useLayoutEffect, useRef } from "react"
 import { useMutateExchangeCodeForTokenSwr } from "../swr"
-import {
-    LocalStorage,
-    LocalStorageAccessToken,
-    LocalStorageId,
-    SessionStorage,
-    SessionStorageId,
-    SessionStorageOauthIdpHint,
-} from "@/modules/storage"
+import { KeycloakIdentityProvider } from "@/modules/api/graphql/mutations/types/exchange-code-for-token"
+import { setAccessToken, setAuthenticated } from "@/redux/slices/keycloak"
+import { useAppDispatch } from "@/redux/hooks"
+import { LocalStorage } from "@/modules/storage/local/storage"
+import { LocalStorageAccessToken } from "@/modules/storage/local/types/keycloak-access-token"
+import { LocalStorageId } from "@/modules/storage/local/enums/id"
+import { SessionStorage } from "@/modules/storage/session/storage"
+import { SessionStorageId } from "@/modules/storage/session/enums/id"
+import { SessionStorageOauthIdpHint } from "@/modules/storage/session/types/oauth-idp-hint"
 
 const OAUTH_QUERY_KEYS = ["code", "state", "session_state", "iss"] as const
 

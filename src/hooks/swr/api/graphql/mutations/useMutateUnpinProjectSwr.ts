@@ -1,8 +1,6 @@
-import {
-    mutateUnpinProject,
-    type UnpinProjectRequest,
-} from "@/modules/api"
 import useSWRMutation from "swr/mutation"
+import { mutateUnpinProject } from "@/modules/api/graphql/mutations/mutation-unpin-project"
+import { type UnpinProjectRequest } from "@/modules/api/graphql/mutations/types/pinned-projects"
 
 type MutateUnpinProjectResult = Awaited<ReturnType<typeof mutateUnpinProject>>
 

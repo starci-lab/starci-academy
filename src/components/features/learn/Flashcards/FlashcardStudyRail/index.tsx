@@ -5,11 +5,13 @@ import useSWR from "swr"
 import { Chip, Input, Label, ListBox, ScrollShadow, TextField, Typography, cn } from "@heroui/react"
 import { CardsThreeIcon, MicrophoneStageIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import { queryFlashcardDecksByCourse } from "@/modules/api/graphql"
-import { AsyncContent, Skeleton } from "@/components/blocks"
-import { useAppSelector } from "@/redux"
 import { useFlashcardNav } from "../useFlashcardNav"
-import type { FlashcardDeckEntity, WithClassNames } from "@/modules/types"
+import { queryFlashcardDecksByCourse } from "@/modules/api/graphql/queries/query-flashcard-decks-by-course"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { useAppSelector } from "@/redux/hooks"
+import type { FlashcardDeckEntity } from "@/modules/types/entities/flashcard-deck"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link FlashcardStudyRail}. */
 export type FlashcardStudyRailProps = WithClassNames<undefined>

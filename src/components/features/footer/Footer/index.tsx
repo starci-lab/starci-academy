@@ -20,9 +20,6 @@ import {
 import {
     pathConfig,
 } from "@/resources/path"
-import {
-    BrandLogo,
-} from "@/components/blocks"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -35,6 +32,7 @@ import {
 import {
     FooterNavColumn,
 } from "./FooterNavColumn"
+import { BrandLogo } from "@/components/blocks/identity/BrandLogo"
 
 /** Founder social links (brand logos → react-icons/fa6 per the icon rule). */
 const SOCIALS = [

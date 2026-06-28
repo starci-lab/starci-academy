@@ -1,13 +1,9 @@
-import {
-    queryAutocompleteGlobalSearch,
-    type SearchableEntity,
-} from "@/modules/api"
-import {
-    useSearchOverlayState
-} from "@/hooks"
-import { useAppDispatch, useAppSelector } from "@/redux"
-import { setGlobalSearchResults } from "@/redux/slices"
 import useSWR from "swr"
+import { queryAutocompleteGlobalSearch } from "@/modules/api/graphql/queries/query-autocomplete-global-search"
+import { type SearchableEntity } from "@/modules/api/graphql/queries/types/autocomplete-global-search"
+import { useSearchOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setGlobalSearchResults } from "@/redux/slices/socketio"
 
 const DEFAULT_ENTITIES: Array<SearchableEntity> = [
     "CourseEntity",

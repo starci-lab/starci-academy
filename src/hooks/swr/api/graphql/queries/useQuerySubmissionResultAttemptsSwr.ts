@@ -1,10 +1,7 @@
 import useSWR from "swr"
-import {
-    defaultSubmissionAttemptsListSorts,
-    GraphQLHeadersKey,
-    querySubmissionAttempts,
-} from "@/modules/api"
-import { useAppSelector } from "@/redux"
+import { defaultSubmissionAttemptsListSorts, querySubmissionAttempts } from "@/modules/api/graphql/queries/query-submission-attempts"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * Page-friendly variant of the submission-attempts query for the dedicated result

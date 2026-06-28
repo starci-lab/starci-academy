@@ -4,9 +4,9 @@ import React from "react"
 import { ReactFlowProvider } from "@xyflow/react"
 import { cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { useAppSelector } from "@/redux"
 import { Canvas } from "../Canvas"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Props for {@link MindMapCanvas}. */
 export type MindMapCanvasProps = WithClassNames<undefined>

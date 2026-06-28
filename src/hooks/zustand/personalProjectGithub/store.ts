@@ -1,9 +1,24 @@
 "use client"
 
 import { create } from "zustand"
+import { AiMode, type ModelProvider } from "@/modules/api/graphql/queries/query-my-ai-settings"
 
 /** Inline autosave status for the debounced url/branch sync. */
 export type PersonalProjectGithubAutosaveStatus = "idle" | "saving" | "saved" | "failed"
+
+/**
+ * Grading-lane + concrete-model pick for the personal-project review. Unlike the challenge
+ * picker there is NO free Auto lane: the personal project must always grade with an Economy
+ * tier model or higher, so `model`/`provider` are seeded (never left null at submit).
+ */
+export interface GradingModelSelection {
+    /** AI lane the chosen model runs on (auto for economy without a plan, premium otherwise). */
+    mode: AiMode
+    /** Concrete model name; null only before the catalog has seeded a default. */
+    model: string | null
+    /** Provider serving {@link model}. */
+    provider: ModelProvider | null
+}
 
 /**
  * Zustand store for the personal-project GitHub form — SHARED between PersonalProjectSubmission
@@ -18,6 +33,12 @@ interface PersonalProjectGithubStoreState {
     branch: string
     /** Chosen programming language to grade against (typescript/java/csharp/go). */
     lang: string
+    /** AI lane for grading (auto for economy without a plan, premium otherwise). */
+    gradeMode: AiMode
+    /** Chosen grading model name; null until the catalog seeds a default. */
+    gradeModel: string | null
+    /** Provider for {@link PersonalProjectGithubStoreState.gradeModel}. */
+    gradeModelProvider: ModelProvider | null
     /** Whether githubUrl has been blurred/touched. */
     touchedGithubUrl: boolean
     /** Whether branch has been blurred/touched. */
@@ -39,6 +60,8 @@ interface PersonalProjectGithubStoreState {
     setGithubUrl: (value: string) => void
     setBranch: (value: string) => void
     setLang: (value: string) => void
+    /** Set the grading-lane + model pick together. */
+    setGradeSelection: (value: GradingModelSelection) => void
     setTouchedGithubUrl: (value: boolean) => void
     setTouchedBranch: (value: boolean) => void
     setGithubUrlError: (value: string | null) => void
@@ -53,6 +76,9 @@ export const usePersonalProjectGithubStore = create<PersonalProjectGithubStoreSt
     githubUrl: "",
     branch: "main",
     lang: "typescript",
+    gradeMode: AiMode.Auto,
+    gradeModel: null,
+    gradeModelProvider: null,
     touchedGithubUrl: false,
     touchedBranch: false,
     githubUrlError: null,
@@ -66,6 +92,11 @@ export const usePersonalProjectGithubStore = create<PersonalProjectGithubStoreSt
     setGithubUrl: (githubUrl) => set({ githubUrl, githubUrlError: null }),
     setBranch: (branch) => set({ branch, branchError: null }),
     setLang: (lang) => set({ lang }),
+    setGradeSelection: ({ mode, model, provider }) => set({
+        gradeMode: mode,
+        gradeModel: model,
+        gradeModelProvider: provider,
+    }),
     setTouchedGithubUrl: (touchedGithubUrl) => set({ touchedGithubUrl }),
     setTouchedBranch: (touchedBranch) => set({ touchedBranch }),
     setGithubUrlError: (githubUrlError) => set({ githubUrlError }),

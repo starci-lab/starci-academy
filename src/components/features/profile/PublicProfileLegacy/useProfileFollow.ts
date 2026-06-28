@@ -6,12 +6,10 @@ import {
     useState,
 } from "react"
 import {
-    useMutateSetFollowSwr,
-    useQueryUserProfileSwr,
-} from "@/hooks"
-import {
     useProfileUsername,
 } from "./useProfileUsername"
+import { useMutateSetFollowSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSetFollowSwr"
+import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
 
 /** Shape returned by {@link useProfileFollow}. */
 export interface UseProfileFollowResult {

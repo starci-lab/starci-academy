@@ -1,11 +1,11 @@
 import React, { cache } from "react"
 import type { Metadata } from "next"
-import { publicEnv } from "@/resources"
 import { SEO_CONFIG } from "@/config/seo"
-import { JsonLd, personSchema } from "@/modules/seo"
 import {
     PublicProfile,
 } from "@/components/features/profile/PublicProfile"
+import { publicEnv } from "@/resources/env/public"
+import { JsonLd, personSchema } from "@/modules/seo/jsonLd"
 
 /** Route params for the public profile page. */
 interface ProfilePageParams {

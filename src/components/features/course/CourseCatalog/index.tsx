@@ -18,25 +18,17 @@ import {
     useRouter,
 } from "next/navigation"
 import {
-    SearchInput,
-} from "@/components/reuseable"
-import {
-    useQueryCoursesSwr,
-} from "@/hooks"
-import {
-    AsyncContent,
-    CourseCardSkeleton,
-    PageHeader,
-} from "@/components/blocks"
-import {
     CatalogCourseCard,
 } from "./CatalogCourseCard"
-import {
-    pathConfig,
-} from "@/resources"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { SearchInput } from "@/components/reuseable/SearchInput"
+import { useQueryCoursesSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursesSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { CourseCardSkeleton } from "@/components/blocks/cards/CourseCardSkeleton"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { pathConfig } from "@/resources/path"
 
 /** Debounce window (ms) before a typed search hits the backend. */
 const SEARCH_DEBOUNCE_MS = 350

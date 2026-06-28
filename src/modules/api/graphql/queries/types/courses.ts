@@ -1,6 +1,6 @@
-import type { CourseEntity } from "@/modules/types"
 import type { GraphQLResponse, PaginationFilters } from "../../types"
 import type { SortBy } from "../../types"
+import type { CourseEntity } from "@/modules/types/entities/course"
 
 /** Inner `data` field for the paginated `courses` query. */
 export interface QueryCoursesPayload {

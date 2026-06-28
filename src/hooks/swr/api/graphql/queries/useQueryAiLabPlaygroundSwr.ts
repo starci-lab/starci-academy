@@ -1,6 +1,6 @@
-import { queryAiLabPlayground } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { queryAiLabPlayground } from "@/modules/api/graphql/queries/query-ai-lab-playground"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR query wrapper for {@link queryAiLabPlayground}. `data` is the unwrapped

@@ -1,13 +1,11 @@
 import {
-    GraphQLHeadersKey,
-    queryChallengeSuggestions,
-} from "@/modules/api"
-import {
     useEntitySuggestionsSwr,
     type EntitySuggestionsFetchParams,
     type EntitySuggestionItem,
 } from "./useEntitySuggestionsSwr"
 import type { SWRConfiguration } from "swr"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { queryChallengeSuggestions } from "@/modules/api/graphql/queries/query-challenge-suggestions"
 
 /** Cache-key prefix namespacing challenge suggestions in the SWR cache. */
 const SWR_KEY = "QUERY_CHALLENGE_SUGGESTIONS_SWR"

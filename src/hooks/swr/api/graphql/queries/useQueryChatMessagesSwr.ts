@@ -1,5 +1,5 @@
 import useSWR from "swr"
-import { queryChatMessages } from "@/modules/api"
+import { queryChatMessages } from "@/modules/api/graphql/queries/query-chat-messages"
 
 /** How many recent messages to load. */
 const PAGE_LIMIT = 50

@@ -11,20 +11,11 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import {
-    useAppDispatch,
-    useAppSelector,
-} from "@/redux"
-import {
-    setContentIsRead,
-} from "@/redux/slices"
-import {
-    GraphQLHeadersKey,
-    mutateMarkContentAsReaded,
-} from "@/modules/api"
-import {
-    useGraphQLWithToast,
-} from "@/modules/toast"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setContentIsRead } from "@/redux/slices/content"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { mutateMarkContentAsReaded } from "@/modules/api/graphql/mutations/mutation-mark-content-as-readed"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
 
 /** SWR key prefix of the course-outline query whose read flags this read updates. */
 const COURSE_OUTLINE_SWR_KEY = "QUERY_MY_COURSE_OUTLINE_SWR"

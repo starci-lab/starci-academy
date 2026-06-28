@@ -2,12 +2,12 @@
 
 import React, { useMemo } from "react"
 import { useTranslations } from "next-intl"
-import { LabeledCard } from "@/components/blocks"
-import { MarkdownContent } from "@/components/reuseable"
-import type { MilestoneTaskBrief } from "@/modules/types"
-import { usePersonalProjectGithubForm } from "@/hooks"
-import { useAppSelector } from "@/redux"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import type { MilestoneTaskBrief } from "@/modules/types/entities/milestone"
+import { usePersonalProjectGithubForm } from "@/hooks/zustand/personalProjectGithub/usePersonalProjectGithubForm"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Props for {@link TaskBrief}. */
 export type TaskBriefProps = WithClassNames<undefined>

@@ -1,8 +1,9 @@
 "use client"
 
 import React from "react"
-import type { MilestoneEntity, WithClassNames } from "@/modules/types"
 import { Typography, cn, Separator } from "@heroui/react"
+import type { MilestoneEntity } from "@/modules/types/entities/milestone"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link MilestoneIndexStrip}.

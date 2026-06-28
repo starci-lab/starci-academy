@@ -1,5 +1,5 @@
-import type { FlashcardDeckEntity } from "@/modules/types"
 import type { GraphQLResponse } from "../../types"
+import type { FlashcardDeckEntity } from "@/modules/types/entities/flashcard-deck"
 
 /** Apollo response shape for the `flashcardDeck` query. */
 export interface QueryFlashcardDeckResponse {

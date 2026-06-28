@@ -12,25 +12,6 @@ import {
     ChartBarIcon,
     PuzzlePieceIcon,
 } from "@phosphor-icons/react"
-import {
-    useQueryUserChallengeStrengthSwr,
-    useQueryUserCoursesSwr,
-    useQueryUserProfileSwr,
-    useQueryUserSolvedChallengesSwr,
-} from "@/hooks"
-import {
-    AsyncContent,
-    LabeledCard,
-    MetricCard,
-    SegmentBar,
-    Skeleton,
-    SurfaceListCard,
-    SurfaceListCardItem,
-} from "@/components/blocks"
-import {
-    getLanguageColor,
-    getLanguageLabel,
-} from "@/modules/utils"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -46,6 +27,17 @@ import {
 import {
     ChallengeCourseRow,
 } from "./ChallengeCourseRow"
+import { useQueryUserChallengeStrengthSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserChallengeStrengthSwr"
+import { useQueryUserCoursesSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCoursesSwr"
+import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
+import { useQueryUserSolvedChallengesSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserSolvedChallengesSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { MetricCard } from "@/components/blocks/stats/MetricCard"
+import { SegmentBar } from "@/components/blocks/stats/SegmentBar"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { getLanguageColor, getLanguageLabel } from "@/modules/utils/language"
 
 /** Props for {@link ProfileChallenges}. */
 export type ProfileChallengesProps = WithClassNames<undefined>

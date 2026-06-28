@@ -1,15 +1,15 @@
 "use client"
 
 import React from "react"
-import { useAppSelector } from "@/redux"
-import { WithClassNames } from "@/modules/types"
 import { cn } from "@heroui/react"
-import { AsyncContent } from "@/components/blocks"
-import { useQueryLessonVideosSwr } from "@/hooks"
 import { LessonCard } from "./LessonCard"
 import { LessonCardSkeleton } from "./LessonCardSkeleton"
 import { LessonBodyEmpty } from "./Empty"
-import { SearchBar } from "@/components/reuseable"
+import { useAppSelector } from "@/redux/hooks"
+import { WithClassNames } from "@/modules/types/base/class-name"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { useQueryLessonVideosSwr } from "@/hooks/swr/api/graphql/queries/useQueryLessonVideosSwr"
+import { SearchBar } from "@/components/reuseable/SearchBar"
 
 export type LessonBodyProps = WithClassNames<undefined>
 

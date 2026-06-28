@@ -11,27 +11,23 @@ import {
 } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
-import { useAppDispatch, useAppSelector } from "@/redux"
-import { setSelectedTaskId } from "@/redux/slices"
-import {
-    useQueryMilestonesSwr,
-    useQueryMilestoneTaskProgressSwr,
-} from "@/hooks"
-import { pathConfig } from "@/resources"
-import {
-    AsyncContent,
-    ListRow,
-    PageHeader,
-    ProgressMeter,
-} from "@/components/blocks"
 import {
     buildMilestoneTaskProgressLookup,
     isPersonalProjectTaskActionUnlocked,
 } from "@/components/utils/task-lookup"
 import { PersonalProjectDashboardSkeleton } from "./PersonalProjectDashboardSkeleton"
 import { TaskBreadcrumb } from "../TaskBreadcrumb"
-import type { MilestoneEntity } from "@/modules/types"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setSelectedTaskId } from "@/redux/slices/milestone"
+import { useQueryMilestonesSwr } from "@/hooks/swr/api/graphql/queries/useQueryMilestonesSwr"
+import { useQueryMilestoneTaskProgressSwr } from "@/hooks/swr/api/graphql/queries/useQueryMilestoneTaskProgressSwr"
+import { pathConfig } from "@/resources/path"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { ListRow } from "@/components/blocks/lists/ListRow"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
+import type { MilestoneEntity } from "@/modules/types/entities/milestone"
 
 /** Props for {@link PersonalProjectDashboard}. */
 export type PersonalProjectDashboardProps = WithClassNames<undefined>

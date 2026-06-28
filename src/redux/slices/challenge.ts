@@ -1,12 +1,10 @@
-import type {
-    ChallengeEntity,
-    ChallengeSubmissionEntity,
-} from "@/modules/types"
-import type { ChallengeSubmissionProgressItem } from "@/modules/api"
 import {
     createSlice,
     type PayloadAction,
 } from "@reduxjs/toolkit"
+import type { ChallengeEntity } from "@/modules/types/entities/challenge"
+import type { ChallengeSubmissionEntity } from "@/modules/types/entities/challenge-submission"
+import type { ChallengeSubmissionProgressItem } from "@/modules/api/graphql/queries/types/challenge-submission-progress"
 
 /**
  * Client state for the active challenge, challenge list, submissions, and async grading jobs.

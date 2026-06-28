@@ -1,5 +1,5 @@
-import type { LivestreamSessionEntity } from "@/modules/types"
 import type { GraphQLResponse, PaginationFilters, SortInput } from "../../types"
+import type { LivestreamSessionEntity } from "@/modules/types/entities/livestream-session"
 
 /** Paginated payload inside `livestreamSessions.data`. */
 export interface QueryLivestreamSessionsPayload {

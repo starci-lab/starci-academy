@@ -9,10 +9,6 @@ import {
     useRouter,
     useSearchParams,
 } from "next/navigation"
-import {
-    CodingDifficulty,
-    CodingDomain,
-} from "@/modules/api/graphql"
 import type {
     DifficultyFilter,
     DomainFilter,
@@ -20,6 +16,7 @@ import type {
     SortKey,
     StatusFilter,
 } from "../types"
+import { CodingDifficulty, CodingDomain } from "@/modules/api/graphql/queries/types/coding"
 
 /** Query-string keys the catalog filters are mirrored to (`/practice?...`). */
 const QUERY_KEYS = {

@@ -3,13 +3,11 @@
 import { useCallback, useMemo, useState } from "react"
 import { z } from "zod"
 import axios from "axios"
-import { sleep } from "@/modules/utils"
-import { useGraphQLWithToast, useRestWithToast } from "@/modules/toast"
-import {
-    useMutateGenerateSubmitCvPresignUrlSwr,
-    useMutateVerifySubmitCvPresignUrlSwr,
-} from "@/hooks/swr"
 import { useCvApplyStore } from "./store"
+import { sleep } from "@/modules/utils/misc"
+import { useGraphQLWithToast, useRestWithToast } from "@/modules/toast/hooks"
+import { useMutateGenerateSubmitCvPresignUrlSwr } from "@/hooks/swr/api/graphql/mutations/useMutateGenerateSubmitCvPresignUrlSwr"
+import { useMutateVerifySubmitCvPresignUrlSwr } from "@/hooks/swr/api/graphql/mutations/useMutateVerifySubmitCvPresignUrlSwr"
 
 /** CV file validation schema: required, must be PDF, ≤ 10MB. */
 const cvFileSchema = z.custom<File | null>((value) => value instanceof File, "cv.form.errors.fileRequired")

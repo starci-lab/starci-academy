@@ -1,10 +1,10 @@
 "use client"
 
 import React, { useState } from "react"
-import { CommunityPostCard } from "@/components/blocks"
-import { ReactionType } from "@/modules/api"
-import type { QueryCommunityFeedItemData } from "@/modules/api"
 import { CommunityCommentThread } from "../CommunityCommentThread"
+import { CommunityPostCard } from "@/components/blocks/feed/CommunityPostCard"
+import { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
+import type { QueryCommunityFeedItemData } from "@/modules/api/graphql/queries/types/community-feed"
 
 /** Props for the {@link CommunityPost} feature. */
 export interface CommunityPostProps {

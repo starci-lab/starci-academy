@@ -7,21 +7,20 @@ import { CheckCircleIcon, CursorClickIcon, LockIcon } from "@phosphor-icons/reac
 import { useTranslations, useLocale } from "next-intl"
 import { useRouter } from "next/navigation"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
-import { mutateReviewFlashcard, queryFlashcardDeck } from "@/modules/api/graphql"
-import { type FlashcardCardEntity } from "@/modules/types"
-import {
-    AsyncContent,
-    EmptyState,
-    FlipCard,
-    ProgressMeter,
-    RatingBar,
-} from "@/components/blocks"
-import { useAppSelector } from "@/redux"
-import { useGraphQLWithToast } from "@/modules/toast"
-import { pathConfig } from "@/resources"
 import { SM2_GRADES } from "../constants"
 import { FlashcardReviewerSkeleton } from "./FlashcardReviewerSkeleton"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { mutateReviewFlashcard } from "@/modules/api/graphql/mutations/mutation-review-flashcard"
+import { queryFlashcardDeck } from "@/modules/api/graphql/queries/query-flashcard-deck"
+import { type FlashcardCardEntity } from "@/modules/types/entities/flashcard-card"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { EmptyState } from "@/components/blocks/feedback/EmptyState"
+import { FlipCard } from "@/components/blocks/cards/FlipCard"
+import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
+import { RatingBar } from "@/components/blocks/buttons/RatingBar"
+import { useAppSelector } from "@/redux/hooks"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
+import { pathConfig } from "@/resources/path"
 
 /** Props for {@link FlashcardReviewer}. */
 export interface FlashcardReviewerProps extends WithClassNames<undefined> {

@@ -1,5 +1,5 @@
-import type { HeadhuntingCompanyEntity } from "@/modules/types"
 import type { HeadhuntingCompanyContactLink } from "../types"
+import type { HeadhuntingCompanyEntity } from "@/modules/types/entities/headhunting-company"
 
 /**
  * Builds contact rows from a headhunting company entity.

@@ -1,7 +1,5 @@
 import React from "react"
-import {
-    Security,
-} from "@/components/features/profile"
+import { Security } from "@/components/features/profile/Security"
 
 /**
  * Route `/[locale]/profile/security` — renders the security (2FA) feature.

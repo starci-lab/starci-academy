@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { BlogList } from "@/components/layouts/blog"
+import { BlogList } from "@/components/layouts/blog/BlogList"
 
 /**
  * Route `/[locale]/blog` — public blog listing. Thin route file: mounts the list

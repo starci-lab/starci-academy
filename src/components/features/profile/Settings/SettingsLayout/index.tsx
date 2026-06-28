@@ -13,16 +13,14 @@ import {
     useRouter,
 } from "next/navigation"
 import {
-    CollapsibleSidebar,
-    SidebarNavGroup,
-    SidebarNavItem,
-} from "@/components/blocks"
-import {
     getSettingsGroups,
 } from "../nav"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { CollapsibleSidebar } from "@/components/blocks/navigation/CollapsibleSidebar"
+import { SidebarNavGroup } from "@/components/blocks/navigation/SidebarNavGroup"
+import { SidebarNavItem } from "@/components/blocks/navigation/SidebarNavItem"
 
 /** localStorage key persisting the settings sidebar collapsed flag. */
 const SIDEBAR_STORAGE_KEY = "starci.settings.sidebar.collapsed"

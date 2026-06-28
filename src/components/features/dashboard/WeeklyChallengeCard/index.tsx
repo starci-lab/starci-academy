@@ -15,13 +15,6 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    useQueryWeeklyChallengeSwr,
-} from "@/hooks"
-import {
-    AsyncContent,
-    LabeledCard,
-} from "@/components/blocks"
-import {
     UserAvatar,
 } from "@/components/reuseable/UserAvatar"
 import {
@@ -33,6 +26,9 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { useQueryWeeklyChallengeSwr } from "@/hooks/swr/api/graphql/queries/useQueryWeeklyChallengeSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 
 /** How many leaderboard rows to show before truncating. */
 const TOP_ROWS = 5

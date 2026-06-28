@@ -6,15 +6,12 @@ import {
 } from "react"
 import { useSWRConfig } from "swr"
 import { useTranslations } from "next-intl"
-import { useAppSelector } from "@/redux"
-import {
-    QUERY_USER_PINNED_PROJECTS_SWR,
-    useMutateReorderPinnedProjectsSwr,
-    useMutateUnpinProjectSwr,
-    useQueryUserPinnedProjectsSwr,
-} from "@/hooks"
-import { useGraphQLWithToast } from "@/modules/toast"
-import type { QueryUserPinnedProjectItem } from "@/modules/api"
+import { useAppSelector } from "@/redux/hooks"
+import { QUERY_USER_PINNED_PROJECTS_SWR, useQueryUserPinnedProjectsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserPinnedProjectsSwr"
+import { useMutateReorderPinnedProjectsSwr } from "@/hooks/swr/api/graphql/mutations/useMutateReorderPinnedProjectsSwr"
+import { useMutateUnpinProjectSwr } from "@/hooks/swr/api/graphql/mutations/useMutateUnpinProjectSwr"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
+import type { QueryUserPinnedProjectItem } from "@/modules/api/graphql/queries/types/user-pinned-projects"
 
 /** Shape returned by {@link usePinnedProjectsManager}. */
 export interface UsePinnedProjectsManagerResult {

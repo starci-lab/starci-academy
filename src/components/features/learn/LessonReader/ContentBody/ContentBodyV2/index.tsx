@@ -4,38 +4,26 @@ import React, {
     useMemo,
 } from "react"
 import {
-    MarkdownContent,
-} from "@/components/reuseable"
-import {
     useLocale,
     useTranslations,
 } from "next-intl"
 import {
-    useAppSelector,
-} from "@/redux"
-import {
     cn,
 } from "@heroui/react"
-import {
-    AsyncContent,
-} from "@/components/blocks"
-import {
-    listContentBodyLangs,
-    pickContentBodyByLang,
-    resolveActiveProgrammingLang,
-    resolveContentBody,
-    type WithClassNames,
-} from "@/modules/types"
-import {
-    useQueryContentStatusSwr,
-    useQueryContentSwr,
-} from "@/hooks"
 import {
     ContentBodySkeleton,
 } from "../../ContentBodySkeleton"
 import {
     useAutoMarkContentRead,
 } from "../useAutoMarkContentRead"
+import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { useAppSelector } from "@/redux/hooks"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { listContentBodyLangs, pickContentBodyByLang, resolveContentBody } from "@/modules/types/entities/content-body"
+import { resolveActiveProgrammingLang } from "@/modules/types/utils/programming-language"
+import { type WithClassNames } from "@/modules/types/base/class-name"
+import { useQueryContentStatusSwr } from "@/hooks/swr/api/graphql/queries/useQueryContentStatusSwr"
+import { useQueryContentSwr } from "@/hooks/swr/api/graphql/queries/useQueryContentSwr"
 
 export type ContentBodyV2Props = WithClassNames<undefined>
 

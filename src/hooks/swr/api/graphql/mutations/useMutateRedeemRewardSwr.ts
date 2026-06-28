@@ -1,8 +1,6 @@
-import {
-    mutateRedeemReward,
-    type RedeemRewardRequest,
-} from "@/modules/api"
 import useSWRMutation from "swr/mutation"
+import { mutateRedeemReward } from "@/modules/api/graphql/mutations/mutation-redeem-reward"
+import { type RedeemRewardRequest } from "@/modules/api/graphql/mutations/types/redeem-reward"
 
 type MutateRedeemRewardResult = Awaited<ReturnType<typeof mutateRedeemReward>>
 

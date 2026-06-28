@@ -8,13 +8,13 @@ import {
 import React, { useEffect } from "react"
 import { cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { SidebarNavItem } from "@/components/blocks"
 import { ContentMap } from "@/components/features/learn/ContentMap"
 import { OnThisPage } from "@/components/features/learn/OnThisPage"
 import { useTableOfContents } from "@/components/features/learn/OnThisPage/hooks/useTableOfContents"
-import { useAppDispatch, useAppSelector } from "@/redux"
-import { setMobileView, type MobileLearnView } from "@/redux/slices"
 import { useSidebarNavItems } from "../hooks/useSidebarNavItems"
+import { SidebarNavItem } from "@/components/blocks/navigation/SidebarNavItem"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setMobileView, type MobileLearnView } from "@/redux/slices/sidebar"
 
 /**
  * Mobile bottom-tab bar for the lesson reader (hidden from `lg` up).

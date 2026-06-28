@@ -2,16 +2,13 @@
 
 import React, { useCallback } from "react"
 import useSWR from "swr"
-import { useAppSelector } from "@/redux"
-import { InteractionBar } from "@/components/reuseable"
-import {
-    GraphQLHeadersKey,
-    mutateReactToContent,
-    queryContentReactions,
-    ReactionType,
-    type GraphQLHeaders,
-} from "@/modules/api"
-import type { WithClassNames } from "@/modules/types"
+import { useAppSelector } from "@/redux/hooks"
+import { InteractionBar } from "@/components/reuseable/Discussion/InteractionBar"
+import { GraphQLHeadersKey, type GraphQLHeaders } from "@/modules/api/graphql/types"
+import { mutateReactToContent } from "@/modules/api/graphql/mutations/mutation-react-to-content"
+import { queryContentReactions } from "@/modules/api/graphql/queries/query-content-reactions"
+import { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Reaction footer for a lesson — the emotion picker + view count that belongs to

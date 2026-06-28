@@ -1,5 +1,5 @@
-import { queryUserWeeklyStats } from "@/modules/api"
 import useSWR from "swr"
+import { queryUserWeeklyStats } from "@/modules/api/graphql/queries/query-user-weekly-stats"
 
 /**
  * SWR hook for a user's streak (current + longest) by id. Public — works for

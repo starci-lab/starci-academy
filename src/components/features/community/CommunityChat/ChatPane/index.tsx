@@ -9,20 +9,16 @@ import {
 } from "@heroui/react"
 import { SealCheckIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import {
-    AsyncContent,
-    ChatBubble,
-} from "@/components/blocks"
-import { UserAvatar } from "@/components/reuseable"
-import {
-    PublicationEvent,
-    SubscriptionEvent,
-    communityChatSocketIoEventEmitter,
-    useCommunityChatSocketIo,
-    useMutateSendChatMessageSwr,
-    useQueryChatMessagesSwr,
-} from "@/hooks"
-import { useGraphQLWithToast } from "@/modules/toast"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { ChatBubble } from "@/components/blocks/feed/ChatBubble"
+import { UserAvatar } from "@/components/reuseable/UserAvatar"
+import { PublicationEvent } from "@/hooks/socketio/enums/publication-event"
+import { SubscriptionEvent } from "@/hooks/socketio/enums/subscription-event"
+import { communityChatSocketIoEventEmitter } from "@/hooks/socketio/useCommunityChatSocketIoLifecycle"
+import { useCommunityChatSocketIo } from "@/hooks/socketio/useCommunityChatSocketIo"
+import { useMutateSendChatMessageSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSendChatMessageSwr"
+import { useQueryChatMessagesSwr } from "@/hooks/swr/api/graphql/queries/useQueryChatMessagesSwr"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
 
 /** Props for the {@link ChatPane} feature. */
 export interface ChatPaneProps {

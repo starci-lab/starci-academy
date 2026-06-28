@@ -1,5 +1,5 @@
-import { queryOpenToWorkUsers } from "@/modules/api"
 import useSWR from "swr"
+import { queryOpenToWorkUsers } from "@/modules/api/graphql/queries/query-open-to-work-users"
 
 /** Talent-directory page size. */
 const PAGE_LIMIT = 24

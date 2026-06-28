@@ -22,11 +22,12 @@ import {
     TrophyIcon,
     WarningCircleIcon,
 } from "@phosphor-icons/react"
-import { SectionHeading, ShowcaseMockup, SHOWCASE_THEMES } from "@/components/blocks"
 import { UserAvatar } from "@/components/reuseable/UserAvatar"
 import { useSmViewpoint } from "@/hooks/reuseables/useSmViewpoint"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { LANDING_LOOP_STEPS } from "../constants"
+import { SectionHeading } from "@/components/blocks/marketing/SectionHeading"
+import { ShowcaseMockup, SHOWCASE_THEMES } from "@/components/blocks/marketing/ShowcaseMockup"
 
 /** Props for {@link LearnLoopScroll}. */
 export type LearnLoopScrollProps = WithClassNames<undefined>

@@ -19,24 +19,6 @@ import {
 import {
     useRouter,
 } from "next/navigation"
-import {
-    useAppSelector,
-} from "@/redux"
-import {
-    useQueryUserProfileSwr,
-    useQueryUserWeeklyStatsSwr,
-} from "@/hooks"
-import {
-    pathConfig,
-} from "@/resources"
-import {
-    FollowButton,
-    SectionCard,
-} from "@/components/reuseable"
-import {
-    StatusChip,
-    StatPair,
-} from "@/components/blocks"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -52,6 +34,14 @@ import {
 import {
     ShareProfileButton,
 } from "../ShareProfileButton"
+import { useAppSelector } from "@/redux/hooks"
+import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
+import { useQueryUserWeeklyStatsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserWeeklyStatsSwr"
+import { pathConfig } from "@/resources/path"
+import { FollowButton } from "@/components/reuseable/FollowButton"
+import { SectionCard } from "@/components/reuseable/SectionCard"
+import { StatusChip } from "@/components/blocks/chips/StatusChip"
+import { StatPair } from "@/components/blocks/stats/StatPair"
 
 /** Props for {@link ProfileIdentityCard}. */
 export type ProfileIdentityCardProps = WithClassNames<undefined>

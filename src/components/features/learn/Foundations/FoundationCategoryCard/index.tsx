@@ -1,22 +1,17 @@
 "use client"
 
 import { CaretRightIcon } from "@phosphor-icons/react"
-import type { FoundationCategoryEntity, WithClassNames } from "@/modules/types"
 import React, { useCallback } from "react"
 import { useLocale } from "next-intl"
 import { useRouter } from "next/navigation"
-import { pathConfig } from "@/resources"
-import { useAppDispatch, useAppSelector } from "@/redux"
-import {
-    setFoundation,
-    setFoundationCategory,
-    setFoundationCategoryId,
-    setFoundationId,
-    setFoundations,
-} from "@/redux/slices"
 import { FoundationCategoryThumbnail } from "../FoundationCategoryThumbnail"
 import { resolveFoundationLogo } from "../shared/foundation-logo"
-import { SurfaceListCardRow } from "@/components/blocks"
+import type { FoundationCategoryEntity } from "@/modules/types/entities/foundation-category"
+import type { WithClassNames } from "@/modules/types/base/class-name"
+import { pathConfig } from "@/resources/path"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { setFoundation, setFoundationCategory, setFoundationCategoryId, setFoundationId, setFoundations } from "@/redux/slices/foundation"
+import { SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
 
 export interface FoundationCategoryCardProps extends WithClassNames<undefined> {
     /** Foundation category from API. */

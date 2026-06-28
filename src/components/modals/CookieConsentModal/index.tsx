@@ -9,11 +9,9 @@ import {
     cn,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import {
-    useCookieConsentStore,
-    useCookiePreferencesOverlayState,
-} from "@/hooks/zustand"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { useCookieConsentStore } from "@/hooks/zustand/cookieConsent/store"
+import { useCookiePreferencesOverlayState } from "@/hooks/zustand/overlay/hooks"
 
 /**
  * Cookie preferences modal — the granular "Tùy chỉnh" panel: Necessary (locked on) + Analytics (toggle),

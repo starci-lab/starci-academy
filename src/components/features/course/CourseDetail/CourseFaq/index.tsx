@@ -14,23 +14,15 @@ import _ from "lodash"
 import {
     QuestionIcon,
 } from "@phosphor-icons/react"
-import {
-    AsyncContent,
-    LabeledCard,
-    Skeleton,
-} from "@/components/blocks"
-import {
-    MarkdownContent,
-} from "@/components/reuseable"
-import {
-    useQueryCourseSwr,
-} from "@/hooks"
-import {
-    useAppSelector,
-} from "@/redux"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { useQueryCourseSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseSwr"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Props for {@link CourseFaq}. */
 export type CourseFaqProps = WithClassNames<undefined>

@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { FoundationResourceLayout } from "@/components/features/learn/Foundations"
+import { FoundationResourceLayout } from "@/components/features/learn/Foundations/FoundationResourceLayout"
 
 /**
  * Learn / foundations / [categoryId] / [foundationId]: the dedicated resource page

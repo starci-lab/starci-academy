@@ -5,13 +5,13 @@ import { Link, Typography } from "@heroui/react"
 import { BuildingsIcon } from "@phosphor-icons/react"
 import { useLocale } from "next-intl"
 import { useRouter } from "next/navigation"
-import type { ConsultantEntity } from "@/modules/types"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { pathConfig } from "@/resources"
-import { useAppSelector } from "@/redux"
-import { PressableCard } from "@/components/blocks"
 import { ConsultantAvatar } from "../ConsultantAvatar"
 import { useOpenHeadhunterDetail } from "../../hooks"
+import type { ConsultantEntity } from "@/modules/types/entities/consultant"
+import { pathConfig } from "@/resources/path"
+import { useAppSelector } from "@/redux/hooks"
+import { PressableCard } from "@/components/blocks/cards/PressableCard"
 
 /** Props for {@link ConsultantCard}. */
 export interface ConsultantCardProps extends WithClassNames<undefined> {

@@ -1,7 +1,8 @@
-import type { WithClassNames } from "@/modules/types"
 import { cn } from "@heroui/react"
 import { Card, Skeleton } from "@heroui/react"
 import React from "react"
+import type { WithClassNames } from "@/modules/types/base/class-name"
+
 /**
  * Skeleton for a submission attempt card.
  */

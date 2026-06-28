@@ -12,13 +12,11 @@ import {
     CircleHalfIcon,
     CircleIcon,
 } from "@phosphor-icons/react"
-import {
-    StatusChip,
-} from "@/components/blocks"
-import type { CodingProblem } from "@/modules/api/graphql"
 import { CODING_DIFFICULTY_META } from "../../constants"
 import type { ProblemStatus } from "../../types"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { StatusChip } from "@/components/blocks/chips/StatusChip"
+import type { CodingProblem } from "@/modules/api/graphql/queries/types/coding"
 
 /** Props for {@link ProblemRow}. A list-item, so it accepts its data as props. */
 export interface ProblemRowProps extends WithClassNames<undefined> {

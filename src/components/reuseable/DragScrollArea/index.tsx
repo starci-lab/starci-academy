@@ -12,7 +12,7 @@ import {
     motion,
     type PanInfo,
 } from "framer-motion"
-import type { WithClassNames } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link DragScrollArea}. */
 export interface DragScrollAreaProps extends WithClassNames<undefined> {

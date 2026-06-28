@@ -13,10 +13,6 @@ import {
     useRouter,
 } from "next/navigation"
 import {
-    PageContainer,
-    PageHeader,
-} from "@/components/blocks"
-import {
     pathConfig,
 } from "@/resources/path"
 import {
@@ -28,6 +24,8 @@ import {
 import type {
     LegalSection,
 } from "../content"
+import { PageContainer } from "@/components/blocks/layout/PageContainer"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
 
 /** Which legal document this page renders. */
 export type LegalKind = "terms" | "privacy"

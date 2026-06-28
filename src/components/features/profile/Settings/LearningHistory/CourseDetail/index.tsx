@@ -20,22 +20,8 @@ import {
     ListBulletsIcon,
 } from "@phosphor-icons/react"
 import {
-    useQueryMyCourseOutlineSwr,
-    useQueryMyCoursesSwr,
-} from "@/hooks"
-import {
-    AsyncContent,
-    IconTile,
-    SegmentBar,
-    Skeleton,
-    TabsCard,
-} from "@/components/blocks"
-import {
     CourseTrialChip,
 } from "@/components/reuseable/CourseTrialChip"
-import {
-    fromGlobalId,
-} from "@/modules/utils"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -48,6 +34,14 @@ import {
 import {
     CourseMilestoneOutline,
 } from "../CourseMilestoneOutline"
+import { useQueryMyCourseOutlineSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCourseOutlineSwr"
+import { useQueryMyCoursesSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCoursesSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { IconTile } from "@/components/blocks/identity/IconTile"
+import { SegmentBar } from "@/components/blocks/stats/SegmentBar"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { TabsCard } from "@/components/blocks/navigation/TabsCard"
+import { fromGlobalId } from "@/modules/utils/globalId"
 
 /** Props for {@link CourseDetail}. */
 export type CourseDetailProps = WithClassNames<undefined>

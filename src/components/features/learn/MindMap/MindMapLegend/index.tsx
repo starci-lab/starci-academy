@@ -3,7 +3,7 @@
 import React, { useMemo } from "react"
 import { Panel } from "@xyflow/react"
 import { useTranslations } from "next-intl"
-import { Legend } from "@/components/blocks"
+import { Legend } from "@/components/blocks/stats/Legend"
 
 /**
  * Floating status legend for the mind-map: explains the module-node tints

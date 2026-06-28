@@ -8,7 +8,7 @@ import {
 } from "@heroui/react"
 import { UserIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link GuestHeader}. */
 export type GuestHeaderProps = WithClassNames<undefined>

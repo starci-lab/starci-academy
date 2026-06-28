@@ -1,8 +1,6 @@
-import {
-    mutateUpdateProfile,
-    type UpdateProfileRequest,
-} from "@/modules/api"
 import useSWRMutation from "swr/mutation"
+import { mutateUpdateProfile } from "@/modules/api/graphql/mutations/mutation-update-profile"
+import { type UpdateProfileRequest } from "@/modules/api/graphql/mutations/types/update-profile"
 
 type MutateUpdateProfileResult = Awaited<ReturnType<typeof mutateUpdateProfile>>
 

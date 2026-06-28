@@ -1,4 +1,4 @@
-import type { MilestoneTaskProgressItem } from "@/modules/api"
+import type { MilestoneTaskProgressItem } from "@/modules/api/graphql/queries/types/milestone-task-progress"
 
 /** Task id → completion row for personal-project milestone progress. */
 export type MilestoneTaskProgressLookup = Map<string, { completed: boolean }>

@@ -1,15 +1,9 @@
-import type {
-    GlobalSearchSocketIoMessage,
-    JobStatusUpdatedSocketIoMessage,
-} from "@/modules/types"
-import {
-    AiLabRunStatus,
-    type AiLabRunChunkData,
-} from "@/hooks/socketio/types"
 import {
     createSlice,
     type PayloadAction
 } from "@reduxjs/toolkit"
+import type { GlobalSearchSocketIoMessage, JobStatusUpdatedSocketIoMessage } from "@/modules/types/socketio"
+import { AiLabRunStatus, type AiLabRunChunkData } from "@/hooks/socketio/types/ai-lab"
 
 /**
  * Redux state for data pushed over Socket.IO connections.

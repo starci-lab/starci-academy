@@ -1,6 +1,7 @@
 import { CombinedGraphQLErrors, CombinedProtocolErrors } from "@apollo/client"
 import { ErrorLink } from "@apollo/client/link/error"
-import { LocalStorage, LocalStorageId } from "@/modules/storage"
+import { LocalStorage } from "@/modules/storage/local/storage"
+import { LocalStorageId } from "@/modules/storage/local/enums/id"
 
 /** Substring of the backend message raised when a newer login evicts this session. */
 const SESSION_SUPERSEDED_MARKER = "superseded"

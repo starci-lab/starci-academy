@@ -1,8 +1,8 @@
 import { CombinedGraphQLErrors } from "@apollo/client"
-import { queryMyCourseOutline } from "@/modules/api"
-import type { MyCourseOutlinePayload } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { queryMyCourseOutline } from "@/modules/api/graphql/queries/query-my-course-outline"
+import type { MyCourseOutlinePayload } from "@/modules/api/graphql/queries/types/my-course-outline"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Backend exception code raised when the viewer has no enrollment for the course. */
 const ENROLLMENT_NOT_FOUND_CODE = "ENROLLMENT_NOT_FOUND_EXCEPTION"

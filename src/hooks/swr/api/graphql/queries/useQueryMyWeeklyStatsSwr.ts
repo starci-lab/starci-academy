@@ -1,7 +1,7 @@
-import { queryMyWeeklyStats } from "@/modules/api"
-import type { QueryMyDashboardWeeklyStatsData } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { queryMyWeeklyStats } from "@/modules/api/graphql/queries/query-my-weekly-stats"
+import type { QueryMyDashboardWeeklyStatsData } from "@/modules/api/graphql/queries/types/my-dashboard"
+import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR wrapper for {@link queryMyWeeklyStats}. `data` is the viewer's rolling

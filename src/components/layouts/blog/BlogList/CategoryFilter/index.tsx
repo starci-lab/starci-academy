@@ -3,8 +3,8 @@
 import React from "react"
 import { Chip, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { BlogCategory } from "@/modules/api/graphql"
-import { CATEGORY_FILTERS, CATEGORY_COLOR } from "../../shared/category"
+import { CATEGORY_COLOR } from "../../shared/category"
+import { BlogCategory } from "@/modules/api/graphql/queries/types/blog"
 
 /** Props for {@link CategoryFilter}. */
 export interface CategoryFilterProps {
@@ -12,22 +12,29 @@ export interface CategoryFilterProps {
     value: BlogCategory | null
     /** Called when the reader picks a different pillar. */
     onChange: (next: BlogCategory | null) => void
+    /**
+     * Pillars that actually have posts (excluding `null`). The row renders `All`
+     * + these only — never a filter pointing at an empty bucket. The caller hides
+     * the whole row when fewer than two pillars exist.
+     */
+    categories: Array<BlogCategory>
 }
 
 /**
  * Editorial-pillar filter row. Each pillar is a `cursor-pointer` chip button with
  * a hover affordance; the active one is filled, the rest soft. Controlled — the
- * container owns the selected value + data fetch.
+ * container owns the selected value + data fetch + which pillars are available.
  */
-export const CategoryFilter = ({ value, onChange }: CategoryFilterProps) => {
+export const CategoryFilter = ({ value, onChange, categories }: CategoryFilterProps) => {
     const t = useTranslations("blog")
+    const filters: Array<BlogCategory | null> = [null, ...categories]
     return (
         <div
             className="flex flex-wrap items-center gap-2"
             role="group"
             aria-label={t("title")}
         >
-            {CATEGORY_FILTERS.map((filter) => {
+            {filters.map((filter) => {
                 const selected = filter === value
                 return (
                     <button

@@ -2,7 +2,7 @@
 
 import React from "react"
 import { Card, cn, Skeleton } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link FeedbackCardSkeleton}.

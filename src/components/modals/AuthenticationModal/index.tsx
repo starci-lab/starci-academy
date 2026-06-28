@@ -1,17 +1,14 @@
 "use client"
 
 import React, { useEffect } from "react"
-import { useAuthenticationOverlayState } from "@/hooks"
-import { useAppDispatch, useAppSelector } from "@/redux"
-import {
-    AuthenticationModalTab,
-    resetSignInState,
-    resetSignUpState,
-} from "@/redux/slices"
 import { SignInSection } from "./SignInSection"
 import { SignUpSection } from "./SignUpSection"
 import { cn, Modal } from "@heroui/react"
-import { WithClassNames } from "@/modules/types"
+import { useAuthenticationOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { AuthenticationModalTab } from "@/redux/slices/tabs"
+import { resetSignInState, resetSignUpState } from "@/redux/slices/state"
+import { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link AuthenticationModal}. */
 type AuthenticationModalProps = WithClassNames<undefined>

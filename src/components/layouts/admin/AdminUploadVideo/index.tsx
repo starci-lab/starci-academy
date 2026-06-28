@@ -12,21 +12,8 @@ import {
     toast,
 } from "@heroui/react"
 import {
-    usePostAdminPresignedUrlSwr,
-    usePostAdminProcessVideoSwr,
-} from "@/hooks/swr"
-import {
-    useRestWithToast,
-} from "@/modules/toast"
-import {
-    useAppSelector,
-} from "@/redux"
-import {
     useRouter,
 } from "next/navigation"
-import type {
-    AdminPresignedUrlItem,
-} from "@/modules/api"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import {
     UploadStatus,
@@ -50,6 +37,11 @@ import {
 import {
     UploadProgressCard,
 } from "./UploadProgressCard"
+import { usePostAdminPresignedUrlSwr } from "@/hooks/swr/api/rest/mutations/usePostAdminPresignedUrlSwr"
+import { usePostAdminProcessVideoSwr } from "@/hooks/swr/api/rest/mutations/usePostAdminProcessVideoSwr"
+import { useRestWithToast } from "@/modules/toast/hooks"
+import { useAppSelector } from "@/redux/hooks"
+import type { AdminPresignedUrlItem } from "@/modules/api/rest/admin-presigned-url/types"
 
 /** Props for {@link AdminUploadVideo}. */
 export type AdminUploadVideoProps = WithClassNames<undefined>

@@ -1,6 +1,6 @@
-import { queryMyLearningFeedbacks } from "@/modules/api"
-import { useAppSelector } from "@/redux"
 import useSWR from "swr"
+import { queryMyLearningFeedbacks } from "@/modules/api/graphql/queries/query-my-learning-feedbacks"
+import { useAppSelector } from "@/redux/hooks"
 
 /** Default page size for the feedback list. */
 export const MY_LEARNING_FEEDBACKS_LIMIT = 20

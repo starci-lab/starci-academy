@@ -1,7 +1,5 @@
 import type { IconComponent } from "@/types"
-import type {
-    SidebarTab,
-} from "@/redux/slices"
+import type { SidebarTab } from "@/redux/slices/sidebar"
 
 /**
  * Which separator-divided cluster a sidebar row belongs to: the course content

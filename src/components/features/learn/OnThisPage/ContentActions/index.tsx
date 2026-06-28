@@ -3,16 +3,13 @@
 import React, { useCallback } from "react"
 import { Label, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { useAppSelector } from "@/redux"
-import {
-    useContentOverlayState,
-    useMutateToggleFavoriteSwr,
-    useQueryContentStatusSwr,
-    useShareOverlayState,
-} from "@/hooks"
-import { useGraphQLWithToast } from "@/modules/toast"
 import { ActionToolbar } from "@/components/features/learn/LessonReader/ContentBody/ActionToolbar"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { useAppSelector } from "@/redux/hooks"
+import { useContentOverlayState, useShareOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useMutateToggleFavoriteSwr } from "@/hooks/swr/api/graphql/mutations/useMutateToggleFavoriteSwr"
+import { useQueryContentStatusSwr } from "@/hooks/swr/api/graphql/queries/useQueryContentStatusSwr"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
 
 /** Props for {@link ContentActions}. */
 export type ContentActionsProps = WithClassNames<undefined>

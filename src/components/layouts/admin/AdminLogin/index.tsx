@@ -13,8 +13,8 @@ import {
 } from "@heroui/react"
 
 import { Controller } from "react-hook-form"
-import { useAdminApiKeyForm } from "@/hooks/rhf"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { useAdminApiKeyForm } from "@/hooks/rhf/useAdminApiKeyForm"
 
 /** Props for {@link AdminLogin}. */
 export type AdminLoginProps = WithClassNames<undefined>

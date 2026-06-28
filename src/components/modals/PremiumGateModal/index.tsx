@@ -13,17 +13,13 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import {
-    usePaymentOverlayState,
-    usePremiumGateOverlayState,
-    useQueryCoursePricePreviewSwr,
-} from "@/hooks"
-import { useAppSelector } from "@/redux"
-import {
-    PaymentFlow,
-} from "@/modules/types"
-import { AsyncContent, PriceTag } from "@/components/blocks"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { usePaymentOverlayState, usePremiumGateOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useQueryCoursePricePreviewSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursePricePreviewSwr"
+import { useAppSelector } from "@/redux/hooks"
+import { PaymentFlow } from "@/modules/types/payment"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { PriceTag } from "@/components/blocks/commerce/PriceTag"
 
 /**
  * Premium-gate modal: a VALUE-FIRST register/buy prompt shown when a viewer clicks

@@ -1,9 +1,5 @@
-import {
-    useAppSelector,
-} from "@/redux"
-import type {
-    SystemConfigAiAutoData,
-} from "@/modules/types"
+import { useAppSelector } from "@/redux/hooks"
+import type { SystemConfigAiAutoData } from "@/modules/types/system-config"
 
 /**
  * Auto-lane caps from mounted `app.yaml` (`systemConfig.ai.auto`), hydrated via

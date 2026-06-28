@@ -3,9 +3,10 @@
 import React from "react"
 import { Card, CardContent, cn } from "@heroui/react"
 import { useMemo } from "react"
-import { VideoRenderer } from "@/components/reuseable"
-import type { VideoRendererType, WithClassNames } from "@/modules/types"
 import { RENDERER_TYPE_OPTION_MAP } from "../map"
+import { VideoRenderer } from "@/components/reuseable/VideoRenderer"
+import type { VideoRendererType } from "@/modules/types/enums/video-renderer-type"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 export interface PreviewCardProps extends WithClassNames<undefined> {
     /** URL to preview. */

@@ -1,5 +1,6 @@
-import type { PersonalProjectTaskEntity, PersonalProjectTaskState } from "@/modules/types"
 import type { GraphQLResponse } from "../../types"
+import type { PersonalProjectTaskEntity } from "@/modules/types/entities/personal-project-task"
+import type { PersonalProjectTaskState } from "@/modules/types/enums/personal-project-task-state"
 
 /** Apollo variables for `tasks(request: TasksRequest!)`. */
 export interface QueryTasksRequest {

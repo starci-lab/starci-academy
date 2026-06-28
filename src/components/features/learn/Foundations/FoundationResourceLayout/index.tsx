@@ -10,21 +10,6 @@ import {
 import {
     useRouter,
 } from "next/navigation"
-import {
-    useAppSelector,
-} from "@/redux"
-import {
-    useQueryFoundationCategoriesSwr,
-    useQueryFoundationsSwr,
-} from "@/hooks"
-import {
-    pathConfig,
-} from "@/resources"
-import {
-    AsyncContent,
-    PageHeader,
-    Skeleton,
-} from "@/components/blocks"
 import type {
     FoundationsBreadcrumbItem,
 } from "../types"
@@ -37,6 +22,13 @@ import {
 import {
     FoundationResourceBody,
 } from "../FoundationResourceBody"
+import { useAppSelector } from "@/redux/hooks"
+import { useQueryFoundationCategoriesSwr } from "@/hooks/swr/api/graphql/queries/useQueryFoundationCategoriesSwr"
+import { useQueryFoundationsSwr } from "@/hooks/swr/api/graphql/queries/useQueryFoundationsSwr"
+import { pathConfig } from "@/resources/path"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /**
  * Dedicated foundation resource page (replaces the old viewer modal).

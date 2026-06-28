@@ -1,12 +1,11 @@
 "use client"
-
-import { AutocompleteGlobalSearchItem } from "@/modules/api"
-import { useSearchOverlayState } from "@/hooks"
 import { cn, ListBox } from "@heroui/react"
 import { useLocale } from "next-intl"
 import { useRouter } from "next/navigation"
 import React, { useCallback } from "react"
-import type { WithClassNames } from "@/modules/types"
+import { AutocompleteGlobalSearchItem } from "@/modules/api/graphql/queries/types/autocomplete-global-search"
+import { useSearchOverlayState } from "@/hooks/zustand/overlay/hooks"
+import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link GlobalSearchContentBlock}. */
 interface GlobalSearchContentBlockProps extends WithClassNames<undefined> {

@@ -7,6 +7,7 @@ import { LightningIcon, ListNumbersIcon, MicrophoneIcon, RobotIcon, StackIcon, S
 import { useTranslations, useLocale } from "next-intl"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { SegmentedControl } from "@/components/blocks/navigation/SegmentedControl"
+import { SelectableCardGroup } from "@/components/blocks/navigation/SelectableCardGroup"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { InterviewSessionSkeleton } from "./InterviewSessionSkeleton"
@@ -244,184 +245,168 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
         }
     }, [index, sessionLength, refreshHistory])
 
-    // ── SETUP — readiness hub ────────────────────────────────────────────
+    // ── SETUP — readiness hub (single column, no bento split) ────────────
     if (phase === "setup") {
-        // practice modes: quick/deep ship now; weak/ladder need backend support
-        // (tag-filtered draw / per-level history) → shown coming-soon, not pressable
-        const modeTiles = [
-            { key: "quick", label: t("flashcard.interview.modeQuick"), icon: LightningIcon, soon: false },
-            { key: "deep", label: t("flashcard.interview.modeDeep"), icon: StackIcon, soon: false },
-            { key: "weak", label: t("flashcard.interview.modeWeak"), icon: TargetIcon, soon: true },
-            { key: "ladder", label: t("flashcard.interview.modeLadder"), icon: StairsIcon, soon: true },
-        ]
+        // weak/ladder need backend (tag-filtered draw / per-level history) → coming-soon
+        const comingSoonBadge = (
+            <span className="text-xs text-muted">{t("flashcard.interview.comingSoon")}</span>
+        )
         return (
             <div className={cn("flex flex-col gap-6", className)}>
-                <div className="grid gap-4 lg:grid-cols-[1.5fr_1fr]">
-                    {/* LEFT — start panel: what to expect + mode + level + CTA */}
-                    <Card>
-                        <CardContent className="flex flex-col gap-6">
-                            {/* hero: mic + headline */}
-                            <div className="flex items-center gap-3">
-                                <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent">
-                                    <MicrophoneIcon className="size-6" aria-hidden focusable="false" />
+                <Card>
+                    <CardContent className="flex flex-col gap-6">
+                        {/* hero: mic + headline */}
+                        <div className="flex items-center gap-3">
+                            <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent">
+                                <MicrophoneIcon className="size-6" aria-hidden focusable="false" />
+                            </div>
+                            <div className="flex flex-col">
+                                <Typography type="h4" weight="semibold">
+                                    {t("flashcard.interview.setupTitle")}
+                                </Typography>
+                                <Typography type="body-sm" color="muted">
+                                    {t("flashcard.interview.setupSubtitle")}
+                                </Typography>
+                            </div>
+                        </div>
+
+                        {/* what to expect — quick chips */}
+                        <div className="flex flex-wrap items-center gap-2">
+                            <Chip size="sm" variant="soft" color="default">
+                                <ListNumbersIcon className="size-4" aria-hidden focusable="false" />
+                                {t("flashcard.interview.expectCount", { total: sessionLength })}
+                            </Chip>
+                            <Chip size="sm" variant="soft" color="default">
+                                <MicrophoneIcon className="size-4" aria-hidden focusable="false" />
+                                {t("flashcard.interview.expectVoice")}
+                            </Chip>
+                            <Chip size="sm" variant="soft" color="default">
+                                <RobotIcon className="size-4" aria-hidden focusable="false" />
+                                {t("flashcard.interview.expectAiGrade")}
+                            </Chip>
+                        </div>
+
+                        {/* readiness — compact full-width strip (not a side column) */}
+                        <div className="flex flex-col gap-2">
+                            <Label>{t("flashcard.interview.readinessTitle")}</Label>
+                            {history === undefined ? (
+                                <div className="flex items-center gap-3">
+                                    <Skeleton.Typography type="h4" width="1/4" />
+                                    <Skeleton.Meter className="flex-1" />
                                 </div>
-                                <div className="flex flex-col">
-                                    <Typography type="h4" weight="semibold">
-                                        {t("flashcard.interview.setupTitle")}
-                                    </Typography>
-                                    <Typography type="body-sm" color="muted">
-                                        {t("flashcard.interview.setupSubtitle")}
-                                    </Typography>
-                                </div>
-                            </div>
-
-                            {/* what to expect — quick chips */}
-                            <div className="flex flex-wrap items-center gap-2">
-                                <Chip size="sm" variant="soft" color="default">
-                                    <ListNumbersIcon className="size-4" aria-hidden focusable="false" />
-                                    {t("flashcard.interview.expectCount", { total: sessionLength })}
-                                </Chip>
-                                <Chip size="sm" variant="soft" color="default">
-                                    <MicrophoneIcon className="size-4" aria-hidden focusable="false" />
-                                    {t("flashcard.interview.expectVoice")}
-                                </Chip>
-                                <Chip size="sm" variant="soft" color="default">
-                                    <RobotIcon className="size-4" aria-hidden focusable="false" />
-                                    {t("flashcard.interview.expectAiGrade")}
-                                </Chip>
-                            </div>
-
-                            {/* practice mode — group label uses <Label> (not muted text) */}
-                            <div className="flex flex-col gap-2">
-                                <Label>{t("flashcard.interview.modeLabel")}</Label>
-                                <div className="grid grid-cols-2 gap-2">
-                                    {modeTiles.map((tile) => {
-                                        const Icon = tile.icon
-                                        if (tile.soon) {
-                                            return (
-                                                <div
-                                                    key={tile.key}
-                                                    className="flex items-center justify-between gap-2 rounded-xl border border-default px-3 py-3 text-sm opacity-60"
-                                                >
-                                                    <span className="flex items-center gap-2 text-muted">
-                                                        <Icon className="size-4 shrink-0" aria-hidden focusable="false" />
-                                                        {tile.label}
-                                                    </span>
-                                                    <span className="shrink-0 text-xs text-muted">
-                                                        {t("flashcard.interview.comingSoon")}
-                                                    </span>
-                                                </div>
-                                            )
-                                        }
-                                        const active = mode === tile.key
-                                        return (
-                                            <button
-                                                key={tile.key}
-                                                type="button"
-                                                aria-pressed={active}
-                                                // only quick/deep render as buttons → cast is safe
-                                                onClick={() => setMode(tile.key as InterviewMode)}
-                                                className={cn(
-                                                    "flex cursor-pointer items-center gap-2 rounded-xl border px-3 py-3 text-left text-sm outline-none transition-colors focus-visible:ring-2 focus-visible:ring-accent",
-                                                    active
-                                                        ? "border-accent bg-accent/10 font-medium text-accent"
-                                                        : "border-default hover:bg-default",
-                                                )}
-                                            >
-                                                <Icon className="size-4 shrink-0" aria-hidden focusable="false" />
-                                                {tile.label}
-                                            </button>
-                                        )
-                                    })}
-                                </div>
-                            </div>
-
-                            {/* seniority level — group label uses <Label> + block segmented */}
-                            <div className="flex flex-col gap-2">
-                                <Label>{t("flashcard.interview.levelLabel")}</Label>
-                                <SegmentedControl
-                                    ariaLabel={t("flashcard.interview.levelLabel")}
-                                    value={level ?? "all"}
-                                    onChange={(value) => setLevel(value === "all" ? null : value)}
-                                    items={[
-                                        { value: "all", label: t("flashcard.interview.levelAll") },
-                                        ...LEVELS.map((value) => ({
-                                            value,
-                                            label: t(`flashcard.level.${value}`),
-                                        })),
-                                    ]}
-                                />
-                            </div>
-
-                            {/* primary CTA — loud, mic-led (one primary action) */}
-                            <Button variant="primary" size="lg" className="self-start" onPress={startSession}>
-                                <MicrophoneIcon className="size-5" aria-hidden focusable="false" />
-                                {t("flashcard.interview.begin")}
-                            </Button>
-                        </CardContent>
-                    </Card>
-
-                    {/* RIGHT — readiness: score meter + verdict breakdown + weak topics */}
-                    <Card>
-                        <CardContent className="flex flex-col gap-4">
-                            <div className="flex flex-col gap-3">
-                                <Label>{t("flashcard.interview.readinessTitle")}</Label>
-                                {history === undefined ? (
-                                    <div className="flex flex-col gap-3">
-                                        <Skeleton.Typography type="h4" width="1/2" />
-                                        <Skeleton.Meter />
-                                    </div>
-                                ) : history && history.totalAnswered > 0 ? (
-                                    <>
+                            ) : history && history.totalAnswered > 0 ? (
+                                <div className="flex flex-col gap-3">
+                                    <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
                                         <div className="flex items-baseline gap-2">
-                                            <Typography className="text-3xl font-medium text-foreground">
+                                            <Typography className="text-2xl font-medium text-foreground">
                                                 {history.averageScore}
                                             </Typography>
                                             <Typography type="body-xs" color="muted">
                                                 {`/100 · ${t("flashcard.interview.bestScore").toLowerCase()} ${history.bestScore}`}
                                             </Typography>
                                         </div>
-                                        <ProgressMeter value={history.averageScore} max={100} />
-                                        {/* verdict breakdown — pass / borderline / fail counts */}
-                                        <div className="flex flex-wrap items-center gap-2">
-                                            <Chip size="sm" variant="soft" color="success">
-                                                {`${t("flashcard.interview.pass")} · ${history.passCount}`}
-                                            </Chip>
-                                            <Chip size="sm" variant="soft" color="warning">
-                                                {`${t("flashcard.interview.borderline")} · ${history.borderlineCount}`}
-                                            </Chip>
-                                            <Chip size="sm" variant="soft" color="danger">
-                                                {`${t("flashcard.interview.fail")} · ${history.failCount}`}
-                                            </Chip>
-                                        </div>
-                                    </>
-                                ) : (
-                                    // never interviewed yet → meter at 0 + nudge (don't self-hide)
-                                    <>
-                                        <ProgressMeter value={0} max={100} />
-                                        <Typography type="body-sm" color="muted">
-                                            {t("flashcard.interview.readinessEmpty")}
-                                        </Typography>
-                                    </>
-                                )}
-                            </div>
-
-                            {/* weak topics to revisit (tag-filtered drill ships next round) */}
-                            {history && history.weakTags.length > 0 ? (
-                                <div className="flex flex-col gap-2 border-t border-default pt-4">
-                                    <Label>{t("flashcard.interview.weakTags")}</Label>
-                                    <div className="flex flex-wrap items-center gap-2">
-                                        {history.weakTags.map((tag) => (
-                                            <Chip key={tag} size="sm" variant="soft" color="default">
-                                                {tag}
-                                            </Chip>
-                                        ))}
+                                        <ProgressMeter value={history.averageScore} max={100} className="min-w-40 flex-1" />
                                     </div>
+                                    {/* verdict breakdown — pass / borderline / fail counts */}
+                                    <div className="flex flex-wrap items-center gap-2">
+                                        <Chip size="sm" variant="soft" color="success">
+                                            {`${t("flashcard.interview.pass")} · ${history.passCount}`}
+                                        </Chip>
+                                        <Chip size="sm" variant="soft" color="warning">
+                                            {`${t("flashcard.interview.borderline")} · ${history.borderlineCount}`}
+                                        </Chip>
+                                        <Chip size="sm" variant="soft" color="danger">
+                                            {`${t("flashcard.interview.fail")} · ${history.failCount}`}
+                                        </Chip>
+                                    </div>
+                                    {/* weak topics to revisit (tag-filtered drill ships next round) */}
+                                    {history.weakTags.length > 0 ? (
+                                        <div className="flex flex-wrap items-center gap-2">
+                                            {history.weakTags.map((tag) => (
+                                                <Chip key={tag} size="sm" variant="soft" color="default">
+                                                    {tag}
+                                                </Chip>
+                                            ))}
+                                        </div>
+                                    ) : null}
                                 </div>
-                            ) : null}
-                        </CardContent>
-                    </Card>
-                </div>
+                            ) : (
+                                // never interviewed yet → meter at 0 + nudge (don't self-hide)
+                                <div className="flex flex-wrap items-center gap-3">
+                                    <ProgressMeter value={0} max={100} className="min-w-40 flex-1" />
+                                    <Typography type="body-sm" color="muted">
+                                        {t("flashcard.interview.readinessEmpty")}
+                                    </Typography>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* practice mode — selectable surface cards (one lights up) */}
+                        <div className="flex flex-col gap-2">
+                            <Label>{t("flashcard.interview.modeLabel")}</Label>
+                            <SelectableCardGroup
+                                ariaLabel={t("flashcard.interview.modeLabel")}
+                                value={mode}
+                                onChange={(next) => {
+                                    // only quick/deep are selectable (weak/ladder disabled)
+                                    if (next === "quick" || next === "deep") {
+                                        setMode(next)
+                                    }
+                                }}
+                                columns={2}
+                                items={[
+                                    {
+                                        value: "quick",
+                                        label: t("flashcard.interview.modeQuick"),
+                                        icon: <LightningIcon className="size-4" />,
+                                    },
+                                    {
+                                        value: "deep",
+                                        label: t("flashcard.interview.modeDeep"),
+                                        icon: <StackIcon className="size-4" />,
+                                    },
+                                    {
+                                        value: "weak",
+                                        label: t("flashcard.interview.modeWeak"),
+                                        icon: <TargetIcon className="size-4" />,
+                                        isDisabled: true,
+                                        badge: comingSoonBadge,
+                                    },
+                                    {
+                                        value: "ladder",
+                                        label: t("flashcard.interview.modeLadder"),
+                                        icon: <StairsIcon className="size-4" />,
+                                        isDisabled: true,
+                                        badge: comingSoonBadge,
+                                    },
+                                ]}
+                            />
+                        </div>
+
+                        {/* seniority level — group label uses <Label> + block segmented */}
+                        <div className="flex flex-col gap-2">
+                            <Label>{t("flashcard.interview.levelLabel")}</Label>
+                            <SegmentedControl
+                                ariaLabel={t("flashcard.interview.levelLabel")}
+                                value={level ?? "all"}
+                                onChange={(value) => setLevel(value === "all" ? null : value)}
+                                items={[
+                                    { value: "all", label: t("flashcard.interview.levelAll") },
+                                    ...LEVELS.map((value) => ({
+                                        value,
+                                        label: t(`flashcard.level.${value}`),
+                                    })),
+                                ]}
+                            />
+                        </div>
+
+                        {/* primary CTA — loud, mic-led (one primary action) */}
+                        <Button variant="primary" size="lg" className="self-start" onPress={startSession}>
+                            <MicrophoneIcon className="size-5" aria-hidden focusable="false" />
+                            {t("flashcard.interview.begin")}
+                        </Button>
+                    </CardContent>
+                </Card>
             </div>
         )
     }

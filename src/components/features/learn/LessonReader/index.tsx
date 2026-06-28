@@ -66,6 +66,7 @@ import {
 import {
     PremiumPaywall,
 } from "./PremiumPaywall"
+import { SelectionHintCallout } from "../ContentAiSelectionAsk/SelectionHintCallout"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { type WithClassNames } from "@/modules/types/base/class-name"
 import { DEFAULT_PROGRAMMING_LANGUAGES, isProgrammingLangAvailable, resolveActiveProgrammingLang } from "@/modules/types/utils/programming-language"
@@ -340,6 +341,9 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
                     <div className="mx-auto w-full max-w-3xl">
                         <Card>
                             <CardContent>
+                                {/* one-time tip: highlight a passage to ask AI (selection feature
+                                    is otherwise only discoverable AFTER selecting) */}
+                                {!isLocked ? <SelectionHintCallout /> : null}
                                 <div className="relative">
                                     <div id="lesson-article" className={cn(isLocked && "select-none")}>
                                         {bodyComponent}

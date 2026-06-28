@@ -30,9 +30,12 @@ const query1 = gql`
         data {
           id
           attemptNumber
+          passed
           score
           shortFeedback
           processedAt
+          servedModel
+          servedProvider
         }
       }
     }

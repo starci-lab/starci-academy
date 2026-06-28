@@ -130,8 +130,8 @@ export const ContentAiFab = ({ className }: ContentAiFabProps) => {
                 ariaLabel={t("contentAi.ask")}
                 className={className}
             >
-                {/* sparkle = AI intent (replaces the old flame mascot) */}
-                <SparkleIcon weight="fill" className="size-7" />
+                {/* sparkle = AI intent; the wrapped isIconOnly button sizes the svg */}
+                <SparkleIcon />
             </FloatingActionButton>
         )
     }
@@ -148,12 +148,12 @@ export const ContentAiFab = ({ className }: ContentAiFabProps) => {
                 onPointerUp={onPointerUp}
                 style={{ bottom }}
                 className={cn(
-                    "fixed right-4 z-40 size-14 touch-none rounded-full shadow-lg",
+                    "fixed right-4 z-40 touch-none rounded-full shadow-lg",
                     className,
                 )}
             >
-                {/* sparkle = AI intent (replaces the old flame mascot) */}
-                <SparkleIcon weight="fill" className="size-7" />
+                {/* sparkle = AI intent; the isIconOnly button sizes the svg itself */}
+                <SparkleIcon />
             </Button>
             <PopoverContent placement="left bottom" className="w-[380px] p-0">
                 <div className="p-3">
@@ -161,7 +161,7 @@ export const ContentAiFab = ({ className }: ContentAiFabProps) => {
                         {contentTitle ?? t("contentAi.title")}
                     </Typography>
                 </div>
-                <div className="p-3">
+                <div className="p-3 pt-0">
                     <ContentAiChat />
                 </div>
             </PopoverContent>

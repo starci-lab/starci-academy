@@ -373,6 +373,12 @@
         "placeholder": "Ask about this content...",
         "ask": "Ask AI",
         "send": "Send",
+        "pickModel": "Pick model",
+        "clear": "Clear chat",
+        "clearHint": "Delete this lesson's whole conversation.",
+        "clearAction": "Clear",
+        "settings": "Settings",
+        "modelLabel": "Reply model",
         "thinking": "Thinking…",
         "error": "Sorry, I couldn't answer that. Please try again.",
         "suggestions": {
@@ -380,7 +386,27 @@
             "hardest": "Explain the hardest part",
             "example": "Give me a real-world example",
             "remember": "What should I remember from this?"
-        }
+        },
+        "askAboutSelection": "Ask AI about this",
+        "selectionHintTitle": "Ask AI about any passage",
+        "selectionHint": "Highlight a passage in the lesson and an ask-AI button appears.",
+        "dismissHint": "Dismiss tip",
+        "new": "New",
+        "clearSelection": "Clear selection",
+        "aboutPassage": "About the passage “{passage}”:",
+        "selectionSuggestions": {
+            "explain": "Explain this passage",
+            "example": "Give an example",
+            "simplify": "Explain it more simply"
+        },
+        "conversations": "Conversations",
+        "chatHistory": "Chat history",
+        "newConversation": "New conversation",
+        "untitled": "Untitled",
+        "searchConversations": "Search conversations…",
+        "noConversations": "No conversations yet",
+        "deleteConversation": "Delete conversation",
+        "turnsCount": "{count} messages"
     },
     "contentActions": {
         "title": "Actions"
@@ -699,6 +725,8 @@
                 "settingsTitle": "Grading settings",
                 "langFieldTitle": "Grading language",
                 "langFieldHint": "Your backend is graded against this language's approach criteria.",
+                "modelFieldTitle": "Grading model",
+                "modelFieldHint": "Pick the AI model that grades your project — Economy tier and up.",
                 "repoFieldTitle": "GitHub URL",
                 "branchFieldTitle": "Branch to review",
                 "branchPlaceholder": "main",
@@ -1036,11 +1064,31 @@
         "backToChallenge": "Back to challenge",
         "title": "Submission result",
         "passNeeded": "need {score} to pass",
+        "gradedBy": "graded by",
+        "history": "Submission history",
+        "resultLabel": "Result",
+        "feedbackLabel": "Feedback",
         "attempts": "Attempts",
         "passed": "Passed",
         "failed": "Not passed",
         "emptyAttempts": "No attempts yet",
         "emptyAttemptsHint": "Submit your work to see the grading result here.",
+        "noFeedback": "No detailed feedback for this attempt.",
+        "error": "Couldn't load the result.",
+        "retry": "Retry"
+    },
+    "personalProjectResult": {
+        "backToTask": "Back to project",
+        "title": "Grading result",
+        "history": "Submission history",
+        "resultLabel": "Result",
+        "feedbackLabel": "Feedback",
+        "attempts": "Attempts",
+        "passed": "Passed",
+        "failed": "Not passed",
+        "viewRepo": "View repo",
+        "emptyAttempts": "No attempts yet",
+        "emptyAttemptsHint": "Evaluate your progress to see the grading result here.",
         "noFeedback": "No detailed feedback for this attempt.",
         "error": "Couldn't load the result.",
         "retry": "Retry"
@@ -2836,8 +2884,13 @@
         "readingMinutes": "{minutes} min read",
         "relatedTitle": "More in {category}",
         "retry": "Try again",
-        "subtitle": "Engineering deep-dives, build-in-public notes, and career guidance.",
-        "title": "Blog",
+        "subtitle": "Deep technical analysis of the very infrastructure that runs StarCi — architecture, trade-offs, and real code.",
+        "title": "The StarCi backend, taken apart",
+        "masthead": {
+            "caption": "The real StarCi backend architecture — drag to orbit."
+        },
+        "startHere": "Start here",
+        "topics": "Topics",
         "viewSource": "View on GitHub",
         "categories": {
             "all": "All",
@@ -2993,5 +3046,37 @@
         "analyticsLabel": "Analytics",
         "analyticsHint": "Google Analytics — anonymous metrics to improve the product.",
         "save": "Save choices"
+    },
+    "socketStatus": {
+        "reconnecting": "Connection lost — reconnecting…",
+        "reconnected": "Reconnected"
+    },
+    "status": {
+        "title": "System status",
+        "subtitle": "Live health of the StarCi Academy platform — built in public, no login required.",
+        "refresh": "Refresh",
+        "overall": "{up}/{total} components healthy",
+        "infraHeading": "Infrastructure",
+        "aiKeysHeading": "AI keys",
+        "latency": "{ms}ms",
+        "checked": "Checked {ago}",
+        "noKeys": "No keys configured.",
+        "aiKeyGroupHeader": "{models} · {provider} · {healthy}/{total} keys",
+        "componentStatus": {
+            "up": "Operational",
+            "degraded": "Degraded",
+            "down": "Down"
+        },
+        "error": {
+            "title": "Could not load status",
+            "description": "We couldn’t reach the status endpoint. Please try again.",
+            "retry": "Try again"
+        },
+        "empty": {
+            "infraTitle": "No components reported",
+            "infraDescription": "No infrastructure components are being probed right now.",
+            "aiTitle": "No AI keys reported",
+            "aiDescription": "No AI key groups are configured right now."
+        }
     }
 }

@@ -373,6 +373,12 @@
         "placeholder": "Hỏi về nội dung này...",
         "ask": "Hỏi AI",
         "send": "Gửi",
+        "pickModel": "Chọn model",
+        "clear": "Xoá lịch sử",
+        "clearHint": "Xoá toàn bộ hội thoại của bài này.",
+        "clearAction": "Xoá",
+        "settings": "Cài đặt",
+        "modelLabel": "Model trả lời",
         "thinking": "Đang trả lời…",
         "error": "Xin lỗi, mình chưa trả lời được. Hãy thử lại sau.",
         "suggestions": {
@@ -380,7 +386,27 @@
             "hardest": "Giải thích phần khó nhất",
             "example": "Cho mình ví dụ thực tế",
             "remember": "Mình nên nhớ gì từ bài này?"
-        }
+        },
+        "askAboutSelection": "Hỏi AI về đoạn này",
+        "selectionHintTitle": "Hỏi AI về đoạn bất kỳ",
+        "selectionHint": "Bôi đen một đoạn trong bài, nút hỏi AI sẽ hiện ra ngay.",
+        "dismissHint": "Bỏ qua gợi ý",
+        "new": "Mới",
+        "clearSelection": "Bỏ chọn đoạn",
+        "aboutPassage": "Về đoạn “{passage}”:",
+        "selectionSuggestions": {
+            "explain": "Giải thích đoạn này",
+            "example": "Cho ví dụ",
+            "simplify": "Giải thích đơn giản hơn"
+        },
+        "conversations": "Cuộc trò chuyện",
+        "chatHistory": "Lịch sử trò chuyện",
+        "newConversation": "Cuộc trò chuyện mới",
+        "untitled": "Chưa đặt tên",
+        "searchConversations": "Tìm hội thoại…",
+        "noConversations": "Chưa có hội thoại nào",
+        "deleteConversation": "Xoá hội thoại",
+        "turnsCount": "{count} tin nhắn"
     },
     "contentActions": {
         "title": "Hành động"
@@ -708,6 +734,8 @@
                 "settingsTitle": "Cài đặt chấm điểm",
                 "langFieldTitle": "Ngôn ngữ chấm điểm",
                 "langFieldHint": "Backend của bạn được chấm theo tiêu chí approach của ngôn ngữ này.",
+                "modelFieldTitle": "Model chấm điểm",
+                "modelFieldHint": "Chọn model AI để chấm dự án — từ gói Tiết kiệm trở lên.",
                 "repoFieldTitle": "URL GitHub",
                 "branchFieldTitle": "Nhánh cần đánh giá",
                 "branchPlaceholder": "main",
@@ -1045,11 +1073,31 @@
         "backToChallenge": "Quay lại thử thách",
         "title": "Kết quả nộp bài",
         "passNeeded": "cần {score} để qua",
+        "gradedBy": "chấm bởi",
+        "history": "Lịch sử nộp bài",
+        "resultLabel": "Kết quả",
+        "feedbackLabel": "Góp ý",
         "attempts": "Các lần thử",
         "passed": "Đạt",
         "failed": "Chưa đạt",
         "emptyAttempts": "Chưa có lần nộp nào",
         "emptyAttemptsHint": "Nộp bài để xem kết quả chấm điểm ở đây.",
+        "noFeedback": "Không có phản hồi chi tiết cho lần thử này.",
+        "error": "Không tải được kết quả.",
+        "retry": "Thử lại"
+    },
+    "personalProjectResult": {
+        "backToTask": "Quay lại dự án",
+        "title": "Kết quả chấm điểm",
+        "history": "Lịch sử nộp bài",
+        "resultLabel": "Kết quả",
+        "feedbackLabel": "Góp ý",
+        "attempts": "Các lần thử",
+        "passed": "Đạt",
+        "failed": "Chưa đạt",
+        "viewRepo": "Xem repo",
+        "emptyAttempts": "Chưa có lần nộp nào",
+        "emptyAttemptsHint": "Đánh giá tiến độ để xem kết quả chấm điểm ở đây.",
         "noFeedback": "Không có phản hồi chi tiết cho lần thử này.",
         "error": "Không tải được kết quả.",
         "retry": "Thử lại"
@@ -2836,8 +2884,13 @@
         "readingMinutes": "Đọc {minutes} phút",
         "relatedTitle": "Thêm trong mục {category}",
         "retry": "Thử lại",
-        "subtitle": "Những bài phân tích kỹ thuật chuyên sâu, ghi chép xây dựng công khai và định hướng nghề nghiệp.",
-        "title": "Blog",
+        "subtitle": "Phân tích kỹ thuật chuyên sâu về chính hạ tầng đang chạy StarCi — kiến trúc, đánh đổi, và code thật.",
+        "title": "Hệ thống StarCi, mổ xẻ",
+        "masthead": {
+            "caption": "Kiến trúc thật của backend StarCi — kéo để xoay bản đồ."
+        },
+        "startHere": "Bắt đầu ở đây",
+        "topics": "Chủ đề",
         "viewSource": "Xem trên GitHub",
         "categories": {
             "all": "Tất cả",
@@ -2993,5 +3046,37 @@
         "analyticsLabel": "Phân tích",
         "analyticsHint": "Google Analytics — đo lường ẩn danh để cải thiện sản phẩm.",
         "save": "Lưu lựa chọn"
+    },
+    "socketStatus": {
+        "reconnecting": "Mất kết nối — đang thử lại…",
+        "reconnected": "Đã kết nối lại"
+    },
+    "status": {
+        "title": "Trạng thái hệ thống",
+        "subtitle": "Tình trạng trực tiếp của nền tảng StarCi Academy — làm công khai, không cần đăng nhập.",
+        "refresh": "Làm mới",
+        "overall": "{up}/{total} thành phần khỏe",
+        "infraHeading": "Hạ tầng",
+        "aiKeysHeading": "Khoá AI",
+        "latency": "{ms}ms",
+        "checked": "Kiểm tra {ago}",
+        "noKeys": "Chưa cấu hình khoá.",
+        "aiKeyGroupHeader": "{models} · {provider} · {healthy}/{total} khoá",
+        "componentStatus": {
+            "up": "Hoạt động",
+            "degraded": "Suy giảm",
+            "down": "Ngừng"
+        },
+        "error": {
+            "title": "Không tải được trạng thái",
+            "description": "Không thể kết nối tới endpoint trạng thái. Vui lòng thử lại.",
+            "retry": "Thử lại"
+        },
+        "empty": {
+            "infraTitle": "Chưa có thành phần nào",
+            "infraDescription": "Hiện chưa có thành phần hạ tầng nào được kiểm tra.",
+            "aiTitle": "Chưa có khoá AI nào",
+            "aiDescription": "Hiện chưa cấu hình nhóm khoá AI nào."
+        }
     }
 }

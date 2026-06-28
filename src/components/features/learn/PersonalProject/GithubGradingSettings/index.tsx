@@ -12,8 +12,10 @@ import {
     TextField,
     Typography,
 } from "@heroui/react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
 import { AutosaveStatus } from "../PersonalProjectSubmission"
+import { GradingModelDropdown } from "./GradingModelDropdown"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { usePersonalProjectGithubForm } from "@/hooks/zustand/personalProjectGithub/usePersonalProjectGithubForm"
 
@@ -30,12 +32,18 @@ export type GithubGradingSettingsProps = WithClassNames<undefined>
  */
 export const GithubGradingSettings = ({ className }: GithubGradingSettingsProps) => {
     const t = useTranslations()
+    const locale = useLocale()
+    const router = useRouter()
     const {
         branch,
         lang,
         errors,
         touched,
         autosaveStatus,
+        gradeModels,
+        gradeSelection,
+        canPremium,
+        setGradeSelection,
         setBranch,
         setLang,
         setTouchedBranch,
@@ -79,6 +87,19 @@ export const GithubGradingSettings = ({ className }: GithubGradingSettingsProps)
                 </Tabs>
                 <Typography type="body-sm" color="muted">
                     {t("finalProject.page.submitGithub.langFieldHint")}
+                </Typography>
+            </div>
+            <div className="flex flex-col gap-2">
+                <Label>{t("finalProject.page.submitGithub.modelFieldTitle")}</Label>
+                <GradingModelDropdown
+                    models={gradeModels}
+                    selection={gradeSelection}
+                    canPremium={canPremium}
+                    onSelect={setGradeSelection}
+                    onUpgrade={() => router.push(`/${locale}/profile/settings/ai-subscription`)}
+                />
+                <Typography type="body-sm" color="muted">
+                    {t("finalProject.page.submitGithub.modelFieldHint")}
                 </Typography>
             </div>
             <div className="flex flex-col gap-2">

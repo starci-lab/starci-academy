@@ -147,3 +147,47 @@ Inventory lại (FE+BE+DB) → data đã có sẵn, chưa render:
 - **Nhãn group = `<Label>`** (Kiểu luyện · Cấp độ · Độ sẵn sàng · Chủ đề cần ôn) — KHÔNG `text-sm/xs text-muted` (per [[control-group-label-uses-label-block]] · `elements/label.md` §1b).
 - i18n thêm `flashcard.interview.{modeLabel,modeQuick,modeDeep,modeWeak,modeLadder,comingSoon,readinessTitle,readinessEmpty}` (vi+en). tsc + eslint + JSON sạch (baseline landing/blog WIP không liên quan).
 - **Vòng sau (chờ BE-add):** mode Điểm yếu (tag-filter draw) + Leo cấp (per-level history) đang disabled "Sắp có"; weakTags chip hiện display-only (chưa drill). Active khi BE mở 4 query đã ghi ở §"BE add nhỏ".
+
+---
+
+## VÒNG 4 — 2026-06-27: bỏ chia đôi cột hẹp (1 cột) + block dùng chung `SelectableCardGroup` (HeroUI RadioGroup)
+> Thầy: *"layout nhỏ rồi còn chia nữa; kiểu selectable card theo dạng tabs? 1 đống card chọn 1 cái sáng lên — nền tảng chưa có. Đọc code heroui rồi đề xuất component chung."*
+
+### Pain
+- **Bento 2 cột trong cột `max-w-3xl` (768px) = chia cái đã hẹp** → setup bị bóp, panel readiness bên phải hẹp/trống → "nhỏ rồi còn chia". Bố cục split chỉ hợp khi container RỘNG; 768px thì KHÔNG.
+- **Mode tiles vòng 3 = `<button aria-pressed>` tự chế** (button-group toggle), KHÔNG phải single-select radio thật → a11y yếu (không arrow-key roving, role sai) + style lặp ở feature. Nền tảng **chưa có** component "chọn 1 card trong N".
+
+### Đọc HeroUI (grounded — `node_modules/@heroui/react/dist/components`)
+- Có sẵn: **`radio` + `radio-group`** (built trên `react-aria-components` `RadioGroup`/`Radio`). Cũng có `progress-circle` (RING native cho readiness), `button-group`, `tag-group`, `list-box`.
+- `RadioRoot` (radio.js): `className: composeTwRenderProps(className, slots.base())` → **className NHẬN HÀM** `(values) => string` với `values.isSelected/isFocusVisible/isDisabled`; root mang **`data-selected="true"`**. → 1 `<Radio>` style được thành CARD: `data-[selected=true]:border-accent data-[selected=true]:bg-accent/10`, content tuỳ ý (icon + label + mô tả + badge), KHÔNG cần dot indicator.
+- Đây là primitive ĐÚNG cho "chọn 1 trong N card sáng lên": RadioGroup = role radiogroup + arrow-key + single-select chuẩn. Hơn hẳn button-grid tự chế.
+
+### ★ Đề xuất block chung — `blocks/navigation/SelectableCardGroup`
+- **API:** `{ items: Array<{ value: T, label, description?, icon?, isDisabled?, badge? }>, value, onChange, ariaLabel, columns?: 1|2|3, className? }`.
+- **Impl:** bọc HeroUI `RadioGroup` (`value`/`onChange` controlled, `aria-label`) + map item → `<Radio value isDisabled>` với className-hàm:
+  - base: `flex items-center gap-2 rounded-xl border border-default px-3 py-3 text-sm cursor-pointer transition-colors hover:bg-default`
+  - `isSelected` → `border-accent bg-accent/10 font-medium text-accent`
+  - `isDisabled` → `cursor-not-allowed opacity-60 hover:bg-transparent` + render `badge` (vd "Sắp có") góc phải
+  - `isFocusVisible` → `ring-2 ring-accent`
+  - RadioGroup root className = `grid gap-2` + `columns` → `grid-cols-{n}`.
+- **Khác `SegmentedControl`** (pill nhỏ, 1 hàng, chọn setting gọn) — `SelectableCardGroup` = card TO (icon + mô tả + badge), cho lựa chọn "nặng" hơn. **Khác `TabsCard`** (underline nav, đổi panel). Đây là single-select CONTROL dạng card.
+- **Tái dùng:** kiểu luyện (interview) · cổng thanh toán (PaymentModal — hiện là list-card interactive tự chế, có thể chuyển) · chọn gói · bất kỳ "chọn 1 trong N card". 1 nguồn render ([[single-source-render]]).
+- **Skeleton:** repo đã có `Skeleton/RadioGroup` → mirror.
+
+### Layout fix — 1 CỘT (bỏ bento)
+- `InterviewSession` setup về **1 cột** (full `max-w-3xl`), 1 Card, các section ngăn bằng gap/divider:
+  hero → chip kỳ vọng → **readiness STRIP ngang** (full-width: ring `progress-circle` avg + cao nhất + breakdown chip — KHÔNG phải cột phải) → **Kiểu luyện** (`<Label>` + `SelectableCardGroup` columns=2) → **Cấp độ** (`<Label>` + SegmentedControl) → CTA `lg`.
+- Readiness từ "cột phải hẹp" → "strip ngang gọn" → hết bóp. User mới: strip 0 + nudge (không ẩn câm).
+- **Hỏi thầy:** readiness strip đặt TRÊN (status header, dưới chip kỳ vọng) hay DƯỚI CTA? (đề xuất: TRÊN — "đang ở đâu" rồi mới "cấu hình + bắt đầu").
+
+### Refs
+- HeroUI v3 RadioGroup/Radio (react-aria-components) — card-as-radio pattern (React Aria "RadioGroup" cards example) · [[single-select-among-options-use-tabs]] (phân biệt: setting nhỏ → segmented; card group → SelectableCardGroup) · [[control-group-label-uses-label-block]] (nhãn group = Label).
+
+### Chốt (thầy duyệt 2026-06-27)
+- Da card = **list-card surface** (`bg-surface` + `border-default`). **Selected = `bg-accent/10` + `border-accent`, CHỮ GIỮ `text-foreground` (đen) — KHÔNG `text-accent`** (thầy: *"text giữ màu đen tạm"*). Rule: [[selectable-card-group-surface-select-state]].
+
+### ĐÃ ÁP DỤNG 2026-06-27 (FE)
+- **Block mới `blocks/navigation/SelectableCardGroup`** (HeroUI `RadioGroup`/`Radio`): item `{value,label,description?,icon?,isDisabled?,badge?}` + `value/onChange/ariaLabel/columns`. Card-visual ở **inner `<div>`** (style theo render-prop `isSelected/isDisabled/isFocusVisible`) → KHÔNG fight `.radio` base unlayered (`flex items-start gap-3`). Selected `bg-accent/10 border-accent` (chữ foreground); disabled `opacity-60` + badge; focus `ring-2 ring-accent`. Da `rounded-xl border bg-surface`.
+- `InterviewSession` setup → **1 CỘT** (bỏ bento `lg:grid-cols`): hero → chip kỳ vọng → **readiness STRIP ngang** (avg + `ProgressMeter` flex-1 + breakdown + weakTags, full-width) → **Kiểu luyện** = `SelectableCardGroup` columns=2 (thay button-grid tự chế) → **Cấp độ** SegmentedControl → CTA `lg`. Readiness đặt TRÊN (status header).
+- tsc + eslint sạch (block + feature). i18n không đổi (đã thêm vòng 3).
+- **Còn ngỏ:** thầy chưa chốt readiness TRÊN vs DƯỚI CTA — tạm để TRÊN, đổi dễ. weak/ladder vẫn disabled "Sắp có" (chờ BE-add).

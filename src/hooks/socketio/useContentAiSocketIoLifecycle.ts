@@ -1,42 +1,37 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect } from "react"
 import { useAppSelector } from "@/redux/hooks"
 import { contentAiSocket } from "./sockets"
+import { useSocketConnectionStore } from "./connectionStore"
 import { LocalStorage } from "@/modules/storage/local/storage"
 import { LocalStorageId } from "@/modules/storage/local/enums/id"
-import { sleep } from "@/modules/utils/misc"
 
 /**
  * Lifecycle hook for the `/content_ai` namespace — runs ONCE in
- * {@link import("./SocketIoSideEffects").SocketIoSideEffects}. Auto-connects on
- * auth (same bearer-token handshake + reconnect backoff as the other
- * namespaces). Answer-chunk listeners are attached per-stream by consumers via
+ * {@link import("./SocketIoSideEffects").SocketIoSideEffects}. Connects on auth
+ * and relies on the manager's built-in reconnection (infinite backoff) to come
+ * back after a drop; the bearer token is supplied per-attempt via a function
+ * `socket.auth` so every reconnect carries a FRESH token. Answer-chunk listeners
+ * are attached per-stream by consumers via
  * {@link import("./useContentAiStream").useContentAiStream}; this hook only owns
  * the connection.
  */
 export const useContentAiSocketIoLifecycle = () => {
     const authenticated = useAppSelector((state) => state.keycloak.authenticated)
-    const [numReconnect, setNumReconnect] = useState(0)
 
-    /** Whether still mounted — blocks setState after unmount (the `disconnect` handler runs after `await sleep`). */
-    const mountedRef = useRef(true)
-    useEffect(() => () => { mountedRef.current = false }, [])
-
-    /** Wire connect / disconnect listeners (no chunk accumulation here). */
+    /** Wire connect / disconnect listeners (log only — reconnection is automatic). */
     useEffect(() => {
         const socket = contentAiSocket
         const onConnect = () => {
             console.log("[Content AI Socket] Connected.")
+            useSocketConnectionStore.getState().setStatus("content_ai", "connected")
         }
-        const onDisconnect = async (reason: string) => {
+        const onDisconnect = (reason: string) => {
             console.log(`[Content AI Socket] Disconnected — reason: ${reason}`)
-            await sleep(3000)
-            if (!mountedRef.current) {
-                return
-            }
-            setNumReconnect((prev) => prev + 1)
+            useSocketConnectionStore.getState().setStatus("content_ai", "disconnected")
         }
         const onConnectError = (err: Error) => {
             console.error("[Content AI Socket] Connection error:", err.message)
+            useSocketConnectionStore.getState().setStatus("content_ai", "disconnected")
         }
         socket.on("connect", onConnect)
         socket.on("disconnect", onDisconnect)
@@ -48,7 +43,7 @@ export const useContentAiSocketIoLifecycle = () => {
         }
     }, [])
 
-    /** Connect (or reconnect) when auth state changes. */
+    /** Connect when auth state changes; the manager auto-reconnects thereafter. */
     useEffect(() => {
         if (!authenticated) {
             return
@@ -56,14 +51,13 @@ export const useContentAiSocketIoLifecycle = () => {
         if (contentAiSocket.connected) {
             contentAiSocket.disconnect()
         }
-        contentAiSocket.auth = {
+        // function form → re-evaluated on every (re)connection attempt, so a
+        // reconnect after the token rotated still handshakes with a fresh token
+        contentAiSocket.auth = (cb) => cb({
             token: LocalStorage.getItemAsString(
                 LocalStorageId.KeycloakAccessToken,
             ),
-        }
+        })
         contentAiSocket.connect()
-    }, [
-        authenticated,
-        numReconnect,
-    ])
+    }, [authenticated])
 }

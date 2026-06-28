@@ -32,7 +32,7 @@ export const FeaturedPost = ({ post, formattedDate }: FeaturedPostProps) => {
                 <Chip size="sm" variant="soft" color={CATEGORY_COLOR[post.category]}>
                     {t(`categories.${post.category}`)}
                 </Chip>
-                <span className="text-xs font-medium uppercase tracking-wide text-accent">
+                <span className="text-xs font-medium text-accent">
                     {t("latest")}
                 </span>
                 {post.isPremium && (
@@ -52,7 +52,7 @@ export const FeaturedPost = ({ post, formattedDate }: FeaturedPostProps) => {
             )}
 
             {/* serif display title — the page's visual hero */}
-            <h2 className="font-serif text-3xl font-semibold leading-tight text-foreground group-hover:underline">
+            <h2 className="text-3xl font-semibold leading-tight text-foreground group-hover:underline">
                 {post.title}
             </h2>
             {post.excerpt && <p className="text-base text-muted">{post.excerpt}</p>}

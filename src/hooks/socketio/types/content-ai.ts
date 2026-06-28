@@ -33,7 +33,9 @@ export interface AskContentAiSocketIoPayload {
     data: {
         /** Client-generated id correlating this question's streamed chunks. */
         streamId: string
-        /** Content the question is about. */
+        /** Conversation (session) this turn belongs to — the saved turn is keyed by it. */
+        sessionId: string
+        /** Content the question is grounded on. */
         contentId: string
         /** The learner's question. */
         question: string

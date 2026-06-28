@@ -10,6 +10,7 @@ import { LeaderboardCategoryRail } from "@/components/features/learn/Leaderboard
 import { FlashcardStudyRail } from "@/components/features/learn/Flashcards/FlashcardStudyRail"
 import { OnThisPage } from "@/components/features/learn/OnThisPage"
 import { ContentAiFab } from "@/components/features/learn/ContentAiFab"
+import { ContentAiSelectionAsk } from "@/components/features/learn/ContentAiSelectionAsk"
 import { EnrollGate } from "@/components/features/learn/shared/EnrollGate"
 import { GithubLinkGate } from "@/components/layouts/auth/GithubLinkGate"
 import { ResizableRail } from "@/components/blocks/layout/ResizableRail"
@@ -166,6 +167,8 @@ export const Layout = ({ children }: PropsWithChildren) => {
             <GithubLinkGate />
             {/* floating "ask StarCi AI" mascot button (self-hides when no content is open) */}
             <ContentAiFab />
+            {/* "ask AI about this passage" button on lesson-article text selection */}
+            <ContentAiSelectionAsk />
             <LearnShell
                 leftRail={showSurface ? leftRail : undefined}
                 rightRail={showSurface ? rightRail : undefined}

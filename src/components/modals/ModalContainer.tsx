@@ -13,7 +13,6 @@ import { CvUpdateModal } from "./CvUpdateModal"
 import { GlobalSearchModal } from "./GlobalSearchModal"
 import { LinkGithubModal } from "./LinkGithubModal"
 import { ShareModal } from "./ShareModal"
-import { UserMilestoneTaskFeedbacksModal } from "./UserMilestoneTaskFeedbacksModal"
 import { FoundationModal } from "./FoundationModal"
 import { HeadhunterModal } from "./HeadhunterModal"
 import { AiQuotaModal } from "./AiQuotaModal"
@@ -38,7 +37,6 @@ export const ModalContainer = () => {
             <GlobalSearchModal />
             <LinkGithubModal />
             <ShareModal />
-            <UserMilestoneTaskFeedbacksModal />
             <FoundationModal />
             <HeadhunterModal />
             <AiQuotaModal />

@@ -9,7 +9,11 @@ export const createManager = () => {
         publicEnv().api.socketIo,
         {
             transports: ["websocket", "polling"],
-            reconnection: false,
+            // Built-in reconnection with infinite backoff (1s → 5s). The bearer
+            // token is supplied per-attempt via a function `socket.auth` in each
+            // lifecycle hook, so reconnects always send a FRESH token (the reason
+            // this used to be disabled in favour of a fragile manual loop).
+            reconnection: true,
             autoConnect: false,
             reconnectionAttempts: Infinity,
             reconnectionDelay: 1000,

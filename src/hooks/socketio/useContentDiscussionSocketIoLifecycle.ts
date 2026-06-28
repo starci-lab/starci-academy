@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect } from "react"
 import EventEmitter2 from "eventemitter2"
 import { SubscriptionEvent } from "./enums"
 import { contentDiscussionSocket } from "./sockets"
+import { useSocketConnectionStore } from "./connectionStore"
 import { useAppSelector } from "@/redux/hooks"
 import { LocalStorage } from "@/modules/storage/local/storage"
 import { LocalStorageId } from "@/modules/storage/local/enums/id"
-import { sleep } from "@/modules/utils/misc"
 
 /** Fan-out for content-discussion events to (non-Redux) component listeners. */
 export const contentDiscussionSocketIoEventEmitter = new EventEmitter2()
@@ -27,17 +27,13 @@ const FORWARDED_EVENTS: ReadonlyArray<SubscriptionEvent> = [
  */
 export const useContentDiscussionSocketIoLifecycle = () => {
     const authenticated = useAppSelector((state) => state.keycloak.authenticated)
-    const [numReconnect, setNumReconnect] = useState(0)
-
-    /** Whether still mounted — blocks setState after unmount (the `disconnect` handler runs after `await sleep`). */
-    const mountedRef = useRef(true)
-    useEffect(() => () => { mountedRef.current = false }, [])
 
     /** Wire connect / disconnect / event listeners that forward to the emitter. */
     useEffect(() => {
         const socket = contentDiscussionSocket
         const onConnect = () => {
             console.log("[Content discussion Socket] Connected.")
+            useSocketConnectionStore.getState().setStatus("content_discussion", "connected")
         }
         // one forwarding handler per event so the UI can listen on the emitter
         const handlers = FORWARDED_EVENTS.map((event) => {
@@ -50,17 +46,13 @@ export const useContentDiscussionSocketIoLifecycle = () => {
                 handler,
             }
         })
-        const onDisconnect = async (reason: string) => {
+        const onDisconnect = (reason: string) => {
             console.log(`[Content discussion Socket] Disconnected — reason: ${reason}`)
-            // brief backoff, then bump the counter to trigger a reconnect effect
-            await sleep(3000)
-            if (!mountedRef.current) {
-                return
-            }
-            setNumReconnect((prev) => prev + 1)
+            useSocketConnectionStore.getState().setStatus("content_discussion", "disconnected")
         }
         const onConnectError = (err: Error) => {
             console.error("[Content discussion Socket] Connection error:", err.message)
+            useSocketConnectionStore.getState().setStatus("content_discussion", "disconnected")
         }
         socket.on("connect", onConnect)
         socket.on("disconnect", onDisconnect)
@@ -84,14 +76,11 @@ export const useContentDiscussionSocketIoLifecycle = () => {
         if (contentDiscussionSocket.connected) {
             contentDiscussionSocket.disconnect()
         }
-        contentDiscussionSocket.auth = {
+        contentDiscussionSocket.auth = (cb) => cb({
             token: LocalStorage.getItemAsString(
                 LocalStorageId.KeycloakAccessToken,
             ),
-        }
+        })
         contentDiscussionSocket.connect()
-    }, [
-        authenticated,
-        numReconnect,
-    ])
+    }, [authenticated])
 }

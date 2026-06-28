@@ -24,7 +24,7 @@ export const PostRow = ({ post, formattedDate }: PostRowProps) => {
     return (
         <Link
             href={`/blog/${post.slug}`}
-            className="group flex cursor-pointer flex-col gap-1.5 border-b border-default py-4 last:border-b-0"
+            className="group flex cursor-pointer flex-col gap-2 border-b border-default py-4 last:border-b-0"
         >
             <h3 className="text-lg font-semibold text-foreground group-hover:underline">
                 {post.title}

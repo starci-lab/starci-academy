@@ -4,11 +4,16 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { debounce } from "lodash"
 import { useLocale, useTranslations } from "next-intl"
 import { SidebarTab } from "@/redux/slices/sidebar"
-import { usePersonalProjectGithubStore, type PersonalProjectGithubAutosaveStatus } from "./store"
+import { usePersonalProjectGithubStore, type GradingModelSelection, type PersonalProjectGithubAutosaveStatus } from "./store"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { addMilestoneTaskIdToJobId } from "@/redux/slices/milestone"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import { useMutateReviewPersonalProjectTaskSwr } from "@/hooks/swr/api/graphql/mutations/useMutateReviewPersonalProjectTaskSwr"
+import { useQueryAiModelsSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiModelsSwr"
+import { useQueryMyAiSettingsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiSettingsSwr"
+import { AiMode } from "@/modules/api/graphql/queries/query-my-ai-settings"
+import { AiModelCategory } from "@/modules/api/graphql/queries/query-ai-models"
+import type { AiGradableModel } from "@/modules/api/graphql/queries/types/ai-models"
 import { useMutateSyncPersonalProjectGithubBranchSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSyncPersonalProjectGithubBranchSwr"
 import { useMutateSyncPersonalProjectGithubSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSyncPersonalProjectGithubSwr"
 import { useQueryCourseEnrollmentStatusSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseEnrollmentStatusSwr"
@@ -18,6 +23,38 @@ import { useJobNotificationsSocketIo } from "@/hooks/socketio/useJobNotification
 /** GitHub repo regex (aligned with the challenge submission rule). */
 const GITHUB_REGEX = /^https:\/\/(www\.)?github\.com\/[A-Za-z0-9_.-]+(\/[A-Za-z0-9_.-]+)?(\/)?$/
 const DEFAULT_BRANCH = "main"
+
+/**
+ * Pick a default grading model — Economy and up only (the personal project never grades on the
+ * free Auto lane). Prefers the first AVAILABLE Economy model (cheapest valid), else the first
+ * available model in the (already Economy+) list. Economy → `auto` unless the user can use the
+ * Premium lane; Balanced/Premium → `premium`.
+ */
+const pickDefaultGradingModel = (
+    models: Array<AiGradableModel>,
+    canPremium: boolean,
+): GradingModelSelection | null => {
+    if (models.length === 0) {
+        return null
+    }
+    // Only models the user can actually submit: an available Economy model (usable on any plan),
+    // or — when entitled — any available higher-tier model. Prefer the cheapest (Economy).
+    const usable = models.filter(
+        (model) => model.available
+            && (model.category === AiModelCategory.Economy || canPremium),
+    )
+    const target =
+        usable.find((model) => model.category === AiModelCategory.Economy)
+        ?? usable[0]
+    if (!target) {
+        return null
+    }
+    return {
+        mode: canPremium ? AiMode.Premium : AiMode.Auto,
+        model: target.model,
+        provider: target.provider,
+    }
+}
 
 /** Autosave status for the debounced url/branch sync (inline feedback). Lives in the store. */
 export type { PersonalProjectGithubAutosaveStatus } from "./store"
@@ -51,6 +88,17 @@ export const usePersonalProjectGithubForm = (options: UsePersonalProjectGithubFo
     const reviewPersonalProjectTaskSwr = useMutateReviewPersonalProjectTaskSwr()
     const jobNotificationsSocket = useJobNotificationsSocketIo()
 
+    // Grading model catalog + entitlement. Economy and up only — the personal project never
+    // grades on the free Auto lane. SWR dedupes across the panel + drawer instances.
+    const aiModelsSwr = useQueryAiModelsSwr()
+    const myAiSettingsSwr = useQueryMyAiSettingsSwr()
+    const canPremium = Boolean(myAiSettingsSwr.data?.canPremium)
+    const gradeModels = useMemo<Array<AiGradableModel>>(
+        () => (aiModelsSwr.data?.aiModels?.data?.gradableModels ?? [])
+            .filter((model) => model.category !== AiModelCategory.Free),
+        [aiModelsSwr.data],
+    )
+
     // SWR exposes STABLE trigger/mutate fns; the debounced-sync effects depend on
     // THESE, not the whole hook objects — otherwise every `isMutating` flip during a
     // sync changed the object identity, re-ran the effect, and re-fired the sync in a
@@ -68,9 +116,13 @@ export const usePersonalProjectGithubForm = (options: UsePersonalProjectGithubFo
     const branchError = usePersonalProjectGithubStore((state) => state.branchError)
     const isSubmitting = usePersonalProjectGithubStore((state) => state.isSubmitting)
     const seeded = usePersonalProjectGithubStore((state) => state.seeded)
+    const gradeMode = usePersonalProjectGithubStore((state) => state.gradeMode)
+    const gradeModel = usePersonalProjectGithubStore((state) => state.gradeModel)
+    const gradeModelProvider = usePersonalProjectGithubStore((state) => state.gradeModelProvider)
     const setGithubUrl = usePersonalProjectGithubStore((state) => state.setGithubUrl)
     const setBranch = usePersonalProjectGithubStore((state) => state.setBranch)
     const setLang = usePersonalProjectGithubStore((state) => state.setLang)
+    const setGradeSelection = usePersonalProjectGithubStore((state) => state.setGradeSelection)
     const setTouchedGithubUrl = usePersonalProjectGithubStore((state) => state.setTouchedGithubUrl)
     const setTouchedBranch = usePersonalProjectGithubStore((state) => state.setTouchedBranch)
     const setGithubUrlError = usePersonalProjectGithubStore((state) => state.setGithubUrlError)
@@ -94,6 +146,24 @@ export const usePersonalProjectGithubForm = (options: UsePersonalProjectGithubFo
             enrollment.personalProjectGithubBranch?.trim() || DEFAULT_BRANCH,
         )
     }, [seeded, enrollment, seed])
+
+    /** Current grading-lane + model pick (Economy+ — never the free Auto lane). */
+    const gradeSelection = useMemo<GradingModelSelection>(
+        () => ({ mode: gradeMode, model: gradeModel, provider: gradeModelProvider }),
+        [gradeMode, gradeModel, gradeModelProvider],
+    )
+
+    // Seed a default model once the catalog is available (so submit never falls back to the free
+    // Auto lane). Only seeds when nothing has been picked yet.
+    useEffect(() => {
+        if (gradeModel || gradeModels.length === 0) {
+            return
+        }
+        const fallback = pickDefaultGradingModel(gradeModels, canPremium)
+        if (fallback) {
+            setGradeSelection(fallback)
+        }
+    }, [gradeModel, gradeModels, canPremium, setGradeSelection])
 
     // Inline validation errors (combined with manual errors from sync/submit below).
     const validationError = useMemo(() => {
@@ -288,12 +358,20 @@ export const usePersonalProjectGithubForm = (options: UsePersonalProjectGithubFo
                     if (!selectedTaskId) {
                         throw new Error("Selected task ID is required")
                     }
+                    // Economy+ only — never the free Auto lane. Use the picked model, falling back
+                    // to a seeded Economy default if the catalog hadn't seeded one yet.
+                    const resolvedGrade = gradeModel
+                        ? gradeSelection
+                        : pickDefaultGradingModel(gradeModels, canPremium)
                     const reviewResult = await reviewPersonalProjectTaskSwr.trigger({
                         courseId: course.id,
                         taskId: selectedTaskId,
                         githubUrl: resolvedUrl,
                         branch: branchTrimmed || undefined,
                         lang: lang || undefined,
+                        mode: resolvedGrade?.mode,
+                        selectedModel: resolvedGrade?.model ?? undefined,
+                        selectedModelProvider: resolvedGrade?.provider ?? undefined,
                     })
                     const reviewEnv = reviewResult?.data?.reviewPersonalProjectTask
                     if (!reviewEnv) {
@@ -318,7 +396,7 @@ export const usePersonalProjectGithubForm = (options: UsePersonalProjectGithubFo
         } finally {
             setIsSubmitting(false)
         }
-    }, [course?.id, githubUrl, branch, lang, enrollment?.personalProjectGithubUrl, selectedTaskId, reviewPersonalProjectTaskSwr, jobNotificationsSocket, locale, dispatch, queryCourseEnrollmentStatusSwr, setBranchError, setIsSubmitting, t, runGraphQL])
+    }, [course?.id, githubUrl, branch, lang, gradeModel, gradeSelection, gradeModels, canPremium, enrollment?.personalProjectGithubUrl, selectedTaskId, reviewPersonalProjectTaskSwr, jobNotificationsSocket, locale, dispatch, queryCourseEnrollmentStatusSwr, setBranchError, setIsSubmitting, t, runGraphQL])
 
     return {
         githubUrl,
@@ -328,6 +406,10 @@ export const usePersonalProjectGithubForm = (options: UsePersonalProjectGithubFo
         touched: { githubUrl: touchedGithubUrl, branch: touchedBranch },
         autosaveStatus: { githubUrl: urlAutosaveStatus, branch: branchAutosaveStatus },
         isSubmitting,
+        gradeModels,
+        gradeSelection,
+        canPremium,
+        setGradeSelection,
         setGithubUrl,
         setBranch,
         setLang,

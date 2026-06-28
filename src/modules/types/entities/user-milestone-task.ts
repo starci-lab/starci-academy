@@ -29,6 +29,10 @@ export interface UserMilestoneTaskAttemptEntity extends AbstractEntity {
     shortFeedback: string | null
     /** When the attempt was finished processing. */
     processedAt: Date | null
+    /** Concrete AI model that graded this attempt (e.g. "qwen2.5-coder:7b"); null for legacy. */
+    servedModel: string | null
+    /** Provider that served the grading model; null for legacy. */
+    servedProvider: string | null
     /** Parent user milestone task ID. */
     userMilestoneTaskId: string
     /** Detailed feedback items for this attempt. */

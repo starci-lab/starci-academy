@@ -106,30 +106,30 @@ export const SearchInput = ({
                 return
             }
             switch (event.key) {
-            case "ArrowDown":
-                // move down, wrapping back to the top past the last row
-                event.preventDefault()
-                setActiveIndex((prev) => (prev + 1) % items.length)
-                break
-            case "ArrowUp":
-                // move up, wrapping to the bottom before the first row
-                event.preventDefault()
-                setActiveIndex((prev) => (prev <= 0 ? items.length - 1 : prev - 1))
-                break
-            case "Enter":
-                // only intercept Enter when a row is highlighted, else let the form submit/search run
-                if (activeIndex >= 0) {
+                case "ArrowDown":
+                    // move down, wrapping back to the top past the last row
                     event.preventDefault()
-                    selectAt(activeIndex)
-                }
-                break
-            case "Escape":
-                // close the dropdown without losing what was typed
-                event.preventDefault()
-                setFocused(false)
-                break
-            default:
-                break
+                    setActiveIndex((prev) => (prev + 1) % items.length)
+                    break
+                case "ArrowUp":
+                    // move up, wrapping to the bottom before the first row
+                    event.preventDefault()
+                    setActiveIndex((prev) => (prev <= 0 ? items.length - 1 : prev - 1))
+                    break
+                case "Enter":
+                    // only intercept Enter when a row is highlighted, else let the form submit/search run
+                    if (activeIndex >= 0) {
+                        event.preventDefault()
+                        selectAt(activeIndex)
+                    }
+                    break
+                case "Escape":
+                    // close the dropdown without losing what was typed
+                    event.preventDefault()
+                    setFocused(false)
+                    break
+                default:
+                    break
             }
         },
         [open, items.length, activeIndex, selectAt],
@@ -144,7 +144,7 @@ export const SearchInput = ({
                         type="search"
                         variant={variant}
                         placeholder={resolvedPlaceholder}
-                        className="pl-9"
+                        className="pl-9 w-full"
                         value={value}
                         onChange={(event) => onValueChange(event.target.value)}
                         onFocus={() => setFocused(true)}

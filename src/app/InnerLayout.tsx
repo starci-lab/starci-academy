@@ -12,6 +12,7 @@ import { DrawerContainer } from "@/components/drawers/DrawerContainer"
 import { AmbientBackground } from "@/components/blocks/layout/AmbientBackground"
 import { TopLoader } from "@/components/blocks/layout/TopLoader"
 import { AppSplash } from "@/components/blocks/layout/AppSplash"
+import { SocketConnectionStatus } from "@/components/blocks/layout/SocketConnectionStatus"
 import { SocketIoSideEffects } from "@/hooks/socketio/SocketIoSideEffects"
 import { SwrSideEffects } from "@/hooks/swr/SwrSideEffects"
 import { ReduxProvider } from "@/redux/ReduxProvider"
@@ -46,6 +47,7 @@ export const InnerLayout = ({ children }: PropsWithChildren) => {
                             <TopLoader />
                             {!isLearnRoute ? <AmbientBackground /> : null}
                             <Navbar />
+                            <SocketConnectionStatus />
                             <ModalContainer />
                             <DrawerContainer />
                             {children}

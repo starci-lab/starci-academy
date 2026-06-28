@@ -11,7 +11,9 @@ import { contentAiSocket } from "./sockets"
 
 /** Args for one streamed content-AI question. */
 export interface AskContentAiStreamParams {
-    /** Content the question is about. */
+    /** Conversation (session) this turn belongs to — the saved turn is keyed by it. */
+    sessionId: string
+    /** Content the question is grounded on. */
     contentId: string
     /** The learner's question. */
     question: string
@@ -85,6 +87,7 @@ export const useContentAiStream = (): ContentAiStreamControls => {
             const payload: AskContentAiSocketIoPayload = {
                 data: {
                     streamId,
+                    sessionId: params.sessionId,
                     contentId: params.contentId,
                     question: params.question,
                     history: params.history,

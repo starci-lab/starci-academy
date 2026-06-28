@@ -87,7 +87,7 @@ export const BlogPost = () => {
                                         </Chip>
                                     )}
                                 </div>
-                                <h1 className="font-serif text-4xl font-semibold leading-tight text-foreground">
+                                <h1 className="text-4xl font-semibold leading-tight text-foreground">
                                     {data.title}
                                 </h1>
                                 <div className="flex items-center gap-2 text-sm text-muted">

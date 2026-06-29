@@ -100,7 +100,7 @@ export const BookmarkCard = ({
                     ) : null}
                 </>
             )}
-            trailing={<CaretRightIcon aria-hidden className="size-4 text-muted" />}
+            trailing={<CaretRightIcon aria-hidden className="size-5 text-muted" />}
         />
     )
 }

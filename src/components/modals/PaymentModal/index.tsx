@@ -320,7 +320,7 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
                     {rowPending ? (
                         <Spinner size="sm" />
                     ) : (
-                        <ArrowRightIcon aria-hidden focusable="false" className="size-4 text-muted" />
+                        <ArrowRightIcon aria-hidden focusable="false" className="size-5 text-muted" />
                     )}
                 </div>
             </button>

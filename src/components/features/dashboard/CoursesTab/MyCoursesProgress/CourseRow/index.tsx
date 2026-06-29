@@ -81,7 +81,7 @@ export const CourseRow = ({ item }: CourseRowProps) => {
                         }))}
                     />
                 </div>
-                <CaretRightIcon aria-hidden focusable="false" className="size-4 shrink-0 text-muted" />
+                <CaretRightIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
             </div>
         </SurfaceListCardItem>
     )

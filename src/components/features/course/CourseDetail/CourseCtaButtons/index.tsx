@@ -7,7 +7,6 @@ import {
 } from "@heroui/react"
 import {
     ArrowRightIcon,
-    BookOpenIcon,
 } from "@phosphor-icons/react"
 import {
     useTranslations,
@@ -51,8 +50,7 @@ export const CourseCtaButtons = ({ className }: CourseCtaButtonsProps) => {
                 {t("course.enroll")}
                 <ArrowRightIcon className="size-5" />
             </Button>
-            <Button variant="secondary" size="lg" className="w-full" onPress={onTryLearning}>
-                <BookOpenIcon className="size-5" />
+            <Button variant="secondary" className="w-full" onPress={onTryLearning}>
                 {t("course.tryLearning")}
             </Button>
         </div>

@@ -1,6 +1,6 @@
 "use client"
 
-import { CaretDownIcon, LockIcon, SparkleIcon, WarningCircleIcon, WarningOctagonIcon } from "@phosphor-icons/react"
+import { CaretDownIcon, LockIcon, SparkleIcon, WarningCircleIcon, WarningIcon } from "@phosphor-icons/react"
 import React from "react"
 import {
     Dropdown,
@@ -72,9 +72,9 @@ export type GradeModelDropdownProps = WithClassNames<undefined> & {
      */
     showAutoLane?: boolean
     /**
-     * Recommended minimum category. Any model BELOW it is flagged DANGER (still
+     * Recommended minimum category. Any model BELOW it is flagged WARNING (still
      * selectable, but may be inaccurate). Grading passes `Economy` → Free models
-     * read danger; the lesson chatbot omits it (Free is its normal lane).
+     * read a warning; the lesson chatbot omits it (Free is its normal lane).
      */
     floor?: AiModelCategory
     /** Popover placement. Default "bottom start"; pass "top start" for a bottom-anchored composer. */
@@ -92,7 +92,7 @@ export type GradeModelDropdownProps = WithClassNames<undefined> & {
  * category chip). Per model:
  * - no working key → DISABLED (warning, not selectable).
  * - Balanced / Premium / Frontier without an unlock → LOCKED (routes to plans).
- * - below the `floor` → SELECTABLE but flagged DANGER (may be inaccurate).
+ * - below the `floor` → SELECTABLE but flagged WARNING (may be inaccurate).
  * - otherwise → normal selectable.
  *
  * @param props - {@link GradeModelDropdownProps}
@@ -151,7 +151,7 @@ export const GradeModelDropdown = ({
                             </DropdownItem>
                         </DropdownSection>
                     ) : null}
-                    {/* One entry per catalog model. Below-floor = danger (selectable,
+                    {/* One entry per catalog model. Below-floor = warning (selectable,
                         risky); Balanced/Premium/Frontier = locked without an unlock. */}
                     <DropdownSection className={showAutoLane ? "border-t border-divider pt-1 mt-1" : undefined}>
                         {models.map((model) => {
@@ -212,7 +212,7 @@ export const GradeModelDropdown = ({
                                 )
                             }
                             if (belowFloor) {
-                                // DANGER: dưới mức khuyến nghị — vẫn chọn được nhưng có thể chấm KHÔNG chính xác.
+                                // WARNING: dưới mức khuyến nghị — vẫn chọn được nhưng có thể chấm KHÔNG chính xác.
                                 return (
                                     <DropdownItem
                                         key={key}
@@ -227,14 +227,14 @@ export const GradeModelDropdown = ({
                                             <Tooltip.Trigger>
                                                 <div className="flex w-full items-center justify-between gap-2">
                                                     <span className="flex min-w-0 items-center gap-2">
-                                                        <WarningOctagonIcon className="size-5 shrink-0 text-danger" />
+                                                        <WarningIcon className="size-5 shrink-0 text-warning" />
                                                         <span className="truncate">{model.model}</span>
                                                     </span>
                                                     {categoryChip}
                                                 </div>
                                             </Tooltip.Trigger>
                                             <Tooltip.Content>
-                                                <Typography type="body-sm" className="text-danger">
+                                                <Typography type="body-sm" className="text-warning">
                                                     {t("aiSettings.belowFloorWarning")}
                                                 </Typography>
                                             </Tooltip.Content>

@@ -77,7 +77,7 @@ const COLLIDE_RADIUS = new Map(
     KNOWLEDGE_NODES.map((node) => {
         const r = bubbleRadius(NODE_DEGREE[node.id] ?? 1)
         const labelHalfWidth = node.label.length * 3.4
-        return [node.id, Math.max(r, labelHalfWidth) + 12] as const
+        return [node.id, Math.max(r, labelHalfWidth) + 14] as const
     }),
 )
 

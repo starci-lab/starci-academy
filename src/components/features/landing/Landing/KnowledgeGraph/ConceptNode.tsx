@@ -43,7 +43,7 @@ export const ConceptNode = ({ id, data }: NodeProps) => {
     const cfg = TRACK_CONFIG[track]
     const degree = NODE_DEGREE[id] ?? 1
     const r = bubbleRadius(degree)
-    const fontSize = Math.round(10 + degree * 1.3)
+    const fontSize = Math.round(11 + degree * 0.8)
     return (
         <div
             className={cn("relative cursor-pointer transition-opacity duration-300", dimmed && "opacity-25")}

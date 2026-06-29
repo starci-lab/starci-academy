@@ -43,6 +43,7 @@ import { StatStrip } from "./StatStrip"
 import { TalentMarketplace } from "./TalentMarketplace"
 import { LearnLoopScroll } from "./LearnLoopScroll"
 import { KnowledgeGraph } from "./KnowledgeGraph"
+import { KNOWLEDGE_NODES } from "./KnowledgeGraph/data"
 import {
     LANDING_COURSE_TRACKS,
     LANDING_FAQ_INDEXES,
@@ -199,19 +200,53 @@ export const Landing = ({ className }: LandingProps) => {
                     </div>
                 </section>
 
-                {/* Kho tàng nội dung — 2 làn code ↔ infra; mỗi chip = bài THẬT (rút từ
-                    content) → bấm vào khóa chứa nó. Khoe chiều sâu chương trình. */}
-                <section id="treasure" className="flex scroll-mt-24 flex-col gap-12">
-                    <SectionHeading
-                        anchorId="treasure"
-                        eyebrow={t("landing.treasure.eyebrow")}
-                        title={t("landing.treasure.title")}
-                        intro={t("landing.treasure.intro")}
-                    />
-                    {/* Knowledge graph "kho tàng": ~26 khái niệm THẬT (node) liên kết builds-on
-                        + cross-track (d3-force live, kéo/zoom). Node màu theo track, click → khóa
-                        chứa nó. "Kiến thức lồng ghép" (vibe Qdrant, brand-themed @xyflow). */}
-                    <KnowledgeGraph />
+                {/* Bản đồ năng lực — SPLIT: copy "flex trình" (trái) + knowledge graph contained
+                    (phải). Graph KHÔNG còn full-bleed (hết "tràn lan") nhưng giữ wow tương tác. */}
+                <section id="treasure" className="scroll-mt-24">
+                    <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-12">
+                        {/* TRÁI — copy flex: heading + stat editorial + dòng lồng ghép + CTA */}
+                        <div className="flex flex-col gap-6">
+                            <SectionHeading
+                                anchorId="treasure"
+                                align="start"
+                                eyebrow={t("landing.treasure.eyebrow")}
+                                title={t("landing.treasure.title")}
+                                intro={t("landing.treasure.intro")}
+                            />
+                            {/* editorial stat: số to + label nhỏ + divider (grounded: số node + số track) */}
+                            <div className="flex items-center gap-6">
+                                <div className="flex flex-col">
+                                    <span className="text-3xl font-medium tracking-tight text-foreground sm:text-4xl">
+                                        {KNOWLEDGE_NODES.length}
+                                    </span>
+                                    <Typography type="body-xs" color="muted">
+                                        {t("landing.treasure.statConcepts")}
+                                    </Typography>
+                                </div>
+                                <span aria-hidden className="h-10 w-px bg-default" />
+                                <div className="flex flex-col">
+                                    <span className="text-3xl font-medium tracking-tight text-foreground sm:text-4xl">
+                                        {LANDING_COURSE_TRACKS.length}
+                                    </span>
+                                    <Typography type="body-xs" color="muted">
+                                        {t("landing.treasure.statTracks")}
+                                    </Typography>
+                                </div>
+                            </div>
+                            {/* giữ ý "lồng ghép" bằng 1 dòng (thay edge animation phải đọc được) */}
+                            <Typography type="body-sm" color="muted">
+                                {t("landing.treasure.interconnect")}
+                            </Typography>
+                            <Button variant="primary" size="lg" onPress={onSeeCourses} className="self-start">
+                                {t("landing.treasure.cta")}
+                                <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
+                            </Button>
+                        </div>
+                        {/* PHẢI — knowledge graph contained: ~38 khái niệm THẬT (node) liên kết
+                            builds-on + cross-track (d3-force live, kéo/zoom). Node màu theo track,
+                            click → khóa chứa nó. "Kiến thức lồng ghép" (vibe Qdrant, @xyflow). */}
+                        <KnowledgeGraph />
+                    </div>
                 </section>
 
                 {/* 5 — Founder beat */}

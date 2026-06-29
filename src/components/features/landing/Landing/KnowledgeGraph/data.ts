@@ -151,5 +151,6 @@ export const NODE_DEGREE: Record<string, number> = (() => {
     return degree
 })()
 
-/** Bán kính bubble (px) theo degree — leaf (deg 1) ≈ 18px → hub (deg 5) ≈ 34px. */
-export const bubbleRadius = (degree: number): number => 18 + degree * 6
+/** Bán kính bubble (px) theo degree — slope nhẹ để khung CONTAINED (nửa cột) đỡ chật:
+ * leaf (deg 1) ≈ 20px → hub (deg 8) ≈ 48px (trước 18+deg*6 cho hub ~66px, quá to). */
+export const bubbleRadius = (degree: number): number => 16 + degree * 4

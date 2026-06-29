@@ -1,6 +1,6 @@
 "use client"
 
-import { CaretDownIcon, LockIcon, SparkleIcon, WarningCircleIcon } from "@phosphor-icons/react"
+import { CaretDownIcon, LockIcon, SparkleIcon, WarningCircleIcon, WarningOctagonIcon } from "@phosphor-icons/react"
 import React from "react"
 import {
     Dropdown,
@@ -16,38 +16,68 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import type {
-
-    ChallengeGradeSelection,
-} from "../types"
 import { AiMode } from "@/modules/api/graphql/queries/query-my-ai-settings"
+import type { ModelProvider } from "@/modules/api/graphql/queries/query-my-ai-settings"
 import { AiModelCategory } from "@/modules/api/graphql/queries/query-ai-models"
 import { type AiGradableModel } from "@/modules/api/graphql/queries/types/ai-models"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { AiCategoryChip } from "@/components/blocks/chips/AiCategoryChip"
 
+/**
+ * Lane + model selection emitted by the picker. `model`/`provider` null = the
+ * Auto lane (the balancer picks). Structurally matches feature selection types
+ * (e.g. ChallengeGradeSelection) so callers pass theirs directly.
+ */
+export interface GradeModelSelection {
+    /** Lane to run on (Auto = balancer-picked, Premium = pinned model). */
+    mode: AiMode
+    /** Pinned model name, or null for the Auto lane. */
+    model: string | null
+    /** Provider of the pinned model, or null for the Auto lane. */
+    provider: ModelProvider | null
+}
+
+/** Categories that need an unlock (paid OR enrolled) to pick. */
+const PLAN_CATEGORIES: ReadonlyArray<AiModelCategory> = [
+    AiModelCategory.Balanced,
+    AiModelCategory.Premium,
+    AiModelCategory.Frontier,
+]
+
 /** Props for {@link GradeModelDropdown}. */
 export type GradeModelDropdownProps = WithClassNames<undefined> & {
     /** Enabled models the user can pick from (from the `aiModels` catalog). */
     models: Array<AiGradableModel>
-    /** The row's current grading-lane + model selection. */
-    selection: ChallengeGradeSelection
-    /** Whether the Premium lane (specific models) is unlocked for this user. */
+    /** The current lane + model selection. */
+    selection: GradeModelSelection
+    /**
+     * Whether higher-tier models are unlocked for this user (paid OR enrolled —
+     * the StarCi rule). Drives the lock on Balanced / Premium / Frontier.
+     */
     canPremium: boolean
     /** Disables the whole control (e.g. while a grade is in flight). */
     isDisabled?: boolean
+    /**
+     * Show the "Auto" lane entry on top. Default true. Pass false where a concrete
+     * model is required (e.g. personal-project review must pin a model).
+     */
+    showAutoLane?: boolean
     /** Fired with the new selection when the user picks an option. */
-    onSelect: (selection: ChallengeGradeSelection) => void
-    /** Fired when a locked (subscription-required) model is pressed — route to the subscription page. */
+    onSelect: (selection: GradeModelSelection) => void
+    /** Fired when a locked (unlock-required) model is pressed — route to plans. */
     onUpgrade: () => void
 }
 
 /**
- * Grading lane + model picker for one submission row.
+ * Shared lane + model picker (grading, AI lab, any model-select surface).
  *
- * Presentational: renders the "Auto (free)" lane plus every catalog model
- * (each tagged with its cost category chip) and forwards the chosen
- * {@link ChallengeGradeSelection}. Premium models are locked unless `canPremium`.
+ * Renders the "Auto" lane plus every catalog model (tagged with its cost
+ * category chip). Per model:
+ * - no working key → DISABLED (warning, not selectable).
+ * - Balanced / Premium / Frontier without an unlock → LOCKED (routes to plans).
+ * - Free → SELECTABLE but flagged DANGER (may grade inaccurately).
+ * - otherwise → normal selectable.
+ *
  * @param props - {@link GradeModelDropdownProps}
  */
 export const GradeModelDropdown = ({
@@ -55,16 +85,16 @@ export const GradeModelDropdown = ({
     selection,
     canPremium,
     isDisabled = false,
+    showAutoLane = true,
     onSelect,
     onUpgrade,
     className,
 }: GradeModelDropdownProps) => {
     const t = useTranslations()
-    // Auto lane = no concrete model picked; otherwise show the chosen model name
-    const isAuto = selection.mode === AiMode.Auto || selection.model === null
-    const triggerLabel = isAuto
-        ? t("aiSettings.lanes.auto.title")
-        : selection.model
+    // a pinned model shows its name; otherwise the Auto label (or "pick a model"
+    // when the Auto lane is hidden and nothing is picked yet)
+    const triggerLabel = selection.model
+        ?? (showAutoLane ? t("aiSettings.lanes.auto.title") : t("aiSettings.pickModel"))
 
     return (
         <Dropdown>
@@ -85,36 +115,34 @@ export const GradeModelDropdown = ({
                 <DropdownMenu
                     aria-label={t("aiSettings.pickModel")}
                 >
-                    {/* Auto lane — balancer picks a complimentary model, free of charge */}
-                    <DropdownSection>
-                        <DropdownItem
-                            key="auto"
-                            onPress={() => onSelect({
-                                mode: AiMode.Auto,
-                                model: null,
-                                provider: null,
-                            })}
-                        >
-                            <div className="flex items-center gap-2">
-                                <span>{t("aiSettings.lanes.auto.title")}</span>
-                            </div>
-                        </DropdownItem>
-                    </DropdownSection>
-                    {/* One entry per catalog model, with a category chip. Free + Economy
-                        models grade without a plan; Balanced + Premium are locked without a
-                        subscription (pressing routes to the subscription page). */}
-                    <DropdownSection className="border-t border-divider pt-1 mt-1">
+                    {/* Auto lane — balancer picks a model on the floor→climb chain */}
+                    {showAutoLane ? (
+                        <DropdownSection>
+                            <DropdownItem
+                                key="auto"
+                                onPress={() => onSelect({
+                                    mode: AiMode.Auto,
+                                    model: null,
+                                    provider: null,
+                                })}
+                            >
+                                <div className="flex items-center gap-2">
+                                    <span>{t("aiSettings.lanes.auto.title")}</span>
+                                </div>
+                            </DropdownItem>
+                        </DropdownSection>
+                    ) : null}
+                    {/* One entry per catalog model. Free = danger (selectable, risky);
+                        Balanced/Premium/Frontier = locked without an unlock. */}
+                    <DropdownSection className={showAutoLane ? "border-t border-divider pt-1 mt-1" : undefined}>
                         {models.map((model) => {
                             const key = `${model.provider}:${model.model}`
                             const categoryChip = <AiCategoryChip category={model.category} />
-                            // Free + Economy are usable without a plan; Balanced + Premium
-                            // require a paid subscription.
-                            const requiresPlan = model.category === AiModelCategory.Balanced
-                                || model.category === AiModelCategory.Premium
+                            const requiresPlan = PLAN_CATEGORIES.includes(model.category)
+                            const isFree = model.category === AiModelCategory.Free
                             if (!model.available) {
-                                // DISABLED (not locked): model/provider tạm không khả dụng (vd key
-                                // không hợp lệ / provider down) → icon CẢNH BÁO, KHÔNG phải ổ khoá.
-                                // Phân biệt với case chưa mua gói (canPremium=false) bên dưới.
+                                // DISABLED (not locked): model/provider tạm không khả dụng
+                                // (key không hợp lệ / provider down) → icon CẢNH BÁO.
                                 return (
                                     <DropdownItem
                                         key={key}
@@ -137,6 +165,7 @@ export const GradeModelDropdown = ({
                                 )
                             }
                             if (requiresPlan && !canPremium) {
+                                // LOCKED: cần nâng gói HOẶC enroll khoá để mở tier cao.
                                 return (
                                     <DropdownItem
                                         key={key}
@@ -155,6 +184,37 @@ export const GradeModelDropdown = ({
                                             </Tooltip.Trigger>
                                             <Tooltip.Content>
                                                 <Typography type="body-sm">{t("aiSettings.subscribeToGrade")}</Typography>
+                                            </Tooltip.Content>
+                                        </Tooltip>
+                                    </DropdownItem>
+                                )
+                            }
+                            if (isFree) {
+                                // DANGER: free model vẫn chọn được nhưng có thể chấm KHÔNG chính xác.
+                                return (
+                                    <DropdownItem
+                                        key={key}
+                                        textValue={model.model}
+                                        onPress={() => onSelect({
+                                            mode: canPremium ? AiMode.Premium : AiMode.Auto,
+                                            model: model.model,
+                                            provider: model.provider,
+                                        })}
+                                    >
+                                        <Tooltip>
+                                            <Tooltip.Trigger>
+                                                <div className="flex w-full items-center justify-between gap-2">
+                                                    <span className="flex min-w-0 items-center gap-2">
+                                                        <WarningOctagonIcon className="size-5 shrink-0 text-danger" />
+                                                        <span className="truncate">{model.model}</span>
+                                                    </span>
+                                                    {categoryChip}
+                                                </div>
+                                            </Tooltip.Trigger>
+                                            <Tooltip.Content>
+                                                <Typography type="body-sm" className="text-danger">
+                                                    {t("aiSettings.freeGradingWarning")}
+                                                </Typography>
                                             </Tooltip.Content>
                                         </Tooltip>
                                     </DropdownItem>

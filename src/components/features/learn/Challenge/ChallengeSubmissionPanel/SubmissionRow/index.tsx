@@ -33,7 +33,7 @@ import {
 } from "../utils"
 import {
     GradeModelDropdown,
-} from "../GradeModelDropdown"
+} from "@/components/blocks/grading/GradeModelDropdown"
 import {
     LastAttemptResult,
 } from "./LastAttemptResult"

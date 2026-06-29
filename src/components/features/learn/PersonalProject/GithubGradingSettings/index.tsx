@@ -15,7 +15,7 @@ import {
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { AutosaveStatus } from "../PersonalProjectSubmission"
-import { GradingModelDropdown } from "./GradingModelDropdown"
+import { GradeModelDropdown } from "@/components/blocks/grading/GradeModelDropdown"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { usePersonalProjectGithubForm } from "@/hooks/zustand/personalProjectGithub/usePersonalProjectGithubForm"
 
@@ -91,10 +91,11 @@ export const GithubGradingSettings = ({ className }: GithubGradingSettingsProps)
             </div>
             <div className="flex flex-col gap-2">
                 <Label>{t("finalProject.page.submitGithub.modelFieldTitle")}</Label>
-                <GradingModelDropdown
+                <GradeModelDropdown
                     models={gradeModels}
                     selection={gradeSelection}
                     canPremium={canPremium}
+                    showAutoLane={false}
                     onSelect={setGradeSelection}
                     onUpgrade={() => router.push(`/${locale}/profile/settings/ai-subscription`)}
                 />

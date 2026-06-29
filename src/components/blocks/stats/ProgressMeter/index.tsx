@@ -61,10 +61,10 @@ export const ProgressMeter = ({
     return (
         <div className={cn("flex flex-col gap-2", className)}>
             {hasTopRow ? (
-                <div className="flex items-center justify-between">
-                    <Typography type="body-xs" color="muted">{label}</Typography>
+                <div className="flex items-center justify-between gap-2">
+                    <Typography type="body-xs" color="muted" className="min-w-0 truncate">{label}</Typography>
                     {showValue ? (
-                        <Typography type="body-xs" color="muted">{percent}%</Typography>
+                        <Typography type="body-xs" color="muted" className="shrink-0">{percent}%</Typography>
                     ) : null}
                 </div>
             ) : null}

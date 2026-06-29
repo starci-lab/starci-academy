@@ -80,7 +80,7 @@ export const PageHeader = ({
             {/* Main row: title+description stack on the left, actions pinned to the right */}
             <div className="flex items-start justify-between gap-3">
                 {/* Left column: stacked title and optional description */}
-                <div className="flex flex-col gap-2">
+                <div className="flex min-w-0 flex-col gap-2">
                     <Typography.Heading level={3} weight="bold">{title}</Typography.Heading>
                     {description ? (
                         // clamp to 2 lines on mobile (keep the header short on a phone); full on sm+

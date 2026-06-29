@@ -148,7 +148,8 @@ export const ContentAiFab = ({ className }: ContentAiFabProps) => {
                 onPointerUp={onPointerUp}
                 style={{ bottom }}
                 className={cn(
-                    "fixed right-4 z-40 touch-none rounded-full shadow-lg",
+                    // keep the bubble clear of the bottom safe area (home indicator) on mobile
+                    "fixed right-4 z-40 mb-[env(safe-area-inset-bottom)] touch-none rounded-full shadow-lg",
                     className,
                 )}
             >

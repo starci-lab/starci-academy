@@ -10,6 +10,7 @@ import { InterviewSession } from "./InterviewSession"
 import { DueReview } from "./DueReview"
 import { DueReviewHero } from "./DueReviewHero"
 import { FlashcardStatsStrip } from "./FlashcardStatsStrip"
+import { FlashcardMobileNav } from "./FlashcardMobileNav"
 import { useFlashcardNav } from "./useFlashcardNav"
 import { type WithClassNames } from "@/modules/types/base/class-name"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
@@ -78,6 +79,9 @@ export const Flashcards = ({ className }: FlashcardsProps) => {
                     title={t("flashcard.title")}
                     description={t("flashcard.subtitle")}
                 />
+
+                {/* mobile fallback for the hidden left rail: mode switch + deck picker */}
+                <FlashcardMobileNav />
 
                 {mode === "study" ? (
                     session === "due" ? (

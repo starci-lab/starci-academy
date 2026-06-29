@@ -34,6 +34,7 @@ import {
 import {
     GradeModelDropdown,
 } from "@/components/blocks/grading/GradeModelDropdown"
+import { AiModelCategory } from "@/modules/api/graphql/queries/query-ai-models"
 import {
     LastAttemptResult,
 } from "./LastAttemptResult"
@@ -241,6 +242,7 @@ export const SubmissionRow = ({
                             selection={gradeSelection}
                             canPremium={canPremium}
                             isDisabled={isPending}
+                            floor={AiModelCategory.Economy}
                             onSelect={(selection) => onSelectGrade(submission.id, selection)}
                             onUpgrade={onUpgrade}
                         />

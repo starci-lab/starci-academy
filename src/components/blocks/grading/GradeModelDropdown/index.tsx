@@ -44,6 +44,15 @@ const PLAN_CATEGORIES: ReadonlyArray<AiModelCategory> = [
     AiModelCategory.Frontier,
 ]
 
+/** Category ladder cheapest → strongest — for "below the floor" comparison. */
+const CATEGORY_ORDER: ReadonlyArray<AiModelCategory> = [
+    AiModelCategory.Free,
+    AiModelCategory.Economy,
+    AiModelCategory.Balanced,
+    AiModelCategory.Premium,
+    AiModelCategory.Frontier,
+]
+
 /** Props for {@link GradeModelDropdown}. */
 export type GradeModelDropdownProps = WithClassNames<undefined> & {
     /** Enabled models the user can pick from (from the `aiModels` catalog). */
@@ -62,6 +71,14 @@ export type GradeModelDropdownProps = WithClassNames<undefined> & {
      * model is required (e.g. personal-project review must pin a model).
      */
     showAutoLane?: boolean
+    /**
+     * Recommended minimum category. Any model BELOW it is flagged DANGER (still
+     * selectable, but may be inaccurate). Grading passes `Economy` → Free models
+     * read danger; the lesson chatbot omits it (Free is its normal lane).
+     */
+    floor?: AiModelCategory
+    /** Popover placement. Default "bottom start"; pass "top start" for a bottom-anchored composer. */
+    placement?: "bottom start" | "top start"
     /** Fired with the new selection when the user picks an option. */
     onSelect: (selection: GradeModelSelection) => void
     /** Fired when a locked (unlock-required) model is pressed — route to plans. */
@@ -75,7 +92,7 @@ export type GradeModelDropdownProps = WithClassNames<undefined> & {
  * category chip). Per model:
  * - no working key → DISABLED (warning, not selectable).
  * - Balanced / Premium / Frontier without an unlock → LOCKED (routes to plans).
- * - Free → SELECTABLE but flagged DANGER (may grade inaccurately).
+ * - below the `floor` → SELECTABLE but flagged DANGER (may be inaccurate).
  * - otherwise → normal selectable.
  *
  * @param props - {@link GradeModelDropdownProps}
@@ -86,6 +103,8 @@ export const GradeModelDropdown = ({
     canPremium,
     isDisabled = false,
     showAutoLane = true,
+    floor,
+    placement = "bottom start",
     onSelect,
     onUpgrade,
     className,
@@ -109,7 +128,7 @@ export const GradeModelDropdown = ({
                 </div>
             </DropdownTrigger>
             <DropdownPopover
-                placement="bottom start"
+                placement={placement}
                 className="min-w-64"
             >
                 <DropdownMenu
@@ -132,14 +151,17 @@ export const GradeModelDropdown = ({
                             </DropdownItem>
                         </DropdownSection>
                     ) : null}
-                    {/* One entry per catalog model. Free = danger (selectable, risky);
-                        Balanced/Premium/Frontier = locked without an unlock. */}
+                    {/* One entry per catalog model. Below-floor = danger (selectable,
+                        risky); Balanced/Premium/Frontier = locked without an unlock. */}
                     <DropdownSection className={showAutoLane ? "border-t border-divider pt-1 mt-1" : undefined}>
                         {models.map((model) => {
                             const key = `${model.provider}:${model.model}`
                             const categoryChip = <AiCategoryChip category={model.category} />
                             const requiresPlan = PLAN_CATEGORIES.includes(model.category)
-                            const isFree = model.category === AiModelCategory.Free
+                            // below the recommended floor → flag danger (grading: Free is
+                            // below Economy). No floor → never flagged (chatbot runs Free).
+                            const belowFloor = floor !== undefined
+                                && CATEGORY_ORDER.indexOf(model.category) < CATEGORY_ORDER.indexOf(floor)
                             if (!model.available) {
                                 // DISABLED (not locked): model/provider tạm không khả dụng
                                 // (key không hợp lệ / provider down) → icon CẢNH BÁO.
@@ -189,8 +211,8 @@ export const GradeModelDropdown = ({
                                     </DropdownItem>
                                 )
                             }
-                            if (isFree) {
-                                // DANGER: free model vẫn chọn được nhưng có thể chấm KHÔNG chính xác.
+                            if (belowFloor) {
+                                // DANGER: dưới mức khuyến nghị — vẫn chọn được nhưng có thể chấm KHÔNG chính xác.
                                 return (
                                     <DropdownItem
                                         key={key}
@@ -213,7 +235,7 @@ export const GradeModelDropdown = ({
                                             </Tooltip.Trigger>
                                             <Tooltip.Content>
                                                 <Typography type="body-sm" className="text-danger">
-                                                    {t("aiSettings.freeGradingWarning")}
+                                                    {t("aiSettings.belowFloorWarning")}
                                                 </Typography>
                                             </Tooltip.Content>
                                         </Tooltip>

@@ -3,11 +3,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import {
     Button,
-    Dropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownPopover,
-    DropdownTrigger,
     Label,
     Link,
     ScrollShadow,
@@ -22,13 +17,13 @@ import {
     PaperPlaneTiltIcon,
     PlusIcon,
     QuotesIcon,
-    SparkleIcon,
     TrashIcon,
     XIcon,
 } from "@phosphor-icons/react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { AiModelCategory } from "@/modules/api/graphql/queries/query-ai-models"
+import { AiMode } from "@/modules/api/graphql/queries/query-my-ai-settings"
 import { useAppSelector } from "@/redux/hooks"
 import {
     useContentAiSelectedModel,
@@ -36,6 +31,12 @@ import {
 } from "@/hooks/zustand/overlay/hooks"
 import { useContentAiStream } from "@/hooks/socketio/useContentAiStream"
 import { useQueryAiModelsSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiModelsSwr"
+import { useQueryMyAiSettingsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiSettingsSwr"
+import {
+    GradeModelDropdown,
+    type GradeModelSelection,
+} from "@/components/blocks/grading/GradeModelDropdown"
+import { pathConfig } from "@/resources/path"
 import { useQueryContentAiHistorySwr } from "@/hooks/swr/api/graphql/queries/useQueryContentAiHistorySwr"
 import { useQueryContentAiSessionsSwr } from "@/hooks/swr/api/graphql/queries/useQueryContentAiSessionsSwr"
 import {
@@ -45,7 +46,6 @@ import {
 import { useMutateCreateContentAiSessionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateCreateContentAiSessionSwr"
 import { useMutateClearContentAiHistorySwr } from "@/hooks/swr/api/graphql/mutations/useMutateClearContentAiHistorySwr"
 import { useMutateTouchContentAiSessionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateTouchContentAiSessionSwr"
-import { AiCategoryChip } from "@/components/blocks/chips/AiCategoryChip"
 import { ChatBubble, type ChatRole } from "@/components/blocks/feed/ChatBubble"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { SearchInput } from "@/components/reuseable/SearchInput"
@@ -92,6 +92,8 @@ interface ChatMessage {
  */
 export const ContentAiChat = ({ className }: ContentAiChatProps) => {
     const t = useTranslations()
+    const router = useRouter()
+    const locale = useLocale()
     const contentId = useAppSelector((state) => state.content.id)
     const { ask, abort } = useContentAiStream()
     const [messages, setMessages] = useState<Array<ChatMessage>>([])
@@ -105,19 +107,34 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
     const [view, setView] = useState<PanelView>("chat")
     const [searchTerm, setSearchTerm] = useState("")
 
-    // free models only — content-AI tutoring runs on the 0-credit local tier
+    // every available model — the picker shows them all (Free is the chatbot's
+    // normal lane here, NOT flagged danger; higher tiers gate on the unlock)
     const aiModelsSwr = useQueryAiModelsSwr()
-    const freeModels = useMemo(
+    const models = useMemo(
         () => (aiModelsSwr.data?.aiModels?.data?.gradableModels ?? [])
-            .filter((model) => model.category === AiModelCategory.Free && model.available),
+            .filter((model) => model.available),
         [aiModelsSwr.data],
     )
+    const myAiSettingsSwr = useQueryMyAiSettingsSwr()
+    // unlocked (paid OR enrolled) → may pin higher-tier models
+    const canPremium = Boolean(myAiSettingsSwr.data?.canPremium)
     const { selectedModel, setSelectedModel } = useContentAiSelectedModel()
-    useEffect(() => {
-        if (!selectedModel && freeModels.length > 0) {
-            setSelectedModel(freeModels[0].model)
+    // default = Auto (no concrete model pinned); a picked model runs Premium when unlocked
+    const modelSelection = useMemo<GradeModelSelection>(() => {
+        if (!selectedModel) {
+            return {
+                mode: AiMode.Auto,
+                model: null,
+                provider: null,
+            }
         }
-    }, [freeModels, selectedModel])
+        const found = models.find((model) => model.model === selectedModel)
+        return {
+            mode: canPremium ? AiMode.Premium : AiMode.Auto,
+            model: selectedModel,
+            provider: found?.provider ?? null,
+        }
+    }, [selectedModel, models, canPremium])
 
     // recent conversations for the header (auto-select most recent + current title)
     const sessionsSwr = useQueryContentAiSessionsSwr(contentId)
@@ -239,6 +256,9 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
             contentId,
             question: content,
             history,
+            mode: modelSelection.mode,
+            model: modelSelection.model,
+            provider: modelSelection.provider,
             onDelta: appendToAssistant,
             onDone: (error) => {
                 setIsStreaming(false)
@@ -257,7 +277,7 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                 })
             },
         })
-    }, [input, contentId, isStreaming, currentSessionId, createSwr, selection, selectionContext, messages, ask, appendToAssistant, setSelection, sessionsSwr, sessionsInfinite])
+    }, [input, contentId, isStreaming, currentSessionId, createSwr, selection, selectionContext, messages, ask, appendToAssistant, setSelection, sessionsSwr, sessionsInfinite, modelSelection])
 
     /** Start a fresh conversation (created lazily on the first message). */
     const onNewConversation = useCallback(() => {
@@ -296,7 +316,6 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
         }
     }, [deleteSwr, sessionsSwr, sessionsInfinite, currentSessionId])
 
-    const activeModelLabel = selectedModel ?? freeModels[0]?.model ?? "—"
     const trimmedSearch = searchTerm.trim()
     // flatten the infinite pages; a short last page means there are no more
     const infiniteItems = (sessionsInfinite.data ?? []).flat()
@@ -308,34 +327,19 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
         ? infiniteItems.filter((session) => session.originContentId === contentId)
         : infiniteItems
 
-    // the model picker dropdown (shared by the composer + the settings view)
+    // the model picker (shared block — composer + settings view). Auto = free
+    // chain; a pinned model runs Premium when unlocked. No `floor` → Free is the
+    // chatbot's normal lane (not flagged danger).
     const modelPicker = (placement: "top start" | "bottom start") => (
-        <Dropdown>
-            <DropdownTrigger className="cursor-pointer">
-                <div className="flex items-center gap-2">
-                    <SparkleIcon className="size-4" />
-                    <span className="max-w-32 truncate">{activeModelLabel}</span>
-                    <AiCategoryChip category={AiModelCategory.Free} />
-                    <CaretDownIcon className="size-4" />
-                </div>
-            </DropdownTrigger>
-            <DropdownPopover placement={placement} className="min-w-56">
-                <DropdownMenu aria-label={t("contentAi.pickModel")}>
-                    {freeModels.map((model) => (
-                        <DropdownItem
-                            key={`${model.provider}:${model.model}`}
-                            textValue={model.model}
-                            onPress={() => setSelectedModel(model.model)}
-                        >
-                            <div className="flex w-full items-center justify-between gap-2">
-                                <span className="truncate">{model.model}</span>
-                                <AiCategoryChip category={model.category} />
-                            </div>
-                        </DropdownItem>
-                    ))}
-                </DropdownMenu>
-            </DropdownPopover>
-        </Dropdown>
+        <GradeModelDropdown
+            models={models}
+            selection={modelSelection}
+            canPremium={canPremium}
+            placement={placement}
+            onSelect={(selection) => setSelectedModel(selection.model)}
+            onUpgrade={() =>
+                router.push(`${pathConfig().locale(locale).profile().build()}/ai-subscription`)}
+        />
     )
 
     // ── conversations view ────────────────────────────────────────────────

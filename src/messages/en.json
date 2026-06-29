@@ -1497,7 +1497,7 @@
         "gradeWith": "Grade with AI",
         "pickModel": "Pick a model",
         "subscribeToGrade": "Subscribe to a paid plan to grade with this model",
-        "freeGradingWarning": "Free model — may return inaccurate grading results",
+        "belowFloorWarning": "Below the recommended level — may return inaccurate results",
         "modelUnavailable": "This model is temporarily unavailable (no working key)",
         "categories": {
             "free": "Free",

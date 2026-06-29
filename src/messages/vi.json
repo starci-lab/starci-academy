@@ -1506,7 +1506,7 @@
         "gradeWith": "Chấm bằng AI",
         "pickModel": "Chọn mô hình",
         "subscribeToGrade": "Đăng ký gói trả phí để chấm bài bằng model này",
-        "freeGradingWarning": "Model miễn phí — có thể trả về kết quả chấm không chính xác",
+        "belowFloorWarning": "Model dưới mức khuyến nghị — có thể trả về kết quả không chính xác",
         "modelUnavailable": "Model tạm không khả dụng (không có key hoạt động)",
         "categories": {
             "free": "Miễn phí",

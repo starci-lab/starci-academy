@@ -19,6 +19,12 @@ export interface AskContentAiStreamParams {
     question: string
     /** Recent prior turns (oldest first) for short-term memory. */
     history: Array<ContentAiHistoryTurn>
+    /** Lane: "auto" (free chain) or "premium" (pin the chosen model). */
+    mode?: string
+    /** Pinned model name (only with mode "premium"). */
+    model?: string | null
+    /** Provider of the pinned model. */
+    provider?: string | null
     /** Called for every incremental token delta as the answer streams. */
     onDelta: (delta: string) => void
     /** Called once when the stream finishes (with `error` set when it failed). */
@@ -91,6 +97,9 @@ export const useContentAiStream = (): ContentAiStreamControls => {
                     contentId: params.contentId,
                     question: params.question,
                     history: params.history,
+                    mode: params.mode,
+                    model: params.model,
+                    provider: params.provider,
                 },
                 locale,
             }

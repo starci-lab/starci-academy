@@ -1545,7 +1545,9 @@
             "upsellPrompt": "Bạn muốn dùng model premium mà không cần khóa riêng?",
             "upsellSubtitle": "ignore"
         },
-        "byokSubtitle": "Thêm API key của riêng bạn để dùng model từ nhà cung cấp của bạn. Khóa được mã hóa khi lưu và sẽ không hiển thị lại."
+        "byokSubtitle": "Thêm API key của riêng bạn để dùng model từ nhà cung cấp của bạn. Khóa được mã hóa khi lưu và sẽ không hiển thị lại.",
+        "systemDescription": "AI tự động chọn model theo độ khó của bài và gói của bạn — không cần cấu hình. Nâng gói để mở các model mạnh hơn.",
+        "upgradePrompt": "Muốn dùng model mạnh hơn để chấm bài?"
     },
     "membership": {
         "title": "Hội viên",

@@ -4,8 +4,8 @@ import React, {
     useCallback,
 } from "react"
 import {
-    Button,
     Link,
+    Typography,
 } from "@heroui/react"
 import {
     useLocale,
@@ -15,49 +15,26 @@ import {
     useRouter,
 } from "next/navigation"
 import {
-    Typography,
-} from "@heroui/react"
-import {
     SettingsBreadcrumb,
 } from "../Settings/SettingsBreadcrumb"
-import {
-    ByokForm,
-} from "./ByokForm"
-import {
-    StatusLine,
-} from "./StatusLine"
-import {
-    AiSettingsSkeleton,
-} from "./AiSettingsSkeleton"
-import { useQueryMyAiSettingsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiSettingsSwr"
-import { useMutateUpdateMyAiSettingsSwr } from "@/hooks/swr/api/graphql/mutations/useMutateUpdateMyAiSettingsSwr"
-import { useAiSettingsForm } from "@/hooks/zustand/aiSettings/useAiSettingsForm"
 import { pathConfig } from "@/resources/path"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 
 /**
- * AI settings feature container.
+ * AI settings page.
  *
- * The page does ONE thing: manage the user's own API key (BYOK). The active AI
- * lane (auto / premium / byok) is resolved by the backend from tier + key in a
- * fixed natural order, so there is no lane selector here — only a read-only
- * "currently using" chip plus the BYOK form. Owns the page chrome + loading
- * gate; children read the SWR + zustand singletons themselves. Mounted by the
- * `/profile/ai-settings` route.
+ * BYOK (bring-your-own-key) was removed from the main flow — grading + the lesson
+ * tutor run ONLY on the StarCi System pool: the system auto-picks a model by task
+ * difficulty + the user's plan (no per-user key/lane config). So this page no
+ * longer manages a key; it just explains that and cross-links to the AI plans.
+ * (BYOK may return later, scoped to the AI Lab playground.)
  */
 export const AiSettings = () => {
     const t = useTranslations()
     const router = useRouter()
     const locale = useLocale()
-    const {
-        data: settings,
-        isLoading,
-        error,
-    } = useQueryMyAiSettingsSwr()
-    const { isMutating } = useMutateUpdateMyAiSettingsSwr()
-    const { byokApiKey, submit } = useAiSettingsForm()
 
-    /** Navigate to the AI subscription page (cross-link for paid models). */
+    /** Navigate to the AI subscription page (where higher model tiers unlock). */
     const onNavigateSubscription = useCallback(
         () => router.push(`${pathConfig().locale(locale).profile().build()}/ai-subscription`),
         [
@@ -66,48 +43,21 @@ export const AiSettings = () => {
         ],
     )
 
-    // gate only the data-dependent content; breadcrumb + header are static
-    // chrome (i18n/router only) so they render immediately, outside the gate.
-    // isValidating is intentionally excluded — background revalidate keeps the
-    // existing content instead of flashing back to the skeleton
-    const ready = !isLoading && !!settings && !error
-
-    // saving needs a stored key or a freshly typed one (nothing else to persist)
-    const byokNeedsKey = !settings?.hasByokKey && !byokApiKey.trim()
-    const saveDisabled = isMutating || byokNeedsKey
-
     return (
         <div className="flex flex-col gap-10">
             <PageHeader
                 breadcrumb={<SettingsBreadcrumb current={t("aiSettings.title")} />}
                 title={t("aiSettings.title")}
-                description={t("aiSettings.byokSubtitle")}
+                description={t("aiSettings.systemDescription")}
             />
-            {ready ? (
-                <>
-                    <ByokForm />
-                    <StatusLine />
-                    <Button
-                        variant="primary"
-                        className="self-start"
-                        isDisabled={saveDisabled}
-                        isPending={isMutating}
-                        onPress={submit}
-                    >
-                        {t("aiSettings.save")}
-                    </Button>
-                    <div className="flex flex-wrap items-center gap-2">
-                        <Typography type="body-sm" color="muted">
-                            {t("aiSettings.byok.upsellPrompt")}
-                        </Typography>
-                        <Link onPress={onNavigateSubscription}>
-                            {t("aiSettings.byok.upsellCta")}
-                        </Link>
-                    </div>
-                </>
-            ) : (
-                <AiSettingsSkeleton />
-            )}
+            <div className="flex flex-wrap items-center gap-2">
+                <Typography type="body-sm" color="muted">
+                    {t("aiSettings.upgradePrompt")}
+                </Typography>
+                <Link onPress={onNavigateSubscription}>
+                    {t("aiSettings.byok.upsellCta")}
+                </Link>
+            </div>
         </div>
     )
 }

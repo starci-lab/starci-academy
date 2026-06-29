@@ -1536,7 +1536,9 @@
             "upsellPrompt": "Want premium models without your own key?",
             "upsellSubtitle": "ignore"
         },
-        "byokSubtitle": "Add your own API key to use your provider's models. Your key is stored encrypted and never shown again."
+        "byokSubtitle": "Add your own API key to use your provider's models. Your key is stored encrypted and never shown again.",
+        "systemDescription": "The system auto-picks a model by task difficulty and your plan — no setup needed. Upgrade to unlock stronger models.",
+        "upgradePrompt": "Want stronger models for grading?"
     },
     "membership": {
         "title": "Membership",

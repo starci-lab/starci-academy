@@ -276,7 +276,7 @@ export const PersonalProjectDashboard = ({
                                     return (
                                         <ListRow
                                             key={task.id}
-                                            className={cn("px-3", isActive && "bg-accent/10")}
+                                            className="px-3"
                                             leading={isActive ? (
                                                 <PlayIcon
                                                     aria-hidden

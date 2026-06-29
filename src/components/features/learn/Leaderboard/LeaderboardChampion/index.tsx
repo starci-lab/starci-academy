@@ -59,7 +59,9 @@ export const LeaderboardChampion = ({ entry, totalXp, viewerUserId, className }:
                 </Typography>
             </div>
             <div className="shrink-0 text-right">
-                <Typography type="h4" weight="bold" className="text-accent">
+                {/* accent XP only when it's the viewer's own card — consistent with
+                    LeaderboardTable/Podium (accent value = "mine", not every #1) */}
+                <Typography type="h4" weight="bold" className={cn(isViewer ? "text-accent" : "text-foreground")}>
                     {totalXp}
                 </Typography>
                 <Typography type="body-xs" color="muted">

@@ -19,4 +19,6 @@ export enum SubscriptionEvent {
     ChatMessageCreated = "community_chat.message_created.subscription",
     /** A streamed token chunk for a content-AI answer (must match backend). */
     ContentAiChunk = "content_ai.chunk.subscription",
+    /** Per-model AI latency snapshot broadcast on `/system_health` (must match backend). */
+    AiModelHealth = "system_health.ai_model_health.subscription",
 }

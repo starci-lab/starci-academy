@@ -72,7 +72,9 @@ export const LeaderboardPodium = ({ top, selectedCategory, viewerUserId, classNa
                             className={cn(
                                 "flex w-full items-center justify-center rounded-t-xl text-sm font-medium",
                                 PEDESTAL_HEIGHT[rank],
-                                isViewer ? "bg-accent/15 text-accent" : "bg-default text-muted",
+                                // viewer is marked by the avatar ring + accent XP only;
+                                // the pedestal stays neutral (no 3rd accent channel / large fill)
+                                "bg-default text-muted",
                             )}
                         >
                             {rank}

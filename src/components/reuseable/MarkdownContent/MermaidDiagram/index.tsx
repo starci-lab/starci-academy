@@ -67,8 +67,13 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
                         onClick={() => setOpen(true)}
                         className="group relative block w-full cursor-zoom-in"
                     >
+                        {/* mermaid stamps an inline `style="max-width:Npx"` on the <svg> that
+                            outranks our `max-w-full` class, so a wide diagram would otherwise push
+                            the reading column past the viewport (the page stops shrinking). Wrap it
+                            in an x-scroll box: it scales to fit when it can, and scrolls inside the
+                            figure when it can't — never blocking the layout. */}
                         <div
-                            className="[&_svg]:h-auto [&_svg]:max-w-full"
+                            className="overflow-x-auto [&_svg]:h-auto [&_svg]:!w-auto [&_svg]:!max-w-none"
                             dangerouslySetInnerHTML={{ __html: data }}
                         />
                         {/* Hover affordance hinting the diagram can be enlarged. */}

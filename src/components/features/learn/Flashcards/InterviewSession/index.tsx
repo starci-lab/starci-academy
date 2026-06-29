@@ -5,10 +5,12 @@ import useSWR from "swr"
 import { Button, Card, CardContent, Chip, Label, Spinner, Typography, cn } from "@heroui/react"
 import { LightningIcon, ListNumbersIcon, MicrophoneIcon, RobotIcon, StackIcon, StairsIcon, TargetIcon } from "@phosphor-icons/react"
 import { useTranslations, useLocale } from "next-intl"
+import { useRouter } from "next/navigation"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { SegmentedControl } from "@/components/blocks/navigation/SegmentedControl"
 import { SelectableCardGroup } from "@/components/blocks/navigation/SelectableCardGroup"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
+import { GradeModelDropdown, type GradeModelSelection } from "@/components/blocks/grading/GradeModelDropdown"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { InterviewSessionSkeleton } from "./InterviewSessionSkeleton"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -16,10 +18,15 @@ import { queryDrawInterviewCard } from "@/modules/api/graphql/queries/query-draw
 import { queryMyInterviewHistory } from "@/modules/api/graphql/queries/query-my-interview-history"
 import type { InterviewCardData } from "@/modules/api/graphql/queries/types/draw-interview-card"
 import type { InterviewGradeResultData } from "@/modules/api/graphql/mutations/types/grade-interview-answer"
+import type { AiGradableModel } from "@/modules/api/graphql/queries/types/ai-models"
 import type { GraphQLHeaders } from "@/modules/api/graphql/types"
 import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { AiMode } from "@/modules/api/graphql/queries/query-my-ai-settings"
+import { AiModelCategory, AiModelTask } from "@/modules/api/graphql/queries/query-ai-models"
 import { InterviewVerdict } from "@/modules/api/graphql/mutations/types/grade-interview-answer"
 import { useMutateGradeInterviewAnswerSwr } from "@/hooks/swr/api/graphql/mutations/useMutateGradeInterviewAnswerSwr"
+import { useQueryAiModelsSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiModelsSwr"
+import { useQueryMyAiSettingsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiSettingsSwr"
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 
@@ -29,16 +36,34 @@ export interface InterviewSessionProps extends WithClassNames<undefined> {
     courseId: string
 }
 
-/** The phases of one mock-interview session. */
-type InterviewPhase = "setup" | "active" | "summary"
+/**
+ * The phases of one mock-interview session. `active` collects every spoken answer
+ * (no verdict between questions — realistic interview); `grading` then grades the
+ * whole batch sequentially; `summary` shows the scorecard.
+ */
+type InterviewPhase = "setup" | "active" | "grading" | "summary"
 
-/** A graded answer, slimmed to what the session summary aggregates. */
-interface InterviewTurn {
-    /** Numeric score 0–10 the backend assigned. */
-    score: number
-    /** Pass / borderline / fail verdict. */
-    verdict: InterviewVerdict
-    /** Technology tags of the question (for weak-topic aggregation). */
+/** One spoken answer stored during `active`, queued for end-of-session grading. */
+interface PendingAnswer {
+    /** Deck the question belongs to (needed by the grade mutation). */
+    deckId: string
+    /** Card whose model answer drives the grading. */
+    cardId: string
+    /** The question prompt (echoed back in the scorecard). */
+    question: string
+    /** The transcribed spoken answer. */
+    transcript: string
+    /** Technology tags of the question (weak-topic aggregation). */
+    tags: Array<string>
+    /** Seniority level of the question, if any. */
+    level: string | null
+}
+
+/** A graded answer in the scorecard — the model result plus its source question. */
+interface GradedAnswer extends InterviewGradeResultData {
+    /** The question prompt this grade is for. */
+    question: string
+    /** Technology tags of the question (weak-topic aggregation). */
     tags: Array<string>
 }
 
@@ -61,23 +86,39 @@ const LEVEL_COLOR: Record<string, "success" | "warning" | "danger" | "accent"> =
     staff: "accent",
 }
 
+/** Mid-tier and above — the only categories offered for interview grading. */
+const INTERVIEW_GRADE_CATEGORIES: ReadonlyArray<AiModelCategory> = [
+    AiModelCategory.Balanced,
+    AiModelCategory.Premium,
+    AiModelCategory.Frontier,
+]
+
+/** Auto lane (balancer picks) — the default grading selection. */
+const AUTO_SELECTION: GradeModelSelection = {
+    mode: AiMode.Auto,
+    model: null,
+    provider: null,
+}
+
 /** Soft, borderless surface shared by the question + transcript panels. */
 const PANEL_CLASS = "flex flex-col gap-3 rounded-xl bg-default/40 p-8"
 
 /**
- * Voice mock-interview over a deck, run as a fixed-length session: the learner
- * optionally picks a practice mode + seniority level, then answers a fixed
- * number of questions aloud (model answer withheld server-side). Each answer is transcribed
- * client-side and graded into a pass/borderline/fail verdict with concrete
- * feedback; at the end a summary aggregates the average score, the verdict
- * breakdown, and the weakest topics (tags of the questions not passed) so the
- * learner knows what to revisit. Draw is an imperative one-shot query (random
- * pick per question, de-duplicated within the session).
+ * Voice mock-interview over a course, run as a fixed-length session graded AT THE
+ * END (no verdict between questions — realistic interview): the learner optionally
+ * picks a practice mode + seniority level + a grading model (mid-tier and above),
+ * then answers a fixed number of questions aloud. Each answer is transcribed
+ * client-side and queued; after the last answer the whole batch is graded
+ * sequentially, then a scorecard aggregates the average score, the verdict
+ * breakdown, the weakest topics, and a per-question feedback list. Draw is an
+ * imperative one-shot query (random pick per question, de-duplicated within the
+ * session).
  * @param props - {@link InterviewSessionProps}
  */
 export const InterviewSession = ({ courseId, className }: InterviewSessionProps) => {
     const t = useTranslations()
     const locale = useLocale()
+    const router = useRouter()
     // recognize speech in the active UI locale (Web Speech wants a BCP-47 tag)
     const recognitionLang = locale === "vi" ? "vi-VN" : "en-US"
     // mock interview is enrolled-only → send the course header for the backend guard
@@ -97,8 +138,25 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
         reset,
     } = useSpeechRecognition({ lang: recognitionLang })
 
-    const { trigger: gradeAnswer, isMutating } = useMutateGradeInterviewAnswerSwr()
+    const { trigger: gradeAnswer } = useMutateGradeInterviewAnswerSwr()
     const runGraphQL = useGraphQLWithToast()
+
+    // grading-model catalog + entitlement (paid OR enrolled unlocks mid+ tiers).
+    // Mirrors ChallengeSubmissionPanel's enrollment/entitlement source.
+    const aiModelsSwr = useQueryAiModelsSwr()
+    const myAiSettingsSwr = useQueryMyAiSettingsSwr()
+    const canPremium = Boolean(myAiSettingsSwr.data?.canPremium)
+    // models suited for interview grading: mid-tier and above + lists the Grading task.
+    const interviewModels = useMemo<Array<AiGradableModel>>(
+        () => (aiModelsSwr.data?.aiModels?.data?.gradableModels ?? []).filter(
+            (model) =>
+                INTERVIEW_GRADE_CATEGORIES.includes(model.category)
+                && (model.supportedTasks?.length
+                    ? model.supportedTasks.includes(AiModelTask.Grading)
+                    : true),
+        ),
+        [aiModelsSwr.data],
+    )
 
     // which phase the session is in
     const [phase, setPhase] = useState<InterviewPhase>("setup")
@@ -106,6 +164,8 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
     const [level, setLevel] = useState<string | null>(null)
     // chosen practice mode → drives the session length
     const [mode, setMode] = useState<InterviewMode>("quick")
+    // chosen grading lane + model (Auto by default)
+    const [selection, setSelection] = useState<GradeModelSelection>(AUTO_SELECTION)
     // how many questions this session runs (derived from the mode)
     const sessionLength = MODE_LENGTH[mode]
     // zero-based index of the current question within the session
@@ -116,12 +176,14 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
     const [drawing, setDrawing] = useState(false)
     // typed draw failure message, or null
     const [drawError, setDrawError] = useState<string | null>(null)
-    // the grade for the current question, or null before grading
-    const [result, setResult] = useState<InterviewGradeResultData | null>(null)
+    // answers collected this session, awaiting end-of-session grading
+    const [pendingAnswers, setPendingAnswers] = useState<Array<PendingAnswer>>([])
+    // graded results (drives the scorecard), filled during the grading phase
+    const [gradedResults, setGradedResults] = useState<Array<GradedAnswer>>([])
+    // how many answers have been graded so far (n of N progress)
+    const [gradedCount, setGradedCount] = useState(0)
     // grade failure message, or null
     const [gradeError, setGradeError] = useState<string | null>(null)
-    // every graded turn this session (drives the summary)
-    const [turns, setTurns] = useState<Array<InterviewTurn>>([])
     // card ids already drawn this session — avoids repeats across questions
     const seenIds = useRef<Set<string>>(new Set())
 
@@ -142,8 +204,6 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
     const drawCurrent = useCallback(async () => {
         setDrawing(true)
         setDrawError(null)
-        setResult(null)
-        setGradeError(null)
         reset()
         try {
             let drawn: InterviewCardData | null = null
@@ -184,66 +244,86 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
         }
     }, [phase, index, drawCurrent])
 
+    // grade the queued answers sequentially, then move to the scorecard.
+    const runGrading = useCallback(
+        async (answers: Array<PendingAnswer>) => {
+            setGradeError(null)
+            setGradedCount(0)
+            setGradedResults([])
+            const collected: Array<GradedAnswer> = []
+            for (const answer of answers) {
+                let graded: InterviewGradeResultData | null = null
+                const ok = await runGraphQL(async () => {
+                    const response = await gradeAnswer({
+                        flashcardDeckId: answer.deckId,
+                        flashcardCardId: answer.cardId,
+                        transcript: answer.transcript,
+                        // omit on the Auto lane → balancer picks; otherwise pin the model
+                        selectedModel: selection.model ?? undefined,
+                        selectedModelProvider: selection.provider ?? undefined,
+                    })
+                    const payload = response.data?.gradeInterviewAnswer
+                    graded = payload?.data ?? null
+                    return (
+                        payload ?? {
+                            success: false,
+                            message: t("flashcard.interview.gradeError"),
+                        }
+                    )
+                })
+                if (ok && graded) {
+                    const result = graded as InterviewGradeResultData
+                    collected.push({ ...result, question: answer.question, tags: answer.tags })
+                } else {
+                    setGradeError(t("flashcard.interview.gradeError"))
+                }
+                setGradedCount((previous) => previous + 1)
+            }
+            setGradedResults(collected)
+            // attempts are now persisted server-side → refresh the cross-session history
+            void refreshHistory()
+            setPhase("summary")
+        },
+        [gradeAnswer, runGraphQL, selection, t, refreshHistory],
+    )
+
     // begin a session at the chosen level: reset all per-session state
     const startSession = useCallback(() => {
         seenIds.current.clear()
-        setTurns([])
+        setPendingAnswers([])
+        setGradedResults([])
+        setGradedCount(0)
+        setGradeError(null)
         setIndex(0)
         setPhase("active")
     }, [])
 
-    // grade the spoken answer; stop the mic first so the last phrase is finalized
-    const submit = useCallback(async () => {
+    // store the current spoken answer and advance; grade the batch after the last one.
+    const nextQuestion = useCallback(() => {
         if (!card || transcript.trim().length === 0) {
             return
         }
         if (listening) {
             stop()
         }
-        setGradeError(null)
-        let gradeResult: InterviewGradeResultData | null = null
-        const ok = await runGraphQL(async () => {
-            const response = await gradeAnswer({
-                flashcardDeckId: card.deckId,
-                flashcardCardId: card.id,
-                transcript: transcript.trim(),
-            })
-            const payload = response.data?.gradeInterviewAnswer
-            gradeResult = payload?.data ?? null
-            return (
-                payload ?? {
-                    success: false,
-                    message: t("flashcard.interview.gradeError"),
-                }
-            )
-        })
-        if (ok && gradeResult) {
-            const graded = gradeResult as InterviewGradeResultData
-            setResult(graded)
-            // record this turn for the end-of-session summary
-            setTurns((previous) => [
-                ...previous,
-                {
-                    score: graded.score,
-                    verdict: graded.verdict,
-                    tags: card.tags ?? [],
-                },
-            ])
-        } else {
-            setGradeError(t("flashcard.interview.gradeError"))
+        const answer: PendingAnswer = {
+            deckId: card.deckId,
+            cardId: card.id,
+            question: card.question,
+            transcript: transcript.trim(),
+            tags: card.tags ?? [],
+            level: card.level ?? null,
         }
-    }, [card, transcript, listening, stop, gradeAnswer, runGraphQL, t])
-
-    // advance to the next question, or end the session after the last one
-    const advance = useCallback(() => {
+        const nextAnswers = [...pendingAnswers, answer]
+        setPendingAnswers(nextAnswers)
         if (index < sessionLength - 1) {
             setIndex((previous) => previous + 1)
         } else {
-            // session done — the attempts are now persisted, so refresh history
-            void refreshHistory()
-            setPhase("summary")
+            // last answer recorded → grade the whole batch
+            setPhase("grading")
+            void runGrading(nextAnswers)
         }
-    }, [index, sessionLength, refreshHistory])
+    }, [card, transcript, listening, stop, pendingAnswers, index, sessionLength, runGrading])
 
     // ── SETUP — readiness hub (single column, no bento split) ────────────
     if (phase === "setup") {
@@ -331,9 +411,11 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                                     ) : null}
                                 </div>
                             ) : (
-                                // never interviewed yet → meter at 0 + nudge (don't self-hide)
-                                <div className="flex flex-wrap items-center gap-3">
-                                    <ProgressMeter value={0} max={100} className="min-w-40 flex-1" />
+                                // never interviewed yet → meter at 0 + nudge (don't self-hide).
+                                // stack (meter full-width, hint below) so the hint doesn't float
+                                // far right on a wide card — keep the row balanced.
+                                <div className="flex flex-col gap-2">
+                                    <ProgressMeter value={0} max={100} />
                                     <Typography type="body-sm" color="muted">
                                         {t("flashcard.interview.readinessEmpty")}
                                     </Typography>
@@ -342,7 +424,7 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                         </div>
 
                         {/* practice mode — selectable surface cards (one lights up) */}
-                        <div className="flex flex-col gap-2">
+                        <div className="flex flex-col gap-3">
                             <Label>{t("flashcard.interview.modeLabel")}</Label>
                             <SelectableCardGroup
                                 ariaLabel={t("flashcard.interview.modeLabel")}
@@ -400,6 +482,22 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                             />
                         </div>
 
+                        {/* grading model — mid-tier and above (Auto default) */}
+                        <div className="flex flex-col gap-3">
+                            <Label>{t("flashcard.interview.modelLabel")}</Label>
+                            <GradeModelDropdown
+                                className="self-start"
+                                models={interviewModels}
+                                selection={selection}
+                                canPremium={canPremium}
+                                task={AiModelTask.Grading}
+                                floor={AiModelCategory.Balanced}
+                                showAutoLane
+                                onSelect={setSelection}
+                                onUpgrade={() => router.push(`/${locale}/profile/settings/ai-subscription`)}
+                            />
+                        </div>
+
                         {/* primary CTA — loud, mic-led (one primary action) */}
                         <Button variant="primary" size="lg" className="self-start" onPress={startSession}>
                             <MicrophoneIcon className="size-5" aria-hidden focusable="false" />
@@ -411,25 +509,50 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
         )
     }
 
-    // ── SUMMARY ──────────────────────────────────────────────────────────
+    // ── GRADING — grade the whole batch sequentially ─────────────────────
+    if (phase === "grading") {
+        return (
+            <div className={cn("flex flex-col gap-6", className)}>
+                <div className="flex flex-col items-center gap-3 rounded-xl bg-default/40 p-8">
+                    <Spinner size="lg" />
+                    <Typography type="body" weight="medium">
+                        {t("flashcard.interview.gradingSession")}
+                    </Typography>
+                    <Typography type="body-sm" color="muted">
+                        {t("flashcard.interview.gradingProgress", {
+                            current: Math.min(gradedCount + 1, pendingAnswers.length),
+                            total: pendingAnswers.length,
+                        })}
+                    </Typography>
+                    <ProgressMeter
+                        value={gradedCount}
+                        max={pendingAnswers.length || 1}
+                        className="w-full max-w-sm"
+                    />
+                </div>
+            </div>
+        )
+    }
+
+    // ── SUMMARY — scorecard + per-question feedback ──────────────────────
     if (phase === "summary") {
-        const answered = turns.length
+        const answered = gradedResults.length
         const averageScore =
             answered > 0
                 ? Math.round(
-                    (turns.reduce((sum, turn) => sum + turn.score, 0) / answered) * 10,
+                    (gradedResults.reduce((sum, item) => sum + item.score, 0) / answered) * 10,
                 ) / 10
                 : 0
-        const passCount = turns.filter((turn) => turn.verdict === InterviewVerdict.Pass).length
-        const borderlineCount = turns.filter(
-            (turn) => turn.verdict === InterviewVerdict.Borderline,
+        const passCount = gradedResults.filter((item) => item.verdict === InterviewVerdict.Pass).length
+        const borderlineCount = gradedResults.filter(
+            (item) => item.verdict === InterviewVerdict.Borderline,
         ).length
-        const failCount = turns.filter((turn) => turn.verdict === InterviewVerdict.Fail).length
+        const failCount = gradedResults.filter((item) => item.verdict === InterviewVerdict.Fail).length
         // weakest topics: tag frequency across the questions not passed
         const weakTagCounts = new Map<string, number>()
-        for (const turn of turns) {
-            if (turn.verdict !== InterviewVerdict.Pass) {
-                for (const tag of turn.tags) {
+        for (const item of gradedResults) {
+            if (item.verdict !== InterviewVerdict.Pass) {
+                for (const tag of item.tags) {
                     weakTagCounts.set(tag, (weakTagCounts.get(tag) ?? 0) + 1)
                 }
             }
@@ -439,8 +562,24 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
             .slice(0, 6)
             .map(([tag]) => tag)
 
+        /** Verdict → chip color (đạt / cận / chưa đạt). */
+        const verdictColorOf = (verdict: InterviewVerdict): "success" | "warning" | "danger" =>
+            verdict === InterviewVerdict.Pass
+                ? "success"
+                : verdict === InterviewVerdict.Borderline
+                    ? "warning"
+                    : "danger"
+        /** Verdict → localized label. */
+        const verdictLabelOf = (verdict: InterviewVerdict): string =>
+            verdict === InterviewVerdict.Pass
+                ? t("flashcard.interview.pass")
+                : verdict === InterviewVerdict.Borderline
+                    ? t("flashcard.interview.borderline")
+                    : t("flashcard.interview.fail")
+
         return (
             <div className={cn("flex flex-col gap-6", className)}>
+                {/* overall scorecard */}
                 <div className="flex flex-col gap-6 rounded-xl bg-default/40 p-8">
                     <div className="flex items-center justify-between gap-3">
                         <Typography type="body" weight="medium">
@@ -501,6 +640,79 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                         {t("flashcard.interview.replay")}
                     </Button>
                 </div>
+
+                {/* per-question feedback list */}
+                {gradedResults.length > 0 ? (
+                    <div className="flex flex-col gap-3">
+                        <Label>{t("flashcard.interview.perQuestionTitle")}</Label>
+                        {gradedResults.map((item, position) => (
+                            <div
+                                key={position}
+                                className="flex flex-col gap-6 rounded-xl bg-default/40 p-8"
+                            >
+                                {/* question number + verdict + score */}
+                                <div className="flex flex-col gap-3">
+                                    <div className="flex items-center justify-between gap-3">
+                                        <Chip size="md" variant="soft" color={verdictColorOf(item.verdict)}>
+                                            {verdictLabelOf(item.verdict)}
+                                        </Chip>
+                                        <Typography type="body-sm" weight="medium">
+                                            {t("flashcard.interview.score", { score: item.score })}
+                                        </Typography>
+                                    </div>
+                                    <Typography type="body-xs" weight="medium" color="muted">
+                                        {t("flashcard.interview.questionN", { n: position + 1 })}
+                                    </Typography>
+                                    <div className="text-foreground">
+                                        <MarkdownContent markdown={item.question} />
+                                    </div>
+                                </div>
+
+                                {/* concrete things done right */}
+                                {item.strengths.length > 0 ? (
+                                    <div className="flex flex-col gap-2">
+                                        <Typography type="body-xs" weight="medium" className="text-success">
+                                            {t("flashcard.interview.strengths")}
+                                        </Typography>
+                                        <ul className="flex list-disc flex-col gap-2 pl-5">
+                                            {item.strengths.map((strength, strengthPosition) => (
+                                                <li key={strengthPosition}>
+                                                    <Typography type="body-sm">{strength}</Typography>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                ) : null}
+
+                                {/* concrete gaps to address */}
+                                {item.gaps.length > 0 ? (
+                                    <div className="flex flex-col gap-2">
+                                        <Typography type="body-xs" weight="medium" className="text-danger">
+                                            {t("flashcard.interview.gaps")}
+                                        </Typography>
+                                        <ul className="flex list-disc flex-col gap-2 pl-5">
+                                            {item.gaps.map((gap, gapPosition) => (
+                                                <li key={gapPosition}>
+                                                    <Typography type="body-sm">{gap}</Typography>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                ) : null}
+
+                                {/* one-line nudge toward the model answer */}
+                                {item.modelAnswerHint ? (
+                                    <div className="flex flex-col gap-2 border-t border-divider pt-6">
+                                        <Typography type="body-xs" weight="medium" color="muted">
+                                            {t("flashcard.interview.hint")}
+                                        </Typography>
+                                        <Typography type="body-sm">{item.modelAnswerHint}</Typography>
+                                    </div>
+                                ) : null}
+                            </div>
+                        ))}
+                    </div>
+                ) : null}
             </div>
         )
     }
@@ -525,23 +737,9 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
         )
     }
 
-    // three distinct verdicts: pass (đạt) / borderline (cận) / fail (chưa đạt)
-    const verdict = result?.verdict
-    const verdictColor: "success" | "warning" | "danger" =
-        verdict === InterviewVerdict.Pass
-            ? "success"
-            : verdict === InterviewVerdict.Borderline
-                ? "warning"
-                : "danger"
-    const verdictLabel =
-        verdict === InterviewVerdict.Pass
-            ? t("flashcard.interview.pass")
-            : verdict === InterviewVerdict.Borderline
-                ? t("flashcard.interview.borderline")
-                : t("flashcard.interview.fail")
-    // whether anything has been transcribed yet (gates the submit button)
+    // whether anything has been transcribed yet (gates the next button)
     const hasTranscript = transcript.trim().length > 0
-    // the action shown after grading: advance, or finish on the last question
+    // the action shown: advance, or finish (grade the batch) on the last question
     const isLastQuestion = index >= sessionLength - 1
 
     return (
@@ -593,7 +791,6 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                         <Button
                             variant={listening ? "danger" : "primary"}
                             onPress={() => (listening ? stop() : start())}
-                            isDisabled={isMutating}
                         >
                             <MicrophoneIcon className="size-5" aria-hidden focusable="false" />
                             {listening
@@ -638,21 +835,6 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                 </div>
             )}
 
-            {/* submit the transcript for grading (before a verdict exists) */}
-            {!result ? (
-                <div className="flex items-center justify-end gap-3">
-                    <Button
-                        size="sm"
-                        variant="primary"
-                        onPress={() => void submit()}
-                        isPending={isMutating}
-                        isDisabled={!hasTranscript || listening}
-                    >
-                        {t("flashcard.interview.submit")}
-                    </Button>
-                </div>
-            ) : null}
-
             {/* grade error (transport / typed failure) */}
             {gradeError ? (
                 <Typography type="body-sm" align="center" className="text-danger">
@@ -660,93 +842,18 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                 </Typography>
             ) : null}
 
-            {/* grading spinner while the answer is in flight */}
-            {isMutating ? (
-                <div className="flex items-center justify-center gap-2">
-                    <Spinner size="sm" />
-                    <Typography type="body-sm" color="muted">
-                        {t("flashcard.interview.grading")}
-                    </Typography>
-                </div>
-            ) : null}
-
-            {/* the verdict result: đạt / cận / chưa đạt + score + strengths/gaps + hints */}
-            {result && !isMutating ? (
-                <div className="flex flex-col gap-6 rounded-xl bg-default/40 p-8">
-                    {/* headline verdict + numeric score */}
-                    <div className="flex items-center justify-between gap-3">
-                        <Chip size="md" variant="soft" color={verdictColor}>
-                            {verdictLabel}
-                        </Chip>
-                        <Typography type="body-sm" weight="medium">
-                            {t("flashcard.interview.score", { score: result.score })}
-                        </Typography>
-                    </div>
-
-                    {/* concrete things done right */}
-                    {result.strengths.length > 0 ? (
-                        <div className="flex flex-col gap-2">
-                            <Typography type="body-xs" weight="medium" className="text-success">
-                                {t("flashcard.interview.strengths")}
-                            </Typography>
-                            <ul className="flex list-disc flex-col gap-2 pl-5">
-                                {result.strengths.map((strength, position) => (
-                                    <li key={position}>
-                                        <Typography type="body-sm">{strength}</Typography>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    ) : null}
-
-                    {/* concrete gaps to address */}
-                    {result.gaps.length > 0 ? (
-                        <div className="flex flex-col gap-2">
-                            <Typography type="body-xs" weight="medium" className="text-danger">
-                                {t("flashcard.interview.gaps")}
-                            </Typography>
-                            <ul className="flex list-disc flex-col gap-2 pl-5">
-                                {result.gaps.map((gap, position) => (
-                                    <li key={position}>
-                                        <Typography type="body-sm">{gap}</Typography>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    ) : null}
-
-                    {/* one-line nudge toward the model answer */}
-                    {result.modelAnswerHint ? (
-                        <div className="flex flex-col gap-2 border-t border-divider pt-6">
-                            <Typography type="body-xs" weight="medium" color="muted">
-                                {t("flashcard.interview.hint")}
-                            </Typography>
-                            <Typography type="body-sm">{result.modelAnswerHint}</Typography>
-                        </div>
-                    ) : null}
-
-                    {/* a natural interviewer follow-up to think about next */}
-                    {result.followUpQuestion ? (
-                        <div className="flex flex-col gap-2">
-                            <Typography type="body-xs" weight="medium" color="muted">
-                                {t("flashcard.interview.followUp")}
-                            </Typography>
-                            <Typography type="body-sm">{result.followUpQuestion}</Typography>
-                        </div>
-                    ) : null}
-
-                    {/* advance to the next question, or finish the session */}
-                    <Button
-                        variant="primary"
-                        className="self-start"
-                        onPress={advance}
-                    >
-                        {isLastQuestion
-                            ? t("flashcard.interview.viewResults")
-                            : t("flashcard.interview.nextQuestion")}
-                    </Button>
-                </div>
-            ) : null}
+            {/* store this answer + advance (no verdict between questions); grade after the last */}
+            <div className="flex items-center justify-end gap-3">
+                <Button
+                    variant="primary"
+                    onPress={nextQuestion}
+                    isDisabled={!hasTranscript || listening}
+                >
+                    {isLastQuestion
+                        ? t("flashcard.interview.finishAndGrade")
+                        : t("flashcard.interview.nextQuestion")}
+                </Button>
+            </div>
         </div>
     )
 }

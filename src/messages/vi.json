@@ -1392,7 +1392,10 @@
         "deck": {
             "due": "{count} đến hạn",
             "mastered": "Đã thuộc {mastered}/{total}",
-            "found": "Tìm thấy {count} bộ thẻ"
+            "found": "Tìm thấy {count} bộ thẻ",
+            "viewAria": "Cách hiển thị",
+            "viewGrid": "Lưới",
+            "viewLine": "Danh sách"
         },
         "stats": {
             "label": "Tiến bộ",

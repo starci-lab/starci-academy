@@ -34,7 +34,7 @@ export const FoundationItemThumbnail = ({
     return (
         <div
             className={cn(
-                "relative aspect-video w-full shrink-0 overflow-hidden bg-accent/10",
+                "relative aspect-video w-full shrink-0 overflow-hidden bg-default",
                 size === "detail" && "max-h-72",
                 className,
             )}
@@ -48,7 +48,7 @@ export const FoundationItemThumbnail = ({
             ) : (
                 <div className="absolute inset-0 flex items-center justify-center">
                     <StackIcon
-                        className="text-accent/60 size-14"
+                        className="size-14 text-muted"
                         aria-hidden
                     />
                 </div>

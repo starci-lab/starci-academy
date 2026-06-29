@@ -7,7 +7,6 @@ import React, {
 import {
     Button,
     Typography,
-    cn,
 } from "@heroui/react"
 import {
     useLocale,
@@ -319,7 +318,7 @@ export const CourseContents = ({ className }: CourseContentsProps) => {
                                         {currentModule.lessons.map((lesson) => (
                                             <ListRow
                                                 key={lesson.id}
-                                                className={cn("px-3", lesson.id === activeLessonId && "bg-accent/10")}
+                                                className="px-3"
                                                 leading={lesson.id === activeLessonId ? (
                                                     <PlayIcon
                                                         aria-hidden

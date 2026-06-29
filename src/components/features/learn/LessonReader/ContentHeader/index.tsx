@@ -1,6 +1,6 @@
 "use client"
 
-import { ClockIcon, FlameIcon, TargetIcon } from "@phosphor-icons/react"
+import { ClockIcon, FlameIcon } from "@phosphor-icons/react"
 import _ from "lodash"
 import React, {
     useMemo,
@@ -80,13 +80,13 @@ export const ContentHeader = () => {
                     <div className="flex flex-wrap items-center gap-2">
                         <ReadBadge />
                         <Chip color="default">
-                            <ClockIcon className="size-5" />
+                            <ClockIcon className="size-3" />
                             <Chip.Label>
                                 {t("content.minutesRead", { minutes: minutesRead })}
                             </Chip.Label>
                         </Chip>
                         <Chip color="default">
-                            <FlameIcon className="size-5" />
+                            <FlameIcon className="size-3" />
                             <Chip.Label>
                                 {t("content.challengeCount", { count: challengeCount })}
                             </Chip.Label>
@@ -96,11 +96,7 @@ export const ContentHeader = () => {
             />
             {/* "What you'll learn" — first CONTENT block, gap-10 below the header above */}
             {outcomes.length > 0 ? (
-                <LabeledCard
-                    frameless
-                    label={t("content.outcomes")}
-                    icon={<TargetIcon className="size-5" />}
-                >
+                <LabeledCard frameless label={t("content.outcomes")}>
                     {/* shared check-list card (same as course value-props / challenge outputs) */}
                     <CheckListCard>
                         {outcomes.map((outcome) => (

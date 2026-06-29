@@ -1383,7 +1383,10 @@
         "deck": {
             "due": "{count} due",
             "mastered": "Mastered {mastered}/{total}",
-            "found": "{count} decks found"
+            "found": "{count} decks found",
+            "viewAria": "Deck layout",
+            "viewGrid": "Grid",
+            "viewLine": "List"
         },
         "stats": {
             "label": "Progress",

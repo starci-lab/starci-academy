@@ -4,9 +4,6 @@ import React, {
     useMemo,
 } from "react"
 import {
-    cn,
-} from "@heroui/react"
-import {
     useLocale,
     useTranslations,
 } from "next-intl"
@@ -103,18 +100,14 @@ export const UpcomingLivestreamCard = ({
             className={className}
         >
             <div className="flex flex-col gap-1.5">
-                {sessions.map((session, index) => (
+                {sessions.map((session) => (
                     <button
                         key={`${session.courseGlobalId}-${session.nextStartAt}`}
                         type="button"
                         onClick={() => router.push(
                             pathConfig().locale(locale).course(session.courseDisplayId).build(),
                         )}
-                        className={cn(
-                            "flex flex-col gap-0 rounded-medium px-2 py-1.5 text-left hover:bg-default/60",
-                            // the soonest session reads as the headline row
-                            index === 0 && "bg-accent/5",
-                        )}
+                        className="flex flex-col gap-0 rounded-medium px-2 py-1.5 text-left hover:bg-default/60"
                     >
                         <span className="truncate text-sm font-semibold text-foreground">
                             {session.sessionTitle ?? session.courseTitle}

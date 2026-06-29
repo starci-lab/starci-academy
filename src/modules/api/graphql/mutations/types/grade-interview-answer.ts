@@ -1,4 +1,5 @@
 import type { GraphQLResponse } from "../../types"
+import type { ModelProvider } from "../../queries/query-my-ai-settings"
 
 /**
  * Coarse pass/borderline/fail band the model assigns to a graded answer.
@@ -21,6 +22,10 @@ export interface GradeInterviewAnswerRequest {
     flashcardCardId: string
     /** The candidate's answer, transcribed from speech on the client. */
     transcript: string
+    /** Concrete model the user picked for grading; omit/null = balancer default. */
+    selectedModel?: string
+    /** Provider serving {@link GradeInterviewAnswerRequest.selectedModel}. */
+    selectedModelProvider?: ModelProvider
 }
 
 /** Payload inside `gradeInterviewAnswer.data` after the standard API wrapper. */

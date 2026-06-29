@@ -7,7 +7,6 @@ import { LearnShell } from "@/components/features/learn/LearnShell"
 import { ContentMap } from "@/components/features/learn/ContentMap"
 import { MilestoneOutline } from "@/components/features/learn/MilestoneOutline"
 import { LeaderboardCategoryRail } from "@/components/features/learn/Leaderboard/LeaderboardCategoryRail"
-import { FlashcardStudyRail } from "@/components/features/learn/Flashcards/FlashcardStudyRail"
 import { OnThisPage } from "@/components/features/learn/OnThisPage"
 import { ContentAiFab } from "@/components/features/learn/ContentAiFab"
 import { ContentAiSelectionAsk } from "@/components/features/learn/ContentAiSelectionAsk"
@@ -64,8 +63,9 @@ export const Layout = ({ children }: PropsWithChildren) => {
     // current-module path instead of re-drawing the whole tree.
     const isContent = segments[0] === "content"
     const isPersonalProject = segments[0] === "personal-project"
-    // the flashcards surface uses the same docs-style left rail: a mode switch +
-    // the course's decks as a nav list (drives the work pane via the URL).
+    // the flashcards surface goes RAIL-LESS entirely (per concepts/when-rail: drop the 2nd rail
+    // for the whole Ôn tập surface). The deck list lives IN the pane (study overview) and the
+    // mode switch is in-pane on desktop too. `isFlashcards` only drives the mobile-bar choice.
     const isFlashcards = segments[0] === "flashcards"
     // the mind-map is a full-bleed interactive canvas (fills the viewport edge-to-edge),
     // so it opts out of the shell's canonical p-6 reading-column padding.
@@ -107,17 +107,6 @@ export const Layout = ({ children }: PropsWithChildren) => {
             ariaLabel={t("courseContents.resizeRail")}
         >
             <MilestoneOutline className="min-h-0 lg:flex-1" />
-        </ResizableRail>
-    ) : isFlashcards ? (
-        <ResizableRail
-            className={railClass}
-            storageKey="starci.learn.flashcardRail.width"
-            defaultWidth={320}
-            minWidth={256}
-            maxWidth={560}
-            ariaLabel={t("courseContents.resizeRail")}
-        >
-            <FlashcardStudyRail className="min-h-0 lg:flex-1" />
         </ResizableRail>
     ) : isLeaderboard ? (
         <ResizableRail

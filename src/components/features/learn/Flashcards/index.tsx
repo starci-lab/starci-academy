@@ -10,10 +10,12 @@ import { InterviewSession } from "./InterviewSession"
 import { DueReview } from "./DueReview"
 import { DueReviewHero } from "./DueReviewHero"
 import { FlashcardStatsStrip } from "./FlashcardStatsStrip"
+import { FlashcardDeckList } from "./FlashcardDeckList"
 import { FlashcardMobileNav } from "./FlashcardMobileNav"
-import { useFlashcardNav } from "./useFlashcardNav"
+import { useFlashcardNav, type FlashcardMode } from "./useFlashcardNav"
 import { type WithClassNames } from "@/modules/types/base/class-name"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { SegmentedControl } from "@/components/blocks/navigation/SegmentedControl"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryCourseEnrollmentStatusSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseEnrollmentStatusSwr"
 import { queryFlashcardDeck } from "@/modules/api/graphql/queries/query-flashcard-deck"
@@ -36,7 +38,7 @@ export type FlashcardsProps = WithClassNames<undefined>
 export const Flashcards = ({ className }: FlashcardsProps) => {
     const t = useTranslations()
     const courseId = useAppSelector((state) => state.course.entity?.id)
-    const { mode, deckId, session, goDue, goOverview } = useFlashcardNav()
+    const { mode, deckId, session, goMode, goDeck, goDue, goOverview } = useFlashcardNav()
     // mock interview is enrolled-only (it spends AI credits) — gate the tab for trial viewers
     const enrollmentSwr = useQueryCourseEnrollmentStatusSwr()
     const isEnrolled = enrollmentSwr.data?.courseEnrollmentStatus?.data?.isEnrolled === true
@@ -83,6 +85,20 @@ export const Flashcards = ({ className }: FlashcardsProps) => {
                 {/* mobile fallback for the hidden left rail: mode switch + deck picker */}
                 <FlashcardMobileNav />
 
+                {/* the flashcards surface is rail-less — the desktop mode switch lives in-pane
+                    for BOTH study and interview (study's deck list is now in the pane too). */}
+                <div className="hidden lg:block">
+                    <SegmentedControl<FlashcardMode>
+                        ariaLabel={t("flashcard.title")}
+                        value={mode}
+                        onChange={goMode}
+                        items={[
+                            { value: "study", label: t("flashcard.mode.study") },
+                            { value: "interview", label: t("flashcard.mode.interview") },
+                        ]}
+                    />
+                </div>
+
                 {mode === "study" ? (
                     session === "due" ? (
                         <DueReview onExit={goOverview} />
@@ -94,6 +110,8 @@ export const Flashcards = ({ className }: FlashcardsProps) => {
                             {/* today's spaced-repetition queue + mastery overview */}
                             <DueReviewHero onStart={goDue} />
                             <FlashcardStatsStrip />
+                            {/* deck topic picker — now in the pane (rail dropped) */}
+                            <FlashcardDeckList onSelectDeck={goDeck} />
                         </div>
                     )
                 ) : !isEnrolled ? (

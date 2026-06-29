@@ -3,7 +3,6 @@
 import React from "react"
 import useSWR from "swr"
 import { Button, Typography } from "@heroui/react"
-import { PuzzlePieceIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { usePathname, useRouter } from "next/navigation"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -98,7 +97,6 @@ export const LessonChallenges = ({ className }: LessonChallengesProps) => {
         >
             <LabeledList
                 className={className}
-                icon={<PuzzlePieceIcon className="size-5" aria-hidden focusable="false" />}
                 label={t("lessonRail.challenges.title")}
                 action={(
                     <Button size="sm" variant="primary" className="self-start" onPress={onPractice}>

@@ -93,7 +93,7 @@ export const GlobalSearchModal = (props: GlobalSearchModalProps) => {
                                 <GlobalSearchContent />
                             </div>
                             {/* footer key-hints — command-palette affordance (Raycast/Linear) */}
-                            <div className="flex items-center gap-4 border-t border-default px-4 py-2">
+                            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-default px-4 py-2">
                                 <span className="inline-flex items-center gap-1">
                                     <ArrowUpIcon aria-hidden focusable="false" className="size-3.5 text-muted" />
                                     <ArrowDownIcon aria-hidden focusable="false" className="size-3.5 text-muted" />

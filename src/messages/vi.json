@@ -2292,6 +2292,7 @@
         "rewardBalance": "{count} điểm",
         "dueCount": "{count} đến hạn",
         "feedTabsAria": "Bảng hoạt động",
+        "feedFilterAria": "Lọc bảng hoạt động",
         "feedFilter": {
             "all": "Tất cả",
             "courses": "Khóa học",

@@ -18,7 +18,7 @@ import {
     cn,
 } from "@heroui/react"
 import {
-    PlayIcon,
+    ArrowRightIcon,
 } from "@phosphor-icons/react"
 import type {
     WithClassNames,
@@ -289,8 +289,8 @@ export const OutlineRail = ({
                         onPress={header.continue.onPress}
                         className="pointer-events-auto w-full"
                     >
-                        <PlayIcon aria-hidden focusable="false" className="size-5" />
                         {header.continue.label}
+                        <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
                     </Button>
                 </div>
             ) : null}

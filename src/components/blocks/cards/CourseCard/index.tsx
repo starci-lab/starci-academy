@@ -154,7 +154,7 @@ export const CourseCard = ({
                             {course.title}
                         </Typography>
                         {course.enrollmentCount > 0 ? (
-                            <Chip variant="secondary" color="accent" size="sm">
+                            <Chip variant="secondary" color="accent" size="sm" className="shrink-0">
                                 <UsersIcon aria-hidden className="size-4" />
                                 <Chip.Label>
                                     {t("courses.learners", { count: course.enrollmentCount })}

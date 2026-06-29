@@ -65,7 +65,7 @@ export const SettingsLayout = ({
         >
             {/* sidebar — sticks under the 4rem navbar, viewport-tall on desktop; the
                 block owns its own scroll (ScrollShadow), divider + width animation. */}
-            <aside className="shrink-0 md:sticky md:top-16 md:h-[calc(100dvh-4rem)]">
+            <aside className="hidden shrink-0 md:block md:sticky md:top-16 md:h-[calc(100dvh-4rem)]">
                 <CollapsibleSidebar
                     title={t("profileSettings.title")}
                     collapseLabel={t("profileSettings.collapseMenu")}
@@ -94,6 +94,28 @@ export const SettingsLayout = ({
             {/* content — the active settings page, flowing in the page scroll.
                 Owns its own p-6 frame (the shell no longer pads). */}
             <main className="min-w-0 flex-1">
+                {/* mobile fallback for the hidden sidebar: a horizontal scroll of the
+                    settings nav (the desktop rail stacks full-height otherwise) */}
+                <div className="sticky top-16 z-30 flex gap-2 overflow-x-auto border-b bg-background/80 px-4 py-2 backdrop-blur-xl md:hidden">
+                    {groups.flatMap((group) => group.items).map((item) => (
+                        <button
+                            key={item.key}
+                            type="button"
+                            onClick={() => router.push(item.href)}
+                            className={cn(
+                                "flex shrink-0 cursor-pointer items-center gap-2 rounded-full border px-3 py-1.5 text-sm transition-colors",
+                                pathname === item.href
+                                    ? "border-accent bg-accent/10 text-accent"
+                                    : "border-default text-muted hover:bg-default",
+                            )}
+                        >
+                            {item.icon}
+                            <span className="whitespace-nowrap">
+                                {t(`profileSettings.items.${item.key}`)}
+                            </span>
+                        </button>
+                    ))}
+                </div>
                 <div className="mx-auto max-w-3xl p-6">
                     {children}
                 </div>

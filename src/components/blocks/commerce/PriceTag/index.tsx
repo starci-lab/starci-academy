@@ -114,12 +114,12 @@ export const PriceTag = ({
             ) : null}
             {breakdown.loyaltyPercent > 0 && breakdown.phase > discounted ? (
                 <div className="flex items-center justify-between gap-4">
-                    <Typography type="body-sm" color="muted">
+                    <Typography type="body-sm" color="muted" className="min-w-0 truncate">
                         {breakdown.loyaltyNote
                             ? `${t("priceTag.loyalty")} · ${breakdown.loyaltyNote}`
                             : t("priceTag.loyalty")}
                     </Typography>
-                    <Typography type="body-sm" className="text-success">
+                    <Typography type="body-sm" className="shrink-0 text-success">
                         {`−${formatPrice(breakdown.phase - discounted, currency)} (−${breakdown.loyaltyPercent}%)`}
                     </Typography>
                 </div>

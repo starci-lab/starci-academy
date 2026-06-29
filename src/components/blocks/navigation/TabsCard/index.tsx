@@ -85,7 +85,14 @@ export const TabsCard = ({
                         >
                             <span className="flex items-center gap-2">
                                 {item.icon}
-                                {item.label}
+                                {/* a tab WITH an icon hides its label visually on mobile
+                                    (icon-only) and shows it from sm up; `sr-only` keeps the
+                                    accessible name on mobile. An icon-less tab always shows it. */}
+                                {item.label ? (
+                                    <span className={cn(item.icon && "sr-only sm:not-sr-only")}>
+                                        {item.label}
+                                    </span>
+                                ) : null}
                             </span>
                         </Tabs.Tab>
                     ))}

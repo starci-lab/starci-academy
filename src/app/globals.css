@@ -38,7 +38,7 @@ html {
 [data-theme="default"] {
   /* Theme Colors (Light Mode) */
   --accent: oklch(70.03% 0.2092 354.13);
-  --accent-foreground: oklch(15% 0.0300 354.13);
+  --accent-foreground: oklch(100% 0 0);
   --background: oklch(97.02% 0.0015 354.13);
   --border: oklch(90.00% 0.0015 354.13);
   --danger: oklch(65.32% 0.2335 37.78);
@@ -89,7 +89,7 @@ html {
   color-scheme: dark;
   /* Theme Colors (Dark Mode) */
   --accent: oklch(70.03% 0.2092 354.13);
-  --accent-foreground: oklch(15% 0.0300 354.13);
+  --accent-foreground: oklch(100% 0 0);
   --background: oklch(12.00% 0.0015 354.13);
   --border: oklch(28.00% 0.0015 354.13);
   --danger: oklch(59.40% 0.1973 36.67);

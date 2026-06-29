@@ -102,7 +102,7 @@ export const WeeklyGoals = ({
                 retryLabel: t("dashboard.retry"),
             }}
             skeleton={(
-                <div className="grid grid-cols-2 gap-x-6 gap-y-3">
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-3">
                     {[0, 1, 2, 3].map((i) => (
                         <Skeleton key={i} className="h-8 w-full rounded-medium" />
                     ))}
@@ -117,7 +117,7 @@ export const WeeklyGoals = ({
                         total: composite.total,
                     })}
                 </Typography>
-                <div className="grid grid-cols-2 gap-x-6 gap-y-3">
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-3">
                     {KPI_ORDER.map((key) => {
                         const item = itemByKey.get(key)
                         const current = item?.current ?? 0

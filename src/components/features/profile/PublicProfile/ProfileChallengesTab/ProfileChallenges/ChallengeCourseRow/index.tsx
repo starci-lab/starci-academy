@@ -150,7 +150,7 @@ export const ChallengeCourseRow = ({
                                         <Typography type="body-sm" weight="medium" truncate>
                                             {challenge.title}
                                         </Typography>
-                                        <div className="grid grid-cols-[6rem_5.5rem_1fr] items-center gap-2">                     
+                                        <div className="flex flex-wrap items-center gap-2 sm:grid sm:grid-cols-[6rem_5.5rem_1fr]">
                                             {level ? <DifficultyChip difficulty={level} /> : null}
                                             {
                                                 challenge.selectedLang ? (

@@ -105,7 +105,7 @@ export const FlashcardStatsStrip = ({ className }: FlashcardStatsStripProps) => 
                 <div className="flex flex-col gap-3">
                     {/* headline: mastered / total (+%) balanced by the streak chip */}
                     <div className="flex items-center justify-between gap-3">
-                        <Typography type="body-sm">
+                        <Typography type="body-sm" className="min-w-0 truncate">
                             {t("flashcard.stats.masteredLine", { mastered, total })}
                             <span className="text-muted">{" · "}{percent}%</span>
                         </Typography>

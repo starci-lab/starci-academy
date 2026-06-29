@@ -5,7 +5,7 @@ import { Button, Typography } from "@heroui/react"
 import { Panel } from "@xyflow/react"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
-import { PlayIcon } from "@phosphor-icons/react"
+import { ArrowRightIcon } from "@phosphor-icons/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link MindMapContinueButton}. */
@@ -46,8 +46,8 @@ export const MindMapContinueButton = ({ resumeHref, allContentDone }: MindMapCon
                     onPress={onResume}
                     className="rounded-full shadow-lg"
                 >
-                    <PlayIcon aria-hidden focusable="false" className="size-5" />
                     {t("mindMap.continue")}
+                    <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
                 </Button>
             </Panel>
         )

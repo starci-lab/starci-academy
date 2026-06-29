@@ -22,6 +22,7 @@ import {
     CircleIcon,
     ClockIcon,
     LockIcon,
+    ArrowRightIcon,
     PlayIcon,
     StackIcon,
     UsersIcon,
@@ -279,10 +280,10 @@ export const CourseContents = ({ className }: CourseContentsProps) => {
                                             className="shrink-0"
                                             onPress={onResume}
                                         >
-                                            <PlayIcon aria-hidden focusable="false" className="size-5" />
                                             {isCapstoneResume
                                                 ? t("courseContents.resumeCapstone")
                                                 : t("courseContents.resume")}
+                                            <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
                                         </Button>
                                     ) : null}
                                 </div>

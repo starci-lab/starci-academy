@@ -7,6 +7,7 @@ import {
     CircleIcon,
     GithubLogoIcon,
     LockIcon,
+    ArrowRightIcon,
     PlayIcon,
 } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
@@ -234,8 +235,8 @@ export const PersonalProjectDashboard = ({
                                     className="shrink-0"
                                     onPress={onContinue}
                                 >
-                                    <PlayIcon aria-hidden focusable="false" className="size-5" />
                                     {t("finalProject.dashboard.continue")}
+                                    <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
                                 </Button>
                             ) : null}
                         </div>

@@ -2,7 +2,7 @@
 
 import React, { useCallback } from "react"
 import { Button, Typography } from "@heroui/react"
-import { LockKeyIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react"
+import { ArrowRightIcon, LockKeyIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
@@ -50,8 +50,8 @@ export const EnrollGate = ({ title, description, className }: EnrollGateProps) =
                     className="mt-2 w-full max-w-xs"
                     onPress={onEnroll}
                 >
-                    <ShoppingCartSimpleIcon aria-hidden focusable="false" className="size-5" />
                     {t("enrollGate.cta")}
+                    <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
                 </Button>
             </div>
         </div>

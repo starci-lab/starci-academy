@@ -6,8 +6,8 @@ import {
     cn,
 } from "@heroui/react"
 import {
+    ArrowRightIcon,
     BookOpenIcon,
-    RocketLaunchIcon,
 } from "@phosphor-icons/react"
 import {
     useTranslations,
@@ -38,8 +38,8 @@ export const CourseCtaButtons = ({ className }: CourseCtaButtonsProps) => {
         return (
             <div className={cn("flex flex-col gap-2", className)}>
                 <Button variant="primary" size="lg" className="w-full" onPress={onContinueLearning}>
-                    <BookOpenIcon className="size-5" />
                     {t("course.continueLearning")}
+                    <ArrowRightIcon className="size-5" />
                 </Button>
             </div>
         )
@@ -48,8 +48,8 @@ export const CourseCtaButtons = ({ className }: CourseCtaButtonsProps) => {
     return (
         <div className={cn("flex flex-col gap-2", className)}>
             <Button variant="primary" size="lg" className="w-full" onPress={onEnroll}>
-                <RocketLaunchIcon className="size-5" />
                 {t("course.enroll")}
+                <ArrowRightIcon className="size-5" />
             </Button>
             <Button variant="secondary" size="lg" className="w-full" onPress={onTryLearning}>
                 <BookOpenIcon className="size-5" />

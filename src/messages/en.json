@@ -1502,7 +1502,8 @@
             "free": "Free",
             "economy": "Economy",
             "balanced": "Balanced",
-            "premium": "Premium"
+            "premium": "Premium",
+            "frontier": "Frontier"
         },
         "premiumLocked": "Paid plan required",
         "save": "Save changes",
@@ -1538,7 +1539,25 @@
         },
         "byokSubtitle": "Add your own API key to use your provider's models. Your key is stored encrypted and never shown again.",
         "systemDescription": "The system auto-picks a model by task difficulty and your plan — no setup needed. Upgrade to unlock stronger models.",
-        "upgradePrompt": "Want stronger models for grading?"
+        "upgradePrompt": "Want stronger models for grading?",
+        "ceil": {
+            "description": "Set a ceiling on the AI model per surface to control credits. Auto still picks a model by difficulty; the ceiling only caps the top.",
+            "defaultLabel": "Default ceiling",
+            "surfacesLabel": "Per-surface ceiling",
+            "inherit": "Use default",
+            "creditCaption": "Credit per call: Free 0 · Economy 5 · Balanced 20 · Premium 50 · Frontier 100",
+            "hardStop": "Auto climbs up to the ceiling, then stops",
+            "plan": "{tier} plan · max ceiling {max}",
+            "planFree": "Free plan · max ceiling {max}",
+            "creditLine": "Credit 5h: {used5h}/{limit5h} · week: {usedWeek}/{limitWeek}",
+            "error": "Couldn't load AI settings",
+            "saving": "Saving…",
+            "surface": {
+                "chatbot": "Ask AI while reading",
+                "grading": "Grading",
+                "interview": "Mock interview"
+            }
+        }
     },
     "membership": {
         "title": "Membership",

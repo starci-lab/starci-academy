@@ -6,13 +6,15 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Maps an AI model cost/quality category to the semantic HeroUI Chip color:
- * free → neutral (foreground), economy → green, balanced → yellow, premium → red.
+ * free → neutral (foreground), economy → green, balanced → yellow, premium +
+ * frontier → red (both are the top, highest-cost tiers).
  */
 const CATEGORY_COLOR: Record<AiModelCategory, "default" | "success" | "warning" | "danger"> = {
     [AiModelCategory.Free]: "default",
     [AiModelCategory.Economy]: "success",
     [AiModelCategory.Balanced]: "warning",
     [AiModelCategory.Premium]: "danger",
+    [AiModelCategory.Frontier]: "danger",
 }
 
 /** Props for {@link AiCategoryChip}. */

@@ -1511,7 +1511,8 @@
             "free": "Miễn phí",
             "economy": "Tiết kiệm",
             "balanced": "Cân bằng",
-            "premium": "Premium"
+            "premium": "Cao cấp",
+            "frontier": "Đỉnh"
         },
         "premiumLocked": "Cần gói trả phí",
         "save": "Lưu thay đổi",
@@ -1547,7 +1548,25 @@
         },
         "byokSubtitle": "Thêm API key của riêng bạn để dùng model từ nhà cung cấp của bạn. Khóa được mã hóa khi lưu và sẽ không hiển thị lại.",
         "systemDescription": "AI tự động chọn model theo độ khó của bài và gói của bạn — không cần cấu hình. Nâng gói để mở các model mạnh hơn.",
-        "upgradePrompt": "Muốn dùng model mạnh hơn để chấm bài?"
+        "upgradePrompt": "Muốn dùng model mạnh hơn để chấm bài?",
+        "ceil": {
+            "description": "Đặt mức trần model AI cho từng hạng mục để kiểm soát credit. Auto vẫn tự chọn model theo độ khó; trần chỉ giới hạn mức cao nhất.",
+            "defaultLabel": "Mức trần mặc định",
+            "surfacesLabel": "Trần theo hạng mục",
+            "inherit": "Theo mặc định",
+            "creditCaption": "Credit mỗi lượt: Miễn phí 0 · Tiết kiệm 5 · Cân bằng 20 · Cao cấp 50 · Đỉnh 100",
+            "hardStop": "Auto leo tới mức trần rồi dừng, không vượt",
+            "plan": "Gói {tier} · trần tối đa {max}",
+            "planFree": "Gói miễn phí · trần tối đa {max}",
+            "creditLine": "Credit 5h: {used5h}/{limit5h} · tuần: {usedWeek}/{limitWeek}",
+            "error": "Không tải được cài đặt AI",
+            "saving": "Đang lưu…",
+            "surface": {
+                "chatbot": "Hỏi AI khi đọc bài",
+                "grading": "Chấm bài",
+                "interview": "Phỏng vấn thử"
+            }
+        }
     },
     "membership": {
         "title": "Hội viên",

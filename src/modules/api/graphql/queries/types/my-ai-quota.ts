@@ -3,6 +3,19 @@ import type {
     AiMode,
     AiSubTier,
 } from "../query-my-ai-settings"
+import type { AiModelCategory } from "../query-ai-models"
+
+/** Per-surface model ceiling the user set (null = inherit default / no cap). */
+export interface QueryMyAiCeilData {
+    /** Global default ceiling; null = no cap (plan ceiling only). */
+    default: AiModelCategory | null
+    /** Hỏi AI khi đọc bài override; null = follow default. */
+    chatbot: AiModelCategory | null
+    /** Chấm bài override; null = follow default. */
+    grading: AiModelCategory | null
+    /** Phỏng vấn thử override; null = follow default. */
+    interview: AiModelCategory | null
+}
 
 /** Per-window unified platform credit quota (free base + tier). */
 export interface QueryMyAiCreditQuotaData {
@@ -32,6 +45,10 @@ export interface QueryMyAiQuotaResponseData {
     window5hResetAt: string | null
     /** When the weekly window rolls over; null when not started. */
     windowWeekResetAt: string | null
+    /** Categories the user's plan unlocks — the ceiling to cap within. */
+    allowedCategories: Array<AiModelCategory>
+    /** Per-surface model ceiling the user set (cost control). */
+    ceil: QueryMyAiCeilData
 }
 
 /** Apollo response shape for the `myAiQuota` query. */

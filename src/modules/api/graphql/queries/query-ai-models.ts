@@ -9,6 +9,7 @@ export enum AiModelCategory {
     Economy = "economy",
     Balanced = "balanced",
     Premium = "premium",
+    Frontier = "frontier",
 }
 
 const query1 = gql`

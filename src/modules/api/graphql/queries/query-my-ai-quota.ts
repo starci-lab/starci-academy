@@ -22,6 +22,13 @@ const query1 = gql`
         }
         window5hResetAt
         windowWeekResetAt
+        allowedCategories
+        ceil {
+          default
+          chatbot
+          grading
+          interview
+        }
       }
     }
   }

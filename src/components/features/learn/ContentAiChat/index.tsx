@@ -32,6 +32,7 @@ import {
 import { useContentAiStream } from "@/hooks/socketio/useContentAiStream"
 import { useQueryAiModelsSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiModelsSwr"
 import { useQueryMyAiSettingsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiSettingsSwr"
+import { AiModelTask } from "@/modules/api/graphql/queries/query-ai-models"
 import {
     GradeModelDropdown,
     type GradeModelSelection,
@@ -153,8 +154,12 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
     const hydratedRef = useRef<string | undefined>(undefined)
     const contentSelectedRef = useRef<string | undefined>(undefined)
     const prevContentIdRef = useRef<string | undefined>(undefined)
-    // bottom anchor — follow the answer to the bottom as it streams in
-    const bottomAnchorRef = useRef<HTMLDivElement>(null)
+    // thread scroll container — auto-follow the answer to the bottom as it
+    // streams, scrolling ONLY this region (never the page)
+    const scrollRef = useRef<HTMLDivElement>(null)
+    // whether the user is pinned to the bottom; false once they scroll up to
+    // re-read, so streaming does not drag them back down
+    const stickToBottomRef = useRef<boolean>(true)
 
     // a new content resets everything (thread, open session, view, search)
     useEffect(() => {
@@ -200,10 +205,32 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
         hydratedRef.current = currentSessionId
     }, [currentSessionId, historySwr.data])
 
-    // keep the latest content in view as messages append / the answer streams
+    // keep the latest content in view as messages append / the answer streams.
+    // scroll ONLY the thread container (scrollIntoView would walk up and yank the
+    // whole lesson page / popover). a user's own send always scrolls; an assistant
+    // delta only follows when the user is still pinned to the bottom.
     useEffect(() => {
-        bottomAnchorRef.current?.scrollIntoView({ block: "end" })
+        const el = scrollRef.current
+        if (!el) {
+            return
+        }
+        const last = messages[messages.length - 1]
+        if (last?.role === "user" || stickToBottomRef.current) {
+            el.scrollTop = el.scrollHeight
+            stickToBottomRef.current = true
+        }
     }, [messages])
+
+    // track whether the user is near the bottom so streaming does not drag them
+    // down while they scroll up to re-read earlier turns
+    const handleThreadScroll = useCallback(() => {
+        const el = scrollRef.current
+        if (!el) {
+            return
+        }
+        stickToBottomRef.current =
+            el.scrollHeight - el.scrollTop - el.clientHeight < 80
+    }, [])
 
     /** Append a delta to the trailing assistant bubble as the answer streams in. */
     const appendToAssistant = useCallback((delta: string) => {
@@ -333,6 +360,7 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
     const modelPicker = (placement: "top start" | "bottom start") => (
         <GradeModelDropdown
             models={models}
+            task={AiModelTask.Chatting}
             selection={modelSelection}
             canPremium={canPremium}
             placement={placement}
@@ -461,11 +489,12 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
     // ── chat view ─────────────────────────────────────────────────────────
     return (
         <div className={cn("flex h-full flex-col gap-3", className)}>
-            {/* conversation switcher — accent link, opens the conversations view
-                (new conversation lives in that view, next to search) */}
+            {/* conversation switcher — quiet go-there link (foreground + hover underline),
+                opens the conversations view (new conversation lives in that view, next to search).
+                Not accent: it's a secondary nav link, not a primary/selected signal. */}
             <Link
                 onPress={() => setView("conversations")}
-                className="flex w-full cursor-pointer items-center gap-2 text-sm font-medium text-accent"
+                className="flex w-full cursor-pointer items-center gap-2 text-sm font-medium text-foreground hover:underline"
             >
                 <ChatsCircleIcon className="size-5 shrink-0" />
                 <span className="min-w-0 flex-1 truncate text-left">
@@ -476,7 +505,7 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
 
             {/* thread — self-bounded scroll region (scroll shadow on the messages,
                 not the popover); composer stays fixed below */}
-            <ScrollShadow hideScrollBar className="max-h-[55vh] min-h-0 flex-1 overflow-y-auto">
+            <ScrollShadow ref={scrollRef} onScroll={handleThreadScroll} hideScrollBar className="max-h-[55vh] min-h-0 flex-1 overflow-y-auto">
                 <div className="flex flex-col gap-3">
                     {messages.length === 0 ? (
                         <div className="flex flex-col gap-2">
@@ -514,8 +543,6 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                             </ChatBubble>
                         ))
                     )}
-                    {/* scroll target so the thread follows the streaming answer */}
-                    <div ref={bottomAnchorRef} aria-hidden />
                 </div>
             </ScrollShadow>
 

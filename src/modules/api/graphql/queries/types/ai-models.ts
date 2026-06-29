@@ -1,6 +1,6 @@
 import type { GraphQLResponse } from "../../types"
 import type { ModelProvider } from "../query-my-ai-settings"
-import type { AiModelCategory } from "../query-ai-models"
+import type { AiModelCategory, AiModelTask } from "../query-ai-models"
 import type { AiActiveModel } from "@/modules/types/ai-model"
 
 /** One selectable model for the grading picker (mirrors backend `AiGradableModelData`). */
@@ -15,6 +15,8 @@ export interface AiGradableModel {
     complimentary: boolean
     /** Whether the model's provider has a working key right now; false → locked (no key). */
     available: boolean
+    /** Tasks this model is suited for (chatting / grading) — pickers filter by this. */
+    supportedTasks: Array<AiModelTask>
 }
 
 /** Payload inside `aiModels.data` after the standard API wrapper. */

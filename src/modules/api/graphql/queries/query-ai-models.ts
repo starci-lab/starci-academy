@@ -12,6 +12,12 @@ export enum AiModelCategory {
     Frontier = "frontier",
 }
 
+/** Task a model is suited for (mirrors backend `AiModelTask`). Drives picker visibility. */
+export enum AiModelTask {
+    Chatting = "chatting",
+    Grading = "grading",
+}
+
 const query1 = gql`
   query AiModels {
     aiModels {
@@ -39,6 +45,7 @@ const query1 = gql`
           category
           complimentary
           available
+          supportedTasks
         }
       }
     }

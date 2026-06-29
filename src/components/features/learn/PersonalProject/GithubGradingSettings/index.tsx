@@ -16,7 +16,7 @@ import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { AutosaveStatus } from "../PersonalProjectSubmission"
 import { GradeModelDropdown } from "@/components/blocks/grading/GradeModelDropdown"
-import { AiModelCategory } from "@/modules/api/graphql/queries/query-ai-models"
+import { AiModelCategory, AiModelTask } from "@/modules/api/graphql/queries/query-ai-models"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { usePersonalProjectGithubForm } from "@/hooks/zustand/personalProjectGithub/usePersonalProjectGithubForm"
 
@@ -98,6 +98,7 @@ export const GithubGradingSettings = ({ className }: GithubGradingSettingsProps)
                     canPremium={canPremium}
                     showAutoLane={false}
                     floor={AiModelCategory.Economy}
+                    task={AiModelTask.Grading}
                     onSelect={setGradeSelection}
                     onUpgrade={() => router.push(`/${locale}/profile/settings/ai-subscription`)}
                 />

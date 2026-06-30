@@ -12,10 +12,6 @@ export interface SystemConfigTaskData {
 
 /** Free Auto-lane caps from `systemConfig.ai.auto` (mounted `app.yaml`). */
 export interface SystemConfigAiAutoData {
-    /** Max complimentary gradings per rolling 5-hour window. */
-    usesPer5h: number
-    /** Max complimentary gradings per rolling 7-day window. */
-    usesPerWeek: number
     /** Max Auto credits per rolling 5-hour window. */
     creditsPer5h: number
     /** Max Auto credits per rolling 7-day window. */

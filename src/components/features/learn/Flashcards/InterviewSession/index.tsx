@@ -3,12 +3,12 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import useSWR from "swr"
 import { Button, Card, CardContent, Chip, Label, Spinner, Typography, cn } from "@heroui/react"
-import { LightningIcon, ListNumbersIcon, MicrophoneIcon, RobotIcon, StackIcon, StairsIcon, TargetIcon } from "@phosphor-icons/react"
+import { LightningIcon, MicrophoneIcon, StackIcon } from "@phosphor-icons/react"
 import { useTranslations, useLocale } from "next-intl"
 import { useRouter } from "next/navigation"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
-import { SegmentedControl } from "@/components/blocks/navigation/SegmentedControl"
-import { SelectableCardGroup } from "@/components/blocks/navigation/SelectableCardGroup"
+import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
+import { InterviewHistory } from "./InterviewHistory"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
 import { GradeModelDropdown, type GradeModelSelection } from "@/components/blocks/grading/GradeModelDropdown"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
@@ -27,6 +27,7 @@ import { InterviewVerdict } from "@/modules/api/graphql/mutations/types/grade-in
 import { useMutateGradeInterviewAnswerSwr } from "@/hooks/swr/api/graphql/mutations/useMutateGradeInterviewAnswerSwr"
 import { useQueryAiModelsSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiModelsSwr"
 import { useQueryMyAiSettingsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiSettingsSwr"
+import { useQueryMyCreditUsageSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCreditUsageSwr"
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 
@@ -166,6 +167,24 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
     const [mode, setMode] = useState<InterviewMode>("quick")
     // chosen grading lane + model (Auto by default)
     const [selection, setSelection] = useState<GradeModelSelection>(AUTO_SELECTION)
+    // credit usage for the compact lane label beside the model picker (mirrors the
+    // challenge submission panel: "Auto/Premium • used/quota credit" / "BYOK")
+    const creditUsage = useQueryMyCreditUsageSwr().data
+    const creditLabel = useMemo(() => {
+        if (selection.mode === AiMode.Byok) {
+            return t("challenge.quota.laneUsage.byok")
+        }
+        if (!creditUsage) {
+            return null
+        }
+        const key = selection.mode === AiMode.Premium
+            ? "challenge.quota.laneUsage.premium"
+            : "challenge.quota.laneUsage.auto"
+        return t(key, {
+            used: creditUsage.windowWeek.usedCredits,
+            quota: creditUsage.windowWeek.quota,
+        })
+    }, [selection.mode, creditUsage, t])
     // how many questions this session runs (derived from the mode)
     const sessionLength = MODE_LENGTH[mode]
     // zero-based index of the current question within the session
@@ -186,6 +205,9 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
     const [gradeError, setGradeError] = useState<string | null>(null)
     // card ids already drawn this session — avoids repeats across questions
     const seenIds = useRef<Set<string>>(new Set())
+    // client-generated id shared by every answer of THIS run → groups the session
+    // in cross-session history (one row per run, not per answer)
+    const sessionId = useRef<string | null>(null)
 
     // the viewer's cross-session history for this deck (persisted server-side per
     // graded answer); `mutate` refreshes it after a session adds new attempts
@@ -257,8 +279,12 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                     const response = await gradeAnswer({
                         flashcardDeckId: answer.deckId,
                         flashcardCardId: answer.cardId,
+                        // group every answer of this run under one session id for history
+                        interviewSessionId: sessionId.current ?? undefined,
                         transcript: answer.transcript,
-                        // omit on the Auto lane → balancer picks; otherwise pin the model
+                        // the chosen lane + model (Auto → balancer; mid+ pick → pinned model).
+                        // mode tells the BE which lane to validate; model/provider omitted on Auto.
+                        mode: selection.mode,
                         selectedModel: selection.model ?? undefined,
                         selectedModelProvider: selection.provider ?? undefined,
                     })
@@ -289,6 +315,8 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
 
     // begin a session at the chosen level: reset all per-session state
     const startSession = useCallback(() => {
+        // fresh session id so this run's answers group together in history
+        sessionId.current = crypto.randomUUID()
         seenIds.current.clear()
         setPendingAnswers([])
         setGradedResults([])
@@ -327,54 +355,23 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
 
     // ── SETUP — readiness hub (single column, no bento split) ────────────
     if (phase === "setup") {
-        // weak/ladder need backend (tag-filtered draw / per-level history) → coming-soon
-        const comingSoonBadge = (
-            <span className="text-xs text-muted">{t("flashcard.interview.comingSoon")}</span>
-        )
         return (
             <div className={cn("flex flex-col gap-6", className)}>
+                {/* ONE consolidated setup card: the interview RESULT (readiness + progress,
+                    always shown) on top, then the config (mode + level + grading) + CTA. */}
                 <Card>
-                    <CardContent className="flex flex-col gap-6">
-                        {/* hero: mic + headline */}
-                        <div className="flex items-center gap-3">
-                            <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent">
-                                <MicrophoneIcon className="size-6" aria-hidden focusable="false" />
-                            </div>
-                            <div className="flex flex-col">
-                                <Typography type="h4" weight="semibold">
-                                    {t("flashcard.interview.setupTitle")}
-                                </Typography>
-                                <Typography type="body-sm" color="muted">
-                                    {t("flashcard.interview.setupSubtitle")}
-                                </Typography>
-                            </div>
-                        </div>
-
-                        {/* what to expect — quick chips */}
-                        <div className="flex flex-wrap items-center gap-2">
-                            <Chip size="sm" variant="soft" color="default">
-                                <ListNumbersIcon className="size-4" aria-hidden focusable="false" />
-                                {t("flashcard.interview.expectCount", { total: sessionLength })}
-                            </Chip>
-                            <Chip size="sm" variant="soft" color="default">
-                                <MicrophoneIcon className="size-4" aria-hidden focusable="false" />
-                                {t("flashcard.interview.expectVoice")}
-                            </Chip>
-                            <Chip size="sm" variant="soft" color="default">
-                                <RobotIcon className="size-4" aria-hidden focusable="false" />
-                                {t("flashcard.interview.expectAiGrade")}
-                            </Chip>
-                        </div>
-
-                        {/* readiness — compact full-width strip (not a side column) */}
-                        <div className="flex flex-col gap-2">
+                    {/* gap-3 between the result block and the divider (the divider already
+                        separates them — a gap-6 on top of it reads too far) */}
+                    <CardContent className="flex flex-col gap-3">
+                        {/* result + progress — ALWAYS shown (0 + nudge for a brand-new learner) */}
+                        <div className="flex flex-col gap-3">
                             <Label>{t("flashcard.interview.readinessTitle")}</Label>
                             {history === undefined ? (
                                 <div className="flex items-center gap-3">
                                     <Skeleton.Typography type="h4" width="1/4" />
                                     <Skeleton.Meter className="flex-1" />
                                 </div>
-                            ) : history && history.totalAnswered > 0 ? (
+                            ) : history !== null && history.totalAnswered > 0 ? (
                                 <div className="flex flex-col gap-3">
                                     <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
                                         <div className="flex items-baseline gap-2">
@@ -411,9 +408,7 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                                     ) : null}
                                 </div>
                             ) : (
-                                // never interviewed yet → meter at 0 + nudge (don't self-hide).
-                                // stack (meter full-width, hint below) so the hint doesn't float
-                                // far right on a wide card — keep the row balanced.
+                                // brand-new learner: meter at 0 + nudge (always shown, never hidden)
                                 <div className="flex flex-col gap-2">
                                     <ProgressMeter value={0} max={100} />
                                     <Typography type="body-sm" color="muted">
@@ -423,88 +418,91 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                             )}
                         </div>
 
-                        {/* practice mode — selectable surface cards (one lights up) */}
-                        <div className="flex flex-col gap-3">
-                            <Label>{t("flashcard.interview.modeLabel")}</Label>
-                            <SelectableCardGroup
-                                ariaLabel={t("flashcard.interview.modeLabel")}
-                                value={mode}
-                                onChange={(next) => {
-                                    // only quick/deep are selectable (weak/ladder disabled)
-                                    if (next === "quick" || next === "deep") {
-                                        setMode(next)
-                                    }
-                                }}
-                                columns={2}
-                                items={[
-                                    {
-                                        value: "quick",
-                                        label: t("flashcard.interview.modeQuick"),
-                                        icon: <LightningIcon className="size-4" />,
-                                    },
-                                    {
-                                        value: "deep",
-                                        label: t("flashcard.interview.modeDeep"),
-                                        icon: <StackIcon className="size-4" />,
-                                    },
-                                    {
-                                        value: "weak",
-                                        label: t("flashcard.interview.modeWeak"),
-                                        icon: <TargetIcon className="size-4" />,
-                                        isDisabled: true,
-                                        badge: comingSoonBadge,
-                                    },
-                                    {
-                                        value: "ladder",
-                                        label: t("flashcard.interview.modeLadder"),
-                                        icon: <StairsIcon className="size-4" />,
-                                        isDisabled: true,
-                                        badge: comingSoonBadge,
-                                    },
-                                ]}
-                            />
+                        {/* config + grading + CTA — divided from the result inside the same card
+                            (pt-3 so the divider sits gap-3 from the content below, matching above) */}
+                        {/* config: mode + level — divided (gap-3) from the result above */}
+                        <div className="flex flex-col gap-6 border-t border-divider pt-3">
+                            {/* practice mode — button-radio (shippable modes only) */}
+                            <div className="flex flex-col gap-3">
+                                <Label>{t("flashcard.interview.modeLabel")}</Label>
+                                <FlexWrapButtonRadio
+                                    ariaLabel={t("flashcard.interview.modeLabel")}
+                                    value={mode}
+                                    onChange={setMode}
+                                    insideCard
+                                    items={[
+                                        {
+                                            value: "quick",
+                                            content: (
+                                                <span className="flex items-center gap-2">
+                                                    <LightningIcon className="size-4" aria-hidden focusable="false" />
+                                                    {t("flashcard.interview.modeQuick")}
+                                                </span>
+                                            ),
+                                        },
+                                        {
+                                            value: "deep",
+                                            content: (
+                                                <span className="flex items-center gap-2">
+                                                    <StackIcon className="size-4" aria-hidden focusable="false" />
+                                                    {t("flashcard.interview.modeDeep")}
+                                                </span>
+                                            ),
+                                        },
+                                    ]}
+                                />
+                            </div>
+
+                            {/* seniority level — same control type as the mode picker */}
+                            <div className="flex flex-col gap-3">
+                                <Label>{t("flashcard.interview.levelLabel")}</Label>
+                                <FlexWrapButtonRadio
+                                    ariaLabel={t("flashcard.interview.levelLabel")}
+                                    value={level ?? "all"}
+                                    onChange={(value) => setLevel(value === "all" ? null : value)}
+                                    insideCard
+                                    items={[
+                                        { value: "all", content: t("flashcard.interview.levelAll") },
+                                        ...LEVELS.map((value) => ({
+                                            value,
+                                            content: t(`flashcard.level.${value}`),
+                                        })),
+                                    ]}
+                                />
+                            </div>
                         </div>
 
-                        {/* seniority level — group label uses <Label> + block segmented */}
-                        <div className="flex flex-col gap-2">
-                            <Label>{t("flashcard.interview.levelLabel")}</Label>
-                            <SegmentedControl
-                                ariaLabel={t("flashcard.interview.levelLabel")}
-                                value={level ?? "all"}
-                                onChange={(value) => setLevel(value === "all" ? null : value)}
-                                items={[
-                                    { value: "all", label: t("flashcard.interview.levelAll") },
-                                    ...LEVELS.map((value) => ({
-                                        value,
-                                        label: t(`flashcard.level.${value}`),
-                                    })),
-                                ]}
-                            />
-                        </div>
+                        {/* footer (divided, gap-3): grading model row (compact, like the submission
+                            panel — dropdown + muted lane/credit) above the start CTA */}
+                        <div className="flex flex-col gap-3 border-t border-divider pt-3">
+                            <div className="flex flex-wrap items-center justify-between gap-2">
+                                <GradeModelDropdown
+                                    className="text-sm text-muted"
+                                    models={interviewModels}
+                                    selection={selection}
+                                    canPremium={canPremium}
+                                    task={AiModelTask.Grading}
+                                    floor={AiModelCategory.Balanced}
+                                    showAutoLane
+                                    onSelect={setSelection}
+                                    onUpgrade={() => router.push(`/${locale}/profile/settings/ai-subscription`)}
+                                />
+                                {creditLabel ? (
+                                    <span className="shrink-0 text-sm text-muted">{creditLabel}</span>
+                                ) : null}
+                            </div>
 
-                        {/* grading model — mid-tier and above (Auto default) */}
-                        <div className="flex flex-col gap-3">
-                            <Label>{t("flashcard.interview.modelLabel")}</Label>
-                            <GradeModelDropdown
-                                className="self-start"
-                                models={interviewModels}
-                                selection={selection}
-                                canPremium={canPremium}
-                                task={AiModelTask.Grading}
-                                floor={AiModelCategory.Balanced}
-                                showAutoLane
-                                onSelect={setSelection}
-                                onUpgrade={() => router.push(`/${locale}/profile/settings/ai-subscription`)}
-                            />
+                            {/* primary CTA — loud, mic-led (one primary action) */}
+                            <Button variant="primary" size="lg" className="self-start" onPress={startSession}>
+                                <MicrophoneIcon className="size-5" aria-hidden focusable="false" />
+                                {t("flashcard.interview.begin")}
+                            </Button>
                         </div>
-
-                        {/* primary CTA — loud, mic-led (one primary action) */}
-                        <Button variant="primary" size="lg" className="self-start" onPress={startSession}>
-                            <MicrophoneIcon className="size-5" aria-hidden focusable="false" />
-                            {t("flashcard.interview.begin")}
-                        </Button>
                     </CardContent>
                 </Card>
+
+                {/* history: past runs (sessions), newest first + pagination — its own card */}
+                <InterviewHistory courseId={courseId} />
             </div>
         )
     }

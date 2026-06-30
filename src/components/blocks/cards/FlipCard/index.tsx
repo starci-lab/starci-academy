@@ -28,7 +28,7 @@ export interface FlipCardProps extends WithClassNames<undefined> {
  * the same size — the card never grows to the taller face (which left a short
  * question stranded in a tall, mostly-empty card). */
 const FACE_CLASS =
-    "relative flex h-80 flex-col overflow-hidden rounded-2xl border border-default bg-surface sm:h-[22rem]"
+    "relative flex h-80 flex-col overflow-hidden rounded-2xl bg-surface shadow-surface sm:h-[22rem]"
 /** Keeps both faces stacked in the same grid cell + hides the away-facing side. */
 const FACE_STYLE: React.CSSProperties = {
     gridArea: "1 / 1",

@@ -230,18 +230,18 @@ export const CourseContents = ({ className }: CourseContentsProps) => {
                             meta={totals.moduleCount > 0 ? (
                                 <div className="flex flex-wrap items-center gap-2">
                                     <HighlightChip
-                                        icon={<StackIcon className="size-5" />}
+                                        icon={<StackIcon className="size-3" />}
                                         value={totals.moduleCount}
                                         label={t("courseContents.metaModulesLabel")}
                                     />
                                     <HighlightChip
-                                        icon={<ClockIcon className="size-5" />}
+                                        icon={<ClockIcon className="size-3" />}
                                         value={`~${readingHours}`}
                                         label={t("courseContents.metaHoursLabel")}
                                     />
                                     {enrollmentCount > 0 ? (
                                         <HighlightChip
-                                            icon={<UsersIcon className="size-5" />}
+                                            icon={<UsersIcon className="size-3" />}
                                             value={numeral(enrollmentCount).format("0,0")}
                                             label={t("courseContents.metaLearnersLabel")}
                                         />

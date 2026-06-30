@@ -3,9 +3,12 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import {
     Button,
+    CloseButton,
+    Input,
     Label,
     Link,
     ScrollShadow,
+    TextField,
     Typography,
     cn,
 } from "@heroui/react"
@@ -18,7 +21,6 @@ import {
     PlusIcon,
     QuotesIcon,
     TrashIcon,
-    XIcon,
 } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
@@ -359,6 +361,7 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
     // chatbot's normal lane (not flagged danger).
     const modelPicker = (placement: "top start" | "bottom start") => (
         <GradeModelDropdown
+            className="min-w-0 max-w-full"
             models={models}
             task={AiModelTask.Chatting}
             selection={modelSelection}
@@ -368,6 +371,27 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
             onUpgrade={() =>
                 router.push(`${pathConfig().locale(locale).profile().build()}/ai-subscription`)}
         />
+    )
+
+    /** Fake input — parent composer/quote box owns fill + padding; Input is chỉ chỗ gõ (flat, no field chrome). */
+    const FLAT_CHAT_INPUT_CLASS =
+        "w-full !rounded-none border-0 !bg-transparent !p-0 !shadow-none ring-0 focus:ring-0 hover:!bg-transparent focus:!bg-transparent data-[hovered=true]:!bg-transparent data-[focused=true]:!bg-transparent"
+
+    const chatInputField = () => (
+        <TextField aria-label={t("contentAi.placeholder")} className="w-full">
+            <Input
+                className={FLAT_CHAT_INPUT_CLASS}
+                placeholder={t("contentAi.placeholder")}
+                value={input}
+                onChange={(event) => setInput(event.target.value)}
+                onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                        event.preventDefault()
+                        void onSend()
+                    }
+                }}
+            />
+        </TextField>
     )
 
     // ── conversations view ────────────────────────────────────────────────
@@ -507,7 +531,7 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                 not the popover); composer stays fixed below */}
             <ScrollShadow ref={scrollRef} onScroll={handleThreadScroll} hideScrollBar className="max-h-[55vh] min-h-0 flex-1 overflow-y-auto">
                 <div className="flex flex-col gap-3">
-                    {messages.length === 0 ? (
+                    {messages.length === 0 && !selection ? (
                         <div className="flex flex-col gap-2">
                             <Typography type="body-sm" color="muted">
                                 {t("contentAi.hint")}
@@ -546,22 +570,19 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                 </div>
             </ScrollShadow>
 
-            {/* selected-passage context (set by the "ask about this passage" button) */}
+            {/* selected-passage context — surface-in-surface on popover panel: border only, no stacked fill (elements/card §4) */}
             {selection ? (
-                <div className="flex flex-col gap-2 rounded-xl border border-default bg-default/50 px-3 py-2">
+                <div className="flex flex-col gap-2 rounded-xl border border-default bg-transparent px-3 py-2 focus-within:ring-2 focus-within:ring-accent">
                     <div className="flex items-start gap-2">
-                        <QuotesIcon className="mt-0.5 size-4 shrink-0 text-muted" />
-                        <Typography type="body-xs" color="muted" className="line-clamp-2 flex-1">
+                        <QuotesIcon className="size-4 shrink-0 text-muted" />
+                        <Typography type="body-sm" color="muted" className="line-clamp-2 flex-1">
                             {selection}
                         </Typography>
-                        <button
-                            type="button"
+                        <CloseButton
                             aria-label={t("contentAi.clearSelection")}
-                            className="shrink-0 cursor-pointer text-muted transition-colors hover:text-foreground"
-                            onClick={() => setSelection(null)}
-                        >
-                            <XIcon className="size-4" />
-                        </button>
+                            className="shrink-0 text-muted hover:bg-default"
+                            onPress={() => setSelection(null)}
+                        />
                     </div>
                     <div className="flex flex-wrap gap-2">
                         {SELECTION_SUGGESTION_KEYS.map((key) => (
@@ -575,46 +596,38 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                             </Button>
                         ))}
                     </div>
+                    {chatInputField()}
                 </div>
             ) : null}
 
-            {/* composer (B: secondary-fill box, no border — input + model picker / settings / send inside) */}
+            {/* composer — input lives in quote block while a passage is selected */}
             <div className="flex flex-col gap-2 rounded-2xl bg-default px-3 py-2 focus-within:ring-2 focus-within:ring-accent">
-                <input
-                    aria-label={t("contentAi.placeholder")}
-                    placeholder={t("contentAi.placeholder")}
-                    value={input}
-                    onChange={(event) => setInput(event.target.value)}
-                    onKeyDown={(event) => {
-                        if (event.key === "Enter") {
-                            event.preventDefault()
-                            void onSend()
-                        }
-                    }}
-                    className="w-full bg-transparent text-sm text-foreground outline-none placeholder:text-muted"
-                />
-                <div className="flex items-center gap-2">
-                    {modelPicker("top start")}
-                    <div className="flex-1" />
-                    <Button
-                        isIconOnly
-                        size="sm"
-                        variant="ghost"
-                        aria-label={t("contentAi.settings")}
-                        onPress={() => setView("settings")}
-                    >
-                        <GearIcon className="size-5" />
-                    </Button>
-                    <Button
-                        isIconOnly
-                        size="sm"
-                        variant="primary"
-                        isPending={isStreaming}
-                        aria-label={t("contentAi.send")}
-                        onPress={() => void onSend()}
-                    >
-                        <PaperPlaneTiltIcon className="size-5" />
-                    </Button>
+                {!selection ? chatInputField() : null}
+                <div className="flex w-full items-center justify-between gap-2">
+                    <div className="min-w-0 overflow-hidden">
+                        {modelPicker("top start")}
+                    </div>
+                    <div className="flex shrink-0 items-center gap-2">
+                        <Button
+                            isIconOnly
+                            size="sm"
+                            variant="ghost"
+                            aria-label={t("contentAi.settings")}
+                            onPress={() => setView("settings")}
+                        >
+                            <GearIcon className="size-5" />
+                        </Button>
+                        <Button
+                            isIconOnly
+                            size="sm"
+                            variant="primary"
+                            isPending={isStreaming}
+                            aria-label={t("contentAi.send")}
+                            onPress={() => void onSend()}
+                        >
+                            <PaperPlaneTiltIcon className="size-5" />
+                        </Button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -374,7 +374,7 @@ export const SubmissionResult = ({
                                     label outside, p-0) — surface bakes bg + radius + separators. */}
                                 <Accordion
                                     variant="surface"
-                                    className="overflow-hidden border border-default"
+                                    className="overflow-hidden shadow-surface"
                                     allowsMultipleExpanded
                                 >
                                     {sortedFeedbacks.map((feedback) => (

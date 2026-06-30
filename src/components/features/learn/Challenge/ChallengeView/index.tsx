@@ -211,11 +211,11 @@ export const ChallengeView = ({ className, onBack }: ChallengeViewProps) => {
                         meta={(
                             <div className="flex flex-wrap items-center gap-2">
                                 <Chip color="accent" variant="soft">
-                                    <TrophyIcon className="size-5" />
+                                    <TrophyIcon className="size-3" />
                                     <Chip.Label>{t("challenge.score", { score: challenge?.score ?? 0 })}</Chip.Label>
                                 </Chip>
                                 <Chip className={difficultyPalette[challenge?.difficulty ?? ChallengeDifficulty.Easy].text} variant="soft">
-                                    <FlameIcon className="size-5" />
+                                    <FlameIcon className="size-3" />
                                     <Chip.Label>{t(challengeDifficultyKey)}</Chip.Label>
                                 </Chip>
                                 {statusBadge ? (
@@ -253,7 +253,7 @@ export const ChallengeView = ({ className, onBack }: ChallengeViewProps) => {
                                     the per-requirement points stay visible in each header. */}
                                 <Accordion
                                     variant="surface"
-                                    className="overflow-hidden border border-default"
+                                    className="overflow-hidden shadow-surface"
                                     allowsMultipleExpanded
                                 >
                                     {requirements.map((item, index) => (
@@ -293,7 +293,7 @@ export const ChallengeView = ({ className, onBack }: ChallengeViewProps) => {
                                     default (a guide you expand step by step). */}
                                 <Accordion
                                     variant="surface"
-                                    className="overflow-hidden border border-default"
+                                    className="overflow-hidden shadow-surface"
                                     allowsMultipleExpanded
                                 >
                                     {steps.map((step, index) => (
@@ -335,7 +335,7 @@ export const ChallengeView = ({ className, onBack }: ChallengeViewProps) => {
                         {hint.length > 0 ? (
                             <Accordion
                                 variant="surface"
-                                className="overflow-hidden border border-default"
+                                className="overflow-hidden shadow-surface"
                             >
                                 <Accordion.Item id="hint" aria-label={t("challenge.hint")}>
                                     <Accordion.Heading>

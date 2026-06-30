@@ -69,7 +69,7 @@ export const CourseCurriculum = ({ className }: CourseCurriculumProps) => {
                 {/* Accordion Card: surface accordion đặt thẳng trên nền trang (frameless,
                     KHÔNG lồng trong Card → tránh surface-in-surface phẳng) + viền card.
                     Ref elements/card.md §3 + draft accordion-card-surface-on-standalone-pages. */}
-                <Accordion variant="surface" className="overflow-hidden border border-default">
+                <Accordion variant="surface" className="overflow-hidden shadow-surface">
                     {modules.map((module) => (
                         <ModuleAccordionItem key={module.id} module={module} />
                     ))}

@@ -1,9 +1,8 @@
 "use client"
 
-import { CaretDownIcon, FunnelIcon, LockIcon, SparkleIcon, WarningCircleIcon, WarningIcon } from "@phosphor-icons/react"
+import { CaretDownIcon, LockIcon, SparkleIcon, WarningCircleIcon, WarningIcon } from "@phosphor-icons/react"
 import React, { useMemo, useState } from "react"
 import {
-    Button,
     Chip,
     Dropdown,
     DropdownItem,
@@ -14,7 +13,6 @@ import {
     ScrollShadow,
     SearchField,
     Separator,
-    Switch,
     Tooltip,
     Typography,
     cn
@@ -22,12 +20,13 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import { AiMode } from "@/modules/api/graphql/queries/query-my-ai-settings"
-import type { ModelProvider } from "@/modules/api/graphql/queries/query-my-ai-settings"
+import { AiMode, ModelProvider } from "@/modules/api/graphql/queries/query-my-ai-settings"
 import { AiModelCategory, AiModelTask } from "@/modules/api/graphql/queries/query-ai-models"
 import { type AiGradableModel } from "@/modules/api/graphql/queries/types/ai-models"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { AiCategoryChip } from "@/components/blocks/chips/AiCategoryChip"
+import { SelfHostGpuMark } from "@/components/blocks/grading/SelfHostGpuMark"
+import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
 import { useAiModelLatency, type ModelHealth } from "@/hooks/socketio/useAiModelLatency"
 
 /**
@@ -60,9 +59,6 @@ const CATEGORY_ORDER: ReadonlyArray<AiModelCategory> = [
     AiModelCategory.Frontier,
 ]
 
-/** Price facet of the funnel filter. */
-type PriceFilter = "all" | "free" | "paid"
-
 /** Tier facet options (incl. the "all" reset). */
 const TIER_FILTERS: ReadonlyArray<AiModelCategory | "all"> = [
     "all",
@@ -73,46 +69,6 @@ const TIER_FILTERS: ReadonlyArray<AiModelCategory | "all"> = [
     AiModelCategory.Frontier,
 ]
 
-/** Price facet options + their i18n key suffix under `aiSettings.*`. */
-const PRICE_FILTERS: ReadonlyArray<{ value: PriceFilter, labelKey: string }> = [
-    {
-        value: "all",
-        labelKey: "filterAll",
-    },
-    {
-        value: "free",
-        labelKey: "filterFree",
-    },
-    {
-        value: "paid",
-        labelKey: "filterPaid",
-    },
-]
-
-/** Small pill toggle used in the funnel filter panel (tier / price facets). */
-const FilterChip = ({
-    active,
-    label,
-    onPress,
-}: {
-    active: boolean
-    label: string
-    onPress: () => void
-}) => (
-    <button
-        type="button"
-        onClick={onPress}
-        className={cn(
-            "cursor-pointer rounded-full border px-3 py-1 text-xs transition-colors",
-            active
-                ? "border-accent bg-accent/10 text-accent"
-                : "border-default text-muted hover:bg-default",
-        )}
-    >
-        {label}
-    </button>
-)
-
 /**
  * Live health badge on each model row — a green dot + latency (up) or a red dot
  * + "down" (failing probe), styled like the category chip. Driven by the public
@@ -120,29 +76,82 @@ const FilterChip = ({
  */
 const ModelHealthChip = ({ ok, latencyMs, errorMessage }: ModelHealth) => {
     const t = useTranslations()
-    return (
-        // native title tooltip surfaces the probe failure reason on hover (debug + UX)
-        <span
-            className="shrink-0"
-            title={!ok && errorMessage ? errorMessage : undefined}
+    const chip = (
+        <Chip
+            color={ok ? "success" : "danger"}
+            variant="soft"
+            size="sm"
         >
-            <Chip
-                color={ok ? "success" : "danger"}
-                variant="soft"
-                size="sm"
-            >
-                <span className={cn("size-1.5 rounded-full", ok ? "bg-success" : "bg-danger")} />
-                <Chip.Label>
-                    {ok
-                        ? t("status.latency", { ms: latencyMs })
-                        : t("status.componentStatus.down")}
-                </Chip.Label>
-            </Chip>
-        </span>
+            <span className={cn("size-1.5 rounded-full", ok ? "bg-success" : "bg-danger")} />
+            <Chip.Label>
+                {ok
+                    ? t("status.latency", { ms: latencyMs })
+                    : t("status.componentStatus.down")}
+            </Chip.Label>
+        </Chip>
     )
+
+    if (!ok && errorMessage) {
+        return (
+            <Tooltip>
+                <Tooltip.Trigger className="shrink-0 cursor-default">
+                    {chip}
+                </Tooltip.Trigger>
+                <Tooltip.Content>{errorMessage}</Tooltip.Content>
+            </Tooltip>
+        )
+    }
+
+    return <span className="shrink-0">{chip}</span>
 }
 
-/** Props for {@link GradeModelDropdown}. */
+/** Models self-hosted on StarCi GPU hardware (v1 hardcode; move to catalog later). */
+const SELF_HOST_GPU_MODELS = new Set(["qwen2.5-coder:7b"])
+
+const showSelfHostMark = (model: AiGradableModel) =>
+    model.provider === ModelProvider.Local && SELF_HOST_GPU_MODELS.has(model.model)
+
+/** Dropdown row width — popover must be bounded or `truncate` never fires. */
+const DROPDOWN_POPOVER_CLASS = "w-80 max-w-[calc(100vw-2rem)]"
+const DROPDOWN_ITEM_ROW_CLASS = "w-full min-w-0 overflow-hidden"
+const MODEL_ROW_TRIGGER_CLASS = "block w-full min-w-0"
+
+/** Model row — name truncates on the left, chips stay pinned on the right. */
+const ModelRowLayout = ({
+    leading,
+    name,
+    nameSuffix,
+    isSelected,
+    muted,
+    trailing,
+}: {
+    leading?: React.ReactNode
+    name: string
+    nameSuffix?: React.ReactNode
+    isSelected?: boolean
+    muted?: boolean
+    trailing: React.ReactNode
+}) => (
+    <div
+        className={cn(
+            "grid w-full grid-cols-[minmax(0,1fr)_auto] items-center gap-2",
+            muted && "text-muted",
+        )}
+    >
+        <span className="flex min-w-0 items-center gap-2 overflow-hidden">
+            {leading}
+            <span
+                className={cn("min-w-0 truncate", isSelected && "text-accent")}
+                title={name}
+            >
+                {name}
+            </span>
+            {nameSuffix}
+        </span>
+        <span className="flex shrink-0 items-center justify-end gap-2">{trailing}</span>
+    </div>
+)
+
 export type GradeModelDropdownProps = WithClassNames<undefined> & {
     /** Enabled models the user can pick from (from the `aiModels` catalog). */
     models: Array<AiGradableModel>
@@ -213,41 +222,41 @@ export const GradeModelDropdown = ({
     const [isOpen, setIsOpen] = useState(false)
     const [query, setQuery] = useState("")
     const normalizedQuery = query.trim().toLowerCase()
-    // funnel facets: tier / price / "only suitable for this task".
+    // single inline facet: tier. (price/suitability folded away — suitability is
+    // now the default, off-task models are hidden, not a toggle.)
     const [tierFilter, setTierFilter] = useState<AiModelCategory | "all">("all")
-    const [priceFilter, setPriceFilter] = useState<PriceFilter>("all")
-    const [onlySuited, setOnlySuited] = useState(false)
-    const [showFilters, setShowFilters] = useState(false)
-    const activeFilterCount = (tierFilter !== "all" ? 1 : 0)
-        + (priceFilter !== "all" ? 1 : 0)
-        + (onlySuited ? 1 : 0)
-    // models NOT suited for `task` are NOT hidden — they render with an amber
-    // warning (like below-floor). The "only suitable" facet can hide them.
-    const filteredModels = useMemo(
-        () => models.filter((model) => {
+    // down (unavailable) + off-task models are HIDDEN by default (noise nobody
+    // picks); `showHidden` reveals them (rendered disabled / amber-warned as before).
+    const [showHidden, setShowHidden] = useState(false)
+    const { visibleModels, hiddenCount } = useMemo(() => {
+        const visible: Array<AiGradableModel> = []
+        let hidden = 0
+        for (const model of models) {
             if (normalizedQuery
                 && !model.model.toLowerCase().includes(normalizedQuery)) {
-                return false
+                continue
             }
             if (tierFilter !== "all" && model.category !== tierFilter) {
-                return false
+                continue
             }
-            if (priceFilter === "free" && !model.complimentary) {
-                return false
-            }
-            if (priceFilter === "paid" && model.complimentary) {
-                return false
-            }
-            if (onlySuited
-                && task
+            const offTask = Boolean(task
                 && model.supportedTasks?.length
-                && !model.supportedTasks.includes(task)) {
-                return false
+                && !model.supportedTasks.includes(task))
+            if (!model.available || offTask) {
+                hidden += 1
+                if (!showHidden) {
+                    continue
+                }
             }
-            return true
-        }),
-        [models, normalizedQuery, tierFilter, priceFilter, onlySuited, task],
-    )
+            visible.push(model)
+        }
+        return { visibleModels: visible, hiddenCount: hidden }
+    }, [models, normalizedQuery, tierFilter, task, showHidden])
+    // tiers present in the catalog → the inline tier filter only offers real buckets.
+    const tierChips = useMemo(() => {
+        const present = new Set(models.map((model) => model.category))
+        return TIER_FILTERS.filter((tier) => tier === "all" || present.has(tier))
+    }, [models])
     // a pinned model shows its name; otherwise the Auto label (or "pick a model"
     // when the Auto lane is hidden and nothing is picked yet)
     const triggerLabel = selection.model
@@ -261,27 +270,27 @@ export const GradeModelDropdown = ({
                 if (!open) {
                     setQuery("")
                     setTierFilter("all")
-                    setPriceFilter("all")
-                    setOnlySuited(false)
-                    setShowFilters(false)
+                    setShowHidden(false)
                 }
             }}
         >
             <DropdownTrigger
                 isDisabled={isDisabled}
-                className={cn("cursor-pointer", className)}
+                className={cn("min-w-0 max-w-full cursor-pointer", className)}
             >
-                <div className="flex items-center gap-2">
-                    <SparkleIcon className="size-5" />
-                    <span className="max-w-40 truncate">{triggerLabel}</span>
-                    <CaretDownIcon className="size-5" />
+                <div className="flex w-full min-w-0 items-center justify-between gap-2">
+                    <span className="flex min-w-0 items-center gap-2 overflow-hidden">
+                        <SparkleIcon className="size-5 shrink-0" />
+                        <span className="truncate">{triggerLabel}</span>
+                    </span>
+                    <CaretDownIcon className="size-5 shrink-0" />
                 </div>
             </DropdownTrigger>
             <DropdownPopover
                 placement={placement}
-                className="min-w-64"
+                className={DROPDOWN_POPOVER_CLASS}
             >
-                <div className="flex flex-col">
+                <div className="flex w-full min-w-0 flex-col">
                     {/* Auto lane — above search + scroll so the default is always one click away. */}
                     {showAutoLane ? (
                         <>
@@ -314,104 +323,58 @@ export const GradeModelDropdown = ({
                             </DropdownMenu>
                         </>
                     ) : null}
-                    {/* Search + funnel filter. No divider below → flows seamlessly into
-                    the model list (gap-3 whitespace only). */}
-                    <div className="flex items-center gap-2 px-2">
-                        <div
-                            className="min-w-0 flex-1"
-                            onKeyDownCapture={(event) => event.stopPropagation()}
+                    {/* Search → inline tier filter → list, separated by whitespace only
+                    (no divider, no funnel panel). down + off-task hidden by default. */}
+                    <div
+                        className="px-2"
+                        onKeyDownCapture={(event) => event.stopPropagation()}
+                    >
+                        <SearchField
+                            variant="secondary"
+                            aria-label={t("aiSettings.searchModel")}
                         >
-                            <SearchField
-                                variant="secondary"
-                                aria-label={t("aiSettings.searchModel")}
-                            >
-                                <SearchField.Group>
-                                    <SearchField.SearchIcon />
-                                    <SearchField.Input
-                                        placeholder={t("aiSettings.searchModel")}
-                                        value={query}
-                                        onChange={(event) => setQuery(event.target.value)}
-                                    />
-                                    {query ? (
-                                        <SearchField.ClearButton onPress={() => setQuery("")} />
-                                    ) : null}
-                                </SearchField.Group>
-                            </SearchField>
-                        </div>
-                        <Button
-                            isIconOnly
-                            size="sm"
-                            variant={activeFilterCount > 0 || showFilters ? "secondary" : "tertiary"}
-                            aria-label={t("aiSettings.filterModels")}
-                            onPress={() => setShowFilters((open) => !open)}
-                            className="relative shrink-0"
-                        >
-                            <FunnelIcon className="size-5" />
-                            {activeFilterCount > 0 ? (
-                                <span className="absolute -right-1 -top-1 flex size-4 items-center justify-center rounded-full bg-accent text-[0.625rem] text-accent-foreground">
-                                    {activeFilterCount}
-                                </span>
-                            ) : null}
-                        </Button>
+                            <SearchField.Group>
+                                <SearchField.SearchIcon />
+                                <SearchField.Input
+                                    placeholder={t("aiSettings.searchModel")}
+                                    value={query}
+                                    onChange={(event) => setQuery(event.target.value)}
+                                />
+                                {query ? (
+                                    <SearchField.ClearButton onPress={() => setQuery("")} />
+                                ) : null}
+                            </SearchField.Group>
+                        </SearchField>
                     </div>
-                    {showFilters ? (
-                        <div className="mx-2 flex flex-col gap-3 rounded-2xl border border-default bg-default/40 px-3 py-3">
-                            <div className="flex flex-col gap-2">
-                                <Typography type="body-xs" className="text-muted">
-                                    {t("aiSettings.filterTier")}
-                                </Typography>
-                                <div className="flex flex-wrap gap-2">
-                                    {TIER_FILTERS.map((tier) => (
-                                        <FilterChip
-                                            key={tier}
-                                            active={tierFilter === tier}
-                                            label={tier === "all"
-                                                ? t("aiSettings.filterAll")
-                                                : t(`aiSettings.categories.${tier}`)}
-                                            onPress={() => setTierFilter(tier)}
-                                        />
-                                    ))}
-                                </div>
-                            </div>
-                            <div className="flex flex-col gap-2">
-                                <Typography type="body-xs" className="text-muted">
-                                    {t("aiSettings.filterPrice")}
-                                </Typography>
-                                <div className="flex flex-wrap gap-2">
-                                    {PRICE_FILTERS.map((price) => (
-                                        <FilterChip
-                                            key={price.value}
-                                            active={priceFilter === price.value}
-                                            label={t(`aiSettings.${price.labelKey}`)}
-                                            onPress={() => setPriceFilter(price.value)}
-                                        />
-                                    ))}
-                                </div>
-                            </div>
-                            {task ? (
-                                <div className="flex items-center justify-between gap-2">
-                                    <Typography type="body-sm">
-                                        {t("aiSettings.filterOnlySuited")}
-                                    </Typography>
-                                    <Switch
-                                        isSelected={onlySuited}
-                                        onChange={setOnlySuited}
-                                    />
-                                </div>
-                            ) : null}
+                    {/* tier filter — FlexWrapButtonRadio inside popover surface (insideCard) */}
+                    {tierChips.length > 1 ? (
+                        <div className="px-2 pt-2">
+                            <FlexWrapButtonRadio
+                                insideCard
+                                ariaLabel={t("aiSettings.filterTier")}
+                                value={tierFilter}
+                                onChange={setTierFilter}
+                                items={tierChips.map((tier) => ({
+                                    value: tier,
+                                    content: tier === "all"
+                                        ? t("aiSettings.filterAll")
+                                        : t(`aiSettings.categories.${tier}`),
+                                }))}
+                            />
                         </div>
                     ) : null}
                     <ScrollShadow
                         hideScrollBar
-                        className="max-h-72"
+                        className="max-h-72 w-full min-w-0"
                     >
                         <DropdownMenu
                             aria-label={t("aiSettings.pickModel")}
+                            className="w-full min-w-0"
                         >
                             {/* One entry per catalog model. Below-floor = warning (selectable,
                         risky); Balanced/Premium/Frontier = locked without an unlock. */}
                             <DropdownSection>
-                                {filteredModels.length === 0 ? (
+                                {visibleModels.length === 0 ? (
                                     <DropdownItem
                                         key="no-results"
                                         textValue={t("aiSettings.searchModelEmpty")}
@@ -420,7 +383,7 @@ export const GradeModelDropdown = ({
                                         <span className="text-muted">{t("aiSettings.searchModelEmpty")}</span>
                                     </DropdownItem>
                                 ) : null}
-                                {filteredModels.map((model) => {
+                                {visibleModels.map((model) => {
                                     const key = `${model.provider}:${model.model}`
                                     const isSelected = selection.model === model.model
                                         && selection.provider === model.provider
@@ -430,6 +393,7 @@ export const GradeModelDropdown = ({
                                     const healthChip = health
                                         ? <ModelHealthChip ok={health.ok} latencyMs={health.latencyMs} errorMessage={health.errorMessage} />
                                         : null
+                                    const selfHostMark = showSelfHostMark(model) ? <SelfHostGpuMark /> : null
                                     const requiresPlan = PLAN_CATEGORIES.includes(model.category)
                                     // below the recommended floor → flag danger (grading: Free is
                                     // below Economy). No floor → never flagged (chatbot runs Free).
@@ -447,17 +411,18 @@ export const GradeModelDropdown = ({
                                             <DropdownItem
                                                 key={key}
                                                 textValue={model.model}
+                                                className={DROPDOWN_ITEM_ROW_CLASS}
                                                 onPress={() => undefined}
                                             >
                                                 <Tooltip>
-                                                    <Tooltip.Trigger>
-                                                        <div className="flex w-full items-center justify-between gap-2 text-muted">
-                                                            <span className="flex min-w-0 items-center gap-2">
-                                                                <WarningCircleIcon className="size-5 shrink-0" />
-                                                                <span className="truncate">{model.model}</span>
-                                                            </span>
-                                                            <span className="flex shrink-0 items-center gap-2">{healthChip}{categoryChip}</span>
-                                                        </div>
+                                                    <Tooltip.Trigger className={MODEL_ROW_TRIGGER_CLASS}>
+                                                        <ModelRowLayout
+                                                            muted
+                                                            name={model.model}
+                                                            nameSuffix={selfHostMark}
+                                                            leading={<WarningCircleIcon className="size-5 shrink-0" />}
+                                                            trailing={<>{healthChip}{categoryChip}</>}
+                                                        />
                                                     </Tooltip.Trigger>
                                                     <Tooltip.Content>{t("aiSettings.modelUnavailable")}</Tooltip.Content>
                                                 </Tooltip>
@@ -470,17 +435,18 @@ export const GradeModelDropdown = ({
                                             <DropdownItem
                                                 key={key}
                                                 textValue={model.model}
+                                                className={DROPDOWN_ITEM_ROW_CLASS}
                                                 onPress={onUpgrade}
                                             >
                                                 <Tooltip>
-                                                    <Tooltip.Trigger>
-                                                        <div className="flex w-full items-center justify-between gap-2 text-muted">
-                                                            <span className="flex min-w-0 items-center gap-2">
-                                                                <LockIcon className="size-5 shrink-0" />
-                                                                <span className="truncate">{model.model}</span>
-                                                            </span>
-                                                            <span className="flex shrink-0 items-center gap-2">{healthChip}{categoryChip}</span>
-                                                        </div>
+                                                    <Tooltip.Trigger className={MODEL_ROW_TRIGGER_CLASS}>
+                                                        <ModelRowLayout
+                                                            muted
+                                                            name={model.model}
+                                                            nameSuffix={selfHostMark}
+                                                            leading={<LockIcon className="size-5 shrink-0" />}
+                                                            trailing={<>{healthChip}{categoryChip}</>}
+                                                        />
                                                     </Tooltip.Trigger>
                                                     <Tooltip.Content>
                                                         <Typography type="body-sm">{t("aiSettings.subscribeToGrade")}</Typography>
@@ -496,6 +462,7 @@ export const GradeModelDropdown = ({
                                             <DropdownItem
                                                 key={key}
                                                 textValue={model.model}
+                                                className={DROPDOWN_ITEM_ROW_CLASS}
                                                 onPress={() => onSelect({
                                                     mode: canPremium ? AiMode.Premium : AiMode.Auto,
                                                     model: model.model,
@@ -503,16 +470,14 @@ export const GradeModelDropdown = ({
                                                 })}
                                             >
                                                 <Tooltip>
-                                                    <Tooltip.Trigger>
-                                                        <div className="flex w-full items-center justify-between gap-2">
-                                                            <span className="flex min-w-0 items-center gap-2">
-                                                                <WarningIcon className="size-5 shrink-0 text-warning" />
-                                                                <span className={cn("truncate", isSelected && "text-accent")}>
-                                                                    {model.model}
-                                                                </span>
-                                                            </span>
-                                                            <span className="flex shrink-0 items-center gap-2">{healthChip}{categoryChip}</span>
-                                                        </div>
+                                                    <Tooltip.Trigger className={MODEL_ROW_TRIGGER_CLASS}>
+                                                        <ModelRowLayout
+                                                            isSelected={isSelected}
+                                                            name={model.model}
+                                                            nameSuffix={selfHostMark}
+                                                            leading={<WarningIcon className="size-5 shrink-0 text-warning" />}
+                                                            trailing={<>{healthChip}{categoryChip}</>}
+                                                        />
                                                     </Tooltip.Trigger>
                                                     <Tooltip.Content>
                                                         <Typography type="body-sm" className="text-warning">
@@ -529,24 +494,37 @@ export const GradeModelDropdown = ({
                                         <DropdownItem
                                             key={key}
                                             textValue={model.model}
+                                            className={DROPDOWN_ITEM_ROW_CLASS}
                                             onPress={() => onSelect({
                                                 mode: canPremium ? AiMode.Premium : AiMode.Auto,
                                                 model: model.model,
                                                 provider: model.provider,
                                             })}
                                         >
-                                            <div className="flex w-full items-center justify-between gap-2">
-                                                <span className={cn("min-w-0 flex-1 truncate", isSelected && "text-accent")}>
-                                                    {model.model}
-                                                </span>
-                                                <span className="flex shrink-0 items-center gap-2">{healthChip}{categoryChip}</span>
-                                            </div>
+                                            <ModelRowLayout
+                                                isSelected={isSelected}
+                                                name={model.model}
+                                                nameSuffix={selfHostMark}
+                                                trailing={<>{healthChip}{categoryChip}</>}
+                                            />
                                         </DropdownItem>
                                     )
                                 })}
                             </DropdownSection>
                         </DropdownMenu>
                     </ScrollShadow>
+                    {/* escape hatch — reveal the down / off-task models hidden by default */}
+                    {hiddenCount > 0 ? (
+                        <button
+                            type="button"
+                            onClick={() => setShowHidden((open) => !open)}
+                            className="cursor-pointer px-3 pb-2 pt-1 text-start text-xs text-muted transition-colors hover:text-foreground"
+                        >
+                            {showHidden
+                                ? t("aiSettings.hideHiddenModels")
+                                : t("aiSettings.showHiddenModels", { count: hiddenCount })}
+                        </button>
+                    ) : null}
                 </div>
             </DropdownPopover>
         </Dropdown>

@@ -8,6 +8,7 @@ import {
     Chip,
     Input,
     Pagination,
+    Separator,
     TextField,
     Typography,
 } from "@heroui/react"
@@ -215,11 +216,10 @@ export const FlashcardDeckList = ({
                     <div className="flex flex-col gap-3">
                         {view === "grid" ? (
                             /* GRID — roomy cards in a responsive grid; keeps the description. */
-                            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                                 {pagedDecks.map((deck: FlashcardDeckEntity) => {
                                     const total = deck.cards?.length ?? 0
                                     const mastered = deck.masteredCount ?? 0
-                                    const percent = total > 0 ? Math.round((mastered / total) * 100) : 0
                                     return (
                                         <Card key={deck.id}>
                                             <div className="flex h-full flex-col gap-2">
@@ -237,18 +237,13 @@ export const FlashcardDeckList = ({
                                                         {deck.description}
                                                     </Typography>
                                                 ) : null}
-                                                {/* per-viewer mastery — thin hairline bar (study only) */}
+                                                {/* per-viewer mastery — count + a plain divider (study only) */}
                                                 {showProgress && total > 0 ? (
-                                                    <div className="mt-auto flex flex-col gap-1">
+                                                    <div className="mt-auto flex flex-col gap-2">
                                                         <Typography type="body-xs" color="muted">
                                                             {t("flashcard.deck.mastered", { mastered, total })}
                                                         </Typography>
-                                                        <div className="h-1 w-full overflow-hidden rounded-full bg-default">
-                                                            <div
-                                                                className="h-full rounded-full bg-accent"
-                                                                style={{ width: `${percent}%` }}
-                                                            />
-                                                        </div>
+                                                        <Separator />
                                                     </div>
                                                 ) : null}
                                                 <div className="flex items-center justify-between gap-2 pt-1">

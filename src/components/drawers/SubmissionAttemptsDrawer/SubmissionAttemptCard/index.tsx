@@ -71,7 +71,7 @@ export const SubmissionAttemptCard = (props: SubmissionAttemptCardProps) => {
     }, [submissionAttempt.submissionUrl])
 
     return (
-        <Card className={cn("border border-divider bg-transparent shadow-none", className)}>
+        <Card className={cn("bg-surface", className)}>
             <Card.Content>
                 <div>
                     <div className="flex items-center justify-between gap-3">

@@ -51,7 +51,7 @@ export const CourseValueProps = ({ className }: CourseValuePropsProps) => {
             <AsyncContent
                 isLoading={isLoading && items.length === 0}
                 skeleton={(
-                    <div className="overflow-hidden rounded-3xl border border-default bg-surface">
+                    <div className="overflow-hidden rounded-3xl bg-surface shadow-surface">
                         {[0, 1, 2, 3].map((row) => (
                             <div key={row} className="px-4 py-4">
                                 <Skeleton.Typography type="body-sm" />

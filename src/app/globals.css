@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @import "@xyflow/react/dist/style.css";
-@import "@heroui/styles";
+@import "@heroui/styles/css";
 
 /*
  * Kill the "giật giật" jitter on learn pages: their left rail is exactly
@@ -26,7 +26,7 @@ html {
 
 /*
  * HeroUI Theme Customization
- * Add this to your global.css after importing @heroui/styles
+ * Add this to your global.css after importing @heroui/styles/css
  * Only includes variables users need to customize
  * @see https://heroui.com/docs/react/getting-started/theming
  */
@@ -82,6 +82,10 @@ html {
   /* Font Family */
   /* Make sure to load Inter font in your app */
   --font-sans: var(--font-inter);
+
+  /* Tooltip — show/hide on hover immediately (HeroUI default 1500ms / 500ms). */
+  --tooltip-delay: 0ms;
+  --tooltip-close-delay: 0ms;
 }
 
 .dark,
@@ -125,6 +129,9 @@ html {
   --surface-tertiary-foreground: oklch(99.11% 0.0015 354.13);
   --warning: oklch(82.03% 0.1392 88.38);
   --warning-foreground: oklch(21.03% 0.0059 88.38);
+
+  --tooltip-delay: 0ms;
+  --tooltip-close-delay: 0ms;
 }
 
 /* ── Component overrides (UI 2.0) ──────────────────────────────────────── */
@@ -191,22 +198,19 @@ html {
     padding: 1rem !important;
 }
 /*
- * Card — unify on a FULL BORDER, NO shadow (flat surface). HeroUI bakes
- * `.card { @apply shadow-surface }` with no border, so cards read inconsistently:
- * a plain <Card> shows a shadow, while cards that manually add `border
- * border-default` (List Card, prereq, accordion surface) show a border. Flatten
- * everything to a single bordered look (`--default` = same token the bordered
- * cards already use); elevation/shadow stays only on true overlays (modal,
- * popover, tooltip — separate recipes, untouched here). The transparent variant
- * is intentionally frameless, so it keeps no border.
+ * Card — use HeroUI's default ELEVATION (`shadow-surface`) with NO border: cards
+ * read as shadow-lifted surfaces, not outlined boxes (reverts the earlier flat-
+ * bordered scheme). HeroUI already bakes `.card { @apply shadow-surface }` with
+ * no border, so we only strip any border the cascade adds and keep the shadow.
+ * The transparent variant stays intentionally frameless (no border, no shadow).
  */
 .card {
-    border: 1px solid var(--default) !important;
-    box-shadow: none !important;
+    border: none !important;
 }
 
 .card--transparent {
     border: none !important;
+    box-shadow: none !important;
 }
 
 /*

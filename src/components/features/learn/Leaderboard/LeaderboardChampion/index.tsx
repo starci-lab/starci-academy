@@ -29,7 +29,7 @@ export const LeaderboardChampion = ({ entry, totalXp, viewerUserId, className }:
     const t = useTranslations()
     const isViewer = !!viewerUserId && entry.userId === viewerUserId
     return (
-        <div className={cn("flex items-center gap-4 rounded-3xl border border-default bg-surface px-5 py-4", className)}>
+        <div className={cn("flex items-center gap-4 rounded-3xl bg-surface shadow-surface px-5 py-4", className)}>
             <div className="relative shrink-0">
                 <CrownIcon
                     aria-hidden

@@ -79,7 +79,10 @@ export const Footer = ({ className }: FooterProps) => {
                 {/* top: brand+manifesto+socials (left) · link columns (right) */}
                 <div className="flex flex-col justify-between gap-10 md:flex-row">
                     <div className="flex max-w-sm flex-col gap-4">
-                        <BrandLogo />
+                        {/* the column is a flex-col (align-items: stretch by default), which
+                            would otherwise stretch the svg's auto width to the full column
+                            width while its height stays fixed — self-start opts it out */}
+                        <BrandLogo className="self-start" />
                         <Typography type="body-sm" color="muted">
                             {t("footer.tagline")}
                         </Typography>

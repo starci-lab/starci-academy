@@ -82,6 +82,8 @@ export const ContentTabBar = ({
                 className="mx-auto w-full max-w-3xl"
                 leftTabs={leftTabs}
                 rightTabs={rightTabs}
+                collapseRightOnMobile
+                rightTabsNeutral
             />
         </div>
     )

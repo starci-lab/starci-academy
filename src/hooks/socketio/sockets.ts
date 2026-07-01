@@ -28,3 +28,11 @@ export const communityChatSocket: Socket = communityChatManager.socket("/communi
 const contentAiManager = createManager()
 /** The `/content_ai` namespace socket (grounded lesson Q&A answer token streaming). */
 export const contentAiSocket: Socket = contentAiManager.socket("/content_ai")
+
+const systemHealthManager = createManager()
+/**
+ * The `/system_health` namespace socket — PUBLIC (no auth). Broadcasts the
+ * per-model AI latency snapshot (`AiModelHealth`) to every client; the pickers
+ * subscribe to live-update their health indicator.
+ */
+export const systemHealthSocket: Socket = systemHealthManager.socket("/system_health")

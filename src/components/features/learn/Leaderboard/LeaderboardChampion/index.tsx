@@ -29,7 +29,7 @@ export const LeaderboardChampion = ({ entry, totalXp, viewerUserId, className }:
     const t = useTranslations()
     const isViewer = !!viewerUserId && entry.userId === viewerUserId
     return (
-        <div className={cn("flex items-center gap-4 rounded-3xl border border-default bg-surface px-5 py-4", className)}>
+        <div className={cn("flex items-center gap-4 rounded-3xl bg-surface shadow-surface px-5 py-4", className)}>
             <div className="relative shrink-0">
                 <CrownIcon
                     aria-hidden
@@ -59,7 +59,9 @@ export const LeaderboardChampion = ({ entry, totalXp, viewerUserId, className }:
                 </Typography>
             </div>
             <div className="shrink-0 text-right">
-                <Typography type="h4" weight="bold" className="text-accent">
+                {/* accent XP only when it's the viewer's own card — consistent with
+                    LeaderboardTable/Podium (accent value = "mine", not every #1) */}
+                <Typography type="h4" weight="bold" className={cn(isViewer ? "text-accent" : "text-foreground")}>
                     {totalXp}
                 </Typography>
                 <Typography type="body-xs" color="muted">

@@ -158,7 +158,7 @@ export const FeedbackCard = (props: FeedbackCardProps) => {
     }
 
     return (
-        <Card className={cn("border border-default bg-surface p-0 shadow-none", className)}>
+        <Card className={cn("bg-surface p-0", className)}>
             <Card.Content>{inner}</Card.Content>
         </Card>
     )

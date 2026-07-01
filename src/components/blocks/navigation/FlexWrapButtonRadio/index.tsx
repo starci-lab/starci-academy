@@ -110,8 +110,11 @@ export const FlexWrapButtonRadio = <T extends string>({
                         </Button>
                     )
                 }
-                // card-styled <Button>: bg-surface + border; selected = bg-<color>/10 + border-<color>.
-                // HeroUI fill = var(--button-bg) → override it via inline style (utility bg loses to it).
+                // card-styled <Button>: bg-surface lifted by a SHADOW (matches the global
+                // card flip — shadow instead of an unselected border; shadow-surface is
+                // transparent in dark mode, same as cards). Selected = bg-<color>/10 + a
+                // colored border as the selection signal. HeroUI fill = var(--button-bg) →
+                // override it via inline style (utility bg loses to it).
                 const style = (selected
                     ? {
                         "--button-bg": `color-mix(in oklab, var(${colorVar}) 10%, transparent)`,
@@ -130,7 +133,7 @@ export const FlexWrapButtonRadio = <T extends string>({
                         aria-pressed={selected}
                         onPress={() => onChange(item.value)}
                         style={style}
-                        className={cn("border", selected ? cn(SELECTED_BORDER[color], "font-medium") : "border-default")}
+                        className={cn("shadow-surface", selected && cn("border", SELECTED_BORDER[color], "font-medium"))}
                     >
                         {item.content}
                     </Button>

@@ -88,7 +88,7 @@ export const CourseRootNode = (props: NodeProps<CourseRootFlowNode>) => {
                 minimal
                     ? "text-2xl font-semibold !border-none !shadow-none dark:!border dark:!border-zinc-600 dark:!bg-zinc-900/90"
                     : "!text-xl",
-                selected && "ring-2 ring-accent/40 dark:ring-accent/50",
+                selected && "ring-2 ring-accent",
             )}
         >
             <Handle

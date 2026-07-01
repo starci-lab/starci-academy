@@ -3,7 +3,7 @@
 import React from "react"
 import useSWR from "swr"
 import { Chip, Typography } from "@heroui/react"
-import { ChartLineUpIcon, FlameIcon } from "@phosphor-icons/react"
+import { FlameIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { DUE_REVIEW_LIMIT } from "../constants"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -97,11 +97,7 @@ export const FlashcardStatsStrip = ({ className }: FlashcardStatsStripProps) => 
                 onRetry: () => { void decks.mutate() },
             }}
         >
-            <LabeledCard
-                className={className}
-                label={t("flashcard.stats.label")}
-                icon={<ChartLineUpIcon className="size-5" aria-hidden focusable="false" />}
-            >
+            <LabeledCard className={className} label={t("flashcard.stats.label")}>
                 <div className="flex flex-col gap-3">
                     {/* headline: mastered / total (+%) balanced by the streak chip */}
                     <div className="flex items-center justify-between gap-3">

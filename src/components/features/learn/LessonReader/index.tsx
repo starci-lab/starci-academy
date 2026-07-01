@@ -259,7 +259,7 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
                     return {
                         key: lang,
                         label: t(`programmingLanguage.${lang}`),
-                        icon: <Icon aria-hidden className="size-5 shrink-0" />,
+                        icon: <Icon aria-hidden className="size-4 shrink-0" />,
                         isDisabled: !isProgrammingLangAvailable(lang, langs),
                     }
                 }),

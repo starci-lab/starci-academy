@@ -29,7 +29,7 @@ export interface TruthListProps extends WithClassNames<undefined> {
  */
 export const TruthList = ({ items, byline, className }: TruthListProps) => {
     return (
-        <div className={cn("overflow-hidden rounded-3xl border border-default bg-surface", className)}>
+        <div className={cn("overflow-hidden rounded-3xl bg-surface shadow-surface", className)}>
             {/* Accordion Card: khung p-0 flush, accordion surface tự lo nền + separator + bo góc.
                 Mỗi sự thật = trigger (statement) bấm mở ra phần giải. KHÔNG Accordion.Indicator
                 → không caret (thầy chốt); hover trigger là affordance. */}

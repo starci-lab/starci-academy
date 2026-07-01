@@ -15,7 +15,7 @@ type FeedbackCardSkeletonProps = WithClassNames<undefined>
  */
 export const FeedbackCardSkeleton = ({ className }: FeedbackCardSkeletonProps) => {
     return (
-        <Card className={cn("w-full border border-default bg-surface p-0 shadow-none", className)}>
+        <Card className={cn("w-full bg-surface p-0", className)}>
             <Card.Content>
                 <div className="p-3">
                     <div className="flex items-center justify-between gap-3">

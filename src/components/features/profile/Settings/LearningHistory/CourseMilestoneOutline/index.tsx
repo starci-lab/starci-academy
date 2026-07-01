@@ -46,10 +46,10 @@ export interface CourseMilestoneOutlineProps extends WithClassNames<undefined> {
 const SKELETON_MILESTONE_COUNT = 4
 
 /** Accordion-card skin — `variant="surface"` bakes bg-surface + rounded; we add the border. */
-const ACCORDION_CARD = "overflow-hidden border border-default"
+const ACCORDION_CARD = "overflow-hidden shadow-surface"
 
 /** Skeleton frame mirroring the surface accordion-card. */
-const ACCORDION_CARD_SKELETON = "flex flex-col rounded-3xl border border-default bg-surface"
+const ACCORDION_CARD_SKELETON = "flex flex-col rounded-3xl bg-surface shadow-surface"
 
 /** A milestone's roll-up completion state, derived from its tasks. */
 type MilestoneState = "done" | "inProgress" | "todo"

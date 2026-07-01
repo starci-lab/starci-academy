@@ -24,7 +24,7 @@ import type {
     ChallengeGradeSelection,
     ChallengeSubmissionRowViewModel,
 } from "../types"
-import type { QueryMyCreditUsageResponseData } from "@/modules/api/graphql/queries/types/my-credit-usage"
+import type { QueryMyAiQuotaResponseData } from "@/modules/api/graphql/queries/types/my-ai-quota"
 import {
     GradeCreditDisplayKind,
 } from "../types"
@@ -34,7 +34,7 @@ import {
 import {
     GradeModelDropdown,
 } from "@/components/blocks/grading/GradeModelDropdown"
-import { AiModelCategory } from "@/modules/api/graphql/queries/query-ai-models"
+import { AiModelCategory, AiModelTask } from "@/modules/api/graphql/queries/query-ai-models"
 import {
     LastAttemptResult,
 } from "./LastAttemptResult"
@@ -57,8 +57,8 @@ export interface SubmissionRowProps extends WithClassNames<undefined> {
     gradeSelection: ChallengeGradeSelection
     /** Whether the Premium lane is unlocked for this user. */
     canPremium: boolean
-    /** Credit usage snapshot for the lane label beside the picker. */
-    creditUsage: QueryMyCreditUsageResponseData | undefined
+    /** Unified tier-aware quota snapshot (`myAiQuota`) for the lane label. */
+    creditUsage: QueryMyAiQuotaResponseData | undefined
     /** Opens the AI quota details modal. */
     onOpenAiQuota: () => void
     /** Fired with the new URL value when the input changes. */
@@ -243,6 +243,7 @@ export const SubmissionRow = ({
                             canPremium={canPremium}
                             isDisabled={isPending}
                             floor={AiModelCategory.Economy}
+                            task={AiModelTask.Grading}
                             onSelect={(selection) => onSelectGrade(submission.id, selection)}
                             onUpgrade={onUpgrade}
                         />

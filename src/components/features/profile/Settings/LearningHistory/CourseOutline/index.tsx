@@ -56,10 +56,10 @@ const SKELETON_MODULE_COUNT = 4
  * separators, so here we only add the card border (the surface variant has none).
  * Surface reads as a real card on the settings page's `bg-background`.
  */
-const ACCORDION_CARD = "overflow-hidden border border-default"
+const ACCORDION_CARD = "overflow-hidden shadow-surface"
 
 /** Skeleton frame that mirrors the surface accordion-card (bg-surface + rounded + border). */
-const ACCORDION_CARD_SKELETON = "flex flex-col rounded-3xl border border-default bg-surface"
+const ACCORDION_CARD_SKELETON = "flex flex-col rounded-3xl bg-surface shadow-surface"
 
 /**
  * Filter modules + their lessons by a search query. A module survives when its

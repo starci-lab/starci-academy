@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint"
   },
@@ -14,8 +14,8 @@
     "@emotion/is-prop-valid": "^1.4.0",
     "@fingerprintjs/fingerprintjs": "^5.2.0",
     "@gravity-ui/icons": "^2.18.0",
-    "@heroui/react": "^3.1.0",
-    "@heroui/styles": "^3.1.0",
+    "@heroui/react": "^3.2.1",
+    "@heroui/styles": "^3.2.1",
     "@hookform/resolvers": "^5.4.0",
     "@iconify/react": "^6.0.2",
     "@icons-pack/react-simple-icons": "^13.13.0",

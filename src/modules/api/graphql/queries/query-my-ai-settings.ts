@@ -14,6 +14,9 @@ export enum AiMode {
 export enum ModelProvider {
     Gemini = "gemini",
     OpenAI = "openai",
+    Local = "local",
+    OpenRouter = "openrouter",
+    Anthropic = "anthropic",
 }
 
 /** Paid subscription tier (mirrors backend `AiSubTier`). */

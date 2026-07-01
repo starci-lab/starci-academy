@@ -43,7 +43,7 @@ export const TagChips = ({ tags, maxVisible = 3, variant = "soft", classNames }:
                     <Chip.Label>{tag}</Chip.Label>
                 </Chip>
             ))}
-            <Tooltip  delay={0} isOpen={menuOpen} onOpenChange={setMenuOpen}>
+            <Tooltip isOpen={menuOpen} onOpenChange={setMenuOpen}>
                 <Tooltip.Trigger className={classNames?.trigger}>
                     <Chip color="default" variant={variant}>
                         <Chip.Label>{t("common.tagsMore", { count: tags.length - maxVisible })}</Chip.Label>

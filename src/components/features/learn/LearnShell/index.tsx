@@ -84,7 +84,7 @@ export const LearnShell = ({
                 for every learn page (features supply only max-w + mx-auto + gap), except
                 full-bleed routes (mind-map canvas). Also anchors the collapse handle +
                 right border for the redux-driven (milestone) rail that opts into it */}
-            <div className={cn("min-h-0 min-w-0 flex-1", !fullBleed && "p-6", useTabBar && "max-lg:pb-16", rightRail && "lg:pr-0 lg:pb-0", showRightCollapse && "relative lg:border-r")}>
+            <div className={cn("min-h-0 w-full min-w-0 flex-1 lg:w-auto", !fullBleed && "p-6", useTabBar && "max-lg:pb-16", rightRail && "lg:pr-0 lg:pb-0", showRightCollapse && "relative lg:border-r")}>
                 {showRightCollapse && <LearnPanelToggles />}
                 {/* mobile chrome: the lesson reader (modules — has a left rail) folds
                     its 4 columns into a bottom-tab bar; other learn tabs (incl. a

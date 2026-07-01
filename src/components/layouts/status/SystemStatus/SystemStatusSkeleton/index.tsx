@@ -10,7 +10,7 @@ export interface SystemStatusSkeletonProps extends WithClassNames<undefined> {
 
 /** A single component-card placeholder mirroring {@link ComponentCard}. */
 const ComponentCardSkeleton = () => (
-    <div className="flex flex-col gap-2 rounded-large border border-default bg-surface p-4">
+    <div className="flex flex-col gap-2 rounded-large bg-surface shadow-surface p-4">
         <div className="flex items-center justify-between gap-2">
             <div className="flex items-center gap-2">
                 <Skeleton className="size-2.5 rounded-full" />
@@ -27,7 +27,7 @@ const ComponentCardSkeleton = () => (
 
 /** A single AI key group placeholder mirroring {@link AiKeyGroup}. */
 const AiKeyGroupSkeleton = () => (
-    <div className="flex flex-col gap-3 rounded-large border border-default bg-surface p-4">
+    <div className="flex flex-col gap-3 rounded-large bg-surface shadow-surface p-4">
         <Skeleton className="h-4 w-2/3 rounded" />
         <div className="flex flex-wrap gap-1.5">
             {Array.from({ length: 5 }).map((_, index) => (

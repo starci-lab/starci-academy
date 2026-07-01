@@ -18,8 +18,6 @@ const query1 = gql`
         }
         ai {
           auto {
-            usesPer5h
-            usesPerWeek
             creditsPer5h
             creditsPerWeek
             creditCost

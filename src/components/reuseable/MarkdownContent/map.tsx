@@ -265,7 +265,7 @@ export const buildMarkdownRenderers = ({
             // Neutral inline code (GitHub/Stripe-style): subtle surface + foreground text, NOT
             // the brand accent — accent is reserved for links so a keyword-dense paragraph stays calm.
             return (
-                <code className="rounded-md bg-default px-1 py-0.5 font-mono text-sm text-foreground">
+                <code className="rounded-md bg-default px-1 py-0.5 font-mono text-sm text-foreground [overflow-wrap:anywhere]">
                     {code}
                 </code>
             )

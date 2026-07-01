@@ -23,7 +23,7 @@ export interface SurfaceListCardProps extends WithClassNames<undefined> {
  * @param props - {@link SurfaceListCardProps}
  */
 export const SurfaceListCard = ({ children, className }: SurfaceListCardProps) => (
-    <div className={cn("overflow-hidden rounded-3xl border border-default bg-surface", className)}>
+    <div className={cn("overflow-hidden rounded-3xl bg-surface shadow-surface", className)}>
         {children}
     </div>
 )

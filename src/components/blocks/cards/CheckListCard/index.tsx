@@ -22,7 +22,7 @@ export interface CheckListCardProps extends WithClassNames<undefined> {
  * @param props - See {@link CheckListCardProps}.
  */
 export const CheckListCard = ({ children, className }: CheckListCardProps) => (
-    <ul className={cn("overflow-hidden rounded-3xl border border-default bg-surface", className)}>
+    <ul className={cn("overflow-hidden rounded-3xl bg-surface shadow-surface", className)}>
         {children}
     </ul>
 )

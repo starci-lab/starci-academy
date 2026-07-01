@@ -3,7 +3,6 @@
 import React from "react"
 import useSWR from "swr"
 import { Button, Typography } from "@heroui/react"
-import { CardsThreeIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { DUE_REVIEW_LIMIT } from "../constants"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -43,11 +42,7 @@ export const DueReviewHero = ({ onStart, className }: DueReviewHeroProps) => {
     const dueCount = data?.dueCount ?? 0
 
     return (
-        <LabeledCard
-            className={className}
-            label={t("flashcard.due.label")}
-            icon={<CardsThreeIcon className="size-5" aria-hidden focusable="false" />}
-        >
+        <LabeledCard className={className} label={t("flashcard.due.label")}>
             <AsyncContent
                 isLoading={isLoading && !data}
                 skeleton={

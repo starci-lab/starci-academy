@@ -44,7 +44,7 @@ export const TrackLadder = ({ tracks, className }: TrackLadderProps) => {
                         className={cn(
                             "flex min-w-40 flex-1 flex-col gap-1 rounded-xl border px-4 py-3",
                             track.highlighted
-                                ? "border-accent/40 bg-accent/5"
+                                ? "border-accent bg-surface"
                                 : "border-separator bg-surface",
                         )}
                     >

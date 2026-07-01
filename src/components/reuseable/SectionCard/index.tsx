@@ -46,7 +46,7 @@ export const SectionCard = ({
 }: SectionCardProps) => {
     const hasHeader = Boolean(title || action || icon)
     return (
-        <Card className={cn(accent && "border-accent/40 bg-accent/5", className)}>
+        <Card className={cn(accent && "border-accent", className)}>
             <CardContent className={cn("flex flex-col gap-3", contentClassName)}>
                 {hasHeader ? (
                     <div className="flex items-center justify-between gap-3 border-b border-separator pb-3">

@@ -176,11 +176,13 @@ export const CourseModuleNode = (props: NodeProps<CourseModuleFlowNode>) => {
                 "relative flex min-h-[100px] min-w-[300px] w-[300px] flex-col items-stretch rounded-3xl px-4 py-3 text-center",
                 "border shadow-sm transition-all duration-200 dark:shadow-lg dark:shadow-black/30",
                 STATUS_TINT[data.status],
-                "hover:border-accent hover:shadow-md hover:ring-2 hover:ring-accent/30 dark:hover:ring-accent/40",
-                data.isActive && "border-accent ring-2 ring-accent/35 dark:ring-accent/45",
-                // "you are here" — strongest emphasis, wins over status border
-                data.isCurrent && "border-accent ring-2 ring-accent/50 dark:ring-accent/60",
-                selected && "ring-2 ring-accent/25 dark:ring-accent/35",
+                // one accent ring scale (no per-state opacity zoo): hover = light ring,
+                // selected/current = full ring, active = border only
+                "hover:border-accent hover:shadow-md hover:ring-2 hover:ring-accent/30",
+                data.isActive && "border-accent",
+                // "you are here" — strongest: accent border + full ring, wins over status border
+                data.isCurrent && "border-accent ring-2 ring-accent",
+                selected && "ring-2 ring-accent",
             )}
         >
             <Handle

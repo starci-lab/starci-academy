@@ -82,53 +82,48 @@ export const MarkdownTable = ({ children, ariaLabel, className }: MarkdownTableP
     const hasThead = parts.some(
         (child) => React.isValidElement(child) && child.type === MarkdownTableHead,
     )
-
-    if (hasThead) {
-        return (
-            <Table variant="primary" className={cn(className)}>
-                <Table.ScrollContainer>
-                    <Table.Content aria-label={ariaLabel}>
-                        {children}
-                    </Table.Content>
-                </Table.ScrollContainer>
-            </Table>
-        )
-    }
-
     const tbodyIndex = parts.findIndex(
         (child) => React.isValidElement(child) && child.type === MarkdownTableBody,
     )
 
-    if (tbodyIndex < 0) {
-        return (
-            <Table variant="primary" className={cn(className)}>
-                <Table.ScrollContainer>
-                    <Table.Content aria-label={ariaLabel}>
-                        <MarkdownTableHead />
-                        {children}
-                    </Table.Content>
-                </Table.ScrollContainer>
-            </Table>
+    let content: React.ReactNode
+    if (hasThead) {
+        content = children
+    } else if (tbodyIndex < 0) {
+        content = (
+            <>
+                <MarkdownTableHead />
+                {children}
+            </>
+        )
+    } else {
+        const tbody = parts[tbodyIndex] as React.ReactElement<{ children?: React.ReactNode }>
+        const bodyRows = React.Children.toArray(tbody.props.children)
+        const [firstRow, ...restRows] = bodyRows
+        content = (
+            <>
+                {parts.slice(0, tbodyIndex)}
+                <MarkdownTableHead>{firstRow}</MarkdownTableHead>
+                <MarkdownTableBody>{restRows}</MarkdownTableBody>
+                {parts.slice(tbodyIndex + 1)}
+            </>
         )
     }
 
-    const tbody = parts[tbodyIndex] as React.ReactElement<{ children?: React.ReactNode }>
-    const bodyRows = React.Children.toArray(tbody.props.children)
-    const [firstRow, ...restRows] = bodyRows
-    const beforeTbody = parts.slice(0, tbodyIndex)
-    const afterTbody = parts.slice(tbodyIndex + 1)
-
+    // The HeroUI table-root is a CSS grid; its inner scroll-container's min-width doesn't
+    // propagate, so a wide table forces the whole reading column past the viewport (page stops
+    // shrinking). Wrap in a PLAIN BLOCK x-scroll box — a block scroll container has min-content
+    // 0, so the column shrinks and the table scrolls inside instead of blocking the layout.
     return (
-        <Table variant="primary" className={cn(className)}>
-            <Table.ScrollContainer>
-                <Table.Content aria-label={ariaLabel}>
-                    {beforeTbody}
-                    <MarkdownTableHead>{firstRow}</MarkdownTableHead>
-                    <MarkdownTableBody>{restRows}</MarkdownTableBody>
-                    {afterTbody}
-                </Table.Content>
-            </Table.ScrollContainer>
-        </Table>
+        <div className="max-w-full overflow-x-auto">
+            <Table variant="primary" className={cn(className)}>
+                <Table.ScrollContainer>
+                    <Table.Content aria-label={ariaLabel}>
+                        {content}
+                    </Table.Content>
+                </Table.ScrollContainer>
+            </Table>
+        </div>
     )
 }
 

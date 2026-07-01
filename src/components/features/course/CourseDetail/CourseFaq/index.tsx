@@ -66,7 +66,7 @@ export const CourseFaq = ({ className }: CourseFaqProps) => {
                 }}
             >
                 {/* Accordion Card (xem elements/card.md §3): surface accordion frameless + viền. */}
-                <Accordion variant="surface" className="overflow-hidden border border-default">
+                <Accordion variant="surface" className="overflow-hidden shadow-surface">
                     {qnas.map((qna) => (
                         <Accordion.Item key={qna.id} aria-label={qna.question}>
                             <Accordion.Heading>

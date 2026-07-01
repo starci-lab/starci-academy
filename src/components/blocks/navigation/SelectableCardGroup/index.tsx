@@ -75,16 +75,17 @@ export const SelectableCardGroup = <T extends string>({
         >
             {items.map((item) => (
                 <Radio key={item.value} value={item.value} isDisabled={item.isDisabled} className="w-full">
-                    {({ isSelected, isDisabled, isFocusVisible }) => (
-                        <div
-                            className={cn(
-                                "flex w-full items-center gap-2 rounded-xl border bg-surface px-3 py-3 text-sm text-foreground transition-colors",
-                                isSelected ? "border-accent bg-accent/10 font-medium" : "border-default",
-                                !isSelected && !isDisabled && "hover:bg-default",
-                                isDisabled && "opacity-60",
-                                isFocusVisible && "ring-2 ring-accent",
-                            )}
-                        >
+                    <Radio.Content className="block w-full">
+                        {({ isSelected, isDisabled, isFocusVisible }) => (
+                            <div
+                                className={cn(
+                                    "flex w-full items-center gap-2 rounded-xl border bg-surface px-3 py-3 text-sm text-foreground transition-colors",
+                                    isSelected ? "border-accent bg-accent/10 font-medium" : "border-default",
+                                    !isSelected && !isDisabled && "hover:bg-default",
+                                    isDisabled && "opacity-60",
+                                    isFocusVisible && "ring-2 ring-accent",
+                                )}
+                            >
                             {item.icon ? (
                                 <span className="shrink-0" aria-hidden>
                                     {item.icon}
@@ -98,7 +99,8 @@ export const SelectableCardGroup = <T extends string>({
                             </span>
                             {item.badge ? <span className="ml-auto shrink-0">{item.badge}</span> : null}
                         </div>
-                    )}
+                        )}
+                    </Radio.Content>
                 </Radio>
             ))}
         </RadioGroup>

@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react"
 import { Typography } from "@heroui/react"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"

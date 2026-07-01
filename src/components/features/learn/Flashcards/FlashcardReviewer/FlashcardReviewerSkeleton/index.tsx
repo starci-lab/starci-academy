@@ -13,7 +13,7 @@ export const FlashcardReviewerSkeleton = ({ className }: WithClassNames<undefine
                 {/* progress bar */}
                 <Skeleton className="h-1.5 w-full rounded-full" />
                 {/* the flashcard — fixed-height bordered surface (mirrors FlipCard) */}
-                <div className="flex h-80 flex-col gap-3 rounded-2xl border border-default bg-surface p-6 sm:h-[22rem]">
+                <div className="flex h-80 flex-col gap-3 rounded-2xl bg-surface shadow-surface p-6 sm:h-[22rem]">
                     <Skeleton.Typography type="body" width="3/4" />
                     <Skeleton.Typography type="body" width="2/3" />
                     <Skeleton.Typography type="body" width="1/2" />

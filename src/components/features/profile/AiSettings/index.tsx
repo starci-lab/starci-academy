@@ -149,7 +149,7 @@ export const AiSettings = () => {
                     )
                     : (
                         <div className="flex flex-col gap-6">
-                            <div className="rounded-2xl border border-default bg-surface px-4 py-3">
+                            <div className="rounded-2xl bg-surface shadow-surface px-4 py-3">
                                 <Typography type="body-sm" color="muted">
                                     {data?.tier
                                         ? t("aiSettings.ceil.plan", {

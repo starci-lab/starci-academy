@@ -126,8 +126,8 @@ export const RewardsPage = ({
                         {t("rewards.title")}
                     </h1>
                 </div>
-                <div className="flex flex-col gap-0 rounded-large bg-accent/10 p-3">
-                    <span className="text-base font-semibold text-foreground">
+                <div className="flex flex-col gap-0 rounded-large bg-surface shadow-surface p-3">
+                    <span className="text-base font-semibold text-accent">
                         {t("rewards.balance", {
                             count: balance,
                         })}

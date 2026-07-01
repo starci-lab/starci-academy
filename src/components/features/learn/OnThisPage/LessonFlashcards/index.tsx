@@ -3,7 +3,6 @@
 import React from "react"
 import useSWR from "swr"
 import { Button, Typography } from "@heroui/react"
-import { CardsThreeIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -70,7 +69,6 @@ export const LessonFlashcards = ({ className }: LessonFlashcardsProps) => {
         >
             <LabeledList
                 className={className}
-                icon={<CardsThreeIcon className="size-5" aria-hidden focusable="false" />}
                 label={t("lessonRail.flashcards.title")}
                 action={(
                     <Button size="sm" variant="primary" className="self-start" onPress={onReview}>

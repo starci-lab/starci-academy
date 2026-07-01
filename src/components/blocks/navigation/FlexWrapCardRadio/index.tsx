@@ -86,20 +86,22 @@ export const FlexWrapCardRadio = <T extends string>({
                 className="contents"
             >
                 {items.map((item) => (
-                    <Radio key={item.value} value={item.value} isDisabled={item.isDisabled}>
-                        {({ isSelected, isDisabled, isFocusVisible }) => (
-                            <div
-                                className={cn(
-                                    "flex items-center gap-2 rounded-xl border bg-surface px-3 py-2 text-sm text-foreground transition-colors",
-                                    isSelected ? cn(SELECTED_CLASS[color], "font-medium") : "border-default",
-                                    !isSelected && !isDisabled && "hover:bg-default",
-                                    isDisabled && "opacity-60",
-                                    isFocusVisible && "ring-2 ring-accent",
-                                )}
-                            >
-                                {item.content}
-                            </div>
-                        )}
+                    <Radio key={item.value} value={item.value} isDisabled={item.isDisabled} className="contents">
+                        <Radio.Content className="contents">
+                            {({ isSelected, isDisabled, isFocusVisible }) => (
+                                <div
+                                    className={cn(
+                                        "flex items-center gap-2 rounded-xl border bg-surface px-3 py-2 text-sm text-foreground transition-colors",
+                                        isSelected ? cn(SELECTED_CLASS[color], "font-medium") : "border-default",
+                                        !isSelected && !isDisabled && "hover:bg-default",
+                                        isDisabled && "opacity-60",
+                                        isFocusVisible && "ring-2 ring-accent",
+                                    )}
+                                >
+                                    {item.content}
+                                </div>
+                            )}
+                        </Radio.Content>
                     </Radio>
                 ))}
             </RadioGroup>

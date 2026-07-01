@@ -110,7 +110,7 @@ export const LearnMobileTabBar = () => {
                                 isActive ? "text-accent" : "text-muted",
                             )}
                         >
-                            <tab.icon className="size-5" weight={isActive ? "fill" : "regular"} />
+                            <tab.icon className="size-5" />
                             <span className="text-xs">{tab.label}</span>
                         </button>
                     )

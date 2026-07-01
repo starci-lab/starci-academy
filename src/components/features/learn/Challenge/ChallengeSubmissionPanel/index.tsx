@@ -27,7 +27,7 @@ import { useMutateSubmitChallengeSubmissionSwr } from "@/hooks/swr/api/graphql/m
 import { useMutateSyncChallengeSubmissionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSyncChallengeSubmissionSwr"
 import { useQueryAiModelsSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiModelsSwr"
 import { useQueryMyAiSettingsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiSettingsSwr"
-import { useQueryMyCreditUsageSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCreditUsageSwr"
+import { useQueryMyAiQuotaSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiQuotaSwr"
 import type { AiGradableModel } from "@/modules/api/graphql/queries/types/ai-models"
 import { ChallengeSubmissionEntity } from "@/modules/types/entities/challenge-submission"
 import { JobCategory } from "@/modules/types/enums/job-category"
@@ -81,8 +81,9 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
     const locale = useLocale()
     const router = useRouter()
     const pathname = usePathname()
-    // Credit usage snapshot (source of truth: credit_usage_histories), Redis-cached.
-    const creditUsageSwr = useQueryMyCreditUsageSwr()
+    // Unified TIER-AWARE quota snapshot (`myAiQuota`): a paid tier shows its own
+    // cap (Plus 5000/week …), not the flat free base from the old credit-usage pool.
+    const creditUsageSwr = useQueryMyAiQuotaSwr()
     const creditUsage = creditUsageSwr.data
     // AI usage details live in the AiQuota modal; the panel only links into it.
     const { open: openAiQuota } = useAiQuotaOverlayState()

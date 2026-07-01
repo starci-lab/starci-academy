@@ -191,3 +191,210 @@ Inventory lại (FE+BE+DB) → data đã có sẵn, chưa render:
 - `InterviewSession` setup → **1 CỘT** (bỏ bento `lg:grid-cols`): hero → chip kỳ vọng → **readiness STRIP ngang** (avg + `ProgressMeter` flex-1 + breakdown + weakTags, full-width) → **Kiểu luyện** = `SelectableCardGroup` columns=2 (thay button-grid tự chế) → **Cấp độ** SegmentedControl → CTA `lg`. Readiness đặt TRÊN (status header).
 - tsc + eslint sạch (block + feature). i18n không đổi (đã thêm vòng 3).
 - **Còn ngỏ:** thầy chưa chốt readiness TRÊN vs DƯỚI CTA — tạm để TRÊN, đổi dễ. weak/ladder vẫn disabled "Sắp có" (chờ BE-add).
+
+---
+
+## VÒNG 5 — 2026-06-30: TÁCH CARD (setup là 1 Card khổng lồ) + RENDER LỊCH SỬ phỏng vấn (seed + hiện list)
+> Thầy: *"brainstorm lại trang này để render cho đẹp, tách card ra được không, tại còn lưu lịch sử phỏng vấn nữa. seed lịch sử và render ra"*. KHÔNG code (chờ `/starci-fe-ux-apply`). Widget đã vẽ (`interview_vong5_tach_card_history_directions`).
+
+### Pain (đo lại FE/BE/DB qua 3 Explore agent)
+1. **Setup = 1 `<Card>` khổng lồ** nhồi: hero + 3 chip + readiness strip + mode (`SelectableCardGroup`) + level (`SegmentedControl`) + model (`GradeModelDropdown`) + CTA. → 1 cột cao ngoằng, mọi field cùng trọng số, không phân cấp, mobile cuộn mệt, không quét nhanh được "tôi cần làm gì". Vi phạm tinh thần [[concepts/card]] (1 card = 1 bounded object có nghĩa, không nhồi mọi thứ).
+2. **Lịch sử CHƯA render đúng nghĩa** — `myInterviewHistory` (aggregate) chỉ hiện ở readiness strip (avg/best/breakdown/weakTags). KHÔNG có: list per-attempt, ngày, trend, `lastAttemptAt` (fetch mà không hiện), retry. i18n `historyTitle`/`historyAnswered` ĐÃ có nhưng **unused** (chừa sẵn cho 1 history view chưa dựng).
+3. **i18n key thiếu hiện raw:** `modelLabel`, `finishAndGrade`, `gradingSession`, `gradingProgress`, `perQuestionTitle`, `questionN` (code gọi `t(...)` nhưng key chưa có trong en/vi.json → hiện nguyên `flashcard.interview.modelLabel`).
+
+### ⚠️ Ràng buộc DỮ LIỆU THẬT (grounded — quyết định cốt lõi của vòng này)
+- **`myInterviewHistory(courseId?, flashcardDeckId?)` = AGGREGATE-ONLY**: `totalAnswered · averageScore · bestScore · passCount · borderlineCount · failCount · weakTags[≤6] · lastAttemptAt`. **KHÔNG có per-attempt list query.**
+- **DB `interview_attempts`** (append-only log) CÓ ĐỦ data per-row: `score · verdict(pass/borderline/fail) · level · tags[] · createdAt · deck/card/enrollment` — NHƯNG **chưa expose ra GraphQL dạng list.**
+- **Mỗi row = 1 CÂU TRẢ LỜI, KHÔNG group thành "phiên"** (không có `InterviewSessionEntity` / sessionId / startedAt-group). → "Lịch sử phỏng vấn" theo data thật = **timeline per-câu-đã-trả-lời**, KHÔNG phải "list các phiên 5/10 câu". (Group theo phiên = cần entity mới → defer, ngoài scope.)
+- **KHÔNG persist:** transcript, strengths/gaps/hint, model đã chấm (ở `credit_usage_histories` rời), duration. → history list chỉ render được field ĐÃ lưu (ngày/điểm/verdict/level/tags). Đừng vẽ trend-chart/replay-answer (data không có).
+
+### → 2 việc thầy yêu cầu, map ra hành động grounded
+| Yêu cầu | Cách làm (grounded) |
+|---|---|
+| **"tách card ra"** | Bổ 1 Card khổng lồ → **3 `LabeledCard` dọc** cách `gap-6` (KHÔNG bento split — vòng 4 thầy đã bác chia đôi trong cột hẹp `max-w-3xl`): **(1) Bắt đầu phỏng vấn** (hero + chip kỳ vọng + mode + level + model + CTA `lg`) · **(2) Độ sẵn sàng** (readiness aggregate: điểm TB + ring + breakdown + weakTags) · **(3) Lịch sử phỏng vấn** (list). Mỗi card = 1 LabeledCard (label ngoài), tránh card-in-card. |
+| **"lưu lịch sử + seed + render"** | History = **list per-câu-đã-trả-lời** (mỗi row: verdict icon + điểm + cấp độ chip + tag + thời gian tương đối; group header theo NGÀY cho ra "timeline"). **Cần 1 BE query MỚI** `interviewAttempts(courseId, limit, offset)` (DB có data, chỉ thiếu resolver) + **seed** rows `interview_attempts` (script kiểu `scratch/seed-leaderboard.cjs`: enrollment + cardIds + score/verdict/level/tags/createdAt rải vài ngày). Phân trang theo [[list-surface-anatomy-search-count-list-pagination]]. |
+
+### 3 HƯỚNG (widget đã vẽ — chọn order + cách render history)
+| Hướng | Thứ tự card | ✅ | ❌ |
+|---|---|---|---|
+| **A — Bắt đầu trước** | Start → Readiness → History | CTA lên đầu (1 primary action, quét nhanh "làm gì") | lịch sử ở đáy, người quay lại phải cuộn |
+| **B — Độ sẵn sàng dẫn** ✅ ĐỀ XUẤT | Readiness → Start → History | vào thấy "tôi tới đâu" trước (động lực, đúng [[surface-lands-on-dashboard-no-auto-forward]] + [[progress-block-growing-quantity-headline-not-vanity-strip]]); user mới (0 attempt) → readiness rỗng tự thu gọn → CTA nổi lên | CTA dưới fold 1 chút cho người quay lại |
+| **C — Start gọn + tab Lịch sử** | Start + 1 card 2 tab (Tổng quan ⇄ Lịch sử) | gọn nhất; lịch sử có "nhà" riêng + phân trang trong tab | thêm 1 lớp tab; readiness + history chen 1 card |
+→ **CHỐT B** (progress-led): khối **Độ sẵn sàng** = headline có nghĩa (điểm TB + ring + breakdown + weakTags) dẫn đầu → "đang ở đâu / luyện tiếp", đúng họ dashboard-land + meter-có-nghĩa. **Start** giữ 1 primary action (CTA `lg` mic). **Lịch sử** = timeline per-câu (group theo ngày) + phân trang. User mới: readiness 0 + nudge (không ẩn câm — [[labeled-section-render-empty-not-self-hide]]), history empty-state "Chưa có lần phỏng vấn nào".
+- **Refs:** [Interview Prep AI](https://apps.apple.com/us/app/interview-prep-ai-practice/id6756488628) (full history mọi phiên + review) · [Score My Interview](https://www.scoremyinterview.com/) (mọi câu đã chấm vào library, mở lại/sửa/nộp lại) · [Exponent](https://www.tryexponent.com/practice) · [Huru](https://huru.ai/) · readiness "proficiency matrix" (green ≥85 / amber 70-84 / red <70) [Mock interview tracker](https://medium.com/@codegrey/i-built-a-coding-interview-tracker-using-what-i-learned-from-pal-7605812dc7d5).
+
+### Section → dữ liệu BE/DB
+| Section (card) | Nguồn | Trạng thái |
+|---|---|---|
+| Bắt đầu (mode/level/model/CTA) | FE state + `drawInterviewCard` + `gradeInterviewAnswer` | ✅ có sẵn |
+| Độ sẵn sàng | `myInterviewHistory(courseId)` (aggregate) | ✅ có sẵn (đang dùng) |
+| **Lịch sử (list)** | **query MỚI `interviewAttempts(courseId, limit, offset)`** → mỗi item `{id, score, verdict, level, tags, createdAt, deckTitle?, question?}` | ⚠️ **BE-add** (DB `interview_attempts` đã có cột; chỉ thiếu resolver + response type) |
+| Seed | script ghi thẳng `interview_attempts` (enrollment + card thật + score/verdict/level/tags/createdAt rải ngày) | ⚠️ **cần viết** (kiểu `scratch/seed-leaderboard.cjs`; local KHÔNG cần CDC vì là bảng thường, direct-insert OK) |
+
+### ⚠️ BE phải add (báo thầy — KHÔNG entity mới, chỉ thêm 1 query + seed)
+1. **Query `interviewAttempts(courseId?: ID, flashcardDeckId?: ID, limit: Int = 10, offset: Int = 0)`** → `[InterviewAttemptItem]` + `totalCount` (cho phân trang). Resolver scan `interview_attempts` theo `enrollmentId` (course) hoặc `userId`, order `createdAt DESC`, join `flashcard_decks.title` + (optional) `flashcard_cards.question`. Tái dùng `InterviewHistoryService` (cùng nguồn aggregate). Enrolled-only guard (như 3 resolver interview hiện có).
+2. **Seed script** `scratch/seed-interview-history.cjs`: chọn 1 user + course enrolled → bốc N card gradable thật → insert ~15-25 rows `interview_attempts` (score 40-95, verdict suy từ score, level/tags từ card, `createdAt` rải 7-14 ngày) → để readiness + history list có data render ngay.
+
+### FE phải đổi (sau khi BE add)
+- `InterviewSession` setup: bổ 1 Card → **3 LabeledCard** (Độ sẵn sàng · Bắt đầu · Lịch sử), gap-6. Readiness tách khỏi card config.
+- **Khối Lịch sử mới:** `LabeledCard "Lịch sử phỏng vấn"` (label + `lastAttemptAt` ở `labelEnd`?) → `SurfaceListCard` + `SurfaceListCardItem` rows (verdict icon + điểm + level chip + tags + relative-time), group header theo ngày, `Pagination` (ẩn khi ≤1 trang, căn trái + hover — [[list-pager-left-align-and-hover]]). Hook mới `useQueryInterviewAttemptsSwr(courseId, page)`. Empty/loading/error chuẩn `AsyncContent`.
+- **Sửa i18n thiếu** (`modelLabel/finishAndGrade/gradingSession/gradingProgress/perQuestionTitle/questionN`) + thêm `history*` (vi+en) — fix luôn bug raw-key.
+- Mode "Điểm yếu"/"Leo cấp" vẫn "Sắp có" (chờ BE tag-filter draw — vòng sau).
+
+### A11y / states
+- History empty (0 attempt) → `EmptyContent` "Chưa có lần phỏng vấn nào" + hint "Bắt đầu phỏng vấn để theo dõi tiến bộ" (KHÔNG ẩn câm card — [[labeled-section-render-empty-not-self-hide]]); readiness 0 + nudge (giữ vòng 4).
+- Loading → skeleton mirror list rows. Error → retry.
+- Verdict màu = semantic (pass success / borderline warning / fail danger), KHÔNG accent ([[elements/color]] §status).
+
+### ✅ CHỐT (thầy 2026-06-30)
+1. **Hướng B** — thứ tự card: **Độ sẵn sàng → Bắt đầu → Lịch sử** (3 LabeledCard dọc, gap-6).
+2. **Lịch sử GROUP THEO PHIÊN** (không per-câu): mỗi dòng lịch sử = 1 phiên (5/10 câu) với điểm TB + breakdown + ngày + cấp độ + mode.
+3. **BE add query + seed** — đồng ý.
+
+### Cách làm GROUP-THEO-PHIÊN — NHẸ NHẤT, KHÔNG entity mới (chốt kỹ thuật)
+Group theo phiên KHÔNG cần `InterviewSessionEntity` đầy đủ. Mỗi attempt đã append-only → chỉ cần **1 cột nhóm chung**:
+- **DB:** thêm cột **nullable `interview_session_id` (uuid)** vào `interview_attempts` (+ index `(interview_session_id)`) + migration. KHÔNG bảng mới.
+- **FE:** `startSession` sinh 1 `sessionId` (uuid client) → truyền vào MỌI `gradeInterviewAnswer` của phiên đó (thêm field `interviewSessionId` vào request). BE ghi vào cột mới mỗi row. (Phiên = các attempt cùng `interview_session_id`.)
+- **BE query MỚI `interviewSessions(courseId?, limit, offset)`** → `{ items: [InterviewSessionSummary], totalCount }`, mỗi item GROUP BY `interview_session_id` trên `interview_attempts`:
+  `{ sessionId, startedAt(min createdAt), questionCount(count), averageScore(avg), passCount/borderlineCount/failCount, level(mode của level trong phiên), weakTags[] }`. Aggregate tính lúc đọc (GROUP BY) — không materialize. Order `startedAt DESC`. Enrolled-only guard.
+  - Legacy rows (seed cũ / trước khi có cột) `interview_session_id = null` → gom thành 1 nhóm "Trước đây" HOẶC bỏ qua (chốt lúc apply; đề xuất: bỏ qua null cho list, vẫn tính vào aggregate readiness).
+- **Seed `scratch/seed-interview-history.cjs`:** 1 user+course enrolled → bốc card gradable thật → tạo ~5-8 PHIÊN, mỗi phiên 5-10 attempt CHUNG `interview_session_id`, `createdAt` rải 7-14 ngày, score 40-95 (verdict suy từ score), level/tags từ card. → readiness + list phiên có data render ngay.
+- `myInterviewHistory` (aggregate readiness) **GIỮ NGUYÊN** (không cần đổi — vẫn quét toàn bộ attempts của course).
+
+### FE render khối Lịch sử (sau BE add)
+- `LabeledCard "Lịch sử phỏng vấn"` → list các **phiên** = `SurfaceListCard` + `SurfaceListCardItem` (mỗi row: ngày/relative-time + điểm TB lớn + breakdown chip đạt/cận/chưa + cấp độ chip + `questionCount` câu). `Pagination` căn trái + hover, ẩn khi ≤1 trang ([[list-pager-left-align-and-hover]] + [[list-surface-anatomy-search-count-list-pagination]]). Hook `useQueryInterviewSessionsSwr(courseId, page)`. Empty `EmptyContent` "Chưa có lần phỏng vấn nào" + hint; loading skeleton mirror; error retry.
+- (Tùy chọn pha sau) bấm 1 phiên → drawer chi tiết per-câu của phiên (data per-attempt vẫn có) — như [[attempt-history-selector-adaptive-and-grading-model-chip]] drawer. Defer.
+
+### Việc cho `/starci-fe-ux-apply` (tổng hợp)
+1. **BE:** cột `interview_session_id` + migration · request `gradeInterviewAnswer` thêm `interviewSessionId?` · query `interviewSessions` (resolver + service GROUP BY + response type) · seed script. **Restart backend** (đổi schema).
+2. **FE:** tách 3 LabeledCard (Độ sẵn sàng → Bắt đầu → Lịch sử) · `startSession` sinh sessionId truyền vào grade · khối Lịch sử list-phiên + pagination + hook · fix i18n thiếu (`modelLabel/finishAndGrade/gradingSession/gradingProgress/perQuestionTitle/questionN`) + thêm `history*` (vi+en).
+
+### ✅ ĐÃ ÁP DỤNG 2026-06-30 (`/starci-fe-ux-apply`)
+**BE (`starci-academy-backend`):**
+- `InterviewAttemptEntity` + cột `interview_session_id` (nullable uuid) + index `idx_interview_attempts_session` + migration `1720500000000-AddSessionIdToInterviewAttempts` (dev tự synchronize).
+- `gradeInterviewAnswer` request + `GradeInterviewAnswerParams` + handler + `InterviewGradingService.grade`/`recordAttempt` → thread `interviewSessionId` → lưu lên attempt.
+- Query MỚI `interviewSessions(courseId?, flashcardDeckId?, limit=10, offset=0)` → module `interview-sessions` (resolver + response type `InterviewSessionItem`/`InterviewSessionsData`) đăng ký trong `flashcard-decks.module`. `InterviewHistoryService.getSessions` GROUP BY `interview_session_id` (window 1000) → summary mỗi run (questionCount/avg/best/verdict breakdown/level mode) + `resolveScope` dùng chung.
+- Seed `scratch/seed-interview-history.cjs`: 3 user THẬT enrolled FS × 6 phiên (45 answers/người, score trending up, rải 7-14 ngày). ĐÃ CHẠY.
+- tsc `src/` sạch (lỗi còn lại = baseline Stripe/.spec, không phải file interview).
+
+**FE (`starci-academy`):**
+- `InterviewSession` setup → **3 `LabeledCard`** dọc gap-6: **Độ sẵn sàng** (`GaugeIcon`, ẩn khi 0 attempt → CTA nổi) → **Bắt đầu phỏng vấn** (`MicrophoneIcon`: subtitle + chips + mode `SelectableCardGroup` + level `SegmentedControl` + model `GradeModelDropdown` + CTA `lg`) → **`InterviewHistory`**. Bỏ hero mic to + `Card`/`CardContent`.
+- `startSession` sinh `sessionId = crypto.randomUUID()` (ref) → truyền `interviewSessionId` vào mỗi `gradeAnswer`.
+- Component MỚI `InterviewHistory/` = `LabeledCard frameless` + `AsyncContent` + `SurfaceListCard`/`SurfaceListCardItem` (mỗi row: ngày locale + N câu + verdict chips non-zero + level chip + điểm TB lớn) + `Pagination` (trái + hover, ẩn ≤1 trang, page-size 5). Hook `useQueryInterviewSessionsSwr` + query `queryInterviewSessions` + types.
+- Fix 6 i18n key thiếu + thêm `historyTitle`(repurpose)/`historyEmpty`/`historyEmptyHint`/`historyError`/`historyQuestionCount` (vi+en). JSON valid.
+- **tsc 0 lỗi · eslint sạch** (file đụng tới).
+
+### ⚠️ CHẠY ĐƯỢC cần (runtime, CHƯA verify mắt)
+1. **Restart backend** (`npm run start:dev`) — Nest watch KHÔNG tự nạp module query mới; schema hiện chưa có `interviewSessions` (probe `false`). Restart → synchronize thêm cột + resolver đăng ký.
+2. **Đăng nhập 1 user đã seed** (`pakoohacha588` / `cuongnvtse160875` / `levan020305`) ở khóa **Fullstack Mastery** → trang Ôn tập › Phỏng vấn thử để thấy 3 card + readiness có số + list 6 phiên.
+- Chưa verify mắt (cần BE restart + login seeded-user). Mode "Điểm yếu"/"Leo cấp" vẫn "Sắp có". Drawer chi tiết per-câu của 1 phiên = defer (pha sau).
+
+---
+
+## VÒNG 6 — 2026-06-30: tách tiếp card CẤU HÌNH thành các labeled card (thầy soi bản vòng 5 live)
+> Thầy (screenshot bản vòng 5 đã live): *"kiểu thầy bảo em tách layout thằng này ra thành các labeled card ấy"*. Card "Bắt đầu phỏng vấn" hiện vẫn gộp chips + Kiểu luyện + Cấp độ + Model chấm + CTA = 1 khối to → tách tiếp.
+
+### Tension (rule)
+[[concepts/card]] cho phép **nhiều LabeledCard ngang hàng** (mỗi cái nhãn riêng, gap-6) — KHÁC "2 box dính không nhãn" (cấm). NHƯNG "card chỉ cho thứ XỨNG là bounded object; 1 control/hành động đơn → KHÔNG phải card". → tách per-control (Cấp độ 1 segmented, Model 1 dropdown thành card riêng) = card mỏng/thừa. Cần gộp theo NGHĨA.
+
+### 3 hướng (widget `interview_setup_split_into_labeled_cards`)
+| Hướng | Cách tách | ✅ | ❌ |
+|---|---|---|---|
+| **A — gộp theo nghĩa · 2 card** ✅ ĐỀ XUẤT | Readiness · **"Cấu hình phiên"** (Kiểu luyện + Cấp độ) · **"Chấm điểm"** (Model + ghi chú) · CTA phẳng · Lịch sử | mỗi card 1 ý rõ (phiên gì / chấm sao); không card 1-control; đúng "card xứng đáng" | "Chấm điểm" chỉ 1 dropdown → thêm 1 dòng helper cho có thân |
+| **B — mỗi nhóm 1 card · 3 card** | Readiness · Kiểu luyện · Cấp độ · Model chấm · CTA · Lịch sử | sát nghĩa "tách hết"; mỗi nhãn 1 card | Cấp độ/Model = 1 control → card mỏng; 5-6 card xếp dọc (nặng) |
+| **C — giữ 1 card cấu hình** (bản vòng 5) | Readiness · Bắt đầu (gộp) · Lịch sử | gọn, cấu hình = 1 việc = 1 card | thầy thấy còn to |
+→ Đề xuất **A**: tách card cấu hình thành **2 card có nghĩa** ("Cấu hình phiên" = mode+level · "Chấm điểm" = model), CTA phẳng dưới (lone CTA không bọc card). Chips kỳ vọng (5 câu/giọng/AI) + subtitle → strip phẳng dưới header trang (meta, không card). Giữ Readiness (ẩn khi 0) + Lịch sử.
+
+### ✅ CHỐT + ĐÃ ÁP DỤNG 2026-06-30 (thầy chọn A + chips strip phẳng)
+- `InterviewSession` setup giờ: **meta strip phẳng** (subtitle + 3 chip kỳ vọng, KHÔNG card) → **Độ sẵn sàng** (LabeledCard, ẩn khi 0) → **"Cấu hình phiên"** (LabeledCard `SlidersHorizontalIcon`: Kiểu luyện + Cấp độ) → **"Chấm điểm"** (LabeledCard `RobotIcon`: Model dropdown + helper 1 dòng cho thân card) → **CTA `lg` phẳng** (không bọc card) → **Lịch sử phỏng vấn**.
+- Bỏ `setupTitle` khỏi label (page header đã frame); helper `gradeHelper` cho card "Chấm điểm" đỡ mỏng. i18n thêm `configTitle/gradeTitle/gradeHelper` (vi+en). tsc 0 · eslint sạch. BE KHÔNG đổi.
+- Nguyên tắc rút ra (cho `/merge`): tách 1 card cấu hình → các LabeledCard ngang hàng **gộp theo NGHĨA** (what-to-practice vs how-graded), KHÔNG per-control (1 segmented/1 dropdown thành card = mỏng, vi phạm "card xứng đáng"); control lẻ mỏng → thêm 1 dòng helper cho thân; CTA đơn để **phẳng** ngoài card; meta "trò chơi này là gì" (subtitle + chips kỳ vọng) = **strip phẳng dưới header**, không bọc card.
+
+---
+
+## VÒNG 7 — 2026-06-30: BỎ meta strip + thống nhất control card "Cấu hình phiên" = button radio (insideCard)
+> Thầy (screenshot bản vòng 6): *"xóa cái xanh trên"* (= meta strip subtitle+chips) + *"render 1 là button radio hết cả 2 chứ? dùng insideCard nhé. thầy đề xuất vậy, trò có phương án nào hay hơn k"*.
+
+### Chốt cứng
+- **XÓA meta strip** (subtitle "Câu hỏi ngẫu nhiên..." + 3 chip 5câu/giọng/AI) — thầy thấy thừa. (Đính chính vòng 6: strip phẳng → bỏ hẳn.)
+- **Cả Kiểu luyện + Cấp độ → `FlexWrapButtonRadio insideCard`** (selected=primary, còn lại=tertiary) trong card "Cấu hình phiên". Thay `SelectableCardGroup` (card to) + `SegmentedControl` → đồng nhất 1 kiểu control, gọn.
+
+### 3 phương án (widget `interview_config_control_type_options`) — khác ở "Sắp có" + Cấp độ
+| Hướng | Kiểu luyện | Cấp độ | Ghi chú |
+|---|---|---|---|
+| **A — thầy đề xuất** | 4 pill (2 disabled "Sắp có") | 5 pill | đúng ý; nhưng 2 pill "Sắp có" = nút ma mờ, hơi rối |
+| **B — ĐỀ XUẤT (hay hơn)** | 2 pill (Nhanh/Sâu) | 5 pill | cùng button-radio insideCard NHƯNG **bỏ 2 mode chưa làm** → sạch, hết nút ma; re-add khi BE xong (tag-draw/per-level). FE pain "disabled options waste space" được giải. |
+| **C — theo ngữ nghĩa** | 2 pill | **GIỮ SegmentedControl** | Cấp độ là **thang ordinal** (Tất cả→Staff) → segmented (track liền) đọc ra "thang" tốt hơn nút rời. Nhưng 2 control khác kiểu (mất đồng nhất thầy muốn). |
+→ **Đề xuất B**: theo đúng thầy (button-radio cả 2, insideCard) + nâng = **bỏ 2 pill "Sắp có"** (nút disabled mờ trong dải pill trông rối hơn là trong card-grid; và đó là clutter đã ghi nhận). "Điểm yếu"/"Leo cấp" re-add khi mở BE. Lưu ý C: nếu thầy coi trọng "Cấp độ = thang" thì giữ segmented cho Cấp độ (nhưng thầy muốn đồng nhất → B thắng).
+- Block: `FlexWrapButtonRadio` ([[elements/card]] §3f) — đã có. BE KHÔNG đổi.
+
+### ✅ ĐÃ ÁP DỤNG 2026-06-30 (thầy chốt B)
+- **Bỏ meta strip** (subtitle + 3 chip) khỏi setup.
+- Card "Cấu hình phiên": **Kiểu luyện** + **Cấp độ** đều → `FlexWrapButtonRadio insideCard` (selected=primary, còn lại=tertiary). Kiểu luyện = **2 pill Nhanh/Sâu** (bỏ "Điểm yếu"/"Leo cấp" disabled — re-add khi BE tag-draw/per-level); Cấp độ = 5 pill (Tất cả/Junior/Middle/Senior/Staff). content = `<span flex gap-2>` icon+label (mode) / text (level).
+- Dọn: bỏ `SelectableCardGroup`/`SegmentedControl`/`comingSoonBadge` + icon `TargetIcon`/`StairsIcon`/`ListNumbersIcon` (unused). i18n `expectCount/expectVoice/expectAiGrade/comingSoon/modeWeak/modeLadder/setupSubtitle/setupTitle` còn nhưng mồ côi (giữ, re-add khi cần). tsc 0 · eslint sạch · BE KHÔNG đổi.
+- Setup giờ: **Độ sẵn sàng** → **Cấu hình phiên** (2 dải button-radio) → **Chấm điểm** (model + helper) → **CTA phẳng** → **Lịch sử**.
+
+---
+
+## VÒNG 8 — 2026-06-30: GOM cả setup về 1 card + Độ sẵn sàng (kết quả+progress) LUÔN hiện + Chấm điểm xuống dưới CTA
+> Thầy (screenshot + chat): *"gom lại 1 card với show ra kết quả phỏng vấn với progress"* → chốt (qua hỏi): **gom CẢ setup về 1 card**; **"kết quả phỏng vấn với progress" = khối Độ sẵn sàng LUÔN hiện** (kể cả user mới = 0% + nudge). Rồi: *"chấm điểm bỏ dưới bắt đầu phỏng vấn, dùng component xài chung ấy, không cần giải thích tự động ="*.
+
+### Đảo hướng (có chủ đích) — gom thay vì tách
+- Vòng 5-7 TÁCH setup thành nhiều LabeledCard; vòng 8 thầy đổi ý → **GOM CẢ setup về 1 `<Card>`** (Độ sẵn sàng + Kiểu luyện + Cấp độ + CTA + Chấm điểm). Section trong card ngăn bằng `<Label>` + 1 divider `border-t` (tách "kết quả" với "cấu hình"). **"Lịch sử phỏng vấn" GIỮ card riêng** (gom = chỉ khu setup).
+- **Độ sẵn sàng = LUÔN hiện** (bỏ gate ẩn-khi-0 của vòng 5): có data → điểm TB + `ProgressMeter` + breakdown + weakTags; user mới (0) → meter 0% + nudge (`readinessEmpty`); loading → skeleton. Đây là "kết quả phỏng vấn với progress" thầy muốn — đặt TRÊN đầu card (where am I) rồi mới cấu hình + bắt đầu.
+
+### Thứ tự trong card (CHỐT)
+Độ sẵn sàng (kết quả+progress) → `border-t` → Kiểu luyện (button-radio) → Cấp độ (button-radio) → **CTA "Bắt đầu phỏng vấn"** → **Chấm điểm** (xuống DƯỚI CTA). Chấm điểm = control phụ (Auto mặc định, ít đổi) → để cuối, dưới CTA; dùng **`GradeModelDropdown` (component model chung)** — dropdown tự self-label (sparkle + tên model) nên **bỏ dòng helper "Tự động = ..."** (thầy: *"không cần giải thích"*).
+
+### ĐÃ ÁP DỤNG 2026-06-30
+- `InterviewSession` setup: 3-4 LabeledCard → **1 `<Card><CardContent gap-6>`** (Độ sẵn sàng luôn-hiện + `border-t pt-6` wrapper cho config) + `<InterviewHistory>` card riêng dưới. Chấm điểm chuyển xuống dưới CTA, bỏ helper.
+- Dọn import: bỏ `LabeledCard` + icon `GaugeIcon`/`SlidersHorizontalIcon`/`RobotIcon` (section giờ chỉ `<Label>`, không icon). Re-add `Card`/`CardContent`. i18n `gradeHelper` còn nhưng mồ côi. tsc 0 · eslint sạch · BE KHÔNG đổi.
+- **Nguyên tắc (cho `/merge`):** "tách" hay "gom" card tùy thầy theo từng màn — đây là đảo hướng có chủ đích (không phải lỗi). Khi gom 1 card: section trong card = `<Label>` + whitespace (+1 divider tách 2 cụm nghĩa lớn: kết quả ↔ cấu hình); control PHỤ (model, Auto-default) đặt **dưới CTA** + dropdown chung tự-label (bỏ helper thừa). Readiness/kết-quả-có-progress đặt TRÊN ĐẦU card (status "đang ở đâu").
+
+### Tinh chỉnh cuối 2026-06-30 (model row kiểu submit-panel + divider gap-3 + footer)
+- **Divider trong card = gap-3 hai bên** (CardContent `gap-3` trên + wrapper `pt-3` dưới = 12px mỗi bên), KHÔNG gap-6 (thầy: *"hai block gap-6 thấy xa"*). → canon [[gap]] §divider.
+- **Bỏ label "Chấm điểm".** Model render **giống panel Nộp bài** (`như hình bên phải`): `GradeModelDropdown` + `text-sm text-muted` "tier • used/quota credit" (reuse `useQueryMyCreditUsageSwr` + i18n `challenge.quota.laneUsage.{auto,premium,byok}`) trên 1 hàng `justify-between`.
+- **Cấu trúc card cuối:** Độ sẵn sàng (kết quả+progress) → *divider gap-3* → **Cấu hình** (Kiểu luyện + Cấp độ) → *divider gap-3* → **footer** (model row compact + credit · CTA "Bắt đầu phỏng vấn"). Footer = model NGAY TRÊN CTA (như submit-panel), divider phía trên footer. Lịch sử = card riêng dưới.
+- i18n `gradeTitle`/`gradeHelper` giờ mồ côi (giữ). tsc 0 · eslint sạch · BE KHÔNG đổi.
+- **Fix bug runtime:** `enrollmentId` là `@RelationId` (virtual) → KHÔNG dùng được trong `where` (lỗi `EntityPropertyNotFound`). Sửa `getSummary` + `resolveScope` dùng `where: { enrollment: { id } }` (lọc qua relation), KHÔNG thêm `@Column`. Áp cho cả `myInterviewHistory` (bug latent cũ) lẫn `interviewSessions`.
+
+---
+
+## VÒNG 9 — 2026-06-30: Lịch sử phỏng vấn → thêm "xem chi tiết phỏng vấn" (drawer per-câu)
+> Thầy (trang đã chạy end-to-end): *"lịch sử phỏng vấn thêm xem chi tiết phỏng vấn"*. Bấm 1 phiên → xem các câu đã trả lời của phiên đó.
+
+### ⚠️ Ràng buộc data (grounded)
+- `interview_attempts` lưu per-câu: **score · verdict · level · tags · createdAt · flashcard_card_id**. Question text join từ **`flashcard_cards.question`**.
+- **KHÔNG lưu**: strengths/gaps/modelAnswerHint/followUpQuestion/transcript (transient — chỉ trả ngay sau phiên ở màn summary, không persist). → Chi tiết phiên CŨ chỉ render được **câu hỏi · verdict · điểm · level/tag**, KHÔNG có góp ý chi tiết.
+
+### Đề xuất (widget `interview_session_detail_drawer`)
+- **Mở = DRAWER** (phải desktop / bottom mobile) — bấm cả dòng phiên (cursor + chevron). Theo [[when-drawer]] + pattern `SubmissionResultHistoryDrawer`/`SubmissionAttemptsDrawer`. Tách component `components/drawers/InterviewSessionDetailDrawer/` (props-driven: open + sessionId + summary). KHÔNG inline.
+- **Nội dung drawer:** header (ngày · N câu · level) + summary (điểm TB + breakdown chip) + **danh sách câu** = mỗi câu: "Câu N" + verdict chip + điểm + question (`MarkdownContent` compact) + level/tag. Empty/loading/error chuẩn.
+- **BE: query MỚI `interviewSessionAttempts(courseId?, sessionId: ID!)`** → các attempt của session (order createdAt ASC) join `flashcard_cards.question`; mỗi item `{ id, score, verdict, level, tags, question, createdAt }`. Scope qua `enrollment`/`userId` như getSessions. Enrolled-only guard.
+
+### 2 mức chi tiết (cần thầy chốt)
+| Mức | Là gì | BE | Áp cho data cũ? |
+|---|---|---|---|
+| **A — grounded (ĐỀ XUẤT)** | câu hỏi · verdict · điểm · level/tag | 1 query mới (join card) | ✅ mọi phiên (kể cả seed cũ) |
+| **B — full feedback** | thêm strengths/gaps/hint mỗi câu (như màn summary) | A + **persist** cột strengths/gaps/hint vào `interview_attempts` + ghi lúc grade + migration | ❌ chỉ phiên MỚI (cũ không có → vẫn chỉ A) |
+→ **A trước** (universal, ship ngay). B chỉ giúp phiên tương lai (data cũ/seed không có feedback) → defer, làm khi thầy muốn richer.
+
+### Refs
+- [Interview Prep AI](https://apps.apple.com/us/app/interview-prep-ai-practice/id6756488628) · [Score My Interview](https://www.scoremyinterview.com/) (mở lại từng câu đã chấm) · pattern drawer repo: `SubmissionResultHistoryDrawer`.
+- Chờ thầy chốt A/B + drawer/page → áp.
+
+### ✅ CHỐT + ĐÃ ÁP DỤNG 2026-06-30 (thầy chọn B + drawer)
+**BE:**
+- `InterviewAttemptEntity` + 3 cột `strengths`/`gaps` (jsonb `[]`) + `model_answer_hint` (varchar nullable) + migration `1720600000000-AddFeedbackToInterviewAttempts`.
+- `recordAttempt` persist `result.strengths/gaps/modelAnswerHint` lúc grade (feedback giờ lưu, không còn transient).
+- Query MỚI **`interviewSessionAttempts(sessionId!, courseId?, flashcardDeckId?)`** → module `interview-session-attempts` + `InterviewHistoryService.getSessionAttempts` (relations `flashcardCard` → question, order createdAt ASC, scope qua `enrollment`). Đăng ký `flashcard-decks.module`.
+- **Backfill** feedback mẫu (vi) vào 137 attempt đã seed (theo verdict) → drawer của user seeded hiện đủ.
+- tsc `src/` sạch · reboot clean · `interviewSessionAttempts` trong schema.
+
+**FE:**
+- Drawer MỚI `components/drawers/InterviewSessionDetailDrawer/` (props-driven: isOpen/onOpenChange/courseId/session). Shell chuẩn (Drawer.Backdrop/Content placement right·bottom/Dialog p-0/Body + ScrollShadow h-full). Summary header (avg + breakdown) + danh sách câu = `AttemptCard` (verdict chip + điểm + question `MarkdownContent` + level/tag + strengths/gaps/hint khi có). `AsyncContent` loading/empty/error.
+- `InterviewHistory`: row → `SurfaceListCardItem onPress` + `CaretRightIcon` → mở drawer (`selectedRun` state). Hook `useQueryInterviewSessionAttemptsSwr` (chỉ fetch khi drawer mở).
+- i18n `detailTitle/detailEmpty/detailError` (vi+en). tsc 0 · eslint sạch.
+
+**Data cũ (không backfill):** strengths/gaps `[]` → drawer chỉ hiện verdict/điểm/question (graceful). Phiên MỚI (grade sau đổi) tự có feedback đầy đủ.
+- Em chưa push gì.

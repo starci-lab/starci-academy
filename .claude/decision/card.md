@@ -24,7 +24,19 @@ Course/pricing/media/continue cards — the dominant content unit.
 - **"Current plan" indicator = full-width banner, NOT a small chip:** `flex w-full justify-center … bg-accent/10` (or `bg-success/10`) + `text-success` medium; banner radius matches the parent card radius (e.g. `rounded-3xl`). Every plan in a comparison (incl. free/0đ) must state real specs (credit/limit).
 
 ## Decisions (newest first)
-- **Persistent action panel in a split workspace** · chose a single **`Card` + `CardContent` (gap-6)**
+
+### 2026-06-21 — Flashcard deck cards: 2-col grid + 0%-progress bar → plain Separator
+- **Scenario:** the deck grid was `sm:grid-cols-2 lg:grid-cols-3` (3 cards wide) and each card showed a thin
+  `bg-accent` mastery bar. At 0% mastery the bar is just an empty `bg-default` track — a pointless faint line.
+  Thầy: "thẻ học grid 2 thôi được không · cái này dùng separator thường thôi được không."
+- **Chose:** (a) grid → **2 columns max** (`grid-cols-1 sm:grid-cols-2`, drop the `lg:grid-cols-3`) for roomier
+  cards; (b) replace the hairline progress bar with a plain HeroUI **`<Separator />`** under the "Đã thuộc m/total"
+  count.
+- **WHY:** the COUNT text already states progress; a 0%/empty progress bar adds visual noise without info. A plain
+  divider reads cleaner + divides the card body from its footer. Use a progress BAR only when the fill is usually
+  non-zero and the % itself is the signal; otherwise a count + separator is calmer. Fewer columns = cards that
+  aren't cramped.
+- **Files:** `Flashcards/FlashcardDeckList` (grid class, bar → `Separator`, dropped the now-unused `percent`).
   wrapping Label "Github dự án" → submission fields → actions → result (`TaskSubmissionPanel`), NOT
   `LabeledCard` · **WHY:** this is the sticky RIGHT side of a read-left/act-right split — it must read as one
   self-contained bordered "panel" the eye returns to, so the label sits INSIDE the card frame (a panel

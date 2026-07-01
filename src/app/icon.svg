@@ -3,4 +3,8 @@
   <path d="M 344 184 C 300 168 208 164 190 200 C 176 230 214 250 262 258 C 314 266 340 284 330 312 C 316 348 224 348 168 328" fill="none" stroke="#FB59A7" stroke-width="38" stroke-linecap="round"/>
   <circle cx="344" cy="184" r="19" fill="#FB59A7"/>
   <circle cx="168" cy="328" r="13" fill="#11181C" stroke="#FB59A7" stroke-width="12"/>
+  <path d="M 108 108 L 148 108 M 108 108 L 108 148" fill="none" stroke="#FB59A7" stroke-width="24" stroke-linecap="round"/>
+  <path d="M 404 404 L 364 404 M 404 404 L 404 364" fill="none" stroke="#FB59A7" stroke-width="24" stroke-linecap="round"/>
+  <circle cx="404" cy="108" r="14" fill="#FB59A7"/>
+  <circle cx="108" cy="404" r="14" fill="#FB59A7"/>
 </svg>

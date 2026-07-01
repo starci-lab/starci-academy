@@ -28,17 +28,19 @@ export const DarkLightModeSwitch = ({ className }: DarkLightModeSwitchProps = {}
             className={cn(className)}
         >
             {({ isSelected }) => (
-                <Switch.Control>
-                    <Switch.Thumb>
-                        <Switch.Icon>
-                            {isSelected ? (
-                                <MoonIcon className="size-5 text-inherit" />
-                            ) : (
-                                <SunIcon className="size-5 text-inherit" />
-                            )}
-                        </Switch.Icon>
-                    </Switch.Thumb>
-                </Switch.Control>
+                <Switch.Content>
+                    <Switch.Control>
+                        <Switch.Thumb>
+                            <Switch.Icon>
+                                {isSelected ? (
+                                    <MoonIcon className="size-5 text-inherit" />
+                                ) : (
+                                    <SunIcon className="size-5 text-inherit" />
+                                )}
+                            </Switch.Icon>
+                        </Switch.Thumb>
+                    </Switch.Control>
+                </Switch.Content>
             )}
         </Switch>
     )

@@ -59,7 +59,8 @@ export const Logo = ({ className }: LogoProps) => {
                 ACADEMY
             </text>
 
-            {/* circuit tracing — brand accent */}
+            {/* circuit tracing — brand accent (roofline trace above "StarCi" removed
+                for top/bottom balance — the crown line unbalanced the mark) */}
             <g
                 stroke="var(--accent)"
                 strokeWidth="5"
@@ -67,12 +68,6 @@ export const Logo = ({ className }: LogoProps) => {
                 strokeLinejoin="miter"
                 fill="none"
             >
-                <path d="M 272 360 L 296 336 L 346 336" />
-                <path d="M 374 336 L 592 336" />
-                <path d="M 600 344 L 600 398" />
-                <path d="M 608 336 L 648 336 L 672 360 L 736 360 L 752 344" />
-                <path d="M 774 336 L 808 336" />
-                <path d="M 944 352 L 920 376" />
                 <path d="M 960 448 L 904 448 L 904 496" />
                 <path d="M 56 424 L 80 424 L 88 432" />
                 <path d="M 96 440 L 96 464 L 72 488" />
@@ -85,18 +80,11 @@ export const Logo = ({ className }: LogoProps) => {
                 <path d="M 568 632 L 632 632 L 656 608 L 720 608 L 744 632 L 848 632 L 872 608 L 904 608" />
             </g>
             <g fill="var(--accent)">
-                <circle cx="360" cy="336" r="14" />
-                <circle cx="600" cy="408" r="10" />
-                <circle cx="760" cy="336" r="14" />
                 <circle cx="688" cy="608" r="12" />
                 <circle cx="272" cy="608" r="12" />
                 <circle cx="96" cy="432" r="8" />
             </g>
             <g fill="none" stroke="var(--accent)" strokeWidth="5">
-                <circle cx="264" cy="368" r="8" />
-                <circle cx="600" cy="336" r="8" />
-                <circle cx="816" cy="336" r="8" />
-                <circle cx="952" cy="344" r="8" />
                 <circle cx="48" cy="424" r="8" />
                 <circle cx="968" cy="448" r="8" />
                 <circle cx="104" cy="608" r="8" />

@@ -19,7 +19,12 @@ export type LogoProps = WithClassNames<undefined>
  * the traces, which are positioned around specific glyphs, would drift.
  *
  * Sizing is controlled by the caller: pass a height (e.g. `h-8`) and let the
- * width follow the intrinsic ratio (`w-auto`, the default).
+ * width follow the intrinsic ratio (`w-auto`, the default). `self-start shrink-0`
+ * are baked in so a `flex-col` ancestor (e.g. the footer's brand column) can't
+ * stretch the svg to the container's full width — `align-items: stretch` would
+ * otherwise force `width` to the column width while `height` stays fixed,
+ * distorting the box and centering the "S" ink inside the extra horizontal
+ * space (default `preserveAspectRatio="xMidYMid"`), reading as a stray left gap.
  *
  * @param props.className - sizing / color (text-*) utilities for the root svg.
  */
@@ -30,7 +35,7 @@ export const Logo = ({ className }: LogoProps) => {
             viewBox="16 308 976 383"
             width="976"
             height="383"
-            className={cn("h-8 w-auto text-foreground", className)}
+            className={cn("h-8 w-auto shrink-0 self-start text-foreground", className)}
             role="img"
             aria-label="StarCi Academy"
         >

@@ -32,7 +32,7 @@ const SURFACE_LABEL_KEY: Record<string, string> = {
     "personal-project": "finalProject.title",
 }
 
-export const Layout = ({ children }: PropsWithChildren) => {
+const Layout = ({ children }: PropsWithChildren) => {
     const t = useTranslations()
     // load the active course here so EVERY learn tab has `course.entity` on a cold refresh
     // (the displayId is synced from the URL by a global effect). Tabs like personal-project

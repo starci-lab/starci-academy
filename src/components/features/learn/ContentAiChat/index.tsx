@@ -319,8 +319,16 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
         setView("chat")
     }, [abort])
 
-    /** Open an existing conversation. */
+    /** Open an existing conversation (re-opening the current one just returns to it). */
     const onSwitchConversation = useCallback((sessionId: string) => {
+        // re-selecting the ALREADY-open conversation → just go back to the thread.
+        // Do NOT wipe messages: setCurrentSessionId(sameId) is a no-op, so the
+        // hydrate effect (keyed on currentSessionId + historySwr.data — both
+        // unchanged) would never re-fire to restore them → the thread goes blank.
+        if (sessionId === currentSessionId) {
+            setView("chat")
+            return
+        }
         abort()
         setMessages([])
         setInput("")
@@ -331,7 +339,7 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
         // then revalidate the list so it reflects the new recency order
         void touchSwr.trigger({ sessionId }).then(() => sessionsSwr.mutate())
         setView("chat")
-    }, [abort, touchSwr, sessionsSwr])
+    }, [abort, touchSwr, sessionsSwr, currentSessionId])
 
     /** Delete a conversation; if it was open, drop back to a fresh thread. */
     const onDeleteConversation = useCallback(async (sessionId: string) => {
@@ -456,7 +464,8 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                                         </Typography>
                                         <Typography type="body-xs" color="muted" className="truncate">
                                             {session.snippet
-                                                ?? t("contentAi.turnsCount", { count: session.messageCount })}
+                                                ? displayText(session.snippet)
+                                                : t("contentAi.turnsCount", { count: session.messageCount })}
                                         </Typography>
                                     </div>
                                     <button

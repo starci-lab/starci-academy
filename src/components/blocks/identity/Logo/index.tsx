@@ -59,8 +59,9 @@ export const Logo = ({ className }: LogoProps) => {
                 ACADEMY
             </text>
 
-            {/* circuit tracing — brand accent (roofline trace above "StarCi" removed
-                for top/bottom balance — the crown line unbalanced the mark) */}
+            {/* circuit tracing — brand accent (roofline trace above "StarCi" and the
+                left/right flanking stubs beside it removed: only the bottom band
+                under "ACADEMY" carries the circuit motif now) */}
             <g
                 stroke="var(--accent)"
                 strokeWidth="5"
@@ -68,9 +69,6 @@ export const Logo = ({ className }: LogoProps) => {
                 strokeLinejoin="miter"
                 fill="none"
             >
-                <path d="M 960 448 L 904 448 L 904 496" />
-                <path d="M 56 424 L 80 424 L 88 432" />
-                <path d="M 96 440 L 96 464 L 72 488" />
                 <path d="M 96 608 L 40 608 L 40 560" />
                 <path d="M 112 608 L 260 608" />
                 <path d="M 472 608 L 472 632 L 568 632" />
@@ -82,11 +80,8 @@ export const Logo = ({ className }: LogoProps) => {
             <g fill="var(--accent)">
                 <circle cx="688" cy="608" r="12" />
                 <circle cx="272" cy="608" r="12" />
-                <circle cx="96" cy="432" r="8" />
             </g>
             <g fill="none" stroke="var(--accent)" strokeWidth="5">
-                <circle cx="48" cy="424" r="8" />
-                <circle cx="968" cy="448" r="8" />
                 <circle cx="104" cy="608" r="8" />
                 <circle cx="472" cy="600" r="8" />
                 <circle cx="512" cy="672" r="6" />

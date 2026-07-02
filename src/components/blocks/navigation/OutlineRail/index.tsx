@@ -12,7 +12,6 @@ import {
     Button,
     Input,
     Label,
-    Link,
     ScrollShadow,
     TextField,
     Typography,
@@ -228,9 +227,22 @@ export const OutlineRail = ({
                                                    [[hover-style-matches-clickable-nature]]); ONLY the caret
                                                    toggles (stay-here → fill). Two click targets, one row. */
                                                 <div className="flex w-full min-w-0 items-center gap-2">
-                                                    <Link
-                                                        onPress={group.onTitlePress}
-                                                        className="group min-w-0 flex-1 py-2 text-left text-foreground no-underline"
+                                                    {/* plain div-as-button (mirrors ListRow — [[elements/list]]):
+                                                        HeroUI `Link` bakes `w-fit` (unlayered) which fights
+                                                        `flex-1` and never actually stretches to fill the row,
+                                                        leaving the caret stranded right next to the title with
+                                                        dead space after it. A bare div gives full utility control. */}
+                                                    <div
+                                                        role="button"
+                                                        tabIndex={0}
+                                                        onClick={group.onTitlePress}
+                                                        onKeyDown={(event) => {
+                                                            if (event.key === "Enter" || event.key === " ") {
+                                                                event.preventDefault()
+                                                                group.onTitlePress?.()
+                                                            }
+                                                        }}
+                                                        className="group min-w-0 flex-1 cursor-pointer py-2 text-left outline-none"
                                                     >
                                                         <div className="flex min-w-0 flex-col overflow-hidden">
                                                             <Typography
@@ -253,7 +265,7 @@ export const OutlineRail = ({
                                                                 </Typography>
                                                             )}
                                                         </div>
-                                                    </Link>
+                                                    </div>
                                                     <Accordion.Trigger
                                                         aria-label={group.title}
                                                         className="shrink-0 rounded-medium p-2 hover:bg-default"

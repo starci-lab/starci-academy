@@ -9,6 +9,8 @@ import type { CourseEntity } from "@/modules/types/entities/course"
 export interface CatalogCourseCardProps {
     /** The catalog course to render. */
     course: CourseEntity
+    /** Card layout — roomy `"grid"` (default) or compact `"line"` row. */
+    layout?: "grid" | "line"
 }
 
 /**
@@ -19,13 +21,14 @@ export interface CatalogCourseCardProps {
  *
  * @param props - {@link CatalogCourseCardProps}
  */
-export const CatalogCourseCard = ({ course }: CatalogCourseCardProps) => {
+export const CatalogCourseCard = ({ course, layout = "grid" }: CatalogCourseCardProps) => {
     const { data } = useQueryCoursePricePreviewSwr(course.id)
     return (
         <CourseCard
             course={course}
             loyaltyPriceVnd={data?.discountedPriceVnd ?? null}
             loyaltyOriginalVnd={data?.originalPriceVnd ?? null}
+            layout={layout}
         />
     )
 }

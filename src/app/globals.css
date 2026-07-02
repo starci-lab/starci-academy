@@ -198,6 +198,17 @@ html {
     padding: 1rem !important;
 }
 /*
+ * Full-bleed exception — the global search (cmd-k) palette IS the input; the
+ * dialog itself carries NO gutter (p-0) — the search BAR (icon + input + kbd)
+ * supplies its own p-3 inset, and result/footer rows supply their own. `.modal__
+ * dialog--flush` (2-class selector, higher specificity than the single-class
+ * rule above) wins regardless of source order. Named + scoped — do NOT reuse
+ * for ordinary modals.
+ */
+.modal__dialog.modal__dialog--flush {
+    padding: 0 !important;
+}
+/*
  * Card — use HeroUI's default ELEVATION (`shadow-surface`) with NO border: cards
  * read as shadow-lifted surfaces, not outlined boxes (reverts the earlier flat-
  * bordered scheme). HeroUI already bakes `.card { @apply shadow-surface }` with
@@ -227,6 +238,71 @@ html {
 }
 
 /*
+ * Ambient background effects (blocks/layout/AmbientBackground/effects) — 9 named
+ * effects (+ "none") picked in Settings → "Giao diện". All transform/opacity only
+ * (compositor thread), all tinted via `var(--accent)` so they retint automatically
+ * with the user's chosen accent color, and all guarded under
+ * `prefers-reduced-motion` below. Never rendered over the lesson reading column.
+ */
+
+/* snowFall — flakes drifting straight down with a light horizontal wander. */
+@keyframes snowFall {
+    0% { transform: translateY(-10vh) translateX(0); opacity: 0; }
+    8% { opacity: 0.9; }
+    92% { opacity: 0.9; }
+    100% { transform: translateY(110vh) translateX(var(--drift, 0)); opacity: 0; }
+}
+
+/* rainFall — thin streaks falling fast, slightly tilted. */
+@keyframes rainFall {
+    0% { transform: translateY(-20vh) rotate(8deg); opacity: 0; }
+    10% { opacity: 0.7; }
+    100% { transform: translateY(120vh) rotate(8deg); opacity: 0; }
+}
+
+/* bubbleRise — hollow circles rising with a wobble (reuses the ember rise arc,
+   a wider drift reads as a wobble rather than a straight line). */
+@keyframes bubbleRise {
+    0% { transform: translateY(0) translateX(0) scale(0.85); opacity: 0; }
+    12% { opacity: 0.8; }
+    85% { opacity: 0.6; }
+    100% { transform: translateY(-100vh) translateX(var(--drift, 0)) scale(1.05); opacity: 0; }
+}
+
+/* fireflyDrift — small aimless wander + flicker, scattered across the viewport
+   (not bottom-anchored like rising effects). */
+@keyframes fireflyDrift {
+    0%, 100% { transform: translate(0, 0); opacity: 0.15; }
+    25% { transform: translate(var(--drift, 0), -14px); opacity: 0.9; }
+    50% { transform: translate(calc(var(--drift, 0) * -1), 6px); opacity: 0.3; }
+    75% { transform: translate(calc(var(--drift, 0) * 0.5), -8px); opacity: 0.85; }
+}
+
+/* starTwinkle — fixed-position dots, opacity pulse only (no motion at all). */
+@keyframes starTwinkle {
+    0%, 100% { opacity: 0.15; }
+    50% { opacity: 0.95; }
+}
+
+/* auroraDrift — large soft blurred ribbons swaying slowly side to side. */
+@keyframes auroraDrift {
+    0%, 100% { transform: translateX(-6%) translateY(0) scale(1); }
+    50% { transform: translateX(6%) translateY(-3%) scale(1.08); }
+}
+
+/* wave-drift — layered wave tiles scrolling horizontally at different speeds
+   (each layer sets its own animation-duration inline for the parallax). */
+@keyframes waveDrift {
+    to { transform: translateX(-50%); }
+}
+
+/* circuitPulse — the whole grid overlay breathing in and out. */
+@keyframes circuitPulse {
+    0%, 100% { opacity: 0.35; }
+    50% { opacity: 0.75; }
+}
+
+/*
  * reactionPop — staggered bounce-in for each emoji of the Facebook-style reaction
  * selector bar (FacebookReactionSelector). Transform/opacity only; the per-emoji
  * hover scale lives on an inner span so the two transforms never fight.
@@ -251,4 +327,14 @@ html {
 @media (prefers-reduced-motion: reduce) {
     .ambient-ember { animation: none !important; opacity: 0 !important; }
     .app-splash-bar { animation: none !important; width: 40% !important; }
+    /* ambient background effects: kill motion, keep a faint static hint (except
+       fully-particle effects, which just disappear — a frozen mid-flight
+       snowflake/raindrop/bubble reads as debris, not atmosphere) */
+    .ambient-snow, .ambient-rain, .ambient-bubble, .ambient-firefly {
+        animation: none !important; opacity: 0 !important;
+    }
+    .ambient-star { animation: none !important; opacity: 0.4 !important; }
+    .ambient-aurora { animation: none !important; }
+    .ambient-wave { animation: none !important; }
+    .ambient-circuit { animation: none !important; opacity: 0.35 !important; }
 }

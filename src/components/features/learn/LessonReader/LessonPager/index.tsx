@@ -50,7 +50,7 @@ export const LessonPager = ({ className }: LessonPagerProps) => {
                                 <Typography type="body-xs" color="muted">
                                     {t("content.prevLesson")}
                                 </Typography>
-                                <Typography type="body-sm" weight="medium" truncate>
+                                <Typography type="body-sm" weight="medium" className="line-clamp-2">
                                     {previous.title}
                                 </Typography>
                             </div>
@@ -68,7 +68,7 @@ export const LessonPager = ({ className }: LessonPagerProps) => {
                                 <Typography type="body-xs" color="muted" align="end">
                                     {t("content.nextLesson")}
                                 </Typography>
-                                <Typography type="body-sm" weight="medium" align="end" truncate>
+                                <Typography type="body-sm" weight="medium" align="end" className="line-clamp-2">
                                     {next.title}
                                 </Typography>
                             </div>

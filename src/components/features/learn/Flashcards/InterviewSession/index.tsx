@@ -27,7 +27,7 @@ import { InterviewVerdict } from "@/modules/api/graphql/mutations/types/grade-in
 import { useMutateGradeInterviewAnswerSwr } from "@/hooks/swr/api/graphql/mutations/useMutateGradeInterviewAnswerSwr"
 import { useQueryAiModelsSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiModelsSwr"
 import { useQueryMyAiSettingsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiSettingsSwr"
-import { useQueryMyCreditUsageSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCreditUsageSwr"
+import { useQueryMyAiQuotaSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiQuotaSwr"
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 
@@ -168,8 +168,10 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
     // chosen grading lane + model (Auto by default)
     const [selection, setSelection] = useState<GradeModelSelection>(AUTO_SELECTION)
     // credit usage for the compact lane label beside the model picker (mirrors the
-    // challenge submission panel: "Auto/Premium • used/quota credit" / "BYOK")
-    const creditUsage = useQueryMyCreditUsageSwr().data
+    // challenge submission panel: "Auto/Premium • remaining/quota credit" / "BYOK").
+    // Reads the UNIFIED tier-aware pool (`myAiQuota`), so a paid tier shows its own
+    // cap (Plus 5000/week …), not the flat free base — matches the submission panel.
+    const creditUsage = useQueryMyAiQuotaSwr().data
     const creditLabel = useMemo(() => {
         if (selection.mode === AiMode.Byok) {
             return t("challenge.quota.laneUsage.byok")
@@ -181,8 +183,10 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
             ? "challenge.quota.laneUsage.premium"
             : "challenge.quota.laneUsage.auto"
         return t(key, {
-            used: creditUsage.windowWeek.usedCredits,
-            quota: creditUsage.windowWeek.quota,
+            // show what's LEFT (remaining), not used — matches the message
+            // placeholder `{remaining}/{quota}` (missing it renders the raw key).
+            remaining: creditUsage.credit.remainingWeek,
+            quota: creditUsage.credit.limitWeek,
         })
     }, [selection.mode, creditUsage, t])
     // how many questions this session runs (derived from the mode)

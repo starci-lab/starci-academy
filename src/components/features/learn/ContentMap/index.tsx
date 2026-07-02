@@ -171,6 +171,19 @@ export const ContentMap = ({ className }: ContentMapProps) => {
         [router, locale, displayId],
     )
 
+    /** Navigate to the dedicated module page (title press — caret still toggles). */
+    const onOpenModule = useCallback(
+        (moduleId: string) => {
+            if (!displayId) {
+                return
+            }
+            router.push(
+                pathConfig().locale(locale).course(displayId).learn().module(moduleId).build(),
+            )
+        },
+        [router, locale, displayId],
+    )
+
     /** modules → milestone-agnostic rail groups (read markers, minutes meta). */
     const groups = useMemo<Array<OutlineRailGroup>>(
         () => modules.map((module) => {
@@ -183,6 +196,7 @@ export const ContentMap = ({ className }: ContentMapProps) => {
                     read: readCount,
                     total: module.lessons.length,
                 }),
+                onTitlePress: () => onOpenModule(module.id),
                 items: module.lessons.map((lesson) => ({
                     id: lesson.id,
                     title: lesson.title,
@@ -198,7 +212,7 @@ export const ContentMap = ({ className }: ContentMapProps) => {
                 })),
             }
         }),
-        [modules, activeContentId, onSelectLesson, t],
+        [modules, activeContentId, onSelectLesson, onOpenModule, t],
     )
 
     return (

@@ -120,9 +120,13 @@ const Layout = ({ children }: PropsWithChildren) => {
             <LeaderboardCategoryRail variant="rail" className="min-h-0 lg:flex-1" />
         </ResizableRail>
     ) : undefined
-    // right rail: on-this-page for lessons only; the capstone keeps its rail on the left, and
-    // the challenge (tabbed single column) needs no outline.
-    const rightRail = (isModules && !isChallenge) ? (
+    // right rail: on-this-page for the LESSON READER only (a real "contents/<id>" route) —
+    // the module SHELL page (`/content/modules/<moduleId>`, no `contents` segment) is its own
+    // dashboard (mirrors the course-content home, which also has no right rail) and would
+    // otherwise inherit a stale TOC from whatever lesson was read last (OnThisPage self-hides
+    // on `!contentId`, not on route — the module shell has no active content of its own).
+    const isLessonReader = isModules && segments.includes("contents")
+    const rightRail = (isLessonReader && !isChallenge) ? (
         <OnThisPage />
     ) : undefined
 

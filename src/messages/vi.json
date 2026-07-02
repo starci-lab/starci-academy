@@ -430,6 +430,27 @@
             "business": "Nghiệp vụ"
         }
     },
+    "modulePage": {
+        "empty": "Module này chưa có bài học.",
+        "error": "Không tải được nội dung module.",
+        "retry": "Thử lại",
+        "metaLessonsLabel": "bài",
+        "metaMinutesLabel": "phút học",
+        "metaChallengesLabel": "thử thách",
+        "completion": "Hoàn thành",
+        "lessonsStat": "Bài học {read}/{total}",
+        "challengesStat": "Thử thách {done}/{total}",
+        "continueEyebrow": "Học tiếp",
+        "resume": "Tiếp tục học",
+        "allDone": "Bạn đã hoàn thành module này.",
+        "lessonsHeading": "Bài học",
+        "challengesHeading": "Thử thách",
+        "challengeCount": "{count} thử thách",
+        "challengeDone": "Đã hoàn thành",
+        "premium": "Nội dung trả phí",
+        "read": "Đã đọc",
+        "unread": "Chưa đọc"
+    },
     "onThisPage": {
         "title": "Trên trang này"
     },

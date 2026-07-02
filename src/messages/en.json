@@ -430,6 +430,27 @@
             "business": "Business"
         }
     },
+    "modulePage": {
+        "empty": "This module has no lessons yet.",
+        "error": "Couldn't load this module.",
+        "retry": "Try again",
+        "metaLessonsLabel": "lessons",
+        "metaMinutesLabel": "min reading",
+        "metaChallengesLabel": "challenges",
+        "completion": "Completed",
+        "lessonsStat": "Lessons {read}/{total}",
+        "challengesStat": "Challenges {done}/{total}",
+        "continueEyebrow": "Continue in this module",
+        "resume": "Continue learning",
+        "allDone": "You've finished this module.",
+        "lessonsHeading": "Lessons",
+        "challengesHeading": "Challenges",
+        "challengeCount": "{count} challenges",
+        "challengeDone": "Completed",
+        "premium": "Premium content",
+        "read": "Read",
+        "unread": "Unread"
+    },
     "onThisPage": {
         "title": "On this page"
     },

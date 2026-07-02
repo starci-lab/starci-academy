@@ -12,6 +12,7 @@ import {
     Button,
     Input,
     Label,
+    Link,
     ScrollShadow,
     TextField,
     Typography,
@@ -59,6 +60,13 @@ export interface OutlineRailGroup {
     collapsedCountLabel: string
     /** Rows in the group. */
     items: Array<OutlineRailItem>
+    /**
+     * When set, the title becomes its own navigable link (go-there → underline on
+     * hover) to a dedicated page for this group, and ONLY the caret toggles
+     * expand/collapse. Omit to keep the whole header as the toggle (the
+     * personal-project milestone rail — milestones have no page of their own).
+     */
+    onTitlePress?: () => void
 }
 
 /** The rail header — the rail's progress + one primary action. */
@@ -215,34 +223,74 @@ export const OutlineRail = ({
                                         className="min-w-0"
                                     >
                                         <Accordion.Heading className="min-w-0">
-                                            <Accordion.Trigger className="min-w-0 w-full max-w-full px-0 py-2 hover:bg-transparent">
-                                                {/* title owns the full width (truncate + tooltip); the count/bar
-                                                    sits on its own line below so long titles aren't squeezed */}
-                                                <div className="flex w-full min-w-0 items-center gap-2 overflow-hidden">
-                                                    <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
-                                                        <Typography
-                                                            type="body"
-                                                            weight="semibold"
-                                                            truncate
-                                                            title={group.title}
-                                                            className="w-full min-w-0"
-                                                        >
-                                                            {group.title}
-                                                        </Typography>
-                                                        {isExpanded ? (
-                                                            <ProgressMeter
-                                                                value={group.progress.done}
-                                                                max={group.progress.total || 1}
-                                                            />
-                                                        ) : (
-                                                            <Typography type="body-xs" color="muted">
-                                                                {group.collapsedCountLabel}
+                                            {group.onTitlePress ? (
+                                                /* title = its own go-there link (underline on hover, not fill —
+                                                   [[hover-style-matches-clickable-nature]]); ONLY the caret
+                                                   toggles (stay-here → fill). Two click targets, one row. */
+                                                <div className="flex w-full min-w-0 items-center gap-2">
+                                                    <Link
+                                                        onPress={group.onTitlePress}
+                                                        className="group min-w-0 flex-1 py-2 text-left text-foreground no-underline"
+                                                    >
+                                                        <div className="flex min-w-0 flex-col overflow-hidden">
+                                                            <Typography
+                                                                type="body"
+                                                                weight="semibold"
+                                                                truncate
+                                                                title={group.title}
+                                                                className="w-full min-w-0 group-hover:underline"
+                                                            >
+                                                                {group.title}
                                                             </Typography>
-                                                        )}
-                                                    </div>
-                                                    <Accordion.Indicator className="shrink-0" />
+                                                            {isExpanded ? (
+                                                                <ProgressMeter
+                                                                    value={group.progress.done}
+                                                                    max={group.progress.total || 1}
+                                                                />
+                                                            ) : (
+                                                                <Typography type="body-xs" color="muted">
+                                                                    {group.collapsedCountLabel}
+                                                                </Typography>
+                                                            )}
+                                                        </div>
+                                                    </Link>
+                                                    <Accordion.Trigger
+                                                        aria-label={group.title}
+                                                        className="shrink-0 rounded-medium p-2 hover:bg-default"
+                                                    >
+                                                        <Accordion.Indicator />
+                                                    </Accordion.Trigger>
                                                 </div>
-                                            </Accordion.Trigger>
+                                            ) : (
+                                                <Accordion.Trigger className="min-w-0 w-full max-w-full px-0 py-2 hover:bg-transparent">
+                                                    {/* title owns the full width (truncate + tooltip); the count/bar
+                                                        sits on its own line below so long titles aren't squeezed */}
+                                                    <div className="flex w-full min-w-0 items-center gap-2 overflow-hidden">
+                                                        <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
+                                                            <Typography
+                                                                type="body"
+                                                                weight="semibold"
+                                                                truncate
+                                                                title={group.title}
+                                                                className="w-full min-w-0"
+                                                            >
+                                                                {group.title}
+                                                            </Typography>
+                                                            {isExpanded ? (
+                                                                <ProgressMeter
+                                                                    value={group.progress.done}
+                                                                    max={group.progress.total || 1}
+                                                                />
+                                                            ) : (
+                                                                <Typography type="body-xs" color="muted">
+                                                                    {group.collapsedCountLabel}
+                                                                </Typography>
+                                                            )}
+                                                        </div>
+                                                        <Accordion.Indicator className="shrink-0" />
+                                                    </div>
+                                                </Accordion.Trigger>
+                                            )}
                                         </Accordion.Heading>
                                         <Accordion.Panel>
                                             <Accordion.Body className="px-0 pb-3">

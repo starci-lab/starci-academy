@@ -306,6 +306,7 @@
             "courses": "Khóa học",
             "blog": "Blog",
             "talents": "Talents",
+            "jobs": "Việc làm IT",
             "community": "Cộng đồng",
             "contact": "Liên hệ",
             "terms": "Điều khoản",
@@ -693,7 +694,9 @@
         "website": "Website",
         "address": "Địa chỉ",
         "phone": "Điện thoại",
-        "email": "Email"
+        "email": "Email",
+        "contactLocked": "Cần điểm CV ≥ {score} để mở thông tin liên hệ.",
+        "improveCv": "Cải thiện CV"
     },
     "cv": {
         "title": "CV",
@@ -2013,6 +2016,114 @@
         "description": "Những học viên đang mở cơ hội việc làm. Bấm vào để xem hồ sơ.",
         "empty": "Chưa có ứng viên nào bật “Sẵn sàng nhận việc”."
     },
+    "jobs": {
+        "employmentType": {
+            "fulltime": "Toàn thời gian",
+            "parttime": "Bán thời gian",
+            "internship": "Thực tập",
+            "contract": "Hợp đồng"
+        },
+        "list": {
+            "title": "Việc làm IT",
+            "description": "Tin tuyển dụng từ các công ty đối tác của StarCi Academy.",
+            "postCta": "Đăng tin tuyển dụng",
+            "searchPlaceholder": "Tìm theo tên vị trí",
+            "found": "{count, plural, =0 {Không có tin} one {# tin} other {# tin}}",
+            "filters": {
+                "allWorkModes": "Mọi hình thức",
+                "allEmploymentTypes": "Mọi loại hình",
+                "workModeAria": "Lọc theo hình thức làm việc",
+                "employmentTypeAria": "Lọc theo loại hình công việc"
+            },
+            "row": {
+                "salaryNegotiable": "Thoả thuận",
+                "salaryRange": "{min} - {max}"
+            },
+            "emptyPlatform": {
+                "title": "Chưa có tin tuyển dụng nào",
+                "description": "Công ty của bạn đang tuyển?",
+                "cta": "Đăng tin miễn phí"
+            },
+            "emptyFiltered": {
+                "title": "Không có tin khớp bộ lọc",
+                "clearFilters": "Xoá bộ lọc"
+            },
+            "error": "Không tải được danh sách tin tuyển dụng."
+        },
+        "detail": {
+            "notFound": "Không tìm thấy tin tuyển dụng này.",
+            "error": "Không tải được tin tuyển dụng.",
+            "postedAgo": "Đăng {time}",
+            "descriptionLabel": "Mô tả công việc",
+            "requirementsLabel": "Yêu cầu",
+            "apply": "Ứng tuyển",
+            "applyByEmail": "Ứng tuyển qua {email}"
+        },
+        "post": {
+            "title": "Đăng tin tuyển dụng",
+            "description": "Tin đăng lên trực tiếp, không qua hàng đợi duyệt.",
+            "submit": "Đăng tin",
+            "signedOut": {
+                "title": "Cần đăng nhập để đăng tin",
+                "description": "Đăng nhập bằng tài khoản StarCi Academy để đăng tin tuyển dụng."
+            },
+            "sections": {
+                "company": "Công ty",
+                "position": "Vị trí tuyển dụng",
+                "applyMethod": "Cách ứng tuyển"
+            },
+            "company": {
+                "searchPlaceholder": "Tìm công ty đã có trên StarCi Academy",
+                "notFoundHint": "Không tìm thấy? Điền thông tin công ty mới bên dưới.",
+                "change": "Đổi công ty",
+                "newTitle": "Tên công ty mới",
+                "newTitlePlaceholder": "Ví dụ: Công ty TNHH ABC",
+                "newLogoUrl": "URL logo (tùy chọn)",
+                "newLogoUrlPlaceholder": "https://...",
+                "newWebsiteUrl": "URL website (tùy chọn)",
+                "newWebsiteUrlPlaceholder": "https://..."
+            },
+            "position": {
+                "title": "Tên vị trí",
+                "titlePlaceholder": "Ví dụ: Backend Engineer",
+                "employmentType": "Loại hình công việc",
+                "employmentTypeNone": "Chưa chọn",
+                "workMode": "Hình thức làm việc",
+                "workModeNone": "Chưa chọn",
+                "location": "Địa điểm",
+                "locationPlaceholder": "Ví dụ: TP. Hồ Chí Minh",
+                "salaryMin": "Lương tối thiểu",
+                "salaryMax": "Lương tối đa",
+                "salaryPlaceholder": "Ví dụ: 15000000",
+                "salaryHint": "Để trống cả hai nếu mức lương thoả thuận.",
+                "description": "Mô tả công việc",
+                "descriptionPlaceholder": "Mô tả công việc, hỗ trợ Markdown",
+                "requirements": "Yêu cầu ứng viên (tùy chọn)",
+                "requirementsPlaceholder": "Yêu cầu ứng viên, hỗ trợ Markdown"
+            },
+            "applyMethod": {
+                "toggleAria": "Chọn cách ứng tuyển",
+                "externalUrl": "Liên kết ngoài",
+                "email": "Email",
+                "urlLabel": "URL ứng tuyển",
+                "urlPlaceholder": "https://...",
+                "emailLabel": "Email nhận hồ sơ",
+                "emailPlaceholder": "hr@congty.com"
+            },
+            "errors": {
+                "companyRequired": "Chọn một công ty có sẵn hoặc điền tên công ty mới.",
+                "companyEitherOr": "Chỉ chọn một trong hai: công ty có sẵn hoặc công ty mới.",
+                "applyUrlRequired": "Nhập URL ứng tuyển.",
+                "applyEmailRequired": "Nhập email nhận hồ sơ."
+            },
+            "success": {
+                "title": "Tin tuyển dụng đã được đăng",
+                "description": "Tin của bạn đã hiển thị công khai trên bảng việc làm — không cần chờ duyệt.",
+                "viewPosting": "Xem tin vừa đăng",
+                "backToBoard": "Về bảng việc làm"
+            }
+        }
+    },
     "reference": {
         "title": "Tài liệu tham khảo"
     },
@@ -2453,6 +2564,7 @@
             "rewards": "Phần thưởng",
             "blog": "Blog",
             "talents": "Nhân tài",
+            "jobs": "Việc làm IT",
             "profile": "Hồ sơ"
         },
         "aiQuota": {
@@ -2780,7 +2892,8 @@
                 "engineer": {
                     "title": "Cho người dùng",
                     "body": "Bạn xây portfolio từ dự án thật, chuẩn production và tôi đưa thẳng tới nhà tuyển dụng. Họ gọi bạn vì thứ bạn làm được, không phải vì CV đẹp.",
-                    "cta": "Bắt đầu xây hồ sơ"
+                    "cta": "Bắt đầu xây hồ sơ",
+                    "jobsCta": "Xem việc làm IT"
                 },
                 "enterprise": {
                     "title": "Cho doanh nghiệp",
@@ -3166,6 +3279,7 @@
             "courses": "Khóa học",
             "blog": "Blog",
             "talents": "Talents",
+            "jobs": "Việc làm IT",
             "community": "Cộng đồng",
             "contact": "Liên hệ",
             "terms": "Điều khoản",

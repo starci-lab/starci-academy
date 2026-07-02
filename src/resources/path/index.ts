@@ -458,6 +458,28 @@ export const pathConfig = () => {
                 build,
             }
         }
+        const jobs = (displayId?: string) => {
+            // IT job board: browse (`/jobs`) or one posting's detail (`/jobs/[displayId]`).
+            // Global, non-course-scoped — mirrors `talents()`.
+            const jobsPath = displayId ? `${localePath}/jobs/${displayId}` : `${localePath}/jobs`
+            const build = () => {
+                return jobsPath
+            }
+            // public submission form: any signed-in user can post a job opening
+            const post = () => {
+                const postPath = `${localePath}/jobs/post`
+                const build = () => {
+                    return postPath
+                }
+                return {
+                    build,
+                }
+            }
+            return {
+                build,
+                post,
+            }
+        }
         const blog = () => {
             // editorial blog index (deep-dive / build-in-public / career / …)
             const blogPath = `${localePath}/blog`
@@ -560,6 +582,7 @@ export const pathConfig = () => {
             ragPlayground,
             review,
             talents,
+            jobs,
             blog,
             community,
             rewards,

@@ -23,6 +23,7 @@ import {
     GiftIcon,
     ArticleIcon,
     BriefcaseIcon,
+    UsersThreeIcon,
 } from "@phosphor-icons/react"
 import {
     pathConfig,
@@ -101,8 +102,13 @@ export const QuickActions = ({
             },
             {
                 key: "talents",
-                Icon: BriefcaseIcon,
+                Icon: UsersThreeIcon,
                 href: pathConfig().locale(locale).talents().build(),
+            },
+            {
+                key: "jobs",
+                Icon: BriefcaseIcon,
+                href: pathConfig().locale(locale).jobs().build(),
             },
         ],
         [

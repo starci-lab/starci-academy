@@ -66,6 +66,7 @@ export const Footer = ({ className }: FooterProps) => {
         { key: "courses", label: t("footer.links.courses"), path: paths.course().build() },
         { key: "blog", label: t("footer.links.blog"), path: paths.blog().build() },
         { key: "talents", label: t("footer.links.talents"), path: paths.talents().build() },
+        { key: "jobs", label: t("footer.links.jobs"), path: paths.jobs().build() },
         { key: "community", label: t("footer.links.community"), path: paths.community().build() },
     ]
     const supportLinks = [

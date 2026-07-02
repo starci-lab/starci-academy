@@ -1,8 +1,12 @@
 "use client"
 
-import { House as BuildingsIcon, Smartphone as PhoneIcon } from "@gravity-ui/icons"
-import { FaLinkedin as LinkedinLogoIcon } from "react-icons/fa6"
-import { Button, cn, Link, Modal } from "@heroui/react"
+import {
+    BuildingsIcon,
+    LinkedinLogoIcon,
+    LockIcon,
+    PhoneIcon,
+} from "@phosphor-icons/react"
+import { Button, cn, Link, Modal, Typography } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import React from "react"
@@ -46,6 +50,12 @@ export const HeadhunterModal = (props: HeadhunterModalProps) => {
         )
     }
 
+    /** Route to the CV review page so the viewer can raise their score past the unlock threshold. */
+    const onImproveCv = () => {
+        setOpen(false)
+        router.push(pathConfig().locale(locale).profile().cv().build())
+    }
+
     return (
         <Modal isOpen={isOpen} onOpenChange={setOpen}>
             <Modal.Backdrop>
@@ -85,47 +95,63 @@ export const HeadhunterModal = (props: HeadhunterModalProps) => {
                                             {headhunter.description}
                                         </p>
                                     ) : null}
-                                    <div className="mt-2 flex w-full flex-wrap justify-center gap-3">
-                                        {headhunter.linkedinUrl ? (
-                                            <Link
-                                                href={headhunter.linkedinUrl}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="inline-flex items-center gap-1.5 text-sm text-accent"
+                                    {headhunter.contactUnlocked ? (
+                                        <div className="mt-2 flex w-full flex-wrap justify-center gap-3">
+                                            {headhunter.linkedinUrl ? (
+                                                <Link
+                                                    href={headhunter.linkedinUrl}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="inline-flex items-center gap-1.5 text-sm text-accent"
+                                                >
+                                                    <LinkedinLogoIcon className="size-5" aria-hidden />
+                                                    {t("headhuntings.linkedin")}
+                                                </Link>
+                                            ) : null}
+                                            {headhunter.phoneNumber ? (
+                                                <Link
+                                                    href={`tel:${headhunter.phoneNumber.replace(/\D/g, "")}`}
+                                                    className="inline-flex items-center gap-1.5 text-sm text-accent"
+                                                >
+                                                    <PhoneIcon className="size-5" aria-hidden />
+                                                    {t("headhuntings.phone")}: {headhunter.phoneNumber}
+                                                </Link>
+                                            ) : null}
+                                            {headhunter.zaloNumber ? (
+                                                <Link
+                                                    href={`https://zalo.me/${headhunter.zaloNumber.replace(/\D/g, "")}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="inline-flex items-center gap-1.5 text-sm text-accent"
+                                                >
+                                                    <PhoneIcon className="size-5" aria-hidden />
+                                                    {t("headhuntings.zalo")}: {headhunter.zaloNumber}
+                                                </Link>
+                                            ) : null}
+                                            {headhunter.email ? (
+                                                <Link
+                                                    href={`mailto:${headhunter.email}`}
+                                                    className="inline-flex items-center gap-1.5 text-sm text-accent"
+                                                >
+                                                    {t("headhuntings.email")}: {headhunter.email}
+                                                </Link>
+                                            ) : null}
+                                        </div>
+                                    ) : (
+                                        <div className="mt-2 flex w-full flex-col items-center gap-3 rounded-2xl border border-default px-4 py-4 text-center">
+                                            <LockIcon aria-hidden focusable="false" className="size-6 text-muted" />
+                                            <Typography type="body-sm" color="muted">
+                                                {t("headhuntings.contactLocked", { score: headhunter.cvScoreUnlockThreshold })}
+                                            </Typography>
+                                            <Button
+                                                variant="secondary"
+                                                size="sm"
+                                                onPress={onImproveCv}
                                             >
-                                                <LinkedinLogoIcon className="size-5" aria-hidden />
-                                                {t("headhuntings.linkedin")}
-                                            </Link>
-                                        ) : null}
-                                        {headhunter.phoneNumber ? (
-                                            <Link
-                                                href={`tel:${headhunter.phoneNumber.replace(/\D/g, "")}`}
-                                                className="inline-flex items-center gap-1.5 text-sm text-accent"
-                                            >
-                                                <PhoneIcon className="size-5" aria-hidden />
-                                                {t("headhuntings.phone")}: {headhunter.phoneNumber}
-                                            </Link>
-                                        ) : null}
-                                        {headhunter.zaloNumber ? (
-                                            <Link
-                                                href={`https://zalo.me/${headhunter.zaloNumber.replace(/\D/g, "")}`}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="inline-flex items-center gap-1.5 text-sm text-accent"
-                                            >
-                                                <PhoneIcon className="size-5" aria-hidden />
-                                                {t("headhuntings.zalo")}: {headhunter.zaloNumber}
-                                            </Link>
-                                        ) : null}
-                                        {headhunter.email ? (
-                                            <Link
-                                                href={`mailto:${headhunter.email}`}
-                                                className="inline-flex items-center gap-1.5 text-sm text-accent"
-                                            >
-                                                {t("headhuntings.email")}: {headhunter.email}
-                                            </Link>
-                                        ) : null}
-                                    </div>
+                                                {t("headhuntings.improveCv")}
+                                            </Button>
+                                        </div>
+                                    )}
                                 </div>
                             ) : null}
                         </Modal.Body>

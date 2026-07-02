@@ -306,6 +306,7 @@
             "courses": "Courses",
             "blog": "Blog",
             "talents": "Talents",
+            "jobs": "IT jobs",
             "community": "Community",
             "contact": "Contact",
             "terms": "Terms",
@@ -684,7 +685,9 @@
         "website": "Website",
         "address": "Address",
         "phone": "Phone",
-        "email": "Email"
+        "email": "Email",
+        "contactLocked": "Reach a CV score of {score} or higher to unlock contact info.",
+        "improveCv": "Improve your CV"
     },
     "cv": {
         "title": "CV",
@@ -2004,6 +2007,114 @@
         "description": "Learners currently open to job opportunities. Click to view a profile.",
         "empty": "No one has turned on \"Open to work\" yet."
     },
+    "jobs": {
+        "employmentType": {
+            "fulltime": "Full-time",
+            "parttime": "Part-time",
+            "internship": "Internship",
+            "contract": "Contract"
+        },
+        "list": {
+            "title": "IT Jobs",
+            "description": "Job postings from StarCi Academy's partner companies.",
+            "postCta": "Post a job",
+            "searchPlaceholder": "Search by job title",
+            "found": "{count, plural, =0 {No postings} one {# posting} other {# postings}}",
+            "filters": {
+                "allWorkModes": "All work modes",
+                "allEmploymentTypes": "All employment types",
+                "workModeAria": "Filter by work mode",
+                "employmentTypeAria": "Filter by employment type"
+            },
+            "row": {
+                "salaryNegotiable": "Negotiable",
+                "salaryRange": "{min} - {max}"
+            },
+            "emptyPlatform": {
+                "title": "No job postings yet",
+                "description": "Is your company hiring?",
+                "cta": "Post one for free"
+            },
+            "emptyFiltered": {
+                "title": "No postings match your filters",
+                "clearFilters": "Clear filters"
+            },
+            "error": "Could not load job postings."
+        },
+        "detail": {
+            "notFound": "This job posting could not be found.",
+            "error": "Could not load this job posting.",
+            "postedAgo": "Posted {time}",
+            "descriptionLabel": "Job description",
+            "requirementsLabel": "Requirements",
+            "apply": "Apply now",
+            "applyByEmail": "Apply via {email}"
+        },
+        "post": {
+            "title": "Post a job",
+            "description": "Your posting goes live immediately — no approval queue.",
+            "submit": "Post job",
+            "signedOut": {
+                "title": "Sign in to post a job",
+                "description": "Sign in with your StarCi Academy account to post a job opening."
+            },
+            "sections": {
+                "company": "Company",
+                "position": "Position",
+                "applyMethod": "How to apply"
+            },
+            "company": {
+                "searchPlaceholder": "Search companies already on StarCi Academy",
+                "notFoundHint": "Not found? Fill in the new company details below.",
+                "change": "Change company",
+                "newTitle": "New company name",
+                "newTitlePlaceholder": "e.g. Acme Inc.",
+                "newLogoUrl": "Logo URL (optional)",
+                "newLogoUrlPlaceholder": "https://...",
+                "newWebsiteUrl": "Website URL (optional)",
+                "newWebsiteUrlPlaceholder": "https://..."
+            },
+            "position": {
+                "title": "Job title",
+                "titlePlaceholder": "e.g. Backend Engineer",
+                "employmentType": "Employment type",
+                "employmentTypeNone": "None selected",
+                "workMode": "Work mode",
+                "workModeNone": "None selected",
+                "location": "Location",
+                "locationPlaceholder": "e.g. Ho Chi Minh City",
+                "salaryMin": "Minimum salary",
+                "salaryMax": "Maximum salary",
+                "salaryPlaceholder": "e.g. 15000000",
+                "salaryHint": "Leave both blank if the salary is negotiable.",
+                "description": "Job description",
+                "descriptionPlaceholder": "Job description, Markdown supported",
+                "requirements": "Requirements (optional)",
+                "requirementsPlaceholder": "Candidate requirements, Markdown supported"
+            },
+            "applyMethod": {
+                "toggleAria": "Choose how to apply",
+                "externalUrl": "External link",
+                "email": "Email",
+                "urlLabel": "Application URL",
+                "urlPlaceholder": "https://...",
+                "emailLabel": "Application email",
+                "emailPlaceholder": "hr@company.com"
+            },
+            "errors": {
+                "companyRequired": "Pick an existing company or fill in a new company name.",
+                "companyEitherOr": "Choose only one: an existing company or a new company.",
+                "applyUrlRequired": "Enter an application URL.",
+                "applyEmailRequired": "Enter an application email."
+            },
+            "success": {
+                "title": "Your job posting is live",
+                "description": "Your posting is now visible on the job board — no approval needed.",
+                "viewPosting": "View posting",
+                "backToBoard": "Back to job board"
+            }
+        }
+    },
     "reference": {
         "title": "References"
     },
@@ -2444,6 +2555,7 @@
             "rewards": "Rewards",
             "blog": "Blog",
             "talents": "Talents",
+            "jobs": "IT jobs",
             "profile": "Profile"
         },
         "aiQuota": {
@@ -2780,7 +2892,8 @@
                 "engineer": {
                     "title": "For users",
                     "body": "You build a portfolio from real, production-grade projects, and I take it straight to hiring teams. They call you for what you can do, not for a polished CV.",
-                    "cta": "Start building your portfolio"
+                    "cta": "Start building your portfolio",
+                    "jobsCta": "Browse IT jobs"
                 },
                 "enterprise": {
                     "title": "For companies",
@@ -3166,6 +3279,7 @@
             "courses": "Courses",
             "blog": "Blog",
             "talents": "Talents",
+            "jobs": "IT jobs",
             "community": "Community",
             "contact": "Contact",
             "terms": "Terms",

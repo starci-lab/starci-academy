@@ -11,7 +11,8 @@ import {
     Typography,
     cn,
 } from "@heroui/react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
 import { AIProcessingText } from "@/components/reuseable/AIProcessingText"
 import { LatexCvPreview } from "@/components/blocks/documents/LatexCvPreview"
 import { StarCiAIBadge } from "@/components/reuseable/StarCiAIBadge"
@@ -22,6 +23,30 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useCvGenerationForm } from "@/hooks/zustand/cvGeneration/useCvGenerationForm"
 import { useCvGenerationStore } from "@/hooks/zustand/cvGeneration/store"
 import { useQueryCvGenerationSwr } from "@/hooks/swr/api/graphql/queries/useQueryCvGenerationSwr"
+import { useQueryAiModelsSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiModelsSwr"
+import { useQueryMyAiSettingsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiSettingsSwr"
+import { AiMode } from "@/modules/api/graphql/queries/query-my-ai-settings"
+import { AiModelCategory, AiModelTask } from "@/modules/api/graphql/queries/query-ai-models"
+import type { AiGradableModel } from "@/modules/api/graphql/queries/types/ai-models"
+import {
+    GradeModelDropdown,
+    type GradeModelSelection,
+} from "@/components/blocks/grading/GradeModelDropdown"
+import { pathConfig } from "@/resources/path"
+
+/** Model categories offered in the CV-generation picker — "medium trở lên" (Balanced and up). */
+const CV_GENERATE_CATEGORIES: ReadonlyArray<AiModelCategory> = [
+    AiModelCategory.Balanced,
+    AiModelCategory.Premium,
+    AiModelCategory.Frontier,
+]
+
+/** Default selection — Auto lane, balancer picks the model. */
+const AUTO_SELECTION: GradeModelSelection = {
+    mode: AiMode.Auto,
+    model: null,
+    provider: null,
+}
 
 /** Props for {@link GenerateSection}. */
 export interface GenerateSectionProps extends WithClassNames<undefined> {
@@ -49,11 +74,28 @@ export const GenerateSection = ({
     className,
 }: GenerateSectionProps) => {
     const t = useTranslations()
+    const locale = useLocale()
+    const router = useRouter()
     const [extraPrompts, setExtraPrompts] = useState("")
+    const [selection, setSelection] = useState<GradeModelSelection>(AUTO_SELECTION)
     const { generate, revise, isGenerating, isRevising } = useCvGenerationForm()
     const activeCvGenerationId = useCvGenerationStore((state) => state.activeCvGenerationId)
     const generationSwr = useQueryCvGenerationSwr(activeCvGenerationId ?? undefined)
     const generation = generationSwr.data
+
+    const aiModelsSwr = useQueryAiModelsSwr()
+    const myAiSettingsSwr = useQueryMyAiSettingsSwr()
+    const canPremium = Boolean(myAiSettingsSwr.data?.canPremium)
+    const cvModels = useMemo<Array<AiGradableModel>>(
+        () => (aiModelsSwr.data?.aiModels?.data?.gradableModels ?? []).filter(
+            (model) =>
+                CV_GENERATE_CATEGORIES.includes(model.category)
+                && (model.supportedTasks?.length
+                    ? model.supportedTasks.includes(AiModelTask.CvGenerating)
+                    : true),
+        ),
+        [aiModelsSwr.data],
+    )
 
     /** Map the CV generation lifecycle to the shared AI job-status copy (queued/processing/…). */
     const jobStatus = useMemo<JobStatus | undefined>(() => {
@@ -84,7 +126,7 @@ export const GenerateSection = ({
     const latexSource = generation?.latexSource ?? ""
 
     const onGenerate = () => {
-        void generate(extraPrompts)
+        void generate(extraPrompts, selection)
     }
 
     const onRevise = () => {
@@ -92,7 +134,7 @@ export const GenerateSection = ({
             onOpenUpload()
             return
         }
-        void revise(cvSubmissionId, extraPrompts)
+        void revise(cvSubmissionId, extraPrompts, selection)
     }
 
     return (
@@ -152,6 +194,21 @@ export const GenerateSection = ({
                     )}
                 </Button>
             </div>
+
+            <GradeModelDropdown
+                className="w-fit max-w-full text-sm text-muted"
+                models={cvModels}
+                selection={selection}
+                canPremium={canPremium}
+                isDisabled={isPending}
+                task={AiModelTask.CvGenerating}
+                floor={AiModelCategory.Balanced}
+                showAutoLane
+                onSelect={setSelection}
+                onUpgrade={() => router.push(
+                    pathConfig().locale(locale).profile().aiSubscription().build(),
+                )}
+            />
 
             {jobStatus !== undefined && !isDone ? (
                 <AIProcessingText

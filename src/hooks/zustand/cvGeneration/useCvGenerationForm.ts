@@ -8,6 +8,7 @@ import { useJobNotificationsSocketIo } from "@/hooks/socketio/useJobNotification
 import { useMutateGenerateCvSwr } from "@/hooks/swr/api/graphql/mutations/useMutateGenerateCvSwr"
 import { useMutateReviseCvSwr } from "@/hooks/swr/api/graphql/mutations/useMutateReviseCvSwr"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
+import type { GradeModelSelection } from "@/components/blocks/grading/GradeModelDropdown"
 
 /**
  * Action hook for the AI CV generation flows. `generate` builds a CV from the learner's StarCi
@@ -43,13 +44,16 @@ export const useCvGenerationForm = () => {
 
     /** Generate a CV from scratch off the learner's StarCi activity. */
     const generate = useCallback(
-        async (extraPrompts?: string) => {
+        async (extraPrompts?: string, selection?: GradeModelSelection) => {
             setIsGenerating(true)
             try {
                 await runGraphQL(
                     async () => {
                         const result = await triggerGenerateCv({
                             extraPrompts: extraPrompts?.trim() || undefined,
+                            mode: selection?.mode,
+                            selectedModel: selection?.model ?? undefined,
+                            selectedModelProvider: selection?.provider ?? undefined,
                         })
                         const env = result?.data?.generateCv
                         if (!env) {
@@ -77,7 +81,7 @@ export const useCvGenerationForm = () => {
 
     /** Revise an already-uploaded CV submission. */
     const revise = useCallback(
-        async (cvSubmissionId: string, extraPrompts?: string) => {
+        async (cvSubmissionId: string, extraPrompts?: string, selection?: GradeModelSelection) => {
             setIsRevising(true)
             try {
                 await runGraphQL(
@@ -85,6 +89,9 @@ export const useCvGenerationForm = () => {
                         const result = await triggerReviseCv({
                             cvSubmissionId,
                             extraPrompts: extraPrompts?.trim() || undefined,
+                            mode: selection?.mode,
+                            selectedModel: selection?.model ?? undefined,
+                            selectedModelProvider: selection?.provider ?? undefined,
                         })
                         const env = result?.data?.reviseCv
                         if (!env) {

@@ -1,4 +1,5 @@
 import type { GraphQLResponse, QueryVariables } from "../../types"
+import type { AiMode, ModelProvider } from "../../queries/query-my-ai-settings"
 
 /** GraphQL `GenerateCvRequest` body. */
 export interface GenerateCvRequest {
@@ -7,6 +8,12 @@ export interface GenerateCvRequest {
      * outside StarCi that the AI should weave into the generated CV.
      */
     extraPrompts?: string
+    /** AI lane to generate on (auto/premium/byok); validated against entitlement at generate time. */
+    mode?: AiMode
+    /** Concrete model the user picked in the CV-generation model picker; undefined = balancer default. */
+    selectedModel?: string
+    /** Provider serving {@link GenerateCvRequest.selectedModel}. */
+    selectedModelProvider?: ModelProvider
 }
 
 /** Payload inside `generateCv.data` after the standard API wrapper. */

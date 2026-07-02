@@ -16,6 +16,7 @@ export enum AiModelCategory {
 export enum AiModelTask {
     Chatting = "chatting",
     Grading = "grading",
+    CvGenerating = "cv_generating",
 }
 
 const query1 = gql`

@@ -704,6 +704,17 @@
             "title": "Xem trước CV (PDF)",
             "fullscreen": "Xem toàn màn hình"
         },
+        "generate": {
+            "title": "Tạo CV bằng AI",
+            "description": "Để AI dựng một bản CV developer từ hoạt động học tập của bạn trên StarCi, hoặc chỉnh sửa CV bạn đã tải lên. Kết quả là bản LaTeX xem trước — tải file .tex về để tinh chỉnh thêm.",
+            "extraPromptsLabel": "Kể thêm về dự án/kinh nghiệm ngoài StarCi (tuỳ chọn)",
+            "extraPromptsPlaceholder": "vd: Tôi làm dự án A, dự án B, tôi biết Golang/TypeScript...",
+            "generateAction": "Tạo CV",
+            "reviseAction": "Chỉnh sửa CV của tôi",
+            "downloadTex": "Tải file .tex",
+            "renderFallback": "Không thể hiển thị bản xem trước. Vui lòng tải file .tex về để xem.",
+            "previewAria": "Bản xem trước CV"
+        },
         "submission": {
             "fileCardTitle": "Thông tin CV đã nộp",
             "submittedAtPending": "Chưa có thời gian nộp từ hệ thống.",

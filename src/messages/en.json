@@ -695,6 +695,17 @@
             "title": "CV preview (PDF)",
             "fullscreen": "View full"
         },
+        "generate": {
+            "title": "Generate CV with AI",
+            "description": "Let AI build a developer CV from your StarCi learning activity, or revise a CV you uploaded. The result is a LaTeX preview — download the .tex source to fine-tune it.",
+            "extraPromptsLabel": "Tell us about projects/experience outside StarCi (optional)",
+            "extraPromptsPlaceholder": "e.g. I built project A and project B, I know Golang/TypeScript...",
+            "generateAction": "Generate CV",
+            "reviseAction": "Revise my CV",
+            "downloadTex": "Download .tex",
+            "renderFallback": "Preview unavailable, download the .tex source instead.",
+            "previewAria": "CV preview"
+        },
         "submission": {
             "fileCardTitle": "Submitted CV information",
             "submittedAtPending": "Submission time not available yet.",

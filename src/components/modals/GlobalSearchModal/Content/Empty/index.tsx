@@ -36,24 +36,22 @@ export const GlobalSearchEmpty = ({ hasQuery, className }: GlobalSearchEmptyProp
     const { data } = useQueryRecommendedCoursesSwr()
     const popular = (data?.items ?? []).slice(0, 4)
 
-    if (hasQuery) {
-        return (
-            <div className={cn("flex flex-col items-center justify-center px-4 py-9 text-center", className)}>
-                <Typography type="body-sm" color="muted">{t("search.noResults")}</Typography>
-            </div>
-        )
-    }
-
+    // No popular courses to fall back on → just the appropriate hint line (never a blank).
     if (popular.length === 0) {
         return (
             <div className={cn("flex flex-col items-center justify-center px-4 py-9 text-center", className)}>
-                <Typography type="body-sm" color="muted">{t("search.idleHint")}</Typography>
+                <Typography type="body-sm" color="muted">{t(hasQuery ? "search.noResults" : "search.idleHint")}</Typography>
             </div>
         )
     }
 
     return (
         <div className={cn("flex flex-col gap-1 px-2", className)}>
+            {/* query typed but no hits → keep the "not found" line, then fall through to Popular
+                so the palette is never a dead-end */}
+            {hasQuery ? (
+                <div className="px-2 pb-1 text-xs text-muted">{t("search.noResults")}</div>
+            ) : null}
             <div className="px-2 text-xs font-medium text-muted">{t("search.popular")}</div>
             <ListBox aria-label={t("search.popular")} className="gap-0">
                 {popular.map((course) => (

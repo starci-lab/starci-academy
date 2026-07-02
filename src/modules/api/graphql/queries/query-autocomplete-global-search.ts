@@ -18,6 +18,9 @@ const query1 = gql`
           displayId
           title
           texts
+          path
+          isEnrolled
+          isFree
           parentPath { course { id displayId } module { id displayId } content { id displayId } challenge { id displayId } }
         }
         modules {
@@ -25,6 +28,7 @@ const query1 = gql`
           displayId
           title
           texts
+          path
           parentPath { course { id displayId } module { id displayId } content { id displayId } challenge { id displayId } }
         }
         challenges {
@@ -32,6 +36,7 @@ const query1 = gql`
           displayId
           title
           texts
+          path
           parentPath { course { id displayId } module { id displayId } content { id displayId } challenge { id displayId } }
         }
         contents {
@@ -39,6 +44,8 @@ const query1 = gql`
           displayId
           title
           texts
+          path
+          isPremium
           parentPath { course { id displayId } module { id displayId } content { id displayId } challenge { id displayId } }
         }
         flashcardDecks {
@@ -46,6 +53,7 @@ const query1 = gql`
           displayId
           title
           texts
+          path
           parentPath { course { id displayId } }
         }
         milestones {
@@ -53,6 +61,7 @@ const query1 = gql`
           displayId
           title
           texts
+          path
           parentPath { course { id displayId } task { id displayId } }
         }
         milestoneTasks {
@@ -60,6 +69,15 @@ const query1 = gql`
           displayId
           title
           texts
+          path
+          parentPath { course { id displayId } }
+        }
+        foundations {
+          id
+          displayId
+          title
+          texts
+          path
           parentPath { course { id displayId } }
         }
       }

@@ -98,6 +98,26 @@
             "landingLink": "Xem FAQ về khoá học ở trang chủ"
         }
     },
+    "appearance": {
+        "title": "Giao diện",
+        "description": "Tùy chỉnh màu nhấn và hiệu ứng nền áp dụng cho toàn bộ ứng dụng, độc lập với chế độ sáng/tối.",
+        "accentLabel": "Màu nhấn",
+        "customColor": "Màu tùy chỉnh",
+        "resetAccent": "Đặt lại mặc định",
+        "effectLabel": "Hiệu ứng nền",
+        "effects": {
+            "none": "Tắt",
+            "ember": "Than hồng",
+            "wave": "Sóng",
+            "snow": "Tuyết",
+            "rain": "Mưa",
+            "bubbles": "Bong bóng",
+            "fireflies": "Đom đóm",
+            "stars": "Bầu trời sao",
+            "aurora": "Cực quang",
+            "circuit": "Mạch điện"
+        }
+    },
     "profileSettings": {
         "title": "Cài đặt",
         "subtitle": "Quản lý tài khoản, AI, nội dung và thành viên.",
@@ -117,6 +137,7 @@
         },
         "items": {
             "editProfile": "Chỉnh sửa hồ sơ",
+            "appearance": "Giao diện",
             "security": "Bảo mật",
             "sessions": "Thiết bị",
             "courseHistory": "Lịch sử học",
@@ -321,7 +342,13 @@
             "lessonVideos": "Bài giảng",
             "flashcards": "Bộ flashcard",
             "milestones": "Tiến độ",
-            "milestoneTasks": "Tasks"
+            "milestoneTasks": "Tasks",
+            "foundations": "Nền tảng"
+        },
+        "result": {
+            "free": "Miễn phí",
+            "enrolled": "Đã đăng ký",
+            "viewCourse": "Xem khóa"
         },
         "idleHint": "Nhập để tìm khóa học, học phần, bài giảng…",
         "popular": "Phổ biến",
@@ -1711,6 +1738,8 @@
             "empty": "Chưa có lượt dùng AI nào.",
             "loading": "Đang tải lịch sử…",
             "purposeGrade": "Chấm challenge",
+            "purposeInterview": "Chấm phỏng vấn",
+            "purposeChatbot": "Hỏi bài AI",
             "autoModel": "Model tự động (miễn phí)",
             "creditsUnit": "credit",
             "breakdownTitle": "Theo nhà cung cấp",
@@ -3182,6 +3211,45 @@
             "infraDescription": "Hiện chưa có thành phần hạ tầng nào được kiểm tra.",
             "aiTitle": "Chưa có khoá AI nào",
             "aiDescription": "Hiện chưa cấu hình nhóm khoá AI nào."
+        }
+    },
+    "ragPlayground": {
+        "hero": {
+            "eyebrow": "RAG Playground · Model chạy local",
+            "headline": "Dán code vào. Hỏi bất cứ điều gì. <accent>AI tự host trả lời — miễn phí, không cần đăng nhập.</accent>",
+            "subline": "Đây là RAG thật: code của bạn được chia nhỏ, nhúng vector, tìm theo ngữ nghĩa — rồi model chạy trên máy chủ local của StarCi (không phải API trả phí) trả lời kèm trích dẫn nguồn.",
+            "cta": "Thử ngay bên dưới"
+        },
+        "import": {
+            "tabsAria": "Chọn cách nạp code",
+            "tabs": {
+                "paste": "Dán code",
+                "upload": "Tải file",
+                "sample": "Dùng mẫu",
+                "github": "Repo GitHub"
+            },
+            "pastePlaceholder": "Dán code vào đây…",
+            "uploadHint": "Chọn 1 file code (.ts, .py, .go, .java, …)",
+            "sampleHint": "Dùng đoạn code mẫu có sẵn (thuật toán tìm top-K bằng cosine similarity) — không cần chuẩn bị gì.",
+            "githubPlaceholder": "https://github.com/owner/repo",
+            "cta": "Nạp & lập chỉ mục",
+            "indexed": "Đã lập chỉ mục {count} đoạn",
+            "genericError": "Không nạp được code này, thử lại hoặc chọn cách khác.",
+            "dismissError": "Đóng thông báo lỗi"
+        },
+        "chat": {
+            "title": "Hỏi về code này",
+            "freeBadge": "Model local · miễn phí",
+            "emptyNoIndexTitle": "Chưa có code để hỏi",
+            "emptyNoIndexDescription": "Nạp code ở khung bên trái trước, rồi quay lại đây hỏi.",
+            "emptyReadyTitle": "Sẵn sàng rồi!",
+            "emptyReadyDescription": "Hỏi bất cứ điều gì về đoạn code vừa nạp — model sẽ trích dẫn đúng chỗ liên quan.",
+            "thinking": "Đang suy nghĩ…",
+            "sources": "Nguồn trích dẫn",
+            "placeholder": "Hỏi về đoạn code này…",
+            "stop": "Dừng",
+            "send": "Gửi câu hỏi",
+            "genericError": "AI hiện không trả lời được, thử lại sau."
         }
     }
 }

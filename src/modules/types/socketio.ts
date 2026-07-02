@@ -44,6 +44,8 @@ export interface GlobalSearchGroups {
     milestones?: Array<GlobalSearchItem>
     /** Milestone-task hits. */
     milestoneTasks?: Array<GlobalSearchItem>
+    /** Foundation hits. */
+    foundations?: Array<GlobalSearchItem>
 }
 
 /** Payload shape for global search subscription results (mirrors UI `GlobalSearchContent`). */

@@ -7,8 +7,16 @@ import { ScrollShadow } from "@heroui/react"
 import { useAppSelector } from "@/redux/hooks"
 import type { AutocompleteGlobalSearchItem } from "@/modules/api/graphql/queries/types/autocomplete-global-search"
 
-/** Entity bucket a pressed search item belongs to — drives how its href is built. */
-type GlobalSearchKind = "course" | "module" | "content" | "challenge" | "flashcardDeck" | "milestone" | "milestoneTask"
+/** Entity bucket a pressed search item belongs to — drives how its href is built + its leading icon. */
+export type GlobalSearchKind =
+    | "course"
+    | "module"
+    | "content"
+    | "challenge"
+    | "flashcardDeck"
+    | "milestone"
+    | "milestoneTask"
+    | "foundation"
 
 /** One grouped, collapsible section of the results (header label + hit count + rows). */
 interface GlobalSearchSection {
@@ -37,6 +45,7 @@ export const GlobalSearchContent = () => {
     const flashcardDecks = useAppSelector((state) => state.socketIo.globalSearchResults?.data?.flashcardDecks)
     const milestones = useAppSelector((state) => state.socketIo.globalSearchResults?.data?.milestones)
     const milestoneTasks = useAppSelector((state) => state.socketIo.globalSearchResults?.data?.milestoneTasks)
+    const foundations = useAppSelector((state) => state.socketIo.globalSearchResults?.data?.foundations)
     const query = useAppSelector((state) => state.search.query).trim()
 
     // One section per bucket, in display order; only non-empty buckets are shown.
@@ -76,6 +85,11 @@ export const GlobalSearchContent = () => {
             label: t("search.suggestions.milestoneTasks"),
             items: milestoneTasks,
         },
+        {
+            kind: "foundation",
+            label: t("search.suggestions.foundations"),
+            items: foundations,
+        },
     ]
     const sections = allSections.filter((section) => (section.items?.length ?? 0) > 0)
 
@@ -90,7 +104,7 @@ export const GlobalSearchContent = () => {
                             <div className="px-2 text-xs font-medium text-muted">
                                 {`${section.label} (${section.items?.length ?? 0})`}
                             </div>
-                            <GlobalSearchContentBlock items={section.items ?? []} />
+                            <GlobalSearchContentBlock kind={section.kind} items={section.items ?? []} />
                         </div>
                     ))}
                 </div>

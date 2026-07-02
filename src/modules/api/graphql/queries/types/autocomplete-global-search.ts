@@ -5,11 +5,11 @@ export type SearchableEntity =
     | "CourseEntity"
     | "ModuleEntity"
     | "ContentEntity"
-    | "LessonVideoEntity"
     | "ChallengeEntity"
     | "MilestoneEntity"
     | "MilestoneTaskEntity"
     | "FlashcardDeckEntity"
+    | "FoundationEntity"
 
 /** One resolved ancestor (course/module/content/challenge) of a search hit. */
 export interface AutocompleteGlobalSearchParentRef {
@@ -50,6 +50,21 @@ export interface AutocompleteGlobalSearchItem {
      * Client prepends `/{locale}` and pushes it. Null/absent when unroutable.
      */
     path?: string | null
+    /**
+     * COURSE hits only: `true` when the authed user has a real enrollment in this
+     * course. Always `false` for guests; `null`/absent for non-course kinds.
+     */
+    isEnrolled?: boolean | null
+    /**
+     * COURSE hits only: `true` when the course has no paid price (no base price and
+     * no priced phase). `null`/absent for non-course kinds.
+     */
+    isFree?: boolean | null
+    /**
+     * CONTENT (lesson) hits only: mirrors `ContentEntity.isPremium`. `null`/absent
+     * for non-content kinds.
+     */
+    isPremium?: boolean | null
 }
 
 /** Payload inside `autocompleteGlobalSearch.data` after the standard API wrapper. */
@@ -70,6 +85,8 @@ export interface AutocompleteGlobalSearchData {
     milestones?: Array<AutocompleteGlobalSearchItem>
     /** Matching milestone-task results. */
     milestoneTasks?: Array<AutocompleteGlobalSearchItem>
+    /** Matching foundation results. */
+    foundations?: Array<AutocompleteGlobalSearchItem>
 }
 
 /** Apollo variables for `autocompleteGlobalSearch(request: AutocompleteGlobalSearchRequest!)`. */

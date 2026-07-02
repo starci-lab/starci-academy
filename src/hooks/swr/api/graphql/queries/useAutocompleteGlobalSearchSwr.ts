@@ -5,15 +5,18 @@ import { useSearchOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { setGlobalSearchResults } from "@/redux/slices/socketio"
 
+// `autocompleteGlobalSearch` is PUBLIC (BE: KeycloakOptionalAuthGraphQLGuard) — free courses
+// and free challenges must be searchable by guests too, so this hook does NOT gate on `authenticated`.
+
 const DEFAULT_ENTITIES: Array<SearchableEntity> = [
     "CourseEntity",
     "ModuleEntity",
     "ContentEntity",
-    "LessonVideoEntity",
     "ChallengeEntity",
     "MilestoneEntity",
     "MilestoneTaskEntity",
     "FlashcardDeckEntity",
+    "FoundationEntity",
 ]
 
 const DEFAULT_SIZE = 8
@@ -23,16 +26,14 @@ const DEFAULT_SIZE = 8
  */
 export const useAutocompleteGlobalSearchSwr = () => {
     const dispatch = useAppDispatch()
-    const authenticated = useAppSelector((state) => state.keycloak.authenticated)
     const { isOpen } = useSearchOverlayState()
     const query = useAppSelector((state) => state.search.query).trim()
 
     return useSWR(
-        authenticated && isOpen
+        isOpen
             ? [
                 "QUERY_AUTOCOMPLETE_GLOBAL_SEARCH_SWR",
                 query,
-                authenticated,
                 isOpen,
             ]
             : null,

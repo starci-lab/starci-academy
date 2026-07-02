@@ -1,7 +1,6 @@
 "use client"
 
 import { MagnifyingGlassIcon } from "@phosphor-icons/react"
-import { ArrowUpIcon, ArrowDownIcon, ArrowElbowDownLeftIcon } from "@phosphor-icons/react"
 import React, { useEffect, useRef, useState } from "react"
 import { cn, Input, Kbd, Modal, TextField, Typography } from "@heroui/react"
 import { useTranslations } from "next-intl"
@@ -72,38 +71,45 @@ export const GlobalSearchModal = (props: GlobalSearchModalProps) => {
         <Modal isOpen={isOpen} onOpenChange={setOpen}>
             <Modal.Backdrop>
                 <Modal.Container className="p-0" size="lg">
-                    <Modal.Dialog className={cn("p-0 rounded-2xl", className)}>
+                    <Modal.Dialog className={cn("p-0 rounded-2xl modal__dialog--flush", className)}>
                         <Modal.Body className="p-0 w-full overflow-hidden">
-                            <TextField variant="secondary" className="w-full relative">
-                                <MagnifyingGlassIcon className="size-5 absolute left-2 top-1/2 -translate-y-1/2 text-muted" />
-                                <Input
-                                    autoFocus
-                                    className="w-full max-w-full pl-9 pr-16 rounded-full border-0 ring-0 focus:ring-0 shadow-none"
-                                    placeholder={t("search.placeholder")}
-                                    value={query}
-                                    onChange={(event) => setQuery(event.target.value)}
-                                    onKeyDown={onInputKeyDown}
-                                />
-                                <Kbd className="absolute right-2 top-1/2 -translate-y-1/2">
-                                    <Kbd.Content>ESC</Kbd.Content>
-                                </Kbd>
+                            <TextField variant="secondary" className="w-full">
+                                <div className="flex w-full items-center gap-2 p-3 border-b border-default">
+                                    <MagnifyingGlassIcon className="size-5 shrink-0 text-muted" />
+                                    <Input
+                                        autoFocus
+                                        className="flex-1 min-w-0 p-0 rounded-none border-0 ring-0 focus:ring-0 shadow-none"
+                                        style={{
+                                            "--input-bg": "transparent",
+                                            "--input-bg-hover": "transparent",
+                                            "--input-bg-focus": "transparent",
+                                        } as React.CSSProperties}
+                                        placeholder={t("search.placeholder")}
+                                        value={query}
+                                        onChange={(event) => setQuery(event.target.value)}
+                                        onKeyDown={onInputKeyDown}
+                                    />
+                                    <Kbd className="shrink-0">
+                                        <Kbd.Content>Esc</Kbd.Content>
+                                    </Kbd>
+                                </div>
                             </TextField>
-                            <div className="border-b" />
-                            <div ref={resultsRef}>
+                            <div ref={resultsRef} className="pt-2">
                                 <GlobalSearchContent />
                             </div>
-                            {/* footer key-hints — command-palette affordance (Raycast/Linear) */}
-                            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-default px-4 py-2">
-                                <span className="inline-flex items-center gap-1">
-                                    <ArrowUpIcon aria-hidden focusable="false" className="size-3.5 text-muted" />
-                                    <ArrowDownIcon aria-hidden focusable="false" className="size-3.5 text-muted" />
+                            {/* footer key-hints (HeroUI-style Kbd, no divider line — spacing separates it) */}
+                            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 px-4 py-3">
+                                <span className="inline-flex items-center gap-2">
+                                    <Kbd><Kbd.Abbr keyValue="up" /></Kbd>
+                                    <Kbd><Kbd.Abbr keyValue="down" /></Kbd>
                                     <Typography type="body-xs" color="muted">{t("search.hint.move")}</Typography>
                                 </span>
-                                <span className="inline-flex items-center gap-1">
-                                    <ArrowElbowDownLeftIcon aria-hidden focusable="false" className="size-3.5 text-muted" />
+                                <span className="inline-flex items-center gap-2">
+                                    <Kbd><Kbd.Abbr keyValue="enter" /></Kbd>
                                     <Typography type="body-xs" color="muted">{t("search.hint.open")}</Typography>
                                 </span>
-                                <span className="inline-flex items-center gap-1">
+                                <span className="inline-flex items-center gap-2">
+                                    <Kbd><Kbd.Content>Esc</Kbd.Content></Kbd>
                                     <Typography type="body-xs" color="muted">{t("search.hint.close")}</Typography>
                                 </span>
                             </div>

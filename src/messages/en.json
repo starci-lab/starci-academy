@@ -98,6 +98,26 @@
             "landingLink": "See course FAQ on the home page"
         }
     },
+    "appearance": {
+        "title": "Appearance",
+        "description": "Customize your accent color and ambient background effect across the app, independent of light or dark mode.",
+        "accentLabel": "Accent color",
+        "customColor": "Custom color",
+        "resetAccent": "Reset to default",
+        "effectLabel": "Background effect",
+        "effects": {
+            "none": "Off",
+            "ember": "Embers",
+            "wave": "Waves",
+            "snow": "Snow",
+            "rain": "Rain",
+            "bubbles": "Bubbles",
+            "fireflies": "Fireflies",
+            "stars": "Starfield",
+            "aurora": "Aurora",
+            "circuit": "Circuit"
+        }
+    },
     "profileSettings": {
         "title": "Settings",
         "subtitle": "Manage your account, AI, content and membership.",
@@ -117,6 +137,7 @@
         },
         "items": {
             "editProfile": "Edit profile",
+            "appearance": "Appearance",
             "security": "Security",
             "sessions": "Devices",
             "courseHistory": "Course history",
@@ -321,7 +342,13 @@
             "lessonVideos": "Lesson videos",
             "flashcards": "Flashcard decks",
             "milestones": "Progress",
-            "milestoneTasks": "Tasks"
+            "milestoneTasks": "Tasks",
+            "foundations": "Foundations"
+        },
+        "result": {
+            "free": "Free",
+            "enrolled": "Enrolled",
+            "viewCourse": "View course"
         },
         "idleHint": "Type to search courses, modules, lessons…",
         "popular": "Popular",
@@ -1702,6 +1729,8 @@
             "empty": "No AI usage yet.",
             "loading": "Loading history…",
             "purposeGrade": "Challenge grading",
+            "purposeInterview": "Interview grading",
+            "purposeChatbot": "AI tutor chat",
             "autoModel": "Auto model (free)",
             "creditsUnit": "credits",
             "breakdownTitle": "By provider",
@@ -3182,6 +3211,45 @@
             "infraDescription": "No infrastructure components are being probed right now.",
             "aiTitle": "No AI keys reported",
             "aiDescription": "No AI key groups are configured right now."
+        }
+    },
+    "ragPlayground": {
+        "hero": {
+            "eyebrow": "RAG Playground · local model",
+            "headline": "Drop in your code. Ask anything. <accent>A self-hosted AI answers — free, no login.</accent>",
+            "subline": "This is real RAG: your code gets chunked, embedded, and semantically searched — then StarCi's self-hosted local model (not a paid API) answers with citations.",
+            "cta": "Try it below"
+        },
+        "import": {
+            "tabsAria": "Choose how to import code",
+            "tabs": {
+                "paste": "Paste code",
+                "upload": "Upload file",
+                "sample": "Use sample",
+                "github": "GitHub repo"
+            },
+            "pastePlaceholder": "Paste your code here…",
+            "uploadHint": "Choose a code file (.ts, .py, .go, .java, …)",
+            "sampleHint": "Use the built-in sample snippet (a cosine-similarity top-K search) — nothing to prepare.",
+            "githubPlaceholder": "https://github.com/owner/repo",
+            "cta": "Import & index",
+            "indexed": "Indexed {count} chunks",
+            "genericError": "Could not import this code — try again or pick another method.",
+            "dismissError": "Dismiss error"
+        },
+        "chat": {
+            "title": "Ask about this code",
+            "freeBadge": "Local model · free",
+            "emptyNoIndexTitle": "No code indexed yet",
+            "emptyNoIndexDescription": "Import code on the left first, then come back here to ask.",
+            "emptyReadyTitle": "Ready to go!",
+            "emptyReadyDescription": "Ask anything about the code you just imported — the model will cite the relevant parts.",
+            "thinking": "Thinking…",
+            "sources": "Cited sources",
+            "placeholder": "Ask about this code…",
+            "stop": "Stop",
+            "send": "Send question",
+            "genericError": "The AI could not answer right now — try again later."
         }
     }
 }

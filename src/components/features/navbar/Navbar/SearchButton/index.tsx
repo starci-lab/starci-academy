@@ -9,6 +9,7 @@ import {
     useTranslations,
 } from "next-intl"
 import { useSearchOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useIsMacPlatform } from "@/hooks/useIsMacPlatform"
 import { InputButtonLike } from "@/components/blocks/buttons/InputButtonLike"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
@@ -29,6 +30,7 @@ export type SearchButtonProps = WithClassNames<undefined>
 export const SearchButton = ({ className }: SearchButtonProps) => {
     const t = useTranslations()
     const { open: onOpenSearch } = useSearchOverlayState()
+    const isMac = useIsMacPlatform()
     return (
         <InputButtonLike
             className={className}
@@ -36,14 +38,14 @@ export const SearchButton = ({ className }: SearchButtonProps) => {
             placeholder={t("search.label")}
             icon={<MagnifyingGlassIcon className="size-5 text-muted" />}
             suffix={(
-                <>
-                    <Kbd>
-                        <Kbd.Content>Ctrl</Kbd.Content>
-                    </Kbd>
-                    <Kbd>
-                        <Kbd.Content>K</Kbd.Content>
-                    </Kbd>
-                </>
+                // one combined Kbd chip (per HeroUI docs — a shortcut combo is a single
+                // Kbd wrapping its parts, not one chip per key); the modifier is
+                // OS-adaptive: ⌘ (Kbd.Abbr) on Mac, the word "Ctrl" everywhere else
+                // (HeroUI's `keyValue="ctrl"` renders the Mac Control glyph ⌃, wrong here)
+                <Kbd>
+                    {isMac ? <Kbd.Abbr keyValue="command" /> : <Kbd.Content>Ctrl</Kbd.Content>}
+                    <Kbd.Content>K</Kbd.Content>
+                </Kbd>
             )}
         />
     )

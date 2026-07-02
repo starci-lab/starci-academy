@@ -9,7 +9,7 @@ import { HeroUIProvider } from "@/components/providers/HeroUIProvider"
 import { NextThemesProvider } from "@/components/providers/NextThemesProvider"
 import { SwrProvider } from "@/components/providers/SwrProvider"
 import { DrawerContainer } from "@/components/drawers/DrawerContainer"
-import { AmbientBackground } from "@/components/blocks/layout/AmbientBackground"
+import { AmbientBackgroundGate } from "@/components/blocks/layout/AmbientBackground/AmbientBackgroundGate"
 import { TopLoader } from "@/components/blocks/layout/TopLoader"
 import { AppSplash } from "@/components/blocks/layout/AppSplash"
 import { SocketConnectionStatus } from "@/components/blocks/layout/SocketConnectionStatus"
@@ -45,7 +45,7 @@ export const InnerLayout = ({ children }: PropsWithChildren) => {
                             <UseEffects />
                             <AppSplash />
                             <TopLoader />
-                            {!isLearnRoute ? <AmbientBackground /> : null}
+                            {!isLearnRoute ? <AmbientBackgroundGate /> : null}
                             <Navbar />
                             <SocketConnectionStatus />
                             <ModalContainer />

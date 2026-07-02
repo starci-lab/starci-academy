@@ -1,71 +1,72 @@
 "use client"
 
-import React, {
-    useMemo,
-} from "react"
+import React from "react"
 import {
     cn,
 } from "@heroui/react"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import {
+    BackgroundEffect,
+} from "@/modules/types/enums/background-effect"
+import {
+    EmberEffect,
+} from "./effects/EmberEffect"
+import {
+    WaveEffect,
+} from "./effects/WaveEffect"
+import {
+    SnowEffect,
+} from "./effects/SnowEffect"
+import {
+    RainEffect,
+} from "./effects/RainEffect"
+import {
+    BubblesEffect,
+} from "./effects/BubblesEffect"
+import {
+    FirefliesEffect,
+} from "./effects/FirefliesEffect"
+import {
+    StarsEffect,
+} from "./effects/StarsEffect"
+import {
+    AuroraEffect,
+} from "./effects/AuroraEffect"
+import {
+    CircuitEffect,
+} from "./effects/CircuitEffect"
 
 /** Props for {@link AmbientBackground}. */
 export interface AmbientBackgroundProps extends WithClassNames<undefined> {
-    /** How many sparks to spawn (default 60). Lower it on weak devices. */
-    count?: number
-}
-
-/** A single spark's deterministic layout + timing. */
-interface Spark {
-    /** Stable React key / seed index. */
-    index: number
-    /** Horizontal start, % of viewport width. */
-    left: number
-    /** Diameter in px. */
-    size: number
-    /** Rise duration in seconds. */
-    duration: number
-    /** Animation start delay in seconds. */
-    delay: number
-    /** Horizontal wander over the rise, px (fed to the `--drift` keyframe var). */
-    drift: number
+    /** Which ambient effect to render (user's Settings → "Giao diện" choice). Defaults to `None`. */
+    effect?: BackgroundEffect
 }
 
 /**
- * App-wide ambient background — a faint brand-pink glow hugging the bottom plus a
- * field of embers drifting slowly upward. Sits `fixed inset-0` behind everything
- * (negative z-index, non-interactive) so it stays put while the page scrolls.
+ * App-wide ambient background — one of several decorative effects (Settings →
+ * "Giao diện") sitting `fixed inset-0` behind everything (negative z-index,
+ * non-interactive) so it stays put while the page scrolls. Every effect tints
+ * from the `--accent` token, so it tracks the user's chosen accent color
+ * automatically; the caller hides this entirely on `/learn` (reading column
+ * stays uncluttered) and honours `prefers-reduced-motion` per-effect in
+ * `globals.css`.
  *
- * Pure presenter: owns all of its style, takes no store/data. Colours come from
- * the `--accent` token so it tracks light/dark automatically; the keyframe
- * (`emberRise`) + reduced-motion guard live in `globals.css`. Sparks are laid out
- * deterministically (seeded by index) so server + client markup match — no
- * hydration mismatch and no `Math.random` at render.
+ * Pure presenter: owns all of its style, takes no store/data beyond the
+ * `effect` prop. Each effect's particle layout is seeded deterministically
+ * (see `useSeededParticles`) so server + client markup match — no hydration
+ * mismatch and no `Math.random` at render.
  *
- * @param props - optional className (placement) + spark `count`.
+ * @param props - optional className (placement) + which `effect` to render.
  */
 export const AmbientBackground = ({
     className,
-    count = 60,
+    effect = BackgroundEffect.None,
 }: AmbientBackgroundProps) => {
-    const sparks = useMemo<Array<Spark>>(
-        () =>
-            Array.from({ length: count }).map((_, index) => {
-                // two cheap hash streams → stable pseudo-random per spark
-                const seed = ((index * 2654435761) % 1000) / 1000
-                const seed2 = ((index * 40503) % 997) / 997
-                return {
-                    index,
-                    left: Math.round(seed * 100),
-                    size: 2 + Math.round(seed2 * 4),
-                    duration: 8 + Math.round(seed * 10),
-                    delay: Math.round(seed2 * 100) / 10,
-                    drift: Math.round((seed - 0.5) * 80),
-                }
-            }),
-        [count],
-    )
+    if (effect === BackgroundEffect.None) {
+        return null
+    }
 
     return (
         <div
@@ -75,33 +76,15 @@ export const AmbientBackground = ({
                 className,
             )}
         >
-            {/* warm glow pooled at the bottom edge */}
-            <div
-                className="absolute inset-x-0 bottom-0 h-2/3"
-                style={{
-                    background:
-                        "radial-gradient(120% 80% at 50% 120%, color-mix(in oklch, var(--accent) 30%, transparent), transparent 70%)",
-                }}
-            />
-
-            {/* rising sparks */}
-            {sparks.map((spark) => (
-                <span
-                    key={spark.index}
-                    className="ambient-ember absolute bottom-0 rounded-full"
-                    style={{
-                        left: `${spark.left}%`,
-                        width: `${spark.size}px`,
-                        height: `${spark.size}px`,
-                        background: "var(--accent)",
-                        boxShadow: `0 0 ${spark.size * 2}px var(--accent)`,
-                        // horizontal wander consumed by the emberRise keyframe
-                        ["--drift" as string]: `${spark.drift}px`,
-                        animation: `emberRise ${spark.duration}s linear infinite ${spark.delay}s`,
-                        opacity: 0,
-                    }}
-                />
-            ))}
+            {effect === BackgroundEffect.Ember ? <EmberEffect /> : null}
+            {effect === BackgroundEffect.Wave ? <WaveEffect /> : null}
+            {effect === BackgroundEffect.Snow ? <SnowEffect /> : null}
+            {effect === BackgroundEffect.Rain ? <RainEffect /> : null}
+            {effect === BackgroundEffect.Bubbles ? <BubblesEffect /> : null}
+            {effect === BackgroundEffect.Fireflies ? <FirefliesEffect /> : null}
+            {effect === BackgroundEffect.Stars ? <StarsEffect /> : null}
+            {effect === BackgroundEffect.Aurora ? <AuroraEffect /> : null}
+            {effect === BackgroundEffect.Circuit ? <CircuitEffect /> : null}
         </div>
     )
 }

@@ -29,6 +29,8 @@ const query1 = gql`
         workMode
         linkedinUrl
         websiteUrl
+        accentColor
+        backgroundEffect
       }
     }
   }

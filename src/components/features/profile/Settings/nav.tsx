@@ -4,6 +4,7 @@ import {
     ChartBarIcon as UsageIcon,
     CreditCardIcon as SubscriptionIcon,
     DesktopIcon as SessionsIcon,
+    PaintBrushIcon as AppearanceIcon,
     PencilSimpleIcon as EditIcon,
     ShieldCheckIcon as SecurityIcon,
     SlidersHorizontalIcon as AiSettingsIcon,
@@ -45,6 +46,7 @@ export const getSettingsGroups = (locale: string): Array<SettingsNavGroup> => {
             key: "account",
             items: [
                 { key: "editProfile", href: profile.edit().build(), icon: <EditIcon className="size-5" /> },
+                { key: "appearance", href: profile.appearance().build(), icon: <AppearanceIcon className="size-5" /> },
                 { key: "security", href: profile.security().build(), icon: <SecurityIcon className="size-5" /> },
                 { key: "sessions", href: profile.sessions().build(), icon: <SessionsIcon className="size-5" /> },
             ],

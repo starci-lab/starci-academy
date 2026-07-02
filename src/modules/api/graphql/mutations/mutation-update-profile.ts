@@ -27,6 +27,8 @@ const mutation1 = gql`
         workMode
         linkedinUrl
         websiteUrl
+        accentColor
+        backgroundEffect
       }
     }
   }

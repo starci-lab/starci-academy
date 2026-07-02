@@ -16,6 +16,7 @@ import { useSyncReduxFoundationId } from "./useSyncReduxFoundationId"
 import { useSyncFoundationEntity } from "./useSyncFoundationEntity"
 import { useSessionSuperseded } from "./useSessionSuperseded"
 import { useInitializeFingerprint } from "./useInitializeFingerprint"
+import { useAccentOverride } from "./useAccentOverride"
 
 /**
  * Mounts all global side-effect hooks once at the top of the app tree.
@@ -26,6 +27,8 @@ import { useInitializeFingerprint } from "./useInitializeFingerprint"
 export const UseEffects = () => {
     /** Initialize FingerprintJS device fingerprint on app mount. */
     useInitializeFingerprint()
+    /** Apply the user's custom accent color (Settings → "Giao diện") as a CSS override. */
+    useAccentOverride()
     /** Show warning toast if user session was superseded on another device. */
     useSessionSuperseded()
     /** The useEffect to sync the redux course id. */

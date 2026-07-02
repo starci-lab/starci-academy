@@ -53,6 +53,18 @@ const Layout = async ({
     return (
         <html lang={locale}>
             <body className={`${font.className} ${font.variable} antialiased  bg-background`}>
+                {/* Blocking no-flash script (same pattern next-themes uses for light/dark
+                    itself, applied to our custom accent-color override): reads the cached
+                    accent hex from localStorage and applies --accent/--accent-foreground
+                    to <html> synchronously, before hydration paints anything with the
+                    default brand accent. The server (UserEntity.accentColor, synced via
+                    useAccentOverride once `me` resolves) stays the source of truth — this
+                    is only a same-device fast-path so a reload never flashes. */}
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: "(function(){try{var c=localStorage.getItem('appearance:accent_color');if(!c)return;var h=c.replace('#','');if(h.length===3)h=h.split('').map(function(x){return x+x}).join('');var r=parseInt(h.slice(0,2),16),g=parseInt(h.slice(2,4),16),b=parseInt(h.slice(4,6),16);var yiq=(r*299+g*587+b*114)/1000;var root=document.documentElement;root.style.setProperty('--accent',c);root.style.setProperty('--accent-foreground',yiq>=150?'oklch(21.03% 0.0015 354.13)':'oklch(100% 0 0)')}catch(e){}})()",
+                    }}
+                />
                 <NextIntlClientProvider locale={locale} messages={messages}>
                     <InnerLayout>
                         <div>

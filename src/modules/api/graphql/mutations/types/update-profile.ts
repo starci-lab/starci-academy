@@ -1,6 +1,7 @@
 import type { GraphQLResponse } from "../../types"
 import type { UserEntity } from "@/modules/types/entities/user"
 import type { WorkMode } from "@/modules/types/enums/work-mode"
+import type { BackgroundEffect } from "@/modules/types/enums/background-effect"
 
 /** GraphQL `UpdateProfileRequest` body (partial update; null clears a field). */
 export interface UpdateProfileRequest {
@@ -26,6 +27,10 @@ export interface UpdateProfileRequest {
     linkedinUrl?: string | null
     /** Personal website / portfolio URL; null clears it. */
     websiteUrl?: string | null
+    /** User-chosen accent color (hex, e.g. #e84393); null clears it back to the default brand accent. */
+    accentColor?: string | null
+    /** Ambient background effect for the app chrome; omit to leave unchanged. */
+    backgroundEffect?: BackgroundEffect
 }
 
 /** Apollo response shape for `updateProfile` (returns the fresh user). */

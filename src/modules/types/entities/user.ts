@@ -1,7 +1,7 @@
 import type { AbstractEntity } from "./abstract"
 import type { EnrollmentEntity } from "./enrollment"
 import type { SubmissionEntity } from "./submission"
-import type { WorkMode, AuthenticationType } from "../enums"
+import type { WorkMode, AuthenticationType, BackgroundEffect } from "../enums"
 
 /**
  * Application user; identity comes from Keycloak (keycloakId = JWT sub).
@@ -49,6 +49,10 @@ export interface UserEntity extends AbstractEntity {
     linkedinUrl?: string | null
     /** Personal website / portfolio URL. */
     websiteUrl?: string | null
+    /** User-chosen accent color (hex); null/undefined = default brand accent. */
+    accentColor?: string | null
+    /** Ambient background effect chosen for the app chrome. */
+    backgroundEffect?: BackgroundEffect
     /** Whether two-factor authentication (TOTP) is enabled for the user. */
     twoFactorEnabled?: boolean
     /** The submissions of the user. */

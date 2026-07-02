@@ -1,4 +1,5 @@
 import type { GraphQLResponse } from "../../types"
+import type { AiCeilSurface } from "../../mutations/types/set-ai-ceil"
 
 /** One AI credit charge row in the usage history. */
 export interface QueryMyCreditUsageHistoryItem {
@@ -16,6 +17,8 @@ export interface QueryMyCreditUsageHistoryItem {
     credits: number
     /** ISO time the charge was recorded. */
     createdAt: string
+    /** AI surface (chatbot / grading / interview) that triggered this charge; null for rows recorded before this column existed. */
+    surface: AiCeilSurface | null
 }
 
 /** Payload inside `myCreditUsageHistory.data` after the standard API wrapper. */

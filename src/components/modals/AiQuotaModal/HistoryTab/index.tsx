@@ -25,6 +25,8 @@ import {
 import {
     useAiQuotaHistorySwr,
 } from "../hooks"
+import { AiCeilSurface } from "@/modules/api/graphql/mutations/types/set-ai-ceil"
+import type { QueryMyCreditUsageHistoryItem } from "@/modules/api/graphql/queries/types/my-credit-usage-history"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** One day bucket for the usage history chart. */
@@ -39,6 +41,26 @@ interface AiQuotaHistoryChartPoint {
 export interface AiQuotaHistoryTabProps extends WithClassNames<undefined> {
     /** When true, load history even outside the modal (full usage page). */
     alwaysLoad?: boolean
+}
+
+/**
+ * Human label for what a charge row was for. `surface` distinguishes an
+ * interview-grading / chatbot charge from a challenge-grading one — rows
+ * predating the `surface` column (or from a surface not yet passing it
+ * through) fall back to the "Chấm challenge" label.
+ */
+const purposeLabel = (
+    item: QueryMyCreditUsageHistoryItem,
+    t: ReturnType<typeof useTranslations>,
+): string => {
+    switch (item.surface) {
+    case AiCeilSurface.Interview:
+        return t("aiQuota.history.purposeInterview")
+    case AiCeilSurface.Chatbot:
+        return t("aiQuota.history.purposeChatbot")
+    default:
+        return t("aiQuota.history.purposeGrade")
+    }
 }
 
 /**
@@ -127,7 +149,7 @@ export const AiQuotaHistoryTab = ({
                                             {item.model ?? t("aiQuota.history.autoModel")}
                                         </div>
                                         <div className="text-xs text-muted">
-                                            {t("aiQuota.history.purposeGrade")}
+                                            {purposeLabel(item, t)}
                                             {" · "}
                                             {dayjs(item.createdAt).format("HH:mm DD/MM")}
                                         </div>

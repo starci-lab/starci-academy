@@ -27,6 +27,8 @@ import {
     YAxis,
 } from "recharts"
 import { useQueryMyCreditUsageHistoryInfiniteSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCreditUsageHistoryInfiniteSwr"
+import { AiCeilSurface } from "@/modules/api/graphql/mutations/types/set-ai-ceil"
+import type { QueryMyCreditUsageHistoryItem } from "@/modules/api/graphql/queries/types/my-credit-usage-history"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { InfiniteScrollSentinel } from "@/components/blocks/async/InfiniteScrollSentinel"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
@@ -46,6 +48,26 @@ const PROVIDER_LABELS: Record<string, string> = {
 /** Lane filter values, in display order. */
 const LANES = ["all", "auto", "premium", "byok"] as const
 type LaneFilter = (typeof LANES)[number]
+
+/**
+ * Human label for what a charge row was for. `surface` distinguishes an
+ * interview-grading / chatbot charge from a challenge-grading one — rows
+ * predating the `surface` column (or from a surface not yet passing it
+ * through) fall back to the "Chấm challenge" label.
+ */
+const purposeLabel = (
+    item: QueryMyCreditUsageHistoryItem,
+    t: ReturnType<typeof useTranslations>,
+): string => {
+    switch (item.surface) {
+    case AiCeilSurface.Interview:
+        return t("aiQuota.history.purposeInterview")
+    case AiCeilSurface.Chatbot:
+        return t("aiQuota.history.purposeChatbot")
+    default:
+        return t("aiQuota.history.purposeGrade")
+    }
+}
 
 /** Props for {@link AiUsageHistory}. */
 export type AiUsageHistoryProps = WithClassNames<undefined>
@@ -231,7 +253,7 @@ export const AiUsageHistory = ({ className }: AiUsageHistoryProps) => {
                                         {item.model ?? t("aiQuota.history.autoModel")}
                                     </Typography>
                                     <Typography type="body-xs" color="muted">
-                                        {t("aiQuota.history.purposeGrade")}
+                                        {purposeLabel(item, t)}
                                         {" · "}
                                         {dayjs(item.createdAt).format("HH:mm DD/MM")}
                                     </Typography>

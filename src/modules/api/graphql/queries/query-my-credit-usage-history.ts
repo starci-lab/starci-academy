@@ -19,6 +19,7 @@ const query1 = gql`
           provider
           credits
           createdAt
+          surface
         }
       }
     }

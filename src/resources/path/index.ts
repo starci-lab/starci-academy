@@ -158,6 +158,15 @@ export const pathConfig = () => {
                     build,
                 }
             }
+            const appearance = () => {
+                const appearancePath = `${settingsPath}/appearance`
+                const build = () => {
+                    return appearancePath
+                }
+                return {
+                    build,
+                }
+            }
             return {
                 build,
                 bookmarks,
@@ -174,6 +183,7 @@ export const pathConfig = () => {
                 attempts,
                 feedback,
                 cv,
+                appearance,
             }
         }
         const authentication = () => {
@@ -477,6 +487,17 @@ export const pathConfig = () => {
                 build,
             }
         }
+        const ragPlayground = () => {
+            // public marketing demo: import code, ask questions, answered by the
+            // local self-hosted model — no login required
+            const ragPlaygroundPath = `${localePath}/rag-playground`
+            const build = () => {
+                return ragPlaygroundPath
+            }
+            return {
+                build,
+            }
+        }
         const review = () => {
             // flashcard review session (SM-2): all due cards across courses
             const reviewPath = `${localePath}/review`
@@ -536,6 +557,7 @@ export const pathConfig = () => {
             publicContent,
             dashboard,
             practice,
+            ragPlayground,
             review,
             talents,
             blog,

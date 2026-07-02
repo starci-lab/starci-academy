@@ -14,4 +14,8 @@ export enum PublicationEvent {
     AskContentAi = "content_ai.ask.publication",
     /** Abort an in-flight content-AI answer stream (must match backend). */
     AbortContentAi = "content_ai.abort.publication",
+    /** Subscribe to a RAG Playground run's token stream (must match backend). */
+    SubscribeRagPlaygroundRun = "rag_playground.subscribe_run.publication",
+    /** Abort an in-flight RAG Playground run (must match backend). */
+    AbortRagPlaygroundRun = "rag_playground.abort_run.publication",
 }

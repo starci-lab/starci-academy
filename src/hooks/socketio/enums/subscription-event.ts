@@ -21,4 +21,6 @@ export enum SubscriptionEvent {
     ContentAiChunk = "content_ai.chunk.subscription",
     /** Per-model AI latency snapshot broadcast on `/system_health` (must match backend). */
     AiModelHealth = "system_health.ai_model_health.subscription",
+    /** A streamed token chunk for a RAG Playground run (must match backend). */
+    RagPlaygroundRunChunk = "rag_playground.run_chunk.subscription",
 }

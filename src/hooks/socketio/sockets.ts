@@ -36,3 +36,11 @@ const systemHealthManager = createManager()
  * subscribe to live-update their health indicator.
  */
 export const systemHealthSocket: Socket = systemHealthManager.socket("/system_health")
+
+const ragPlaygroundManager = createManager()
+/**
+ * The `/rag_playground` namespace socket — PUBLIC (no auth). Streams the
+ * answer token-by-token for a run prepared by the `askRagPlayground` mutation
+ * (anonymous marketing demo, local self-hosted model).
+ */
+export const ragPlaygroundSocket: Socket = ragPlaygroundManager.socket("/rag_playground")

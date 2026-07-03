@@ -17,6 +17,8 @@ export enum AiModelTask {
     Chatting = "chatting",
     Grading = "grading",
     CvGenerating = "cv_generating",
+    TaskGrading = "task_grading",
+    ChallengeGrading = "challenge_grading",
 }
 
 const query1 = gql`

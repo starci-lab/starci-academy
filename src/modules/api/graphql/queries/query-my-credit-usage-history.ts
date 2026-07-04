@@ -13,7 +13,6 @@ const query1 = gql`
         total
         items {
           id
-          mode
           recommendation
           model
           provider

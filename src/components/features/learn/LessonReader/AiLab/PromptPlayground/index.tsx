@@ -28,7 +28,6 @@ import type {
     AiLabModelSelection,
     AiLabParamsForm,
 } from "../types"
-import { AiMode } from "@/modules/api/graphql/queries/query-my-ai-settings"
 import { type AiGradableModel } from "@/modules/api/graphql/queries/types/ai-models"
 import { type AiLabPlaygroundData } from "@/modules/api/graphql/queries/types/ai-lab-playground"
 import { type GraphQLResponse } from "@/modules/api/graphql/types"
@@ -84,7 +83,6 @@ export const PromptPlayground = ({ playground, className }: PromptPlaygroundProp
     const [userPrompt, setUserPrompt] = useState(playground.defaultUserPrompt ?? "")
     const [params, setParams] = useState<AiLabParamsForm>(() => buildDefaultParams(playground))
     const [selection, setSelection] = useState<AiLabModelSelection>({
-        mode: AiMode.Auto,
         model: null,
         provider: null,
     })
@@ -148,7 +146,6 @@ export const PromptPlayground = ({ playground, className }: PromptPlaygroundProp
                             topP: params.topP,
                             maxTokens: params.maxTokens,
                         },
-                        mode: selection.mode,
                         selectedModel: selection.model ?? undefined,
                         selectedModelProvider: selection.provider ?? undefined,
                     })
@@ -206,7 +203,7 @@ export const PromptPlayground = ({ playground, className }: PromptPlaygroundProp
             setSystemPrompt(playground.defaultSystemPrompt ?? "")
             setUserPrompt(playground.defaultUserPrompt ?? "")
             setParams(buildDefaultParams(playground))
-            setSelection({ mode: AiMode.Auto, model: null, provider: null })
+            setSelection({ model: null, provider: null })
             setCachedOutput(null)
             if (runId) {
                 reset(runId)

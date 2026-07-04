@@ -14,7 +14,6 @@ import {
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { Dropzone } from "@/components/reuseable/Dropzone"
-import { AiMode } from "@/modules/api/graphql/queries/query-my-ai-settings"
 import { AiModelCategory, AiModelTask } from "@/modules/api/graphql/queries/query-ai-models"
 import type { AiGradableModel } from "@/modules/api/graphql/queries/types/ai-models"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -37,7 +36,6 @@ const CV_SCORE_CATEGORIES: ReadonlyArray<AiModelCategory> = [
 
 /** Default selection — Auto lane, balancer picks the model. */
 const AUTO_SELECTION: GradeModelSelection = {
-    mode: AiMode.Auto,
     model: null,
     provider: null,
 }

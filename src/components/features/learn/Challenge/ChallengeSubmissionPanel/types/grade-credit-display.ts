@@ -1,7 +1,5 @@
 /** How the compact credit label beside the grade picker should render. */
 export enum GradeCreditDisplayKind {
-    /** BYOK lane — static label only. */
-    Byok = "byok",
     /** Auto/Premium — `used/quota` usage line. */
     Usage = "usage",
     /** Cannot afford the next grading run in a rolling window. */
@@ -14,6 +12,6 @@ export enum GradeCreditDisplayKind {
 export interface GradeCreditDisplay {
     /** Render branch. */
     kind: GradeCreditDisplayKind
-    /** Localized text when {@link GradeCreditDisplayKind.Usage} or BYOK. */
+    /** Localized text when {@link GradeCreditDisplayKind.Usage}. */
     text?: string
 }

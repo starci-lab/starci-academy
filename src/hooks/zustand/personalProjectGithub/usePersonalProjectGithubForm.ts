@@ -11,7 +11,6 @@ import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import { useMutateReviewPersonalProjectTaskSwr } from "@/hooks/swr/api/graphql/mutations/useMutateReviewPersonalProjectTaskSwr"
 import { useQueryAiModelsSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiModelsSwr"
 import { useQueryMyAiSettingsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiSettingsSwr"
-import { AiMode } from "@/modules/api/graphql/queries/query-my-ai-settings"
 import { AiModelCategory } from "@/modules/api/graphql/queries/query-ai-models"
 import type { AiGradableModel } from "@/modules/api/graphql/queries/types/ai-models"
 import { useMutateSyncPersonalProjectGithubBranchSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSyncPersonalProjectGithubBranchSwr"
@@ -27,8 +26,7 @@ const DEFAULT_BRANCH = "main"
 /**
  * Pick a default grading model — Economy and up only (the personal project never grades on the
  * free Auto lane). Prefers the first AVAILABLE Economy model (cheapest valid), else the first
- * available model in the (already Economy+) list. Economy → `auto` unless the user can use the
- * Premium lane; Balanced/Premium → `premium`.
+ * available model in the (already Economy+) list.
  */
 const pickDefaultGradingModel = (
     models: Array<AiGradableModel>,
@@ -50,7 +48,6 @@ const pickDefaultGradingModel = (
         return null
     }
     return {
-        mode: canPremium ? AiMode.Premium : AiMode.Auto,
         model: target.model,
         provider: target.provider,
     }
@@ -116,7 +113,6 @@ export const usePersonalProjectGithubForm = (options: UsePersonalProjectGithubFo
     const branchError = usePersonalProjectGithubStore((state) => state.branchError)
     const isSubmitting = usePersonalProjectGithubStore((state) => state.isSubmitting)
     const seeded = usePersonalProjectGithubStore((state) => state.seeded)
-    const gradeMode = usePersonalProjectGithubStore((state) => state.gradeMode)
     const gradeModel = usePersonalProjectGithubStore((state) => state.gradeModel)
     const gradeModelProvider = usePersonalProjectGithubStore((state) => state.gradeModelProvider)
     const setGithubUrl = usePersonalProjectGithubStore((state) => state.setGithubUrl)
@@ -147,10 +143,10 @@ export const usePersonalProjectGithubForm = (options: UsePersonalProjectGithubFo
         )
     }, [seeded, enrollment, seed])
 
-    /** Current grading-lane + model pick (Economy+ — never the free Auto lane). */
+    /** Current grading-model pick (Economy+ — never the free Auto lane). */
     const gradeSelection = useMemo<GradingModelSelection>(
-        () => ({ mode: gradeMode, model: gradeModel, provider: gradeModelProvider }),
-        [gradeMode, gradeModel, gradeModelProvider],
+        () => ({ model: gradeModel, provider: gradeModelProvider }),
+        [gradeModel, gradeModelProvider],
     )
 
     // Seed a default model once the catalog is available (so submit never falls back to the free
@@ -369,7 +365,6 @@ export const usePersonalProjectGithubForm = (options: UsePersonalProjectGithubFo
                         githubUrl: resolvedUrl,
                         branch: branchTrimmed || undefined,
                         lang: lang || undefined,
-                        mode: resolvedGrade?.mode,
                         selectedModel: resolvedGrade?.model ?? undefined,
                         selectedModelProvider: resolvedGrade?.provider ?? undefined,
                     })

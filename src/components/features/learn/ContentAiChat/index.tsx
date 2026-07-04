@@ -25,7 +25,6 @@ import {
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { AiMode } from "@/modules/api/graphql/queries/query-my-ai-settings"
 import { useAppSelector } from "@/redux/hooks"
 import {
     useContentAiSelectedModel,
@@ -122,22 +121,20 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
     // unlocked (paid OR enrolled) → may pin higher-tier models
     const canPremium = Boolean(myAiSettingsSwr.data?.canPremium)
     const { selectedModel, setSelectedModel } = useContentAiSelectedModel()
-    // default = Auto (no concrete model pinned); a picked model runs Premium when unlocked
+    // default = Auto (no concrete model pinned); a picked model runs on that model
     const modelSelection = useMemo<GradeModelSelection>(() => {
         if (!selectedModel) {
             return {
-                mode: AiMode.Auto,
                 model: null,
                 provider: null,
             }
         }
         const found = models.find((model) => model.model === selectedModel)
         return {
-            mode: canPremium ? AiMode.Premium : AiMode.Auto,
             model: selectedModel,
             provider: found?.provider ?? null,
         }
-    }, [selectedModel, models, canPremium])
+    }, [selectedModel, models])
 
     // recent conversations for the header (auto-select most recent + current title)
     const sessionsSwr = useQueryContentAiSessionsSwr(contentId)
@@ -285,7 +282,6 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
             contentId,
             question: content,
             history,
-            mode: modelSelection.mode,
             model: modelSelection.model,
             provider: modelSelection.provider,
             onDelta: appendToAssistant,

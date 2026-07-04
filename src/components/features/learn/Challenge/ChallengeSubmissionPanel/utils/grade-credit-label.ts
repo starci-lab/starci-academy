@@ -10,12 +10,11 @@ import {
 import type {
     GradeCreditDisplay,
 } from "../types/grade-credit-display"
-import { AiMode } from "@/modules/api/graphql/queries/query-my-ai-settings"
 
 /** Params for {@link resolveGradeCreditDisplay}. */
 export interface ResolveGradeCreditDisplayParams {
-    /** Grading lane selected for this submission row. */
-    mode: AiMode
+    /** True when a concrete model is pinned (Premium); false = the free Auto lane. */
+    hasPinnedModel: boolean
     /** Unified, TIER-AWARE quota snapshot from `myAiQuota` (free base OR the active
      * tier's cap — `creditAllowance` overrides); omitted when still loading. */
     creditUsage: QueryMyAiQuotaResponseData | undefined
@@ -47,22 +46,16 @@ const isAutoGradingBlocked = (
  * @returns Display model for the submission row.
  */
 export const resolveGradeCreditDisplay = ({
-    mode,
+    hasPinnedModel,
     creditUsage,
     autoCreditCost,
     t,
 }: ResolveGradeCreditDisplayParams): GradeCreditDisplay => {
-    if (mode === AiMode.Byok) {
-        return {
-            kind: GradeCreditDisplayKind.Byok,
-            text: t("challenge.quota.laneUsage.byok"),
-        }
-    }
     if (!creditUsage) {
         return { kind: GradeCreditDisplayKind.Hidden }
     }
     if (
-        mode === AiMode.Auto
+        !hasPinnedModel
         && autoCreditCost !== undefined
         && isAutoGradingBlocked(creditUsage, autoCreditCost)
     ) {
@@ -71,7 +64,7 @@ export const resolveGradeCreditDisplay = ({
             text: t("challenge.quota.quotaReached"),
         }
     }
-    const key = mode === AiMode.Premium
+    const key = hasPinnedModel
         ? "challenge.quota.laneUsage.premium"
         : "challenge.quota.laneUsage.auto"
     return {

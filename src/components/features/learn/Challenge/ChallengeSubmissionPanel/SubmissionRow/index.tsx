@@ -39,7 +39,6 @@ import {
     LastAttemptResult,
 } from "./LastAttemptResult"
 import { JobCategory } from "@/modules/types/enums/job-category"
-import { AiMode } from "@/modules/api/graphql/queries/query-my-ai-settings"
 import { AIProcessingText } from "@/components/reuseable/AIProcessingText"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import type { AiGradableModel } from "@/modules/api/graphql/queries/types/ai-models"
@@ -126,15 +125,17 @@ export const SubmissionRow = ({
         maxScore,
     } = row
 
+    const hasPinnedModel = gradeSelection.model !== null
+
     const creditDisplay = useMemo(
         () => resolveGradeCreditDisplay({
-            mode: gradeSelection.mode,
+            hasPinnedModel,
             creditUsage,
             autoCreditCost: aiAutoConfig?.creditCost,
             t,
         }),
         [
-            gradeSelection.mode,
+            hasPinnedModel,
             creditUsage,
             aiAutoConfig?.creditCost,
             t,
@@ -144,12 +145,8 @@ export const SubmissionRow = ({
     const isQuotaReached = creditDisplay.kind === GradeCreditDisplayKind.QuotaReached
 
     const onPressCreditLabel = useCallback(() => {
-        if (gradeSelection.mode === AiMode.Byok) {
-            return
-        }
         onOpenAiQuota()
     }, [
-        gradeSelection.mode,
         onOpenAiQuota,
     ])
 
@@ -248,24 +245,18 @@ export const SubmissionRow = ({
                             onUpgrade={onUpgrade}
                         />
                         {creditDisplay.kind !== GradeCreditDisplayKind.Hidden ? (
-                            gradeSelection.mode === AiMode.Byok ? (
-                                <span className="shrink-0 text-sm text-muted">
-                                    {creditDisplay.text}
-                                </span>
-                            ) : (
-                                <button
-                                    type="button"
-                                    onClick={onPressCreditLabel}
-                                    className={creditLabelClassName}
-                                >
-                                    {isQuotaReached ? (
-                                        <WarningCircleIcon
-                                            className="size-5"
-                                        />
-                                    ) : null}
-                                    <span className="text-sm font-base">{creditDisplay.text}</span>
-                                </button>
-                            )
+                            <button
+                                type="button"
+                                onClick={onPressCreditLabel}
+                                className={creditLabelClassName}
+                            >
+                                {isQuotaReached ? (
+                                    <WarningCircleIcon
+                                        className="size-5"
+                                    />
+                                ) : null}
+                                <span className="text-sm font-base">{creditDisplay.text}</span>
+                            </button>
                         ) : null}
                     </div>
                     <div className="flex w-full items-center gap-2">

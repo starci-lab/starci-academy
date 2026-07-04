@@ -20,7 +20,7 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import { AiMode, ModelProvider } from "@/modules/api/graphql/queries/query-my-ai-settings"
+import { ModelProvider } from "@/modules/api/graphql/queries/query-my-ai-settings"
 import { AiModelCategory, AiModelTask } from "@/modules/api/graphql/queries/query-ai-models"
 import { type AiGradableModel } from "@/modules/api/graphql/queries/types/ai-models"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -30,13 +30,12 @@ import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButt
 import { useAiModelLatency, type ModelHealth } from "@/hooks/socketio/useAiModelLatency"
 
 /**
- * Lane + model selection emitted by the picker. `model`/`provider` null = the
- * Auto lane (the balancer picks). Structurally matches feature selection types
- * (e.g. ChallengeGradeSelection) so callers pass theirs directly.
+ * Model selection emitted by the picker. `model`/`provider` null = the Auto
+ * lane (the balancer picks); a pinned model runs on that model. Structurally
+ * matches feature selection types (e.g. ChallengeGradeSelection) so callers
+ * pass theirs directly.
  */
 export interface GradeModelSelection {
-    /** Lane to run on (Auto = balancer-picked, Premium = pinned model). */
-    mode: AiMode
     /** Pinned model name, or null for the Auto lane. */
     model: string | null
     /** Provider of the pinned model, or null for the Auto lane. */
@@ -301,7 +300,6 @@ export const GradeModelDropdown = ({
                                         textValue={t("aiSettings.lanes.auto.title")}
                                         onPress={() => {
                                             onSelect({
-                                                mode: AiMode.Auto,
                                                 model: null,
                                                 provider: null,
                                             })
@@ -464,7 +462,6 @@ export const GradeModelDropdown = ({
                                                 textValue={model.model}
                                                 className={DROPDOWN_ITEM_ROW_CLASS}
                                                 onPress={() => onSelect({
-                                                    mode: canPremium ? AiMode.Premium : AiMode.Auto,
                                                     model: model.model,
                                                     provider: model.provider,
                                                 })}
@@ -496,7 +493,6 @@ export const GradeModelDropdown = ({
                                             textValue={model.model}
                                             className={DROPDOWN_ITEM_ROW_CLASS}
                                             onPress={() => onSelect({
-                                                mode: canPremium ? AiMode.Premium : AiMode.Auto,
                                                 model: model.model,
                                                 provider: model.provider,
                                             })}

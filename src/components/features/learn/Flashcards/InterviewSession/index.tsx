@@ -21,7 +21,6 @@ import type { InterviewGradeResultData } from "@/modules/api/graphql/mutations/t
 import type { AiGradableModel } from "@/modules/api/graphql/queries/types/ai-models"
 import type { GraphQLHeaders } from "@/modules/api/graphql/types"
 import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
-import { AiMode } from "@/modules/api/graphql/queries/query-my-ai-settings"
 import { AiModelCategory, AiModelTask } from "@/modules/api/graphql/queries/query-ai-models"
 import { InterviewVerdict } from "@/modules/api/graphql/mutations/types/grade-interview-answer"
 import { useMutateGradeInterviewAnswerSwr } from "@/hooks/swr/api/graphql/mutations/useMutateGradeInterviewAnswerSwr"
@@ -96,7 +95,6 @@ const INTERVIEW_GRADE_CATEGORIES: ReadonlyArray<AiModelCategory> = [
 
 /** Auto lane (balancer picks) — the default grading selection. */
 const AUTO_SELECTION: GradeModelSelection = {
-    mode: AiMode.Auto,
     model: null,
     provider: null,
 }
@@ -168,18 +166,15 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
     // chosen grading lane + model (Auto by default)
     const [selection, setSelection] = useState<GradeModelSelection>(AUTO_SELECTION)
     // credit usage for the compact lane label beside the model picker (mirrors the
-    // challenge submission panel: "Auto/Premium • remaining/quota credit" / "BYOK").
+    // challenge submission panel: "Auto/Premium • remaining/quota credit").
     // Reads the UNIFIED tier-aware pool (`myAiQuota`), so a paid tier shows its own
     // cap (Plus 5000/week …), not the flat free base — matches the submission panel.
     const creditUsage = useQueryMyAiQuotaSwr().data
     const creditLabel = useMemo(() => {
-        if (selection.mode === AiMode.Byok) {
-            return t("challenge.quota.laneUsage.byok")
-        }
         if (!creditUsage) {
             return null
         }
-        const key = selection.mode === AiMode.Premium
+        const key = selection.model !== null
             ? "challenge.quota.laneUsage.premium"
             : "challenge.quota.laneUsage.auto"
         return t(key, {
@@ -188,7 +183,7 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
             remaining: creditUsage.credit.remainingWeek,
             quota: creditUsage.credit.limitWeek,
         })
-    }, [selection.mode, creditUsage, t])
+    }, [selection.model, creditUsage, t])
     // how many questions this session runs (derived from the mode)
     const sessionLength = MODE_LENGTH[mode]
     // zero-based index of the current question within the session
@@ -286,9 +281,8 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                         // group every answer of this run under one session id for history
                         interviewSessionId: sessionId.current ?? undefined,
                         transcript: answer.transcript,
-                        // the chosen lane + model (Auto → balancer; mid+ pick → pinned model).
-                        // mode tells the BE which lane to validate; model/provider omitted on Auto.
-                        mode: selection.mode,
+                        // the chosen model (Auto → balancer picks; mid+ pick → pinned model).
+                        // model/provider omitted on Auto so the balancer chooses.
                         selectedModel: selection.model ?? undefined,
                         selectedModelProvider: selection.provider ?? undefined,
                     })

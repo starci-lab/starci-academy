@@ -1,5 +1,5 @@
 import type { IconComponent } from "@/types"
-import type { AiMode, ModelProvider } from "@/modules/api/graphql/queries/query-my-ai-settings"
+import type { ModelProvider } from "@/modules/api/graphql/queries/query-my-ai-settings"
 import type { ChallengeSubmissionEntity } from "@/modules/types/entities/challenge-submission"
 import type { JobStatus } from "@/modules/types/enums/job-status"
 import type { SubmissionType } from "@/modules/types/enums/submission-type"
@@ -7,10 +7,8 @@ import type { SubmissionType } from "@/modules/types/enums/submission-type"
 /** Lookup from a submission link type to the brand icon shown beside its title. */
 export type SubmissionIconMap = Record<SubmissionType, IconComponent>
 
-/** A grading lane + concrete model the user picked for one submission row. */
+/** The concrete model the user picked for one submission row. */
 export interface ChallengeGradeSelection {
-    /** Lane the grade runs on (auto = balancer default, premium = the picked model). */
-    mode: AiMode
     /** Concrete model name; null on the Auto lane (balancer chooses). */
     model: string | null
     /** Provider serving {@link model}; null on the Auto lane. */

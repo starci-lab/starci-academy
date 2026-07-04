@@ -31,7 +31,6 @@ import { useQueryAiModelsSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiM
 import { useQueryMyAiSettingsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiSettingsSwr"
 import { useQueryMockInterviewPromptsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMockInterviewPromptsSwr"
 import { useMutateGradeMockInterviewSessionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateGradeMockInterviewSessionSwr"
-import { AiMode } from "@/modules/api/graphql/queries/query-my-ai-settings"
 import { AiModelCategory, AiModelTask } from "@/modules/api/graphql/queries/query-ai-models"
 import type { AiGradableModel } from "@/modules/api/graphql/queries/types/ai-models"
 import type { MockInterviewPromptSummary } from "@/modules/api/graphql/queries/types/mock-interview-prompts"
@@ -72,7 +71,6 @@ const PHASES: ReadonlyArray<MockInterviewPhaseKey> = [
 
 /** Auto lane (balancer picks) — the default grading selection. */
 const AUTO_SELECTION: GradeModelSelection = {
-    mode: AiMode.Auto,
     model: null,
     provider: null,
 }
@@ -217,7 +215,6 @@ export const MockInterviewSession = ({ courseId, className }: MockInterviewSessi
                 phase: params.phase,
                 history: params.history.map((turn) => ({ role: turn.role, content: turn.content })),
                 latestAnswer: params.latestAnswer,
-                mode: selection.mode,
                 model: selection.model,
                 provider: selection.provider,
                 onDelta: (delta) => {
@@ -311,7 +308,6 @@ export const MockInterviewSession = ({ courseId, className }: MockInterviewSessi
                 level: level === "all" ? undefined : level,
                 turns: turnsForGrading,
                 sessionId: sessionId.current ?? crypto.randomUUID(),
-                mode: selection.mode,
                 selectedModel: selection.model ?? undefined,
                 selectedModelProvider: selection.provider ?? undefined,
             })

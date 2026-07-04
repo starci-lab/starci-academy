@@ -1,5 +1,5 @@
 import type { GraphQLResponse } from "../../types"
-import type { AiMode, ModelProvider } from "../../queries/query-my-ai-settings"
+import type { ModelProvider } from "../../queries/query-my-ai-settings"
 
 /**
  * One recorded turn of a completed mock-interview transcript. The candidate
@@ -35,8 +35,6 @@ export interface GradeMockInterviewSessionRequest {
     turns: Array<MockInterviewTurnInput>
     /** Client-generated id grouping this attempt into its interview run. */
     sessionId: string
-    /** AI lane to grade on (auto/premium/byok); validated against entitlement at grade time. */
-    mode?: AiMode
     /** Concrete model name the user picked for grading; omit/null = balancer default. */
     selectedModel?: string
     /** Provider serving {@link GradeMockInterviewSessionRequest.selectedModel}. */

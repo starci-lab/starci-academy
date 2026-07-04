@@ -21,7 +21,6 @@ const query1 = gql`
         }
         model
         provider
-        mode
         output
         promptTokens
         completionTokens

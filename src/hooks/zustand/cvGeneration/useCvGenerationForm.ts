@@ -51,7 +51,6 @@ export const useCvGenerationForm = () => {
                     async () => {
                         const result = await triggerGenerateCv({
                             extraPrompts: extraPrompts?.trim() || undefined,
-                            mode: selection?.mode,
                             selectedModel: selection?.model ?? undefined,
                             selectedModelProvider: selection?.provider ?? undefined,
                         })
@@ -89,7 +88,6 @@ export const useCvGenerationForm = () => {
                         const result = await triggerReviseCv({
                             cvSubmissionId,
                             extraPrompts: extraPrompts?.trim() || undefined,
-                            mode: selection?.mode,
                             selectedModel: selection?.model ?? undefined,
                             selectedModelProvider: selection?.provider ?? undefined,
                         })

@@ -1,4 +1,4 @@
-﻿import type { AiMode, ModelProvider } from "../../queries/query-my-ai-settings"
+﻿import type { ModelProvider } from "../../queries/query-my-ai-settings"
 import type { GraphQLResponse, QueryVariables } from "../../types"
 
 /** GraphQL `ReviewPersonalProjectTaskRequest` body. */
@@ -19,14 +19,10 @@ export interface ReviewPersonalProjectTaskRequest {
     branch?: string | null
     /** Chosen programming language for a SCHEMA V2 task (typescript/java/csharp/go). */
     lang?: string
-    /** AI lane for grading (auto / premium / byok). */
-    mode?: AiMode
-    /** Concrete model for premium/BYOK (required for those lanes). */
+    /** Concrete model to pin for grading (absent → balancer picks). */
     selectedModel?: string
     /** Provider for {@link selectedModel}. */
     selectedModelProvider?: ModelProvider
-    /** One-shot BYOK key when `mode` is byok and no key is on file. */
-    byokApiKey?: string
 }
 
 /** Payload inside `reviewPersonalProjectTask.data` after the standard API wrapper. */

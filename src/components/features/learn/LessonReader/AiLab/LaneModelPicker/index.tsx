@@ -22,7 +22,6 @@ import {
 import type {
     AiLabModelSelection,
 } from "../types"
-import { AiMode } from "@/modules/api/graphql/queries/query-my-ai-settings"
 import { AiModelCategory } from "@/modules/api/graphql/queries/query-ai-models"
 import { type AiGradableModel } from "@/modules/api/graphql/queries/types/ai-models"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -63,7 +62,7 @@ export const LaneModelPicker = ({
     className,
 }: LaneModelPickerProps) => {
     const t = useTranslations()
-    const isAuto = selection.mode === AiMode.Auto || selection.model === null
+    const isAuto = selection.model === null
     const triggerLabel = isAuto
         ? t("aiSettings.lanes.auto.title")
         : selection.model
@@ -90,7 +89,6 @@ export const LaneModelPicker = ({
                         <DropdownItem
                             key="auto"
                             onPress={() => onSelect({
-                                mode: AiMode.Auto,
                                 model: null,
                                 provider: null,
                             })}
@@ -160,7 +158,6 @@ export const LaneModelPicker = ({
                                     key={key}
                                     textValue={model.model}
                                     onPress={() => onSelect({
-                                        mode: canPremium ? AiMode.Premium : AiMode.Auto,
                                         model: model.model,
                                         provider: model.provider,
                                     })}

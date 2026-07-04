@@ -2,14 +2,10 @@
 
 import React, {
     useMemo,
-    useState,
 } from "react"
 import {
     Chip,
-    Label,
-    ListBox,
     ScrollShadow,
-    Select,
     Typography,
     cn,
 } from "@heroui/react"
@@ -45,10 +41,6 @@ const PROVIDER_LABELS: Record<string, string> = {
     gemini: "Gemini",
 }
 
-/** Lane filter values, in display order. */
-const LANES = ["all", "auto", "premium", "byok"] as const
-type LaneFilter = (typeof LANES)[number]
-
 /**
  * Human label for what a charge row was for. `surface` distinguishes an
  * interview-grading / chatbot charge from a challenge-grading one — rows
@@ -74,10 +66,10 @@ export type AiUsageHistoryProps = WithClassNames<undefined>
 
 /**
  * AI usage insight for the `/profile/ai-usage` page: a per-day spend chart, a
- * "by provider" {@link SegmentBar} breakdown, a lane filter, and the charge
- * history as an infinite-scroll list. Self-contained: drives its own
- * `useSWRInfinite` over `myCreditUsageHistory` (offset paginated) + a local lane
- * filter. Chart/breakdown are computed client-side from the loaded rows.
+ * "by provider" {@link SegmentBar} breakdown, and the charge history as an
+ * infinite-scroll list. Self-contained: drives its own `useSWRInfinite` over
+ * `myCreditUsageHistory` (offset paginated). Chart/breakdown are computed
+ * client-side from the loaded rows.
  *
  * NOTE: linking a charge back to its challenge needs the backend to expose
  * `attemptId` on the history item — not surfaced yet, so rows are read-only.
@@ -86,7 +78,6 @@ export type AiUsageHistoryProps = WithClassNames<undefined>
  */
 export const AiUsageHistory = ({ className }: AiUsageHistoryProps) => {
     const t = useTranslations()
-    const [lane, setLane] = useState<LaneFilter>("all")
 
     const {
         data,
@@ -136,12 +127,6 @@ export const AiUsageHistory = ({ className }: AiUsageHistoryProps) => {
                 value: credits,
             }))
     }, [items, t])
-
-    // lane filter applies only to the list (chart/breakdown stay overall)
-    const filtered = useMemo(
-        () => (lane === "all" ? items : items.filter((item) => item.mode === lane)),
-        [items, lane],
-    )
 
     return (
         <AsyncContent
@@ -206,47 +191,10 @@ export const AiUsageHistory = ({ className }: AiUsageHistoryProps) => {
                     </LabeledCard>
                 ) : null}
 
-                {/* card 3 — charge history list; the lane filter sits in the card's
-                    action slot (right of the label) instead of a separate row */}
-                <LabeledCard
-                    label={t("aiQuota.history.title")}
-                    action={(
-                        <>
-                            <Label className="sr-only">{t("aiQuota.history.lane.all")}</Label>
-                            <Select.Root<{ id: string }, "single">
-                                aria-label={t("aiQuota.history.lane.all")}
-                                selectedKey={lane}
-                                onSelectionChange={(key) => setLane(String(key) as LaneFilter)}
-                            >
-                                <Select.Trigger aria-label={t("aiQuota.history.lane.all")} className="w-fit min-w-40">
-                                    <Select.Value>
-                                        {() => (
-                                            <Typography type="body-sm">
-                                                {t(`aiQuota.history.lane.${lane}`)}
-                                            </Typography>
-                                        )}
-                                    </Select.Value>
-                                    <Select.Indicator />
-                                </Select.Trigger>
-                                <Select.Popover>
-                                    <ListBox.Root aria-label={t("aiQuota.history.lane.all")}>
-                                        {LANES.map((value) => (
-                                            <ListBox.Item
-                                                key={value}
-                                                id={value}
-                                                textValue={t(`aiQuota.history.lane.${value}`)}
-                                            >
-                                                {t(`aiQuota.history.lane.${value}`)}
-                                            </ListBox.Item>
-                                        ))}
-                                    </ListBox.Root>
-                                </Select.Popover>
-                            </Select.Root>
-                        </>
-                    )}
-                >
+                {/* card 3 — charge history list */}
+                <LabeledCard label={t("aiQuota.history.title")}>
                     <ScrollShadow className="flex max-h-96 flex-col divide-y divide-divider">
-                        {filtered.map((item) => (
+                        {items.map((item) => (
                             <div key={item.id} className="flex items-center justify-between gap-3 py-2">
                                 <div className="flex min-w-0 flex-col gap-0">
                                     <Typography type="body-sm" weight="medium" truncate>

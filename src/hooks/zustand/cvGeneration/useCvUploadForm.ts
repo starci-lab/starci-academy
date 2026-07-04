@@ -93,7 +93,6 @@ export const useCvUploadForm = () => {
                         const result = await triggerUploadCv({
                             cdnKey: presignPayload.cdnKey,
                             label: label?.trim() || undefined,
-                            mode: selection?.mode,
                             selectedModel: selection?.model ?? undefined,
                             selectedModelProvider: selection?.provider ?? undefined,
                         })

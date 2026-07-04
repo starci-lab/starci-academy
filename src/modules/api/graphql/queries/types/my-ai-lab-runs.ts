@@ -1,5 +1,5 @@
 import type { GraphQLResponse } from "../../types"
-import type { AiMode, ModelProvider } from "../query-my-ai-settings"
+import type { ModelProvider } from "../query-my-ai-settings"
 
 /** Generation params persisted on an AI Lab run. */
 export interface QueryAiLabRunParamsData {
@@ -27,8 +27,6 @@ export interface QueryAiLabRunData {
     model: string | null
     /** Provider that served the run. */
     provider: ModelProvider | null
-    /** AI lane the run executed on. */
-    mode: AiMode | null
     /** Final model output (null while streaming / on failure). */
     output: string | null
     /** Prompt token count. */

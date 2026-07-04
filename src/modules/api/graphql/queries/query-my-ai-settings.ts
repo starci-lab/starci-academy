@@ -3,14 +3,7 @@ import { type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 import type { QueryMyAiSettingsResponse } from "./types"
 
-/** Which AI lane a user runs on (mirrors backend `AiMode`). */
-export enum AiMode {
-    Auto = "auto",
-    Premium = "premium",
-    Byok = "byok",
-}
-
-/** BYOK provider (mirrors backend `ModelProvider`). */
+/** Provider serving a concrete model (mirrors backend `ModelProvider`). */
 export enum ModelProvider {
     Gemini = "gemini",
     OpenAI = "openai",
@@ -33,13 +26,7 @@ const query1 = gql`
       message
       error
       data {
-        preferredMode
-        effectiveMode
         canPremium
-        canByok
-        byokProvider
-        hasByokKey
-        byokKeyLast4
         tier
       }
     }
@@ -55,8 +42,8 @@ const queryMap: Record<QueryMyAiSettings, DocumentNode> = {
 }
 
 /**
- * Fetches the current user's AI lane settings (preferred + effective lane,
- * BYOK provider/availability, Premium/BYOK capability flags).
+ * Fetches the current user's AI capabilities: whether paid-tier models are
+ * unlocked (`canPremium` = paid OR enrolled) and the active paid `tier`.
  *
  * Mirrors `myAiSettings` (queries/ai/my-ai-settings.resolver.ts).
  */

@@ -23,9 +23,7 @@ export interface AskMockInterviewTurnStreamParams {
     history: Array<MockInterviewHistoryTurn>
     /** The candidate's most recent answer; pass empty string on the opening turn. */
     latestAnswer: string
-    /** Lane: "auto" (free/economy chain) or "premium" (pin the chosen model). */
-    mode?: string
-    /** Pinned model name (only with mode "premium"). */
+    /** Pinned model name (absent → balancer picks from the chain). */
     model?: string | null
     /** Provider of the pinned model. */
     provider?: string | null
@@ -105,7 +103,6 @@ export const useMockInterviewTurnStream = (): MockInterviewTurnStreamControls =>
                     phase: params.phase,
                     history: params.history,
                     latestAnswer: params.latestAnswer,
-                    mode: params.mode,
                     model: params.model,
                     provider: params.provider,
                 },

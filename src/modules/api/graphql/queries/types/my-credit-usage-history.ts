@@ -5,9 +5,7 @@ import type { AiCeilSurface } from "../../mutations/types/set-ai-ceil"
 export interface QueryMyCreditUsageHistoryItem {
     /** Charge row id. */
     id: string
-    /** AI lane billed (auto / premium / byok). */
-    mode: string
-    /** Premium tier billed (low / medium / high); null for auto / byok. */
+    /** Model-recommendation tier billed (low / medium / high); null when unattributed. */
     recommendation: string | null
     /** Concrete model billed (e.g. gpt-5-mini); null for the free Auto lane. */
     model: string | null

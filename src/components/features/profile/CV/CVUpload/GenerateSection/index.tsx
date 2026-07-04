@@ -25,7 +25,6 @@ import { useCvGenerationStore } from "@/hooks/zustand/cvGeneration/store"
 import { useQueryCvGenerationSwr } from "@/hooks/swr/api/graphql/queries/useQueryCvGenerationSwr"
 import { useQueryAiModelsSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiModelsSwr"
 import { useQueryMyAiSettingsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiSettingsSwr"
-import { AiMode } from "@/modules/api/graphql/queries/query-my-ai-settings"
 import { AiModelCategory, AiModelTask } from "@/modules/api/graphql/queries/query-ai-models"
 import type { AiGradableModel } from "@/modules/api/graphql/queries/types/ai-models"
 import {
@@ -43,7 +42,6 @@ const CV_GENERATE_CATEGORIES: ReadonlyArray<AiModelCategory> = [
 
 /** Default selection — Auto lane, balancer picks the model. */
 const AUTO_SELECTION: GradeModelSelection = {
-    mode: AiMode.Auto,
     model: null,
     provider: null,
 }

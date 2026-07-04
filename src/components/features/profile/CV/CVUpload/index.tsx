@@ -16,6 +16,9 @@ import {
 import {
     GenerateSection,
 } from "./GenerateSection"
+import {
+    UploadSection,
+} from "./UploadSection"
 
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useAppSelector } from "@/redux/hooks"
@@ -119,6 +122,7 @@ export const CVUpload = ({ className }: CVUploadProps) => {
                 submittedAtLabel={submittedAtLabel}
                 onOpenUpdate={openCvUpdateModal}
             />
+            <UploadSection />
             <GenerateSection
                 cvSubmissionId={cvUrlPayload?.id}
                 onOpenUpload={openCvUpdateModal}

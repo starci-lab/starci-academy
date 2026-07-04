@@ -5,13 +5,13 @@ import { cn } from "@heroui/react"
 import {
     GraduationCapIcon,
     ChartBarIcon,
-    GaugeIcon,
+    TrendUpIcon,
     PuzzlePieceIcon,
     CodeIcon,
 } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { OverviewJobReadiness } from "./OverviewJobReadiness"
+import { ProfileJobReadiness } from "./ProfileJobReadiness"
 import { OverviewCourses } from "./OverviewCourses"
 import { OverviewContributions } from "./OverviewContributions"
 import { OverviewChallengeSkills } from "./OverviewChallengeSkills"
@@ -23,9 +23,10 @@ import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 export type ProfileOverviewTabProps = WithClassNames<undefined>
 
 /**
- * Overview-tab body of the public profile (UI 2.0): four labelled sections, each
+ * Overview-tab body of the public profile (UI 2.0): five labelled sections, each
  * a {@link LabeledCard} (title `Label` outside, content inside) with its data
  * states handled by `AsyncContent`:
+ *  0. Job readiness — `ProfileJobReadiness` (headline recruiter signal, no course-scope).
  *  1. Joined courses — `OverviewCourses` (see-all → Activity tab).
  *  2. Contributions — `OverviewContributions` (heatmap + streak).
  *  3. Skills from challenges — `OverviewChallengeSkills` (see-all → Challenges tab).
@@ -44,12 +45,13 @@ export const ProfileOverviewTab = ({
 
     return (
         <div className={cn("flex min-w-0 flex-1 flex-col gap-6", className)}>
-            {/* headline recruiter metric — the AI-verified job-readiness portfolio */}
+            {/* headline recruiter signal — per-track depth, no blended composite */}
             <LabeledCard
                 label={t("jobReadiness.title")}
-                icon={<GaugeIcon aria-hidden focusable="false" className="size-5" />}
+                icon={<TrendUpIcon aria-hidden focusable="false" className="size-5" />}
+                frameless
             >
-                <OverviewJobReadiness />
+                <ProfileJobReadiness />
             </LabeledCard>
 
             <LabeledCard

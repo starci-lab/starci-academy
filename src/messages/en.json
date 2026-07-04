@@ -40,6 +40,38 @@
             "signInRequired": "Sign in with an active membership to join the chat."
         }
     },
+    "cart": {
+        "label": "Cart",
+        "title": "Your cart",
+        "description": "Review the courses you picked and pay in one go.",
+        "empty": "Your cart is empty",
+        "emptyHint": "No courses in your cart yet. Browse the courses and add some.",
+        "browseCourses": "Browse courses",
+        "add": "Add to cart",
+        "added": "Added to your cart",
+        "inCart": "In cart",
+        "remove": "Remove from cart",
+        "removed": "Removed from your cart",
+        "clear": "Clear cart",
+        "cleared": "Cart cleared",
+        "checkout": "Checkout",
+        "checkoutCount": "Check out {count} courses",
+        "subtotal": "Subtotal",
+        "total": "Total",
+        "itemsCount": "{count} courses",
+        "savings": "You save {amount}",
+        "bundleBonus": "Bundle deal +{percent}%",
+        "addMoreHint2": "Add 1 more course for an extra 5% off",
+        "addMoreHint3": "Add 1 more course for 10% off",
+        "error": "Couldn't load your cart",
+        "retry": "Try again",
+        "viewFullCart": "View full cart",
+        "comboActive": "Saving {percent}% with the combo",
+        "comboNextHint": "Add 1 more course for {percent}% off",
+        "comboMaxHint": "You have the biggest combo deal",
+        "comboStart": "Add 1 more course to unlock the combo deal",
+        "tooltipAdd": "Add to cart"
+    },
     "contact": {
         "title": "Contact",
         "intro": "StarCi is built by one person — your question reaches the person who makes it. Pick the fastest route below, or send a message.",
@@ -317,7 +349,7 @@
     },
     "legal": {
         "contactNote": "Questions about these terms or your data? Email cuongnvtse160875@gmail.com.",
-    "lastUpdated": "Last updated: {date}",
+        "lastUpdated": "Last updated: {date}",
         "terms": {
             "title": "Terms of Service",
             "description": "The terms for using StarCi Academy.",
@@ -781,6 +813,19 @@
                 "fileRequired": "CV file is required.",
                 "fileTypeInvalid": "CV file must be a PDF.",
                 "fileSizeInvalid": "File size must be 10MB or less."
+            }
+        },
+        "upload": {
+            "title": "Upload your CV",
+            "description": "Already have a CV? Upload the PDF so AI scores it and gives feedback with the same rubric as StarCi-generated CVs.",
+            "fileHint": "Drag & drop or choose your CV file (PDF, up to 10MB).",
+            "labelLabel": "A name to remember this CV by (optional)",
+            "labelPlaceholder": "e.g. Backend application CV 2026",
+            "uploadAction": "Upload and score",
+            "errors": {
+                "fileRequired": "Please choose a CV file.",
+                "fileTypeInvalid": "The CV must be a PDF.",
+                "fileSizeInvalid": "Max file size is 10MB."
             }
         }
     },
@@ -3045,8 +3090,7 @@
                     "tag": "Stay sharp",
                     "desc": "Compare solutions and climb the ranks."
                 }
-            },
-            "cta": "Jump in"
+            }
         },
         "treasure": {
             "eyebrow": "System capability map",
@@ -3356,51 +3400,6 @@
         "middle": "Mid",
         "senior": "Senior"
     },
-    "footer": {
-        "tagline": "Learn by building real systems with your own hands — sharp enough for any technical interview.",
-        "exploreTitle": "Explore",
-        "supportTitle": "Support",
-        "links": {
-            "courses": "Courses",
-            "blog": "Blog",
-            "talents": "Talents",
-            "jobs": "IT jobs",
-            "community": "Community",
-            "contact": "Contact",
-            "terms": "Terms",
-            "privacy": "Privacy"
-        },
-        "madeBy": "Built by Nguyễn Văn Tự Cường",
-        "copyright": "© {year} StarCi Academy"
-    },
-    "legal": {
-        "contactNote": "Questions about these terms or your data? Email cuongnvtse160875@gmail.com.",
-        "lastUpdated": "Last updated: {date}",
-        "terms": {
-            "title": "Terms of Service",
-            "description": "The terms for using StarCi Academy.",
-            "body": "The full terms document is being finalized. By using StarCi Academy you agree to use the platform for lawful learning and to respect the ownership of course content. A detailed version will be published on this page."
-        },
-        "privacy": {
-            "title": "Privacy Policy",
-            "description": "How StarCi Academy collects and uses your data.",
-            "body": "The full privacy policy is being finalized. StarCi Academy collects only the data needed to run your learning (account, progress, submissions) and does not sell your data to third parties. A detailed version will be published on this page."
-        }
-    },
-    "cookieConsent": {
-        "title": "Cookies",
-        "body": "We use necessary cookies to sign you in and remember your language, plus analytics cookies (Google Analytics) to improve your experience. You can accept, reject, or customize.",
-        "acceptAll": "Accept all",
-        "reject": "Reject",
-        "customize": "Customize",
-        "modalTitle": "Cookie preferences",
-        "modalBody": "Choose which cookies you allow. Necessary cookies are always on so the system works.",
-        "necessaryLabel": "Necessary",
-        "necessaryHint": "Sign-in, security and language. Always on.",
-        "analyticsLabel": "Analytics",
-        "analyticsHint": "Google Analytics — anonymous metrics to improve the product.",
-        "save": "Save choices"
-    },
     "socketStatus": {
         "reconnecting": "Connection lost — reconnecting…",
         "reconnected": "Reconnected"
@@ -3470,6 +3469,159 @@
             "stop": "Stop",
             "send": "Send question",
             "genericError": "The AI could not answer right now — try again later."
+        }
+    },
+    "architecture": {
+        "title": "StarCi's system, live",
+        "subtitle": "A public engineering map — every node is a REAL infrastructure component, its status proven by your own request, nothing faked.",
+        "mapCaption": "Drag to orbit. Click a group to open its detailed diagram.",
+        "rail": {
+            "ariaLabel": "System component list",
+            "ownGroup": "StarCi's own system",
+            "externalGroup": "External dependencies",
+            "tagline": {
+                "keycloak": "Auth · OIDC",
+                "aiBalancer": "Multi-provider AI routing",
+                "judge0": "Run & grade code",
+                "ollama": "In-house LLM",
+                "redis": "Cache · queue",
+                "postgres": "Primary database",
+                "qdrant": "Vectors · RAG",
+                "elasticsearch": "Content search",
+                "minio": "Media storage",
+                "mail": "Transactional email",
+                "kafka": "Event bus · CDC",
+                "nats": "Streaming · job status",
+                "github": "OAuth · repos",
+                "stripe": "International cards",
+                "paypal": "International wallet",
+                "payos": "Domestic gateway",
+                "sepay": "Domestic gateway"
+            }
+        },
+        "map": {
+            "core": "Core API",
+            "coreSub": "nestjs",
+            "client": "Client",
+            "clientSub": "web · you are here",
+            "gateway": "API Gateway",
+            "gatewaySub": "graphql · ws",
+            "errorHeading": "Couldn't load system status",
+            "errorDescription": "The health API didn't answer. Try again in a moment.",
+            "retry": "Retry"
+        },
+        "status": {
+            "checking": "checking…",
+            "up": "up",
+            "degraded": "degraded",
+            "down": "down",
+            "unknown": "unknown"
+        },
+        "panel": {
+            "whyHeading": "Why it matters",
+            "deepDive": "Read the engineering deep-dive",
+            "latency": "{ms} ms",
+            "checked": "checked {ago}"
+        },
+        "curl": {
+            "heading": "Try it with the real API",
+            "commandLabel": "curl command (public GraphQL endpoint)",
+            "copy": "Copy",
+            "copied": "Copied",
+            "run": "Run"
+        },
+        "view": {
+            "present": "Today",
+            "future": "Future",
+            "grouped": "By group",
+            "everything": "Everything",
+            "backToOverview": "‹ Back to the whole system",
+            "eraAria": "Select timeline",
+            "layoutAria": "Select layout"
+        },
+        "pod": {
+            "payment": {
+                "name": "Payments",
+                "sub": "4 gateways"
+            },
+            "auth": {
+                "name": "Auth",
+                "sub": "keycloak · oauth"
+            },
+            "ai": {
+                "name": "AI",
+                "sub": "balancer · rag"
+            },
+            "data": {
+                "name": "Data + CDC",
+                "sub": "pg · kafka · es"
+            },
+            "events": {
+                "name": "Events",
+                "sub": "kafka · nats"
+            },
+            "media": {
+                "name": "Media",
+                "sub": "minio"
+            },
+            "coding": {
+                "name": "Code grading",
+                "sub": "judge0"
+            },
+            "notify": {
+                "name": "Notify",
+                "sub": "brevo"
+            }
+        },
+        "future": {
+            "comingSoon": "Coming soon",
+            "caption": "Where we're headed — splitting the monolith into microservices.",
+            "bus": "Event bus",
+            "busSub": "kafka · nats",
+            "order": "order-service",
+            "payment": "payment-service",
+            "ai": "ai-service",
+            "grading": "grading-service",
+            "media": "media-service",
+            "notification": "notification-service"
+        },
+        "role": {
+            "keycloak": "OIDC identity server + OAuth — issues tokens and manages per-device sessions.",
+            "aiBalancer": "Routes every AI call across providers, rotating keys by health and falling back on failure.",
+            "judge0": "Isolated code runner — compiles, runs tests and grades learners' coding submissions.",
+            "ollama": "In-house LLM (OpenAI-compatible) for tasks that don't need a cloud model.",
+            "redis": "Cache, job queue (BullMQ), throttler and socket adapter.",
+            "postgres": "Primary relational database (TypeORM) — the source of truth for all durable data.",
+            "qdrant": "Vector store for RAG (LangChain) — grounds AI grading in real context.",
+            "elasticsearch": "Low-latency search over content and courses.",
+            "minio": "S3-compatible storage for covers, media and assets.",
+            "mail": "Sends transactional email via Brevo SMTP.",
+            "kafka": "Event bus + CDC (Debezium) — keeps read-models in sync, CQRS-style.",
+            "nats": "JetStream — streams live job status back to the client.",
+            "github": "OAuth login + repo/team management for grading via repositories.",
+            "stripe": "International card gateway for payments outside Vietnam.",
+            "paypal": "International wallet for payments outside Vietnam.",
+            "payos": "Domestic payment gateway (QR / bank transfer).",
+            "sepay": "Domestic payment gateway with IPN reconciliation."
+        },
+        "why": {
+            "keycloak": "Without it nobody logs in — all access flows through here.",
+            "aiBalancer": "Keeps AI stable and cheap, never locked to a single vendor.",
+            "judge0": "Decides whether coding work passes — grading must run real code.",
+            "ollama": "Cuts dependency and cost on cloud models for light tasks.",
+            "redis": "Speeds up responses and coordinates background jobs system-wide.",
+            "postgres": "Lose it and you lose the data — every durable write lands here.",
+            "qdrant": "Lets AI grade on real context instead of guessing.",
+            "elasticsearch": "Finds lessons and courses fast as data grows.",
+            "minio": "Where course images, video and assets actually live.",
+            "mail": "The channel that reaches learners: verify, receipts, reminders.",
+            "kafka": "The backbone that syncs read-models — proof CQRS runs for real.",
+            "nats": "Shows learners grading/job progress instantly.",
+            "github": "Both a login method and the source of submissions to grade.",
+            "stripe": "Opens the door for international users to pay by card.",
+            "paypal": "Adds a familiar international payment option.",
+            "payos": "The primary payment rail for Vietnamese users.",
+            "sepay": "Reconciles bank balance changes for domestic payments."
         }
     }
 }

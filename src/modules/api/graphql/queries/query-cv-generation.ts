@@ -16,12 +16,20 @@ const query1 = gql`
       error
       data {
         id
-        kind
+        mode
         status
+        source
+        score
+        label
+        courseId
+        targetRole
+        language
+        sourceCvSubmissionId
         latexSource
         extraPrompts
-        error
-        cvSubmissionId
+        structuredData
+        errorMessage
+        processedAt
         createdAt
       }
     }

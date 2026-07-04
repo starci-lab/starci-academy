@@ -8,23 +8,51 @@
  */
 export type PaymentContext =
     | CoursePaymentContext
+    | CoursesCheckoutPaymentContext
     | AiSubscriptionPaymentContext
     | MembershipPaymentContext
 
 /** Discriminator for the {@link PaymentContext} union. */
 export enum PaymentFlow {
-    /** Enrolling in (paying for) a course. */
+    /** Enrolling in (paying for) a single course. */
     CourseEnroll = "courseEnroll",
+    /** Buying SEVERAL cart courses at once (multi-course checkout). */
+    CoursesCheckout = "coursesCheckout",
     /** Purchasing an AI subscription tier. */
     AiSubscription = "aiSubscription",
     /** Purchasing community membership. */
     Membership = "membership",
 }
 
-/** Payment context for the course-enroll flow. */
+/**
+ * One line in the multi-course checkout summary. Carries just the display
+ * identity (cover + title); the PRICE is fetched fresh by the payment modal via
+ * `coursesCheckoutPreview` (keyed on the context's `courseIds`) so the modal and
+ * cart always show the identical real charged total.
+ */
+export interface CartCheckoutLine {
+    /** Course id being purchased. */
+    courseId: string
+    /** Course title shown in the summary. */
+    title: string
+    /** Cover image URL (or null → branded fallback). */
+    coverImageUrl?: string | null
+}
+
+/** Payment context for the single course-enroll flow. */
 export interface CoursePaymentContext {
     /** Marks this as the course-enroll flow. */
     flow: PaymentFlow.CourseEnroll
+}
+
+/** Payment context for the multi-course cart checkout flow. */
+export interface CoursesCheckoutPaymentContext {
+    /** Marks this as the multi-course checkout flow. */
+    flow: PaymentFlow.CoursesCheckout
+    /** Ids of the cart courses to buy in one transaction (also key the preview). */
+    courseIds: Array<string>
+    /** Cart lines for the multi-line summary (cover + title); price comes from the preview. */
+    lines: Array<CartCheckoutLine>
 }
 
 /** Payment context for the AI subscription flow. */

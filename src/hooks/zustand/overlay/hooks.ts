@@ -1,7 +1,7 @@
 "use client"
 
 import { useCallback } from "react"
-import { useOverlayStore, type OverlayKey, type FollowListContext } from "./store"
+import { useOverlayStore, type OverlayKey, type FollowListContext, type PendingCartIntent } from "./store"
 import type { PaymentContext } from "@/modules/types/payment"
 import type { QueryActiveAdvertisementData } from "@/modules/api/graphql/queries/types/active-advertisement"
 
@@ -86,6 +86,8 @@ export const useLessonVideoOverlayState = () => useOverlayHandle("lessonVideo")
 export const useLinkGithubOverlayState = () => useOverlayHandle("linkGithub")
 /** Livestream calendar overlay state. */
 export const useLivestreamCalendarOverlayState = () => useOverlayHandle("livestreamCalendar")
+/** Mini-cart drawer overlay state (slide-out cart confirmation + combo meter + checkout). */
+export const useMiniCartOverlayState = () => useOverlayHandle("miniCart")
 /**
  * Payment overlay state — UNLIKE the other overlays: it carries a {@link PaymentContext} payload.
  * `open(context)` stashes the payload then opens (one modal serves multiple flows: course enroll /
@@ -206,4 +208,19 @@ export const useContentAiSelection = (): {
     const selectionContext = useOverlayStore((state) => state.contentAiSelectionContext)
     const setSelection = useOverlayStore((state) => state.setContentAiSelection)
     return { selection, selectionContext, setSelection }
+}
+
+/**
+ * A guest's deferred cart action — set when a signed-out viewer taps "add to cart"
+ * / the nav cart (which opens the auth modal instead), then replayed by
+ * {@link import("@/components/drawers/MiniCartDrawer").MiniCartDrawer} once they sign in.
+ * @returns the pending intent and its setter (pass `null` to clear).
+ */
+export const usePendingCartIntent = (): {
+    readonly pendingCartIntent: PendingCartIntent | null
+    setPendingCartIntent: (intent: PendingCartIntent | null) => void
+} => {
+    const pendingCartIntent = useOverlayStore((state) => state.pendingCartIntent)
+    const setPendingCartIntent = useOverlayStore((state) => state.setPendingCartIntent)
+    return { pendingCartIntent, setPendingCartIntent }
 }

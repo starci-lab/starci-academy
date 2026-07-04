@@ -1,27 +1,29 @@
 import useSWR from "swr"
 import { queryUserJobReadiness } from "@/modules/api/graphql/queries/query-user-job-readiness"
-import type { JobReadinessData } from "@/modules/api/graphql/queries/types/job-readiness"
+import type { QueryUserJobReadinessData } from "@/modules/api/graphql/queries/types/user-job-readiness"
 
 /**
- * SWR wrapper for {@link queryUserJobReadiness}. `data` is the user's public
- * job-readiness portfolio (composite + tracks + foundation), or `null`. Keyed by
- * user id — serves both the viewer's own profile and a recruiter viewing
- * another. Only runs once a `userId` is known.
+ * SWR hook for a user's job-readiness snapshot (global foundation + one
+ * depth-card per purchased course track), by id. Public — works for anonymous
+ * viewers, and serves both the viewer's own profile and a recruiter viewing
+ * another (profiles are addressed by user id). Returns null when the user has
+ * nothing to show yet; pass null/undefined userId to disable.
  *
- * @param userId - id of the profile owner whose readiness to fetch.
+ * @param userId - id of the user whose job-readiness snapshot to fetch
+ * @returns the SWR handle (data = `{ foundation, tracks }`, or null)
  */
 export const useQueryUserJobReadinessSwr = (userId: string | null | undefined) => {
-    return useSWR<JobReadinessData | null>(
+    const swr = useSWR(
         userId ? ["QUERY_USER_JOB_READINESS_SWR", userId] : null,
-        async () => {
-            if (!userId) {
-                throw new Error("User id not found")
-            }
-            // unwrap the standard API envelope; null when absent
-            const result = await queryUserJobReadiness({
-                request: { userId },
+        async (): Promise<QueryUserJobReadinessData | null> => {
+            const data = await queryUserJobReadiness({
+                request: { userId: userId as string },
             })
-            return result.data?.userJobReadiness?.data ?? null
+            if (!data || !data.data) {
+                throw new Error("Failed to fetch user job readiness")
+            }
+            return data.data.userJobReadiness?.data ?? null
         },
     )
+    return swr
 }

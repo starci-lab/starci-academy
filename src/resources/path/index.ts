@@ -438,6 +438,16 @@ export const pathConfig = () => {
                 build,
             }
         }
+        const cart = () => {
+            // shopping cart: review chosen courses + multi-course checkout
+            const cartPath = `${localePath}/cart`
+            const build = () => {
+                return cartPath
+            }
+            return {
+                build,
+            }
+        }
         const terms = () => {
             // terms of service (stub page, linked from the footer)
             const termsPath = `${localePath}/terms`
@@ -495,6 +505,16 @@ export const pathConfig = () => {
             const blogPath = `${localePath}/blog`
             const build = () => {
                 return blogPath
+            }
+            return {
+                build,
+            }
+        }
+        const architecture = () => {
+            // public "System Atlas": live 3D map + per-component health + curl playground
+            const architecturePath = `${localePath}/architecture`
+            const build = () => {
+                return architecturePath
             }
             return {
                 build,
@@ -588,12 +608,14 @@ export const pathConfig = () => {
             contact,
             publicContent,
             dashboard,
+            cart,
             practice,
             ragPlayground,
             review,
             talents,
             jobs,
             blog,
+            architecture,
             community,
             rewards,
             league,

@@ -32,7 +32,7 @@ import {
 import {
     FooterNavColumn,
 } from "./FooterNavColumn"
-import { BrandLogo } from "@/components/blocks/identity/BrandLogo"
+import { BrandLockup } from "@/components/blocks/identity/BrandLockup"
 
 /** Founder social links (brand logos → react-icons/fa6 per the icon rule). */
 const SOCIALS = [
@@ -50,7 +50,7 @@ export type FooterProps = WithClassNames<undefined>
  * on the left; two quiet link columns (explore · support) on the right; a bottom
  * bar with copyright, the "built by" credit, and the legal stubs.
  *
- * Pure composition: blocks (`BrandLogo`) + the locale-aware router + real route
+ * Pure composition: blocks (`BrandLockup`) + the locale-aware router + real route
  * helpers / contact constants. Hidden on the reader/auth shells by the caller
  * ({@link InnerLayout}).
  *
@@ -81,9 +81,9 @@ export const Footer = ({ className }: FooterProps) => {
                 <div className="flex flex-col justify-between gap-10 md:flex-row">
                     <div className="flex max-w-sm flex-col gap-4">
                         {/* the column is a flex-col (align-items: stretch by default), which
-                            would otherwise stretch the svg's auto width to the full column
+                            would otherwise stretch the lockup's auto width to the full column
                             width while its height stays fixed — self-start opts it out */}
-                        <BrandLogo className="self-start" />
+                        <BrandLockup className="self-start" />
                         <Typography type="body-sm" color="muted">
                             {t("footer.tagline")}
                         </Typography>

@@ -214,7 +214,7 @@ export const GenerateSection = ({
                 <AIProcessingText
                     jobCategory={JobCategory.ReviewCv}
                     jobStatus={jobStatus}
-                    error={generation?.error ?? undefined}
+                    error={generation?.errorMessage ?? undefined}
                 />
             ) : null}
 

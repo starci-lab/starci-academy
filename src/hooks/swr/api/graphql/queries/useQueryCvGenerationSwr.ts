@@ -24,7 +24,7 @@ export const useQueryCvGenerationSwr = (cvGenerationId?: string) => {
         async () => {
             const response = await queryCvGeneration({
                 debug: false,
-                request: { cvGenerationId: cvGenerationId as string },
+                request: { id: cvGenerationId as string },
             })
             const wrapped = response.data?.cvGeneration
             if (!wrapped) {

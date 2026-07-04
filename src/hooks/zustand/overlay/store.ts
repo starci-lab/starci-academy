@@ -16,6 +16,14 @@ export interface FollowListContext {
 }
 
 /**
+ * A cart action a GUEST tried before signing in — replayed once they authenticate.
+ * `"add"` adds the course then opens the mini-cart; `"open"` just opens the mini-cart.
+ */
+export type PendingCartIntent =
+    | { readonly type: "add"; readonly courseId: string }
+    | { readonly type: "open" }
+
+/**
  * Identifier for each overlay (modal/drawer/popover) in the app. Each key holds an independent
  * open state in {@link useOverlayStore}.
  */
@@ -44,6 +52,7 @@ export type OverlayKey =
     | "lessonVideo"
     | "linkGithub"
     | "livestreamCalendar"
+    | "miniCart"
     | "payment"
     | "personalProjectTaskAttemptsDrawer"
     | "pinnedProjects"
@@ -78,6 +87,7 @@ const OVERLAY_KEYS: ReadonlyArray<OverlayKey> = [
     "lessonVideo",
     "linkGithub",
     "livestreamCalendar",
+    "miniCart",
     "payment",
     "personalProjectTaskAttemptsDrawer",
     "pinnedProjects",
@@ -97,6 +107,8 @@ interface OverlayStoreState {
     adModalContext: QueryActiveAdvertisementData | null
     /** Follow-list modal payload (whose graph + which tab). */
     followListContext: FollowListContext | null
+    /** A cart action a guest deferred until sign-in (replayed on auth), or null. */
+    pendingCartIntent: PendingCartIntent | null
     /** Content-AI selected model — shared between the chat composer + the settings modal. */
     contentAiSelectedModel: string | null
     /** Bumped by the settings modal after clearing history → signals the chat to reset its thread. */
@@ -121,6 +133,8 @@ interface OverlayStoreState {
     setAdModalContext: (context: QueryActiveAdvertisementData | null) => void
     /** Stash the follow-list modal payload. */
     setFollowListContext: (context: FollowListContext | null) => void
+    /** Stash (or clear) the guest's deferred cart action. */
+    setPendingCartIntent: (intent: PendingCartIntent | null) => void
     /** Set the content-AI selected model. */
     setContentAiSelectedModel: (model: string | null) => void
     /** Signal the chat thread to reset (after the settings modal clears the saved history). */
@@ -152,6 +166,7 @@ export const useOverlayStore = create<OverlayStoreState>((set) => ({
     paymentContext: null,
     adModalContext: null,
     followListContext: null,
+    pendingCartIntent: null,
     contentAiSelectedModel: null,
     contentAiClearNonce: 0,
     contentAiSelection: null,
@@ -167,6 +182,7 @@ export const useOverlayStore = create<OverlayStoreState>((set) => ({
     setPaymentContext: (context) => set({ paymentContext: context }),
     setAdModalContext: (context) => set({ adModalContext: context }),
     setFollowListContext: (context) => set({ followListContext: context }),
+    setPendingCartIntent: (intent) => set({ pendingCartIntent: intent }),
     setContentAiSelectedModel: (model) => set({ contentAiSelectedModel: model }),
     signalContentAiCleared: () =>
         set((state) => ({ contentAiClearNonce: state.contentAiClearNonce + 1 })),

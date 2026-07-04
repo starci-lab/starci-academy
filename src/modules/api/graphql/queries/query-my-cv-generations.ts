@@ -1,19 +1,12 @@
 import { createAuthApolloClient } from "../clients"
 import {
-    SortOrder,
     type QueryParams,
-    type SortInput,
 } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 import type {
     MyCvGenerationsListRequest,
     QueryMyCvGenerationsResponse,
 } from "./types/cv-generation"
-
-/** Sort keys for `myCvGenerations`. */
-export enum MyCvGenerationsSortBy {
-    CreatedAt = "createdAt",
-}
 
 const query1 = gql`
   query MyCvGenerations($request: MyCvGenerationsRequest) {
@@ -22,17 +15,21 @@ const query1 = gql`
       message
       error
       data {
-        totalCount
-        data {
-          id
-          kind
-          status
-          latexSource
-          extraPrompts
-          error
-          cvSubmissionId
-          createdAt
-        }
+        id
+        mode
+        status
+        source
+        score
+        label
+        courseId
+        targetRole
+        language
+        sourceCvSubmissionId
+        extraPrompts
+        structuredData
+        errorMessage
+        processedAt
+        createdAt
       }
     }
   }
@@ -46,15 +43,9 @@ const queryMap: Record<QueryMyCvGenerations, DocumentNode> = {
     [QueryMyCvGenerations.Query1]: query1,
 }
 
-export const defaultMyCvGenerationsSorts: Array<SortInput<MyCvGenerationsSortBy>> = [
-    {
-        by: MyCvGenerationsSortBy.CreatedAt,
-        order: SortOrder.Desc,
-    },
-]
-
 /**
- * Paginated AI CV generations for the signed-in user (newest first).
+ * AI CV generations for the signed-in user (newest first). Pagination via
+ * `limit` / `offset`; the backend returns a flat array (clamped server-side).
  */
 export const queryMyCvGenerations = async ({
     query = QueryMyCvGenerations.Query1,

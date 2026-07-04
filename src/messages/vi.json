@@ -40,6 +40,38 @@
             "signInRequired": "Đăng nhập bằng tài khoản có gói member để vào chat."
         }
     },
+    "cart": {
+        "label": "Giỏ hàng",
+        "title": "Giỏ hàng",
+        "description": "Xem lại các khóa học bạn đã chọn và thanh toán một lần.",
+        "empty": "Giỏ hàng đang trống",
+        "emptyHint": "Chưa có khóa học nào trong giỏ. Khám phá các khóa học và thêm vào giỏ nhé.",
+        "browseCourses": "Xem các khóa học",
+        "add": "Thêm vào giỏ",
+        "added": "Đã thêm vào giỏ hàng",
+        "inCart": "Đã ở trong giỏ",
+        "remove": "Bỏ khỏi giỏ",
+        "removed": "Đã bỏ khỏi giỏ hàng",
+        "clear": "Xóa giỏ hàng",
+        "cleared": "Đã xóa giỏ hàng",
+        "checkout": "Thanh toán",
+        "checkoutCount": "Thanh toán {count} khóa học",
+        "subtotal": "Tạm tính",
+        "total": "Tổng cộng",
+        "itemsCount": "{count} khóa học",
+        "savings": "Bạn tiết kiệm {amount}",
+        "bundleBonus": "Ưu đãi combo +{percent}%",
+        "addMoreHint2": "Thêm 1 khóa nữa để được giảm thêm 5%",
+        "addMoreHint3": "Thêm 1 khóa nữa để được giảm 10%",
+        "error": "Không tải được giỏ hàng",
+        "retry": "Thử lại",
+        "viewFullCart": "Xem giỏ hàng đầy đủ",
+        "comboActive": "Đang giảm {percent}% combo",
+        "comboNextHint": "Thêm 1 khóa nữa để giảm {percent}%",
+        "comboMaxHint": "Bạn đang nhận ưu đãi combo cao nhất",
+        "comboStart": "Thêm 1 khóa nữa để bắt đầu ưu đãi combo",
+        "tooltipAdd": "Thêm vào giỏ"
+    },
     "contact": {
         "title": "Liên hệ",
         "intro": "StarCi do một người dựng nên — câu hỏi của bạn tới thẳng người làm ra nó. Chọn cách nhanh nhất bên dưới, hoặc gửi tin nhắn.",
@@ -317,7 +349,7 @@
     },
     "legal": {
         "contactNote": "Có câu hỏi về điều khoản hoặc dữ liệu của bạn? Liên hệ cuongnvtse160875@gmail.com.",
-    "lastUpdated": "Cập nhật lần cuối: {date}",
+        "lastUpdated": "Cập nhật lần cuối: {date}",
         "terms": {
             "title": "Điều khoản sử dụng",
             "description": "Các điều khoản khi sử dụng StarCi Academy.",
@@ -786,6 +818,19 @@
                 "label": "File CV (PDF)",
                 "hint": "Chỉ chấp nhận file PDF, tối đa 10MB."
             },
+            "errors": {
+                "fileRequired": "Vui lòng chọn file CV.",
+                "fileTypeInvalid": "CV phải là định dạng PDF.",
+                "fileSizeInvalid": "Dung lượng file tối đa là 10MB."
+            }
+        },
+        "upload": {
+            "title": "Tải CV lên",
+            "description": "Đã có CV riêng? Tải file PDF lên để AI chấm điểm và góp ý theo cùng bộ tiêu chí với CV do StarCi tạo.",
+            "fileHint": "Kéo thả hoặc chọn file CV (PDF, tối đa 10MB).",
+            "labelLabel": "Tên gợi nhớ cho CV này (tuỳ chọn)",
+            "labelPlaceholder": "vd: CV ứng tuyển Backend 2026",
+            "uploadAction": "Tải lên và chấm điểm",
             "errors": {
                 "fileRequired": "Vui lòng chọn file CV.",
                 "fileTypeInvalid": "CV phải là định dạng PDF.",
@@ -3045,8 +3090,7 @@
                     "tag": "Giữ phong độ",
                     "desc": "Đối chiếu lời giải với người khác, rồi leo bảng xếp hạng."
                 }
-            },
-            "cta": "Vào cày thử"
+            }
         },
         "treasure": {
             "eyebrow": "Bản đồ năng lực hệ thống",
@@ -3356,51 +3400,6 @@
         "clear": "Bỏ ghim linh vật",
         "empty": "Đạt thành tích để ghim linh vật."
     },
-    "footer": {
-        "tagline": "Học bằng cách tự tay dựng hệ thống thật — đủ trình cho mọi vòng phỏng vấn kỹ thuật.",
-        "exploreTitle": "Khám phá",
-        "supportTitle": "Hỗ trợ",
-        "links": {
-            "courses": "Khóa học",
-            "blog": "Blog",
-            "talents": "Talents",
-            "jobs": "Việc làm IT",
-            "community": "Cộng đồng",
-            "contact": "Liên hệ",
-            "terms": "Điều khoản",
-            "privacy": "Bảo mật"
-        },
-        "madeBy": "Được phát triển bởi Nguyễn Văn Tự Cường",
-        "copyright": "© {year} StarCi Academy"
-    },
-    "legal": {
-        "contactNote": "Có câu hỏi về điều khoản hoặc dữ liệu của bạn? Liên hệ cuongnvtse160875@gmail.com.",
-        "lastUpdated": "Cập nhật lần cuối: {date}",
-        "terms": {
-            "title": "Điều khoản sử dụng",
-            "description": "Các điều khoản khi sử dụng StarCi Academy.",
-            "body": "Tài liệu điều khoản đầy đủ đang được hoàn thiện. Khi sử dụng StarCi Academy, bạn đồng ý dùng nền tảng cho mục đích học tập hợp pháp và tôn trọng quyền sở hữu của nội dung khóa học. Phiên bản chi tiết sẽ được cập nhật tại trang này."
-        },
-        "privacy": {
-            "title": "Chính sách bảo mật",
-            "description": "Cách StarCi Academy thu thập và sử dụng dữ liệu của bạn.",
-            "body": "Chính sách bảo mật đầy đủ đang được hoàn thiện. StarCi Academy chỉ thu thập dữ liệu cần thiết để vận hành việc học của bạn (tài khoản, tiến độ, bài nộp) và không bán dữ liệu cho bên thứ ba. Phiên bản chi tiết sẽ được cập nhật tại trang này."
-        }
-    },
-    "cookieConsent": {
-        "title": "Cookie",
-        "body": "Bọn mình dùng cookie cần thiết để bạn đăng nhập và ghi nhớ ngôn ngữ, cùng cookie phân tích (Google Analytics) để cải thiện trải nghiệm. Bạn có thể chấp nhận, từ chối, hoặc tùy chỉnh.",
-        "acceptAll": "Chấp nhận tất cả",
-        "reject": "Từ chối",
-        "customize": "Tùy chỉnh",
-        "modalTitle": "Tùy chỉnh cookie",
-        "modalBody": "Chọn loại cookie bạn cho phép. Cookie cần thiết luôn bật để hệ thống hoạt động.",
-        "necessaryLabel": "Cần thiết",
-        "necessaryHint": "Đăng nhập, bảo mật và ghi nhớ ngôn ngữ. Luôn bật.",
-        "analyticsLabel": "Phân tích",
-        "analyticsHint": "Google Analytics — đo lường ẩn danh để cải thiện sản phẩm.",
-        "save": "Lưu lựa chọn"
-    },
     "socketStatus": {
         "reconnecting": "Mất kết nối — đang thử lại…",
         "reconnected": "Đã kết nối lại"
@@ -3470,6 +3469,159 @@
             "stop": "Dừng",
             "send": "Gửi câu hỏi",
             "genericError": "AI hiện không trả lời được, thử lại sau."
+        }
+    },
+    "architecture": {
+        "title": "Hệ thống StarCi, đang sống",
+        "subtitle": "Bản đồ kỹ thuật công khai — mỗi node là 1 thành phần hạ tầng THẬT, chấm trạng thái do chính request của bạn kiểm chứng, không có gì giả lập.",
+        "mapCaption": "Kéo để xoay bản đồ. Bấm 1 nhóm để mở sơ đồ chi tiết.",
+        "rail": {
+            "ariaLabel": "Danh sách thành phần hệ thống",
+            "ownGroup": "Hệ thống StarCi",
+            "externalGroup": "Dịch vụ bên ngoài",
+            "tagline": {
+                "keycloak": "Đăng nhập · OIDC",
+                "aiBalancer": "Điều phối AI đa provider",
+                "judge0": "Chạy & chấm code",
+                "ollama": "LLM chạy nội bộ",
+                "redis": "Cache · hàng đợi",
+                "postgres": "Cơ sở dữ liệu chính",
+                "qdrant": "Vector · RAG",
+                "elasticsearch": "Tìm kiếm nội dung",
+                "minio": "Lưu trữ media",
+                "mail": "Email giao dịch",
+                "kafka": "Event bus · CDC",
+                "nats": "Streaming · job status",
+                "github": "OAuth · repo",
+                "stripe": "Thẻ quốc tế",
+                "paypal": "Ví quốc tế",
+                "payos": "Cổng nội địa",
+                "sepay": "Cổng nội địa"
+            }
+        },
+        "map": {
+            "core": "Core API",
+            "coreSub": "nestjs",
+            "client": "Client",
+            "clientSub": "web · bạn ở đây",
+            "gateway": "API Gateway",
+            "gatewaySub": "graphql · ws",
+            "errorHeading": "Không tải được trạng thái hệ thống",
+            "errorDescription": "Không gọi được API health. Thử lại sau giây lát.",
+            "retry": "Thử lại"
+        },
+        "status": {
+            "checking": "đang kiểm tra…",
+            "up": "đang chạy",
+            "degraded": "chập chờn",
+            "down": "gián đoạn",
+            "unknown": "chưa rõ"
+        },
+        "panel": {
+            "whyHeading": "Vì sao quan trọng",
+            "deepDive": "Đọc bài mổ xẻ kỹ thuật",
+            "latency": "{ms} ms",
+            "checked": "kiểm tra {ago}"
+        },
+        "curl": {
+            "heading": "Tự kiểm tra bằng API thật",
+            "commandLabel": "Lệnh curl (endpoint GraphQL công khai)",
+            "copy": "Sao chép",
+            "copied": "Đã chép",
+            "run": "Chạy thử"
+        },
+        "view": {
+            "present": "Hiện tại",
+            "future": "Tương lai",
+            "grouped": "Xem theo nhóm",
+            "everything": "Xem toàn bộ",
+            "backToOverview": "‹ Về toàn hệ thống",
+            "eraAria": "Chọn dòng thời gian",
+            "layoutAria": "Chọn cách hiển thị"
+        },
+        "pod": {
+            "payment": {
+                "name": "Thanh toán",
+                "sub": "4 cổng"
+            },
+            "auth": {
+                "name": "Xác thực",
+                "sub": "keycloak · oauth"
+            },
+            "ai": {
+                "name": "AI",
+                "sub": "balancer · rag"
+            },
+            "data": {
+                "name": "Dữ liệu + CDC",
+                "sub": "pg · kafka · es"
+            },
+            "events": {
+                "name": "Sự kiện",
+                "sub": "kafka · nats"
+            },
+            "media": {
+                "name": "Media",
+                "sub": "minio"
+            },
+            "coding": {
+                "name": "Chấm code",
+                "sub": "judge0"
+            },
+            "notify": {
+                "name": "Thông báo",
+                "sub": "brevo"
+            }
+        },
+        "future": {
+            "comingSoon": "Sắp ra mắt",
+            "caption": "Hướng đi sắp tới — tách monolith thành microservices.",
+            "bus": "Event bus",
+            "busSub": "kafka · nats",
+            "order": "order-service",
+            "payment": "payment-service",
+            "ai": "ai-service",
+            "grading": "grading-service",
+            "media": "media-service",
+            "notification": "notification-service"
+        },
+        "role": {
+            "keycloak": "Máy chủ định danh OIDC + OAuth — phát hành token, quản lý phiên đăng nhập theo thiết bị.",
+            "aiBalancer": "Điều phối mọi lời gọi AI qua nhiều provider, tự xoay key theo sức khoẻ và fallback khi lỗi.",
+            "judge0": "Bộ chạy code cô lập — biên dịch, chạy test và chấm bài coding của học viên.",
+            "ollama": "LLM chạy nội bộ (tương thích OpenAI) cho các tác vụ không cần model đám mây.",
+            "redis": "Cache, hàng đợi job (BullMQ), throttler và socket adapter.",
+            "postgres": "Cơ sở dữ liệu quan hệ chính (TypeORM) — nguồn sự thật cho mọi dữ liệu bền vững.",
+            "qdrant": "Kho vector cho RAG (LangChain) — tìm ngữ cảnh để AI chấm bài sát hơn.",
+            "elasticsearch": "Tìm kiếm nội dung và khoá học với độ trễ thấp.",
+            "minio": "Lưu trữ tương thích S3 cho ảnh bìa, media và tài nguyên.",
+            "mail": "Gửi email giao dịch qua Brevo SMTP.",
+            "kafka": "Event bus + CDC (Debezium) — đồng bộ read-model theo mô hình CQRS.",
+            "nats": "JetStream — truyền trạng thái job theo thời gian thực về client.",
+            "github": "OAuth đăng nhập + quản lý repo/team để chấm bài qua repository.",
+            "stripe": "Cổng thẻ quốc tế cho thanh toán ngoài Việt Nam.",
+            "paypal": "Ví quốc tế cho thanh toán ngoài Việt Nam.",
+            "payos": "Cổng thanh toán nội địa (QR / chuyển khoản ngân hàng).",
+            "sepay": "Cổng thanh toán nội địa với đối soát IPN."
+        },
+        "why": {
+            "keycloak": "Không có nó thì không ai đăng nhập được — toàn bộ quyền truy cập đi qua đây.",
+            "aiBalancer": "Giữ AI ổn định và rẻ, không khoá chết vào một nhà cung cấp duy nhất.",
+            "judge0": "Quyết định bài coding đạt hay chưa — chấm phải chạy được code thật.",
+            "ollama": "Giảm phụ thuộc và chi phí model đám mây cho tác vụ nhẹ.",
+            "redis": "Tăng tốc phản hồi và điều phối job nền cho cả hệ.",
+            "postgres": "Mất nó là mất dữ liệu — mọi ghi bền vững đều nằm ở đây.",
+            "qdrant": "Cho phép AI chấm dựa trên ngữ cảnh thật thay vì đoán mò.",
+            "elasticsearch": "Tìm bài học và khoá học nhanh khi dữ liệu lớn dần.",
+            "minio": "Nơi ảnh, video và tài nguyên khoá học thực sự nằm.",
+            "mail": "Kênh chạm tới học viên: xác thực, biên nhận, nhắc nhở.",
+            "kafka": "Là xương sống đồng bộ read-model — bằng chứng CQRS chạy thật.",
+            "nats": "Cho học viên thấy tiến độ chấm/chạy job ngay lập tức.",
+            "github": "Vừa là cách đăng nhập, vừa là nơi lấy bài nộp để chấm.",
+            "stripe": "Mở cửa cho người dùng quốc tế trả tiền bằng thẻ.",
+            "paypal": "Thêm một lựa chọn thanh toán quốc tế quen thuộc.",
+            "payos": "Kênh thanh toán chính cho người dùng Việt Nam.",
+            "sepay": "Đối soát biến động số dư ngân hàng cho thanh toán nội địa."
         }
     }
 }

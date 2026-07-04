@@ -3,7 +3,6 @@
 import { useState } from "react"
 import useSWR from "swr"
 import {
-    defaultMyCvGenerationsSorts,
     queryMyCvGenerations,
 } from "@/modules/api/graphql/queries/query-my-cv-generations"
 import { CvGenerationStatus } from "@/modules/types/enums/cv-generation-status"
@@ -12,7 +11,7 @@ import { useAppSelector } from "@/redux/hooks"
 export const MY_CV_GENERATIONS_PAGE_SIZE = 5
 
 /**
- * Loads paginated AI CV generations for the current user (newest first). Polls while
+ * Loads AI CV generations for the current user (newest first, flat array). Polls while
  * the newest row is still in flight so a just-enqueued generation resolves in-place.
  *
  * @param enabled - Gate the fetch (e.g. only when the CV page/history is visible).
@@ -32,11 +31,8 @@ export const useQueryMyCvGenerationsSwr = (enabled = true) => {
             const response = await queryMyCvGenerations({
                 debug: false,
                 request: {
-                    filters: {
-                        limit: MY_CV_GENERATIONS_PAGE_SIZE,
-                        pageNumber,
-                        sorts: defaultMyCvGenerationsSorts,
-                    },
+                    limit: MY_CV_GENERATIONS_PAGE_SIZE,
+                    offset: pageNumber * MY_CV_GENERATIONS_PAGE_SIZE,
                 },
             })
 
@@ -49,7 +45,7 @@ export const useQueryMyCvGenerationsSwr = (enabled = true) => {
         },
         {
             refreshInterval: (data) => {
-                const latest = data?.data?.[0]
+                const latest = data?.[0]
                 if (
                     latest?.status === CvGenerationStatus.Pending ||
                     latest?.status === CvGenerationStatus.Processing

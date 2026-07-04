@@ -45,6 +45,9 @@ import {
     NotificationBell,
 } from "./NotificationBell"
 import {
+    CartButton,
+} from "./CartButton"
+import {
     LanguageDropdown,
 } from "./LanguageDropdown"
 import {
@@ -111,6 +114,11 @@ export const Navbar = ({ className }: NavbarProps) => {
                 path: pathConfig().locale().contact().build(),
                 isActive: pathname.startsWith(pathConfig().locale(locale).contact().build()),
             },
+            {
+                label: t("cart.title"),
+                path: pathConfig().locale().cart().build(),
+                isActive: pathname.startsWith(pathConfig().locale(locale).cart().build()),
+            },
         ],
         [locale, pathname, t],
     )
@@ -141,6 +149,7 @@ export const Navbar = ({ className }: NavbarProps) => {
                         <LanguageDropdown />
                         <DarkLightModeSwitch />
                     </div>
+                    <CartButton />
                     <NotificationBell />
                     <AccountMenuDropdown />
                     {/* mobile: expand icon → navigation drawer */}

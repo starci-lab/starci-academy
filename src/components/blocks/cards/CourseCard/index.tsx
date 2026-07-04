@@ -54,6 +54,12 @@ export interface CourseCardProps extends WithClassNames<undefined> {
      * catalog offer a grid ⇆ list view toggle without a second card component.
      */
     layout?: "grid" | "line"
+    /**
+     * Optional trailing action node (e.g. an "Add to cart" button) rendered beside
+     * the View CTA. The block only places it; the caller (a feature) owns its logic
+     * so the card stays presentational.
+     */
+    action?: React.ReactNode
 }
 
 /**
@@ -69,6 +75,7 @@ export const CourseCard = ({
     loyaltyPriceVnd,
     loyaltyOriginalVnd,
     layout = "grid",
+    action,
     className,
 }: CourseCardProps) => {
     const locale = useLocale()
@@ -198,6 +205,7 @@ export const CourseCard = ({
                                 className="size-4 transition-transform group-hover:translate-x-1"
                             />
                         </Link>
+                        {action}
                     </div>
                 </div>
             </Card>
@@ -277,17 +285,20 @@ export const CourseCard = ({
                 ) : null}
                 {/* see-more style CTA: accent Link with a caret that slides right on
                     hover (per starci-card.md) — the card itself is not pressable */}
-                <Link
-                    onPress={onView}
-                    className="group inline-flex w-fit items-center gap-1 text-accent"
-                >
-                    {t("courses.viewCourse")}
-                    <CaretRightIcon
-                        aria-hidden
-                        focusable="false"
-                        className="size-4 transition-transform group-hover:translate-x-1"
-                    />
-                </Link>
+                <div className="flex items-center justify-between gap-2">
+                    <Link
+                        onPress={onView}
+                        className="group inline-flex w-fit items-center gap-1 text-accent"
+                    >
+                        {t("courses.viewCourse")}
+                        <CaretRightIcon
+                            aria-hidden
+                            focusable="false"
+                            className="size-4 transition-transform group-hover:translate-x-1"
+                        />
+                    </Link>
+                    {action}
+                </div>
             </Card.Footer>
         </Card>
     )

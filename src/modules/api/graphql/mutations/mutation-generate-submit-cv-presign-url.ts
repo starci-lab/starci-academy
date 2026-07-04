@@ -12,6 +12,7 @@ const mutation1 = gql`
       data {
         url
         cvSubmissionId
+        cdnKey
       }
     }
   }

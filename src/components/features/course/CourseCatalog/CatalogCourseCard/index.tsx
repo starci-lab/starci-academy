@@ -2,6 +2,7 @@
 
 import React from "react"
 import { CourseCard } from "@/components/blocks/cards/CourseCard"
+import { AddToCartButton } from "@/components/features/cart/AddToCartButton"
 import { useQueryCoursePricePreviewSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursePricePreviewSwr"
 import type { CourseEntity } from "@/modules/types/entities/course"
 
@@ -29,6 +30,7 @@ export const CatalogCourseCard = ({ course, layout = "grid" }: CatalogCourseCard
             loyaltyPriceVnd={data?.discountedPriceVnd ?? null}
             loyaltyOriginalVnd={data?.originalPriceVnd ?? null}
             layout={layout}
+            action={<AddToCartButton course={course} variant="secondary" iconOnly />}
         />
     )
 }

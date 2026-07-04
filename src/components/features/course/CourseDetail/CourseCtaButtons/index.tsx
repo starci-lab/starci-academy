@@ -14,6 +14,12 @@ import {
 import {
     useCourseEnrollment,
 } from "../hooks/useCourseEnrollment"
+import {
+    AddToCartButton,
+} from "@/components/features/cart/AddToCartButton"
+import {
+    useAppSelector,
+} from "@/redux/hooks"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -31,6 +37,7 @@ export type CourseCtaButtonsProps = WithClassNames<undefined>
  */
 export const CourseCtaButtons = ({ className }: CourseCtaButtonsProps) => {
     const t = useTranslations()
+    const course = useAppSelector((state) => state.course.entity)
     const { isEnrolled, onEnroll, onContinueLearning, onTryLearning } = useCourseEnrollment()
 
     if (isEnrolled) {
@@ -50,7 +57,17 @@ export const CourseCtaButtons = ({ className }: CourseCtaButtonsProps) => {
                 {t("course.enroll")}
                 <ArrowRightIcon className="size-5" />
             </Button>
-            <Button variant="secondary" className="w-full" onPress={onTryLearning}>
+            {course ? (
+                <AddToCartButton
+                    course={course}
+                    isEnrolled={isEnrolled}
+                    variant="secondary"
+                    fullWidth
+                />
+            ) : null}
+            {/* "Try free" is de-emphasised (quiet tertiary text) — it's a tertiary
+                affordance under the Enroll / Add-to-cart cluster, not a peer CTA. */}
+            <Button variant="tertiary" className="w-full" onPress={onTryLearning}>
                 {t("course.tryLearning")}
             </Button>
         </div>

@@ -5,11 +5,13 @@ import { cn } from "@heroui/react"
 import {
     GraduationCapIcon,
     ChartBarIcon,
+    GaugeIcon,
     PuzzlePieceIcon,
     CodeIcon,
 } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { OverviewJobReadiness } from "./OverviewJobReadiness"
 import { OverviewCourses } from "./OverviewCourses"
 import { OverviewContributions } from "./OverviewContributions"
 import { OverviewChallengeSkills } from "./OverviewChallengeSkills"
@@ -42,6 +44,14 @@ export const ProfileOverviewTab = ({
 
     return (
         <div className={cn("flex min-w-0 flex-1 flex-col gap-6", className)}>
+            {/* headline recruiter metric — the AI-verified job-readiness portfolio */}
+            <LabeledCard
+                label={t("jobReadiness.title")}
+                icon={<GaugeIcon aria-hidden focusable="false" className="size-5" />}
+            >
+                <OverviewJobReadiness />
+            </LabeledCard>
+
             <LabeledCard
                 label={t("publicProfile.overview.courses")}
                 icon={<GraduationCapIcon aria-hidden focusable="false" className="size-5" />}

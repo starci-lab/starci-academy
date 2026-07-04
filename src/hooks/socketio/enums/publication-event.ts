@@ -18,4 +18,8 @@ export enum PublicationEvent {
     SubscribeRagPlaygroundRun = "rag_playground.subscribe_run.publication",
     /** Abort an in-flight RAG Playground run (must match backend). */
     AbortRagPlaygroundRun = "rag_playground.abort_run.publication",
+    /** Ask the mock interviewer for its next turn and stream it back (must match backend). */
+    AskMockInterviewTurn = "mock_interview.ask.publication",
+    /** Abort an in-flight mock-interviewer turn stream (must match backend). */
+    AbortMockInterviewTurn = "mock_interview.abort.publication",
 }

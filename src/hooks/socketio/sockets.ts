@@ -29,6 +29,10 @@ const contentAiManager = createManager()
 /** The `/content_ai` namespace socket (grounded lesson Q&A answer token streaming). */
 export const contentAiSocket: Socket = contentAiManager.socket("/content_ai")
 
+const mockInterviewManager = createManager()
+/** The `/mock_interview` namespace socket (mock interviewer turn token streaming). */
+export const mockInterviewSocket: Socket = mockInterviewManager.socket("/mock_interview")
+
 const systemHealthManager = createManager()
 /**
  * The `/system_health` namespace socket — PUBLIC (no auth). Broadcasts the

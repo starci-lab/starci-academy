@@ -1,9 +1,10 @@
 "use client"
 
 import React from "react"
-import { Button, Skeleton, Typography } from "@heroui/react"
+import { Button, Link, Skeleton, Typography } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
+import { ArrowUpRightIcon } from "@phosphor-icons/react"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { ResizableRail } from "@/components/blocks/layout/ResizableRail"
 import { ResponsiveBreadcrumb } from "@/components/blocks/navigation/ResponsiveBreadcrumb"
@@ -17,6 +18,9 @@ import { CurlTester } from "./CurlTester"
 import { useArchitectureNode } from "./hooks/useArchitectureNode"
 import { useArchitecturePod } from "./hooks/useArchitecturePod"
 import { useSystemHealthPoll } from "./hooks/useSystemHealthPoll"
+
+/** Public GitHub repo backing this live atlas — the "don't trust me, go read it" link. */
+const BACKEND_REPO_URL = "https://github.com/starci-lab/starci-academy-backend"
 
 /**
  * `/architecture` — the public "System Atlas": a live, interactive tour of
@@ -84,6 +88,14 @@ export const Architecture = () => {
                         )}
                         title={t("title")}
                         description={t("subtitle")}
+                        actions={(
+                            <Link href={BACKEND_REPO_URL} target="_blank" rel="noopener noreferrer">
+                                <Button variant="tertiary" size="sm">
+                                    {t("header.viewSource")}
+                                    <ArrowUpRightIcon className="size-4" aria-hidden />
+                                </Button>
+                            </Link>
+                        )}
                     />
 
                     <div className="flex flex-col gap-6">

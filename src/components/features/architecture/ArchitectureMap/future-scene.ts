@@ -23,21 +23,20 @@ interface FutureServiceSeed {
     id: string
     /** i18n key suffix (`architecture.future.<key>`). */
     key: string
-    /** honeycomb-ish ring angle in radians (top, clockwise). */
+    /** INTEGER grid cell (staggered around the bus — one grid system, snap-to-tile). */
     cell: [number, number]
 }
 
-/** Ring radius for the future services around the event bus. */
-const RING_D = 2.9
-
-/** The 6 planned services from the rule doc, on a ring around the event bus. */
-const FUTURE_SERVICES: Array<Omit<FutureServiceSeed, "cell">> = [
-    { id: "order-service", key: "order" },
-    { id: "payment-service", key: "payment" },
-    { id: "ai-service", key: "ai" },
-    { id: "grading-service", key: "grading" },
-    { id: "media-service", key: "media" },
-    { id: "notification-service", key: "notification" },
+/** The 6 planned services from the rule doc, snapped to a staggered ring of
+ *  INTEGER cells around the event bus `[0,0]` (Direction A — every node on its
+ *  own tile, no fractional `cos/sin`). */
+const FUTURE_SERVICES: Array<FutureServiceSeed> = [
+    { id: "order-service", key: "order", cell: [0, -3] },
+    { id: "payment-service", key: "payment", cell: [3, -2] },
+    { id: "ai-service", key: "ai", cell: [3, 2] },
+    { id: "grading-service", key: "grading", cell: [0, 3] },
+    { id: "media-service", key: "media", cell: [-3, 2] },
+    { id: "notification-service", key: "notification", cell: [-3, -2] },
 ]
 
 /**
@@ -51,20 +50,13 @@ const FUTURE_SERVICES: Array<Omit<FutureServiceSeed, "cell">> = [
  * @param labels - i18n'd node names.
  */
 export const buildFutureScene = (labels: FutureSceneLabels): ArchitectureSceneData => {
-    const count = FUTURE_SERVICES.length
-    const serviceNodes: Array<ArchitectureNode> = FUTURE_SERVICES.map((service, index) => {
-        const angle = (Math.PI / 2) - (index / count) * Math.PI * 2
-        return {
-            id: service.id,
-            name: labels.service(service.key),
-            cell: [
-                Number((RING_D * Math.cos(angle)).toFixed(3)),
-                Number((RING_D * -Math.sin(angle)).toFixed(3)),
-            ],
-            kind: "container",
-            tone: "normal",
-        }
-    })
+    const serviceNodes: Array<ArchitectureNode> = FUTURE_SERVICES.map((service) => ({
+        id: service.id,
+        name: labels.service(service.key),
+        cell: service.cell,
+        kind: "container",
+        tone: "normal",
+    }))
 
     const nodes: Array<ArchitectureNode> = [
         { id: BUS_ID, name: labels.bus, sub: labels.busSub, cell: [0, 0], kind: "broker", tone: "normal" },

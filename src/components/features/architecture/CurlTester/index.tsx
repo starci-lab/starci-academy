@@ -99,7 +99,7 @@ export const CurlTester = ({ className }: CurlTesterProps) => {
                 </pre>
             </div>
 
-            <Button variant="secondary" size="sm" onPress={onRun} isPending={running} className="self-start">
+            <Button variant="primary" size="sm" onPress={onRun} isPending={running} className="self-start">
                 <PlayIcon aria-hidden focusable="false" className="size-4" />
                 {t("curl.run")}
             </Button>

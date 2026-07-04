@@ -88,7 +88,7 @@ export const NodeDissectionPanel = ({ nodeId, healthByName, className }: NodeDis
                     </p>
                 ) : null}
 
-                <div className="flex flex-col gap-1.5 border-t border-default pt-4">
+                <div className="flex flex-col gap-1.5 border-t border-default pt-3">
                     <Typography type="body-sm" weight="medium">{t("panel.whyHeading")}</Typography>
                     <Typography type="body-sm" color="muted">{t(`why.${component.name}`)}</Typography>
                 </div>

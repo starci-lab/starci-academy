@@ -1,10 +1,30 @@
 import { CombinedGraphQLErrors, CombinedProtocolErrors } from "@apollo/client"
+import { ServerError, ServerParseError } from "@apollo/client/errors"
 import { ErrorLink } from "@apollo/client/link/error"
 import { LocalStorage } from "@/modules/storage/local/storage"
 import { LocalStorageId } from "@/modules/storage/local/enums/id"
+import { useOverlayStore } from "@/hooks/zustand/overlay/store"
 
 /** Substring of the backend message raised when a newer login evicts this session. */
 const SESSION_SUPERSEDED_MARKER = "superseded"
+
+/** Lower bound of the 5xx range — server-side failure (gateway down, mid-deploy, crash). */
+const SERVER_ERROR_STATUS_MIN = 500
+/** Upper bound (exclusive) of the 5xx range. */
+const SERVER_ERROR_STATUS_MAX = 600
+
+/**
+ * Whether a network error is a persistent 5xx from the gateway/backend (not a
+ * plain offline/timeout/CORS failure, which carries no HTTP status at all).
+ *
+ * `ServerError` = non-2xx with a JSON body; `ServerParseError` = non-2xx with a
+ * non-JSON body (e.g. nginx's default HTML error page — a bare 502 usually lands
+ * in the latter). Both expose `.statusCode`; a plain network error does not.
+ */
+const isMaintenanceError = (error: unknown): boolean =>
+    (ServerError.is(error) || ServerParseError.is(error))
+    && error.statusCode >= SERVER_ERROR_STATUS_MIN
+    && error.statusCode < SERVER_ERROR_STATUS_MAX
 
 /**
  * Handles the single-session eviction: when a newer login on another device
@@ -64,6 +84,13 @@ export const createErrorLink = (debug = false) =>
                 }
             }
             )
+            return
+        }
+        // persistent 5xx (retries already exhausted by RetryLink) → block the app
+        // with the maintenance dialog. A plain network error (offline/timeout/CORS)
+        // has no statusCode and falls through to the log below unchanged.
+        if (isMaintenanceError(error) && typeof window !== "undefined") {
+            useOverlayStore.getState().openOverlay("maintenance")
             return
         }
         console.error(`[Network error]: ${error.message}`)

@@ -9,8 +9,9 @@ import { SegmentedControl } from "@/components/blocks/navigation/SegmentedContro
 import type { HealthByName } from "../hooks/useSystemHealthPoll"
 import { ARCHITECTURE_POD_MAP } from "../pods"
 import { buildLiveScene } from "./scene"
-import { buildPodOverviewScene } from "./pod-scene"
+import { buildPodOverviewScene, OVERVIEW_CORE_ID } from "./pod-scene"
 import { buildPodDetailScene } from "./pod-detail-scene"
+import { buildCoreDetailScene, CORE_DETAIL_ID } from "./core-detail-scene"
 import { buildFutureScene } from "./future-scene"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
@@ -117,32 +118,53 @@ export const ArchitectureMap = ({
         }),
         [t],
     )
+    const coreLabels = useMemo(
+        () => ({
+            ...memberLabels,
+            core: t("map.core"),
+            coreSub: t("map.coreSub"),
+            moduleName: (id: string) => t(`module.${id}.name`),
+        }),
+        [memberLabels, t],
+    )
 
-    // the pod detail view only applies in present · pods mode with a valid pod
+    // in present · pods mode a drill target is either the Core (`core`) or a
+    // real pod. Core drills into the module scene; a pod into its flow scene.
+    const isCoreDrill = era === "present" && layout === "pods" && pod === CORE_DETAIL_ID
     const activePod = era === "present" && layout === "pods" && pod && ARCHITECTURE_POD_MAP[pod] ? pod : null
+    const isDrilled = isCoreDrill || Boolean(activePod)
 
     const data = useMemo(() => {
         if (era === "future") return buildFutureScene(futureLabels)
         if (layout === "everything") return buildLiveScene(healthByName, flatLabels)
+        if (isCoreDrill) return buildCoreDetailScene(healthByName, coreLabels)
         if (activePod) return buildPodDetailScene(activePod, healthByName, { ...memberLabels, core: podLabels.core, coreSub: podLabels.coreSub })
         return buildPodOverviewScene(healthByName, podLabels)
-    }, [era, layout, activePod, healthByName, futureLabels, flatLabels, memberLabels, podLabels])
+    }, [era, layout, isCoreDrill, activePod, healthByName, futureLabels, flatLabels, memberLabels, coreLabels, podLabels])
 
     // in the future scene nothing is selectable (roadmap, not live); in overview,
-    // clicking a pod drills in; in pod-detail / flat, clicking selects a component.
+    // clicking a pod drills into its flow and clicking Core drills into its
+    // modules; in pod-detail / flat, clicking selects a component.
     const handleSelect = (id: string) => {
         if (era === "future") return
-        if (layout === "pods" && !activePod) {
-            if (ARCHITECTURE_POD_MAP[id]) onSelectPod(id)
+        if (layout === "pods" && !isDrilled) {
+            if (id === OVERVIEW_CORE_ID) onSelectPod(CORE_DETAIL_ID)
+            else if (ARCHITECTURE_POD_MAP[id]) onSelectPod(id)
             return
         }
         onSelectNode(id)
     }
 
     // the map ring highlight: the drilled pod in overview, else the selected node
-    const highlightId = era === "future" ? undefined : layout === "pods" && !activePod ? (pod ?? undefined) : selectedId
+    const highlightId = era === "future" ? undefined : layout === "pods" && !isDrilled ? (pod ?? undefined) : selectedId
 
-    const caption = era === "future" ? t("future.caption") : activePod ? t(`pod.${ARCHITECTURE_POD_MAP[activePod].nameKey}.name`) : t("mapCaption")
+    const caption = era === "future"
+        ? t("future.caption")
+        : isCoreDrill
+            ? t("view.coreDetail")
+            : activePod
+                ? t(`pod.${ARCHITECTURE_POD_MAP[activePod].nameKey}.name`)
+                : t("map.coreDrillHint")
 
     return (
         <div className={cn("flex flex-col gap-3", className)}>
@@ -176,8 +198,8 @@ export const ArchitectureMap = ({
                 )}
             </div>
 
-            {/* back affordance when drilled into a pod */}
-            {activePod ? (
+            {/* back affordance when drilled into a pod or the Core modules */}
+            {isDrilled ? (
                 <Button
                     variant="tertiary"
                     size="sm"

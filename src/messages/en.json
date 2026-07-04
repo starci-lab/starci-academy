@@ -3666,5 +3666,13 @@
         "header": {
             "viewSource": "View source"
         }
+    },
+    "talentDirectory": {
+        "title": "Recruiter marketplace",
+        "description": "Pick a track, then browse open-to-work candidates ranked by their depth in that track alone.",
+        "trackFilterAria": "Filter candidates by track",
+        "qualified": "Qualified",
+        "empty": "No candidates for this track yet.",
+        "emptyHint": "No one open to work has built depth in this track. Try another track."
     }
 }

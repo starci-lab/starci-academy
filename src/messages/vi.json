@@ -3666,5 +3666,13 @@
         "header": {
             "viewSource": "Xem mã nguồn"
         }
+    },
+    "talentDirectory": {
+        "title": "Sàn tuyển dụng",
+        "description": "Chọn một lộ trình, rồi duyệt các ứng viên sẵn sàng nhận việc — xếp hạng theo độ sâu riêng của lộ trình đó.",
+        "trackFilterAria": "Lọc ứng viên theo lộ trình",
+        "qualified": "Đạt chuẩn",
+        "empty": "Chưa có ứng viên cho lộ trình này.",
+        "emptyHint": "Chưa có ai sẵn sàng nhận việc xây dựng đủ độ sâu ở lộ trình này. Thử lộ trình khác."
     }
 }

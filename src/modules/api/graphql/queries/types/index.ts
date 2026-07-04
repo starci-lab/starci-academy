@@ -128,3 +128,4 @@ export * from "./chat"
 
 export * from "./my-cart"
 export * from "./courses-checkout-preview"
+export * from "./talent-candidates"

@@ -21,6 +21,7 @@ import { AdModal } from "./AdModal"
 import { ManagePinnedProjectsModal } from "./ManagePinnedProjectsModal"
 import { FollowListModal } from "./FollowListModal"
 import { CookieConsentModal } from "./CookieConsentModal"
+import { MaintenanceModal } from "./MaintenanceModal"
 
 export const ModalContainer = () => {
     return (
@@ -46,6 +47,7 @@ export const ModalContainer = () => {
             <ManagePinnedProjectsModal />
             <FollowListModal />
             <CookieConsentModal />
+            <MaintenanceModal />
             {/* <AIProcessingModal /> */}
         </>
     )

@@ -52,6 +52,7 @@ export type OverlayKey =
     | "lessonVideo"
     | "linkGithub"
     | "livestreamCalendar"
+    | "maintenance"
     | "miniCart"
     | "payment"
     | "personalProjectTaskAttemptsDrawer"
@@ -87,6 +88,7 @@ const OVERLAY_KEYS: ReadonlyArray<OverlayKey> = [
     "lessonVideo",
     "linkGithub",
     "livestreamCalendar",
+    "maintenance",
     "miniCart",
     "payment",
     "personalProjectTaskAttemptsDrawer",

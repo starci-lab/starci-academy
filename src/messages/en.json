@@ -3404,6 +3404,12 @@
         "reconnecting": "Connection lost — reconnecting…",
         "reconnected": "Reconnected"
     },
+    "maintenance": {
+        "title": "Website under maintenance",
+        "description": "We're working on a fix. Please check back in 20–30 minutes.",
+        "pollStatus": "Checking connection…",
+        "retry": "Retry"
+    },
     "status": {
         "title": "System status",
         "subtitle": "Live health of the StarCi Academy platform — built in public, no login required.",
@@ -3508,7 +3514,8 @@
             "gatewaySub": "graphql · ws",
             "errorHeading": "Couldn't load system status",
             "errorDescription": "The health API didn't answer. Try again in a moment.",
-            "retry": "Retry"
+            "retry": "Retry",
+            "coreDrillHint": "Drag to orbit the map. Click a group to open its detailed flow, or click Core API to see the modules inside."
         },
         "status": {
             "checking": "checking…",
@@ -3537,7 +3544,8 @@
             "everything": "Everything",
             "backToOverview": "‹ Back to the whole system",
             "eraAria": "Select timeline",
-            "layoutAria": "Select layout"
+            "layoutAria": "Select layout",
+            "coreDetail": "Core API — dissected into modules (click a node for detail)."
         },
         "pod": {
             "payment": {
@@ -3622,6 +3630,41 @@
             "paypal": "Adds a familiar international payment option.",
             "payos": "The primary payment rail for Vietnamese users.",
             "sepay": "Reconciles bank balance changes for domestic payments."
+        },
+        "module": {
+            "auth": {
+                "name": "Auth"
+            },
+            "user": {
+                "name": "User"
+            },
+            "transactions": {
+                "name": "Payments"
+            },
+            "coding": {
+                "name": "Code grading"
+            },
+            "flashcard": {
+                "name": "Flashcards"
+            },
+            "progress": {
+                "name": "Progress"
+            },
+            "discussion": {
+                "name": "Discussion"
+            },
+            "aiLab": {
+                "name": "AI Lab"
+            },
+            "league": {
+                "name": "Leaderboard"
+            },
+            "notification": {
+                "name": "Notifications"
+            }
+        },
+        "header": {
+            "viewSource": "View source"
         }
     }
 }

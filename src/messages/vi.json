@@ -3404,6 +3404,12 @@
         "reconnecting": "Mất kết nối — đang thử lại…",
         "reconnected": "Đã kết nối lại"
     },
+    "maintenance": {
+        "title": "Website đang bảo trì",
+        "description": "Bọn mình đang khắc phục sự cố. Vui lòng quay lại sau 20–30 phút.",
+        "pollStatus": "Đang kiểm tra kết nối…",
+        "retry": "Thử lại"
+    },
     "status": {
         "title": "Trạng thái hệ thống",
         "subtitle": "Tình trạng trực tiếp của nền tảng StarCi Academy — làm công khai, không cần đăng nhập.",
@@ -3508,7 +3514,8 @@
             "gatewaySub": "graphql · ws",
             "errorHeading": "Không tải được trạng thái hệ thống",
             "errorDescription": "Không gọi được API health. Thử lại sau giây lát.",
-            "retry": "Thử lại"
+            "retry": "Thử lại",
+            "coreDrillHint": "Kéo để xoay bản đồ. Bấm 1 nhóm để mở luồng chi tiết, hoặc bấm Core API để xem các module bên trong."
         },
         "status": {
             "checking": "đang kiểm tra…",
@@ -3537,7 +3544,8 @@
             "everything": "Xem toàn bộ",
             "backToOverview": "‹ Về toàn hệ thống",
             "eraAria": "Chọn dòng thời gian",
-            "layoutAria": "Chọn cách hiển thị"
+            "layoutAria": "Chọn cách hiển thị",
+            "coreDetail": "Core API — mổ xẻ theo module (bấm để xem chi tiết)."
         },
         "pod": {
             "payment": {
@@ -3622,6 +3630,41 @@
             "paypal": "Thêm một lựa chọn thanh toán quốc tế quen thuộc.",
             "payos": "Kênh thanh toán chính cho người dùng Việt Nam.",
             "sepay": "Đối soát biến động số dư ngân hàng cho thanh toán nội địa."
+        },
+        "module": {
+            "auth": {
+                "name": "Xác thực"
+            },
+            "user": {
+                "name": "Người dùng"
+            },
+            "transactions": {
+                "name": "Thanh toán"
+            },
+            "coding": {
+                "name": "Chấm code"
+            },
+            "flashcard": {
+                "name": "Thẻ ghi nhớ"
+            },
+            "progress": {
+                "name": "Tiến độ"
+            },
+            "discussion": {
+                "name": "Thảo luận"
+            },
+            "aiLab": {
+                "name": "AI Lab"
+            },
+            "league": {
+                "name": "Xếp hạng"
+            },
+            "notification": {
+                "name": "Thông báo"
+            }
+        },
+        "header": {
+            "viewSource": "Xem mã nguồn"
         }
     }
 }

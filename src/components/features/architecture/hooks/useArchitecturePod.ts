@@ -3,9 +3,15 @@
 import { useCallback, useMemo } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { ARCHITECTURE_POD_MAP } from "../pods"
+import { CORE_DETAIL_ID } from "../ArchitectureMap/core-detail-scene"
 
 /** Query key the drilled-into pod is mirrored to (`/architecture?pod=payment`). */
 const POD_KEY = "pod"
+
+/** A `?pod=` value is valid when it names a real pod OR the reserved Core
+ *  drill-down (`core` → the Core-module scene). */
+const isValidPod = (raw: string | null): raw is string =>
+    Boolean(raw) && (raw === CORE_DETAIL_ID || Boolean(ARCHITECTURE_POD_MAP[raw!]))
 
 /** The handle returned by {@link useArchitecturePod}. */
 export interface UseArchitecturePodResult {
@@ -28,12 +34,12 @@ export const useArchitecturePod = (): UseArchitecturePodResult => {
 
     const pod = useMemo(() => {
         const raw = searchParams.get(POD_KEY)
-        return raw && ARCHITECTURE_POD_MAP[raw] ? raw : null
+        return isValidPod(raw) ? raw : null
     }, [searchParams])
 
     const setPod = useCallback((id: string | null) => {
         const params = new URLSearchParams(searchParams.toString())
-        if (id && ARCHITECTURE_POD_MAP[id]) {
+        if (isValidPod(id)) {
             params.set(POD_KEY, id)
         } else {
             params.delete(POD_KEY)

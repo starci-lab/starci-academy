@@ -86,6 +86,13 @@ export const useLessonVideoOverlayState = () => useOverlayHandle("lessonVideo")
 export const useLinkGithubOverlayState = () => useOverlayHandle("linkGithub")
 /** Livestream calendar overlay state. */
 export const useLivestreamCalendarOverlayState = () => useOverlayHandle("livestreamCalendar")
+/**
+ * Maintenance overlay state — the backend-unreachable (persistent 502) blocking
+ * dialog. Unlike every other overlay here, `open()` is also called from OUTSIDE
+ * React (the Apollo `ErrorLink`, via `useOverlayStore.getState().openOverlay("maintenance")`)
+ * since a network error isn't detected inside a component.
+ */
+export const useMaintenanceOverlayState = () => useOverlayHandle("maintenance")
 /** Mini-cart drawer overlay state (slide-out cart confirmation + combo meter + checkout). */
 export const useMiniCartOverlayState = () => useOverlayHandle("miniCart")
 /**

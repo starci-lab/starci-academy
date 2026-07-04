@@ -22,6 +22,26 @@ import type { HealthByName } from "./hooks/useSystemHealthPoll"
  *
  * Grounded in the sub-scene table of `architecture-atlas-pod-drilldown.md`.
  */
+/**
+ * One authored DIRECTED flow edge inside a pod's drill-down — the REAL topology,
+ * not a generic Core→member fan-out. `from`/`to` reference node ids: a pod
+ * `member` name, the reserved `"core"` id, or a "borrowed" node from another pod
+ * when the true flow needs it (data shows Kafka+ES, coding shows Redis, auth
+ * shows GitHub — pods are conceptual). `eventual` renders the wire faint +
+ * dashed (async / CDC / OAuth federation); `webhook` marks a return arrow (a
+ * gateway IPN / callback running BACK to Core).
+ */
+export interface PodFlowEdge {
+    /** Source node id (member name / `"core"` / borrowed component name). */
+    from: string
+    /** Target node id. */
+    to: string
+    /** Async / eventual link — rendered faint + dashed. */
+    eventual?: boolean
+    /** A callback / IPN return arrow (gateway → Core). */
+    webhook?: boolean
+}
+
 export interface ArchitecturePod {
     /** Stable pod id — mirrored to the URL (`?pod=payment`). */
     id: string
@@ -33,6 +53,14 @@ export interface ArchitecturePod {
     members: Array<string>
     /** Leading / pod icon (phosphor). */
     icon: Icon
+    /**
+     * The pod's REAL directed flow (authored) — read by
+     * {@link import("./ArchitectureMap/pod-detail-scene").buildPodDetailScene} to
+     * lay nodes out by flow SHAPE (chain vs fan/tree) and emit correct arrows.
+     * MAY reference a borrowed node (another pod's member) so the true flow
+     * reads end-to-end. When omitted the detail falls back to Core→member fan.
+     */
+    flow?: Array<PodFlowEdge>
 }
 
 /**
@@ -41,14 +69,101 @@ export interface ArchitecturePod {
  * pod). Order here is the overview ring order.
  */
 export const ARCHITECTURE_PODS: Array<ArchitecturePod> = [
-    { id: "payment", nameKey: "payment", members: ["stripe", "paypal", "payos", "sepay"], icon: CreditCardIcon },
-    { id: "auth", nameKey: "auth", members: ["keycloak", "github"], icon: KeyIcon },
-    { id: "ai", nameKey: "ai", members: ["aiBalancer", "ollama", "qdrant"], icon: BrainIcon },
-    { id: "data", nameKey: "data", members: ["postgres", "kafka", "elasticsearch"], icon: DatabaseIcon },
-    { id: "events", nameKey: "events", members: ["kafka", "nats"], icon: RadioIcon },
-    { id: "media", nameKey: "media", members: ["minio"], icon: HardDrivesIcon },
-    { id: "coding", nameKey: "coding", members: ["judge0"], icon: TerminalIcon },
-    { id: "notify", nameKey: "notify", members: ["mail"], icon: EnvelopeIcon },
+    {
+        id: "payment",
+        nameKey: "payment",
+        members: ["stripe", "paypal", "payos", "sepay"],
+        icon: CreditCardIcon,
+        // FAN + return: Core charges each gateway, each gateway IPNs/webhooks back.
+        flow: [
+            { from: "core", to: "stripe" },
+            { from: "core", to: "paypal" },
+            { from: "core", to: "payos" },
+            { from: "core", to: "sepay" },
+            { from: "stripe", to: "core", eventual: true, webhook: true },
+            { from: "paypal", to: "core", eventual: true, webhook: true },
+            { from: "payos", to: "core", eventual: true, webhook: true },
+            { from: "sepay", to: "core", eventual: true, webhook: true },
+        ],
+    },
+    {
+        id: "auth",
+        nameKey: "auth",
+        members: ["keycloak", "github"],
+        icon: KeyIcon,
+        // CHAIN: Core → Keycloak → GitHub (OAuth IdP federation).
+        flow: [
+            { from: "core", to: "keycloak" },
+            { from: "keycloak", to: "github", eventual: true },
+        ],
+    },
+    {
+        id: "ai",
+        nameKey: "ai",
+        members: ["aiBalancer", "ollama", "qdrant"],
+        icon: BrainIcon,
+        // TREE: Core → aiBalancer → Ollama (local); Core → Qdrant (RAG).
+        flow: [
+            { from: "core", to: "aiBalancer" },
+            { from: "aiBalancer", to: "ollama", eventual: true },
+            { from: "core", to: "qdrant" },
+        ],
+    },
+    {
+        id: "data",
+        nameKey: "data",
+        members: ["postgres", "kafka", "elasticsearch"],
+        icon: DatabaseIcon,
+        // CHAIN: Core → Postgres → Kafka (Debezium CDC, async) → Elasticsearch;
+        // faint Core ⇠ ES read edge closes the read-model loop.
+        flow: [
+            { from: "core", to: "postgres" },
+            { from: "postgres", to: "kafka", eventual: true },
+            { from: "kafka", to: "elasticsearch", eventual: true },
+            { from: "elasticsearch", to: "core", eventual: true },
+        ],
+    },
+    {
+        id: "events",
+        nameKey: "events",
+        members: ["kafka", "nats"],
+        icon: RadioIcon,
+        // FAN: Core → NATS (job status); Postgres → Kafka (CDC, borrowed Postgres).
+        flow: [
+            { from: "core", to: "nats" },
+            { from: "postgres", to: "kafka", eventual: true },
+        ],
+    },
+    {
+        id: "media",
+        nameKey: "media",
+        members: ["minio"],
+        icon: HardDrivesIcon,
+        // SINGLE: Core → MinIO.
+        flow: [{ from: "core", to: "minio" }],
+    },
+    {
+        id: "coding",
+        nameKey: "coding",
+        members: ["judge0"],
+        icon: TerminalIcon,
+        // CHAIN: Core → Redis (BullMQ queue, borrowed) → Judge0.
+        flow: [
+            { from: "core", to: "redis" },
+            { from: "redis", to: "judge0", eventual: true },
+        ],
+    },
+    {
+        id: "notify",
+        nameKey: "notify",
+        members: ["mail"],
+        icon: EnvelopeIcon,
+        // FAN: Core → NATS (borrowed) · Core → Mail (Brevo).
+        flow: [
+            { from: "core", to: "nats" },
+            { from: "core", to: "mail" },
+        ],
+    },
 ]
 
 /** Fast lookup by pod id. */

@@ -2925,25 +2925,6 @@
                 }
             }
         },
-        "roadmap": {
-            "eyebrow": "The path",
-            "title": "Three mastery tracks — learn with structure",
-            "intro": "Each track runs foundation → application with real capstone projects. Follow in order, or pick your track.",
-            "tracks": {
-                "fullstack": {
-                    "label": "Fullstack",
-                    "caption": "Build the whole product — backend to frontend"
-                },
-                "systemDesign": {
-                    "label": "System Design",
-                    "caption": "Design systems at scale"
-                },
-                "devops": {
-                    "label": "DevOps",
-                    "caption": "Ship & operate across clouds"
-                }
-            }
-        },
         "systems": {
             "eyebrow": "Not CRUD",
             "title": "Real systems you build with your own hands",
@@ -2985,17 +2966,7 @@
             "eyebrow": "The dark side of coding",
             "title": "The blunt truth about tech",
             "name": "Nguyễn Văn Tự Cường",
-            "role": "Founder · StarCi Academy",
             "titles": "CTO @ Nivo Technology · CTO @ TEDO Technology",
-            "expertise": {
-                "systemDesign": "System Design",
-                "blockchain": "Blockchain",
-                "aiAutomation": "AI business automation"
-            },
-            "quote": "Relax boss — I can still fix the bug.",
-            "body1": "I teach exactly what I ship in production every day — not slides, real systems at CTO scale.",
-            "body2": "Everything here is built in the open — the platform, the curriculum, the challenges. Read the engineering notes and judge the work for yourself.",
-            "github": "GitHub",
             "blog": "Read the blog",
             "thesis": "Plenty of places teach coding to make you feel good and earn a certificate fast. StarCi Academy is different — I only tell the blunt truths about this industry and what real systems actually demand.",
             "truth1": "Big-project experience does not guarantee interview success.",

@@ -2925,25 +2925,6 @@
                 }
             }
         },
-        "roadmap": {
-            "eyebrow": "Lộ trình",
-            "title": "Ba lộ trình mastery — học có hệ thống",
-            "intro": "Mỗi lộ trình đi từ nền tảng đến ứng dụng (foundation → application), kèm capstone dự án thật. Học tuần tự hoặc chọn đúng track của bạn.",
-            "tracks": {
-                "fullstack": {
-                    "label": "Fullstack",
-                    "caption": "Dựng trọn sản phẩm — backend đến frontend"
-                },
-                "systemDesign": {
-                    "label": "System Design",
-                    "caption": "Xây hệ thống quy mô lớn"
-                },
-                "devops": {
-                    "label": "DevOps",
-                    "caption": "Triển khai & vận hành đa cloud"
-                }
-            }
-        },
         "systems": {
             "eyebrow": "Không phải CRUD",
             "title": "Những hệ thống bạn tự tay dựng",
@@ -2985,17 +2966,7 @@
             "eyebrow": "Góc khuất nghề code",
             "title": "Sự thật trần trụi về ngành IT",
             "name": "Nguyễn Văn Tự Cường",
-            "role": "Founder · StarCi Academy",
             "titles": "CTO @ Nivo Technology · CTO @ TEDO Technology",
-            "expertise": {
-                "systemDesign": "System Design",
-                "blockchain": "Blockchain",
-                "aiAutomation": "Tự động hóa doanh nghiệp bằng AI"
-            },
-            "quote": "Sếp Cường ơi bình tĩnh thôi, bug em còn fix được.",
-            "body1": "Tôi dạy đúng thứ tôi làm ở production mỗi ngày — không phải slide, mà là hệ thống thật ở tầm CTO.",
-            "body2": "Mọi thứ ở đây đều làm công khai — nền tảng, chương trình, challenge. Đọc các ghi chú kỹ thuật và tự đánh giá chất lượng.",
-            "github": "GitHub",
             "blog": "Đọc blog",
             "thesis": "Nhiều nơi dạy lập trình để bạn thấy dễ chịu và nhanh có chứng chỉ. StarCi Academy thì khác, tôi chỉ nói những sự thật trần trụi về ngành và những gì hệ thống thực tế yêu cầu.",
             "truth1": "Kinh nghiệm dự án lớn không giúp bạn thành công khi phỏng vấn.",

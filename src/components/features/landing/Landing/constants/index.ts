@@ -6,14 +6,6 @@ export const LANDING_LOOP_STEPS = [
     "rank",
 ] as const
 
-/** Mastery tracks shown on the roadmap — the 3 REAL courses (keys map to
- * `landing.roadmap.tracks.{key}.*`). Grounded: no "security"/"architect" course exists. */
-export const LANDING_TRACK_KEYS = [
-    "fullstack",
-    "systemDesign",
-    "devops",
-] as const
-
 /** Real systems built across the curriculum (capstones) — keys map to
  * `landing.systems.items.{key}.{name,badge}`. Curated highlight of the SD capstones
  * (proof of "build real systems, not CRUD"). Trimmed to 6 most representative. */
@@ -43,49 +35,6 @@ export const LANDING_TRACK_TAG: Record<(typeof LANDING_COURSE_TRACKS)[number], s
     systemDesign: "SD",
     devops: "DO",
 }
-
-/**
- * "Kho tàng" — curated trophy lesson topics rút TỪ content thật (verifiable lesson
- * titles), chia 2 làn: `code` (thuật toán/pattern bạn viết) vs `infra` (hệ thống/vận
- * hành). `label` = tên bài kỹ thuật (giữ English, same vi/en như các node khác);
- * `track` = khóa chứa bài → dùng để gắn tag + link "Vào khóa" (course thật).
- * Nguồn: CONTENT-TREASURE-UX-BRAINSTORM.md (đào `.mount/data/courses/*`).
- */
-export const LANDING_TREASURE_TOPICS: Record<
-    "code" | "infra",
-    ReadonlyArray<{ id: string; label: string; track: (typeof LANDING_COURSE_TRACKS)[number] }>
-> = {
-    code: [
-        { id: "redlock", label: "Redlock & Fencing Token", track: "systemDesign" },
-        { id: "sagaChoreography", label: "2PC vs Saga choreography", track: "systemDesign" },
-        { id: "tokenBucket", label: "Token bucket + Redis Lua", track: "systemDesign" },
-        { id: "kafkaEoS", label: "Kafka exactly-once", track: "systemDesign" },
-        { id: "ragPgvector", label: "RAG + pgvector", track: "fullstack" },
-        { id: "webhookIdempotency", label: "Webhook idempotency & refund", track: "fullstack" },
-    ],
-    infra: [
-        { id: "k8sControlPlane", label: "K8s control plane (etcd/apiserver)", track: "devops" },
-        { id: "argoCanary", label: "Argo Rollouts canary", track: "devops" },
-        { id: "slsaSigstore", label: "SLSA & Sigstore supply-chain", track: "devops" },
-        { id: "falco", label: "Falco runtime security", track: "devops" },
-        { id: "otelJaeger", label: "OpenTelemetry / Jaeger tracing", track: "systemDesign" },
-        { id: "terraformMultiCloud", label: "Terraform multi-cloud", track: "devops" },
-    ],
-}
-
-/** Founder expertise chips — keys map to `landing.founder.expertise.{key}`. */
-export const LANDING_FOUNDER_EXPERTISE = [
-    "systemDesign",
-    "blockchain",
-    "aiAutomation",
-] as const
-
-/**
- * Public-repo count on the GitHub org (`StarCi-Academy`) — the one verifiable
- * "build in the open" proof in the founder beat. Static figure (no BE field):
- * update manually, or wire `api.github.com/orgs/StarCi-Academy`.public_repos.
- */
-export const FOUNDER_PUBLIC_REPOS = 242
 
 /** Raw-truth rows in the founder beat — content at
  * `landing.founder.truth{n}` (the blunt truth) / `landing.founder.fix{n}` (our answer). */
@@ -127,7 +76,7 @@ export const LANDING_TRACK_COURSE_SLUG: Record<(typeof LANDING_COURSE_TRACKS)[nu
  * dạng cột dọc trong section Roadmap. label = nhãn tầng sentence-case (đồng bộ design-system,
  * no-uppercase). topic = tóm tắt nội dung tiếng Anh kỹ thuật. */
 export const LANDING_ROADMAP_TIERS: Record<
-    (typeof LANDING_TRACK_KEYS)[number],
+    (typeof LANDING_COURSE_TRACKS)[number],
     ReadonlyArray<{ label: string; topic: string }>
 > = {
     fullstack: [

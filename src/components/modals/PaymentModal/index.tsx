@@ -7,10 +7,12 @@ import { ArrowRightIcon, FlameIcon, GraduationCapIcon, LockSimpleIcon } from "@p
 import { useTranslations } from "next-intl"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useMutateCourseEnrollSwr } from "@/hooks/swr/api/graphql/mutations/useMutateCourseEnrollSwr"
+import { useMutateCoursesCheckoutSwr } from "@/hooks/swr/api/graphql/mutations/useMutateCoursesCheckoutSwr"
 import { useMutatePurchaseAiSubscriptionSwr } from "@/hooks/swr/api/graphql/mutations/useMutatePurchaseAiSubscriptionSwr"
 import { useMutatePurchaseMembershipSwr } from "@/hooks/swr/api/graphql/mutations/useMutatePurchaseMembershipSwr"
 import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useQueryCoursePricePreviewSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursePricePreviewSwr"
+import { useQueryCoursesCheckoutPreviewSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursesCheckoutPreviewSwr"
 import { useAppSelector } from "@/redux/hooks"
 import { PaymentFlow } from "@/modules/types/payment"
 import { PaymentType } from "@/modules/types/enums/payment-type"
@@ -19,6 +21,7 @@ import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import { submitCheckout } from "@/modules/payment/submit-checkout"
 import { queryAiSubscriptionTiers } from "@/modules/api/graphql/queries/query-ai-subscription-tiers"
 import type { DiscountReason } from "@/modules/api/graphql/queries/types/recommended-courses"
+import type { CoursesCheckoutPreviewLine } from "@/modules/api/graphql/queries/types/courses-checkout-preview"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
@@ -70,6 +73,7 @@ interface PaymentOrder {
 export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
     const { isOpen, setOpen, context } = usePaymentOverlayState()
     const courseEnrollSwr = useMutateCourseEnrollSwr()
+    const coursesCheckoutSwr = useMutateCoursesCheckoutSwr()
     const purchaseAiSubscriptionSwr = useMutatePurchaseAiSubscriptionSwr()
     const purchaseMembershipSwr = useMutatePurchaseMembershipSwr()
     const course = useAppSelector((state) => state.course.entity)
@@ -81,11 +85,26 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
     const runGraphQL = useGraphQLWithToast()
 
     const isCourse = context?.flow === PaymentFlow.CourseEnroll
+    const isCoursesCheckout = context?.flow === PaymentFlow.CoursesCheckout
     const isAi = context?.flow === PaymentFlow.AiSubscription
     const isMembership = context?.flow === PaymentFlow.Membership
 
     // course price preview (original vs loyalty-discounted) — exact checkout pricing
     const coursePriceSwr = useQueryCoursePricePreviewSwr(isCourse ? course?.id ?? null : null)
+    // multi-course checkout preview (per-course + summed charged/list, bundle bonus).
+    // Keyed on the context's course ids → shares the cart page's SWR cache.
+    const checkoutCourseIds = useMemo(
+        () => (isCoursesCheckout && context?.flow === PaymentFlow.CoursesCheckout ? context.courseIds : []),
+        [isCoursesCheckout, context],
+    )
+    const checkoutPreviewSwr = useQueryCoursesCheckoutPreviewSwr(checkoutCourseIds)
+    const checkoutPreview = checkoutPreviewSwr.data
+    // courseId → preview line, for per-course prices in the multi-course summary
+    const checkoutLineByCourse = useMemo(() => {
+        const map = new Map<string, CoursesCheckoutPreviewLine>()
+        checkoutPreview?.lines.forEach((line) => map.set(line.courseId, line))
+        return map
+    }, [checkoutPreview])
     // AI tiers fetched modal-locally (the page hook is gated to /profile/ai-subscription)
     const aiTiersSwr = useSWR(
         isAi ? ["PAYMENT_MODAL_AI_TIERS"] : null,
@@ -100,17 +119,21 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
 
     // any mutation in flight disables interaction + drives the row spinner
     const isMutating = courseEnrollSwr.isMutating
+        || coursesCheckoutSwr.isMutating
         || purchaseAiSubscriptionSwr.isMutating
         || purchaseMembershipSwr.isMutating
 
     // the loading / error state of the price source for the active flow
     const priceLoading = (isCourse && !coursePriceSwr.data && !coursePriceSwr.error)
+        || (isCoursesCheckout && !checkoutPreview && !checkoutPreviewSwr.error)
         || (isAi && !aiTiersSwr.data && !aiTiersSwr.error)
     const priceError = isCourse
         ? coursePriceSwr.error
-        : isAi
-            ? aiTiersSwr.error
-            : undefined
+        : isCoursesCheckout
+            ? checkoutPreviewSwr.error
+            : isAi
+                ? aiTiersSwr.error
+                : undefined
 
     // unified order summary derived per flow
     const order = useMemo<PaymentOrder | null>(() => {
@@ -132,6 +155,21 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
                 enrolledCount: price?.enrolledCount ?? 0,
             }
         }
+        if (context.flow === PaymentFlow.CoursesCheckout) {
+            // multi-course cart: totals from the checkout preview (real charged vs
+            // list, VND always + USD when every line has one). Per-line detail is
+            // rendered separately below the summary header.
+            return {
+                name: t("cart.checkoutCount", { count: context.lines.length }),
+                priceVnd: checkoutPreview?.totalChargedVnd,
+                originalVnd: checkoutPreview?.totalListVnd,
+                priceUsd: checkoutPreview?.totalChargedUsd ?? null,
+                originalUsd: checkoutPreview?.totalListUsd ?? null,
+                discountPercent: 0,
+                discountReason: "none",
+                enrolledCount: 0,
+            }
+        }
         if (context.flow === PaymentFlow.AiSubscription) {
             return {
                 name: aiTier?.displayName ?? t("payment.aiPlanName"),
@@ -150,7 +188,7 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
             enrolledCount: 0,
             priceUsd: null,
         }
-    }, [context, coursePriceSwr.data, aiTier, course?.title, t])
+    }, [context, coursePriceSwr.data, checkoutPreview, aiTier, course?.title, t])
 
     // whether international (USD) gateways are usable for this order
     const hasUsd = isMembership || (order?.priceUsd != null)
@@ -235,6 +273,21 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
                     checkoutUrl = data?.checkoutUrl ?? ""
                     checkoutFields = data?.checkoutFields
                     return response.data.courseEnroll
+                }
+                if (context.flow === PaymentFlow.CoursesCheckout) {
+                    const response = await coursesCheckoutSwr.trigger({
+                        courseIds: context.courseIds,
+                        paymentType,
+                        returnUrl: window.location.href,
+                        cancelUrl: window.location.href,
+                    })
+                    if (!response.data?.coursesCheckout) {
+                        throw new Error(response.error?.message)
+                    }
+                    const data = response.data.coursesCheckout.data
+                    checkoutUrl = data?.checkoutUrl ?? ""
+                    checkoutFields = data?.checkoutFields
+                    return response.data.coursesCheckout
                 }
                 if (context.flow === PaymentFlow.Membership) {
                     const response = await purchaseMembershipSwr.trigger({
@@ -338,57 +391,124 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
                         </Modal.Header>
                         <Modal.Body>
                             <div className="flex flex-col gap-3">
-                                {/* summary — FLAT (no card frame): IconTile + name + price (PriceTag with
-                                    hover breakdown) + loyalty breakdown, on the modal surface. */}
-                                <div className="flex flex-col">
-                                    <div className="flex items-center gap-3">
-                                        <IconTile
-                                            size="sm"
-                                            tone="accent"
-                                            icon={<GraduationCapIcon />}
-                                            src={isCourse ? coverImageUrl : undefined}
-                                            alt={order?.name ?? ""}
-                                        />
-                                        <div className="flex min-w-0 flex-1 flex-col">
-                                            <Typography type="body-xs" color="muted" truncate title={order?.name}>
-                                                {order?.name}
-                                            </Typography>
-                                            <AsyncContent
-                                                isLoading={Boolean(priceLoading)}
-                                                skeleton={<div className="mt-1 h-6 w-28 animate-pulse rounded-lg bg-default" />}
-                                                error={priceError}
-                                                errorContent={{ title: t("payment.priceError") }}
-                                            >
+                                {/* multi-course cart summary — one row per course (cover + title +
+                                    real charged price) + the charged total (from the checkout
+                                    preview, in the active currency), on the modal surface. */}
+                                {isCoursesCheckout && context?.flow === PaymentFlow.CoursesCheckout ? (
+                                    <AsyncContent
+                                        isLoading={Boolean(priceLoading)}
+                                        skeleton={
+                                            <div className="flex flex-col gap-2">
+                                                {context.lines.map((line) => (
+                                                    <div key={line.courseId} className="flex items-center gap-3">
+                                                        <div className="size-12 shrink-0 animate-pulse rounded-xl bg-default" />
+                                                        <div className="h-4 min-w-0 flex-1 animate-pulse rounded-lg bg-default" />
+                                                        <div className="h-5 w-20 shrink-0 animate-pulse rounded-lg bg-default" />
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        }
+                                        error={priceError}
+                                        errorContent={{ title: t("payment.priceError") }}
+                                    >
+                                        <div className="flex flex-col gap-3">
+                                            <div className="flex flex-col gap-2">
+                                                {context.lines.map((line) => {
+                                                    const previewLine = checkoutLineByCourse.get(line.courseId)
+                                                    const lineDiscounted = isUsd ? previewLine?.chargedUsd : previewLine?.chargedVnd
+                                                    const lineOriginal = isUsd ? previewLine?.listUsd : previewLine?.listVnd
+                                                    return (
+                                                        <div key={line.courseId} className="flex items-center gap-3">
+                                                            <IconTile
+                                                                size="sm"
+                                                                tone="accent"
+                                                                icon={<GraduationCapIcon />}
+                                                                src={line.coverImageUrl ?? undefined}
+                                                                alt={line.title}
+                                                            />
+                                                            <Typography type="body-sm" truncate title={line.title} className="min-w-0 flex-1">
+                                                                {line.title}
+                                                            </Typography>
+                                                            {lineDiscounted != null ? (
+                                                                <PriceTag
+                                                                    discounted={lineDiscounted}
+                                                                    original={lineOriginal}
+                                                                    currency={activeCurrency}
+                                                                    size="sm"
+                                                                    className="shrink-0"
+                                                                />
+                                                            ) : null}
+                                                        </div>
+                                                    )
+                                                })}
+                                            </div>
+                                            <div className="flex items-center justify-between gap-3 border-t border-default pt-3">
+                                                <Typography type="body-sm" weight="semibold">{t("cart.total")}</Typography>
                                                 {summaryDiscounted != null ? (
                                                     <PriceTag
                                                         discounted={summaryDiscounted}
                                                         original={summaryOriginal}
                                                         currency={activeCurrency}
                                                         size="md"
-                                                        breakdown={summaryPhase != null ? {
-                                                            phase: summaryPhase,
-                                                            loyaltyPercent: order?.discountPercent ?? 0,
-                                                        } : undefined}
+                                                        className="shrink-0 justify-end"
                                                     />
-                                                ) : isMembership ? (
-                                                    <Typography type="h4" weight="bold">{t("membership.price")}</Typography>
                                                 ) : null}
-                                            </AsyncContent>
-                                        </div>
-                                    </div>
-                                    {/* loyalty breakdown — WHY the discount applies (discountReason + enrolledCount) */}
-                                    {order && order.discountPercent > 0
-                                        && loyaltyReasons(order.discountReason, order.enrolledCount).length > 0 ? (
-                                            <div className="mt-2 flex flex-col gap-1">
-                                                {loyaltyReasons(order.discountReason, order.enrolledCount).map((row) => (
-                                                    <div key={row.key} className="flex items-center gap-2">
-                                                        {row.icon}
-                                                        <Typography type="body-xs" color="muted">{row.label}</Typography>
-                                                    </div>
-                                                ))}
                                             </div>
-                                        ) : null}
-                                </div>
+                                        </div>
+                                    </AsyncContent>
+                                ) : (
+                                /* single-item summary — FLAT (no card frame): IconTile + name + price
+                                    (PriceTag with hover breakdown) + loyalty breakdown. */
+                                    <div className="flex flex-col">
+                                        <div className="flex items-center gap-3">
+                                            <IconTile
+                                                size="sm"
+                                                tone="accent"
+                                                icon={<GraduationCapIcon />}
+                                                src={isCourse ? coverImageUrl : undefined}
+                                                alt={order?.name ?? ""}
+                                            />
+                                            <div className="flex min-w-0 flex-1 flex-col">
+                                                <Typography type="body-xs" color="muted" truncate title={order?.name}>
+                                                    {order?.name}
+                                                </Typography>
+                                                <AsyncContent
+                                                    isLoading={Boolean(priceLoading)}
+                                                    skeleton={<div className="mt-1 h-6 w-28 animate-pulse rounded-lg bg-default" />}
+                                                    error={priceError}
+                                                    errorContent={{ title: t("payment.priceError") }}
+                                                >
+                                                    {summaryDiscounted != null ? (
+                                                        <PriceTag
+                                                            discounted={summaryDiscounted}
+                                                            original={summaryOriginal}
+                                                            currency={activeCurrency}
+                                                            size="md"
+                                                            breakdown={summaryPhase != null ? {
+                                                                phase: summaryPhase,
+                                                                loyaltyPercent: order?.discountPercent ?? 0,
+                                                            } : undefined}
+                                                        />
+                                                    ) : isMembership ? (
+                                                        <Typography type="h4" weight="bold">{t("membership.price")}</Typography>
+                                                    ) : null}
+                                                </AsyncContent>
+                                            </div>
+                                        </div>
+                                        {/* loyalty breakdown — WHY the discount applies (discountReason + enrolledCount) */}
+                                        {order && order.discountPercent > 0
+                                        && loyaltyReasons(order.discountReason, order.enrolledCount).length > 0 ? (
+                                                <div className="mt-2 flex flex-col gap-1">
+                                                    {loyaltyReasons(order.discountReason, order.enrolledCount).map((row) => (
+                                                        <div key={row.key} className="flex items-center gap-2">
+                                                            {row.icon}
+                                                            <Typography type="body-xs" color="muted">{row.label}</Typography>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            ) : null}
+                                    </div>
+                                )}
 
                                 {/* currency / region toggle — drives the summary price + gateway list.
                                     Only shown when the order HAS a USD price (a real choice exists). */}

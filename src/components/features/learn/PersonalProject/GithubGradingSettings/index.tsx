@@ -98,7 +98,7 @@ export const GithubGradingSettings = ({ className }: GithubGradingSettingsProps)
                     canPremium={canPremium}
                     showAutoLane={false}
                     floor={AiModelCategory.Economy}
-                    task={AiModelTask.Grading}
+                    task={AiModelTask.TaskGrading}
                     onSelect={setGradeSelection}
                     onUpgrade={() => router.push(`/${locale}/profile/settings/ai-subscription`)}
                 />

@@ -5,6 +5,7 @@ import {
     CardsIcon,
     GraduationCapIcon,
     MapPinLineIcon,
+    MicrophoneStageIcon,
     StackIcon,
     UsersIcon,
 } from "@phosphor-icons/react"
@@ -110,6 +111,16 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
                 icon: CardsIcon,
                 group: "practice",
                 url: pathConfig().locale(locale).course(courseDisplayId).learn().flashcards().build(),
+            },
+            {
+                label: t("mockInterview.navLabel"),
+                value: "mock-interview",
+                tab: SidebarTab.MockInterview,
+                icon: MicrophoneStageIcon,
+                group: "practice",
+                url: pathConfig().locale(locale).course(courseDisplayId).learn().mockInterview().build(),
+                // enrolled-only (spends AI credits) — mirror the personal-project lock
+                locked,
             },
             {
                 label: t("finalProject.title"),

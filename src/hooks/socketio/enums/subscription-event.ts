@@ -23,4 +23,6 @@ export enum SubscriptionEvent {
     AiModelHealth = "system_health.ai_model_health.subscription",
     /** A streamed token chunk for a RAG Playground run (must match backend). */
     RagPlaygroundRunChunk = "rag_playground.run_chunk.subscription",
+    /** A streamed token chunk for the mock interviewer's next turn (must match backend). */
+    MockInterviewChunk = "mock_interview.chunk.subscription",
 }

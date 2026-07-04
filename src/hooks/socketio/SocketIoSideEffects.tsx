@@ -5,6 +5,7 @@ import { useCommunityChatSocketIoLifecycle } from "./useCommunityChatSocketIoLif
 import { useContentAiSocketIoLifecycle } from "./useContentAiSocketIoLifecycle"
 import { useContentDiscussionSocketIoLifecycle } from "./useContentDiscussionSocketIoLifecycle"
 import { useJobNotificationsSocketIoLifecycle } from "./useJobNotificationsSocketIoLifecycle"
+import { useMockInterviewSocketIoLifecycle } from "./useMockInterviewSocketIoLifecycle"
 
 /**
  * Mounts the Socket.IO connection lifecycle ONCE for the app tree (replaces the old
@@ -19,5 +20,6 @@ export const SocketIoSideEffects = () => {
     useAiLabSocketIoLifecycle()
     useCommunityChatSocketIoLifecycle()
     useContentAiSocketIoLifecycle()
+    useMockInterviewSocketIoLifecycle()
     return null
 }

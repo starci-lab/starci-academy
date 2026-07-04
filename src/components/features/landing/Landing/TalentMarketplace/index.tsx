@@ -142,6 +142,7 @@ export const TalentMarketplace = ({ className }: TalentMarketplaceProps) => {
 
     const onBuildPortfolio = () => router.push(pathConfig().locale(locale).course().build())
     const onBrowseTalents = () => router.push(pathConfig().locale(locale).talents().build())
+    const onBrowseJobs = () => router.push(pathConfig().locale(locale).jobs().build())
 
     return (
         <section className={cn("flex flex-col gap-16", className)}>
@@ -164,7 +165,7 @@ export const TalentMarketplace = ({ className }: TalentMarketplaceProps) => {
                             body={t("landing.outcome.items.enterprise.body")}
                         />
                     </div>
-                    <div className="flex flex-wrap gap-3">
+                    <div className="flex flex-wrap items-center gap-3">
                         <Button variant="primary" size="lg" onPress={onBuildPortfolio}>
                             <RocketLaunchIcon aria-hidden focusable="false" className="size-5" />
                             {t("landing.outcome.items.engineer.cta")}
@@ -172,6 +173,10 @@ export const TalentMarketplace = ({ className }: TalentMarketplaceProps) => {
                         <Button variant="secondary" size="lg" onPress={onBrowseTalents}>
                             {t("landing.outcome.items.enterprise.cta")}
                             <CaretRightIcon aria-hidden focusable="false" className="size-5" />
+                        </Button>
+                        <Button variant="tertiary" onPress={onBrowseJobs}>
+                            {t("landing.outcome.items.engineer.jobsCta")}
+                            <CaretRightIcon aria-hidden focusable="false" className="size-4" />
                         </Button>
                     </div>
                 </div>

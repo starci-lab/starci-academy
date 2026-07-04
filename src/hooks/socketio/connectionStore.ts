@@ -9,6 +9,7 @@ export type SocketNamespace =
     | "ai_lab"
     | "community_chat"
     | "content_ai"
+    | "mock_interview"
 
 /** Per-namespace connection status. */
 export type SocketConnectionStatus = "connected" | "disconnected"

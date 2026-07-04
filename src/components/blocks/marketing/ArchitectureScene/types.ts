@@ -20,8 +20,10 @@ export type SceneTone = "normal" | "success" | "danger"
  *  - `loadBalancer` → hex puck + hub (an edge gateway / balancer that fans out)
  *  - `client`       → monitor on a stand (a web / mobile client device)
  *  - `user`         → person silhouette (an end user)
+ *  - `pod`          → hexagonal honeycomb cell holding member nodes (a functional
+ *                     group / capability that drills into its own sub-scene)
  *  Default (omitted) = `container`. */
-export type NodeKind = "container" | "database" | "broker" | "loadBalancer" | "client" | "user"
+export type NodeKind = "container" | "database" | "broker" | "loadBalancer" | "client" | "user" | "pod"
 
 /** Status badge tone (coloured text line inside a node's label frame). */
 export type StatusTone = "danger" | "warning" | "success" | "info"

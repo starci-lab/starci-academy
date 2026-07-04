@@ -13,7 +13,7 @@ import {
 import {
     useRouter,
 } from "@/i18n/navigation"
-import { BrandLogo } from "@/components/blocks/identity/BrandLogo"
+import { BrandLockup } from "@/components/blocks/identity/BrandLockup"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
@@ -22,7 +22,7 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 export type LogoProps = WithClassNames<undefined>
 
 /**
- * Logo — the {@link BrandLogo} lockup wrapped in a link that routes home when
+ * Logo — the {@link BrandLockup} lockup wrapped in a link that routes home when
  * pressed.
  *
  * `"use client"` for the router press handler.
@@ -41,9 +41,9 @@ export const Logo = ({ className }: LogoProps) => {
     return (
         <Link
             onPress={onPress}
-            className={cn("cursor-pointer", className)}
+            className={cn("cursor-pointer no-underline", className)}
         >
-            <BrandLogo />
+            <BrandLockup />
         </Link>
     )
 }

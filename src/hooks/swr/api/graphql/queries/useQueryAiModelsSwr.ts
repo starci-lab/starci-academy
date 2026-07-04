@@ -7,7 +7,8 @@ import { setAiModels } from "@/redux/slices/ai-models"
 /**
  * SWR query core for the AI models query. Returns the viewer's tier-scoped model
  * list, so it only runs once the viewer is authenticated. Only fetches under `/learn`
- * (consumers: StarciAi + ChallengeModal submission panel) — avoids fetching outside the learn area.
+ * or `/profile/cv` (consumers: StarciAi + ChallengeModal submission panel + the CV
+ * generation model picker) — avoids fetching on every other page.
  * @returns the SWR query handle.
  */
 export const useQueryAiModelsSwr = () => {
@@ -15,9 +16,10 @@ export const useQueryAiModelsSwr = () => {
     const authenticated = useAppSelector((state) => state.keycloak.authenticated)
     const pathname = usePathname()
     const onLearnPage = pathname.includes("/learn")
+    const onCvPage = pathname.includes("/profile/cv")
 
     const swr = useSWR(
-        authenticated && onLearnPage ? ["QUERY_AI_MODELS_SWR"] : null,
+        authenticated && (onLearnPage || onCvPage) ? ["QUERY_AI_MODELS_SWR"] : null,
         async () => {
             const data = await queryAiModels({})
 

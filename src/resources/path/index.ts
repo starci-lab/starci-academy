@@ -325,6 +325,15 @@ export const pathConfig = () => {
                         build,
                     }
                 }
+                const mockInterview = () => {
+                    const mockInterviewPath = `${learnPath}/mock-interview`
+                    const build = () => {
+                        return mockInterviewPath
+                    }
+                    return {
+                        build,
+                    }
+                }
                 const practice = () => {
                     const practicePath = `${learnPath}/practice`
                     const build = () => {
@@ -387,6 +396,7 @@ export const pathConfig = () => {
                     leaderboard,
                     headhuntings,
                     flashcards,
+                    mockInterview,
                     practice,
                     foundations,
                     module,
@@ -428,6 +438,16 @@ export const pathConfig = () => {
                 build,
             }
         }
+        const cart = () => {
+            // shopping cart: review chosen courses + multi-course checkout
+            const cartPath = `${localePath}/cart`
+            const build = () => {
+                return cartPath
+            }
+            return {
+                build,
+            }
+        }
         const terms = () => {
             // terms of service (stub page, linked from the footer)
             const termsPath = `${localePath}/terms`
@@ -458,11 +478,43 @@ export const pathConfig = () => {
                 build,
             }
         }
+        const jobs = (displayId?: string) => {
+            // IT job board: browse (`/jobs`) or one posting's detail (`/jobs/[displayId]`).
+            // Global, non-course-scoped — mirrors `talents()`.
+            const jobsPath = displayId ? `${localePath}/jobs/${displayId}` : `${localePath}/jobs`
+            const build = () => {
+                return jobsPath
+            }
+            // public submission form: any signed-in user can post a job opening
+            const post = () => {
+                const postPath = `${localePath}/jobs/post`
+                const build = () => {
+                    return postPath
+                }
+                return {
+                    build,
+                }
+            }
+            return {
+                build,
+                post,
+            }
+        }
         const blog = () => {
             // editorial blog index (deep-dive / build-in-public / career / …)
             const blogPath = `${localePath}/blog`
             const build = () => {
                 return blogPath
+            }
+            return {
+                build,
+            }
+        }
+        const architecture = () => {
+            // public "System Atlas": live 3D map + per-component health + curl playground
+            const architecturePath = `${localePath}/architecture`
+            const build = () => {
+                return architecturePath
             }
             return {
                 build,
@@ -556,11 +608,14 @@ export const pathConfig = () => {
             contact,
             publicContent,
             dashboard,
+            cart,
             practice,
             ragPlayground,
             review,
             talents,
+            jobs,
             blog,
+            architecture,
             community,
             rewards,
             league,

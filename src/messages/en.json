@@ -40,6 +40,38 @@
             "signInRequired": "Sign in with an active membership to join the chat."
         }
     },
+    "cart": {
+        "label": "Cart",
+        "title": "Your cart",
+        "description": "Review the courses you picked and pay in one go.",
+        "empty": "Your cart is empty",
+        "emptyHint": "No courses in your cart yet. Browse the courses and add some.",
+        "browseCourses": "Browse courses",
+        "add": "Add to cart",
+        "added": "Added to your cart",
+        "inCart": "In cart",
+        "remove": "Remove from cart",
+        "removed": "Removed from your cart",
+        "clear": "Clear cart",
+        "cleared": "Cart cleared",
+        "checkout": "Checkout",
+        "checkoutCount": "Check out {count} courses",
+        "subtotal": "Subtotal",
+        "total": "Total",
+        "itemsCount": "{count} courses",
+        "savings": "You save {amount}",
+        "bundleBonus": "Bundle deal +{percent}%",
+        "addMoreHint2": "Add 1 more course for an extra 5% off",
+        "addMoreHint3": "Add 1 more course for 10% off",
+        "error": "Couldn't load your cart",
+        "retry": "Try again",
+        "viewFullCart": "View full cart",
+        "comboActive": "Saving {percent}% with the combo",
+        "comboNextHint": "Add 1 more course for {percent}% off",
+        "comboMaxHint": "You have the biggest combo deal",
+        "comboStart": "Add 1 more course to unlock the combo deal",
+        "tooltipAdd": "Add to cart"
+    },
     "contact": {
         "title": "Contact",
         "intro": "StarCi is built by one person — your question reaches the person who makes it. Pick the fastest route below, or send a message.",
@@ -306,6 +338,7 @@
             "courses": "Courses",
             "blog": "Blog",
             "talents": "Talents",
+            "jobs": "IT jobs",
             "community": "Community",
             "contact": "Contact",
             "terms": "Terms",
@@ -316,7 +349,7 @@
     },
     "legal": {
         "contactNote": "Questions about these terms or your data? Email cuongnvtse160875@gmail.com.",
-    "lastUpdated": "Last updated: {date}",
+        "lastUpdated": "Last updated: {date}",
         "terms": {
             "title": "Terms of Service",
             "description": "The terms for using StarCi Academy.",
@@ -684,13 +717,26 @@
         "website": "Website",
         "address": "Address",
         "phone": "Phone",
-        "email": "Email"
+        "email": "Email",
+        "contactLocked": "Reach a CV score of {score} or higher to unlock contact info.",
+        "improveCv": "Improve your CV"
     },
     "cv": {
         "title": "CV",
         "preview": {
             "title": "CV preview (PDF)",
             "fullscreen": "View full"
+        },
+        "generate": {
+            "title": "Generate CV with AI",
+            "description": "Let AI build a developer CV from your StarCi learning activity, or revise a CV you uploaded. The result is a LaTeX preview — download the .tex source to fine-tune it.",
+            "extraPromptsLabel": "Tell us about projects/experience outside StarCi (optional)",
+            "extraPromptsPlaceholder": "e.g. I built project A and project B, I know Golang/TypeScript...",
+            "generateAction": "Generate CV",
+            "reviseAction": "Revise my CV",
+            "downloadTex": "Download .tex",
+            "renderFallback": "Preview unavailable, download the .tex source instead.",
+            "previewAria": "CV preview"
         },
         "submission": {
             "fileCardTitle": "Submitted CV information",
@@ -767,6 +813,19 @@
                 "fileRequired": "CV file is required.",
                 "fileTypeInvalid": "CV file must be a PDF.",
                 "fileSizeInvalid": "File size must be 10MB or less."
+            }
+        },
+        "upload": {
+            "title": "Upload your CV",
+            "description": "Already have a CV? Upload the PDF so AI scores it and gives feedback with the same rubric as StarCi-generated CVs.",
+            "fileHint": "Drag & drop or choose your CV file (PDF, up to 10MB).",
+            "labelLabel": "A name to remember this CV by (optional)",
+            "labelPlaceholder": "e.g. Backend application CV 2026",
+            "uploadAction": "Upload and score",
+            "errors": {
+                "fileRequired": "Please choose a CV file.",
+                "fileTypeInvalid": "The CV must be a PDF.",
+                "fileSizeInvalid": "Max file size is 10MB."
             }
         }
     },
@@ -1469,7 +1528,7 @@
         "searchEmpty": "No decks match \"{query}\".",
         "mode": {
             "study": "Study",
-            "interview": "Mock interview"
+            "interview": "Rapid recall"
         },
         "interview": {
             "record": "Answer aloud",
@@ -1484,7 +1543,7 @@
             "newQuestion": "New question",
             "nextQuestion": "Next question",
             "retry": "Try again",
-            "drawError": "Could not load an interview question for this deck.",
+            "drawError": "Could not load a question for this deck.",
             "gradeError": "Could not grade your answer. Please try again.",
             "pass": "Pass",
             "borderline": "Borderline",
@@ -1496,8 +1555,8 @@
             "followUp": "Likely follow-up",
             "start": "Start interview",
             "backToTopics": "← Topics",
-            "pickLabel": "Pick a topic to interview",
-            "begin": "Start interview",
+            "pickLabel": "Pick a topic to practice",
+            "begin": "Start practice",
             "levelAll": "All levels",
             "progress": "Question {current}/{total}",
             "viewResults": "See session result",
@@ -1505,15 +1564,15 @@
             "avgScore": "Average score",
             "bestScore": "Best score",
             "weakTags": "Topics to revisit",
-            "replay": "Interview again",
-            "setupTitle": "Ready to interview?",
+            "replay": "Practice again",
+            "setupTitle": "Ready to practice?",
             "setupSubtitle": "Random questions across the whole course.",
             "setupHint": "Pick a seniority level (optional), then answer {total} questions aloud.",
             "expectCount": "{total} questions",
             "expectVoice": "Answer by voice",
             "expectAiGrade": "AI scores + feedback",
             "levelLabel": "Question level",
-            "historyTitle": "Interview history",
+            "historyTitle": "Practice history",
             "historyAnswered": "{count} questions practiced",
             "modeLabel": "Practice mode",
             "modeQuick": "Quick · 5",
@@ -1529,11 +1588,11 @@
             "gradingProgress": "Grading {current} of {total}",
             "perQuestionTitle": "Per-question feedback",
             "questionN": "Question {n}",
-            "historyEmpty": "No interviews yet",
-            "historyEmptyHint": "Start an interview to track your progress run by run.",
-            "historyError": "Could not load your interview history.",
+            "historyEmpty": "No practice yet",
+            "historyEmptyHint": "Start practicing to track your progress run by run.",
+            "historyError": "Could not load your practice history.",
             "historyQuestionCount": "{count} questions",
-            "detailTitle": "Interview detail",
+            "detailTitle": "Session detail",
             "detailEmpty": "No answers in this run",
             "detailError": "Could not load the run detail.",
             "configTitle": "Session setup",
@@ -1556,6 +1615,80 @@
             "insane": "Insane"
         },
         "backToOverview": "Overview"
+    },
+    "mockInterview": {
+        "navLabel": "Mock interview",
+        "title": "Mock interview",
+        "subtitle": "Practice a 5-step technical interview with detailed AI feedback.",
+        "gateTitle": "Enroll to practice interviews",
+        "gateDescription": "The mock interview spends AI credits — enroll in the course to unlock it.",
+        "systemLabel": "Pick an interview topic",
+        "promptsEmpty": "This course doesn't have any interview prompts yet.",
+        "promptsError": "Couldn't load the interview prompts.",
+        "promptsRetry": "Retry",
+        "gradingLabel": "Grading",
+        "modelLabel": "Grading model",
+        "begin": "Start interview",
+        "grading": "Grading your interview…",
+        "gradingPending": "Reviewing the whole session — this can take about a minute.",
+        "gradingFailed": "Grading failed. Try again.",
+        "backToSetup": "Back to setup",
+        "retry": "Interview again",
+        "scorecardPending": "Couldn't load the result.",
+        "perPhaseTitle": "Score by phase",
+        "attributesTitle": "Skill assessment",
+        "strengthsTitle": "Strengths",
+        "gapsTitle": "Areas to improve",
+        "followUpTitle": "Suggested follow-up question",
+        "nextPhase": "Next phase",
+        "finishAndGrade": "Finish and grade",
+        "promptLabel": "Design prompt",
+        "interviewerPending": "The interviewer is preparing the opening question…",
+        "sendAnswer": "Send answer",
+        "historyTitle": "Interview history",
+        "historyEmpty": "You haven't done a mock interview yet.",
+        "historyError": "Couldn't load your interview history.",
+        "historyDetailTitle": "Interview session detail",
+        "phase": {
+            "requirements": "Clarify requirements",
+            "estimation": "Plan your approach",
+            "highLevel": "Design and implement",
+            "deepDive": "Deep dive",
+            "tradeoffs": "Trade-offs and risks"
+        },
+        "attribute": {
+            "communication": "Communication",
+            "structuredThinking": "Structured thinking",
+            "tradeoffAwareness": "Trade-off awareness"
+        },
+        "diagram": {
+            "title": "Architecture whiteboard",
+            "addBox": "Add box",
+            "newBoxLabel": "New box",
+            "canvasAria": "Mock interview architecture whiteboard"
+        }
+    },
+    "jobReadiness": {
+        "title": "Job readiness",
+        "subtitle": "A composite of your CV, challenge strength, and per-course competency — every metric AI-graded.",
+        "aiVerified": "Every metric AI-graded on real submissions",
+        "error": "Couldn't load your job-readiness score.",
+        "empty": "No job-readiness data yet.",
+        "foundationTitle": "Foundation",
+        "tracksTitle": "Verified tracks",
+        "tracksEmpty": "No courses yet — join a course to build your first track.",
+        "notStarted": "Not started",
+        "trackCapstone": "Capstone",
+        "trackInterview": "Interview",
+        "band": {
+            "needsWork": "Needs significant work",
+            "building": "Building readiness",
+            "jobReady": "Job ready"
+        },
+        "pillar": {
+            "cv": "CV",
+            "challenge": "Challenge strength"
+        }
     },
     "aiSettings": {
         "title": "AI Settings",
@@ -2004,6 +2137,114 @@
         "description": "Learners currently open to job opportunities. Click to view a profile.",
         "empty": "No one has turned on \"Open to work\" yet."
     },
+    "jobs": {
+        "employmentType": {
+            "fulltime": "Full-time",
+            "parttime": "Part-time",
+            "internship": "Internship",
+            "contract": "Contract"
+        },
+        "list": {
+            "title": "IT Jobs",
+            "description": "Job postings from StarCi Academy's partner companies.",
+            "postCta": "Post a job",
+            "searchPlaceholder": "Search by job title",
+            "found": "{count, plural, =0 {No postings} one {# posting} other {# postings}}",
+            "filters": {
+                "allWorkModes": "All work modes",
+                "allEmploymentTypes": "All employment types",
+                "workModeAria": "Filter by work mode",
+                "employmentTypeAria": "Filter by employment type"
+            },
+            "row": {
+                "salaryNegotiable": "Negotiable",
+                "salaryRange": "{min} - {max}"
+            },
+            "emptyPlatform": {
+                "title": "No job postings yet",
+                "description": "Is your company hiring?",
+                "cta": "Post one for free"
+            },
+            "emptyFiltered": {
+                "title": "No postings match your filters",
+                "clearFilters": "Clear filters"
+            },
+            "error": "Could not load job postings."
+        },
+        "detail": {
+            "notFound": "This job posting could not be found.",
+            "error": "Could not load this job posting.",
+            "postedAgo": "Posted {time}",
+            "descriptionLabel": "Job description",
+            "requirementsLabel": "Requirements",
+            "apply": "Apply now",
+            "applyByEmail": "Apply via {email}"
+        },
+        "post": {
+            "title": "Post a job",
+            "description": "Your posting goes live immediately — no approval queue.",
+            "submit": "Post job",
+            "signedOut": {
+                "title": "Sign in to post a job",
+                "description": "Sign in with your StarCi Academy account to post a job opening."
+            },
+            "sections": {
+                "company": "Company",
+                "position": "Position",
+                "applyMethod": "How to apply"
+            },
+            "company": {
+                "searchPlaceholder": "Search companies already on StarCi Academy",
+                "notFoundHint": "Not found? Fill in the new company details below.",
+                "change": "Change company",
+                "newTitle": "New company name",
+                "newTitlePlaceholder": "e.g. Acme Inc.",
+                "newLogoUrl": "Logo URL (optional)",
+                "newLogoUrlPlaceholder": "https://...",
+                "newWebsiteUrl": "Website URL (optional)",
+                "newWebsiteUrlPlaceholder": "https://..."
+            },
+            "position": {
+                "title": "Job title",
+                "titlePlaceholder": "e.g. Backend Engineer",
+                "employmentType": "Employment type",
+                "employmentTypeNone": "None selected",
+                "workMode": "Work mode",
+                "workModeNone": "None selected",
+                "location": "Location",
+                "locationPlaceholder": "e.g. Ho Chi Minh City",
+                "salaryMin": "Minimum salary",
+                "salaryMax": "Maximum salary",
+                "salaryPlaceholder": "e.g. 15000000",
+                "salaryHint": "Leave both blank if the salary is negotiable.",
+                "description": "Job description",
+                "descriptionPlaceholder": "Job description, Markdown supported",
+                "requirements": "Requirements (optional)",
+                "requirementsPlaceholder": "Candidate requirements, Markdown supported"
+            },
+            "applyMethod": {
+                "toggleAria": "Choose how to apply",
+                "externalUrl": "External link",
+                "email": "Email",
+                "urlLabel": "Application URL",
+                "urlPlaceholder": "https://...",
+                "emailLabel": "Application email",
+                "emailPlaceholder": "hr@company.com"
+            },
+            "errors": {
+                "companyRequired": "Pick an existing company or fill in a new company name.",
+                "companyEitherOr": "Choose only one: an existing company or a new company.",
+                "applyUrlRequired": "Enter an application URL.",
+                "applyEmailRequired": "Enter an application email."
+            },
+            "success": {
+                "title": "Your job posting is live",
+                "description": "Your posting is now visible on the job board — no approval needed.",
+                "viewPosting": "View posting",
+                "backToBoard": "Back to job board"
+            }
+        }
+    },
     "reference": {
         "title": "References"
     },
@@ -2444,6 +2685,7 @@
             "rewards": "Rewards",
             "blog": "Blog",
             "talents": "Talents",
+            "jobs": "IT jobs",
             "profile": "Profile"
         },
         "aiQuota": {
@@ -2780,7 +3022,8 @@
                 "engineer": {
                     "title": "For users",
                     "body": "You build a portfolio from real, production-grade projects, and I take it straight to hiring teams. They call you for what you can do, not for a polished CV.",
-                    "cta": "Start building your portfolio"
+                    "cta": "Start building your portfolio",
+                    "jobsCta": "Browse IT jobs"
                 },
                 "enterprise": {
                     "title": "For companies",
@@ -2847,8 +3090,7 @@
                     "tag": "Stay sharp",
                     "desc": "Compare solutions and climb the ranks."
                 }
-            },
-            "cta": "Jump in"
+            }
         },
         "treasure": {
             "eyebrow": "System capability map",
@@ -3158,50 +3400,6 @@
         "middle": "Mid",
         "senior": "Senior"
     },
-    "footer": {
-        "tagline": "Learn by building real systems with your own hands — sharp enough for any technical interview.",
-        "exploreTitle": "Explore",
-        "supportTitle": "Support",
-        "links": {
-            "courses": "Courses",
-            "blog": "Blog",
-            "talents": "Talents",
-            "community": "Community",
-            "contact": "Contact",
-            "terms": "Terms",
-            "privacy": "Privacy"
-        },
-        "madeBy": "Built by Nguyễn Văn Tự Cường",
-        "copyright": "© {year} StarCi Academy"
-    },
-    "legal": {
-        "contactNote": "Questions about these terms or your data? Email cuongnvtse160875@gmail.com.",
-        "lastUpdated": "Last updated: {date}",
-        "terms": {
-            "title": "Terms of Service",
-            "description": "The terms for using StarCi Academy.",
-            "body": "The full terms document is being finalized. By using StarCi Academy you agree to use the platform for lawful learning and to respect the ownership of course content. A detailed version will be published on this page."
-        },
-        "privacy": {
-            "title": "Privacy Policy",
-            "description": "How StarCi Academy collects and uses your data.",
-            "body": "The full privacy policy is being finalized. StarCi Academy collects only the data needed to run your learning (account, progress, submissions) and does not sell your data to third parties. A detailed version will be published on this page."
-        }
-    },
-    "cookieConsent": {
-        "title": "Cookies",
-        "body": "We use necessary cookies to sign you in and remember your language, plus analytics cookies (Google Analytics) to improve your experience. You can accept, reject, or customize.",
-        "acceptAll": "Accept all",
-        "reject": "Reject",
-        "customize": "Customize",
-        "modalTitle": "Cookie preferences",
-        "modalBody": "Choose which cookies you allow. Necessary cookies are always on so the system works.",
-        "necessaryLabel": "Necessary",
-        "necessaryHint": "Sign-in, security and language. Always on.",
-        "analyticsLabel": "Analytics",
-        "analyticsHint": "Google Analytics — anonymous metrics to improve the product.",
-        "save": "Save choices"
-    },
     "socketStatus": {
         "reconnecting": "Connection lost — reconnecting…",
         "reconnected": "Reconnected"
@@ -3271,6 +3469,159 @@
             "stop": "Stop",
             "send": "Send question",
             "genericError": "The AI could not answer right now — try again later."
+        }
+    },
+    "architecture": {
+        "title": "StarCi's system, live",
+        "subtitle": "A public engineering map — every node is a REAL infrastructure component, its status proven by your own request, nothing faked.",
+        "mapCaption": "Drag to orbit. Click a group to open its detailed diagram.",
+        "rail": {
+            "ariaLabel": "System component list",
+            "ownGroup": "StarCi's own system",
+            "externalGroup": "External dependencies",
+            "tagline": {
+                "keycloak": "Auth · OIDC",
+                "aiBalancer": "Multi-provider AI routing",
+                "judge0": "Run & grade code",
+                "ollama": "In-house LLM",
+                "redis": "Cache · queue",
+                "postgres": "Primary database",
+                "qdrant": "Vectors · RAG",
+                "elasticsearch": "Content search",
+                "minio": "Media storage",
+                "mail": "Transactional email",
+                "kafka": "Event bus · CDC",
+                "nats": "Streaming · job status",
+                "github": "OAuth · repos",
+                "stripe": "International cards",
+                "paypal": "International wallet",
+                "payos": "Domestic gateway",
+                "sepay": "Domestic gateway"
+            }
+        },
+        "map": {
+            "core": "Core API",
+            "coreSub": "nestjs",
+            "client": "Client",
+            "clientSub": "web · you are here",
+            "gateway": "API Gateway",
+            "gatewaySub": "graphql · ws",
+            "errorHeading": "Couldn't load system status",
+            "errorDescription": "The health API didn't answer. Try again in a moment.",
+            "retry": "Retry"
+        },
+        "status": {
+            "checking": "checking…",
+            "up": "up",
+            "degraded": "degraded",
+            "down": "down",
+            "unknown": "unknown"
+        },
+        "panel": {
+            "whyHeading": "Why it matters",
+            "deepDive": "Read the engineering deep-dive",
+            "latency": "{ms} ms",
+            "checked": "checked {ago}"
+        },
+        "curl": {
+            "heading": "Try it with the real API",
+            "commandLabel": "curl command (public GraphQL endpoint)",
+            "copy": "Copy",
+            "copied": "Copied",
+            "run": "Run"
+        },
+        "view": {
+            "present": "Today",
+            "future": "Future",
+            "grouped": "By group",
+            "everything": "Everything",
+            "backToOverview": "‹ Back to the whole system",
+            "eraAria": "Select timeline",
+            "layoutAria": "Select layout"
+        },
+        "pod": {
+            "payment": {
+                "name": "Payments",
+                "sub": "4 gateways"
+            },
+            "auth": {
+                "name": "Auth",
+                "sub": "keycloak · oauth"
+            },
+            "ai": {
+                "name": "AI",
+                "sub": "balancer · rag"
+            },
+            "data": {
+                "name": "Data + CDC",
+                "sub": "pg · kafka · es"
+            },
+            "events": {
+                "name": "Events",
+                "sub": "kafka · nats"
+            },
+            "media": {
+                "name": "Media",
+                "sub": "minio"
+            },
+            "coding": {
+                "name": "Code grading",
+                "sub": "judge0"
+            },
+            "notify": {
+                "name": "Notify",
+                "sub": "brevo"
+            }
+        },
+        "future": {
+            "comingSoon": "Coming soon",
+            "caption": "Where we're headed — splitting the monolith into microservices.",
+            "bus": "Event bus",
+            "busSub": "kafka · nats",
+            "order": "order-service",
+            "payment": "payment-service",
+            "ai": "ai-service",
+            "grading": "grading-service",
+            "media": "media-service",
+            "notification": "notification-service"
+        },
+        "role": {
+            "keycloak": "OIDC identity server + OAuth — issues tokens and manages per-device sessions.",
+            "aiBalancer": "Routes every AI call across providers, rotating keys by health and falling back on failure.",
+            "judge0": "Isolated code runner — compiles, runs tests and grades learners' coding submissions.",
+            "ollama": "In-house LLM (OpenAI-compatible) for tasks that don't need a cloud model.",
+            "redis": "Cache, job queue (BullMQ), throttler and socket adapter.",
+            "postgres": "Primary relational database (TypeORM) — the source of truth for all durable data.",
+            "qdrant": "Vector store for RAG (LangChain) — grounds AI grading in real context.",
+            "elasticsearch": "Low-latency search over content and courses.",
+            "minio": "S3-compatible storage for covers, media and assets.",
+            "mail": "Sends transactional email via Brevo SMTP.",
+            "kafka": "Event bus + CDC (Debezium) — keeps read-models in sync, CQRS-style.",
+            "nats": "JetStream — streams live job status back to the client.",
+            "github": "OAuth login + repo/team management for grading via repositories.",
+            "stripe": "International card gateway for payments outside Vietnam.",
+            "paypal": "International wallet for payments outside Vietnam.",
+            "payos": "Domestic payment gateway (QR / bank transfer).",
+            "sepay": "Domestic payment gateway with IPN reconciliation."
+        },
+        "why": {
+            "keycloak": "Without it nobody logs in — all access flows through here.",
+            "aiBalancer": "Keeps AI stable and cheap, never locked to a single vendor.",
+            "judge0": "Decides whether coding work passes — grading must run real code.",
+            "ollama": "Cuts dependency and cost on cloud models for light tasks.",
+            "redis": "Speeds up responses and coordinates background jobs system-wide.",
+            "postgres": "Lose it and you lose the data — every durable write lands here.",
+            "qdrant": "Lets AI grade on real context instead of guessing.",
+            "elasticsearch": "Finds lessons and courses fast as data grows.",
+            "minio": "Where course images, video and assets actually live.",
+            "mail": "The channel that reaches learners: verify, receipts, reminders.",
+            "kafka": "The backbone that syncs read-models — proof CQRS runs for real.",
+            "nats": "Shows learners grading/job progress instantly.",
+            "github": "Both a login method and the source of submissions to grade.",
+            "stripe": "Opens the door for international users to pay by card.",
+            "paypal": "Adds a familiar international payment option.",
+            "payos": "The primary payment rail for Vietnamese users.",
+            "sepay": "Reconciles bank balance changes for domestic payments."
         }
     }
 }

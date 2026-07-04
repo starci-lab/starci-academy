@@ -1,0 +1,97 @@
+"use client"
+
+import React, { useState } from "react"
+import { Chip, cn } from "@heroui/react"
+import { CaretRightIcon } from "@phosphor-icons/react"
+import { useLocale, useTranslations } from "next-intl"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
+import { SkeletonListRow } from "@/components/blocks/skeleton/Skeleton/ListRow"
+import { useQueryMyMockInterviewAttemptsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyMockInterviewAttemptsSwr"
+import { MockInterviewAttemptDrawer } from "@/components/drawers/MockInterviewAttemptDrawer"
+import type { MockInterviewAttemptItem } from "@/modules/api/graphql/queries/types/my-mock-interview-attempts"
+import type { WithClassNames } from "@/modules/types/base/class-name"
+
+/** Props for {@link MockInterviewHistory}. */
+export interface MockInterviewHistoryProps extends WithClassNames<undefined> {
+    /** Course whose mock-interview history to list. */
+    courseId: string
+}
+
+/** Attempts to show on the setup screen (older ones are still queryable via the drawer's own page later). */
+const HISTORY_PAGE_SIZE = 10
+
+/** Verdict → chip color (đạt / cận / chưa đạt) — mirrors {@link MockInterviewScorecard}'s convention. */
+const verdictColorOf = (verdict: string): "success" | "warning" | "danger" =>
+    verdict === "pass" ? "success" : verdict === "borderline" ? "warning" : "danger"
+
+/**
+ * The viewer's past mock-interview sessions for this course, newest first —
+ * shown on the setup screen so a learner can re-open and review a previous
+ * scorecard instead of it vanishing once graded. Renders even when empty
+ * (labeled section on a page the learner opened — never self-hides).
+ * @param props - {@link MockInterviewHistoryProps}
+ */
+export const MockInterviewHistory = ({ courseId, className }: MockInterviewHistoryProps) => {
+    const t = useTranslations()
+    const locale = useLocale()
+    const attemptsSwr = useQueryMyMockInterviewAttemptsSwr(courseId, HISTORY_PAGE_SIZE, 0)
+    const items = attemptsSwr.data?.items ?? []
+    const [selectedAttempt, setSelectedAttempt] = useState<MockInterviewAttemptItem | null>(null)
+
+    const formatDate = (iso: string) =>
+        new Intl.DateTimeFormat(locale, { dateStyle: "medium" }).format(new Date(iso))
+
+    return (
+        <>
+            <LabeledCard label={t("mockInterview.historyTitle")} className={cn(className)}>
+                <AsyncContent
+                    isLoading={attemptsSwr.isLoading && items.length === 0}
+                    skeleton={(
+                        <div className="flex flex-col gap-3">
+                            <SkeletonListRow withTrailing />
+                            <SkeletonListRow withTrailing />
+                            <SkeletonListRow withTrailing />
+                        </div>
+                    )}
+                    isEmpty={!attemptsSwr.isLoading && items.length === 0}
+                    emptyContent={{ title: t("mockInterview.historyEmpty") }}
+                    error={items.length === 0 ? attemptsSwr.error : undefined}
+                    errorContent={{
+                        title: t("mockInterview.historyError"),
+                        onRetry: () => void attemptsSwr.mutate(),
+                        retryLabel: t("mockInterview.promptsRetry"),
+                    }}
+                >
+                    <SurfaceListCard>
+                        {items.map((attempt) => (
+                            <SurfaceListCardRow
+                                key={attempt.id}
+                                title={attempt.promptTitle}
+                                subtitle={formatDate(attempt.createdAt)}
+                                meta={(
+                                    <Chip size="sm" variant="soft" color={verdictColorOf(attempt.verdict)}>
+                                        <Chip.Label>{attempt.overallScore}</Chip.Label>
+                                    </Chip>
+                                )}
+                                trailing={<CaretRightIcon className="size-4 text-muted" aria-hidden focusable="false" />}
+                                onPress={() => setSelectedAttempt(attempt)}
+                            />
+                        ))}
+                    </SurfaceListCard>
+                </AsyncContent>
+            </LabeledCard>
+
+            <MockInterviewAttemptDrawer
+                isOpen={selectedAttempt !== null}
+                onOpenChange={(open) => {
+                    if (!open) {
+                        setSelectedAttempt(null)
+                    }
+                }}
+                attempt={selectedAttempt}
+            />
+        </>
+    )
+}

@@ -27,4 +27,12 @@ export interface ConsultantEntity extends AbstractEntity {
     companyId: string
     /** Parent headhunting company when loaded. */
     company?: HeadhuntingCompanyEntity
+    /**
+     * Whether the viewer's CV score meets {@link cvScoreUnlockThreshold} — when
+     * `false`, `email` / `phoneNumber` / `zaloNumber` / `linkedinUrl` are `null`
+     * server-side (never sent). Anonymous viewers always get `false`.
+     */
+    contactUnlocked: boolean
+    /** The CV score (0-100) required to unlock contact info; always `70`. */
+    cvScoreUnlockThreshold: number
 }

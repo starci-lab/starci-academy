@@ -8,7 +8,7 @@ import React from "react"
 import { cn, Typography } from "@heroui/react"
 import { Canvas, useFrame } from "@react-three/fiber"
 import { Edges, Html, Line, OrbitControls } from "@react-three/drei"
-import { ArrowsSplitIcon, CheckCircleIcon, CubeIcon, DatabaseIcon, DesktopIcon, InfoIcon, StackIcon, UserIcon, WarningIcon, type Icon } from "@phosphor-icons/react"
+import { ArrowsSplitIcon, CheckCircleIcon, CubeIcon, DatabaseIcon, DesktopIcon, HexagonIcon, InfoIcon, StackIcon, UserIcon, WarningIcon, type Icon } from "@phosphor-icons/react"
 import { useReducedMotion } from "framer-motion"
 import * as THREE from "three"
 import type { ReactNode } from "react"
@@ -310,6 +310,40 @@ const BrokerMesh = ({ shade }: { shade: Shade }) => {
     )
 }
 
+/** Member-node "bumps" on a pod's top face (fraction of the hex radius) — a small
+ *  cluster that reads as "this cell HOLDS nodes". */
+const POD_MEMBERS: Array<[number, number]> = [[-0.4, 0.22], [0.4, 0.22], [0, -0.44]]
+/** Pod hex radius + prism height (bigger + taller than the loadBalancer puck so it
+ *  reads as a container cell, not a gateway). */
+const POD_R = 1.16
+const POD_H = 0.66
+
+/** `pod` — a hexagonal honeycomb CELL: a flat-top hex prism (tri-tone flat shading)
+ *  with a small cluster of light member-node cubes on its top face. Represents a
+ *  functional GROUP (payment, ai, data…) that drills into its own sub-scene; the hex
+ *  tiles into a honeycomb around the Core. */
+const PodMesh = ({ shade }: { shade: Shade }) => (
+    <group>
+        <mesh position={[0, POD_H / 2, 0]} rotation={[0, Math.PI / 6, 0]}>
+            <cylinderGeometry args={[POD_R, POD_R, POD_H, 6]} />
+            <CylFaces shade={shade} />
+            <Ink color={shade.outline} />
+        </mesh>
+        {POD_MEMBERS.map(([mx, mz], i) => (
+            <mesh key={i} position={[mx, POD_H + 0.13, mz]}>
+                <boxGeometry args={[0.32, 0.26, 0.32]} />
+                <meshBasicMaterial attach="material-0" color="#d7dbe2" />
+                <meshBasicMaterial attach="material-1" color="#c2c7d0" />
+                <meshBasicMaterial attach="material-2" color="#eef0f4" />
+                <meshBasicMaterial attach="material-3" color="#c2c7d0" />
+                <meshBasicMaterial attach="material-4" color="#c2c7d0" />
+                <meshBasicMaterial attach="material-5" color="#d7dbe2" />
+                <Ink color={shade.outline} />
+            </mesh>
+        ))}
+    </group>
+)
+
 /** `loadBalancer` — a hex puck (an edge gateway that fans out). */
 const LoadBalancerMesh = ({ shade }: { shade: Shade }) => (
     <mesh position={[0, 0.32, 0]} rotation={[0, Math.PI / 6, 0]}>
@@ -372,6 +406,7 @@ const KindMesh = ({ kind, shade }: { kind: NodeKind | undefined; shade: Shade })
     case "loadBalancer": return <LoadBalancerMesh shade={shade} />
     case "client": return <ClientMesh shade={shade} />
     case "user": return <UserMesh shade={shade} />
+    case "pod": return <PodMesh shade={shade} />
     default: return <ContainerMesh shade={shade} />
     }
 }
@@ -384,14 +419,25 @@ const KIND_ICON: Record<NodeKind, Icon> = {
     database: DatabaseIcon,
     broker: StackIcon,
     user: UserIcon,
+    pod: HexagonIcon,
 }
 
 /** A node rendered as its {@link NodeKind} shape (flat-iso, token tones) + its floating label.
  *  Danger nodes "run hot": every FILL material pulses uniformly toward {@link EMBER} (snapshotted
  *  by traversing the group, so it works for any geometry — box / cylinder / sphere), breathing hot
  *  without the lopsided wash an additive camera-facing glow would leave on just the front faces.
- *  Outline lines (Edges) are skipped so the ink stays one uniform, theme-aware colour. */
-const Bar = ({ node, cell, shade, reduce }: { node: ArchitectureNode; cell: number; shade: Shade; reduce: boolean }) => {
+ *  Outline lines (Edges) are skipped so the ink stays one uniform, theme-aware colour.
+ *
+ *  Optionally clickable (`onClick`) with a `selected` ring under the label — both opt-in so a
+ *  purely-decorative scene (the default) renders exactly as before. */
+const Bar = ({ node, cell, shade, reduce, selected, onClick }: {
+    node: ArchitectureNode
+    cell: number
+    shade: Shade
+    reduce: boolean
+    selected?: boolean
+    onClick?: () => void
+}) => {
     const [cx, cz] = node.cell
     const group = React.useRef<THREE.Group>(null)
     const isDanger = (node.tone ?? "normal") === "danger"
@@ -419,12 +465,22 @@ const Bar = ({ node, cell, shade, reduce }: { node: ArchitectureNode; cell: numb
     const TypeIcon = KIND_ICON[node.kind ?? "container"]
     const StatusIcon = node.status ? STATUS_ICON[node.status.tone] : null
     return (
-        <group ref={group} position={[cx * cell, 0, cz * cell]}>
+        <group
+            ref={group}
+            position={[cx * cell, 0, cz * cell]}
+            onClick={onClick ? (event) => { event.stopPropagation(); onClick() } : undefined}
+            onPointerOver={onClick ? (event) => { event.stopPropagation(); document.body.style.cursor = "pointer" } : undefined}
+            onPointerOut={onClick ? () => { document.body.style.cursor = "auto" } : undefined}
+        >
             <KindMesh kind={node.kind} shade={shade} />
-            {/* label = a surface chip with a border in the node's own colour */}
+            {/* label = a surface chip with a border in the node's own colour; selected → thicker
+                accent ring so the click ↔ rail sync reads at a glance */}
             <Html position={[0, LABEL_Y, 0]} center zIndexRange={[120, 0]} style={{ pointerEvents: "none" }}>
                 <div
-                    className="flex select-none flex-col items-center gap-0.5 whitespace-nowrap rounded-md border px-2 py-1 text-center"
+                    className={cn(
+                        "flex select-none flex-col items-center gap-0.5 whitespace-nowrap rounded-md border px-2 py-1 text-center",
+                        selected && "ring-2 ring-accent ring-offset-1 ring-offset-transparent",
+                    )}
                     style={{ backgroundColor: "var(--surface)", borderColor: shade.tint }}
                 >
                     <span className="font-mono text-[11px] font-medium leading-tight text-foreground">{node.name}</span>
@@ -485,7 +541,13 @@ const Edge = ({ edge, centres, color, reduce }: { edge: ArchitectureEdge; centre
 }
 
 /** Whole scene (inside the Canvas). The camera orbits via OrbitControls, so no group drift here. */
-const Scene = ({ data, palette, reduce }: { data: ArchitectureSceneData; palette: Palette; reduce: boolean }) => {
+const Scene = ({ data, palette, reduce, selectedId, onSelectNode }: {
+    data: ArchitectureSceneData
+    palette: Palette
+    reduce: boolean
+    selectedId?: string
+    onSelectNode?: (id: string) => void
+}) => {
     const centres = React.useMemo(() => buildCentres(data.nodes, data.board.cell), [data])
     const grid = React.useMemo(() => buildGrid(data.board), [data.board])
     return (
@@ -501,7 +563,15 @@ const Scene = ({ data, palette, reduce }: { data: ArchitectureSceneData; palette
                 />
             ))}
             {data.nodes.map((node) => (
-                <Bar key={node.id} node={node} cell={data.board.cell} shade={palette.node[node.tone ?? "normal"]} reduce={reduce} />
+                <Bar
+                    key={node.id}
+                    node={node}
+                    cell={data.board.cell}
+                    shade={palette.node[node.tone ?? "normal"]}
+                    reduce={reduce}
+                    selected={selectedId === node.id}
+                    onClick={onSelectNode ? () => onSelectNode(node.id) : undefined}
+                />
             ))}
         </group>
     )
@@ -513,6 +583,16 @@ export interface ArchitectureSceneProps extends WithClassNames<undefined> {
     data?: ArchitectureSceneData
     /** Caption under the scene (i18n string from the feature). */
     caption?: ReactNode
+    /**
+     * Id of the node to highlight (a ring under its label) — opt-in, for a
+     * master-detail atlas that syncs the map selection with a sidebar/URL.
+     */
+    selectedId?: string
+    /**
+     * When provided, nodes become clickable (cursor + click), calling back
+     * with the clicked node's id — lets a caller sync the map ⇄ a rail/panel.
+     */
+    onSelectNode?: (id: string) => void
 }
 
 /**
@@ -522,7 +602,7 @@ export interface ArchitectureSceneProps extends WithClassNames<undefined> {
  *
  * @param props - {@link ArchitectureSceneProps}
  */
-export const ArchitectureScene = ({ data = DEFAULT_DATA, caption, className }: ArchitectureSceneProps) => {
+export const ArchitectureScene = ({ data = DEFAULT_DATA, caption, className, selectedId, onSelectNode }: ArchitectureSceneProps) => {
     const reduce = Boolean(useReducedMotion())
     const palette = usePalette()
     return (
@@ -536,7 +616,7 @@ export const ArchitectureScene = ({ data = DEFAULT_DATA, caption, className }: A
                     style={{ background: "transparent" }}
                     dpr={[2, 3]}
                 >
-                    <Scene data={data} palette={palette} reduce={reduce} />
+                    <Scene data={data} palette={palette} reduce={reduce} selectedId={selectedId} onSelectNode={onSelectNode} />
                     {/* drag to orbit (no zoom/pan, no auto-spin — keeps the labels in a stable
                         order). Polar clamped so the camera can't dip under the floor or top-down. */}
                     <OrbitControls

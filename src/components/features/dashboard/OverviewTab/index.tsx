@@ -35,6 +35,10 @@ import {
 import {
     ChangelogList,
 } from "../ChangelogList"
+import {
+    JobReadinessWidget,
+    JobReadinessWidgetIcon,
+} from "./JobReadinessWidget"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -46,8 +50,9 @@ export type OverviewTabProps = WithClassNames<undefined>
 /**
  * Dashboard "Overview" tab — the cockpit, every section framed by a `LabeledCard`
  * (label outside + card, mirroring the profile page): "Tiếp tục học" (next action),
- * "Đà học" (streak), "Mục tiêu tuần" (weekly goals), the weekly-challenge event,
- * then the contribution heatmap. Each child self-fetches + owns its states.
+ * "Đà học" (streak), "Mục tiêu tuần" (weekly goals), "Độ sẵn sàng của tôi" (own
+ * job-readiness + a CTA at the missing pillar), the weekly-challenge event, then
+ * the contribution heatmap. Each child self-fetches + owns its states.
  * @param props - optional root class name (placement only)
  */
 export const OverviewTab = ({
@@ -81,6 +86,12 @@ export const OverviewTab = ({
                 icon={<TargetIcon aria-hidden focusable="false" className="size-5" />}
             >
                 <WeeklyGoals />
+            </LabeledCard>
+            <LabeledCard
+                label={t("jobReadiness.myTitle")}
+                icon={<JobReadinessWidgetIcon aria-hidden focusable="false" className="size-5" />}
+            >
+                <JobReadinessWidget />
             </LabeledCard>
             {/* weekly-challenge event — self-titled card (self-hides when none) */}
             <WeeklyChallengeCard />

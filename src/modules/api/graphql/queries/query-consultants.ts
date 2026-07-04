@@ -35,6 +35,8 @@ const query1 = gql`
           avatarUrl
           sortIndex
           companyId
+          contactUnlocked
+          cvScoreUnlockThreshold
           company {
             id
             displayId

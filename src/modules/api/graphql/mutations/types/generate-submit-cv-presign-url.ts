@@ -6,6 +6,12 @@ export interface GenerateSubmitCvPresignUrlData {
     url: string
     /** CV submission row ID created by the backend. */
     cvSubmissionId: string
+    /**
+     * Storage object key the file is PUT to. Pass this into `uploadCv` so the
+     * uploaded CV lands in the unified `cv_generations` table (`source = uploaded`)
+     * and gets scored.
+     */
+    cdnKey: string
 }
 
 /** GraphQL `GenerateSubmitCvPresignUrlRequest` body. */

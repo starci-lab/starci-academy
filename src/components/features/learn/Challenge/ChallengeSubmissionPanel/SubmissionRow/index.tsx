@@ -243,7 +243,7 @@ export const SubmissionRow = ({
                             canPremium={canPremium}
                             isDisabled={isPending}
                             floor={AiModelCategory.Economy}
-                            task={AiModelTask.Grading}
+                            task={AiModelTask.ChallengeGrading}
                             onSelect={(selection) => onSelectGrade(submission.id, selection)}
                             onUpgrade={onUpgrade}
                         />

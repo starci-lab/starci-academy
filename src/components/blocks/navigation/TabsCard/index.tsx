@@ -48,6 +48,13 @@ export interface TabsCardGroup {
 export interface TabsCardProps extends WithClassNames<undefined> {
     /** Primary tab group, pinned left. */
     leftTabs: TabsCardGroup
+    /**
+     * Inline cluster rendered right AFTER the left tab group — actions that belong
+     * to the left axis (e.g. a manage-menu for the active tab, an "+" add button,
+     * an overflow count). Rendered as SIBLINGS of the tab list, never inside a
+     * `Tabs.Tab` (react-aria tabs can't nest interactive elements).
+     */
+    leftEnd?: ReactNode
     /** Optional secondary tab group, pinned right (e.g. a language switcher). */
     rightTabs?: TabsCardGroup
     /**
@@ -86,6 +93,7 @@ const TAB_CLASS_NEUTRAL =
  */
 export const TabsCard = ({
     leftTabs,
+    leftEnd,
     rightTabs,
     collapseRightOnMobile,
     rightTabsNeutral,
@@ -179,7 +187,12 @@ export const TabsCard = ({
 
     return (
         <div className={cn("flex items-center justify-between gap-3", className)}>
-            {renderGroup(leftTabs)}
+            {leftEnd ? (
+                <div className="flex min-w-0 items-center gap-1">
+                    {renderGroup(leftTabs)}
+                    {leftEnd}
+                </div>
+            ) : renderGroup(leftTabs)}
             {rightTabs
                 ? collapseRightOnMobile
                     ? (

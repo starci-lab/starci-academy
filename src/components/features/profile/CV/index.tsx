@@ -1,7 +1,6 @@
 "use client"
 
 import React, {
-    useCallback,
     useMemo,
 } from "react"
 import {
@@ -14,10 +13,9 @@ import {
 } from "next-intl"
 import {
     useRouter,
-    useSearchParams,
 } from "next/navigation"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { CvWorkspace } from "./CvWorkspace"
+import { CvGallery } from "./CvGallery"
 import { pathConfig } from "@/resources/path"
 
 /** One breadcrumb row for the CV page. */
@@ -34,14 +32,11 @@ type CvBreadcrumbItem = {
 export type CvProps = WithClassNames<undefined>
 
 /**
- * CV page — a USER-level (not course-scoped) résumé tool: upload + AI feedback + PDF preview.
- * Hosted at `/profile/cv` (the user owns one CV across all courses). Profile-context breadcrumb
- * (Home › Hồ sơ › CV) wrapping the shared {@link CvWorkspace} (also rendered, without a
- * breadcrumb, as the public-profile "CV" tab).
- *
- * The URL's `?edit=true` (this same route — see the pathConfig `cv().edit()`
- * builder) selects {@link CvWorkspace}'s compose mode instead of a separate
- * `/profile/cv/edit` route; the old route now just redirects here.
+ * CV page — a USER-level (not course-scoped) résumé tool. Hosted at
+ * `/profile/cv` (the user owns many CVs across all courses). Profile-context
+ * breadcrumb (Home › Hồ sơ › CV) wrapping the shared {@link CvBlocksWorkspace}
+ * block editor (also rendered, without a breadcrumb, as the public-profile "CV"
+ * tab).
  *
  * @param props - {@link CvProps}
  */
@@ -49,16 +44,6 @@ export const Cv = ({ className }: CvProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
-    const searchParams = useSearchParams()
-    const edit = searchParams.get("edit") === "true"
-
-    /** Flip between review and compose IN PLACE (`router.replace` — no extra
-     *  history entry for a mode toggle within the same tool). */
-    const onEditChange = useCallback((next: boolean) => {
-        router.replace(next
-            ? pathConfig().locale(locale).profile().cv().edit().build()
-            : pathConfig().locale(locale).profile().cv().build())
-    }, [locale, router])
 
     const breadcrumbItems = useMemo((): Array<CvBreadcrumbItem> => [
         {
@@ -74,21 +59,16 @@ export const Cv = ({ className }: CvProps) => {
         {
             key: "cv",
             label: t("cv.title"),
-            onPress: edit ? () => onEditChange(false) : undefined,
         },
     ], [
-        edit,
         locale,
-        onEditChange,
         router,
         t,
     ])
 
     return (
         <div className={cn("mx-auto flex w-full max-w-[1280px] flex-col px-6 py-6", className)}>
-            <CvWorkspace
-                edit={edit}
-                onEditChange={onEditChange}
+            <CvGallery
                 breadcrumb={(
                     <Breadcrumbs>
                         {breadcrumbItems.map((item) => (

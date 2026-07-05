@@ -27,6 +27,16 @@ export interface AskMockInterviewTurnStreamParams {
     model?: string | null
     /** Provider of the pinned model. */
     provider?: string | null
+    /** Seniority level driving rubric strictness for this turn's follow-up, or omitted for "any level". */
+    level?: string
+    /** Top-level flow this session runs ("qna" | "design"); absent is treated as `"qna"`. */
+    mode?: string | null
+    /** THIS question's cognitive frame ("theory" | "reasoning" | "scenario"), randomly assigned per-question at draw time; meaningful only when `mode` is "qna". */
+    kind?: string | null
+    /** Current question's seed text (Q&A kinds) — resend unchanged for the opening ask and every follow-up on that question. */
+    currentSeed?: string | null
+    /** 0-based index of the question this turn belongs to (Q&A kinds). */
+    questionIndex?: number | null
     /** Called for every incremental token delta as the turn streams. */
     onDelta: (delta: string) => void
     /** Called once when the stream finishes (with `error` set when it failed). */
@@ -105,6 +115,11 @@ export const useMockInterviewTurnStream = (): MockInterviewTurnStreamControls =>
                     latestAnswer: params.latestAnswer,
                     model: params.model,
                     provider: params.provider,
+                    level: params.level,
+                    mode: params.mode,
+                    kind: params.kind,
+                    currentSeed: params.currentSeed,
+                    questionIndex: params.questionIndex,
                 },
                 locale,
             }

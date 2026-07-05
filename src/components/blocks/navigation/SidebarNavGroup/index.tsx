@@ -46,15 +46,20 @@ export const SidebarNavGroup = ({
                 the single padding wrapper lives on CollapsibleSidebar, so this stays
                 inset, not edge-to-edge. */}
             {divider ? <Separator className="mb-3" /> : null}
+            {/* Header (semantic <header>) OUTSIDE — Typography renders a <p>, and a
+                <header> may not descend from a <p> (hydration error). Wrapping the
+                other way (<header> holding the <p>) is valid HTML. */}
             {label && !collapsed ? (
-                <Typography
-                    type="body-xs"
-                    weight="medium"
-                    color="muted"
-                    className="tracking-wide"
-                >
-                    <Header>{label}</Header>
-                </Typography>
+                <Header>
+                    <Typography
+                        type="body-xs"
+                        weight="medium"
+                        color="muted"
+                        className="tracking-wide"
+                    >
+                        {label}
+                    </Typography>
+                </Header>
             ) : null}
             {children}
         </div>

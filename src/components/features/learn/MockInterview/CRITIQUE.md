@@ -214,3 +214,85 @@ UI never shows the rolling average, the band, or the "one more run" delta — so
 concrete, personalized list of curriculum gaps) at the exact moment the learner is most motivated to fix them — and
 then does nothing with it. No CTA, no course deep-link, no progress hook. Everything else is fixable polish; this is
 a structural failure to convert a "diagnosis" into "go study," which is the whole point of a learning platform.
+
+---
+---
+
+# VÒNG 2 (2026-07-05) — thầy's cuts: "chọn nhiều đề tài quá, chia 3 mức random" + "diagram — hình thức khác?"
+
+## Trạng thái các hole VÒNG 1 (re-verify source 2026-07-05)
+| Hole V1 | Trạng thái |
+|---|---|
+| H1 dead-end scorecard | ✅ **ĐÃ VÁ** — scorecard giờ có PRIMARY "Ôn lại {phase yếu} trong khóa" deep-link RAG-matched content + track snapshot |
+| H2 forgeable transcript (client-sent `turns`/`promptTitle`/`level`) | ❌ **CÒN NGUYÊN** — server vẫn chấm nguyên văn client gửi |
+| H3 invisible moat | 🟡 một phần — scorecard hiện citation matched-content; classics vẫn ngang hàng capstone trong picker |
+| H4 walled off trial | ❌ còn (enrolled-only); quota-wall → subscription upsell ĐÃ có |
+| H5 charged hollow run | ✅ ĐÃ VÁ — min 100 ký tự (`MockInterviewSessionTooShortException`) trước khi gate quota |
+| H6 hidden retention mechanic | 🟡 một phần — recent-5 window tồn tại (WF-09) nhưng scorecard chưa hiện rolling avg + delta band |
+
+## Grounded facts MỚI (neo cho vòng 2)
+- **Setup = 3 tầng quyết định:** picker đề = **20 capstone (SD) + 14 classic ≈ 34 lựa chọn** (1-column
+  `SelectableCardGroup`) · level 5 lựa chọn (all/junior/middle/senior/staff) · model picker (Balanced/Premium/
+  Frontier + Auto). Prompt ĐÃ có `difficulty` (Easy/Medium/Hard/Insane) nhưng picker bắt chọn ĐỀ, không chọn mức.
+- **Kịch bản 5 phase HARDCODED thuần System-Design** (estimation = QPS/storage · highLevel = boxes-and-arrows
+  5–7 components) — chạy y hệt cho capstone Fullstack/DevOps.
+- **Diagram = FE whiteboard (xyflow) LUÔN hiện, mọi khóa**; khi chấm serialize thành text `[Diagram]\n…` append
+  làm 1 candidate turn. **BE không có khái niệm diagram** (turns[].content = plain string; grading prompt không
+  nói với model "đây là diagram, chấm kiến trúc").
+
+## Lens 3/1 — Choice overload & the random cut (⭐ thầy's point 1)
+V2-1. *Real interviews hand you a random question — you never pick.* **Claim: the 34-option picker doesn't just
+      add friction, it corrupts the signal: learners rehearse the capstone they already built, job-readiness
+      inflates on comfort-zone practice, and the recruiter-facing pillar quietly becomes "practiced their
+      favorite topic 5 times."** Why should an examinee EVER choose their own exam question?
+V2-2. Thầy's "3 mức random" — stress-testing it back: (a) random from the FULL pool can draw a capstone the
+      learner hasn't reached (module-18 system while they're on module 3) → instant fail → churn. Should the
+      pool be **progress-aware** (draw ≤ current milestone progress, capstone-first, classics as filler)? The
+      progress data already exists. (b) Today there are TWO hardness knobs meaning the same thing to a user —
+      prompt `difficulty` (Easy/Hard) and `level` (junior/staff, rubric strictness). **Claim: "3 mức" should
+      collapse BOTH into one axis (Sơ/Trung/Cao → drives pool difficulty AND rubric strictness), deleting the
+      level selector and the prompt picker in one move.** Any reason two hardness knobs must survive?
+V2-3. If the prompt is random, the "retry" story changes: today retry = same prompt again (memorize the grader);
+      random = new prompt each run (real signal, resists retry-gaming — strengthens the recent-5 window). Is
+      there ANY business case for keeping deliberate same-prompt retry (e.g. "practice this capstone before its
+      milestone review")? If yes, is that a separate mode rather than the default?
+
+## Lens 1/6 — SD-monoculture format & per-track submission (⭐ thầy's point 2)
+V2-4. **The 5-phase script IS a System-Design interview** (QPS estimation, boxes-and-arrows). A Fullstack
+      learner interviewing about their CRUD capstone gets scored on "estimation" and "high-level architecture"
+      — phases their real job interview may never ask. **Claim: every non-SD score this emits is graded against
+      the wrong exam, and since it feeds the same job-readiness pillar, the pillar's meaning silently varies by
+      course.** Rebut: what does a 62 mean for a DevOps learner?
+V2-5. **The diagram board is grading theater**: 10 minutes of drawing serializes to the same text a learner
+      could type, and the rubric is never told it's a diagram. Either the grader SEES the structure (label it
+      in the prompt + grade architecture explicitly — SD only), or the board is cut/hidden on non-SD courses.
+      Which — and why has "always-on whiteboard for everyone" survived this long?
+V2-6. Thầy asks "hình thức khác?" — transfer-appropriate formats per track would be: SD → diagram (rubric-aware),
+      FS → code/API-contract pad (endpoint signature, schema sketch), DevOps → pipeline/config sketch or
+      incident runbook. **Claim: per-track ANSWER SURFACES are only worth building AFTER the phase script is
+      per-track — otherwise we bolt the right answer-box onto the wrong interview.** Build order: script first,
+      surface second. Agree, or is there a cheaper cut (hide diagram on non-SD, ship nothing else)?
+V2-7. Model picker at setup (3rd decision): does "Balanced vs Frontier" before an interview create business
+      value for the LEARNER — and does a Frontier-graded 80 mean the same as an Economy-graded 80 inside one
+      recent-5 average? If stronger models grade differently, paid users' readiness numbers drift from free
+      users' — a [[fair-monetization-axiom]] smell nobody has measured. Should the score-feeding grade be
+      pinned to ONE tier (model choice only upgrades feedback RICHNESS, not the number)?
+
+## HOLES VÒNG 2
+- **V2-H1 · Picker corrupts signal + kills starts** — 34 đề × 2 knob độ khó × model = 3 quyết định trước câu
+  hỏi đầu tiên; tự chọn đề = luyện vùng an toàn → readiness inflate. (V2-1..3)
+- **V2-H2 · SD-monoculture** — 1 kịch bản phỏng vấn SD cho mọi track → điểm non-SD sai nghĩa mà vẫn feed
+  chung 1 pillar. (V2-4)
+- **V2-H3 · Diagram theater** — effort vẽ không được chấm; whiteboard hiện cả ở khóa không cần. (V2-5, V2-6)
+- **V2-H4 · Grader-tier drift** — model mạnh/yếu chấm cùng 1 average; tiền có thể đổi số. (V2-7)
+
+## Resolution directions (chờ thầy chốt → layout-brainstorm → workflow)
+- **R1 (3 mức random, sharpened):** setup còn ĐÚNG 1 quyết định = **mức (Sơ/Trung/Cao)** — map junior/mid/senior
+  → drive CẢ pool đề (difficulty + progress-aware, capstone-first) LẪN rubric strictness. Bỏ prompt picker, bỏ
+  level selector; model → Auto de-emphasized. Đề lộ ra SAU khi bấm bắt đầu (như thi thật). Optional mode phụ
+  "luyện đề này" deep-link từ trang milestone (giữ deliberate-practice mà không nhiễm default).
+- **R2 (format theo track, phased):** bước 1 = phase script per-track (SD giữ 5 phase; FS/DevOps script riêng
+  ngắn hơn); bước 2 = answer surface per-track (SD: diagram rubric-aware; FS: code/API pad; DevOps: config/
+  runbook). Ngay lập tức (rẻ): gắn nhãn diagram trong grading prompt + ẨN whiteboard ở khóa non-SD.
+- **R3 (signal integrity):** điểm-feed-readiness chấm bằng 1 tier cố định (Economy) — model xịn hơn chỉ nâng
+  chất feedback; server tự lookup prompt/level (đừng tin client) — gộp với V1-H2.

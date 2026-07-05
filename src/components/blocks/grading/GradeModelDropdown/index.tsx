@@ -113,6 +113,22 @@ const showSelfHostMark = (model: AiGradableModel) =>
 /** Dropdown row width — popover must be bounded or `truncate` never fires. */
 const DROPDOWN_POPOVER_CLASS = "w-80 max-w-[calc(100vw-2rem)]"
 const DROPDOWN_ITEM_ROW_CLASS = "w-full min-w-0 overflow-hidden"
+
+/**
+ * HeroUI's `Select.Indicator` chevron, replicated 1:1 (same 16×16 viewBox + path)
+ * so the `isDropdown` trigger's caret is IDENTICAL to the Select dropdowns beside
+ * it — `IconChevronDown` is a HeroUI internal, not exported, so we inline its SVG.
+ */
+const FieldChevronDown = () => (
+    <svg aria-hidden="true" fill="none" viewBox="0 0 16 16" className="size-4">
+        <path
+            clipRule="evenodd"
+            fillRule="evenodd"
+            fill="currentColor"
+            d="M2.97 5.47a.75.75 0 0 1 1.06 0L8 9.44l3.97-3.97a.75.75 0 1 1 1.06 1.06l-4.5 4.5a.75.75 0 0 1-1.06 0l-4.5-4.5a.75.75 0 0 1 0-1.06"
+        />
+    </svg>
+)
 const MODEL_ROW_TRIGGER_CLASS = "block w-full min-w-0"
 
 /** Model row — name truncates on the left, chips stay pinned on the right. */
@@ -183,6 +199,12 @@ export type GradeModelDropdownProps = WithClassNames<undefined> & {
     task?: AiModelTask
     /** Popover placement. Default "bottom start"; pass "top start" for a bottom-anchored composer. */
     placement?: "bottom start" | "top start"
+    /**
+     * Render the trigger as a standard bordered field-style dropdown button
+     * (mirrors HeroUI `Select.Trigger`) instead of the bare inline trigger, so it
+     * matches Select dropdowns sitting alongside it (e.g. the CV editor sidebar).
+     */
+    isDropdown?: boolean
     /** Fired with the new selection when the user picks an option. */
     onSelect: (selection: GradeModelSelection) => void
     /** Fired when a locked (unlock-required) model is pressed — route to plans. */
@@ -210,6 +232,7 @@ export const GradeModelDropdown = ({
     floor,
     task,
     placement = "bottom start",
+    isDropdown = false,
     onSelect,
     onUpgrade,
     className,
@@ -273,18 +296,51 @@ export const GradeModelDropdown = ({
                 }
             }}
         >
-            <DropdownTrigger
-                isDisabled={isDisabled}
-                className={cn("min-w-0 max-w-full cursor-pointer", className)}
-            >
-                <div className="flex w-full min-w-0 items-center justify-between gap-2">
+            {isDropdown ? (
+                // isDropdown → the trigger IS the field (ONE element, exactly like the
+                // Select — no inner wrapper div, so no stacked shadow). `flex!` beats the
+                // `.dropdown__trigger` base `inline-block`; every field state (chrome +
+                // hover bg/border + focus border + shadow-field) is copied 1:1 from
+                // `.select__trigger`. `transform-none!` (unconditional) removes BOTH the
+                // press-shrink (`scale(.97)`) AND the base `transform-gpu` (`translateZ(0)`)
+                // — the GPU compositing layer is what made `shadow-field` render darker than
+                // the Select's on hover. The Select has no transform, so now they match.
+                <DropdownTrigger
+                    isDisabled={isDisabled}
+                    className={cn(
+                        "relative flex! min-h-9 w-full cursor-pointer items-center rounded-field border border-[color:var(--field-border)] bg-field py-2 pe-7 ps-3 text-sm text-field-foreground shadow-field transform-none!",
+                        "data-[hovered=true]:bg-field-hover data-[hovered=true]:border-[color:var(--field-border-hover)]",
+                        "data-[focus-visible=true]:border-[color:var(--field-border-focus)]",
+                        className,
+                    )}
+                >
                     <span className="flex min-w-0 items-center gap-2 overflow-hidden">
                         <SparkleIcon className="size-5 shrink-0" />
                         <span className="truncate">{triggerLabel}</span>
                     </span>
-                    <CaretDownIcon className="size-5 shrink-0" />
-                </div>
-            </DropdownTrigger>
+                    <span
+                        className={cn(
+                            "absolute inset-y-0 end-2 my-auto flex shrink-0 items-center justify-center text-field-placeholder transition duration-150",
+                            isOpen && "rotate-180",
+                        )}
+                    >
+                        <FieldChevronDown />
+                    </span>
+                </DropdownTrigger>
+            ) : (
+                <DropdownTrigger
+                    isDisabled={isDisabled}
+                    className={cn("min-w-0 max-w-full cursor-pointer", className)}
+                >
+                    <div className="flex w-full min-w-0 items-center justify-between gap-2">
+                        <span className="flex min-w-0 items-center gap-2 overflow-hidden">
+                            <SparkleIcon className="size-5 shrink-0" />
+                            <span className="truncate">{triggerLabel}</span>
+                        </span>
+                        <CaretDownIcon className="size-5 shrink-0" />
+                    </div>
+                </DropdownTrigger>
+            )}
             <DropdownPopover
                 placement={placement}
                 className={DROPDOWN_POPOVER_CLASS}

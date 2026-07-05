@@ -10,10 +10,12 @@ import type { ModelProvider } from "../../queries/query-my-ai-settings"
 export interface MockInterviewTurnInput {
     /** Who spoke this turn — `"interviewer"` or `"candidate"`. */
     role: string
-    /** Which of the 5 canonical interview phases this turn belongs to (a `MockInterviewPhase` value). */
+    /** Which of the 5 canonical interview phases this turn belongs to (a `MockInterviewPhase` value). Carries no meaning for Q&A kinds — any valid enum value is accepted. */
     phase: string
     /** The turn's text content (candidate turns are speech-to-text transcribed). */
     content: string
+    /** Which question (0-based) this turn belongs to — Q&A kinds only, groups turns into per-question `phaseScores` server-side. Omit for `kind="design"`. */
+    questionIndex?: number
 }
 
 /**

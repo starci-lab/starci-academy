@@ -47,7 +47,9 @@ export const MockInterviewHistory = ({ courseId, courseDisplayId, className }: M
 
     return (
         <>
-            <LabeledCard label={t("mockInterview.historyTitle")} className={cn(className)}>
+            {/* frameless: the content IS a SurfaceListCard (a bounded surface), so the
+                LabeledCard must NOT wrap it in a second card → no card-in-card. */}
+            <LabeledCard frameless label={t("mockInterview.historyTitle")} className={cn(className)}>
                 <AsyncContent
                     isLoading={attemptsSwr.isLoading && items.length === 0}
                     skeleton={(

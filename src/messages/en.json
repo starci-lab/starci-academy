@@ -733,6 +733,271 @@
   "cv": {
     "title": "CV",
     "description": "Your CV score, AI feedback, and preview — kept side by side so you can compare them.",
+    "builder": {
+      "title": "Build CV",
+      "description": "Assemble your CV from blocks — projects, experience, education — with a live PDF preview right beside it.",
+      "documentsAria": "Choose the CV you're editing",
+      "addDocument": "Add new CV",
+      "untitled": "CV #{number}",
+      "galleryDescription": "Your CVs. Click one to edit, or create a new one.",
+      "galleryTarget": "your CVs",
+      "createCta": "Create new CV",
+      "openEditor": "Open editor",
+      "editCta": "Edit {name}",
+      "deleteCta": "Delete CV",
+      "missingTitle": "This CV wasn't found",
+      "missingHint": "It may have been deleted. Go back to the list to pick another.",
+      "emptyTitle": "You don't have any CV yet",
+      "emptyHint": "Create a CV to start assembling your blocks.",
+      "createFirst": "Create first CV",
+      "errorTitle": "Couldn't load your CVs",
+      "retry": "Retry",
+      "template": {
+        "label": "Template",
+        "galleryTitle": "Template gallery",
+        "selectAria": "Use the {name} template",
+        "atsSafe": "ATS-safe",
+        "atsRisk": "May struggle with ATS",
+        "wordHint": "Two columns look best as PDF",
+        "names": {
+          "classic": "Classic",
+          "modern": "Modern",
+          "sidebar": "Two-column",
+          "minimal": "Minimal"
+        }
+      },
+      "fontLabel": "Font",
+      "accentLabel": "Accent color",
+      "trustBadge": "{count} verified projects",
+      "nameLabel": "CV name",
+      "namePlaceholder": "Name this CV",
+      "noCourseTitle": "No verified projects yet",
+      "noCourseHint": "Take a course and finish its capstone to add a verified project to your CV.",
+      "noCourseCta": "Browse courses",
+      "downloadCta": "Download PDF",
+      "downloadWordCta": "Download Word",
+      "mobilePaneAria": "Switch between Edit and Preview",
+      "editPane": "Edit",
+      "previewPane": "Preview",
+      "previewTitle": "CV preview (PDF)",
+      "addBlock": "Add block",
+      "removeBlock": "Remove block",
+      "moveBlockUp": "Move block up",
+      "moveBlockDown": "Move block down",
+      "resizeSidebarAria": "Drag to resize the style sidebar",
+      "quickAccessLabel": "Quick access",
+      "addItem": "Add item",
+      "removeItem": "Remove item",
+      "splitEntryCta": "Paste existing CV",
+      "splitModalTitle": "Paste existing CV",
+      "splitModalDescription": "Paste the content of a CV you already have — AI will split it into blocks for you to keep editing (nothing is saved automatically; review it first).",
+      "splitModalFieldLabel": "CV content",
+      "splitModalPlaceholder": "Paste your full CV content here...",
+      "splitModalSubmit": "Split into blocks",
+      "splitModalSubmitting": "Splitting...",
+      "splitModalError": "Couldn't split this content. Please try again.",
+      "fontScaleLabel": "Font size",
+      "fontScale": {
+        "sm": "Small",
+        "md": "Medium",
+        "lg": "Large"
+      },
+      "languageLabel": "CV language",
+      "language": {
+        "vi": "Vietnamese",
+        "en": "English"
+      },
+      "aiAssistantLabel": "AI assistant",
+      "aiCredits": "{remaining}/{limit} credits left",
+      "tailorEntryCta": "Tailor to a job posting",
+      "tailorModalTitle": "Tailor CV to a job posting",
+      "tailorModalDescription": "Paste the job description you're targeting — AI will adjust the wording and ordering of your CV's blocks to match it (nothing is saved automatically; review it first).",
+      "tailorModalFieldLabel": "Job description",
+      "tailorModalPlaceholder": "Paste the job posting/description here...",
+      "tailorModalSubmit": "Tailor to this job",
+      "tailorModalSubmitting": "Tailoring...",
+      "tailorModalError": "Couldn't tailor this CV to that job. Please try again.",
+      "inputModeAria": "Input method",
+      "inputModePaste": "Paste text",
+      "inputModeUpload": "Upload file",
+      "uploadHint": "Drag and drop or choose a file (PDF · DOCX · TXT, up to 10MB)",
+      "uploadExtracting": "Extracting text from the file...",
+      "uploadTooLarge": "That file's too large. 10MB max.",
+      "uploadFailed": "Couldn't read that file. Try again or paste text.",
+      "completeness": {
+        "label": "Completeness",
+        "percent": "{percent}%",
+        "hints": {
+          "personalName": "Add your name to Personal information",
+          "personalEmail": "Add your email to Personal information",
+          "summary": "Write a short Summary about yourself",
+          "project": "Add at least one Project",
+          "skills": "Add your Skills",
+          "education": "Add your Education"
+        }
+      }
+    },
+    "blocks": {
+      "common": {
+        "aiRewrite": "AI-assist",
+        "aiRewriteRetry": "Retry",
+        "moveUp": "Move up",
+        "moveDown": "Move down",
+        "removeItem": "Remove item",
+        "invalidUrl": "That doesn't look like a valid link (https://...)"
+      },
+      "personal": {
+        "title": "Personal info",
+        "fields": {
+          "name": "Full name",
+          "role": "Target role",
+          "email": "Email",
+          "phone": "Phone",
+          "location": "Location",
+          "birthDate": "Date of birth",
+          "linkedinUrl": "LinkedIn",
+          "githubUsername": "GitHub"
+        },
+        "placeholders": {
+          "name": "Jane Doe",
+          "role": "Backend Developer",
+          "email": "you@email.com",
+          "phone": "+1 234 567 890",
+          "location": "Ho Chi Minh City",
+          "birthDate": "01/01/2000",
+          "linkedinUrl": "https://linkedin.com/in/you",
+          "githubUsername": "your-github-username"
+        }
+      },
+      "summary": {
+        "title": "Summary",
+        "fields": {
+          "text": "Summary"
+        },
+        "placeholders": {
+          "text": "A few sentences introducing yourself and your career goal..."
+        }
+      },
+      "experience": {
+        "title": "Experience",
+        "addItem": "Add experience",
+        "fields": {
+          "company": "Company",
+          "role": "Role",
+          "startDate": "Start date",
+          "endDate": "End date",
+          "bullets": "Description"
+        },
+        "placeholders": {
+          "company": "Company name",
+          "role": "Backend Developer",
+          "startDate": "Jan 2023",
+          "endDate": "Present",
+          "bullets": "Describe what you did and the results you achieved..."
+        }
+      },
+      "education": {
+        "title": "Education",
+        "addItem": "Add education",
+        "fields": {
+          "school": "School",
+          "degree": "Degree / major",
+          "startDate": "Start date",
+          "endDate": "End date"
+        },
+        "placeholders": {
+          "school": "School name",
+          "degree": "Software Engineering",
+          "startDate": "2019",
+          "endDate": "2023"
+        }
+      },
+      "skills": {
+        "title": "Skills",
+        "suggestedLabel": "Suggested",
+        "addLabel": "Add a skill",
+        "addPlaceholder": "e.g. Redis",
+        "addAction": "Add",
+        "removeSkill": "Remove skill {name}"
+      },
+      "project": {
+        "title": "Projects",
+        "addExternal": "Add an external project",
+        "sourceVerified": "Verified",
+        "sourceSelf": "Self-reported",
+        "pickFromStarciLabel": "Pick from StarCi",
+        "pickFromStarciPlaceholder": "Pick a completed project...",
+        "pickFromStarciLoading": "Loading your projects...",
+        "pickFromStarciEmpty": "No completed projects to pick from yet.",
+        "fields": {
+          "title": "Project name",
+          "description": "Description"
+        },
+        "placeholders": {
+          "title": "Project name",
+          "description": "A short description of the project and your role..."
+        }
+      },
+      "achievement": {
+        "title": "Achievements",
+        "addItem": "Add achievement",
+        "fields": {
+          "title": "Achievement name",
+          "description": "Description"
+        },
+        "placeholders": {
+          "title": "e.g. AWS Solutions Architect certification",
+          "description": "A short description"
+        }
+      },
+      "certification": {
+        "title": "Certifications",
+        "addItem": "Add certification",
+        "fields": {
+          "name": "Certification name",
+          "issuer": "Issuing organization",
+          "date": "Date",
+          "credentialUrl": "Credential link"
+        },
+        "placeholders": {
+          "name": "e.g. AWS Certified Solutions Architect",
+          "issuer": "Amazon Web Services",
+          "date": "2024",
+          "credentialUrl": "https://credly.com/badges/..."
+        }
+      },
+      "language": {
+        "title": "Languages",
+        "addItem": "Add language",
+        "fields": {
+          "name": "Language",
+          "level": "Proficiency"
+        },
+        "placeholders": {
+          "name": "English",
+          "level": "IELTS 7.0 / Fluent"
+        }
+      },
+      "activity": {
+        "title": "Activities",
+        "addItem": "Add activity",
+        "fields": {
+          "title": "Activity name",
+          "description": "Description"
+        },
+        "placeholders": {
+          "title": "e.g. Volunteer, Green Summer campaign",
+          "description": "A short description of your role and contribution..."
+        }
+      },
+      "interest": {
+        "title": "Interests",
+        "addLabel": "Add interest",
+        "addPlaceholder": "e.g. Reading",
+        "addAction": "Add",
+        "removeInterest": "Remove interest {name}"
+      }
+    },
     "editCta": "Edit CV",
     "editTitle": "Edit CV",
     "editDescription": "Upload an existing CV or let AI build a new one from your StarCi activity.",
@@ -1716,19 +1981,36 @@
   "mockInterview": {
     "navLabel": "Mock interview",
     "title": "Mock interview",
-    "subtitle": "Practice a 5-step technical interview with detailed AI feedback.",
+    "subtitle": "Answer randomly-drawn technical interview questions, graded in detail by AI.",
     "gateTitle": "Enroll to practice interviews",
     "gateDescription": "The mock interview spends AI credits — enroll in the course to unlock it.",
-    "systemLabel": "Pick an interview topic",
-    "promptsEmpty": "This course doesn't have any interview prompts yet.",
-    "promptsError": "Couldn't load the interview prompts.",
     "promptsRetry": "Retry",
     "gradingLabel": "Grading",
+    "modeToggleLabel": "Mode",
+    "modeAuto": "Automatic",
+    "modeConfigurable": "Customize",
+    "autoCaption": "5 questions · all kinds · speak or type",
+    "questionCountLabel": "Question count",
+    "questionCountOption": "{count} questions",
+    "kindPickerLabel": "Question kind",
+    "kindAll": "All",
+    "answerModeLabel": "Answer mode",
+    "answerMode": {
+      "voice": "Speak",
+      "text": "Type",
+      "both": "Both"
+    },
+    "kindDesignDisabledHint": "Only available for the System Design course",
+    "designModeCta": "Practice system design",
+    "tierLabel": "Level",
+    "tierCaption": "The prompt and question kinds are drawn at random, just like a real interview",
     "modelLabel": "Grading model",
+    "autoCredit": "{remaining}/{quota} credit left this week",
     "begin": "Start interview",
     "grading": "Grading your interview…",
     "gradingPending": "Reviewing the whole session — this can take about a minute.",
     "gradingFailed": "Grading failed. Try again.",
+    "startFailed": "Couldn't start the interview. Try again.",
     "backToSetup": "Back to setup",
     "retry": "Interview again",
     "scorecardPending": "Couldn't load the result.",
@@ -1738,10 +2020,19 @@
     "gapsTitle": "Areas to improve",
     "followUpTitle": "Suggested follow-up question",
     "nextPhase": "Next phase",
+    "nextQuestion": "Next question",
+    "questionCounter": "Question {index}/{total}",
+    "questionCounterWithKind": "Question {index}/{total} · {kind}",
     "finishAndGrade": "Finish and grade",
     "promptLabel": "Design prompt",
     "interviewerPending": "The interviewer is preparing the opening question…",
     "sendAnswer": "Send answer",
+    "answerPlaceholder": "Type or tap the mic to answer…",
+    "answerAndNext": "Answer & next question",
+    "answerAndFinish": "Answer & submit",
+    "addArtifactToggle": "Add a diagram / code (optional)",
+    "hideArtifactToggle": "Hide diagram / code tools",
+    "finishEarly": "Finish early and grade",
     "historyTitle": "Interview history",
     "historyEmpty": "You haven't done a mock interview yet.",
     "historyError": "Couldn't load your interview history.",
@@ -1760,6 +2051,17 @@
     "quotaExceededTitle": "Out of AI credits this month",
     "quotaExceededDescription": "You've used up your AI grading allowance for the current window. Upgrade your AI plan to keep grading right away.",
     "quotaExceededCta": "Upgrade AI plan",
+    "tier": {
+      "so": "Entry",
+      "trung": "Mid",
+      "cao": "Senior"
+    },
+    "kind": {
+      "theory": "Theory",
+      "reasoning": "Reasoning",
+      "scenario": "Scenario",
+      "design": "Design"
+    },
     "phase": {
       "requirements": "Clarify requirements",
       "estimation": "Plan your approach",
@@ -1777,6 +2079,15 @@
       "addBox": "Add box",
       "newBoxLabel": "New box",
       "canvasAria": "Mock interview architecture whiteboard"
+    },
+    "workspace": {
+      "ariaLabel": "Work tools",
+      "whiteboard": "Whiteboard",
+      "code": "Code",
+      "notes": "Notes",
+      "languageLabel": "Language",
+      "codePlaceholder": "Write your code here…",
+      "notesPlaceholder": "Notes, estimates, API sketches…"
     }
   },
   "jobReadiness": {

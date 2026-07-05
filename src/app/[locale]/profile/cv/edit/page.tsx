@@ -5,16 +5,14 @@ interface PageProps {
 }
 
 /**
- * `/profile/cv/edit` — LEGACY route (kept only so old bookmarks/deep-links
- * still resolve). CV compose (upload/generate/revise) is no longer a separate
- * page/layout — it's the `?edit=true` MODE of `/profile/cv` itself (same shell
- * as the review surface), so every new navigation should build
- * `pathConfig().profile().cv().edit().build()` (which already returns
- * `/profile/cv?edit=true`) instead of linking here.
+ * `/profile/cv/edit` — LEGACY route (kept so old bookmarks/deep-links resolve).
+ * The CV flow is now a GALLERY at `/profile/cv` (list) + a dedicated editor at
+ * `/profile/cv/<id>`; there is no standalone "edit" surface, so this redirects
+ * to the gallery.
  */
 const Page = async ({ params }: PageProps) => {
     const { locale } = await params
-    redirect(`/${locale}/profile/cv?edit=true`)
+    redirect(`/${locale}/profile/cv`)
 }
 
 export default Page

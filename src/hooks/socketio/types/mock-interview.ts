@@ -52,6 +52,16 @@ export interface AskMockInterviewTurnSocketIoPayload {
         model?: string | null
         /** Provider of the pinned model. */
         provider?: string | null
+        /** Seniority level driving rubric strictness for this turn's follow-up, or omitted for "any level". */
+        level?: string
+        /** Top-level flow this session runs ("qna" | "design"); absent is treated as `"qna"`. */
+        mode?: string | null
+        /** THIS question's cognitive frame ("theory" | "reasoning" | "scenario"), randomly assigned per-question at draw time; meaningful only when `mode` is "qna". */
+        kind?: string | null
+        /** Current question's seed text (Q&A kinds) — resent unchanged for the opening ask and every follow-up on that question. */
+        currentSeed?: string | null
+        /** 0-based index of the question this turn belongs to (Q&A kinds), for "Câu N" phrasing + first-ask detection. */
+        questionIndex?: number | null
     }
     /** Locale (reply language + which body locale the server loads). */
     locale: string

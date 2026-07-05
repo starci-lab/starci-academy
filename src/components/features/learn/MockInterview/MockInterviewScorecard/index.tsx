@@ -24,7 +24,7 @@ import { useQueryMatchedContentSwr } from "@/hooks/swr/api/graphql/queries/useQu
 import { pathConfig } from "@/resources/path"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { MockInterviewTrackSnapshot } from "../MockInterviewTrackSnapshot"
-import type { MockInterviewGradeResult } from "../types"
+import type { MockInterviewGradeResult, MockInterviewPhaseKey } from "../types"
 
 /** Props for {@link MockInterviewScorecard}. */
 export interface MockInterviewScorecardProps extends WithClassNames<undefined> {
@@ -55,6 +55,26 @@ const WEAK_PHASE_THRESHOLD = 0.6
 /** Verdict → chip color (đạt / cận / chưa đạt) — mirrors the flashcard mock interview's convention. */
 const verdictColorOf = (verdict: MockInterviewGradeResult["verdict"]): "success" | "warning" | "danger" =>
     verdict === "pass" ? "success" : verdict === "borderline" ? "warning" : "danger"
+
+/** The 5 canonical design-kind phase keys — used to tell a `kind="design"` phase from a Q&A-kind server-labeled question ("Câu 1" …). */
+const DESIGN_PHASE_KEYS: ReadonlyArray<MockInterviewPhaseKey> = [
+    "requirements",
+    "estimation",
+    "highLevel",
+    "deepDive",
+    "tradeoffs",
+]
+
+/**
+ * Renders a `phaseScores[].phase` value for display. `kind="design"` sends one
+ * of the 5 canonical phase keys (i18n-resolved); Q&A kinds instead send a
+ * ready-to-render label like `"Câu 1"` straight from the server — rendered
+ * as-is, no i18n lookup (the scorecard never hardcodes 5 phase labels).
+ */
+const phaseDisplayLabel = (phase: string, t: ReturnType<typeof useTranslations>): string =>
+    (DESIGN_PHASE_KEYS as ReadonlyArray<string>).includes(phase)
+        ? t(`mockInterview.phase.${phase}`)
+        : phase
 
 /**
  * Read-only render of one graded mock-interview session — score, verdict, a
@@ -122,7 +142,7 @@ export const MockInterviewScorecard = ({
         ? pathConfig().locale(locale).course(courseDisplayId).learn().module(matchedContent.module.id).content(firstMatchedContentId).build()
         : pathConfig().locale(locale).course(courseDisplayId).learn().content().build()
 
-    const weakPhaseLabel = weakestPhase ? t(`mockInterview.phase.${weakestPhase.phase}`) : null
+    const weakPhaseLabel = weakestPhase ? phaseDisplayLabel(weakestPhase.phase, t) : null
 
     return (
         <div className={cn("flex flex-col gap-6", className)}>
@@ -188,7 +208,7 @@ export const MockInterviewScorecard = ({
                         <div key={phaseScore.phase} className="flex flex-col gap-1">
                             <div className="flex items-center gap-3">
                                 <Typography type="body-sm" className="w-40 shrink-0">
-                                    {t(`mockInterview.phase.${phaseScore.phase}`)}
+                                    {phaseDisplayLabel(phaseScore.phase, t)}
                                 </Typography>
                                 <ProgressMeter value={phaseScore.score} max={phaseScore.max} className="flex-1" />
                             </div>

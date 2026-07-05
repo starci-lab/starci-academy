@@ -154,23 +154,21 @@ export const pathConfig = () => {
                 const build = () => {
                     return cvPath
                 }
-                // Edit is a MODE (query-param) of the same `/profile/cv` surface, not a
-                // separate route — `?edit=true`, keeping compose (upload/generate) and
-                // review (score/feedback/preview) on one shell. `/profile/cv/edit` (the
-                // old route) still exists as a redirect for bookmarks/deep-links, but every
-                // NEW navigation should build the query-param form.
-                const edit = () => {
-                    const editPath = `${cvPath}?edit=true`
-                    const build = () => {
-                        return editPath
+                // `/profile/cv` is the CV GALLERY (list of the user's CVs). Editing
+                // one is a DEDICATED route `/profile/cv/<id>` (the roomy block
+                // editor), not a query-param mode — the gallery just renders + opens.
+                const document = (id: string) => {
+                    const documentPath = `${cvPath}/${id}`
+                    const documentBuild = () => {
+                        return documentPath
                     }
                     return {
-                        build,
+                        build: documentBuild,
                     }
                 }
                 return {
                     build,
-                    edit,
+                    document,
                 }
             }
             const appearance = () => {

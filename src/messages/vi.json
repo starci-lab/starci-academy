@@ -742,6 +742,271 @@
   "cv": {
     "title": "CV",
     "description": "Điểm CV, góp ý từ AI và bản xem trước — luôn cạnh nhau để bạn đối chiếu.",
+    "builder": {
+      "title": "Dựng CV",
+      "description": "Ghép từng khối thông tin — dự án, kinh nghiệm, học vấn — và xem bản PDF cập nhật ngay bên cạnh.",
+      "documentsAria": "Chọn CV đang chỉnh sửa",
+      "addDocument": "Thêm CV mới",
+      "untitled": "CV #{number}",
+      "galleryDescription": "Các CV của bạn. Bấm một CV để chỉnh sửa, hoặc tạo CV mới.",
+      "galleryTarget": "danh sách CV",
+      "createCta": "Tạo CV mới",
+      "openEditor": "Mở chỉnh sửa",
+      "editCta": "Chỉnh sửa {name}",
+      "deleteCta": "Xoá CV",
+      "missingTitle": "Không tìm thấy CV này",
+      "missingHint": "CV có thể đã bị xoá. Quay lại danh sách để chọn CV khác.",
+      "emptyTitle": "Bạn chưa có CV nào",
+      "emptyHint": "Tạo một CV để bắt đầu ghép các khối thông tin của bạn.",
+      "createFirst": "Tạo CV đầu tiên",
+      "errorTitle": "Không tải được danh sách CV",
+      "retry": "Thử lại",
+      "template": {
+        "label": "Mẫu",
+        "galleryTitle": "Thư viện mẫu",
+        "selectAria": "Chọn mẫu {name}",
+        "atsSafe": "An toàn ATS",
+        "atsRisk": "Có thể khó qua ATS",
+        "wordHint": "2 cột đẹp nhất khi tải PDF",
+        "names": {
+          "classic": "Cổ điển",
+          "modern": "Hiện đại",
+          "sidebar": "Hai cột",
+          "minimal": "Tối giản"
+        }
+      },
+      "fontLabel": "Phông chữ",
+      "accentLabel": "Màu nhấn",
+      "trustBadge": "{count} dự án đã xác thực",
+      "nameLabel": "Tên CV",
+      "namePlaceholder": "Đặt tên cho CV này",
+      "noCourseTitle": "Chưa có dự án xác thực",
+      "noCourseHint": "Học một khóa và hoàn thành capstone để CV có dự án được xác thực.",
+      "noCourseCta": "Vào khóa học",
+      "downloadCta": "Tải PDF",
+      "downloadWordCta": "Tải Word",
+      "mobilePaneAria": "Chuyển giữa Sửa và Xem",
+      "editPane": "Sửa",
+      "previewPane": "Xem",
+      "previewTitle": "Bản xem trước CV (PDF)",
+      "addBlock": "Thêm block",
+      "removeBlock": "Xoá block",
+      "moveBlockUp": "Đưa block lên",
+      "moveBlockDown": "Đưa block xuống",
+      "resizeSidebarAria": "Kéo để đổi độ rộng thanh cấu hình",
+      "quickAccessLabel": "Truy cập nhanh",
+      "addItem": "Thêm mục",
+      "removeItem": "Xoá mục",
+      "splitEntryCta": "Dán CV có sẵn",
+      "splitModalTitle": "Dán CV có sẵn",
+      "splitModalDescription": "Dán nội dung một bản CV bạn đã có — AI sẽ tách thành các block để bạn tiếp tục chỉnh sửa (không lưu tự động, bạn xem lại rồi mới lưu).",
+      "splitModalFieldLabel": "Nội dung CV",
+      "splitModalPlaceholder": "Dán toàn bộ nội dung CV vào đây...",
+      "splitModalSubmit": "Tách thành block",
+      "splitModalSubmitting": "Đang tách...",
+      "splitModalError": "Không tách được nội dung này. Vui lòng thử lại.",
+      "fontScaleLabel": "Cỡ chữ",
+      "fontScale": {
+        "sm": "Nhỏ",
+        "md": "Vừa",
+        "lg": "Lớn"
+      },
+      "languageLabel": "Ngôn ngữ CV",
+      "language": {
+        "vi": "Tiếng Việt",
+        "en": "English"
+      },
+      "aiAssistantLabel": "Trợ lý AI",
+      "aiCredits": "Còn {remaining}/{limit} credit",
+      "tailorEntryCta": "Chỉnh theo tin tuyển dụng",
+      "tailorModalTitle": "Chỉnh CV theo tin tuyển dụng",
+      "tailorModalDescription": "Dán mô tả công việc bạn muốn ứng tuyển — AI sẽ điều chỉnh câu chữ và thứ tự các mục trong CV cho sát với tin tuyển dụng này (không lưu tự động, bạn xem lại rồi mới lưu).",
+      "tailorModalFieldLabel": "Mô tả công việc",
+      "tailorModalPlaceholder": "Dán mô tả công việc / tin tuyển dụng vào đây...",
+      "tailorModalSubmit": "Chỉnh theo tin tuyển dụng",
+      "tailorModalSubmitting": "Đang chỉnh...",
+      "tailorModalError": "Không chỉnh được CV theo tin này. Vui lòng thử lại.",
+      "inputModeAria": "Cách nhập nội dung",
+      "inputModePaste": "Dán văn bản",
+      "inputModeUpload": "Tải file lên",
+      "uploadHint": "Kéo thả hoặc chọn file (PDF · DOCX · TXT, tối đa 10MB)",
+      "uploadExtracting": "Đang trích văn bản từ file...",
+      "uploadTooLarge": "File quá lớn. Tối đa 10MB.",
+      "uploadFailed": "Không đọc được file này. Thử lại hoặc dán văn bản.",
+      "completeness": {
+        "label": "Hoàn thiện",
+        "percent": "{percent}%",
+        "hints": {
+          "personalName": "Thêm họ tên vào phần Thông tin cá nhân",
+          "personalEmail": "Thêm email vào phần Thông tin cá nhân",
+          "summary": "Viết một đoạn Tóm tắt ngắn về bản thân",
+          "project": "Thêm ít nhất một Dự án",
+          "skills": "Thêm các Kỹ năng của bạn",
+          "education": "Thêm thông tin Học vấn"
+        }
+      }
+    },
+    "blocks": {
+      "common": {
+        "aiRewrite": "AI viết giúp",
+        "aiRewriteRetry": "Thử lại",
+        "moveUp": "Di chuyển lên",
+        "moveDown": "Di chuyển xuống",
+        "removeItem": "Xoá mục",
+        "invalidUrl": "Đường link chưa hợp lệ (dạng https://...)"
+      },
+      "personal": {
+        "title": "Thông tin cá nhân",
+        "fields": {
+          "name": "Họ tên",
+          "role": "Vị trí ứng tuyển",
+          "email": "Email",
+          "phone": "Số điện thoại",
+          "location": "Nơi ở",
+          "birthDate": "Ngày sinh",
+          "linkedinUrl": "LinkedIn",
+          "githubUsername": "GitHub"
+        },
+        "placeholders": {
+          "name": "Nguyễn Văn A",
+          "role": "Backend Developer",
+          "email": "ban@email.com",
+          "phone": "0901 234 567",
+          "location": "TP. Hồ Chí Minh",
+          "birthDate": "01/01/2000",
+          "linkedinUrl": "https://linkedin.com/in/ban",
+          "githubUsername": "username-github"
+        }
+      },
+      "summary": {
+        "title": "Tóm tắt",
+        "fields": {
+          "text": "Tóm tắt bản thân"
+        },
+        "placeholders": {
+          "text": "Vài câu giới thiệu ngắn gọn về bạn và mục tiêu nghề nghiệp..."
+        }
+      },
+      "experience": {
+        "title": "Kinh nghiệm",
+        "addItem": "Thêm kinh nghiệm",
+        "fields": {
+          "company": "Công ty",
+          "role": "Vị trí",
+          "startDate": "Bắt đầu",
+          "endDate": "Kết thúc",
+          "bullets": "Mô tả công việc"
+        },
+        "placeholders": {
+          "company": "Tên công ty",
+          "role": "Backend Developer",
+          "startDate": "Th01/2023",
+          "endDate": "Hiện tại",
+          "bullets": "Mô tả những việc bạn đã làm và kết quả đạt được..."
+        }
+      },
+      "education": {
+        "title": "Học vấn",
+        "addItem": "Thêm học vấn",
+        "fields": {
+          "school": "Trường",
+          "degree": "Bằng cấp / chuyên ngành",
+          "startDate": "Bắt đầu",
+          "endDate": "Kết thúc"
+        },
+        "placeholders": {
+          "school": "Tên trường",
+          "degree": "Kỹ thuật phần mềm",
+          "startDate": "2019",
+          "endDate": "2023"
+        }
+      },
+      "skills": {
+        "title": "Kỹ năng",
+        "suggestedLabel": "Gợi ý",
+        "addLabel": "Thêm kỹ năng",
+        "addPlaceholder": "vd: Redis",
+        "addAction": "Thêm",
+        "removeSkill": "Xoá kỹ năng {name}"
+      },
+      "project": {
+        "title": "Dự án",
+        "addExternal": "Thêm dự án ngoài",
+        "sourceVerified": "Đã xác thực",
+        "sourceSelf": "Tự khai",
+        "pickFromStarciLabel": "Chọn từ dự án StarCi",
+        "pickFromStarciPlaceholder": "Chọn một dự án đã hoàn thành...",
+        "pickFromStarciLoading": "Đang tải danh sách dự án...",
+        "pickFromStarciEmpty": "Chưa có dự án nào đã hoàn thành để chọn.",
+        "fields": {
+          "title": "Tên dự án",
+          "description": "Mô tả"
+        },
+        "placeholders": {
+          "title": "Tên dự án",
+          "description": "Mô tả ngắn gọn về dự án và vai trò của bạn..."
+        }
+      },
+      "achievement": {
+        "title": "Thành tích",
+        "addItem": "Thêm thành tích",
+        "fields": {
+          "title": "Tên thành tích",
+          "description": "Mô tả"
+        },
+        "placeholders": {
+          "title": "vd: Chứng chỉ AWS Solutions Architect",
+          "description": "Mô tả ngắn gọn"
+        }
+      },
+      "certification": {
+        "title": "Chứng chỉ",
+        "addItem": "Thêm chứng chỉ",
+        "fields": {
+          "name": "Tên chứng chỉ",
+          "issuer": "Đơn vị cấp",
+          "date": "Thời gian",
+          "credentialUrl": "Link chứng chỉ"
+        },
+        "placeholders": {
+          "name": "vd: AWS Certified Solutions Architect",
+          "issuer": "Amazon Web Services",
+          "date": "2024",
+          "credentialUrl": "https://credly.com/badges/..."
+        }
+      },
+      "language": {
+        "title": "Ngôn ngữ",
+        "addItem": "Thêm ngôn ngữ",
+        "fields": {
+          "name": "Ngôn ngữ",
+          "level": "Trình độ"
+        },
+        "placeholders": {
+          "name": "Tiếng Anh",
+          "level": "IELTS 7.0 / Thành thạo"
+        }
+      },
+      "activity": {
+        "title": "Hoạt động",
+        "addItem": "Thêm hoạt động",
+        "fields": {
+          "title": "Tên hoạt động",
+          "description": "Mô tả"
+        },
+        "placeholders": {
+          "title": "vd: Tình nguyện viên mùa hè xanh",
+          "description": "Mô tả ngắn gọn vai trò và đóng góp của bạn..."
+        }
+      },
+      "interest": {
+        "title": "Sở thích",
+        "addLabel": "Thêm sở thích",
+        "addPlaceholder": "vd: Đọc sách",
+        "addAction": "Thêm",
+        "removeInterest": "Xoá sở thích {name}"
+      }
+    },
     "editCta": "Chỉnh sửa CV",
     "editTitle": "Chỉnh sửa CV",
     "editDescription": "Tải CV có sẵn lên hoặc để AI dựng một bản mới từ hoạt động học tập của bạn.",
@@ -1725,19 +1990,36 @@
   "mockInterview": {
     "navLabel": "Phỏng vấn thử",
     "title": "Phỏng vấn thử",
-    "subtitle": "Luyện phỏng vấn kỹ thuật theo 5 bước, AI chấm chi tiết.",
+    "subtitle": "Trả lời các câu hỏi phỏng vấn kỹ thuật ngẫu nhiên, AI chấm chi tiết.",
     "gateTitle": "Đăng ký để phỏng vấn thử",
     "gateDescription": "Phỏng vấn thử tiêu tốn tín dụng AI — đăng ký khóa để mở tính năng này.",
-    "systemLabel": "Chọn chủ đề phỏng vấn",
-    "promptsEmpty": "Khóa học này chưa có đề phỏng vấn nào.",
-    "promptsError": "Không tải được đề phỏng vấn.",
     "promptsRetry": "Thử lại",
     "gradingLabel": "Chấm điểm",
+    "modeToggleLabel": "Chế độ",
+    "modeAuto": "Tự động",
+    "modeConfigurable": "Tùy chỉnh",
+    "autoCaption": "5 câu · mọi kiểu · nói hoặc gõ",
+    "questionCountLabel": "Số câu",
+    "questionCountOption": "{count} câu",
+    "kindPickerLabel": "Kiểu câu",
+    "kindAll": "Tất cả",
+    "answerModeLabel": "Cách trả lời",
+    "answerMode": {
+      "voice": "Nói",
+      "text": "Gõ",
+      "both": "Cả hai"
+    },
+    "kindDesignDisabledHint": "Chỉ khả dụng cho khóa Thiết kế hệ thống",
+    "designModeCta": "Luyện thiết kế hệ thống",
+    "tierLabel": "Mức",
+    "tierCaption": "Đề & kiểu câu hỏi được chọn ngẫu nhiên như phỏng vấn thật",
     "modelLabel": "Model chấm điểm",
+    "autoCredit": "Còn {remaining}/{quota} credit tuần này",
     "begin": "Bắt đầu phỏng vấn",
     "grading": "Đang chấm buổi phỏng vấn…",
     "gradingPending": "Đang tổng hợp toàn bộ buổi phỏng vấn — có thể mất khoảng 1 phút.",
     "gradingFailed": "Chấm điểm thất bại. Thử lại.",
+    "startFailed": "Không thể bắt đầu phỏng vấn. Thử lại.",
     "backToSetup": "Về cấu hình",
     "retry": "Phỏng vấn lại",
     "scorecardPending": "Không tải được kết quả.",
@@ -1747,10 +2029,19 @@
     "gapsTitle": "Cần cải thiện",
     "followUpTitle": "Câu hỏi gợi mở tiếp theo",
     "nextPhase": "Chuyển phase",
+    "nextQuestion": "Câu tiếp theo",
+    "questionCounter": "Câu {index}/{total}",
+    "questionCounterWithKind": "Câu {index}/{total} · {kind}",
     "finishAndGrade": "Kết thúc và chấm",
     "promptLabel": "Đề thiết kế",
     "interviewerPending": "Interviewer đang chuẩn bị câu hỏi mở đầu…",
     "sendAnswer": "Gửi câu trả lời",
+    "answerPlaceholder": "Gõ hoặc bấm mic để trả lời…",
+    "answerAndNext": "Trả lời & câu tiếp theo",
+    "answerAndFinish": "Trả lời & nộp bài",
+    "addArtifactToggle": "Thêm sơ đồ / code (tuỳ chọn)",
+    "hideArtifactToggle": "Ẩn công cụ vẽ / code",
+    "finishEarly": "Kết thúc sớm và chấm",
     "historyTitle": "Lịch sử phỏng vấn",
     "historyEmpty": "Bạn chưa có buổi phỏng vấn nào.",
     "historyError": "Không tải được lịch sử phỏng vấn.",
@@ -1769,6 +2060,17 @@
     "quotaExceededTitle": "Hết credit AI tháng này",
     "quotaExceededDescription": "Bạn đã dùng hết hạn mức chấm điểm AI trong cửa sổ hiện tại. Nâng cấp gói AI để chấm tiếp ngay.",
     "quotaExceededCta": "Nâng cấp gói AI",
+    "tier": {
+      "so": "Sơ",
+      "trung": "Trung",
+      "cao": "Cao"
+    },
+    "kind": {
+      "theory": "Lý thuyết",
+      "reasoning": "Tư duy",
+      "scenario": "Tình huống",
+      "design": "Thiết kế"
+    },
     "phase": {
       "requirements": "Làm rõ yêu cầu",
       "estimation": "Lên kế hoạch tiếp cận",
@@ -1786,6 +2088,15 @@
       "addBox": "Thêm hộp",
       "newBoxLabel": "Hộp mới",
       "canvasAria": "Bảng vẽ kiến trúc phỏng vấn thử"
+    },
+    "workspace": {
+      "ariaLabel": "Công cụ làm việc",
+      "whiteboard": "Whiteboard",
+      "code": "Code",
+      "notes": "Ghi chú",
+      "languageLabel": "Ngôn ngữ",
+      "codePlaceholder": "Viết code ở đây…",
+      "notesPlaceholder": "Ghi chú, ước lượng, phác thảo API…"
     }
   },
   "jobReadiness": {

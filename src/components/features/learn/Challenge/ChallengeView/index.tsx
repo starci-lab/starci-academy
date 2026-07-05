@@ -1,8 +1,8 @@
 "use client"
 
-import { ArrowLeftIcon, CaretRightIcon, GearSixIcon, TrophyIcon, FlameIcon, LightbulbIcon } from "@phosphor-icons/react"
+import { CaretRightIcon, GearSixIcon, TrophyIcon, FlameIcon, LightbulbIcon } from "@phosphor-icons/react"
 import React, { useEffect, useMemo, useState } from "react"
-import { Accordion, Button, Chip, Drawer, Input, Label, Link, ScrollShadow, Spinner, Tabs, TextField, Typography, cn } from "@heroui/react"
+import { Accordion, Button, Chip, Drawer, Input, Label, ScrollShadow, Spinner, Tabs, TextField, Typography, cn } from "@heroui/react"
 import { ChallengeViewSkeleton } from "./ChallengeViewSkeleton"
 import { ChallengeSubmissionPanel } from "../ChallengeSubmissionPanel"
 import { useTranslations } from "next-intl"
@@ -11,6 +11,7 @@ import { Score } from "@/components/reuseable/Score"
 import { useMutateSyncPersonalProjectGithubSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSyncPersonalProjectGithubSwr"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import { CheckListCard, CheckListItem } from "@/components/blocks/cards/CheckListCard"
+import { BackLink } from "@/components/blocks/navigation/BackLink"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { useAppSelector } from "@/redux/hooks"
@@ -198,13 +199,7 @@ export const ChallengeView = ({ className, onBack }: ChallengeViewProps) => {
                         description · meta chips (score · difficulty · status) */}
                     <PageHeader
                         breadcrumb={onBack ? (
-                            <Link
-                                onPress={onBack}
-                                className="inline-flex w-fit cursor-pointer items-center gap-2 font-medium text-accent"
-                            >
-                                <ArrowLeftIcon aria-hidden className="size-5" />
-                                <Typography type="body-sm" className="font-medium">{t("challenge.back")}</Typography>
-                            </Link>
+                            <BackLink label={t("challenge.back")} onPress={onBack} />
                         ) : undefined}
                         title={challenge?.title ?? ""}
                         description={challenge?.description || undefined}

@@ -17,7 +17,6 @@ import {
     useSearchParams,
 } from "next/navigation"
 import {
-    ArrowLeftIcon,
     ArrowSquareOutIcon,
     InfoIcon,
     LightbulbIcon,
@@ -28,6 +27,7 @@ import { dayjs, getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { ModelByline, VerdictIcon } from "@/components/blocks/grading/GradingByline"
+import { BackLink } from "@/components/blocks/navigation/BackLink"
 import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
@@ -224,13 +224,10 @@ export const PersonalProjectTaskResult = ({
         <div className={cn("mx-auto flex w-full max-w-5xl flex-col gap-10", className)}>
             <PageHeader
                 breadcrumb={(
-                    <Link
+                    <BackLink
+                        label={t("personalProjectResult.backToTask")}
                         onPress={() => router.push(taskHref)}
-                        className="flex w-fit cursor-pointer items-center gap-2 text-sm text-muted"
-                    >
-                        <ArrowLeftIcon aria-hidden focusable="false" className="size-5" />
-                        {t("personalProjectResult.backToTask")}
-                    </Link>
+                    />
                 )}
                 title={selectedTaskDetail?.title ?? t("personalProjectResult.title")}
                 description={selectedTaskDetail?.description || undefined}

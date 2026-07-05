@@ -17,7 +17,6 @@ import {
     useSearchParams,
 } from "next/navigation"
 import {
-    ArrowLeftIcon,
     ArrowSquareOutIcon,
     InfoIcon,
     LightbulbIcon,
@@ -28,6 +27,7 @@ import { dayjs, getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { ModelByline, VerdictIcon } from "@/components/blocks/grading/GradingByline"
+import { BackLink } from "@/components/blocks/navigation/BackLink"
 import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
@@ -230,13 +230,10 @@ export const SubmissionResult = ({
         <div className={cn("mx-auto flex w-full max-w-5xl flex-col gap-10 p-6", className)}>
             <PageHeader
                 breadcrumb={(
-                    <Link
+                    <BackLink
+                        label={t("submissionResult.backToChallenge")}
                         onPress={() => router.push(challengeHref)}
-                        className="flex w-fit cursor-pointer items-center gap-2 text-sm text-muted"
-                    >
-                        <ArrowLeftIcon aria-hidden focusable="false" className="size-5" />
-                        {t("submissionResult.backToChallenge")}
-                    </Link>
+                    />
                 )}
                 title={requirement?.title ?? t("submissionResult.title")}
                 description={requirement?.description || undefined}

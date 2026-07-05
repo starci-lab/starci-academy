@@ -116,3 +116,98 @@ thị cho recruiter thế nào, và bắc cầu sang generate/enroll ra sao.
 - Code: file:line ở §Grounded (upload-cv.resolver/handler · cv-scoring.service · consultant-contact-gate.service ·
   job-readiness.service). Rule: [[fair-monetization-axiom]] (per-track/gate theo tier·enroll, không theo count; giá trị
   ⇐ việc thật). Business framing: two-sided marketplace trust · freemium conversion lever · Hooked (trigger→demand).
+
+---
+
+# ROUND 2 — 2026-07-05 (sau khi commit `524e0389` vá Round 1)
+
+> Trigger: thầy hỏi trực tiếp (1) có luồng nào biến CV upload thành CV generate không? (2) nếu đã generate rồi,
+> viết thêm extraPrompts có ăn thêm điểm không? Đã đọc lại source THẬT (2 Explore agent song song, BE+FE) sau khi
+> commit `524e0389` (cùng ngày) đã vá 4/5 hole của Round 1 bằng cách filter `consultant-contact-gate.getBestCvScore`
+> + `job-readiness.computeCvScore`/`loadTrackCvScores` xuống `source = 'generated'`. Round 2 kiểm tra cái vá đó có
+> THẬT SỰ kín không — và tìm ra **1 lỗ MỚI Round 1 chưa từng xét** cộng **2 bug cụ thể** (không phải philosophy, là
+> code thật lệch nhau) sinh ra từ việc vá nửa vời.
+
+## Trả lời thẳng 2 câu hỏi của thầy (trước khi phản biện)
+
+**(1) Có luồng upload → generate không?** **CÓ — qua `reviseCv`.** `revise-cv.handler.ts:81-89` chấp nhận
+`cvSubmissionId` trỏ tới BẤT KỲ row `cv_generations` nào thuộc về user, KHÔNG phân biệt `source` (comment dòng
+77-80 nói thẳng: "covers both `Generated` and `Uploaded` sources"). Và `enqueue-generate-cv.service.ts:130-132`:
+*"Both generate + revise flow through here, so this row is always `source = Generated`"* — nghĩa là **bấm "Chỉnh
+sửa CV của tôi" trên 1 CV đã UPLOAD sẽ tạo ra 1 row MỚI với `source='generated'`**, dù nội dung gốc (từ file upload)
+CHƯA HỀ được đối chiếu với hoạt động thật. Đây CHÍNH LÀ luồng "biến upload thành generate" — nhưng nó là **lỗ hổng**,
+không phải tính năng cố ý (§Hole mới bên dưới).
+
+**(2) ExtraPrompts nhiều hơn có ăn thêm điểm không?** **KHÔNG trực tiếp — nhưng có gián tiếp, và đây là thiết kế ĐÚNG.**
+`generate-cv-score-step.service.ts:130-142` gọi `cvScoringService.score({ structuredData, ... })` — **chỉ truyền CV
+JSON đã dựng xong, KHÔNG truyền `extraPrompts`** vào bước chấm. Bước chấm không biết prompt gốc dài hay ngắn, chỉ
+chấm SẢN PHẨM cuối. `extraPrompts` chỉ ảnh hưởng ở bước COMPOSE (dệt thêm 1 dự án ngoài StarCi vào CV) — nếu điều đó
+làm CV thật sự đầy đủ/thuyết phục hơn thì điểm có thể lên, nhưng đó là "viết prompt tốt hơn → CV tốt hơn → điểm cao
+hơn vì CV tốt hơn", KHÔNG PHẢI "prompt dài → cộng điểm trực tiếp". Không có cách "spam chữ vào ô notes" để ăn điểm
+không qua nội dung CV thật. **Thiết kế này ĐÃ ĐÚNG, không cần sửa.**
+
+## Grounded — cái Round 1 KHÔNG xét tới (2 Explore agent xác nhận, file:line)
+
+1. **"Revise an upload" = bypass 1-click cho đúng cái gate vừa vá sáng nay.** User upload 1 CV bịa hoàn toàn (bịa
+   công ty, năm kinh nghiệm) → bấm "Chỉnh sửa CV của tôi" (không cần điền extraPrompts) → `generate-cv-compose-step
+   .service.ts` (nhánh Revise) đọc `sourceCvText` (chính văn bản bịa) với chỉ dẫn *"Preserve any real experience...
+   do not fabricate BEYOND what the original CV... supports"* — tức AI được lệnh **GIỮ NGUYÊN** nội dung bịa gốc,
+   chỉ văn phong hoá + dệt thêm vài dòng verified data thật. Row kết quả `source='generated'` → **lọt thẳng qua
+   filter `source='generated'` mà commit `524e0389` vừa dựng lên** → tính vào job-readiness + mở gate recruiter,
+   y hệt lỗ Round 1 đã chỉ ra, chỉ khác 1 bước bấm nút.
+2. **FE tự tính "Eligible for recruiter contact" SOURCE-BLIND, lệch với gate BE thật (post-fix).**
+   `CvWorkspace/index.tsx:122-126`: `bestScore = MAX(score)` qua MỌI CV (không filter source) → hiện badge
+   "Eligible"/"Not yet eligible" cho CHÍNH CHỦ dựa trên số này. Nhưng gate THẬT (`consultant-contact-gate.service
+   .ts`) giờ chỉ tính `source='generated'`. Hệ quả: **user upload CV 85 điểm sẽ thấy badge "Eligible for recruiter
+   contact" trong dashboard của họ — nhưng khi recruiter thật bấm "liên hệ", BE từ chối** (vì CV đó `source=uploaded`
+   không qua filter). Đây là bug lệch FE/BE THẬT, không phải câu hỏi triết lý — cần sửa code.
+3. **Copy 2 chỗ mâu thuẫn nhau trong CHÍNH sản phẩm.** `vi.json:793` (`sourceUploadedHint`, hiện trong scorecard
+   callout): *"CV này do bạn tự khai — **vẫn tính điểm và mở khoá liên hệ bình thường**."* — > <, `vi.json:899`
+   (`unverifiedHint`, hiện ở khu upload): *"CV tải lên... **KHÔNG tính vào điểm sẵn sàng đi làm hay mở khoá nhà
+   tuyển dụng**."* Dòng 899 đúng với thực tế MỚI (sau `524e0389`); dòng 793 là copy CŨ từ trước khi vá, giờ SAI —
+   trực tiếp nói ngược cái BE vừa sửa.
+
+## Questions by lens (ENGLISH — thầy phản biện tiếp)
+
+### 7. Abuse / gaming (lens nóng nhất Round 2)
+- Confirmed: uploading a fabricated CV, then clicking "Revise" ONCE with empty `extraPrompts`, flips `source` to
+  `generated` — the exact label `524e0389` just reserved for "achievement-backed, trust it." **The fix filters by a
+  column value, not by provenance. Doesn't a 1-click revise completely undo this morning's patch?**
+- The compose prompt for Revise mode literally instructs the model to **preserve** the original CV's claims. **If the
+  original upload was fabricated, "preserve + don't fabricate beyond it" preserves the fabrication. Whose job is it to
+  verify the ORIGINAL claims — and if the answer is "no one's," is `source='generated'` still a meaningful trust label
+  after a revise?**
+
+### 6. Two-sided value (trust — same stakes as Round 1)
+- Recruiters were just promised (via the same-day fix) that `generated` = backed by real StarCi work. **If a revised
+  upload can carry that label with zero verification, what did the fix actually buy — or did it just move the exploit
+  one click deeper, past where anyone would think to look?**
+
+### 1. Business job & fit (the FE/BE mismatch specifically)
+- The learner's OWN dashboard tells them "Eligible for recruiter contact" (FE, source-blind) while the real gate would
+  reject a recruiter's request for that same CV (BE, source-filtered, post-fix). **A user who trusts their own
+  dashboard and tells a recruiter "I'm unlocked, go ahead" gets publicly contradicted by the platform. Is that an
+  acceptable state to ship, even temporarily?**
+
+## HOLES FOUND — Round 2
+6. **Revise-an-upload bypasses the source='generated' gate** — 1 click, 0 verification, 0 extraPrompts required,
+   fully undoes `524e0389`'s intent. (Sharpest hole — this is THE loophole in this morning's own fix.)
+7. **FE eligibility badge is source-blind, BE gate is now source-filtered** — real functional mismatch, will surface
+   as a confusing/broken promise to real users the moment an uploaded-CV owner scores ≥70. Needs a code fix, not a debate.
+8. **Contradictory user-facing copy** (`vi.json:793` vs `:899`) about whether upload counts — one of the two strings
+   is simply wrong post-fix. Needs a copy fix, not a debate.
+
+## Resolution directions to debate — Round 2
+- **(a) Close the loophole at the SOURCE column, not by re-deriving trust from provenance-that-can-be-spoofed:**
+  when `mode = Revise` AND the row being revised has `source = Uploaded`, either (i) force the NEW row to inherit
+  `source = Uploaded` too (revising an upload never earns "generated"; only a from-scratch `generate` on verified
+  achievements does), or (ii) require the revise to be BLENDED-ENOUGH with verified data to count (harder to define,
+  gameable by "verified data + 1 bogus line").  **(i) is simpler and closes the hole completely — recommend this.**
+- **(b) Fix the FE/BE mismatch immediately regardless of (a):** `CvWorkspace`'s `bestScore`/eligibility computation
+  must filter to `source='generated'`, matching `consultant-contact-gate.service.ts` exactly (ideally: FE reads a
+  BE-computed `isRecruiterEligible` field instead of re-deriving MAX client-side — single source of truth, avoids
+  future drift). This is a straightforward bug fix, not something to debate.
+- **(c) Fix the copy contradiction:** delete/rewrite `sourceUploadedHint` (`vi.json:793` + `en.json` counterpart) to
+  match `unverifiedHint`'s (now-correct) claim — upload does NOT count toward job-readiness/recruiter-gate.
+- Per skill process: (a) needs thầy's decision (a design choice); (b) and (c) are bugs — recommend fixing them
+  regardless of how (a) is resolved, since they're wrong under EITHER interpretation of what upload should do.

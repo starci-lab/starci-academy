@@ -748,11 +748,10 @@
       "deleteConfirmBody": "This can't be undone. The score and feedback for \"{label}\" will be permanently deleted.",
       "deleteConfirmAction": "Delete CV",
       "deleteCancelAction": "Cancel",
-      "recruiterUnlocked": "Best CV: {score}/100 · Recruiter unlocked",
-      "recruiterNeedMore": "Best CV: {score}/100 · {remaining} more points to unlock recruiters",
-      "recruiterLearnMore": "Level up",
-      "editModeTitle": "Edit CV",
-      "backToResults": "View result"
+      "bestCvCaption": "Best CV",
+      "recruiterUnlocked": "Recruiter unlocked",
+      "recruiterNeedMore": "{remaining} more points to unlock recruiters",
+      "recruiterLearnMore": "Level up"
     },
     "preview": {
       "title": "CV preview (PDF)",
@@ -779,10 +778,11 @@
       "emptyHint": "Built from the capstone, challenges, and coding you complete in a course — not typed by hand.",
       "emptyPrimaryCta": "Browse courses",
       "emptyUploadCta": "Upload a CV",
-      "sourceGenerated": "Verified · counts toward your score",
-      "sourceUploaded": "Unverified · not counted",
-      "sourceUploadedHint": "Uploaded CVs aren't checked against real work on StarCi, so they don't count toward your job-readiness score or the recruiter unlock.",
-      "demandBridgeCta": "Generate from your achievements to make it count",
+      "sourceGenerated": "Verified",
+      "sourceUploaded": "Self-reported · not cross-checked",
+      "sourceUploadedBannerTitle": "Get verified by StarCi to stand out",
+      "sourceUploadedHint": "This CV is self-reported — it still counts toward your score and unlocks recruiter contact normally. Generate one from real work (a passed capstone, a graded challenge) so recruiters see a \"Verified\" label and you rank higher when they compare candidates.",
+      "demandBridgeCta": "Generate from your achievements",
       "overflowMore": "+{count}"
     },
     "generate": {
@@ -887,7 +887,7 @@
         "fileTypeInvalid": "The CV must be a PDF.",
         "fileSizeInvalid": "Max file size is 10MB."
       },
-      "unverifiedHint": "Uploaded CVs are scored with the same rubric, but do NOT count toward your job-readiness score or the recruiter unlock — generate one above to make it count."
+      "unverifiedHint": "Uploaded CVs are scored with the same rubric and still count toward your score and recruiter unlock normally — but this one is self-reported, not cross-checked against real work. Generate one from your StarCi achievements (capstone, graded challenges) above to get the \"Verified\" label and rank higher when recruiters compare candidates."
     }
   },
   "finalProject": {
@@ -2608,6 +2608,8 @@
     },
     "disabled": "Disabled",
     "back": "Back",
+    "goBack": "Back",
+    "goBackTo": "Back to {target}",
     "cancel": "Cancel",
     "save": "Save",
     "edit": "Edit",

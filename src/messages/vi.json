@@ -757,11 +757,10 @@
       "deleteConfirmBody": "Hành động này không thể hoàn tác. Điểm và góp ý của \"{label}\" sẽ bị xoá vĩnh viễn.",
       "deleteConfirmAction": "Xoá CV",
       "deleteCancelAction": "Huỷ",
-      "recruiterUnlocked": "CV tốt nhất: {score}/100 · Recruiter đã mở khóa",
-      "recruiterNeedMore": "CV tốt nhất: {score}/100 · còn {remaining} điểm để mở khóa recruiter",
-      "recruiterLearnMore": "Học nâng cao",
-      "editModeTitle": "Chỉnh sửa CV",
-      "backToResults": "Xem kết quả"
+      "bestCvCaption": "CV tốt nhất",
+      "recruiterUnlocked": "Recruiter đã mở khóa",
+      "recruiterNeedMore": "Còn {remaining} điểm để mở khoá recruiter",
+      "recruiterLearnMore": "Học nâng cao"
     },
     "preview": {
       "title": "Xem trước CV (PDF)",
@@ -788,10 +787,11 @@
       "emptyHint": "CV dựng từ capstone · thử thách · coding bạn hoàn thành trong khóa — không viết tay.",
       "emptyPrimaryCta": "Vào khóa học",
       "emptyUploadCta": "Tải CV lên",
-      "sourceGenerated": "Đã xác minh · tính điểm",
-      "sourceUploaded": "Chưa xác minh · không tính điểm",
-      "sourceUploadedHint": "CV tải lên chưa được đối chiếu với thành tích thật trên StarCi, nên không tính vào điểm sẵn sàng đi làm hay mở khoá nhà tuyển dụng.",
-      "demandBridgeCta": "Tạo CV từ thành tích để tính điểm",
+      "sourceGenerated": "Đã xác thực",
+      "sourceUploaded": "Tự khai · chưa đối chiếu",
+      "sourceUploadedBannerTitle": "Được StarCi xác thực để nổi bật hơn",
+      "sourceUploadedHint": "CV này do bạn tự khai — vẫn tính điểm và mở khoá liên hệ bình thường. Tạo CV từ thành tích thật (capstone, thử thách đã chấm) để nhà tuyển dụng thấy nhãn \"Đã xác thực\", xếp hạng cao hơn khi so ứng viên.",
+      "demandBridgeCta": "Tạo CV từ thành tích",
       "overflowMore": "+{count}"
     },
     "generate": {
@@ -896,7 +896,7 @@
         "fileTypeInvalid": "CV phải là định dạng PDF.",
         "fileSizeInvalid": "Dung lượng file tối đa là 10MB."
       },
-      "unverifiedHint": "CV tải lên được chấm cùng rubric, nhưng KHÔNG tính vào điểm sẵn sàng đi làm hay mở khoá nhà tuyển dụng — muốn tính điểm thì Tạo ở trên."
+      "unverifiedHint": "CV tải lên được chấm cùng rubric và vẫn tính điểm/mở khoá liên hệ bình thường — nhưng đây là CV tự khai, chưa đối chiếu với thành tích thật. Tạo CV từ thành tích StarCi (capstone, thử thách đã chấm) ở trên để được gắn nhãn \"Đã xác thực\", xếp hạng cao hơn khi nhà tuyển dụng so ứng viên."
     }
   },
   "finalProject": {
@@ -2617,6 +2617,8 @@
     },
     "disabled": "Tạm tắt",
     "back": "Quay lại",
+    "goBack": "Trở lại",
+    "goBackTo": "Trở lại {target}",
     "cancel": "Hủy",
     "save": "Lưu",
     "edit": "Sửa",

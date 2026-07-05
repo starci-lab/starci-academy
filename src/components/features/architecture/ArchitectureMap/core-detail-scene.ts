@@ -5,7 +5,7 @@ import type {
 } from "@/components/blocks/marketing/ArchitectureScene/types"
 import type { HealthByName } from "../hooks/useSystemHealthPoll"
 import { ARCHITECTURE_COMPONENT_MAP } from "../constants"
-import { buildMemberNodeState, type MemberStatusLabels } from "./scene"
+import { boardFromNodes, buildMemberNodeState, type MemberStatusLabels } from "./scene"
 
 /** The reserved `?pod=` value that opens the Core-module drill-down. */
 export const CORE_DETAIL_ID = "core"
@@ -138,7 +138,9 @@ export const buildCoreDetailScene = (
     ]
 
     return {
-        board: { cols: [-7, 7], rows: [-5, 7], cell: 1 },
+        board: boardFromNodes(nodes, 1),
+        // re-fit at render time to the actual bounding box (see `CameraFit`);
+        // this is only the fallback viewing angle/distance before that runs.
         camera: { position: [12, 12, 12], zoom: 26 },
         nodes,
         edges,

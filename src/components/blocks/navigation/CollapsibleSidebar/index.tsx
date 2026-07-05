@@ -43,6 +43,12 @@ export interface CollapsibleSidebarProps extends WithClassNames<undefined> {
      * choice survives navigation between pages that share this sidebar.
      */
     storageKey: string
+    /**
+     * Optional node pinned BETWEEN the header and the scrollable nav — always
+     * visible (outside the scroll area). Rendered inside the collapsed-context
+     * provider, so it can adapt to the rail (e.g. a resume pill → play icon).
+     */
+    topSlot?: React.ReactNode
     /** The panel body — typically grouped {@link import("../SidebarNavGroup").SidebarNavGroup}s. */
     children: React.ReactNode
 }
@@ -66,6 +72,7 @@ export const CollapsibleSidebar = ({
     collapseLabel,
     expandLabel,
     storageKey,
+    topSlot,
     children,
     className,
 }: CollapsibleSidebarProps) => {
@@ -140,6 +147,9 @@ export const CollapsibleSidebar = ({
                         <SidebarSimpleIcon className="size-5" />
                     </Button>
                 </div>
+
+                {/* pinned top slot (e.g. resume pill) — above the scroll area, always visible */}
+                {topSlot}
 
                 {/* body: the nav — ALWAYS rendered; rows drop to icon-only in the rail
                     (via SidebarCollapsedContext). A HeroUI ScrollShadow owns the overflow

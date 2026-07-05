@@ -9,6 +9,7 @@ import { pathConfig } from "@/resources/path"
 import { getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
 import { ARCHITECTURE_COMPONENT_MAP } from "../constants"
 import type { HealthByName } from "../hooks/useSystemHealthPoll"
+import { MetricsInline } from "../MetricsInline"
 import { getArchitectureStatusVisual, resolveArchitectureStatus } from "../statusVisual"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
@@ -80,6 +81,7 @@ export const NodeDissectionPanel = ({ nodeId, healthByName, className }: NodeDis
                         {health?.latencyMs == null ? "—" : t("panel.latency", { ms: health.latencyMs })}
                     </span>
                     {checkedAgo ? <span>{t("panel.checked", { ago: checkedAgo })}</span> : null}
+                    <MetricsInline metrics={health?.metrics} />
                 </div>
 
                 {health?.message ? (

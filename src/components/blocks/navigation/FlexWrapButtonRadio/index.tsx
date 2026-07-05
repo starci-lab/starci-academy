@@ -60,6 +60,14 @@ export interface FlexWrapButtonRadioProps<T extends string> extends WithClassNam
      * "+N" overflow button). Not part of the group's value — it's an action.
      */
     trailing?: ReactNode
+    /**
+     * Optional per-item trailing action rendered as a SIBLING of the item's button
+     * (not nested inside it — a `<Button>` can't contain another interactive
+     * element). When provided, each item renders as `[button][action]`. Use for a
+     * per-item menu trigger (e.g. edit/delete). Omit for a plain single-select row
+     * (default — matches every existing caller's output exactly).
+     */
+    itemAction?: (item: FlexWrapButtonRadioItem<T>) => ReactNode
 }
 
 /**
@@ -89,6 +97,7 @@ export const FlexWrapButtonRadio = <T extends string>({
     color = "accent",
     insideCard = false,
     trailing,
+    itemAction,
     className,
 }: FlexWrapButtonRadioProps<T>) => {
     const colorVar = COLOR_VAR[color]
@@ -96,8 +105,9 @@ export const FlexWrapButtonRadio = <T extends string>({
         <div role="group" aria-label={ariaLabel} className={cn("flex flex-wrap items-center gap-2", className)}>
             {items.map((item) => {
                 const selected = item.value === value
+                let button: ReactNode
                 if (insideCard) {
-                    return (
+                    button = (
                         <Button
                             key={item.value}
                             size="sm"
@@ -109,34 +119,46 @@ export const FlexWrapButtonRadio = <T extends string>({
                             {item.content}
                         </Button>
                     )
+                } else {
+                    // card-styled <Button>: bg-surface lifted by a SHADOW (matches the global
+                    // card flip — shadow instead of an unselected border; shadow-surface is
+                    // transparent in dark mode, same as cards). Selected = bg-<color>/10 + a
+                    // colored border as the selection signal. HeroUI fill = var(--button-bg) →
+                    // override it via inline style (utility bg loses to it).
+                    const style = (selected
+                        ? {
+                            "--button-bg": `color-mix(in oklab, var(${colorVar}) 10%, transparent)`,
+                            "--button-bg-hover": `color-mix(in oklab, var(${colorVar}) 14%, transparent)`,
+                        }
+                        : {
+                            "--button-bg": "var(--surface)",
+                            "--button-bg-hover": "var(--default)",
+                        }) as CSSProperties
+                    button = (
+                        <Button
+                            key={item.value}
+                            size="sm"
+                            variant="ghost"
+                            isDisabled={item.isDisabled}
+                            aria-pressed={selected}
+                            onPress={() => onChange(item.value)}
+                            style={style}
+                            className={cn("shadow-surface", selected && cn("border", SELECTED_BORDER[color], "font-medium"))}
+                        >
+                            {item.content}
+                        </Button>
+                    )
                 }
-                // card-styled <Button>: bg-surface lifted by a SHADOW (matches the global
-                // card flip — shadow instead of an unselected border; shadow-surface is
-                // transparent in dark mode, same as cards). Selected = bg-<color>/10 + a
-                // colored border as the selection signal. HeroUI fill = var(--button-bg) →
-                // override it via inline style (utility bg loses to it).
-                const style = (selected
-                    ? {
-                        "--button-bg": `color-mix(in oklab, var(${colorVar}) 10%, transparent)`,
-                        "--button-bg-hover": `color-mix(in oklab, var(${colorVar}) 14%, transparent)`,
-                    }
-                    : {
-                        "--button-bg": "var(--surface)",
-                        "--button-bg-hover": "var(--default)",
-                    }) as CSSProperties
+                if (!itemAction) {
+                    return button
+                }
+                // per-item action is a SIBLING of the button (not nested inside it —
+                // a <Button> can't contain another interactive element).
                 return (
-                    <Button
-                        key={item.value}
-                        size="sm"
-                        variant="ghost"
-                        isDisabled={item.isDisabled}
-                        aria-pressed={selected}
-                        onPress={() => onChange(item.value)}
-                        style={style}
-                        className={cn("shadow-surface", selected && cn("border", SELECTED_BORDER[color], "font-medium"))}
-                    >
-                        {item.content}
-                    </Button>
+                    <div key={item.value} className="flex items-center gap-1">
+                        {button}
+                        {itemAction(item)}
+                    </div>
                 )
             })}
             {trailing}

@@ -1,3 +1,60 @@
+# UX Brainstorm — "Hỏi nhanh" (Quick Quiz): bỏ AI + gamify học-hiệu-quả (2026-07-05, Opus)
+
+> `/starci-fe-ux-brainstorm`. Route `/learn/flashcards/interview` = tab **"Hỏi nhanh"** trong "Ôn tập".
+> ⚠️ SUPERSEDE phần "2026-06-25" bên dưới: các API nó dựng trên (`gradeInterviewAnswer`/`drawInterviewCard`/
+> `myInterviewHistory`) NAY ĐÃ BỊ GỠ khỏi BE (grep `mtp` = 0). Feature AI-mock-interview thật đã tách sang
+> `features/learn/MockInterview` (`/learn/mock-interview`, `gradeMockInterviewSession`) + lấy tên "Phỏng vấn thử".
+> `InterviewSession` này giờ = "Hỏi nhanh" orphan gọi API chết (→ toast "Mất kết nối"). Làm lại KHÔNG-AI, cô lập.
+
+## 0. Hai phát hiện quyết định (grounded)
+- **0a. Gọi API chết:** `gradeInterviewAnswer`/`drawInterviewCard`/`myInterviewHistory` không còn trên `starci-academy-backend@mtp`
+  (0 grep). BE chỉ còn `gradeMockInterviewSession` + FE riêng `MockInterview`. → "Phỏng vấn thử" (AI, sâu, capstone) ≠
+  "Hỏi nhanh". Redesign "Hỏi nhanh" cô lập, KHÔNG đụng `MockInterview`.
+- **0b. Content flashcard = câu hỏi phỏng vấn higher-order**, đáp án 5 tầng (`Trả lời thẳng`→`Cơ chế`→`Trade-off`→
+  `Bẫy`→`Đào sâu tiếp`) + chip **`Từ khoá ăn điểm`**. KHÔNG phải fact-recall → mọi cơ chế chấm phải bám cấu trúc này.
+
+## 1. Bằng chứng learning-science (quyết định "cách", có nguồn — §Nguồn cuối)
+| Nguyên tắc | Hệ quả cho "Hỏi nhanh" |
+|---|---|
+| **Transfer-appropriate processing** (Agarwal 2019): luyện chỉ chuyển hoá khi format luyện KHỚP đích; luyện fact ≠ cải thiện higher-order | mục tiêu = trả lời phỏng vấn (higher-order) → **phải luyện higher-order retrieval** → **GIẾT multiple-choice** |
+| **Testing effect** (Roediger–Karpicke; Dunlosky 2013 high-utility): short-answer bắt nhớ-lại-hoàn-toàn > recognition; biến số = NỖ LỰC | **bắt gõ/nói TRƯỚC khi lật** → **GIẾT tự-chấm nhị phân nhìn-xong-bấm-Đúng** |
+| **Elaborative interrogation / self-explanation** (Dunlosky 2013): tự sinh why/how bền hơn nhận thụ động | **"Đào sâu tiếp"** (viết sẵn trong content) = vòng bonus |
+| **Spacing** (Dunlosky 2013 high-utility) | **streak NGÀY** là hook gamify CHÍNH; vẫn nuôi SM-2 |
+| **Interleaving** (Dunlosky 2013) | phiên **trộn thẻ across tag/deck**, không blast 1 deck |
+| **Gamification meta** (Zeng 2024; SDT 2023; overjustification): tăng động lực nhưng **tối thiểu lên competency**; điểm kỳ vọng có thể **giết** động lực học | **thưởng ĐỘ PHỦ (keyword/tầng) + THÓI QUEN (streak ngày), KHÔNG tốc độ tap**; điểm ở "equilibrium"; recap khung theo MASTERY không raw points |
+
+## 2. Phương pháp chốt (không AI, tái dùng content + SRS)
+**Nhớ lại (gõ/nói) → lật đối chiếu keyword + tầng → tự chấm SM-2 (`reviewFlashcard`) → bonus "đào sâu" → interleave → quay lại mai (streak).**
+Chấm KHÔNG AI = **string-match** câu trả lời với chip `Từ khoá ăn điểm` (đã fetch sẵn trong `answer`) → "nhắc 3/6 từ khoá".
+1 engine SRS (không hệ điểm song song); XP qua `writeXpHistory` (+1 `XpSource`, `refId=sessionId` idempotent) → leaderboard sẵn có.
+
+## 3. Ba hướng "cách" — khác ở ĐỘ ÉP cấu trúc (widget đã vẽ trong chat)
+- **A — Recall + chấm từ khoá (ĐỀ XUẤT):** 1 câu → gõ/nói → lật → keyword-coverage + tick tầng → SM-2 4 mức. Higher-order thật + chấm khách quan + ship nhẹ + nuôi SRS. Rủi ro: tự-tick tầng (keyword khách quan gánh).
+- **B — Phỏng vấn tầng:** tách đáp án 5 phần (theo `:::muted` header sẵn có) thành 2-3 micro-recall nối tiếp ("cơ chế"→reveal→"1 trade-off"→reveal→"1 bẫy"). Sát phỏng vấn thật nhất; nặng eng hơn, ít "nhanh".
+- **C — Triage nhanh:** vuốt "nói được / chưa chắc", warm-up + streak. Thành thật KHÔNG dạy sâu (đã có "Học thẻ" lo lật nhanh) → quá nhẹ cho content này.
+- **Chốt: A**, mượn "Đào sâu tiếp" của B làm bonus elaborative-interrogation. B để dành làm chế độ "drill sâu" tách riêng sau.
+
+## 4. Gamify layer (bọc trên A, đúng §1 hàng cuối)
+- Hook CHÍNH = **streak NGÀY** (map hệ streak/leaderboard sẵn có), to nhất trên setup.
+- **XP = f(độ phủ keyword + tầng)**, KHÔNG f(tốc độ); combo-trong-phiên = gia vị.
+- Progress bar fill theo câu (X/N). Recap khung mastery ("N/M thẻ trả lời được không cần gợi ý · streak +1").
+- Bỏ dropdown model AI (`GradeModelDropdown`) — ngừng render tại đây, KHÔNG sửa file gốc (dùng chung nơi khác).
+
+## 5. Việc khi `/starci-fe-ux-apply`
+- **FE:** viết lại `InterviewSession` theo vòng A; bỏ 3 mutation/query chết + `GradeModelDropdown`; nguồn thẻ + mastery từ query flashcard course sẵn có; parse `Từ khoá ăn điểm` từ `answer`; tự chấm qua `reviewFlashcard`.
+- **BE (nhỏ, 0 AI):** `XpSource.FlashcardQuiz` + mutation "hoàn tất phiên" → `writeXpHistory(refId=sessionId)`; nếu chưa có query "rút N thẻ ngẫu nhiên theo course+level+interleave" thì thêm (kiểm module `flashcard-decks` trước).
+- **Verify:** hết toast mất-kết-nối · XP đúng 1 lần/phiên · "Độ thuộc" khớp Học thẻ · streak ngày đúng.
+
+## Nguồn
+- Agarwal 2019, Retrieval Practice & Bloom's Taxonomy, J.Ed.Psych 111 — https://pdf.poojaagarwal.com/Agarwal_2018_JEdPsych.pdf
+- Dunlosky et al. 2013, Improving Students' Learning With Effective Learning Techniques — https://www.aft.org/ae/fall2013/dunlosky
+- Roediger & Karpicke, repeated retrieval / testing effect — https://www.sciencedirect.com/science/article/abs/pii/S0749596X06001367
+- Zeng et al. 2024, Gamification meta-analysis (BJET) — https://bera-journals.onlinelibrary.wiley.com/doi/full/10.1111/bjet.13471
+- Gamification & intrinsic motivation, SDT meta 2023 — https://link.springer.com/article/10.1007/s11423-023-10337-7
+- Overjustification effect — https://en.wikipedia.org/wiki/Overjustification_effect
+
+---
+
 # UX Brainstorm — Phỏng vấn thử: RANDOM toàn khóa (bỏ chọn chủ đề) + chặn chưa-enroll (2026-06-25)
 
 > `/starci-fe-ux-brainstorm`. Trang: `/learn/flashcards` tab **"Phỏng vấn thử"**. Thầy: *"random câu hỏi, không cho users chọn theo chủ đề; có attempts; dùng Web Voice; gửi BE chấm = AI + feedback; KHÔNG mua khóa khỏi xài; nhớ chặn nếu chưa enroll"*. KHÔNG code (chờ `/starci-fe-ux-apply`).

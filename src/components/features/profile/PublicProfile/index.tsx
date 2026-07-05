@@ -57,6 +57,9 @@ import {
 import {
     ProfileActivityTab,
 } from "./ProfileActivityTab"
+import {
+    ProfileCvTab,
+} from "./ProfileCvTab"
 import { useAppSelector } from "@/redux/hooks"
 import { useProfileTabStore } from "@/hooks/zustand/profileTab/store"
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
@@ -118,7 +121,7 @@ export const PublicProfile = ({
     // the profile tab strip renders as the global Navbar's bottom layer, but only
     // when the main profile actually shows (not on loading / not-found / locked).
     const showTabs = !isLoading && !(authenticated && !username) && Boolean(user) && !error && !isLocked
-    const tabsNode = useMemo(() => <ProfileTabsBar />, [])
+    const tabsNode = useMemo(() => <ProfileTabsBar isSelf={isSelf} />, [isSelf])
     useRegisterNavbarBottomLayer(showTabs ? tabsNode : null)
 
     // first load → skeleton so the column never jumps. On the bare `/profile` the
@@ -188,6 +191,16 @@ export const PublicProfile = ({
                             className="flex flex-col gap-6"
                         >
                             <ProfileSkillsTab />
+                        </div>
+                    ) : null}
+                    {tab === "cv" && isSelf ? (
+                        <div
+                            id="profile-panel-cv"
+                            role="tabpanel"
+                            aria-labelledby="cv"
+                            className="flex flex-col gap-6"
+                        >
+                            <ProfileCvTab />
                         </div>
                     ) : null}
                     {tab === "activity" ? (

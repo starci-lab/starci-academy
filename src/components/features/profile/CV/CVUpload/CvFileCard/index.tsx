@@ -3,7 +3,6 @@
 import { ClockIcon, DownloadSimpleIcon, FilePdfIcon } from "@phosphor-icons/react"
 import React from "react"
 import {
-    Button,
     Card,
     CardContent,
     cn,
@@ -18,18 +17,16 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link CvFileCard}. */
 export interface CvFileCardProps extends WithClassNames<undefined> {
-    /** URL the stored/selected CV file resolves to (empty when none). */
+    /** URL the stored CV file resolves to (empty when none — e.g. generated CVs have no raw file). */
     currentCvLink: string
     /** Display label for the CV file link. */
     currentCvLinkLabel: string
     /** Human-readable submission time. */
     submittedAtLabel: string
-    /** Fired when the user wants to open the CV update upload modal. */
-    onOpenUpdate: () => void
 }
 
 /**
- * Stored CV file card: file link, submitted time, download link, and update action.
+ * Current CV file card: file link, submitted time, and download link.
  *
  * Presentational: renders the provided file metadata, no logic.
  * @param props - {@link CvFileCardProps}
@@ -38,7 +35,6 @@ export const CvFileCard = ({
     currentCvLink,
     currentCvLinkLabel,
     submittedAtLabel,
-    onOpenUpdate,
     className,
 }: CvFileCardProps) => {
     const t = useTranslations()
@@ -88,9 +84,6 @@ export const CvFileCard = ({
                     </div>
                 </CardContent>
             </Card>
-            <Button variant="secondary" onPress={onOpenUpdate}>
-                {t("cv.submission.updateAction")}
-            </Button>
         </div>
     )
 }

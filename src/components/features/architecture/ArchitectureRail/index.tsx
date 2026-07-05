@@ -5,6 +5,7 @@ import { Label, ListBox, ScrollShadow, Typography, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { ARCHITECTURE_COMPONENTS } from "../constants"
 import type { HealthByName } from "../hooks/useSystemHealthPoll"
+import { MetricsInline } from "../MetricsInline"
 import { getArchitectureStatusVisual, resolveArchitectureStatus } from "../statusVisual"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
@@ -33,6 +34,7 @@ const ComponentRow = ({
     const t = useTranslations("architecture")
     const state = resolveArchitectureStatus(name, healthByName)
     const visual = getArchitectureStatusVisual(state)
+    const metrics = healthByName?.[name]?.metrics
     return (
         <span className="flex w-full min-w-0 items-center gap-2">
             <Icon aria-hidden className="size-4 shrink-0 text-muted" />
@@ -43,6 +45,10 @@ const ComponentRow = ({
                 <Typography type="body-xs" color="muted" className="min-w-0 truncate">
                     {t(`rail.tagline.${name}`)}
                 </Typography>
+                {/* only components with a local Docker container carry metrics — a
+                    row with none (judge0, ollama, mail, aiBalancer, external SaaS)
+                    simply stays 2 lines, no fake placeholder line */}
+                <MetricsInline metrics={metrics} className="text-xs text-muted" />
             </span>
             <span className={cn("flex shrink-0 items-center gap-1.5 rounded-full px-2 py-0.5", visual.chipClassName)}>
                 <span className={cn("size-1.5 shrink-0 rounded-full", visual.dotClassName, visual.pulse && "animate-pulse")} aria-hidden />

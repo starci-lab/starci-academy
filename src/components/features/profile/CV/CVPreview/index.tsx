@@ -1,10 +1,7 @@
 "use client"
 
 import { MagnifyingGlassPlusIcon } from "@phosphor-icons/react"
-import React, {
-    useEffect,
-    useMemo,
-} from "react"
+import React, { useMemo } from "react"
 import {
     Button,
     cn,
@@ -12,10 +9,9 @@ import {
 import { useTranslations } from "next-intl"
 import dynamic from "next/dynamic"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { useAppSelector } from "@/redux/hooks"
 import { useCvPreviewOverlayState } from "@/hooks/zustand/overlay/hooks"
-import { useQueryCvUrlSwr } from "@/hooks/swr/api/graphql/queries/useQueryCvUrlSwr"
-import { useCvApplyStore } from "@/hooks/zustand/cvApply/store"
+import { useQueryCvGenerationSwr } from "@/hooks/swr/api/graphql/queries/useQueryCvGenerationSwr"
+import { CvSource } from "@/modules/api/graphql/queries/types/cv-generation"
 
 const PDFView = dynamic(
     () => import("@/components/reuseable/PDFView").then((module) => module.PDFView),
@@ -23,76 +19,92 @@ const PDFView = dynamic(
 )
 
 /** Props for {@link CVPreview}. */
-export type CVPreviewProps = WithClassNames<undefined>
+export interface CVPreviewProps extends WithClassNames<undefined> {
+    /**
+     * `cv_generations.id` to preview — shared with the sibling {@link CvScorecard}
+     * so picking a CV in the history dial updates the preview too, instead of
+     * this pane always showing the latest CV regardless of selection.
+     */
+    cvId: string | undefined
+}
+
+/** Whether a (presigned) URL points at a plain-text upload, by its path extension. */
+const isTextFileUrl = (url: string): boolean => {
+    try {
+        return new URL(url).pathname.toLowerCase().endsWith(".txt")
+    } catch {
+        return false
+    }
+}
 
 /**
- * Sticky PDF preview of the current CV (blob or saved URL) plus fullscreen entry.
+ * The ONE shared preview for the caller's SELECTED CV (`cvId`) — regardless of
+ * source: an uploaded PDF/text file (`uploadedCvUrl`), or a `Generated` CV
+ * compiled server-side into a real PDF (`generatedPdfUrl`, `tectonic` — see
+ * `/profile/cv/edit`). Rendered as its own full-width "Xem trước" tab in
+ * `CvWorkspace` (not a narrow sticky sidebar) so the document gets the whole
+ * workspace width instead of sharing a row with the scorecard. A fullscreen
+ * entry is still available for reading at full resolution.
+ *
  * @param props - {@link CVPreviewProps}
  */
-export const CVPreview = ({ className }: CVPreviewProps) => {
+export const CVPreview = ({ className, cvId }: CVPreviewProps) => {
     const t = useTranslations()
-    const cvFile = useCvApplyStore((state) => state.cvFile)
     const {
         open: openCvPreviewModal,
     } = useCvPreviewOverlayState()
-    useQueryCvUrlSwr()
-    const cvUrlPayload = useAppSelector((state) => state.cvUrl.entity)
-    const selectedFileUrl = useMemo(() => {
-        if (!cvFile) return ""
-        return URL.createObjectURL(cvFile)
-    }, [
-        cvFile,
-    ])
-    const previewPdfUrl = useMemo(
-        () => selectedFileUrl || (cvUrlPayload?.cvUrl ?? ""), [
-            selectedFileUrl,
-            cvUrlPayload?.cvUrl,
-        ]
-    )
+    const detailSwr = useQueryCvGenerationSwr(cvId)
+    const detail = detailSwr.data
 
-    useEffect(() => {
-        return () => {
-            if (selectedFileUrl) URL.revokeObjectURL(selectedFileUrl)
+    const previewPdfUrl = useMemo(() => {
+        if (!detail) {
+            return ""
         }
-    }, [
-        selectedFileUrl,
-    ])
+        if (detail.source === CvSource.Uploaded) {
+            const url = detail.uploadedCvUrl ?? ""
+            return url && !isTextFileUrl(url) ? url : ""
+        }
+        return detail.generatedPdfUrl ?? ""
+    }, [detail])
+
+    const previewTextUrl = useMemo(() => {
+        if (!detail || detail.source !== CvSource.Uploaded) {
+            return ""
+        }
+        const url = detail.uploadedCvUrl ?? ""
+        return url && isTextFileUrl(url) ? url : ""
+    }, [detail])
 
     return (
-        <div
-            className={cn(
-                "col-span-2 flex flex-col lg:sticky lg:top-16 lg:self-start lg:h-[calc(100vh-64px)] lg:min-h-0",
-                className,
+        <div className={cn("flex flex-col gap-3", className)}>
+            {previewTextUrl ? (
+                <iframe
+                    key={previewTextUrl}
+                    src={previewTextUrl}
+                    title={t("cv.preview.title")}
+                    className="h-[300px] w-full rounded-2xl border border-default bg-surface lg:h-[75vh]"
+                />
+            ) : (
+                <PDFView
+                    key={previewPdfUrl || "cv-preview-empty"}
+                    src={previewPdfUrl}
+                    title={t("cv.preview.title")}
+                    heightClassName="h-[300px] lg:h-[75vh]"
+                    showAllPages={true}
+                    allowVerticalScroll={true}
+                    fitToContainer={true}
+                />
             )}
-        >
-            {/*
-              PDF scrolls inside a flex child with `min-h-0` so the "Xem full" bar stays
-              anchored under the preview instead of being pushed to the viewport bottom.
-            */}
-            <div className="flex min-h-0 flex-1 flex-col">
-                <div className="min-h-0 flex-1 overflow-hidden lg:flex lg:min-h-0 lg:flex-col">
-                    <PDFView
-                        key={previewPdfUrl || "cv-preview-empty"}
-                        src={previewPdfUrl}
-                        title={t("cv.preview.title")}
-                        heightClassName="h-[300px] lg:h-full lg:min-h-0"
-                        showAllPages={true}
-                        allowVerticalScroll={true}
-                        fitToContainer={true}
-                    />
-                </div>
-                <div className="shrink-0 border-t bg-content1/80 p-3 pb-5 backdrop-blur-sm lg:pb-4">
-                    <Button
-                        size="lg"
-                        className="w-full"
-                        variant="outline"
-                        onPress={openCvPreviewModal}
-                    >
-                        <MagnifyingGlassPlusIcon aria-hidden className="size-5" />
-                        {t("cv.preview.fullscreen")}
-                    </Button>
-                </div>
-            </div>
+            <Button
+                size="lg"
+                className="w-full"
+                variant="outline"
+                isDisabled={!previewPdfUrl}
+                onPress={() => openCvPreviewModal(previewPdfUrl)}
+            >
+                <MagnifyingGlassPlusIcon aria-hidden className="size-5" />
+                {t("cv.preview.fullscreen")}
+            </Button>
         </div>
     )
 }

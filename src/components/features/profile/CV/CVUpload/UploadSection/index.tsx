@@ -41,18 +41,23 @@ const AUTO_SELECTION: GradeModelSelection = {
 }
 
 /** Props for {@link UploadSection}. */
-export type UploadSectionProps = WithClassNames<undefined>
+export interface UploadSectionProps extends WithClassNames<undefined> {
+    /** Course/track the created CV should be tied to — owned by the parent so the picker renders once. */
+    courseId?: string
+}
 
 /**
  * CV **upload** section (WF-07): pick a PDF, optionally name it, choose a scoring
  * model, then upload. Runs the presign → PUT → `uploadCv` flow via
  * {@link useCvUploadForm}; the created generation is registered in the shared
  * {@link useCvGenerationStore}, so the sibling preview polls + renders it — the
- * same infra the generate/revise flows use. Owns its file/label/selection state.
+ * same infra the generate/revise flows use. Owns its file/label/selection state;
+ * `courseId` comes from the parent (shared with {@link GenerateSection}) so the
+ * course/track picker renders exactly once.
  *
  * @param props - {@link UploadSectionProps}
  */
-export const UploadSection = ({ className }: UploadSectionProps) => {
+export const UploadSection = ({ className, courseId }: UploadSectionProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -78,7 +83,7 @@ export const UploadSection = ({ className }: UploadSectionProps) => {
     const onUpload = () => {
         // Clear any previously-previewed generation so the sibling preview follows this upload.
         setActiveCvGenerationId(null)
-        void submit(label, selection)
+        void submit(label, selection, courseId)
     }
 
     return (
@@ -92,7 +97,7 @@ export const UploadSection = ({ className }: UploadSectionProps) => {
                 hint={t("cv.upload.fileHint")}
                 file={cvFile}
                 errorMessage={cvFile && error ? t(error) : undefined}
-                acceptedMimeTypes={["application/pdf"]}
+                acceptedMimeTypes={["application/pdf", "text/plain"]}
                 maxSizeInBytes={10 * 1024 * 1024}
                 onChange={(file) => setCvFile(file)}
             />

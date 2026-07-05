@@ -1,7 +1,7 @@
 "use client"
 
-import { ArrowClockwiseIcon, SparkleIcon } from "@phosphor-icons/react"
-import React, { useMemo, useState } from "react"
+import { ArrowClockwiseIcon, DownloadSimpleIcon, SparkleIcon } from "@phosphor-icons/react"
+import React, { useCallback, useMemo, useState } from "react"
 import {
     Button,
     Label,
@@ -14,7 +14,6 @@ import {
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { AIProcessingText } from "@/components/reuseable/AIProcessingText"
-import { LatexCvPreview } from "@/components/blocks/documents/LatexCvPreview"
 import { StarCiAIBadge } from "@/components/reuseable/StarCiAIBadge"
 import { JobCategory } from "@/modules/types/enums/job-category"
 import { JobStatus } from "@/modules/types/enums/job-status"
@@ -49,26 +48,30 @@ const AUTO_SELECTION: GradeModelSelection = {
 /** Props for {@link GenerateSection}. */
 export interface GenerateSectionProps extends WithClassNames<undefined> {
     /**
-     * `cv_submissions.id` of the currently uploaded CV, if any. Enables the "Revise my CV"
-     * action (revise operates on an uploaded submission).
+     * `cv_generations.id` of the caller's current CV (either source — uploaded or
+     * generated), if any. Enables the "Revise my CV" action.
      */
-    cvSubmissionId?: string
-    /** Fired to open the (reused) CV upload modal for the revise flow. */
-    onOpenUpload: () => void
+    sourceCvGenerationId?: string
+    /** Course/track the generated CV should be tied to — owned by the parent so the picker renders once. */
+    courseId?: string
 }
 
 /**
  * AI CV generation section: a free-text "extra context" field plus two flows —
  * **Generate** (build a CV from the learner's StarCi activity) and **Revise** (improve an
- * uploaded CV). Both enqueue a background job whose id is polled via
+ * existing CV). Both enqueue a background job whose id is polled via
  * {@link useQueryCvGenerationSwr}; while pending it shows the shared AI-processing status
- * line, and on `Done` it renders the returned `.tex` via {@link LatexCvPreview}.
+ * line. The compiled result (`generatedPdfUrl`, server-side `tectonic`) previews in the
+ * SIBLING {@link CVPreview} (right column) — the one shared viewer for every CV
+ * regardless of source — so this section only surfaces a status line + the
+ * `.tex` download (a compile failure degrades to a "can't preview" message instead
+ * of blocking the run).
  *
  * @param props - {@link GenerateSectionProps}
  */
 export const GenerateSection = ({
-    cvSubmissionId,
-    onOpenUpload,
+    sourceCvGenerationId,
+    courseId,
     className,
 }: GenerateSectionProps) => {
     const t = useTranslations()
@@ -122,17 +125,33 @@ export const GenerateSection = ({
 
     const isDone = generation?.status === CvGenerationStatus.Done
     const latexSource = generation?.latexSource ?? ""
+    const generatedPdfUrl = generation?.generatedPdfUrl ?? ""
+
+    /** Download the raw `.tex` as a blob via a throwaway anchor (revoked immediately). */
+    const onDownloadTex = useCallback(() => {
+        if (typeof window === "undefined" || !latexSource) {
+            return
+        }
+        const blob = new Blob([latexSource], { type: "application/x-tex" })
+        const url = URL.createObjectURL(blob)
+        const anchor = document.createElement("a")
+        anchor.href = url
+        anchor.download = "cv.tex"
+        document.body.appendChild(anchor)
+        anchor.click()
+        document.body.removeChild(anchor)
+        URL.revokeObjectURL(url)
+    }, [latexSource])
 
     const onGenerate = () => {
-        void generate(extraPrompts, selection)
+        void generate(extraPrompts, selection, courseId)
     }
 
     const onRevise = () => {
-        if (!cvSubmissionId) {
-            onOpenUpload()
+        if (!sourceCvGenerationId) {
             return
         }
-        void revise(cvSubmissionId, extraPrompts, selection)
+        void revise(sourceCvGenerationId, extraPrompts, selection, courseId)
     }
 
     return (
@@ -178,7 +197,7 @@ export const GenerateSection = ({
                 <Button
                     size="lg"
                     variant="secondary"
-                    isDisabled={isPending}
+                    isDisabled={isPending || !sourceCvGenerationId}
                     isPending={isRevising}
                     onPress={onRevise}
                 >
@@ -216,11 +235,27 @@ export const GenerateSection = ({
                 />
             ) : null}
 
+            {isDone && generatedPdfUrl ? (
+                <p className="text-sm text-success">
+                    {t("cv.generate.previewReadyHint")}
+                </p>
+            ) : isDone ? (
+                <div className="flex flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-default bg-surface p-4 text-center">
+                    <p className="text-sm text-muted">
+                        {t("cv.generate.renderFallback")}
+                    </p>
+                </div>
+            ) : null}
+
             {isDone && latexSource ? (
-                <LatexCvPreview
-                    latexSource={latexSource}
-                    className="min-h-[360px]"
-                />
+                <Button
+                    variant="secondary"
+                    onPress={onDownloadTex}
+                    className="shrink-0 self-start"
+                >
+                    <DownloadSimpleIcon aria-hidden className="size-5" />
+                    {t("cv.generate.downloadTex")}
+                </Button>
             ) : null}
         </div>
     )

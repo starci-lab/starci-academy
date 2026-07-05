@@ -1,4 +1,5 @@
 import type {
+    ArchitectureBoard,
     ArchitectureEdge,
     ArchitectureNode,
     ArchitectureSceneData,
@@ -6,6 +7,28 @@ import type {
 } from "@/components/blocks/marketing/ArchitectureScene/types"
 import type { HealthByName } from "../hooks/useSystemHealthPoll"
 import { ARCHITECTURE_COMPONENT_MAP } from "../constants"
+
+/**
+ * Derives a scene's floor-grid bounds from its ACTUAL node cells (+ a fixed
+ * margin), instead of a hardcoded `cols`/`rows` guess — a scene builder that
+ * scales node spacing by count (fan rings, chain steps) would otherwise draw a
+ * grid that's too small (clipping nodes at the edge) or too big (a tiny board
+ * floating in an oversized floor) for the topology it just laid out.
+ *
+ * @param nodes - The scene's placed nodes (post-layout).
+ * @param cell - World units per cell.
+ * @param margin - Extra cells of floor padding beyond the outermost node.
+ */
+export const boardFromNodes = (nodes: ArchitectureNode[], cell: number, margin = 2): ArchitectureBoard => {
+    if (nodes.length === 0) return { cols: [-margin, margin], rows: [-margin, margin], cell }
+    const xs = nodes.map((n) => n.cell[0])
+    const zs = nodes.map((n) => n.cell[1])
+    return {
+        cols: [Math.min(...xs) - margin, Math.max(...xs) + margin],
+        rows: [Math.min(...zs) - margin, Math.max(...zs) + margin],
+        cell,
+    }
+}
 
 /**
  * Fixed topology (grid cells + edges) for the architecture atlas — grounded in
@@ -178,7 +201,9 @@ export const buildLiveScene = (
     })
 
     return {
-        board: { cols: [-4, 7], rows: [-4, 3], cell: 2.4 },
+        board: boardFromNodes(nodes, 2.4),
+        // re-fit at render time to the actual bounding box (see `CameraFit`);
+        // this is only the fallback viewing angle/distance before that runs.
         camera: { position: [14, 11, 12], zoom: 20 },
         nodes,
         edges: [...OWN_EDGES, ...EXTERNAL_EDGES],

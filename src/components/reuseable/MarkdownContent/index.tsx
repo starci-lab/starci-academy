@@ -236,12 +236,25 @@ export interface MarkdownContentProps extends WithClassNames<undefined> {
  * theme hook and client-side markdown rendering.
  * @param props - {@link MarkdownContentProps}
  */
+/**
+ * Strips Anki-style cloze markers `{{cN::…}}` down to their inner text so a
+ * flashcard answer renders cleanly everywhere (reviewer / due / quiz full
+ * answer). The `cN::` prefix makes the pattern distinctive — it never collides
+ * with template braces like `{{ user.name }}` in lesson code samples.
+ * @param markdown - Raw markdown that may carry cloze markers.
+ */
+const stripClozeMarkers = (markdown: string): string =>
+    markdown.replace(/\{\{c\d+::([\s\S]*?)\}\}/g, "$1")
+
 export const MarkdownContent = ({ markdown, reading = false, className }: MarkdownContentProps) => {
     const theme = useTheme()
     const t = useTranslations()
     const mermaidCaptions = useMemo(() => extractMermaidCaptions(markdown), [markdown])
-    // Strip the figure-caption paragraphs (rendered as `<figcaption>` by MermaidDiagram instead).
-    const renderedMarkdown = useMemo(() => stripMermaidCaptions(markdown), [markdown])
+    // Strip mermaid figure-captions (rendered as `<figcaption>`) + cloze markers (rendered plain).
+    const renderedMarkdown = useMemo(
+        () => stripClozeMarkers(stripMermaidCaptions(markdown)),
+        [markdown],
+    )
     const components = useMemo(
         () => buildMarkdownRenderers({
             isDark: theme.theme === "dark",

@@ -328,7 +328,11 @@
         "collapseRightRail": "Hide right rail",
         "expandRightRail": "Show right rail",
         "dashboard": "Dashboard",
-        "guestPrompt": "Sign in to track your progress"
+        "guestPrompt": "Sign in to track your progress",
+        "groupPath": "Path",
+        "groupPractice": "Review & practice",
+        "groupTrack": "Track",
+        "resumeContinue": "Continue"
     },
     "footer": {
         "tagline": "Learn by building real systems with your own hands — sharp enough for any technical interview.",
@@ -444,6 +448,11 @@
         "metaLearnersLabel": "learners",
         "capstoneEyebrow": "Content done — on to your project",
         "resumeCapstone": "Continue project",
+        "nudges": {
+            "dueFlashcards": "{count} cards due today",
+            "mockInterview": "Practice interview for your upcoming project",
+            "rank": "Rank #{rank} this week"
+        },
         "challengesByDifficulty": "Challenges by difficulty",
         "difficulty": {
             "beginner": "Easy",
@@ -723,19 +732,57 @@
     },
     "cv": {
         "title": "CV",
+        "description": "Your CV score, AI feedback, and preview — kept side by side so you can compare them.",
+        "editCta": "Edit CV",
+        "editTitle": "Edit CV",
+        "editDescription": "Upload an existing CV or let AI build a new one from your StarCi activity.",
+        "workspace": {
+            "resultTab": "Result",
+            "previewTab": "Preview",
+            "tabsAria": "Switch between CV result and preview",
+            "addNew": "Add new CV",
+            "manageAria": "Manage {label}",
+            "editAction": "Edit",
+            "deleteAction": "Delete",
+            "deleteConfirmTitle": "Delete this CV?",
+            "deleteConfirmBody": "This can't be undone. The score and feedback for \"{label}\" will be permanently deleted.",
+            "deleteConfirmAction": "Delete CV",
+            "deleteCancelAction": "Cancel"
+        },
         "preview": {
             "title": "CV preview (PDF)",
             "fullscreen": "View full"
         },
+        "courseTrack": {
+            "label": "Tie to a course (optional)",
+            "noneOption": "No course",
+            "loading": "Loading your courses…"
+        },
+        "scorecard": {
+            "resultLabel": "Result",
+            "feedbackLabel": "Feedback",
+            "unlocked": "Eligible for recruiter contact",
+            "locked": "Not yet eligible for recruiter contact",
+            "needMore": "Need {score} more points to unlock recruiter contact.",
+            "noScoreYet": "No score yet",
+            "stillScoring": "Scoring…",
+            "history": "Your CVs",
+            "untitled": "CV #{number}",
+            "noSuggestion": "No specific suggestion.",
+            "noFeedback": "No feedback yet.",
+            "emptyTitle": "No CV yet",
+            "emptyHint": "Create or upload a CV below to get started."
+        },
         "generate": {
             "title": "Generate CV with AI",
-            "description": "Let AI build a developer CV from your StarCi learning activity, or revise a CV you uploaded. The result is a LaTeX preview — download the .tex source to fine-tune it.",
+            "description": "Let AI build a developer CV from your StarCi learning activity, or revise a CV you uploaded. The result is compiled into a real PDF, previewed on the right — download the .tex source if you want to fine-tune it.",
             "extraPromptsLabel": "Tell us about projects/experience outside StarCi (optional)",
             "extraPromptsPlaceholder": "e.g. I built project A and project B, I know Golang/TypeScript...",
             "generateAction": "Generate CV",
             "reviseAction": "Revise my CV",
             "downloadTex": "Download .tex",
-            "renderFallback": "Preview unavailable, download the .tex source instead.",
+            "previewReadyHint": "Done — see the PDF preview on the right.",
+            "renderFallback": "Couldn't compile a PDF. Download the .tex source instead.",
             "previewAria": "CV preview"
         },
         "submission": {
@@ -818,7 +865,7 @@
         "upload": {
             "title": "Upload your CV",
             "description": "Already have a CV? Upload the PDF so AI scores it and gives feedback with the same rubric as StarCi-generated CVs.",
-            "fileHint": "Drag & drop or choose your CV file (PDF, up to 10MB).",
+            "fileHint": "Drag & drop or choose your CV file (PDF or plain text .txt, up to 10MB).",
             "labelLabel": "A name to remember this CV by (optional)",
             "labelPlaceholder": "e.g. Backend application CV 2026",
             "uploadAction": "Upload and score",
@@ -1599,8 +1646,30 @@
             "gradeTitle": "Grading",
             "gradeHelper": "Pick the AI that grades your answers. Auto lets the system choose a fitting model.",
             "pickHint": "Pick a deck from the list on the left to start a mock interview.",
-            "gateTitle": "Mock interview is for enrolled learners",
-            "gateDescription": "Enroll in the course to practice with the AI interviewer — a score and feedback after every answer."
+            "gateTitle": "Quick quiz is for enrolled learners",
+            "gateDescription": "Enroll in the course to practice recall with flashcards — self-check by key terms and earn XP each session.",
+            "masteryTitle": "Mastery",
+            "clozeInstruction": "Fill the blanks with the right key terms.",
+            "checkAnswer": "Check",
+            "clozeResult": "{correct}/{total} blanks correct",
+            "showSolution": "See the full answer",
+            "masteredCaption": "{mastered}/{total} cards mastered",
+            "streakChip": "{count} days",
+            "recallLabel": "Your answer",
+            "recallPlaceholder": "Type your answer before flipping…",
+            "coverage": "You mentioned {covered}/{total} key terms",
+            "revealAnswer": "Reveal answer",
+            "comboChip": "x{combo}",
+            "recapTitle": "Recap",
+            "answeredWithoutHint": "{count}/{total} cards answered without a hint",
+            "bestCombo": "Best combo",
+            "xpEarned": "XP earned",
+            "avgCoverage": "Avg coverage",
+            "xpAddedToLeaderboard": "XP added to the course leaderboard",
+            "xpToast": "+{xp} XP",
+            "practiceMore": "Practice more",
+            "emptyAtLevel": "No cards at this level yet",
+            "backToSetup": "Back"
         },
         "level": {
             "junior": "Junior",
@@ -1674,6 +1743,8 @@
         "aiVerified": "Every metric AI-graded on real submissions",
         "error": "Couldn't load your job-readiness score.",
         "empty": "No job-readiness data yet.",
+        "myEmpty": "You don't have job-readiness data yet.",
+        "emptyHint": "Read lessons, submit challenges, and update your CV to start building your job-readiness score.",
         "foundationTitle": "Foundation",
         "tracksTitle": "Verified tracks",
         "tracksEmpty": "No courses yet — join a course to build your first track.",
@@ -2005,7 +2076,8 @@
             "capstone": "Projects",
             "skills": "Skills",
             "projects": "Projects",
-            "challenges": "Challenges"
+            "challenges": "Challenges",
+            "cv": "CV"
         },
         "coding": {
             "solved": "Solved",
@@ -3271,19 +3343,48 @@
         }
     },
     "rewards": {
-        "balance": "{count} reward points",
-        "balanceNote": "Reward points are separate from the lifetime XP that powers your league ranking.",
+        "balanceLabel": "Coin",
+        "description": "Trade Coin earned from learning for vouchers, AI credit, or gifts.",
         "cancel": "Cancel",
-        "cannotAfford": "Not enough points",
+        "cannotAfford": "Not enough Coin",
+        "catalogError": "Couldn't load the shop.",
         "confirmRedeem": "Confirm redemption",
-        "cost": "{count} points",
+        "cost": "{count} Coin",
         "noRedemptions": "You haven't redeemed any rewards yet.",
         "redeem": "Redeem",
         "redeemedTitle": "Redemption history",
         "shipAddress": "Shipping address",
         "shipName": "Recipient name",
         "shipPhone": "Phone number",
-        "title": "Rewards store",
+        "title": "Coin shop",
+        "tabsAria": "Switch between Shop and My wallet",
+        "tabs": {
+            "shop": "Shop",
+            "wallet": "My wallet",
+            "walletWithCount": "My wallet ({count})"
+        },
+        "justRedeemed": {
+            "voucherTitle": "Here's your voucher code",
+            "aiCreditTitle": "AI credit topped up",
+            "aiCreditDescription": "+{amount5h} credit for the next 5 hours · +{amountWeek} credit this week.",
+            "dismiss": "Dismiss"
+        },
+        "myVouchers": {
+            "title": "My vouchers",
+            "empty": "No vouchers yet",
+            "emptyHint": "Redeem Coin for a voucher in the Shop tab.",
+            "error": "Couldn't load your vouchers.",
+            "copy": "Copy",
+            "copied": "Code copied",
+            "scopeAny": "Valid for any course",
+            "scopeCourse": "Valid for {course} only",
+            "status": {
+                "unused": "Available",
+                "reserved": "Reserved",
+                "used": "Used",
+                "expired": "Expired"
+            }
+        },
         "status": {
             "granted": "Granted",
             "pending": "Pending",

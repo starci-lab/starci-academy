@@ -12,6 +12,11 @@ const mutation1 = gql`
       data {
         balance
         streakFreezes
+        voucherCode
+        aiCreditGranted {
+          amount5h
+          amountWeek
+        }
       }
     }
   }
@@ -32,7 +37,7 @@ export type MutateRedeemRewardParams = MutateParams<
 >
 
 /**
- * Redeems a reward by key, spending điểm quà. Mirrors `redeemReward`
+ * Redeems a reward by key, spending Coin. Mirrors `redeemReward`
  * (mutations/rewards/redeem-reward).
  */
 export const mutateRedeemReward = async ({

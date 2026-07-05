@@ -154,8 +154,18 @@ export const pathConfig = () => {
                 const build = () => {
                     return cvPath
                 }
+                const edit = () => {
+                    const editPath = `${cvPath}/edit`
+                    const build = () => {
+                        return editPath
+                    }
+                    return {
+                        build,
+                    }
+                }
                 return {
                     build,
+                    edit,
                 }
             }
             const appearance = () => {

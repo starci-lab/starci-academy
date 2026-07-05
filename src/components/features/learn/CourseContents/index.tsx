@@ -36,14 +36,14 @@ import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 import {
-    resolveResumeHref,
     toDifficulty,
 } from "./map"
 import {
     CourseContentsSkeleton,
 } from "./CourseContentsSkeleton"
+import { LearnNudges } from "./LearnNudges"
+import { useCourseResume } from "../shared/useCourseResume"
 import { useAppSelector } from "@/redux/hooks"
-import { useQueryMyCourseOutlineSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCourseOutlineSwr"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { DifficultyChip } from "@/components/blocks/chips/DifficultyChip"
 import { HighlightChip } from "@/components/blocks/chips/HighlightChip"
@@ -72,7 +72,6 @@ export const CourseContents = ({ className }: CourseContentsProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
-    const courseId = useAppSelector((state) => state.course.id)
     const displayId = useAppSelector((state) => state.course.displayId)
     const courseTitle = useAppSelector((state) => state.course.entity?.title)
     const courseDescription = useAppSelector((state) => state.course.entity?.description)
@@ -83,63 +82,16 @@ export const CourseContents = ({ className }: CourseContentsProps) => {
     const totals = useCourseTotals()
     const readingHours = Math.max(1, Math.round(totals.totalMinutes / 60))
 
-    const outlineSwr = useQueryMyCourseOutlineSwr(courseId ?? null)
-    const outline = outlineSwr.data
-
-    /**
-     * The pointer the "Tiếp tục học" action resumes. CONTENT-FIRST: the next unread
-     * lesson / uncompleted challenge (`nextContentTask`), so the content home never
-     * sends a learner with unread lessons into the capstone. Only once all content is
-     * done (`nextContentTask` null) does it fall back to the capstone task — the one
-     * moment the personal project is the natural next step.
-     */
-    const resumePointer = useMemo(
-        () => outline?.nextContentTask ?? outline?.currentTask ?? null,
-        [outline],
-    )
-
-    /** Whether the resume target is the capstone (all content done) rather than content. */
-    const isCapstoneResume = resumePointer?.kind === "milestoneTask"
-
-    /** Resume href for the active pointer (null when nothing is resolvable). */
-    const resumeHref = useMemo(
-        () => (outline && resumePointer
-            ? resolveResumeHref(resumePointer, outline.modules, locale, displayId)
-            : null),
-        [outline, resumePointer, locale, displayId],
-    )
-
-    /** Title of the resume target (walk the tree by id) for the continue line. */
-    const resumeTitle = useMemo(() => {
-        if (!outline || !resumePointer) {
-            return null
-        }
-        if (resumePointer.kind === "milestoneTask") {
-            for (const milestone of outline.milestones) {
-                const task = milestone.tasks.find((entry) => entry.id === resumePointer.id)
-                if (task) {
-                    return task.title
-                }
-            }
-            return null
-        }
-        for (const module of outline.modules) {
-            if (resumePointer.kind === "lesson") {
-                const lesson = module.lessons.find((entry) => entry.id === resumePointer.id)
-                if (lesson) {
-                    return lesson.title
-                }
-                continue
-            }
-            for (const lesson of module.lessons) {
-                const challenge = lesson.challenges.find((entry) => entry.id === resumePointer.id)
-                if (challenge) {
-                    return challenge.title
-                }
-            }
-        }
-        return null
-    }, [outline, resumePointer])
+    // resume pointer + progress from the single shared source (also feeds the
+    // sidebar resume rail; SWR dedupes the underlying outline fetch)
+    const {
+        outlineSwr,
+        outline,
+        resumePointer,
+        resumeHref,
+        resumeTitle,
+        isCapstoneResume,
+    } = useCourseResume()
 
     /**
      * The module the learner is currently in: the one owning the resume pointer, else
@@ -305,6 +257,10 @@ export const CourseContents = ({ className }: CourseContentsProps) => {
                                     ].join(" · ")}
                                 </Typography>
                             </div>
+
+                            {/* contextual nudges — aids that orbit the spine (due flashcards,
+                                interview, rank). Each self-hides when its state is 0. */}
+                            <LearnNudges />
 
                             {/* region B — keep-going path: the current module's lessons. The full
                             module → lesson tree lives in the left content-map rail, so the body

@@ -12,6 +12,8 @@ export interface GenerateCvRequest {
     selectedModel?: string
     /** Provider serving {@link GenerateCvRequest.selectedModel}. */
     selectedModelProvider?: ModelProvider
+    /** Optional course/track (`courses.id`, decoded from its global id) to tie this CV to. */
+    courseId?: string
 }
 
 /** Payload inside `generateCv.data` after the standard API wrapper. */

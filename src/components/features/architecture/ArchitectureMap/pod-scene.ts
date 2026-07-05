@@ -5,6 +5,7 @@ import type {
 } from "@/components/blocks/marketing/ArchitectureScene/types"
 import type { HealthByName } from "../hooks/useSystemHealthPoll"
 import { ARCHITECTURE_PODS, computePodStatus } from "../pods"
+import { boardFromNodes } from "./scene"
 
 /** Resolver for the pod name/sub i18n keys + the roll-up badge labels — passed
  *  in so the scene builder stays a pure data function (no `useTranslations`). */
@@ -94,7 +95,9 @@ export const buildPodOverviewScene = (
     }))
 
     return {
-        board: { cols: [-5, 5], rows: [-4, 4], cell: 1 },
+        board: boardFromNodes(nodes, 1),
+        // re-fit at render time to the actual bounding box (see `CameraFit`);
+        // this is only the fallback viewing angle/distance before that runs.
         camera: { position: [12, 11, 12], zoom: 30 },
         nodes,
         edges,

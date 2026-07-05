@@ -328,7 +328,11 @@
         "collapseRightRail": "Ẩn thanh bên phải",
         "expandRightRail": "Hiện thanh bên phải",
         "dashboard": "Bảng điều khiển",
-        "guestPrompt": "Đăng nhập để theo dõi tiến độ của bạn"
+        "guestPrompt": "Đăng nhập để theo dõi tiến độ của bạn",
+        "groupPath": "Lộ trình",
+        "groupPractice": "Ôn & luyện",
+        "groupTrack": "Theo dõi",
+        "resumeContinue": "Tiếp tục"
     },
     "footer": {
         "tagline": "Học bằng cách tự tay dựng hệ thống thật — đủ trình cho mọi vòng phỏng vấn kỹ thuật.",
@@ -444,6 +448,11 @@
         "metaLearnersLabel": "học viên",
         "capstoneEyebrow": "Đã xong nội dung — tới đồ án cá nhân",
         "resumeCapstone": "Tiếp tục đồ án",
+        "nudges": {
+            "dueFlashcards": "{count} thẻ đến hạn hôm nay",
+            "mockInterview": "Luyện phỏng vấn cho đồ án sắp tới",
+            "rank": "Hạng #{rank} tuần này"
+        },
         "challengesByDifficulty": "Challenge theo độ khó",
         "difficulty": {
             "beginner": "Dễ",
@@ -732,19 +741,57 @@
     },
     "cv": {
         "title": "CV",
+        "description": "Điểm CV, góp ý từ AI và bản xem trước — luôn cạnh nhau để bạn đối chiếu.",
+        "editCta": "Chỉnh sửa CV",
+        "editTitle": "Chỉnh sửa CV",
+        "editDescription": "Tải CV có sẵn lên hoặc để AI dựng một bản mới từ hoạt động học tập của bạn.",
+        "workspace": {
+            "resultTab": "Kết quả",
+            "previewTab": "Xem trước",
+            "tabsAria": "Chuyển giữa Kết quả và Xem trước CV",
+            "addNew": "Thêm CV mới",
+            "manageAria": "Quản lý {label}",
+            "editAction": "Sửa",
+            "deleteAction": "Xoá",
+            "deleteConfirmTitle": "Xoá CV này?",
+            "deleteConfirmBody": "Hành động này không thể hoàn tác. Điểm và góp ý của \"{label}\" sẽ bị xoá vĩnh viễn.",
+            "deleteConfirmAction": "Xoá CV",
+            "deleteCancelAction": "Huỷ"
+        },
         "preview": {
             "title": "Xem trước CV (PDF)",
             "fullscreen": "Xem toàn màn hình"
         },
+        "courseTrack": {
+            "label": "Gắn với khoá học (tuỳ chọn)",
+            "noneOption": "Không gắn khoá học",
+            "loading": "Đang tải danh sách khoá học…"
+        },
+        "scorecard": {
+            "resultLabel": "Kết quả",
+            "feedbackLabel": "Góp ý",
+            "unlocked": "Đủ điều kiện liên hệ nhà tuyển dụng",
+            "locked": "Chưa đủ điều kiện liên hệ NTD",
+            "needMore": "Cần thêm {score} điểm để mở khoá liên hệ nhà tuyển dụng.",
+            "noScoreYet": "Chưa có điểm",
+            "stillScoring": "Đang chấm điểm…",
+            "history": "Các CV của bạn",
+            "untitled": "CV #{number}",
+            "noSuggestion": "Không có gợi ý cụ thể.",
+            "noFeedback": "Chưa có góp ý.",
+            "emptyTitle": "Chưa có CV nào",
+            "emptyHint": "Tạo hoặc tải CV lên bên dưới để bắt đầu."
+        },
         "generate": {
             "title": "Tạo CV bằng AI",
-            "description": "Để AI dựng một bản CV developer từ hoạt động học tập của bạn trên StarCi, hoặc chỉnh sửa CV bạn đã tải lên. Kết quả là bản LaTeX xem trước — tải file .tex về để tinh chỉnh thêm.",
+            "description": "Để AI dựng một bản CV developer từ hoạt động học tập của bạn trên StarCi, hoặc chỉnh sửa CV bạn đã tải lên. Kết quả được biên dịch ra PDF thật, xem ở khung bên phải — tải file .tex về nếu muốn tinh chỉnh thêm.",
             "extraPromptsLabel": "Kể thêm về dự án/kinh nghiệm ngoài StarCi (tuỳ chọn)",
             "extraPromptsPlaceholder": "vd: Tôi làm dự án A, dự án B, tôi biết Golang/TypeScript...",
             "generateAction": "Tạo CV",
             "reviseAction": "Chỉnh sửa CV của tôi",
             "downloadTex": "Tải file .tex",
-            "renderFallback": "Không thể hiển thị bản xem trước. Vui lòng tải file .tex về để xem.",
+            "previewReadyHint": "Đã tạo xong — xem bản PDF ở khung bên phải.",
+            "renderFallback": "Không thể biên dịch ra PDF. Vui lòng tải file .tex về để xem.",
             "previewAria": "Bản xem trước CV"
         },
         "submission": {
@@ -827,7 +874,7 @@
         "upload": {
             "title": "Tải CV lên",
             "description": "Đã có CV riêng? Tải file PDF lên để AI chấm điểm và góp ý theo cùng bộ tiêu chí với CV do StarCi tạo.",
-            "fileHint": "Kéo thả hoặc chọn file CV (PDF, tối đa 10MB).",
+            "fileHint": "Kéo thả hoặc chọn file CV (PDF hoặc văn bản .txt, tối đa 10MB).",
             "labelLabel": "Tên gợi nhớ cho CV này (tuỳ chọn)",
             "labelPlaceholder": "vd: CV ứng tuyển Backend 2026",
             "uploadAction": "Tải lên và chấm điểm",
@@ -1608,8 +1655,30 @@
             "gradeTitle": "Chấm điểm",
             "gradeHelper": "Chọn AI chấm câu trả lời của bạn. Tự động = hệ thống chọn model phù hợp.",
             "pickHint": "Chọn 1 bộ thẻ ở danh sách bên trái để bắt đầu phiên phỏng vấn.",
-            "gateTitle": "Phỏng vấn thử dành cho học viên",
-            "gateDescription": "Đăng ký khóa học để luyện phỏng vấn với AI — chấm điểm và góp ý sau mỗi câu trả lời."
+            "gateTitle": "Hỏi nhanh dành cho học viên",
+            "gateDescription": "Đăng ký khóa học để luyện nhớ lại kiến thức bằng flashcard — tự chấm theo từ khoá và nhận XP sau mỗi phiên.",
+            "masteryTitle": "Độ thuộc",
+            "clozeInstruction": "Điền các ô trống bằng từ khoá đúng.",
+            "checkAnswer": "Kiểm tra",
+            "clozeResult": "Đúng {correct}/{total} ô",
+            "showSolution": "Xem lời giải đầy đủ",
+            "masteredCaption": "{mastered}/{total} thẻ đã thuộc",
+            "streakChip": "{count} ngày",
+            "recallLabel": "Câu trả lời của bạn",
+            "recallPlaceholder": "Gõ câu trả lời của bạn trước khi lật…",
+            "coverage": "Bạn nhắc {covered}/{total} từ khoá",
+            "revealAnswer": "Lật đáp án",
+            "comboChip": "x{combo}",
+            "recapTitle": "Tổng kết",
+            "answeredWithoutHint": "{count}/{total} thẻ trả lời được không cần gợi ý",
+            "bestCombo": "Combo cao nhất",
+            "xpEarned": "XP nhận được",
+            "avgCoverage": "Độ phủ TB",
+            "xpAddedToLeaderboard": "XP đã cộng vào bảng xếp hạng khoá học",
+            "xpToast": "+{xp} XP",
+            "practiceMore": "Luyện thêm",
+            "emptyAtLevel": "Chưa có thẻ ở cấp độ này",
+            "backToSetup": "Quay lại"
         },
         "level": {
             "junior": "Junior",
@@ -1683,6 +1752,8 @@
         "aiVerified": "Mọi chỉ số do AI chấm trên bài nộp thật",
         "error": "Không tải được điểm sẵn sàng đi làm.",
         "empty": "Chưa có dữ liệu sẵn sàng đi làm.",
+        "myEmpty": "Bạn chưa có dữ liệu sẵn sàng đi làm.",
+        "emptyHint": "Đọc bài, nộp thử thách và cập nhật CV để bắt đầu tính điểm sẵn sàng đi làm.",
         "foundationTitle": "Nền tảng",
         "tracksTitle": "Năng lực theo khóa",
         "tracksEmpty": "Chưa có khóa nào — tham gia 1 khóa để tạo track đầu tiên.",
@@ -2014,7 +2085,8 @@
             "capstone": "Dự án",
             "skills": "Kỹ năng",
             "projects": "Dự án",
-            "challenges": "Thử thách"
+            "challenges": "Thử thách",
+            "cv": "CV"
         },
         "coding": {
             "solved": "Đã giải",
@@ -3271,19 +3343,48 @@
         }
     },
     "rewards": {
-        "balance": "{count} điểm quà",
-        "balanceNote": "Điểm quà tách biệt với XP tích lũy dùng để xếp hạng giải đấu của bạn.",
+        "balanceLabel": "Coin",
+        "description": "Đổi Coin kiếm được từ học tập lấy voucher, hạn mức AI, hoặc quà tặng.",
         "cancel": "Hủy",
-        "cannotAfford": "Không đủ điểm",
+        "cannotAfford": "Không đủ Coin",
+        "catalogError": "Không tải được cửa hàng.",
         "confirmRedeem": "Xác nhận đổi quà",
-        "cost": "{count} điểm",
+        "cost": "{count} Coin",
         "noRedemptions": "Bạn chưa đổi phần quà nào.",
         "redeem": "Đổi quà",
-        "redeemedTitle": "Lịch sử đổi quà",
+        "redeemedTitle": "Lịch sử đổi thưởng",
         "shipAddress": "Địa chỉ nhận hàng",
         "shipName": "Tên người nhận",
         "shipPhone": "Số điện thoại",
-        "title": "Cửa hàng đổi quà",
+        "title": "Cửa hàng Coin",
+        "tabsAria": "Chuyển giữa Cửa hàng và Ví của tôi",
+        "tabs": {
+            "shop": "Cửa hàng",
+            "wallet": "Ví của tôi",
+            "walletWithCount": "Ví của tôi ({count})"
+        },
+        "justRedeemed": {
+            "voucherTitle": "Đây là mã voucher của bạn",
+            "aiCreditTitle": "Đã cộng thêm hạn mức AI",
+            "aiCreditDescription": "+{amount5h} credit cho 5 giờ tới · +{amountWeek} credit cho tuần này.",
+            "dismiss": "Đóng thông báo"
+        },
+        "myVouchers": {
+            "title": "Voucher của tôi",
+            "empty": "Chưa có voucher nào",
+            "emptyHint": "Đổi Coin lấy voucher ở tab Cửa hàng.",
+            "error": "Không tải được danh sách.",
+            "copy": "Sao chép",
+            "copied": "Đã sao chép mã",
+            "scopeAny": "Áp dụng cho mọi khóa học",
+            "scopeCourse": "Chỉ áp dụng cho {course}",
+            "status": {
+                "unused": "Khả dụng",
+                "reserved": "Đang giữ chỗ",
+                "used": "Đã dùng",
+                "expired": "Hết hạn"
+            }
+        },
         "status": {
             "granted": "Đã cấp",
             "pending": "Đang xử lý",

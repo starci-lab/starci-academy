@@ -6,7 +6,7 @@ import type {
 import type { HealthByName } from "../hooks/useSystemHealthPoll"
 import { ARCHITECTURE_COMPONENT_MAP } from "../constants"
 import { ARCHITECTURE_POD_MAP, type PodFlowEdge } from "../pods"
-import { buildMemberNodeState, type MemberStatusLabels } from "./scene"
+import { boardFromNodes, buildMemberNodeState, type MemberStatusLabels } from "./scene"
 
 /** i18n'd labels for the pod-detail sub-scene. */
 export interface PodDetailLabels extends MemberStatusLabels {
@@ -19,35 +19,61 @@ export interface PodDetailLabels extends MemberStatusLabels {
 const CORE_ID = "core"
 
 /**
- * Radial fallback offsets (INTEGER cells) for a FAN/TREE layout — Core at the
- * centre, members snapped to surrounding tiles. Used when the flow isn't a
- * simple single chain (or when a pod has no authored `flow`). Kept ~3 cells out
- * so hex meshes + floating labels stay clear.
+ * Radius (in cells) Core→member fan nodes sit at when there's ROOM to spread —
+ * only reached once a ring holds few enough nodes to space them evenly at this
+ * distance (see {@link fanCellFor}). Kept the pre-existing "~3 cells out" feel
+ * for small pods; bigger pods grow the radius instead of overlapping.
  */
-const FAN_CELLS: Array<[number, number]> = [
-    [0, -3],
-    [3, -2],
-    [3, 2],
-    [0, 3],
-    [-3, 2],
-    [-3, -2],
-    [3, 0],
-    [-3, 0],
-]
+const FAN_BASE_RADIUS = 3
+/** Minimum straight-line cell distance kept between two neighbouring fan
+ *  nodes on the same ring, so their floating labels never visually overlap
+ *  (found empirically against the label's `max-w-28` box). */
+const FAN_MIN_ARC_SPACING = 2.6
+
+/**
+ * Computes a FAN/TREE ring position for the `index`-th (of `total`) non-chain
+ * node around Core, SCALING THE RADIUS WITH THE NODE COUNT instead of a fixed
+ * 8-slot table — a pod with 2 members and a pod with 8 members both get evenly
+ * spaced, non-overlapping tiles. Snapped to the nearest INTEGER cell (the board
+ * is an integer grid) so hex meshes still centre cleanly on a tile.
+ *
+ * The radius grows just enough that the ring's circumference divided by
+ * `total` nodes stays ≥ {@link FAN_MIN_ARC_SPACING} cells apart — i.e. more
+ * members automatically pushes the ring outward rather than crowding it.
+ */
+const fanCellFor = (index: number, total: number): [number, number] => {
+    const count = Math.max(total, 1)
+    const angleStep = (2 * Math.PI) / count
+    // circumference = 2πr must fit `count` nodes each ≥ FAN_MIN_ARC_SPACING apart
+    const radiusForSpacing = (count * FAN_MIN_ARC_SPACING) / (2 * Math.PI)
+    const radius = Math.max(FAN_BASE_RADIUS, radiusForSpacing)
+    // start at "north" (12 o'clock) like the old table's first `[0, -3]` slot
+    const angle = -Math.PI / 2 + angleStep * index
+    return [Math.round(Math.cos(angle) * radius), Math.round(Math.sin(angle) * radius)]
+}
 
 /**
  * Places nodes for a CHAIN flow (`Core → a → b → c …`) stepwise along a diagonal
  * so the arrows read sequentially left→right / top→bottom, every node on its own
- * INTEGER cell. Any node NOT on the chain's spine (e.g. a Core → Qdrant branch,
- * or a back-edge target) is dropped to the fan fallback. Returns null when the
- * flow isn't a clean linear chain from Core.
+ * cell. Any node NOT on the chain's spine (e.g. a Core → Qdrant branch, or a
+ * back-edge target) is dropped to the fan fallback. Returns null when the flow
+ * isn't a clean linear chain from Core.
+ *
+ * The step multiplier SCALES with the chain's length: a longer chain (more
+ * hops) spaces each hop further apart so a long name (e.g. "elasticsearch")
+ * has room for its label without crowding the next node in the sequence —
+ * a fixed `+2/+1` step (the old behaviour) works for 2-3 hops but visibly
+ * overlaps once a chain runs 4+ nodes deep.
  */
+const CHAIN_MIN_STEP = 2
+const CHAIN_STEP_PER_EXTRA_HOP = 0.4
+
 const layoutChain = (orderedIds: Array<string>): Record<string, [number, number]> | null => {
-    // step diagonally down-right: each hop moves +2 col, +1 row → distinct tiles,
-    // readable sequential arrows without overlap
+    const extraHops = Math.max(orderedIds.length - 3, 0) // chains ≤3 keep the classic step
+    const step = CHAIN_MIN_STEP + extraHops * CHAIN_STEP_PER_EXTRA_HOP
     const cells: Record<string, [number, number]> = {}
     orderedIds.forEach((id, index) => {
-        cells[id] = [index * 2, index]
+        cells[id] = [Math.round(index * step), Math.round(index * (step / 2))]
     })
     return cells
 }
@@ -138,10 +164,15 @@ export const buildPodDetailScene = (
     const chainOrder = readChain(flow)
     const chainCells = chainOrder ? layoutChain(chainOrder) : null
 
+    // how many nodes will actually land on the fan ring (everything NOT Core
+    // and NOT already placed by the chain) — sizes the ring's radius so it
+    // scales with THIS pod's member count instead of a fixed 8-slot table
+    const fanNodeCount = referenced.filter((id) => id !== CORE_ID && !chainCells?.[id]).length
+
     const cellFor = (id: string, fanIndex: () => number): [number, number] => {
         if (id === CORE_ID) return chainCells?.[CORE_ID] ?? [0, 0]
         if (chainCells?.[id]) return chainCells[id]
-        return FAN_CELLS[fanIndex() % FAN_CELLS.length]
+        return fanCellFor(fanIndex(), fanNodeCount)
     }
 
     let fanCursor = 0
@@ -177,7 +208,10 @@ export const buildPodDetailScene = (
     }))
 
     return {
-        board: { cols: [-4, 8], rows: [-4, 5], cell: 1 },
+        board: boardFromNodes(nodes, 1),
+        // the camera is re-fit to the actual node bounding box at render time
+        // (see `ArchitectureScene`'s `CameraFit`) — this is only the fallback
+        // viewing angle/distance before that first fit runs.
         camera: { position: [11, 10, 11], zoom: 34 },
         nodes,
         edges,

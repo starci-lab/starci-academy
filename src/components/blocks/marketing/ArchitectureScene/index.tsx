@@ -6,7 +6,7 @@
 
 import React from "react"
 import { cn, Typography } from "@heroui/react"
-import { Canvas, useFrame } from "@react-three/fiber"
+import { Canvas, useFrame, useThree } from "@react-three/fiber"
 import { Edges, Html, Line, OrbitControls } from "@react-three/drei"
 import { ArrowsSplitIcon, CheckCircleIcon, CubeIcon, DatabaseIcon, DesktopIcon, HexagonIcon, InfoIcon, StackIcon, UserIcon, WarningIcon, type Icon } from "@phosphor-icons/react"
 import { useReducedMotion } from "framer-motion"
@@ -15,6 +15,7 @@ import type { ReactNode } from "react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import type {
     ArchitectureBoard,
+    ArchitectureCamera,
     ArchitectureEdge,
     ArchitectureNode,
     ArchitectureSceneData,
@@ -201,6 +202,112 @@ const buildGrid = (board: ArchitectureBoard): Array<[number, number, number]> =>
         pts.push([xMin, GY, z], [xMax, GY, z])
     }
     return pts
+}
+
+/**
+ * Auto-fits the isometric camera to a scene's ACTUAL node bounding box, instead
+ * of trusting a fixed `data.camera` — a scene with 2 nodes and a scene with 8+
+ * nodes both need a different zoom/position to frame correctly. Keeps the same
+ * isometric VIEWING ANGLE (the unit direction of the authored `data.camera`
+ * position) and only rescales the distance + orthographic zoom to the content's
+ * footprint, so every scene still reads as "the same camera", just reframed.
+ *
+ * `zoom` (orthographic) is inversely proportional to the world-space span the
+ * camera must cover — bigger bounding box → smaller zoom. `FIT_PADDING` leaves
+ * headroom for the floating `<Html>` labels (which sit above the node meshes
+ * and extend past their footprint), so labels at the scene's edge don't clip
+ * against the canvas border.
+ */
+const FIT_PADDING = 1.6
+const FIT_MIN_ZOOM = 10
+const FIT_MAX_ZOOM = 46
+const FIT_MIN_SPAN = 6 // a 1-2 node scene shouldn't zoom in absurdly tight
+const REFERENCE_SPAN = 8 // world units a zoom of `REFERENCE_ZOOM` frames comfortably
+const REFERENCE_ZOOM = 34
+
+interface CameraFitResult {
+    position: [number, number, number]
+    zoom: number
+    /** World point the camera should look at — the node bounding box's centroid. */
+    lookAt: [number, number, number]
+}
+
+const computeCameraFit = (nodes: ArchitectureNode[], cell: number, authored: ArchitectureCamera): CameraFitResult => {
+    if (nodes.length === 0) return { position: authored.position, zoom: authored.zoom, lookAt: [0, 0, 0] }
+    let minX = Infinity
+    let maxX = -Infinity
+    let minZ = Infinity
+    let maxZ = -Infinity
+    for (const node of nodes) {
+        const x = node.cell[0] * cell
+        const z = node.cell[1] * cell
+        if (x < minX) minX = x
+        if (x > maxX) maxX = x
+        if (z < minZ) minZ = z
+        if (z > maxZ) maxZ = z
+    }
+    const spanX = Math.max(maxX - minX, FIT_MIN_SPAN)
+    const spanZ = Math.max(maxZ - minZ, FIT_MIN_SPAN)
+    // the world span an iso camera must cover ~ the larger of the two axes'
+    // footprint (both project onto the screen in an isometric view), padded
+    // for the floating labels that extend past each node's mesh
+    const span = Math.max(spanX, spanZ) * FIT_PADDING
+    const fitZoom = THREE.MathUtils.clamp((REFERENCE_ZOOM * REFERENCE_SPAN) / span, FIT_MIN_ZOOM, FIT_MAX_ZOOM)
+    const cx = (minX + maxX) / 2
+    const cz = (minZ + maxZ) / 2
+    const [ax, ay, az] = authored.position
+    const authoredLen = Math.hypot(ax, ay, az) || 1
+    // scale the camera's DISTANCE with the footprint too (orthographic zoom
+    // alone can't compensate for a very off-centre/huge board), then recentre
+    // it over the bounding box's centroid so large scenes don't clip a corner
+    const distanceScale = THREE.MathUtils.clamp(span / REFERENCE_SPAN, 0.7, 2.4)
+    const distance = authoredLen * distanceScale
+    return {
+        position: [
+            cx + (ax / authoredLen) * distance,
+            (ay / authoredLen) * distance,
+            cz + (az / authoredLen) * distance,
+        ],
+        zoom: fitZoom,
+        lookAt: [cx, 0, cz],
+    }
+}
+
+/** Sits inside the `<Canvas>` and imperatively re-frames the orthographic
+ *  camera whenever the scene's node bounding box changes (drilling into a pod,
+ *  switching layouts, …) — the generic fix for "camera doesn't fit the scene"
+ *  that benefits every scene builder, not a per-scene hardcoded position.
+ *
+ *  `<OrbitControls makeDefault>` OWNS the camera every frame (it recomputes
+ *  `camera.position` each tick from its OWN internal spherical state —
+ *  distance-from-target/azimuth/polar — captured when it mounted). Setting
+ *  `camera.position`/`lookAt` here alone would get silently snapped back on
+ *  the very next frame. `useThree().controls` is the live OrbitControls
+ *  instance (drei registers it there under `makeDefault`) — retargeting it
+ *  + calling `.update()` re-derives that internal state from the NEW camera
+ *  position/target, so the fit actually sticks instead of fighting the rig. */
+const CameraFit = ({ nodes, cell, authored }: { nodes: ArchitectureNode[]; cell: number; authored: ArchitectureCamera }) => {
+    const { camera, controls } = useThree()
+    React.useEffect(() => {
+        const fit = computeCameraFit(nodes, cell, authored)
+        camera.position.set(...fit.position)
+        const ortho = camera as THREE.OrthographicCamera
+        if (ortho.isOrthographicCamera) {
+            ortho.zoom = fit.zoom
+            ortho.updateProjectionMatrix()
+        }
+        camera.lookAt(...fit.lookAt)
+        camera.updateMatrixWorld()
+        // retarget the OrbitControls rig so it stops fighting the manual fit
+        // on the next `useFrame` tick (see doc comment above)
+        const rig = controls as { target?: THREE.Vector3; update?: () => void } | null
+        if (rig?.target && rig.update) {
+            rig.target.set(...fit.lookAt)
+            rig.update()
+        }
+        // `authored`/`camera` are stable per scene mount; re-fit on node/cell identity change only
+    }, [nodes, cell, controls])
+    return null
 }
 
 /** Ember tint a `danger` node pulses toward — "running hot, about to burn". */
@@ -478,7 +585,11 @@ const Bar = ({ node, cell, shade, reduce, selected, onClick }: {
             <Html position={[0, LABEL_Y, 0]} center zIndexRange={[120, 0]} style={{ pointerEvents: "none" }}>
                 <div
                     className={cn(
-                        "flex select-none flex-col items-center gap-0.5 whitespace-nowrap rounded-md border px-2 py-1 text-center",
+                        // `whitespace-normal` + a fixed `max-width` (rather than `nowrap`) so a
+                        // long name/sub (e.g. "elasticsearch") WRAPS onto a second line instead of
+                        // running wide enough to visually clip against/overlap a neighbouring
+                        // node's mesh when several nodes sit close together (a tight fan/chain)
+                        "flex w-max max-w-28 select-none flex-col items-center gap-0.5 whitespace-normal break-words rounded-md border px-2 py-1 text-center",
                         selected && "ring-2 ring-accent ring-offset-1 ring-offset-transparent",
                     )}
                     style={{ backgroundColor: "var(--surface)", borderColor: shade.tint }}
@@ -552,6 +663,10 @@ const Scene = ({ data, palette, reduce, selectedId, onSelectNode }: {
     const grid = React.useMemo(() => buildGrid(data.board), [data.board])
     return (
         <group>
+            {/* re-frames the camera to this scene's ACTUAL node bounding box on every
+                data change (drilling into a pod, switching layout, …) — a 2-node scene
+                and an 8+-node scene both get a fit that shows every label uncropped */}
+            <CameraFit nodes={data.nodes} cell={data.board.cell} authored={data.camera} />
             <Line points={grid} segments color={palette.edge.normal} lineWidth={1} transparent opacity={0.22} />
             {data.edges.map((edge) => (
                 <Edge

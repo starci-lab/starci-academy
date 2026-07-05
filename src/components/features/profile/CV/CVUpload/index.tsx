@@ -3,16 +3,22 @@
 import React, {
     useEffect,
     useMemo,
+    useState,
 } from "react"
 import { cn } from "@heroui/react"
 import {
     useLocale,
     useTranslations,
 } from "next-intl"
+import { useRouter, useSearchParams } from "next/navigation"
 import { dayjs } from "@/modules/dayjs"
+import { pathConfig } from "@/resources/path"
 import {
     CvFileCard,
 } from "./CvFileCard"
+import {
+    CourseTrackPicker,
+} from "./CourseTrackPicker"
 import {
     GenerateSection,
 } from "./GenerateSection"
@@ -21,21 +27,24 @@ import {
 } from "./UploadSection"
 
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { useAppSelector } from "@/redux/hooks"
-import { useCvUpdateOverlayState } from "@/hooks/zustand/overlay/hooks"
-import { useQueryCvUrlSwr } from "@/hooks/swr/api/graphql/queries/useQueryCvUrlSwr"
-import { useCvApplyStore } from "@/hooks/zustand/cvApply/store"
 import { CvGenerationStatus } from "@/modules/types/enums/cv-generation-status"
+import { CvSource } from "@/modules/api/graphql/queries/types/cv-generation"
 import { useCvGenerationStore } from "@/hooks/zustand/cvGeneration/store"
 import { useQueryCvGenerationSwr } from "@/hooks/swr/api/graphql/queries/useQueryCvGenerationSwr"
-import { getFileNameFromUrl } from "@/utils/filename"
+import { useQueryMyCvGenerationsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCvGenerationsSwr"
 
 /** Props for {@link CVUpload}. */
 export type CVUploadProps = WithClassNames<undefined>
 /**
  * CV block: stored file card (upload/replace) plus the AI CV **generation** flow
- * (generate from StarCi activity / revise an uploaded CV) rendered as a read-only LaTeX
- * preview. Owns SWR/redux/store/derived state; renders presentational children.
+ * (generate from StarCi activity / revise an existing CV) rendered as a read-only LaTeX
+ * preview. Owns SWR/store/derived state; renders presentational children. Lives on the
+ * dedicated `/profile/cv/edit` page — once a run finishes it navigates back to
+ * `/profile/cv` so the caller sees the fresh score/feedback/preview immediately.
+ *
+ * Targets a SPECIFIC CV when the caller arrives with `?cvId=<id>` (e.g. "Sửa" on a
+ * given entry in the history dial) — falls back to the newest CV otherwise (the
+ * "+ Thêm CV mới" entry point, which has no CV to target yet).
  *
  * @param props - {@link CVUploadProps}
  */
@@ -44,38 +53,35 @@ export const CVUpload = ({ className }: CVUploadProps) => {
     const t = useTranslations()
     /** Current locale (dayjs month labels). */
     const locale = useLocale()
-    /** Selected CV file — shared via zustand store (set by CvUpdateModal). */
-    const cvFile = useCvApplyStore((state) => state.cvFile)
-    /** Opens the CV update upload modal (also reused as the "revise" file picker). */
-    const { open: openCvUpdateModal } = useCvUpdateOverlayState()
-    /** Selected file URL. */
-    const selectedFileUrl = useMemo(() => {
-        if (!cvFile) return ""
-        return URL.createObjectURL(cvFile)
-    }, [
-        cvFile,
-    ])
-    /** CV URL SWR. */
-    const cvUrlSwr = useQueryCvUrlSwr()
-    /** CV URL payload. */
-    const cvUrlPayload = useAppSelector((state) => state.cvUrl.entity)
-    /** Active CV generation id + its polled status (to refresh the stored CV on completion). */
+    const router = useRouter()
+    const searchParams = useSearchParams()
+    /** `cv_generations.id` to target (from `?cvId=`), when the caller scoped this page to one. */
+    const targetCvId = searchParams.get("cvId") ?? undefined
+    /** Course/track the NEXT upload/generate/revise ties this CV to — shared by both
+        actions so the picker appears once, not once per action. */
+    const [courseId, setCourseId] = useState<string | undefined>(undefined)
+    /** The caller's CV generation history (newest first). */
+    const myCvGenerationsSwr = useQueryMyCvGenerationsSwr()
+    /** The targeted CV — `?cvId=` if it resolves, else the newest one. */
+    const target = myCvGenerationsSwr.data?.find((cv) => cv.id === targetCvId)
+        ?? myCvGenerationsSwr.data?.[0]
+    /** Full detail (resolved `latexSource`/`uploadedCvUrl`) for the targeted CV row. */
+    const targetDetailSwr = useQueryCvGenerationSwr(target?.id)
+    const targetDetail = targetDetailSwr.data
+    /** Active CV generation id + its polled status (to navigate back to the review page once a run finishes). */
     const activeCvGenerationId = useCvGenerationStore((state) => state.activeCvGenerationId)
+    const setActiveCvGenerationId = useCvGenerationStore((state) => state.setActiveCvGenerationId)
     const generationSwr = useQueryCvGenerationSwr(activeCvGenerationId ?? undefined)
     const activeCvGenerationStatus = generationSwr.data?.status
-    /** Current CV link. */
-    const currentCvLink = selectedFileUrl || (cvUrlPayload?.cvUrl ?? "")
+    /** Current CV link — only uploaded CVs have a raw downloadable file. */
+    const currentCvLink = target?.source === CvSource.Uploaded
+        ? (targetDetail?.uploadedCvUrl ?? "")
+        : ""
     /** Current CV link label. */
-    const currentCvLinkLabel =
-        cvFile?.name ||
-        (
-            cvUrlPayload?.cvUrl ?
-                getFileNameFromUrl(cvUrlPayload.cvUrl)
-                : t("cv.submission.defaultCvFileName")
-        )
+    const currentCvLinkLabel = target?.label || t("cv.submission.defaultCvFileName")
     /** Human-readable submission time: `HH:mm, D MMM YYYY` (e.g. `15:33, 23 Jan 2024`). */
     const submittedAtLabel = useMemo(() => {
-        const raw = cvUrlPayload?.submittedAt
+        const raw = target?.processedAt ?? target?.createdAt
         if (!raw) {
             return t("cv.submission.submittedAtPending")
         }
@@ -86,31 +92,30 @@ export const CVUpload = ({ className }: CVUploadProps) => {
         const dayjsLocale = locale.startsWith("vi") ? "vi" : "en"
         return d.locale(dayjsLocale).format("HH:mm, D MMMM YYYY")
     }, [
-        cvUrlPayload?.submittedAt,
+        target?.processedAt,
+        target?.createdAt,
         locale,
         t,
     ])
-    /** Refresh the stored CV metadata once a generation finishes. */
+    /**
+     * Once a generation finishes, refresh the CV history and jump back to the review
+     * page (`/profile/cv`) — the caller came here to act, not to linger; the fresh
+     * score/feedback/preview is what they actually want to see next.
+     */
     useEffect(
         () => {
             if (activeCvGenerationStatus !== CvGenerationStatus.Done) {
                 return
             }
-            void cvUrlSwr.mutate()
+            void myCvGenerationsSwr.mutate()
+            setActiveCvGenerationId(null)
+            router.push(pathConfig().locale(locale).profile().cv().build())
         }, [
             activeCvGenerationStatus,
-            cvUrlSwr,
-        ]
-    )
-
-    /** Handle selected file URL cleanup. */
-    useEffect(
-        () => {
-            return () => {
-                if (selectedFileUrl) URL.revokeObjectURL(selectedFileUrl)
-            }
-        }, [
-            selectedFileUrl,
+            myCvGenerationsSwr,
+            setActiveCvGenerationId,
+            router,
+            locale,
         ]
     )
 
@@ -120,12 +125,15 @@ export const CVUpload = ({ className }: CVUploadProps) => {
                 currentCvLink={currentCvLink}
                 currentCvLinkLabel={currentCvLinkLabel}
                 submittedAtLabel={submittedAtLabel}
-                onOpenUpdate={openCvUpdateModal}
             />
-            <UploadSection />
+            <CourseTrackPicker
+                value={courseId}
+                onChange={setCourseId}
+            />
+            <UploadSection courseId={courseId} />
             <GenerateSection
-                cvSubmissionId={cvUrlPayload?.id}
-                onOpenUpload={openCvUpdateModal}
+                sourceCvGenerationId={target?.id}
+                courseId={courseId}
             />
         </div>
     )

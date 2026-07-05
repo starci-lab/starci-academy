@@ -71,7 +71,9 @@ export const JobReadinessWidget = ({ className }: JobReadinessWidgetProps) => {
             : missingPillar === "interview"
                 ? pathConfig().locale(locale).course(strongestTrack.courseSlug).learn().mockInterview().build()
                 : missingPillar === "cv"
-                    ? pathConfig().locale(locale).course(strongestTrack.courseSlug).learn().cv().build()
+                    // CV is a USER-level tool (not course-scoped) — `/learn/cv` never
+                    // existed as a route (dead builder in pathConfig, unused elsewhere).
+                    ? pathConfig().locale(locale).profile().cv().build()
                     : null
         : null
 

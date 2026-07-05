@@ -22,11 +22,9 @@ const query1 = gql`
         score
         label
         courseId
+        courseTitle
         targetRole
         language
-        sourceCvSubmissionId
-        extraPrompts
-        structuredData
         errorMessage
         processedAt
         createdAt

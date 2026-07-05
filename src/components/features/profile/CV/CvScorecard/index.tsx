@@ -3,28 +3,36 @@
 import React, { useMemo } from "react"
 import {
     Accordion,
+    Button,
     Card,
     CardContent,
     Chip,
     Typography,
     cn,
 } from "@heroui/react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
 import {
+    ArrowRightIcon,
     InfoIcon,
     LightbulbIcon,
+    SparkleIcon,
+    UploadSimpleIcon,
     WarningCircleIcon,
 } from "@phosphor-icons/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { Callout } from "@/components/blocks/feedback/Callout"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { VerdictIcon } from "@/components/blocks/grading/GradingByline"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { pathConfig } from "@/resources/path"
 import { useQueryCvGenerationSwr } from "@/hooks/swr/api/graphql/queries/useQueryCvGenerationSwr"
 import { useQueryMyCvGenerationsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCvGenerationsSwr"
 import { CvGenerationStatus } from "@/modules/types/enums/cv-generation-status"
 import { SubmissionFeedbackSeverity } from "@/modules/types/enums/submission-feedback-severity"
+import { CvSource } from "@/modules/api/graphql/queries/types/cv-generation"
 import type { CvFeedbackItem } from "@/modules/api/graphql/queries/types/cv-generation"
 
 /** Props for {@link CvScorecard}. */
@@ -127,6 +135,10 @@ const FindingAccordionItem = ({ item, index }: { item: CvFeedbackItem, index: nu
  */
 export const CvScorecard = ({ className, selectedId }: CvScorecardProps) => {
     const t = useTranslations()
+    const locale = useLocale()
+    const router = useRouter()
+    const coursesHref = pathConfig().locale(locale).course().build()
+    const editHref = pathConfig().locale(locale).profile().cv().edit().build()
     const myCvGenerationsSwr = useQueryMyCvGenerationsSwr()
     const list = myCvGenerationsSwr.data ?? []
     const listLoading = myCvGenerationsSwr.data === undefined && !myCvGenerationsSwr.error
@@ -151,74 +163,139 @@ export const CvScorecard = ({ className, selectedId }: CvScorecardProps) => {
 
     return (
         <div className={cn("flex flex-col gap-6", className)}>
-            {/* Score hero — ALWAYS a bounded card (loading / empty / real), never a
-                floating empty-state. NO "Kết quả" label of its own — the
-                already-active "Kết quả" tab above it says that. */}
-            <Card>
-                <CardContent className="flex flex-col gap-3">
-                    <AsyncContent
-                        isLoading={listLoading}
-                        skeleton={<Skeleton className="h-16 w-full rounded-xl" />}
-                        isEmpty={!hasAnyCv}
-                        emptyContent={{
-                            title: t("cv.scorecard.emptyTitle"),
-                            description: t("cv.scorecard.emptyHint"),
-                        }}
-                    >
-                        {/* score hero — the #1 signal, tinted by unlock verdict */}
-                        <div className="flex items-start gap-3">
-                            <div className="flex items-baseline">
-                                <span
-                                    className={cn(
-                                        "text-4xl font-bold leading-none",
-                                        score === null ? "text-muted" : unlocked ? "text-success" : "text-warning",
-                                    )}
-                                >
-                                    {stillScoring ? "…" : (score ?? "—")}
-                                </span>
-                                {score !== null && !stillScoring ? (
-                                    <span className="text-base text-muted">/100</span>
-                                ) : null}
-                            </div>
-                            <div className="min-w-0 flex-1">
-                                <div className="flex flex-wrap items-center gap-2">
-                                    {stillScoring ? (
-                                        <Typography type="body-sm" color="muted">
-                                            {t("cv.scorecard.stillScoring")}
-                                        </Typography>
-                                    ) : score !== null ? (
-                                        <Chip color={unlocked ? "success" : "warning"} variant="soft" size="sm">
-                                            <VerdictIcon pass={unlocked} />
-                                            <Chip.Label>
-                                                {t(unlocked ? "cv.scorecard.unlocked" : "cv.scorecard.locked")}
-                                            </Chip.Label>
-                                        </Chip>
-                                    ) : (
-                                        <Typography type="body-sm" color="muted">
-                                            {t("cv.scorecard.noScoreYet")}
-                                        </Typography>
-                                    )}
-                                    {detail?.courseTitle ? (
-                                        <Chip size="sm">
-                                            <Chip.Label>{detail.courseTitle}</Chip.Label>
-                                        </Chip>
+            {/* Score hero — ALWAYS a bounded card (loading / real), never a floating
+                empty-state. NO "Kết quả" label of its own — the already-active
+                "Kết quả" tab above it says that. Zero-CV renders the funnel invite
+                card below INSTEAD of this one (see `!hasAnyCv` branch). */}
+            {hasAnyCv || listLoading ? (
+                <Card>
+                    <CardContent className="flex flex-col gap-3">
+                        <AsyncContent
+                            isLoading={listLoading}
+                            skeleton={<Skeleton className="h-16 w-full rounded-xl" />}
+                        >
+                            {/* score hero — the #1 signal, tinted by unlock verdict */}
+                            <div className="flex items-start gap-3">
+                                <div className="flex items-baseline">
+                                    <span
+                                        className={cn(
+                                            "text-4xl font-bold leading-none",
+                                            score === null ? "text-muted" : unlocked ? "text-success" : "text-warning",
+                                        )}
+                                    >
+                                        {stillScoring ? "…" : (score ?? "—")}
+                                    </span>
+                                    {score !== null && !stillScoring ? (
+                                        <span className="text-base text-muted">/100</span>
                                     ) : null}
                                 </div>
-                                {!stillScoring && score !== null && !unlocked ? (
-                                    <Typography type="body-sm" color="muted" className="mt-1">
-                                        {t("cv.scorecard.needMore", { score: CV_SCORE_UNLOCK_THRESHOLD - score })}
-                                    </Typography>
-                                ) : null}
-                                {!stillScoring && detail?.feedback?.shortFeedback ? (
-                                    <Typography type="body-sm" color="muted" className="mt-1">
-                                        {detail.feedback.shortFeedback}
-                                    </Typography>
-                                ) : null}
+                                <div className="min-w-0 flex-1">
+                                    <div className="flex flex-wrap items-center gap-2">
+                                        {stillScoring ? (
+                                            <Typography type="body-sm" color="muted">
+                                                {t("cv.scorecard.stillScoring")}
+                                            </Typography>
+                                        ) : score !== null ? (
+                                            <Chip color={unlocked ? "success" : "warning"} variant="soft" size="sm">
+                                                <VerdictIcon pass={unlocked} />
+                                                <Chip.Label>
+                                                    {t(unlocked ? "cv.scorecard.unlocked" : "cv.scorecard.locked")}
+                                                </Chip.Label>
+                                            </Chip>
+                                        ) : (
+                                            <Typography type="body-sm" color="muted">
+                                                {t("cv.scorecard.noScoreYet")}
+                                            </Typography>
+                                        )}
+                                        {detail?.courseTitle ? (
+                                            <Chip size="sm">
+                                                <Chip.Label>{detail.courseTitle}</Chip.Label>
+                                            </Chip>
+                                        ) : null}
+                                        {/* Verified/unverified source marker (fair-monetization: an
+                                            uploaded CV — self-reported, unchecked against real
+                                            platform work — must never read the same as a
+                                            generated one). */}
+                                        {detail?.source !== undefined ? (
+                                            detail.source === CvSource.Generated ? (
+                                                <Chip size="sm" className="bg-success/10 text-success">
+                                                    <SparkleIcon aria-hidden focusable="false" className="size-3" />
+                                                    <Chip.Label>{t("cv.scorecard.sourceGenerated")}</Chip.Label>
+                                                </Chip>
+                                            ) : (
+                                                <Chip size="sm" className="bg-warning/10 text-warning">
+                                                    <UploadSimpleIcon aria-hidden focusable="false" className="size-3" />
+                                                    <Chip.Label>{t("cv.scorecard.sourceUploaded")}</Chip.Label>
+                                                </Chip>
+                                            )
+                                        ) : null}
+                                    </div>
+                                    {!stillScoring && score !== null && !unlocked ? (
+                                        <Typography type="body-sm" color="muted" className="mt-1">
+                                            {t("cv.scorecard.needMore", { score: CV_SCORE_UNLOCK_THRESHOLD - score })}
+                                        </Typography>
+                                    ) : null}
+                                    {!stillScoring && detail?.feedback?.shortFeedback ? (
+                                        <Typography type="body-sm" color="muted" className="mt-1">
+                                            {detail.feedback.shortFeedback}
+                                        </Typography>
+                                    ) : null}
+                                </div>
                             </div>
+                        </AsyncContent>
+                    </CardContent>
+                </Card>
+            ) : null}
+
+            {/* Demand-bridge — an uploaded CV is self-reported/unverified, so it never
+                counts toward the recruiter gate or job-readiness. Nudge the learner to
+                the ONE thing that makes the score count: generating a CV from real
+                platform achievements. */}
+            {hasAnyCv && detail?.source === CvSource.Uploaded ? (
+                <Callout
+                    status="warning"
+                    title={t("cv.scorecard.sourceUploaded")}
+                    description={t("cv.scorecard.sourceUploadedHint")}
+                    action={(
+                        <Button
+                            variant="tertiary"
+                            size="sm"
+                            className="shrink-0"
+                            onPress={() => router.push(editHref)}
+                        >
+                            {t("cv.scorecard.demandBridgeCta")}
+                            <ArrowRightIcon aria-hidden focusable="false" className="size-4" />
+                        </Button>
+                    )}
+                />
+            ) : null}
+
+            {/* Empty state — the funnel card. Reaching this page with zero CVs IS the
+                pitch: a CV backed by real platform work, not a blank "nothing here". */}
+            {!hasAnyCv && !listLoading ? (
+                <Card>
+                    <CardContent className="flex flex-col gap-3">
+                        <Typography type="h4">{t("cv.scorecard.emptyTitle")}</Typography>
+                        <Typography type="body-sm" color="muted">{t("cv.scorecard.emptyHint")}</Typography>
+                        <div className="flex flex-wrap gap-2">
+                            <Button
+                                variant="primary"
+                                size="lg"
+                                onPress={() => router.push(coursesHref)}
+                            >
+                                {t("cv.scorecard.emptyPrimaryCta")}
+                                <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
+                            </Button>
+                            <Button
+                                variant="secondary"
+                                onPress={() => router.push(editHref)}
+                            >
+                                {t("cv.scorecard.emptyUploadCta")}
+                            </Button>
                         </div>
-                    </AsyncContent>
-                </CardContent>
-            </Card>
+                    </CardContent>
+                </Card>
+            ) : null}
 
             {/* findings — a labeled accordion card, only once there's a CV to grade */}
             {hasAnyCv ? (

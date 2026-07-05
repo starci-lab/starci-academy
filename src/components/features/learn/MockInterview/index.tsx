@@ -23,6 +23,7 @@ export type MockInterviewProps = WithClassNames<undefined>
 export const MockInterview = ({ className }: MockInterviewProps) => {
     const t = useTranslations()
     const courseId = useAppSelector((state) => state.course.entity?.id)
+    const courseDisplayId = useAppSelector((state) => state.course.displayId)
     // enrolled-only (spends AI credits) — gate trial viewers behind an enroll CTA
     const enrollmentSwr = useQueryCourseEnrollmentStatusSwr()
     const isEnrolled = enrollmentSwr.data?.courseEnrollmentStatus?.data?.isEnrolled === true
@@ -41,8 +42,8 @@ export const MockInterview = ({ className }: MockInterviewProps) => {
                         title={t("mockInterview.gateTitle")}
                         description={t("mockInterview.gateDescription")}
                     />
-                ) : courseId ? (
-                    <MockInterviewSession key={courseId} courseId={courseId} />
+                ) : courseId && courseDisplayId ? (
+                    <MockInterviewSession key={courseId} courseId={courseId} courseDisplayId={courseDisplayId} />
                 ) : null}
             </div>
         </div>

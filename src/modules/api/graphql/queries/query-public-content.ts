@@ -18,6 +18,9 @@ const query1 = gql`
         isPremium
         title
         body
+        module {
+          id
+        }
         challenges {
           id
         }

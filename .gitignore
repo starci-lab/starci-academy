@@ -42,3 +42,7 @@ next-env.d.ts
 
 # local render artifact
 .blog-render.html
+
+# session checkpoints + brainstorm/prototype artifacts (Tailwind v4 must not scan these)
+.session/
+.starci-prototypes/

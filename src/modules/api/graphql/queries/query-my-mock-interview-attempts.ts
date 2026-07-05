@@ -31,6 +31,7 @@ const query1 = gql`
           strengths
           gaps
           followUpQuestion
+          matchedContentIds
           createdAt
         }
       }

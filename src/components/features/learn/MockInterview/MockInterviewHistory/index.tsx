@@ -17,6 +17,8 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 export interface MockInterviewHistoryProps extends WithClassNames<undefined> {
     /** Course whose mock-interview history to list. */
     courseId: string
+    /** Course display id, for the drawer's scorecard "study this" deep link. */
+    courseDisplayId: string
 }
 
 /** Attempts to show on the setup screen (older ones are still queryable via the drawer's own page later). */
@@ -33,7 +35,7 @@ const verdictColorOf = (verdict: string): "success" | "warning" | "danger" =>
  * (labeled section on a page the learner opened — never self-hides).
  * @param props - {@link MockInterviewHistoryProps}
  */
-export const MockInterviewHistory = ({ courseId, className }: MockInterviewHistoryProps) => {
+export const MockInterviewHistory = ({ courseId, courseDisplayId, className }: MockInterviewHistoryProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const attemptsSwr = useQueryMyMockInterviewAttemptsSwr(courseId, HISTORY_PAGE_SIZE, 0)
@@ -91,6 +93,8 @@ export const MockInterviewHistory = ({ courseId, className }: MockInterviewHisto
                     }
                 }}
                 attempt={selectedAttempt}
+                courseId={courseId}
+                courseDisplayId={courseDisplayId}
             />
         </>
     )

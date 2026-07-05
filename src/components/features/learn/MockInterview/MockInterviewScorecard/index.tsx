@@ -1,30 +1,45 @@
 "use client"
 
-import React from "react"
+import React, { useMemo } from "react"
 import {
+    Button,
     Chip,
     Label,
+    Link,
     Typography,
     cn,
 } from "@heroui/react"
 import {
+    ArrowRightIcon,
     ChatCircleIcon,
     CheckCircleIcon,
     WarningCircleIcon,
 } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
+import { Callout } from "@/components/blocks/feedback/Callout"
+import { InfoTooltip } from "@/components/blocks/feedback/InfoTooltip"
+import { useQueryMatchedContentSwr } from "@/hooks/swr/api/graphql/queries/useQueryMatchedContentSwr"
+import { pathConfig } from "@/resources/path"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { MockInterviewTrackSnapshot } from "../MockInterviewTrackSnapshot"
 import type { MockInterviewGradeResult } from "../types"
 
 /** Props for {@link MockInterviewScorecard}. */
 export interface MockInterviewScorecardProps extends WithClassNames<undefined> {
     /** The graded result to render (current session, or a past attempt re-opened from history). */
     grade: MockInterviewGradeResult
-    /** System the session worked through, shown as a header line when known. */
+    /** Course the session belongs to — needed for the track snapshot (B3). */
+    courseId: string
+    /** Course display id, for building the "study this" deep link (B6) via `pathConfig().course(displayId)`. */
+    courseDisplayId: string
+    /** System this session worked through, shown as a header line when known. */
     promptTitle?: string
     /** ISO timestamp of when this attempt was graded — shown for history detail, omitted for a live session. */
     createdAt?: string | null
+    /** Called when the learner picks "Interview again" (B7, now a tertiary action). Omit to hide the action (e.g. read-only history detail). */
+    onRetry?: () => void
 }
 
 /** The 3 named attributes the grader always scores, in a fixed display order. */
@@ -34,21 +49,35 @@ const ATTRIBUTE_ORDER: ReadonlyArray<string> = [
     "tradeoffAwareness",
 ]
 
+/** A phase below this fraction of its max is called out as "weak" (B4/B6) — mirrors the ~60% pass-bar convention used elsewhere in grading result pages. */
+const WEAK_PHASE_THRESHOLD = 0.6
+
 /** Verdict → chip color (đạt / cận / chưa đạt) — mirrors the flashcard mock interview's convention. */
 const verdictColorOf = (verdict: MockInterviewGradeResult["verdict"]): "success" | "warning" | "danger" =>
     verdict === "pass" ? "success" : verdict === "borderline" ? "warning" : "danger"
 
 /**
- * Read-only render of one graded mock-interview session — score, verdict,
- * per-phase + per-attribute breakdown, strengths, gaps, and a suggested
- * follow-up question. Shared between the just-finished session's scorecard
- * and the history detail drawer for a past attempt (a single source of
- * render for "what a graded session looks like").
+ * Read-only render of one graded mock-interview session — score, verdict, a
+ * course-grounding citation, a "where you stand" track snapshot, per-phase +
+ * per-attribute breakdown, strengths, gaps, and the primary "study your weak
+ * area" CTA that closes the demand loop back into the course. Shared between
+ * the just-finished session's scorecard and the history detail drawer for a
+ * past attempt (a single source of render for "what a graded session looks like").
+ *
  * @param props - {@link MockInterviewScorecardProps}
  */
-export const MockInterviewScorecard = ({ grade, promptTitle, createdAt, className }: MockInterviewScorecardProps) => {
+export const MockInterviewScorecard = ({
+    grade,
+    courseId,
+    courseDisplayId,
+    promptTitle,
+    createdAt,
+    onRetry,
+    className,
+}: MockInterviewScorecardProps) => {
     const t = useTranslations()
     const locale = useLocale()
+    const router = useRouter()
 
     // known attribute keys render with a localized label; anything unexpected
     // (the grader is prompted to a fixed set, but AI output isn't guaranteed)
@@ -68,8 +97,35 @@ export const MockInterviewScorecard = ({ grade, promptTitle, createdAt, classNam
         ? new Intl.DateTimeFormat(locale, { dateStyle: "medium", timeStyle: "short" }).format(new Date(createdAt))
         : null
 
+    // B2/B4/B6 — resolve the FIRST RAG-matched content id into a title + module id (single
+    // representative citation; retrieval already ranks matches, no batch content-by-ids
+    // query exists to cheaply resolve every match). Empty matchedContentIds → no citation,
+    // fall back to a plain deep link (never fabricate a match).
+    const firstMatchedContentId = grade.matchedContentIds[0]
+    const matchedContentSwr = useQueryMatchedContentSwr(firstMatchedContentId)
+    const matchedContent = matchedContentSwr.data
+
+    // B4/B6 — the single weakest phase (lowest earned/max ratio), when it's actually
+    // weak (below threshold) — the CTA and phase-bar link both key off this.
+    const weakestPhase = useMemo(() => {
+        const weak = grade.phaseScores
+            .filter((phaseScore) => phaseScore.max > 0 && phaseScore.score / phaseScore.max < WEAK_PHASE_THRESHOLD)
+            .sort((left, right) => (left.score / left.max) - (right.score / right.max))
+        return weak[0]
+    }, [grade.phaseScores])
+
+    // B6 — deep link routes to the matched content when we have BOTH a content id and
+    // its owning module id (the route needs both segments); otherwise falls back to the
+    // course-contents home ("Học phần" landing) so the CTA never dead-ends even when
+    // nothing matched.
+    const studyHref = (firstMatchedContentId && matchedContent?.module?.id)
+        ? pathConfig().locale(locale).course(courseDisplayId).learn().module(matchedContent.module.id).content(firstMatchedContentId).build()
+        : pathConfig().locale(locale).course(courseDisplayId).learn().content().build()
+
+    const weakPhaseLabel = weakestPhase ? t(`mockInterview.phase.${weakestPhase.phase}`) : null
+
     return (
-        <div className={cn("flex flex-col gap-6 rounded-xl bg-default/40 p-8", className)}>
+        <div className={cn("flex flex-col gap-6", className)}>
             {(promptTitle || formattedDate) ? (
                 <div className="flex flex-wrap items-center justify-between gap-3">
                     {promptTitle ? (
@@ -81,26 +137,72 @@ export const MockInterviewScorecard = ({ grade, promptTitle, createdAt, classNam
                 </div>
             ) : null}
 
-            <div className="flex flex-wrap items-center gap-3">
-                <div className="flex items-baseline gap-2">
-                    <Typography className="text-4xl font-medium text-foreground">{grade.overallScore}</Typography>
-                    <Typography type="body-xs" color="muted">/100</Typography>
+            {/* B1 — verdict hero + "not yet server-verified" honesty badge (Hole 2: the
+                graded transcript is client-supplied, not reconstructed from the socket
+                stream server-side, so recruiter-facing readiness shouldn't read as fully
+                attested until that's fixed). */}
+            <div className="flex flex-col gap-3 rounded-xl bg-default/40 p-8">
+                <div className="flex flex-wrap items-center gap-3">
+                    <div className="flex items-baseline gap-2">
+                        <Typography className="text-4xl font-medium text-foreground">{grade.overallScore}</Typography>
+                        <Typography type="body-xs" color="muted">/100</Typography>
+                    </div>
+                    <Chip size="md" variant="soft" color={verdictColorOf(grade.verdict)}>
+                        {t(`flashcard.interview.${grade.verdict}`)}
+                    </Chip>
+                    <InfoTooltip
+                        title={t("mockInterview.serverUnverifiedTitle")}
+                        description={t("mockInterview.serverUnverifiedHint")}
+                    >
+                        <Chip size="sm" variant="soft" color="warning">
+                            <Chip.Label>{t("mockInterview.serverUnverifiedBadge")}</Chip.Label>
+                        </Chip>
+                    </InfoTooltip>
                 </div>
-                <Chip size="md" variant="soft" color={verdictColorOf(grade.verdict)}>
-                    {t(`flashcard.interview.${grade.verdict}`)}
-                </Chip>
+
+                {/* B2 — moat surfacing: cite the matched module when we have one, else a
+                    quieter, non-specific grounding line (never fake a citation). */}
+                {firstMatchedContentId ? (
+                    <Callout
+                        status="accent"
+                        title={matchedContent?.title
+                            ? t("mockInterview.moatCalloutTitled", { title: matchedContent.title })
+                            : t("mockInterview.moatCalloutUntitled")}
+                    />
+                ) : (
+                    <Typography type="body-xs" color="muted">
+                        {t("mockInterview.moatCalloutGeneric")}
+                    </Typography>
+                )}
             </div>
+
+            {/* B3 — rolling readiness snapshot (retention hook, Hole 6). Shares the exact
+                same component + data the setup screen shows (single source). */}
+            <MockInterviewTrackSnapshot courseId={courseId} />
 
             <div className="flex flex-col gap-3">
                 <Label>{t("mockInterview.perPhaseTitle")}</Label>
-                {grade.phaseScores.map((phaseScore) => (
-                    <div key={phaseScore.phase} className="flex items-center gap-3">
-                        <Typography type="body-sm" className="w-40 shrink-0">
-                            {t(`mockInterview.phase.${phaseScore.phase}`)}
-                        </Typography>
-                        <ProgressMeter value={phaseScore.score} max={phaseScore.max} className="flex-1" />
-                    </div>
-                ))}
+                {grade.phaseScores.map((phaseScore) => {
+                    const isWeak = weakestPhase?.phase === phaseScore.phase
+                    return (
+                        <div key={phaseScore.phase} className="flex flex-col gap-1">
+                            <div className="flex items-center gap-3">
+                                <Typography type="body-sm" className="w-40 shrink-0">
+                                    {t(`mockInterview.phase.${phaseScore.phase}`)}
+                                </Typography>
+                                <ProgressMeter value={phaseScore.score} max={phaseScore.max} className="flex-1" />
+                            </div>
+                            {isWeak ? (
+                                <Link
+                                    href={studyHref}
+                                    className="ml-40 flex w-fit items-center gap-1 text-sm text-accent hover:underline"
+                                >
+                                    {t("mockInterview.viewInLesson")}
+                                </Link>
+                            ) : null}
+                        </div>
+                    )
+                })}
             </div>
 
             {orderedAttributes.length > 0 ? (
@@ -131,14 +233,25 @@ export const MockInterviewScorecard = ({ grade, promptTitle, createdAt, classNam
                 </div>
             ) : null}
 
+            {/* B5 — gaps: matched → a small "study this" link; unmatched → plain text (mixed, honest). */}
             {grade.gaps.length > 0 ? (
                 <div className="flex flex-col gap-3">
                     <Label>{t("mockInterview.gapsTitle")}</Label>
                     <ul className="flex flex-col gap-2">
                         {grade.gaps.map((gap, position) => (
-                            <li key={position} className="flex items-start gap-2">
-                                <WarningCircleIcon className="mt-0.5 size-4 shrink-0 text-warning" aria-hidden focusable="false" />
-                                <Typography type="body-sm">{gap}</Typography>
+                            <li key={position} className="flex flex-col gap-1">
+                                <div className="flex items-start gap-2">
+                                    <WarningCircleIcon className="mt-0.5 size-4 shrink-0 text-warning" aria-hidden focusable="false" />
+                                    <Typography type="body-sm">{gap}</Typography>
+                                </div>
+                                {firstMatchedContentId ? (
+                                    <Link
+                                        href={studyHref}
+                                        className="ml-6 flex w-fit items-center gap-1 text-sm text-accent hover:underline"
+                                    >
+                                        {t("mockInterview.viewInLesson")}
+                                    </Link>
+                                ) : null}
                             </li>
                         ))}
                     </ul>
@@ -154,6 +267,27 @@ export const MockInterviewScorecard = ({ grade, promptTitle, createdAt, classNam
                     </div>
                 </div>
             ) : null}
+
+            {/* B6/B7 — the demand-loop fix: the PRIMARY action now studies the weak spot in
+                the course, not "run it again"; retry is demoted to a tertiary action so
+                re-running to chase a better number isn't the path of least resistance. */}
+            <div className="flex flex-wrap items-center gap-3 border-t border-divider pt-4">
+                <Button
+                    variant="primary"
+                    size="lg"
+                    onPress={() => router.push(studyHref)}
+                >
+                    {weakPhaseLabel
+                        ? t("mockInterview.weakPhaseCta", { phase: weakPhaseLabel })
+                        : t("mockInterview.weakPhaseCtaGeneric")}
+                    <ArrowRightIcon className="size-5" aria-hidden focusable="false" />
+                </Button>
+                {onRetry ? (
+                    <Button variant="tertiary" onPress={onRetry}>
+                        {t("mockInterview.retry")}
+                    </Button>
+                ) : null}
+            </div>
         </div>
     )
 }

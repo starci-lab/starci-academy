@@ -14,6 +14,18 @@ const mutation1 = gql`
       error
       data {
         xpEarned
+        dailyCapReached
+        weakTags {
+          tag
+          coverage
+          moduleId
+          contentId
+        }
+        readiness {
+          currentAvg
+          threshold
+          unlocked
+        }
       }
     }
   }

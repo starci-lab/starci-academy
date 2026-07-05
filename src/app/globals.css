@@ -2,6 +2,16 @@
 @import "@xyflow/react/dist/style.css";
 @import "@heroui/styles/css";
 
+/* Exclude `.md` and `.html` from Tailwind v4's automatic content scan. This is a
+ * Next.js App Router app — every real utility class lives in `.tsx`; markdown/html
+ * files are prose, docs, or prototype artifacts (brainstorm/critique `.md`, `.session/*.md`
+ * checkpoints, layout `.html` mockups). The v4 candidate extractor was crashing the build
+ * ("RangeError: Invalid code point …") because a `.md` doc contained a Windows path like
+ * `...\34864604-...` — the `\348646` run was parsed as a CSS unicode escape → fromCodePoint
+ * on an out-of-range value. These files never need utility generation, so ignore them. */
+@source not "**/*.md";
+@source not "**/*.html";
+
 /*
  * Kill the "giật giật" jitter on learn pages: their left rail is exactly
  * `calc(100dvh - 4rem)` tall, so the document lands right ON the viewport height

@@ -44,6 +44,12 @@ export interface MockInterviewAttemptItem {
     gaps: Array<string>
     /** A follow-up an interviewer would ask next, or null. */
     followUpQuestion: string | null
+    /**
+     * Content ids the RAG retrieval matched while grading this attempt (one flat
+     * list for the whole session, not per-phase). Empty when the course had no RAG
+     * index at grade time, retrieval found nothing, or the attempt predates this field.
+     */
+    matchedContentIds: Array<string>
     /** ISO timestamp of when this attempt was graded. */
     createdAt: string
 }

@@ -75,6 +75,15 @@ export interface MockInterviewGradeSessionData {
     gaps: Array<string>
     /** A natural follow-up an interviewer would ask next, or null. */
     followUpQuestion?: string | null
+    /**
+     * Content ids the RAG retrieval matched while grounding this session's grading —
+     * one flat list for the WHOLE session (retrieval is a single top-K pass over the
+     * candidate's combined answers, not phase-scoped), so a weak phase can only be
+     * deep-linked to "related content for this session", not a per-phase citation.
+     * Empty when the course has no RAG index, retrieval found nothing, or the field
+     * predates this attempt — never fabricate a match when this is empty.
+     */
+    matchedContentIds: Array<string>
 }
 
 /** Apollo response shape for `gradeMockInterviewSession`. */

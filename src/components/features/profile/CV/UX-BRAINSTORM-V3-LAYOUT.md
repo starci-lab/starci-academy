@@ -74,7 +74,80 @@
 - **Hệ quả kiến trúc:** `selectedCvId` giờ sống ở `CvWorkspace` VÀ điều khiển dial NGOÀI 2 tab — cả `CvScorecard` (giờ chỉ còn render score-hero + Góp ý, KHÔNG còn tự vẽ dial nữa — dial chuyển thành block riêng ở `CvWorkspace`) lẫn `CVPreview` đều nhận `selectedId`/`cvId` y như đã lift ở vòng 4, chỉ khác là dial UI không còn nested trong `CvScorecard`.
 - Không cần BE mới. Đây là bố cục CUỐI của toàn bộ chuỗi brainstorm (V3 §1→§9) — chốt để `/starci-fe-ux-apply`.
 
+## 10. Vòng 7 — MA TRẬN 4 STATE DỮ LIỆU + bake phễu-vào-khóa (`/starci-fe-layout-brainstorm`)
+> Thầy: *"đủ layout nhé — lúc rỗng, có cv, có 5 cv, 1 upload + 1 generate. cover all test case. update rules."*
+> Vòng 1→9 đã chốt SKELETON (header → dải chọn CV → tabs Kết quả/Xem trước). Vòng này KHÔNG đổi skeleton — nó
+> **định nghĩa skeleton đó render thế nào qua MỌI state dữ liệu** + **bake mindset phễu-vào-khóa** (skill layout mới).
+> Đã vẽ widget "cv_tab_layout_all_states" (khung vùng + 4 state cạnh nhau).
+
+### Khung vùng cố định (mọi state) — A→E, xếp dọc trong cột nội dung tab CV
+| # | Vùng | Vai | Ẩn/hiện |
+|---|---|---|---|
+| A | Header: "Các CV của bạn" + `[+ Thêm CV mới]` | tạo (đi `/profile/cv/edit`) | luôn |
+| **B** | **Dòng recruiter-unlock: điểm BEST /100 · unlock ≥70 · "còn N → học nâng"** | **outcome + PHỄU khóa (mới, bake vòng này)** | luôn |
+| C | Dải chọn CV (`FlexWrapButtonRadio`: nhãn · icon nguồn · điểm) | chọn 1-trong-N, áp cho CẢ 2 tab | ẩn khi 0–1 CV |
+| D | `TabsCard`: **Kết quả** (mặc định) \| Xem trước | đổi view của CV đang chọn | ẩn khi 0 CV |
+| E | Nội dung tab của CV đang chọn | — | thay theo state |
+
+**Vì sao B+C TRÊN tabs:** dải chọn áp cho cả 2 tab (đúng §9); điểm-best + recruiter là **mức trang** (không theo tab)
+→ đặt ngoài tab. B là **anchor phễu bake mới** — mọi lần vào trang đều thấy "recruiter cần ≥70 ⇐ điểm ⇐ học".
+
+### Ma trận STATE → layout (cover all test case)
+| State | B recruiter-line | C dải chọn | D tabs | E nội dung | **Phễu khóa nằm đâu** |
+|---|---|---|---|---|---|
+| **Rỗng (0 CV)** | `0/100 · recruiter khóa` | ẩn | ẩn | **CARD LỜI MỜI** (không "Chưa có CV") | **PRIMARY `[Vào khóa học →]`** trong card + mini-loop học→bằng-chứng→CV≥70→recruiter |
+| **1 CV** | điểm CV đó (=best) | ẩn (1 cái, khỏi chọn) | hiện | Kết quả: score-hero + Góp ý · Xem trước: doc/PDF | dòng B "còn N → học" + trong Góp ý: pillar yếu → CTA capstone khóa · ô trống doc → CTA khóa |
+| **5 CV** | điểm **BEST** của 5 | hiện: **5 chip inline** (trong cap hiện `CV_CHIPS_MAX=6`) | hiện | như 1-CV, theo CV đang chọn | dòng B + funnel trong Kết quả/Xem trước của CV đang chọn |
+| **Mix (1 upload + 1 generate)** | best của 2 | hiện: 2 chip, icon `⚡ tạo` vs `⬆ tải` | hiện | Kết quả GIỐNG NHAU (1 rubric) · Xem trước KHÁC (tạo=doc dựng, tải=PDF gốc) | như trên; CV "tạo" có ô-trống-doc → phễu, CV "tải" không có ô trống nên phễu ở dòng B + Góp ý |
+
+### Chi tiết từng state
+- **Rỗng (phễu #1, quan trọng nhất):** §5 cũ ("chuyển sang tab Cấu hình") **ĐÃ SAI với mindset mới** → thay bằng
+  **card LỜI MỜI**: headline "CV của bạn bắt đầu từ việc học" + body "CV dựng từ capstone/thử thách/coding trong khóa —
+  không viết tay" + **PRIMARY `[Vào khóa học →]` (→ `/courses`)** + secondary `[Tạo từ thành tích]` / `[Tải CV lên]`
+  (secondary vì tay-trắng tạo cũng rỗng → học trước) + mini-loop 4 bước. Tab con ẩn (không có gì để tab). Đây là
+  ngõ-KHÔNG-cụt: chính sự rỗng LÀ pitch bán khóa (fair: "học để KIẾM bằng chứng", KHÔNG "mua để tăng số").
+- **1 CV:** dải chọn ẩn (1 cái không cần chọn — [[single-select-among-options-use-tabs]] chỉ dùng khi ≥2). Kết quả =
+  score-hero + Góp ý accordion; Xem trước = doc/PDF full-width. Ô trống trong doc (Kinh nghiệm/Dự án chưa có) = dashed
+  + CTA đích danh vào khóa lấp nó.
+- **5 CV:** dải chọn bật — chip = verdict icon + nhãn + điểm + kebab (Sửa/Xoá) [đã có ở code]. **5 ≤ cap hiện
+  `CV_CHIPS_MAX=6` → cả 5 chip hiện inline, chưa cần overflow.** GAP đề xuất: khi **>6 CV → 5 chip + `+N` mở drawer**
+  (pattern chọn-lần-thử [[attempt-history-selector-adaptive-and-grading-model-chip]]) — code hiện chỉ `slice(0,6)`,
+  CHƯA có nhánh drawer, cần thêm khi apply. Chip đang chọn = viền accent. Dòng B = điểm **BEST** (gate recruiter theo
+  max, không theo count — [[fair-monetization-axiom]]: 5 CV không "cộng điểm", chỉ lấy cái mạnh nhất). Tabs/nội dung =
+  như 1-CV cho CV đang chọn.
+- **Mix nguồn:** icon `source` phân biệt (`⚡` generated / `⬆` uploaded — field `cv_generations.source`). Cùng 1 rubric
+  `CvScoringService` → **tab Kết quả shape GIỐNG HỆT** cho cả 2 nguồn. Khác biệt DUY NHẤT ở tab Xem trước: generated =
+  doc dựng-từ-thành-tích (có ô trống → phễu); uploaded = PDF gốc user (không ô trống → phễu qua dòng B + Góp ý).
+
+### CTA-khóa (bắt buộc theo skill) — nằm ở đâu + tại sao
+1. **State rỗng:** PRIMARY `[Vào khóa học]` — cả empty-state = phễu. (mạnh nhất, đúng chỗ tay-trắng nhìn đầu tiên.)
+2. **Mọi state:** dòng B "còn N điểm → học nâng" link `/courses` — anchor bền, luôn thấy.
+3. **Kết quả tab (pillar yếu):** trong Góp ý → "hoàn thành capstone/thử thách trong khóa → nâng điểm".
+4. **Xem trước (ô trống doc):** slot dashed → CTA vào khóa cụ thể lấp mục đó.
+
+### Đổi so với V3 §1→§9
+- **GIỮ NGUYÊN** skeleton §9 (header → selector → tabs). **THÊM** dòng B (recruiter-unlock + phễu) ngay dưới header.
+- **THAY** §5 empty-state ("mở tab Cấu hình") → **card lời mời vào khóa** (bake mindset).
+- **ĐỊNH NGHĨA MỚI** state 5-CV (overflow `+N` drawer) + state mix-nguồn (icon source, Kết quả chung / Xem trước khác)
+  — V3 chưa cover.
+- Không cần BE mới cho layout; field đã có (`source`, `score`, `courseId`, `myCvGenerations`). Dòng B best-score +
+  recruiter cần `jobReadiness.foundation.cvScore` / `getBestCvScore ≥ 70` (đã có ở BE).
+
+### Grounded từ code (Explore scan 2026-07-05) — file + gap khi apply
+- **Skeleton V3 §9 ĐÃ dựng đúng trong code:** `CvWorkspace/index.tsx:72–194` = header ("Các CV của bạn" +
+  "+ Thêm CV mới" → `/profile/cv/edit`) → `FlexWrapButtonRadio` (chỉ khi `>1` CV, chip = VerdictIcon + label + score +
+  kebab Sửa/Xoá) → `TabsCard` (Kết quả|Xem trước) → `CvScorecard`(result) / `CVPreview`(preview). Config sống ở route
+  riêng `/profile/cv/edit` (`CVUpload` = CvFileCard + CourseTrackPicker + UploadSection + GenerateSection). Nguồn phân
+  biệt bằng `cv.source` (`Uploaded`→file gốc / `Generated`→PDF tectonic).
+- **GAP 1 (phễu — việc chính vòng này):** empty-state `CvScorecard/index.tsx:162–166` = `AsyncContent` "Chưa có CV
+  nào / Tạo hoặc tải CV lên bên dưới" — **KHÔNG có link `/courses`** (agent xác nhận). → thay bằng **card LỜI MỜI vào
+  khóa** (state Rỗng ở trên).
+- **GAP 2 (dòng B):** chưa có dòng recruiter-unlock + best-score + "còn N → học" ở cấp trang → THÊM ngay dưới header.
+- **GAP 3 (overflow):** selector `slice(0, CV_CHIPS_MAX=6)`, chưa có nhánh `+N`→drawer cho `>6` CV → thêm khi apply.
+- **KHÔNG đổi:** cấu trúc tabs, route edit, source-detection, kebab — chỉ THÊM 3 gap trên (đều là bake phễu + state).
+
 ## Nguồn tham khảo
 - Vòng 1: [Rezi Score explained](https://www.rezi.ai/rezi-docs/the-rezi-score-explained) · [Teal resume checker](https://www.tealhq.com/tool/resume-checker) · [Kickresume resume checker](https://www.kickresume.com/en/resume-checker/)
 - Vòng 3 (mới, xác nhận pattern desktop-sidebar-thường-trực/mobile-xếp-chồng): tìm kiếm "resume builder app layout live preview sidebar always visible" — kết quả chỉ ra Resume.io/Novoresume giữ preview/sidebar thường trực trên desktop, thu gọn thành 1-lúc-1-vùng trên mobile.
-- Nội bộ: `.claude/rules/layouts/sticky.md` (sticky full-height đã đúng cơ chế, giữ nguyên) · `.claude/rules/drafts/single-select-among-options-use-tabs.md` (tab cho single-select) · `.claude/rules/drafts/when-rail.md` (vì sao bác Hướng B) · `UX-BRAINSTORM.md` (V1) · `UX-BRAINSTORM-V2.md` (V2, fold vào làm điều kiện cần của Hướng A).
+- Vòng 7: LinkedIn profile-strength (ô thiếu = nudge) · Credly/Coursera (thành tích → hồ sơ) · Teal resume library (list nhiều CV) · pattern nội bộ chọn-lần-thử + fair-monetization.
+- Nội bộ: `.claude/rules/layouts/sticky.md` · `.claude/rules/drafts/single-select-among-options-use-tabs.md` · `.claude/rules/drafts/when-rail.md` · `.claude/rules/concepts/fair-monetization-axiom.md` · `.claude/rules/drafts/attempt-history-selector-adaptive-and-grading-model-chip.md` · `UX-BRAINSTORM.md` (V1) · `UX-BRAINSTORM-V2.md` (V2).

@@ -1,16 +1,20 @@
-"use client"
+import { redirect } from "next/navigation"
 
-import React from "react"
-import {
-    CVEdit,
-} from "@/components/features/profile/CV/CVEdit"
+interface PageProps {
+    params: Promise<{ locale: string }>
+}
 
 /**
- * CV configuration route (`/profile/cv/edit`): upload/generate/revise, separate
- * from the `/profile/cv` review page.
+ * `/profile/cv/edit` — LEGACY route (kept only so old bookmarks/deep-links
+ * still resolve). CV compose (upload/generate/revise) is no longer a separate
+ * page/layout — it's the `?edit=true` MODE of `/profile/cv` itself (same shell
+ * as the review surface), so every new navigation should build
+ * `pathConfig().profile().cv().edit().build()` (which already returns
+ * `/profile/cv?edit=true`) instead of linking here.
  */
-const Page = () => {
-    return <CVEdit />
+const Page = async ({ params }: PageProps) => {
+    const { locale } = await params
+    redirect(`/${locale}/profile/cv?edit=true`)
 }
 
 export default Page

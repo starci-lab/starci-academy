@@ -13,6 +13,14 @@ export interface UserSlice {
     user: UserEntity | null
     /** Whether the user is enrolled in the course. */
     enrolled: boolean
+    /**
+     * Whether {@link enrolled} reflects a settled enrollment-status query (success or
+     * error) rather than the pre-fetch default. `enrolled` defaults to `false`, so any
+     * consumer that renders DIFFERENT content for enrolled vs. trial viewers must gate
+     * on this flag first — otherwise a genuinely enrolled user flashes the trial UI
+     * while the query is still in flight.
+     */
+    enrollKnown: boolean
     /** The user's enrollment. */
     enrollment?: EnrollmentEntity
 }
@@ -25,6 +33,8 @@ const initialState: UserSlice = {
     user: null,
     /** Whether the user is enrolled in the course. */
     enrolled: false,
+    /** The enrollment-status query has not settled yet on a fresh load. */
+    enrollKnown: false,
     /** The user's enrollment. */
     enrollment: undefined,
 }
@@ -49,10 +59,17 @@ export const userSlice = createSlice(
             },
             /** The action to set the enrolled state. */
             setEnrolled: (
-                state, 
+                state,
                 action: PayloadAction<boolean>
             ) => {
                 state.enrolled = action.payload
+            },
+            /** The action to mark the enrollment-status query as settled (success or error). */
+            setEnrollKnown: (
+                state,
+                action: PayloadAction<boolean>
+            ) => {
+                state.enrollKnown = action.payload
             },
             /** The action to set the enrollment. */
             setEnrollment: (
@@ -71,5 +88,6 @@ export const userReducer = userSlice.reducer
 export const {
     setUser,
     setEnrolled,
+    setEnrollKnown,
     setEnrollment,
 } = userSlice.actions

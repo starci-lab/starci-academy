@@ -30,4 +30,5 @@ export const mapMockInterviewAttemptToGradeResult = (
     strengths: attempt.strengths,
     gaps: attempt.gaps,
     followUpQuestion: attempt.followUpQuestion,
+    matchedContentIds: attempt.matchedContentIds,
 })

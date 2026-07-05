@@ -86,4 +86,11 @@ export interface MockInterviewGradeResult {
     gaps: Array<string>
     /** A follow-up an interviewer would ask next (nullable). */
     followUpQuestion: string | null
+    /**
+     * Content ids the RAG retrieval matched while grading this session (one flat list
+     * for the WHOLE session — retrieval isn't phase-scoped). Empty when the course has
+     * no RAG index, retrieval found nothing, or the attempt predates this field — never
+     * treat empty as an error, and never fabricate a citation when it's empty.
+     */
+    matchedContentIds: Array<string>
 }

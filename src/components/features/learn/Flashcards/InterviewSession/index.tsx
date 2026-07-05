@@ -2,17 +2,20 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import useSWR from "swr"
-import { Button, Card, CardContent, Chip, Label, Typography, cn } from "@heroui/react"
+import { Button, Card, CardContent, Chip, Label, ScrollShadow, Typography, cn } from "@heroui/react"
 import {
     ArrowRightIcon,
     CheckCircleIcon,
     CursorClickIcon,
     FlameIcon,
     LightningIcon,
+    LockKeyIcon,
+    MicrophoneStageIcon,
     StackIcon,
     XCircleIcon,
 } from "@phosphor-icons/react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { SM2_GRADES } from "../constants"
 import { InterviewSessionSkeleton } from "./InterviewSessionSkeleton"
@@ -23,9 +26,11 @@ import { mutateReviewFlashcard } from "@/modules/api/graphql/mutations/mutation-
 import { queryFlashcardDecksByCourse } from "@/modules/api/graphql/queries/query-flashcard-decks-by-course"
 import { queryFlashcardDeck } from "@/modules/api/graphql/queries/query-flashcard-deck"
 import { type FlashcardCardEntity } from "@/modules/types/entities/flashcard-card"
+import { type QuizSessionReadinessData, type QuizSessionWeakTagData } from "@/modules/api/graphql/mutations/types/complete-flashcard-quiz-session"
 import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
+import { Callout } from "@/components/blocks/feedback/Callout"
 import { FlipCard } from "@/components/blocks/cards/FlipCard"
 import { MetricCard } from "@/components/blocks/stats/MetricCard"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
@@ -35,6 +40,10 @@ import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { useQueryMyWeeklyStatsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyWeeklyStatsSwr"
 import { useMutateCompleteFlashcardQuizSessionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateCompleteFlashcardQuizSessionSwr"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
+import { useAppSelector } from "@/redux/hooks"
+import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { PaymentFlow } from "@/modules/types/payment"
+import { pathConfig } from "@/resources/path"
 
 /** Props for {@link InterviewSession}. */
 export interface InterviewSessionProps extends WithClassNames<undefined> {
@@ -81,10 +90,17 @@ interface QuizCard extends FlashcardCardEntity {
     keywords: Array<string>
 }
 
-/** Per-card outcome recorded during `active`, aggregated in the recap. */
+/** Per-card outcome recorded during `active`, aggregated in the recap AND sent to
+ *  `completeFlashcardQuizSession` so the server re-derives coverage/XP itself. */
 interface CardResult {
+    /** The card this outcome belongs to (sent to the server for scoring + weak-tags). */
+    cardId: string
     /** Ratio of blanks filled correctly (0..1), or null for a fallback card without a cloze. */
     coverageRatio: number | null
+    /** Blanks filled correctly this card had (0 for a fallback card without a cloze). */
+    correctBlanks: number
+    /** Total cloze blanks this card had (0 for a fallback card without a cloze). */
+    totalBlanks: number
     /** Whether the learner got the card fully right without a hint (mastery signal). */
     correct: boolean
     /** XP this card contributed to the local estimate. */
@@ -113,8 +129,17 @@ const shuffle = <T,>(input: Array<T>): Array<T> => {
  */
 export const InterviewSession = ({ courseId, className }: InterviewSessionProps) => {
     const t = useTranslations()
+    const locale = useLocale()
     const runGraphQL = useGraphQLWithToast()
-    // quiz is enrolled-only → send the course header for the backend guard
+    // trial vs enrolled — drives the recap's Zone E enroll-upsell (primary for trial viewers)
+    // and gates Zone D (AI Mock Interview cross-link, only relevant once actually enrolled).
+    // Populated globally by `learn/layout.tsx` (`useQueryCourseEnrollmentStatusSwr`).
+    const enrolled = useAppSelector((state) => state.user.enrolled)
+    // `enrolled` defaults to false, so only trust it once the status query has settled —
+    // otherwise a genuinely enrolled viewer would flash the trial-upsell (Zone E) on cold load.
+    const enrollKnown = useAppSelector((state) => state.user.enrollKnown)
+    const displayId = useAppSelector((state) => state.course.displayId)
+    // quiz cards are enrolled-only → send the course header for the backend guard
     const courseHeaders = useMemo(
         () => ({ [GraphQLHeadersKey.XCourseId]: courseId }),
         [courseId],
@@ -177,6 +202,12 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
     const sessionId = useRef<string | null>(null)
     // XP awarded by the backend for this run (shown in the recap)
     const [xpEarned, setXpEarned] = useState(0)
+    // whether today's daily XP cap for this source clamped the grant (recap transparency note)
+    const [dailyCapReached, setDailyCapReached] = useState(false)
+    // weakest tags this session, ranked worst-first (recap Zone C demand-bridge)
+    const [weakTags, setWeakTags] = useState<Array<QuizSessionWeakTagData>>([])
+    // AI Mock Interview readiness signal (recap Zone D)
+    const [readiness, setReadiness] = useState<QuizSessionReadinessData | null>(null)
     // guards the one-shot completion mutation on entering the recap
     const completedRef = useRef(false)
 
@@ -222,6 +253,9 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
             setCombo(0)
             setBestCombo(0)
             setXpEarned(0)
+            setDailyCapReached(false)
+            setWeakTags([])
+            setReadiness(null)
             completedRef.current = false
         } finally {
             setBuilding(false)
@@ -300,7 +334,8 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
         [checked],
     )
 
-    // finalize the run: grant XP once (idempotent), then show the recap
+    // finalize the run: send the per-card breakdown so the server re-derives coverage/XP
+    // itself (no client-trusted aggregate), grant XP once (idempotent), then show the recap
     const finish = useCallback(
         async (finalResults: Array<CardResult>) => {
             setPhase("recap")
@@ -308,13 +343,11 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                 return
             }
             completedRef.current = true
-            const answeredCount = finalResults.length
-            const withCoverage = finalResults.filter((result) => result.coverageRatio !== null)
-            const coverageScore =
-                withCoverage.length > 0
-                    ? withCoverage.reduce((sum, result) => sum + (result.coverageRatio ?? 0), 0)
-                        / withCoverage.length
-                    : 0
+            const answers = finalResults.map((result) => ({
+                cardId: result.cardId,
+                correctBlanks: result.correctBlanks,
+                totalBlanks: result.totalBlanks,
+            }))
             let awarded = 0
             await runGraphQL(
                 async () => {
@@ -322,13 +355,15 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                         request: {
                             sessionId: sessionId.current as string,
                             courseId,
-                            answeredCount,
-                            coverageScore,
+                            answers,
                         },
                         headers: courseHeaders,
                     })
                     const payload = response.data?.completeFlashcardQuizSession
                     awarded = payload?.data?.xpEarned ?? 0
+                    setDailyCapReached(payload?.data?.dailyCapReached ?? false)
+                    setWeakTags(payload?.data?.weakTags ?? [])
+                    setReadiness(payload?.data?.readiness ?? null)
                     return (
                         payload ?? {
                             success: false,
@@ -377,13 +412,20 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
             const keptCombo =
                 (coverageRatio !== null && coverageRatio >= COMBO_COVERAGE_THRESHOLD)
                 || grade >= COMBO_GRADE_THRESHOLD
+            // this card's raw blank counts — sent to the server, which re-derives coverage/XP
+            // itself (no client-trusted aggregate); a fallback (no-cloze) card sends 0/0
+            const totalBlanks = coverageRatio !== null ? (cloze?.blanks.length ?? 0) : 0
+            const correctBlanks = coverageRatio !== null ? Math.round(coverageRatio * totalBlanks) : 0
             const xp =
                 coverageRatio !== null
-                    ? Math.round(coverageRatio * (cloze?.blanks.length ?? 0)) * XP_PER_CORRECT_BLANK
+                    ? correctBlanks * XP_PER_CORRECT_BLANK
                     : grade >= COMBO_GRADE_THRESHOLD
                         ? XP_PER_STRUCTURAL_CARD
                         : 0
-            const nextResults = [...results, { coverageRatio, correct, xp }]
+            const nextResults = [
+                ...results,
+                { cardId: card.id, coverageRatio, correctBlanks, totalBlanks, correct, xp },
+            ]
             setResults(nextResults)
             setCombo((current) => {
                 const next = keptCombo ? current + 1 : 0
@@ -520,9 +562,26 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                         / withCoverage.length) * 100,
                 )
                 : 0
+
+        // Zone C data: top-3 weak tags drive the primary demand-bridge row; anything past
+        // 3 scrolls INSIDE the same card (never truncated silently, never a separate drawer)
+        const topWeakTags = weakTags.slice(0, 3)
+        const overflowWeakTags = weakTags.slice(3)
+        const learn = pathConfig().locale(locale).course(displayId).learn()
+        const genericContinueHref = learn.module().build()
+        // resolve a weak tag straight to its lesson when the deck→lesson mapping was
+        // unambiguous; `null` → the caller falls back to `genericContinueHref`
+        const resolveTagHref = (tag: QuizSessionWeakTagData) =>
+            tag.moduleId && tag.contentId
+                ? learn.module(tag.moduleId).content(tag.contentId).build()
+                : tag.moduleId
+                    ? learn.module(tag.moduleId).build()
+                    : null
+
         return (
             <div className={cn("flex flex-col gap-6", className)}>
                 <div className="flex flex-col gap-6 rounded-2xl bg-surface p-6 shadow-surface">
+                    {/* Zone A — header */}
                     <div className="flex flex-col gap-2">
                         <Label>{t("flashcard.interview.recapTitle")}</Label>
                         <Typography type="h4" weight="semibold">
@@ -533,6 +592,8 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                         </Typography>
                     </div>
 
+                    {/* Zone B — metric readout (XP shows a transparent daily-cap note instead
+                        of reading as broken when the grant was clamped to 0/less) */}
                     <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                         <MetricCard
                             value={`x${bestCombo}`}
@@ -541,6 +602,7 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                         <MetricCard
                             value={`+${xpEarned}`}
                             label={t("flashcard.interview.xpEarned")}
+                            hint={dailyCapReached ? t("flashcard.interview.dailyCapReached") : undefined}
                         />
                         <MetricCard
                             value={`${avgCoverage}%`}
@@ -553,17 +615,43 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                             {t("flashcard.interview.xpAddedToLeaderboard")}
                         </Typography>
                     ) : null}
-
-                    <Button
-                        variant="primary"
-                        size="lg"
-                        className="self-start"
-                        onPress={() => setPhase("setup")}
-                    >
-                        {t("flashcard.interview.practiceMore")}
-                        <ArrowRightIcon className="size-5" aria-hidden focusable="false" />
-                    </Button>
                 </div>
+
+                {/* Zone E — enroll upsell (trial only): the recap's PRIMARY action for a trial
+                    viewer — keep the earned momentum going by unlocking the full course, framed
+                    as a reward, not a paywall. Gated on `enrollKnown` too: `enrolled` defaults to
+                    false, so without this a genuinely enrolled viewer would briefly see the
+                    upsell before the status query settles. */}
+                {enrollKnown && !enrolled ? <RecapEnrollUpsell /> : null}
+
+                {/* Zone C — weak-tags demand-bridge: PRIMARY when enrolled, a smaller secondary
+                    link under the upsell when trial (Zone E takes the primary slot instead).
+                    Treated as non-primary until enrollment is known, same reasoning as Zone E. */}
+                <RecapWeakTagsCard
+                    weakTags={topWeakTags}
+                    overflowWeakTags={overflowWeakTags}
+                    resolveTagHref={resolveTagHref}
+                    genericHref={genericContinueHref}
+                    primary={enrollKnown && enrolled}
+                />
+
+                {/* Zone D — AI Mock Interview readiness: only relevant once actually enrolled
+                    (state 5 in the matrix — hidden pre-enrollment/while enrollment is unknown). */}
+                {enrollKnown && enrolled && readiness ? (
+                    <RecapReadinessCallout readiness={readiness} mockInterviewHref={learn.mockInterview().build()} />
+                ) : null}
+
+                {/* Zone F — footer note + "Practice more", demoted to secondary now that C/D/E
+                    exist: looping the quiz is no longer the screen's most-encouraged action. */}
+                <Button
+                    variant="secondary"
+                    size="lg"
+                    className="self-start"
+                    onPress={() => setPhase("setup")}
+                >
+                    {t("flashcard.interview.practiceMore")}
+                    <ArrowRightIcon className="size-5" aria-hidden focusable="false" />
+                </Button>
             </div>
         )
     }
@@ -851,3 +939,246 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
         </div>
     )
 }
+
+/**
+ * Recap Zone E — the enroll upsell shown ONLY to trial viewers, as the recap's
+ * PRIMARY action (per `LAYOUT-BRAINSTORM.md`). Mirrors {@link EnrollGate}'s visual
+ * anatomy (icon badge + title + description + button) but is embedded INLINE inside
+ * the recap card rather than rendered full-page, and reads as an earned reward for
+ * the streak/XP the learner just built — not a blocking paywall. Opens the same
+ * shared course-enroll payment overlay {@link EnrollGate} uses.
+ */
+const RecapEnrollUpsell = () => {
+    const t = useTranslations()
+    const { open } = usePaymentOverlayState()
+
+    const onEnroll = useCallback(
+        () => open({ flow: PaymentFlow.CourseEnroll }),
+        [open],
+    )
+
+    return (
+        <div className="flex flex-col items-center gap-3 rounded-2xl border border-default bg-default px-6 py-8 text-center">
+            <div className="flex size-12 items-center justify-center rounded-full bg-accent/15">
+                <FlameIcon aria-hidden focusable="false" className="size-6 text-accent" />
+            </div>
+            <div className="flex flex-col gap-1">
+                <Typography type="h4" weight="semibold">
+                    {t("flashcard.interview.upsellTitle")}
+                </Typography>
+                <Typography type="body-sm" color="muted">
+                    {t("flashcard.interview.upsellDescription")}
+                </Typography>
+            </div>
+            <Button
+                variant="primary"
+                size="lg"
+                className="mt-1 w-full max-w-xs"
+                onPress={onEnroll}
+            >
+                {t("flashcard.interview.upsellCta")}
+                <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
+            </Button>
+        </div>
+    )
+}
+
+/** Props for {@link RecapWeakTagsCard}. */
+interface RecapWeakTagsCardProps {
+    /** Top-3 weakest tags to always show (empty when nothing qualifies — state "empty"). */
+    weakTags: Array<QuizSessionWeakTagData>
+    /** Any tags beyond the top-3 — scrolled INSIDE this same card, never truncated silently
+     *  and never a separate drawer (state "overflow"). */
+    overflowWeakTags: Array<QuizSessionWeakTagData>
+    /** Resolves a weak tag to its lesson route, or `null` when the deck→lesson mapping was
+     *  ambiguous (falls back to `genericHref` for that row). */
+    resolveTagHref: (tag: QuizSessionWeakTagData) => string | null
+    /** Generic "continue learning" destination — the empty-state CTA AND the fallback for
+     *  any weak tag whose lesson mapping was ambiguous. */
+    genericHref: string
+    /** Whether this card is the recap's PRIMARY demand-bridge (enrolled viewers) or a
+     *  smaller secondary link (trial viewers, where Zone E takes the primary slot instead). */
+    primary: boolean
+}
+
+/** One weak-tag row: tag label + coverage + a "review this lesson" link. */
+const WeakTagRow = ({
+    tag,
+    href,
+}: {
+    tag: QuizSessionWeakTagData
+    href: string
+}) => {
+    const t = useTranslations()
+    const router = useRouter()
+    return (
+        <button
+            type="button"
+            onClick={() => router.push(href)}
+            className="group flex w-full cursor-pointer items-center justify-between gap-3 rounded-xl border border-default bg-default px-4 py-3 text-left outline-none transition-colors hover:bg-default/70 focus-visible:ring-2 focus-visible:ring-accent"
+        >
+            <div className="flex min-w-0 flex-col gap-0.5">
+                <Typography type="body-sm" weight="medium" className="truncate">
+                    {tag.tag}
+                </Typography>
+                <Typography type="body-xs" color="muted">
+                    {t("flashcard.interview.weakTagCoverage", { percent: Math.round(tag.coverage * 100) })}
+                </Typography>
+            </div>
+            <span className="flex shrink-0 items-center gap-1 text-sm font-medium text-accent">
+                {t("flashcard.interview.reviewLesson")}
+                <ArrowRightIcon
+                    aria-hidden
+                    focusable="false"
+                    className="size-4 transition-transform group-hover:translate-x-1"
+                />
+            </span>
+        </button>
+    )
+}
+
+/**
+ * Recap Zone C — the demand-bridge from "just played" to "go learn". Ranks the
+ * session's weakest tags and links each straight back to the lesson that covers
+ * it; falls back to a generic "keep learning" CTA when there's no weak-tag data
+ * yet (first session, or the mapping was ambiguous). Overflow past the top-3
+ * scrolls inside the same card via `ScrollShadow` — never a drawer (the card
+ * always has room; see `LAYOUT-BRAINSTORM.md` state 4).
+ */
+const RecapWeakTagsCard = ({
+    weakTags,
+    overflowWeakTags,
+    resolveTagHref,
+    genericHref,
+    primary,
+}: RecapWeakTagsCardProps) => {
+    const t = useTranslations()
+    const router = useRouter()
+
+    // no weak-tag data at all → the one, simple, generic bridge (state "empty"). When
+    // this card IS the recap's primary action (enrolled, no upsell competing), the CTA
+    // is a full primary button per LAYOUT-BRAINSTORM state 1; when it's demoted (trial),
+    // it's a standalone (no primary beside it) tertiary link.
+    if (weakTags.length === 0) {
+        return primary ? (
+            <div className="flex flex-col gap-3 rounded-2xl bg-surface p-6 shadow-surface">
+                <Label>{t("flashcard.interview.weakTagsTitle")}</Label>
+                <Typography type="body-sm" color="muted">
+                    {t("flashcard.interview.weakTagsEmpty")}
+                </Typography>
+                <Button
+                    variant="primary"
+                    className="self-start"
+                    onPress={() => router.push(genericHref)}
+                >
+                    {t("flashcard.interview.continueLearning")}
+                    <ArrowRightIcon className="size-5" aria-hidden focusable="false" />
+                </Button>
+            </div>
+        ) : (
+            <Button
+                variant="tertiary"
+                size="sm"
+                className="self-start"
+                onPress={() => router.push(genericHref)}
+            >
+                {t("flashcard.interview.continueLearning")}
+                <ArrowRightIcon className="size-4" aria-hidden focusable="false" />
+            </Button>
+        )
+    }
+
+    // secondary (trial) rendering: a smaller link-style row, not the full card — Zone E
+    // (enroll upsell) is the primary action instead (state "mixed (trial)"). Standalone,
+    // no primary beside it → tertiary, per elements/button.md.
+    if (!primary) {
+        const first = weakTags[0]
+        const firstHref = resolveTagHref(first) ?? genericHref
+        return (
+            <Button
+                variant="tertiary"
+                size="sm"
+                className="self-start"
+                onPress={() => router.push(firstHref)}
+            >
+                {t("flashcard.interview.weakTagSecondaryLink", { tag: first.tag })}
+                <ArrowRightIcon className="size-4" aria-hidden focusable="false" />
+            </Button>
+        )
+    }
+
+    return (
+        <div className="flex flex-col gap-3 rounded-2xl bg-surface p-6 shadow-surface">
+            <Label>{t("flashcard.interview.weakTagsTitle")}</Label>
+            <div className="flex flex-col gap-2">
+                {weakTags.map((tag) => (
+                    <WeakTagRow key={tag.tag} tag={tag} href={resolveTagHref(tag) ?? genericHref} />
+                ))}
+            </div>
+            {overflowWeakTags.length > 0 ? (
+                <ScrollShadow hideScrollBar className="max-h-40 overflow-y-auto">
+                    <div className="flex flex-col gap-2 pt-0.5">
+                        {overflowWeakTags.map((tag) => (
+                            <WeakTagRow key={tag.tag} tag={tag} href={resolveTagHref(tag) ?? genericHref} />
+                        ))}
+                    </div>
+                </ScrollShadow>
+            ) : null}
+        </div>
+    )
+}
+
+/** Props for {@link RecapReadinessCallout}. */
+interface RecapReadinessCalloutProps {
+    /** The readiness signal returned by `completeFlashcardQuizSession`. */
+    readiness: QuizSessionReadinessData
+    /** Route to the AI Mock Interview surface (only navigated to once unlocked). */
+    mockInterviewHref: string
+}
+
+/**
+ * Recap Zone D — the cross-link toward the AI Mock Interview (StarCi's actual
+ * AI-graded, credit-costing differentiator), so a learner who finishes "Hỏi
+ * nhanh" feeling good is pointed at it instead of never hearing it exists.
+ * Locked state stays visible (transparent about the threshold, per state
+ * "special (daily-cap)"/readiness in `LAYOUT-BRAINSTORM.md`) rather than hiding.
+ */
+const RecapReadinessCallout = ({ readiness, mockInterviewHref }: RecapReadinessCalloutProps) => {
+    const t = useTranslations()
+    const router = useRouter()
+
+    if (!readiness.unlocked) {
+        return (
+            <Callout
+                status="default"
+                icon={<LockKeyIcon className="size-5" aria-hidden focusable="false" />}
+                title={t("flashcard.interview.readinessLockedTitle")}
+                description={t("flashcard.interview.readinessLockedDescription", {
+                    currentAvg: readiness.currentAvg,
+                    threshold: readiness.threshold,
+                })}
+            />
+        )
+    }
+
+    return (
+        <Callout
+            status="success"
+            icon={<MicrophoneStageIcon className="size-5" aria-hidden focusable="false" />}
+            title={t("flashcard.interview.readinessUnlockedTitle")}
+            description={t("flashcard.interview.readinessUnlockedDescription")}
+            action={(
+                <Button
+                    variant="secondary"
+                    size="sm"
+                    className="shrink-0"
+                    onPress={() => router.push(mockInterviewHref)}
+                >
+                    {t("flashcard.interview.readinessUnlockedCta")}
+                    <ArrowRightIcon className="size-4" aria-hidden focusable="false" />
+                </Button>
+            )}
+        />
+    )
+}
+

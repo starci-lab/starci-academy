@@ -1,0 +1,188 @@
+<style>
+:root{
+  --ink:#1c1a1d; --ink-muted:#726d72; --line:#e6e1e4;
+  --paper:#faf8f9; --card:#ffffff; --card-1:#f3eef1;
+  --accent:#c23f74; --accent-bg:#fbe9f1; --accent-ink:#7d2a4d;
+  --success:#1f7a4d; --success-bg:#e6f4ec;
+  --danger:#b23a3a; --danger-bg:#fbe8e8;
+  --pro:#5b4b9e; --pro-bg:#eee9fa;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --sans: -apple-system, "Segoe UI", Inter, Roboto, sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0}
+.wrap{font-family:var(--sans);background:var(--paper);color:var(--ink);padding:1.5rem;display:flex;flex-direction:column;gap:1.25rem;min-height:100%}
+.head{display:flex;flex-direction:column;gap:.25rem}
+.head h1{font-size:20px;font-weight:600;margin:0;letter-spacing:-.01em}
+.head p{font-size:13px;color:var(--ink-muted);margin:0;max-width:60ch}
+.tag{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--ink-muted);font-family:var(--mono);background:var(--card-1);border-radius:6px;padding:3px 8px;width:fit-content}
+
+.layout{display:grid;grid-template-columns:minmax(0,460px) minmax(0,1fr);gap:1.5rem;align-items:start}
+@media (max-width:760px){.layout{grid-template-columns:1fr}}
+
+.frame{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.chrome{display:flex;align-items:center;gap:8px;padding:9px 12px;background:var(--card-1);border-bottom:1px solid var(--line)}
+.dot{width:9px;height:9px;border-radius:50%;background:#d8d2d6}
+.urlbar{flex:1;font-family:var(--mono);font-size:11px;color:var(--ink-muted);background:var(--card);border:1px solid var(--line);border-radius:6px;padding:4px 9px;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+.nav{display:flex;gap:4px;padding:10px 12px 0}
+.nav button{flex:1;font-family:var(--sans);font-size:11.5px;font-weight:500;color:var(--ink-muted);background:transparent;border:1px solid var(--line);border-radius:8px;padding:6px 4px;cursor:pointer;transition:background .12s,color .12s}
+.nav button:hover{background:var(--card-1)}
+.nav button[data-active="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+.screen{display:none;flex-direction:column;gap:10px;padding:14px}
+.screen[data-visible="true"]{display:flex}
+
+.h{font-size:14px;font-weight:600;margin:0}
+.muted{font-size:11px;color:var(--ink-muted);margin:0}
+.block{border-radius:9px;padding:9px 11px;font-size:12px;background:var(--card-1)}
+.block.accent{background:var(--accent-bg);color:var(--accent-ink)}
+.block.pro{background:var(--pro-bg);color:var(--pro)}
+.block.success{background:var(--success-bg);color:var(--success)}
+.block.danger{background:var(--danger-bg);color:var(--danger)}
+.block.outline{background:var(--card);border:1px solid var(--line)}
+.cta{border:none;border-radius:9px;padding:11px;font-family:var(--sans);font-size:12.5px;font-weight:600;background:var(--accent);color:#fff;cursor:pointer;text-align:center;width:100%}
+.cta:hover{filter:brightness(1.06)}
+.cta:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ghost{border:none;background:transparent;color:var(--ink-muted);font-family:var(--sans);font-size:11.5px;cursor:pointer;padding:2px;text-align:center}
+.ghost:hover{color:var(--ink)}
+
+.eyebrow{font-size:10.5px;font-weight:600;letter-spacing:.03em;color:var(--ink-muted);text-transform:uppercase;margin:2px 0 -2px}
+.dots-row{display:flex;gap:4px}
+.dots-row span{flex:1;height:4px;border-radius:2px;background:var(--line)}
+.score{font-family:var(--mono);font-size:26px;font-weight:600;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.rowline{display:flex;justify-content:space-between;font-size:11.5px}
+.rowline b{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+.notes{display:flex;flex-direction:column;gap:14px}
+.notes h2{font-size:13px;font-weight:600;margin:0}
+.notes .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.notes .card .k{font-family:var(--mono);font-size:10.5px;color:var(--accent-ink);background:var(--accent-bg);border-radius:5px;padding:1px 6px;width:fit-content}
+.notes .card p{margin:0;font-size:12px;line-height:1.55;color:var(--ink)}
+.notes .card p.dim{color:var(--ink-muted);font-size:11px}
+.notes .flag{font-size:11px;color:var(--danger);background:var(--danger-bg);border-radius:6px;padding:6px 9px}
+
+.foot{font-size:11px;color:var(--ink-muted);border-top:1px solid var(--line);padding-top:10px}
+</style>
+
+<div class="wrap">
+  <div class="head">
+    <span class="tag">MockInterview / LAYOUT-PROTOTYPE.html — ref sống, sinh 2026-07-05</span>
+    <h1>Phỏng vấn thử — click-through 4 màn</h1>
+    <p>Prototype tương tác của layout đã chốt (xem LAYOUT-BRAINSTORM.md cùng thư mục). Bấm CTA trong khung để đi qua đúng luồng thật, hoặc dùng thanh nhảy nhanh để so 2 verdict.</p>
+  </div>
+
+  <div class="layout">
+    <div class="frame">
+      <div class="chrome">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="urlbar" id="urlbar">/courses/system-design-mastery/learn/mock-interview</span>
+      </div>
+      <div class="nav" role="tablist" aria-label="Nhảy nhanh giữa các màn">
+        <button data-goto="setup">Setup</button>
+        <button data-goto="active">Đang làm</button>
+        <button data-goto="pass">Đạt</button>
+        <button data-goto="fail">Chưa đạt</button>
+      </div>
+
+      <div class="screen" data-screen="setup">
+        <p class="h">Phỏng vấn thử</p>
+        <div class="block outline">
+          <span class="rowline"><span>Rolling-5</span><b>62 · building</b></span>
+          <p class="muted">1 lần nữa đạt → jobReady</p>
+        </div>
+        <p class="eyebrow">Cấu hình</p>
+        <div class="block">
+          <span class="rowline"><span>Cấp độ</span><b>Middle</b></span>
+          <span class="rowline"><span>Model chấm</span><b>Auto</b></span>
+        </div>
+        <button class="cta" data-action="start">Bắt đầu phỏng vấn</button>
+        <p class="eyebrow">Lịch sử phỏng vấn</p>
+        <div class="block outline"><span class="rowline"><span>12/06</span><b style="color:var(--success)">78 · Đạt</b></span></div>
+        <div class="block outline"><span class="rowline"><span>08/06</span><b style="color:var(--danger)">41 · Chưa đạt</b></span></div>
+        <button class="ghost" data-goto="setup">+3 xem tất cả</button>
+      </div>
+
+      <div class="screen" data-screen="active">
+        <p class="h">Đang làm bài — pha 3/5</p>
+        <div class="dots-row">
+          <span style="background:var(--success)"></span><span style="background:var(--success)"></span>
+          <span style="background:var(--accent)"></span><span></span><span></span>
+        </div>
+        <p class="muted">high-level design</p>
+        <div class="block">Bạn sẽ thiết kế API gateway thế nào cho hệ rate-limiter này?</div>
+        <div class="block outline" style="text-align:center;padding:22px 11px">● đang ghi âm câu trả lời</div>
+        <p class="muted">không chấm giữa chừng — chấm cả buổi khi xong</p>
+        <button class="cta" data-action="submit">Nộp bài, chấm điểm</button>
+      </div>
+
+      <div class="screen" data-screen="pass">
+        <div class="block success" style="font-weight:600">KẾT QUẢ — ĐẠT</div>
+        <span class="score" style="color:var(--success)">78<span style="font-size:14px;color:var(--ink-muted);font-weight:400"> / 100 · cần 60</span></span>
+        <div class="block pro">Chấm theo khóa của bạn — trích Module 7</div>
+        <div class="block outline"><span class="rowline"><span>Rolling-5</span><b>68 · building</b></span></div>
+        <p class="muted">deepDive 16/25 — pha yếu nhất</p>
+        <button class="cta" data-action="retry">Ôn lại deepDive trong khóa →</button>
+        <button class="ghost" data-goto="setup">Làm lại phỏng vấn</button>
+      </div>
+
+      <div class="screen" data-screen="fail">
+        <div class="block danger" style="font-weight:600">KẾT QUẢ — CHƯA ĐẠT</div>
+        <span class="score" style="color:var(--danger)">41<span style="font-size:14px;color:var(--ink-muted);font-weight:400"> / 100 · cần 60</span></span>
+        <div class="block pro">Chấm theo khóa của bạn — trích Module 4 &amp; 7</div>
+        <div class="block outline"><span class="rowline"><span>Rolling-5</span><b>52 · needsWork</b></span></div>
+        <p class="muted">tradeoffs 8/25 · deepDive 11/25 — 2 pha yếu</p>
+        <button class="cta" data-action="retry">Ôn lại tradeoffs trong khóa →</button>
+        <button class="ghost" data-goto="setup">Làm lại phỏng vấn</button>
+      </div>
+    </div>
+
+    <div class="notes">
+      <h2>Ghi chú tham chiếu (khớp LAYOUT-BRAINSTORM.md)</h2>
+      <div class="card">
+        <span class="k">B6 — CTA chính đổi vai</span>
+        <p>Nút chính ở Đạt/Chưa đạt KHÔNG còn là "Làm lại" — là "Ôn lại [pha yếu] trong khóa →". Đây là chỗ đóng vòng demand-loop (Hole 1 trong CRITIQUE.md).</p>
+      </div>
+      <div class="card">
+        <span class="k">B2 — moat</span>
+        <p>Dòng tím "Chấm theo khóa của bạn — trích Module X" phải xuất hiện ở CẢ pass lẫn fail, không chỉ khi đạt.</p>
+      </div>
+      <div class="card">
+        <span class="k">B3 — retention</span>
+        <p>Rolling-5 + band hiện ở cả Setup (trước khi bắt đầu) lẫn Scorecard (sau khi chấm) — 1 nguồn dữ liệu, 2 điểm hiện.</p>
+        <p class="dim">Chưa đủ 5 lần → đổi câu chữ, không hiện số band giả.</p>
+      </div>
+      <div class="card">
+        <span class="k">Nhánh MATCHED / UNMATCHED</span>
+        <p>Prototype này giả định luôn có match (BE đã trả contentId). Khi BE CHƯA trả, CTA đổi thành "Xem lại nội dung khóa →" (route chung, không lỗi).</p>
+      </div>
+      <p class="flag">Chưa vẽ: badge "chưa xác thực server" (Hole 2) — cần chốt vị trí đặt (cạnh score hoặc cạnh rolling-5) trước khi build.</p>
+    </div>
+  </div>
+
+  <p class="foot">Prototype tĩnh, không gọi API thật. Cập nhật file này khi layout đổi — đây là bản tham chiếu cho lần build/duyệt sau, không phải sản phẩm cuối.</p>
+</div>
+
+<script>
+(function(){
+  var screens = document.querySelectorAll('[data-screen]');
+  var navBtns = document.querySelectorAll('.nav button');
+  var urlbar = document.getElementById('urlbar');
+  var urls = {
+    setup: '/courses/system-design-mastery/learn/mock-interview',
+    active: '/courses/system-design-mastery/learn/mock-interview?phase=active',
+    pass: '/courses/system-design-mastery/learn/mock-interview?result=1',
+    fail: '/courses/system-design-mastery/learn/mock-interview?result=2'
+  };
+  function show(name){
+    screens.forEach(function(s){ s.setAttribute('data-visible', s.dataset.screen === name ? 'true' : 'false'); });
+    navBtns.forEach(function(b){ b.setAttribute('data-active', b.dataset.goto === name ? 'true' : 'false'); });
+    if (urls[name]) urlbar.textContent = urls[name];
+  }
+  navBtns.forEach(function(b){ b.addEventListener('click', function(){ show(b.dataset.goto); }); });
+  document.querySelectorAll('[data-action="start"]').forEach(function(b){ b.addEventListener('click', function(){ show('active'); }); });
+  document.querySelectorAll('[data-action="submit"]').forEach(function(b){ b.addEventListener('click', function(){ show(Math.random() < 0.5 ? 'pass' : 'fail'); }); });
+  document.querySelectorAll('[data-action="retry"]').forEach(function(b){ b.addEventListener('click', function(){ b.textContent = 'Đang chuyển sang /learn/content…'; }); });
+  show('setup');
+})();
+</script>

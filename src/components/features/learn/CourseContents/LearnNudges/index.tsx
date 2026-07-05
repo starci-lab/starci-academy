@@ -61,6 +61,9 @@ export const LearnNudges = ({ className }: LearnNudgesProps) => {
     const displayId = useAppSelector((state) => state.course.displayId)
     const courseId = useAppSelector((state) => state.course.id)
     const enrolled = useAppSelector((state) => state.user.enrolled)
+    // `enrolled` defaults to false before the status query settles — gate on this too so
+    // an enrolled viewer doesn't see the mock-interview nudge disappear-then-reappear on load.
+    const enrollKnown = useAppSelector((state) => state.user.enrollKnown)
 
     const { outline } = useCourseResume()
     const dueSwr = useQueryMyDueFlashcardsSwr(courseId ?? undefined)
@@ -71,7 +74,7 @@ export const LearnNudges = ({ className }: LearnNudgesProps) => {
     // the mock-interview is enrolled-only and grounds its prompts in the capstone,
     // so only nudge it when the viewer is enrolled AND the course has capstone tasks
     const hasCapstone = outline?.milestones.some((milestone) => milestone.tasks.length > 0) ?? false
-    const showInterview = enrolled && hasCapstone
+    const showInterview = enrollKnown && enrolled && hasCapstone
 
     const learn = pathConfig().locale(locale).course(displayId).learn()
 

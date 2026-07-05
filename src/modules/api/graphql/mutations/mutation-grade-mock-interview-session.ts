@@ -27,6 +27,7 @@ const mutation1 = gql`
         strengths
         gaps
         followUpQuestion
+        matchedContentIds
       }
     }
   }

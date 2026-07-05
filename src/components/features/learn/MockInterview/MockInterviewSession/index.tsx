@@ -21,14 +21,17 @@ import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { ChatBubble } from "@/components/blocks/feed/ChatBubble"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { Callout } from "@/components/blocks/feedback/Callout"
 import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
 import { GradeModelDropdown, type GradeModelSelection } from "@/components/blocks/grading/GradeModelDropdown"
 import { SelectableCardGroup } from "@/components/blocks/navigation/SelectableCardGroup"
 import { SkeletonRadioGroup } from "@/components/blocks/skeleton/Skeleton/RadioGroup"
+import { pathConfig } from "@/resources/path"
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition"
 import { useMockInterviewTurnStream } from "@/hooks/socketio/useMockInterviewTurnStream"
 import { useQueryAiModelsSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiModelsSwr"
 import { useQueryMyAiSettingsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiSettingsSwr"
+import { useQueryMyAiQuotaSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiQuotaSwr"
 import { useQueryMockInterviewPromptsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMockInterviewPromptsSwr"
 import { useMutateGradeMockInterviewSessionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateGradeMockInterviewSessionSwr"
 import { AiModelCategory, AiModelTask } from "@/modules/api/graphql/queries/query-ai-models"
@@ -40,6 +43,7 @@ import { MockInterviewDiagram } from "../MockInterviewDiagram"
 import { serializeMockInterviewDiagram } from "../MockInterviewDiagram/serialize"
 import { MockInterviewScorecard } from "../MockInterviewScorecard"
 import { MockInterviewHistory } from "../MockInterviewHistory"
+import { MockInterviewTrackSnapshot } from "../MockInterviewTrackSnapshot"
 import { normalizeMockInterviewVerdict } from "../mapAttemptToGradeResult"
 import type {
     MockInterviewDiagramEdgeSnapshot,
@@ -55,6 +59,8 @@ import type {
 export interface MockInterviewSessionProps extends WithClassNames<undefined> {
     /** Course the interview systems are drawn from (enrolled-only, like the flashcard interview). */
     courseId: string
+    /** Course display id, for building the scorecard's "study this" deep link. */
+    courseDisplayId: string
 }
 
 /** The four screens of one mock interview. */
@@ -103,11 +109,17 @@ const formatElapsed = (seconds: number): string => {
  * BE field). The end-of-session grade calls `gradeMockInterviewSession`.
  * @param props - {@link MockInterviewSessionProps}
  */
-export const MockInterviewSession = ({ courseId, className }: MockInterviewSessionProps) => {
+export const MockInterviewSession = ({ courseId, courseDisplayId, className }: MockInterviewSessionProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
     const recognitionLang = locale === "vi" ? "vi-VN" : "en-US"
+
+    // unified AI credit pool snapshot — re-checked (typed, no message-string guessing)
+    // right after a grading failure so a quota-exhausted failure can be told apart
+    // from any other failure and routed to the AI-subscription upsell (mirrors the
+    // pattern ChallengeSubmissionPanel already uses via `resolveGradeCreditDisplay`).
+    const aiQuotaSwr = useQueryMyAiQuotaSwr()
 
     const {
         supported,
@@ -156,6 +168,9 @@ export const MockInterviewSession = ({ courseId, className }: MockInterviewSessi
     const [grade, setGrade] = useState<MockInterviewGradeResult | null>(null)
     // set when grading throws/fails — surfaced back on the interview screen so nothing is lost
     const [gradeError, setGradeError] = useState<string | null>(null)
+    // true when the LAST grading failure was specifically the AI credit pool being
+    // exhausted — shown as a distinct upsell card instead of the generic error box
+    const [gradeQuotaExceeded, setGradeQuotaExceeded] = useState(false)
     // elapsed seconds while in the interview
     const [elapsed, setElapsed] = useState(0)
     // client-generated run id (groups this session's attempt in history)
@@ -245,6 +260,7 @@ export const MockInterviewSession = ({ courseId, className }: MockInterviewSessi
         setElapsed(0)
         setGrade(null)
         setGradeError(null)
+        setGradeQuotaExceeded(false)
         setPhase("interview")
         // the interviewer opens the session — empty history, no answer yet
         askNextTurn({ phase: PHASES[0], latestAnswer: "", history: [] })
@@ -289,6 +305,7 @@ export const MockInterviewSession = ({ courseId, className }: MockInterviewSessi
         }
         setPhase("grading")
         setGradeError(null)
+        setGradeQuotaExceeded(false)
         // fold the whiteboard sketch (if any) in as a final candidate turn — kept FE-only
         // (no new BE field) by reusing the existing transcript shape
         const diagramText = serializeMockInterviewDiagram(diagramRef.current.nodes, diagramRef.current.edges)
@@ -312,9 +329,19 @@ export const MockInterviewSession = ({ courseId, className }: MockInterviewSessi
                 selectedModelProvider: selection.provider ?? undefined,
             })
             const payload = response.data?.gradeMockInterviewSession
-            // typed backend failure (quota, validation …) — surface the message and stay in
-            // the interview so nothing recorded so far is lost
+            // typed backend failure (quota, substance gate, validation …) — surface the
+            // message and stay in the interview so nothing recorded so far is lost
             if (!payload?.success || !payload.data) {
+                // the mutation response has no typed error CODE to distinguish "quota
+                // exhausted" from other failures — re-check the credit pool right after
+                // the failure so the upsell card is based on the FRESH quota state, not
+                // string-matching the BE's error message
+                const freshQuota = await aiQuotaSwr.mutate()
+                const overQuotaNow = Boolean(
+                    freshQuota
+                    && (freshQuota.credit.remaining5h < 1 || freshQuota.credit.remainingWeek < 1),
+                )
+                setGradeQuotaExceeded(overQuotaNow)
                 setGradeError(payload?.message ?? t("mockInterview.gradingFailed"))
                 setPhase("interview")
                 return
@@ -331,13 +358,17 @@ export const MockInterviewSession = ({ courseId, className }: MockInterviewSessi
                 strengths: payload.data.strengths,
                 gaps: payload.data.gaps,
                 followUpQuestion: payload.data.followUpQuestion ?? null,
+                matchedContentIds: payload.data.matchedContentIds ?? [],
             })
             setPhase("scorecard")
         } catch {
+            // thrown (network/GraphQL) error — not a typed backend failure, so no fresh
+            // quota re-check is meaningful here; treat as the generic failure
+            setGradeQuotaExceeded(false)
             setGradeError(t("mockInterview.gradingFailed"))
             setPhase("interview")
         }
-    }, [courseId, selectedPrompt, isAsking, level, turns, currentPhase, selection, gradeSwr, t])
+    }, [courseId, selectedPrompt, isAsking, level, turns, currentPhase, selection, gradeSwr, aiQuotaSwr, t])
 
     // mirror the whiteboard's plain-object snapshot into a ref (read only at grade time)
     const handleDiagramChange = useCallback(
@@ -351,6 +382,10 @@ export const MockInterviewSession = ({ courseId, className }: MockInterviewSessi
     if (phase === "setup") {
         return (
             <div className={cn("flex flex-col gap-6", className)}>
+                {/* A3 — "where you stand" snapshot before starting a new run (retention hook,
+                    Hole 6). Self-hides when the viewer has no track/interview attempt yet. */}
+                <MockInterviewTrackSnapshot courseId={courseId} />
+
                 <LabeledCard label={t("mockInterview.systemLabel")}>
                     <AsyncContent
                         isLoading={promptsSwr.isLoading && prompts.length === 0}
@@ -422,7 +457,7 @@ export const MockInterviewSession = ({ courseId, className }: MockInterviewSessi
                     {t("mockInterview.begin")}
                 </Button>
 
-                <MockInterviewHistory courseId={courseId} />
+                <MockInterviewHistory courseId={courseId} courseDisplayId={courseDisplayId} />
             </div>
         )
     }
@@ -458,15 +493,19 @@ export const MockInterviewSession = ({ courseId, className }: MockInterviewSessi
         }
         return (
             <div className={cn("flex flex-col gap-6", className)}>
-                <MockInterviewScorecard grade={grade} promptTitle={selectedPrompt?.title} />
-                <div className="flex flex-wrap items-center gap-3">
-                    <Button variant="primary" onPress={startSession}>
-                        {t("mockInterview.retry")}
-                    </Button>
-                    <Button variant="secondary" onPress={() => setPhase("setup")}>
-                        {t("mockInterview.backToSetup")}
-                    </Button>
-                </div>
+                {/* B6/B7 live INSIDE the scorecard now: the primary action studies the weak
+                    phase in the course (closes the demand loop, Hole 1), retry is a
+                    tertiary action beside it — see MockInterviewScorecard. */}
+                <MockInterviewScorecard
+                    grade={grade}
+                    courseId={courseId}
+                    courseDisplayId={courseDisplayId}
+                    promptTitle={selectedPrompt?.title}
+                    onRetry={startSession}
+                />
+                <Button variant="tertiary" className="self-start" onPress={() => setPhase("setup")}>
+                    {t("mockInterview.backToSetup")}
+                </Button>
             </div>
         )
     }
@@ -531,7 +570,26 @@ export const MockInterviewSession = ({ courseId, className }: MockInterviewSessi
                     <Typography type="body" weight="medium">{selectedPrompt?.title}</Typography>
                 </div>
 
-                {gradeError ? (
+                {/* grading failure — distinguish the AI-credit-pool-exhausted case (typed via
+                    the `myAiQuota` re-check right after the failure, not message-string
+                    matching) from any other backend failure (validation, substance gate …),
+                    which is shown inline with whatever message the backend returned. */}
+                {gradeQuotaExceeded ? (
+                    <Callout
+                        status="warning"
+                        title={t("mockInterview.quotaExceededTitle")}
+                        description={t("mockInterview.quotaExceededDescription")}
+                        action={(
+                            <Button
+                                variant="secondary"
+                                size="sm"
+                                onPress={() => router.push(pathConfig().locale(locale).profile().aiSubscription().build())}
+                            >
+                                {t("mockInterview.quotaExceededCta")}
+                            </Button>
+                        )}
+                    />
+                ) : gradeError ? (
                     <div className="rounded-xl bg-danger/10 p-4">
                         <Typography type="body-sm" className="text-danger">{gradeError}</Typography>
                     </div>

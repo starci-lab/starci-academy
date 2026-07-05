@@ -9,7 +9,10 @@ Sonnet Workflow implement (BE fix trước, FE dùng contract đó dựng sau).
 
 ## Luồng còn treo (QUAN TRỌNG — đọc trước khi làm gì tiếp)
 - **Workflow đang chạy nền:** task id `w8pjejj7u`, run id `wf_787b7a3b-be1` (script:
-  `C:\Users\Cuong\.claude\projects\C--Repositories-ac-starci-academy-backend\34864604-543e-489d-9215-b4484623e12d\workflows\scripts\quick-answer-recap-fix-wf_787b7a3b-be1.js`).
+  `C:\Users\Cuong\.claude\projects\C--Repositories-ac-starci-academy-backend\3486-4604-543e-489d-9215-b4484623e12d\workflows\scripts\quick-answer-recap-fix-wf_787b7a3b-be1.js`
+  — session id split with an extra hyphen above on purpose: a bare `\` + 6 digits here
+  crashes the FE's Tailwind v4 build (it gets misread as a CSS unicode escape), so don't
+  paste the raw path back in without breaking up the digit run).
   2 phase tuần tự: **Implement BE** (agent `be-quick-answer-fix`) → **Implement FE** (agent `fe-quick-answer-recap`,
   chỉ chạy SAU khi có kết quả BE vì cần đúng contract request/response mới).
   - Tại thời điểm lưu: BE agent **đã sửa file** (xem git status dưới) nhưng **CHƯA nhận được thông báo hoàn tất**

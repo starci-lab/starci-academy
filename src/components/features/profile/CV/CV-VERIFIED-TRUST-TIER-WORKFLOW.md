@@ -40,15 +40,30 @@ Một `cv_generations` row (hoặc ứng viên) đạt **verified** khi thỏa (
 | F3 | **Link "học để verify" đi đâu** (quyết định ở §5): chưa enroll → catalog `/courses`; đã enroll còn capstone dở → về khóa đó. | reuse `pathConfig` |
 | F4 | **Trên chip chọn CV / CV detail:** hiện mức verified của từng CV (huy hiệu nhỏ) để user thấy CV nào "mạnh" với NTD. | `CvWorkspace` dial / `CvScorecard` |
 
-## 5. Quyết định mở (thầy chốt trước khi làm)
-1. **Ngưỡng "verified"** (§2): generated-source đủ chưa, hay cần ≥N challenge / ≥1 capstone đạt? N = ?
-2. **2 mức hay 3 mức** huy hiệu (self_reported / activity_backed / [capstone_verified]).
-3. **per-user hay per-CV** (đề xuất per-user).
-4. **Link nudge F3** trỏ đâu theo trạng thái enroll.
-5. (tùy) Có thêm **Hướng B** (§6) để hard-plug luôn không, hay chỉ soft (A thuần).
+## 5. Quyết định ĐÃ CHỐT (2026-07-05, để BE làm luôn — UX sau)
+1. **Ngưỡng "verified" = theo ACTIVITY thật, per-user, KHÔNG gắn payment:**
+   - `capstone_verified`: user có **≥1 milestone/capstone task attempt ĐẠT**.
+   - `activity_backed`: user có **≥1 challenge submission ĐẠT** (nhưng chưa capstone).
+   - `self_reported`: không có gì ở trên (vd chỉ upload CV ngoài).
+2. **3 mức** (self_reported / activity_backed / capstone_verified).
+3. **per-user** — verification là về việc user ĐÃ LÀM ở StarCi, không theo từng CV artifact. CV `source` chỉ dùng cho nudge FE (§4 F2).
+4. **Link nudge F3** — UX/UI làm sau, BE không đụng.
+5. **KHÔNG hard-plug (Hướng B)** — A thuần: giữ gate liên hệ `bestCvScore >= 70` MỞ, chỉ thêm lớp verified + ranking.
 
 ## 6. Tùy chọn thêm — Hướng B (hard-plug, nếu A thuần chưa đủ)
 - Nếu sau này thấy free-giỏi vẫn "lách" nhiều: cho **liên hệ NTD chỉ mở từ CV activity-backed** (upload chấm + góp ý free nhưng không tự mở contact). Đây MỚI là chỗ đụng gate → cân nhắc kỹ (đảo quyết định score-only, cần sửa `ConsultantContactGateService` + test). **Chưa làm trong A**; ghi để dành.
+
+## 6b. ĐÃ LÀM — BE (2026-07-05, branch mtp `starci-academy-backend`)
+- **Enum** `CvVerificationLevel` (`self_reported`/`activity_backed`/`capstone_verified`) + GraphQL registration — `src/modules/databases/postgresql/primary/enums/cv-verification-level.ts` (export ở enums/index).
+- **`CvVerificationService`** (`src/modules/bussiness/headhuntings/`) — `resolveLevels({userIds})` (batch, 2 probe: passed-capstone / graded-challenge) + `resolveLevel(userId)` + `rankOf(level)`. Signal CLEAN, per-user, KHÔNG payment: capstone = `user_milestone_task_attempts.passed=true`; activity = challenge attempt có `score IS NOT NULL` (challenge không có cột `passed`). Provider + export ở `headhuntings.module` (global qua bussiness.module → inject ở đâu cũng được).
+- **`talentCandidates`** — gắn `verificationLevel` vào mỗi candidate + expose field GraphQL trên `TalentCandidateItem`; **secondary sort**: depth DESC (primary, giữ fairness), tie → verification rank DESC (capstone > activity > self). `TalentCandidatesService` inject `CvVerificationService`, thêm `resolveLevels` vào Promise.all batch.
+- **Test:** `cv-verification.service.spec` 8/8 pass; `talent-candidates.service.spec` cập nhật (mock service mới) + thêm test tiebreak → 4/4 pass. tsc: 0 lỗi mới (baseline 236 giữ nguyên). Lint sạch mọi file đụng.
+- **KHÔNG đụng** `ConsultantContactGateService`/gate ≥70/test của nó (đúng A thuần).
+
+### ⚠️ Ghi chú quan trọng (đọc trước khi kỳ vọng): BE-A làm được gì / KHÔNG làm được gì
+- **`talentCandidates` (chợ NTD list ứng viên) VỐN ĐÃ enrollment-gated** (`isEnrolled=true`) → free user KHÔNG nằm trong list này. Nên `verificationLevel` ở đây **thưởng độ sâu trong pool ĐÃ trả tiền** (capstone-verified nổi trên enrolled-nhưng-chưa-làm-gì), + đặt nền cho badge recruiter-facing. Đây là giá trị thật của A.
+- **KHÔNG plug được kịch bản "free-giỏi cold-contact NTD"** (surface `ConsultantContactGateService`, gate score-only) — A thuần cố ý giữ gate MỞ. Muốn chặn đường đó = **Hướng B** (§6, chưa làm, cần thầy duyệt vì đảo test-locked). Nhưng lưu ý: free user chỉ **PUSH** được (chủ động liên hệ NTD), KHÔNG bị **PULL** (không xuất hiện trong pool NTD duyệt) → thiệt hại free-rider vốn đã hạn chế sẵn.
+- FE (badge verified + nudge CV "tự khai") = §4, làm sau (UX/UI).
 
 ## 7. Cái ĐÃ đúng sẵn, đừng đụng
 - Gate liên hệ `bestCvScore >= 70` (count-independent) — đúng fairness-axiom, giữ.

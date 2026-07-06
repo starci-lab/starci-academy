@@ -3,8 +3,10 @@
 import React, { useCallback, useMemo, useState } from "react"
 import useSWR, { useSWRConfig } from "swr"
 import { Button, Typography, cn } from "@heroui/react"
-import { CheckCircleIcon, CursorClickIcon } from "@phosphor-icons/react"
-import { useTranslations } from "next-intl"
+import { ArrowRightIcon, CheckCircleIcon, CursorClickIcon } from "@phosphor-icons/react"
+import { useLocale, useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { pathConfig } from "@/resources/path"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { DUE_REVIEW_LIMIT, SM2_GRADES } from "../constants"
 import { DueReviewSkeleton } from "./DueReviewSkeleton"
@@ -35,10 +37,17 @@ export interface DueReviewProps extends WithClassNames<undefined> {
  */
 export const DueReview = ({ onExit, className }: DueReviewProps) => {
     const t = useTranslations()
+    const locale = useLocale()
+    const router = useRouter()
     const runGraphQL = useGraphQLWithToast()
     const { mutate: globalMutate } = useSWRConfig()
     // scope the due queue to THIS course; shared SWR key with the hero (DueReviewHero)
     const courseId = useAppSelector((state) => state.course.entity?.id)
+    // course-loop handoff: after clearing due cards, the next rung is a mock interview
+    // (enrolled-only). `enrollKnown` gates the flicker before the status query settles.
+    const courseDisplayId = useAppSelector((state) => state.course.displayId)
+    const enrolled = useAppSelector((state) => state.user.enrolled)
+    const enrollKnown = useAppSelector((state) => state.user.enrollKnown)
     const dueKey = useMemo(
         () => ["my-due-flashcards", courseId ?? null, DUE_REVIEW_LIMIT] as const,
         [courseId],
@@ -142,9 +151,30 @@ export const DueReview = ({ onExit, className }: DueReviewProps) => {
                     title={t("flashcard.review.sessionDoneTitle")}
                     description={t("flashcard.review.sessionDoneDescription", { count: reviewedCount })}
                     action={
-                        <Button size="sm" variant="primary" onPress={onFinish}>
-                            {t("flashcard.review.backToHome")}
-                        </Button>
+                        <div className="flex flex-wrap items-center justify-center gap-3">
+                            {/* cross-track NUDGE (flashcards feed no pillar; interview feeds the
+                                30% pillar) — keep it a quiet `secondary`, not a loud accent primary,
+                                so it reads as "you could also…" not the forced next step. */}
+                            {enrollKnown && enrolled && courseDisplayId ? (
+                                <Button
+                                    size="sm"
+                                    variant="secondary"
+                                    onPress={() => router.push(
+                                        pathConfig().locale(locale).course(courseDisplayId).learn().mockInterview().build(),
+                                    )}
+                                >
+                                    {t("flashcard.review.mockInterviewCta")}
+                                    <ArrowRightIcon aria-hidden focusable="false" className="size-4" />
+                                </Button>
+                            ) : null}
+                            <Button
+                                size="sm"
+                                variant={enrollKnown && enrolled ? "tertiary" : "primary"}
+                                onPress={onFinish}
+                            >
+                                {t("flashcard.review.backToHome")}
+                            </Button>
+                        </div>
                     }
                 />
             ) : (

@@ -10,12 +10,13 @@ import {
     Typography,
     cn,
 } from "@heroui/react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import {
     usePathname,
     useRouter,
     useSearchParams,
 } from "next/navigation"
+import { pathConfig } from "@/resources/path"
 import {
     ArrowSquareOutIcon,
     InfoIcon,
@@ -26,6 +27,7 @@ import {
 import { dayjs, getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { UpNextCard } from "@/components/blocks/learn/UpNextCard"
 import { ModelByline, VerdictIcon } from "@/components/blocks/grading/GradingByline"
 import { BackLink } from "@/components/blocks/navigation/BackLink"
 import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
@@ -36,6 +38,7 @@ import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { useQueryUserPersonalTaskAttemptsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserPersonalTaskAttemptsSwr"
 import { useQueryUserPersonalTaskAttemptFeedbacksSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserPersonalTaskAttemptFeedbacksSwr"
 import { useQueryMilestoneTaskSwr } from "@/hooks/swr/api/graphql/queries/useQueryMilestoneTaskSwr"
+import { useQueryMilestoneTaskProgressSwr } from "@/hooks/swr/api/graphql/queries/useQueryMilestoneTaskProgressSwr"
 import { useQueryAiModelsSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiModelsSwr"
 import { usePersonalProjectGithubStore } from "@/hooks/zustand/personalProjectGithub/store"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
@@ -142,11 +145,19 @@ export const PersonalProjectTaskResult = ({
     className,
 }: PersonalProjectTaskResultProps) => {
     const t = useTranslations()
+    const locale = useLocale()
     const router = useRouter()
     const pathname = usePathname()
     const searchParams = useSearchParams()
     const dispatch = useAppDispatch()
     const [historyOpen, setHistoryOpen] = useState(false)
+    // completion handoff (capstone track): after passing this task, hand off to the
+    // NEXT unlocked milestone task. `currentTask` advances to the next task once this
+    // one passes, so we show it only when it's a DIFFERENT task from the one just done.
+    const courseDisplayId = useAppSelector((state) => state.course.displayId)
+    const selectedTaskId = useAppSelector((state) => state.milestone.selectedTaskId)
+    const milestoneProgressSwr = useQueryMilestoneTaskProgressSwr()
+    const nextTaskId = milestoneProgressSwr.data?.milestoneTaskProgress?.data?.currentTask?.id ?? null
 
     const attemptParam = searchParams.get("attempt")
 
@@ -370,6 +381,19 @@ export const PersonalProjectTaskResult = ({
                             </AsyncContent>
                         </LabeledCard>
                     </div>
+                ) : null}
+                {/* capstone-track handoff: passed → next milestone task */}
+                {passing && nextTaskId && nextTaskId !== selectedTaskId && courseDisplayId ? (
+                    <UpNextCard
+                        showCheck
+                        eyebrow={t("personalProjectResult.upNextEyebrow")}
+                        title={t("personalProjectResult.nextTaskTitle")}
+                        description={t("personalProjectResult.nextTaskDesc")}
+                        ctaLabel={t("personalProjectResult.nextTaskCta")}
+                        onPress={() => router.push(
+                            pathConfig().locale(locale).course(courseDisplayId).learn().personalProject(nextTaskId).build(),
+                        )}
+                    />
                 ) : null}
             </div>
 

@@ -21,6 +21,7 @@ import {
 import {
     LaneModelPicker,
 } from "../LaneModelPicker"
+import { GradeCreditCaption } from "@/components/blocks/grading/GradeCreditCaption"
 import {
     ParamControls,
 } from "../ParamControls"
@@ -101,7 +102,7 @@ export const PromptPlayground = ({ playground, className }: PromptPlaygroundProp
     const aiModelsSwr = useQueryAiModelsSwr()
     const aiSettingsSwr = useQueryMyAiSettingsSwr()
     const canPremium = Boolean(aiSettingsSwr.data?.canPremium)
-    useQueryMyAiQuotaSwr()
+    const aiQuotaSwr = useQueryMyAiQuotaSwr()
     const runsSwr = useQueryMyAiLabRunsSwr(playground.id)
 
     const gradableModels = useMemo<Array<AiGradableModel>>(
@@ -287,6 +288,11 @@ export const PromptPlayground = ({ playground, className }: PromptPlaygroundProp
                         isDisabled={isPending}
                         onSelect={setSelection}
                         onUpgrade={onGoToAiSettings}
+                    />
+                    <GradeCreditCaption
+                        creditUsage={aiQuotaSwr.data}
+                        hasPinnedModel={Boolean(selection.model)}
+                        autoCreditCost={undefined}
                     />
                 </div>
                 <div className="flex items-center gap-2">

@@ -2,10 +2,9 @@
 
 import React, { useMemo } from "react"
 import {
+    Alert,
     Button,
-    Chip,
     Label,
-    Link,
     Typography,
     cn,
 } from "@heroui/react"
@@ -14,12 +13,11 @@ import {
     ChatCircleIcon,
     CheckCircleIcon,
     WarningCircleIcon,
+    XCircleIcon,
 } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
-import { Callout } from "@/components/blocks/feedback/Callout"
-import { InfoTooltip } from "@/components/blocks/feedback/InfoTooltip"
 import { useQueryMatchedContentSwr } from "@/hooks/swr/api/graphql/queries/useQueryMatchedContentSwr"
 import { pathConfig } from "@/resources/path"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -52,9 +50,37 @@ const ATTRIBUTE_ORDER: ReadonlyArray<string> = [
 /** A phase below this fraction of its max is called out as "weak" (B4/B6) — mirrors the ~60% pass-bar convention used elsewhere in grading result pages. */
 const WEAK_PHASE_THRESHOLD = 0.6
 
-/** Verdict → chip color (đạt / cận / chưa đạt) — mirrors the flashcard mock interview's convention. */
-const verdictColorOf = (verdict: MockInterviewGradeResult["verdict"]): "success" | "warning" | "danger" =>
+/** Verdict → semantic tone (đạt / cận / chưa đạt) — drives the verdict Alert status. */
+const verdictStatusOf = (verdict: MockInterviewGradeResult["verdict"]): "success" | "warning" | "danger" =>
     verdict === "pass" ? "success" : verdict === "borderline" ? "warning" : "danger"
+
+/** Verdict → Phosphor icon for the Alert indicator. */
+const VERDICT_ICON = {
+    pass: CheckCircleIcon,
+    borderline: WarningCircleIcon,
+    fail: XCircleIcon,
+} as const
+
+/**
+ * Verdict status → soft tint class (literal, so Tailwind emits it). The verdict
+ * Alert uses the tinted "in-surface" look (`bg-<status>/10` + `shadow-none`), not
+ * the default `bg-surface` + shadow — the scorecard is a tinted result banner and
+ * often renders inside the history drawer surface. Mirrors {@link Callout}.
+ */
+const VERDICT_TINT: Record<"success" | "warning" | "danger", string> = {
+    success: "bg-success/10",
+    warning: "bg-warning/10",
+    danger: "bg-danger/10",
+}
+
+/**
+ * Score bar color BY VALUE (not always accent): a low score must read as low.
+ * &lt;50% of max = danger, &lt;75% = warning, else success.
+ */
+const scoreColorOf = (score: number, max: number): "success" | "warning" | "danger" => {
+    const ratio = max > 0 ? score / max : 0
+    return ratio < 0.5 ? "danger" : ratio < 0.75 ? "warning" : "success"
+}
 
 /** The 5 canonical design-kind phase keys — used to tell a `kind="design"` phase from a Q&A-kind server-labeled question ("Câu 1" …). */
 const DESIGN_PHASE_KEYS: ReadonlyArray<MockInterviewPhaseKey> = [
@@ -144,6 +170,11 @@ export const MockInterviewScorecard = ({
 
     const weakPhaseLabel = weakestPhase ? phaseDisplayLabel(weakestPhase.phase, t) : null
 
+    // design mode scores against the 5 canonical phases; qna scores are per-question
+    // ("Câu N") — drives whether the breakdown reads "từng phase" or "từng câu".
+    const isDesignScore = grade.phaseScores.length > 0
+        && grade.phaseScores.every((phaseScore) => (DESIGN_PHASE_KEYS as ReadonlyArray<string>).includes(phaseScore.phase))
+
     return (
         <div className={cn("flex flex-col gap-6", className)}>
             {(promptTitle || formattedDate) ? (
@@ -157,72 +188,55 @@ export const MockInterviewScorecard = ({
                 </div>
             ) : null}
 
-            {/* B1 — verdict hero + "not yet server-verified" honesty badge (Hole 2: the
-                graded transcript is client-supplied, not reconstructed from the socket
-                stream server-side, so recruiter-facing readiness shouldn't read as fully
-                attested until that's fixed). */}
-            <div className="flex flex-col gap-3 rounded-xl bg-default/40 p-8">
-                <div className="flex flex-wrap items-center gap-3">
-                    <div className="flex items-baseline gap-2">
-                        <Typography className="text-4xl font-medium text-foreground">{grade.overallScore}</Typography>
-                        <Typography type="body-xs" color="muted">/100</Typography>
-                    </div>
-                    <Chip size="md" variant="soft" color={verdictColorOf(grade.verdict)}>
+            {/* B1 — verdict = HeroUI Alert (status by verdict), NOT a hand-tinted div.
+                Title carries the score; Description folds in the course-grounding line
+                (moat) + the "not yet server-verified" honesty note as plain text — no
+                second chip beside the verdict. */}
+            <Alert status={verdictStatusOf(grade.verdict)} className={cn("shadow-none", VERDICT_TINT[verdictStatusOf(grade.verdict)])}>
+                <Alert.Indicator>
+                    {React.createElement(VERDICT_ICON[grade.verdict], { className: "size-6", "aria-hidden": true })}
+                </Alert.Indicator>
+                <Alert.Content>
+                    <Alert.Title>
+                        <span className="text-2xl font-medium">{grade.overallScore}</span>
+                        <span className="text-muted">/100</span>
+                        {" · "}
                         {t(`flashcard.interview.${grade.verdict}`)}
-                    </Chip>
-                    <InfoTooltip
-                        title={t("mockInterview.serverUnverifiedTitle")}
-                        description={t("mockInterview.serverUnverifiedHint")}
-                    >
-                        <Chip size="sm" variant="soft" color="warning">
-                            <Chip.Label>{t("mockInterview.serverUnverifiedBadge")}</Chip.Label>
-                        </Chip>
-                    </InfoTooltip>
-                </div>
-
-                {/* B2 — moat surfacing: cite the matched module when we have one, else a
-                    quieter, non-specific grounding line (never fake a citation). */}
-                {firstMatchedContentId ? (
-                    <Callout
-                        status="accent"
-                        title={matchedContent?.title
-                            ? t("mockInterview.moatCalloutTitled", { title: matchedContent.title })
-                            : t("mockInterview.moatCalloutUntitled")}
-                    />
-                ) : (
-                    <Typography type="body-xs" color="muted">
-                        {t("mockInterview.moatCalloutGeneric")}
-                    </Typography>
-                )}
-            </div>
+                    </Alert.Title>
+                    <Alert.Description>
+                        <span className="block">
+                            {firstMatchedContentId
+                                ? (matchedContent?.title
+                                    ? t("mockInterview.moatCalloutTitled", { title: matchedContent.title })
+                                    : t("mockInterview.moatCalloutUntitled"))
+                                : t("mockInterview.moatCalloutGeneric")}
+                        </span>
+                        <span className="block text-muted">{t("mockInterview.serverUnverifiedHint")}</span>
+                    </Alert.Description>
+                </Alert.Content>
+            </Alert>
 
             {/* B3 — rolling readiness snapshot (retention hook, Hole 6). Shares the exact
                 same component + data the setup screen shows (single source). */}
             <MockInterviewTrackSnapshot courseId={courseId} />
 
             <div className="flex flex-col gap-3">
-                <Label>{t("mockInterview.perPhaseTitle")}</Label>
-                {grade.phaseScores.map((phaseScore) => {
-                    const isWeak = weakestPhase?.phase === phaseScore.phase
-                    return (
-                        <div key={phaseScore.phase} className="flex flex-col gap-1">
-                            <div className="flex items-center gap-3">
-                                <Typography type="body-sm" className="w-40 shrink-0">
-                                    {phaseDisplayLabel(phaseScore.phase, t)}
-                                </Typography>
-                                <ProgressMeter value={phaseScore.score} max={phaseScore.max} className="flex-1" />
-                            </div>
-                            {isWeak ? (
-                                <Link
-                                    href={studyHref}
-                                    className="ml-40 flex w-fit items-center gap-1 text-sm text-accent hover:underline"
-                                >
-                                    {t("mockInterview.viewInLesson")}
-                                </Link>
-                            ) : null}
-                        </div>
-                    )
-                })}
+                {/* qna sends "Câu N" phases → "Điểm theo từng câu"; design sends the 5
+                    canonical phase keys → "Điểm theo từng phase". */}
+                <Label>{isDesignScore ? t("mockInterview.perPhaseTitle") : t("mockInterview.perQuestionTitle")}</Label>
+                {grade.phaseScores.map((phaseScore) => (
+                    <div key={phaseScore.phase} className="flex items-center gap-3">
+                        <Typography type="body-sm" className="w-40 shrink-0">
+                            {phaseDisplayLabel(phaseScore.phase, t)}
+                        </Typography>
+                        <ProgressMeter
+                            value={phaseScore.score}
+                            max={phaseScore.max}
+                            color={scoreColorOf(phaseScore.score, phaseScore.max)}
+                            className="flex-1"
+                        />
+                    </div>
+                ))}
             </div>
 
             {orderedAttributes.length > 0 ? (
@@ -233,7 +247,12 @@ export const MockInterviewScorecard = ({
                             <Typography type="body-sm" className="w-40 shrink-0">
                                 {attributeLabel(attribute.key)}
                             </Typography>
-                            <ProgressMeter value={attribute.score} max={100} className="flex-1" />
+                            <ProgressMeter
+                                value={attribute.score}
+                                max={100}
+                                color={scoreColorOf(attribute.score, 100)}
+                                className="flex-1"
+                            />
                         </div>
                     ))}
                 </div>
@@ -253,25 +272,16 @@ export const MockInterviewScorecard = ({
                 </div>
             ) : null}
 
-            {/* B5 — gaps: matched → a small "study this" link; unmatched → plain text (mixed, honest). */}
+            {/* B5 — gaps: plain "what to add" list. The single course deep-link lives on
+                the primary CTA below (no per-row floating link). */}
             {grade.gaps.length > 0 ? (
                 <div className="flex flex-col gap-3">
                     <Label>{t("mockInterview.gapsTitle")}</Label>
                     <ul className="flex flex-col gap-2">
                         {grade.gaps.map((gap, position) => (
-                            <li key={position} className="flex flex-col gap-1">
-                                <div className="flex items-start gap-2">
-                                    <WarningCircleIcon className="mt-0.5 size-4 shrink-0 text-warning" aria-hidden focusable="false" />
-                                    <Typography type="body-sm">{gap}</Typography>
-                                </div>
-                                {firstMatchedContentId ? (
-                                    <Link
-                                        href={studyHref}
-                                        className="ml-6 flex w-fit items-center gap-1 text-sm text-accent hover:underline"
-                                    >
-                                        {t("mockInterview.viewInLesson")}
-                                    </Link>
-                                ) : null}
+                            <li key={position} className="flex items-start gap-2">
+                                <WarningCircleIcon className="mt-0.5 size-4 shrink-0 text-warning" aria-hidden focusable="false" />
+                                <Typography type="body-sm">{gap}</Typography>
                             </li>
                         ))}
                     </ul>

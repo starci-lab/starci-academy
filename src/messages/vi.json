@@ -1418,6 +1418,10 @@
     "copyLink": "Sao chép link",
     "mindMapReadDetails": "Đọc chi tiết"
   },
+  "aiCredit": {
+    "usage": "Còn {remaining}/{quota} credit tuần này",
+    "quotaReached": "Đã hết credit tuần này"
+  },
   "challenge": {
     "title": "Thử thách",
     "do": "Làm",
@@ -1995,6 +1999,7 @@
     "gateDescription": "Phỏng vấn thử tiêu tốn tín dụng AI — đăng ký khóa để mở tính năng này.",
     "promptsRetry": "Thử lại",
     "gradingLabel": "Chấm điểm",
+    "configTitle": "Cấu hình phiên",
     "modeToggleLabel": "Chế độ",
     "modeAuto": "Tự động",
     "modeConfigurable": "Tùy chỉnh",
@@ -2024,6 +2029,7 @@
     "retry": "Phỏng vấn lại",
     "scorecardPending": "Không tải được kết quả.",
     "perPhaseTitle": "Điểm theo từng phase",
+    "perQuestionTitle": "Điểm theo từng câu",
     "attributesTitle": "Đánh giá kỹ năng",
     "strengthsTitle": "Điểm mạnh",
     "gapsTitle": "Cần cải thiện",
@@ -3930,7 +3936,8 @@
         "paypal": "Ví quốc tế",
         "payos": "Cổng nội địa",
         "sepay": "Cổng nội địa"
-      }
+      },
+      "moduleGroup": "Ứng dụng · {count} module"
     },
     "map": {
       "core": "Core API",
@@ -3942,7 +3949,9 @@
       "errorHeading": "Không tải được trạng thái hệ thống",
       "errorDescription": "Không gọi được API health. Thử lại sau giây lát.",
       "retry": "Thử lại",
-      "coreDrillHint": "Kéo để xoay bản đồ. Bấm 1 nhóm để mở luồng chi tiết, hoặc bấm Core API để xem các module bên trong."
+      "coreDrillHint": "Kéo để xoay bản đồ. Bấm 1 nhóm để mở luồng chi tiết, hoặc bấm Core API để xem các module bên trong.",
+      "moduleHint": "Bấm 1 module để làm nổi hạ tầng mà nó chạy trên. Kéo để xoay bản đồ.",
+      "atlasHint": "Toàn hệ thống trên 1 bản đồ. Bấm 1 thành phần để xem chi tiết, kéo để xoay."
     },
     "status": {
       "checking": "đang kiểm tra…",
@@ -3955,7 +3964,8 @@
       "whyHeading": "Vì sao quan trọng",
       "deepDive": "Đọc bài mổ xẻ kỹ thuật",
       "latency": "{ms} ms",
-      "checked": "kiểm tra {ago}"
+      "checked": "kiểm tra {ago}",
+      "runsOn": "Chạy trên"
     },
     "curl": {
       "heading": "Tự kiểm tra bằng API thật",
@@ -4060,38 +4070,64 @@
     },
     "module": {
       "auth": {
-        "name": "Xác thực"
+        "name": "Xác thực",
+        "sub": "keycloak · oauth",
+        "role": "Đăng nhập, phiên và OAuth GitHub — cửa vào của toàn hệ thống, cấp danh tính cho mọi request."
       },
-      "user": {
-        "name": "Người dùng"
-      },
-      "transactions": {
-        "name": "Thanh toán"
+      "learning": {
+        "name": "Học tập",
+        "sub": "khóa · bài · nội dung",
+        "role": "Khóa học, học phần, bài học và tiến độ — trái tim nội dung của StarCi, đọc/ghi Postgres, tìm kiếm và media."
       },
       "coding": {
-        "name": "Chấm code"
+        "name": "Chấm code",
+        "sub": "thử thách · judge0",
+        "role": "Thử thách lập trình được chạy và chấm tự động qua Judge0, xếp hàng qua Redis."
       },
-      "flashcard": {
-        "name": "Thẻ ghi nhớ"
+      "ai": {
+        "name": "AI",
+        "sub": "chấm · rag · trợ lý",
+        "role": "Chấm CV/bài, gợi ý và trợ lý — điều phối qua AI Balancer, chạy LLM nội bộ, tra cứu ngữ cảnh bằng vector."
       },
-      "progress": {
-        "name": "Tiến độ"
+      "payment": {
+        "name": "Thanh toán",
+        "sub": "gói · đơn hàng",
+        "role": "Mua khóa, gói thành viên và trả góp — nối 4 cổng thanh toán trong và ngoài nước."
       },
-      "discussion": {
-        "name": "Thảo luận"
+      "community": {
+        "name": "Cộng đồng",
+        "sub": "thảo luận · chat",
+        "role": "Thảo luận, bình luận và chat thời gian thực giữa người học."
       },
-      "aiLab": {
-        "name": "AI Lab"
+      "careers": {
+        "name": "Nghề nghiệp",
+        "sub": "cv · việc làm · phỏng vấn",
+        "role": "Hồ sơ CV, gợi ý việc làm và phỏng vấn thử — biến thành tích học thành bằng chứng cho nhà tuyển dụng."
       },
-      "league": {
-        "name": "Xếp hạng"
+      "notify": {
+        "name": "Thông báo",
+        "sub": "email · realtime",
+        "role": "Gửi thông báo qua email và luồng thời gian thực khi có sự kiện học tập."
       },
-      "notification": {
-        "name": "Thông báo"
+      "ranking": {
+        "name": "Xếp hạng",
+        "sub": "bảng · thưởng · huy hiệu",
+        "role": "Bảng xếp hạng, phần thưởng và huy hiệu — vòng động lực giữ người học quay lại."
+      },
+      "media": {
+        "name": "Media",
+        "sub": "ảnh · tệp",
+        "role": "Lưu và phục vụ ảnh, tệp đính kèm và tài nguyên khóa học qua object storage."
       }
     },
     "header": {
-      "viewSource": "Xem mã nguồn"
+      "viewSource": "Xem mã nguồn",
+      "viewCourse": "Vào khóa học"
+    },
+    "courseCta": {
+      "title": "Hệ thống thật này là thứ bạn sẽ học để tự dựng.",
+      "body": "Mọi thành phần trên đây đều được dạy trong lộ trình StarCi — học để tự tay dựng nên nó.",
+      "cta": "Vào khóa học"
     }
   },
   "talentDirectory": {

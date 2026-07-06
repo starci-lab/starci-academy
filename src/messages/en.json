@@ -1409,6 +1409,10 @@
     "copyLink": "Copy link",
     "mindMapReadDetails": "Read details"
   },
+  "aiCredit": {
+    "usage": "{remaining}/{quota} credits left this week",
+    "quotaReached": "Weekly credits used up"
+  },
   "challenge": {
     "title": "Challenges",
     "do": "Do",
@@ -1986,6 +1990,7 @@
     "gateDescription": "The mock interview spends AI credits — enroll in the course to unlock it.",
     "promptsRetry": "Retry",
     "gradingLabel": "Grading",
+    "configTitle": "Session config",
     "modeToggleLabel": "Mode",
     "modeAuto": "Automatic",
     "modeConfigurable": "Customize",
@@ -2015,6 +2020,7 @@
     "retry": "Interview again",
     "scorecardPending": "Couldn't load the result.",
     "perPhaseTitle": "Score by phase",
+    "perQuestionTitle": "Score by question",
     "attributesTitle": "Skill assessment",
     "strengthsTitle": "Strengths",
     "gapsTitle": "Areas to improve",
@@ -3930,7 +3936,8 @@
         "paypal": "International wallet",
         "payos": "Domestic gateway",
         "sepay": "Domestic gateway"
-      }
+      },
+      "moduleGroup": "Application · {count} modules"
     },
     "map": {
       "core": "Core API",
@@ -3942,7 +3949,9 @@
       "errorHeading": "Couldn't load system status",
       "errorDescription": "The health API didn't answer. Try again in a moment.",
       "retry": "Retry",
-      "coreDrillHint": "Drag to orbit the map. Click a group to open its detailed flow, or click Core API to see the modules inside."
+      "coreDrillHint": "Drag to orbit the map. Click a group to open its detailed flow, or click Core API to see the modules inside.",
+      "moduleHint": "Click a module to light up the infra it runs on. Drag to rotate the map.",
+      "atlasHint": "The whole system on one board. Click any component for details, drag to rotate."
     },
     "status": {
       "checking": "checking…",
@@ -3955,7 +3964,8 @@
       "whyHeading": "Why it matters",
       "deepDive": "Read the engineering deep-dive",
       "latency": "{ms} ms",
-      "checked": "checked {ago}"
+      "checked": "checked {ago}",
+      "runsOn": "Runs on"
     },
     "curl": {
       "heading": "Try it with the real API",
@@ -4060,38 +4070,64 @@
     },
     "module": {
       "auth": {
-        "name": "Auth"
+        "name": "Auth",
+        "sub": "keycloak · oauth",
+        "role": "Login, sessions and GitHub OAuth — the front door of the whole system, issuing identity to every request."
       },
-      "user": {
-        "name": "User"
-      },
-      "transactions": {
-        "name": "Payments"
+      "learning": {
+        "name": "Learning",
+        "sub": "courses · lessons · content",
+        "role": "Courses, modules, lessons and progress — StarCi content heart, reading/writing Postgres, search and media."
       },
       "coding": {
-        "name": "Code grading"
+        "name": "Code grading",
+        "sub": "challenges · judge0",
+        "role": "Coding challenges compiled and auto-graded via Judge0, queued through Redis."
       },
-      "flashcard": {
-        "name": "Flashcards"
+      "ai": {
+        "name": "AI",
+        "sub": "grading · rag · assistant",
+        "role": "CV/work grading, suggestions and the assistant — routed through the AI Balancer, running local LLMs and vector retrieval."
       },
-      "progress": {
-        "name": "Progress"
+      "payment": {
+        "name": "Payments",
+        "sub": "plans · orders",
+        "role": "Course purchases, memberships and installments — wiring four domestic and international gateways."
       },
-      "discussion": {
-        "name": "Discussion"
+      "community": {
+        "name": "Community",
+        "sub": "discussion · chat",
+        "role": "Discussions, comments and real-time chat between learners."
       },
-      "aiLab": {
-        "name": "AI Lab"
+      "careers": {
+        "name": "Careers",
+        "sub": "cv · jobs · interview",
+        "role": "CV profiles, job matching and mock interviews — turning learning achievements into proof for recruiters."
       },
-      "league": {
-        "name": "Leaderboard"
+      "notify": {
+        "name": "Notifications",
+        "sub": "email · realtime",
+        "role": "Sends notifications over email and real-time streams on learning events."
       },
-      "notification": {
-        "name": "Notifications"
+      "ranking": {
+        "name": "Ranking",
+        "sub": "leaderboard · rewards · badges",
+        "role": "Leaderboards, rewards and badges — the motivation loop that keeps learners coming back."
+      },
+      "media": {
+        "name": "Media",
+        "sub": "images · files",
+        "role": "Stores and serves images, attachments and course assets via object storage."
       }
     },
     "header": {
-      "viewSource": "View source"
+      "viewSource": "View source",
+      "viewCourse": "Explore courses"
+    },
+    "courseCta": {
+      "title": "This real, live system is exactly what you will learn to build.",
+      "body": "Every component here is taught in the StarCi tracks — learn to build it yourself.",
+      "cta": "Explore courses"
     }
   },
   "talentDirectory": {

@@ -3,7 +3,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import {
     Button,
-    Label,
     Spinner,
     TextArea,
     TextField,
@@ -23,8 +22,10 @@ import { useRouter } from "next/navigation"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { ChatBubble } from "@/components/blocks/feed/ChatBubble"
 import { Callout } from "@/components/blocks/feedback/Callout"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
 import { GradeModelDropdown, type GradeModelSelection } from "@/components/blocks/grading/GradeModelDropdown"
+import { GradeCreditCaption } from "@/components/blocks/grading/GradeCreditCaption"
 import { pathConfig } from "@/resources/path"
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition"
 import { useMockInterviewTurnStream } from "@/hooks/socketio/useMockInterviewTurnStream"
@@ -677,174 +678,175 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, className }: M
                     Hole 6). Self-hides when the viewer has no track/interview attempt yet. */}
                 <MockInterviewTrackSnapshot courseId={courseId} />
 
-                {/* Vòng 5 — config-mode toggle: "Tự động" (default, mock-exam — random
-                    everything, feeds job-readiness) vs "Tùy chỉnh" (deliberate practice —
-                    reveals the 4 controls below, excluded from job-readiness). Every control
-                    on this screen is a WrapButton/chip — never a tab. */}
-                <div className="flex flex-col gap-3">
-                    <Label>{t("mockInterview.modeToggleLabel")}</Label>
-                    <FlexWrapButtonRadio
-                        ariaLabel={t("mockInterview.modeToggleLabel")}
-                        value={configMode}
-                        onChange={setConfigMode}
-                        items={[
-                            { value: "auto" as const, content: t("mockInterview.modeAuto") },
-                            { value: "configurable" as const, content: t("mockInterview.modeConfigurable") },
-                        ]}
-                    />
-                </div>
+                {/* Cấu hình phiên — a LabeledCard: the card's own name lives OUTSIDE it
+                    (label + labelEnd summary), never a <Label> INSIDE the card. Inner
+                    control-groups are split by whitespace + a body-xs muted HELPER caption
+                    (not a <Label> component). The grading-model picker sits INSIDE the card
+                    as an isDropdown field with its weekly credit beside; the CTA stays FLAT
+                    below (1 primary action, not boxed). Every control is a WrapButton/chip. */}
+                <LabeledCard
+                    label={t("mockInterview.configTitle")}
+                    labelEnd={configMode === "auto" ? t("mockInterview.autoCaption") : undefined}
+                    contentClassName="flex flex-col gap-6"
+                >
+                    <div className="flex flex-col gap-2">
+                        <Typography type="body-xs" color="muted">{t("mockInterview.modeToggleLabel")}</Typography>
+                        <FlexWrapButtonRadio
+                            ariaLabel={t("mockInterview.modeToggleLabel")}
+                            value={configMode}
+                            onChange={setConfigMode}
+                            items={[
+                                { value: "auto" as const, content: t("mockInterview.modeAuto") },
+                                { value: "configurable" as const, content: t("mockInterview.modeConfigurable") },
+                            ]}
+                        />
+                    </div>
 
-                {configMode === "auto" ? (
-                    <Typography type="body-xs" color="muted">
-                        {t("mockInterview.autoCaption")}
-                    </Typography>
-                ) : (
-                    <>
-                        <div className="flex flex-col gap-3">
-                            <Label>{t("mockInterview.questionCountLabel")}</Label>
-                            <FlexWrapButtonRadio
-                                ariaLabel={t("mockInterview.questionCountLabel")}
-                                value={questionCount}
-                                onChange={setQuestionCount}
-                                items={QUESTION_COUNT_OPTIONS.map((count) => ({
-                                    value: count,
-                                    content: t("mockInterview.questionCountOption", { count }),
-                                }))}
-                            />
-                        </div>
-
-                        <div className="flex flex-col gap-3">
-                            <Label>{t("mockInterview.kindPickerLabel")}</Label>
-                            <div role="group" aria-label={t("mockInterview.kindPickerLabel")} className="flex flex-wrap items-center gap-2">
-                                <button
-                                    type="button"
-                                    aria-pressed={selectedKinds.length === 0}
-                                    onClick={() => setSelectedKinds([])}
-                                    className={cn(
-                                        "cursor-pointer rounded-full border px-3 py-1.5 text-sm font-medium transition-colors",
-                                        selectedKinds.length === 0
-                                            ? "border-accent bg-accent/10 text-foreground"
-                                            : "border-default bg-surface text-muted shadow-surface hover:bg-default",
-                                    )}
-                                >
-                                    {t("mockInterview.kindAll")}
-                                </button>
-                                {KIND_OPTIONS.map((kind) => {
-                                    const isSelected = selectedKinds.includes(kind)
-                                    return (
-                                        <button
-                                            key={kind}
-                                            type="button"
-                                            aria-pressed={isSelected}
-                                            onClick={() => setSelectedKinds((previous) => (isSelected
-                                                ? previous.filter((value) => value !== kind)
-                                                : [...previous, kind]))}
-                                            className={cn(
-                                                "cursor-pointer rounded-full border px-3 py-1.5 text-sm font-medium transition-colors",
-                                                isSelected
-                                                    ? "border-accent bg-accent/10 text-foreground"
-                                                    : "border-default bg-surface text-muted shadow-surface hover:bg-default",
-                                            )}
-                                        >
-                                            {t(`mockInterview.kind.${kind}`)}
-                                        </button>
-                                    )
-                                })}
+                    {configMode === "configurable" ? (
+                        <>
+                            <div className="flex flex-col gap-2">
+                                <Typography type="body-xs" color="muted">{t("mockInterview.questionCountLabel")}</Typography>
+                                <FlexWrapButtonRadio
+                                    ariaLabel={t("mockInterview.questionCountLabel")}
+                                    value={questionCount}
+                                    onChange={setQuestionCount}
+                                    items={QUESTION_COUNT_OPTIONS.map((count) => ({
+                                        value: count,
+                                        content: t("mockInterview.questionCountOption", { count }),
+                                    }))}
+                                />
                             </div>
-                        </div>
 
-                        <div className="flex flex-col gap-3">
-                            <Label>{t("mockInterview.answerModeLabel")}</Label>
-                            <FlexWrapButtonRadio
-                                ariaLabel={t("mockInterview.answerModeLabel")}
-                                value={answerMode}
-                                onChange={setAnswerMode}
-                                items={(["voice", "text", "both"] as const).map((value) => ({
-                                    value,
-                                    content: t(`mockInterview.answerMode.${value}`),
-                                }))}
+                            <div className="flex flex-col gap-2">
+                                <Typography type="body-xs" color="muted">{t("mockInterview.kindPickerLabel")}</Typography>
+                                <div role="group" aria-label={t("mockInterview.kindPickerLabel")} className="flex flex-wrap items-center gap-2">
+                                    <button
+                                        type="button"
+                                        aria-pressed={selectedKinds.length === 0}
+                                        onClick={() => setSelectedKinds([])}
+                                        className={cn(
+                                            "cursor-pointer rounded-full border px-3 py-1.5 text-sm font-medium transition-colors",
+                                            selectedKinds.length === 0
+                                                ? "border-accent bg-accent/10 text-foreground"
+                                                : "border-default bg-surface text-muted shadow-surface hover:bg-default",
+                                        )}
+                                    >
+                                        {t("mockInterview.kindAll")}
+                                    </button>
+                                    {KIND_OPTIONS.map((kind) => {
+                                        const isSelected = selectedKinds.includes(kind)
+                                        return (
+                                            <button
+                                                key={kind}
+                                                type="button"
+                                                aria-pressed={isSelected}
+                                                onClick={() => setSelectedKinds((previous) => (isSelected
+                                                    ? previous.filter((value) => value !== kind)
+                                                    : [...previous, kind]))}
+                                                className={cn(
+                                                    "cursor-pointer rounded-full border px-3 py-1.5 text-sm font-medium transition-colors",
+                                                    isSelected
+                                                        ? "border-accent bg-accent/10 text-foreground"
+                                                        : "border-default bg-surface text-muted shadow-surface hover:bg-default",
+                                                )}
+                                            >
+                                                {t(`mockInterview.kind.${kind}`)}
+                                            </button>
+                                        )
+                                    })}
+                                </div>
+                            </div>
+
+                            <div className="flex flex-col gap-2">
+                                <Typography type="body-xs" color="muted">{t("mockInterview.answerModeLabel")}</Typography>
+                                <FlexWrapButtonRadio
+                                    ariaLabel={t("mockInterview.answerModeLabel")}
+                                    value={answerMode}
+                                    onChange={setAnswerMode}
+                                    items={(["voice", "text", "both"] as const).map((value) => ({
+                                        value,
+                                        content: t(`mockInterview.answerMode.${value}`),
+                                    }))}
+                                />
+                            </div>
+                        </>
+                    ) : null}
+
+                    <div className="flex flex-col gap-2">
+                        <Typography type="body-xs" color="muted">{t("mockInterview.tierLabel")}</Typography>
+                        <FlexWrapButtonRadio
+                            ariaLabel={t("mockInterview.tierLabel")}
+                            value={tier}
+                            onChange={setTier}
+                            items={TIERS.map((value) => ({
+                                value,
+                                content: t(`mockInterview.tier.${value}`),
+                            }))}
+                        />
+                        <Typography type="body-xs" color="muted">
+                            {t("mockInterview.tierCaption")}
+                        </Typography>
+                    </div>
+
+                    {/* grading model — INSIDE the card as a field; because it's nested in
+                        the config card (card-in-card / surface-in-surface), the field reads
+                        by BORDER not shadow: `shadow-none` drops shadow-field so it doesn't
+                        stack elevation inside the card. The Auto lane ALWAYS carries its
+                        weekly credit beside it (unified-pool concept). */}
+                    <div className="flex flex-col gap-2">
+                        <Typography type="body-xs" color="muted">{t("mockInterview.modelLabel")}</Typography>
+                        <div className="flex flex-wrap items-center gap-3">
+                            <GradeModelDropdown
+                                isDropdown
+                                className="w-full shadow-none sm:w-72"
+                                models={gradeModels}
+                                selection={selection}
+                                canPremium={canPremium}
+                                task={AiModelTask.Grading}
+                                floor={AiModelCategory.Balanced}
+                                showAutoLane
+                                onSelect={setSelection}
+                                onUpgrade={() => router.push(`/${locale}/profile/settings/ai-subscription`)}
+                            />
+                            <GradeCreditCaption
+                                creditUsage={aiQuotaSwr.data}
+                                hasPinnedModel={Boolean(selection.model)}
+                                autoCreditCost={undefined}
                             />
                         </div>
-                    </>
-                )}
-
-                {/* Mức — shared between both config modes (a lone control, flat, no card
-                    wrapping a single control, split-config-card-by-meaning-not-per-control). */}
-                <div className="flex flex-col gap-3">
-                    <Label>{t("mockInterview.tierLabel")}</Label>
-                    <FlexWrapButtonRadio
-                        ariaLabel={t("mockInterview.tierLabel")}
-                        value={tier}
-                        onChange={setTier}
-                        items={TIERS.map((value) => ({
-                            value,
-                            content: t(`mockInterview.tier.${value}`),
-                        }))}
-                    />
-                    <Typography type="body-xs" color="muted">
-                        {t("mockInterview.tierCaption")}
-                    </Typography>
-                </div>
+                    </div>
+                </LabeledCard>
 
                 {startError ? (
                     <Callout status="danger" title={startError} onClose={() => setStartError(null)} />
                 ) : null}
 
-                {/* CTA + its grading-model control are ONE cluster (gap-2): the model
-                    dropdown sits DIRECTLY under the button, not a section away (gap-6). */}
-                <div className="flex flex-col gap-2">
-                    {/* primary CTA — flat, the only primary action on this screen */}
-                    <div className="flex flex-wrap items-center gap-3">
+                {/* CTA — flat, the only primary action on this screen (not boxed). */}
+                <div className="flex flex-wrap items-center gap-3">
+                    <Button
+                        variant="primary"
+                        size="lg"
+                        isDisabled={startSessionSwr.isMutating}
+                        onPress={() => void startSession("qna")}
+                    >
+                        {startSessionSwr.isMutating ? (
+                            <Spinner size="sm" />
+                        ) : (
+                            <MicrophoneIcon className="size-5" aria-hidden focusable="false" />
+                        )}
+                        {t("mockInterview.begin")}
+                    </Button>
+                    {isDesignAvailable ? (
                         <Button
-                            variant="primary"
+                            variant="secondary"
                             size="lg"
                             isDisabled={startSessionSwr.isMutating}
-                            onPress={() => void startSession("qna")}
+                            onPress={() => void startSession("design")}
                         >
-                            {startSessionSwr.isMutating ? (
-                                <Spinner size="sm" />
-                            ) : (
-                                <MicrophoneIcon className="size-5" aria-hidden focusable="false" />
-                            )}
-                            {t("mockInterview.begin")}
+                            <PenNibIcon className="size-5" aria-hidden focusable="false" />
+                            {t("mockInterview.designModeCta")}
                         </Button>
-                        {isDesignAvailable ? (
-                            <Button
-                                variant="secondary"
-                                size="lg"
-                                isDisabled={startSessionSwr.isMutating}
-                                onPress={() => void startSession("design")}
-                            >
-                                <PenNibIcon className="size-5" aria-hidden focusable="false" />
-                                {t("mockInterview.designModeCta")}
-                            </Button>
-                        ) : null}
-                    </div>
-
-                    {/* grading model — de-emphasized, self-labelling (sparkle + "Tự động").
-                        The Auto lane ALWAYS carries its credit cost beside it (unified pool
-                        concept) so the learner sees what a run spends before starting. */}
-                    <div className="flex flex-wrap items-center gap-2">
-                        <GradeModelDropdown
-                            className="w-fit text-sm text-muted"
-                            models={gradeModels}
-                            selection={selection}
-                            canPremium={canPremium}
-                            task={AiModelTask.Grading}
-                            floor={AiModelCategory.Balanced}
-                            showAutoLane
-                            onSelect={setSelection}
-                            onUpgrade={() => router.push(`/${locale}/profile/settings/ai-subscription`)}
-                        />
-                        {!selection.model && aiQuotaSwr.data?.credit ? (
-                            <Typography type="body-xs" color="muted">
-                                {t("mockInterview.autoCredit", {
-                                    remaining: aiQuotaSwr.data.credit.remainingWeek,
-                                    quota: aiQuotaSwr.data.credit.limitWeek,
-                                })}
-                            </Typography>
-                        ) : null}
-                    </div>
+                    ) : null}
                 </div>
 
                 <MockInterviewHistory courseId={courseId} courseDisplayId={courseDisplayId} />

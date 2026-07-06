@@ -305,17 +305,22 @@ export const GradeModelDropdown = ({
                 // press-shrink (`scale(.97)`) AND the base `transform-gpu` (`translateZ(0)`)
                 // — the GPU compositing layer is what made `shadow-field` render darker than
                 // the Select's on hover. The Select has no transform, so now they match.
+                // Hover is wired on BOTH `hover:` (real CSS `:hover`) AND
+                // `data-[hovered=true]:` (react-aria's hover state) — `.select__trigger`
+                // bakes `&:hover, &[data-hovered="true"]` together, so this trigger must
+                // match both paths or it can visibly lag/miss the Select's hover feedback.
                 <DropdownTrigger
                     isDisabled={isDisabled}
                     className={cn(
                         "relative flex! min-h-9 w-full cursor-pointer items-center rounded-field border border-[color:var(--field-border)] bg-field py-2 pe-7 ps-3 text-sm text-field-foreground shadow-field transform-none!",
+                        "hover:bg-field-hover hover:border-[color:var(--field-border-hover)]",
                         "data-[hovered=true]:bg-field-hover data-[hovered=true]:border-[color:var(--field-border-hover)]",
                         "data-[focus-visible=true]:border-[color:var(--field-border-focus)]",
                         className,
                     )}
                 >
                     <span className="flex min-w-0 items-center gap-2 overflow-hidden">
-                        <SparkleIcon className="size-5 shrink-0" />
+                        <SparkleIcon className="size-4 shrink-0" />
                         <span className="truncate">{triggerLabel}</span>
                     </span>
                     <span
@@ -334,10 +339,10 @@ export const GradeModelDropdown = ({
                 >
                     <div className="flex w-full min-w-0 items-center justify-between gap-2">
                         <span className="flex min-w-0 items-center gap-2 overflow-hidden">
-                            <SparkleIcon className="size-5 shrink-0" />
+                            <SparkleIcon className="size-4 shrink-0" />
                             <span className="truncate">{triggerLabel}</span>
                         </span>
-                        <CaretDownIcon className="size-5 shrink-0" />
+                        <CaretDownIcon className="size-4 shrink-0" />
                     </div>
                 </DropdownTrigger>
             )}

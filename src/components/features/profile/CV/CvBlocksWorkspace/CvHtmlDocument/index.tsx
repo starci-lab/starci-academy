@@ -89,8 +89,14 @@ const SectionTitle = ({ title, accent, scale }: { title: string, accent: string,
     <div style={sectionTitleStyle(accent, scale)}>{title}</div>
 )
 
-/** Header / contact block. */
-const PersonalBlock = ({ block, accent, scale }: CvBlockRenderProps) => {
+/**
+ * Header / contact block. `nameColor` lets a template render the person's NAME
+ * in a color other than the section-heading `accent` (e.g. `classic` keeps the
+ * name as plain foreground ink, reserving `accent` for the section-title rules
+ * only) — defaults to `accent` for templates that don't override it (unchanged
+ * behavior for `sidebar`).
+ */
+const PersonalBlock = ({ block, accent, scale, nameColor }: CvBlockRenderProps & { nameColor?: string }) => {
     const f = singleFields(block)
     const name = str(f.name)
     const role = str(f.role)
@@ -105,7 +111,7 @@ const PersonalBlock = ({ block, accent, scale }: CvBlockRenderProps) => {
     return (
         <div style={{ marginBottom: 4 }}>
             {name ? (
-                <div style={{ fontSize: px(26, scale), fontWeight: 700, color: accent, lineHeight: 1.15 }}>{name}</div>
+                <div style={{ fontSize: px(26, scale), fontWeight: 700, color: nameColor ?? accent, lineHeight: 1.15 }}>{name}</div>
             ) : null}
             {role ? (
                 <div style={{ fontSize: px(14, scale), color: MUTED_COLOR, marginTop: 2 }}>{role}</div>
@@ -338,12 +344,22 @@ const SIDEBAR_BLOCK_TYPES: ReadonlySet<BlockType> = new Set([
 /** Monochrome ink for the `minimal` template (no accent color). */
 const MINIMAL_ACCENT = "#111111"
 
-/** classic (default) — every block stacked in one column with accent section rules. */
-const ClassicTemplate = ({ blocks, accent, scale }: CvTemplateProps) => (
-    <div style={{ padding: "40px 44px" }}>
-        {blocks.map((block) => <CvBlockView key={block.id} block={block} accent={accent} scale={scale} />)}
-    </div>
-)
+/** classic (default) — every block stacked in one column with accent section
+ * rules. The NAME renders as plain foreground ink (TEXT_COLOR), not the accent
+ * — accent is reserved for the section-title rules only (thầy: "mẫu cổ điển để
+ * text-foreground"). Personal is special-cased (mirrors modern/sidebar below)
+ * so only its name color is overridden; the rest still flow through the
+ * generic `CvBlockView` with the real accent for their section headings. */
+const ClassicTemplate = ({ blocks, accent, scale }: CvTemplateProps) => {
+    const personal = blocks.find((block) => block.type === BlockType.Personal)
+    const rest = blocks.filter((block) => block.type !== BlockType.Personal)
+    return (
+        <div style={{ padding: "40px 44px" }}>
+            {personal ? <PersonalBlock block={personal} accent={accent} scale={scale} nameColor={TEXT_COLOR} /> : null}
+            {rest.map((block) => <CvBlockView key={block.id} block={block} accent={accent} scale={scale} />)}
+        </div>
+    )
+}
 
 /** modern — an accent header band (name + contacts) over a single-column body. */
 const ModernTemplate = ({ blocks, accent, scale }: CvTemplateProps) => {

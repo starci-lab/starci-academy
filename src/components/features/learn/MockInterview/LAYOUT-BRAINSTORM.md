@@ -160,6 +160,61 @@ Khung session (active phase): **SPLIT 2 pane** (full-bleed sẵn):
   cho nhãn phase. FE render bars generic → 0 đổi schema scorecard. `kind` chỉ lưu ở `mock_interview_sessions`.
 - **Hệ quả:** nợ "classify flashcard" GỠ BỎ. Chỉ còn cột `kind` trên session + logic pick/prompt/grade per-kind.
 
+## VÒNG 6 (2026-07-06) — SCORECARD re-audit (phèn/sai rules) + feature NÂNG TẦM (đáp án mẫu per-câu)
+> Thầy: *"ux ui phèn quá và sai rules hết"* + *"thêm tính năng gì để nâng tầm hơn là copy paste từ chatgpt"*.
+> Ref: interviewing.io/Pramp/Revarta — ChatGPT NỊNH ("great answer") → tự tin ảo → fail thật; sản phẩm xịn:
+> honest calibrated feedback + speech delivery metrics + **model-answer comparison**.
+
+### Sai rules ở SCORECARD (grounded từ audit) — phải fix
+| # | Vi phạm | Rule | Fix |
+|---|---|---|---|
+| 1 | Verdict hero = `div bg-default/40 p-8` tự chế | [[verdict-banner-and-separated-finding-cards]] / [[grading-result-page-labeled-cards-verdict-hero-findings-accordion]] | **`Alert status=success/danger/warning`** + `Alert.Indicator` phosphor + Title (score) + Description (verdict · cần N · chấm theo khóa) |
+| 2 | 2 Chip DÍNH ("Chưa đạt" + "Chưa xác thực server") | [[elements/chip]] §3 (chip-cạnh-chip) | "chưa xác thực" → 1 dòng trong `Alert.Description` (hoặc tooltip trên score), KHÔNG chip thứ 2 |
+| 3 | Section "Điểm theo từng **phase**" nhưng nội dung "Câu 1-5" | label đúng nghĩa | i18n `perPhaseTitle` → "Điểm theo từng **câu**" cho qna (branch design vs qna) |
+| 4 | Link "Xem trong bài học" floating `ml-40` giữa row | layout (no dead/floating) | đưa link VÀO panel accordion của câu đó (xem nâng tầm) |
+| 5 | Bars luôn `color="accent"` (điểm 12/100 vẫn hồng) | semantic score | bar **semantic theo tỉ lệ**: <50% danger · 50-75% warning · ≥75% success |
+| 6 | Scorecard = 1 khối dài các Label+list | [[grading-result-page…]] (LabeledCard tách vùng) | 3 `LabeledCard`: "Kết quả" (Alert verdict) · "Chi tiết từng câu" (accordion) · "Góp ý" (strengths/gaps) |
+
+### ❌ BỎ — feature "đáp án mẫu per-câu" (thầy chốt 2026-07-06)
+> Thầy: *"luồng phỏng vấn là AI thuần thôi, cắm RAG để tạo câu hỏi và chấm câu trả lời. đừng vẽ thêm đáp án."*
+> Lý do (grounded): câu hỏi = AI **REFRAME** flashcard topic theo kind (`QNA_KIND_FRAMING_MAP` "reframe the seed
+> topic into…") → `card.answer` (đáp án câu GỐC) KHÔNG khớp câu đã reframe → "đáp án mẫu = card.answer" sẽ lệch.
+> Thầy chốt: **KHÔNG hiển thị đáp án.** Luồng = AI thuần + RAG (tạo câu hỏi + chấm câu trả lời). Workflow v6
+> đã DỪNG (TaskStop). CHỈ giữ phần rule-fix scorecard (dưới). Nếu sau muốn per-câu review thì chỉ câu+điểm+feedback,
+> KHÔNG đáp án.
+
+### ✅ ĐÃ LÀM 2026-07-06 (FE-only, tsc/eslint/JSON sạch) — rule-fix scorecard
+- **Verdict `div bg-default/40` → `Alert`** status theo verdict (pass=success/borderline=warning/fail=danger) +
+  `Alert.Indicator` phosphor (CheckCircle/Warning/XCircle) + Title (score `text-2xl` + verdict) + Description (moat
+  grounding line + server-unverified text). **Bỏ 2 chip dính** (verdict + "chưa xác thực" giờ = text trong Description).
+- **Bars semantic** (`ProgressMeter` thêm prop `color`; scorecard tính `scoreColorOf` = <50% danger · <75% warning ·
+  else success) — điểm 12/100 giờ đỏ, không hồng-cứng. Áp cả phase/câu LẪN attribute bars.
+- **Section title branch:** qna → "Điểm theo từng câu" (`perQuestionTitle` mới) · design → "…từng phase" (`isDesignScore`).
+- **Bỏ floating link** "Xem trong bài học" (ml-40/ml-6 giữa row) — đường về bài = CTA chính "Ôn lại [pha yếu]" cuối.
+- Giữ Label + whitespace giữa section (KHÔNG bọc LabeledCard mỗi cái — tránh card chồng, [[whitespace-over-dividers]]).
+
+### ~~⭐ NÂNG TẦM (anti-ChatGPT) — REVIEW TỪNG CÂU kèm ĐÁP ÁN MẪU~~ (BỎ — xem trên)
+- **Mỗi câu = 1 Accordion item** (thay list phase bar phẳng): trigger = "Câu N · kind · bar semantic · điểm"; panel =
+  **câu hỏi + câu BẠN trả lời + ĐÁP ÁN MẪU (từ flashcard authored answer) + "thiếu gì" + link ôn bài**.
+- **Vì sao khác ChatGPT:** StarCi có **đáp án chuẩn author-viết của CHÍNH khóa** (flashcard `answer` + `:::chip`) →
+  so sánh "bạn nói vs chuẩn"; ChatGPT KHÔNG có chân lý cho khóa của bạn → chỉ nịnh. Đây là moat thật.
+- **Vá luôn #4** (floating link vào panel) + **#3/#6** (accordion = pattern chuẩn findings).
+- **CẦN BE delta:** grade trả **per-question** `{questionIndex, kind, seedTitle, candidateAnswer, modelAnswer (fetch card.answer by cardId), feedback, score, max, matchedContentId?}` — hiện chỉ có `{phase,score,max}` tổng. Grading prompt đã có card answer làm reference (theory) → mở rộng trả về client per-câu.
+
+### Feature nâng tầm khác (ưu tiên)
+- **P1 rẻ — "chấm thẳng không nịnh":** copy nhấn grounded curriculum ("sai so với Module 7"), + badge "chấm theo khóa" (đã có moat citation, làm nổi hơn).
+- **P2 — Đo cách nói** (khi answerMode voice): tốc độ nói (từ/phút) · từ đệm ("ừm/à" count) · thời lượng/câu — **FE tính từ STT transcript + timer**, không cần BE (STT đã có). Chỉ hiện khi trả lời bằng giọng.
+- **P2 — Xu hướng readiness:** TB 5 gần nhất + band + "còn X lên jobReady" (mechanic WF-09 có sẵn, UI chưa hiện — brainstorm vòng 1 B3).
+- **Defer — interviewer persona** (dễ/khó tính), **replay annotate** (drawer đã có).
+
+### SESSION (screenshot 2) — khá ổn, chỉ polish nhẹ
+- Question card `div bg-default/40` → cân nhắc `bg-surface` reading card (nhẹ). Composer + progress dots + workspace-toggle OK. 1 cột (không 2-pane) hợp qna.
+
+### Cần thầy chốt
+1. **Đáp án mẫu per-câu (P1)** — làm ngay? (cần BE trả per-question + fetch card answer). Đây là feature nâng tầm chính.
+2. **Đo cách nói (P2)** — FE-only, làm kèm hay để sau?
+3. Scorecard rule-fix (Alert/semantic bar/accordion) — apply chung với per-câu.
+
 ## VÒNG 5 (2026-07-06) — meta chips → OPTIONS cấu hình (All vs Configurable) + Mức = WrapButton
 > Thầy: *"biến thành option: chọn câu, chọn mode nói/gõ/cả 2, chọn mỗi câu 1 kiểu hoặc 1 category hay nhiều
 > category… 1 là all hai là configurable"* + *"mức đừng render tab, render WrapButton"*.

@@ -22,6 +22,7 @@ import { useRouter } from "next/navigation"
 import {
     ArrowRightIcon,
     BriefcaseIcon,
+    CaretDownIcon,
     PaperclipIcon,
     SquaresFourIcon,
     TrophyIcon,
@@ -30,6 +31,7 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { SegmentedControl } from "@/components/blocks/navigation/SegmentedControl"
 import { ResizableRail } from "@/components/blocks/layout/ResizableRail"
+import { InputButtonLike } from "@/components/blocks/buttons/InputButtonLike"
 import { GradeModelDropdown, type GradeModelSelection } from "@/components/blocks/grading/GradeModelDropdown"
 import { AiModelTask } from "@/modules/api/graphql/queries/query-ai-models"
 import { pathConfig } from "@/resources/path"
@@ -378,20 +380,22 @@ export const CvEditor = ({ className, cvId }: CvEditorProps) => {
                             hideScrollBar
                             className="flex flex-col gap-6 p-6 lg:min-h-0 lg:flex-1 lg:overflow-y-auto"
                         >
-                            {/* Mẫu (template) — coarsest style lever, so it sits at the top;
-                            the button opens the live thumbnail gallery. */}
+                            {/* Mẫu (template) — coarsest style lever, so it sits at the top.
+                            Shows the CURRENT value and opens a picker (the thumbnail
+                            gallery) exactly like the Select fields below it — so it
+                            renders with the SAME field chrome (InputButtonLike: a button
+                            disguised as an input), not a quiet action Button. Reserve
+                            `Button variant="tertiary"` for controls that DO something
+                            (Truy cập nhanh below), not ones that DISPLAY a value. */}
                             <div className="flex flex-col gap-3">
                                 <Label>{t("cv.builder.template.label")}</Label>
-                                <Button
-                                    variant="tertiary"
-                                    className="w-full justify-start"
+                                <InputButtonLike
+                                    ariaLabel={t("cv.builder.template.label")}
                                     onPress={() => setIsTemplateModalOpen(true)}
-                                >
-                                    <SquaresFourIcon aria-hidden className="size-4 shrink-0" />
-                                    <span className="truncate">
-                                        {t(`cv.builder.template.names.${draft?.style.template ?? "classic"}`)}
-                                    </span>
-                                </Button>
+                                    icon={<SquaresFourIcon aria-hidden className="size-4 shrink-0 text-muted" />}
+                                    placeholder={t(`cv.builder.template.names.${draft?.style.template ?? "classic"}`)}
+                                    suffix={<CaretDownIcon aria-hidden className="size-4 text-muted" />}
+                                />
                             </div>
 
                             <div className="flex flex-col gap-3">

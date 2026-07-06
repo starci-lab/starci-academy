@@ -8,6 +8,8 @@ import {
     TextField,
     cn,
 } from "@heroui/react"
+import Editor from "@monaco-editor/react"
+import { useTheme } from "next-themes"
 import { useTranslations } from "next-intl"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { ProgrammingLanguage } from "@/modules/types/enums/programming-language"
@@ -89,6 +91,7 @@ export const MockInterviewWorkspace = ({
     className,
 }: MockInterviewWorkspaceProps) => {
     const t = useTranslations()
+    const { theme } = useTheme()
 
     const languageItems = DEFAULT_PROGRAMMING_LANGUAGES.map((lang) => ({
         id: lang,
@@ -167,16 +170,24 @@ export const MockInterviewWorkspace = ({
                         </ListBox.Root>
                     </Select.Popover>
                 </Select.Root>
-                <TextField variant="secondary" className="w-full">
-                    <TextArea
-                        rows={12}
+                {/* a REAL editor (Monaco) — a debug/review/optimize question seeds its
+                    given code here for the candidate to FIX in place (not a plain
+                    textarea): line numbers + syntax highlighting = editing, not narrating */}
+                <div className="h-72 overflow-hidden rounded-xl border border-default">
+                    <Editor
+                        height="100%"
+                        language={codeState.lang}
+                        theme={theme === "dark" ? "vs-dark" : "light"}
                         value={codeState.code}
-                        onChange={(event) => onCodeStateChange({ ...codeState, code: event.target.value })}
-                        placeholder={t("mockInterview.workspace.codePlaceholder")}
-                        className="resize-none font-mono"
-                        aria-label={t("mockInterview.workspace.code")}
+                        onChange={(value) => onCodeStateChange({ ...codeState, code: value ?? "" })}
+                        options={{
+                            minimap: { enabled: false },
+                            fontSize: 14,
+                            scrollBeyondLastLine: false,
+                            padding: { top: 12, bottom: 12 },
+                        }}
                     />
-                </TextField>
+                </div>
             </div>
 
             <div className={cn(tool !== "notes" && "hidden")}>

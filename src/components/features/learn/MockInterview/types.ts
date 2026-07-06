@@ -64,6 +64,13 @@ export interface MockInterviewTurn {
     content: string
     /** Which seed question (0-based) this turn belongs to — Q&A kinds only, tags the turn for grading's per-question grouping. */
     questionIndex?: number
+    /**
+     * Set on an interviewer turn whose question shipped GIVEN code that was
+     * seeded into the editable Code tool — the bubble shows a "code loaded into
+     * the editor" chip instead of the code inline, pointing the candidate at the
+     * tool to fix it in place.
+     */
+    artifactHint?: "code"
 }
 
 /**

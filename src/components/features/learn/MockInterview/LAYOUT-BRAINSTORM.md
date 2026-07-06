@@ -401,3 +401,105 @@ Giữ nguyên 2-pane (conversation + whiteboard) + phase-stepper — bản chấ
 - [Google Interview Warmup UI flow](https://www.designer.tips/practices/google-interview-warmup) (1 câu · 1 ô trả
   lời nói-hoặc-gõ chung · feedback sau mỗi câu) · [[interactive-needs-hover]] (nút gộp vẫn cần hover/cursor rõ) ·
   [[layout-must-funnel-to-courses-and-cover-full-data-state-matrix]] (ma trận state).
+
+---
+---
+
+# VÒNG 6 (2026-07-07) — FREE→PAID CONVERSION LAYOUT (resolve CRITIQUE V3)
+
+> Feed = `CRITIQUE.md` VÒNG 3 (kinh tế chuyển đổi 2 trục). Grounded lại route/shell + block-order (Explore 2026-07-07).
+> Trọng tâm KHÁC vòng 1-5 (format phỏng vấn): vòng này = **đặt lại quan hệ CTA free→paid** trên feature.
+
+## Sự thật nền (đổi cả bài toán — verify 2026-07-07)
+- **Route/shell (GIỮ, đã đúng):** `/[locale]/courses/[courseId]/learn/mock-interview` = **route RIÊNG**, `LearnShell`
+  **KHÔNG rail**, cột giữa `mx-auto max-w-3xl gap-10` (PageHeader → content, three-tier). 1 route, state-machine nội
+  bộ (setup → active → scorecard). Trial vs enrolled = nhánh top-level trong `MockInterview/index.tsx:40-47`.
+- **Quyết định RỜI/KHÔNG RỜI = KHÔNG RỜI.** Active interview là surface "làm-1-việc" tập trung → giữ route riêng +
+  state-machine nội bộ (đúng [[when-rail]]/[[leaf-page-one-nav-and-combined-tab-toolbar]]). **Teaser trial sống CÙNG
+  route** (chỉ là nhánh top-level khác), KHÔNG đẻ route mới.
+- **⚠️ Với user ĐÃ ENROLL, MỌI thứ màn này đã mở khoá:** enroll unlock hết model tier (Premium/Frontier) + Qwen 0đ
+  vô hạn + 500/tuần. → **KHÔNG có gì để upsell AI-sub ở đây** (model-lock không bao giờ hiện cho enrolled; pool
+  không cạn). Đây là bằng chứng layout: credit-meter + model-lock ở màn này = bán nhầm/không có demand.
+
+## Khung màn (GIỮ — centered, no rail)
+`PageHeader (breadcrumb + title + subtitle)` → `[nhánh: TRIAL teaser | ENROLLED session]`. Cột `max-w-3xl`, gap-10
+header→content. KHÔNG rail (đúng default [[when-rail]]).
+
+## 3 thay đổi layout cốt lõi (resolve V3 holes)
+
+### Đổi 1 — TRIAL = TEASER FUNNEL, không hard-gate (resolve V3-H5) ⭐ CTA-khóa chính
+- **Thay `EnrollGate` chặn-cứng bằng TEASER:** trial user được **1 lần phỏng vấn thử miễn phí** (Qwen-graded, cap
+  ngắn — qna 3 câu HOẶC 1 phase) → **teaser scorecard-lite** (verdict + 1 gap cụ thể + moat "chấm theo đúng bài
+  khoá X") → **ENROLL CTA primary**: "Học khoá để: luyện không giới hạn · điểm feed job-readiness recruiter thấy ·
+  mở model chấm mạnh hơn". → tài sản thuyết phục nhất ("bạn CHƯA sẵn sàng, bằng chứng đây") giờ ĐỨNG TRƯỚC người chưa
+  trả tiền = phễu acquisition. (Ref: reverse-trial / "aha trước paywall" — Duolingo/Grammarly teaser.)
+- **Sau khi hết lượt teaser** (đã dùng 1 lần) → card lời-mời (KHÔNG lỗi trơ): "Bạn đã thử 1 lần — học khoá để luyện
+  tiếp" + ENROLL primary. (state đặc biệt "teaser-used".)
+- **BE phụ thuộc (flag cho workflow):** ungate đúng 1 run cho trial + đếm cap (session-scoped/user-scoped). Không có
+  → giữ EnrollGate cũ (fallback), teaser là enhancement.
+
+### Đổi 2 — CREDIT REFRAME: luyện free vô hạn, KHÔNG dead-end (resolve V3-H1/H2/H4)
+- **Bỏ credit-meter khan-hiếm đứng riêng khỏi setup.** Default lane = **"Tự động (miễn phí)"** = Qwen 0đ → enrolled
+  luyện KHÔNG giới hạn, không lo credit. Setup mặc định KHÔNG hiện dòng credit nào.
+- **Credit hiện CONTEXTUAL trong dropdown model** (chỉ khi user chủ động chọn model trả phí Balanced+): "Chấm sâu hơn
+  · tốn N credit · còn M tuần này". → credit thôi trang trí, chỉ xuất hiện khi thực sự liên quan (chọn model xịn).
+- **Pool cạn giữa phiên (resolve V3-H2):** thay warning Callout "hết credit → nâng cấp" (tịch thu kết quả) bằng
+  **soft inline notice** lúc chấm: "Credit tuần này đã hết — đang chấm bằng model miễn phí (điểm vẫn tính)." →
+  **KHÔNG chặn, KHÔNG mất công.** Vì điểm-feed-readiness vốn chấm bằng tier cố định (Đổi 3), fallback Qwen = không
+  mất điểm. Nút phụ "Nâng cấp để chấm bằng model mạnh hơn" (de-emphasized, → ai-subscription) — optional, không chặn.
+
+### Đổi 3 — FIXED-TIER SCORING làm TRUST SIGNAL hiện rõ (resolve V3-H3 fairness)
+- **Điểm feed job-readiness LUÔN chấm bằng 1 tier cố định (Economy/Qwen).** Model mạnh hơn chỉ nâng RICHNESS của
+  feedback (gaps/strengths chi tiết hơn), KHÔNG đổi con số. (BE: pin scoring model — flag workflow.)
+- **Layout surface guarantee** (biến cơ chế ẩn thành tín hiệu tin cậy — cùng tinh thần dòng "server unverified" đã
+  có ở scorecard B2): 1 dòng muted cạnh model picker + trên scorecard: *"Điểm tính vào job-readiness luôn chấm bằng
+  model chuẩn — model mạnh hơn chỉ cho feedback chi tiết hơn, không đổi điểm."* → recruiter tin (không ai mua được
+  band cao hơn), user hiểu model-choice không phải pay-to-win.
+
+## Bảng khối → vị trí → vai → lý do (setup ENROLLED, sau reframe)
+| Khối | Vị trí | Vai | Lý do |
+|---|---|---|---|
+| PageHeader (title+subtitle) | trên cùng | định danh | three-tier, gap-10 |
+| Track snapshot (band + best) | đầu content (self-hide nếu chưa có) | status "đang ở đâu" | kết-quả trên đầu ([[concepts/card]]) |
+| Green room + CTA "Bắt đầu" / "Luyện thiết kế" | giữa | **PRIMARY** | 1 primary action/màn |
+| Config accordion (collapsed) | dưới CTA | phụ | control phụ dưới CTA ([[split-config-card-by-meaning-not-per-control]]); Qwen default = KHÔNG credit line |
+| — model dropdown (trong config) | trong accordion | phụ | credit contextual chỉ khi chọn model phí; + dòng fixed-tier trust |
+| History (N attempts) | cuối | tham chiếu | frameless list + overflow drawer |
+
+## MA TRẬN STATE (bung đủ — [[layout-must-funnel-to-courses-and-cover-full-data-state-matrix]])
+| State | Layout | Phễu-khóa |
+|---|---|---|
+| **Trial (chưa enroll)** | Teaser card "Thử miễn phí 1 lần" (primary) → chạy Qwen cap → mini-scorecard | **ENROLL primary** (acquisition) ⭐ |
+| **Trial teaser-used** | Card lời-mời "đã thử 1 lần — học khoá luyện tiếp" | **ENROLL primary** |
+| **Enrolled · rỗng (chưa luyện)** | Track snapshot ẩn · green room + CTA · config collapsed (Qwen, no credit) | scorecard→course (sau khi chạy) |
+| **Enrolled · N history** | Track snapshot (band+best) + green room + history list | scorecard→course |
+| **Active session** | Question + workspace + recorder; pool-empty → soft "chấm free" notice (KHÔNG block) | — |
+| **Scorecard** | verdict+moat+bars+strengths/gaps+followup + **"Ôn lại {phase} trong khóa" primary** + retry | **study-link (retention)** ⭐ |
+| **Overflow (history > cap)** | history +N → drawer (MockInterviewHistory sẵn có) | — |
+| **Mixed** | attempts Tự động (chip "tính điểm") vs Tùy chỉnh (chip "luyện tủ", `counts_to_readiness=false`); design vs qna = đổi label | — |
+| **Đặc biệt** | session <100 ký tự → callout "chưa đủ để chấm", KHÔNG charge (guard BE sẵn) | — |
+
+## CTA-khóa (2 phễu rõ)
+1. **Acquisition** = Trial teaser → **ENROLL** (mới, phễu chính vòng này).
+2. **Retention** = Scorecard "Ôn lại `<phase yếu>` trong khoá →" (đã có V1-fix, giữ). Vòng khép: điểm ⇐ trả lời ⇐
+   phải học.
+
+## Cắt / Giữ / Thêm
+- **CẮT:** credit-meter khan-hiếm đứng riêng ở setup · hard-block quota Callout giữa phiên (tịch thu) · mọi ảo tưởng
+  "upsell AI-sub ở màn này" (enrolled đã mở hết).
+- **GIỮ:** route/shell (no rail, max-w-3xl) · green room + CTA · config accordion · GradeModelDropdown (credit
+  contextual) · `MockInterviewScorecard` (verdict/moat/study-CTA) · History/drawer · design 2-pane 5-phase.
+- **THÊM:** teaser run cho trial + mini-scorecard + enroll CTA · dòng fixed-tier trust (cạnh picker + scorecard) ·
+  soft free-model fallback notice giữa phiên.
+
+## BE phụ thuộc (flag cho workflow — layout đợi các cái này)
+1. Teaser: ungate 1 run cho trial + cap (session/user-scoped).
+2. Fixed-tier scoring: pin grade-feed-readiness về Economy/Qwen; premium chỉ enrich feedback.
+3. Pool-empty → fallback Qwen (không throw `AiQuotaExhaustedException` ở surface Interview).
+
+## Refs vòng 6
+- Reverse-trial / aha-before-paywall (Duolingo/Grammarly teaser) · [[fair-monetization-axiom]] (học để kiếm bằng
+  chứng, model-choice không pay-to-win) · [[layout-must-funnel-to-courses-and-cover-full-data-state-matrix]] (rỗng =
+  phễu, ma trận state) · [[split-config-card-by-meaning-not-per-control]] (control phụ dưới CTA) ·
+  [[credit-unified-pool-ui]] (credit cạnh picker, block không tự query) · [[disable-vs-lock-and-perrow-autosave]]
+  (fallback mềm thay chặn cứng).

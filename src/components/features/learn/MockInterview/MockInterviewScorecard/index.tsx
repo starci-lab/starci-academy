@@ -312,6 +312,17 @@ export const MockInterviewScorecard = ({
                         : t("mockInterview.weakPhaseCtaGeneric")}
                     <ArrowRightIcon className="size-5" aria-hidden focusable="false" />
                 </Button>
+                {/* next rung in the loop: turn the interview into a built artifact —
+                    a quiet handoff to the course's capstone (personal project). */}
+                <Button
+                    variant="tertiary"
+                    onPress={() => router.push(
+                        pathConfig().locale(locale).course(courseDisplayId).learn().personalProject().build(),
+                    )}
+                >
+                    {t("mockInterview.capstoneCta")}
+                    <ArrowRightIcon className="size-5" aria-hidden focusable="false" />
+                </Button>
                 {onRetry ? (
                     <Button variant="tertiary" onPress={onRetry}>
                         {t("mockInterview.retry")}

@@ -41,6 +41,14 @@ export interface MockInterviewSeedTopic {
     kind: string
     /** The seed flashcard's topic/title, shown as the current question in the left pane. */
     title: string
+    /**
+     * GIVEN code the candidate should FIX/read (interview-bank debug/review/optimize
+     * questions) — delivered SEPARATELY from the prose so the FE seeds it into an
+     * editable code editor instead of showing it read-only in the chat. Null otherwise.
+     */
+    givenCode?: string | null
+    /** Language of {@link givenCode} (e.g. "typescript") — drives the editor's syntax mode. Null when no given code. */
+    givenLang?: string | null
 }
 
 /** Payload inside `startMockInterviewSession.data` after the standard API wrapper. */

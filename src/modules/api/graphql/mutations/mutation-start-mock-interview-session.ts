@@ -24,6 +24,8 @@ const mutation1 = gql`
           cardId
           kind
           title
+          givenCode
+          givenLang
         }
       }
     }

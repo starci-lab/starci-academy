@@ -20,6 +20,24 @@ export interface UseSpeechSynthesisResult {
     speak: (text: string) => void
     /** Stop any in-flight speech immediately. */
     cancel: () => void
+    /**
+     * Whether the browser's voice list has finished loading at least once (Chrome
+     * fires this asynchronously via `voiceschanged`, sometimes AFTER the first
+     * `getVoices()` call returns empty) — {@link hasLocaleVoice} is only meaningful
+     * once this is `true`; before that it would false-positive "no voice" during
+     * the brief window the list hasn't populated yet.
+     */
+    voicesLoaded: boolean
+    /**
+     * Whether the browser currently exposes AT LEAST ONE installed voice matching
+     * {@link UseSpeechSynthesisOptions.lang} (exact match, or same base language,
+     * e.g. any "vi-*" voice for "vi-VN"). `false` (once {@link voicesLoaded}) means
+     * `speak()` will fall back to whatever default voice the OS has — usually
+     * English — mispronouncing the requested language's text.
+     */
+    hasLocaleVoice: boolean
+    /** Re-read the browser's current voice list (e.g. after the user installs an OS voice pack) and recompute {@link hasLocaleVoice}. */
+    recheckVoices: () => void
 }
 
 /** Strip common Markdown syntax so the interviewer reads naturally (no "hash", "asterisk", backticks). */
@@ -54,6 +72,24 @@ export const useSpeechSynthesis = (
     const langRef = useRef(lang)
     langRef.current = lang
 
+    // the browser's own voice list — read once on mount, re-read whenever the
+    // engine fires `voiceschanged` (Chrome populates this ASYNCHRONOUSLY, often
+    // after the component mounts) or the caller explicitly asks (recheckVoices,
+    // after guiding the user to install an OS voice pack)
+    const [voices, setVoices] = useState<Array<SpeechSynthesisVoice>>([])
+    const [voicesLoaded, setVoicesLoaded] = useState(false)
+
+    const readVoices = useCallback(() => {
+        if (typeof window === "undefined" || !("speechSynthesis" in window)) {
+            return
+        }
+        const list = window.speechSynthesis.getVoices()
+        if (list.length > 0) {
+            setVoices(list)
+            setVoicesLoaded(true)
+        }
+    }, [])
+
     // detect support + hydrate the persisted preference once on mount
     useEffect(() => {
         if (typeof window === "undefined" || !("speechSynthesis" in window)) {
@@ -64,7 +100,21 @@ export const useSpeechSynthesis = (
         if (stored === "off") {
             setEnabledState(false)
         }
-    }, [storageKey])
+        readVoices()
+        window.speechSynthesis.onvoiceschanged = readVoices
+        return () => {
+            window.speechSynthesis.onvoiceschanged = null
+        }
+    }, [storageKey, readVoices])
+
+    /**
+     * Whether ANY installed voice matches the requested lang — exact tag match,
+     * or same base language (e.g. any "vi-*" voice satisfies "vi-VN"). Only
+     * trustworthy once {@link voicesLoaded} — an empty pre-load list must not
+     * read as "no Vietnamese voice on this machine".
+     */
+    const hasLocaleVoice = voices.some((voice) => voice.lang === lang)
+        || voices.some((voice) => voice.lang?.startsWith(lang.split("-")[0] ?? ""))
 
     // stop any in-flight speech when the component unmounts
     useEffect(() => {
@@ -104,15 +154,19 @@ export const useSpeechSynthesis = (
         window.speechSynthesis.cancel()
         const utterance = new window.SpeechSynthesisUtterance(spoken)
         utterance.lang = langRef.current
-        // prefer a voice matching the locale, if the browser exposes any
-        const voices = window.speechSynthesis.getVoices()
-        const match = voices.find((voice) => voice.lang === langRef.current)
-            ?? voices.find((voice) => voice.lang?.startsWith(langRef.current.split("-")[0] ?? ""))
+        // prefer a voice matching the locale, if the browser exposes any (re-reads
+        // live rather than trusting the `voices` state, in case a voice was just
+        // installed and `voiceschanged` hasn't fired/re-rendered yet)
+        const liveVoices = window.speechSynthesis.getVoices()
+        const match = liveVoices.find((voice) => voice.lang === langRef.current)
+            ?? liveVoices.find((voice) => voice.lang?.startsWith(langRef.current.split("-")[0] ?? ""))
         if (match) {
             utterance.voice = match
         }
         window.speechSynthesis.speak(utterance)
     }, [enabled])
 
-    return { supported, enabled, setEnabled, speak, cancel }
+    return {
+        supported, enabled, setEnabled, speak, cancel, voicesLoaded, hasLocaleVoice, recheckVoices: readVoices,
+    }
 }

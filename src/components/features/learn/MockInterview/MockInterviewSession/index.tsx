@@ -3,6 +3,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import {
     Button,
+    Chip,
     Spinner,
     Typography,
     cn,
@@ -13,6 +14,7 @@ import {
     CheckCircleIcon,
     CircleIcon,
     ClockIcon,
+    CodeIcon,
     DoorOpenIcon,
     MicrophoneIcon,
     PenNibIcon,
@@ -41,6 +43,8 @@ import type { AiGradableModel } from "@/modules/api/graphql/queries/types/ai-mod
 import type { MockInterviewTurnInput } from "@/modules/api/graphql/mutations/types/grade-mock-interview-session"
 import type { MockInterviewSeedTopic } from "@/modules/api/graphql/mutations/types/start-mock-interview-session"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { ProgrammingLanguage } from "@/modules/types/enums/programming-language"
+import { DEFAULT_PROGRAMMING_LANGUAGES } from "@/modules/types/utils/programming-language"
 import {
     MOCK_INTERVIEW_CODE_STATE_DEFAULT,
     MockInterviewWorkspace,
@@ -155,6 +159,26 @@ interface DrawnMockInterviewPrompt {
     id: string
     title: string
     seedTopics: Array<MockInterviewSeedTopic>
+    /** Where the questions came from — `"interview-bank"` (authored prompts,
+     *  delivered STATICALLY with no AI call) vs `"flashcard"` (AI-framed live). */
+    source: string
+}
+
+/** Bank questions are pre-authored → the interviewer just READS them (no AI turn
+ *  call to ask); only flashcard-seed sessions AI-frame a topic into a question. */
+const isStaticBankPrompt = (prompt: DrawnMockInterviewPrompt | undefined): boolean =>
+    prompt?.source === "interview-bank"
+
+/**
+ * Coerce an authored `givenLang` string to one of the workspace editor's four
+ * supported languages (its values ARE Monaco language ids), defaulting to
+ * TypeScript for an unset/unknown language — so a debug question's given code
+ * always seeds into a syntax-highlighted editor.
+ */
+const mapGivenLangToProgrammingLanguage = (lang: string | null | undefined): ProgrammingLanguage => {
+    const normalized = (lang ?? "").trim().toLowerCase()
+    return DEFAULT_PROGRAMMING_LANGUAGES.find((candidate) => candidate === normalized)
+        ?? ProgrammingLanguage.TypeScript
 }
 
 /** Format elapsed seconds as mm:ss. */
@@ -424,6 +448,46 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, className }: M
         [courseId, selection, currentLevel, mode, isQna, turnStream],
     )
 
+    // deliver a PRE-AUTHORED interview-bank question with NO AI call — the
+    // question is fully written in `.mount`, so the interviewer just reads it
+    // (rendered as-is, incl. any folded diagram/code) and speaks it aloud (TTS).
+    // Only grading needs AI; asking a static question does not.
+    const deliverStaticQuestion = useCallback((index: number, prompt: DrawnMockInterviewPrompt) => {
+        const topic = prompt.seedTopics[index]
+        const questionText = topic?.title ?? ""
+        if (questionText.length === 0) {
+            return
+        }
+        // a debug/review/optimize question ships GIVEN code → seed it into the
+        // editable Code tool + surface the tool (open + switch to the Code tab) so
+        // the candidate FIXES it in place; the bubble then shows a "code loaded"
+        // chip, not the code inline. A voice-only question RESETS the code buffer so
+        // the previous question's code never lingers into — or is graded against —
+        // the next one (each question's own code is captured at submit time).
+        const givenCode = topic?.givenCode?.trim() ? topic.givenCode : null
+        if (givenCode) {
+            setCodeState({ lang: mapGivenLangToProgrammingLanguage(topic?.givenLang), code: givenCode })
+            setWorkspaceTool("code")
+            setWorkspaceOpen(true)
+        } else {
+            setCodeState(MOCK_INTERVIEW_CODE_STATE_DEFAULT)
+        }
+        ttsRef.current.cancel()
+        setIsAsking(false)
+        setStreamingText(null)
+        setTurns((previous) => [
+            ...previous,
+            {
+                role: "interviewer",
+                phase: PHASES[0],
+                content: questionText,
+                questionIndex: index,
+                artifactHint: givenCode ? "code" : undefined,
+            },
+        ])
+        ttsRef.current.speak(questionText)
+    }, [])
+
     // ask the SERVER to draw a fresh prompt for the current tier and start a new run.
     // Re-drawing (rather than reusing the same prompt) is also how "Phỏng vấn lại"
     // behaves — retrying asks the server for a fresh draw of the SAME mode/tier, never
@@ -461,6 +525,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, className }: M
                 id: payload.data.promptId,
                 title: payload.data.promptTitle,
                 seedTopics: payload.data.seedTopics,
+                source: payload.data.source,
             }
             sessionId.current = payload.data.sessionId
             setSelectedPrompt(drawn)
@@ -481,20 +546,25 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, className }: M
             // design keeps defaulting to the whiteboard (architecture systems).
             setWorkspaceTool(nextMode === "design" ? "whiteboard" : "notes")
             setPhase("interview")
-            // the interviewer opens the session — empty history, no answer yet. For
-            // mode="qna" the opening turn is framed around the first drawn seed topic.
-            askNextTurn({
-                phase: PHASES[0],
-                latestAnswer: "",
-                history: [],
-                prompt: drawn,
-                questionIndex: 0,
-                currentSeed: drawn.seedTopics[0]?.title ?? null,
-            })
+            // the interviewer opens the session. Interview-bank questions are
+            // PRE-AUTHORED → deliver the first one statically (no AI call, just
+            // read it); flashcard-seed sessions AI-frame the topic live.
+            if (nextMode === "qna" && isStaticBankPrompt(drawn)) {
+                deliverStaticQuestion(0, drawn)
+            } else {
+                askNextTurn({
+                    phase: PHASES[0],
+                    latestAnswer: "",
+                    history: [],
+                    prompt: drawn,
+                    questionIndex: 0,
+                    currentSeed: drawn.seedTopics[0]?.title ?? null,
+                })
+            }
         } catch {
             setStartError(t("mockInterview.startFailed"))
         }
-    }, [courseId, currentLevel, mode, configMode, questionCount, selectedKinds, startSessionSwr, askNextTurn, t])
+    }, [courseId, currentLevel, mode, configMode, questionCount, selectedKinds, startSessionSwr, askNextTurn, deliverStaticQuestion, t])
 
     // mode="design" only (Vòng 5) — record the current spoken answer as a candidate
     // turn, then ask the interviewer to probe/follow-up on it within the SAME phase,
@@ -583,7 +653,11 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, className }: M
                 questionIndex: syntheticQuestionIndex,
             })
         }
-        if (codeState.code.trim().length > 0) {
+        // qna captures each question's code as its own per-question turn in
+        // submitQnaAnswer (tagged with that question's index), so folding the shared
+        // buffer again here would double-count it against the LAST question. Design
+        // mode is a single "question" → the once-at-grade fold is correct there.
+        if (!isQna && codeState.code.trim().length > 0) {
             turnsForGrading.push({
                 role: "candidate",
                 phase: currentPhase,
@@ -668,6 +742,19 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, className }: M
             ...turns,
             { role: "candidate", phase: currentPhase, content: answer, questionIndex },
         ]
+        // capture THIS question's edited code as its own candidate artifact turn,
+        // tagged with THIS question's index, so a debug/review question's FIX is
+        // graded against the right question (the shared code buffer is reset for the
+        // next question's seed in deliverStaticQuestion). This is why finishAndGrade's
+        // global code-fold is skipped for qna — code is captured here, per-question.
+        if (codeState.code.trim().length > 0) {
+            nextTurns.push({
+                role: "candidate",
+                phase: currentPhase,
+                content: `[Code lang=${codeState.lang}]\n${codeState.code}`,
+                questionIndex,
+            })
+        }
         setTurns(nextTurns)
         reset()
         setAnswerDraft("")
@@ -677,15 +764,20 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, className }: M
         }
         const next = questionIndex + 1
         setQuestionIndex(next)
-        askNextTurn({
-            phase: currentPhase,
-            latestAnswer: "",
-            history: nextTurns,
-            prompt: selectedPrompt,
-            questionIndex: next,
-            currentSeed: selectedPrompt.seedTopics[next]?.title ?? null,
-        })
-    }, [answerDraft, isAsking, selectedPrompt, listening, stop, turns, currentPhase, questionIndex, reset, isLastQuestion, finishAndGrade, askNextTurn])
+        // static bank → read the next authored question (no AI); flashcard → AI-frame
+        if (isStaticBankPrompt(selectedPrompt)) {
+            deliverStaticQuestion(next, selectedPrompt)
+        } else {
+            askNextTurn({
+                phase: currentPhase,
+                latestAnswer: "",
+                history: nextTurns,
+                prompt: selectedPrompt,
+                questionIndex: next,
+                currentSeed: selectedPrompt.seedTopics[next]?.title ?? null,
+            })
+        }
+    }, [answerDraft, isAsking, selectedPrompt, listening, stop, turns, currentPhase, questionIndex, reset, isLastQuestion, finishAndGrade, askNextTurn, deliverStaticQuestion, codeState])
 
     // leave the interview mid-run (abandon, ungraded) — confirm first, then hush the
     // mic + any spoken question and return to the green room.
@@ -1082,8 +1174,16 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, className }: M
                             <Spinner size="sm" />
                         )
                     ) : currentQuestionTurn ? (
-                        <div className="text-sm font-medium text-foreground">
-                            <MarkdownContent markdown={currentQuestionTurn.content} />
+                        <div className="flex flex-col gap-2">
+                            <div className="text-sm font-medium text-foreground">
+                                <MarkdownContent markdown={currentQuestionTurn.content} />
+                            </div>
+                            {currentQuestionTurn.artifactHint === "code" ? (
+                                <Chip size="sm" className="w-fit bg-accent/10 text-accent">
+                                    <CodeIcon className="size-3" aria-hidden focusable="false" />
+                                    <Chip.Label>{t("mockInterview.workspace.codeLoadedHint")}</Chip.Label>
+                                </Chip>
+                            ) : null}
                         </div>
                     ) : (
                         <Typography type="body-sm" color="muted">

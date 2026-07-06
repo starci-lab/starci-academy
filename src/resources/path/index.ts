@@ -320,6 +320,15 @@ export const pathConfig = () => {
                         build,
                     }
                 }
+                const qa = () => {
+                    const qaPath = `${learnPath}/qa`
+                    const build = () => {
+                        return qaPath
+                    }
+                    return {
+                        build,
+                    }
+                }
                 const headhuntings = () => {
                     const headhuntingsPath = `${learnPath}/headhuntings`
                     const build = () => {
@@ -407,6 +416,7 @@ export const pathConfig = () => {
                     cv,
                     personalProject,
                     leaderboard,
+                    qa,
                     headhuntings,
                     flashcards,
                     mockInterview,

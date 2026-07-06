@@ -3,6 +3,7 @@
 import {
     BracketsCurlyIcon,
     CardsIcon,
+    ChatsCircleIcon,
     GraduationCapIcon,
     MapPinLineIcon,
     MicrophoneStageIcon,
@@ -157,6 +158,14 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
                 url: pathConfig().locale(locale).course(courseDisplayId).learn().leaderboard().build(),
                 // rank nudge — only when the viewer is ranked on this course
                 badge: myRank !== null ? { tone: "rank", value: myRank } : undefined,
+            },
+            {
+                label: t("courseQa.navLabel"),
+                value: "qa",
+                tab: SidebarTab.CourseQa,
+                icon: ChatsCircleIcon,
+                group: "track",
+                url: pathConfig().locale(locale).course(courseDisplayId).learn().qa().build(),
             },
         ],
         [

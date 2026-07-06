@@ -9,6 +9,7 @@ export enum SidebarTab {
     Cv = "cv",
     PersonalProject = "personalProject",
     Leaderboard = "leaderboard",
+    CourseQa = "courseQa",
     Foundations = "foundations",
     Headhuntings = "headhuntings",
     Flashcards = "flashcards",

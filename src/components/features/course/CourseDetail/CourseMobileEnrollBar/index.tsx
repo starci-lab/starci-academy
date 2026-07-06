@@ -8,7 +8,7 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    RocketLaunchIcon,
+    ArrowRightIcon,
     BookOpenIcon,
 } from "@phosphor-icons/react"
 import {
@@ -67,8 +67,8 @@ export const CourseMobileEnrollBar = ({ className }: CourseMobileEnrollBarProps)
                     </Button>
                 ) : (
                     <Button variant="primary" onPress={onEnroll}>
-                        <RocketLaunchIcon className="size-5" />
                         {t("course.enroll")}
+                        <ArrowRightIcon className="size-5" />
                     </Button>
                 )}
             </div>

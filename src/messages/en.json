@@ -448,6 +448,14 @@
     "metaLearnersLabel": "learners",
     "capstoneEyebrow": "Content done — on to your project",
     "resumeCapstone": "Continue project",
+    "trial": {
+      "title": "You're on a free trial of this course",
+      "desc": "Unlock the full course + build real proof for your job profile — capstone, graded challenges, interviews recruiters can see.",
+      "descRemaining": "{remaining} free lessons left. Unlock the full course + build real job proof recruiters can see.",
+      "cta": "Unlock the course",
+      "earnedTitle": "You're giving the trial a serious go",
+      "earnedDesc": "Unlock to learn the whole course + build real job proof — the unlock button is right on this page."
+    },
     "nudges": {
       "dueFlashcards": "{count} cards due today",
       "mockInterview": "Practice interview for your upcoming project",
@@ -572,13 +580,14 @@
     "enrolled": "Enrolled",
     "priceUsdHint": "≈ {amount} for international payments",
     "continueLearning": "Continue Learning",
-    "tryLearning": "Try for free",
+    "tryLearning": "Try it free",
     "trial": "Trial",
     "paywall": {
       "title": "Premium content",
       "titleNamed": "Unlock {course}",
       "description": "You're reading a preview. Enroll to learn the whole course.",
       "buy": "Enroll in course",
+      "priceRising": "then rises to {nextPrice}",
       "back": "Go back",
       "unlock": {
         "content": "All lessons",
@@ -677,9 +686,12 @@
   },
   "enrollGate": {
     "title": "Unlock {surface}",
-    "description": "Enroll in the course to unlock this section and start practising.",
+    "description": "Enroll to unlock this — do the real work and build proof for your job profile.",
     "cta": "Enroll in course",
-    "locked": "Enrollment required"
+    "locked": "Enrollment required",
+    "hookTitle": "You're on a free trial",
+    "hookDesc": "Unlock the full course + build real job proof recruiters can see.",
+    "hookCta": "Unlock the course"
   },
   "foundations": {
     "title": "Foundations",
@@ -1349,6 +1361,16 @@
   },
   "content": {
     "title": "Content",
+    "upNext": {
+      "eyebrow": "Up next · Practice this lesson",
+      "challengesTitle": "Do this lesson's {count} challenges",
+      "challengesDesc": "Apply what you just learned — challenges are auto-graded and count toward your progress.",
+      "challengesCta": "Do the challenges",
+      "challengesDoneEyebrow": "All challenges passed ✓ · Up next",
+      "nextLessonTitle": "Next lesson: {title}",
+      "nextLessonDesc": "You've finished this lesson — keep going on your path.",
+      "nextLessonCta": "Next lesson"
+    },
     "language": "Language",
     "mindMapAria": "Course and modules overview",
     "mindMapEmpty": "No modules to show yet.",
@@ -1560,6 +1582,10 @@
   },
   "personalProjectResult": {
     "backToTask": "Back to project",
+    "upNextEyebrow": "Task passed ✓ · Up next",
+    "nextTaskTitle": "On to your project's next task",
+    "nextTaskDesc": "Each task you finish raises your job-readiness (capstone).",
+    "nextTaskCta": "Next task",
     "title": "Grading result",
     "history": "Submission history",
     "resultLabel": "Result",
@@ -1598,6 +1624,39 @@
       "low": "Low priority",
       "unknown": "Unknown"
     }
+  },
+  "courseQa": {
+    "navLabel": "Q&A",
+    "title": "Q&A for this course",
+    "description": "Ask when you're stuck — the founder and your classmates answer. Questions and answers here compound over time, so every future cohort benefits.",
+    "answeredLine": "{total} questions · {answered} answered",
+    "learnersLine": "{count} learners enrolled in this course",
+    "filterAria": "Filter questions",
+    "filter": {
+      "unanswered": "Unanswered",
+      "answered": "Answered",
+      "mine": "Mine",
+      "all": "All"
+    },
+    "searchPlaceholder": "Search questions...",
+    "searchEmpty": "No matching questions.",
+    "count": "{count} questions",
+    "statusAnswered": "Answered",
+    "statusUnanswered": "Unanswered",
+    "founderBadge": "Founder",
+    "answeredByFounder": "Founder answered",
+    "replyCount": "{count} replies",
+    "lessonTag": "Lesson: {title}",
+    "generalTag": "General",
+    "composerPlaceholder": "Ask a question about the whole course...",
+    "composerSubmit": "Post question",
+    "empty": {
+      "title": "No questions yet",
+      "hint": "Open a lesson and ask when you're stuck — the founder will answer."
+    },
+    "emptyCta": "Go to course content",
+    "loadError": "Couldn't load questions",
+    "retry": "Retry"
   },
   "leaderboard": {
     "title": "Leaderboard",
@@ -1814,6 +1873,7 @@
       "sessionDoneTitle": "Session complete",
       "sessionDoneDescription": "You reviewed {count} cards. Come back when more are due.",
       "backToHome": "Back to review",
+      "mockInterviewCta": "Try a mock interview",
       "studyAgain": "Study again",
       "intervalDays": "{count}d"
     },
@@ -1986,8 +2046,8 @@
     "navLabel": "Mock interview",
     "title": "Mock interview",
     "subtitle": "Answer randomly-drawn technical interview questions, graded in detail by AI.",
-    "gateTitle": "Enroll to practice interviews",
-    "gateDescription": "The mock interview spends AI credits — enroll in the course to unlock it.",
+    "gateTitle": "Practice interviews — prove you're job-ready",
+    "gateDescription": "Graded against the exact course you study; the score feeds the profile recruiters see. Enroll to unlock.",
     "promptsRetry": "Retry",
     "gradingLabel": "Grading",
     "configTitle": "Session config",
@@ -2054,6 +2114,7 @@
     "trackSnapshotHint": "Readiness for the whole track (capstone, interview, CV) — not just the interview.",
     "weakPhaseCta": "Review {phase} in the course",
     "weakPhaseCtaGeneric": "Review the course content",
+    "capstoneCta": "Work on your capstone",
     "quotaExceededTitle": "Out of AI credits this month",
     "quotaExceededDescription": "You've used up your AI grading allowance for the current window. Upgrade your AI plan to keep grading right away.",
     "quotaExceededCta": "Upgrade AI plan",
@@ -2066,7 +2127,14 @@
       "theory": "Theory",
       "reasoning": "Reasoning",
       "scenario": "Scenario",
-      "design": "Design"
+      "design": "Design",
+      "debug": "Debug",
+      "review": "Code review",
+      "optimize": "Optimize",
+      "coding": "Coding",
+      "behavioral": "Behavioral",
+      "situational": "Situational",
+      "culture": "Motivation"
     },
     "phase": {
       "requirements": "Clarify requirements",
@@ -2093,7 +2161,8 @@
       "notes": "Notes",
       "languageLabel": "Language",
       "codePlaceholder": "Write your code here…",
-      "notesPlaceholder": "Notes, estimates, API sketches…"
+      "notesPlaceholder": "Notes, estimates, API sketches…",
+      "codeLoadedHint": "Code loaded into the Code tab — fix it there"
     },
     "enterRoom": "Enter the room",
     "aboutToBeInterviewed": "You are about to be interviewed",
@@ -3276,6 +3345,8 @@
   },
   "discussion": {
     "title": "Discussion · {count}",
+    "archiveLine": "{answered}/{total} questions answered — compounding over time",
+    "founderBadge": "Founder",
     "react": "React",
     "post": "Post",
     "reply": "Reply",

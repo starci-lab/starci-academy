@@ -18,6 +18,11 @@ const query1 = gql`
         discountedPriceUsd
         discountReason
         enrolledCount
+        currentPhase
+        nextPhase
+        seatsRemainingInCurrentPhase
+        nextPhasePriceVnd
+        nextPhasePriceUsd
       }
     }
   }

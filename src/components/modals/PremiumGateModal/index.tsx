@@ -1,6 +1,6 @@
 "use client"
 
-import { ShoppingCartIcon, CheckCircleIcon } from "@phosphor-icons/react"
+import { ArrowRightIcon, CheckCircleIcon } from "@phosphor-icons/react"
 import React, {
     useCallback,
 } from "react"
@@ -20,6 +20,7 @@ import { useAppSelector } from "@/redux/hooks"
 import { PaymentFlow } from "@/modules/types/payment"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { PriceTag } from "@/components/blocks/commerce/PriceTag"
+import { PhaseScarcityNote } from "@/components/blocks/commerce/PhaseScarcityNote"
 
 /**
  * Premium-gate modal: a VALUE-FIRST register/buy prompt shown when a viewer clicks
@@ -100,7 +101,7 @@ export const PremiumGateModal = ({ className }: WithClassNames<undefined>) => {
                                         errorContent={{ title: t("payment.priceError") }}
                                     >
                                         {price?.discountedPriceVnd != null ? (
-                                            <div className="border-t border-default pt-3">
+                                            <div className="flex flex-col gap-2 border-t border-default pt-3">
                                                 <PriceTag
                                                     discounted={price.discountedPriceVnd}
                                                     original={price.originalPriceVnd}
@@ -109,6 +110,11 @@ export const PremiumGateModal = ({ className }: WithClassNames<undefined>) => {
                                                         phase: price.phasePriceVnd,
                                                         loyaltyPercent: price.discountPercent,
                                                     }}
+                                                />
+                                                <PhaseScarcityNote
+                                                    currentPhase={price.currentPhase}
+                                                    seatsRemaining={price.seatsRemainingInCurrentPhase}
+                                                    nextPhasePriceVnd={price.nextPhasePriceVnd}
                                                 />
                                             </div>
                                         ) : null}
@@ -121,8 +127,8 @@ export const PremiumGateModal = ({ className }: WithClassNames<undefined>) => {
                                     className="w-full"
                                     onPress={onBuy}
                                 >
-                                    <ShoppingCartIcon aria-hidden focusable="false" className="size-5" />
                                     {t("course.paywall.buy")}
+                                    <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
                                 </Button>
                             </div>
                         </Modal.Body>

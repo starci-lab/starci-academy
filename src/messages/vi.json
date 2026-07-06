@@ -448,6 +448,14 @@
     "metaLearnersLabel": "học viên",
     "capstoneEyebrow": "Đã xong nội dung — tới đồ án cá nhân",
     "resumeCapstone": "Tiếp tục đồ án",
+    "trial": {
+      "title": "Bạn đang học thử khóa này",
+      "desc": "Mở khóa để học trọn khóa + dựng bằng chứng đi làm — capstone, thử thách đã chấm, phỏng vấn — cho hồ sơ nhà tuyển dụng thấy.",
+      "descRemaining": "Còn {remaining} bài đọc thử. Mở khóa để học trọn khóa + dựng bằng chứng đi làm cho hồ sơ nhà tuyển dụng thấy.",
+      "cta": "Mở khóa học",
+      "earnedTitle": "Bạn đang học thử nghiêm túc đấy",
+      "earnedDesc": "Mở khóa để học trọn khóa + dựng bằng chứng đi làm — nút Mở khóa ngay trên trang này."
+    },
     "nudges": {
       "dueFlashcards": "{count} thẻ đến hạn hôm nay",
       "mockInterview": "Luyện phỏng vấn cho đồ án sắp tới",
@@ -572,13 +580,14 @@
     "enrolled": "Đã đăng ký",
     "priceUsdHint": "≈ {amount} khi thanh toán quốc tế",
     "continueLearning": "Tiếp tục học",
-    "tryLearning": "Học thử",
+    "tryLearning": "Học thử miễn phí",
     "trial": "Học thử",
     "paywall": {
       "title": "Nội dung trả phí",
       "titleNamed": "Mở khoá {course}",
       "description": "Bạn đang đọc thử. Đăng ký để học trọn khóa.",
       "buy": "Đăng ký khóa học",
+      "priceRising": "giá tăng lên {nextPrice} sau đó",
       "back": "Quay lại",
       "unlock": {
         "content": "Toàn bộ bài học",
@@ -686,9 +695,12 @@
   },
   "enrollGate": {
     "title": "Mở khoá {surface}",
-    "description": "Đăng ký khoá học để mở khoá phần này và bắt đầu thực hành.",
+    "description": "Đăng ký khoá để mở phần này — thực hành thật, dựng bằng chứng cho hồ sơ đi làm.",
     "cta": "Đăng ký khoá học",
-    "locked": "Cần đăng ký khoá học"
+    "locked": "Cần đăng ký khoá học",
+    "hookTitle": "Bạn đang học thử",
+    "hookDesc": "Mở khóa để học trọn khóa + dựng bằng chứng đi làm cho hồ sơ nhà tuyển dụng thấy.",
+    "hookCta": "Mở khóa học"
   },
   "foundations": {
     "title": "Nền tảng",
@@ -1358,6 +1370,16 @@
   },
   "content": {
     "title": "Nội dung",
+    "upNext": {
+      "eyebrow": "Tiếp theo · Luyện tập bài này",
+      "challengesTitle": "Làm {count} thử thách của bài này",
+      "challengesDesc": "Áp dụng ngay điều vừa học — thử thách được chấm tự động, tính vào tiến độ của bạn.",
+      "challengesCta": "Làm thử thách",
+      "challengesDoneEyebrow": "Đã đạt hết thử thách ✓ · Tiếp theo",
+      "nextLessonTitle": "Sang bài tiếp: {title}",
+      "nextLessonDesc": "Bạn đã hoàn thành bài này — tiếp tục lộ trình học.",
+      "nextLessonCta": "Bài tiếp theo"
+    },
     "language": "Ngôn ngữ",
     "mindMapAria": "Sơ đồ khóa học và các học phần",
     "mindMapEmpty": "Chưa có học phần để hiển thị.",
@@ -1569,6 +1591,10 @@
   },
   "personalProjectResult": {
     "backToTask": "Quay lại dự án",
+    "upNextEyebrow": "Đạt task này ✓ · Tiếp theo",
+    "nextTaskTitle": "Sang task tiếp theo của dự án",
+    "nextTaskDesc": "Mỗi task hoàn thành nâng độ sẵn sàng đi làm (capstone) của bạn.",
+    "nextTaskCta": "Task tiếp theo",
     "title": "Kết quả chấm điểm",
     "history": "Lịch sử nộp bài",
     "resultLabel": "Kết quả",
@@ -1607,6 +1633,39 @@
       "low": "Ưu tiên thấp",
       "unknown": "Không rõ"
     }
+  },
+  "courseQa": {
+    "navLabel": "Hỏi đáp",
+    "title": "Hỏi đáp khóa này",
+    "description": "Hỏi khi bạn kẹt — founder và cả lớp trả lời. Câu hỏi và lời giải ở đây tích luỹ theo thời gian, mọi cohort sau đều được hưởng.",
+    "answeredLine": "{total} câu hỏi · {answered} đã được trả lời",
+    "learnersLine": "{count} học viên đang học khóa này",
+    "filterAria": "Lọc câu hỏi",
+    "filter": {
+      "unanswered": "Chưa trả lời",
+      "answered": "Đã trả lời",
+      "mine": "Của tôi",
+      "all": "Tất cả"
+    },
+    "searchPlaceholder": "Tìm câu hỏi...",
+    "searchEmpty": "Không tìm thấy câu hỏi khớp.",
+    "count": "{count} câu hỏi",
+    "statusAnswered": "Đã trả lời",
+    "statusUnanswered": "Chưa trả lời",
+    "founderBadge": "Founder",
+    "answeredByFounder": "Founder đã trả lời",
+    "replyCount": "{count} trả lời",
+    "lessonTag": "Bài: {title}",
+    "generalTag": "Chung",
+    "composerPlaceholder": "Hỏi chung khóa học...",
+    "composerSubmit": "Đăng câu hỏi",
+    "empty": {
+      "title": "Chưa có câu hỏi nào",
+      "hint": "Mở một bài học và hỏi khi bạn kẹt — founder sẽ trả lời."
+    },
+    "emptyCta": "Vào nội dung khóa",
+    "loadError": "Không tải được câu hỏi",
+    "retry": "Thử lại"
   },
   "leaderboard": {
     "title": "Bảng xếp hạng",
@@ -1823,6 +1882,7 @@
       "sessionDoneTitle": "Hoàn thành phiên ôn",
       "sessionDoneDescription": "Bạn đã ôn {count} thẻ. Quay lại khi có thêm thẻ đến hạn.",
       "backToHome": "Về trang ôn tập",
+      "mockInterviewCta": "Phỏng vấn thử về khóa này",
       "studyAgain": "Học lại",
       "intervalDays": "{count} ngày"
     },
@@ -1995,8 +2055,8 @@
     "navLabel": "Phỏng vấn thử",
     "title": "Phỏng vấn thử",
     "subtitle": "Trả lời các câu hỏi phỏng vấn kỹ thuật ngẫu nhiên, AI chấm chi tiết.",
-    "gateTitle": "Đăng ký để phỏng vấn thử",
-    "gateDescription": "Phỏng vấn thử tiêu tốn tín dụng AI — đăng ký khóa để mở tính năng này.",
+    "gateTitle": "Luyện phỏng vấn — chứng minh bạn sẵn sàng đi làm",
+    "gateDescription": "Phỏng vấn chấm theo đúng khóa bạn học; điểm vào hồ sơ nhà tuyển dụng thấy. Đăng ký khóa để mở.",
     "promptsRetry": "Thử lại",
     "gradingLabel": "Chấm điểm",
     "configTitle": "Cấu hình phiên",
@@ -2063,6 +2123,7 @@
     "trackSnapshotHint": "Độ sẵn sàng của cả track (dự án, phỏng vấn, CV) — không chỉ riêng phỏng vấn.",
     "weakPhaseCta": "Ôn lại {phase} trong khóa",
     "weakPhaseCtaGeneric": "Xem lại nội dung khóa",
+    "capstoneCta": "Làm dự án cá nhân",
     "quotaExceededTitle": "Hết credit AI tháng này",
     "quotaExceededDescription": "Bạn đã dùng hết hạn mức chấm điểm AI trong cửa sổ hiện tại. Nâng cấp gói AI để chấm tiếp ngay.",
     "quotaExceededCta": "Nâng cấp gói AI",
@@ -2075,7 +2136,14 @@
       "theory": "Lý thuyết",
       "reasoning": "Tư duy",
       "scenario": "Tình huống",
-      "design": "Thiết kế"
+      "design": "Thiết kế",
+      "debug": "Sửa sai",
+      "review": "Đọc code",
+      "optimize": "Tối ưu",
+      "coding": "Viết code",
+      "behavioral": "Hành vi",
+      "situational": "Tình huống EQ",
+      "culture": "Động lực"
     },
     "phase": {
       "requirements": "Làm rõ yêu cầu",
@@ -2102,7 +2170,8 @@
       "notes": "Ghi chú",
       "languageLabel": "Ngôn ngữ",
       "codePlaceholder": "Viết code ở đây…",
-      "notesPlaceholder": "Ghi chú, ước lượng, phác thảo API…"
+      "notesPlaceholder": "Ghi chú, ước lượng, phác thảo API…",
+      "codeLoadedHint": "Code đã nạp vào tab Code — sửa trực tiếp"
     },
     "enterRoom": "Vào phòng phỏng vấn",
     "aboutToBeInterviewed": "Bạn sắp được phỏng vấn",
@@ -3276,6 +3345,8 @@
   },
   "discussion": {
     "title": "Thảo luận · {count}",
+    "archiveLine": "{answered}/{total} câu hỏi đã được trả lời — tích luỹ theo thời gian",
+    "founderBadge": "Founder",
     "react": "Bày tỏ cảm xúc",
     "post": "Đăng",
     "reply": "Trả lời",

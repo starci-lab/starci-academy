@@ -2,11 +2,13 @@
 
 import React, {
     useCallback,
+    useEffect,
     useMemo,
 } from "react"
 import {
     Button,
     Typography,
+    toast,
 } from "@heroui/react"
 import {
     useLocale,
@@ -42,6 +44,7 @@ import {
     CourseContentsSkeleton,
 } from "./CourseContentsSkeleton"
 import { LearnNudges } from "./LearnNudges"
+import { TrialConversionStrip } from "./TrialConversionStrip"
 import { useCourseResume } from "../shared/useCourseResume"
 import { useAppSelector } from "@/redux/hooks"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
@@ -76,6 +79,11 @@ export const CourseContents = ({ className }: CourseContentsProps) => {
     const courseTitle = useAppSelector((state) => state.course.entity?.title)
     const courseDescription = useAppSelector((state) => state.course.entity?.description)
     const enrollmentCount = useAppSelector((state) => state.course.entity?.enrollmentCount) ?? 0
+    const courseEntityId = useAppSelector((state) => state.course.entity?.id)
+    // trial = logged-in learner who has NOT purchased; `enrollKnown` gates until the
+    // status query settles so the conversion strip never flashes for a paid learner.
+    const enrolled = useAppSelector((state) => state.user.enrolled)
+    const enrollKnown = useAppSelector((state) => state.user.enrollKnown)
 
     // catalog meta (chương · giờ học · học viên) — derived client-side from the loaded
     // course tree, identity facts the progress stat line below does NOT carry.
@@ -113,6 +121,45 @@ export const CourseContents = ({ className }: CourseContentsProps) => {
         }
         return outline.modules[0]
     }, [outline])
+
+    // goal-gradient signal for the trial strip: FREE lessons the viewer hasn't read
+    // yet ("còn N bài đọc thử") — a near-a-milestone framing that beats "read X/Y".
+    const freeLessonsRemaining = useMemo(() => {
+        if (!outline) {
+            return 0
+        }
+        return outline.modules.reduce(
+            (sum, module) => sum + module.lessons.filter(
+                (lesson) => !lesson.isPremium && !lesson.isRead,
+            ).length,
+            0,
+        )
+    }, [outline])
+
+    // earned-moment (#9): once a TRIAL learner has proven serious engagement (read a
+    // few free lessons or passed a challenge), fire ONE celebratory enroll nudge —
+    // localStorage-gated per course so it never nags on return visits.
+    useEffect(() => {
+        if (!enrollKnown || enrolled || !courseEntityId || !outline) {
+            return
+        }
+        if (typeof window === "undefined") {
+            return
+        }
+        const key = `starci.trialEarned.${courseEntityId}`
+        if (window.localStorage.getItem(key)) {
+            return
+        }
+        const provenSerious = outline.progress.lessonsRead >= 3
+            || outline.progress.challengesCompleted >= 1
+        if (!provenSerious) {
+            return
+        }
+        window.localStorage.setItem(key, "1")
+        toast.success(t("courseContents.trial.earnedTitle"), {
+            description: t("courseContents.trial.earnedDesc"),
+        })
+    }, [enrollKnown, enrolled, courseEntityId, outline, t])
 
     /** The lesson to highlight in the path: the resume lesson, or the resume challenge's owner. */
     const activeLessonId = useMemo(() => {
@@ -207,6 +254,15 @@ export const CourseContents = ({ className }: CourseContentsProps) => {
                             {/* non-blocking warning: paid learner not yet in the course GitHub team
                                 (self-hides for trial / when already in team) */}
                             <GithubTeamGate />
+                            {/* trial → enroll conversion strip: only for a not-yet-enrolled
+                                learner (loss-aversion progress + real pricing-phase scarcity +
+                                outcome-framed enroll CTA). Self-hidden for paid learners. */}
+                            {enrollKnown && !enrolled && courseEntityId ? (
+                                <TrialConversionStrip
+                                    courseId={courseEntityId}
+                                    freeLessonsRemaining={freeLessonsRemaining}
+                                />
+                            ) : null}
                             {/* continue + progress — flat (no card frame), the honest unified meter */}
                             <div className="flex flex-col gap-3">
                                 <div className="flex items-start justify-between gap-3">

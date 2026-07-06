@@ -296,3 +296,99 @@ V2-7. Model picker at setup (3rd decision): does "Balanced vs Frontier" before a
   runbook). Ngay lập tức (rẻ): gắn nhãn diagram trong grading prompt + ẨN whiteboard ở khóa non-SD.
 - **R3 (signal integrity):** điểm-feed-readiness chấm bằng 1 tier cố định (Economy) — model xịn hơn chỉ nâng
   chất feedback; server tự lookup prompt/level (đừng tin client) — gộp với V1-H2.
+
+---
+---
+
+# VÒNG 3 (2026-07-07) — FREE→PAID CONVERSION ECONOMICS (thầy: "design lại sự liên quan để CTA free→paid")
+
+> Trọng tâm KHÁC V1/V2: không phải demand-loop hay integrity, mà **kinh tế chuyển đổi 2 trục trả tiền**
+> (enroll khóa vs mua AI-sub). Grounded lại BE credit/entitlement + FE flow (3 Explore, 2026-07-07).
+
+## Grounded facts MỚI (đổi cả bài toán — verify 2026-07-07)
+- **KHÔNG có "free mock-interview user".** Chưa enroll → `EnrollGate` (`MockInterview/index.tsx:40-46`), không
+  bao giờ thấy setup card. → conversion ĐẦU TIÊN là **enroll khóa**, KHÔNG phải mua AI-sub. Mock interview là
+  feature **hậu-mua** (retention), không phải phễu acquisition.
+- **Credit pool:** free base = **500/tuần, 100/5h** (`ai-auto-quota-defaults.ts`). Paid: Plus 3000/tuần (99k),
+  Pro 6000 (199k), Max 15000 (499k). **Enroll KHÔNG nâng pool** — chỉ mở MODEL ACCESS (Premium/Frontier); pool
+  vẫn free base (`isUnlocked = paid OR hasActiveEnrollment`, `ai-entitlement.service.ts:387-431`).
+- **Charge theo model đã phục vụ:** Free/Qwen=**0**, Economy=5, Balanced=20, Premium=50, Frontier=100. Enrolled
+  non-payer/tuần: **25 lần Balanced HOẶC vô hạn Qwen (0đ)**.
+- **Exhaustion = HARD BLOCK cuối buổi** (`assertNotOverQuota` throw) — sau khi đã trả lời hết. `Bắt đầu`
+  `isDisabled={isMutating}` thôi, KHÔNG pre-flight theo credit.
+- **Score KHÔNG normalize theo model** (`normalizeScore` chỉ clamp) → model rộng tay = số cao hơn. Recruiter
+  (`talent-candidates`) + job-readiness đều lọc `counts_to_readiness=true` (grinding + Tùy-chỉnh đã chặn) NHƯNG
+  model-generosity thì KHÔNG chặn.
+
+## Lens 2/4 — AI-subscription có demand event không? (⭐ hole to nhất vòng này)
+V3-1. **Claim: AI-subscription là paywall MA cho mock interview.** Enrolled user đã có: mọi model tier mở +
+      500 credit/tuần + **Qwen chấm 0đ vô hạn**. 1 người luyện phỏng vấn 1 mình BAO GIỜ tiêu hết 500/tuần (=25
+      lần Balanced, hoặc vô hạn Qwen)? Nếu trigger "hết credit" gần như KHÔNG BAO GIỜ nổ cho user bình thường,
+      thì giá trị duy nhất của AI-sub (pool to hơn) **không có sự kiện tạo demand**. Convince me 500/tuần là
+      ràng buộc thật, không phải số trang trí.
+V3-2. Caption "Còn 417/500 credit tuần này" là **text tĩnh** (không `onOpenDetails`), nút `Bắt đầu` bỏ qua nó
+      hoàn toàn. Con số đáng lẽ tạo khan hiếm/urgency lại chỉ để trang trí → dạy user "credit dư thừa, kệ nó".
+      **Hiển thị 417/500 thay đổi HÀNH VI gì?** Nếu không gì → đó là UI phản-tác-dụng (dạy bỏ qua credit).
+V3-3. Nếu AI-sub KHÔNG bán được trên mock-interview (vì pool không cạn), thì **credit caption + model-lock ở
+      màn này đang bán nhầm sản phẩm**. AI-sub có lý khi pool CHÁY thật (challenge grind, CV rewrite, chatbot).
+      **Có nên bỏ hẳn credit UI khỏi mock-interview** và chỉ bán AI-sub ở surface nơi pool thực sự cạn? Reframe
+      AI-sub = "capacity cho các surface AI khác + priority", không phải "capacity để phỏng vấn"?
+
+## Lens 3 — Credit-wall là trigger hay dead-end?
+V3-4. **Hard block CUỐI BUỔI = khoảnh khắc convert tệ nhất có thể.** User trả lời hết 15 phút → submit →
+      `AiQuotaExhaustedException` → tịch thu kết quả → "nâng cấp". Đọc ra "công của bạn mất trắng, trả tiền
+      đi", KHÔNG phải "nâng cấp để mở thêm". **Sao đây là trigger chứ không phải rage-quit?** Và: sao không có
+      pre-flight (biết trước khi tốn 15 phút)? Đặc biệt vô lý khi **Qwen = 0đ** — lẽ ra hết credit thì
+      "chuyển sang model free để luyện tiếp" (không dead-end), chứ không chặn cứng.
+V3-5. Upsell (model-lock + quota Callout) đều `router.push('/profile/settings/ai-subscription')` — **quăng user
+      khỏi luồng vào trang settings tài khoản**, không phải paywall in-context với value của CHÍNH lúc này.
+      Bằng chứng nào cho thấy "ném sang settings giữa chừng" convert tốt hơn offer tại chỗ, leak rate ở cú
+      handoff đó bao nhiêu?
+
+## Lens 4/6 — 2 trục trả tiền lẫn lộn tại điểm quyết định + fairness (đã confirm số)
+V3-6. Enroll mở MODEL, AI-sub mở POOL — 2 trục **trực giao**. Nhưng UI đặt "chọn model xịn hơn" (perk enroll)
+      + "sắp hết credit" (perk AI-sub) trên CÙNG cụm dropdown+caption. **User có hiểu model-lock = mua-khóa còn
+      credit = mua-sub không?** Trộn 2 trục tại 1 điểm → convert cả hai đều mờ.
+V3-7. **(confirmed, không còn là "smell" — là hố thật)** Score KHÔNG normalize theo model; Frontier có thể chấm
+      +10 rộng hơn Qwen. User Max-tier grind recent-5 bằng model rộng tay → **nâng readiness recruiter thấy** =
+      đúng "trả tiền → số cao hơn", cấm bởi [[fair-monetization-axiom]]. Recruiter sort theo readiness → top list
+      = "ai trả cho Frontier" → recruiter mất tin → tín hiệu hỏng. Rubric "giống nhau" KHÔNG cứu được: cùng
+      rubric, khác độ rộng tay grader = khác điểm. **Convince me user Max không mua được readiness band cao hơn
+      user free-Qwen cùng trình.** (Trùng V2-H4 nhưng giờ có số + confirm recruiter consumer KHÔNG chặn.)
+
+## Lens 1/8 — reposition & moat cho conversion
+V3-8. Nếu mock interview là feature hậu-enroll (V1-H4/V3 fact), thì **CTA free→paid mạnh nhất là teaser DRIVE
+      ENROLL**, không phải bán AI-sub. Tài sản thuyết phục nhất ("đây, bạn CHƯA sẵn sàng, bằng chứng đây") đang
+      bị khoá khỏi đúng người chưa trả tiền. 1 lần chạy free (Qwen-graded, cap) cho trial → scorecard kết bằng
+      enroll CTA. **Sao asset convert mạnh nhất lại giấu khỏi người chưa convert?** (nâng cấp V1-H4.)
+
+## HOLES VÒNG 3
+- **V3-H1 · AI-sub = phantom paywall trên mock-interview** — pool 500/tuần + Qwen 0đ vô hạn → trigger hết
+  credit gần như không nổ → AI-sub không có demand event ở màn này. Credit UI đang bán nhầm chỗ. (V3-1..3)
+- **V3-H2 · Credit-wall là rage-quit, không phải trigger** — hard block cuối buổi, không pre-flight, không
+  fallback-sang-Qwen dù Qwen 0đ. (V3-4, V3-5)
+- **V3-H3 · Grader-tier drift phá fairness + recruiter trust (CONFIRMED)** — score không normalize theo model →
+  Max-tier mua được readiness band. (V3-7)
+- **V3-H4 · 2 trục trả tiền lẫn lộn tại điểm quyết định** — model-lock (enroll) + credit (sub) trộn 1 cụm →
+  convert cả hai đều mờ. (V3-6)
+- **V3-H5 · Asset convert mạnh nhất bị khoá khỏi người chưa trả tiền** — không teaser free → mock-interview
+  không kéo được enroll (phễu acquisition bỏ trống). (V3-8)
+
+## Resolution directions VÒNG 3 (chờ thầy chốt → layout-brainstorm → workflow)
+- **R-V3-A (fix H1+H2 cùng lúc — reframe credit):** free-tier mock-interview chấm **Qwen mặc định (0đ)** → luyện
+  vô hạn, KHÔNG dead-end. Model Balanced+ = "feedback sâu hơn" (tốn pool) đặt sau, opt-in. Hết pool → tự rớt về
+  Qwen (không chặn). AI-sub KHÔNG bán ở mock-interview → gỡ credit caption khỏi màn này, bán AI-sub ở surface
+  pool-cháy-thật (challenge grind / CV / chat). → credit thôi trang trí, dead-end biến mất, AI-sub bán đúng chỗ.
+- **R-V3-B (fix H3 — pin scoring tier):** điểm-FEED-readiness luôn chấm bằng **1 tier cố định (Economy/Qwen)**;
+  model xịn chỉ nâng **richness feedback**, KHÔNG đổi số feed recruiter. (gộp R3 vòng 2.)
+- **R-V3-C (fix H5 — teaser drive enroll):** 1 lần chạy free (Qwen, cap) cho trial user → scorecard kết bằng
+  enroll CTA ("thấy chưa, học khóa để luyện tiếp + mở model mạnh"). Mock-interview thành phễu enroll, không chỉ
+  retention.
+- **R-V3-D (fix H4 — tách 2 trục):** model-lock nói rõ "mở khi enroll khóa"; credit/pool nói rõ "nâng khi mua
+  AI-sub". 2 thông điệp tách bạch, không trộn 1 cụm. (Chỉ cần khi vẫn giữ credit UI ở đây — nếu chọn R-V3-A thì
+  H4 tự tan vì bỏ credit khỏi màn.)
+
+## Weakest lens VÒNG 3
+**Lens 2/4 — Demand-generation cho AI-subscription.** Trên mock-interview, AI-sub gần như không có sự kiện tạo
+demand (pool không cạn vì Qwen 0đ). Credit UI ở đây bán nhầm sản phẩm + tạo 1 dead-end cuối buổi. Trục trả tiền
+đúng của màn này là **ENROLL** (mở model + là điều kiện thấy feature), không phải AI-sub.

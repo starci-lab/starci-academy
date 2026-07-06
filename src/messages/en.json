@@ -2094,6 +2094,26 @@
       "languageLabel": "Language",
       "codePlaceholder": "Write your code here…",
       "notesPlaceholder": "Notes, estimates, API sketches…"
+    },
+    "enterRoom": "Enter the room",
+    "aboutToBeInterviewed": "You are about to be interviewed",
+    "roomSummary": "{count} questions · {tier} level · ~{minutes} min",
+    "customizeSession": "Customize session",
+    "leaveInterview": "Leave interview",
+    "leaveConfirm": "Leave the interview now? This session will not be graded.",
+    "interviewerSpeaking": "speaking",
+    "muteInterviewer": "Mute the interviewer voice",
+    "unmuteInterviewer": "Unmute the interviewer voice",
+    "pushToTalk": "Tap to answer",
+    "listening": "Listening…",
+    "typeInstead": "type instead",
+    "useVoice": "Use voice",
+    "interviewerGrading": "{name} is grading your interview…",
+    "debriefTitle": "Interview debrief",
+    "personaRole": {
+      "so": "Software engineer",
+      "trung": "Senior engineer",
+      "cao": "Staff engineer"
     }
   },
   "jobReadiness": {

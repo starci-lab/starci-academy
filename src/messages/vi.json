@@ -2103,6 +2103,26 @@
       "languageLabel": "Ngôn ngữ",
       "codePlaceholder": "Viết code ở đây…",
       "notesPlaceholder": "Ghi chú, ước lượng, phác thảo API…"
+    },
+    "enterRoom": "Vào phòng phỏng vấn",
+    "aboutToBeInterviewed": "Bạn sắp được phỏng vấn",
+    "roomSummary": "{count} câu · mức {tier} · ~{minutes} phút",
+    "customizeSession": "Tùy chỉnh phiên",
+    "leaveInterview": "Rời phỏng vấn",
+    "leaveConfirm": "Rời phỏng vấn bây giờ? Phiên này sẽ không được chấm.",
+    "interviewerSpeaking": "đang nói",
+    "muteInterviewer": "Tắt giọng đọc của người phỏng vấn",
+    "unmuteInterviewer": "Bật giọng đọc của người phỏng vấn",
+    "pushToTalk": "Nhấn để trả lời",
+    "listening": "Đang nghe…",
+    "typeInstead": "gõ thay",
+    "useVoice": "Dùng giọng nói",
+    "interviewerGrading": "{name} đang chấm bài phỏng vấn…",
+    "debriefTitle": "Nhận xét từ buổi phỏng vấn",
+    "personaRole": {
+      "so": "Kỹ sư phần mềm",
+      "trung": "Kỹ sư cấp cao",
+      "cao": "Kỹ sư chủ chốt"
     }
   },
   "jobReadiness": {

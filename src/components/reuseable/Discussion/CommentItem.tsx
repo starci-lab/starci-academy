@@ -2,6 +2,7 @@
 
 import React, { useState } from "react"
 import { Link, cn } from "@heroui/react"
+import { SealCheckIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
 import { UserAvatar } from "../UserAvatar"
@@ -91,11 +92,18 @@ export const CommentItem = ({
                     className="mt-0.5 shrink-0"
                 />
                 <div className="flex min-w-0 flex-1 flex-col gap-2">
-                    {/* author + timestamp header */}
+                    {/* author + founder badge + timestamp header */}
                     <div className="flex flex-wrap items-center gap-2">
                         <span className="text-sm font-semibold text-foreground">
                             {comment.author.username}
                         </span>
+                        {comment.isFounderAuthor ? (
+                            <SealCheckIcon
+                                weight="fill"
+                                aria-label={t("discussion.founderBadge")}
+                                className="size-3.5 shrink-0 text-accent"
+                            />
+                        ) : null}
                         <span className="text-xs text-muted">
                             {getTimeAgoLabel(getTimeAgoMessage(comment.createdAt), t)}
                         </span>

@@ -5,10 +5,16 @@ import type {
     ReactionType,
 } from "../../queries/types/discussion"
 
-/** GraphQL `CreateCommentRequest` body. */
+/**
+ * GraphQL `CreateCommentRequest` body. A top-level comment must set exactly one of
+ * `contentId` (a lesson question) or `courseId` (a course-general "hỏi chung khóa"
+ * question); a reply only needs `parentCommentId` (it inherits the parent's scope).
+ */
 export interface CreateCommentRequest {
-    /** Content the comment is attached to. */
-    contentId: string
+    /** Content the comment is attached to; omit for a course-general question or a reply. */
+    contentId?: string | null
+    /** Course the comment is attached to (course-general question); omit for a lesson question or a reply. */
+    courseId?: string | null
     /** Parent comment id when replying; null/omitted for a top-level comment. */
     parentCommentId?: string | null
     /** Raw comment body authored by the user. */

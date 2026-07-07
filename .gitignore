@@ -42,3 +42,6 @@ next-env.d.ts
 
 # local render artifact
 .blog-render.html
+.brainstorm/
+.session/
+.starci-prototypes/

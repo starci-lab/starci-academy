@@ -2,8 +2,8 @@
 
 import React from "react"
 import { useTranslations } from "next-intl"
-import { cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { SimpleEmptyState } from "@/components/blocks/feedback/SimpleEmptyState"
 
 export type CodeExplainingEmptyProps = WithClassNames<undefined>
 
@@ -14,8 +14,8 @@ export const CodeExplainingEmpty = ({ className }: CodeExplainingEmptyProps) => 
     const t = useTranslations()
 
     return (
-        <p className={cn("text-sm text-muted", className)}>
+        <SimpleEmptyState className={className}>
             {t("content.codeExplainings.empty")}
-        </p>
+        </SimpleEmptyState>
     )
 }

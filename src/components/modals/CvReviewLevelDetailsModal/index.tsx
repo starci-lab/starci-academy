@@ -5,8 +5,6 @@ import React, {
 } from "react"
 import {
     Button,
-    cn,
-    Modal,
 } from "@heroui/react"
 import {
     useTranslations,
@@ -15,6 +13,7 @@ import { useCvReviewLevelDetailsOverlayState } from "@/hooks/zustand/overlay/hoo
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { setSelectedCvReviewTemplateId } from "@/redux/slices/cv-review-level"
 import { WithClassNames } from "@/modules/types/base/class-name"
+import { ModalShell } from "@/components/blocks/layout/ModalShell"
 
 /**
  * One selectable CV rubric template row in the modal.
@@ -102,38 +101,34 @@ export const CvReviewLevelDetailsModal = ({ className }: CvReviewLevelDetailsMod
     )
 
     return (
-        <Modal
+        <ModalShell
             isOpen={isOpen}
             onOpenChange={setOpen}
+            className={className}
+            size="md"
+            header={(
+                <>
+                    <div className="text-base font-semibold">
+                        {t("cv.submission.reviewLevelDetails.selectionTitle")}
+                    </div>
+                    <div className="text-xs text-muted">
+                        {t("cv.submission.reviewLevelDetails.subtitle")}
+                    </div>
+                </>
+            )}
+            bodyClassName="flex flex-col gap-6"
         >
-            <Modal.Backdrop>
-                <Modal.Container size="md">
-                    <Modal.Dialog className={cn(className)}>
-                        <Modal.CloseTrigger />
-                        <Modal.Header>
-                            <div className="text-base font-semibold">
-                                {t("cv.submission.reviewLevelDetails.selectionTitle")}
-                            </div>
-                            <div className="text-xs text-muted">
-                                {t("cv.submission.reviewLevelDetails.subtitle")}
-                            </div>
-                        </Modal.Header>
-                        <Modal.Body className="flex flex-col gap-6">
-                            <div className="flex max-h-[60vh] flex-col gap-3 overflow-y-auto">
-                                {optionElements}
-                            </div>
-                            <div className="flex justify-end">
-                                <Button
-                                    variant="primary"
-                                    onPress={() => setOpen(false)}
-                                >
-                                    {t("cv.submission.reviewLevelDetails.close")}
-                                </Button>
-                            </div>
-                        </Modal.Body>
-                    </Modal.Dialog>
-                </Modal.Container>
-            </Modal.Backdrop>
-        </Modal>
+            <div className="flex max-h-[60vh] flex-col gap-3 overflow-y-auto">
+                {optionElements}
+            </div>
+            <div className="flex justify-end">
+                <Button
+                    variant="primary"
+                    onPress={() => setOpen(false)}
+                >
+                    {t("cv.submission.reviewLevelDetails.close")}
+                </Button>
+            </div>
+        </ModalShell>
     )
 }

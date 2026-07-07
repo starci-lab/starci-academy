@@ -6,9 +6,7 @@ import React, {
 } from "react"
 import {
     Button,
-    Modal,
     Typography,
-    cn,
 } from "@heroui/react"
 import {
     useTranslations,
@@ -21,6 +19,7 @@ import { PaymentFlow } from "@/modules/types/payment"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { PriceTag } from "@/components/blocks/commerce/PriceTag"
 import { PhaseScarcityNote } from "@/components/blocks/commerce/PhaseScarcityNote"
+import { ModalShell } from "@/components/blocks/layout/ModalShell"
 
 /**
  * Premium-gate modal: a VALUE-FIRST register/buy prompt shown when a viewer clicks
@@ -62,79 +61,74 @@ export const PremiumGateModal = ({ className }: WithClassNames<undefined>) => {
     ]
 
     return (
-        <Modal isOpen={isOpen} onOpenChange={setOpen}>
-            <Modal.Backdrop>
-                <Modal.Container>
-                    <Modal.Dialog className={cn(className)}>
-                        <Modal.CloseTrigger />
-                        <Modal.Header>
-                            <Typography type="body" weight="semibold" className="pr-8">
-                                {course?.title
-                                    ? t("course.paywall.titleNamed", { course: course.title })
-                                    : t("course.paywall.title")}
-                            </Typography>
-                        </Modal.Header>
-                        <Modal.Body>
-                            {/* info cluster (desc + unlocks + price) gap-3; the CTA is a separate
-                                action area → gap-6 from it (layouts/gap.md). */}
-                            <div className="flex flex-col gap-6">
-                                <div className="flex flex-col gap-3">
-                                    <Typography type="body-sm" color="muted">
-                                        {t("course.paywall.description")}
-                                    </Typography>
+        <ModalShell
+            isOpen={isOpen}
+            onOpenChange={setOpen}
+            className={className}
+            header={(
+                <Typography type="body" weight="semibold" className="pr-8">
+                    {course?.title
+                        ? t("course.paywall.titleNamed", { course: course.title })
+                        : t("course.paywall.title")}
+                </Typography>
+            )}
+        >
+            {/* info cluster (desc + unlocks + price) gap-3; the CTA is a separate
+                action area → gap-6 from it (layouts/gap.md). */}
+            <div className="flex flex-col gap-6">
+                <div className="flex flex-col gap-3">
+                    <Typography type="body-sm" color="muted">
+                        {t("course.paywall.description")}
+                    </Typography>
 
-                                    {/* what the purchase unlocks — value before price */}
-                                    <ul className="flex flex-col gap-2">
-                                        {unlocks.map((item) => (
-                                            <li key={item} className="flex items-center gap-2">
-                                                <CheckCircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-success" />
-                                                <Typography type="body-sm">{item}</Typography>
-                                            </li>
-                                        ))}
-                                    </ul>
+                    {/* what the purchase unlocks — value before price */}
+                    <ul className="flex flex-col gap-2">
+                        {unlocks.map((item) => (
+                            <li key={item} className="flex items-center gap-2">
+                                <CheckCircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-success" />
+                                <Typography type="body-sm">{item}</Typography>
+                            </li>
+                        ))}
+                    </ul>
 
-                                    {/* price anchor — single-source PriceTag (struck original + % off) */}
-                                    <AsyncContent
-                                        isLoading={priceLoading}
-                                        skeleton={<div className="h-7 w-32 animate-pulse rounded-xl bg-surface" />}
-                                        error={priceSwr.error}
-                                        errorContent={{ title: t("payment.priceError") }}
-                                    >
-                                        {price?.discountedPriceVnd != null ? (
-                                            <div className="flex flex-col gap-2 border-t border-default pt-3">
-                                                <PriceTag
-                                                    discounted={price.discountedPriceVnd}
-                                                    original={price.originalPriceVnd}
-                                                    size="lg"
-                                                    breakdown={{
-                                                        phase: price.phasePriceVnd,
-                                                        loyaltyPercent: price.discountPercent,
-                                                    }}
-                                                />
-                                                <PhaseScarcityNote
-                                                    currentPhase={price.currentPhase}
-                                                    seatsRemaining={price.seatsRemainingInCurrentPhase}
-                                                    nextPhasePriceVnd={price.nextPhasePriceVnd}
-                                                />
-                                            </div>
-                                        ) : null}
-                                    </AsyncContent>
-                                </div>
-
-                                <Button
-                                    variant="primary"
+                    {/* price anchor — single-source PriceTag (struck original + % off) */}
+                    <AsyncContent
+                        isLoading={priceLoading}
+                        skeleton={<div className="h-7 w-32 animate-pulse rounded-xl bg-surface" />}
+                        error={priceSwr.error}
+                        errorContent={{ title: t("payment.priceError") }}
+                    >
+                        {price?.discountedPriceVnd != null ? (
+                            <div className="flex flex-col gap-2 border-t border-default pt-3">
+                                <PriceTag
+                                    discounted={price.discountedPriceVnd}
+                                    original={price.originalPriceVnd}
                                     size="lg"
-                                    className="w-full"
-                                    onPress={onBuy}
-                                >
-                                    {t("course.paywall.buy")}
-                                    <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
-                                </Button>
+                                    breakdown={{
+                                        phase: price.phasePriceVnd,
+                                        loyaltyPercent: price.discountPercent,
+                                    }}
+                                />
+                                <PhaseScarcityNote
+                                    currentPhase={price.currentPhase}
+                                    seatsRemaining={price.seatsRemainingInCurrentPhase}
+                                    nextPhasePriceVnd={price.nextPhasePriceVnd}
+                                />
                             </div>
-                        </Modal.Body>
-                    </Modal.Dialog>
-                </Modal.Container>
-            </Modal.Backdrop>
-        </Modal>
+                        ) : null}
+                    </AsyncContent>
+                </div>
+
+                <Button
+                    variant="primary"
+                    size="lg"
+                    className="w-full"
+                    onPress={onBuy}
+                >
+                    {t("course.paywall.buy")}
+                    <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
+                </Button>
+            </div>
+        </ModalShell>
     )
 }

@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { cn, Modal, ScrollShadow } from "@heroui/react"
+import { ScrollShadow } from "@heroui/react"
 import { VideoRenderer } from "@/components/reuseable/VideoRenderer"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { resolveFoundationMountFileUrl } from "@/components/features/learn/Foundations/utils/resolveFoundationUrls"
@@ -10,6 +10,7 @@ import { FoundationKind } from "@/modules/types/enums/foundation-kind"
 import { VideoHostPlatform } from "@/modules/types/enums/video-host-platform"
 import { useAppSelector } from "@/redux/hooks"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { ModalShell } from "@/components/blocks/layout/ModalShell"
 
 /**
  * Props for {@link FoundationModal}.
@@ -69,26 +70,17 @@ export const FoundationModal = (props: FoundationModalProps) => {
         : undefined
 
     return (
-        <Modal isOpen={isOpen} onOpenChange={setOpen}>
-            <Modal.Backdrop>
-                <Modal.Container
-                    className={containerClassName}
-                    size="full"
-                    scroll={foundation?.kind === FoundationKind.Document ? "inside" : undefined}
-                >
-                    <Modal.Dialog className={cn(className)}>
-                        <Modal.CloseTrigger />
-                        <Modal.Header>
-                            <div className="text-center text-2xl font-bold">
-                                {foundation?.title ?? ""}
-                            </div>
-                        </Modal.Header>
-                        <Modal.Body>
-                            {renderBody()}
-                        </Modal.Body>
-                    </Modal.Dialog>
-                </Modal.Container>
-            </Modal.Backdrop>
-        </Modal>
+        <ModalShell
+            isOpen={isOpen}
+            onOpenChange={setOpen}
+            className={className}
+            containerClassName={containerClassName}
+            size="full"
+            scroll={foundation?.kind === FoundationKind.Document ? "inside" : undefined}
+            title={foundation?.title ?? ""}
+            titleClassName="text-center text-2xl font-bold"
+        >
+            {renderBody()}
+        </ModalShell>
     )
 }

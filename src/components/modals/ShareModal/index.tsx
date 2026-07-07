@@ -3,7 +3,7 @@
 import { SiFacebook as FacebookLogoIcon, SiTelegram as TelegramLogoIcon, SiX as TwitterLogoIcon } from "@icons-pack/react-simple-icons"
 import { FaLinkedin as LinkedinLogoIcon } from "react-icons/fa6"
 import React, { useMemo } from "react"
-import { cn, Modal, Surface } from "@heroui/react"
+import { Surface } from "@heroui/react"
 import { pathConfig } from "@/resources/path"
 import { useTranslations } from "next-intl"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -11,6 +11,7 @@ import { useShareOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useAppSelector } from "@/redux/hooks"
 import { QRCode } from "@/components/reuseable/QRCode"
 import { SnippetIcon } from "@/components/reuseable/SnippetIcon"
+import { ModalShell } from "@/components/blocks/layout/ModalShell"
 
 export const ShareModal = ({ className }: WithClassNames<undefined>) => {
     const t = useTranslations()
@@ -48,44 +49,37 @@ export const ShareModal = ({ className }: WithClassNames<undefined>) => {
     ], [shareUrl, shareTitle])
 
     return (
-        <Modal isOpen={isOpen} onOpenChange={setOpen}>
-            <Modal.Backdrop>
-                <Modal.Container size="md">
-                    <Modal.Dialog className={cn(className)}>
-                        <Modal.CloseTrigger />
-                        <Modal.Header>
-                            <div className="text-2xl font-bold text-center">
-                                {t("content.share")}
-                            </div>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <div className="flex flex-col items-center gap-6 pb-4">
-                                {shareUrl && (
-                                    <div className="flex flex-col items-center gap-3">
-                                        <Surface variant="secondary" className="rounded-xl p-2">
-                                            <QRCode size={160} data={shareUrl} />
-                                        </Surface>
-                                        <div className="text-xs text-muted">
-                                            {t("content.scanQr")}
-                                        </div>
-                                    </div>
-                                )}
-                                <div className="flex gap-1.5 items-center">
-                                    <div className="text-sm text-muted">
-                                        {shareUrl}
-                                    </div>
-                                    <SnippetIcon copyString={shareUrl} />
-                                </div>
-                                <div className="flex items-center gap-3">
-                                    {socialLinks.map((socialLink) => (
-                                        <SnippetIcon key={socialLink.label} copyString={socialLink.url} />
-                                    ))}
-                                </div>
-                            </div>
-                        </Modal.Body>
-                    </Modal.Dialog>
-                </Modal.Container>
-            </Modal.Backdrop>
-        </Modal>
+        <ModalShell
+            isOpen={isOpen}
+            onOpenChange={setOpen}
+            className={className}
+            size="md"
+            title={t("content.share")}
+            titleClassName="text-2xl font-bold text-center"
+        >
+            <div className="flex flex-col items-center gap-6 pb-4">
+                {shareUrl && (
+                    <div className="flex flex-col items-center gap-3">
+                        <Surface variant="secondary" className="rounded-xl p-2">
+                            <QRCode size={160} data={shareUrl} />
+                        </Surface>
+                        <div className="text-xs text-muted">
+                            {t("content.scanQr")}
+                        </div>
+                    </div>
+                )}
+                <div className="flex gap-1.5 items-center">
+                    <div className="text-sm text-muted">
+                        {shareUrl}
+                    </div>
+                    <SnippetIcon copyString={shareUrl} />
+                </div>
+                <div className="flex items-center gap-3">
+                    {socialLinks.map((socialLink) => (
+                        <SnippetIcon key={socialLink.label} copyString={socialLink.url} />
+                    ))}
+                </div>
+            </div>
+        </ModalShell>
     )
 }

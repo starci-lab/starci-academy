@@ -2,6 +2,7 @@
 
 import React from "react"
 import { useTranslations } from "next-intl"
+import { useSearchParams } from "next/navigation"
 import { EnrollGate } from "../shared/EnrollGate"
 import { LearnBreadcrumb } from "../shared/LearnBreadcrumb"
 import { MockInterviewSession } from "./MockInterviewSession"
@@ -27,15 +28,21 @@ export const MockInterview = ({ className }: MockInterviewProps) => {
     // enrolled-only (spends AI credits) — gate trial viewers behind an enroll CTA
     const enrollmentSwr = useQueryCourseEnrollmentStatusSwr()
     const isEnrolled = enrollmentSwr.data?.courseEnrollmentStatus?.data?.isEnrolled === true
+    // during the LIVE interview phase the shell goes full-bleed (course rails dropped via
+    // `?phase=interview`); drop the centered max-width + page header here to match — the
+    // interview is a focused work surface, not a centered reading column.
+    const isLive = useSearchParams().get("phase") === "interview"
 
     return (
         <div className={className}>
-            <div className="mx-auto flex max-w-3xl flex-col gap-10">
-                <PageHeader
-                    breadcrumb={<LearnBreadcrumb current={t("mockInterview.title")} />}
-                    title={t("mockInterview.title")}
-                    description={t("mockInterview.subtitle")}
-                />
+            <div className={isLive ? "flex flex-col" : "mx-auto flex max-w-3xl flex-col gap-10"}>
+                {!isLive ? (
+                    <PageHeader
+                        breadcrumb={<LearnBreadcrumb current={t("mockInterview.title")} />}
+                        title={t("mockInterview.title")}
+                        description={t("mockInterview.subtitle")}
+                    />
+                ) : null}
 
                 {!isEnrolled ? (
                     <EnrollGate

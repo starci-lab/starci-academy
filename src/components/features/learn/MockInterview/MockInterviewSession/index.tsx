@@ -21,7 +21,7 @@ import {
     SignOutIcon,
 } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { ChatBubble } from "@/components/blocks/feed/ChatBubble"
 import { Callout } from "@/components/blocks/feedback/Callout"
@@ -212,6 +212,8 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, className }: M
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
+    const pathname = usePathname()
+    const searchParams = useSearchParams()
     const recognitionLang = locale === "vi" ? "vi-VN" : "en-US"
 
     // unified AI credit pool snapshot — re-checked (typed, no message-string guessing)
@@ -380,6 +382,25 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, className }: M
         const id = window.setInterval(() => setElapsed((previous) => previous + 1), 1000)
         return () => window.clearInterval(id)
     }, [phase])
+
+    // mirror the active phase into the URL (`?phase=interview`) so the learn shell + the
+    // MockInterview page shell can drop the course rails + centered padding for the LIVE
+    // interview only (a full-bleed work surface); setup/grading/scorecard stay centered.
+    // Guarded so it never loops: replaces only when the param differs from the current phase.
+    useEffect(() => {
+        const want = phase === "interview" ? "interview" : null
+        if (searchParams.get("phase") === want) {
+            return
+        }
+        const params = new URLSearchParams(searchParams.toString())
+        if (want) {
+            params.set("phase", want)
+        } else {
+            params.delete("phase")
+        }
+        const qs = params.toString()
+        router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false })
+    }, [phase, pathname, searchParams, router])
 
     // ask the interviewer for its next turn (opening line, a probe after an answer, a
     // phase-transition line for mode="design", or a fresh seed question for mode="qna")
@@ -1115,140 +1136,171 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, className }: M
         ) : null
 
         return (
-            <div className={cn("mx-auto flex w-full max-w-2xl flex-col gap-6", className)}>
-                {/* HUD — leave (left) · timer (center) · question counter + kind (right) */}
-                <div className="flex items-center justify-between gap-3">
-                    <Button variant="tertiary" size="sm" onPress={leaveInterview}>
-                        <SignOutIcon className="size-4" aria-hidden focusable="false" />
-                        {t("mockInterview.leaveInterview")}
-                    </Button>
-                    <div className="flex items-center gap-2 text-muted">
-                        <ClockIcon className="size-4" aria-hidden focusable="false" />
-                        <Typography type="body-sm" weight="medium" className="tabular-nums">{formatElapsed(elapsed)}</Typography>
+            <div
+                className={cn(
+                    "mx-auto w-full",
+                    // full-bleed page (the shell drops its rails via ?phase=interview). The
+                    // workspace opens ON DEMAND into a first-class RIGHT pane (2-pane on lg,
+                    // stacked on mobile); until then the conversation stays a centered column.
+                    workspaceOpen
+                        ? "grid max-w-6xl gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]"
+                        : "max-w-2xl",
+                    className,
+                )}
+            >
+                {/* LEFT — the conversation column */}
+                <div className="flex flex-col gap-6">
+                    {/* HUD — leave (left) · timer (center) · question counter + kind (right) */}
+                    <div className="flex items-center justify-between gap-3">
+                        <Button variant="tertiary" size="sm" onPress={leaveInterview}>
+                            <SignOutIcon className="size-4" aria-hidden focusable="false" />
+                            {t("mockInterview.leaveInterview")}
+                        </Button>
+                        <div className="flex items-center gap-2 text-muted">
+                            <ClockIcon className="size-4" aria-hidden focusable="false" />
+                            <Typography type="body-sm" weight="medium" className="tabular-nums">{formatElapsed(elapsed)}</Typography>
+                        </div>
+                        <Typography type="body-xs" weight="medium" color="muted">
+                            {currentKind
+                                ? t("mockInterview.questionCounterWithKind", {
+                                    index: questionIndex + 1,
+                                    total: totalQuestions,
+                                    kind: t(`mockInterview.kind.${currentKind}`),
+                                })
+                                : t("mockInterview.questionCounter", { index: questionIndex + 1, total: totalQuestions })}
+                        </Typography>
                     </div>
-                    <Typography type="body-xs" weight="medium" color="muted">
-                        {currentKind
-                            ? t("mockInterview.questionCounterWithKind", {
-                                index: questionIndex + 1,
-                                total: totalQuestions,
-                                kind: t(`mockInterview.kind.${currentKind}`),
-                            })
-                            : t("mockInterview.questionCounter", { index: questionIndex + 1, total: totalQuestions })}
-                    </Typography>
-                </div>
 
-                {/* progress dots — done=success, current=accent, upcoming=track */}
-                <div className="flex gap-1" role="presentation">
-                    {Array.from({ length: totalQuestions }, (_, position) => (
-                        <span
-                            key={position}
-                            className={cn(
-                                "h-1 flex-1 rounded-full",
-                                position < questionIndex ? "bg-success" : position === questionIndex ? "bg-accent" : "bg-default",
-                            )}
-                        />
-                    ))}
-                </div>
+                    {/* progress dots — done=success, current=accent, upcoming=track */}
+                    <div className="flex gap-1" role="presentation">
+                        {Array.from({ length: totalQuestions }, (_, position) => (
+                            <span
+                                key={position}
+                                className={cn(
+                                    "h-1 flex-1 rounded-full",
+                                    position < questionIndex ? "bg-success" : position === questionIndex ? "bg-accent" : "bg-default",
+                                )}
+                            />
+                        ))}
+                    </div>
 
-                {errorCallout}
+                    {errorCallout}
 
-                {/* interviewer presence — avatar + persona + "đang nói" pulse + TTS toggle,
-                    wrapping THIS question's streamed turn (once) as the body */}
-                <InterviewerPresence
-                    persona={persona}
-                    roleLabel={roleLabel}
-                    speaking={isAsking}
-                    speakingLabel={t("mockInterview.interviewerSpeaking")}
-                    ttsSupported={tts.supported}
-                    ttsEnabled={tts.enabled}
-                    onToggleTts={() => tts.setEnabled(!tts.enabled)}
-                    muteLabel={t("mockInterview.muteInterviewer")}
-                    unmuteLabel={t("mockInterview.unmuteInterviewer")}
-                >
-                    {isAsking ? (
-                        streamingText ? (
-                            <div className="text-sm font-medium text-foreground">
-                                <MarkdownContent markdown={streamingText} />
+                    {/* interviewer presence — avatar + persona + "đang nói" pulse + TTS toggle,
+                        wrapping THIS question's streamed turn (once) as the body */}
+                    <InterviewerPresence
+                        persona={persona}
+                        roleLabel={roleLabel}
+                        speaking={isAsking}
+                        speakingLabel={t("mockInterview.interviewerSpeaking")}
+                        ttsSupported={tts.supported}
+                        ttsEnabled={tts.enabled}
+                        onToggleTts={() => tts.setEnabled(!tts.enabled)}
+                        muteLabel={t("mockInterview.muteInterviewer")}
+                        unmuteLabel={t("mockInterview.unmuteInterviewer")}
+                    >
+                        {isAsking ? (
+                            streamingText ? (
+                                <div className="text-sm font-medium text-foreground">
+                                    <MarkdownContent markdown={streamingText} />
+                                </div>
+                            ) : (
+                                <Spinner size="sm" />
+                            )
+                        ) : currentQuestionTurn ? (
+                            <div className="flex flex-col gap-2">
+                                <div className="text-sm font-medium text-foreground">
+                                    <MarkdownContent markdown={currentQuestionTurn.content} />
+                                </div>
+                                {currentQuestionTurn.artifactHint === "code" ? (
+                                    <Chip size="sm" className="w-fit bg-accent/10 text-accent">
+                                        <CodeIcon className="size-3" aria-hidden focusable="false" />
+                                        <Chip.Label>{t("mockInterview.workspace.codeLoadedHint")}</Chip.Label>
+                                    </Chip>
+                                ) : null}
                             </div>
                         ) : (
-                            <Spinner size="sm" />
-                        )
-                    ) : currentQuestionTurn ? (
-                        <div className="flex flex-col gap-2">
-                            <div className="text-sm font-medium text-foreground">
-                                <MarkdownContent markdown={currentQuestionTurn.content} />
-                            </div>
-                            {currentQuestionTurn.artifactHint === "code" ? (
-                                <Chip size="sm" className="w-fit bg-accent/10 text-accent">
-                                    <CodeIcon className="size-3" aria-hidden focusable="false" />
-                                    <Chip.Label>{t("mockInterview.workspace.codeLoadedHint")}</Chip.Label>
-                                </Chip>
-                            ) : null}
-                        </div>
-                    ) : (
-                        <Typography type="body-sm" color="muted">
-                            {t("mockInterview.interviewerPending")}
+                            <Typography type="body-sm" color="muted">
+                                {t("mockInterview.interviewerPending")}
+                            </Typography>
+                        )}
+                    </InterviewerPresence>
+
+                    {/* answer — voice is the hero (big push-to-talk mic + live transcript),
+                        typing is the quiet fallback. Voice + typing both land in `answerDraft`
+                        (the STT mirror effect keeps them in sync). */}
+                    <VoiceHero
+                        sttSupported={supported}
+                        listening={listening}
+                        interimTranscript={interimTranscript}
+                        value={answerDraft}
+                        onValueChange={setAnswerDraft}
+                        onToggleListen={() => (listening ? stop() : start())}
+                        answerMode={answerMode}
+                        labels={{
+                            pushToTalk: t("mockInterview.pushToTalk"),
+                            listening: t("mockInterview.listening"),
+                            typeInstead: t("mockInterview.typeInstead"),
+                            useVoice: t("mockInterview.useVoice"),
+                            placeholder: t("mockInterview.answerPlaceholder"),
+                        }}
+                    />
+
+                    {/* open the workspace ON DEMAND — most Q&A answers are spoken/typed; a
+                        code/whiteboard question auto-opens it. Once open it becomes the RIGHT
+                        pane below, never a collapsible under the answer. */}
+                    {!workspaceOpen ? (
+                        <button
+                            type="button"
+                            onClick={() => setWorkspaceOpen(true)}
+                            className="group flex w-fit cursor-pointer items-center gap-1.5 text-muted hover:text-foreground"
+                        >
+                            <PenNibIcon className="size-4" aria-hidden focusable="false" />
+                            <Typography type="body-xs" className="group-hover:underline">
+                                {t("mockInterview.addArtifactToggle")}
+                            </Typography>
+                        </button>
+                    ) : null}
+
+                    <Button
+                        variant="primary"
+                        size="lg"
+                        onPress={submitQnaAnswer}
+                        isDisabled={answerDraft.trim().length === 0 || isAsking}
+                    >
+                        {isLastQuestion ? t("mockInterview.answerAndFinish") : t("mockInterview.answerAndNext")}
+                        <ArrowRightIcon className="size-5" aria-hidden focusable="false" />
+                    </Button>
+                    {/* grade before the last question (rarely needed — auto-finishes on the last) */}
+                    <Button variant="tertiary" size="sm" className="self-center" onPress={() => void finishAndGrade()} isDisabled={isAsking}>
+                        {t("mockInterview.finishEarly")}
+                    </Button>
+                </div>
+
+                {/* RIGHT — workspace pane (first-class, not a toggle-below). Kept MOUNTED
+                    (hidden when closed) so an in-progress sketch/code/notes buffer survives
+                    toggling. On mobile the grid stacks it under the conversation. */}
+                <div className={cn("flex flex-col gap-3", !workspaceOpen && "hidden")}>
+                    <button
+                        type="button"
+                        onClick={() => setWorkspaceOpen(false)}
+                        className="group flex w-fit cursor-pointer items-center gap-1.5 self-end text-muted hover:text-foreground"
+                    >
+                        <Typography type="body-xs" className="group-hover:underline">
+                            {t("mockInterview.hideArtifactToggle")}
                         </Typography>
-                    )}
-                </InterviewerPresence>
-
-                {/* answer — voice is the hero (big push-to-talk mic + live transcript),
-                    typing is the quiet fallback. Voice + typing both land in `answerDraft`
-                    (the STT mirror effect keeps them in sync). */}
-                <VoiceHero
-                    sttSupported={supported}
-                    listening={listening}
-                    interimTranscript={interimTranscript}
-                    value={answerDraft}
-                    onValueChange={setAnswerDraft}
-                    onToggleListen={() => (listening ? stop() : start())}
-                    answerMode={answerMode}
-                    labels={{
-                        pushToTalk: t("mockInterview.pushToTalk"),
-                        listening: t("mockInterview.listening"),
-                        typeInstead: t("mockInterview.typeInstead"),
-                        useVoice: t("mockInterview.useVoice"),
-                        placeholder: t("mockInterview.answerPlaceholder"),
-                    }}
-                />
-
-                {/* optional artifact tools — collapsed by default; kept MOUNTED (hidden, not
-                    unmounted) so an in-progress sketch is never lost by toggling */}
-                <button
-                    type="button"
-                    onClick={() => setWorkspaceOpen((previous) => !previous)}
-                    className="group flex w-fit cursor-pointer items-center gap-1.5 text-muted hover:text-foreground"
-                >
-                    <PenNibIcon className="size-4" aria-hidden focusable="false" />
-                    <Typography type="body-xs" className="group-hover:underline">
-                        {workspaceOpen ? t("mockInterview.hideArtifactToggle") : t("mockInterview.addArtifactToggle")}
-                    </Typography>
-                </button>
-                <MockInterviewWorkspace
-                    className={cn(!workspaceOpen && "hidden")}
-                    tool={workspaceTool}
-                    onToolChange={setWorkspaceTool}
-                    onDiagramChange={handleDiagramChange}
-                    hasDiagramContent={hasDiagramContent}
-                    codeState={codeState}
-                    onCodeStateChange={setCodeState}
-                    notes={notes}
-                    onNotesChange={setNotes}
-                />
-
-                <Button
-                    variant="primary"
-                    size="lg"
-                    onPress={submitQnaAnswer}
-                    isDisabled={answerDraft.trim().length === 0 || isAsking}
-                >
-                    {isLastQuestion ? t("mockInterview.answerAndFinish") : t("mockInterview.answerAndNext")}
-                    <ArrowRightIcon className="size-5" aria-hidden focusable="false" />
-                </Button>
-                {/* grade before the last question (rarely needed — auto-finishes on the last) */}
-                <Button variant="tertiary" size="sm" className="self-center" onPress={() => void finishAndGrade()} isDisabled={isAsking}>
-                    {t("mockInterview.finishEarly")}
-                </Button>
+                    </button>
+                    <MockInterviewWorkspace
+                        tool={workspaceTool}
+                        onToolChange={setWorkspaceTool}
+                        onDiagramChange={handleDiagramChange}
+                        hasDiagramContent={hasDiagramContent}
+                        codeState={codeState}
+                        onCodeStateChange={setCodeState}
+                        notes={notes}
+                        onNotesChange={setNotes}
+                    />
+                </div>
             </div>
         )
     }

@@ -2173,6 +2173,19 @@
       "notesPlaceholder": "Ghi chú, ước lượng, phác thảo API…",
       "codeLoadedHint": "Code đã nạp vào tab Code — sửa trực tiếp"
     },
+    "voiceUnavailable": {
+      "title": "Máy chưa có giọng đọc tiếng Việt",
+      "description": "Người phỏng vấn đọc câu hỏi bằng giọng nói của trình duyệt. Máy này chưa cài giọng tiếng Việt, nên câu hỏi sẽ bị đọc bằng giọng tiếng Anh (sai dấu). Cài giọng tiếng Việt để nghe tự nhiên hơn:",
+      "stepWindows1": "Mở Cài đặt Windows → Thời gian & Ngôn ngữ → Giọng nói.",
+      "stepWindows2": "Ở mục Giọng nói, bấm Thêm giọng nói và chọn Tiếng Việt.",
+      "stepWindows3": "Tải xong, quay lại đây và bấm Kiểm tra lại.",
+      "macNote": "Trên macOS: System Settings → Accessibility → Spoken Content → System Voice → Manage Voices → thêm giọng Tiếng Việt. Trên điện thoại, cài gói giọng nói trong phần cài đặt Trợ năng.",
+      "openSettings": "Mở cài đặt giọng nói",
+      "recheck": "Kiểm tra lại",
+      "found": "Đã tìm thấy giọng tiếng Việt — sẵn sàng!",
+      "stillNotFound": "Vẫn chưa thấy giọng tiếng Việt. Thử tải lại trang sau khi cài xong.",
+      "dismiss": "Bỏ qua, vẫn tiếp tục"
+    },
     "enterRoom": "Vào phòng phỏng vấn",
     "aboutToBeInterviewed": "Bạn sắp được phỏng vấn",
     "roomSummary": "{count} câu · mức {tier} · ~{minutes} phút",

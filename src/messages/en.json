@@ -2164,6 +2164,19 @@
       "notesPlaceholder": "Notes, estimates, API sketches…",
       "codeLoadedHint": "Code loaded into the Code tab — fix it there"
     },
+    "voiceUnavailable": {
+      "title": "No voice for this language installed",
+      "description": "The interviewer reads questions aloud using your browser's voices. This machine has no voice for the current language, so questions will be read with a default (usually English) voice — mispronouncing the text. Install a matching voice for a natural read:",
+      "stepWindows1": "Open Windows Settings → Time & Language → Speech.",
+      "stepWindows2": "Under Voices, click Add voices and pick your language.",
+      "stepWindows3": "Once it downloads, come back and click Re-check.",
+      "macNote": "On macOS: System Settings → Accessibility → Spoken Content → System Voice → Manage Voices → add your language. On mobile, install a voice pack from Accessibility settings.",
+      "openSettings": "Open voice settings",
+      "recheck": "Re-check",
+      "found": "Voice found — you're all set!",
+      "stillNotFound": "Still no matching voice. Try reloading the page after installing it.",
+      "dismiss": "Dismiss and continue"
+    },
     "enterRoom": "Enter the room",
     "aboutToBeInterviewed": "You are about to be interviewed",
     "roomSummary": "{count} questions · {tier} level · ~{minutes} min",

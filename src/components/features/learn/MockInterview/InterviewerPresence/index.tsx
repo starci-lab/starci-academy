@@ -8,10 +8,8 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link InterviewerPresence}. */
 export interface InterviewerPresenceProps extends WithClassNames<undefined> {
-    /** The interviewer identity (monogram + name). */
+    /** The interviewer identity (face photo + name). */
     persona: MockInterviewPersona
-    /** Resolved role label (i18n'd by the caller from `persona.roleTier`). */
-    roleLabel: string
     /** Whether the interviewer is currently "speaking" (a question is streaming in). */
     speaking: boolean
     /** Label shown next to the speaking pulse (e.g. "đang nói"). */
@@ -51,7 +49,6 @@ const PulseBar = ({ delayMs, heightClass }: { delayMs: number; heightClass: stri
  */
 export const InterviewerPresence = ({
     persona,
-    roleLabel,
     speaking,
     speakingLabel,
     ttsSupported,
@@ -65,12 +62,12 @@ export const InterviewerPresence = ({
     return (
         <div className={cn("rounded-2xl bg-surface p-4 shadow-surface", className)}>
             <div className="flex items-center gap-3">
-                <div
-                    className="flex size-10 shrink-0 items-center justify-center rounded-full bg-accent/10 text-base font-medium text-accent"
+                <img
+                    src={persona.avatarSrc}
+                    alt=""
+                    className="size-10 shrink-0 rounded-full object-cover"
                     aria-hidden
-                >
-                    {persona.monogram}
-                </div>
+                />
                 <div className="flex min-w-0 flex-col">
                     <div className="flex items-center gap-2">
                         <Typography type="body-sm" weight="medium" className="truncate">{persona.name}</Typography>
@@ -85,7 +82,6 @@ export const InterviewerPresence = ({
                             </span>
                         ) : null}
                     </div>
-                    <Typography type="body-xs" color="muted" className="truncate">{roleLabel}</Typography>
                 </div>
                 {ttsSupported ? (
                     <button

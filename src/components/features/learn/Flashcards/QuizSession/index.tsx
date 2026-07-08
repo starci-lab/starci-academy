@@ -5,8 +5,8 @@ import useSWR from "swr"
 import { Button, Chip, Label, ScrollShadow, Typography, cn } from "@heroui/react"
 import {
     ArrowRightIcon,
+    ArrowsClockwiseIcon,
     CheckCircleIcon,
-    CursorClickIcon,
     FlameIcon,
     LightningIcon,
     LockKeyIcon,
@@ -31,12 +31,12 @@ import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { Callout } from "@/components/blocks/feedback/Callout"
 import { FlipCard } from "@/components/blocks/cards/FlipCard"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
-import { MetricCard } from "@/components/blocks/stats/MetricCard"
+import { StatPair } from "@/components/blocks/stats/StatPair"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
 import { RatingBar } from "@/components/blocks/buttons/RatingBar"
 import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
-import { QuizProgressStrip } from "./QuizProgressStrip"
+import { FlashcardStatsStrip } from "../FlashcardStatsStrip"
 import { FlashcardQuizHistory } from "./FlashcardQuizHistory"
 import { FlashcardQuizStats } from "./FlashcardQuizStats"
 import { useQueryMyWeeklyStatsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyWeeklyStatsSwr"
@@ -140,7 +140,7 @@ const shuffle = <T,>(input: Array<T>): Array<T> => {
  * sibling-card distractors, checks the answer objectively, reads the full model
  * answer, and self-grades with SM-2 (which reschedules the card). A combo tracks
  * momentum; the recap frames the run by mastery and grants leaderboard XP once
- * per session. The setup's own progress readout goes through {@link QuizProgressStrip}.
+ * per session. The setup's data states go through {@link FlashcardStatsStrip}.
  * @param props - {@link QuizSessionProps}
  */
 export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessionProps) => {
@@ -177,8 +177,8 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
     )
     const decks = decksSwr.data
 
-    // refreshed after a session grants XP so `QuizProgressStrip`'s own streak/XP
-    // reflects the just-completed session on the next render
+    // refreshed after a session grants XP (the setup's progress zone reads its own
+    // streak from `FlashcardStatsStrip` instead)
     const weeklyStatsSwr = useQueryMyWeeklyStatsSwr()
 
     const runComplete = useMutateCompleteFlashcardQuizSessionSwr()
@@ -456,7 +456,10 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
         return [...new Set(source.flatMap((other) => other.keywords))]
     }, [card, sessionCards, index])
 
-    // the cloze for the current card (null → fall back to a plain flip + self-grade)
+    // the cloze for the current card (null → fall back to a plain flip +
+    // self-grade — only when the card itself has no clozable key terms;
+    // "Hỏi nhanh" and "Học thẻ" are unrelated features, so this is NOT a
+    // learner-facing method choice, just a per-card content fallback).
     const cloze = useMemo<ClozeQuestion | null>(
         () =>
             card
@@ -694,12 +697,12 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                             <Callout status="danger" title={resumeError} />
                         ) : null}
 
-                        {/* Zone 1 — progress: "Hỏi nhanh"'s OWN readout (sessions/coverage/streak),
-                    NOT the sibling "Học thẻ" tab's mastery bar — mastery is a real shared SM-2
-                    metric across both modes, but the two setup screens read better with their
-                    own numbers (thầy 2026-07-09: "tiến bộ ở 2 nơi khác nhau chứ"; was
-                    `<FlashcardStatsStrip />` before this split). */}
-                        <QuizProgressStrip courseId={courseId} />
+                        {/* Zone 1 — progress: reuse the sibling "Học thẻ" tab's stats block (shares
+                    its SWR keys, so this adds no extra fetch) instead of a bespoke readout — thầy
+                    2026-07-09 reversed the earlier split ("QuizProgressStrip", 1 turn prior): "ý là
+                    cái Tiến bộ học nhanh => Tiến bộ và tái sử dụng component Tiến bộ ở tab học"
+                    (rename back to plain "Tiến bộ" + share the ONE component again). */}
+                        <FlashcardStatsStrip />
 
                         {/* Zone 2 — config: mode + level, its own labeled card so it reads as a
                     distinct block from the progress zone above (was one dense card before). */}
@@ -809,42 +812,58 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
 
         return (
             <div className={cn("flex flex-col gap-6", className)}>
-                <div className="flex flex-col gap-6 rounded-2xl bg-surface p-6 shadow-surface">
-                    {/* Zone A — header */}
-                    <div className="flex flex-col gap-2">
-                        <Label>{t("flashcard.quiz.recapTitle")}</Label>
-                        <Typography type="h4" weight="semibold">
-                            {t("flashcard.quiz.answeredWithoutHint", {
-                                count: fullyCorrect,
-                                total: results.length,
-                            })}
-                        </Typography>
+                {/* Zone A+B — `LabeledCard` (label OUTSIDE + a REAL framed `<Card>`), not a
+                    hand-rolled `bg-surface` div with the label stuffed inside (thầy
+                    2026-07-09: "cam render dạng labeled card"). */}
+                <LabeledCard label={t("flashcard.quiz.recapTitle")} contentClassName="flex flex-col gap-6">
+                    <Typography type="h4" weight="semibold">
+                        {t("flashcard.quiz.answeredWithoutHint", {
+                            count: fullyCorrect,
+                            total: results.length,
+                        })}
+                    </Typography>
+
+                    {/* Zone B — metric readout: each cell is a bounded BORDERED sub-card
+                        (transparent bg, not another fill) — this row sits INSIDE the
+                        `LabeledCard`'s own framed `<Card>`, so per [[card]] §4
+                        surface-in-surface a nested cell gets a BORDER, not a 2nd opaque
+                        fill (thầy: "đỏ render dạng surface in surface, có border"; a
+                        totally frameless `StatPair` row read as no boundary at all —
+                        undercorrected the earlier card-in-card fix). `StatPair` still owns
+                        the value/label typography; the border wrapper is the only addition. */}
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                        <div className="rounded-xl border border-default p-3">
+                            <StatPair
+                                value={`x${bestCombo}`}
+                                label={t("flashcard.quiz.bestCombo")}
+                            />
+                        </div>
+                        <div className="rounded-xl border border-default p-3">
+                            <StatPair
+                                value={`+${xpEarned}`}
+                                label={t("flashcard.quiz.xpEarned")}
+                            />
+                        </div>
+                        <div className="rounded-xl border border-default p-3">
+                            <StatPair
+                                value={`${avgCoverage}%`}
+                                label={t("flashcard.quiz.avgCoverage")}
+                            />
+                        </div>
                     </div>
 
-                    {/* Zone B — metric readout (XP shows a transparent daily-cap note instead
-                        of reading as broken when the grant was clamped to 0/less) */}
-                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                        <MetricCard
-                            value={`x${bestCombo}`}
-                            label={t("flashcard.quiz.bestCombo")}
-                        />
-                        <MetricCard
-                            value={`+${xpEarned}`}
-                            label={t("flashcard.quiz.xpEarned")}
-                            hint={dailyCapReached ? t("flashcard.quiz.dailyCapReached") : undefined}
-                        />
-                        <MetricCard
-                            value={`${avgCoverage}%`}
-                            label={t("flashcard.quiz.avgCoverage")}
-                        />
-                    </div>
+                    {dailyCapReached ? (
+                        <Typography type="body-xs" color="muted">
+                            {t("flashcard.quiz.dailyCapReached")}
+                        </Typography>
+                    ) : null}
 
                     {xpEarned > 0 ? (
                         <Typography type="body-xs" color="muted">
                             {t("flashcard.quiz.xpAddedToLeaderboard")}
                         </Typography>
                     ) : null}
-                </div>
+                </LabeledCard>
 
                 {/* Zone E — enroll upsell (trial only): the recap's PRIMARY action for a trial
                     viewer — keep the earned momentum going by unlocking the full course, framed
@@ -955,13 +974,13 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                     ariaLabel={showAnswer ? t("flashcard.showQuestion") : t("flashcard.showAnswer")}
                     frontHint={
                         <>
-                            <CursorClickIcon className="size-3.5" aria-hidden focusable="false" />
+                            <ArrowsClockwiseIcon className="size-3.5" aria-hidden focusable="false" />
                             {t("flashcard.flipHint")}
                         </>
                     }
                     backHint={
                         <>
-                            <CursorClickIcon className="size-3.5" aria-hidden focusable="false" />
+                            <ArrowsClockwiseIcon className="size-3.5" aria-hidden focusable="false" />
                             {t("flashcard.flipBackHint")}
                         </>
                     }
@@ -1013,9 +1032,17 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
 
     // ── CLOZE: fill blanks → check → read full answer → SM-2 ───────────────
     const allFilled = filled.every((value) => value !== null)
+    // `cloze.blanks[blankIndex]?.` guards the same transient-render crash as
+    // `filled[segment.index] ?? null` above: for one render tick right after
+    // `commitCard` advances to the next card, `cloze` has ALREADY recomputed
+    // for it (possibly with FEWER blanks) while `filled`/`checked` still hold
+    // the PREVIOUS (possibly longer) card's values — `cloze.blanks[blankIndex]`
+    // then reads `undefined` for an out-of-range index, crashing on
+    // `.toLowerCase()`. Optional-chaining just makes that comparison `false`
+    // for this one tick; the reset effect below realigns everything right after.
     const correctCount = checked
         ? filled.filter((value, blankIndex) =>
-            value !== null && value.toLowerCase() === cloze.blanks[blankIndex].toLowerCase(),
+            value !== null && value.toLowerCase() === cloze.blanks[blankIndex]?.toLowerCase(),
         ).length
         : 0
     const coverageRatio = cloze.blanks.length > 0 ? correctCount / cloze.blanks.length : 0
@@ -1024,12 +1051,12 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
         <div className={cn("flex flex-col gap-6", className)}>
             {header}
 
-            {/* question + cloze — TINTED (accent/5 + left accent border), bounded-small per
-                accent-system.md §5 exception, so it reads as the ACTIVE interaction zone,
-                distinct from the neutral word-bank card below (redesign 2026-07-09,
-                fe/components/tabs.md-adjacent visual-polish pass — see quiz-visual-polish
-                prototype). */}
-            <div className="flex flex-col gap-3 rounded-2xl border-l-[3px] border-l-accent bg-accent/5 p-6 shadow-surface">
+            {/* question + cloze — plain Card shell (bo góc + shadow-surface), CÙNG kiểu
+                với FlipCard — the earlier accent/5 + left-border tint (2026-07-09) was
+                reverted the same day (thầy: "ý là bỏ cái kiểu bg hồng với border...
+                render plain Card như bth thôi") — 1 Card duy nhất xuyên suốt feature,
+                không mỗi màn 1 "ngôn ngữ" riêng. */}
+            <div className="flex flex-col gap-3 rounded-2xl bg-surface p-6 shadow-surface">
                 <Typography type="body-xs" weight="medium" color="muted">
                     {t("flashcard.questionLabel")}
                 </Typography>
@@ -1078,8 +1105,8 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                                 const tone = !checked
                                     ? "border-accent/60 bg-accent/10 text-accent"
                                     : isCorrect
-                                        ? "border-success/60 bg-success/10 text-success"
-                                        : "border-danger/60 bg-danger/10 text-danger"
+                                        ? "border-success/60 bg-success/10 text-success motion-safe:[animation:blankPop_0.35s_ease]"
+                                        : "border-danger/60 bg-danger/10 text-danger motion-safe:[animation:blankShake_0.4s_ease]"
                                 return (
                                     <button
                                         key={position}
@@ -1132,6 +1159,9 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                                         variant="outline"
                                         isDisabled={used}
                                         onPress={() => placeTerm(term)}
+                                        // a "pick me" tile feel (Quizlet/Duolingo token
+                                        // convention) — lift on hover instead of sitting flat.
+                                        className="transition-transform hover:-translate-y-0.5"
                                     >
                                         {term}
                                     </Button>
@@ -1323,8 +1353,7 @@ const RecapWeakTagsCard = ({
     // it's a standalone (no primary beside it) tertiary link.
     if (weakTags.length === 0) {
         return primary ? (
-            <div className="flex flex-col gap-3 rounded-2xl bg-surface p-6 shadow-surface">
-                <Label>{t("flashcard.quiz.weakTagsTitle")}</Label>
+            <LabeledCard label={t("flashcard.quiz.weakTagsTitle")} contentClassName="flex flex-col gap-3">
                 <Typography type="body-sm" color="muted">
                     {t("flashcard.quiz.weakTagsEmpty")}
                 </Typography>
@@ -1336,7 +1365,7 @@ const RecapWeakTagsCard = ({
                     {t("flashcard.quiz.continueLearning")}
                     <ArrowRightIcon className="size-5" aria-hidden focusable="false" />
                 </Button>
-            </div>
+            </LabeledCard>
         ) : (
             <Button
                 variant="tertiary"
@@ -1370,8 +1399,7 @@ const RecapWeakTagsCard = ({
     }
 
     return (
-        <div className="flex flex-col gap-3 rounded-2xl bg-surface p-6 shadow-surface">
-            <Label>{t("flashcard.quiz.weakTagsTitle")}</Label>
+        <LabeledCard label={t("flashcard.quiz.weakTagsTitle")} contentClassName="flex flex-col gap-3">
             <div className="flex flex-col gap-2">
                 {weakTags.map((tag) => (
                     <WeakTagRow key={tag.tag} tag={tag} href={resolveTagHref(tag) ?? genericHref} />
@@ -1386,7 +1414,7 @@ const RecapWeakTagsCard = ({
                     </div>
                 </ScrollShadow>
             ) : null}
-        </div>
+        </LabeledCard>
     )
 }
 

@@ -321,9 +321,24 @@ export const buildMarkdownRenderers = ({
         li: ({ children }) => (
             <ProseText elementType="li" size={bodySize} className="space-y-2 leading-relaxed">{children}</ProseText>
         ),
-        p: ({ children }) => (
-            <ProseText elementType="div" size={bodySize} className={reading ? "mb-4 leading-relaxed" : "leading-relaxed"}>{children}</ProseText>
-        ),
+        p: ({ children, node }) => {
+            // a paragraph whose ENTIRE content is one `**bold**` span is a common
+            // "fake heading" authoring idiom (e.g. flashcard answers structured
+            // "**Trả lời thẳng** ...", "**Vì sao** ...") — read it as a section
+            // LABEL (muted, small), not a normal bold sentence, so it lines up
+            // with the surrounding UI labels ("Câu hỏi"/"Đáp án" are
+            // `body-xs muted`) instead of standing out as loud black bold.
+            const soleChild = node?.children?.length === 1 ? node.children[0] : null
+            const isStandaloneLabel = Boolean(
+                soleChild && "tagName" in soleChild && soleChild.tagName === "strong",
+            )
+            if (isStandaloneLabel) {
+                return <div className="text-sm text-muted">{children}</div>
+            }
+            return (
+                <ProseText elementType="div" size={bodySize} className={reading ? "mb-4 leading-relaxed" : "leading-relaxed"}>{children}</ProseText>
+            )
+        },
         a: ({ href, children }) => {
         // Internal links (e.g. related-problem `/practice/<slug>`) navigate in-app
         // (same tab, locale-aware) via the next-intl Link; external links open a new tab.

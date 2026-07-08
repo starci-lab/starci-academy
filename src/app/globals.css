@@ -49,6 +49,23 @@ html {
   100% { transform: translate(-50%, 24px); opacity: 0; }
 }
 
+/* A cloze blank's checked-correct feedback — a quick confident bounce (Flashcards
+   Quiz visual-polish, 2026-07-09). */
+@keyframes blankPop {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.16); }
+  100% { transform: scale(1); }
+}
+
+/* A cloze blank's checked-wrong feedback — a short horizontal wiggle. */
+@keyframes blankShake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-4px); }
+  40% { transform: translateX(4px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(3px); }
+}
+
 /*
  * HeroUI Theme Customization
  * Add this to your global.css after importing @heroui/styles/css

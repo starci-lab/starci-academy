@@ -15,6 +15,7 @@ import { mutateReviewFlashcard } from "@/modules/api/graphql/mutations/mutation-
 import { queryMyDueFlashcards } from "@/modules/api/graphql/queries/query-my-due-flashcards"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
+import { BackLink } from "@/components/blocks/navigation/BackLink"
 import { FlipCard } from "@/components/blocks/cards/FlipCard"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
 import { RatingBar } from "@/components/blocks/buttons/RatingBar"
@@ -178,23 +179,33 @@ export const DueReview = ({ onExit, className }: DueReviewProps) => {
                     }
                 />
             ) : (
-                <div className={cn("flex flex-col gap-3", className)}>
-                    {/* progress through this batch */}
-                    <ProgressMeter
-                        value={currentIndex + 1}
-                        max={cards.length}
-                        label={t("flashcard.cardProgress", {
-                            current: currentIndex + 1,
-                            total: cards.length,
-                        })}
-                    />
+                <div className={cn("flex flex-col gap-6", className)}>
+                    {/* back out early — this session has no persisted resume state (each
+                        grade is saved immediately via reviewFlashcard), so leaving mid-run
+                        loses nothing; no confirm modal needed (thầy 2026-07-09: "sao không
+                        có kết thúc sớm, trở về"). */}
+                    <BackLink target={t("flashcard.title")} onPress={onExit} />
 
-                    {/* which deck this card belongs to (cards span all courses) */}
-                    {card ? (
-                        <Typography type="body-xs" color="muted">
-                            {card.deckTitle}
-                        </Typography>
-                    ) : null}
+                    <div className="flex flex-col gap-3">
+                        {/* progress through this batch */}
+                        <ProgressMeter
+                            value={currentIndex + 1}
+                            max={cards.length}
+                            label={t("flashcard.cardProgress", {
+                                current: currentIndex + 1,
+                                total: cards.length,
+                            })}
+                        />
+
+                        {/* which deck this card belongs to (cards span all courses) — bumped
+                            to a readable weight so it reads as the deck's NAME, not a stray
+                            caption (thầy: "hiển thị cái tên deck ra ở đây"). */}
+                        {card ? (
+                            <Typography type="body-sm" weight="medium">
+                                {card.deckTitle}
+                            </Typography>
+                        ) : null}
+                    </div>
 
                     {/* the flip card: prompt → answer */}
                     <FlipCard

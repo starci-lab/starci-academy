@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import useSWR from "swr"
 import { Button, Chip, Typography, cn } from "@heroui/react"
-import { CheckCircleIcon, CursorClickIcon, LockIcon } from "@phosphor-icons/react"
+import { ArrowsClockwiseIcon, CheckCircleIcon, LockIcon } from "@phosphor-icons/react"
 import { useTranslations, useLocale } from "next-intl"
 import { useRouter } from "next/navigation"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
@@ -315,13 +315,13 @@ export const FlashcardReviewer = ({ deckId, className, onBack }: FlashcardReview
                         ariaLabel={revealed ? t("flashcard.showQuestion") : t("flashcard.showAnswer")}
                         frontHint={
                             <>
-                                <CursorClickIcon className="size-3.5" aria-hidden focusable="false" />
+                                <ArrowsClockwiseIcon className="size-3.5" aria-hidden focusable="false" />
                                 {t("flashcard.flipHint")}
                             </>
                         }
                         backHint={isLocked ? undefined : (
                             <>
-                                <CursorClickIcon className="size-3.5" aria-hidden focusable="false" />
+                                <ArrowsClockwiseIcon className="size-3.5" aria-hidden focusable="false" />
                                 {t("flashcard.flipBackHint")}
                             </>
                         )}

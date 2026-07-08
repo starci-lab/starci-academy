@@ -2,6 +2,12 @@
 
 import React from "react"
 import { Typography, cn } from "@heroui/react"
+import {
+    SmileyIcon,
+    SmileySadIcon,
+    SmileyWinkIcon,
+    SmileyXEyesIcon,
+} from "@phosphor-icons/react"
 import type { ReactNode } from "react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
@@ -39,6 +45,15 @@ const GRADE_TINT: Record<number, string> = {
     3: "bg-accent/10 text-accent hover:bg-accent/20",
 }
 
+/** One glance-scannable face per recall grade — reinforces the label faster
+ *  than color alone (thầy 2026-07-09 visual-polish pass). */
+const GRADE_ICON: Record<number, typeof SmileyIcon> = {
+    0: SmileyXEyesIcon,
+    1: SmileySadIcon,
+    2: SmileyIcon,
+    3: SmileyWinkIcon,
+}
+
 /**
  * The SM-2 recall-rating bar: a row of FOUR equal-width grade tiles (Again / Hard
  * / Good / Easy) the learner taps after revealing a flashcard's answer. Each press
@@ -51,28 +66,33 @@ const GRADE_TINT: Record<number, string> = {
 export const RatingBar = ({ options, onRate, isPending = false, className }: RatingBarProps) => {
     return (
         <div className={cn("grid grid-cols-2 gap-2 sm:grid-cols-4", className)}>
-            {options.map((option) => (
-                <button
-                    key={option.grade}
-                    type="button"
-                    disabled={isPending}
-                    onClick={() => onRate(option.grade)}
-                    className={cn(
-                        "flex w-full flex-col items-center justify-center gap-0.5 rounded-3xl px-3 py-2.5",
-                        "cursor-pointer text-sm font-medium outline-none transition-colors",
-                        "focus-visible:ring-2 focus-visible:ring-accent",
-                        "disabled:cursor-not-allowed disabled:opacity-60",
-                        GRADE_TINT[option.grade] ?? "bg-default text-foreground hover:bg-default/80",
-                    )}
-                >
-                    <span>{option.label}</span>
-                    {option.hint !== undefined ? (
-                        <Typography type="body-xs" className="opacity-80">
-                            {option.hint}
-                        </Typography>
-                    ) : null}
-                </button>
-            ))}
+            {options.map((option) => {
+                const GradeIcon = GRADE_ICON[option.grade]
+                return (
+                    <button
+                        key={option.grade}
+                        type="button"
+                        disabled={isPending}
+                        onClick={() => onRate(option.grade)}
+                        className={cn(
+                            "flex w-full flex-col items-center justify-center gap-1 rounded-3xl px-3 py-3",
+                            "cursor-pointer text-sm font-medium outline-none transition-all",
+                            "hover:-translate-y-0.5 hover:shadow-surface",
+                            "focus-visible:ring-2 focus-visible:ring-accent",
+                            "disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0",
+                            GRADE_TINT[option.grade] ?? "bg-default text-foreground hover:bg-default/80",
+                        )}
+                    >
+                        {GradeIcon ? <GradeIcon className="size-5" aria-hidden focusable="false" /> : null}
+                        <span>{option.label}</span>
+                        {option.hint !== undefined ? (
+                            <Typography type="body-xs" className="opacity-80">
+                                {option.hint}
+                            </Typography>
+                        ) : null}
+                    </button>
+                )
+            })}
         </div>
     )
 }

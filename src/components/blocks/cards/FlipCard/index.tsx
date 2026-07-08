@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { cn } from "@heroui/react"
+import { ScrollShadow, cn } from "@heroui/react"
 import { motion } from "framer-motion"
 import type { ReactNode } from "react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -37,7 +37,10 @@ const FACE_STYLE: React.CSSProperties = {
 }
 
 /** The scrollable body of a face. Front centers its (usually short) prompt; back
- * top-aligns its (often long, code-heavy) answer and scrolls. */
+ * top-aligns its (often long, code-heavy) answer and scrolls — `ScrollShadow`
+ * (fade at the scroll edges), not a bare `overflow-y-auto` div, per
+ * [[wide-content-scrolls-not-blocks-ui]] (a vertically-overflowing bounded
+ * panel gets `ScrollShadow`; thầy 2026-07-09: "dùng scrollshadow cho nội dung"). */
 const bodyClass = (centered: boolean) =>
     cn(
         "flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto p-6",
@@ -57,10 +60,13 @@ const Face = ({
     style: React.CSSProperties
 }) => (
     <div className={FACE_CLASS} style={style}>
-        <div className={bodyClass(centered)}>{children}</div>
+        <ScrollShadow hideScrollBar className={bodyClass(centered)}>{children}</ScrollShadow>
         {hint ? (
             <div className="flex shrink-0 justify-center px-6 pb-4">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-default px-3 py-1.5 text-xs text-muted">
+                {/* accent-tinted (not solid — this is an affordance hint, not the CTA
+                    itself) + a gentle float to read as "tap me", replacing the flat
+                    muted pill that read as inert (thầy 2026-07-09: "nhìn xấu quá"). */}
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/10 px-3 py-1.5 text-xs font-medium text-accent motion-safe:animate-bounce">
                     {hint}
                 </span>
             </div>

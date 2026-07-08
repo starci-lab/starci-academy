@@ -4,7 +4,6 @@ import React, { useMemo } from "react"
 import {
     Alert,
     Button,
-    Label,
     Typography,
     cn,
 } from "@heroui/react"
@@ -17,7 +16,11 @@ import {
 } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
+import { CheckListCard, CheckListItem } from "@/components/blocks/cards/CheckListCard"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
+import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { useQueryMatchedContentSwr } from "@/hooks/swr/api/graphql/queries/useQueryMatchedContentSwr"
 import { pathConfig } from "@/resources/path"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -220,88 +223,88 @@ export const MockInterviewScorecard = ({
                 same component + data the setup screen shows (single source). */}
             <MockInterviewTrackSnapshot courseId={courseId} />
 
-            <div className="flex flex-col gap-3">
-                {/* qna sends "Câu N" phases → "Điểm theo từng câu"; design sends the 5
-                    canonical phase keys → "Điểm theo từng phase". */}
-                <Label>{isDesignScore ? t("mockInterview.perPhaseTitle") : t("mockInterview.perQuestionTitle")}</Label>
-                {grade.phaseScores.map((phaseScore) => (
-                    <div key={phaseScore.phase} className="flex items-center gap-3">
-                        <Typography type="body-sm" className="w-40 shrink-0">
-                            {phaseDisplayLabel(phaseScore.phase, t)}
-                        </Typography>
-                        <ProgressMeter
-                            value={phaseScore.score}
-                            max={phaseScore.max}
-                            color={scoreColorOf(phaseScore.score, phaseScore.max)}
-                            className="flex-1"
-                        />
-                    </div>
-                ))}
-            </div>
-
-            {orderedAttributes.length > 0 ? (
+            {/* qna sends "Câu N" phases → "Điểm theo từng câu"; design sends the 5
+                canonical phase keys → "Điểm theo từng phase". */}
+            <LabeledCard label={isDesignScore ? t("mockInterview.perPhaseTitle") : t("mockInterview.perQuestionTitle")}>
                 <div className="flex flex-col gap-3">
-                    <Label>{t("mockInterview.attributesTitle")}</Label>
-                    {orderedAttributes.map((attribute) => (
-                        <div key={attribute.key} className="flex items-center gap-3">
+                    {grade.phaseScores.map((phaseScore) => (
+                        <div key={phaseScore.phase} className="flex items-center gap-3">
                             <Typography type="body-sm" className="w-40 shrink-0">
-                                {attributeLabel(attribute.key)}
+                                {phaseDisplayLabel(phaseScore.phase, t)}
                             </Typography>
                             <ProgressMeter
-                                value={attribute.score}
-                                max={100}
-                                color={scoreColorOf(attribute.score, 100)}
+                                value={phaseScore.score}
+                                max={phaseScore.max}
+                                color={scoreColorOf(phaseScore.score, phaseScore.max)}
                                 className="flex-1"
                             />
                         </div>
                     ))}
                 </div>
+            </LabeledCard>
+
+            {orderedAttributes.length > 0 ? (
+                <LabeledCard label={t("mockInterview.attributesTitle")}>
+                    <div className="flex flex-col gap-3">
+                        {orderedAttributes.map((attribute) => (
+                            <div key={attribute.key} className="flex items-center gap-3">
+                                <Typography type="body-sm" className="w-40 shrink-0">
+                                    {attributeLabel(attribute.key)}
+                                </Typography>
+                                <ProgressMeter
+                                    value={attribute.score}
+                                    max={100}
+                                    color={scoreColorOf(attribute.score, 100)}
+                                    className="flex-1"
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </LabeledCard>
             ) : null}
 
             {grade.strengths.length > 0 ? (
-                <div className="flex flex-col gap-3">
-                    <Label>{t("mockInterview.strengthsTitle")}</Label>
-                    <ul className="flex flex-col gap-2">
+                <LabeledCard label={t("mockInterview.strengthsTitle")} frameless>
+                    <CheckListCard>
                         {grade.strengths.map((strength, position) => (
-                            <li key={position} className="flex items-start gap-2">
-                                <CheckCircleIcon className="mt-0.5 size-4 shrink-0 text-success" aria-hidden focusable="false" />
-                                <Typography type="body-sm">{strength}</Typography>
-                            </li>
+                            <CheckListItem key={position}>
+                                <MarkdownContent markdown={strength} />
+                            </CheckListItem>
                         ))}
-                    </ul>
-                </div>
+                    </CheckListCard>
+                </LabeledCard>
             ) : null}
 
             {/* B5 — gaps: plain "what to add" list. The single course deep-link lives on
                 the primary CTA below (no per-row floating link). */}
             {grade.gaps.length > 0 ? (
-                <div className="flex flex-col gap-3">
-                    <Label>{t("mockInterview.gapsTitle")}</Label>
-                    <ul className="flex flex-col gap-2">
+                <LabeledCard label={t("mockInterview.gapsTitle")} frameless>
+                    <SurfaceListCard>
                         {grade.gaps.map((gap, position) => (
-                            <li key={position} className="flex items-start gap-2">
-                                <WarningCircleIcon className="mt-0.5 size-4 shrink-0 text-warning" aria-hidden focusable="false" />
-                                <Typography type="body-sm">{gap}</Typography>
-                            </li>
+                            <SurfaceListCardItem key={position}>
+                                <div className="flex items-start gap-2">
+                                    <WarningCircleIcon className="mt-0.5 size-4 shrink-0 text-warning" aria-hidden focusable="false" />
+                                    <MarkdownContent markdown={gap} className="min-w-0 flex-1" />
+                                </div>
+                            </SurfaceListCardItem>
                         ))}
-                    </ul>
-                </div>
+                    </SurfaceListCard>
+                </LabeledCard>
             ) : null}
 
             {grade.followUpQuestion ? (
-                <div className="flex flex-col gap-2 border-t border-divider pt-4">
-                    <Label>{t("mockInterview.followUpTitle")}</Label>
+                <LabeledCard label={t("mockInterview.followUpTitle")}>
                     <div className="flex items-start gap-2">
                         <ChatCircleIcon className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden focusable="false" />
-                        <Typography type="body-sm" className="italic">{grade.followUpQuestion}</Typography>
+                        <MarkdownContent markdown={grade.followUpQuestion} className="min-w-0 flex-1 italic" />
                     </div>
-                </div>
+                </LabeledCard>
             ) : null}
 
             {/* B6/B7 — the demand-loop fix: the PRIMARY action now studies the weak spot in
                 the course, not "run it again"; retry is demoted to a tertiary action so
                 re-running to chase a better number isn't the path of least resistance. */}
-            <div className="flex flex-wrap items-center gap-3 border-t border-divider pt-4">
+            <div className="flex flex-wrap items-center gap-3">
                 <Button
                     variant="primary"
                     size="lg"

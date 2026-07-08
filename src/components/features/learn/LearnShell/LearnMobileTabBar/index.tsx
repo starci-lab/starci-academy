@@ -106,7 +106,8 @@ export const LearnMobileTabBar = () => {
                             aria-selected={isActive}
                             onClick={() => dispatch(setMobileView(tab.key))}
                             className={cn(
-                                "flex flex-1 flex-col items-center justify-center gap-2",
+                                "flex flex-1 flex-col items-center justify-center gap-2 outline-none",
+                                "focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset",
                                 isActive ? "text-accent" : "text-muted",
                             )}
                         >

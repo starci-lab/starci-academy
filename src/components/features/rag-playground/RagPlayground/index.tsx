@@ -388,7 +388,7 @@ export const RagPlayground = ({ className }: RagPlaygroundProps) => {
                                 {t("ragPlayground.chat.title")}
                             </Typography>
                             <Chip size="sm" className="bg-accent/10 text-accent">
-                                <SparkleIcon aria-hidden focusable="false" className="size-3" />
+                                <SparkleIcon aria-hidden focusable="false" className="size-4" />
                                 <Chip.Label>{t("ragPlayground.chat.freeBadge")}</Chip.Label>
                             </Chip>
                         </div>

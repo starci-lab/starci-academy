@@ -349,8 +349,13 @@ export const PersonalProjectTaskResult = ({
                             </div>
                         </LabeledCard>
 
-                        {/* findings — a labeled accordion card (each finding expands) */}
-                        <LabeledCard label={t("personalProjectResult.feedbackLabel")} frameless>
+                        {/* findings — a labeled accordion card (each finding expands). frameless
+                            ONLY once the accordion self-frames; loading/empty/erroring have no
+                            bounded surface of their own, so LabeledCard's Card must frame them. */}
+                        <LabeledCard
+                            label={t("personalProjectResult.feedbackLabel")}
+                            frameless={!feedbacksLoading && !(!feedbacksSwr.data && feedbacksSwr.error) && feedbacks.length > 0}
+                        >
                             <AsyncContent
                                 isLoading={feedbacksLoading}
                                 skeleton={<Skeleton className="h-40 w-full rounded-2xl" />}

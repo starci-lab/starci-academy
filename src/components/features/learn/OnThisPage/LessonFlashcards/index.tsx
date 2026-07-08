@@ -71,7 +71,7 @@ export const LessonFlashcards = ({ className }: LessonFlashcardsProps) => {
                 className={className}
                 label={t("lessonRail.flashcards.title")}
                 action={(
-                    <Button size="sm" variant="primary" className="self-start" onPress={onReview}>
+                    <Button size="sm" variant="secondary" className="self-start" onPress={onReview}>
                         {t("lessonRail.flashcards.review")}
                     </Button>
                 )}

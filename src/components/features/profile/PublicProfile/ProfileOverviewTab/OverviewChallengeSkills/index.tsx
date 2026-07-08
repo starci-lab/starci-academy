@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { Typography, cn } from "@heroui/react"
+import { Typography } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useProfileUsername } from "../../hooks/useProfileUsername"
@@ -9,6 +9,7 @@ import { buildDifficultySegments } from "../../ProfileChallengesTab/ProfileChall
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
 import { useQueryUserSolvedChallengesSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserSolvedChallengesSwr"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { SegmentBar } from "@/components/blocks/stats/SegmentBar"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { StatPair } from "@/components/blocks/stats/StatPair"
@@ -16,20 +17,33 @@ import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/
 import { getLanguageColor, getLanguageLabel } from "@/modules/utils/language"
 
 /** Props for {@link OverviewChallengeSkills}. */
-export type OverviewChallengeSkillsProps = WithClassNames<undefined>
+export interface OverviewChallengeSkillsProps extends WithClassNames<undefined> {
+    /** Section label, rendered outside the card (owned here, like every other self-contained section). */
+    label: React.ReactNode
+    /** Optional leading icon before the label. */
+    icon?: React.ReactNode
+    /** Optional "see more" link on the label row. */
+    onSeeMore?: () => void
+    /** Text for the see-more link. */
+    seeMoreLabel?: React.ReactNode
+    /** Stretch the section (and its card) to fill the row's height. */
+    fillHeight?: boolean
+}
 
 /**
  * Overview snapshot — skills proven by graded CHALLENGES, mirroring the "Kỹ năng
  * qua Luyện tập" card: a passed-count headline, the 4-tone DIFFICULTY
  * {@link SegmentBar}, then a language {@link SegmentBar} (brand legend, same as the
  * Challenges tab). A teaser only — the full submission list lives behind "Xem
- * thêm" in the Challenges tab. Content only (no card): the parent
- * {@link import("@/components/blocks").LabeledCard} supplies the frame; the fetch
+ * thêm" in the Challenges tab. Owns its own `LabeledCard`, with `frameless`
+ * computed HERE (not hardcoded) so the loaded snapshot (self-framed as a
+ * `SurfaceListCard`) skips the outer `Card` — but the skeleton/empty/error
+ * states, which have no bounded surface of their own, still get one. The fetch
  * goes through {@link AsyncContent}.
  *
- * @param props - optional root class name (placement only)
+ * @param props - {@link OverviewChallengeSkillsProps}
  */
-export const OverviewChallengeSkills = ({ className }: OverviewChallengeSkillsProps) => {
+export const OverviewChallengeSkills = ({ className, label, icon, onSeeMore, seeMoreLabel, fillHeight }: OverviewChallengeSkillsProps) => {
     const t = useTranslations()
     const username = useProfileUsername()
     const { data: user } = useQueryUserProfileSwr(username)
@@ -48,68 +62,79 @@ export const OverviewChallengeSkills = ({ className }: OverviewChallengeSkillsPr
         return acc
     }, {})
     const langs = Object.entries(langCounts).sort((a, b) => b[1] - a[1])
+    const hasChallenges = !(isLoading || !userId) && !error && challenges.length > 0
 
     return (
-        <AsyncContent
-            isLoading={(isLoading || !userId) && challenges.length === 0}
-            skeleton={(
-                <SurfaceListCard>
+        <LabeledCard
+            className={className}
+            label={label}
+            icon={icon}
+            onSeeMore={onSeeMore}
+            seeMoreLabel={seeMoreLabel}
+            fillHeight={fillHeight}
+            frameless={hasChallenges}
+        >
+            <AsyncContent
+                isLoading={(isLoading || !userId) && challenges.length === 0}
+                skeleton={(
+                    <SurfaceListCard>
+                        <SurfaceListCardItem>
+                            <div className="flex flex-col gap-3">
+                                {/* StatPair (count + label) + difficulty bar + language */}
+                                <Skeleton.Metric />
+                                <Skeleton.SegmentBar legendItems={4} />
+                                <div className="flex flex-col gap-2">
+                                    <Skeleton.Typography type="body-xs" width="1/4" />
+                                    <Skeleton.SegmentBar legendItems={4} />
+                                </div>
+                            </div>
+                        </SurfaceListCardItem>
+                    </SurfaceListCard>
+                )}
+                isEmpty={challenges.length === 0}
+                emptyContent={{ title: t("publicProfile.skills.empty") }}
+                error={challenges.length === 0 ? error : undefined}
+                errorContent={{
+                    title: t("publicProfile.loadError"),
+                    onRetry: () => { void mutate() },
+                    retryLabel: t("publicProfile.loadErrorRetry"),
+                }}
+            >
+                <SurfaceListCard className="h-full">
                     <SurfaceListCardItem>
                         <div className="flex flex-col gap-3">
-                            {/* StatPair (count + label) + difficulty bar + language */}
-                            <Skeleton.Metric />
-                            <Skeleton.SegmentBar legendItems={4} />
-                            <div className="flex flex-col gap-2">
-                                <Skeleton.Typography type="body-xs" width="1/4" />
-                                <Skeleton.SegmentBar legendItems={4} />
-                            </div>
+                            {/* passed count headline + difficulty distribution (4-tone) */}
+                            <StatPair
+                                value={challenges.length}
+                                label={t("publicProfile.challengesCount")}
+                            />
+                            {difficultySegments.length > 0 ? (
+                                <SegmentBar
+                                    ariaLabel={`${challenges.length} ${t("publicProfile.challengesCount")}`}
+                                    segments={difficultySegments}
+                                />
+                            ) : null}
+                            {/* language breadth — same SegmentBar + brand legend as the Challenges tab */}
+                            {langs.length > 0 ? (
+                                <div className="flex flex-col gap-2">
+                                    <Typography type="body-xs" color="muted">
+                                        {t("publicProfile.skillsSnapshot.languagesLabel")}
+                                    </Typography>
+                                    <SegmentBar
+                                        ariaLabel={t("publicProfile.skillsSnapshot.languagesLabel")}
+                                        segments={langs.map(([lang, count]) => ({
+                                            key: lang,
+                                            label: getLanguageLabel(lang),
+                                            value: count,
+                                            color: getLanguageColor(lang),
+                                        }))}
+                                    />
+                                </div>
+                            ) : null}
                         </div>
                     </SurfaceListCardItem>
                 </SurfaceListCard>
-            )}
-            isEmpty={challenges.length === 0}
-            emptyContent={{ title: t("publicProfile.skills.empty") }}
-            error={challenges.length === 0 ? error : undefined}
-            errorContent={{
-                title: t("publicProfile.loadError"),
-                onRetry: () => { void mutate() },
-                retryLabel: t("publicProfile.loadErrorRetry"),
-            }}
-        >
-            <SurfaceListCard className={cn("h-full", className)}>
-                <SurfaceListCardItem>
-                    <div className="flex flex-col gap-3">
-                        {/* passed count headline + difficulty distribution (4-tone) */}
-                        <StatPair
-                            value={challenges.length}
-                            label={t("publicProfile.challengesCount")}
-                        />
-                        {difficultySegments.length > 0 ? (
-                            <SegmentBar
-                                ariaLabel={`${challenges.length} ${t("publicProfile.challengesCount")}`}
-                                segments={difficultySegments}
-                            />
-                        ) : null}
-                        {/* language breadth — same SegmentBar + brand legend as the Challenges tab */}
-                        {langs.length > 0 ? (
-                            <div className="flex flex-col gap-2">
-                                <Typography type="body-xs" color="muted">
-                                    {t("publicProfile.skillsSnapshot.languagesLabel")}
-                                </Typography>
-                                <SegmentBar
-                                    ariaLabel={t("publicProfile.skillsSnapshot.languagesLabel")}
-                                    segments={langs.map(([lang, count]) => ({
-                                        key: lang,
-                                        label: getLanguageLabel(lang),
-                                        value: count,
-                                        color: getLanguageColor(lang),
-                                    }))}
-                                />
-                            </div>
-                        ) : null}
-                    </div>
-                </SurfaceListCardItem>
-            </SurfaceListCard>
-        </AsyncContent>
+            </AsyncContent>
+        </LabeledCard>
     )
 }

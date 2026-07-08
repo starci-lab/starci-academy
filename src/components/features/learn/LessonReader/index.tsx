@@ -171,7 +171,7 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
             if (isSandbox) {
                 items.push({
                     key: ContentTab.Sandbox,
-                    label: "Sandbox",
+                    label: t("content.tabs.sandbox"),
                     component: <SandboxBody />,
                 })
             }

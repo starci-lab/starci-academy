@@ -151,7 +151,7 @@ export const LivestreamCalendarModal = ({ className }: WithClassNames<undefined>
                                                         <Chip.Label>{dayLabel}</Chip.Label>
                                                     </Chip>
                                                     <Chip color="accent" size="sm" variant="soft">
-                                                        <ClockIcon className="size-5" />
+                                                        <ClockIcon className="size-4" />
                                                         <Chip.Label>
                                                             {t("livestream.calendar.sessionTime", {
                                                                 start: formatTime(session.startTime),

@@ -124,7 +124,7 @@ export const TalentDirectory = ({ className }: TalentDirectoryProps) => {
                                     <div className="flex flex-wrap items-center gap-2">
                                         {track.isQualified ? (
                                             <Chip size="sm" variant="soft" color="success">
-                                                <RocketLaunchIcon aria-hidden focusable="false" className="size-3" />
+                                                <RocketLaunchIcon aria-hidden focusable="false" className="size-4" />
                                                 <Chip.Label>{t("talentDirectory.qualified")}</Chip.Label>
                                             </Chip>
                                         ) : null}

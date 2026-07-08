@@ -59,7 +59,7 @@ export const ResumeRail = () => {
                     "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
                 )}
             >
-                <PlayIcon weight="fill" aria-hidden focusable="false" className="size-5" />
+                <PlayIcon aria-hidden focusable="false" className="size-5" />
             </Link>
         )
     }
@@ -69,17 +69,17 @@ export const ResumeRail = () => {
             aria-label={`${t("nav.resumeContinue")} · ${resumeTitle}`}
             onPress={onResume}
             className={cn(
-                "mb-3 flex cursor-pointer items-center gap-2 rounded-large bg-accent/10 px-3 py-2",
+                "mb-3 flex w-full min-w-0 max-w-full cursor-pointer items-center gap-2 overflow-hidden rounded-large bg-accent/10 px-3 py-2",
                 "no-underline transition-colors hover:bg-accent/15",
                 "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
             )}
         >
-            <PlayIcon weight="fill" aria-hidden focusable="false" className="size-5 shrink-0 text-accent" />
-            <span className="flex min-w-0 flex-col gap-0">
-                <Typography type="body-xs" className="text-accent" truncate>
+            <PlayIcon aria-hidden focusable="false" className="size-5 shrink-0 text-accent" />
+            <span className="flex min-w-0 flex-1 flex-col gap-0 overflow-hidden">
+                <Typography type="body-xs" className="min-w-0 text-accent" truncate>
                     {eyebrow}
                 </Typography>
-                <Typography type="body-sm" weight="medium" className="text-foreground" truncate>
+                <Typography type="body-sm" className="min-w-0 text-foreground" truncate title={resumeTitle}>
                     {resumeTitle}
                 </Typography>
             </span>

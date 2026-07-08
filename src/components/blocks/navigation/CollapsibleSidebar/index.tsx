@@ -148,8 +148,13 @@ export const CollapsibleSidebar = ({
                     </Button>
                 </div>
 
-                {/* pinned top slot (e.g. resume pill) — above the scroll area, always visible */}
-                {topSlot}
+                {/* pinned top slot (e.g. resume pill) — above the scroll area, always visible.
+                    min-w-0: a column-flex item defaults to content-width (min-width: auto),
+                    which would let it overflow the rail and get hard-clipped by overflow-hidden
+                    instead of shrinking so its own `truncate` text can ellipsize. */}
+                <div className="min-w-0">
+                    {topSlot}
+                </div>
 
                 {/* body: the nav — ALWAYS rendered; rows drop to icon-only in the rail
                     (via SidebarCollapsedContext). A HeroUI ScrollShadow owns the overflow

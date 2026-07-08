@@ -22,7 +22,6 @@ import { useRouter } from "next/navigation"
 import {
     ArrowRightIcon,
     BriefcaseIcon,
-    CaretDownIcon,
     PaperclipIcon,
     SquaresFourIcon,
     TrophyIcon,
@@ -31,10 +30,11 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { SegmentedControl } from "@/components/blocks/navigation/SegmentedControl"
 import { ResizableRail } from "@/components/blocks/layout/ResizableRail"
-import { InputButtonLike } from "@/components/blocks/buttons/InputButtonLike"
 import { GradeModelDropdown, type GradeModelSelection } from "@/components/blocks/grading/GradeModelDropdown"
+import { GradeCreditCaption } from "@/components/blocks/grading/GradeCreditCaption"
 import { AiModelTask } from "@/modules/api/graphql/queries/query-ai-models"
 import { pathConfig } from "@/resources/path"
+import { useSystemAiAutoConfig } from "@/hooks/useSystemAiAutoConfig"
 import { useRegisterNavbarBottomLayer } from "@/hooks/zustand/navbarBottomLayer/store"
 import { useCvEditorToolbarStore } from "@/hooks/zustand/cvEditorToolbar/store"
 import { useQueryMyCvBlocksSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCvBlocksSwr"
@@ -139,6 +139,7 @@ export const CvEditor = ({ className, cvId }: CvEditorProps) => {
     const aiSettingsSwr = useQueryMyAiSettingsSwr()
     const aiQuotaSwr = useQueryMyAiQuotaSwr()
     const aiQuota = aiQuotaSwr.data
+    const aiAutoConfig = useSystemAiAutoConfig()
     const gradeModels = aiModelsSwr.data?.aiModels?.data?.gradableModels ?? []
     const canPremium = aiSettingsSwr.data?.canPremium ?? false
     const [aiSelection, setAiSelection] = useState<GradeModelSelection>({ model: null, provider: null })
@@ -382,20 +383,23 @@ export const CvEditor = ({ className, cvId }: CvEditorProps) => {
                         >
                             {/* Mẫu (template) — coarsest style lever, so it sits at the top.
                             Shows the CURRENT value and opens a picker (the thumbnail
-                            gallery) exactly like the Select fields below it — so it
-                            renders with the SAME field chrome (InputButtonLike: a button
-                            disguised as an input), not a quiet action Button. Reserve
-                            `Button variant="tertiary"` for controls that DO something
-                            (Truy cập nhanh below), not ones that DISPLAY a value. */}
+                            gallery), rendered as `Button variant="tertiary"` — matching
+                            the "Trợ lý AI" picker below (both button-style pickers;
+                            Phông chữ/Cỡ chữ stay real `Select` fields). */}
                             <div className="flex flex-col gap-3">
                                 <Label>{t("cv.builder.template.label")}</Label>
-                                <InputButtonLike
-                                    ariaLabel={t("cv.builder.template.label")}
+                                <Button
+                                    variant="tertiary"
+                                    size="sm"
+                                    fullWidth
+                                    aria-label={t("cv.builder.template.label")}
                                     onPress={() => setIsTemplateModalOpen(true)}
-                                    icon={<SquaresFourIcon aria-hidden className="size-4 shrink-0 text-muted" />}
-                                    placeholder={t(`cv.builder.template.names.${draft?.style.template ?? "classic"}`)}
-                                    suffix={<CaretDownIcon aria-hidden className="size-4 text-muted" />}
-                                />
+                                >
+                                    <SquaresFourIcon aria-hidden className="size-4 shrink-0" />
+                                    <span className="min-w-0 flex-1 truncate text-left">
+                                        {t(`cv.builder.template.names.${draft?.style.template ?? "classic"}`)}
+                                    </span>
+                                </Button>
                             </div>
 
                             <div className="flex flex-col gap-3">
@@ -512,24 +516,17 @@ export const CvEditor = ({ className, cvId }: CvEditorProps) => {
                             </div>
 
                             {/* AI assistant — the model picker for "AI viết giúp" rewrites,
-                            rendered as a field-style dropdown (`isDropdown`) to match the
-                            Select dropdowns above. Remaining AI credits sit on the right of
-                            the label. Sits ABOVE "Truy cập nhanh" (thầy: trợ lý AI ở trên). */}
+                            rendered `isButton` (matches the "Mẫu" picker above — both
+                            button-style pickers; Phông chữ/Cỡ chữ stay real `Select`
+                            fields). Sits ABOVE "Truy cập nhanh" (thầy: trợ lý AI ở trên).
+                            Credit caption = shared `GradeCreditCaption` (weekly pool, same
+                            as every other AI surface — see canon
+                            `ai-credit-caption-bound-to-picker-not-button.md`). */}
                             <div className="flex flex-col gap-3">
-                                <div className="flex items-center justify-between gap-2">
-                                    <Label>{t("cv.builder.aiAssistantLabel")}</Label>
-                                    {aiQuota ? (
-                                        <Typography type="body-xs" color="muted">
-                                            {t("cv.builder.aiCredits", {
-                                                remaining: aiQuota.credit.remaining5h,
-                                                limit: aiQuota.credit.limit5h,
-                                            })}
-                                        </Typography>
-                                    ) : null}
-                                </div>
+                                <Label>{t("cv.builder.aiAssistantLabel")}</Label>
                                 <GradeModelDropdown
-                                    className="w-full"
-                                    isDropdown
+                                    isButton
+                                    isButtonFullWidth
                                     models={gradeModels}
                                     selection={aiSelection}
                                     canPremium={canPremium}
@@ -538,24 +535,29 @@ export const CvEditor = ({ className, cvId }: CvEditorProps) => {
                                     onSelect={setAiSelection}
                                     onUpgrade={onUpgrade}
                                 />
+                                <GradeCreditCaption
+                                    creditUsage={aiQuota}
+                                    hasPinnedModel={aiSelection.model !== null}
+                                    autoCreditCost={aiAutoConfig?.creditCost}
+                                />
                             </div>
 
                             {/* Quick access — both ingest entry points: paste an existing CV +
                             tailor to a job description (thầy: cả 2 ở truy cập nhanh). */}
                             <div className="flex flex-col gap-2">
                                 <Label>{t("cv.builder.quickAccessLabel")}</Label>
-                                <Button variant="tertiary" className="w-full" onPress={() => setIsSplitModalOpen(true)}>
-                                    <PaperclipIcon aria-hidden className="size-4" />
-                                    {t("cv.builder.splitEntryCta")}
+                                <Button variant="tertiary" className="w-full justify-start" onPress={() => setIsSplitModalOpen(true)}>
+                                    <PaperclipIcon aria-hidden className="size-4 shrink-0" />
+                                    <span className="min-w-0 flex-1 truncate text-left">{t("cv.builder.splitEntryCta")}</span>
                                 </Button>
                                 <Button
                                     variant="tertiary"
-                                    className="w-full"
+                                    className="w-full justify-start"
                                     isDisabled={!draft}
                                     onPress={() => setIsTailorModalOpen(true)}
                                 >
-                                    <BriefcaseIcon aria-hidden className="size-4" />
-                                    {t("cv.builder.tailorEntryCta")}
+                                    <BriefcaseIcon aria-hidden className="size-4 shrink-0" />
+                                    <span className="min-w-0 flex-1 truncate text-left">{t("cv.builder.tailorEntryCta")}</span>
                                 </Button>
                             </div>
 
@@ -593,7 +595,7 @@ export const CvEditor = ({ className, cvId }: CvEditorProps) => {
                             <div className="mt-auto">
                                 {capstoneCount > 0 ? (
                                     <Chip className="bg-accent/10 text-accent">
-                                        <TrophyIcon aria-hidden className="size-3" />
+                                        <TrophyIcon aria-hidden className="size-4" />
                                         <Chip.Label>{t("cv.builder.trustBadge", { count: capstoneCount })}</Chip.Label>
                                     </Chip>
                                 ) : (

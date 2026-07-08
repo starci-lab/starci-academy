@@ -423,7 +423,7 @@
     "moduleLessons": "{read}/{total} bài",
     "tasksStat": "Nhiệm vụ {done}/{total}",
     "resume": "Tiếp tục học",
-    "allDone": "Bạn đã hoàn thành khóa học này 🎉",
+    "allDone": "Bạn đã hoàn thành khóa học này",
     "searchAria": "Tìm nội dung",
     "searchPlaceholder": "Tìm nội dung...",
     "premium": "Nội dung trả phí",
@@ -523,6 +523,7 @@
     "modelLabel": "Model trả lời",
     "thinking": "Đang trả lời…",
     "error": "Xin lỗi, mình chưa trả lời được. Hãy thử lại sau.",
+    "upgrade": "Nâng cấp để hỏi tiếp",
     "suggestions": {
       "summarize": "Tóm tắt bài này trong 3 ý chính",
       "hardest": "Giải thích phần khó nhất",
@@ -679,6 +680,7 @@
     "zoomIn": "Phóng to",
     "zoomOut": "Thu nhỏ",
     "fitView": "Vừa khung nhìn",
+    "backToCourse": "Về khóa học",
     "continue": "Tiếp tục học",
     "continueAria": "Tiếp tục tới nội dung kế tiếp",
     "allDone": "Đã học hết nội dung",
@@ -829,7 +831,6 @@
         "en": "English"
       },
       "aiAssistantLabel": "Trợ lý AI",
-      "aiCredits": "Còn {remaining}/{limit} credit",
       "tailorEntryCta": "Chỉnh theo tin tuyển dụng",
       "tailorModalTitle": "Chỉnh CV theo tin tuyển dụng",
       "tailorModalDescription": "Dán mô tả công việc bạn muốn ứng tuyển — AI sẽ điều chỉnh câu chữ và thứ tự các mục trong CV cho sát với tin tuyển dụng này (không lưu tự động, bạn xem lại rồi mới lưu).",
@@ -1423,7 +1424,16 @@
       "content": "Nội dung",
       "lessonVideos": "Bài giảng",
       "codeExplainings": "Bài giảng",
-      "challenges": "Thử thách"
+      "challenges": "Thử thách",
+      "sandbox": "Sandbox"
+    },
+    "e2e": {
+      "empty": "Chưa có dữ liệu E2E cho bài học này.",
+      "title": "Kiểm thử end-to-end (Playwright)",
+      "passedCount": "{passed}/{total} luồng pass — log thật ghi lại từ lần chạy E2E trên backend & UI thật.",
+      "languagesAria": "Ngôn ngữ E2E",
+      "statusPass": "pass",
+      "statusFail": "fail"
     },
     "unread": "Chưa đọc",
     "hasLecture": "Có bài giảng",
@@ -1442,7 +1452,8 @@
   },
   "aiCredit": {
     "usage": "Còn {remaining}/{quota} credit tuần này",
-    "quotaReached": "Đã hết credit tuần này"
+    "quotaReached": "Đã hết credit tuần này",
+    "quotaReachedBurst": "Đã dùng hết credit trong ít phút vừa rồi — thử lại sau"
   },
   "challenge": {
     "title": "Thử thách",
@@ -1452,20 +1463,6 @@
       "completed": "Đã hoàn thành · {score}/{maxScore} điểm",
       "inProgress": "Đang làm · {score}/{maxScore} điểm",
       "failed": "Chưa đạt · {score}/{maxScore} điểm"
-    },
-    "quota": {
-      "overQuota": "Bạn đã hết quota AI ({used}/{quota} credit). Nâng cấp để tiếp tục chấm bài.",
-      "addQuota": "Thêm quota",
-      "resetAt": "Quota hồi lại lúc {time}",
-      "aiUsage": "AI Usage",
-      "usage": "{used}/{quota} credit",
-      "remaining": "Còn {remaining} credit",
-      "quotaReached": "Hết quota",
-      "laneUsage": {
-        "auto": "Auto • {remaining}/{quota} credit",
-        "premium": "Premium • {remaining}/{quota} credit",
-        "byok": "BYOK"
-      }
     },
     "viewAttempts": "Xem những lần thử trước",
     "pass": "Đạt",
@@ -1927,9 +1924,9 @@
     "searchEmpty": "Không có bộ nào khớp với \"{query}\".",
     "mode": {
       "study": "Học thẻ",
-      "interview": "Hỏi nhanh"
+      "quiz": "Hỏi nhanh"
     },
-    "interview": {
+    "quiz": {
       "record": "Trả lời bằng giọng nói",
       "stop": "Dừng",
       "recording": "Đang nghe…",
@@ -1943,6 +1940,8 @@
       "nextQuestion": "Câu tiếp theo",
       "retry": "Thử lại",
       "drawError": "Không tải được câu hỏi cho bộ thẻ này.",
+      "sessionLoadErrorTitle": "Không tải được câu hỏi cho phiên luyện này.",
+      "sessionLoadErrorDescription": "Một vài bộ thẻ chưa sẵn sàng ở phía máy chủ. Thử lại hoặc đổi cấp độ khác.",
       "gradeError": "Không chấm được câu trả lời. Vui lòng thử lại.",
       "pass": "Đạt",
       "borderline": "Cận đạt",
@@ -2001,6 +2000,7 @@
       "gateTitle": "Hỏi nhanh dành cho học viên",
       "gateDescription": "Đăng ký khóa học để luyện nhớ lại kiến thức bằng flashcard — tự chấm theo từ khoá và nhận XP sau mỗi phiên.",
       "masteryTitle": "Độ thuộc",
+      "configLabel": "Cấu hình luyện",
       "clozeInstruction": "Điền các ô trống bằng từ khoá đúng.",
       "checkAnswer": "Kiểm tra",
       "clozeResult": "Đúng {correct}/{total} ô",
@@ -2035,7 +2035,11 @@
       "readinessLockedDescription": "Cần độ thuộc trung bình ≥ {threshold}% — bạn đang ở {currentAvg}%.",
       "readinessUnlockedTitle": "Sẵn sàng thử AI Mock Interview",
       "readinessUnlockedDescription": "Độ thuộc của bạn đã đạt ngưỡng — thử buổi phỏng vấn được AI chấm điểm thật xem sao.",
-      "readinessUnlockedCta": "Vào AI Mock Interview"
+      "readinessUnlockedCta": "Vào AI Mock Interview",
+      "resumeTitle": "Hỏi nhanh dở dang",
+      "resumeSubtitle": "Câu {current}/{total}",
+      "resumeCta": "Tiếp tục",
+      "resumeFailed": "Không thể tiếp tục phiên này — có thể đã hết hạn. Bắt đầu phiên mới bên dưới."
     },
     "level": {
       "junior": "Junior",
@@ -2085,6 +2089,9 @@
     "gradingPending": "Đang tổng hợp toàn bộ buổi phỏng vấn — có thể mất khoảng 1 phút.",
     "gradingFailed": "Chấm điểm thất bại. Thử lại.",
     "startFailed": "Không thể bắt đầu phỏng vấn. Thử lại.",
+    "resumeFailed": "Không thể tiếp tục phiên trước — phiên đã hết hạn hoặc không còn tồn tại. Hãy bắt đầu phiên mới.",
+    "resumeCta": "Tiếp tục",
+    "resumeSubtitle": "{progress} · Mức {tier}",
     "backToSetup": "Về cấu hình",
     "retry": "Phỏng vấn lại",
     "scorecardPending": "Không tải được kết quả.",
@@ -2109,6 +2116,7 @@
     "hideArtifactToggle": "Ẩn công cụ vẽ / code",
     "finishEarly": "Kết thúc sớm và chấm",
     "historyTitle": "Lịch sử phỏng vấn",
+    "historySeeMore": "Xem thêm",
     "historyEmpty": "Bạn chưa có buổi phỏng vấn nào.",
     "historyError": "Không tải được lịch sử phỏng vấn.",
     "historyDetailTitle": "Chi tiết buổi phỏng vấn",
@@ -2192,6 +2200,10 @@
     "customizeSession": "Tùy chỉnh phiên",
     "leaveInterview": "Rời phỏng vấn",
     "leaveConfirm": "Rời phỏng vấn bây giờ? Phiên này sẽ không được chấm.",
+    "stayInInterview": "Ở lại",
+    "finishEarlyTitle": "Kết thúc sớm?",
+    "finishEarlyConfirm": "Chấm điểm ngay với các câu đã trả lời? Bạn sẽ không quay lại phiên này được nữa.",
+    "finishEarlyCta": "Kết thúc & chấm",
     "interviewerSpeaking": "đang nói",
     "muteInterviewer": "Tắt giọng đọc của người phỏng vấn",
     "unmuteInterviewer": "Bật giọng đọc của người phỏng vấn",

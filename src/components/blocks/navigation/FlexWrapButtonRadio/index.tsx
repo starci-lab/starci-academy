@@ -48,8 +48,11 @@ export interface FlexWrapButtonRadioProps<T extends string> extends WithClassNam
     color?: FlexWrapButtonRadioColor
     /**
      * Whether this selector sits INSIDE a card already:
-     * - `true` — native HeroUI variants (selected = `primary`, else `tertiary`).
+     * - `true` — native HeroUI variants (selected = `secondary`, else `ghost`).
      *   Clean buttons, no surface of their own (the parent card is the surface).
+     *   NEVER `primary` here — a config card commonly sits on the SAME surface as
+     *   the page's one accent CTA, and a solid-primary selected pill would compete
+     *   with it (1 accent-solid / surface, Von Restorff — `accent-system`).
      * - `false` (default) — standalone: each option is a card-styled `<Button>`
      *   (`bg-surface` + border); the selected one is `bg-<color>/10` + `border-<color>`.
      *   Still a real `<Button>` (consistent height), just given its own surface.
@@ -76,8 +79,9 @@ export interface FlexWrapButtonRadioProps<T extends string> extends WithClassNam
  * height, so a text-only `trailing` lines up with icon-bearing options). Two looks
  * via `insideCard`:
  *
- * - `insideCard={true}` — native `primary`/`tertiary` variants (use when the group
- *   already sits inside a card).
+ * - `insideCard={true}` — native `secondary`/`ghost` variants (use when the group
+ *   already sits inside a card; never `primary` — would compete with the surface's
+ *   own accent CTA).
  * - `insideCard={false}` (default) — card-styled buttons (`bg-surface` + border,
  *   selected `bg-<color>/10` + `border-<color>`). HeroUI buttons drive their fill
  *   via the `--button-bg` CSS var, so the surface/tint is set through inline style
@@ -111,7 +115,7 @@ export const FlexWrapButtonRadio = <T extends string>({
                         <Button
                             key={item.value}
                             size="sm"
-                            variant={selected ? "primary" : "tertiary"}
+                            variant={selected ? "secondary" : "ghost"}
                             isDisabled={item.isDisabled}
                             aria-pressed={selected}
                             onPress={() => onChange(item.value)}

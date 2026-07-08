@@ -90,7 +90,7 @@ export const SkillsBlockEditor = ({ className, block, onChange }: SkillsBlockEdi
                                     aria-label={t("cv.blocks.skills.removeSkill", { name })}
                                     onPress={() => onRemoveSkill(item.id)}
                                 >
-                                    <XIcon aria-hidden className="size-3" />
+                                    <XIcon aria-hidden className="size-4" />
                                 </Link>
                             </Chip>
                         )

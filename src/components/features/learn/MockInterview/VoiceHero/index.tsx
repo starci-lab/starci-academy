@@ -89,7 +89,10 @@ export const VoiceHero = ({
                         className="group flex w-fit cursor-pointer items-center gap-1.5 text-muted hover:text-foreground"
                     >
                         <MicrophoneIcon className="size-4" aria-hidden focusable="false" />
-                        <Typography type="body-xs" className="group-hover:underline">{labels.useVoice}</Typography>
+                        {/* plain span (not Typography, which bakes its own text-foreground and would
+                            never read muted at rest) — inherits the button's text-muted/hover:text-foreground
+                            so the icon and label stay the same color at every state. */}
+                        <span className="text-xs font-medium group-hover:underline">{labels.useVoice}</span>
                     </button>
                 ) : null}
             </div>

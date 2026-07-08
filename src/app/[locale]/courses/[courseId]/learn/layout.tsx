@@ -76,7 +76,14 @@ const Layout = ({ children }: PropsWithChildren) => {
     // The active phase is mirrored into the URL (`?phase=interview`) by MockInterviewSession
     // so the shell can drop the course rails + reading padding for that phase only.
     const isMockInterview = segments[0] === "mock-interview"
-    const isMockInterviewLive = isMockInterview && searchParams.get("phase") === "interview"
+    // the dedicated resumable route (`mock-interview/interview/[sessionId]`) is
+    // ALWAYS the live work surface — detected straight off the path segment so
+    // there is no `?phase=interview` round-trip to wait on before the shell
+    // drops its rails. Additive: the legacy `?phase=interview` query-param
+    // mirror (still written by MockInterviewSession once mounted) keeps working
+    // for the same route too.
+    const isMockInterviewInterviewRoute = isMockInterview && segments[1] === "interview"
+    const isMockInterviewLive = isMockInterviewInterviewRoute || (isMockInterview && searchParams.get("phase") === "interview")
     // the leaderboard shows its XP-category selector as a sidebar (like the content
     // page) on the LEFT; the board reads the selection from the `?category=` URL param.
     const isLeaderboard = segments[0] === "leaderboard"

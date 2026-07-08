@@ -28,7 +28,7 @@ export interface FlashcardReviewerProps extends WithClassNames<undefined> {
     deckId: string
 }
 
-/** HeroUI Chip color per interview seniority level. */
+/** HeroUI Chip color per quiz seniority level. */
 const LEVEL_COLOR: Record<string, "success" | "warning" | "danger" | "accent"> = {
     junior: "success",
     middle: "warning",
@@ -177,7 +177,7 @@ export const FlashcardReviewer = ({ deckId, className }: FlashcardReviewerProps)
                         })}
                     />
 
-                    {/* current card meta: interview level + technology tags */}
+                    {/* current card meta: quiz level + technology tags */}
                     {card && (card.level || (card.tags?.length ?? 0) > 0) ? (
                         <div className="flex flex-wrap items-center gap-2">
                             {card.level ? (

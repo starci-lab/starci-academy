@@ -124,11 +124,11 @@ export const ChallengeCard = ({ challenge, className }: ChallengeCardProps) => {
                 </div>
                 <div className="flex items-center gap-2 flex-wrap">
                     <Chip color="default" className={difficultyPalette[challenge.difficulty]?.text ?? "text-muted"}>
-                        <FlameIcon className="size-3" />
+                        <FlameIcon className="size-4" />
                         <Chip.Label>{t(DIFFICULTY_LABEL_KEY[challenge.difficulty] ?? "challenge.difficulty.easy")}</Chip.Label>
                     </Chip>
                     <Chip variant="secondary" color="accent">
-                        <TrophyIcon className="size-3" />
+                        <TrophyIcon className="size-4" />
                         <Chip.Label>{challenge.score}</Chip.Label>
                     </Chip>
                     {challenge.hint ? (

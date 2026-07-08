@@ -94,7 +94,7 @@ const SampleCandidateCard = () => {
             </div>
 
             <Chip variant="soft" color="success" size="sm" className="self-start">
-                <CheckCircleIcon aria-hidden focusable="false" className="size-3.5" />
+                <CheckCircleIcon aria-hidden focusable="false" className="size-4" />
                 <Chip.Label>{t("landing.outcome.card.openToWork")}</Chip.Label>
             </Chip>
 

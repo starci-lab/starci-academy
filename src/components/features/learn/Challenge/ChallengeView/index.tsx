@@ -206,11 +206,11 @@ export const ChallengeView = ({ className, onBack }: ChallengeViewProps) => {
                         meta={(
                             <div className="flex flex-wrap items-center gap-2">
                                 <Chip color="accent" variant="soft">
-                                    <TrophyIcon className="size-3" />
+                                    <TrophyIcon className="size-4" />
                                     <Chip.Label>{t("challenge.score", { score: challenge?.score ?? 0 })}</Chip.Label>
                                 </Chip>
                                 <Chip className={difficultyPalette[challenge?.difficulty ?? ChallengeDifficulty.Easy].text} variant="soft">
-                                    <FlameIcon className="size-3" />
+                                    <FlameIcon className="size-4" />
                                     <Chip.Label>{t(challengeDifficultyKey)}</Chip.Label>
                                 </Chip>
                                 {statusBadge ? (
@@ -378,7 +378,7 @@ export const ChallengeView = ({ className, onBack }: ChallengeViewProps) => {
                             onClick={() => setLangOpen(true)}
                             aria-label={t("challenge.gradingSettings")}
                             aria-expanded={isLangOpen}
-                            className="group flex cursor-pointer items-center justify-between gap-3 rounded-medium bg-default-100 px-3 py-2 text-left"
+                            className="group flex cursor-pointer items-center justify-between gap-3 rounded-medium bg-default-100 px-3 py-2 text-left outline-none focus-visible:ring-2 focus-visible:ring-accent"
                         >
                             <span className="flex items-center gap-2 text-sm">
                                 <GearSixIcon className="size-4 shrink-0" />

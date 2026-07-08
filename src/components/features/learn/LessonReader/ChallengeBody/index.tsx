@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useMemo } from "react"
-import { Pagination, cn } from "@heroui/react"
+import { Pagination } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { ChallengeCard } from "./ChallengeCard"
@@ -61,30 +61,35 @@ export const ChallengeBody = ({ className }: ChallengeBodyProps) => {
         [totalPages],
     )
     const currentPage = pageNumber ?? 1
+    // frameless ONLY once real cards render (each ChallengeCard self-frames); while
+    // loading/empty/erroring there is no bounded surface, so LabeledCard's own Card
+    // must frame it — otherwise the section's label would also disappear along with
+    // the frame (AsyncContent used to sit OUTSIDE LabeledCard entirely).
+    const hasChallenges = !isLoading && !error && !isEmpty
 
     return (
-        <AsyncContent
-            isLoading={isLoading}
-            skeleton={(
-                <div className={cn("flex flex-col gap-3", className)}>
-                    <ChallengeCardSkeleton />
-                    <ChallengeCardSkeleton />
-                </div>
-            )}
-            isEmpty={isEmpty}
-            emptyContent={{ title: t("challenge.empty") }}
-            error={error}
-            errorContent={{
-                title: t("challenge.errorTitle"),
-                description: t("challenge.errorDescription"),
-                onRetry: () => queryChallengesSwr.mutate(),
-                retryLabel: t("challenge.retry"),
-            }}
+        <LabeledCard
+            label={t("challenge.count", { count: count ?? 0 })}
+            frameless={hasChallenges}
+            className={className}
         >
-            <LabeledCard
-                label={t("challenge.count", { count: count ?? 0 })}
-                frameless
-                className={className}
+            <AsyncContent
+                isLoading={isLoading}
+                skeleton={(
+                    <div className="flex flex-col gap-3">
+                        <ChallengeCardSkeleton />
+                        <ChallengeCardSkeleton />
+                    </div>
+                )}
+                isEmpty={isEmpty}
+                emptyContent={{ title: t("challenge.empty") }}
+                error={error}
+                errorContent={{
+                    title: t("challenge.errorTitle"),
+                    description: t("challenge.errorDescription"),
+                    onRetry: () => queryChallengesSwr.mutate(),
+                    retryLabel: t("challenge.retry"),
+                }}
             >
                 <div className="flex flex-col gap-6">
                     <div className="flex flex-col gap-3">
@@ -147,7 +152,7 @@ export const ChallengeBody = ({ className }: ChallengeBodyProps) => {
                         />
                     ) : null}
                 </div>
-            </LabeledCard>
-        </AsyncContent>
+            </AsyncContent>
+        </LabeledCard>
     )
 }

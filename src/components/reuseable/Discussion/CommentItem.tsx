@@ -3,8 +3,11 @@
 import React, { useState } from "react"
 import { Link, cn } from "@heroui/react"
 import { SealCheckIcon } from "@phosphor-icons/react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
 import { getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
+import { pathConfig } from "@/resources/path"
+import { EntityLink } from "@/components/blocks/feed/EntityLink"
 import { UserAvatar } from "../UserAvatar"
 import { ReactionBar } from "./ReactionBar"
 import { CommentComposer } from "./CommentComposer"
@@ -58,6 +61,8 @@ export const CommentItem = ({
     className,
 }: CommentItemProps) => {
     const t = useTranslations()
+    const locale = useLocale()
+    const router = useRouter()
     // transient per-comment UI state
     const [replying, setReplying] = useState(false)
     const [editing, setEditing] = useState(false)
@@ -94,9 +99,13 @@ export const CommentItem = ({
                 <div className="flex min-w-0 flex-1 flex-col gap-2">
                     {/* author + founder badge + timestamp header */}
                     <div className="flex flex-wrap items-center gap-2">
-                        <span className="text-sm font-semibold text-foreground">
-                            {comment.author.username}
-                        </span>
+                        <EntityLink
+                            label={comment.author.username}
+                            onPress={() => router.push(
+                                pathConfig().locale(locale).profile(comment.author.username).build(),
+                            )}
+                            className="text-sm"
+                        />
                         {comment.isFounderAuthor ? (
                             <SealCheckIcon
                                 weight="fill"

@@ -80,13 +80,13 @@ export const ContentHeader = () => {
                     <div className="flex flex-wrap items-center gap-2">
                         <ReadBadge />
                         <Chip color="default">
-                            <ClockIcon className="size-3" />
+                            <ClockIcon className="size-4" />
                             <Chip.Label>
                                 {t("content.minutesRead", { minutes: minutesRead })}
                             </Chip.Label>
                         </Chip>
                         <Chip color="default">
-                            <FlameIcon className="size-3" />
+                            <FlameIcon className="size-4" />
                             <Chip.Label>
                                 {t("content.challengeCount", { count: challengeCount })}
                             </Chip.Label>

@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import useSWR from "swr"
-import { Button, Card, CardContent, Chip, Label, ScrollShadow, Typography, cn } from "@heroui/react"
+import { Button, Chip, Label, ScrollShadow, Typography, cn } from "@heroui/react"
 import {
     ArrowRightIcon,
     CheckCircleIcon,
@@ -18,7 +18,7 @@ import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { SM2_GRADES } from "../constants"
-import { InterviewSessionSkeleton } from "./InterviewSessionSkeleton"
+import { QuizSessionSkeleton } from "./QuizSessionSkeleton"
 import { parseAnswerKeywords } from "./parse-answer-keywords"
 import { buildCloze, type ClozeQuestion } from "./build-cloze"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -28,27 +28,46 @@ import { queryFlashcardDeck } from "@/modules/api/graphql/queries/query-flashcar
 import { type FlashcardCardEntity } from "@/modules/types/entities/flashcard-card"
 import { type QuizSessionReadinessData, type QuizSessionWeakTagData } from "@/modules/api/graphql/mutations/types/complete-flashcard-quiz-session"
 import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
+import { ErrorContent } from "@/components/blocks/async/ErrorContent"
 import { Callout } from "@/components/blocks/feedback/Callout"
 import { FlipCard } from "@/components/blocks/cards/FlipCard"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { MetricCard } from "@/components/blocks/stats/MetricCard"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
 import { RatingBar } from "@/components/blocks/buttons/RatingBar"
 import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
-import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { FlashcardStatsStrip } from "../FlashcardStatsStrip"
 import { useQueryMyWeeklyStatsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyWeeklyStatsSwr"
 import { useMutateCompleteFlashcardQuizSessionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateCompleteFlashcardQuizSessionSwr"
+import { useMutateStartFlashcardQuizSessionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateStartFlashcardQuizSessionSwr"
+import { useMutateSyncFlashcardQuizSessionProgressSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardQuizSessionProgressSwr"
+import { useQueryMyInProgressFlashcardQuizSessionSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyInProgressFlashcardQuizSessionSwr"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import { useAppSelector } from "@/redux/hooks"
 import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { PaymentFlow } from "@/modules/types/payment"
 import { pathConfig } from "@/resources/path"
+import { ContinueCard } from "@/components/blocks/cards/ContinueCard"
 
-/** Props for {@link InterviewSession}. */
-export interface InterviewSessionProps extends WithClassNames<undefined> {
+/** Props for {@link QuizSession}. */
+export interface QuizSessionProps extends WithClassNames<undefined> {
     /** Course to draw quiz cards across (rendered only for enrolled viewers). */
     courseId: string
+    /** Notified whenever the ACTUAL cloze/flip work surface is on screen — a
+     *  làm-việc-tập-trung job — so the parent pane can widen just for that, vs the
+     *  `setup`/`recap`/building/error/empty sub-states, which are centered messages
+     *  and stay at the narrow width like their siblings. */
+    onWorkSurfaceChange?: (isWorkSurface: boolean) => void
+    /**
+     * Present when reached via the dedicated `flashcards/quiz/[sessionId]`
+     * route — on mount, rehydrates that session from
+     * `myInProgressFlashcardQuizSession` (re-fetching the actual card objects
+     * for the persisted `cardIds`, in order) and jumps straight into the
+     * `active` phase at the persisted `currentIndex`, instead of showing setup.
+     * Mirrors `MockInterviewSessionProps.resumeSessionId`.
+     */
+    resumeSessionId?: string
 }
 
 /**
@@ -56,7 +75,7 @@ export interface InterviewSessionProps extends WithClassNames<undefined> {
  * fixed set of cloze cards (fill blanks → check → read full answer → SM-2);
  * `recap` frames the result by mastery and grants XP.
  */
-type QuizPhase = "setup" | "active" | "recap"
+export type QuizPhase = "setup" | "active" | "recap"
 
 /** Practice modes — differ only in how many cards a session runs. */
 type QuizMode = "quick" | "deep"
@@ -124,12 +143,13 @@ const shuffle = <T,>(input: Array<T>): Array<T> => {
  * sibling-card distractors, checks the answer objectively, reads the full model
  * answer, and self-grades with SM-2 (which reschedules the card). A combo tracks
  * momentum; the recap frames the run by mastery and grants leaderboard XP once
- * per session. Data states go through {@link AsyncContent}.
- * @param props - {@link InterviewSessionProps}
+ * per session. The setup's data states go through {@link FlashcardStatsStrip}.
+ * @param props - {@link QuizSessionProps}
  */
-export const InterviewSession = ({ courseId, className }: InterviewSessionProps) => {
+export const QuizSession = ({ courseId, className, onWorkSurfaceChange, resumeSessionId }: QuizSessionProps) => {
     const t = useTranslations()
     const locale = useLocale()
+    const router = useRouter()
     const runGraphQL = useGraphQLWithToast()
     // trial vs enrolled — drives the recap's Zone E enroll-upsell (primary for trial viewers)
     // and gates Zone D (AI Mock Interview cross-link, only relevant once actually enrolled).
@@ -158,22 +178,23 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
     )
     const decks = decksSwr.data
 
-    // streak chip (rolling 7-day activity) — refreshed after a session grants XP
+    // refreshed after a session grants XP (the setup's progress zone reads its own
+    // streak from `FlashcardStatsStrip` instead)
     const weeklyStatsSwr = useQueryMyWeeklyStatsSwr()
-    const streak = weeklyStatsSwr.data?.streak ?? 0
 
     const runComplete = useMutateCompleteFlashcardQuizSessionSwr()
+    const runStart = useMutateStartFlashcardQuizSessionSwr()
+    const runSyncProgress = useMutateSyncFlashcardQuizSessionProgressSwr()
+    // read BOTH by the setup screen's resume card (when NOT already resuming) and the
+    // rehydrate effect below (when `resumeSessionId` IS present) — mirrors
+    // `MockInterviewSession`'s single `inProgressSessionSwr` read.
+    const inProgressSessionSwr = useQueryMyInProgressFlashcardQuizSessionSwr(courseId)
 
-    // aggregate mastery across every deck of the course
-    const { masteredSum, totalCards } = useMemo(() => {
-        let mastered = 0
-        let total = 0
-        for (const deck of decks ?? []) {
-            mastered += deck.masteredCount ?? 0
-            total += deck.cards?.length ?? 0
-        }
-        return { masteredSum: mastered, totalCards: total }
-    }, [decks])
+    // total card count across the course's decks — gates the setup CTA
+    const totalCards = useMemo(
+        () => (decks ?? []).reduce((sum, deck) => sum + (deck.cards?.length ?? 0), 0),
+        [decks],
+    )
 
     // ── session state ────────────────────────────────────────────────────
     const [phase, setPhase] = useState<QuizPhase>("setup")
@@ -198,6 +219,10 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
     const [bestCombo, setBestCombo] = useState(0)
     // true while building the session (fetching full deck cards)
     const [building, setBuilding] = useState(false)
+    // true when EVERY drawn deck failed to load (e.g. a deck missing from the ES
+    // index) — distinct from "no cards matched the chosen level" so the learner
+    // isn't told to change a filter when the real cause is a backend hiccup
+    const [buildError, setBuildError] = useState(false)
     // client-generated id shared by this run → idempotent XP grant
     const sessionId = useRef<string | null>(null)
     // XP awarded by the backend for this run (shown in the recap)
@@ -210,8 +235,17 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
     const [readiness, setReadiness] = useState<QuizSessionReadinessData | null>(null)
     // guards the one-shot completion mutation on entering the recap
     const completedRef = useRef(false)
+    // guards the one-shot resume rehydration to run at most once per mounted instance
+    const resumeAttemptedRef = useRef(false)
+    // set when `resumeSessionId` couldn't be resumed (no matching session / expired
+    // past its 24h TTL) — shown as an inline note on the setup screen it falls back to
+    const [resumeError, setResumeError] = useState<string | null>(null)
 
-    const sessionLength = MODE_LENGTH[mode]
+    // the setup screen's mode picker drives this pre-build; once cards are actually
+    // drawn (fresh OR resumed), the real count wins — a resumed run's card count
+    // depends on whichever mode it was originally started with, not the setup
+    // screen's current (unrelated) selection.
+    const sessionLength = sessionCards.length > 0 ? sessionCards.length : MODE_LENGTH[mode]
 
     // SM-2 grade buttons, localized for the rating bar
     const ratingOptions = useMemo(
@@ -219,34 +253,89 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
         [t],
     )
 
-    // fetch the full cards of every deck, pool + filter + shuffle, then begin
+    // fetch the full cards of every deck (self-grading needs a model answer to compare
+    // against). Each deck is fetched independently (allSettled) so ONE deck failing
+    // (e.g. missing from the Elasticsearch index the single-deck read serves from —
+    // see `FlashcardDeckReadService.getById`) can't silently empty the whole pool:
+    // the caller just draws from whichever decks DID resolve. Shared by a FRESH start
+    // (draws + shuffles) and a resume (looks the persisted `cardIds` up by id).
+    const fetchCardPool = useCallback(async () => {
+        const settled = await Promise.allSettled(
+            (decks ?? []).map(async (deck) => {
+                const response = await queryFlashcardDeck({
+                    request: { flashcardDeckId: deck.id },
+                    headers: courseHeaders,
+                })
+                const payload = response.data?.flashcardDeck
+                if (!payload?.success) {
+                    throw new Error(payload?.message ?? "flashcard deck fetch failed")
+                }
+                return payload.data?.cards ?? []
+            }),
+        )
+        const anyDeckFailed = settled.some((result) => result.status === "rejected")
+        const deckPayloads = settled
+            .filter((result) => result.status === "fulfilled")
+            .map((result) => result.value)
+        const pool: Array<QuizCard> = deckPayloads
+            .flat()
+            .filter((card) => Boolean(card.answer))
+            .map((card) => ({ ...card, keywords: parseAnswerKeywords(card.answer ?? "") }))
+        return { pool, anyDeckFailed }
+    }, [decks, courseHeaders])
+
+    // draw a fresh run: pool + filter by level + shuffle, then record it server-side
+    // (idempotent id for the whole run) before showing question 1
     const startSession = useCallback(async () => {
         if (!decks || decks.length === 0) {
             return
         }
         setBuilding(true)
+        setBuildError(false)
+        setResumeError(null)
         setPhase("active")
         try {
-            // fetch each deck's full cards in parallel, then pool them
-            const deckPayloads = await Promise.all(
-                decks.map(async (deck) => {
-                    const response = await queryFlashcardDeck({
-                        request: { flashcardDeckId: deck.id },
-                        headers: courseHeaders,
-                    })
-                    return response.data?.flashcardDeck.data?.cards ?? []
-                }),
-            )
-            const pool: Array<QuizCard> = deckPayloads
-                .flat()
-                // self-grading needs a model answer to compare against
-                .filter((card) => Boolean(card.answer))
-                // honour the chosen seniority level
-                .filter((card) => level === null || card.level === level)
-                .map((card) => ({ ...card, keywords: parseAnswerKeywords(card.answer ?? "") }))
-            const drawn = shuffle(pool).slice(0, sessionLength)
+            const { pool, anyDeckFailed } = await fetchCardPool()
+            const drawn = shuffle(
+                pool.filter((card) => level === null || card.level === level),
+            ).slice(0, sessionLength)
 
-            sessionId.current = crypto.randomUUID()
+            // an empty pool only means "no cards at this level" when every deck
+            // fetch actually succeeded — otherwise it's a load failure in disguise
+            if (drawn.length === 0 && anyDeckFailed) {
+                setBuildError(true)
+            }
+
+            // persist the drawn run server-side, then navigate to the dedicated,
+            // resumable `/quiz/[sessionId]` route (mirrors Mock Interview's
+            // startSession) so the URL always carries the real session id and a
+            // refresh resumes it — that route's rehydrate effect re-draws the
+            // persisted cardIds and enters the active phase.
+            if (drawn.length > 0) {
+                const started = await runStart.trigger({
+                    request: { courseId, cardIds: drawn.map((card) => card.id) },
+                    headers: courseHeaders,
+                }).catch(() => null)
+                const startedId = started?.data?.startFlashcardQuizSession.data?.sessionId
+                if (startedId && displayId) {
+                    // prime the in-progress cache with the just-created session BEFORE
+                    // navigating, so the fresh QuizSession that mounts at
+                    // `/quiz/[sessionId]` reads it (not the stale `null` the setup
+                    // screen's resume check cached) and rehydrates cleanly instead of
+                    // flashing "resume failed".
+                    await inProgressSessionSwr.mutate()
+                    router.push(
+                        pathConfig().locale(locale).course(displayId).learn()
+                            .flashcards().quiz(startedId).build(),
+                    )
+                    return
+                }
+                // persist failed (or no course display id) → fall through to a local,
+                // non-resumable run so the quiz still works this session.
+                sessionId.current = startedId ?? crypto.randomUUID()
+            } else {
+                sessionId.current = crypto.randomUUID()
+            }
             setSessionCards(drawn)
             setIndex(0)
             setResults([])
@@ -260,9 +349,70 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
         } finally {
             setBuilding(false)
         }
-    }, [decks, level, sessionLength, courseHeaders])
+    }, [decks, level, sessionLength, courseHeaders, courseId, fetchCardPool, runStart, inProgressSessionSwr, displayId, locale, router])
+
+    // resume, on mount, when reached via the dedicated `flashcards/quiz/[sessionId]`
+    // route — waits for both the deck pool AND the in-progress query to settle, then
+    // either rehydrates straight into the active phase at the persisted card/index or
+    // falls back to setup with an inline error. Runs at most ONCE per mounted instance.
+    useEffect(() => {
+        if (!resumeSessionId || resumeAttemptedRef.current || !decks || inProgressSessionSwr.isLoading) {
+            return
+        }
+        resumeAttemptedRef.current = true
+        const data = inProgressSessionSwr.data
+        if (!data || data.sessionId !== resumeSessionId) {
+            setResumeError(t("flashcard.quiz.resumeFailed"))
+            setPhase("setup")
+            return
+        }
+        void (async () => {
+            const { pool } = await fetchCardPool()
+            const cardById = new Map(pool.map((quizCard) => [quizCard.id, quizCard]))
+            const restoredCards = data.cardIds
+                .map((cardId) => cardById.get(cardId))
+                .filter((quizCard): quizCard is QuizCard => Boolean(quizCard))
+            if (restoredCards.length === 0) {
+                setResumeError(t("flashcard.quiz.resumeFailed"))
+                setPhase("setup")
+                return
+            }
+            const restoredResults: Array<CardResult> = data.results.map((result) => {
+                const coverageRatio = result.totalBlanks > 0 ? result.correctBlanks / result.totalBlanks : null
+                return {
+                    cardId: result.cardId,
+                    coverageRatio,
+                    correctBlanks: result.correctBlanks,
+                    totalBlanks: result.totalBlanks,
+                    correct: coverageRatio === 1,
+                    xp: coverageRatio !== null ? result.correctBlanks * XP_PER_CORRECT_BLANK : 0,
+                }
+            })
+            sessionId.current = resumeSessionId
+            setSessionCards(restoredCards)
+            setIndex(Math.min(data.currentIndex, restoredCards.length - 1))
+            setResults(restoredResults)
+            setCombo(0)
+            setBestCombo(0)
+            setXpEarned(0)
+            setDailyCapReached(false)
+            setWeakTags([])
+            setReadiness(null)
+            completedRef.current = false
+            setResumeError(null)
+            setPhase("active")
+        })()
+    }, [resumeSessionId, decks, inProgressSessionSwr.isLoading, inProgressSessionSwr.data, fetchCardPool, t])
 
     const card = sessionCards[index]
+
+    // the parent widens ONLY while the real cloze/flip work UI is on screen — the
+    // `active` phase's building/error/empty sub-states are centered messages, not
+    // the làm-việc-tập-trung job itself, so they stay at the narrow width
+    const isWorkSurface = phase === "active" && !building && !buildError && Boolean(card)
+    useEffect(() => {
+        onWorkSurfaceChange?.(isWorkSurface)
+    }, [isWorkSurface, onWorkSurfaceChange])
 
     // distractor pool: sibling cards' key terms, preferring the SAME tag (closer =
     // more plausible, à la Duolingo/Quizlet drawing from the session's own vocab)
@@ -432,121 +582,131 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                 setBestCombo((peak) => Math.max(peak, next))
                 return next
             })
+            const nextIndex = index < sessionLength - 1 ? index + 1 : index
+            // best-effort, fire-and-forget persistence for resume — never blocks
+            // advancing the quiz, and a failed sync only degrades resumability
+            if (sessionId.current) {
+                void runSyncProgress
+                    .trigger({
+                        request: {
+                            sessionId: sessionId.current,
+                            currentIndex: nextIndex,
+                            results: nextResults.map((result) => ({
+                                cardId: result.cardId,
+                                correctBlanks: result.correctBlanks,
+                                totalBlanks: result.totalBlanks,
+                            })),
+                        },
+                        headers: courseHeaders,
+                    })
+                    .catch(() => {})
+            }
             if (index < sessionLength - 1) {
                 setIndex((current) => current + 1)
             } else {
                 void finish(nextResults)
             }
         },
-        [card, cloze, results, index, sessionLength, runGraphQL, t, finish],
+        [card, cloze, results, index, sessionLength, runGraphQL, t, finish, runSyncProgress, courseHeaders],
     )
 
     // ── SETUP ────────────────────────────────────────────────────────────
     if (phase === "setup") {
+        const resumeData = inProgressSessionSwr.data
+        const learnPath = pathConfig().locale(locale).course(displayId).learn()
         return (
             <div className={cn("flex flex-col gap-6", className)}>
-                <Card>
-                    <CardContent className="flex flex-col gap-6">
-                        {/* mastery ("Độ thuộc") + streak */}
-                        <div className="flex flex-col gap-3">
-                            <Label>{t("flashcard.interview.masteryTitle")}</Label>
-                            <AsyncContent
-                                isLoading={decksSwr.isLoading && !decks}
-                                skeleton={
-                                    <div className="flex flex-col gap-2">
-                                        <Skeleton.Meter />
-                                        <Skeleton.Typography type="body-xs" width="1/3" />
-                                    </div>
-                                }
-                                error={!decks ? decksSwr.error : undefined}
-                                errorContent={{
-                                    title: t("flashcard.empty"),
-                                    onRetry: () => { void decksSwr.mutate() },
-                                }}
-                            >
-                                <div className="flex flex-col gap-2">
-                                    <ProgressMeter value={masteredSum} max={totalCards} />
-                                    <div className="flex flex-wrap items-center justify-between gap-2">
-                                        <Typography type="body-xs" color="muted">
-                                            {t("flashcard.interview.masteredCaption", {
-                                                mastered: masteredSum,
-                                                total: totalCards,
-                                            })}
-                                        </Typography>
-                                        {weeklyStatsSwr.data && streak > 0 ? (
-                                            <Chip size="sm" variant="soft" color="warning">
-                                                <FlameIcon className="size-3" aria-hidden focusable="false" />
-                                                {t("flashcard.interview.streakChip", { count: streak })}
-                                            </Chip>
-                                        ) : null}
-                                    </div>
-                                </div>
-                            </AsyncContent>
-                        </div>
+                {/* Zone 0 — resume: a "Hỏi nhanh" run left in progress (24h TTL) deep-links
+                    straight back into it via the dedicated `.../quiz/[sessionId]` route,
+                    ABOVE the ordinary setup zones. Demotes Zone 3's CTA to secondary below
+                    so this reads as the screen's primary action while it's shown. */}
+                {resumeData ? (
+                    <ContinueCard
+                        title={t("flashcard.quiz.resumeTitle")}
+                        subtitle={t("flashcard.quiz.resumeSubtitle", {
+                            current: resumeData.currentIndex + 1,
+                            total: resumeData.cardIds.length,
+                        })}
+                        value={resumeData.currentIndex}
+                        max={resumeData.cardIds.length}
+                        ctaLabel={t("flashcard.quiz.resumeCta")}
+                        href={learnPath.flashcards().quiz(resumeData.sessionId).build()}
+                    />
+                ) : null}
 
-                        {/* config: mode + level — divided (gap-3) from the mastery block above */}
-                        <div className="flex flex-col gap-6 border-t border-divider pt-3">
-                            <div className="flex flex-col gap-3">
-                                <Label>{t("flashcard.interview.modeLabel")}</Label>
-                                <FlexWrapButtonRadio
-                                    ariaLabel={t("flashcard.interview.modeLabel")}
-                                    value={mode}
-                                    onChange={setMode}
-                                    insideCard
-                                    items={[
-                                        {
-                                            value: "quick",
-                                            content: (
-                                                <span className="flex items-center gap-2">
-                                                    <LightningIcon className="size-4" aria-hidden focusable="false" />
-                                                    {t("flashcard.interview.modeQuick")}
-                                                </span>
-                                            ),
-                                        },
-                                        {
-                                            value: "deep",
-                                            content: (
-                                                <span className="flex items-center gap-2">
-                                                    <StackIcon className="size-4" aria-hidden focusable="false" />
-                                                    {t("flashcard.interview.modeDeep")}
-                                                </span>
-                                            ),
-                                        },
-                                    ]}
-                                />
-                            </div>
+                {resumeError ? (
+                    <Callout status="danger" title={resumeError} />
+                ) : null}
 
-                            <div className="flex flex-col gap-3">
-                                <Label>{t("flashcard.interview.levelLabel")}</Label>
-                                <FlexWrapButtonRadio
-                                    ariaLabel={t("flashcard.interview.levelLabel")}
-                                    value={level ?? "all"}
-                                    onChange={(value) => setLevel(value === "all" ? null : value)}
-                                    insideCard
-                                    items={[
-                                        { value: "all", content: t("flashcard.interview.levelAll") },
-                                        ...LEVELS.map((value) => ({
-                                            value,
-                                            content: t(`flashcard.level.${value}`),
-                                        })),
-                                    ]}
-                                />
-                            </div>
-                        </div>
+                {/* Zone 1 — progress: reuse the sibling "Học thẻ" tab's stats block (shares
+                    its SWR keys, so this adds no extra fetch) instead of a bespoke mastery
+                    readout, so both tabs of the same "Ôn tập" surface read as one system. */}
+                <FlashcardStatsStrip />
 
-                        {/* primary CTA — one loud action */}
-                        <Button
-                            variant="primary"
-                            size="lg"
-                            className="self-start"
-                            isDisabled={!decks || totalCards === 0}
-                            onPress={() => { void startSession() }}
-                        >
-                            {t("flashcard.interview.begin")}
-                            <ArrowRightIcon className="size-5" aria-hidden focusable="false" />
-                        </Button>
-                    </CardContent>
-                </Card>
+                {/* Zone 2 — config: mode + level, its own labeled card so it reads as a
+                    distinct block from the progress zone above (was one dense card before). */}
+                <LabeledCard label={t("flashcard.quiz.configLabel")} contentClassName="flex flex-col gap-6">
+                    <div className="flex flex-col gap-3">
+                        <Label>{t("flashcard.quiz.modeLabel")}</Label>
+                        <FlexWrapButtonRadio
+                            ariaLabel={t("flashcard.quiz.modeLabel")}
+                            value={mode}
+                            onChange={setMode}
+                            insideCard
+                            items={[
+                                {
+                                    value: "quick",
+                                    content: (
+                                        <span className="flex items-center gap-2">
+                                            <LightningIcon className="size-4" aria-hidden focusable="false" />
+                                            {t("flashcard.quiz.modeQuick")}
+                                        </span>
+                                    ),
+                                },
+                                {
+                                    value: "deep",
+                                    content: (
+                                        <span className="flex items-center gap-2">
+                                            <StackIcon className="size-4" aria-hidden focusable="false" />
+                                            {t("flashcard.quiz.modeDeep")}
+                                        </span>
+                                    ),
+                                },
+                            ]}
+                        />
+                    </div>
+
+                    <div className="flex flex-col gap-3">
+                        <Label>{t("flashcard.quiz.levelLabel")}</Label>
+                        <FlexWrapButtonRadio
+                            ariaLabel={t("flashcard.quiz.levelLabel")}
+                            value={level ?? "all"}
+                            onChange={(value) => setLevel(value === "all" ? null : value)}
+                            insideCard
+                            items={[
+                                { value: "all", content: t("flashcard.quiz.levelAll") },
+                                ...LEVELS.map((value) => ({
+                                    value,
+                                    content: t(`flashcard.level.${value}`),
+                                })),
+                            ]}
+                        />
+                    </div>
+                </LabeledCard>
+
+                {/* Zone 3 — CTA, standalone (matches the sibling tab's stacked-block rhythm
+                    rather than being boxed inside Zone 2's card). Demoted to secondary/ghost
+                    while Zone 0's resume card is shown — that card is the primary action then. */}
+                <Button
+                    variant={resumeData ? "secondary" : "primary"}
+                    size="lg"
+                    className="self-start"
+                    isDisabled={!decks || totalCards === 0}
+                    onPress={() => { void startSession() }}
+                >
+                    {t("flashcard.quiz.begin")}
+                    <ArrowRightIcon className="size-5" aria-hidden focusable="false" />
+                </Button>
             </div>
         )
     }
@@ -583,9 +743,9 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                 <div className="flex flex-col gap-6 rounded-2xl bg-surface p-6 shadow-surface">
                     {/* Zone A — header */}
                     <div className="flex flex-col gap-2">
-                        <Label>{t("flashcard.interview.recapTitle")}</Label>
+                        <Label>{t("flashcard.quiz.recapTitle")}</Label>
                         <Typography type="h4" weight="semibold">
-                            {t("flashcard.interview.answeredWithoutHint", {
+                            {t("flashcard.quiz.answeredWithoutHint", {
                                 count: fullyCorrect,
                                 total: results.length,
                             })}
@@ -597,22 +757,22 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                     <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                         <MetricCard
                             value={`x${bestCombo}`}
-                            label={t("flashcard.interview.bestCombo")}
+                            label={t("flashcard.quiz.bestCombo")}
                         />
                         <MetricCard
                             value={`+${xpEarned}`}
-                            label={t("flashcard.interview.xpEarned")}
-                            hint={dailyCapReached ? t("flashcard.interview.dailyCapReached") : undefined}
+                            label={t("flashcard.quiz.xpEarned")}
+                            hint={dailyCapReached ? t("flashcard.quiz.dailyCapReached") : undefined}
                         />
                         <MetricCard
                             value={`${avgCoverage}%`}
-                            label={t("flashcard.interview.avgCoverage")}
+                            label={t("flashcard.quiz.avgCoverage")}
                         />
                     </div>
 
                     {xpEarned > 0 ? (
                         <Typography type="body-xs" color="muted">
-                            {t("flashcard.interview.xpAddedToLeaderboard")}
+                            {t("flashcard.quiz.xpAddedToLeaderboard")}
                         </Typography>
                     ) : null}
                 </div>
@@ -649,7 +809,7 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                     className="self-start"
                     onPress={() => setPhase("setup")}
                 >
-                    {t("flashcard.interview.practiceMore")}
+                    {t("flashcard.quiz.practiceMore")}
                     <ArrowRightIcon className="size-5" aria-hidden focusable="false" />
                 </Button>
             </div>
@@ -659,7 +819,23 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
     // ── ACTIVE ───────────────────────────────────────────────────────────
     // building the session (fetching deck cards) — mirror with a content skeleton
     if (building) {
-        return <InterviewSessionSkeleton className={className} />
+        return <QuizSessionSkeleton className={className} />
+    }
+
+    // every drawn deck failed to load — a backend hiccup, NOT "no cards at this
+    // level", so say so distinctly and offer a real retry instead of steering the
+    // learner to change a filter that was never the problem
+    if (buildError) {
+        return (
+            <div className={cn("flex flex-col gap-6", className)}>
+                <ErrorContent
+                    title={t("flashcard.quiz.sessionLoadErrorTitle")}
+                    description={t("flashcard.quiz.sessionLoadErrorDescription")}
+                    onRetry={() => { void startSession() }}
+                    retryLabel={t("flashcard.quiz.retry")}
+                />
+            </div>
+        )
     }
 
     // no cards after the level filter — offer a way back to setup
@@ -668,10 +844,10 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
             <div className={cn("flex flex-col gap-6", className)}>
                 <EmptyState
                     icon={<CheckCircleIcon aria-hidden focusable="false" />}
-                    title={t("flashcard.interview.emptyAtLevel")}
+                    title={t("flashcard.quiz.emptyAtLevel")}
                     action={
                         <Button size="sm" variant="secondary" onPress={() => setPhase("setup")}>
-                            {t("flashcard.interview.backToSetup")}
+                            {t("flashcard.quiz.backToSetup")}
                         </Button>
                     }
                 />
@@ -686,7 +862,7 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                 <ProgressMeter
                     value={index + 1}
                     max={sessionLength}
-                    label={t("flashcard.interview.progress", {
+                    label={t("flashcard.quiz.progress", {
                         current: index + 1,
                         total: sessionLength,
                     })}
@@ -694,8 +870,8 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                 />
                 {combo > 1 ? (
                     <Chip size="sm" variant="soft" color="warning">
-                        <FlameIcon className="size-3" aria-hidden focusable="false" />
-                        {t("flashcard.interview.comboChip", { combo })}
+                        <FlameIcon className="size-4" aria-hidden focusable="false" />
+                        {t("flashcard.quiz.comboChip", { combo })}
                     </Chip>
                 ) : null}
             </div>
@@ -808,7 +984,7 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                     color="muted"
                     className="border-t border-divider pt-3"
                 >
-                    {t("flashcard.interview.clozeInstruction")}
+                    {t("flashcard.quiz.clozeInstruction")}
                 </Typography>
                 <p className="text-base leading-loose text-foreground">
                     {cloze.segments.map((segment, position) =>
@@ -850,7 +1026,7 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                 {/* after checking, surface the right term for any blank got wrong */}
                 {checked && correctCount < cloze.blanks.length ? (
                     <Typography type="body-xs" color="muted">
-                        {t("flashcard.interview.clozeResult", {
+                        {t("flashcard.quiz.clozeResult", {
                             correct: correctCount,
                             total: cloze.blanks.length,
                         })}
@@ -883,7 +1059,7 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                         isDisabled={!allFilled}
                         onPress={() => setChecked(true)}
                     >
-                        {t("flashcard.interview.checkAnswer")}
+                        {t("flashcard.quiz.checkAnswer")}
                     </Button>
                 </div>
             ) : (
@@ -896,7 +1072,7 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                             <XCircleIcon className="size-5 text-danger" aria-hidden focusable="false" />
                         )}
                         <Typography type="body-sm" weight="medium">
-                            {t("flashcard.interview.clozeResult", {
+                            {t("flashcard.quiz.clozeResult", {
                                 correct: correctCount,
                                 total: cloze.blanks.length,
                             })}
@@ -918,7 +1094,7 @@ export const InterviewSession = ({ courseId, className }: InterviewSessionProps)
                             className="self-start"
                             onPress={() => setShowAnswer(true)}
                         >
-                            {t("flashcard.interview.showSolution")}
+                            {t("flashcard.quiz.showSolution")}
                         </Button>
                     )}
 
@@ -964,10 +1140,10 @@ const RecapEnrollUpsell = () => {
             </div>
             <div className="flex flex-col gap-1">
                 <Typography type="h4" weight="semibold">
-                    {t("flashcard.interview.upsellTitle")}
+                    {t("flashcard.quiz.upsellTitle")}
                 </Typography>
                 <Typography type="body-sm" color="muted">
-                    {t("flashcard.interview.upsellDescription")}
+                    {t("flashcard.quiz.upsellDescription")}
                 </Typography>
             </div>
             <Button
@@ -976,7 +1152,7 @@ const RecapEnrollUpsell = () => {
                 className="mt-1 w-full max-w-xs"
                 onPress={onEnroll}
             >
-                {t("flashcard.interview.upsellCta")}
+                {t("flashcard.quiz.upsellCta")}
                 <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
             </Button>
         </div>
@@ -1022,11 +1198,11 @@ const WeakTagRow = ({
                     {tag.tag}
                 </Typography>
                 <Typography type="body-xs" color="muted">
-                    {t("flashcard.interview.weakTagCoverage", { percent: Math.round(tag.coverage * 100) })}
+                    {t("flashcard.quiz.weakTagCoverage", { percent: Math.round(tag.coverage * 100) })}
                 </Typography>
             </div>
             <span className="flex shrink-0 items-center gap-1 text-sm font-medium text-accent">
-                {t("flashcard.interview.reviewLesson")}
+                {t("flashcard.quiz.reviewLesson")}
                 <ArrowRightIcon
                     aria-hidden
                     focusable="false"
@@ -1062,16 +1238,16 @@ const RecapWeakTagsCard = ({
     if (weakTags.length === 0) {
         return primary ? (
             <div className="flex flex-col gap-3 rounded-2xl bg-surface p-6 shadow-surface">
-                <Label>{t("flashcard.interview.weakTagsTitle")}</Label>
+                <Label>{t("flashcard.quiz.weakTagsTitle")}</Label>
                 <Typography type="body-sm" color="muted">
-                    {t("flashcard.interview.weakTagsEmpty")}
+                    {t("flashcard.quiz.weakTagsEmpty")}
                 </Typography>
                 <Button
                     variant="primary"
                     className="self-start"
                     onPress={() => router.push(genericHref)}
                 >
-                    {t("flashcard.interview.continueLearning")}
+                    {t("flashcard.quiz.continueLearning")}
                     <ArrowRightIcon className="size-5" aria-hidden focusable="false" />
                 </Button>
             </div>
@@ -1082,7 +1258,7 @@ const RecapWeakTagsCard = ({
                 className="self-start"
                 onPress={() => router.push(genericHref)}
             >
-                {t("flashcard.interview.continueLearning")}
+                {t("flashcard.quiz.continueLearning")}
                 <ArrowRightIcon className="size-4" aria-hidden focusable="false" />
             </Button>
         )
@@ -1101,7 +1277,7 @@ const RecapWeakTagsCard = ({
                 className="self-start"
                 onPress={() => router.push(firstHref)}
             >
-                {t("flashcard.interview.weakTagSecondaryLink", { tag: first.tag })}
+                {t("flashcard.quiz.weakTagSecondaryLink", { tag: first.tag })}
                 <ArrowRightIcon className="size-4" aria-hidden focusable="false" />
             </Button>
         )
@@ -1109,7 +1285,7 @@ const RecapWeakTagsCard = ({
 
     return (
         <div className="flex flex-col gap-3 rounded-2xl bg-surface p-6 shadow-surface">
-            <Label>{t("flashcard.interview.weakTagsTitle")}</Label>
+            <Label>{t("flashcard.quiz.weakTagsTitle")}</Label>
             <div className="flex flex-col gap-2">
                 {weakTags.map((tag) => (
                     <WeakTagRow key={tag.tag} tag={tag} href={resolveTagHref(tag) ?? genericHref} />
@@ -1152,8 +1328,8 @@ const RecapReadinessCallout = ({ readiness, mockInterviewHref }: RecapReadinessC
             <Callout
                 status="default"
                 icon={<LockKeyIcon className="size-5" aria-hidden focusable="false" />}
-                title={t("flashcard.interview.readinessLockedTitle")}
-                description={t("flashcard.interview.readinessLockedDescription", {
+                title={t("flashcard.quiz.readinessLockedTitle")}
+                description={t("flashcard.quiz.readinessLockedDescription", {
                     currentAvg: readiness.currentAvg,
                     threshold: readiness.threshold,
                 })}
@@ -1165,8 +1341,8 @@ const RecapReadinessCallout = ({ readiness, mockInterviewHref }: RecapReadinessC
         <Callout
             status="success"
             icon={<MicrophoneStageIcon className="size-5" aria-hidden focusable="false" />}
-            title={t("flashcard.interview.readinessUnlockedTitle")}
-            description={t("flashcard.interview.readinessUnlockedDescription")}
+            title={t("flashcard.quiz.readinessUnlockedTitle")}
+            description={t("flashcard.quiz.readinessUnlockedDescription")}
             action={(
                 <Button
                     variant="secondary"
@@ -1174,7 +1350,7 @@ const RecapReadinessCallout = ({ readiness, mockInterviewHref }: RecapReadinessC
                     className="shrink-0"
                     onPress={() => router.push(mockInterviewHref)}
                 >
-                    {t("flashcard.interview.readinessUnlockedCta")}
+                    {t("flashcard.quiz.readinessUnlockedCta")}
                     <ArrowRightIcon className="size-4" aria-hidden focusable="false" />
                 </Button>
             )}

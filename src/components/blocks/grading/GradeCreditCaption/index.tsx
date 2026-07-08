@@ -62,13 +62,16 @@ export const GradeCreditCaption = ({
     // So show the pool for both. The affordability WARNING only fires on Auto,
     // where we know the per-run cost (`autoCreditCost`); a pinned model's cost
     // isn't known here, so it shows the usage line without the block check.
-    const blocked = !hasPinnedModel
-        && autoCreditCost !== undefined
-        && (creditUsage.credit.remaining5h < autoCreditCost
-            || creditUsage.credit.remainingWeek < autoCreditCost)
+    // Two independent windows can trigger the block — a short 5h burst cap or the
+    // weekly pool — and the message must name the ACTUAL reason: telling someone
+    // who still has weekly credit that they're "out for the week" is just wrong.
+    const canAffordAuto = autoCreditCost !== undefined
+    const blockedByBurst = canAffordAuto && creditUsage.credit.remaining5h < autoCreditCost
+    const blockedByWeek = canAffordAuto && creditUsage.credit.remainingWeek < autoCreditCost
+    const blocked = !hasPinnedModel && (blockedByBurst || blockedByWeek)
 
     const text = blocked
-        ? t("aiCredit.quotaReached")
+        ? t(blockedByWeek ? "aiCredit.quotaReached" : "aiCredit.quotaReachedBurst")
         : t("aiCredit.usage", {
             remaining: creditUsage.credit.remainingWeek,
             quota: creditUsage.credit.limitWeek,

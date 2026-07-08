@@ -343,8 +343,22 @@ export const pathConfig = () => {
                     const build = () => {
                         return flashcardsPath
                     }
+                    // the dedicated, resumable URL for an in-progress "Hỏi nhanh" quiz run —
+                    // mirrors `mockInterview().interview(sessionId)`: the setup screen's resume
+                    // card deep-links here so a session started earlier (24h TTL) rehydrates
+                    // straight into the active phase instead of starting fresh.
+                    const quiz = (sessionId: string) => {
+                        const quizPath = `${flashcardsPath}/quiz/${sessionId}`
+                        const build = () => {
+                            return quizPath
+                        }
+                        return {
+                            build,
+                        }
+                    }
                     return {
                         build,
+                        quiz,
                     }
                 }
                 const mockInterview = () => {
@@ -352,8 +366,22 @@ export const pathConfig = () => {
                     const build = () => {
                         return mockInterviewPath
                     }
+                    // the dedicated, resumable URL for a LIVE session (full-bleed work
+                    // surface) — `startMockInterviewSession` navigates here right after
+                    // drawing a session, and it's how a resumable in-progress session (24h
+                    // TTL) is deep-linked back into from the setup screen's resume card.
+                    const interview = (sessionId: string) => {
+                        const interviewPath = `${mockInterviewPath}/interview/${sessionId}`
+                        const build = () => {
+                            return interviewPath
+                        }
+                        return {
+                            build,
+                        }
+                    }
                     return {
                         build,
+                        interview,
                     }
                 }
                 const practice = () => {

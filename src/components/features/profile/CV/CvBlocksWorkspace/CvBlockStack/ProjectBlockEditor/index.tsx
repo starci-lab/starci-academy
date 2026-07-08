@@ -113,9 +113,9 @@ export const ProjectBlockEditor = ({ className, block, onChange, onAiRewrite }: 
                                 className={isVerified ? "bg-success/10 text-success" : "bg-default text-muted"}
                             >
                                 {isVerified ? (
-                                    <SealCheckIcon aria-hidden className="size-3" />
+                                    <SealCheckIcon aria-hidden className="size-4" />
                                 ) : (
-                                    <UserIcon aria-hidden className="size-3" />
+                                    <UserIcon aria-hidden className="size-4" />
                                 )}
                                 <Chip.Label>
                                     {isVerified ? t("cv.blocks.project.sourceVerified") : t("cv.blocks.project.sourceSelf")}

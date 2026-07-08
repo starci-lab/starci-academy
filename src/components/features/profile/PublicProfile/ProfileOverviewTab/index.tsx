@@ -45,24 +45,21 @@ export const ProfileOverviewTab = ({
 
     return (
         <div className={cn("flex min-w-0 flex-1 flex-col gap-6", className)}>
-            {/* headline recruiter signal — per-track depth, no blended composite */}
-            <LabeledCard
+            {/* headline recruiter signal — per-track depth, no blended composite.
+                Each section below now owns its own LabeledCard (frameless computed
+                internally) so loading/empty/error states get a real Card instead of
+                rendering bare under a hardcoded `frameless`. */}
+            <ProfileJobReadiness
                 label={t("jobReadiness.title")}
                 icon={<TrendUpIcon aria-hidden focusable="false" className="size-5" />}
-                frameless
-            >
-                <ProfileJobReadiness />
-            </LabeledCard>
+            />
 
-            <LabeledCard
+            <OverviewCourses
                 label={t("publicProfile.overview.courses")}
                 icon={<GraduationCapIcon aria-hidden focusable="false" className="size-5" />}
                 onSeeMore={() => setTab("activity")}
                 seeMoreLabel={t("publicProfile.overview.seeMore")}
-                frameless
-            >
-                <OverviewCourses />
-            </LabeledCard>
+            />
 
             <LabeledCard
                 label={t("publicProfile.contributions.heading")}
@@ -73,27 +70,21 @@ export const ProfileOverviewTab = ({
 
             {/* two skill cards side by side on desktop */}
             <div className="grid gap-6 md:grid-cols-2">
-                <LabeledCard
+                <OverviewChallengeSkills
                     label={t("publicProfile.overview.challengeSkills")}
                     icon={<PuzzlePieceIcon aria-hidden focusable="false" className="size-5" />}
                     onSeeMore={() => setTab("challenges")}
                     seeMoreLabel={t("publicProfile.overview.seeMore")}
                     fillHeight
-                    frameless
-                >
-                    <OverviewChallengeSkills />
-                </LabeledCard>
+                />
 
-                <LabeledCard
+                <OverviewCodeSkills
                     label={t("publicProfile.overview.codeSkills")}
                     icon={<CodeIcon aria-hidden focusable="false" className="size-5" />}
                     onSeeMore={() => setTab("skills")}
                     seeMoreLabel={t("publicProfile.overview.seeMore")}
                     fillHeight
-                    frameless
-                >
-                    <OverviewCodeSkills />
-                </LabeledCard>
+                />
             </div>
         </div>
     )

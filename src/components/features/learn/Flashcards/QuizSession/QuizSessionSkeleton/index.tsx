@@ -7,7 +7,7 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
  * a progress meter, the level/tag chips, the tall flip card (question + recall
  * input), and the reveal control.
  */
-export const InterviewSessionSkeleton = ({ className }: WithClassNames<undefined> = {}) => {
+export const QuizSessionSkeleton = ({ className }: WithClassNames<undefined> = {}) => {
     return (
         <div className={className}>
             <div className="flex flex-col gap-6">

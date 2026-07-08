@@ -82,6 +82,7 @@ export const InterviewerPresence = ({
                             </span>
                         ) : null}
                     </div>
+                    <Typography type="body-xs" color="muted" className="truncate">{persona.role}</Typography>
                 </div>
                 {ttsSupported ? (
                     <button

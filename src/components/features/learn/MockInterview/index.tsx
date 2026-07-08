@@ -12,7 +12,15 @@ import { useAppSelector } from "@/redux/hooks"
 import { useQueryCourseEnrollmentStatusSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseEnrollmentStatusSwr"
 
 /** Props for {@link MockInterview}. */
-export type MockInterviewProps = WithClassNames<undefined>
+export interface MockInterviewProps extends WithClassNames<undefined> {
+    /**
+     * Present when reached via the dedicated `/mock-interview/interview/[sessionId]`
+     * route — threaded straight through to {@link MockInterviewSession}, which
+     * rehydrates that server-persisted session (24h TTL) instead of showing the
+     * green room.
+     */
+    resumeSessionId?: string
+}
 
 /**
  * Course-level mock interview WORK PANE (entry). Reads the active course off
@@ -21,7 +29,7 @@ export type MockInterviewProps = WithClassNames<undefined>
  * with the standard learn header + breadcrumb.
  * @param props - {@link MockInterviewProps}
  */
-export const MockInterview = ({ className }: MockInterviewProps) => {
+export const MockInterview = ({ className, resumeSessionId }: MockInterviewProps) => {
     const t = useTranslations()
     const courseId = useAppSelector((state) => state.course.entity?.id)
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
@@ -30,8 +38,11 @@ export const MockInterview = ({ className }: MockInterviewProps) => {
     const isEnrolled = enrollmentSwr.data?.courseEnrollmentStatus?.data?.isEnrolled === true
     // during the LIVE interview phase the shell goes full-bleed (course rails dropped via
     // `?phase=interview`); drop the centered max-width + page header here to match — the
-    // interview is a focused work surface, not a centered reading column.
-    const isLive = useSearchParams().get("phase") === "interview"
+    // interview is a focused work surface, not a centered reading column. A
+    // `resumeSessionId` (the dedicated `/interview/[sessionId]` route) always lands
+    // straight in the interview phase, so it counts as live immediately too — no
+    // waiting on the query-param mirror to catch up after mount.
+    const isLive = useSearchParams().get("phase") === "interview" || Boolean(resumeSessionId)
 
     return (
         <div className={className}>
@@ -50,7 +61,12 @@ export const MockInterview = ({ className }: MockInterviewProps) => {
                         description={t("mockInterview.gateDescription")}
                     />
                 ) : courseId && courseDisplayId ? (
-                    <MockInterviewSession key={courseId} courseId={courseId} courseDisplayId={courseDisplayId} />
+                    <MockInterviewSession
+                        key={courseId}
+                        courseId={courseId}
+                        courseDisplayId={courseDisplayId}
+                        resumeSessionId={resumeSessionId}
+                    />
                 ) : null}
             </div>
         </div>

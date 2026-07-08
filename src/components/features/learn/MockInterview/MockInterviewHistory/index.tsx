@@ -21,7 +21,7 @@ export interface MockInterviewHistoryProps extends WithClassNames<undefined> {
     courseDisplayId: string
 }
 
-/** Attempts to show on the setup screen (older ones are still queryable via the drawer's own page later). */
+/** Attempts to show on the setup screen initially, and how many more "Xem thêm" reveals per click. */
 const HISTORY_PAGE_SIZE = 10
 
 /** Verdict → chip color (đạt / cận / chưa đạt) — mirrors {@link MockInterviewScorecard}'s convention. */
@@ -38,18 +38,37 @@ const verdictColorOf = (verdict: string): "success" | "warning" | "danger" =>
 export const MockInterviewHistory = ({ courseId, courseDisplayId, className }: MockInterviewHistoryProps) => {
     const t = useTranslations()
     const locale = useLocale()
-    const attemptsSwr = useQueryMyMockInterviewAttemptsSwr(courseId, HISTORY_PAGE_SIZE, 0)
+    // "Xem thêm" grows the page size client-side (offset stays 0) rather than opening a
+    // separate route/drawer — simplest overflow affordance for a list the learner is
+    // unlikely to page through more than once or twice.
+    const [visibleCount, setVisibleCount] = useState(HISTORY_PAGE_SIZE)
+    const attemptsSwr = useQueryMyMockInterviewAttemptsSwr(courseId, visibleCount, 0)
     const items = attemptsSwr.data?.items ?? []
+    const totalCount = attemptsSwr.data?.totalCount ?? items.length
+    const hasMore = items.length < totalCount
     const [selectedAttempt, setSelectedAttempt] = useState<MockInterviewAttemptItem | null>(null)
 
     const formatDate = (iso: string) =>
         new Intl.DateTimeFormat(locale, { dateStyle: "medium" }).format(new Date(iso))
 
+    // frameless ONLY once real rows self-frame as a SurfaceListCard (avoids
+    // card-in-card there); while loading/empty/erroring there is no bounded
+    // surface of its own, so LabeledCard's own Card must frame it — otherwise
+    // the empty/error/skeleton state renders bare on the page background,
+    // mismatching the framed sibling section above it.
+    const hasRows = !attemptsSwr.isLoading && !attemptsSwr.error && items.length > 0
+
     return (
         <>
-            {/* frameless: the content IS a SurfaceListCard (a bounded surface), so the
-                LabeledCard must NOT wrap it in a second card → no card-in-card. */}
-            <LabeledCard frameless label={t("mockInterview.historyTitle")} className={cn(className)}>
+            {/* onSeeMore only claims the label row's right slot once there are more
+                attempts than the current page — never a dead "Xem thêm" past the end. */}
+            <LabeledCard
+                frameless={hasRows}
+                label={t("mockInterview.historyTitle")}
+                onSeeMore={hasMore ? () => setVisibleCount((count) => count + HISTORY_PAGE_SIZE) : undefined}
+                seeMoreLabel={t("mockInterview.historySeeMore")}
+                className={cn(className)}
+            >
                 <AsyncContent
                     isLoading={attemptsSwr.isLoading && items.length === 0}
                     skeleton={(

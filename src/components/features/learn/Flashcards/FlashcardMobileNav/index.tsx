@@ -17,7 +17,7 @@ export type FlashcardMobileNavProps = WithClassNames<undefined>
 /**
  * Mobile (`<lg`) fallback for the flashcards LEFT RAIL — which is hidden on
  * small screens. Surfaces the SAME controls the rail owns: a mode switch
- * (Study / Mock interview) + a horizontal scroll of the course's decks, all
+ * (Study / Quiz) + a horizontal scroll of the course's decks, all
  * driving the URL via {@link useFlashcardNav} so the rail (desktop) and this bar
  * (mobile) stay in sync. Shares the deck SWR key with the rail/list → no extra
  * fetch. Rendered `lg:hidden` above the work pane.
@@ -53,7 +53,7 @@ export const FlashcardMobileNav = ({ className }: FlashcardMobileNavProps) => {
                 onChange={goMode}
                 items={[
                     { value: "study", label: t("flashcard.mode.study") },
-                    { value: "interview", label: t("flashcard.mode.interview") },
+                    { value: "quiz", label: t("flashcard.mode.quiz") },
                 ]}
             />
 

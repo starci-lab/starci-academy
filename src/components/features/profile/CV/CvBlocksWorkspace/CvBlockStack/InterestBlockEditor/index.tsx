@@ -62,7 +62,7 @@ export const InterestBlockEditor = ({ className, block, onChange }: InterestBloc
                                     aria-label={t("cv.blocks.interest.removeInterest", { name })}
                                     onPress={() => onRemoveInterest(item.id)}
                                 >
-                                    <XIcon aria-hidden className="size-3" />
+                                    <XIcon aria-hidden className="size-4" />
                                 </Link>
                             </Chip>
                         )

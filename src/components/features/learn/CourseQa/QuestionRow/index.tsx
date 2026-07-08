@@ -12,6 +12,7 @@ import { getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
 import type { CourseQuestionNode } from "@/modules/api/graphql/queries/types/course-questions"
 import type { CommentNode, ReactionType } from "@/modules/api/graphql/queries/types/discussion"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { EntityLink } from "@/components/blocks/feed/EntityLink"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { UserAvatar } from "@/components/reuseable/UserAvatar"
 import { CommentComposer } from "@/components/reuseable/Discussion/CommentComposer"
@@ -148,9 +149,13 @@ export const QuestionRow = ({ question, currentUserId, currentUser, onAnswered, 
                         avatar={question.author.avatar}
                     />
                     <div className="flex min-w-0 flex-1 items-center gap-1">
-                        <Typography type="body-sm" weight="semibold" truncate>
-                            {displayName}
-                        </Typography>
+                        <EntityLink
+                            label={displayName}
+                            onPress={() => router.push(
+                                pathConfig().locale(locale).profile(question.author.username).build(),
+                            )}
+                            className="truncate text-sm"
+                        />
                         {question.isFounderAuthor ? (
                             <SealCheckIcon
                                 weight="fill"

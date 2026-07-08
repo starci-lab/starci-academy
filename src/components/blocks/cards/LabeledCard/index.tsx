@@ -96,7 +96,7 @@ export const LabeledCard = ({
                         />
                     </Link>
                 ) : labelEnd != null ? (
-                    <span className="shrink-0 text-xs text-muted">{labelEnd}</span>
+                    <span className="shrink-0 text-sm text-muted">{labelEnd}</span>
                 ) : null)}
             </div>
             {/* frameless = content is itself card(s) → no inner Card (avoid nesting) */}

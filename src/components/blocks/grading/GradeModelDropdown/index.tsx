@@ -3,6 +3,7 @@
 import { CaretDownIcon, LockIcon, SparkleIcon, WarningCircleIcon, WarningIcon } from "@phosphor-icons/react"
 import React, { useMemo, useState } from "react"
 import {
+    Button,
     Chip,
     Dropdown,
     DropdownItem,
@@ -202,9 +203,27 @@ export type GradeModelDropdownProps = WithClassNames<undefined> & {
     /**
      * Render the trigger as a standard bordered field-style dropdown button
      * (mirrors HeroUI `Select.Trigger`) instead of the bare inline trigger, so it
-     * matches Select dropdowns sitting alongside it (e.g. the CV editor sidebar).
+     * matches real `Select` fields sitting alongside it. No current caller uses
+     * this (CV editor's model + template pickers moved to `isButton` 2026-07-08 —
+     * see canon `fe/components/input.md` §7 correction) — kept for a future
+     * surface that genuinely sits beside a `Select`.
      */
     isDropdown?: boolean
+    /**
+     * Render the trigger as a real `Button` (`variant="tertiary"`) instead of the
+     * bare inline trigger, so it reads as a button among sibling toggle-button/
+     * button-style pickers (e.g. Mock Interview's `FlexWrapButtonRadio` pills, or
+     * the CV editor's "Mẫu" template picker). Mutually exclusive with
+     * `isDropdown` — pick whichever the trigger's siblings are (Select fields →
+     * `isDropdown`; buttons/pills → `isButton`).
+     */
+    isButton?: boolean
+    /**
+     * `isButton` only — stretch the trigger `Button` to the full width of its
+     * container (e.g. a sidebar stacking full-width fields like the CV editor's
+     * Font/Font-size Selects) instead of hugging its label content.
+     */
+    isButtonFullWidth?: boolean
     /** Fired with the new selection when the user picks an option. */
     onSelect: (selection: GradeModelSelection) => void
     /** Fired when a locked (unlock-required) model is pressed — route to plans. */
@@ -232,7 +251,9 @@ export const GradeModelDropdown = ({
     floor,
     task,
     placement = "bottom start",
-    isDropdown = false,
+    isDropdown,
+    isButton = false,
+    isButtonFullWidth = false,
     onSelect,
     onUpgrade,
     className,
@@ -296,7 +317,19 @@ export const GradeModelDropdown = ({
                 }
             }}
         >
-            {isDropdown ? (
+            {isButton ? (
+                <DropdownTrigger
+                    isDisabled={isDisabled}
+                    className={cn("cursor-pointer", isButtonFullWidth && "block w-full", className)}
+                >
+                    <Button variant="tertiary" size="sm" fullWidth={isButtonFullWidth}>
+                        <SparkleIcon aria-hidden className="size-4 shrink-0" />
+                        <span className={cn("truncate", isButtonFullWidth ? "min-w-0 flex-1 text-left" : "max-w-40")}>
+                            {triggerLabel}
+                        </span>
+                    </Button>
+                </DropdownTrigger>
+            ) : isDropdown ? (
                 // isDropdown → the trigger IS the field (ONE element, exactly like the
                 // Select — no inner wrapper div, so no stacked shadow). `flex!` beats the
                 // `.dropdown__trigger` base `inline-block`; every field state (chrome +

@@ -2,18 +2,25 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 
-/** The two top-level flashcard modes, each its own route slug. */
-export type FlashcardMode = "study" | "interview"
+/**
+ * The two top-level flashcard modes, each its own route slug. Named "quiz" (not
+ * "interview") on purpose — this is a DIFFERENT feature from the separate AI
+ * Mock Interview (`learn/mock-interview`); reusing "interview" here read as the
+ * same feature and caused real confusion (thầy: "đừng gọi là interview... kẻo
+ * nhầm với interview"). Matches the BE naming already in place
+ * (`FlashcardQuizSessionEntity`/`completeFlashcardQuizSession`).
+ */
+export type FlashcardMode = "study" | "quiz"
 
 /** URL slug per mode (English, reads in the path: `…/flashcards/review`). */
 const MODE_SLUG: Record<FlashcardMode, string> = {
     study: "review",
-    interview: "interview",
+    quiz: "quiz",
 }
 
 /**
  * URL-backed navigation for the flashcards surface. The MODE is a route segment
- * (`…/flashcards/review` | `…/flashcards/interview`) so each mode is its own page
+ * (`…/flashcards/review` | `…/flashcards/quiz`) so each mode is its own page
  * with a readable English slug; the open deck / session ride as query params
  * (`?deck=<id>` · `?session=due`). The LEFT RAIL (rendered by the learn layout)
  * and the work PANE (the page) both read this hook → one source of truth across
@@ -24,14 +31,18 @@ export const useFlashcardNav = () => {
     const pathname = usePathname()
     const params = useSearchParams()
 
-    // last path segment carries the mode slug; `…/flashcards` (no slug) = study
+    // the segment right after "flashcards" carries the mode slug; `…/flashcards`
+    // (no slug) = study. Read it by position off the "flashcards" segment rather
+    // than the LAST path segment, so the resumable `…/quiz/[sessionId]` route
+    // (which has an extra segment past the mode slug) still resolves to "quiz".
     const segments = pathname.split("/")
-    const lastSegment = segments[segments.length - 1]
-    const mode: FlashcardMode = lastSegment === MODE_SLUG.interview ? "interview" : "study"
-    // the flashcards root (strip a trailing mode slug if present)
+    const flashcardsIndex = segments.indexOf("flashcards")
+    const modeSegment = flashcardsIndex >= 0 ? segments[flashcardsIndex + 1] : undefined
+    const mode: FlashcardMode = modeSegment === MODE_SLUG.quiz ? "quiz" : "study"
+    // the flashcards root (everything up to and including the "flashcards" segment)
     const root =
-        lastSegment === MODE_SLUG.study || lastSegment === MODE_SLUG.interview
-            ? segments.slice(0, -1).join("/")
+        flashcardsIndex >= 0
+            ? segments.slice(0, flashcardsIndex + 1).join("/")
             : pathname
 
     const deckId = params.get("deck")
@@ -55,7 +66,7 @@ export const useFlashcardNav = () => {
     }
 
     return {
-        /** Active mode (study | interview). */
+        /** Active mode (study | quiz). */
         mode,
         /** Open deck id, or null (overview / topic picker). */
         deckId,

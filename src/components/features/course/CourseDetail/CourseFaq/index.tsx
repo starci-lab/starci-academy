@@ -48,12 +48,17 @@ export const CourseFaq = ({ className }: CourseFaqProps) => {
         return null
     }
 
+    // frameless ONLY once the accordion itself self-frames (surface variant); while
+    // loading/erroring there is no bounded surface, so LabeledCard's own Card must
+    // frame it — otherwise the skeleton/error renders bare on the page background.
+    const hasQnas = !isLoading && !error && qnas.length > 0
+
     return (
         <LabeledCard
             className={className}
             label={t("courseLanding.faq")}
             icon={<QuestionIcon aria-hidden focusable="false" className="size-5" />}
-            frameless
+            frameless={hasQnas}
         >
             <AsyncContent
                 isLoading={isLoading && qnas.length === 0}

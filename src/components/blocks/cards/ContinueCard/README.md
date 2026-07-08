@@ -24,6 +24,7 @@ call-to-action label. Built on `SectionCard` and `ProgressMeter`.
 | `ctaLabel` | `React.ReactNode` | `undefined` | Call-to-action label pinned to the far right (e.g. "Continue"). Rendered accent-coloured. |
 | `onPress` | `() => void` | `undefined` | When set, the whole card is wrapped in a `<button>`. Prefer `href` for navigation. |
 | `href` | `string` | `undefined` | When set, the whole card is wrapped in an `<a>`. Takes priority over `onPress`. |
+| `urgent` | `boolean` | `false` | Renders `subtitle` in warning tone instead of muted — for a REAL time-sensitive fact in the subtitle text (e.g. a server-enforced deadline countdown). Never set this off a fabricated/decorative countdown — see `principles/persuasion-psychology` (no fake scarcity). |
 | `className` | `string` | `undefined` | Applied to the outermost element for caller placement (width, margin, grid area). |
 
 ## Usage
@@ -64,6 +65,7 @@ export const DashboardContinue = () => (
 - **`className` placement.** When the card is interactive, `className` is placed on the outer `<a>` / `<button>` wrapper — not on `SectionCard` — so layout constraints (width, margin, grid area) apply to the true outermost element.
 - **Truncation via prop.** Both `title` and `subtitle` use the `truncate` prop on `Typography` (not `className="truncate"`), as required by LAW 2.
 - **`ctaLabel` colour.** The `text-accent` class on the CTA `Typography` is the one allowed `className` colour exception per LAW 1 — the HeroUI `color` prop lacks an "accent" token for body text.
+- **`urgent` colour.** Same exception as `ctaLabel` — `text-warning` via `className` (HeroUI `Typography`'s `color` prop only has `"default"`/`"muted"`, no semantic tones). Grounded example: Mock Interview's resume card turns the subtitle warning-toned once the server-enforced 1-hour session deadline is close, mirroring a REAL countdown — never fabricate one just to look urgent.
 - **Spacing.** The card body uses `gap-3` (same-function items, per the project spacing-scale convention). The info row uses `gap-3` between cover, text column, and CTA.
 - **`cover` sizing.** Size and shape of the cover node (rounded corners, aspect ratio) are the caller's responsibility — pass fully styled nodes.
 - **Accessibility.** When `href` is set, the outer `<a>` has no extra `aria-label`; ensure `title` is descriptive enough to serve as the link label. When `onPress` is used, the `<button>` gets `type="button"` and `text-left`.

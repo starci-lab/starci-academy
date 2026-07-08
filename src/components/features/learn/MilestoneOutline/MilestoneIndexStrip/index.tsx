@@ -37,11 +37,12 @@ export const MilestoneIndexStrip = ({
             {milestones.map((milestone) => {
                 return (
                     <React.Fragment key={String(milestone.id)}>
-                        <Typography
-                            type="body"
+                        <button
+                            type="button"
                             className={
                                 cn(
-                                    "font-semibold cursor-pointer items-center justify-center transition-colors p-2",
+                                    "font-semibold cursor-pointer items-center justify-center transition-colors p-2 outline-none",
+                                    "focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-full",
                                     String(milestone.id) === String(activeMilestoneId)
                                         ? "text-accent"
                                         : "text-muted hover:text-accent"
@@ -51,8 +52,10 @@ export const MilestoneIndexStrip = ({
                                 () => onSelectMilestone(String(milestone.id))
                             }
                         >
-                            {milestone.sortIndex}
-                        </Typography>
+                            <Typography type="body" className="font-semibold">
+                                {milestone.sortIndex}
+                            </Typography>
+                        </button>
                         <Separator
                             className="w-full"
                         />

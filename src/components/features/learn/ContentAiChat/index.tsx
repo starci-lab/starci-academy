@@ -14,6 +14,7 @@ import {
 } from "@heroui/react"
 import {
     ArrowLeftIcon,
+    ArrowRightIcon,
     CaretDownIcon,
     ChatsCircleIcon,
     GearIcon,
@@ -25,7 +26,6 @@ import {
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { AiMode } from "@/modules/api/graphql/queries/query-my-ai-settings"
 import { useAppSelector } from "@/redux/hooks"
 import {
     useContentAiSelectedModel,
@@ -80,6 +80,8 @@ interface ChatMessage {
     role: ChatRole
     /** The message text (assistant content may be markdown). */
     content: string
+    /** Whether this assistant turn is an AI-quota-exhausted error (shows an upgrade CTA). */
+    isQuotaError?: boolean
 }
 
 /**
@@ -122,22 +124,20 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
     // unlocked (paid OR enrolled) → may pin higher-tier models
     const canPremium = Boolean(myAiSettingsSwr.data?.canPremium)
     const { selectedModel, setSelectedModel } = useContentAiSelectedModel()
-    // default = Auto (no concrete model pinned); a picked model runs Premium when unlocked
+    // default = Auto (no concrete model pinned); a picked model runs on that model
     const modelSelection = useMemo<GradeModelSelection>(() => {
         if (!selectedModel) {
             return {
-                mode: AiMode.Auto,
                 model: null,
                 provider: null,
             }
         }
         const found = models.find((model) => model.model === selectedModel)
         return {
-            mode: canPremium ? AiMode.Premium : AiMode.Auto,
             model: selectedModel,
             provider: found?.provider ?? null,
         }
-    }, [selectedModel, models, canPremium])
+    }, [selectedModel, models])
 
     // recent conversations for the header (auto-select most recent + current title)
     const sessionsSwr = useQueryContentAiSessionsSwr(contentId)
@@ -285,7 +285,6 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
             contentId,
             question: content,
             history,
-            mode: modelSelection.mode,
             model: modelSelection.model,
             provider: modelSelection.provider,
             onDelta: appendToAssistant,
@@ -300,7 +299,11 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                     const next = [...prev]
                     const last = next[next.length - 1]
                     if (last && last.role === "assistant" && last.content === "") {
-                        next[next.length - 1] = { ...last, content: `⚠️ ${error}` }
+                        next[next.length - 1] = {
+                            ...last,
+                            content: `⚠️ ${error}`,
+                            isQuotaError: error.startsWith("AI quota exhausted"),
+                        }
                     }
                     return next
                 })
@@ -565,6 +568,21 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                                         <Typography type="body-sm" color="muted">
                                             {t("contentAi.thinking")}
                                         </Typography>
+                                    ) : message.isQuotaError ? (
+                                        <div className="flex flex-col gap-2">
+                                            <MarkdownContent markdown={message.content} />
+                                            <Button
+                                                variant="primary"
+                                                size="sm"
+                                                className="self-start"
+                                                onPress={() => router.push(
+                                                    `${pathConfig().locale(locale).profile().build()}/ai-subscription`,
+                                                )}
+                                            >
+                                                {t("contentAi.upgrade")}
+                                                <ArrowRightIcon aria-hidden focusable="false" className="size-4" />
+                                            </Button>
+                                        </div>
                                     ) : (
                                         <MarkdownContent markdown={message.content} />
                                     )

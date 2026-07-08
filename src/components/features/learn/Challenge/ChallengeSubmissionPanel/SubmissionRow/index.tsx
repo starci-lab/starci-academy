@@ -1,10 +1,7 @@
 "use client"
 
-import { WarningCircleIcon, PencilLineIcon } from "@phosphor-icons/react"
-import React, {
-    useCallback,
-    useMemo,
-} from "react"
+import { PencilLineIcon } from "@phosphor-icons/react"
+import React from "react"
 import {
     Button,
     cn,
@@ -26,20 +23,16 @@ import type {
 } from "../types"
 import type { QueryMyAiQuotaResponseData } from "@/modules/api/graphql/queries/types/my-ai-quota"
 import {
-    GradeCreditDisplayKind,
-} from "../types"
-import {
-    resolveGradeCreditDisplay,
-} from "../utils"
-import {
     GradeModelDropdown,
 } from "@/components/blocks/grading/GradeModelDropdown"
+import {
+    GradeCreditCaption,
+} from "@/components/blocks/grading/GradeCreditCaption"
 import { AiModelCategory, AiModelTask } from "@/modules/api/graphql/queries/query-ai-models"
 import {
     LastAttemptResult,
 } from "./LastAttemptResult"
 import { JobCategory } from "@/modules/types/enums/job-category"
-import { AiMode } from "@/modules/api/graphql/queries/query-my-ai-settings"
 import { AIProcessingText } from "@/components/reuseable/AIProcessingText"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import type { AiGradableModel } from "@/modules/api/graphql/queries/types/ai-models"
@@ -126,42 +119,7 @@ export const SubmissionRow = ({
         maxScore,
     } = row
 
-    const creditDisplay = useMemo(
-        () => resolveGradeCreditDisplay({
-            mode: gradeSelection.mode,
-            creditUsage,
-            autoCreditCost: aiAutoConfig?.creditCost,
-            t,
-        }),
-        [
-            gradeSelection.mode,
-            creditUsage,
-            aiAutoConfig?.creditCost,
-            t,
-        ],
-    )
-
-    const isQuotaReached = creditDisplay.kind === GradeCreditDisplayKind.QuotaReached
-
-    const onPressCreditLabel = useCallback(() => {
-        if (gradeSelection.mode === AiMode.Byok) {
-            return
-        }
-        onOpenAiQuota()
-    }, [
-        gradeSelection.mode,
-        onOpenAiQuota,
-    ])
-
-    const creditLabelClassName = useMemo(
-        () => cn(
-            "inline-flex shrink-0 items-center gap-2 text-sm transition-colors",
-            isQuotaReached
-                ? "cursor-pointer font-semibold text-danger hover:opacity-90"
-                : "cursor-pointer text-muted hover:text-foreground",
-        ),
-        [isQuotaReached],
-    )
+    const hasPinnedModel = gradeSelection.model !== null
 
     return (
         <div className={cn(!inAccordion && "border-b last:border-b-0 p-3", className)}>
@@ -247,26 +205,13 @@ export const SubmissionRow = ({
                             onSelect={(selection) => onSelectGrade(submission.id, selection)}
                             onUpgrade={onUpgrade}
                         />
-                        {creditDisplay.kind !== GradeCreditDisplayKind.Hidden ? (
-                            gradeSelection.mode === AiMode.Byok ? (
-                                <span className="shrink-0 text-sm text-muted">
-                                    {creditDisplay.text}
-                                </span>
-                            ) : (
-                                <button
-                                    type="button"
-                                    onClick={onPressCreditLabel}
-                                    className={creditLabelClassName}
-                                >
-                                    {isQuotaReached ? (
-                                        <WarningCircleIcon
-                                            className="size-5"
-                                        />
-                                    ) : null}
-                                    <span className="text-sm font-base">{creditDisplay.text}</span>
-                                </button>
-                            )
-                        ) : null}
+                        <GradeCreditCaption
+                            className="shrink-0"
+                            creditUsage={creditUsage}
+                            hasPinnedModel={hasPinnedModel}
+                            autoCreditCost={aiAutoConfig?.creditCost}
+                            onOpenDetails={onOpenAiQuota}
+                        />
                     </div>
                     <div className="flex w-full items-center gap-2">
                         <Button

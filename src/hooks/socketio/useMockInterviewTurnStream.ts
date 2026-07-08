@@ -11,6 +11,13 @@ import { mockInterviewSocket } from "./sockets"
 
 /** Args for one streamed mock-interviewer turn. */
 export interface AskMockInterviewTurnStreamParams {
+    /**
+     * Id of the persisted `mock_interview_sessions` row this ask belongs to —
+     * "session time limit" (2026-07-08): lets the server enforce the 1-hour
+     * ask-loop deadline against THIS session's own `createdAt` before
+     * spending an AI call.
+     */
+    sessionId: string
     /** Course the interview is grounded in (RAG scope + on-rails course content). */
     courseId: string
     /** Id of the interview prompt this session is running. */
@@ -23,12 +30,20 @@ export interface AskMockInterviewTurnStreamParams {
     history: Array<MockInterviewHistoryTurn>
     /** The candidate's most recent answer; pass empty string on the opening turn. */
     latestAnswer: string
-    /** Lane: "auto" (free/economy chain) or "premium" (pin the chosen model). */
-    mode?: string
-    /** Pinned model name (only with mode "premium"). */
+    /** Pinned model name (absent → balancer picks from the chain). */
     model?: string | null
     /** Provider of the pinned model. */
     provider?: string | null
+    /** Seniority level driving rubric strictness for this turn's follow-up, or omitted for "any level". */
+    level?: string
+    /** Top-level flow this session runs ("qna" | "design"); absent is treated as `"qna"`. */
+    mode?: string | null
+    /** THIS question's cognitive frame ("theory" | "reasoning" | "scenario"), randomly assigned per-question at draw time; meaningful only when `mode` is "qna". */
+    kind?: string | null
+    /** Current question's seed text (Q&A kinds) — resend unchanged for the opening ask and every follow-up on that question. */
+    currentSeed?: string | null
+    /** 0-based index of the question this turn belongs to (Q&A kinds). */
+    questionIndex?: number | null
     /** Called for every incremental token delta as the turn streams. */
     onDelta: (delta: string) => void
     /** Called once when the stream finishes (with `error` set when it failed). */
@@ -99,15 +114,20 @@ export const useMockInterviewTurnStream = (): MockInterviewTurnStreamControls =>
             const payload: AskMockInterviewTurnSocketIoPayload = {
                 data: {
                     streamId,
+                    sessionId: params.sessionId,
                     courseId: params.courseId,
                     promptId: params.promptId,
                     promptTitle: params.promptTitle,
                     phase: params.phase,
                     history: params.history,
                     latestAnswer: params.latestAnswer,
-                    mode: params.mode,
                     model: params.model,
                     provider: params.provider,
+                    level: params.level,
+                    mode: params.mode,
+                    kind: params.kind,
+                    currentSeed: params.currentSeed,
+                    questionIndex: params.questionIndex,
                 },
                 locale,
             }

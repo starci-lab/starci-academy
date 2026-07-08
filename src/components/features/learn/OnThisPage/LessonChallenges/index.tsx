@@ -5,6 +5,7 @@ import useSWR from "swr"
 import { Button, Typography } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { usePathname, useRouter } from "next/navigation"
+import { ArrowRightIcon } from "@phosphor-icons/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
 import { queryChallenges } from "@/modules/api/graphql/queries/query-challenges"
@@ -15,6 +16,8 @@ import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import type { Difficulty } from "@/components/blocks/chips/DifficultyChip"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { ContentTab, setContentTab } from "@/redux/slices/tabs"
+import { useQueryContentSwr } from "@/hooks/swr/api/graphql/queries/useQueryContentSwr"
+import { usePremiumGateOverlayState } from "@/hooks/zustand/overlay/hooks"
 
 /** Props for {@link LessonChallenges}. */
 export type LessonChallengesProps = WithClassNames<undefined>
@@ -57,6 +60,8 @@ export const LessonChallenges = ({ className }: LessonChallengesProps) => {
     const pathname = usePathname()
     const courseId = useAppSelector((state) => state.course.entity?.id)
     const contentId = useAppSelector((state) => state.content.id)
+    const { data: content } = useQueryContentSwr()
+    const { open: openPremiumGate } = usePremiumGateOverlayState()
 
     // challenges of THIS lesson; key null until both ids hydrate
     const { data, isLoading } = useSWR(
@@ -79,6 +84,10 @@ export const LessonChallenges = ({ className }: LessonChallengesProps) => {
 
     // open the lesson's Challenges tab in place (same content route)
     const onPractice = () => {
+        if (content?.isPremium) {
+            openPremiumGate()
+            return
+        }
         dispatch(setContentTab(ContentTab.Challenges))
         router.replace(`${pathname}?tab=${ContentTab.Challenges}`)
     }
@@ -101,6 +110,7 @@ export const LessonChallenges = ({ className }: LessonChallengesProps) => {
                 action={(
                     <Button size="sm" variant="primary" className="self-start" onPress={onPractice}>
                         {t("lessonRail.challenges.practice")}
+                        <ArrowRightIcon aria-hidden focusable="false" className="size-4" />
                     </Button>
                 )}
             >

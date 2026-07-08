@@ -16,6 +16,10 @@ export interface MockInterviewAttemptDrawerProps {
     onOpenChange: (open: boolean) => void
     /** The past attempt to show, or `null` while closed/unselected. */
     attempt: MockInterviewAttemptItem | null
+    /** Course the attempt belongs to — needed for the scorecard's track snapshot. */
+    courseId: string
+    /** Course display id, for the scorecard's "study this" deep link. */
+    courseDisplayId: string
 }
 
 /**
@@ -26,7 +30,13 @@ export interface MockInterviewAttemptDrawerProps {
  * render). Right on desktop, bottom sheet on mobile.
  * @param props - {@link MockInterviewAttemptDrawerProps}
  */
-export const MockInterviewAttemptDrawer = ({ isOpen, onOpenChange, attempt }: MockInterviewAttemptDrawerProps) => {
+export const MockInterviewAttemptDrawer = ({
+    isOpen,
+    onOpenChange,
+    attempt,
+    courseId,
+    courseDisplayId,
+}: MockInterviewAttemptDrawerProps) => {
     const t = useTranslations()
     const { isMobile } = useSmViewpoint()
 
@@ -46,6 +56,8 @@ export const MockInterviewAttemptDrawer = ({ isOpen, onOpenChange, attempt }: Mo
                                 {attempt ? (
                                     <MockInterviewScorecard
                                         grade={mapMockInterviewAttemptToGradeResult(attempt)}
+                                        courseId={courseId}
+                                        courseDisplayId={courseDisplayId}
                                         promptTitle={attempt.promptTitle}
                                         createdAt={attempt.createdAt}
                                     />

@@ -1,5 +1,5 @@
 import type { MockInterviewAttemptItem } from "@/modules/api/graphql/queries/types/my-mock-interview-attempts"
-import type { MockInterviewGradeResult, MockInterviewPhaseKey } from "./types"
+import type { MockInterviewGradeResult } from "./types"
 
 /** Narrows a loose wire-format verdict string to the local union, defaulting to "borderline". */
 export const normalizeMockInterviewVerdict = (verdict: string): MockInterviewGradeResult["verdict"] =>
@@ -22,7 +22,7 @@ export const mapMockInterviewAttemptToGradeResult = (
     overallScore: attempt.overallScore,
     verdict: normalizeMockInterviewVerdict(attempt.verdict),
     phaseScores: attempt.phaseScores.map((phaseScore) => ({
-        phase: phaseScore.phase as MockInterviewPhaseKey,
+        phase: phaseScore.phase,
         score: phaseScore.score,
         max: phaseScore.max,
     })),
@@ -30,4 +30,5 @@ export const mapMockInterviewAttemptToGradeResult = (
     strengths: attempt.strengths,
     gaps: attempt.gaps,
     followUpQuestion: attempt.followUpQuestion,
+    matchedContentIds: attempt.matchedContentIds,
 })

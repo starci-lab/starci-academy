@@ -3,15 +3,14 @@
 import React, { useEffect, useState } from "react"
 import {
     Button,
-    Modal,
     Switch,
     Typography,
-    cn,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useCookieConsentStore } from "@/hooks/zustand/cookieConsent/store"
 import { useCookiePreferencesOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { ModalShell } from "@/components/blocks/layout/ModalShell"
 
 /**
  * Cookie preferences modal — the granular "Tùy chỉnh" panel: Necessary (locked on) + Analytics (toggle),
@@ -38,81 +37,76 @@ export const CookieConsentModal = ({ className }: WithClassNames<undefined>) => 
     }, [isOpen, analyticsAllowed])
 
     return (
-        <Modal isOpen={isOpen} onOpenChange={setOpen}>
-            <Modal.Backdrop>
-                <Modal.Container>
-                    <Modal.Dialog className={cn(className)}>
-                        <Modal.CloseTrigger />
-                        <Modal.Header>
-                            <Typography type="body" weight="semibold" className="pr-8">
-                                {t("cookieConsent.modalTitle")}
-                            </Typography>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <div className="flex flex-col gap-6">
-                                <Typography type="body-sm" color="muted">
-                                    {t("cookieConsent.modalBody")}
-                                </Typography>
+        <ModalShell
+            isOpen={isOpen}
+            onOpenChange={setOpen}
+            className={className}
+            header={(
+                <Typography type="body" weight="semibold" className="pr-8">
+                    {t("cookieConsent.modalTitle")}
+                </Typography>
+            )}
+        >
+            <div className="flex flex-col gap-6">
+                <Typography type="body-sm" color="muted">
+                    {t("cookieConsent.modalBody")}
+                </Typography>
 
-                                {/* necessary — always on, locked */}
-                                <div className="flex items-start justify-between gap-3">
-                                    <div className="flex flex-col gap-0">
-                                        <Typography type="body" weight="semibold">
-                                            {t("cookieConsent.necessaryLabel")}
-                                        </Typography>
-                                        <Typography type="body-sm" color="muted">
-                                            {t("cookieConsent.necessaryHint")}
-                                        </Typography>
-                                    </div>
-                                    <Switch isSelected isDisabled aria-label={t("cookieConsent.necessaryLabel")} />
-                                </div>
+                {/* necessary — always on, locked */}
+                <div className="flex items-start justify-between gap-3">
+                    <div className="flex flex-col gap-0">
+                        <Typography type="body" weight="semibold">
+                            {t("cookieConsent.necessaryLabel")}
+                        </Typography>
+                        <Typography type="body-sm" color="muted">
+                            {t("cookieConsent.necessaryHint")}
+                        </Typography>
+                    </div>
+                    <Switch isSelected isDisabled aria-label={t("cookieConsent.necessaryLabel")} />
+                </div>
 
-                                {/* analytics — toggleable */}
-                                <div className="flex items-start justify-between gap-3">
-                                    <div className="flex flex-col gap-0">
-                                        <Typography type="body" weight="semibold">
-                                            {t("cookieConsent.analyticsLabel")}
-                                        </Typography>
-                                        <Typography type="body-sm" color="muted">
-                                            {t("cookieConsent.analyticsHint")}
-                                        </Typography>
-                                    </div>
-                                    <Switch
-                                        isSelected={analyticsDraft}
-                                        onChange={(value) => setAnalyticsDraft(value)}
-                                        aria-label={t("cookieConsent.analyticsLabel")}
-                                    />
-                                </div>
+                {/* analytics — toggleable */}
+                <div className="flex items-start justify-between gap-3">
+                    <div className="flex flex-col gap-0">
+                        <Typography type="body" weight="semibold">
+                            {t("cookieConsent.analyticsLabel")}
+                        </Typography>
+                        <Typography type="body-sm" color="muted">
+                            {t("cookieConsent.analyticsHint")}
+                        </Typography>
+                    </div>
+                    <Switch
+                        isSelected={analyticsDraft}
+                        onChange={(value) => setAnalyticsDraft(value)}
+                        aria-label={t("cookieConsent.analyticsLabel")}
+                    />
+                </div>
 
-                                {/* actions — parity: save / reject equal, accept-all tertiary */}
-                                <div className="flex flex-wrap items-center gap-2">
-                                    <Button
-                                        variant="primary"
-                                        size="sm"
-                                        onPress={() => { save(analyticsDraft); close() }}
-                                    >
-                                        {t("cookieConsent.save")}
-                                    </Button>
-                                    <Button
-                                        variant="secondary"
-                                        size="sm"
-                                        onPress={() => { rejectAll(); close() }}
-                                    >
-                                        {t("cookieConsent.reject")}
-                                    </Button>
-                                    <Button
-                                        variant="tertiary"
-                                        size="sm"
-                                        onPress={() => { acceptAll(); close() }}
-                                    >
-                                        {t("cookieConsent.acceptAll")}
-                                    </Button>
-                                </div>
-                            </div>
-                        </Modal.Body>
-                    </Modal.Dialog>
-                </Modal.Container>
-            </Modal.Backdrop>
-        </Modal>
+                {/* actions — parity: save / reject equal, accept-all tertiary */}
+                <div className="flex flex-wrap items-center gap-2">
+                    <Button
+                        variant="primary"
+                        size="sm"
+                        onPress={() => { save(analyticsDraft); close() }}
+                    >
+                        {t("cookieConsent.save")}
+                    </Button>
+                    <Button
+                        variant="secondary"
+                        size="sm"
+                        onPress={() => { rejectAll(); close() }}
+                    >
+                        {t("cookieConsent.reject")}
+                    </Button>
+                    <Button
+                        variant="tertiary"
+                        size="sm"
+                        onPress={() => { acceptAll(); close() }}
+                    >
+                        {t("cookieConsent.acceptAll")}
+                    </Button>
+                </div>
+            </div>
+        </ModalShell>
     )
 }

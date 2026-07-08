@@ -1,5 +1,5 @@
 import type { GraphQLResponse } from "../../types"
-import type { AiMode, ModelProvider } from "../query-my-ai-settings"
+import type { ModelProvider } from "../query-my-ai-settings"
 
 /** Generation params persisted on an eval run submission. */
 export interface QueryAiLabEvalRunParamsData {
@@ -53,8 +53,6 @@ export interface AiLabEvalResultData {
     model: string | null
     /** Provider that served grading. */
     provider: ModelProvider | null
-    /** AI lane grading executed on. */
-    mode: AiMode | null
     /** Aggregate score earned. */
     totalScore: number | null
     /** Maximum achievable score. */

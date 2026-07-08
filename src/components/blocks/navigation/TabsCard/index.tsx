@@ -48,6 +48,13 @@ export interface TabsCardGroup {
 export interface TabsCardProps extends WithClassNames<undefined> {
     /** Primary tab group, pinned left. */
     leftTabs: TabsCardGroup
+    /**
+     * Inline cluster rendered right AFTER the left tab group — actions that belong
+     * to the left axis (e.g. a manage-menu for the active tab, an "+" add button,
+     * an overflow count). Rendered as SIBLINGS of the tab list, never inside a
+     * `Tabs.Tab` (react-aria tabs can't nest interactive elements).
+     */
+    leftEnd?: ReactNode
     /** Optional secondary tab group, pinned right (e.g. a language switcher). */
     rightTabs?: TabsCardGroup
     /**
@@ -65,13 +72,35 @@ export interface TabsCardProps extends WithClassNames<undefined> {
      * accent (both groups accent).
      */
     rightTabsNeutral?: boolean
+    /**
+     * `"secondary"` (default) = in-page content tabs — underline, hugs its own
+     * label width, no outer baseline (this component's caller owns full-width
+     * chrome if it wants any, §1). `"primary"` = page-FEATURE tabs that switch
+     * the ENTIRE panel content — full-width, evenly-stretched segmented pill
+     * (HeroUI's own default Tabs look). Use `"primary"` for top-level section
+     * switches (e.g. Bắt đầu/Lịch sử/Thống kê), `"secondary"` for a content
+     * filter/language-switcher. Applies to BOTH groups (a toolbar is either
+     * page-feature nav or in-page filter nav, not a mix).
+     */
+    variant?: "primary" | "secondary"
 }
 
-/** Selected-state chrome — accent underline + accent text (primary tab group). */
-const TAB_CLASS_ACCENT =
-    "rounded-none data-[selected=true]:border-b-2 data-[selected=true]:border-accent data-[selected=true]:text-accent"
+/**
+ * Selected-state TEXT color only (accent tab group) — the underline itself now
+ * comes from `<Tabs.Indicator/>` (native HeroUI `.tabs--secondary` accent bar).
+ * Corrected 2026-07-09: this used to ALSO draw its own manual `border-b-2
+ * border-accent`, which — once `<Tabs.Indicator/>` was added per tabs.md §5 —
+ * doubled up with the indicator's own bottom line under the same tab.
+ */
+const TAB_CLASS_ACCENT = "rounded-none data-[selected=true]:text-accent"
 
-/** Selected-state chrome — NEUTRAL foreground underline (secondary toggle group, no accent). */
+/**
+ * Selected-state chrome — NEUTRAL foreground underline (secondary toggle
+ * group, no accent). Kept on the MANUAL `border-b-2` technique (unlike
+ * `TAB_CLASS_ACCENT` above) because `.tabs--secondary`'s indicator is
+ * hardcoded `bg-accent` — there is no "neutral-colored" native indicator to
+ * switch to, so `<Tabs.Indicator/>` is suppressed for this path (see below).
+ */
 const TAB_CLASS_NEUTRAL =
     "rounded-none data-[selected=true]:border-b-2 data-[selected=true]:border-foreground data-[selected=true]:font-medium data-[selected=true]:text-foreground"
 
@@ -86,14 +115,17 @@ const TAB_CLASS_NEUTRAL =
  */
 export const TabsCard = ({
     leftTabs,
+    leftEnd,
     rightTabs,
     collapseRightOnMobile,
     rightTabsNeutral,
+    variant = "secondary",
     className,
 }: TabsCardProps) => {
-    /** Render one controlled secondary tab group (`accent` = accent selected chrome). */
+    /** Render one controlled tab group (`accent` = accent selected chrome, secondary-only). */
     const renderGroup = (group: TabsCardGroup, accent = true): ReactNode => (
         <ExtendedTabs
+            variant={variant}
             selectedKey={group.selectedKey}
             onSelectionChange={group.onSelectionChange}
         >
@@ -104,7 +136,10 @@ export const TabsCard = ({
                             key={item.key}
                             id={item.key}
                             isDisabled={item.isDisabled}
-                            className={cn(accent ? TAB_CLASS_ACCENT : TAB_CLASS_NEUTRAL, item.muted && "text-muted")}
+                            className={cn(
+                                variant === "secondary" && (accent ? TAB_CLASS_ACCENT : TAB_CLASS_NEUTRAL),
+                                item.muted && "text-muted",
+                            )}
                         >
                             <span className="flex items-center gap-2">
                                 {item.icon}
@@ -117,6 +152,15 @@ export const TabsCard = ({
                                     </span>
                                 ) : null}
                             </span>
+                            {/* REQUIRED for "primary" and secondary-ACCENT (fe/components/tabs.md
+                                §5) — HeroUI Tabs renders no selected-state chrome of its own;
+                                without this, "primary" reads as plain undifferentiated text (no
+                                floating pill) and secondary-accent has no underline at all.
+                                Suppressed for secondary-NEUTRAL: `.tabs--secondary`'s indicator is
+                                hardcoded `bg-accent` (no neutral color option), so that path keeps
+                                its OWN `border-b-2 border-foreground` (TAB_CLASS_NEUTRAL) as the
+                                sole indicator instead of doubling up with a wrong-colored one. */}
+                            {(variant === "primary" || accent) && <Tabs.Indicator />}
                         </Tabs.Tab>
                     ))}
                 </Tabs.List>
@@ -179,7 +223,12 @@ export const TabsCard = ({
 
     return (
         <div className={cn("flex items-center justify-between gap-3", className)}>
-            {renderGroup(leftTabs)}
+            {leftEnd ? (
+                <div className="flex min-w-0 items-center gap-1">
+                    {renderGroup(leftTabs)}
+                    {leftEnd}
+                </div>
+            ) : renderGroup(leftTabs)}
             {rightTabs
                 ? collapseRightOnMobile
                     ? (

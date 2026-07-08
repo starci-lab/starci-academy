@@ -16,6 +16,13 @@ const query1 = gql`
           latencyMs
           message
           checkedAt
+          metrics {
+            cpuPercent
+            memoryUsedBytes
+            memoryLimitBytes
+            networkRxBytesPerSec
+            networkTxBytesPerSec
+          }
         }
       }
     }

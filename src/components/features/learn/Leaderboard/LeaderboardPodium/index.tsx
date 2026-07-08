@@ -1,11 +1,12 @@
 "use client"
 
 import React from "react"
-import { Typography, cn } from "@heroui/react"
-import { useTranslations } from "next-intl"
+import { Link, Typography, cn } from "@heroui/react"
+import { useLocale, useTranslations } from "next-intl"
 import { CrownIcon } from "@phosphor-icons/react"
 import { categoryEntryXp, type LeaderboardCategoryKey, type RankedLeaderboardEntry } from "../categories"
 import { UserAvatar } from "@/components/reuseable/UserAvatar"
+import { pathConfig } from "@/resources/path"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link LeaderboardPodium}. */
@@ -33,6 +34,7 @@ const PEDESTAL_HEIGHT: Record<number, string> = { 1: "h-20", 2: "h-14", 3: "h-10
  */
 export const LeaderboardPodium = ({ top, selectedCategory, viewerUserId, className }: LeaderboardPodiumProps) => {
     const t = useTranslations()
+    const locale = useLocale()
     const byRank = new Map(top.map((row) => [row.displayRank, row]))
 
     return (
@@ -47,24 +49,29 @@ export const LeaderboardPodium = ({ top, selectedCategory, viewerUserId, classNa
                 const isLeader = rank === 1
                 return (
                     <div key={rank} className="flex w-24 flex-col items-center gap-1.5">
-                        <div className="relative">
-                            {isLeader ? (
-                                <CrownIcon
-                                    aria-hidden
-                                    focusable="false"
-                                    className="absolute -top-4 left-1/2 size-5 -translate-x-1/2 text-warning"
+                        <Link
+                            href={pathConfig().locale(locale).profile(entry.username ?? undefined).build()}
+                            className="flex flex-col items-center gap-1.5 text-foreground no-underline"
+                        >
+                            <div className="relative">
+                                {isLeader ? (
+                                    <CrownIcon
+                                        aria-hidden
+                                        focusable="false"
+                                        className="absolute -top-4 left-1/2 size-5 -translate-x-1/2 text-warning"
+                                    />
+                                ) : null}
+                                <UserAvatar
+                                    username={entry.username}
+                                    avatar={entry.avatar}
+                                    size={isLeader ? "lg" : "md"}
+                                    className={cn(isViewer && "ring-2 ring-accent")}
                                 />
-                            ) : null}
-                            <UserAvatar
-                                username={entry.username}
-                                avatar={entry.avatar}
-                                size={isLeader ? "lg" : "md"}
-                                className={cn(isViewer && "ring-2 ring-accent")}
-                            />
-                        </div>
-                        <Typography type="body-sm" weight={isViewer ? "semibold" : "medium"} className="line-clamp-1 text-center">
-                            {isViewer ? t("leaderboard.you") : entry.username}
-                        </Typography>
+                            </div>
+                            <Typography type="body-sm" weight={isViewer ? "semibold" : "medium"} className="line-clamp-1 text-center">
+                                {isViewer ? t("leaderboard.you") : entry.username}
+                            </Typography>
+                        </Link>
                         <Typography type="body-xs" className={cn("shrink-0", isViewer ? "text-accent" : "text-muted")}>
                             {t("leaderboard.xp", { xp: categoryEntryXp(entry, selectedCategory) })}
                         </Typography>

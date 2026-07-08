@@ -75,9 +75,14 @@ export const ProfilePinned = ({
         return null
     }
 
+    // frameless ONLY once real pins render (each PinnedProjectCard self-frames);
+    // while loading/empty(owner CTA)/erroring there is no bounded surface, so
+    // LabeledCard's own Card must frame it — otherwise it renders bare on the page.
+    const hasPins = !error && pins.length > 0
+
     return (
         <LabeledCard
-            frameless
+            frameless={hasPins}
             label={t("pinnedProjects.heading")}
             icon={<PinIcon className="size-5" aria-hidden="true" focusable="false" />}
             action={action}

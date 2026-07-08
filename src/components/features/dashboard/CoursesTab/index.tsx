@@ -22,7 +22,6 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
-import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 
 /** Props for {@link CoursesTab}. */
 export type CoursesTabProps = WithClassNames<undefined>
@@ -39,13 +38,10 @@ export const CoursesTab = ({
     const t = useTranslations()
     return (
         <div className={cn("flex flex-col gap-6", className)}>
-            <LabeledCard
-                frameless
+            <MyCoursesProgress
                 label={t("dashboard.enrolledCourses")}
                 icon={<GraduationCapIcon aria-hidden focusable="false" className="size-5" />}
-            >
-                <MyCoursesProgress />
-            </LabeledCard>
+            />
             <RecommendedCourses />
             <UpcomingLivestreamCard />
         </div>

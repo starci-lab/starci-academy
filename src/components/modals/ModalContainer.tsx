@@ -9,7 +9,6 @@ import { LanguageModal } from "./LanguageModal"
 import { FeedbackDetailsModal } from "./FeedbackDetailsModal"
 import { CvPreviewModal } from "./CvPreviewModal"
 import { CvReviewLevelDetailsModal } from "./CvReviewLevelDetailsModal"
-import { CvUpdateModal } from "./CvUpdateModal"
 import { GlobalSearchModal } from "./GlobalSearchModal"
 import { LinkGithubModal } from "./LinkGithubModal"
 import { ShareModal } from "./ShareModal"
@@ -35,7 +34,6 @@ export const ModalContainer = () => {
             <FeedbackDetailsModal />
             <CvPreviewModal />
             <CvReviewLevelDetailsModal />
-            <CvUpdateModal />
             <GlobalSearchModal />
             <LinkGithubModal />
             <ShareModal />

@@ -2,6 +2,31 @@
 @import "@xyflow/react/dist/style.css";
 @import "@heroui/styles/css";
 
+/* Exclude `.md` and `.html` from Tailwind v4's automatic content scan. This is a
+ * Next.js App Router app — every real utility class lives in `.tsx`; markdown/html
+ * files are prose, docs, or prototype artifacts (brainstorm/critique `.md`, `.session/*.md`
+ * checkpoints, layout `.html` mockups). The v4 candidate extractor was crashing the build
+ * ("RangeError: Invalid code point …") because a `.md` doc contained a Windows path with
+ * a backslash immediately followed by several digits (a numeric folder/id segment) —
+ * that run gets parsed as a CSS unicode escape and decoded via fromCodePoint on an
+ * out-of-range value. (Don't "fix" this note by pasting a literal example back in here —
+ * the scanner reads comments too, so the example itself becomes a fresh trigger. Same
+ * goes for typing a double-star glob followed by a slash-star in prose right here — that
+ * literal sequence closes THIS comment early, same as it would in any C-style comment.)
+ * These files never need utility generation, so ignore them.
+ *
+ * The plain double-star md/html globs below do not reach files under dot-directories
+ * (a leading dot segment is conventionally excluded from double-star matches) — list
+ * every dot-dir that actually holds prose docs explicitly, or a future checkpoint or
+ * brainstorm doc slips back through the scanner. */
+@source not "**/*.md";
+@source not "**/*.html";
+@source not ".claude/**/*.md";
+@source not ".session/**/*.md";
+@source not ".memory/**/*.md";
+@source not ".legacy/**/*.md";
+@source not ".uxuirefs/**/*.md";
+
 /*
  * Kill the "giật giật" jitter on learn pages: their left rail is exactly
  * `calc(100dvh - 4rem)` tall, so the document lands right ON the viewport height

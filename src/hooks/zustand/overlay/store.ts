@@ -41,8 +41,6 @@ export type OverlayKey =
     | "cookiePreferences"
     | "cvPreview"
     | "cvReviewLevelDetails"
-    | "cvSubmissionAttemptsDrawer"
-    | "cvUpdate"
     | "e2eResult"
     | "feedbackDetails"
     | "followList"
@@ -77,8 +75,6 @@ const OVERLAY_KEYS: ReadonlyArray<OverlayKey> = [
     "cookiePreferences",
     "cvPreview",
     "cvReviewLevelDetails",
-    "cvSubmissionAttemptsDrawer",
-    "cvUpdate",
     "e2eResult",
     "feedbackDetails",
     "followList",
@@ -107,6 +103,8 @@ interface OverlayStoreState {
     paymentContext: PaymentContext | null
     /** Interstitial ad modal payload (the active ad to render). */
     adModalContext: QueryActiveAdvertisementData | null
+    /** CV preview modal payload — the presigned/rendered URL to show fullscreen. */
+    cvPreviewContext: string | null
     /** Follow-list modal payload (whose graph + which tab). */
     followListContext: FollowListContext | null
     /** A cart action a guest deferred until sign-in (replayed on auth), or null. */
@@ -133,6 +131,8 @@ interface OverlayStoreState {
     setPaymentContext: (context: PaymentContext | null) => void
     /** Stash the interstitial ad modal payload. */
     setAdModalContext: (context: QueryActiveAdvertisementData | null) => void
+    /** Stash the CV preview modal payload. */
+    setCvPreviewContext: (context: string | null) => void
     /** Stash the follow-list modal payload. */
     setFollowListContext: (context: FollowListContext | null) => void
     /** Stash (or clear) the guest's deferred cart action. */
@@ -167,6 +167,7 @@ export const useOverlayStore = create<OverlayStoreState>((set) => ({
     openMap: buildInitialOpenMap(),
     paymentContext: null,
     adModalContext: null,
+    cvPreviewContext: null,
     followListContext: null,
     pendingCartIntent: null,
     contentAiSelectedModel: null,
@@ -183,6 +184,7 @@ export const useOverlayStore = create<OverlayStoreState>((set) => ({
         set((state) => ({ openMap: { ...state.openMap, [key]: !state.openMap[key] } })),
     setPaymentContext: (context) => set({ paymentContext: context }),
     setAdModalContext: (context) => set({ adModalContext: context }),
+    setCvPreviewContext: (context) => set({ cvPreviewContext: context }),
     setFollowListContext: (context) => set({ followListContext: context }),
     setPendingCartIntent: (intent) => set({ pendingCartIntent: intent }),
     setContentAiSelectedModel: (model) => set({ contentAiSelectedModel: model }),

@@ -15,16 +15,18 @@ import { useAppSelector } from "@/redux/hooks"
  * @param courseId - course whose mock-interview history to fetch.
  * @param limit - page size (attempts per page); server defaults to 10.
  * @param offset - page offset (attempts to skip); server defaults to 0.
+ * @param mode - optional mode filter ("qna" | "design"); omitted = every mode.
  */
 export const useQueryMyMockInterviewAttemptsSwr = (
     courseId: string | undefined,
     limit?: number,
     offset?: number,
+    mode?: string,
 ) => {
     const authenticated = useAppSelector((state) => state.keycloak.authenticated)
     return useSWR<QueryMyMockInterviewAttemptsResponseData | null>(
         courseId && authenticated
-            ? ["QUERY_MY_MOCK_INTERVIEW_ATTEMPTS_SWR", courseId, limit, offset]
+            ? ["QUERY_MY_MOCK_INTERVIEW_ATTEMPTS_SWR", courseId, limit, offset, mode]
             : null,
         async () => {
             if (!courseId) {
@@ -33,7 +35,7 @@ export const useQueryMyMockInterviewAttemptsSwr = (
             const headers: GraphQLHeaders = { [GraphQLHeadersKey.XCourseId]: courseId }
             // unwrap the standard API envelope; null when absent
             const result = await queryMyMockInterviewAttempts({
-                request: { courseId, limit, offset },
+                request: { courseId, limit, offset, mode },
                 headers,
             })
             return result.data?.myMockInterviewAttempts?.data ?? null

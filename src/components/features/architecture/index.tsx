@@ -2,9 +2,9 @@
 
 import React from "react"
 import { Button, Link, Skeleton, Typography } from "@heroui/react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
-import { ArrowUpRightIcon } from "@phosphor-icons/react"
+import { ArrowRightIcon, ArrowUpRightIcon } from "@phosphor-icons/react"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { ResizableRail } from "@/components/blocks/layout/ResizableRail"
 import { ResponsiveBreadcrumb } from "@/components/blocks/navigation/ResponsiveBreadcrumb"
@@ -16,7 +16,6 @@ import { ArchitectureMap } from "./ArchitectureMap"
 import { NodeDissectionPanel } from "./NodeDissectionPanel"
 import { CurlTester } from "./CurlTester"
 import { useArchitectureNode } from "./hooks/useArchitectureNode"
-import { useArchitecturePod } from "./hooks/useArchitecturePod"
 import { useSystemHealthPoll } from "./hooks/useSystemHealthPoll"
 
 /** Public GitHub repo backing this live atlas — the "don't trust me, go read it" link. */
@@ -43,9 +42,11 @@ export const Architecture = () => {
     const t = useTranslations("architecture")
     const tGlobal = useTranslations()
     const router = useRouter()
+    const locale = useLocale()
     const { node, setNode } = useArchitectureNode()
-    const { pod, setPod } = useArchitecturePod()
     const { healthByName, isLoading, error, refresh } = useSystemHealthPoll()
+
+    const onOpenCourses = () => router.push(pathConfig().locale(locale).course().build())
 
     return (
         // single column on mobile/tablet; rail + content side-by-side from lg up
@@ -89,12 +90,18 @@ export const Architecture = () => {
                         title={t("title")}
                         description={t("subtitle")}
                         actions={(
-                            <Link href={BACKEND_REPO_URL} target="_blank" rel="noopener noreferrer">
-                                <Button variant="tertiary" size="sm">
-                                    {t("header.viewSource")}
-                                    <ArrowUpRightIcon className="size-4" aria-hidden />
+                            <div className="flex flex-wrap items-center gap-2">
+                                <Link href={BACKEND_REPO_URL} target="_blank" rel="noopener noreferrer">
+                                    <Button variant="tertiary" size="sm">
+                                        {t("header.viewSource")}
+                                        <ArrowUpRightIcon className="size-4" aria-hidden />
+                                    </Button>
+                                </Link>
+                                <Button variant="primary" size="sm" onPress={onOpenCourses}>
+                                    {t("header.viewCourse")}
+                                    <ArrowRightIcon className="size-4" aria-hidden />
                                 </Button>
-                            </Link>
+                            </div>
                         )}
                     />
 
@@ -121,8 +128,6 @@ export const Architecture = () => {
                                     healthByName={healthByName}
                                     selectedId={node}
                                     onSelectNode={setNode}
-                                    pod={pod}
-                                    onSelectPod={setPod}
                                 />
                             </>
                         )}
@@ -132,6 +137,19 @@ export const Architecture = () => {
                         <LabeledCard label={t("curl.heading")}>
                             <CurlTester />
                         </LabeledCard>
+
+                        {/* course-CTA band — closes the loop: this real, live system is
+                            exactly what the courses teach you to build → go learn to build it */}
+                        <div className="flex flex-col items-start gap-3 rounded-3xl bg-accent/10 p-6 sm:flex-row sm:items-center sm:justify-between">
+                            <div className="flex flex-col gap-1">
+                                <Typography type="body" weight="semibold">{t("courseCta.title")}</Typography>
+                                <Typography type="body-sm" color="muted">{t("courseCta.body")}</Typography>
+                            </div>
+                            <Button variant="primary" size="lg" className="shrink-0" onPress={onOpenCourses}>
+                                {t("courseCta.cta")}
+                                <ArrowRightIcon className="size-5" aria-hidden />
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </div>

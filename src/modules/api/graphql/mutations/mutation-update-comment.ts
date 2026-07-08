@@ -17,6 +17,7 @@ const mutation1 = gql`
         createdAt
         parentCommentId
         replyCount
+        isFounderAuthor
         author {
           id
           username

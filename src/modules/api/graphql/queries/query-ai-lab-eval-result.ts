@@ -23,7 +23,6 @@ const query1 = gql`
         }
         model
         provider
-        mode
         totalScore
         maxScore
         passed

@@ -19,7 +19,7 @@ export type FlashcardStudyRailProps = WithClassNames<undefined>
 /**
  * The flashcards LEFT RAIL — the same docs-style sidebar as the content-map rail
  * (pinned header + scroll region, full rail height), rendered by the learn layout
- * in the rail column. A mode switch (Study / Mock interview) + the course's decks
+ * in the rail column. A mode switch (Study / Quiz) + the course's decks
  * as a searchable nav list; all selection drives the URL (`useFlashcardNav`), so
  * the rail (layout) and the work pane (page) share one source of truth. Reads the
  * owning course id from the store; shares the deck SWR key with the page.
@@ -67,7 +67,7 @@ export const FlashcardStudyRail = ({ className }: FlashcardStudyRailProps) => {
                     onSelectionChange={(keys) => {
                         // controlled single-select → switch mode from the chosen key
                         const key = [...keys][0]
-                        if (key === "study" || key === "interview") {
+                        if (key === "study" || key === "quiz") {
                             goMode(key)
                         }
                     }}
@@ -86,20 +86,20 @@ export const FlashcardStudyRail = ({ className }: FlashcardStudyRailProps) => {
                         </span>
                     </ListBox.Item>
                     <ListBox.Item
-                        id="interview"
-                        textValue={t("flashcard.mode.interview")}
+                        id="quiz"
+                        textValue={t("flashcard.mode.quiz")}
                         className="cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent/10"
                     >
                         <span className="flex items-center gap-2">
                             <MicrophoneStageIcon className="size-4 shrink-0" aria-hidden focusable="false" />
                             <Typography type="body-sm" weight="medium">
-                                {t("flashcard.mode.interview")}
+                                {t("flashcard.mode.quiz")}
                             </Typography>
                         </span>
                     </ListBox.Item>
                 </ListBox>
 
-                {/* deck search — study mode only (interview is course-wide random) */}
+                {/* deck search — study mode only (quiz is course-wide random) */}
                 {mode === "study" ? (
                     <div className="flex flex-col gap-2">
                         <Label className="px-1 text-xs text-muted">{t("flashcard.decksLabel")}</Label>

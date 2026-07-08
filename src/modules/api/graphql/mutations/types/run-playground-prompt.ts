@@ -1,4 +1,4 @@
-import type { AiMode, ModelProvider } from "../../queries/query-my-ai-settings"
+import type { ModelProvider } from "../../queries/query-my-ai-settings"
 import type { GraphQLResponse } from "../../types"
 
 /** Generation params for an AI Lab prompt run (`AiLabRunParamsInput`). */
@@ -21,14 +21,10 @@ export interface RunPlaygroundPromptInput {
     userPrompt: string
     /** Optional generation params. */
     params?: AiLabRunParamsInput
-    /** AI lane to run on (auto/premium/byok); validated against entitlement at run time. */
-    mode?: AiMode
     /** Concrete model the user picked; null = balancer default. */
     selectedModel?: string
     /** Provider serving {@link selectedModel}. */
     selectedModelProvider?: ModelProvider
-    /** One-shot BYOK key for this run only (not saved to profile). */
-    byokApiKey?: string
 }
 
 /** Payload inside `runPlaygroundPrompt.data` after the standard API wrapper. */

@@ -15,6 +15,15 @@ const query1 = gql`
         description
         cost
         kind
+        voucher {
+          discountType
+          value
+          validityDays
+        }
+        aiCredit {
+          amount5h
+          amountWeek
+        }
       }
     }
   }

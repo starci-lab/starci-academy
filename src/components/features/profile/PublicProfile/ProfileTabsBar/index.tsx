@@ -1,12 +1,13 @@
 "use client"
 
-import React from "react"
+import React, { useMemo } from "react"
 import { cn, Tabs } from "@heroui/react"
 import {
     HouseIcon,
     PuzzlePieceIcon,
     RocketIcon,
     CodeIcon,
+    FileTextIcon,
     PulseIcon,
 } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
@@ -22,11 +23,15 @@ const TAB_ICONS: Record<ProfileTab, typeof HouseIcon> = {
     challenges: PuzzlePieceIcon,
     projects: RocketIcon,
     skills: CodeIcon,
+    cv: FileTextIcon,
     activity: PulseIcon,
 }
 
 /** Props for {@link ProfileTabsBar}. */
-export type ProfileTabsBarProps = WithClassNames<undefined>
+export interface ProfileTabsBarProps extends WithClassNames<undefined> {
+    /** Whether the viewer is the profile owner — withholds the owner-only "CV" tab otherwise. */
+    isSelf: boolean
+}
 
 /**
  * Full-width tab strip for the profile page. The page registers it as the global
@@ -37,11 +42,16 @@ export type ProfileTabsBarProps = WithClassNames<undefined>
  * indicator). The open tab lives in the shared store, so panels elsewhere stay in
  * sync.
  *
- * @param props - optional root class name (placement only)
+ * @param props - {@link ProfileTabsBarProps}
  */
-export const ProfileTabsBar = ({ className }: ProfileTabsBarProps) => {
+export const ProfileTabsBar = ({ isSelf, className }: ProfileTabsBarProps) => {
     const t = useTranslations()
     const { tab, setTab } = useProfileTabStore()
+    // "cv" is the owner's résumé tool — withheld from visitors viewing someone else's profile.
+    const visibleTabs = useMemo(
+        () => PROFILE_TABS.filter((tabId) => tabId !== "cv" || isSelf),
+        [isSelf],
+    )
 
     return (
         // Rendered as the Navbar's bottom layer — no border / sticky / bg of its
@@ -54,7 +64,7 @@ export const ProfileTabsBar = ({ className }: ProfileTabsBarProps) => {
                 >
                     <Tabs.ListContainer>
                         <Tabs.List aria-label={t("publicProfile.title")}>
-                            {PROFILE_TABS.map((tabId) => {
+                            {visibleTabs.map((tabId) => {
                                 const TabIcon = TAB_ICONS[tabId]
                                 return (
                                     <Tabs.Tab

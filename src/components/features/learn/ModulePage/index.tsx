@@ -189,18 +189,18 @@ export const ModulePage = ({ className }: ModulePageProps) => {
                                         </StatusChip>
                                     ) : null}
                                     <HighlightChip
-                                        icon={<StackIcon className="size-3" />}
+                                        icon={<StackIcon className="size-4" />}
                                         value={lessons.length}
                                         label={t("modulePage.metaLessonsLabel")}
                                     />
                                     <HighlightChip
-                                        icon={<ClockIcon className="size-3" />}
+                                        icon={<ClockIcon className="size-4" />}
                                         value={outlineModule.lessons.reduce((sum, lesson) => sum + lesson.minutesRead, 0)}
                                         label={t("modulePage.metaMinutesLabel")}
                                     />
                                     {challenges.length > 0 ? (
                                         <HighlightChip
-                                            icon={<PuzzlePieceIcon className="size-3" />}
+                                            icon={<PuzzlePieceIcon className="size-4" />}
                                             value={challenges.length}
                                             label={t("modulePage.metaChallengesLabel")}
                                         />

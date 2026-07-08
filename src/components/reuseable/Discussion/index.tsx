@@ -1,7 +1,7 @@
 "use client"
 
-import React from "react"
-import { Button, Label, Spinner, cn } from "@heroui/react"
+import React, { useMemo } from "react"
+import { Button, Label, Spinner, Typography, cn } from "@heroui/react"
 import { ChatsCircleIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { CommentComposer } from "./CommentComposer"
@@ -53,13 +53,18 @@ export interface DiscussionProps extends WithClassNames<undefined> {
 }
 
 /**
- * Bottom-of-lesson discussion zone — FRAMELESS: a label ("Thảo luận · N") above an
- * avatar-led composer and the threaded comment list, sitting directly on the page
- * canvas (no card) so it doesn't stack a second bordered surface under the reading
- * "paper" card. The content reaction picker is NOT here — it lives in the reading-card
- * footer ({@link import("@/components/features/learn/LessonReader/ContentBody/ContentBodyV2/Discussion/ContentReactionBar").ContentReactionBar}).
+ * Bottom-of-lesson discussion zone — FRAMELESS: a label ("Thảo luận · N") + an honest
+ * "archive line" (how many of this lesson's questions already have an answer — the
+ * value compounds as more cohorts pass through) above an avatar-led composer and the
+ * threaded comment list, sitting directly on the page canvas (no card) so it doesn't
+ * stack a second bordered surface under the reading "paper" card. The content reaction
+ * picker is NOT here — it lives in the reading-card footer
+ * ({@link import("@/components/features/learn/LessonReader/ContentBody/ContentBodyV2/Discussion/ContentReactionBar").ContentReactionBar}).
  *
  * Presentational: receives all data + callbacks from a container; holds no data hooks.
+ * The archive line is computed from the currently-loaded top-level comments (an honest,
+ * real count — not a fabricated aggregate); it only under-counts before "load more" is
+ * exhausted, same tradeoff as the course-wide Q&A roll-up's answered count.
  * @param props - {@link DiscussionProps}
  */
 export const Discussion = ({
@@ -82,13 +87,27 @@ export const Discussion = ({
 }: DiscussionProps) => {
     const t = useTranslations()
 
+    // real (not fabricated) count of currently-loaded top-level questions that already
+    // have at least one reply — the "compounds over time" answer archive
+    const answeredCount = useMemo(
+        () => comments.filter((comment) => comment.replyCount > 0).length,
+        [comments],
+    )
+
     return (
         <section className={cn("flex flex-col gap-3", className)}>
-            {/* ── label + composer (related → gap-3) ── */}
+            {/* ── label + archive line + composer (related → gap-3) ── */}
             <div className="flex flex-col gap-3">
-                <div className="flex items-center gap-2">
-                    <ChatsCircleIcon aria-hidden focusable="false" className="size-5 text-muted" />
-                    <Label>{t("discussion.title", { count: total })}</Label>
+                <div className="flex flex-col gap-1">
+                    <div className="flex items-center gap-2">
+                        <ChatsCircleIcon aria-hidden focusable="false" className="size-5 text-muted" />
+                        <Label>{t("discussion.title", { count: total })}</Label>
+                    </div>
+                    {total > 0 ? (
+                        <Typography type="body-xs" color="muted">
+                            {t("discussion.archiveLine", { answered: answeredCount, total })}
+                        </Typography>
+                    ) : null}
                 </div>
                 {/* avatar-led composer: collapses to a slim pill until focused */}
                 <CommentComposer onSubmit={onSubmitComment} currentUser={currentUser} collapsible />

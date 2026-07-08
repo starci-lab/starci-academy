@@ -62,14 +62,27 @@ export const useContentAiChatOverlayState = () => useOverlayHandle("contentAiCha
 export const useContentAiSettingsOverlayState = () => useOverlayHandle("contentAiSettings")
 /** Cookie preferences modal overlay state ("Tùy chỉnh" granular cookie consent). */
 export const useCookiePreferencesOverlayState = () => useOverlayHandle("cookiePreferences")
-/** CV preview overlay state. */
-export const useCvPreviewOverlayState = () => useOverlayHandle("cvPreview")
+/**
+ * CV preview overlay state — carries the URL of the CV to show fullscreen (the
+ * same presigned/rendered URL the inline preview uses), like {@link useAdModalOverlayState}.
+ * @returns the overlay handle plus `context` (the URL) and `open(url)`.
+ */
+export const useCvPreviewOverlayState = () => {
+    const base = useOverlayHandle("cvPreview")
+    const context = useOverlayStore((state) => state.cvPreviewContext)
+    const setContext = useOverlayStore((state) => state.setCvPreviewContext)
+    const openOverlay = useOverlayStore((state) => state.openOverlay)
+    const open = useCallback(
+        (url: string) => {
+            setContext(url)
+            openOverlay("cvPreview")
+        },
+        [setContext, openOverlay],
+    )
+    return { ...base, open, context }
+}
 /** CV review level details overlay state. */
 export const useCvReviewLevelDetailsOverlayState = () => useOverlayHandle("cvReviewLevelDetails")
-/** CV submission attempts drawer overlay state. */
-export const useCvSubmissionAttemptsDrawerOverlayState = () => useOverlayHandle("cvSubmissionAttemptsDrawer")
-/** CV update overlay state. */
-export const useCvUpdateOverlayState = () => useOverlayHandle("cvUpdate")
 /** E2E-result drawer overlay state (lesson footer proof panel). */
 export const useE2eResultOverlayState = () => useOverlayHandle("e2eResult")
 /** Feedback details overlay state. */

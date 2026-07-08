@@ -3,9 +3,15 @@
 import { useCallback, useMemo } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { ARCHITECTURE_COMPONENT_MAP, DEFAULT_ARCHITECTURE_NODE } from "../constants"
+import { isArchitectureModuleId } from "../modules"
 
 /** Query key the selected node is mirrored to (`/architecture?node=kafka`). */
 const NODE_KEY = "node"
+
+/** A `?node=` value is valid when it names a probed infra/external component OR
+ *  a feature module (the atlas renders both as selectable nodes). */
+const isSelectableNode = (id: string): boolean =>
+    Boolean(ARCHITECTURE_COMPONENT_MAP[id]) || isArchitectureModuleId(id)
 
 /** The handle returned by {@link useArchitectureNode}. */
 export interface UseArchitectureNodeResult {
@@ -31,11 +37,11 @@ export const useArchitectureNode = (): UseArchitectureNodeResult => {
 
     const node = useMemo(() => {
         const raw = searchParams.get(NODE_KEY)
-        return raw && ARCHITECTURE_COMPONENT_MAP[raw] ? raw : DEFAULT_ARCHITECTURE_NODE
+        return raw && isSelectableNode(raw) ? raw : DEFAULT_ARCHITECTURE_NODE
     }, [searchParams])
 
     const setNode = useCallback((name: string) => {
-        if (!ARCHITECTURE_COMPONENT_MAP[name]) return
+        if (!isSelectableNode(name)) return
         const params = new URLSearchParams(searchParams.toString())
         if (name === DEFAULT_ARCHITECTURE_NODE) {
             params.delete(NODE_KEY)

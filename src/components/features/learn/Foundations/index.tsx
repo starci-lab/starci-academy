@@ -25,6 +25,7 @@ import {
 import {
     FoundationsLearnHeader,
 } from "./FoundationsLearnHeader"
+import { TrialEnrollHook } from "../shared/TrialEnrollHook"
 import {
     FoundationsList,
 } from "./FoundationsList"
@@ -172,6 +173,8 @@ export const FoundationsLearnLayout = () => {
         // tier layout: PageHeader (breadcrumb+title+desc) → content cluster, gap-10 between (debt page-heading)
         <div className="mx-auto flex max-w-3xl flex-col gap-10">
             <FoundationsLearnHeader breadcrumb={<FoundationsBreadcrumbs items={breadcrumbItems} />} />
+            {/* ambient trial → enroll hook (self-hides for paid learners) */}
+            <TrialEnrollHook />
             {/* browse cluster: search row · list · pager (gap-6 inside the cluster) */}
             <div className="flex flex-col gap-6">
                 {/* search row: box (server-side, debounced) on the left, resource count right-aligned */}

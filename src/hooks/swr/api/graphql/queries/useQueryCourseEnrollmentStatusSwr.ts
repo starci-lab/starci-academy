@@ -1,7 +1,7 @@
 import useSWR from "swr"
 import { queryCourseEnrollmentStatus } from "@/modules/api/graphql/queries/query-course-enrollment-status"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
-import { setEnrolled, setEnrollment } from "@/redux/slices/user"
+import { setEnrolled, setEnrollKnown, setEnrollment } from "@/redux/slices/user"
 
 /**
  * The core function to query course enrollment status with SWR.
@@ -30,7 +30,15 @@ export const useQueryCourseEnrollmentStatusSwr = () => {
             }
             dispatch(setEnrollment(data.data.courseEnrollmentStatus.data?.enrollment))
             dispatch(setEnrolled(Boolean(data.data.courseEnrollmentStatus.data?.isEnrolled)))
+            dispatch(setEnrollKnown(true))
             return data.data
+        },
+        {
+            // an error still means the query has SETTLED (we just don't have a
+            // confident answer) — mark it known so consumers stop treating `enrolled`
+            // as "pending" and can decide their own error fallback instead of
+            // flashing trial-only UI forever
+            onError: () => dispatch(setEnrollKnown(true)),
         }
     )
     return swr

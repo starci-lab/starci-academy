@@ -22,10 +22,23 @@ const query1 = gql`
         score
         label
         courseId
+        courseTitle
         targetRole
         language
+        feedback {
+          shortFeedback
+          templateLevel
+          items {
+            severity
+            section
+            message
+            suggestion
+          }
+        }
         sourceCvSubmissionId
         latexSource
+        uploadedCvUrl
+        generatedPdfUrl
         extraPrompts
         structuredData
         errorMessage

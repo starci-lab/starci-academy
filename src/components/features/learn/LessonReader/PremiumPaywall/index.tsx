@@ -1,6 +1,6 @@
 "use client"
 
-import { LockKeyIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react"
+import { ArrowRightIcon, LockKeyIcon } from "@phosphor-icons/react"
 import React, {
     useCallback,
 } from "react"
@@ -16,6 +16,7 @@ import { PaymentFlow } from "@/modules/types/payment"
 import { useAppSelector } from "@/redux/hooks"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { PriceTag } from "@/components/blocks/commerce/PriceTag"
+import { PhaseScarcityNote } from "@/components/blocks/commerce/PhaseScarcityNote"
 
 /**
  * Medium-style inline paywall for a premium ("trial read") lesson the viewer has
@@ -75,14 +76,22 @@ export const PremiumPaywall = () => {
                     />
                 ) : null}
             </AsyncContent>
+            {price ? (
+                <PhaseScarcityNote
+                    currentPhase={price.currentPhase}
+                    seatsRemaining={price.seatsRemainingInCurrentPhase}
+                    nextPhasePriceVnd={price.nextPhasePriceVnd}
+                    className="justify-center"
+                />
+            ) : null}
             <Button
                 variant="primary"
                 size="lg"
                 className="mt-2 w-full max-w-[280px]"
                 onPress={onBuy}
             >
-                <ShoppingCartSimpleIcon className="h-5 w-5" />
                 {t("course.paywall.buy")}
+                <ArrowRightIcon className="size-5" />
             </Button>
         </div>
     )

@@ -2,6 +2,10 @@
 
 import React from "react"
 import {
+    Chip,
+    Typography,
+} from "@heroui/react"
+import {
     useTranslations,
 } from "next-intl"
 import {
@@ -11,8 +15,10 @@ import {
     useSidebarNavItems,
 } from "../hooks/useSidebarNavItems"
 import type {
+    LearnNavBadge,
     LearnNavGroup,
 } from "../types"
+import { ResumeRail } from "../ResumeRail"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -24,11 +30,33 @@ import { SidebarNavItem } from "@/components/blocks/navigation/SidebarNavItem"
 const SIDEBAR_STORAGE_KEY = "starci.learn.sidebar.collapsed"
 
 /**
- * Order the separator-divided nav clusters render in: course content, then the
- * hands-on work + leaderboard. The first group has no divider; every later group
- * gets a full-width {@link SidebarNavGroup} divider on top.
+ * Order the labelled nav clusters render in: the mandatory spine (path), then the
+ * aids (practice), then the meta surfaces (track). The first group has no divider;
+ * every later group gets a full-width {@link SidebarNavGroup} divider on top.
  */
-const GROUP_ORDER: ReadonlyArray<LearnNavGroup> = ["study", "practice"]
+const GROUP_ORDER: ReadonlyArray<LearnNavGroup> = ["path", "practice", "track"]
+
+/**
+ * Render a row's trailing status badge: a warning-tinted due-card count, or the
+ * viewer's rank as accent text. Kept small so it doesn't crowd the label.
+ *
+ * @param badge - The {@link LearnNavBadge} to render.
+ * @returns The badge node.
+ */
+const renderBadge = (badge: LearnNavBadge): React.ReactNode => {
+    if (badge.tone === "rank") {
+        return (
+            <Typography type="body-xs" className="text-accent">
+                {`#${badge.value}`}
+            </Typography>
+        )
+    }
+    return (
+        <Chip size="sm" className="bg-warning/10 text-warning">
+            <Chip.Label>{badge.value}</Chip.Label>
+        </Chip>
+    )
+}
 
 /** Props for {@link LearnSidebar}. */
 export type LearnSidebarProps = WithClassNames<undefined>
@@ -50,12 +78,19 @@ export const LearnSidebar = ({ className }: LearnSidebarProps) => {
     const t = useTranslations()
     // shared entries + active tab (also used by the mobile drawer)
     const { items, selectedTab, onSelect } = useSidebarNavItems()
+    // role-group captions (sentence case — no uppercase)
+    const groupLabels: Record<LearnNavGroup, string> = {
+        path: t("nav.groupPath"),
+        practice: t("nav.groupPractice"),
+        track: t("nav.groupTrack"),
+    }
     return (
         <CollapsibleSidebar
             title={t("nav.courseMenu")}
             collapseLabel={t("nav.collapseLeftRail")}
             expandLabel={t("nav.expandLeftRail")}
             storageKey={SIDEBAR_STORAGE_KEY}
+            topSlot={<ResumeRail />}
             className={className}
         >
             {GROUP_ORDER.map((group, index) => {
@@ -66,7 +101,7 @@ export const LearnSidebar = ({ className }: LearnSidebarProps) => {
                 }
                 return (
                     // first cluster has no divider; later clusters get the full-width separator
-                    <SidebarNavGroup key={group} divider={index > 0}>
+                    <SidebarNavGroup key={group} divider={index > 0} label={groupLabels[group]}>
                         {groupItems.map((item) => (
                             <SidebarNavItem
                                 key={item.value}
@@ -79,7 +114,7 @@ export const LearnSidebar = ({ className }: LearnSidebarProps) => {
                                         focusable="false"
                                         className="size-4 text-muted"
                                     />
-                                ) : undefined}
+                                ) : item.badge ? renderBadge(item.badge) : undefined}
                                 onPress={() => onSelect(item)}
                             />
                         ))}

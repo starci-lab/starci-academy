@@ -1,10 +1,11 @@
 "use client"
 
 import React from "react"
-import { Chip, Typography, cn } from "@heroui/react"
-import { useTranslations } from "next-intl"
+import { Chip, Link, Typography, cn } from "@heroui/react"
+import { useLocale, useTranslations } from "next-intl"
 import { CrownIcon } from "@phosphor-icons/react"
 import { UserAvatar } from "@/components/reuseable/UserAvatar"
+import { pathConfig } from "@/resources/path"
 import type { CourseLeaderboardEntry } from "@/modules/api/graphql/queries/types/course-leaderboard"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
@@ -27,37 +28,43 @@ export interface LeaderboardChampionProps extends WithClassNames<undefined> {
  */
 export const LeaderboardChampion = ({ entry, totalXp, viewerUserId, className }: LeaderboardChampionProps) => {
     const t = useTranslations()
+    const locale = useLocale()
     const isViewer = !!viewerUserId && entry.userId === viewerUserId
     return (
         <div className={cn("flex items-center gap-4 rounded-3xl bg-surface shadow-surface px-5 py-4", className)}>
-            <div className="relative shrink-0">
-                <CrownIcon
-                    aria-hidden
-                    focusable="false"
-                    className="absolute -top-3.5 left-1/2 size-5 -translate-x-1/2 text-warning"
-                />
-                <UserAvatar
-                    username={entry.username}
-                    avatar={entry.avatar}
-                    size="lg"
-                    className={cn(isViewer && "ring-2 ring-accent")}
-                />
-            </div>
-            <div className="flex min-w-0 flex-1 flex-col gap-0">
-                <div className="flex items-center gap-2">
-                    <Typography type="body" weight="semibold" className="line-clamp-1">
-                        {entry.username}
-                    </Typography>
-                    {isViewer && (
-                        <Chip size="sm" variant="soft" color="accent">
-                            {t("leaderboard.you")}
-                        </Chip>
-                    )}
+            <Link
+                href={pathConfig().locale(locale).profile(entry.username ?? undefined).build()}
+                className="flex min-w-0 flex-1 items-center gap-4 text-foreground no-underline"
+            >
+                <div className="relative shrink-0">
+                    <CrownIcon
+                        aria-hidden
+                        focusable="false"
+                        className="absolute -top-3.5 left-1/2 size-5 -translate-x-1/2 text-warning"
+                    />
+                    <UserAvatar
+                        username={entry.username}
+                        avatar={entry.avatar}
+                        size="lg"
+                        className={cn(isViewer && "ring-2 ring-accent")}
+                    />
                 </div>
-                <Typography type="body-sm" color="muted">
-                    {t("leaderboard.champion")}
-                </Typography>
-            </div>
+                <div className="flex min-w-0 flex-1 flex-col gap-0">
+                    <div className="flex items-center gap-2">
+                        <Typography type="body" weight="semibold" className="line-clamp-1">
+                            {entry.username}
+                        </Typography>
+                        {isViewer && (
+                            <Chip size="sm" variant="soft" color="accent">
+                                {t("leaderboard.you")}
+                            </Chip>
+                        )}
+                    </div>
+                    <Typography type="body-sm" color="muted">
+                        {t("leaderboard.champion")}
+                    </Typography>
+                </div>
+            </Link>
             <div className="shrink-0 text-right">
                 {/* accent XP only when it's the viewer's own card — consistent with
                     LeaderboardTable/Podium (accent value = "mine", not every #1) */}

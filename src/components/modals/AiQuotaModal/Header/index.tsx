@@ -3,7 +3,6 @@
 import React from "react"
 import {
     Chip,
-    Modal,
 } from "@heroui/react"
 import {
     useTranslations,
@@ -12,25 +11,27 @@ import { useQueryMyAiQuotaSwr } from "@/hooks/swr/api/graphql/queries/useQueryMy
 
 /**
  * AI quota modal title row — tier chip from `myAiQuota` when subscribed.
+ *
+ * Renders bare content only (no `Modal.Header` wrapper) — the caller passes
+ * this as `<ModalShell header={<AiQuotaHeader />}>`, and `ModalShell` supplies
+ * the `Modal.Header` wrapper itself.
  */
 export const AiQuotaHeader = () => {
     const t = useTranslations()
     const { data: quota } = useQueryMyAiQuotaSwr()
 
     return (
-        <Modal.Header>
-            <div className="pr-8">
-                <div className="flex items-center gap-1.5">
-                    <span className="text-lg font-semibold text-foreground">
-                        {t("aiQuota.title")}
-                    </span>
-                    {quota?.tier ? (
-                        <Chip size="sm" color={quota.tier === "max" ? "warning" : "default"} variant="soft">
-                            {quota.tier.toUpperCase()}
-                        </Chip>
-                    ) : null}
-                </div>
+        <div className="pr-8">
+            <div className="flex items-center gap-1.5">
+                <span className="text-lg font-semibold text-foreground">
+                    {t("aiQuota.title")}
+                </span>
+                {quota?.tier ? (
+                    <Chip size="sm" color={quota.tier === "max" ? "warning" : "default"} variant="soft">
+                        {quota.tier.toUpperCase()}
+                    </Chip>
+                ) : null}
             </div>
-        </Modal.Header>
+        </div>
     )
 }

@@ -34,7 +34,6 @@ import type {
     AiLabParamsForm,
 } from "../types"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
-import { AiMode } from "@/modules/api/graphql/queries/query-my-ai-settings"
 import { type AiGradableModel } from "@/modules/api/graphql/queries/types/ai-models"
 import { type GraphQLResponse } from "@/modules/api/graphql/types"
 import { type SubmitEvalChallengeData } from "@/modules/api/graphql/mutations/types/submit-eval-challenge"
@@ -84,7 +83,6 @@ export const EvalChallengePanel = ({ evalSetId, className }: EvalChallengePanelP
     const [userTemplate, setUserTemplate] = useState("")
     const [params, setParams] = useState<AiLabParamsForm>(DEFAULT_PARAMS)
     const [selection, setSelection] = useState<AiLabModelSelection>({
-        mode: AiMode.Auto,
         model: null,
         provider: null,
     })
@@ -157,7 +155,6 @@ export const EvalChallengePanel = ({ evalSetId, className }: EvalChallengePanelP
                             topP: params.topP,
                             maxTokens: params.maxTokens,
                         },
-                        mode: selection.mode,
                         selectedModel: selection.model ?? undefined,
                         selectedModelProvider: selection.provider ?? undefined,
                     })

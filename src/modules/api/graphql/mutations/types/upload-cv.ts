@@ -1,5 +1,5 @@
 import type { GraphQLResponse, QueryVariables } from "../../types"
-import type { AiMode, ModelProvider } from "../../queries/query-my-ai-settings"
+import type { ModelProvider } from "../../queries/query-my-ai-settings"
 
 /**
  * GraphQL `UploadCvRequest` body: register a CV the user already PUT to storage
@@ -17,8 +17,6 @@ export interface UploadCvRequest {
     targetRole?: string
     /** Optional language/locale for this CV (free-text, e.g. "en" / "vi"). */
     language?: string
-    /** AI lane to score on (auto/premium); validated against entitlement at score time. */
-    mode?: AiMode
     /** Concrete model the user picked for scoring; undefined = balancer default (Auto). */
     selectedModel?: string
     /** Provider serving {@link UploadCvRequest.selectedModel}. */

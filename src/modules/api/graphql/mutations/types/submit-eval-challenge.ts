@@ -1,4 +1,4 @@
-import type { AiMode, ModelProvider } from "../../queries/query-my-ai-settings"
+import type { ModelProvider } from "../../queries/query-my-ai-settings"
 import type { GraphQLResponse } from "../../types"
 import type { AiLabRunParamsInput } from "./run-playground-prompt"
 
@@ -14,14 +14,10 @@ export interface SubmitEvalChallengeInput {
     userTemplate: string
     /** Optional generation params. */
     params?: AiLabRunParamsInput
-    /** AI lane to grade on (auto/premium/byok). */
-    mode?: AiMode
     /** Concrete model the user picked; null = balancer default. */
     selectedModel?: string
     /** Provider serving the selected model. */
     selectedModelProvider?: ModelProvider
-    /** One-shot BYOK key for this run only (not saved to profile). */
-    byokApiKey?: string
 }
 
 /** Payload inside `submitEvalChallenge.data` after the standard API wrapper. */

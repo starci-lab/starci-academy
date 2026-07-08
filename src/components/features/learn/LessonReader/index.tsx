@@ -81,6 +81,7 @@ import { useQueryActiveAdvertisementSwr } from "@/hooks/swr/api/graphql/queries/
 import { useQueryAiLabPlaygroundSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiLabPlaygroundSwr"
 import { AdvertisementPlacement } from "@/modules/api/graphql/queries/types/active-advertisement"
 import { ContentTab, setContentTab } from "@/redux/slices/tabs"
+import { UpNextCard } from "@/components/blocks/learn/UpNextCard"
 import { setContentSelectedProgrammingLang } from "@/redux/slices/content"
 
 export type LessonReaderProps = WithClassNames<undefined>
@@ -170,7 +171,7 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
             if (isSandbox) {
                 items.push({
                     key: ContentTab.Sandbox,
-                    label: "Sandbox",
+                    label: t("content.tabs.sandbox"),
                     component: <SandboxBody />,
                 })
             }
@@ -373,6 +374,26 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
                     full-width tabs. */}
                 {!isLocked && !isFullWidthTab ? (
                     <div className="flex flex-col gap-6 pb-6">
+                        {/* completion handoff: after reading, the natural next rung is
+                            this lesson's own challenges. MOBILE-ONLY (`lg:hidden`): on
+                            desktop the right rail's "Luyện tập bài này" already surfaces
+                            these challenges with a CTA, so a 2nd accent CTA here would be
+                            a duplicate / accent-flood. Fired only on the Content tab when
+                            the lesson has challenges. No `showCheck`/"đã đọc xong" claim —
+                            we don't verify read-completion here. */}
+                        {selectedTabKey === ContentTab.Content
+                            && (content?.challenges?.length ?? 0) > 0 ? (
+                                <UpNextCard
+                                    className="mx-auto w-full max-w-3xl lg:hidden"
+                                    eyebrow={t("content.upNext.eyebrow")}
+                                    title={t("content.upNext.challengesTitle", {
+                                        count: content?.challenges?.length ?? 0,
+                                    })}
+                                    description={t("content.upNext.challengesDesc")}
+                                    ctaLabel={t("content.upNext.challengesCta")}
+                                    onPress={() => onTabChange(ContentTab.Challenges)}
+                                />
+                            ) : null}
                         <ContentDiscussion className="mx-auto w-full max-w-3xl" />
                         <LessonPager className="mx-auto w-full max-w-3xl" />
                         {hasE2e ? (

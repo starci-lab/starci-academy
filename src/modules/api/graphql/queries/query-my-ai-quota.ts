@@ -10,7 +10,6 @@ const query1 = gql`
       message
       error
       data {
-        mode
         tier
         credit {
           limit5h

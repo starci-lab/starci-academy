@@ -27,6 +27,7 @@ import { COURSE_MODULE_SLOT_NODE_TYPE } from "../moduleExpansion"
 import { COURSE_ROOT_NODE_TYPE, CourseRootNode } from "../RootNode"
 import { MindMapFullscreenButton } from "../MindMapFullscreenButton"
 import { MindMapContinueButton } from "../MindMapContinueButton"
+import { MindMapBackButton } from "../MindMapBackButton"
 import { MindMapLegend } from "../MindMapLegend"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryMyCourseOutlineSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCourseOutlineSwr"
@@ -184,6 +185,7 @@ export const Canvas = () => {
                         <FrameCornersIcon />
                     </ControlButton>
                 </Controls>
+                <MindMapBackButton />
                 <MindMapFullscreenButton targetRef={containerRef} />
                 <MindMapContinueButton resumeHref={resumeHref} allContentDone={allContentDone} />
                 {outline ? <MindMapLegend /> : null}

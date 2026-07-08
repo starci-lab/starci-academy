@@ -48,19 +48,19 @@ export interface FlashcardDeckListProps extends WithClassNames<undefined> {
     /** CTA label on each deck card. Defaults to the study label. */
     ctaLabel?: string
     /** Show the per-viewer spaced-repetition chrome (due chip + mastery meter).
-     * The interview tab passes `false` — SR state is irrelevant when picking a
+     * The quiz tab passes `false` — SR state is irrelevant when picking a
      * topic to drill aloud. Defaults to `true`. */
     showProgress?: boolean
 }
 
 /**
  * Lists the flashcard decks owned by the active course as a topic picker, shared
- * by both the study and interview tabs. Renders the decks either as a roomy card
+ * by both the study and quiz tabs. Renders the decks either as a roomy card
  * GRID (default — keeps the topic description) or a compact LINE list (one row
  * per deck), toggled by a view switch and persisted across sessions. Each deck
  * shows its difficulty + card count and (in study mode) the viewer's due chip +
  * a thin mastery bar; the CTA label and SR chrome are caller-controlled so the
- * same list drives "Study" and "Interview". Reads the owning course id from the
+ * same list drives "Study" and "Quiz". Reads the owning course id from the
  * course Redux slice; data states go through {@link AsyncContent}.
  * @param props - {@link FlashcardDeckListProps}
  */

@@ -8,7 +8,7 @@ import { create } from "zustand"
  * canonical type — both import it from the shared store. "challenges" surfaces
  * graded-challenge proof (repo submissions); "skills" holds coding-practice stats.
  */
-export type ProfileTab = "overview" | "challenges" | "projects" | "skills" | "activity"
+export type ProfileTab = "overview" | "challenges" | "projects" | "skills" | "cv" | "activity"
 
 /**
  * Zustand store for the public-profile tab — SHARED so the Tabs strip and the

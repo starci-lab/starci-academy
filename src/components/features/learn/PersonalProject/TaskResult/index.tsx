@@ -10,14 +10,14 @@ import {
     Typography,
     cn,
 } from "@heroui/react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import {
     usePathname,
     useRouter,
     useSearchParams,
 } from "next/navigation"
+import { pathConfig } from "@/resources/path"
 import {
-    ArrowLeftIcon,
     ArrowSquareOutIcon,
     InfoIcon,
     LightbulbIcon,
@@ -27,7 +27,9 @@ import {
 import { dayjs, getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { UpNextCard } from "@/components/blocks/learn/UpNextCard"
 import { ModelByline, VerdictIcon } from "@/components/blocks/grading/GradingByline"
+import { BackLink } from "@/components/blocks/navigation/BackLink"
 import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
@@ -36,6 +38,7 @@ import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { useQueryUserPersonalTaskAttemptsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserPersonalTaskAttemptsSwr"
 import { useQueryUserPersonalTaskAttemptFeedbacksSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserPersonalTaskAttemptFeedbacksSwr"
 import { useQueryMilestoneTaskSwr } from "@/hooks/swr/api/graphql/queries/useQueryMilestoneTaskSwr"
+import { useQueryMilestoneTaskProgressSwr } from "@/hooks/swr/api/graphql/queries/useQueryMilestoneTaskProgressSwr"
 import { useQueryAiModelsSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiModelsSwr"
 import { usePersonalProjectGithubStore } from "@/hooks/zustand/personalProjectGithub/store"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
@@ -142,11 +145,19 @@ export const PersonalProjectTaskResult = ({
     className,
 }: PersonalProjectTaskResultProps) => {
     const t = useTranslations()
+    const locale = useLocale()
     const router = useRouter()
     const pathname = usePathname()
     const searchParams = useSearchParams()
     const dispatch = useAppDispatch()
     const [historyOpen, setHistoryOpen] = useState(false)
+    // completion handoff (capstone track): after passing this task, hand off to the
+    // NEXT unlocked milestone task. `currentTask` advances to the next task once this
+    // one passes, so we show it only when it's a DIFFERENT task from the one just done.
+    const courseDisplayId = useAppSelector((state) => state.course.displayId)
+    const selectedTaskId = useAppSelector((state) => state.milestone.selectedTaskId)
+    const milestoneProgressSwr = useQueryMilestoneTaskProgressSwr()
+    const nextTaskId = milestoneProgressSwr.data?.milestoneTaskProgress?.data?.currentTask?.id ?? null
 
     const attemptParam = searchParams.get("attempt")
 
@@ -224,13 +235,10 @@ export const PersonalProjectTaskResult = ({
         <div className={cn("mx-auto flex w-full max-w-5xl flex-col gap-10", className)}>
             <PageHeader
                 breadcrumb={(
-                    <Link
+                    <BackLink
+                        label={t("personalProjectResult.backToTask")}
                         onPress={() => router.push(taskHref)}
-                        className="flex w-fit cursor-pointer items-center gap-2 text-sm text-muted"
-                    >
-                        <ArrowLeftIcon aria-hidden focusable="false" className="size-5" />
-                        {t("personalProjectResult.backToTask")}
-                    </Link>
+                    />
                 )}
                 title={selectedTaskDetail?.title ?? t("personalProjectResult.title")}
                 description={selectedTaskDetail?.description || undefined}
@@ -341,8 +349,13 @@ export const PersonalProjectTaskResult = ({
                             </div>
                         </LabeledCard>
 
-                        {/* findings — a labeled accordion card (each finding expands) */}
-                        <LabeledCard label={t("personalProjectResult.feedbackLabel")} frameless>
+                        {/* findings — a labeled accordion card (each finding expands). frameless
+                            ONLY once the accordion self-frames; loading/empty/erroring have no
+                            bounded surface of their own, so LabeledCard's Card must frame them. */}
+                        <LabeledCard
+                            label={t("personalProjectResult.feedbackLabel")}
+                            frameless={!feedbacksLoading && !(!feedbacksSwr.data && feedbacksSwr.error) && feedbacks.length > 0}
+                        >
                             <AsyncContent
                                 isLoading={feedbacksLoading}
                                 skeleton={<Skeleton className="h-40 w-full rounded-2xl" />}
@@ -373,6 +386,19 @@ export const PersonalProjectTaskResult = ({
                             </AsyncContent>
                         </LabeledCard>
                     </div>
+                ) : null}
+                {/* capstone-track handoff: passed → next milestone task */}
+                {passing && nextTaskId && nextTaskId !== selectedTaskId && courseDisplayId ? (
+                    <UpNextCard
+                        showCheck
+                        eyebrow={t("personalProjectResult.upNextEyebrow")}
+                        title={t("personalProjectResult.nextTaskTitle")}
+                        description={t("personalProjectResult.nextTaskDesc")}
+                        ctaLabel={t("personalProjectResult.nextTaskCta")}
+                        onPress={() => router.push(
+                            pathConfig().locale(locale).course(courseDisplayId).learn().personalProject(nextTaskId).build(),
+                        )}
+                    />
                 ) : null}
             </div>
 

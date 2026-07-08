@@ -5,6 +5,7 @@ import { Button, Typography, cn } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useSearchParams } from "next/navigation"
 import { LearnBreadcrumb } from "../shared/LearnBreadcrumb"
+import { TrialEnrollHook } from "../shared/TrialEnrollHook"
 import { LeaderboardTable } from "./LeaderboardTable"
 import { LeaderboardPodium } from "./LeaderboardPodium"
 import { LeaderboardChampion } from "./LeaderboardChampion"
@@ -76,6 +77,9 @@ export const Leaderboard = ({ className }: LeaderboardProps) => {
                 title={t("leaderboard.title")}
                 description={t("leaderboard.subtitle")}
             />
+
+            {/* ambient trial → enroll hook (self-hides for paid learners) */}
+            <TrialEnrollHook />
 
             <div className="flex flex-col gap-6">
                 {/* mobile category selector (the desktop rail lives in the shell's left slot) */}

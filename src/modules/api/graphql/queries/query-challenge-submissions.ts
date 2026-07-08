@@ -33,7 +33,6 @@ const query1 = gql`
           description
           userSubmission {
             submissionUrl
-            selectedMode
             selectedModel
             selectedModelProvider
             selectedLang

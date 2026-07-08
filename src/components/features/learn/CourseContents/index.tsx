@@ -2,11 +2,13 @@
 
 import React, {
     useCallback,
+    useEffect,
     useMemo,
 } from "react"
 import {
     Button,
     Typography,
+    toast,
 } from "@heroui/react"
 import {
     useLocale,
@@ -36,14 +38,15 @@ import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 import {
-    resolveResumeHref,
     toDifficulty,
 } from "./map"
 import {
     CourseContentsSkeleton,
 } from "./CourseContentsSkeleton"
+import { LearnNudges } from "./LearnNudges"
+import { TrialConversionStrip } from "./TrialConversionStrip"
+import { useCourseResume } from "../shared/useCourseResume"
 import { useAppSelector } from "@/redux/hooks"
-import { useQueryMyCourseOutlineSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCourseOutlineSwr"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { DifficultyChip } from "@/components/blocks/chips/DifficultyChip"
 import { HighlightChip } from "@/components/blocks/chips/HighlightChip"
@@ -72,74 +75,31 @@ export const CourseContents = ({ className }: CourseContentsProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
-    const courseId = useAppSelector((state) => state.course.id)
     const displayId = useAppSelector((state) => state.course.displayId)
     const courseTitle = useAppSelector((state) => state.course.entity?.title)
     const courseDescription = useAppSelector((state) => state.course.entity?.description)
     const enrollmentCount = useAppSelector((state) => state.course.entity?.enrollmentCount) ?? 0
+    const courseEntityId = useAppSelector((state) => state.course.entity?.id)
+    // trial = logged-in learner who has NOT purchased; `enrollKnown` gates until the
+    // status query settles so the conversion strip never flashes for a paid learner.
+    const enrolled = useAppSelector((state) => state.user.enrolled)
+    const enrollKnown = useAppSelector((state) => state.user.enrollKnown)
 
     // catalog meta (chương · giờ học · học viên) — derived client-side from the loaded
     // course tree, identity facts the progress stat line below does NOT carry.
     const totals = useCourseTotals()
     const readingHours = Math.max(1, Math.round(totals.totalMinutes / 60))
 
-    const outlineSwr = useQueryMyCourseOutlineSwr(courseId ?? null)
-    const outline = outlineSwr.data
-
-    /**
-     * The pointer the "Tiếp tục học" action resumes. CONTENT-FIRST: the next unread
-     * lesson / uncompleted challenge (`nextContentTask`), so the content home never
-     * sends a learner with unread lessons into the capstone. Only once all content is
-     * done (`nextContentTask` null) does it fall back to the capstone task — the one
-     * moment the personal project is the natural next step.
-     */
-    const resumePointer = useMemo(
-        () => outline?.nextContentTask ?? outline?.currentTask ?? null,
-        [outline],
-    )
-
-    /** Whether the resume target is the capstone (all content done) rather than content. */
-    const isCapstoneResume = resumePointer?.kind === "milestoneTask"
-
-    /** Resume href for the active pointer (null when nothing is resolvable). */
-    const resumeHref = useMemo(
-        () => (outline && resumePointer
-            ? resolveResumeHref(resumePointer, outline.modules, locale, displayId)
-            : null),
-        [outline, resumePointer, locale, displayId],
-    )
-
-    /** Title of the resume target (walk the tree by id) for the continue line. */
-    const resumeTitle = useMemo(() => {
-        if (!outline || !resumePointer) {
-            return null
-        }
-        if (resumePointer.kind === "milestoneTask") {
-            for (const milestone of outline.milestones) {
-                const task = milestone.tasks.find((entry) => entry.id === resumePointer.id)
-                if (task) {
-                    return task.title
-                }
-            }
-            return null
-        }
-        for (const module of outline.modules) {
-            if (resumePointer.kind === "lesson") {
-                const lesson = module.lessons.find((entry) => entry.id === resumePointer.id)
-                if (lesson) {
-                    return lesson.title
-                }
-                continue
-            }
-            for (const lesson of module.lessons) {
-                const challenge = lesson.challenges.find((entry) => entry.id === resumePointer.id)
-                if (challenge) {
-                    return challenge.title
-                }
-            }
-        }
-        return null
-    }, [outline, resumePointer])
+    // resume pointer + progress from the single shared source (also feeds the
+    // sidebar resume rail; SWR dedupes the underlying outline fetch)
+    const {
+        outlineSwr,
+        outline,
+        resumePointer,
+        resumeHref,
+        resumeTitle,
+        isCapstoneResume,
+    } = useCourseResume()
 
     /**
      * The module the learner is currently in: the one owning the resume pointer, else
@@ -161,6 +121,45 @@ export const CourseContents = ({ className }: CourseContentsProps) => {
         }
         return outline.modules[0]
     }, [outline])
+
+    // goal-gradient signal for the trial strip: FREE lessons the viewer hasn't read
+    // yet ("còn N bài đọc thử") — a near-a-milestone framing that beats "read X/Y".
+    const freeLessonsRemaining = useMemo(() => {
+        if (!outline) {
+            return 0
+        }
+        return outline.modules.reduce(
+            (sum, module) => sum + module.lessons.filter(
+                (lesson) => !lesson.isPremium && !lesson.isRead,
+            ).length,
+            0,
+        )
+    }, [outline])
+
+    // earned-moment (#9): once a TRIAL learner has proven serious engagement (read a
+    // few free lessons or passed a challenge), fire ONE celebratory enroll nudge —
+    // localStorage-gated per course so it never nags on return visits.
+    useEffect(() => {
+        if (!enrollKnown || enrolled || !courseEntityId || !outline) {
+            return
+        }
+        if (typeof window === "undefined") {
+            return
+        }
+        const key = `starci.trialEarned.${courseEntityId}`
+        if (window.localStorage.getItem(key)) {
+            return
+        }
+        const provenSerious = outline.progress.lessonsRead >= 3
+            || outline.progress.challengesCompleted >= 1
+        if (!provenSerious) {
+            return
+        }
+        window.localStorage.setItem(key, "1")
+        toast.success(t("courseContents.trial.earnedTitle"), {
+            description: t("courseContents.trial.earnedDesc"),
+        })
+    }, [enrollKnown, enrolled, courseEntityId, outline, t])
 
     /** The lesson to highlight in the path: the resume lesson, or the resume challenge's owner. */
     const activeLessonId = useMemo(() => {
@@ -230,18 +229,18 @@ export const CourseContents = ({ className }: CourseContentsProps) => {
                             meta={totals.moduleCount > 0 ? (
                                 <div className="flex flex-wrap items-center gap-2">
                                     <HighlightChip
-                                        icon={<StackIcon className="size-3" />}
+                                        icon={<StackIcon className="size-4" />}
                                         value={totals.moduleCount}
                                         label={t("courseContents.metaModulesLabel")}
                                     />
                                     <HighlightChip
-                                        icon={<ClockIcon className="size-3" />}
+                                        icon={<ClockIcon className="size-4" />}
                                         value={`~${readingHours}`}
                                         label={t("courseContents.metaHoursLabel")}
                                     />
                                     {enrollmentCount > 0 ? (
                                         <HighlightChip
-                                            icon={<UsersIcon className="size-3" />}
+                                            icon={<UsersIcon className="size-4" />}
                                             value={numeral(enrollmentCount).format("0,0")}
                                             label={t("courseContents.metaLearnersLabel")}
                                         />
@@ -255,6 +254,15 @@ export const CourseContents = ({ className }: CourseContentsProps) => {
                             {/* non-blocking warning: paid learner not yet in the course GitHub team
                                 (self-hides for trial / when already in team) */}
                             <GithubTeamGate />
+                            {/* trial → enroll conversion strip: only for a not-yet-enrolled
+                                learner (loss-aversion progress + real pricing-phase scarcity +
+                                outcome-framed enroll CTA). Self-hidden for paid learners. */}
+                            {enrollKnown && !enrolled && courseEntityId ? (
+                                <TrialConversionStrip
+                                    courseId={courseEntityId}
+                                    freeLessonsRemaining={freeLessonsRemaining}
+                                />
+                            ) : null}
                             {/* continue + progress — flat (no card frame), the honest unified meter */}
                             <div className="flex flex-col gap-3">
                                 <div className="flex items-start justify-between gap-3">
@@ -305,6 +313,10 @@ export const CourseContents = ({ className }: CourseContentsProps) => {
                                     ].join(" · ")}
                                 </Typography>
                             </div>
+
+                            {/* contextual nudges — aids that orbit the spine (due flashcards,
+                                interview, rank). Each self-hides when its state is 0. */}
+                            <LearnNudges />
 
                             {/* region B — keep-going path: the current module's lessons. The full
                             module → lesson tree lives in the left content-map rail, so the body

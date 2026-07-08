@@ -49,12 +49,17 @@ export const CourseCurriculum = ({ className }: CourseCurriculumProps) => {
         return null
     }
 
+    // frameless ONLY once the accordion itself self-frames (surface variant); while
+    // loading/erroring there is no bounded surface, so LabeledCard's own Card must
+    // frame it — otherwise the skeleton/error renders bare on the page background.
+    const hasModules = !isLoading && !error && modules.length > 0
+
     return (
         <LabeledCard
             className={className}
             label={t("courseLanding.curriculum")}
             icon={<ListChecksIcon aria-hidden focusable="false" className="size-5" />}
-            frameless
+            frameless={hasModules}
         >
             <AsyncContent
                 isLoading={isLoading && modules.length === 0}

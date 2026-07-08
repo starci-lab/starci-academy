@@ -184,7 +184,9 @@ export const ChallengeCourseRow = ({
                                                 aria-label={t("publicProfile.openRepo", { title: challenge.title })}
                                             >
                                                 <LinkIcon aria-hidden focusable="false" className="size-5" />
-                                                <Typography type="body-xs">
+                                                {/* Typography bakes its own text-foreground and ignores the
+                                                    Link's text-accent — explicit color keeps icon+label matching. */}
+                                                <Typography type="body-xs" className="text-accent">
                                                     {t("publicProfile.repoLink")}
                                                 </Typography>
                                             </Link>

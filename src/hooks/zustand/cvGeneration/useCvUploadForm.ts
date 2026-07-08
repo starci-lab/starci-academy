@@ -13,10 +13,13 @@ import { useMutateUploadCvSwr } from "@/hooks/swr/api/graphql/mutations/useMutat
 import { useGraphQLWithToast, useRestWithToast } from "@/modules/toast/hooks"
 import type { GradeModelSelection } from "@/components/blocks/grading/GradeModelDropdown"
 
-/** CV file validation schema: required, must be PDF, ≤ 10MB. */
+/** Mimetypes the upload form accepts — matches the Dropzone + BE `extractCvText` (pdf-parse / UTF-8 fallback). */
+const ACCEPTED_CV_MIME_TYPES: ReadonlyArray<string> = ["application/pdf", "text/plain"]
+
+/** CV file validation schema: required, must be PDF or plain text, ≤ 10MB. */
 const cvFileSchema = z
     .custom<File | null>((value) => value instanceof File, "cv.upload.errors.fileRequired")
-    .refine((file) => file instanceof File && file.type === "application/pdf", "cv.upload.errors.fileTypeInvalid")
+    .refine((file) => file instanceof File && ACCEPTED_CV_MIME_TYPES.includes(file.type), "cv.upload.errors.fileTypeInvalid")
     .refine((file) => file instanceof File && file.size <= 10 * 1024 * 1024, "cv.upload.errors.fileSizeInvalid")
 
 /**
@@ -57,7 +60,7 @@ export const useCvUploadForm = () => {
     )
 
     const submit = useCallback(
-        async (label?: string, selection?: GradeModelSelection) => {
+        async (label?: string, selection?: GradeModelSelection, courseId?: string) => {
             if (!cvFile || error) {
                 return
             }
@@ -93,9 +96,9 @@ export const useCvUploadForm = () => {
                         const result = await triggerUploadCv({
                             cdnKey: presignPayload.cdnKey,
                             label: label?.trim() || undefined,
-                            mode: selection?.mode,
                             selectedModel: selection?.model ?? undefined,
                             selectedModelProvider: selection?.provider ?? undefined,
+                            courseId,
                         })
                         const env = result?.data?.uploadCv
                         if (!env) {

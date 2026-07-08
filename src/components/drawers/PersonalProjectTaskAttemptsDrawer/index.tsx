@@ -35,8 +35,8 @@ type AttemptRow = {
 export type PersonalProjectTaskAttemptsDrawerProps = WithClassNames<undefined>
 
 /**
- * Drawer listing AI review attempts for the selected personal-project milestone task.
- * Mirrors {@link UserCvSubmissionAttemptsDrawer} layout without server pagination.
+ * Drawer listing AI review attempts for the selected personal-project milestone task,
+ * without server pagination.
  */
 export const PersonalProjectTaskAttemptsDrawer = (props: PersonalProjectTaskAttemptsDrawerProps = {}) => {
     const { className } = props

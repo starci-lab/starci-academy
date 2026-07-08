@@ -4,6 +4,7 @@ import React from "react"
 import { ScrollShadow, Typography, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { ARCHITECTURE_COMPONENTS } from "../../constants"
+import { ARCHITECTURE_MODULES } from "../../modules"
 import type { HealthByName } from "../../hooks/useSystemHealthPoll"
 import { getArchitectureStatusVisual, resolveArchitectureStatus } from "../../statusVisual"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -51,6 +52,35 @@ const NodeChip = ({
     )
 }
 
+/** One module chip: icon + name, NO status dot (modules have no health probe). */
+const ModuleChip = ({
+    id,
+    icon: Icon,
+    selected,
+    onSelect,
+}: {
+    id: string
+    icon: React.ComponentType<{ className?: string; "aria-hidden"?: boolean }>
+    selected: boolean
+    onSelect: () => void
+}) => {
+    const t = useTranslations("architecture")
+    return (
+        <button
+            type="button"
+            aria-pressed={selected}
+            onClick={onSelect}
+            className={cn(
+                "flex shrink-0 cursor-pointer items-center gap-2 rounded-full border px-3 py-1.5 text-sm transition-colors",
+                selected ? "border-accent bg-accent/10 text-accent" : "border-default text-muted hover:bg-default",
+            )}
+        >
+            <Icon aria-hidden className="size-4 shrink-0" />
+            <Typography type="body-sm" className={selected ? "text-accent" : undefined}>{t(`module.${id}.name`)}</Typography>
+        </button>
+    )
+}
+
 /**
  * Mobile counterpart of {@link import("..").ArchitectureRail}: below `lg` the
  * docs-style rail hides, so the component list folds into two horizontally
@@ -93,6 +123,20 @@ export const ArchitectureMobileNav = ({ healthByName, selectedId, onSelect, clas
                             healthByName={healthByName}
                             selected={selectedId === component.name}
                             onSelect={() => onSelect(component.name)}
+                        />
+                    ))}
+                </ScrollShadow>
+            </div>
+            <div className="flex flex-col gap-1.5">
+                <Typography type="body-xs" color="muted">{t("rail.moduleGroup", { count: ARCHITECTURE_MODULES.length })}</Typography>
+                <ScrollShadow orientation="horizontal" hideScrollBar className="flex gap-2 overflow-x-auto pb-1">
+                    {ARCHITECTURE_MODULES.map((module) => (
+                        <ModuleChip
+                            key={module.id}
+                            id={module.id}
+                            icon={module.icon}
+                            selected={selectedId === module.id}
+                            onSelect={() => onSelect(module.id)}
                         />
                     ))}
                 </ScrollShadow>

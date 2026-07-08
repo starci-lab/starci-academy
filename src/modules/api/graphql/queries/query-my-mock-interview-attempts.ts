@@ -4,8 +4,8 @@ import { DocumentNode, gql } from "@apollo/client"
 import type { QueryMyMockInterviewAttemptsResponse } from "./types/my-mock-interview-attempts"
 
 const query1 = gql`
-  query MyMockInterviewAttempts($courseId: ID!, $limit: Int, $offset: Int) {
-    myMockInterviewAttempts(courseId: $courseId, limit: $limit, offset: $offset) {
+  query MyMockInterviewAttempts($courseId: ID!, $limit: Int, $offset: Int, $mode: String) {
+    myMockInterviewAttempts(courseId: $courseId, limit: $limit, offset: $offset, mode: $mode) {
       success
       message
       error
@@ -17,6 +17,7 @@ const query1 = gql`
           promptId
           promptTitle
           level
+          mode
           overallScore
           verdict
           phaseScores {
@@ -31,6 +32,7 @@ const query1 = gql`
           strengths
           gaps
           followUpQuestion
+          matchedContentIds
           createdAt
         }
       }
@@ -54,6 +56,8 @@ export interface MyMockInterviewAttemptsRequest {
     limit?: number
     /** Page offset (attempts to skip); server defaults to 0. */
     offset?: number
+    /** Optional mode filter ("qna" | "design"); omitted = every mode. */
+    mode?: string
 }
 
 /**
@@ -81,6 +85,7 @@ export const queryMyMockInterviewAttempts = async ({
             courseId: request?.courseId,
             limit: request?.limit,
             offset: request?.offset,
+            mode: request?.mode,
         },
     })
 }

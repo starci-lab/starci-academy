@@ -154,8 +154,21 @@ export const pathConfig = () => {
                 const build = () => {
                     return cvPath
                 }
+                // `/profile/cv` is the CV GALLERY (list of the user's CVs). Editing
+                // one is a DEDICATED route `/profile/cv/<id>` (the roomy block
+                // editor), not a query-param mode — the gallery just renders + opens.
+                const document = (id: string) => {
+                    const documentPath = `${cvPath}/${id}`
+                    const documentBuild = () => {
+                        return documentPath
+                    }
+                    return {
+                        build: documentBuild,
+                    }
+                }
                 return {
                     build,
+                    document,
                 }
             }
             const appearance = () => {
@@ -307,6 +320,15 @@ export const pathConfig = () => {
                         build,
                     }
                 }
+                const qa = () => {
+                    const qaPath = `${learnPath}/qa`
+                    const build = () => {
+                        return qaPath
+                    }
+                    return {
+                        build,
+                    }
+                }
                 const headhuntings = () => {
                     const headhuntingsPath = `${learnPath}/headhuntings`
                     const build = () => {
@@ -321,8 +343,37 @@ export const pathConfig = () => {
                     const build = () => {
                         return flashcardsPath
                     }
+                    // the dedicated, resumable URL for an in-progress "Hỏi nhanh" quiz run —
+                    // mirrors `mockInterview().interview(sessionId)`: the setup screen's resume
+                    // card deep-links here so a session started earlier (24h TTL) rehydrates
+                    // straight into the active phase instead of starting fresh.
+                    const quiz = (sessionId: string) => {
+                        const quizPath = `${flashcardsPath}/quiz/sessions/${sessionId}`
+                        const build = () => {
+                            return quizPath
+                        }
+                        return {
+                            build,
+                        }
+                    }
+                    // resumable "Học thẻ" (SM-2 review) URL: the deck being reviewed rides
+                    // as a route segment (not `?deck=`) so it's traceable/shareable, mirroring
+                    // `quiz(sessionId)` above (thầy 2026-07-09: "trên url cũng không có cái
+                    // deck của phần ôn"). `useFlashcardNav` parses `deckId` back out of this
+                    // same shape — keep the two in sync if this ever changes.
+                    const review = (deckId: string) => {
+                        const reviewPath = `${flashcardsPath}/review/decks/${deckId}`
+                        const build = () => {
+                            return reviewPath
+                        }
+                        return {
+                            build,
+                        }
+                    }
                     return {
                         build,
+                        quiz,
+                        review,
                     }
                 }
                 const mockInterview = () => {
@@ -330,8 +381,22 @@ export const pathConfig = () => {
                     const build = () => {
                         return mockInterviewPath
                     }
+                    // the dedicated, resumable URL for a LIVE session (full-bleed work
+                    // surface) — `startMockInterviewSession` navigates here right after
+                    // drawing a session, and it's how a resumable in-progress session (24h
+                    // TTL) is deep-linked back into from the setup screen's resume card.
+                    const interview = (sessionId: string) => {
+                        const interviewPath = `${mockInterviewPath}/interview/${sessionId}`
+                        const build = () => {
+                            return interviewPath
+                        }
+                        return {
+                            build,
+                        }
+                    }
                     return {
                         build,
+                        interview,
                     }
                 }
                 const practice = () => {
@@ -394,6 +459,7 @@ export const pathConfig = () => {
                     cv,
                     personalProject,
                     leaderboard,
+                    qa,
                     headhuntings,
                     flashcards,
                     mockInterview,

@@ -1,0 +1,321 @@
+"use client"
+
+import React, {
+    useCallback,
+    useState,
+} from "react"
+import type { ReactNode } from "react"
+import {
+    Button,
+    Chip,
+    Skeleton,
+    cn,
+    toast,
+} from "@heroui/react"
+import { useTranslations } from "next-intl"
+import {
+    CheckCircleIcon,
+    CopyIcon,
+    GiftIcon,
+    LightningIcon,
+    SnowflakeIcon,
+    TShirtIcon,
+    TicketIcon,
+} from "@phosphor-icons/react"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { Callout } from "@/components/blocks/feedback/Callout"
+import { IconTile } from "@/components/blocks/identity/IconTile"
+import { useMutateRedeemRewardSwr } from "@/hooks/swr/api/graphql/mutations/useMutateRedeemRewardSwr"
+import { useQueryMyRewardWalletSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyRewardWalletSwr"
+import { useQueryMyVouchersSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyVouchersSwr"
+import { useQueryRewardsSwr } from "@/hooks/swr/api/graphql/queries/useQueryRewardsSwr"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
+import type { QueryRewardData } from "@/modules/api/graphql/queries/types/rewards"
+import type { RedeemRewardAiCreditGrant } from "@/modules/api/graphql/mutations/types/redeem-reward"
+import type { WithClassNames } from "@/modules/types/base/class-name"
+
+/** Icon per catalog item, keyed by its stable reward key (falls back to a generic gift). */
+const REWARD_ICON: Record<string, ReactNode> = {
+    streakFreeze: <SnowflakeIcon aria-hidden focusable="false" className="size-5 text-accent" />,
+    aiCreditBoost: <LightningIcon aria-hidden focusable="false" className="size-5 text-accent" />,
+    voucher10: <TicketIcon aria-hidden focusable="false" className="size-5 text-accent" />,
+    tshirt: <TShirtIcon aria-hidden focusable="false" className="size-5 text-accent" />,
+}
+
+/** One redeem effect's takeaway shown right after redeeming (voucher code / AI-credit bump). */
+type JustRedeemed =
+    | { kind: "voucher", code: string }
+    | { kind: "aiCredit", grant: RedeemRewardAiCreditGrant }
+
+/** Shipping form fields (physical rewards only). */
+interface ShippingForm {
+    recipientName: string
+    phone: string
+    address: string
+}
+
+const EMPTY_SHIPPING: ShippingForm = {
+    recipientName: "",
+    phone: "",
+    address: "",
+}
+
+/** Props for {@link RewardCatalog}. */
+export type RewardCatalogProps = WithClassNames<undefined>
+
+/**
+ * The Coin shop's "Cửa hàng" tab: the redeemable catalog grid. Self-fetches the
+ * catalog + the viewer's balance (the wallet SWR key is shared with the header
+ * and the "Ví của tôi" tab, so a redeem here refreshes both instantly). Physical
+ * rewards expand an inline shipping form before redeeming; a `voucher`/`aiCredit`
+ * redemption surfaces its takeaway (code to copy / bonus credit granted) in a
+ * dismissible callout above the grid.
+ *
+ * @param props - optional className for the root element.
+ */
+export const RewardCatalog = ({ className }: RewardCatalogProps) => {
+    const t = useTranslations()
+    const rewardsSwr = useQueryRewardsSwr()
+    const walletSwr = useQueryMyRewardWalletSwr()
+    const vouchersSwr = useQueryMyVouchersSwr()
+    const { trigger: triggerRedeem } = useMutateRedeemRewardSwr()
+    const runGraphQL = useGraphQLWithToast()
+
+    /** The reward key currently being redeemed (single in-flight redeem). */
+    const [redeeming, setRedeeming] = useState<string | null>(null)
+    /** The physical reward whose shipping form is open (null = none). */
+    const [shippingFor, setShippingFor] = useState<string | null>(null)
+    const [ship, setShip] = useState<ShippingForm>(EMPTY_SHIPPING)
+    /** The takeaway of the most recent voucher/aiCredit redemption, if any. */
+    const [justRedeemed, setJustRedeemed] = useState<JustRedeemed | null>(null)
+
+    const balance = walletSwr.data?.balance ?? 0
+
+    const onRedeem = useCallback(
+        async (reward: QueryRewardData, shipping?: ShippingForm) => {
+            setRedeeming(reward.key)
+            try {
+                let redeemed: { voucherCode?: string | null, aiCreditGranted?: RedeemRewardAiCreditGrant | null } | undefined
+                const ok = await runGraphQL(async () => {
+                    const result = await triggerRedeem({
+                        rewardKey: reward.key,
+                        ...shipping,
+                    })
+                    const wrapped = result.data!.redeemReward
+                    redeemed = wrapped.data
+                    return wrapped
+                })
+                if (ok) {
+                    await walletSwr.mutate()
+                    if (reward.kind === "voucher" && redeemed?.voucherCode) {
+                        setJustRedeemed({ kind: "voucher", code: redeemed.voucherCode })
+                        await vouchersSwr.mutate()
+                    } else if (reward.kind === "aiCredit" && redeemed?.aiCreditGranted) {
+                        setJustRedeemed({ kind: "aiCredit", grant: redeemed.aiCreditGranted })
+                    }
+                    // close + reset the shipping form on success
+                    setShippingFor(null)
+                    setShip(EMPTY_SHIPPING)
+                }
+            } finally {
+                setRedeeming(null)
+            }
+        },
+        [
+            triggerRedeem,
+            walletSwr,
+            vouchersSwr,
+            runGraphQL,
+        ],
+    )
+
+    const onCopyCode = useCallback(
+        async (code: string) => {
+            try {
+                await navigator.clipboard.writeText(code)
+                toast.success(t("rewards.myVouchers.copied"))
+            } catch {
+                // clipboard blocked (permissions/http) → no-op, code is still selectable text
+            }
+        },
+        [t],
+    )
+
+    return (
+        <div className={cn("flex flex-col gap-3", className)}>
+            {justRedeemed ? (
+                <Callout
+                    status="accent"
+                    icon={<CheckCircleIcon className="size-5" />}
+                    title={
+                        justRedeemed.kind === "voucher"
+                            ? t("rewards.justRedeemed.voucherTitle")
+                            : t("rewards.justRedeemed.aiCreditTitle")
+                    }
+                    description={
+                        justRedeemed.kind === "voucher" ? (
+                            <span className="flex items-center gap-2">
+                                <span className="font-mono font-medium text-foreground">{justRedeemed.code}</span>
+                                <Button
+                                    variant="tertiary"
+                                    size="sm"
+                                    onPress={() => void onCopyCode(justRedeemed.code)}
+                                >
+                                    <CopyIcon aria-hidden focusable="false" className="size-4" />
+                                    {t("rewards.myVouchers.copy")}
+                                </Button>
+                            </span>
+                        ) : (
+                            t("rewards.justRedeemed.aiCreditDescription", {
+                                amount5h: justRedeemed.grant.amount5h,
+                                amountWeek: justRedeemed.grant.amountWeek,
+                            })
+                        )
+                    }
+                    onClose={() => setJustRedeemed(null)}
+                    closeAriaLabel={t("rewards.justRedeemed.dismiss")}
+                />
+            ) : null}
+
+            <AsyncContent
+                isLoading={!rewardsSwr.data}
+                skeleton={(
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                        {Array.from({ length: 4 }).map((_, index) => (
+                            <div
+                                key={index}
+                                className="flex flex-col gap-3 rounded-3xl bg-surface p-4 shadow-surface"
+                            >
+                                <div className="flex items-center gap-3">
+                                    <Skeleton className="size-12 shrink-0 rounded-xl" />
+                                    <Skeleton className="h-4 w-1/2 rounded-lg" />
+                                </div>
+                                <Skeleton className="h-4 w-full rounded-lg" />
+                                <Skeleton className="h-9 w-24 self-end rounded-lg" />
+                            </div>
+                        ))}
+                    </div>
+                )}
+                error={rewardsSwr.error}
+                errorContent={{
+                    title: t("rewards.catalogError"),
+                    onRetry: () => void rewardsSwr.mutate(),
+                }}
+            >
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                    {(rewardsSwr.data ?? []).map((reward) => {
+                        const affordable = balance >= reward.cost
+                        const isPhysical = reward.kind === "physical"
+                        const formOpen = shippingFor === reward.key
+                        const shipReady = Boolean(
+                            ship.recipientName.trim()
+                            && ship.phone.trim()
+                            && ship.address.trim(),
+                        )
+                        return (
+                            <div
+                                key={reward.key}
+                                className="flex flex-col gap-3 rounded-3xl bg-surface p-4 shadow-surface"
+                            >
+                                <div className="flex items-start gap-3">
+                                    <IconTile
+                                        size="sm"
+                                        tone="accent"
+                                        icon={REWARD_ICON[reward.key] ?? (
+                                            <GiftIcon aria-hidden focusable="false" className="size-5 text-accent" />
+                                        )}
+                                    />
+                                    <div className="flex min-w-0 flex-1 flex-col gap-0">
+                                        <span className="truncate text-sm font-semibold text-foreground">
+                                            {reward.title}
+                                        </span>
+                                        <span className="text-xs text-muted">
+                                            {reward.description}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className="flex items-center justify-between gap-3">
+                                    <Chip color="accent" variant="soft" size="sm">
+                                        <Chip.Label>
+                                            {t("rewards.cost", { count: reward.cost })}
+                                        </Chip.Label>
+                                    </Chip>
+                                    {!formOpen ? (
+                                        <Button
+                                            variant="primary"
+                                            size="sm"
+                                            isDisabled={!affordable || redeeming !== null}
+                                            isPending={redeeming === reward.key}
+                                            onPress={() => {
+                                                if (isPhysical) {
+                                                    setShippingFor(reward.key)
+                                                } else {
+                                                    void onRedeem(reward)
+                                                }
+                                            }}
+                                        >
+                                            {affordable
+                                                ? t("rewards.redeem")
+                                                : t("rewards.cannotAfford")}
+                                        </Button>
+                                    ) : null}
+                                </div>
+
+                                {formOpen ? (
+                                    <div className="flex flex-col gap-2">
+                                        <input
+                                            value={ship.recipientName}
+                                            onChange={(event) => setShip((prev) => ({
+                                                ...prev,
+                                                recipientName: event.target.value,
+                                            }))}
+                                            placeholder={t("rewards.shipName")}
+                                            className="rounded-xl border border-default bg-surface px-3 py-1.5 text-sm text-foreground outline-none focus:border-accent"
+                                        />
+                                        <input
+                                            value={ship.phone}
+                                            onChange={(event) => setShip((prev) => ({
+                                                ...prev,
+                                                phone: event.target.value,
+                                            }))}
+                                            placeholder={t("rewards.shipPhone")}
+                                            className="rounded-xl border border-default bg-surface px-3 py-1.5 text-sm text-foreground outline-none focus:border-accent"
+                                        />
+                                        <input
+                                            value={ship.address}
+                                            onChange={(event) => setShip((prev) => ({
+                                                ...prev,
+                                                address: event.target.value,
+                                            }))}
+                                            placeholder={t("rewards.shipAddress")}
+                                            className="rounded-xl border border-default bg-surface px-3 py-1.5 text-sm text-foreground outline-none focus:border-accent"
+                                        />
+                                        <div className="flex items-center gap-2">
+                                            <Button
+                                                variant="primary"
+                                                size="sm"
+                                                isDisabled={!shipReady || redeeming !== null}
+                                                isPending={redeeming === reward.key}
+                                                onPress={() => void onRedeem(reward, ship)}
+                                            >
+                                                {t("rewards.confirmRedeem")}
+                                            </Button>
+                                            <Button
+                                                variant="tertiary"
+                                                size="sm"
+                                                onPress={() => setShippingFor(null)}
+                                            >
+                                                {t("rewards.cancel")}
+                                            </Button>
+                                        </div>
+                                    </div>
+                                ) : null}
+                            </div>
+                        )
+                    })}
+                </div>
+            </AsyncContent>
+        </div>
+    )
+}

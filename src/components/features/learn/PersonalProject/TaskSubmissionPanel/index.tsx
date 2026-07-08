@@ -70,7 +70,7 @@ export const TaskSubmissionPanel = ({
                         onClick={() => setSettingsOpen(true)}
                         aria-label={t("finalProject.page.submitGithub.settingsTitle")}
                         aria-expanded={isSettingsOpen}
-                        className="group flex cursor-pointer items-center justify-between gap-3 rounded-medium bg-default-100 px-3 py-2 text-left"
+                        className="group flex cursor-pointer items-center justify-between gap-3 rounded-medium bg-default-100 px-3 py-2 text-left outline-none focus-visible:ring-2 focus-visible:ring-accent"
                     >
                         <span className="flex items-center gap-2 text-sm">
                             <GearSixIcon className="size-4 shrink-0" />

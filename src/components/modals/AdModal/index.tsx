@@ -2,10 +2,6 @@
 
 import React from "react"
 import {
-    cn,
-    Modal,
-} from "@heroui/react"
-import {
     useTranslations,
 } from "next-intl"
 import {
@@ -13,6 +9,7 @@ import {
 } from "@/components/features/dashboard/AdBanner"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useAdModalOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { ModalShell } from "@/components/blocks/layout/ModalShell"
 
 /**
  * Interstitial ad modal — shown immediately when a non-enrolled, non-member
@@ -34,22 +31,15 @@ export const AdModal = ({ className }: WithClassNames<undefined>) => {
     }
 
     return (
-        <Modal isOpen={isOpen} onOpenChange={setOpen}>
-            <Modal.Backdrop>
-                <Modal.Container>
-                    <Modal.Dialog className={cn(className)}>
-                        <Modal.CloseTrigger />
-                        <Modal.Header>
-                            <span className="pr-8 text-lg font-semibold text-foreground">
-                                {t("dashboard.adModalTitle")}
-                            </span>
-                        </Modal.Header>
-                        <Modal.Body className="gap-3">
-                            <AdBanner ad={context} />
-                        </Modal.Body>
-                    </Modal.Dialog>
-                </Modal.Container>
-            </Modal.Backdrop>
-        </Modal>
+        <ModalShell
+            isOpen={isOpen}
+            onOpenChange={setOpen}
+            className={className}
+            title={t("dashboard.adModalTitle")}
+            titleClassName="text-foreground"
+            bodyClassName="gap-3"
+        >
+            <AdBanner ad={context} />
+        </ModalShell>
     )
 }

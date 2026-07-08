@@ -63,6 +63,15 @@ export interface ContinueCardProps extends WithClassNames<undefined> {
      * Takes priority over {@link onPress}.
      */
     href?: string
+    /**
+     * Renders `subtitle` in `warning` color instead of the default muted tone —
+     * for when the subtitle carries a REAL time-sensitive fact (e.g. "còn 12
+     * phút" against a server-enforced deadline), not decorative urgency.
+     * Never fabricate a countdown to trigger this — see
+     * `principles/persuasion-psychology` (no fake scarcity/countdown).
+     * Defaults to `false` (current muted look, unchanged for existing callers).
+     */
+    urgent?: boolean
 }
 
 /**
@@ -89,6 +98,7 @@ export const ContinueCard = ({
     ctaLabel,
     onPress,
     href,
+    urgent = false,
     className,
 }: ContinueCardProps) => {
     const interactive = Boolean(onPress || href)
@@ -109,7 +119,10 @@ export const ContinueCard = ({
                         {title}
                     </Typography>
                     {subtitle ? (
-                        <Typography type="body-xs" color="muted" truncate>
+                        // `color` only supports "default"/"muted" (HeroUI Typography has no
+                        // semantic-tone color prop) — `text-warning` via className is the
+                        // same documented exception `ctaLabel`'s `text-accent` already uses.
+                        <Typography type="body-xs" color={urgent ? undefined : "muted"} className={cn(urgent && "text-warning")} truncate>
                             {subtitle}
                         </Typography>
                     ) : null}

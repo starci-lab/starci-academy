@@ -65,10 +65,11 @@ export const CourseCtaButtons = ({ className }: CourseCtaButtonsProps) => {
                     fullWidth
                 />
             ) : null}
-            {/* "Try free" is de-emphasised (quiet tertiary text) — it's a tertiary
-                affordance under the Enroll / Add-to-cart cluster, not a peer CTA. */}
-            <Button variant="tertiary" className="w-full" onPress={onTryLearning}>
+            {/* "Try free" is the ACQUISITION entry for a non-payer — a peer secondary
+                CTA (not buried as quiet tertiary), so the funnel's front door is visible. */}
+            <Button variant="secondary" size="lg" className="w-full" onPress={onTryLearning}>
                 {t("course.tryLearning")}
+                <ArrowRightIcon className="size-5" />
             </Button>
         </div>
     )

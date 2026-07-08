@@ -2,7 +2,7 @@ import type { AbstractEntity } from "./abstract"
 import type { ChallengeSubmissionEntity } from "./challenge-submission"
 import type { SubmissionAttemptEntity } from "./submission-attempt"
 import type { UserEntity } from "./user"
-import type { AiMode, ModelProvider } from "@/modules/api/graphql/queries/query-my-ai-settings"
+import type { ModelProvider } from "@/modules/api/graphql/queries/query-my-ai-settings"
 
 /**
  * Join row user ↔ challenge submission (`user_submissions`).
@@ -19,8 +19,6 @@ export interface UserChallengeSubmissionEntity extends AbstractEntity {
     submissionId: string
     /** The URL submitted by the user. */
     submissionUrl: string
-    /** AI grading lane last chosen for this submission; null until picked. */
-    selectedMode?: AiMode | null
     /** Concrete model name last chosen for this submission; null = balancer default. */
     selectedModel?: string | null
     /** Provider serving the chosen model; null when no model chosen. */

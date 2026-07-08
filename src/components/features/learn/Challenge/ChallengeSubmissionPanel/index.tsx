@@ -253,7 +253,6 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
                 async () => {
                     const response = await syncSubmissionSwr.trigger({
                         id: submissionId,
-                        selectedMode: selection.mode,
                         selectedModel: selection.model ?? undefined,
                         selectedModelProvider: selection.provider ?? undefined,
                     })
@@ -312,7 +311,6 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
                         challengeSubmissionId: submissionId,
                         githubUrl: values.submissions?.[index]?.userSubmission?.submissionUrl?.trim()
                             || undefined,
-                        mode: selection?.mode,
                         selectedModel: selection?.model ?? undefined,
                         selectedModelProvider: selection?.provider ?? undefined,
                         // SCHEMA V2: send the active language tab; backend falls back to the stored one if absent

@@ -19,3 +19,12 @@ export const SM2_GRADES: ReadonlyArray<Sm2GradeConfig> = [
     { grade: 2, labelKey: "flashcard.review.good" },
     { grade: 3, labelKey: "flashcard.review.easy" },
 ]
+
+/** HeroUI Chip color per interview seniority level — shared by `InterviewSession`,
+ *  `FlashcardQuizHistory` and any other surface that badges a quiz's `level`. */
+export const LEVEL_COLOR: Record<string, "success" | "warning" | "danger" | "accent"> = {
+    junior: "success",
+    middle: "warning",
+    senior: "danger",
+    staff: "accent",
+}

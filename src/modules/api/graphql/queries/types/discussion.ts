@@ -69,6 +69,8 @@ export interface CommentNode {
     replyCount: number
     /** Reaction summary for this comment from the viewer's view. */
     reactions: ReactionSummary
+    /** Whether the comment author is the founder (drives the founder badge). */
+    isFounderAuthor: boolean
 }
 
 /** A page of comments plus total count. */
@@ -79,10 +81,16 @@ export interface CommentsPage {
     total: number
 }
 
-/** Request body for the `contentComments` query. */
+/**
+ * Request body for the `contentComments` query. A top-level listing (`parentCommentId`
+ * omitted) must set exactly one of `contentId`/`courseId`; a reply listing only needs
+ * `parentCommentId` (works for the replies of a course-general question too).
+ */
 export interface ContentCommentsRequest {
-    /** Content whose comments are listed. */
-    contentId: string
+    /** Content whose top-level comments are listed; omit for a course-general scope or a reply listing. */
+    contentId?: string | null
+    /** Course whose top-level (course-general) comments are listed; omit for a lesson scope or a reply listing. */
+    courseId?: string | null
     /** Parent comment id to list replies of; null/omitted for top-level. */
     parentCommentId?: string | null
     /** 1-based page number (default 1). */

@@ -1,6 +1,5 @@
 import type { GraphQLResponse } from "../../types"
 import type {
-    AiMode,
     AiSubTier,
 } from "../query-my-ai-settings"
 import type { AiModelCategory } from "../query-ai-models"
@@ -35,8 +34,6 @@ export interface QueryMyAiCreditQuotaData {
 
 /** Payload inside `myAiQuota.data` after the standard API wrapper. */
 export interface QueryMyAiQuotaResponseData {
-    /** Natural lane the user is on right now. */
-    mode: AiMode
     /** Active paid tier, or null on the free lane. */
     tier: AiSubTier | null
     /** Unified platform credit quota (free base + tier). */

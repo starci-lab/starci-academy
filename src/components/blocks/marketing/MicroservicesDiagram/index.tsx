@@ -178,10 +178,10 @@ export const MicroservicesDiagram = ({ caption, className }: MicroservicesDiagra
                         transition={reduce ? undefined : { repeat: Infinity, duration: 3 + index * 0.5, ease: "easeInOut" }}
                     >
                         <Chip size="sm" className="bg-danger/10 text-danger">
-                            <WarningIcon aria-hidden focusable="false" className="size-3" />
+                            <WarningIcon aria-hidden focusable="false" className="size-4" />
                             <Chip.Label className="inline-flex items-center gap-1">
                                 {failure.from}
-                                <CaretRightIcon aria-hidden focusable="false" className="size-3" />
+                                <CaretRightIcon aria-hidden focusable="false" className="size-4" />
                                 {failure.to}
                             </Chip.Label>
                         </Chip>

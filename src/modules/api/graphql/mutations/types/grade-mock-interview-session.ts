@@ -1,5 +1,5 @@
 import type { GraphQLResponse } from "../../types"
-import type { AiMode, ModelProvider } from "../../queries/query-my-ai-settings"
+import type { ModelProvider } from "../../queries/query-my-ai-settings"
 
 /**
  * One recorded turn of a completed mock-interview transcript. The candidate
@@ -10,10 +10,12 @@ import type { AiMode, ModelProvider } from "../../queries/query-my-ai-settings"
 export interface MockInterviewTurnInput {
     /** Who spoke this turn — `"interviewer"` or `"candidate"`. */
     role: string
-    /** Which of the 5 canonical interview phases this turn belongs to (a `MockInterviewPhase` value). */
+    /** Which of the 5 canonical interview phases this turn belongs to (a `MockInterviewPhase` value). Carries no meaning for Q&A kinds — any valid enum value is accepted. */
     phase: string
     /** The turn's text content (candidate turns are speech-to-text transcribed). */
     content: string
+    /** Which question (0-based) this turn belongs to — Q&A kinds only, groups turns into per-question `phaseScores` server-side. Omit for `kind="design"`. */
+    questionIndex?: number
 }
 
 /**
@@ -35,8 +37,6 @@ export interface GradeMockInterviewSessionRequest {
     turns: Array<MockInterviewTurnInput>
     /** Client-generated id grouping this attempt into its interview run. */
     sessionId: string
-    /** AI lane to grade on (auto/premium/byok); validated against entitlement at grade time. */
-    mode?: AiMode
     /** Concrete model name the user picked for grading; omit/null = balancer default. */
     selectedModel?: string
     /** Provider serving {@link GradeMockInterviewSessionRequest.selectedModel}. */
@@ -77,6 +77,15 @@ export interface MockInterviewGradeSessionData {
     gaps: Array<string>
     /** A natural follow-up an interviewer would ask next, or null. */
     followUpQuestion?: string | null
+    /**
+     * Content ids the RAG retrieval matched while grounding this session's grading —
+     * one flat list for the WHOLE session (retrieval is a single top-K pass over the
+     * candidate's combined answers, not phase-scoped), so a weak phase can only be
+     * deep-linked to "related content for this session", not a per-phase citation.
+     * Empty when the course has no RAG index, retrieval found nothing, or the field
+     * predates this attempt — never fabricate a match when this is empty.
+     */
+    matchedContentIds: Array<string>
 }
 
 /** Apollo response shape for `gradeMockInterviewSession`. */

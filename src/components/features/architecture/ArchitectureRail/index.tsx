@@ -4,7 +4,9 @@ import React, { useMemo } from "react"
 import { Label, ListBox, ScrollShadow, Typography, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { ARCHITECTURE_COMPONENTS } from "../constants"
+import { ARCHITECTURE_MODULES } from "../modules"
 import type { HealthByName } from "../hooks/useSystemHealthPoll"
+import { MetricsInline } from "../MetricsInline"
 import { getArchitectureStatusVisual, resolveArchitectureStatus } from "../statusVisual"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
@@ -33,6 +35,7 @@ const ComponentRow = ({
     const t = useTranslations("architecture")
     const state = resolveArchitectureStatus(name, healthByName)
     const visual = getArchitectureStatusVisual(state)
+    const metrics = healthByName?.[name]?.metrics
     return (
         <span className="flex w-full min-w-0 items-center gap-2">
             <Icon aria-hidden className="size-4 shrink-0 text-muted" />
@@ -43,11 +46,40 @@ const ComponentRow = ({
                 <Typography type="body-xs" color="muted" className="min-w-0 truncate">
                     {t(`rail.tagline.${name}`)}
                 </Typography>
+                {/* only components with a local Docker container carry metrics — a
+                    row with none (judge0, ollama, mail, aiBalancer, external SaaS)
+                    simply stays 2 lines, no fake placeholder line */}
+                <MetricsInline metrics={metrics} className="text-xs text-muted" />
             </span>
             <span className={cn("flex shrink-0 items-center gap-1.5 rounded-full px-2 py-0.5", visual.chipClassName)}>
                 <span className={cn("size-1.5 shrink-0 rounded-full", visual.dotClassName, visual.pulse && "animate-pulse")} aria-hidden />
                 <Typography type="body-xs" className="whitespace-nowrap">
                     {t(`status.${state}`)}
+                </Typography>
+            </span>
+        </span>
+    )
+}
+
+/** One module rail row: icon + name + one-line sub. NO status dot — modules
+ *  have no health probe (honesty), so a green/gray dot would be fabricated. */
+const ModuleRow = ({
+    id,
+    icon: Icon,
+}: {
+    id: string
+    icon: React.ComponentType<{ className?: string; "aria-hidden"?: boolean }>
+}) => {
+    const t = useTranslations("architecture")
+    return (
+        <span className="flex w-full min-w-0 items-center gap-2">
+            <Icon aria-hidden className="size-4 shrink-0 text-muted" />
+            <span className="flex min-w-0 flex-1 flex-col">
+                <Typography type="body-sm" weight="medium" className="min-w-0 truncate">
+                    {t(`module.${id}.name`)}
+                </Typography>
+                <Typography type="body-xs" color="muted" className="min-w-0 truncate">
+                    {t(`module.${id}.sub`)}
                 </Typography>
             </span>
         </span>
@@ -120,6 +152,30 @@ export const ArchitectureRail = ({ healthByName, selectedId, onSelect, className
                                     className="cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent/10"
                                 >
                                     <ComponentRow name={component.name} icon={component.icon} healthByName={healthByName} />
+                                </ListBox.Item>
+                            ))}
+                        </ListBox>
+                    </div>
+
+                    <div className="flex flex-col gap-2">
+                        <Label className="px-1 text-xs text-muted">
+                            {t("rail.moduleGroup", { count: ARCHITECTURE_MODULES.length })}
+                        </Label>
+                        <ListBox
+                            aria-label={t("rail.moduleGroup", { count: ARCHITECTURE_MODULES.length })}
+                            selectionMode="single"
+                            selectedKeys={ARCHITECTURE_MODULES.some((m) => m.id === selectedId) ? [selectedId] : []}
+                            onSelectionChange={onSelectionChange}
+                            className="gap-1 p-0"
+                        >
+                            {ARCHITECTURE_MODULES.map((module) => (
+                                <ListBox.Item
+                                    key={module.id}
+                                    id={module.id}
+                                    textValue={module.id}
+                                    className="cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent/10"
+                                >
+                                    <ModuleRow id={module.id} icon={module.icon} />
                                 </ListBox.Item>
                             ))}
                         </ListBox>

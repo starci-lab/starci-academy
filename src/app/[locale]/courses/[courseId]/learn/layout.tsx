@@ -1,7 +1,7 @@
 "use client"
 import React, { PropsWithChildren } from "react"
 import { useTranslations } from "next-intl"
-import { useSelectedLayoutSegments } from "next/navigation"
+import { useSelectedLayoutSegments, useSearchParams } from "next/navigation"
 import { Spinner } from "@heroui/react"
 import { LearnShell } from "@/components/features/learn/LearnShell"
 import { ContentMap } from "@/components/features/learn/ContentMap"
@@ -56,6 +56,7 @@ const Layout = ({ children }: PropsWithChildren) => {
     // Use the full segment list: `includes("modules")` flags the reader/module routes,
     // while `segments[0]` flags the top-level tabs (content / personal-project / mind-map).
     const segments = useSelectedLayoutSegments()
+    const searchParams = useSearchParams()
     const isModules = segments.includes("modules")
     // the course-content home (`/learn/content`) + the lesson reader (`/content/modules/...`)
     // both share the content-map rail on the LEFT: the full module → lesson tree lives in
@@ -70,6 +71,19 @@ const Layout = ({ children }: PropsWithChildren) => {
     // the mind-map is a full-bleed interactive canvas (fills the viewport edge-to-edge),
     // so it opts out of the shell's canonical p-6 reading-column padding.
     const isMindMap = segments[0] === "mind-map"
+    // the mock interview goes full-bleed ONLY during the live `interview` phase (a focused
+    // work surface: conversation + tool workspace). setup/grading/scorecard stay centered.
+    // The active phase is mirrored into the URL (`?phase=interview`) by MockInterviewSession
+    // so the shell can drop the course rails + reading padding for that phase only.
+    const isMockInterview = segments[0] === "mock-interview"
+    // the dedicated resumable route (`mock-interview/interview/[sessionId]`) is
+    // ALWAYS the live work surface — detected straight off the path segment so
+    // there is no `?phase=interview` round-trip to wait on before the shell
+    // drops its rails. Additive: the legacy `?phase=interview` query-param
+    // mirror (still written by MockInterviewSession once mounted) keeps working
+    // for the same route too.
+    const isMockInterviewInterviewRoute = isMockInterview && segments[1] === "interview"
+    const isMockInterviewLive = isMockInterviewInterviewRoute || (isMockInterview && searchParams.get("phase") === "interview")
     // the leaderboard shows its XP-category selector as a sidebar (like the content
     // page) on the LEFT; the board reads the selection from the `?category=` URL param.
     const isLeaderboard = segments[0] === "leaderboard"
@@ -165,7 +179,7 @@ const Layout = ({ children }: PropsWithChildren) => {
             <LearnShell
                 leftRail={showSurface ? leftRail : undefined}
                 rightRail={showSurface ? rightRail : undefined}
-                fullBleed={isMindMap}
+                fullBleed={isMindMap || isMockInterviewLive}
                 simpleMobileBar={isLeaderboard || isFlashcards}
             >
                 {content}

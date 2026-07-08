@@ -40,6 +40,8 @@ export const DueReviewHero = ({ onStart, className }: DueReviewHeroProps) => {
     )
 
     const dueCount = data?.dueCount ?? 0
+    const dueReviewCount = data?.dueReviewCount ?? 0
+    const newCount = data?.newCount ?? 0
 
     return (
         <LabeledCard className={className} label={t("flashcard.due.label")}>
@@ -63,9 +65,21 @@ export const DueReviewHero = ({ onStart, className }: DueReviewHeroProps) => {
                 }}
             >
                 <div className="flex flex-wrap items-center justify-between gap-3">
-                    <Typography type="body-sm" color="muted">
-                        {t("flashcard.due.count", { count: dueCount })}
-                    </Typography>
+                    <div className="flex flex-col gap-0.5">
+                        <Typography type="body-sm" color="muted">
+                            {t("flashcard.due.count", { count: dueCount })}
+                        </Typography>
+                        {/* breaks down the (possibly confusing) total into its 2 parts — only
+                            when it's actually a mix, so a pure-overdue or pure-new queue doesn't
+                            show a redundant "X + 0" (thầy 2026-07-09: "cái log 25 thẻ còn lại là
+                            ở đâu ra" — dueCount = overdue reviews + today's capped new batch,
+                            see DAILY_NEW_LIMIT in flashcard-review.service.ts). */}
+                        {dueReviewCount > 0 && newCount > 0 ? (
+                            <Typography type="body-xs" color="muted">
+                                {t("flashcard.due.countBreakdown", { overdue: dueReviewCount, newCapped: newCount })}
+                            </Typography>
+                        ) : null}
+                    </div>
                     <Button variant="primary" onPress={onStart}>
                         {t("flashcard.due.start", { count: dueCount })}
                     </Button>

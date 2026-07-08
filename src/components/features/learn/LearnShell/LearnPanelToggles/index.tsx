@@ -50,7 +50,7 @@ export const LearnPanelToggles = ({ className }: LearnPanelTogglesProps) => {
                     aria-label={rightCollapsed ? t("nav.expandRightRail") : t("nav.collapseRightRail")}
                     title={rightCollapsed ? t("nav.expandRightRail") : t("nav.collapseRightRail")}
                     onClick={() => dispatch(toggleRightCollapsed())}
-                    className="group pointer-events-auto absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 cursor-pointer"
+                    className="group pointer-events-auto absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-full"
                 >
                     <span className={barClass} />
                     {/* caret points outward (collapse) when expanded, inward (expand) when collapsed */}

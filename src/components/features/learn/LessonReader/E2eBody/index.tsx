@@ -2,6 +2,7 @@
 
 import React, { useMemo, useState } from "react"
 import { Accordion } from "@heroui/react"
+import { useTranslations } from "next-intl"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { useAppSelector } from "@/redux/hooks"
 import { ProgrammingLanguageTabs } from "@/components/reuseable/ProgrammingLanguageTabs"
@@ -25,6 +26,7 @@ interface E2eFlow {
  * filter is shown so learners can read each stack's real run.
  */
 export const E2eBody = (): React.JSX.Element => {
+    const t = useTranslations()
     const content = useAppSelector((state) => state.content.entity)
     const flows = (content?.e2eFlows as Array<E2eFlow> | null | undefined) ?? []
 
@@ -43,7 +45,7 @@ export const E2eBody = (): React.JSX.Element => {
     if (flows.length === 0) {
         return (
             <div className="py-10 text-center text-sm text-default-500">
-                Chưa có dữ liệu E2E cho bài học này.
+                {t("content.e2e.empty")}
             </div>
         )
     }
@@ -51,9 +53,9 @@ export const E2eBody = (): React.JSX.Element => {
     return (
         <div className="mx-auto flex max-w-3xl flex-col gap-6">
             <div className="flex flex-col gap-2">
-                <p className="text-sm font-semibold">Kiểm thử end-to-end (Playwright)</p>
+                <p className="text-sm font-semibold">{t("content.e2e.title")}</p>
                 <p className="text-sm text-default-500">
-                    {passed}/{visible.length} luồng pass — log thật ghi lại từ lần chạy E2E trên backend & UI thật.
+                    {t("content.e2e.passedCount", { passed, total: visible.length })}
                 </p>
             </div>
 
@@ -63,7 +65,7 @@ export const E2eBody = (): React.JSX.Element => {
                     availableLangs={langs}
                     selectedLang={activeLang}
                     onSelectLang={setActiveLang}
-                    ariaLabel="E2E languages"
+                    ariaLabel={t("content.e2e.languagesAria")}
                     surfaceBorder={false}
                 />
             )}
@@ -81,11 +83,11 @@ export const E2eBody = (): React.JSX.Element => {
                                     <span className="flex items-center gap-2 text-start">
                                         <span
                                             className={[
-                                                "inline-flex h-5 shrink-0 items-center rounded-full px-2 text-[11px] font-semibold",
+                                                "inline-flex h-5 shrink-0 items-center rounded-full px-2 text-[11px] font-semibold capitalize",
                                                 ok ? "bg-success/15 text-success" : "bg-danger/15 text-danger",
                                             ].join(" ")}
                                         >
-                                            {ok ? "PASS" : "FAIL"}
+                                            {ok ? t("content.e2e.statusPass") : t("content.e2e.statusFail")}
                                         </span>
                                         <span className="text-sm font-medium">{flow.title}</span>
                                     </span>

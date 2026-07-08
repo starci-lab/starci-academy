@@ -3,6 +3,7 @@
 import { CaretDownIcon, LockIcon, SparkleIcon, WarningCircleIcon, WarningIcon } from "@phosphor-icons/react"
 import React, { useMemo, useState } from "react"
 import {
+    Button,
     Chip,
     Dropdown,
     DropdownItem,
@@ -20,7 +21,7 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import { AiMode, ModelProvider } from "@/modules/api/graphql/queries/query-my-ai-settings"
+import { ModelProvider } from "@/modules/api/graphql/queries/query-my-ai-settings"
 import { AiModelCategory, AiModelTask } from "@/modules/api/graphql/queries/query-ai-models"
 import { type AiGradableModel } from "@/modules/api/graphql/queries/types/ai-models"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -30,13 +31,12 @@ import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButt
 import { useAiModelLatency, type ModelHealth } from "@/hooks/socketio/useAiModelLatency"
 
 /**
- * Lane + model selection emitted by the picker. `model`/`provider` null = the
- * Auto lane (the balancer picks). Structurally matches feature selection types
- * (e.g. ChallengeGradeSelection) so callers pass theirs directly.
+ * Model selection emitted by the picker. `model`/`provider` null = the Auto
+ * lane (the balancer picks); a pinned model runs on that model. Structurally
+ * matches feature selection types (e.g. ChallengeGradeSelection) so callers
+ * pass theirs directly.
  */
 export interface GradeModelSelection {
-    /** Lane to run on (Auto = balancer-picked, Premium = pinned model). */
-    mode: AiMode
     /** Pinned model name, or null for the Auto lane. */
     model: string | null
     /** Provider of the pinned model, or null for the Auto lane. */
@@ -114,6 +114,22 @@ const showSelfHostMark = (model: AiGradableModel) =>
 /** Dropdown row width — popover must be bounded or `truncate` never fires. */
 const DROPDOWN_POPOVER_CLASS = "w-80 max-w-[calc(100vw-2rem)]"
 const DROPDOWN_ITEM_ROW_CLASS = "w-full min-w-0 overflow-hidden"
+
+/**
+ * HeroUI's `Select.Indicator` chevron, replicated 1:1 (same 16×16 viewBox + path)
+ * so the `isDropdown` trigger's caret is IDENTICAL to the Select dropdowns beside
+ * it — `IconChevronDown` is a HeroUI internal, not exported, so we inline its SVG.
+ */
+const FieldChevronDown = () => (
+    <svg aria-hidden="true" fill="none" viewBox="0 0 16 16" className="size-4">
+        <path
+            clipRule="evenodd"
+            fillRule="evenodd"
+            fill="currentColor"
+            d="M2.97 5.47a.75.75 0 0 1 1.06 0L8 9.44l3.97-3.97a.75.75 0 1 1 1.06 1.06l-4.5 4.5a.75.75 0 0 1-1.06 0l-4.5-4.5a.75.75 0 0 1 0-1.06"
+        />
+    </svg>
+)
 const MODEL_ROW_TRIGGER_CLASS = "block w-full min-w-0"
 
 /** Model row — name truncates on the left, chips stay pinned on the right. */
@@ -184,6 +200,30 @@ export type GradeModelDropdownProps = WithClassNames<undefined> & {
     task?: AiModelTask
     /** Popover placement. Default "bottom start"; pass "top start" for a bottom-anchored composer. */
     placement?: "bottom start" | "top start"
+    /**
+     * Render the trigger as a standard bordered field-style dropdown button
+     * (mirrors HeroUI `Select.Trigger`) instead of the bare inline trigger, so it
+     * matches real `Select` fields sitting alongside it. No current caller uses
+     * this (CV editor's model + template pickers moved to `isButton` 2026-07-08 —
+     * see canon `fe/components/input.md` §7 correction) — kept for a future
+     * surface that genuinely sits beside a `Select`.
+     */
+    isDropdown?: boolean
+    /**
+     * Render the trigger as a real `Button` (`variant="tertiary"`) instead of the
+     * bare inline trigger, so it reads as a button among sibling toggle-button/
+     * button-style pickers (e.g. Mock Interview's `FlexWrapButtonRadio` pills, or
+     * the CV editor's "Mẫu" template picker). Mutually exclusive with
+     * `isDropdown` — pick whichever the trigger's siblings are (Select fields →
+     * `isDropdown`; buttons/pills → `isButton`).
+     */
+    isButton?: boolean
+    /**
+     * `isButton` only — stretch the trigger `Button` to the full width of its
+     * container (e.g. a sidebar stacking full-width fields like the CV editor's
+     * Font/Font-size Selects) instead of hugging its label content.
+     */
+    isButtonFullWidth?: boolean
     /** Fired with the new selection when the user picks an option. */
     onSelect: (selection: GradeModelSelection) => void
     /** Fired when a locked (unlock-required) model is pressed — route to plans. */
@@ -211,6 +251,9 @@ export const GradeModelDropdown = ({
     floor,
     task,
     placement = "bottom start",
+    isDropdown,
+    isButton = false,
+    isButtonFullWidth = false,
     onSelect,
     onUpgrade,
     className,
@@ -274,18 +317,68 @@ export const GradeModelDropdown = ({
                 }
             }}
         >
-            <DropdownTrigger
-                isDisabled={isDisabled}
-                className={cn("min-w-0 max-w-full cursor-pointer", className)}
-            >
-                <div className="flex w-full min-w-0 items-center justify-between gap-2">
+            {isButton ? (
+                <DropdownTrigger
+                    isDisabled={isDisabled}
+                    className={cn("cursor-pointer", isButtonFullWidth && "block w-full", className)}
+                >
+                    <Button variant="tertiary" size="sm" fullWidth={isButtonFullWidth}>
+                        <SparkleIcon aria-hidden className="size-4 shrink-0" />
+                        <span className={cn("truncate", isButtonFullWidth ? "min-w-0 flex-1 text-left" : "max-w-40")}>
+                            {triggerLabel}
+                        </span>
+                    </Button>
+                </DropdownTrigger>
+            ) : isDropdown ? (
+                // isDropdown → the trigger IS the field (ONE element, exactly like the
+                // Select — no inner wrapper div, so no stacked shadow). `flex!` beats the
+                // `.dropdown__trigger` base `inline-block`; every field state (chrome +
+                // hover bg/border + focus border + shadow-field) is copied 1:1 from
+                // `.select__trigger`. `transform-none!` (unconditional) removes BOTH the
+                // press-shrink (`scale(.97)`) AND the base `transform-gpu` (`translateZ(0)`)
+                // — the GPU compositing layer is what made `shadow-field` render darker than
+                // the Select's on hover. The Select has no transform, so now they match.
+                // Hover is wired on BOTH `hover:` (real CSS `:hover`) AND
+                // `data-[hovered=true]:` (react-aria's hover state) — `.select__trigger`
+                // bakes `&:hover, &[data-hovered="true"]` together, so this trigger must
+                // match both paths or it can visibly lag/miss the Select's hover feedback.
+                <DropdownTrigger
+                    isDisabled={isDisabled}
+                    className={cn(
+                        "relative flex! min-h-9 w-full cursor-pointer items-center rounded-field border border-[color:var(--field-border)] bg-field py-2 pe-7 ps-3 text-sm text-field-foreground shadow-field transform-none!",
+                        "hover:bg-field-hover hover:border-[color:var(--field-border-hover)]",
+                        "data-[hovered=true]:bg-field-hover data-[hovered=true]:border-[color:var(--field-border-hover)]",
+                        "data-[focus-visible=true]:border-[color:var(--field-border-focus)]",
+                        className,
+                    )}
+                >
                     <span className="flex min-w-0 items-center gap-2 overflow-hidden">
-                        <SparkleIcon className="size-5 shrink-0" />
+                        <SparkleIcon className="size-4 shrink-0" />
                         <span className="truncate">{triggerLabel}</span>
                     </span>
-                    <CaretDownIcon className="size-5 shrink-0" />
-                </div>
-            </DropdownTrigger>
+                    <span
+                        className={cn(
+                            "absolute inset-y-0 end-2 my-auto flex shrink-0 items-center justify-center text-field-placeholder transition duration-150",
+                            isOpen && "rotate-180",
+                        )}
+                    >
+                        <FieldChevronDown />
+                    </span>
+                </DropdownTrigger>
+            ) : (
+                <DropdownTrigger
+                    isDisabled={isDisabled}
+                    className={cn("min-w-0 max-w-full cursor-pointer", className)}
+                >
+                    <div className="flex w-full min-w-0 items-center justify-between gap-2">
+                        <span className="flex min-w-0 items-center gap-2 overflow-hidden">
+                            <SparkleIcon className="size-4 shrink-0" />
+                            <span className="truncate">{triggerLabel}</span>
+                        </span>
+                        <CaretDownIcon className="size-4 shrink-0" />
+                    </div>
+                </DropdownTrigger>
+            )}
             <DropdownPopover
                 placement={placement}
                 className={DROPDOWN_POPOVER_CLASS}
@@ -301,7 +394,6 @@ export const GradeModelDropdown = ({
                                         textValue={t("aiSettings.lanes.auto.title")}
                                         onPress={() => {
                                             onSelect({
-                                                mode: AiMode.Auto,
                                                 model: null,
                                                 provider: null,
                                             })
@@ -464,7 +556,6 @@ export const GradeModelDropdown = ({
                                                 textValue={model.model}
                                                 className={DROPDOWN_ITEM_ROW_CLASS}
                                                 onPress={() => onSelect({
-                                                    mode: canPremium ? AiMode.Premium : AiMode.Auto,
                                                     model: model.model,
                                                     provider: model.provider,
                                                 })}
@@ -496,7 +587,6 @@ export const GradeModelDropdown = ({
                                             textValue={model.model}
                                             className={DROPDOWN_ITEM_ROW_CLASS}
                                             onPress={() => onSelect({
-                                                mode: canPremium ? AiMode.Premium : AiMode.Auto,
                                                 model: model.model,
                                                 provider: model.provider,
                                             })}

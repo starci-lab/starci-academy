@@ -6,13 +6,30 @@
  * (see the TODO stubs in `index.tsx`). Implement the BE to this shape.
  */
 
-/** The five canonical phases of a mock interview (interview-driven order). */
+/** The five canonical phases of a mock interview (interview-driven order). Only meaningful for `kind="design"`. */
 export type MockInterviewPhaseKey =
     | "requirements"
     | "estimation"
     | "highLevel"
     | "deepDive"
     | "tradeoffs"
+
+/**
+ * The TOP-LEVEL flow a mock-interview session runs — "mode split" (2026-07-06).
+ * `qna` draws N independent questions, each randomly assigned its own
+ * {@link MockInterviewKind} at draw time (mixed within one session, "y như
+ * phỏng vấn thật"); `design` keeps the unchanged 5-phase capstone flow,
+ * reached from its own setup entry point.
+ */
+export type MockInterviewMode = "qna" | "design"
+
+/**
+ * THIS QUESTION's cognitive frame — lives on each individual drawn seed
+ * (`seedTopics[i].kind`), never on the whole session. Every question in a
+ * `mode="qna"` session is randomly assigned one of these 3 kinds at draw
+ * time, mixing kinds within a single run.
+ */
+export type MockInterviewKind = "theory" | "reasoning" | "scenario"
 
 /** Where an interview prompt comes from — a curated course capstone, or an AI-generated classic. */
 export type MockInterviewPromptSource = "capstone" | "classic"
@@ -41,19 +58,33 @@ export type MockInterviewTurnRole = "interviewer" | "candidate"
 export interface MockInterviewTurn {
     /** Interviewer (AI, streamed from BE) or candidate (voice transcript). */
     role: MockInterviewTurnRole
-    /** The phase this turn belongs to. */
+    /** The phase this turn belongs to (kind="design" only — carries no meaning for Q&A kinds). */
     phase: MockInterviewPhaseKey
     /** Markdown content. */
     content: string
+    /** Which seed question (0-based) this turn belongs to — Q&A kinds only, tags the turn for grading's per-question grouping. */
+    questionIndex?: number
+    /**
+     * Set on an interviewer turn whose question shipped GIVEN code that was
+     * seeded into the editable Code tool — the bubble shows a "code loaded into
+     * the editor" chip instead of the code inline, pointing the candidate at the
+     * tool to fix it in place.
+     */
+    artifactHint?: "code"
 }
 
-/** Per-phase score in the scorecard. */
+/**
+ * Per-phase score in the scorecard. For `kind="design"` this is one of the 5
+ * canonical {@link MockInterviewPhaseKey} values (i18n-resolved via
+ * `mockInterview.phase.<key>`). For Q&A kinds the server instead sends a
+ * ready-to-render label like `"Câu 1"` — rendered AS-IS, no i18n lookup.
+ */
 export interface MockInterviewPhaseScore {
-    /** Which phase. */
-    phase: MockInterviewPhaseKey
-    /** Earned points for the phase. */
+    /** Which phase (design), or a server-labeled question ("Câu 1", "Câu 2" …) for Q&A kinds. */
+    phase: string
+    /** Earned points for the phase/question. */
     score: number
-    /** Max points for the phase. */
+    /** Max points for the phase/question. */
     max: number
 }
 
@@ -86,4 +117,11 @@ export interface MockInterviewGradeResult {
     gaps: Array<string>
     /** A follow-up an interviewer would ask next (nullable). */
     followUpQuestion: string | null
+    /**
+     * Content ids the RAG retrieval matched while grading this session (one flat list
+     * for the WHOLE session — retrieval isn't phase-scoped). Empty when the course has
+     * no RAG index, retrieval found nothing, or the attempt predates this field — never
+     * treat empty as an error, and never fabricate a citation when it's empty.
+     */
+    matchedContentIds: Array<string>
 }

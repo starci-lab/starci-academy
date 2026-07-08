@@ -33,6 +33,11 @@ export interface ProgressMeterProps extends WithClassNames<undefined> {
      * the top row. Defaults to `false`.
      */
     showValue?: boolean
+    /**
+     * Fill color. Defaults to `"accent"`; pass a semantic tone (e.g. by score
+     * ratio: danger / warning / success) when the bar's VALUE carries meaning.
+     */
+    color?: "accent" | "success" | "warning" | "danger"
 }
 
 /**
@@ -52,6 +57,7 @@ export const ProgressMeter = ({
     max = 100,
     label,
     showValue = false,
+    color = "accent",
     className,
 }: ProgressMeterProps) => {
     const safeMax = max > 0 ? max : 1
@@ -72,7 +78,7 @@ export const ProgressMeter = ({
                 aria-label={typeof label === "string" ? label : "Progress"}
                 value={value}
                 maxValue={safeMax}
-                color="accent"
+                color={color}
                 size="sm"
             >
                 <ProgressBar.Track>

@@ -8,6 +8,8 @@ export interface MyInProgressMockInterviewSeedQuestionItem {
     kind: string
     /** The seed flashcard's topic/title. */
     title: string
+    /** GIVEN code the candidate should fix/read (debug/review/optimize questions only), one entry per authored language, so resuming re-seeds the SAME code into the workspace. Empty otherwise. */
+    givenCodes: Array<{ lang: string, code: string }>
 }
 
 /** One recorded turn of an in-progress session's transcript so far. Mirrors backend `MyInProgressMockInterviewSessionTurnItem`. */
@@ -54,6 +56,8 @@ export interface MyInProgressMockInterviewSessionData {
     phaseIndex: number
     /** ISO timestamp of the session's last synced activity. */
     updatedAt: string
+    /** ISO timestamp of the session's 1-hour ask-loop deadline (createdAt + 1h) — anchors the FE countdown to the TRUE remaining time on resume, never a freshly-reset hour. */
+    deadlineAt: string
 }
 
 /** Apollo response shape for `myInProgressMockInterviewSession`. */

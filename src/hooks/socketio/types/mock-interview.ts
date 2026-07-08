@@ -36,6 +36,12 @@ export interface AskMockInterviewTurnSocketIoPayload {
     data: {
         /** Client-generated id correlating this turn's streamed chunks. */
         streamId: string
+        /**
+         * Id of the persisted `mock_interview_sessions` row this ask belongs
+         * to — lets the server enforce the 1-hour ask-loop deadline against
+         * THIS session's own `createdAt` before spending an AI call.
+         */
+        sessionId: string
         /** Course the interview is grounded in (RAG scope + on-rails course content). */
         courseId: string
         /** Id of the interview prompt this session is running. */

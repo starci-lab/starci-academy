@@ -8,9 +8,13 @@
  * mirroring how Duolingo builds its word bank from the session's own vocabulary.
  */
 
-/** One piece of a cloze sentence: literal text, or a numbered blank slot. */
+/** One piece of a cloze sentence: literal text, a lightweight inline markdown
+ *  span (`` `code` ``/`**bold**`/`*italic*`), or a numbered blank slot. */
 export type ClozeSegment =
     | { kind: "text", text: string }
+    | { kind: "code", text: string }
+    | { kind: "bold", text: string }
+    | { kind: "italic", text: string }
     | { kind: "blank", index: number }
 
 /** A generated cloze question for one card. */
@@ -108,10 +112,33 @@ export const buildCloze = (
     const segments: Array<ClozeSegment> = []
     const blanks: Array<string> = []
     let cursor = winStart
+    // splits on lightweight inline markdown spans instead of leaving them as raw
+    // `*`/`` ` `` characters, so the rendered cloze sentence matches the same
+    // emphasis the answer prose carries (thầy 2026-07-09: "text có markdown ở
+    // phần điền vào"). Checked in priority order per match position: code
+    // (`` `x` ``) > bold (`**x**`) > italic (`*x*`) — `**` must be tried before
+    // `*` or the italic branch would eat one asterisk of a bold pair.
+    const inlineSpan = /`([^`]+)`|\*\*([^*]+)\*\*|\*([^*]+)\*/g
     const pushText = (raw: string) => {
-        const text = raw.replace(/`/g, "")
-        if (text.length > 0) {
-            segments.push({ kind: "text", text })
+        let cursor2 = 0
+        inlineSpan.lastIndex = 0
+        for (let m = inlineSpan.exec(raw); m; m = inlineSpan.exec(raw)) {
+            const before = raw.slice(cursor2, m.index)
+            if (before.length > 0) {
+                segments.push({ kind: "text", text: before })
+            }
+            if (m[1] !== undefined) {
+                segments.push({ kind: "code", text: m[1] })
+            } else if (m[2] !== undefined) {
+                segments.push({ kind: "bold", text: m[2] })
+            } else {
+                segments.push({ kind: "italic", text: m[3] })
+            }
+            cursor2 = m.index + m[0].length
+        }
+        const rest = raw.slice(cursor2)
+        if (rest.length > 0) {
+            segments.push({ kind: "text", text: rest })
         }
     }
     for (const marker of inWindow) {

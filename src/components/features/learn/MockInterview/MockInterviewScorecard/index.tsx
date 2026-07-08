@@ -201,7 +201,7 @@ export const MockInterviewScorecard = ({
                         <span className="text-2xl font-medium">{grade.overallScore}</span>
                         <span className="text-muted">/100</span>
                         {" · "}
-                        {t(`flashcard.interview.${grade.verdict}`)}
+                        {t(`mockInterview.verdict.${grade.verdict}`)}
                     </Alert.Title>
                     <Alert.Description>
                         <span className="block">

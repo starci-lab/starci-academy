@@ -176,6 +176,37 @@ const REMARK_PLUGINS = [remarkGfm, remarkDirective, remarkMuted, remarkTab, rema
 const MERMAID_CAPTION_REGEX = /```mermaid[ \t]*\r?\n([\s\S]*?)\r?\n```[ \t]*\r?\n+[ \t]*([^\r\n]+)/g
 
 /**
+ * Cuts off a trailing ```mermaid fence that hasn't been closed yet — markdown fed in
+ * progressively (the mock-interview typewriter reveal, an AI stream) walks THROUGH every
+ * partial length of the diagram source one tick at a time, and `mermaid.render()` throws
+ * "Syntax error in text" for every one of those incomplete snapshots (remark treats an
+ * unterminated fence — even one whose opening `\`\`\`mermaid` line hasn't finished
+ * arriving yet — as a code block that already extends to end-of-document). Since a
+ * reveal only ever GROWS the text, at most the LAST fence can be unterminated — any
+ * earlier one already has content (and therefore its closing fence) after it.
+ *
+ * Line-based rather than regex-on-the-whole-string so a fence caught mid-way through
+ * typing its OWN opening line (before its trailing newline even arrives) is held back
+ * too, not just one still missing its closing fence.
+ * @param markdown - Raw markdown source, possibly mid-reveal.
+ * @returns `markdown` unchanged, or truncated right before an unterminated trailing mermaid fence.
+ */
+const holdBackIncompleteMermaidFence = (markdown: string): string => {
+    const lines = markdown.split("\n")
+    let lastOpenLine = -1
+    for (let i = 0; i < lines.length; i++) {
+        if (/^```mermaid[ \t]*$/.test(lines[i].trimEnd())) {
+            lastOpenLine = i
+        }
+    }
+    if (lastOpenLine === -1) {
+        return markdown
+    }
+    const isClosed = lines.slice(lastOpenLine + 1).some((line) => line.trim() === "```")
+    return isClosed ? markdown : lines.slice(0, lastOpenLine).join("\n").trimEnd()
+}
+
+/**
  * Scans markdown for mermaid blocks and pairs each with the caption paragraph that
  * immediately follows it (a line starting with "Hình"/"Figure"), keyed by trimmed source.
  * @param markdown - Raw markdown source.
@@ -249,11 +280,17 @@ const stripClozeMarkers = (markdown: string): string =>
 export const MarkdownContent = ({ markdown, reading = false, className }: MarkdownContentProps) => {
     const theme = useTheme()
     const t = useTranslations()
-    const mermaidCaptions = useMemo(() => extractMermaidCaptions(markdown), [markdown])
+    // hold back an unterminated trailing mermaid fence FIRST — markdown streamed in
+    // progressively (typewriter reveal, AI token stream) walks through every partial
+    // length of a diagram's source, and parsing those mid-fence snapshots is what
+    // throws mermaid's "Syntax error in text". The rest of the pipeline only ever
+    // sees a diagram once its fence is fully closed.
+    const stableMarkdown = useMemo(() => holdBackIncompleteMermaidFence(markdown), [markdown])
+    const mermaidCaptions = useMemo(() => extractMermaidCaptions(stableMarkdown), [stableMarkdown])
     // Strip mermaid figure-captions (rendered as `<figcaption>`) + cloze markers (rendered plain).
     const renderedMarkdown = useMemo(
-        () => stripClozeMarkers(stripMermaidCaptions(markdown)),
-        [markdown],
+        () => stripClozeMarkers(stripMermaidCaptions(stableMarkdown)),
+        [stableMarkdown],
     )
     const components = useMemo(
         () => buildMarkdownRenderers({

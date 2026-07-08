@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useCallback, useMemo, useState } from "react"
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import useSWR from "swr"
 import { Button, Chip, Typography, cn } from "@heroui/react"
 import { CheckCircleIcon, CursorClickIcon, LockIcon } from "@phosphor-icons/react"
@@ -15,17 +15,27 @@ import { queryFlashcardDeck } from "@/modules/api/graphql/queries/query-flashcar
 import { type FlashcardCardEntity } from "@/modules/types/entities/flashcard-card"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
+import { BackLink } from "@/components/blocks/navigation/BackLink"
 import { FlipCard } from "@/components/blocks/cards/FlipCard"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
 import { RatingBar } from "@/components/blocks/buttons/RatingBar"
 import { useAppSelector } from "@/redux/hooks"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import { pathConfig } from "@/resources/path"
+import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
+import { useMutateStartFlashcardReviewSessionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateStartFlashcardReviewSessionSwr"
+import { useMutateSyncFlashcardReviewSessionProgressSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardReviewSessionProgressSwr"
+import { useMutateCompleteFlashcardReviewSessionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateCompleteFlashcardReviewSessionSwr"
+import { useQueryMyInProgressFlashcardReviewSessionSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyInProgressFlashcardReviewSessionSwr"
 
 /** Props for {@link FlashcardReviewer}. */
 export interface FlashcardReviewerProps extends WithClassNames<undefined> {
     /** Deck id being reviewed. */
     deckId: string
+    /** Returns to the study overview (due + mastery + deck list). Renders a
+     *  {@link BackLink} above the progress meter when given — thầy 2026-07-09:
+     *  "cả 2 phần review và quiz đều không có nút back về". */
+    onBack?: () => void
 }
 
 /** HeroUI Chip color per quiz seniority level. */
@@ -44,13 +54,19 @@ const LEVEL_COLOR: Record<string, "success" | "warning" | "danger" | "accent"> =
  * a summary closes the run. Data states go through {@link AsyncContent}.
  * @param props - {@link FlashcardReviewerProps}
  */
-export const FlashcardReviewer = ({ deckId, className }: FlashcardReviewerProps) => {
+export const FlashcardReviewer = ({ deckId, className, onBack }: FlashcardReviewerProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
     const runGraphQL = useGraphQLWithToast()
     // owning course slug drives the deep-links to referenced lessons/modules
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
+    // owning course id (uuid) — for the review-session mutations' enrollment-guard header
+    const courseId = useAppSelector((state) => state.course.entity?.id)
+    const courseHeaders = useMemo(
+        () => (courseId ? { [GraphQLHeadersKey.XCourseId]: courseId } : undefined),
+        [courseId],
+    )
     // entitlement: enrolled viewers unlock premium cards (first ~20%/deck stay free)
     const enrolled = useAppSelector((state) => state.user.enrolled)
     // index of the card currently shown
@@ -78,6 +94,53 @@ export const FlashcardReviewer = ({ deckId, className }: FlashcardReviewerProps)
         () => [...(data?.cards ?? [])].sort((prev, next) => prev.sortIndex - next.sortIndex),
         [data?.cards],
     )
+
+    // ── resumable review session (2026-07-09: "đều lưu session lại để build
+    // stats" — mirrors QuizSession's own start/sync/complete/resume wiring,
+    // scoped to this ONE deck instead of the whole course) ──────────────────
+    const runStartSession = useMutateStartFlashcardReviewSessionSwr()
+    const runSyncSession = useMutateSyncFlashcardReviewSessionProgressSwr()
+    const runCompleteSession = useMutateCompleteFlashcardReviewSessionSwr()
+    const inProgressSessionSwr = useQueryMyInProgressFlashcardReviewSessionSwr(deckId, courseId)
+    // the server-issued session id — a ref (not state) since it never drives a render
+    const sessionIdRef = useRef<string | null>(null)
+    // guards the mount-time resume/start effect so it runs at most once per deck
+    const initAttemptedRef = useRef(false)
+    // guards `completeFlashcardReviewSession` so a re-render at `done` never double-fires it
+    const completedRef = useRef(false)
+
+    // once the deck's cards AND the in-progress check have both settled: resume
+    // the caller's existing draw for this deck if one exists, otherwise start a
+    // fresh one — mirrors `QuizSession`'s own resume-or-start split, just
+    // automatic (no dedicated `/sessions/[id]` route for review — the deck id
+    // alone is the URL, per thầy's "trên url cũng không có cái deck của phần ôn").
+    useEffect(() => {
+        if (
+            initAttemptedRef.current
+            || cards.length === 0
+            || inProgressSessionSwr.isLoading
+            || !courseHeaders
+        ) {
+            return
+        }
+        initAttemptedRef.current = true
+        const resumable = inProgressSessionSwr.data
+        if (resumable) {
+            sessionIdRef.current = resumable.sessionId
+            setCurrentIndex(Math.min(resumable.currentIndex, cards.length - 1))
+            setReviewedCount(resumable.reviewedCount)
+            return
+        }
+        void runStartSession
+            .trigger({
+                request: { deckId, cardIds: cards.map((deckCard) => deckCard.id) },
+                headers: courseHeaders,
+            })
+            .then((result) => {
+                sessionIdRef.current = result.data?.startFlashcardReviewSession.data?.sessionId ?? null
+            })
+            .catch(() => {})
+    }, [cards, deckId, courseHeaders, inProgressSessionSwr.isLoading, inProgressSessionSwr.data, runStartSession])
 
     // SM-2 grade buttons, localized for the rating bar
     const ratingOptions = useMemo(
@@ -127,19 +190,70 @@ export const FlashcardReviewer = ({ deckId, className }: FlashcardReviewerProps)
             )
             setReviewing(false)
             if (ok) {
-                setReviewedCount((count) => count + 1)
+                const nextReviewedCount = reviewedCount + 1
+                const nextIndex = currentIndex + 1
+                setReviewedCount(nextReviewedCount)
                 setRevealed(false)
-                setCurrentIndex((index) => index + 1)
+                setCurrentIndex(nextIndex)
+                // best-effort, fire-and-forget persistence for resume — never blocks
+                // advancing the reviewer, and a failed sync only degrades resumability
+                if (sessionIdRef.current && courseHeaders) {
+                    void runSyncSession
+                        .trigger({
+                            request: {
+                                sessionId: sessionIdRef.current,
+                                currentIndex: nextIndex,
+                                reviewedCount: nextReviewedCount,
+                                xpEarned: 0,
+                            },
+                            headers: courseHeaders,
+                        })
+                        .catch(() => {})
+                }
             }
         },
-        [card, runGraphQL, t],
+        [card, runGraphQL, t, reviewedCount, currentIndex, courseHeaders, runSyncSession],
     )
 
-    // restart the deck from the first card
+    // the run just finished (past the last card) — close out the persisted
+    // session ONCE so `myFlashcardReviewHistory`/`myFlashcardReviewStats` can
+    // read it; guarded so a re-render at `done` never double-fires it.
+    useEffect(() => {
+        if (!done || completedRef.current || !sessionIdRef.current || !courseHeaders) {
+            return
+        }
+        completedRef.current = true
+        void runCompleteSession
+            .trigger({
+                request: {
+                    sessionId: sessionIdRef.current,
+                    reviewedCount,
+                    xpEarned: 0,
+                },
+                headers: courseHeaders,
+            })
+            .catch(() => {})
+    }, [done, reviewedCount, courseHeaders, runCompleteSession])
+
+    // restart the deck from the first card — a fresh run, so start a NEW
+    // resumable session too (the finished one was already completed above)
     const onRestart = () => {
         setCurrentIndex(0)
         setRevealed(false)
         setReviewedCount(0)
+        completedRef.current = false
+        sessionIdRef.current = null
+        if (courseHeaders) {
+            void runStartSession
+                .trigger({
+                    request: { deckId, cardIds: cards.map((deckCard) => deckCard.id) },
+                    headers: courseHeaders,
+                })
+                .then((result) => {
+                    sessionIdRef.current = result.data?.startFlashcardReviewSession.data?.sessionId ?? null
+                })
+                .catch(() => {})
+        }
     }
 
     return (
@@ -167,6 +281,7 @@ export const FlashcardReviewer = ({ deckId, className }: FlashcardReviewerProps)
                 />
             ) : (
                 <div className={cn("flex flex-col gap-6", className)}>
+                    {onBack ? <BackLink target={t("flashcard.title")} onPress={onBack} /> : null}
                     {/* progress by position through the deck */}
                     <ProgressMeter
                         value={currentIndex + 1}

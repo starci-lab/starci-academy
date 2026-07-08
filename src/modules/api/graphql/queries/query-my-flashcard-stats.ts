@@ -15,6 +15,12 @@ const query1 = gql`
         retentionRate
         totalReviewed
         lastReviewedAt
+        gradeDistribution {
+          again
+          hard
+          good
+          easy
+        }
       }
     }
   }

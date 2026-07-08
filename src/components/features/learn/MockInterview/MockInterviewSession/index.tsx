@@ -30,6 +30,7 @@ import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { ModalShell } from "@/components/blocks/layout/ModalShell"
 import { ContinueCard } from "@/components/blocks/cards/ContinueCard"
 import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
+import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { GradeModelDropdown, type GradeModelSelection } from "@/components/blocks/grading/GradeModelDropdown"
 import { GradeCreditCaption } from "@/components/blocks/grading/GradeCreditCaption"
 import { BackLink } from "@/components/blocks/navigation/BackLink"
@@ -46,13 +47,15 @@ import { useMutateGradeMockInterviewSessionSwr } from "@/hooks/swr/api/graphql/m
 import { useMutateStartMockInterviewSessionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateStartMockInterviewSessionSwr"
 import { useMutateSyncMockInterviewSessionTurnsSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSyncMockInterviewSessionTurnsSwr"
 import { AiModelCategory, AiModelTask } from "@/modules/api/graphql/queries/query-ai-models"
+import { queryMyMockInterviewAttemptBySession } from "@/modules/api/graphql/queries/query-my-mock-interview-attempt-by-session"
+import { GraphQLHeadersKey, type GraphQLHeaders } from "@/modules/api/graphql/types"
 import type { AiGradableModel } from "@/modules/api/graphql/queries/types/ai-models"
 import type { MockInterviewTurnInput } from "@/modules/api/graphql/mutations/types/grade-mock-interview-session"
 import type { MockInterviewTurnInput as SyncMockInterviewTurnInput } from "@/modules/api/graphql/mutations/types/sync-mock-interview-session-turns"
 import type { MockInterviewSeedTopic } from "@/modules/api/graphql/mutations/types/start-mock-interview-session"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { ProgrammingLanguage } from "@/modules/types/enums/programming-language"
-import { DEFAULT_PROGRAMMING_LANGUAGES } from "@/modules/types/utils/programming-language"
+import { DEFAULT_PROGRAMMING_LANGUAGES, resolveActiveProgrammingLang } from "@/modules/types/utils/programming-language"
 import {
     MOCK_INTERVIEW_CODE_STATE_DEFAULT,
     MockInterviewWorkspace,
@@ -61,12 +64,13 @@ import {
 import { serializeMockInterviewDiagram } from "../MockInterviewDiagram/serialize"
 import { MockInterviewScorecard } from "../MockInterviewScorecard"
 import { MockInterviewHistory } from "../MockInterviewHistory"
+import { MockInterviewStats } from "../MockInterviewStats"
 import { MockInterviewTrackSnapshot } from "../MockInterviewTrackSnapshot"
 import { InterviewerPresence } from "../InterviewerPresence"
 import { VoiceHero } from "../VoiceHero"
 import { VoiceUnavailableModal } from "../VoiceUnavailableModal"
 import { personaFor } from "../interviewPersona"
-import { normalizeMockInterviewVerdict } from "../mapAttemptToGradeResult"
+import { mapMockInterviewAttemptToGradeResult, normalizeMockInterviewVerdict } from "../mapAttemptToGradeResult"
 import type {
     MockInterviewDiagramEdgeSnapshot,
     MockInterviewDiagramNodeSnapshot,
@@ -195,6 +199,18 @@ const isStaticBankPrompt = (prompt: DrawnMockInterviewPrompt | undefined): boole
     prompt?.source === "interview-bank"
 
 /**
+ * Whether the CURRENT question has ANYTHING to submit from the code/whiteboard
+ * workspace — `mode="design"` always does (its answer IS the architecture
+ * diagram); `qna` only when this question ships given code (debug/review/
+ * optimize). A plain theory/reasoning/scenario question has nothing to draw
+ * or edit there — its answer is spoken/typed — so the workspace toggle is
+ * disabled entirely rather than opening an empty, purposeless pane
+ * (2026-07-09 feedback: a blank "Bảng vẽ kiến trúc" for a theory question).
+ */
+const questionHasWorkspaceTool = (isDesignMode: boolean, givenCodes: Array<{ lang: string, code: string }> | undefined): boolean =>
+    isDesignMode || Boolean(givenCodes && givenCodes.length > 0)
+
+/**
  * Coerce an authored `givenLang` string to one of the workspace editor's four
  * supported languages (its values ARE Monaco language ids), defaulting to
  * TypeScript for an unset/unknown language — so a debug question's given code
@@ -206,12 +222,34 @@ const mapGivenLangToProgrammingLanguage = (lang: string | null | undefined): Pro
         ?? ProgrammingLanguage.TypeScript
 }
 
+/**
+ * Resolve which authored language variant a debug/review/optimize question
+ * opens on — reuses `resolveActiveProgrammingLang` (same helper `ChallengeView`
+ * uses for its own 4-language step content): TypeScript wins if authored,
+ * else whichever language IS authored, in `DEFAULT_PROGRAMMING_LANGUAGES`
+ * order. Mock Interview has no cross-session "last picked language" memory
+ * (unlike Challenge's `storedLang`, sourced from past submission history) —
+ * each debug question just opens on the first authored language.
+ */
+const resolveOpeningGivenCode = (
+    givenCodes: Array<{ lang: string, code: string }>,
+): { lang: string, code: string } | null => {
+    if (givenCodes.length === 0) {
+        return null
+    }
+    const openLang = resolveActiveProgrammingLang(null, givenCodes.map((variant) => variant.lang))
+    return givenCodes.find((variant) => variant.lang === openLang) ?? givenCodes[0]
+}
+
 /** Format elapsed seconds as mm:ss. */
 const formatElapsed = (seconds: number): string => {
     const mm = Math.floor(seconds / 60)
     const ss = seconds % 60
     return `${String(mm).padStart(2, "0")}:${String(ss).padStart(2, "0")}`
 }
+
+/** Below this many seconds remaining, the HUD countdown turns warning-colored (session time limit, real urgency — not fake scarcity). */
+const TIME_LIMIT_WARNING_SECONDS = 5 * 60
 
 /**
  * Mock interview — two top-level MODES (2026-07-06 "mode split"): `qna` draws
@@ -224,8 +262,9 @@ const formatElapsed = (seconds: number): string => {
  * Setup is flat (no per-control cards): a 3-notch tier (Sơ/Trung/Cao) drives
  * both the random draw and the rubric's strictness; the prompt/questions are
  * only revealed once the session starts (like a real interview). The
- * right-pane workspace ({@link MockInterviewWorkspace}) offers three
- * persistent candidate tools — whiteboard, code, notes — each folded into the
+ * right-pane workspace ({@link MockInterviewWorkspace}) renders straight to
+ * whichever tool the current question needs (whiteboard for design, code for a
+ * debug/review/optimize question) — its artifact is folded into the
  * transcript as a labeled synthetic candidate turn at grade time. The AI
  * interviewer's turns stream over the `/mock_interview` socket
  * (`useMockInterviewTurnStream`, one active stream at a time), grounded via
@@ -302,6 +341,14 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
     const authCheckSwr = useQueryUserSwr()
 
     const [phase, setPhase] = useState<MockInterviewPhase>("setup")
+    // which setup tab is active ("Bắt đầu" / "Lịch sử" / "Thống kê") — setup phase only.
+    // Seeded from `?tab=` so a shared/refreshed link lands back on the same tab (mirrors
+    // the `?phase=` sync below, and `layouts/dashboard-hub.md`'s own "?tab= must be
+    // shareable" precedent) — "begin" is the implicit default, never written to the URL.
+    const [setupTab, setSetupTab] = useState<"begin" | "history" | "stats">(() => {
+        const initial = searchParams.get("tab")
+        return initial === "history" || initial === "stats" ? initial : "begin"
+    })
     const [tier, setTier] = useState<MockInterviewTier>("trung")
     // setup's "Tự động" vs "Tùy chỉnh" toggle — see MockInterviewConfigMode.
     const [configMode, setConfigMode] = useState<MockInterviewConfigMode>("auto")
@@ -352,10 +399,29 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
     // true when the LAST grading failure was specifically the AI credit pool being
     // exhausted — shown as a distinct upsell card instead of the generic error box
     const [gradeQuotaExceeded, setGradeQuotaExceeded] = useState(false)
-    // elapsed seconds while in the interview
-    const [elapsed, setElapsed] = useState(0)
     // client-generated run id (groups this session's attempt in history)
     const sessionId = useRef<string | null>(null)
+    // "session time limit" (2026-07-08): server-authoritative ISO deadline for
+    // this session's ask loop (createdAt + 1h), from startSession's/resume's
+    // own response — the countdown below is DERIVED from this, never from a
+    // local clock start; the server independently re-enforces the SAME
+    // deadline at ask-time (see useMockInterviewTurnStream's SESSION_EXPIRED).
+    const [deadlineAt, setDeadlineAt] = useState<string | null>(null)
+    // true once the session has hit its 1-hour deadline (detected by the
+    // client tick below reaching 0, OR by an ask coming back
+    // `error==="SESSION_EXPIRED"` — whichever happens first) — drives the
+    // one-shot auto-grade effect + the Grading screen's "hết giờ" banner.
+    const [timedOut, setTimedOut] = useState(false)
+    // guards the auto-grade-on-timeout effect to fire at most once
+    const timedOutGradedRef = useRef(false)
+    // seconds left until `deadlineAt` (updated by the same tick that checks
+    // `timedOut`) — drives the HUD's countdown display; null until the
+    // deadline is known (setup / grading / scorecard, or before the first tick).
+    const [remainingSeconds, setRemainingSeconds] = useState<number | null>(null)
+    // forces the setup screen's resume-card countdown to recompute every 30s —
+    // a coarse, minutes-level tick (unlike the live interview's per-second
+    // deadline tick above) is proportionate for a static "come back" card.
+    const [, setResumeCountdownTick] = useState(0)
     // live text of the interviewer's turn currently streaming in ("" once started, null when idle)
     const [streamingText, setStreamingText] = useState<string | null>(null)
     // mirrors streamingText but read synchronously from the onDelta callback (avoids stale closures)
@@ -364,36 +430,29 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
     // so a second `ask()` never overwrites the single in-flight stream tracked by the socket hook
     const [isAsking, setIsAsking] = useState(false)
 
-    // right-pane workspace — which tool is active + each tool's persisted artifact.
-    // "qna" defaults to Notes (most answers are spoken/typed, not drawn/coded —
-    // Whiteboard/Code stay one tab away for whichever question needs them);
-    // "design" keeps defaulting to the whiteboard (its capstones are architecture
-    // systems).
-    const [workspaceTool, setWorkspaceTool] = useState<"whiteboard" | "code" | "notes">(
-        mode === "design" ? "whiteboard" : "notes",
-    )
+    // right-pane workspace — which tool renders, driven ENTIRELY by the current
+    // question (2026-07-09: dropped the candidate-facing Whiteboard/Code/Notes tab
+    // bar + the Notes tool itself — "render thẳng công cụ", no manual picking).
+    // "design" always renders the whiteboard (its capstones are architecture
+    // systems); "qna" renders code only for a debug/review/optimize question.
+    const [workspaceTool, setWorkspaceTool] = useState<"whiteboard" | "code">("whiteboard")
     const diagramRef = useRef<{
         nodes: Array<MockInterviewDiagramNodeSnapshot>
         edges: Array<MockInterviewDiagramEdgeSnapshot>
     }>({ nodes: [], edges: [] })
-    const [hasDiagramContent, setHasDiagramContent] = useState(false)
     const [codeState, setCodeState] = useState<MockInterviewCodeState>(MOCK_INTERVIEW_CODE_STATE_DEFAULT)
-    const [notes, setNotes] = useState("")
     // mode="qna" only — the single answer field's typed draft. Voice input mirrors into
     // this same value (see the effect below) so gõ/nói land in ONE editable field
     // instead of the old mic-only flow with nowhere to type.
     const [answerDraft, setAnswerDraft] = useState("")
-    // mode="qna" only — whether the optional whiteboard/code/notes panel is expanded.
-    // Collapsed by default (Vòng 5): most Q&A answers are spoken/typed, not drawn/coded,
-    // so the workspace no longer eats half the screen unconditionally. Stays MOUNTED
-    // (just hidden) so an in-progress sketch/code/notes buffer is never lost by toggling.
+    // whether the workspace pane is expanded. Reset to `questionHasWorkspaceTool(...)`
+    // at every question/phase transition (2026-07-09: no more "candidate manually
+    // opened it" state to preserve — the toggle is DISABLED whenever the current
+    // question has nothing to submit there, so a manual open is only ever possible
+    // when a tool genuinely applies, and it re-defaults to open on the NEXT
+    // question regardless of whether this one was left open or hidden). Stays
+    // MOUNTED (just hidden) so an in-progress sketch/code buffer is never lost.
     const [workspaceOpen, setWorkspaceOpen] = useState(false)
-    // mode="qna" only — true while the CURRENT open state was forced by a given-code
-    // question (deliverStaticQuestion), not clicked open by the candidate themselves.
-    // Lets the NEXT question auto-close a workspace it auto-opened, without ever
-    // clobbering one the candidate deliberately opened (e.g. to jot notes) — a ref
-    // (not state) because it's pure bookkeeping that never itself drives a render.
-    const workspaceAutoOpenedRef = useRef(false)
     // green room — whether the (collapsed-by-default) "Tùy chỉnh phiên" config is open.
     // Defaults sensible (Tự động), so the pre-interview screen reads as a calm waiting
     // room, not a settings form; power users expand it to tune the run.
@@ -425,6 +484,9 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
     const currentSeedTopic = selectedPrompt?.seedTopics[questionIndex]
     const currentSeed = currentSeedTopic?.title ?? null
     const currentKind = currentSeedTopic?.kind
+    // drives the header's "Ẩn/hiện công cụ" toggle — disabled when this question
+    // has nothing to submit from the workspace.
+    const currentHasWorkspaceTool = questionHasWorkspaceTool(mode === "design", currentSeedTopic?.givenCodes)
     const totalQuestions = selectedPrompt?.seedTopics.length ?? QNA_QUESTION_COUNT
     const isLastQuestion = questionIndex >= totalQuestions - 1
     // the single question card (mode="qna", Vòng 5) shows ONLY the interviewer's turn for
@@ -433,6 +495,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
     const currentQuestionTurn = [...turns].reverse().find(
         (turn) => turn.role === "interviewer" && turn.questionIndex === questionIndex,
     )
+
 
     // mirror the finalized STT transcript into the single answer draft while listening,
     // so gõ (typing) and nói (voice) both land in ONE editable field. Skipped on the
@@ -444,14 +507,42 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
         }
     }, [listening, transcript])
 
-    // tick the interview timer once per second while in the interview
+    // "session time limit" — tick every second while in the interview,
+    // comparing against the SERVER-issued `deadlineAt` (never a local clock
+    // start); flips `timedOut` once the deadline passes. A DEFENSIVE check
+    // (the server independently re-enforces the same deadline at ask-time),
+    // so a session with no in-flight ask at the exact moment of expiry still
+    // ends promptly instead of waiting for the next `askNextTurn`.
     useEffect(() => {
-        if (phase !== "interview") {
+        if (phase !== "interview" || !deadlineAt || timedOut) {
             return
         }
-        const id = window.setInterval(() => setElapsed((previous) => previous + 1), 1000)
+        const deadlineMs = new Date(deadlineAt).getTime()
+        const tick = () => {
+            const msLeft = deadlineMs - Date.now()
+            if (msLeft <= 0) {
+                setRemainingSeconds(0)
+                setTimedOut(true)
+                return
+            }
+            setRemainingSeconds(Math.ceil(msLeft / 1000))
+        }
+        tick()
+        const id = window.setInterval(tick, 1000)
         return () => window.clearInterval(id)
-    }, [phase])
+    }, [phase, deadlineAt, timedOut])
+
+    // resume-card countdown (setup screen) — coarse 30s tick, only while there's
+    // an actual resumable session to show a deadline for. HONEST urgency: the
+    // countdown is derived from the SAME server `deadlineAt` the live interview
+    // enforces, never a fabricated number (principles/persuasion-psychology).
+    useEffect(() => {
+        if (phase !== "setup" || !inProgressSessionSwr.data) {
+            return
+        }
+        const id = window.setInterval(() => setResumeCountdownTick((previous) => previous + 1), 30_000)
+        return () => window.clearInterval(id)
+    }, [phase, inProgressSessionSwr.data])
 
     // mirror the active phase into the URL (`?phase=interview`) so the learn shell + the
     // MockInterview page shell can drop the course rails + centered padding for the LIVE
@@ -471,6 +562,24 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
         const qs = params.toString()
         router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false })
     }, [phase, pathname, searchParams, router])
+
+    // mirror the setup tab into the URL (`?tab=history` / `?tab=stats`) — same technique
+    // as the `phase` mirror above, so "Lịch sử"/"Thống kê" are shareable/refresh-safe
+    // links. "begin" (the default) is never written, keeping the common-case URL clean.
+    useEffect(() => {
+        const want = setupTab === "begin" ? null : setupTab
+        if (searchParams.get("tab") === want) {
+            return
+        }
+        const params = new URLSearchParams(searchParams.toString())
+        if (want) {
+            params.set("tab", want)
+        } else {
+            params.delete("tab")
+        }
+        const qs = params.toString()
+        router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false })
+    }, [setupTab, pathname, searchParams, router])
 
     // nudge the candidate to install a matching TTS voice ONCE per interview, only
     // once the browser's voice list has actually loaded and confirms none matches the
@@ -535,6 +644,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
             // the server draw, read off the seed the ask is currently framed around.
             const askKind = effectiveIsQna ? params.prompt.seedTopics[params.questionIndex]?.kind : undefined
             turnStream.ask({
+                sessionId: sessionId.current ?? "",
                 courseId,
                 promptId: params.prompt.id,
                 promptTitle: params.prompt.title,
@@ -557,6 +667,14 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                 onDone: (error) => {
                     setIsAsking(false)
                     setStreamingText(null)
+                    // "session time limit" — the server rejected this ask because the
+                    // 1-hour deadline already passed (catches the case where the
+                    // client-side countdown tick was throttled/the tab was backgrounded);
+                    // the dedicated timedOut effect takes it from here (auto-grade).
+                    if (error === "SESSION_EXPIRED") {
+                        setTimedOut(true)
+                        return
+                    }
                     const finalText = streamingRef.current.trim()
                     // append the completed interviewer turn only when the stream actually
                     // produced something — an aborted/errored stream leaves nothing behind
@@ -595,22 +713,19 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
         // chip, not the code inline. A voice-only question RESETS the code buffer so
         // the previous question's code never lingers into — or is graded against —
         // the next one (each question's own code is captured at submit time).
-        const givenCode = topic?.givenCode?.trim() ? topic.givenCode : null
-        if (givenCode) {
-            setCodeState({ lang: mapGivenLangToProgrammingLanguage(topic?.givenLang), code: givenCode })
+        const openingGivenCode = resolveOpeningGivenCode(topic?.givenCodes ?? [])
+        if (openingGivenCode) {
+            setCodeState({ lang: mapGivenLangToProgrammingLanguage(openingGivenCode.lang), code: openingGivenCode.code })
             setWorkspaceTool("code")
-            setWorkspaceOpen(true)
-            workspaceAutoOpenedRef.current = true
         } else {
             setCodeState(MOCK_INTERVIEW_CODE_STATE_DEFAULT)
-            // this question doesn't need the workspace — close it again, but ONLY if
-            // it was THIS flow that opened it for a previous code question; a
-            // candidate-opened workspace (notes, say) must never be force-closed
-            if (workspaceAutoOpenedRef.current) {
-                setWorkspaceOpen(false)
-                workspaceAutoOpenedRef.current = false
-            }
+            setWorkspaceTool("whiteboard")
         }
+        // this question either HAS a tool to submit from (open by default, no manual
+        // step) or has NOTHING to submit there (the toggle is disabled — see the
+        // header button — so there is no "candidate manually opened it" state to
+        // preserve across questions anymore).
+        setWorkspaceOpen(Boolean(openingGivenCode))
         ttsRef.current.cancel()
         setIsAsking(false)
         setStreamingText(null)
@@ -621,7 +736,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                 phase: PHASES[0],
                 content: questionText,
                 questionIndex: index,
-                artifactHint: givenCode ? "code" : undefined,
+                artifactHint: openingGivenCode ? "code" : undefined,
             },
         ])
         ttsRef.current.speak(questionText)
@@ -669,24 +784,24 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                 source: payload.data.source,
             }
             sessionId.current = payload.data.sessionId
+            setDeadlineAt(payload.data.deadlineAt)
+            setTimedOut(false)
+            timedOutGradedRef.current = false
             setSelectedPrompt(drawn)
             setTurns([])
             setPhaseIndex(0)
             setQuestionIndex(0)
-            setElapsed(0)
             setGrade(null)
             setGradeError(null)
             setGradeQuotaExceeded(false)
             diagramRef.current = { nodes: [], edges: [] }
-            setHasDiagramContent(false)
             setCodeState(MOCK_INTERVIEW_CODE_STATE_DEFAULT)
-            setNotes("")
             setAnswerDraft("")
-            setWorkspaceOpen(false)
-            workspaceAutoOpenedRef.current = false
-            // Q&A defaults the workspace to Notes (most answers are spoken/typed);
-            // design keeps defaulting to the whiteboard (architecture systems).
-            setWorkspaceTool(nextMode === "design" ? "whiteboard" : "notes")
+            setWorkspaceTool("whiteboard")
+            // design mode's whiteboard is always the tool; a qna question's own
+            // given-code check (if any) runs right below via `deliverStaticQuestion`
+            // and overrides this for question 0 when it applies.
+            setWorkspaceOpen(nextMode === "design")
             // navigate to the dedicated, resumable `/interview/[sessionId]` route instead
             // of just flipping `phase` locally — that route's `MockInterviewSession`
             // instance rehydrates via `myInProgressMockInterviewSession` and (since a
@@ -745,8 +860,32 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
         resumeAttemptedRef.current = true
         const data = inProgressSessionSwr.data
         if (!data || data.sessionId !== resumeSessionId) {
-            setResumeError(t("mockInterview.resumeFailed"))
-            setPhase("setup")
+            // no longer `in_progress` — before treating this as a dead end,
+            // check whether it was actually GRADED already (finished normally,
+            // or auto-graded on the 1-hour timeout): if so, show that REAL
+            // result instead of a plain "session expired" error.
+            void (async () => {
+                const headers: GraphQLHeaders = { [GraphQLHeadersKey.XCourseId]: courseId }
+                const response = await queryMyMockInterviewAttemptBySession({
+                    request: { courseId, sessionId: resumeSessionId },
+                    headers,
+                }).catch(() => null)
+                const attempt = response?.data?.myMockInterviewAttemptBySessionId?.data ?? null
+                if (attempt) {
+                    setSelectedPrompt({
+                        id: attempt.promptId,
+                        title: attempt.promptTitle,
+                        seedTopics: [],
+                        source: "",
+                    })
+                    setGrade(mapMockInterviewAttemptToGradeResult(attempt))
+                    setResumeError(null)
+                    setPhase("scorecard")
+                    return
+                }
+                setResumeError(t("mockInterview.resumeFailed"))
+                setPhase("setup")
+            })()
             return
         }
         const nextMode: MockInterviewMode = data.mode === "design" ? "design" : "qna"
@@ -755,8 +894,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
             cardId: question.cardId,
             kind: question.kind,
             title: question.title,
-            givenCode: null,
-            givenLang: null,
+            givenCodes: question.givenCodes ?? [],
         }))
         const drawn: DrawnMockInterviewPrompt = {
             id: data.promptId,
@@ -772,26 +910,36 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
             artifactHint: turn.artifactHint === "code" ? "code" : undefined,
         }))
         sessionId.current = resumeSessionId
+        setDeadlineAt(data.deadlineAt)
+        setTimedOut(false)
+        timedOutGradedRef.current = false
         setMode(nextMode)
         setTier(nextTier)
         setSelectedPrompt(drawn)
         setTurns(rehydratedTurns)
         setQuestionIndex(data.questionIndex)
         setPhaseIndex(data.phaseIndex)
-        setElapsed(0)
         setGrade(null)
         setGradeError(null)
         setGradeQuotaExceeded(false)
         setStartError(null)
         setResumeError(null)
         diagramRef.current = { nodes: [], edges: [] }
-        setHasDiagramContent(false)
         setCodeState(MOCK_INTERVIEW_CODE_STATE_DEFAULT)
-        setNotes("")
         setAnswerDraft("")
-        setWorkspaceOpen(false)
-        workspaceAutoOpenedRef.current = false
-        setWorkspaceTool(nextMode === "design" ? "whiteboard" : "notes")
+        setWorkspaceTool("whiteboard")
+        // re-seed the Code workspace for a debug/review/optimize question the
+        // learner was ALREADY on when they left — `deliverStaticQuestion` below
+        // only fires for a brand-new question (turns.length === 0), so a resume
+        // mid-question would otherwise leave the given code out of the editor
+        // even though the question text still asks to read/fix it.
+        const currentTopic = nextMode === "qna" && isStaticBankPrompt(drawn) ? drawn.seedTopics[data.questionIndex] : undefined
+        const currentGivenCode = resolveOpeningGivenCode(currentTopic?.givenCodes ?? [])
+        if (currentGivenCode) {
+            setCodeState({ lang: mapGivenLangToProgrammingLanguage(currentGivenCode.lang), code: currentGivenCode.code })
+            setWorkspaceTool("code")
+        }
+        setWorkspaceOpen(questionHasWorkspaceTool(nextMode === "design", currentTopic?.givenCodes))
         setPhase("interview")
         if (rehydratedTurns.length === 0) {
             if (nextMode === "qna" && isStaticBankPrompt(drawn)) {
@@ -808,7 +956,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                 })
             }
         }
-    }, [resumeSessionId, authCheckSwr.isLoading, inProgressSessionSwr.isLoading, inProgressSessionSwr.data, askNextTurn, deliverStaticQuestion, t])
+    }, [resumeSessionId, courseId, authCheckSwr.isLoading, inProgressSessionSwr.isLoading, inProgressSessionSwr.data, askNextTurn, deliverStaticQuestion, t])
 
     // best-effort, fire-and-forget persistence of the transcript-so-far — fires whenever
     // the turn list (or the current question/phase pointer) changes while live, so it
@@ -941,14 +1089,6 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                 questionIndex: syntheticQuestionIndex,
             })
         }
-        if (notes.trim().length > 0) {
-            turnsForGrading.push({
-                role: "candidate",
-                phase: currentPhase,
-                content: `[Notes]\n${notes}`,
-                questionIndex: syntheticQuestionIndex,
-            })
-        }
         try {
             const response = await gradeSwr.trigger({
                 courseId,
@@ -1000,7 +1140,20 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
             setGradeError(t("mockInterview.gradingFailed"))
             setPhase("interview")
         }
-    }, [courseId, selectedPrompt, isAsking, currentLevel, turns, currentPhase, isQna, questionIndex, codeState, notes, selection, gradeSwr, aiQuotaSwr, t])
+    }, [courseId, selectedPrompt, isAsking, currentLevel, turns, currentPhase, isQna, questionIndex, codeState, selection, gradeSwr, aiQuotaSwr, t])
+
+    // "session time limit" — react to `timedOut` (flipped by either the client
+    // countdown tick or a server SESSION_EXPIRED ask rejection) by auto-grading
+    // with whatever transcript exists so far — the candidate's answer in
+    // progress (not yet submitted) is dropped, matching the "chấm những gì đã
+    // có, bỏ câu dở" ruling (no grace period). Guarded to fire at most once.
+    useEffect(() => {
+        if (!timedOut || timedOutGradedRef.current || phase !== "interview") {
+            return
+        }
+        timedOutGradedRef.current = true
+        void finishAndGrade()
+    }, [timedOut, phase, finishAndGrade])
 
     // mode="qna" only (Vòng 5) — "hỏi từng câu": record the answer, then move STRAIGHT
     // to the next question (or straight to grading on the last one) — one combined
@@ -1090,7 +1243,6 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
     const handleDiagramChange = useCallback(
         (nodes: Array<MockInterviewDiagramNodeSnapshot>, edges: Array<MockInterviewDiagramEdgeSnapshot>) => {
             diagramRef.current = { nodes, edges }
-            setHasDiagramContent(nodes.length > 0)
         },
         [],
     )
@@ -1117,16 +1269,34 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
             const progressLabel = resumeMode === "design"
                 ? `${resumeSession.phaseIndex + 1}/${PHASES.length} · ${t(`mockInterview.phase.${PHASES[resumeSession.phaseIndex]}`)}`
                 : t("mockInterview.questionCounter", { index: resumeSession.questionIndex + 1, total: resumeMax })
+            // "session time limit" — HONEST urgency: minutes left derived from the
+            // SAME server `deadlineAt` the live interview enforces (never a made-up
+            // countdown). The 24h resume-window query doesn't itself check the 1h
+            // ask-loop deadline, so a session past its OWN hour can still surface
+            // here — `resumeExpired` branches the copy so it never reads as "still
+            // answerable" when it isn't. Clicking through still works (the interview
+            // screen's own deadline tick immediately auto-grades with whatever was
+            // synced) — this is deliberately NOT hidden, just labeled honestly.
+            const resumeRemainingMinutes = Math.max(0, Math.ceil((new Date(resumeSession.deadlineAt).getTime() - Date.now()) / 60_000))
+            const resumeExpired = resumeRemainingMinutes <= 0
+            const resumeUrgent = resumeExpired || resumeRemainingMinutes <= 15
             return (
                 <ContinueCard
                     title={resumeSession.promptTitle}
-                    subtitle={t("mockInterview.resumeSubtitle", {
-                        progress: progressLabel,
-                        tier: t(`mockInterview.tier.${resumeTier}`),
-                    })}
+                    subtitle={resumeExpired
+                        ? t("mockInterview.resumeSubtitleExpired", {
+                            progress: progressLabel,
+                            tier: t(`mockInterview.tier.${resumeTier}`),
+                        })
+                        : t("mockInterview.resumeSubtitleWithDeadline", {
+                            progress: progressLabel,
+                            tier: t(`mockInterview.tier.${resumeTier}`),
+                            minutes: resumeRemainingMinutes,
+                        })}
+                    urgent={resumeUrgent}
                     value={resumeValue}
                     max={resumeMax}
-                    ctaLabel={t("mockInterview.resumeCta")}
+                    ctaLabel={resumeExpired ? t("mockInterview.resumeCtaExpired") : t("mockInterview.resumeCta")}
                     href={pathConfig()
                         .locale(locale)
                         .course(courseDisplayId)
@@ -1140,240 +1310,274 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
 
         return (
             <div className={cn("flex w-full flex-col gap-6", className)}>
-                {/* A3 — "where you stand" snapshot before starting a new run (retention hook).
-                    Self-hides when the viewer has no track/interview attempt yet. */}
-                <MockInterviewTrackSnapshot courseId={courseId} />
+                {/* page-FEATURE tabs (switches the ENTIRE setup panel, not an in-page content
+                    filter) → variant="primary": full-width, evenly-stretched segmented pill
+                    (fe/components/tabs.md §0b) — NOT the default "secondary" underline, which
+                    hugs its own label width and is meant for in-page filters. */}
+                <TabsCard
+                    variant="primary"
+                    leftTabs={{
+                        items: [
+                            { key: "begin", label: t("mockInterview.setupTabBegin") },
+                            { key: "history", label: t("mockInterview.setupTabHistory") },
+                            { key: "stats", label: t("mockInterview.setupTabStats") },
+                        ],
+                        selectedKey: setupTab,
+                        ariaLabel: t("mockInterview.setupTabBegin"),
+                        onSelectionChange: (key) => setSetupTab(key as "begin" | "history" | "stats"),
+                    }}
+                />
 
-                {/* green room — a calm pre-interview waiting room: the interviewer you're
+                {setupTab === "history" ? (
+                    <MockInterviewHistory courseId={courseId} courseDisplayId={courseDisplayId} onStartInterview={() => setSetupTab("begin")} />
+                ) : setupTab === "stats" ? (
+                    <MockInterviewStats courseId={courseId} courseDisplayId={courseDisplayId} onStartInterview={() => setSetupTab("begin")} />
+                ) : (
+                    <>
+                        {/* Zone 0 — resume: a session left in progress (24h TTL) deep-links straight
+                    back into it, ABOVE every other zone (mirrors Flashcard Quiz's own resume
+                    placement, 2026-07-09 — sibling features read as one system). Demotes the
+                    green room's primary CTA to secondary below so this reads as the screen's
+                    primary action while it's shown. */}
+                        {resumeCard}
+
+                        {resumeError ? (
+                            <Callout status="danger" title={resumeError} onClose={() => setResumeError(null)} />
+                        ) : null}
+
+                        {/* A3 — "where you stand" snapshot before starting a new run (retention hook).
+                    Self-hides when the viewer has no track/interview attempt yet. */}
+                        <MockInterviewTrackSnapshot courseId={courseId} />
+
+                        {/* green room — a calm pre-interview waiting room: the interviewer you're
                     about to meet, what's ahead, and the ONE way in. Config is tucked away
                     (collapsed) so this reads as an occasion, not a settings form. */}
-                <div className="flex flex-col gap-4 rounded-2xl bg-surface p-6 shadow-surface">
-                    <div className="flex items-center gap-3">
-                        <img src={persona.avatarSrc} alt="" className="size-12 shrink-0 rounded-full object-cover" aria-hidden />
-                        <div className="flex min-w-0 flex-col">
-                            <Typography type="body" weight="medium" className="truncate">{persona.name}</Typography>
-                            <Typography type="body-xs" color="muted" className="truncate">{persona.role}</Typography>
-                        </div>
-                    </div>
-                    <div className="flex flex-col gap-1">
-                        <Typography type="h4" weight="semibold">{t("mockInterview.aboutToBeInterviewed")}</Typography>
-                        <Typography type="body-sm" color="muted">
-                            {t("mockInterview.roomSummary", { count: estCount, tier: t(`mockInterview.tier.${tier}`), minutes: estMinutes })}
-                        </Typography>
-                    </div>
-                    <div className="flex flex-wrap items-center gap-3">
-                        <Button
-                            variant="primary"
-                            size="lg"
-                            isPending={startingMode === "qna"}
-                            isDisabled={startingMode !== null && startingMode !== "qna"}
-                            onPress={() => void startSession("qna")}
-                        >
-                            {({ isPending }) => (
-                                <>
-                                    {isPending ? (
-                                        <Spinner size="sm" color="current" />
-                                    ) : (
-                                        <DoorOpenIcon className="size-5" aria-hidden focusable="false" />
+                        <div className="flex flex-col gap-4 rounded-2xl bg-surface p-6 shadow-surface">
+                            <div className="flex items-center gap-3">
+                                <img src={persona.avatarSrc} alt="" className="size-12 shrink-0 rounded-full object-cover" aria-hidden />
+                                <div className="flex min-w-0 flex-col">
+                                    <Typography type="body" weight="medium" className="truncate">{persona.name}</Typography>
+                                    <Typography type="body-xs" color="muted" className="truncate">{persona.role}</Typography>
+                                </div>
+                            </div>
+                            <div className="flex flex-col gap-1">
+                                <Typography type="h4" weight="semibold">{t("mockInterview.aboutToBeInterviewed")}</Typography>
+                                <Typography type="body-sm" color="muted">
+                                    {t("mockInterview.roomSummary", { count: estCount, tier: t(`mockInterview.tier.${tier}`), minutes: estMinutes })}
+                                </Typography>
+                            </div>
+                            <div className="flex flex-wrap items-center gap-3">
+                                {/* demoted to secondary while a resumable session is shown (Zone 0
+                                    above) — that ContinueCard reads as the screen's primary action then,
+                                    mirrors Flashcard Quiz's own resume-demote (2026-07-09). */}
+                                <Button
+                                    variant={resumeSession ? "secondary" : "primary"}
+                                    size="lg"
+                                    isPending={startingMode === "qna"}
+                                    isDisabled={startingMode !== null && startingMode !== "qna"}
+                                    onPress={() => void startSession("qna")}
+                                >
+                                    {({ isPending }) => (
+                                        <>
+                                            {isPending ? (
+                                                <Spinner size="sm" color="current" />
+                                            ) : (
+                                                <DoorOpenIcon className="size-5" aria-hidden focusable="false" />
+                                            )}
+                                            {t("mockInterview.enterRoom")}
+                                        </>
                                     )}
-                                    {t("mockInterview.enterRoom")}
-                                </>
-                            )}
-                        </Button>
-                        {isDesignAvailable ? (
-                            <Button
-                                variant="secondary"
-                                size="lg"
-                                isPending={startingMode === "design"}
-                                isDisabled={startingMode !== null && startingMode !== "design"}
-                                onPress={() => void startSession("design")}
-                            >
-                                {({ isPending }) => (
-                                    <>
-                                        {isPending ? (
-                                            <Spinner size="sm" color="current" />
-                                        ) : (
-                                            <PenNibIcon className="size-5" aria-hidden focusable="false" />
+                                </Button>
+                                {isDesignAvailable ? (
+                                    <Button
+                                        variant="secondary"
+                                        size="lg"
+                                        isPending={startingMode === "design"}
+                                        isDisabled={startingMode !== null && startingMode !== "design"}
+                                        onPress={() => void startSession("design")}
+                                    >
+                                        {({ isPending }) => (
+                                            <>
+                                                {isPending ? (
+                                                    <Spinner size="sm" color="current" />
+                                                ) : (
+                                                    <PenNibIcon className="size-5" aria-hidden focusable="false" />
+                                                )}
+                                                {t("mockInterview.designModeCta")}
+                                            </>
                                         )}
-                                        {t("mockInterview.designModeCta")}
-                                    </>
-                                )}
-                            </Button>
-                        ) : null}
-                    </div>
-                </div>
+                                    </Button>
+                                ) : null}
+                            </div>
+                        </div>
 
-                {/* Tùy chỉnh phiên — collapsed by default; all run config lives here so the
+                        {/* Tùy chỉnh phiên — collapsed by default; all run config lives here so the
                     green room stays calm. Every control is a WrapButton/chip; the grading
                     model sits INSIDE the card as an isDropdown field with its weekly credit. */}
-                <div className="flex flex-col gap-3">
-                    <button
-                        type="button"
-                        onClick={() => setConfigOpen((previous) => !previous)}
-                        aria-expanded={configOpen}
-                        className="group flex w-fit cursor-pointer items-center gap-1.5 text-muted hover:text-foreground"
-                    >
-                        <CaretDownIcon
-                            className={cn("size-4 transition-transform", configOpen && "rotate-180")}
-                            aria-hidden
-                            focusable="false"
-                        />
-                        {/* plain span (not Typography, which bakes its own text-foreground and would
+                        <div className="flex flex-col gap-3">
+                            <button
+                                type="button"
+                                onClick={() => setConfigOpen((previous) => !previous)}
+                                aria-expanded={configOpen}
+                                className="group flex w-fit cursor-pointer items-center gap-1.5 text-muted hover:text-foreground"
+                            >
+                                <CaretDownIcon
+                                    className={cn("size-4 transition-transform", configOpen && "rotate-180")}
+                                    aria-hidden
+                                    focusable="false"
+                                />
+                                {/* plain span (not Typography, which bakes its own text-foreground and would
                             never read muted at rest) — inherits the button's text-muted/hover:text-foreground
                             so the icon and label stay the same color at every state. */}
-                        <span className="text-sm group-hover:underline">
-                            {t("mockInterview.customizeSession")}
-                        </span>
-                    </button>
-                    {configOpen ? (
-                        <LabeledCard
-                            label={t("mockInterview.configTitle")}
-                            labelEnd={configMode === "auto" ? t("mockInterview.autoCaption") : undefined}
-                            contentClassName="flex flex-col gap-6"
-                        >
-                            <div className="flex flex-col gap-2">
-                                <Label>{t("mockInterview.modeToggleLabel")}</Label>
-                                <FlexWrapButtonRadio
-                                    ariaLabel={t("mockInterview.modeToggleLabel")}
-                                    value={configMode}
-                                    onChange={setConfigMode}
-                                    insideCard
-                                    items={[
-                                        { value: "auto" as const, content: t("mockInterview.modeAuto") },
-                                        { value: "configurable" as const, content: t("mockInterview.modeConfigurable") },
-                                    ]}
-                                />
-                            </div>
-
-                            {configMode === "configurable" ? (
-                                <>
+                                <span className="text-sm group-hover:underline">
+                                    {t("mockInterview.customizeSession")}
+                                </span>
+                            </button>
+                            {configOpen ? (
+                                <LabeledCard
+                                    label={t("mockInterview.configTitle")}
+                                    labelEnd={configMode === "auto" ? t("mockInterview.autoCaption") : undefined}
+                                    contentClassName="flex flex-col gap-6"
+                                >
                                     <div className="flex flex-col gap-2">
-                                        <Label>{t("mockInterview.questionCountLabel")}</Label>
+                                        <Label>{t("mockInterview.modeToggleLabel")}</Label>
                                         <FlexWrapButtonRadio
-                                            ariaLabel={t("mockInterview.questionCountLabel")}
-                                            value={questionCount}
-                                            onChange={setQuestionCount}
+                                            ariaLabel={t("mockInterview.modeToggleLabel")}
+                                            value={configMode}
+                                            onChange={setConfigMode}
                                             insideCard
-                                            items={QUESTION_COUNT_OPTIONS.map((count) => ({
-                                                value: count,
-                                                content: t("mockInterview.questionCountOption", { count }),
-                                            }))}
+                                            items={[
+                                                { value: "auto" as const, content: t("mockInterview.modeAuto") },
+                                                { value: "configurable" as const, content: t("mockInterview.modeConfigurable") },
+                                            ]}
                                         />
                                     </div>
 
-                                    <div className="flex flex-col gap-2">
-                                        <Label>{t("mockInterview.kindPickerLabel")}</Label>
-                                        <div role="group" aria-label={t("mockInterview.kindPickerLabel")} className="flex flex-wrap items-center gap-2">
-                                            <button
-                                                type="button"
-                                                aria-pressed={selectedKinds.length === 0}
-                                                onClick={() => setSelectedKinds([])}
-                                                className={cn(
-                                                    "cursor-pointer rounded-full border px-3 py-1.5 text-sm font-medium transition-colors",
-                                                    selectedKinds.length === 0
-                                                        ? "border-accent bg-accent/10 text-foreground"
-                                                        : "border-default bg-surface text-muted shadow-surface hover:bg-default",
-                                                )}
-                                            >
-                                                {t("mockInterview.kindAll")}
-                                            </button>
-                                            {KIND_OPTIONS.map((kind) => {
-                                                const isSelected = selectedKinds.includes(kind)
-                                                return (
+                                    {configMode === "configurable" ? (
+                                        <>
+                                            <div className="flex flex-col gap-2">
+                                                <Label>{t("mockInterview.questionCountLabel")}</Label>
+                                                <FlexWrapButtonRadio
+                                                    ariaLabel={t("mockInterview.questionCountLabel")}
+                                                    value={questionCount}
+                                                    onChange={setQuestionCount}
+                                                    insideCard
+                                                    items={QUESTION_COUNT_OPTIONS.map((count) => ({
+                                                        value: count,
+                                                        content: t("mockInterview.questionCountOption", { count }),
+                                                    }))}
+                                                />
+                                            </div>
+
+                                            <div className="flex flex-col gap-2">
+                                                <Label>{t("mockInterview.kindPickerLabel")}</Label>
+                                                <div role="group" aria-label={t("mockInterview.kindPickerLabel")} className="flex flex-wrap items-center gap-2">
                                                     <button
-                                                        key={kind}
                                                         type="button"
-                                                        aria-pressed={isSelected}
-                                                        onClick={() => setSelectedKinds((previous) => (isSelected
-                                                            ? previous.filter((value) => value !== kind)
-                                                            : [...previous, kind]))}
+                                                        aria-pressed={selectedKinds.length === 0}
+                                                        onClick={() => setSelectedKinds([])}
                                                         className={cn(
                                                             "cursor-pointer rounded-full border px-3 py-1.5 text-sm font-medium transition-colors",
-                                                            isSelected
+                                                            selectedKinds.length === 0
                                                                 ? "border-accent bg-accent/10 text-foreground"
                                                                 : "border-default bg-surface text-muted shadow-surface hover:bg-default",
                                                         )}
                                                     >
-                                                        {t(`mockInterview.kind.${kind}`)}
+                                                        {t("mockInterview.kindAll")}
                                                     </button>
-                                                )
-                                            })}
-                                        </div>
-                                    </div>
+                                                    {KIND_OPTIONS.map((kind) => {
+                                                        const isSelected = selectedKinds.includes(kind)
+                                                        return (
+                                                            <button
+                                                                key={kind}
+                                                                type="button"
+                                                                aria-pressed={isSelected}
+                                                                onClick={() => setSelectedKinds((previous) => (isSelected
+                                                                    ? previous.filter((value) => value !== kind)
+                                                                    : [...previous, kind]))}
+                                                                className={cn(
+                                                                    "cursor-pointer rounded-full border px-3 py-1.5 text-sm font-medium transition-colors",
+                                                                    isSelected
+                                                                        ? "border-accent bg-accent/10 text-foreground"
+                                                                        : "border-default bg-surface text-muted shadow-surface hover:bg-default",
+                                                                )}
+                                                            >
+                                                                {t(`mockInterview.kind.${kind}`)}
+                                                            </button>
+                                                        )
+                                                    })}
+                                                </div>
+                                            </div>
+
+                                            <div className="flex flex-col gap-2">
+                                                <Label>{t("mockInterview.answerModeLabel")}</Label>
+                                                <FlexWrapButtonRadio
+                                                    ariaLabel={t("mockInterview.answerModeLabel")}
+                                                    value={answerMode}
+                                                    onChange={setAnswerMode}
+                                                    insideCard
+                                                    items={(["voice", "text", "both"] as const).map((value) => ({
+                                                        value,
+                                                        content: t(`mockInterview.answerMode.${value}`),
+                                                    }))}
+                                                />
+                                            </div>
+                                        </>
+                                    ) : null}
 
                                     <div className="flex flex-col gap-2">
-                                        <Label>{t("mockInterview.answerModeLabel")}</Label>
+                                        <Label>{t("mockInterview.tierLabel")}</Label>
                                         <FlexWrapButtonRadio
-                                            ariaLabel={t("mockInterview.answerModeLabel")}
-                                            value={answerMode}
-                                            onChange={setAnswerMode}
+                                            ariaLabel={t("mockInterview.tierLabel")}
+                                            value={tier}
+                                            onChange={setTier}
                                             insideCard
-                                            items={(["voice", "text", "both"] as const).map((value) => ({
+                                            items={TIERS.map((value) => ({
                                                 value,
-                                                content: t(`mockInterview.answerMode.${value}`),
+                                                content: t(`mockInterview.tier.${value}`),
                                             }))}
                                         />
+                                        <Typography type="body-xs" color="muted">
+                                            {t("mockInterview.tierCaption")}
+                                        </Typography>
                                     </div>
-                                </>
-                            ) : null}
 
-                            <div className="flex flex-col gap-2">
-                                <Label>{t("mockInterview.tierLabel")}</Label>
-                                <FlexWrapButtonRadio
-                                    ariaLabel={t("mockInterview.tierLabel")}
-                                    value={tier}
-                                    onChange={setTier}
-                                    insideCard
-                                    items={TIERS.map((value) => ({
-                                        value,
-                                        content: t(`mockInterview.tier.${value}`),
-                                    }))}
-                                />
-                                <Typography type="body-xs" color="muted">
-                                    {t("mockInterview.tierCaption")}
-                                </Typography>
-                            </div>
-
-                            {/* grading model — `isButton` trigger (real `Button variant="tertiary"`)
+                                    {/* grading model — `isButton` trigger (real `Button variant="tertiary"`)
                         so it reads as a button among its siblings (the kind-picker toggles),
                         not a bare inline link. `isDropdown` (bordered Select-style field) stays
                         reserved for surfaces mirroring a REAL adjacent Select (e.g. the CV
                         editor's language field) — this card has none. The Auto lane ALWAYS
                         carries its weekly credit beside it (unified-pool concept). */}
-                            <div className="flex flex-col gap-2">
-                                <Label>{t("mockInterview.modelLabel")}</Label>
-                                <div className="flex flex-wrap items-center gap-3">
-                                    <GradeModelDropdown
-                                        isButton
-                                        models={gradeModels}
-                                        selection={selection}
-                                        canPremium={canPremium}
-                                        task={AiModelTask.Grading}
-                                        floor={AiModelCategory.Balanced}
-                                        showAutoLane
-                                        onSelect={setSelection}
-                                        onUpgrade={() => router.push(`/${locale}/profile/settings/ai-subscription`)}
-                                    />
-                                    <GradeCreditCaption
-                                        creditUsage={aiQuotaSwr.data}
-                                        hasPinnedModel={Boolean(selection.model)}
-                                        autoCreditCost={undefined}
-                                    />
-                                </div>
-                            </div>
-                        </LabeledCard>
-                    ) : null}
-                </div>
+                                    <div className="flex flex-col gap-2">
+                                        <Label>{t("mockInterview.modelLabel")}</Label>
+                                        <div className="flex flex-wrap items-center gap-3">
+                                            <GradeModelDropdown
+                                                isButton
+                                                models={gradeModels}
+                                                selection={selection}
+                                                canPremium={canPremium}
+                                                task={AiModelTask.Grading}
+                                                floor={AiModelCategory.Balanced}
+                                                showAutoLane
+                                                onSelect={setSelection}
+                                                onUpgrade={() => router.push(`/${locale}/profile/settings/ai-subscription`)}
+                                            />
+                                            <GradeCreditCaption
+                                                creditUsage={aiQuotaSwr.data}
+                                                hasPinnedModel={Boolean(selection.model)}
+                                                autoCreditCost={undefined}
+                                            />
+                                        </div>
+                                    </div>
+                                </LabeledCard>
+                            ) : null}
+                        </div>
 
-                {startError ? (
-                    <Callout status="danger" title={startError} onClose={() => setStartError(null)} />
-                ) : null}
-                {resumeError ? (
-                    <Callout status="danger" title={resumeError} onClose={() => setResumeError(null)} />
-                ) : null}
-
-                <MockInterviewHistory courseId={courseId} courseDisplayId={courseDisplayId} />
-                {resumeCard}
+                        {startError ? (
+                            <Callout status="danger" title={startError} onClose={() => setStartError(null)} />
+                        ) : null}
+                    </>
+                )}
             </div>
         )
     }
@@ -1381,17 +1585,25 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
     // ── GRADING (debrief opening) ────────────────────────────────────────
     if (phase === "grading") {
         return (
-            <div className={cn("flex w-full flex-col items-center gap-4 rounded-2xl bg-surface p-8 shadow-surface", className)}>
-                <img src={persona.avatarSrc} alt="" className="size-12 shrink-0 rounded-full object-cover" aria-hidden />
+            <div className={cn("mx-auto flex w-full max-w-3xl flex-col gap-4", className)}>
+                {/* "session time limit" — HONEST: never let a timeout-triggered grade
+                    read as a random/silent cutoff. Only shown when THIS grade was
+                    auto-triggered by the 1-hour deadline, not a manual "Kết thúc sớm". */}
+                {timedOut ? (
+                    <Callout status="warning" title={t("mockInterview.sessionExpiredBanner")} />
+                ) : null}
+                <div className="flex w-full flex-col items-center gap-4 rounded-2xl bg-surface p-8 shadow-surface">
+                    <img src={persona.avatarSrc} alt="" className="size-12 shrink-0 rounded-full object-cover" aria-hidden />
 
-                <div className="flex flex-col items-center gap-2">
-                    <Typography type="body" weight="medium" align="center">
-                        {t("mockInterview.interviewerGrading", { name: persona.name })}
-                    </Typography>
-                    <Spinner size="sm" />
-                    <Typography type="body-sm" color="muted" align="center">
-                        {t("mockInterview.gradingPending")}
-                    </Typography>
+                    <div className="flex flex-col items-center gap-2">
+                        <Typography type="body" weight="medium" align="center">
+                            {t("mockInterview.interviewerGrading", { name: persona.name })}
+                        </Typography>
+                        <Spinner size="sm" />
+                        <Typography type="body-sm" color="muted" align="center">
+                            {t("mockInterview.gradingPending")}
+                        </Typography>
+                    </div>
                 </div>
             </div>
         )
@@ -1401,7 +1613,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
     if (phase === "scorecard") {
         if (!grade) {
             return (
-                <div className={cn("flex flex-col items-center gap-3 py-10", className)}>
+                <div className={cn("mx-auto flex w-full max-w-3xl flex-col items-center gap-3 py-10", className)}>
                     <Typography type="body-sm" color="muted" align="center">
                         {t("mockInterview.scorecardPending")}
                     </Typography>
@@ -1412,7 +1624,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
             )
         }
         return (
-            <div className={cn("flex w-full flex-col gap-6", className)}>
+            <div className={cn("mx-auto flex w-full max-w-3xl flex-col gap-6", className)}>
                 {/* debrief header — the interviewer "sits down" to give feedback */}
                 <div className="flex items-center gap-3">
                     <img src={persona.avatarSrc} alt="" className="size-10 shrink-0 rounded-full object-cover" aria-hidden />
@@ -1516,9 +1728,17 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                 <span className="hidden h-5 w-px shrink-0 bg-default sm:block" aria-hidden />
                 <Typography type="body-sm" weight="medium" color="muted" className="whitespace-nowrap">{opts.counter}</Typography>
                 <span className="flex-1" />
-                <span className="flex shrink-0 items-center gap-1.5">
+                {/* "session time limit" — counts DOWN to the server deadline (never a
+                    local clock start); turns warning-colored under 5 minutes left (real
+                    urgency, backed by an actual server-enforced deadline). */}
+                <span
+                    className={cn(
+                        "flex shrink-0 items-center gap-1.5",
+                        remainingSeconds !== null && remainingSeconds <= TIME_LIMIT_WARNING_SECONDS && "text-warning",
+                    )}
+                >
                     <ClockIcon className="size-4" aria-hidden focusable="false" />
-                    <Typography type="body-sm" weight="medium" className="tabular-nums">{formatElapsed(elapsed)}</Typography>
+                    <Typography type="body-sm" weight="medium" className="tabular-nums">{formatElapsed(remainingSeconds ?? 0)}</Typography>
                 </span>
                 {opts.rightSlot ? (
                     <>
@@ -1590,21 +1810,18 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                         : t("mockInterview.questionCounter", { index: questionIndex + 1, total: totalQuestions }),
                     total: totalQuestions,
                     current: questionIndex,
-                    // tools toggle lives in the header band (not a floating link) — most Q&A
-                    // answers are spoken/typed; a code/whiteboard question auto-opens the pane.
+                    // tools toggle lives in the header band (not a floating link). Disabled
+                    // when THIS question has nothing to submit from the workspace (a plain
+                    // theory/reasoning/scenario question) — there is nothing to open.
                     rightSlot: (
                         <Button
                             variant="tertiary"
                             size="sm"
-                            onPress={() => {
-                                // a DELIBERATE toggle either way — never auto-closed/opened
-                                // again by a later question's own workspace bookkeeping
-                                workspaceAutoOpenedRef.current = false
-                                setWorkspaceOpen((previous) => !previous)
-                            }}
+                            isDisabled={!currentHasWorkspaceTool}
+                            onPress={() => setWorkspaceOpen((previous) => !previous)}
                         >
                             <PenNibIcon className="size-4" aria-hidden focusable="false" />
-                            {workspaceOpen ? t("mockInterview.hideArtifactToggle") : t("mockInterview.addArtifactToggle")}
+                            {t("mockInterview.toggleWorkspaceLabel")}
                         </Button>
                     ),
                 })}
@@ -1703,18 +1920,15 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                     </div>
 
                     {/* RIGHT — workspace pane (first-class). Kept MOUNTED (hidden when closed)
-                        so an in-progress sketch/code/notes buffer survives toggling. On mobile
+                        so an in-progress sketch/code buffer survives toggling. On mobile
                         the grid stacks it under the conversation. */}
                     <div className={cn("min-w-0", !workspaceOpen && "hidden")}>
                         <MockInterviewWorkspace
                             tool={workspaceTool}
-                            onToolChange={setWorkspaceTool}
                             onDiagramChange={handleDiagramChange}
-                            hasDiagramContent={hasDiagramContent}
                             codeState={codeState}
                             onCodeStateChange={setCodeState}
-                            notes={notes}
-                            onNotesChange={setNotes}
+                            givenCodeVariants={currentSeedTopic?.givenCodes ?? []}
                         />
                     </div>
                 </div>
@@ -1908,18 +2122,14 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                     </div>
                 </div>
 
-                {/* RIGHT — the candidate tool workspace: whiteboard / code / notes, "y như
-                phỏng vấn thật". Artifacts persist across tab switches; each non-empty
-                artifact is folded into the transcript as a labeled turn at grade time. */}
+                {/* RIGHT — the candidate tool workspace: renders straight to the whiteboard
+                (design mode is always architecture systems). Its artifact is folded
+                into the transcript as a labeled turn at grade time. */}
                 <MockInterviewWorkspace
                     tool={workspaceTool}
-                    onToolChange={setWorkspaceTool}
                     onDiagramChange={handleDiagramChange}
-                    hasDiagramContent={hasDiagramContent}
                     codeState={codeState}
                     onCodeStateChange={setCodeState}
-                    notes={notes}
-                    onNotesChange={setNotes}
                 />
             </div>
         </div>

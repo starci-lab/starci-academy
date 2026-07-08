@@ -15,10 +15,9 @@ import {
     XCircleIcon,
 } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { SM2_GRADES } from "../constants"
-import { QuizSessionSkeleton } from "./QuizSessionSkeleton"
 import { parseAnswerKeywords } from "./parse-answer-keywords"
 import { buildCloze, type ClozeQuestion } from "./build-cloze"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -29,7 +28,6 @@ import { type FlashcardCardEntity } from "@/modules/types/entities/flashcard-car
 import { type QuizSessionReadinessData, type QuizSessionWeakTagData } from "@/modules/api/graphql/mutations/types/complete-flashcard-quiz-session"
 import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
-import { ErrorContent } from "@/components/blocks/async/ErrorContent"
 import { Callout } from "@/components/blocks/feedback/Callout"
 import { FlipCard } from "@/components/blocks/cards/FlipCard"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
@@ -37,7 +35,10 @@ import { MetricCard } from "@/components/blocks/stats/MetricCard"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
 import { RatingBar } from "@/components/blocks/buttons/RatingBar"
 import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
-import { FlashcardStatsStrip } from "../FlashcardStatsStrip"
+import { TabsCard } from "@/components/blocks/navigation/TabsCard"
+import { QuizProgressStrip } from "./QuizProgressStrip"
+import { FlashcardQuizHistory } from "./FlashcardQuizHistory"
+import { FlashcardQuizStats } from "./FlashcardQuizStats"
 import { useQueryMyWeeklyStatsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyWeeklyStatsSwr"
 import { useMutateCompleteFlashcardQuizSessionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateCompleteFlashcardQuizSessionSwr"
 import { useMutateStartFlashcardQuizSessionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateStartFlashcardQuizSessionSwr"
@@ -49,18 +50,14 @@ import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { PaymentFlow } from "@/modules/types/payment"
 import { pathConfig } from "@/resources/path"
 import { ContinueCard } from "@/components/blocks/cards/ContinueCard"
+import { BackLink } from "@/components/blocks/navigation/BackLink"
 
 /** Props for {@link QuizSession}. */
 export interface QuizSessionProps extends WithClassNames<undefined> {
     /** Course to draw quiz cards across (rendered only for enrolled viewers). */
     courseId: string
-    /** Notified whenever the ACTUAL cloze/flip work surface is on screen — a
-     *  làm-việc-tập-trung job — so the parent pane can widen just for that, vs the
-     *  `setup`/`recap`/building/error/empty sub-states, which are centered messages
-     *  and stay at the narrow width like their siblings. */
-    onWorkSurfaceChange?: (isWorkSurface: boolean) => void
     /**
-     * Present when reached via the dedicated `flashcards/quiz/[sessionId]`
+     * Present when reached via the dedicated `flashcards/quiz/sessions/[sessionId]`
      * route — on mount, rehydrates that session from
      * `myInProgressFlashcardQuizSession` (re-fetching the actual card objects
      * for the persisted `cardIds`, in order) and jumps straight into the
@@ -143,13 +140,15 @@ const shuffle = <T,>(input: Array<T>): Array<T> => {
  * sibling-card distractors, checks the answer objectively, reads the full model
  * answer, and self-grades with SM-2 (which reschedules the card). A combo tracks
  * momentum; the recap frames the run by mastery and grants leaderboard XP once
- * per session. The setup's data states go through {@link FlashcardStatsStrip}.
+ * per session. The setup's own progress readout goes through {@link QuizProgressStrip}.
  * @param props - {@link QuizSessionProps}
  */
-export const QuizSession = ({ courseId, className, onWorkSurfaceChange, resumeSessionId }: QuizSessionProps) => {
+export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessionProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
+    const pathname = usePathname()
+    const searchParams = useSearchParams()
     const runGraphQL = useGraphQLWithToast()
     // trial vs enrolled — drives the recap's Zone E enroll-upsell (primary for trial viewers)
     // and gates Zone D (AI Mock Interview cross-link, only relevant once actually enrolled).
@@ -178,8 +177,8 @@ export const QuizSession = ({ courseId, className, onWorkSurfaceChange, resumeSe
     )
     const decks = decksSwr.data
 
-    // refreshed after a session grants XP (the setup's progress zone reads its own
-    // streak from `FlashcardStatsStrip` instead)
+    // refreshed after a session grants XP so `QuizProgressStrip`'s own streak/XP
+    // reflects the just-completed session on the next render
     const weeklyStatsSwr = useQueryMyWeeklyStatsSwr()
 
     const runComplete = useMutateCompleteFlashcardQuizSessionSwr()
@@ -198,6 +197,14 @@ export const QuizSession = ({ courseId, className, onWorkSurfaceChange, resumeSe
 
     // ── session state ────────────────────────────────────────────────────
     const [phase, setPhase] = useState<QuizPhase>("setup")
+    // which setup tab is active ("Bắt đầu" / "Lịch sử" / "Thống kê") — setup phase only.
+    // Seeded from `?tab=` so a shared/refreshed link lands back on the same tab (mirrors
+    // MockInterviewSession's own setupTab + `layouts/dashboard-hub.md`'s "?tab= must be
+    // shareable" precedent) — "begin" is the implicit default, never written to the URL.
+    const [setupTab, setSetupTab] = useState<"begin" | "history" | "stats">(() => {
+        const initial = searchParams.get("tab")
+        return initial === "history" || initial === "stats" ? initial : "begin"
+    })
     const [mode, setMode] = useState<QuizMode>("quick")
     const [level, setLevel] = useState<string | null>(null)
     // cards drawn for the current run
@@ -217,12 +224,14 @@ export const QuizSession = ({ courseId, className, onWorkSurfaceChange, resumeSe
     // in-session combo (consecutive well-answered cards) + its peak
     const [combo, setCombo] = useState(0)
     const [bestCombo, setBestCombo] = useState(0)
-    // true while building the session (fetching full deck cards)
-    const [building, setBuilding] = useState(false)
-    // true when EVERY drawn deck failed to load (e.g. a deck missing from the ES
-    // index) — distinct from "no cards matched the chosen level" so the learner
-    // isn't told to change a filter when the real cause is a backend hiccup
-    const [buildError, setBuildError] = useState(false)
+    // true while `startSession` is drawing + persisting a fresh run — drives the
+    // "Bắt đầu luyện" button's own isPending (stays ON this screen; only the
+    // eventual navigation to `/quiz/[sessionId]` leaves it, restructured 2026-07-09).
+    const [starting, setStarting] = useState(false)
+    // set when `startSession` couldn't produce a playable session (no cards at the
+    // chosen level, or the persist call failed) — shown inline on the setup screen;
+    // the run never leaves `setup` until a session is actually created.
+    const [startError, setStartError] = useState<string | null>(null)
     // client-generated id shared by this run → idempotent XP grant
     const sessionId = useRef<string | null>(null)
     // XP awarded by the backend for this run (shown in the recap)
@@ -284,74 +293,82 @@ export const QuizSession = ({ courseId, className, onWorkSurfaceChange, resumeSe
         return { pool, anyDeckFailed }
     }, [decks, courseHeaders])
 
-    // draw a fresh run: pool + filter by level + shuffle, then record it server-side
-    // (idempotent id for the whole run) before showing question 1
+    // draw a fresh run: pool + filter by level + shuffle, persist it server-side,
+    // THEN navigate to the resumable `/quiz/[sessionId]` route — stays on THIS
+    // (setup) screen the whole time, pending only on the CTA itself, per thầy's
+    // 2026-07-09 correction ("tạo phiên xong rồi mới load vào quiz kèm id" — no
+    // more instant phase flip to a building-skeleton screen, and no more silent
+    // local/non-resumable fallback when the persist call fails: a real failure
+    // now surfaces inline instead of quietly degrading).
     const startSession = useCallback(async () => {
-        if (!decks || decks.length === 0) {
+        if (!decks || decks.length === 0 || starting) {
             return
         }
-        setBuilding(true)
-        setBuildError(false)
+        setStarting(true)
+        setStartError(null)
         setResumeError(null)
-        setPhase("active")
         try {
             const { pool, anyDeckFailed } = await fetchCardPool()
             const drawn = shuffle(
                 pool.filter((card) => level === null || card.level === level),
             ).slice(0, sessionLength)
 
-            // an empty pool only means "no cards at this level" when every deck
-            // fetch actually succeeded — otherwise it's a load failure in disguise
-            if (drawn.length === 0 && anyDeckFailed) {
-                setBuildError(true)
+            if (drawn.length === 0) {
+                // an empty pool only means "no cards at this level" when every deck
+                // fetch actually succeeded — otherwise it's a load failure in disguise
+                setStartError(
+                    anyDeckFailed
+                        ? t("flashcard.quiz.sessionLoadErrorTitle")
+                        : t("flashcard.quiz.emptyAtLevel"),
+                )
+                setStarting(false)
+                return
             }
 
-            // persist the drawn run server-side, then navigate to the dedicated,
-            // resumable `/quiz/[sessionId]` route (mirrors Mock Interview's
-            // startSession) so the URL always carries the real session id and a
-            // refresh resumes it — that route's rehydrate effect re-draws the
-            // persisted cardIds and enters the active phase.
-            if (drawn.length > 0) {
-                const started = await runStart.trigger({
-                    request: { courseId, cardIds: drawn.map((card) => card.id) },
-                    headers: courseHeaders,
-                }).catch(() => null)
-                const startedId = started?.data?.startFlashcardQuizSession.data?.sessionId
-                if (startedId && displayId) {
-                    // prime the in-progress cache with the just-created session BEFORE
-                    // navigating, so the fresh QuizSession that mounts at
-                    // `/quiz/[sessionId]` reads it (not the stale `null` the setup
-                    // screen's resume check cached) and rehydrates cleanly instead of
-                    // flashing "resume failed".
-                    await inProgressSessionSwr.mutate()
-                    router.push(
-                        pathConfig().locale(locale).course(displayId).learn()
-                            .flashcards().quiz(startedId).build(),
-                    )
-                    return
-                }
-                // persist failed (or no course display id) → fall through to a local,
-                // non-resumable run so the quiz still works this session.
-                sessionId.current = startedId ?? crypto.randomUUID()
-            } else {
-                sessionId.current = crypto.randomUUID()
+            // `mode`/`level` are REQUIRED (non-null) on the backend's
+            // StartFlashcardQuizSessionRequest (see start-flashcard-quiz-session/
+            // graphql-types/request.ts) — omitting them fails GraphQL input
+            // validation before the resolver even runs (fixed 2026-07-09).
+            const started = await runStart.trigger({
+                request: { courseId, cardIds: drawn.map((card) => card.id), mode, level },
+                headers: courseHeaders,
+            }).catch(() => null)
+            const startedId = started?.data?.startFlashcardQuizSession.data?.sessionId
+            if (!startedId || !displayId) {
+                setStartError(t("flashcard.quiz.sessionLoadErrorTitle"))
+                setStarting(false)
+                return
             }
-            setSessionCards(drawn)
-            setIndex(0)
-            setResults([])
-            setCombo(0)
-            setBestCombo(0)
-            setXpEarned(0)
-            setDailyCapReached(false)
-            setWeakTags([])
-            setReadiness(null)
-            completedRef.current = false
-        } finally {
-            setBuilding(false)
+            // prime the in-progress cache with the just-created session BEFORE
+            // navigating, so the fresh page that mounts at `/quiz/[sessionId]` reads
+            // it (not the stale `null` this screen's own resume check cached) and
+            // rehydrates cleanly instead of flashing "resume failed".
+            await inProgressSessionSwr.mutate()
+            router.push(
+                pathConfig().locale(locale).course(displayId).learn()
+                    .flashcards().quiz(startedId).build(),
+            )
+            // deliberately no `setStarting(false)` here — this instance is about to
+            // be unmounted by the navigation, so the button stays visibly pending
+            // right up until the destination page takes over.
+        } catch {
+            setStartError(t("flashcard.quiz.sessionLoadErrorTitle"))
+            setStarting(false)
         }
-    }, [decks, level, sessionLength, courseHeaders, courseId, fetchCardPool, runStart, inProgressSessionSwr, displayId, locale, router])
+    }, [decks, starting, level, sessionLength, t, courseHeaders, courseId, mode, runStart, inProgressSessionSwr, displayId, locale, router])
 
-    // resume, on mount, when reached via the dedicated `flashcards/quiz/[sessionId]`
+    // "Thoát" — leaves the active run for the setup screen. No confirm modal (unlike
+    // Mock Interview's leave, which is destructive/abandon-ungraded): a quiz run is
+    // persisted server-side (`syncFlashcardQuizSessionProgress`) so navigating away
+    // just resumes later from the same card (thầy 2026-07-09: "cả 2 phần review và
+    // quiz đều không có nút back về").
+    const exitToSetup = useCallback(() => {
+        router.push(
+            `${pathConfig().locale(locale).course(displayId).learn().flashcards().build()}/quiz`,
+        )
+    }, [router, locale, displayId])
+
+    // resume, on mount, when reached via the dedicated `flashcards/quiz/sessions/[sessionId]`
     // route — waits for both the deck pool AND the in-progress query to settle, then
     // either rehydrates straight into the active phase at the persisted card/index or
     // falls back to setup with an inline error. Runs at most ONCE per mounted instance.
@@ -406,13 +423,24 @@ export const QuizSession = ({ courseId, className, onWorkSurfaceChange, resumeSe
 
     const card = sessionCards[index]
 
-    // the parent widens ONLY while the real cloze/flip work UI is on screen — the
-    // `active` phase's building/error/empty sub-states are centered messages, not
-    // the làm-việc-tập-trung job itself, so they stay at the narrow width
-    const isWorkSurface = phase === "active" && !building && !buildError && Boolean(card)
+    // mirror the setup tab into the URL (`?tab=history` / `?tab=stats`) — same technique
+    // as MockInterviewSession's own setupTab mirror, so "Lịch sử"/"Thống kê" are
+    // shareable/refresh-safe links. "begin" (the default) is never written, keeping the
+    // common-case URL clean.
     useEffect(() => {
-        onWorkSurfaceChange?.(isWorkSurface)
-    }, [isWorkSurface, onWorkSurfaceChange])
+        const want = setupTab === "begin" ? null : setupTab
+        if (searchParams.get("tab") === want) {
+            return
+        }
+        const params = new URLSearchParams(searchParams.toString())
+        if (want) {
+            params.set("tab", want)
+        } else {
+            params.delete("tab")
+        }
+        const qs = params.toString()
+        router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false })
+    }, [setupTab, pathname, searchParams, router])
 
     // distractor pool: sibling cards' key terms, preferring the SAME tag (closer =
     // more plausible, à la Duolingo/Quizlet drawing from the session's own vocab)
@@ -616,97 +644,138 @@ export const QuizSession = ({ courseId, className, onWorkSurfaceChange, resumeSe
         const learnPath = pathConfig().locale(locale).course(displayId).learn()
         return (
             <div className={cn("flex flex-col gap-6", className)}>
-                {/* Zone 0 — resume: a "Hỏi nhanh" run left in progress (24h TTL) deep-links
+                {/* NESTED under the outer "Học thẻ/Hỏi nhanh" mode switch (Flashcards/index.tsx,
+                    also variant="primary") — a SECOND primary-weight pill here would render at
+                    the exact same visual weight as that outer mode switch, erasing the
+                    parent/child hierarchy (fe/components/tabs.md §0d, corrected 2026-07-09).
+                    variant="secondary" + explicit `className="w-full"` gives the lighter,
+                    full-width UNDERLINE treatment appropriate for a sub-panel switch nested
+                    inside an already-selected top-level mode (mirrors `ContentTabBar`). */}
+                <TabsCard
+                    variant="secondary"
+                    className="w-full"
+                    leftTabs={{
+                        items: [
+                            { key: "begin", label: t("flashcard.quiz.setupTabBegin") },
+                            { key: "history", label: t("flashcard.quiz.setupTabHistory") },
+                            { key: "stats", label: t("flashcard.quiz.setupTabStats") },
+                        ],
+                        selectedKey: setupTab,
+                        ariaLabel: t("flashcard.quiz.setupTabBegin"),
+                        onSelectionChange: (key) => setSetupTab(key as "begin" | "history" | "stats"),
+                    }}
+                />
+
+                {setupTab === "history" ? (
+                    <FlashcardQuizHistory courseId={courseId} onStartQuiz={() => setSetupTab("begin")} />
+                ) : setupTab === "stats" ? (
+                    <FlashcardQuizStats courseId={courseId} onStartQuiz={() => setSetupTab("begin")} />
+                ) : (
+                    <>
+                        {/* Zone 0 — resume: a "Hỏi nhanh" run left in progress (24h TTL) deep-links
                     straight back into it via the dedicated `.../quiz/[sessionId]` route,
                     ABOVE the ordinary setup zones. Demotes Zone 3's CTA to secondary below
                     so this reads as the screen's primary action while it's shown. */}
-                {resumeData ? (
-                    <ContinueCard
-                        title={t("flashcard.quiz.resumeTitle")}
-                        subtitle={t("flashcard.quiz.resumeSubtitle", {
-                            current: resumeData.currentIndex + 1,
-                            total: resumeData.cardIds.length,
-                        })}
-                        value={resumeData.currentIndex}
-                        max={resumeData.cardIds.length}
-                        ctaLabel={t("flashcard.quiz.resumeCta")}
-                        href={learnPath.flashcards().quiz(resumeData.sessionId).build()}
-                    />
-                ) : null}
+                        {resumeData ? (
+                            <ContinueCard
+                                title={t("flashcard.quiz.resumeTitle")}
+                                subtitle={t("flashcard.quiz.resumeSubtitle", {
+                                    current: resumeData.currentIndex + 1,
+                                    total: resumeData.cardIds.length,
+                                })}
+                                value={resumeData.currentIndex}
+                                max={resumeData.cardIds.length}
+                                ctaLabel={t("flashcard.quiz.resumeCta")}
+                                href={learnPath.flashcards().quiz(resumeData.sessionId).build()}
+                            />
+                        ) : null}
 
-                {resumeError ? (
-                    <Callout status="danger" title={resumeError} />
-                ) : null}
+                        {resumeError ? (
+                            <Callout status="danger" title={resumeError} />
+                        ) : null}
 
-                {/* Zone 1 — progress: reuse the sibling "Học thẻ" tab's stats block (shares
-                    its SWR keys, so this adds no extra fetch) instead of a bespoke mastery
-                    readout, so both tabs of the same "Ôn tập" surface read as one system. */}
-                <FlashcardStatsStrip />
+                        {/* Zone 1 — progress: "Hỏi nhanh"'s OWN readout (sessions/coverage/streak),
+                    NOT the sibling "Học thẻ" tab's mastery bar — mastery is a real shared SM-2
+                    metric across both modes, but the two setup screens read better with their
+                    own numbers (thầy 2026-07-09: "tiến bộ ở 2 nơi khác nhau chứ"; was
+                    `<FlashcardStatsStrip />` before this split). */}
+                        <QuizProgressStrip courseId={courseId} />
 
-                {/* Zone 2 — config: mode + level, its own labeled card so it reads as a
+                        {/* Zone 2 — config: mode + level, its own labeled card so it reads as a
                     distinct block from the progress zone above (was one dense card before). */}
-                <LabeledCard label={t("flashcard.quiz.configLabel")} contentClassName="flex flex-col gap-6">
-                    <div className="flex flex-col gap-3">
-                        <Label>{t("flashcard.quiz.modeLabel")}</Label>
-                        <FlexWrapButtonRadio
-                            ariaLabel={t("flashcard.quiz.modeLabel")}
-                            value={mode}
-                            onChange={setMode}
-                            insideCard
-                            items={[
-                                {
-                                    value: "quick",
-                                    content: (
-                                        <span className="flex items-center gap-2">
-                                            <LightningIcon className="size-4" aria-hidden focusable="false" />
-                                            {t("flashcard.quiz.modeQuick")}
-                                        </span>
-                                    ),
-                                },
-                                {
-                                    value: "deep",
-                                    content: (
-                                        <span className="flex items-center gap-2">
-                                            <StackIcon className="size-4" aria-hidden focusable="false" />
-                                            {t("flashcard.quiz.modeDeep")}
-                                        </span>
-                                    ),
-                                },
-                            ]}
-                        />
-                    </div>
+                        <LabeledCard label={t("flashcard.quiz.configLabel")} contentClassName="flex flex-col gap-6">
+                            <div className="flex flex-col gap-3">
+                                <Label>{t("flashcard.quiz.modeLabel")}</Label>
+                                <FlexWrapButtonRadio
+                                    ariaLabel={t("flashcard.quiz.modeLabel")}
+                                    value={mode}
+                                    onChange={setMode}
+                                    insideCard
+                                    items={[
+                                        {
+                                            value: "quick",
+                                            content: (
+                                                <span className="flex items-center gap-2">
+                                                    <LightningIcon className="size-4" aria-hidden focusable="false" />
+                                                    {t("flashcard.quiz.modeQuick")}
+                                                </span>
+                                            ),
+                                        },
+                                        {
+                                            value: "deep",
+                                            content: (
+                                                <span className="flex items-center gap-2">
+                                                    <StackIcon className="size-4" aria-hidden focusable="false" />
+                                                    {t("flashcard.quiz.modeDeep")}
+                                                </span>
+                                            ),
+                                        },
+                                    ]}
+                                />
+                            </div>
 
-                    <div className="flex flex-col gap-3">
-                        <Label>{t("flashcard.quiz.levelLabel")}</Label>
-                        <FlexWrapButtonRadio
-                            ariaLabel={t("flashcard.quiz.levelLabel")}
-                            value={level ?? "all"}
-                            onChange={(value) => setLevel(value === "all" ? null : value)}
-                            insideCard
-                            items={[
-                                { value: "all", content: t("flashcard.quiz.levelAll") },
-                                ...LEVELS.map((value) => ({
-                                    value,
-                                    content: t(`flashcard.level.${value}`),
-                                })),
-                            ]}
-                        />
-                    </div>
-                </LabeledCard>
+                            <div className="flex flex-col gap-3">
+                                <Label>{t("flashcard.quiz.levelLabel")}</Label>
+                                <FlexWrapButtonRadio
+                                    ariaLabel={t("flashcard.quiz.levelLabel")}
+                                    value={level ?? "all"}
+                                    onChange={(value) => setLevel(value === "all" ? null : value)}
+                                    insideCard
+                                    items={[
+                                        { value: "all", content: t("flashcard.quiz.levelAll") },
+                                        ...LEVELS.map((value) => ({
+                                            value,
+                                            content: t(`flashcard.level.${value}`),
+                                        })),
+                                    ]}
+                                />
+                            </div>
+                        </LabeledCard>
 
-                {/* Zone 3 — CTA, standalone (matches the sibling tab's stacked-block rhythm
+                        {/* Zone 3 — CTA, standalone (matches the sibling tab's stacked-block rhythm
                     rather than being boxed inside Zone 2's card). Demoted to secondary/ghost
-                    while Zone 0's resume card is shown — that card is the primary action then. */}
-                <Button
-                    variant={resumeData ? "secondary" : "primary"}
-                    size="lg"
-                    className="self-start"
-                    isDisabled={!decks || totalCards === 0}
-                    onPress={() => { void startSession() }}
-                >
-                    {t("flashcard.quiz.begin")}
-                    <ArrowRightIcon className="size-5" aria-hidden focusable="false" />
-                </Button>
+                    while Zone 0's resume card is shown — that card is the primary action then.
+                    `isPending` while `startSession` draws + persists the run — the button stays
+                    ON this screen and pending until either the destination page takes over
+                    (success) or `startError` surfaces (failure); no more instant jump to a
+                    separate building-skeleton screen (thầy, 2026-07-09). */}
+                        <Button
+                            variant={resumeData ? "secondary" : "primary"}
+                            size="lg"
+                            className="self-start"
+                            isDisabled={!decks || totalCards === 0}
+                            isPending={starting}
+                            onPress={() => { void startSession() }}
+                        >
+                            {t("flashcard.quiz.begin")}
+                            <ArrowRightIcon className="size-5" aria-hidden focusable="false" />
+                        </Button>
+
+                        {startError ? (
+                            <Callout status="danger" title={startError} />
+                        ) : null}
+                    </>
+                )}
             </div>
         )
     }
@@ -817,28 +886,10 @@ export const QuizSession = ({ courseId, className, onWorkSurfaceChange, resumeSe
     }
 
     // ── ACTIVE ───────────────────────────────────────────────────────────
-    // building the session (fetching deck cards) — mirror with a content skeleton
-    if (building) {
-        return <QuizSessionSkeleton className={className} />
-    }
-
-    // every drawn deck failed to load — a backend hiccup, NOT "no cards at this
-    // level", so say so distinctly and offer a real retry instead of steering the
-    // learner to change a filter that was never the problem
-    if (buildError) {
-        return (
-            <div className={cn("flex flex-col gap-6", className)}>
-                <ErrorContent
-                    title={t("flashcard.quiz.sessionLoadErrorTitle")}
-                    description={t("flashcard.quiz.sessionLoadErrorDescription")}
-                    onRetry={() => { void startSession() }}
-                    retryLabel={t("flashcard.quiz.retry")}
-                />
-            </div>
-        )
-    }
-
-    // no cards after the level filter — offer a way back to setup
+    // no cards after the level filter — offer a way back to setup. (A fresh draw
+    // that fails to produce cards, or a load failure, is now caught earlier —
+    // see `startError` on the setup screen — and never reaches here; this branch
+    // is a resume-only guard, e.g. every persisted card was since deleted.)
     if (!card) {
         return (
             <div className={cn("flex flex-col gap-6", className)}>
@@ -855,9 +906,10 @@ export const QuizSession = ({ courseId, className, onWorkSurfaceChange, resumeSe
         )
     }
 
-    // shared header: progress + combo + card meta
+    // shared header: back link + progress + combo + card meta
     const header = (
         <>
+            <BackLink label={t("flashcard.quiz.exitToSetup")} onPress={exitToSetup} />
             <div className="flex flex-wrap items-center justify-between gap-3">
                 <ProgressMeter
                     value={index + 1}
@@ -972,8 +1024,12 @@ export const QuizSession = ({ courseId, className, onWorkSurfaceChange, resumeSe
         <div className={cn("flex flex-col gap-6", className)}>
             {header}
 
-            {/* question prompt + the cloze sentence (one surface, divided) */}
-            <div className="flex flex-col gap-3 rounded-2xl bg-surface p-6 shadow-surface">
+            {/* question + cloze — TINTED (accent/5 + left accent border), bounded-small per
+                accent-system.md §5 exception, so it reads as the ACTIVE interaction zone,
+                distinct from the neutral word-bank card below (redesign 2026-07-09,
+                fe/components/tabs.md-adjacent visual-polish pass — see quiz-visual-polish
+                prototype). */}
+            <div className="flex flex-col gap-3 rounded-2xl border-l-[3px] border-l-accent bg-accent/5 p-6 shadow-surface">
                 <Typography type="body-xs" weight="medium" color="muted">
                     {t("flashcard.questionLabel")}
                 </Typography>
@@ -990,9 +1046,31 @@ export const QuizSession = ({ courseId, className, onWorkSurfaceChange, resumeSe
                     {cloze.segments.map((segment, position) =>
                         segment.kind === "text" ? (
                             <span key={position}>{segment.text}</span>
+                        ) : segment.kind === "code" ? (
+                            // same inline-code styling as MarkdownContent's own renderer
+                            // (reuseable/MarkdownContent/map.tsx) — kept consistent since this
+                            // sentence sits right next to the question's own MarkdownContent.
+                            <code
+                                key={position}
+                                className="rounded-md bg-default px-1 py-0.5 font-mono text-sm text-foreground [overflow-wrap:anywhere]"
+                            >
+                                {segment.text}
+                            </code>
+                        ) : segment.kind === "bold" ? (
+                            <strong key={position} className="font-semibold">{segment.text}</strong>
+                        ) : segment.kind === "italic" ? (
+                            <em key={position}>{segment.text}</em>
                         ) : (
                             (() => {
-                                const value = filled[segment.index]
+                                // `?? null` guards a real crash: for one render tick right after
+                                // `commitCard` advances `index` (before the card-change effect
+                                // resets `filled`), `cloze` has ALREADY recomputed for the new
+                                // (possibly longer) card while `filled` still holds the previous
+                                // card's (possibly shorter) array — `filled[segment.index]` then
+                                // reads `undefined`, which slips past a `!== null` guard and
+                                // crashes on `.toLowerCase()`. Coercing to `null` here makes every
+                                // downstream `=== null` check treat it the same as "not filled yet".
+                                const value = filled[segment.index] ?? null
                                 const isCorrect =
                                     checked
                                     && value !== null
@@ -1011,12 +1089,12 @@ export const QuizSession = ({ courseId, className, onWorkSurfaceChange, resumeSe
                                         className={cn(
                                             "mx-1 inline-flex min-w-16 items-center justify-center rounded-lg border px-3 py-0.5 align-middle text-sm font-medium transition-colors",
                                             value === null
-                                                ? "border-dashed border-default text-muted"
+                                                ? "border-dashed border-default bg-default/60 text-muted"
                                                 : tone,
                                             !checked && value !== null ? "cursor-pointer" : "",
                                         )}
                                     >
-                                        {value ?? " "}
+                                        {value ?? "···"}
                                     </button>
                                 )
                             })()
@@ -1034,24 +1112,32 @@ export const QuizSession = ({ courseId, className, onWorkSurfaceChange, resumeSe
                 ) : null}
             </div>
 
-            {/* the word bank: correct terms + sibling distractors (used chips dim out) */}
+            {/* the word bank: correct terms + sibling distractors (used chips dim out).
+                loose on the page (no card wrapper) — it's a bank of CHIPS to pick from,
+                not a content surface; the tinted question block above is the only card
+                here (thầy 2026-07-09: "ngân hàng từ để trong card làm gì? bỏ ra ngoài card"). */}
             {!checked ? (
-                <div className="flex flex-col gap-3">
-                    <div className="flex flex-wrap items-center gap-2">
-                        {cloze.bank.map((term) => {
-                            const used = filled.includes(term)
-                            return (
-                                <Button
-                                    key={term}
-                                    size="sm"
-                                    variant="outline"
-                                    isDisabled={used}
-                                    onPress={() => placeTerm(term)}
-                                >
-                                    {term}
-                                </Button>
-                            )
-                        })}
+                <div className="flex flex-col gap-6">
+                    <div className="flex flex-col gap-3">
+                        <Typography type="body-xs" weight="medium" color="muted">
+                            {t("flashcard.quiz.wordBankLabel")}
+                        </Typography>
+                        <div className="flex flex-wrap items-center gap-2">
+                            {cloze.bank.map((term) => {
+                                const used = filled.includes(term)
+                                return (
+                                    <Button
+                                        key={term}
+                                        size="sm"
+                                        variant="outline"
+                                        isDisabled={used}
+                                        onPress={() => placeTerm(term)}
+                                    >
+                                        {term}
+                                    </Button>
+                                )
+                            })}
+                        </div>
                     </div>
                     <Button
                         variant="primary"

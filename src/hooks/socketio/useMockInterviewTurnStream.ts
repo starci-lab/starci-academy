@@ -11,6 +11,13 @@ import { mockInterviewSocket } from "./sockets"
 
 /** Args for one streamed mock-interviewer turn. */
 export interface AskMockInterviewTurnStreamParams {
+    /**
+     * Id of the persisted `mock_interview_sessions` row this ask belongs to —
+     * "session time limit" (2026-07-08): lets the server enforce the 1-hour
+     * ask-loop deadline against THIS session's own `createdAt` before
+     * spending an AI call.
+     */
+    sessionId: string
     /** Course the interview is grounded in (RAG scope + on-rails course content). */
     courseId: string
     /** Id of the interview prompt this session is running. */
@@ -107,6 +114,7 @@ export const useMockInterviewTurnStream = (): MockInterviewTurnStreamControls =>
             const payload: AskMockInterviewTurnSocketIoPayload = {
                 data: {
                     streamId,
+                    sessionId: params.sessionId,
                     courseId: params.courseId,
                     promptId: params.promptId,
                     promptTitle: params.promptTitle,

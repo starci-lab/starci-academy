@@ -348,9 +348,23 @@ export const pathConfig = () => {
                     // card deep-links here so a session started earlier (24h TTL) rehydrates
                     // straight into the active phase instead of starting fresh.
                     const quiz = (sessionId: string) => {
-                        const quizPath = `${flashcardsPath}/quiz/${sessionId}`
+                        const quizPath = `${flashcardsPath}/quiz/sessions/${sessionId}`
                         const build = () => {
                             return quizPath
+                        }
+                        return {
+                            build,
+                        }
+                    }
+                    // resumable "Học thẻ" (SM-2 review) URL: the deck being reviewed rides
+                    // as a route segment (not `?deck=`) so it's traceable/shareable, mirroring
+                    // `quiz(sessionId)` above (thầy 2026-07-09: "trên url cũng không có cái
+                    // deck của phần ôn"). `useFlashcardNav` parses `deckId` back out of this
+                    // same shape — keep the two in sync if this ever changes.
+                    const review = (deckId: string) => {
+                        const reviewPath = `${flashcardsPath}/review/decks/${deckId}`
+                        const build = () => {
+                            return reviewPath
                         }
                         return {
                             build,
@@ -359,6 +373,7 @@ export const pathConfig = () => {
                     return {
                         build,
                         quiz,
+                        review,
                     }
                 }
                 const mockInterview = () => {

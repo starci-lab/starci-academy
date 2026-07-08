@@ -5,7 +5,7 @@ import useSWR from "swr"
 import { cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { useFlashcardNav, type FlashcardMode } from "../useFlashcardNav"
-import { SegmentedControl } from "@/components/blocks/navigation/SegmentedControl"
+import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { queryFlashcardDecksByCourse } from "@/modules/api/graphql/queries/query-flashcard-decks-by-course"
 import { useAppSelector } from "@/redux/hooks"
 import type { FlashcardDeckEntity } from "@/modules/types/entities/flashcard-deck"
@@ -47,14 +47,20 @@ export const FlashcardMobileNav = ({ className }: FlashcardMobileNavProps) => {
 
     return (
         <div className={cn("flex flex-col gap-3 lg:hidden", className)}>
-            <SegmentedControl<FlashcardMode>
-                ariaLabel={t("flashcard.title")}
-                value={mode}
-                onChange={goMode}
-                items={[
-                    { value: "study", label: t("flashcard.mode.study") },
-                    { value: "quiz", label: t("flashcard.mode.quiz") },
-                ]}
+            {/* page-FEATURE switch (mirrors the desktop rail's own mode control, see
+                Flashcards/index.tsx) → TabsCard variant="primary", NOT SegmentedControl
+                (fe/components/tabs.md §0b, corrected 2026-07-09). */}
+            <TabsCard
+                variant="primary"
+                leftTabs={{
+                    items: [
+                        { key: "study", label: t("flashcard.mode.study") },
+                        { key: "quiz", label: t("flashcard.mode.quiz") },
+                    ],
+                    selectedKey: mode,
+                    ariaLabel: t("flashcard.title"),
+                    onSelectionChange: (key) => goMode(key as FlashcardMode),
+                }}
             />
 
             {/* study mode → horizontal deck picker (the rail's deck list, mobile form) */}

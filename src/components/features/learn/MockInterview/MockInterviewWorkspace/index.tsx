@@ -4,14 +4,11 @@ import React from "react"
 import {
     ListBox,
     Select,
-    TextArea,
-    TextField,
     cn,
 } from "@heroui/react"
 import Editor from "@monaco-editor/react"
 import { useTheme } from "next-themes"
 import { useTranslations } from "next-intl"
-import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { ProgrammingLanguage } from "@/modules/types/enums/programming-language"
 import { DEFAULT_PROGRAMMING_LANGUAGES } from "@/modules/types/utils/programming-language"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -21,8 +18,14 @@ import type {
     MockInterviewDiagramNodeSnapshot,
 } from "../MockInterviewDiagram"
 
-/** One tool tab of the {@link MockInterviewWorkspace} — "y như phỏng vấn thật". */
-type MockInterviewTool = "whiteboard" | "code" | "notes"
+/**
+ * Which tool the {@link MockInterviewWorkspace} shows — driven ENTIRELY by the
+ * current question, never by a candidate-facing switcher (2026-07-09 feedback:
+ * a manual Whiteboard/Code/Notes tab bar read as "xàm" busywork). A
+ * debug/review/optimize question (given code) renders straight to `"code"`; a
+ * `mode="design"` phase renders straight to `"whiteboard"`.
+ */
+type MockInterviewTool = "whiteboard" | "code"
 
 /** Controlled code-tab state (language + source), lifted so switching tabs never loses it. */
 export interface MockInterviewCodeState {
@@ -34,25 +37,25 @@ export interface MockInterviewCodeState {
 
 /** Props for {@link MockInterviewWorkspace}. */
 export interface MockInterviewWorkspaceProps extends WithClassNames<undefined> {
-    /** Which tool tab is active. */
+    /** Which tool renders — set by the caller from the current question, not by the candidate. */
     tool: MockInterviewTool
-    /** Fired when the candidate switches tools. */
-    onToolChange: (tool: MockInterviewTool) => void
     /** Whiteboard change callback — mirrors {@link MockInterviewDiagram}'s `onChange` (read at grade time). */
     onDiagramChange: (
         nodes: Array<MockInterviewDiagramNodeSnapshot>,
         edges: Array<MockInterviewDiagramEdgeSnapshot>,
     ) => void
-    /** Whether the whiteboard currently has any box on it (drives its tab dot). */
-    hasDiagramContent: boolean
     /** Controlled code-tab state. */
     codeState: MockInterviewCodeState
     /** Fired with the next code-tab state. */
     onCodeStateChange: (next: MockInterviewCodeState) => void
-    /** Controlled notes-tab text. */
-    notes: string
-    /** Fired with the next notes text. */
-    onNotesChange: (next: string) => void
+    /**
+     * Every authored language variant of the CURRENT question's given code —
+     * switching the language `Select` looks up the matching variant here and
+     * swaps `codeState.code` to it, client-side, no refetch (mirrors
+     * `ChallengeView`'s own per-language step content). Empty when the
+     * current question has no given code (`tool !== "code"`).
+     */
+    givenCodeVariants?: Array<{ lang: string, code: string }>
 }
 
 /** Default code-tab state — TypeScript, empty buffer. */
@@ -61,39 +64,37 @@ export const MOCK_INTERVIEW_CODE_STATE_DEFAULT: MockInterviewCodeState = {
     code: "",
 }
 
-/** A small filled dot marking a tool tab whose artifact is non-empty. */
-const ArtifactDot = () => (
-    <span aria-hidden className="size-1.5 shrink-0 rounded-full bg-accent" />
-)
-
 /**
- * The mock interview's right-pane WORKSPACE — a `TabsCard` switching between three
- * candidate tools, "y như phỏng vấn thật" (CoderPad-style: whiteboard ⇆ code ⇆ notes
- * in one pad): the existing {@link MockInterviewDiagram} xyflow canvas, a plain code
- * textarea (with a language picker), and a plain notes textarea.
+ * The mock interview's right-pane WORKSPACE — renders straight to the ONE tool
+ * the current question needs (no candidate-facing switcher): the
+ * {@link MockInterviewDiagram} xyflow canvas for a `mode="design"` phase, or a
+ * Monaco code editor for a debug/review/optimize question's given code.
  *
- * All three tools stay MOUNTED at once (toggled with `hidden`, not conditionally
- * rendered) so switching tabs never destroys an artifact — the diagram keeps its own
- * xyflow state internally, and the code/notes buffers are controlled by the parent.
- * A tab whose artifact is non-empty shows a small dot in its label.
+ * Both stay MOUNTED (toggled with `hidden`, not conditionally rendered) so an
+ * in-progress sketch survives a `qna` session moving between a code question
+ * and a plain one.
  *
  * @param props - {@link MockInterviewWorkspaceProps}
  */
 export const MockInterviewWorkspace = ({
     tool,
-    onToolChange,
     onDiagramChange,
-    hasDiagramContent,
     codeState,
     onCodeStateChange,
-    notes,
-    onNotesChange,
+    givenCodeVariants = [],
     className,
 }: MockInterviewWorkspaceProps) => {
     const t = useTranslations()
     const { theme } = useTheme()
 
-    const languageItems = DEFAULT_PROGRAMMING_LANGUAGES.map((lang) => ({
+    // only offer languages actually AUTHORED for this question (mirrors
+    // ChallengeView only showing tabs for languages that exist) — falls back to
+    // the full default list if variants are somehow empty while the tool is
+    // still "code" (shouldn't happen, but never leaves the picker blank).
+    const availableLangs = givenCodeVariants.length > 0
+        ? givenCodeVariants.map((variant) => variant.lang)
+        : DEFAULT_PROGRAMMING_LANGUAGES
+    const languageItems = availableLangs.map((lang) => ({
         id: lang,
         title: t(`programmingLanguage.${lang}`),
     }))
@@ -101,45 +102,6 @@ export const MockInterviewWorkspace = ({
 
     return (
         <div className={cn("flex flex-col gap-3", className)}>
-            <TabsCard
-                leftTabs={{
-                    items: [
-                        {
-                            key: "whiteboard",
-                            label: (
-                                <span className="flex items-center gap-1.5">
-                                    {t("mockInterview.workspace.whiteboard")}
-                                    {hasDiagramContent ? <ArtifactDot /> : null}
-                                </span>
-                            ),
-                        },
-                        {
-                            key: "code",
-                            label: (
-                                <span className="flex items-center gap-1.5">
-                                    {t("mockInterview.workspace.code")}
-                                    {codeState.code.trim().length > 0 ? <ArtifactDot /> : null}
-                                </span>
-                            ),
-                        },
-                        {
-                            key: "notes",
-                            label: (
-                                <span className="flex items-center gap-1.5">
-                                    {t("mockInterview.workspace.notes")}
-                                    {notes.trim().length > 0 ? <ArtifactDot /> : null}
-                                </span>
-                            ),
-                        },
-                    ],
-                    selectedKey: tool,
-                    ariaLabel: t("mockInterview.workspace.ariaLabel"),
-                    onSelectionChange: (key) => onToolChange(String(key) as MockInterviewTool),
-                }}
-            />
-
-            {/* all three tools stay mounted — only visibility toggles, so an in-progress
-                sketch/code/notes buffer is never lost when the candidate switches tabs */}
             <div className={cn(tool !== "whiteboard" && "hidden")}>
                 <MockInterviewDiagram onChange={onDiagramChange} />
             </div>
@@ -149,9 +111,15 @@ export const MockInterviewWorkspace = ({
                     aria-label={t("mockInterview.workspace.languageLabel")}
                     selectedKey={codeState.lang}
                     onSelectionChange={(key) => {
-                        if (key) {
-                            onCodeStateChange({ ...codeState, lang: String(key) as ProgrammingLanguage })
+                        if (!key) {
+                            return
                         }
+                        const nextLang = String(key) as ProgrammingLanguage
+                        // switching language swaps in that variant's OWN given code
+                        // (client-side lookup, no refetch) — not just a re-label of
+                        // the same buffer under a different syntax highlighter
+                        const variant = givenCodeVariants.find((candidate) => candidate.lang === nextLang)
+                        onCodeStateChange({ lang: nextLang, code: variant?.code ?? codeState.code })
                     }}
                 >
                     <Select.Trigger aria-label={t("mockInterview.workspace.languageLabel")} className="w-40">
@@ -188,19 +156,6 @@ export const MockInterviewWorkspace = ({
                         }}
                     />
                 </div>
-            </div>
-
-            <div className={cn(tool !== "notes" && "hidden")}>
-                <TextField variant="secondary" className="w-full">
-                    <TextArea
-                        rows={12}
-                        value={notes}
-                        onChange={(event) => onNotesChange(event.target.value)}
-                        placeholder={t("mockInterview.workspace.notesPlaceholder")}
-                        className="resize-none"
-                        aria-label={t("mockInterview.workspace.notes")}
-                    />
-                </TextField>
             </div>
         </div>
     )

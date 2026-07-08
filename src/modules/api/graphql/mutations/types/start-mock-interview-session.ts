@@ -33,6 +33,18 @@ export interface StartMockInterviewSessionRequest {
     countsToReadiness?: boolean
 }
 
+/**
+ * One authored programming-language variant of a debug/review/optimize
+ * question's GIVEN code — same conceptual bug, one entry per language. The
+ * candidate freely switches between these client-side (no refetch).
+ */
+export interface MockInterviewGivenCodeVariant {
+    /** Programming language this variant is written in (e.g. "typescript"). */
+    lang: string
+    /** The given code itself, in {@link lang}. */
+    code: string
+}
+
 /** One flashcard topic seeding a `mode="qna"` session's questions, in ask order. */
 export interface MockInterviewSeedTopic {
     /** The seed flashcard's id. */
@@ -44,11 +56,10 @@ export interface MockInterviewSeedTopic {
     /**
      * GIVEN code the candidate should FIX/read (interview-bank debug/review/optimize
      * questions) — delivered SEPARATELY from the prose so the FE seeds it into an
-     * editable code editor instead of showing it read-only in the chat. Null otherwise.
+     * editable code editor instead of showing it read-only in the chat, one entry
+     * per authored language. Empty otherwise.
      */
-    givenCode?: string | null
-    /** Language of {@link givenCode} (e.g. "typescript") — drives the editor's syntax mode. Null when no given code. */
-    givenLang?: string | null
+    givenCodes: Array<MockInterviewGivenCodeVariant>
 }
 
 /** Payload inside `startMockInterviewSession.data` after the standard API wrapper. */
@@ -69,6 +80,8 @@ export interface StartMockInterviewSessionData {
     mode: string
     /** Drawn flashcard-card seed questions, in ask order — one per question, each with its own randomly-assigned kind. Empty for `mode="design"`. */
     seedTopics: Array<MockInterviewSeedTopic>
+    /** ISO timestamp of the session's 1-hour ask-loop deadline (createdAt + 1h) — the FE derives its countdown from THIS, never a local clock start. */
+    deadlineAt: string
 }
 
 /** Apollo response shape for `startMockInterviewSession`. */

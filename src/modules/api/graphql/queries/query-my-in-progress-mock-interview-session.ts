@@ -21,6 +21,10 @@ const query1 = gql`
           cardId
           kind
           title
+          givenCodes {
+            lang
+            code
+          }
         }
         turns {
           role
@@ -32,6 +36,7 @@ const query1 = gql`
         questionIndex
         phaseIndex
         updatedAt
+        deadlineAt
       }
     }
   }

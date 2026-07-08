@@ -30,6 +30,8 @@ export interface MockInterviewAttemptItem {
     promptTitle: string
     /** Seniority level the session was graded against, or null (any level). */
     level: string | null
+    /** The top-level flow this session ran ("qna" | "design"), or null for an attempt graded before the "mode split" (treated as "design"). */
+    mode: string | null
     /** Integer 0–100 overall score. */
     overallScore: number
     /** Coarse pass/borderline/fail band. */

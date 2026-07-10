@@ -1,12 +1,13 @@
 "use client"
 
 import React from "react"
-import { Typography, cn } from "@heroui/react"
-import { useLocale } from "next-intl"
+import { cn } from "@heroui/react"
+import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { EntityResultRow } from "@/components/blocks/learn/EntityResultRow"
 import { useQuerySearchCourseContentSwr } from "@/hooks/swr/api/graphql/queries/useQuerySearchCourseContentSwr"
 import { resolveSearchResultHref } from "@/modules/learn/resolve-search-result-href"
 
@@ -25,6 +26,13 @@ export interface RelatedContentListProps extends WithClassNames<undefined> {
     query: string
     /** Section label (translated by the caller — each surface phrases this differently). */
     label: React.ReactNode
+    /**
+     * The current surface's OWN source id (this lesson / task / deck). Filtered out
+     * of the results so the block never suggests the page the learner is already on
+     * — a title-derived query (e.g. LessonReader's `content.title`) always returns
+     * itself as the top hit, which reads as a bug ("nên đọc: bài chính nó").
+     */
+    excludeId?: string
     /** Max rows shown. Defaults to 3. */
     limit?: number
 }
@@ -44,13 +52,20 @@ export const RelatedContentList = ({
     courseDisplayId,
     query,
     label,
+    excludeId,
     limit = 3,
     className,
 }: RelatedContentListProps) => {
     const locale = useLocale()
+    const t = useTranslations("common")
     const router = useRouter()
     const swr = useQuerySearchCourseContentSwr(courseId, query, Boolean(query.trim()))
-    const results = (swr.data ?? []).slice(0, limit)
+    // drop the current surface's own source — a title-derived query always returns
+    // itself as the top hit, and suggesting the page you're on reads as a bug.
+    const results = (swr.data ?? [])
+        .filter((item) => !excludeId
+            || (item.contentId !== excludeId && item.deckId !== excludeId && item.taskId !== excludeId))
+        .slice(0, limit)
 
     if (!query.trim() || swr.error || (!swr.isLoading && results.length === 0)) {
         return null
@@ -70,29 +85,17 @@ export const RelatedContentList = ({
             >
                 <div className="overflow-hidden rounded-2xl border border-default bg-surface">
                     {results.map((item, index) => (
-                        <button
+                        <EntityResultRow
                             key={`${item.kind}-${item.contentId ?? item.deckId ?? item.taskId ?? index}`}
-                            type="button"
-                            onClick={() => {
-                                const href = resolveSearchResultHref(item, locale, courseDisplayId)
+                            item={item}
+                            ctaLabel={t("read")}
+                            onSelect={(picked) => {
+                                const href = resolveSearchResultHref(picked, locale, courseDisplayId)
                                 if (href) {
                                     router.push(href)
                                 }
                             }}
-                            className="relative flex w-full flex-col gap-0.5 px-4 py-3 text-left transition-colors hover:bg-default after:absolute after:bottom-0 after:left-[3%] after:h-px after:w-[94%] after:bg-surface-foreground/6 after:content-[''] last:after:hidden"
-                        >
-                            {item.breadcrumb ? (
-                                <Typography type="body-xs" color="muted" truncate>
-                                    {item.breadcrumb}
-                                </Typography>
-                            ) : null}
-                            <Typography type="body-sm" weight="medium" truncate>
-                                {item.title}
-                            </Typography>
-                            <Typography type="body-xs" color="muted" className="line-clamp-2">
-                                {item.snippet}
-                            </Typography>
-                        </button>
+                        />
                     ))}
                 </div>
             </AsyncContent>

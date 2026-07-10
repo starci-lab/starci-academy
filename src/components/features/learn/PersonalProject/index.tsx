@@ -102,6 +102,7 @@ export const Task = ({
                     courseId={course.id}
                     courseDisplayId={course.displayId}
                     query={`${displayTask.title} ${displayTask.description ?? ""}`}
+                    excludeId={displayTask.id}
                     label={t("task.relatedContent.label")}
                 />
             ) : null}

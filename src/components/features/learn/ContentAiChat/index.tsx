@@ -15,10 +15,13 @@ import {
 import {
     ArrowLeftIcon,
     ArrowRightIcon,
+    BookOpenIcon,
+    CardsThreeIcon,
     CaretDownIcon,
     ChatsCircleIcon,
+    CodeIcon,
+    FlagIcon,
     GearIcon,
-    MagnifyingGlassIcon,
     PaperPlaneTiltIcon,
     PlusIcon,
     QuotesIcon,
@@ -57,7 +60,10 @@ import { SearchInput } from "@/components/reuseable/SearchInput"
 import { InfiniteScrollSentinel } from "@/components/blocks/async/InfiniteScrollSentinel"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { useQuerySearchCourseContentSwr } from "@/hooks/swr/api/graphql/queries/useQuerySearchCourseContentSwr"
+import { querySearchCourseContent } from "@/modules/api/graphql/queries/query-search-course-content"
 import type { SearchCourseContentItem } from "@/modules/api/graphql/queries/types/search-course-content"
+import { ChatToolResult } from "@/components/blocks/learn/ChatToolResult"
+import { EntityResultRow } from "@/components/blocks/learn/EntityResultRow"
 
 /** Props for {@link ContentAiChat}. */
 export type ContentAiChatProps = WithClassNames<undefined>
@@ -67,6 +73,44 @@ const SUGGESTION_KEYS = ["summarize", "hardest", "example", "remember"] as const
 
 /** Scoped quick-asks shown when a lesson passage is selected (keys under `contentAi.selectionSuggestions`). */
 const SELECTION_SUGGESTION_KEYS = ["explain", "example", "simplify"] as const
+
+/** The kind an in-chat "find X" intent resolves to. */
+type ContentIntentKind = "content" | "challenge" | "flashcard" | "milestone"
+
+/** A find-verb that signals the learner wants a LIST of course content, not a chat answer. */
+const CONTENT_INTENT_VERB_RE = /(tìm|find|gợi ý|liệt kê|list|show|kiếm)/i
+
+/** Kind noun → the corpus kind to search. */
+const CONTENT_INTENT_KINDS: Array<{ re: RegExp, kind: ContentIntentKind }> = [
+    { re: /(flashcard|thẻ)/i, kind: "flashcard" },
+    { re: /(thử thách|challenge|bài tập)/i, kind: "challenge" },
+    { re: /(dự án|milestone|capstone|nhiệm vụ)/i, kind: "milestone" },
+    { re: /(bài học|bài|lesson|nội dung)/i, kind: "content" },
+]
+
+/**
+ * Detect an in-chat "find <kind> for this" intent — requires BOTH a find-verb
+ * and a kind noun so a normal question ("tóm tắt bài này") never hijacks the chat
+ * into a search. Returns the kind to render, or null for a normal answer.
+ * MVP intent lives client-side; the BE classifier + persisted tool turn is phase 2.
+ */
+const detectContentIntent = (text: string): ContentIntentKind | null => {
+    if (!CONTENT_INTENT_VERB_RE.test(text)) {
+        return null
+    }
+    return CONTENT_INTENT_KINDS.find((entry) => entry.re.test(text))?.kind ?? null
+}
+
+/** Per-kind header presentation for the in-chat tool-result widget. */
+const TOOL_RESULT_META: Record<ContentIntentKind, { labelKey: string, Icon: typeof CardsThreeIcon }> = {
+    flashcard: { labelKey: "entityResult.kindFlashcard", Icon: CardsThreeIcon },
+    content: { labelKey: "entityResult.kindContent", Icon: BookOpenIcon },
+    challenge: { labelKey: "entityResult.kindChallenge", Icon: CodeIcon },
+    milestone: { labelKey: "entityResult.kindMilestone", Icon: FlagIcon },
+}
+
+/** Number of rows the in-chat tool result shows before "see all". */
+const TOOL_RESULT_LIMIT = 5
 
 /** Extract the visible `<display>…</display>` part of a message (hides `<context>` from the UI). */
 const DISPLAY_RE = /<display>([\s\S]*?)<\/display>/
@@ -88,6 +132,21 @@ interface ChatMessage {
     content: string
     /** Whether this assistant turn is an AI-quota-exhausted error (shows an upgrade CTA). */
     isQuotaError?: boolean
+    /**
+     * In-chat tool result (generative-UI part) — when the learner asks to FIND
+     * content ("tìm flashcard cho phần này"), this assistant turn renders a
+     * pickable {@link ChatToolResult} list instead of streamed text.
+     */
+    toolResult?: {
+        /** Which corpus the results belong to (drives the header label/icon). */
+        kind: ContentIntentKind
+        /** The query that produced them (feeds the "see all" full-search view). */
+        query: string
+        /** The matched sources (already sliced to {@link TOOL_RESULT_LIMIT}). */
+        items: Array<SearchCourseContentItem>
+        /** True while the RAG search is in flight (renders skeleton rows). */
+        isLoading: boolean
+    }
 }
 
 /**
@@ -294,10 +353,55 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
         })
     }, [])
 
+    /**
+     * Run an in-chat "find content" intent: append a tool-result assistant turn,
+     * then fill it from a course-wide RAG search. Client-side MVP — the BE intent
+     * classifier + persisted tool turn is phase 2 (this turn is not saved yet).
+     */
+    const runContentIntent = useCallback(async (raw: string, kind: ContentIntentKind) => {
+        const courseId = course?.id
+        if (!courseId) {
+            return
+        }
+        setMessages((prev) => [
+            ...prev,
+            { role: "user", content: raw },
+            { role: "assistant", content: "", toolResult: { kind, query: raw, items: [], isLoading: true } },
+        ])
+        setInput("")
+        let items: Array<SearchCourseContentItem> = []
+        try {
+            const res = await querySearchCourseContent({ courseId, searchQuery: raw })
+            const all = res.data?.searchCourseContent?.data?.results ?? []
+            items = all
+                .filter((item) => (kind === "content"
+                    ? item.kind === "content" || item.kind === "code"
+                    : item.kind === kind))
+                .slice(0, TOOL_RESULT_LIMIT)
+        } catch {
+            items = []
+        }
+        setMessages((prev) => {
+            const next = [...prev]
+            const last = next[next.length - 1]
+            if (last?.role === "assistant" && last.toolResult) {
+                next[next.length - 1] = { ...last, toolResult: { ...last.toolResult, items, isLoading: false } }
+            }
+            return next
+        })
+    }, [course?.id])
+
     /** Send a question, creating a conversation lazily on the first message. */
     const onSend = useCallback(async (preset?: string) => {
         const raw = (preset ?? input).trim()
         if (!raw || !contentId || isStreaming) {
+            return
+        }
+        // an in-chat "find <kind>" ask renders a pickable list, not a streamed
+        // answer (skipped while a passage is selected — that path is "explain this")
+        const intentKind = selection ? null : detectContentIntent(raw)
+        if (intentKind && course?.id) {
+            void runContentIntent(raw, intentKind)
             return
         }
         let sessionId = currentSessionId
@@ -357,7 +461,7 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                 })
             },
         })
-    }, [input, contentId, isStreaming, currentSessionId, createSwr, selection, selectionContext, messages, ask, appendToAssistant, setSelection, sessionsSwr, sessionsInfinite, modelSelection])
+    }, [input, contentId, isStreaming, currentSessionId, createSwr, selection, selectionContext, messages, ask, appendToAssistant, setSelection, sessionsSwr, sessionsInfinite, modelSelection, runContentIntent, course?.id])
 
     /** Start a fresh conversation (created lazily on the first message). */
     const onNewConversation = useCallback(() => {
@@ -452,6 +556,39 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
             />
         </TextField>
     )
+
+    /** Render an in-chat tool-result turn: an intro line + the pickable widget
+     *  (or a quiet text fallback when the search came back empty). */
+    const renderToolResult = (tr: NonNullable<ChatMessage["toolResult"]>) => {
+        const meta = TOOL_RESULT_META[tr.kind]
+        const Icon = meta.Icon
+        if (!tr.isLoading && tr.items.length === 0) {
+            return (
+                <div className="flex flex-col gap-2">
+                    <Typography type="body-sm">{t("contentAi.toolResult.intro")}</Typography>
+                    <Typography type="body-sm" color="muted">{t("contentAi.toolResult.empty")}</Typography>
+                </div>
+            )
+        }
+        return (
+            <div className="flex flex-col gap-2">
+                <Typography type="body-sm">{t("contentAi.toolResult.intro")}</Typography>
+                <ChatToolResult
+                    items={tr.items}
+                    isLoading={tr.isLoading}
+                    label={t(meta.labelKey)}
+                    icon={<Icon className="size-4" aria-hidden focusable="false" />}
+                    onSelect={onSelectSearchResult}
+                    onViewAll={() => {
+                        setContentSearchQuery(tr.query)
+                        setDebouncedContentSearchQuery(tr.query)
+                        setView("search")
+                    }}
+                    viewAllLabel={t("contentAi.toolResult.viewAll")}
+                />
+            </div>
+        )
+    }
 
     // ── conversations view ────────────────────────────────────────────────
     if (view === "conversations") {
@@ -591,26 +728,15 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                                 {t("contentAi.searchContentHint")}
                             </Typography>
                         ) : (
-                            <div className="flex flex-col gap-1">
+                            <div className="flex flex-col overflow-hidden rounded-2xl border border-default">
                                 {results.map((item, index) => (
-                                    <button
+                                    <EntityResultRow
                                         key={`${item.kind}-${item.contentId ?? item.deckId ?? item.taskId ?? index}`}
-                                        type="button"
-                                        onClick={() => onSelectSearchResult(item)}
-                                        className="flex flex-col gap-0.5 rounded-xl px-3 py-2 text-left transition-colors hover:bg-default"
-                                    >
-                                        {item.breadcrumb ? (
-                                            <Typography type="body-xs" color="muted" truncate>
-                                                {item.breadcrumb}
-                                            </Typography>
-                                        ) : null}
-                                        <Typography type="body-sm" weight="medium" truncate>
-                                            {item.title}
-                                        </Typography>
-                                        <Typography type="body-xs" color="muted" className="line-clamp-2">
-                                            {item.snippet}
-                                        </Typography>
-                                    </button>
+                                        item={item}
+                                        showKindChip
+                                        showSnippet
+                                        onSelect={onSelectSearchResult}
+                                    />
                                 ))}
                             </div>
                         )}
@@ -659,15 +785,6 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                     </span>
                     <CaretDownIcon className="size-4 shrink-0" />
                 </Link>
-                <Button
-                    isIconOnly
-                    size="sm"
-                    variant="ghost"
-                    aria-label={t("contentAi.searchContent")}
-                    onPress={() => setView("search")}
-                >
-                    <MagnifyingGlassIcon className="size-5" />
-                </Button>
             </div>
 
             {/* thread — self-bounded scroll region (scroll shadow on the messages,
@@ -695,7 +812,9 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                         messages.map((message, index) => (
                             <ChatBubble key={index} role={message.role}>
                                 {message.role === "assistant" ? (
-                                    message.content === "" ? (
+                                    message.toolResult ? (
+                                        renderToolResult(message.toolResult)
+                                    ) : message.content === "" ? (
                                         <Typography type="body-sm" color="muted">
                                             {t("contentAi.thinking")}
                                         </Typography>

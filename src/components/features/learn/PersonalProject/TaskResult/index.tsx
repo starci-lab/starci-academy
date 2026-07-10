@@ -405,6 +405,7 @@ export const PersonalProjectTaskResult = ({
                                 courseId={courseId}
                                 courseDisplayId={courseDisplayId}
                                 query={failingFindingsQuery}
+                                excludeId={selectedTaskId ?? undefined}
                                 label={t("personalProjectResult.relatedContent.label")}
                             />
                         ) : null}

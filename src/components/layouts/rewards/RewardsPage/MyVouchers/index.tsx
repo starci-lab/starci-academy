@@ -3,6 +3,7 @@
 import React from "react"
 import { Chip, Skeleton, cn } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
 import {
     ReceiptIcon,
     TicketIcon,
@@ -14,8 +15,10 @@ import {
     SurfaceListCardRow,
 } from "@/components/blocks/cards/SurfaceListCard"
 import { IconTile } from "@/components/blocks/identity/IconTile"
+import { EntityLink } from "@/components/blocks/feed/EntityLink"
 import { useQueryMyRewardWalletSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyRewardWalletSwr"
 import { useQueryMyVouchersSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyVouchersSwr"
+import { pathConfig } from "@/resources/path"
 import type { QueryMyVoucherData } from "@/modules/api/graphql/queries/types/my-vouchers"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
@@ -48,6 +51,7 @@ export type MyVouchersProps = WithClassNames<undefined>
 export const MyVouchers = ({ className }: MyVouchersProps) => {
     const t = useTranslations()
     const locale = useLocale()
+    const router = useRouter()
     const vouchersSwr = useQueryMyVouchersSwr()
     const walletSwr = useQueryMyRewardWalletSwr()
 
@@ -99,7 +103,17 @@ export const MyVouchers = ({ className }: MyVouchersProps) => {
                                 title={<span className="font-mono">{voucher.code}</span>}
                                 subtitle={
                                     voucher.courseId
-                                        ? t("rewards.myVouchers.scopeCourse", { course: voucher.courseTitle ?? "" })
+                                        ? t.rich("rewards.myVouchers.scopeCourse", {
+                                            course: voucher.courseTitle ?? "",
+                                            link: (chunks) => (
+                                                <EntityLink
+                                                    label={String(chunks)}
+                                                    onPress={voucher.courseDisplayId ? () => router.push(
+                                                        pathConfig().locale(locale).course(voucher.courseDisplayId ?? undefined).build(),
+                                                    ) : undefined}
+                                                />
+                                            ),
+                                        })
                                         : t("rewards.myVouchers.scopeAny")
                                 }
                                 meta={(

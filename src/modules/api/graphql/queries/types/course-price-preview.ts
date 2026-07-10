@@ -2,6 +2,22 @@ import type { GraphQLResponse } from "../../types"
 import type { DiscountReason } from "./recommended-courses"
 import type { PricingPhase } from "@/modules/types/enums/pricing-phase"
 
+/**
+ * One offered installment ("trả góp") term for a course's discounted price
+ * (mirrors backend `InstallmentOptionItem`). The payment modal renders these as
+ * the 3/6/12-month choices, each with its per-month + total (markup applied).
+ */
+export interface InstallmentOption {
+    /** Number of monthly cycles (3, 6, or 12). */
+    months: number
+    /** Markup percent this term adds over the discounted price. */
+    markupPercent: number
+    /** Whole amount owed across the schedule (discounted price + markup). */
+    totalAmountVnd: number
+    /** Amount charged each cycle (incl. the first at checkout) = total / months. */
+    monthlyAmountVnd: number
+}
+
 /** Pre-checkout price preview for a course (mirrors backend `CoursePricePreviewData`). */
 export interface QueryCoursePricePreviewData {
     /** Original (pre-discount) VND price (= list / MSRP, struck "before"). */
@@ -32,6 +48,8 @@ export interface QueryCoursePricePreviewData {
     nextPhasePriceVnd: number | null
     /** USD price after the current phase sells out; null when no next-phase USD price. */
     nextPhasePriceUsd: number | null
+    /** Offered installment (trả góp) terms for the discounted VND price; empty for a free/USD-only course. */
+    installmentOptions: Array<InstallmentOption>
 }
 
 /** Apollo response for the `coursePricePreview` query. */

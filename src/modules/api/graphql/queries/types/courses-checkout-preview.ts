@@ -1,4 +1,5 @@
 import type { GraphQLResponse } from "../../types"
+import type { InstallmentOption } from "./course-price-preview"
 
 /**
  * One line of a multi-course checkout preview (mirrors backend
@@ -44,6 +45,8 @@ export interface CoursesCheckoutPreviewData {
     bundleBonusPercent: number
     /** Number of purchasable lines. */
     itemCount: number
+    /** Offered installment (trả góp) terms for the order's charged VND total; empty for a free/USD-only order. */
+    installmentOptions: Array<InstallmentOption>
 }
 
 /** Request for the `coursesCheckoutPreview` query. */

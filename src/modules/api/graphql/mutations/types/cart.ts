@@ -60,6 +60,8 @@ export interface CoursesCheckoutRequest {
     returnUrl?: string
     /** Cancel URL if the user aborts checkout (PayOS). */
     cancelUrl?: string
+    /** Pay the whole cart in installments (trả góp) over this many months (3/6/12). Omit = pay in full. Only PayOS/Sepay (VND). */
+    installmentMonths?: number
 }
 
 /** Payload inside `coursesCheckout.data` after the standard API wrapper. */

@@ -35,6 +35,7 @@ import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { PersonalProjectTaskResultHistoryDrawer } from "@/components/drawers/PersonalProjectTaskResultHistoryDrawer"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { RelatedContentList } from "@/components/blocks/learn/RelatedContentList"
 import { useQueryUserPersonalTaskAttemptsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserPersonalTaskAttemptsSwr"
 import { useQueryUserPersonalTaskAttemptFeedbacksSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserPersonalTaskAttemptFeedbacksSwr"
 import { useQueryMilestoneTaskSwr } from "@/hooks/swr/api/graphql/queries/useQueryMilestoneTaskSwr"
@@ -154,6 +155,7 @@ export const PersonalProjectTaskResult = ({
     // completion handoff (capstone track): after passing this task, hand off to the
     // NEXT unlocked milestone task. `currentTask` advances to the next task once this
     // one passes, so we show it only when it's a DIFFERENT task from the one just done.
+    const courseId = useAppSelector((state) => state.course.id)
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
     const selectedTaskId = useAppSelector((state) => state.milestone.selectedTaskId)
     const milestoneProgressSwr = useQueryMilestoneTaskProgressSwr()
@@ -207,6 +209,14 @@ export const PersonalProjectTaskResult = ({
             return rankDiff !== 0 ? rankDiff : (a.sortIndex ?? 0) - (b.sortIndex ?? 0)
         }),
         [feedbacks],
+    )
+
+    // query auto-built from the top-severity findings' own text — no typing. Only
+    // meaningful on a FAILED attempt (a pass has nothing to "go fix"); the passing
+    // case keeps its existing UpNextCard handoff instead.
+    const failingFindingsQuery = useMemo(
+        () => sortedFeedbacks.slice(0, 3).map((feedback) => feedback.message).join(" "),
+        [sortedFeedbacks],
     )
 
     // selector: render up to ATTEMPT_CHIPS_MAX; beyond that show the newest few + "+N"
@@ -385,6 +395,19 @@ export const PersonalProjectTaskResult = ({
                                 </Accordion>
                             </AsyncContent>
                         </LabeledCard>
+
+                        {/* quiet, self-hiding "what to read to fix this" — ONLY when the attempt
+                            failed (a pass has nothing to go fix; that case keeps its existing
+                            UpNextCard handoff below instead). Query auto-built from the findings
+                            themselves, no typing. */}
+                        {!passing && courseId && courseDisplayId ? (
+                            <RelatedContentList
+                                courseId={courseId}
+                                courseDisplayId={courseDisplayId}
+                                query={failingFindingsQuery}
+                                label={t("personalProjectResult.relatedContent.label")}
+                            />
+                        ) : null}
                     </div>
                 ) : null}
                 {/* capstone-track handoff: passed → next milestone task */}

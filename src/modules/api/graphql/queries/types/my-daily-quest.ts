@@ -5,6 +5,8 @@ export type DailyQuestKey =
     | "readContent"
     | "passChallenge"
     | "reviewFlashcards"
+    | "mockInterview"
+    | "quizSession"
 
 /** One daily-quest task: today's progress vs the static target. */
 export interface QueryDailyQuestTaskData {
@@ -22,7 +24,7 @@ export interface QueryMyDailyQuestData {
     date: string
     /** Each daily task with its current progress and target. */
     tasks: Array<QueryDailyQuestTaskData>
-    /** True when every task's current >= target. */
+    /** True when at least DAILY_QUEST_MIN_TASKS_REQUIRED (3) of the 5 tasks are done. */
     allDone: boolean
     /** True when the reward was already claimed today. */
     claimed: boolean

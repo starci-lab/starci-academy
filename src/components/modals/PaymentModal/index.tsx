@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useMemo, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import { Modal, Spinner, Typography, cn } from "@heroui/react"
 import useSWR from "swr"
 import { ArrowRightIcon, FlameIcon, GraduationCapIcon, LockSimpleIcon } from "@phosphor-icons/react"
@@ -27,6 +27,7 @@ import { IconTile } from "@/components/blocks/identity/IconTile"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { PriceTag } from "@/components/blocks/commerce/PriceTag"
 import { SegmentedControl } from "@/components/blocks/navigation/SegmentedControl"
+import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
 import type { PriceCurrency } from "@/components/blocks/commerce/PriceTag"
 
 /** Format an integer VND amount as "1.275.000₫". */
@@ -81,6 +82,8 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentType | null>(null)
     // chosen currency / region (drives summary price + gateway list)
     const [currency, setCurrency] = useState<PriceCurrency>("VND")
+    // installment (trả góp) term chosen — null = pay in full (unchanged default)
+    const [installmentMonths, setInstallmentMonths] = useState<number | null>(null)
     const t = useTranslations()
     const runGraphQL = useGraphQLWithToast()
 
@@ -190,8 +193,26 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
         }
     }, [context, coursePriceSwr.data, checkoutPreview, aiTier, course?.title, t])
 
-    // whether international (USD) gateways are usable for this order
-    const hasUsd = isMembership || (order?.priceUsd != null)
+    // installment (trả góp) terms for the active course flow (empty for AI/membership)
+    const installmentOptions = isCourse
+        ? (coursePriceSwr.data?.installmentOptions ?? [])
+        : isCoursesCheckout
+            ? (checkoutPreview?.installmentOptions ?? [])
+            : []
+    const installmentAvailable = installmentOptions.length > 0
+    const selectedInstallment = installmentMonths != null
+        ? installmentOptions.find((option) => option.months === installmentMonths) ?? null
+        : null
+    // paying in installments is VND-only (PayOS/Sepay) — force the domestic side
+    const installmentActive = selectedInstallment != null
+    // reset the term whenever the order/context changes (a new modal open)
+    useEffect(() => {
+        setInstallmentMonths(null)
+    }, [context])
+
+    // whether international (USD) gateways are usable for this order (never while
+    // paying in installments — those cycles can only be collected in VND)
+    const hasUsd = (isMembership || (order?.priceUsd != null)) && !installmentActive
     // the effective currency (clamped to VND when no USD price exists)
     const activeCurrency: PriceCurrency = hasUsd ? currency : "VND"
     const isUsd = activeCurrency === "USD"
@@ -265,6 +286,7 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
                         paymentType,
                         payosReturnUrl: window.location.href,
                         payosCancelUrl: window.location.href,
+                        installmentMonths: installmentMonths ?? undefined,
                     })
                     if (!response.data?.courseEnroll) {
                         throw new Error(response.error?.message)
@@ -280,6 +302,7 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
                         paymentType,
                         returnUrl: window.location.href,
                         cancelUrl: window.location.href,
+                        installmentMonths: installmentMonths ?? undefined,
                     })
                     if (!response.data?.coursesCheckout) {
                         throw new Error(response.error?.message)
@@ -345,9 +368,12 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
     const renderMethodRow = (
         method: { type: PaymentType, name: string, description: string, iconUrl: string },
     ) => {
-        const amountLabel = isUsd
-            ? (order?.priceUsd != null ? formatUsd(order.priceUsd) : null)
-            : (order?.priceVnd != null ? formatVnd(order.priceVnd) : null)
+        const amountLabel = installmentActive && selectedInstallment
+            // installments charge only the first cycle now (VND) — show the monthly figure
+            ? t("payment.installment.perMonth", { amount: formatVnd(selectedInstallment.monthlyAmountVnd) })
+            : isUsd
+                ? (order?.priceUsd != null ? formatUsd(order.priceUsd) : null)
+                : (order?.priceVnd != null ? formatVnd(order.priceVnd) : null)
         const rowPending = isMutating && selectedPaymentMethod === method.type
         return (
             <button
@@ -509,6 +535,53 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
                                             ) : null}
                                     </div>
                                 )}
+
+                                {/* installment (trả góp) — pick "pay in full" or a 3/6/12-month plan.
+                                    VND-only (choosing a term forces the domestic gateways). Course
+                                    flows only, and only when the BE offered terms (positive VND price). */}
+                                {installmentAvailable ? (
+                                    <div className="flex flex-col gap-2">
+                                        <SegmentedControl<"full" | "installment">
+                                            ariaLabel={t("payment.installment.title")}
+                                            value={installmentActive ? "installment" : "full"}
+                                            onChange={(value) => setInstallmentMonths(
+                                                value === "installment" ? installmentOptions[0]?.months ?? null : null,
+                                            )}
+                                            items={[
+                                                { value: "full", label: t("payment.installment.payFull") },
+                                                { value: "installment", label: t("payment.installment.payInstallment") },
+                                            ]}
+                                        />
+                                        {installmentActive ? (
+                                            <FlexWrapButtonRadio<string>
+                                                ariaLabel={t("payment.installment.title")}
+                                                value={String(installmentMonths)}
+                                                onChange={(value) => setInstallmentMonths(Number(value))}
+                                                items={installmentOptions.map((option) => ({
+                                                    value: String(option.months),
+                                                    content: (
+                                                        <span className="flex flex-col items-start gap-0.5">
+                                                            <Typography type="body-sm" weight="semibold">
+                                                                {t("payment.installment.months", { months: option.months })}
+                                                            </Typography>
+                                                            <Typography type="body-xs" color="muted">
+                                                                {t("payment.installment.perMonth", { amount: formatVnd(option.monthlyAmountVnd) })}
+                                                            </Typography>
+                                                        </span>
+                                                    ),
+                                                }))}
+                                            />
+                                        ) : null}
+                                        {selectedInstallment ? (
+                                            <Typography type="body-xs" color="muted">
+                                                {t("payment.installment.summary", {
+                                                    total: formatVnd(selectedInstallment.totalAmountVnd),
+                                                    markup: selectedInstallment.markupPercent,
+                                                })}
+                                            </Typography>
+                                        ) : null}
+                                    </div>
+                                ) : null}
 
                                 {/* currency / region toggle — drives the summary price + gateway list.
                                     Only shown when the order HAS a USD price (a real choice exists). */}

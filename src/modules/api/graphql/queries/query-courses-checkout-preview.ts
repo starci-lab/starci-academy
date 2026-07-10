@@ -27,6 +27,12 @@ const query1 = gql`
         totalChargedUsd
         bundleBonusPercent
         itemCount
+        installmentOptions {
+          months
+          markupPercent
+          totalAmountVnd
+          monthlyAmountVnd
+        }
       }
     }
   }

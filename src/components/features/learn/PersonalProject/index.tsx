@@ -28,6 +28,7 @@ import { useAppSelector } from "@/redux/hooks"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { RichText } from "@/components/reuseable/RichText"
 import { useQueryMilestoneTaskSwr } from "@/hooks/swr/api/graphql/queries/useQueryMilestoneTaskSwr"
+import { RelatedContentList } from "@/components/blocks/learn/RelatedContentList"
 
 /** Props for {@link Task}. */
 export type TaskProps = WithClassNames<undefined>
@@ -51,6 +52,7 @@ export const Task = ({
     const milestoneEntities = useAppSelector((state) => state.milestone.entities)
     const selectedTaskDetail = useAppSelector((state) => state.milestone.selectedTaskDetail)
     const selectedTaskId = useAppSelector((state) => state.milestone.selectedTaskId)
+    const course = useAppSelector((state) => state.course.entity)
 
     const taskFromMilestones = useMemo(() => {
         if (!selectedTaskId) return undefined
@@ -92,6 +94,17 @@ export const Task = ({
                     <TaskCodeImplementations />
                 </div>
             )}
+            {/* quiet, self-hiding "read before you build" — query auto-built from the
+                task's own title+description, no typing. Sits ONLY in the reading column;
+                the submit/evaluate panel (right, persistent) is untouched. */}
+            {course?.id && course.displayId && displayTask?.title ? (
+                <RelatedContentList
+                    courseId={course.id}
+                    courseDisplayId={course.displayId}
+                    query={`${displayTask.title} ${displayTask.description ?? ""}`}
+                    label={t("task.relatedContent.label")}
+                />
+            ) : null}
         </div>
     )
 

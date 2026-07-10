@@ -33,6 +33,7 @@ import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SubmissionResultHistoryDrawer } from "@/components/drawers/SubmissionResultHistoryDrawer"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { RelatedContentList } from "@/components/blocks/learn/RelatedContentList"
 import { useQuerySubmissionResultAttemptsSwr } from "@/hooks/swr/api/graphql/queries/useQuerySubmissionResultAttemptsSwr"
 import { useQuerySubmissionResultFeedbacksSwr } from "@/hooks/swr/api/graphql/queries/useQuerySubmissionResultFeedbacksSwr"
 import { useQueryAiModelsSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiModelsSwr"
@@ -153,6 +154,8 @@ export const SubmissionResult = ({
 
     const config = useAppSelector((state) => state.system.config)
     const passThreshold = config?.challenge?.passThreshold ?? 0
+    const courseId = useAppSelector((state) => state.course.id)
+    const courseDisplayId = useAppSelector((state) => state.course.displayId)
     const challengeSubmissions = useAppSelector((state) => state.challenge.challengeSubmissions)
     const requirement = useMemo(
         () => (challengeSubmissions ?? []).find((submission) => submission.id === challengeSubmissionId),
@@ -195,6 +198,11 @@ export const SubmissionResult = ({
             return rankDiff !== 0 ? rankDiff : (a.sortIndex ?? 0) - (b.sortIndex ?? 0)
         }),
         [feedbacks],
+    )
+    // query auto-built from the top-severity findings' own text — no typing
+    const failingFindingsQuery = useMemo(
+        () => sortedFeedbacks.slice(0, 3).map((feedback) => feedback.message).join(" "),
+        [sortedFeedbacks],
     )
 
     // chip strip: render up to ATTEMPT_CHIPS_MAX chips; beyond that show the newest
@@ -389,6 +397,17 @@ export const SubmissionResult = ({
                                 </Accordion>
                             </AsyncContent>
                         </LabeledCard>
+
+                        {/* quiet, self-hiding "what to read to fix this" — ONLY when the attempt
+                            failed. Query auto-built from the findings themselves, no typing. */}
+                        {!passing && courseId && courseDisplayId ? (
+                            <RelatedContentList
+                                courseId={courseId}
+                                courseDisplayId={courseDisplayId}
+                                query={failingFindingsQuery}
+                                label={t("submissionResult.relatedContent.label")}
+                            />
+                        ) : null}
                     </div>
                 ) : null}
             </div>

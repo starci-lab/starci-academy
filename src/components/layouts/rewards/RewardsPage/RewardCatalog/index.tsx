@@ -8,7 +8,11 @@ import type { ReactNode } from "react"
 import {
     Button,
     Chip,
+    Input,
+    Label,
     Skeleton,
+    TextField,
+    Typography,
     cn,
     toast,
 } from "@heroui/react"
@@ -25,6 +29,7 @@ import {
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { Callout } from "@/components/blocks/feedback/Callout"
 import { IconTile } from "@/components/blocks/identity/IconTile"
+import { ModalShell } from "@/components/blocks/layout/ModalShell"
 import { useMutateRedeemRewardSwr } from "@/hooks/swr/api/graphql/mutations/useMutateRedeemRewardSwr"
 import { useQueryMyRewardWalletSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyRewardWalletSwr"
 import { useQueryMyVouchersSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyVouchersSwr"
@@ -88,6 +93,8 @@ export const RewardCatalog = ({ className }: RewardCatalogProps) => {
     const [ship, setShip] = useState<ShippingForm>(EMPTY_SHIPPING)
     /** The takeaway of the most recent voucher/aiCredit redemption, if any. */
     const [justRedeemed, setJustRedeemed] = useState<JustRedeemed | null>(null)
+    /** A non-physical reward awaiting spend confirmation (Coin is real, redeem is irreversible). */
+    const [confirming, setConfirming] = useState<QueryRewardData | null>(null)
 
     const balance = walletSwr.data?.balance ?? 0
 
@@ -196,6 +203,12 @@ export const RewardCatalog = ({ className }: RewardCatalogProps) => {
                         ))}
                     </div>
                 )}
+                isEmpty={(rewardsSwr.data ?? []).length === 0}
+                emptyContent={{
+                    icon: <GiftIcon aria-hidden focusable="false" className="size-8 text-muted" />,
+                    title: t("rewards.catalogEmptyTitle"),
+                    description: t("rewards.catalogEmptyDescription"),
+                }}
                 error={rewardsSwr.error}
                 errorContent={{
                     title: t("rewards.catalogError"),
@@ -251,7 +264,10 @@ export const RewardCatalog = ({ className }: RewardCatalogProps) => {
                                                 if (isPhysical) {
                                                     setShippingFor(reward.key)
                                                 } else {
-                                                    void onRedeem(reward)
+                                                    // Coin is real + redeem is irreversible — confirm
+                                                    // before spending (mirrors the shipping form's own
+                                                    // "Xác nhận đổi" step for physical rewards).
+                                                    setConfirming(reward)
                                                 }
                                             }}
                                         >
@@ -264,33 +280,46 @@ export const RewardCatalog = ({ className }: RewardCatalogProps) => {
 
                                 {formOpen ? (
                                     <div className="flex flex-col gap-2">
-                                        <input
-                                            value={ship.recipientName}
-                                            onChange={(event) => setShip((prev) => ({
-                                                ...prev,
-                                                recipientName: event.target.value,
-                                            }))}
-                                            placeholder={t("rewards.shipName")}
-                                            className="rounded-xl border border-default bg-surface px-3 py-1.5 text-sm text-foreground outline-none focus:border-accent"
-                                        />
-                                        <input
-                                            value={ship.phone}
-                                            onChange={(event) => setShip((prev) => ({
-                                                ...prev,
-                                                phone: event.target.value,
-                                            }))}
-                                            placeholder={t("rewards.shipPhone")}
-                                            className="rounded-xl border border-default bg-surface px-3 py-1.5 text-sm text-foreground outline-none focus:border-accent"
-                                        />
-                                        <input
-                                            value={ship.address}
-                                            onChange={(event) => setShip((prev) => ({
-                                                ...prev,
-                                                address: event.target.value,
-                                            }))}
-                                            placeholder={t("rewards.shipAddress")}
-                                            className="rounded-xl border border-default bg-surface px-3 py-1.5 text-sm text-foreground outline-none focus:border-accent"
-                                        />
+                                        <TextField variant="secondary">
+                                            <Label htmlFor={`reward-ship-name-${reward.key}`}>
+                                                {t("rewards.shipName")}
+                                            </Label>
+                                            <Input
+                                                id={`reward-ship-name-${reward.key}`}
+                                                value={ship.recipientName}
+                                                onChange={(event) => setShip((prev) => ({
+                                                    ...prev,
+                                                    recipientName: event.target.value,
+                                                }))}
+                                            />
+                                        </TextField>
+                                        <TextField variant="secondary">
+                                            <Label htmlFor={`reward-ship-phone-${reward.key}`}>
+                                                {t("rewards.shipPhone")}
+                                            </Label>
+                                            <Input
+                                                id={`reward-ship-phone-${reward.key}`}
+                                                type="tel"
+                                                value={ship.phone}
+                                                onChange={(event) => setShip((prev) => ({
+                                                    ...prev,
+                                                    phone: event.target.value,
+                                                }))}
+                                            />
+                                        </TextField>
+                                        <TextField variant="secondary">
+                                            <Label htmlFor={`reward-ship-address-${reward.key}`}>
+                                                {t("rewards.shipAddress")}
+                                            </Label>
+                                            <Input
+                                                id={`reward-ship-address-${reward.key}`}
+                                                value={ship.address}
+                                                onChange={(event) => setShip((prev) => ({
+                                                    ...prev,
+                                                    address: event.target.value,
+                                                }))}
+                                            />
+                                        </TextField>
                                         <div className="flex items-center gap-2">
                                             <Button
                                                 variant="primary"
@@ -316,6 +345,45 @@ export const RewardCatalog = ({ className }: RewardCatalogProps) => {
                     })}
                 </div>
             </AsyncContent>
+
+            {/* spend confirmation for non-physical rewards — Coin is real + redeem is
+                irreversible, so a single accidental tap must never fire it (mirrors the
+                shipping form's own "Xác nhận đổi" step for physical rewards). */}
+            <ModalShell
+                isOpen={confirming !== null}
+                onOpenChange={(open) => {
+                    if (!open) {
+                        setConfirming(null)
+                    }
+                }}
+                title={t("rewards.confirmRedeem")}
+                size="sm"
+                bodyClassName="gap-4"
+            >
+                <Typography type="body-sm" color="muted">
+                    {confirming
+                        ? t("rewards.confirmRedeemBody", { cost: confirming.cost, title: confirming.title })
+                        : null}
+                </Typography>
+                <div className="flex justify-end gap-2">
+                    <Button variant="tertiary" onPress={() => setConfirming(null)}>
+                        {t("rewards.cancel")}
+                    </Button>
+                    <Button
+                        variant="primary"
+                        isPending={redeeming !== null}
+                        onPress={() => {
+                            const reward = confirming
+                            setConfirming(null)
+                            if (reward) {
+                                void onRedeem(reward)
+                            }
+                        }}
+                    >
+                        {t("rewards.confirmRedeem")}
+                    </Button>
+                </div>
+            </ModalShell>
         </div>
     )
 }

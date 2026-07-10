@@ -60,6 +60,7 @@
     "total": "Total",
     "itemsCount": "{count} courses",
     "savings": "You save {amount}",
+    "installmentHint": "Or pay in installments from {amount}/mo",
     "bundleBonus": "Bundle deal +{percent}%",
     "addMoreHint2": "Add 1 more course for an extra 5% off",
     "addMoreHint3": "Add 1 more course for 10% off",
@@ -183,7 +184,8 @@
       "rewards": "Rewards",
       "blog": "Blog",
       "talents": "Talents",
-      "membership": "Membership"
+      "membership": "Membership",
+      "installments": "Installments"
     },
     "learning": {
       "loadMore": "Load more",
@@ -548,6 +550,10 @@
     "untitled": "Untitled",
     "searchConversations": "Search conversations…",
     "noConversations": "No conversations yet",
+    "searchContent": "Search course content",
+    "searchContentPlaceholder": "Search lessons, challenges, flashcards, tasks...",
+    "searchContentHint": "Ask a natural question too — AI understands meaning, not just keywords.",
+    "searchContentEmpty": "No matching content found",
     "deleteConversation": "Delete conversation",
     "turnsCount": "{count} messages"
   },
@@ -1325,6 +1331,9 @@
   },
   "task": {
     "briefTitle": "Instructions",
+    "relatedContent": {
+      "label": "Read this before you build"
+    },
     "criteriaTitle": "Grading criteria",
     "codeImplementationsTitle": "Implementation guides",
     "codeImplementationsTabsAria": "Implementation guides by language",
@@ -1362,6 +1371,9 @@
   },
   "content": {
     "title": "Content",
+    "relatedContent": {
+      "label": "You might also want to read"
+    },
     "upNext": {
       "eyebrow": "Up next · Practice this lesson",
       "challengesTitle": "Do this lesson's {count} challenges",
@@ -1562,6 +1574,9 @@
   },
   "submissionResult": {
     "backToChallenge": "Back to challenge",
+    "relatedContent": {
+      "label": "What to read to fix this"
+    },
     "title": "Submission result",
     "passNeeded": "need {score} to pass",
     "gradedBy": "graded by",
@@ -1579,6 +1594,9 @@
   },
   "personalProjectResult": {
     "backToTask": "Back to project",
+    "relatedContent": {
+      "label": "What to read to fix this"
+    },
     "upNextEyebrow": "Task passed ✓ · Up next",
     "nextTaskTitle": "On to your project's next task",
     "nextTaskDesc": "Each task you finish raises your job-readiness (capstone).",
@@ -1982,6 +2000,7 @@
       "avgScore": "Average score",
       "bestScore": "Best score",
       "weakTagsTitle": "Topics to revisit",
+      "relatedContentLabel": "More practice",
       "replay": "Practice again",
       "setupTitle": "Ready to practice?",
       "setupSubtitle": "Random questions across the whole course.",
@@ -2144,6 +2163,7 @@
     "attributesTitle": "Skill assessment",
     "strengthsTitle": "Strengths",
     "gapsTitle": "Areas to improve",
+    "relatedContentLabel": "Worth reviewing",
     "followUpTitle": "Suggested follow-up question",
     "nextPhase": "Next phase",
     "nextQuestion": "Next question",
@@ -2580,6 +2600,31 @@
     "empty": "No active sessions.",
     "unknownDevice": "Unknown device"
   },
+  "installmentPlans": {
+    "title": "My installment plans",
+    "subtitle": "Track your installment progress and pay the next cycle.",
+    "empty": "You have no installment plans",
+    "emptyDesc": "When buying a course, you can choose 3/6/12-month installments instead of paying in full.",
+    "emptyCta": "Explore courses",
+    "termMonths": "{months}-month installment",
+    "flexiblePool": "Installment balance",
+    "perCycle": "/cycle",
+    "progress": "{paid}/{months} cycles paid",
+    "remaining": "Remaining",
+    "minPaymentFormula": "This cycle's minimum: {percent}% of balance, at least {floor}",
+    "amountLabel": "Amount to pay",
+    "minLabel": "Minimum {amount}",
+    "nextDue": "Next cycle due {date}",
+    "payThisCycle": "Pay this cycle",
+    "pay": "Pay",
+    "unlock": "Pay to unlock",
+    "status": {
+      "Active": "Active",
+      "Overdue": "Overdue",
+      "Defaulted": "Locked",
+      "Completed": "Completed"
+    }
+  },
   "follow": {
     "follow": "Follow",
     "following": "Following"
@@ -2995,6 +3040,14 @@
     "noCardStored": "StarCi Academy never stores your card details",
     "aiPlanName": "AI plan",
     "membershipName": "StarCi membership",
+    "installment": {
+      "title": "Payment option",
+      "payFull": "Pay in full",
+      "payInstallment": "Installments",
+      "months": "{months} months",
+      "perMonth": "{amount}/mo",
+      "summary": "Total {total} (incl. +{markup}% installment fee) · domestic gateways only (VND)"
+    },
     "loyalty": {
       "enrolled": "You own {count} courses",
       "diligent": "You keep a learning streak"
@@ -3240,7 +3293,9 @@
       "tasks": {
         "readContent": "Read content",
         "passChallenge": "Pass a challenge",
-        "reviewFlashcards": "Review flashcards"
+        "reviewFlashcards": "Review flashcards",
+        "mockInterview": "Complete a Mock Interview session",
+        "quizSession": "Complete a Quick Quiz session"
       }
     },
     "identityStats": {
@@ -3902,8 +3957,11 @@
     "cannotAfford": "Not enough Coin",
     "catalogError": "Couldn't load the shop.",
     "confirmRedeem": "Confirm redemption",
+    "confirmRedeemBody": "You'll spend {cost} Coin on \"{title}\". This can't be undone.",
     "cost": "{count} Coin",
     "noRedemptions": "You haven't redeemed any rewards yet.",
+    "catalogEmptyTitle": "No rewards yet",
+    "catalogEmptyDescription": "Check back soon — new rewards will show up here.",
     "redeem": "Redeem",
     "redeemedTitle": "Redemption history",
     "shipAddress": "Shipping address",
@@ -3930,7 +3988,7 @@
       "copy": "Copy",
       "copied": "Code copied",
       "scopeAny": "Valid for any course",
-      "scopeCourse": "Valid for {course} only",
+      "scopeCourse": "Valid for <link>{course}</link> only",
       "status": {
         "unused": "Available",
         "reserved": "Reserved",
@@ -3963,6 +4021,11 @@
     "markAllRead": "Mark all as read",
     "retry": "Try again",
     "title": "Notifications"
+  },
+  "notification": {
+    "streakMilestone": {
+      "title": "{days}-day streak! +{coin} Coin added to your wallet"
+    }
   },
   "streakFreeze": {
     "buy": "Buy a freeze ({cost} XP)",

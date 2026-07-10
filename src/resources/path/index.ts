@@ -105,6 +105,15 @@ export const pathConfig = () => {
                     build,
                 }
             }
+            const installments = () => {
+                const installmentsPath = `${settingsPath}/installments`
+                const build = () => {
+                    return installmentsPath
+                }
+                return {
+                    build,
+                }
+            }
             const settings = () => {
                 const build = () => {
                     return settingsPath
@@ -187,6 +196,7 @@ export const pathConfig = () => {
                 aiSettings,
                 aiSubscription,
                 membership,
+                installments,
                 settings,
                 edit,
                 sessions,

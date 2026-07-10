@@ -31,6 +31,7 @@ import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { Callout } from "@/components/blocks/feedback/Callout"
 import { FlipCard } from "@/components/blocks/cards/FlipCard"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { RelatedContentList } from "@/components/blocks/learn/RelatedContentList"
 import { StatPair } from "@/components/blocks/stats/StatPair"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
 import { RatingBar } from "@/components/blocks/buttons/RatingBar"
@@ -882,6 +883,19 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                     genericHref={genericContinueHref}
                     primary={enrollKnown && enrolled}
                 />
+
+                {/* quiet, self-hiding "practice this too" — course-wide RAG search auto-queried
+                    on the SAME weak tags Zone C already resolved to a lesson (no typing);
+                    additive since it can ALSO surface challenges/milestone tasks/other decks,
+                    which the tag→lesson-only mapping above never considers. */}
+                {displayId && topWeakTags.length > 0 ? (
+                    <RelatedContentList
+                        courseId={courseId}
+                        courseDisplayId={displayId}
+                        query={topWeakTags.map((tag) => tag.tag).join(" ")}
+                        label={t("flashcard.quiz.relatedContentLabel")}
+                    />
+                ) : null}
 
                 {/* Zone D — AI Mock Interview readiness: only relevant once actually enrolled
                     (state 5 in the matrix — hidden pre-enrollment/while enrollment is unknown). */}

@@ -23,6 +23,12 @@ const query1 = gql`
         seatsRemainingInCurrentPhase
         nextPhasePriceVnd
         nextPhasePriceUsd
+        installmentOptions {
+          months
+          markupPercent
+          totalAmountVnd
+          monthlyAmountVnd
+        }
       }
     }
   }

@@ -76,6 +76,13 @@ export const CartView = () => {
         return map
     }, [preview])
 
+    // cheapest installment cycle (lowest monthlyAmountVnd, usually the longest
+    // term) — surfaces that trả góp EXISTS before the buyer commits to checkout;
+    // full term picker lives in PaymentModal once they proceed.
+    const cheapestMonthlyVnd = preview?.installmentOptions.length
+        ? Math.min(...preview.installmentOptions.map((option) => option.monthlyAmountVnd))
+        : null
+
     // plain summed list total from the cart entities — the fallback shown when the
     // preview query errors (so the page still shows a total, minus the discount extras).
     const fallbackTotalVnd = useMemo(
@@ -202,6 +209,12 @@ export const CartView = () => {
                                             </Chip>
                                         ) : null}
                                     </div>
+                                ) : null}
+
+                                {cheapestMonthlyVnd != null ? (
+                                    <Typography type="body-xs" color="muted">
+                                        {t("cart.installmentHint", { amount: formatVnd(cheapestMonthlyVnd) })}
+                                    </Typography>
                                 ) : null}
 
                                 {/* quiet nudge — add another course to reach the next bundle tier */}

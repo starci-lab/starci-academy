@@ -14,6 +14,8 @@ export interface QueryMyVoucherData {
     courseId: string | null
     /** Title of the scoped course; null = any course. */
     courseTitle: string | null
+    /** Display id (slug) of the scoped course, for deep-linking; null = any course. */
+    courseDisplayId: string | null
     /** Lifecycle status — unused / reserved / used / expired. */
     status: string
     /** ISO timestamp the voucher stops being redeemable. */

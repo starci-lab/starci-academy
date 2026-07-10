@@ -25,6 +25,10 @@ export interface CourseEnrollRequest {
     payosReturnUrl?: string
     /** PayOS cancel URL if user aborts checkout. */
     payosCancelUrl?: string
+    /** Optional Coin-shop voucher code applied on top of the loyalty discount. */
+    voucherCode?: string
+    /** Pay in installments (trả góp) over this many months (3/6/12). Omit = pay in full. Only PayOS/Sepay (VND). */
+    installmentMonths?: number
 }
 
 /** Apollo variables bag for the `courseEnroll` mutation. */

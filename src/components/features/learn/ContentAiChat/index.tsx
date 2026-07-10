@@ -18,6 +18,7 @@ import {
     CaretDownIcon,
     ChatsCircleIcon,
     GearIcon,
+    MagnifyingGlassIcon,
     PaperPlaneTiltIcon,
     PlusIcon,
     QuotesIcon,
@@ -28,6 +29,7 @@ import { useRouter } from "next/navigation"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useAppSelector } from "@/redux/hooks"
 import {
+    useContentAiChatOverlayState,
     useContentAiSelectedModel,
     useContentAiSelection,
 } from "@/hooks/zustand/overlay/hooks"
@@ -53,6 +55,9 @@ import { ChatBubble, type ChatRole } from "@/components/blocks/feed/ChatBubble"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { SearchInput } from "@/components/reuseable/SearchInput"
 import { InfiniteScrollSentinel } from "@/components/blocks/async/InfiniteScrollSentinel"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { useQuerySearchCourseContentSwr } from "@/hooks/swr/api/graphql/queries/useQuerySearchCourseContentSwr"
+import type { SearchCourseContentItem } from "@/modules/api/graphql/queries/types/search-course-content"
 
 /** Props for {@link ContentAiChat}. */
 export type ContentAiChatProps = WithClassNames<undefined>
@@ -70,9 +75,10 @@ const displayText = (content: string): string => {
     return match ? match[1].trim() : content
 }
 
-/** Which in-panel view is showing. Conversations + settings are in-panel (not
- * separate overlays) so they never z-fight the chat popover they live inside. */
-type PanelView = "chat" | "conversations" | "settings"
+/** Which in-panel view is showing. Conversations + settings + search are all
+ * in-panel (not separate overlays) so they never z-fight the chat popover they
+ * live inside. */
+type PanelView = "chat" | "conversations" | "settings" | "search"
 
 /** One turn in the content-AI conversation. */
 interface ChatMessage {
@@ -100,7 +106,9 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
     const router = useRouter()
     const locale = useLocale()
     const contentId = useAppSelector((state) => state.content.id)
+    const course = useAppSelector((state) => state.course.entity)
     const { ask, abort } = useContentAiStream()
+    const { close: closeChat } = useContentAiChatOverlayState()
     const [messages, setMessages] = useState<Array<ChatMessage>>([])
     const [input, setInput] = useState("")
     const [isStreaming, setIsStreaming] = useState(false)
@@ -111,6 +119,20 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
     const [currentSessionId, setCurrentSessionId] = useState<string | null>(null)
     const [view, setView] = useState<PanelView>("chat")
     const [searchTerm, setSearchTerm] = useState("")
+
+    // "Tìm nội dung khóa" (search view) — debounced so typing never fires an
+    // embedding call per keystroke (unlike the plain-ILIKE conversations search above)
+    const [contentSearchQuery, setContentSearchQuery] = useState("")
+    const [debouncedContentSearchQuery, setDebouncedContentSearchQuery] = useState("")
+    useEffect(() => {
+        const timer = setTimeout(() => setDebouncedContentSearchQuery(contentSearchQuery), 400)
+        return () => clearTimeout(timer)
+    }, [contentSearchQuery])
+    const contentSearchSwr = useQuerySearchCourseContentSwr(
+        course?.id ?? null,
+        debouncedContentSearchQuery,
+        view === "search",
+    )
 
     // every available model — the picker shows them all (Free is the chatbot's
     // normal lane here, NOT flagged danger; higher tiers gate on the unlock)
@@ -172,9 +194,35 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
         setCurrentSessionId(null)
         setView("chat")
         setSearchTerm("")
+        setContentSearchQuery("")
+        setDebouncedContentSearchQuery("")
         hydratedRef.current = undefined
         contentSelectedRef.current = undefined
     }, [contentId, abort])
+
+    /** Jump to a search result's real surface (content/challenge/flashcard/milestone), then close the panel. */
+    const onSelectSearchResult = useCallback(
+        (item: SearchCourseContentItem) => {
+            const displayId = course?.displayId
+            if (!displayId) {
+                return
+            }
+            const learn = pathConfig().locale(locale).course(displayId).learn()
+            const href = item.kind === "flashcard" && item.deckId
+                ? learn.flashcards().review(item.deckId).build()
+                : item.kind === "milestone" && item.taskId
+                    ? learn.personalProject(item.taskId).build()
+                    : item.moduleId && item.contentId
+                        ? learn.module(item.moduleId).content(item.contentId).build()
+                        : null
+            if (!href) {
+                return
+            }
+            closeChat()
+            router.push(href)
+        },
+        [course?.displayId, locale, router, closeChat],
+    )
 
     // once the lesson's conversations load, reopen the most recent one — opening a
     // chat bumps its recency server-side (touchSession), so "most recent" = the
@@ -501,6 +549,77 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
         )
     }
 
+    // ── search view ("Tìm nội dung khóa") ──────────────────────────────────
+    if (view === "search") {
+        const results = contentSearchSwr.data ?? []
+        return (
+            <div className={cn("flex h-full flex-col gap-3", className)}>
+                <button
+                    type="button"
+                    className="group flex w-fit cursor-pointer items-center gap-2 text-sm text-muted transition-colors hover:text-foreground"
+                    onClick={() => setView("chat")}
+                >
+                    <ArrowLeftIcon className="size-4" />
+                    <span className="group-hover:underline">{t("contentAi.searchContent")}</span>
+                </button>
+                <SearchInput
+                    value={contentSearchQuery}
+                    onValueChange={setContentSearchQuery}
+                    placeholder={t("contentAi.searchContentPlaceholder")}
+                />
+                <ScrollShadow hideScrollBar className="max-h-[55vh] min-h-0 flex-1 overflow-y-auto">
+                    <AsyncContent
+                        isLoading={contentSearchSwr.isLoading && debouncedContentSearchQuery.trim().length > 0}
+                        skeleton={
+                            <div className="flex flex-col gap-2">
+                                {[0, 1, 2].map((row) => (
+                                    <div key={row} className="h-14 animate-pulse rounded-xl bg-default" />
+                                ))}
+                            </div>
+                        }
+                        isEmpty={debouncedContentSearchQuery.trim().length > 0 && results.length === 0}
+                        emptyContent={{
+                            title: t("contentAi.searchContentEmpty"),
+                        }}
+                        error={contentSearchSwr.error}
+                        errorContent={{
+                            title: t("contentAi.searchContentEmpty"),
+                        }}
+                    >
+                        {debouncedContentSearchQuery.trim().length === 0 ? (
+                            <Typography type="body-sm" color="muted">
+                                {t("contentAi.searchContentHint")}
+                            </Typography>
+                        ) : (
+                            <div className="flex flex-col gap-1">
+                                {results.map((item, index) => (
+                                    <button
+                                        key={`${item.kind}-${item.contentId ?? item.deckId ?? item.taskId ?? index}`}
+                                        type="button"
+                                        onClick={() => onSelectSearchResult(item)}
+                                        className="flex flex-col gap-0.5 rounded-xl px-3 py-2 text-left transition-colors hover:bg-default"
+                                    >
+                                        {item.breadcrumb ? (
+                                            <Typography type="body-xs" color="muted" truncate>
+                                                {item.breadcrumb}
+                                            </Typography>
+                                        ) : null}
+                                        <Typography type="body-sm" weight="medium" truncate>
+                                            {item.title}
+                                        </Typography>
+                                        <Typography type="body-xs" color="muted" className="line-clamp-2">
+                                            {item.snippet}
+                                        </Typography>
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+                    </AsyncContent>
+                </ScrollShadow>
+            </div>
+        )
+    }
+
     // ── settings view (model picker) ──────────────────────────────────────
     if (view === "settings") {
         return (
@@ -526,18 +645,30 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
     return (
         <div className={cn("flex h-full flex-col gap-3", className)}>
             {/* conversation switcher — quiet go-there link (foreground + hover underline),
-                opens the conversations view (new conversation lives in that view, next to search).
-                Not accent: it's a secondary nav link, not a primary/selected signal. */}
-            <Link
-                onPress={() => setView("conversations")}
-                className="flex w-full cursor-pointer items-center gap-2 text-sm font-medium text-foreground hover:underline"
-            >
-                <ChatsCircleIcon className="size-5 shrink-0" />
-                <span className="min-w-0 flex-1 truncate text-left">
-                    {t("contentAi.chatHistory")}
-                </span>
-                <CaretDownIcon className="size-4 shrink-0" />
-            </Link>
+                opens the conversations view. Not accent: it's a secondary nav link, not a
+                primary/selected signal. Paired with the search icon — both are "find
+                something" actions (history = find a past chat; search = find course content). */}
+            <div className="flex items-center gap-2">
+                <Link
+                    onPress={() => setView("conversations")}
+                    className="flex min-w-0 flex-1 cursor-pointer items-center gap-2 text-sm font-medium text-foreground hover:underline"
+                >
+                    <ChatsCircleIcon className="size-5 shrink-0" />
+                    <span className="min-w-0 flex-1 truncate text-left">
+                        {t("contentAi.chatHistory")}
+                    </span>
+                    <CaretDownIcon className="size-4 shrink-0" />
+                </Link>
+                <Button
+                    isIconOnly
+                    size="sm"
+                    variant="ghost"
+                    aria-label={t("contentAi.searchContent")}
+                    onPress={() => setView("search")}
+                >
+                    <MagnifyingGlassIcon className="size-5" />
+                </Button>
+            </div>
 
             {/* thread — self-bounded scroll region (scroll shadow on the messages,
                 not the popover); composer stays fixed below */}

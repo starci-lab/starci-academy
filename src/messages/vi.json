@@ -60,6 +60,7 @@
     "total": "Tổng cộng",
     "itemsCount": "{count} khóa học",
     "savings": "Bạn tiết kiệm {amount}",
+    "installmentHint": "Hoặc trả góp từ {amount}/tháng",
     "bundleBonus": "Ưu đãi combo +{percent}%",
     "addMoreHint2": "Thêm 1 khóa nữa để được giảm thêm 5%",
     "addMoreHint3": "Thêm 1 khóa nữa để được giảm 10%",
@@ -183,7 +184,8 @@
       "rewards": "Phần thưởng",
       "blog": "Blog",
       "talents": "Nhân tài",
-      "membership": "Thành viên"
+      "membership": "Thành viên",
+      "installments": "Trả góp"
     },
     "learning": {
       "loadMore": "Tải thêm",
@@ -548,6 +550,10 @@
     "untitled": "Chưa đặt tên",
     "searchConversations": "Tìm hội thoại…",
     "noConversations": "Chưa có hội thoại nào",
+    "searchContent": "Tìm nội dung khóa",
+    "searchContentPlaceholder": "Tìm bài học, thử thách, thẻ ôn tập, nhiệm vụ...",
+    "searchContentHint": "Hỏi bằng câu tự nhiên cũng được — AI hiểu nghĩa, không cần đúng từ khoá.",
+    "searchContentEmpty": "Không tìm thấy nội dung nào khớp",
     "deleteConversation": "Xoá hội thoại",
     "turnsCount": "{count} tin nhắn"
   },
@@ -1334,6 +1340,9 @@
   },
   "task": {
     "briefTitle": "Hướng dẫn",
+    "relatedContent": {
+      "label": "Bài nên đọc trước khi làm"
+    },
     "criteriaTitle": "Tiêu chí chấm điểm",
     "codeImplementationsTitle": "Hướng dẫn triển khai",
     "codeImplementationsTabsAria": "Hướng dẫn triển khai theo ngôn ngữ",
@@ -1371,6 +1380,9 @@
   },
   "content": {
     "title": "Nội dung",
+    "relatedContent": {
+      "label": "Có thể bạn muốn đọc thêm"
+    },
     "upNext": {
       "eyebrow": "Tiếp theo · Luyện tập bài này",
       "challengesTitle": "Làm {count} thử thách của bài này",
@@ -1571,6 +1583,9 @@
   },
   "submissionResult": {
     "backToChallenge": "Quay lại thử thách",
+    "relatedContent": {
+      "label": "Đọc gì để sửa"
+    },
     "title": "Kết quả nộp bài",
     "passNeeded": "cần {score} để qua",
     "gradedBy": "chấm bởi",
@@ -1588,6 +1603,9 @@
   },
   "personalProjectResult": {
     "backToTask": "Quay lại dự án",
+    "relatedContent": {
+      "label": "Đọc gì để sửa"
+    },
     "upNextEyebrow": "Đạt task này ✓ · Tiếp theo",
     "nextTaskTitle": "Sang task tiếp theo của dự án",
     "nextTaskDesc": "Mỗi task hoàn thành nâng độ sẵn sàng đi làm (capstone) của bạn.",
@@ -1991,6 +2009,7 @@
       "avgScore": "Điểm trung bình",
       "bestScore": "Điểm cao nhất",
       "weakTagsTitle": "Chủ đề cần ôn thêm",
+      "relatedContentLabel": "Thực hành thêm",
       "replay": "Luyện lại",
       "setupTitle": "Sẵn sàng luyện?",
       "setupSubtitle": "Câu hỏi ngẫu nhiên trên toàn khóa học.",
@@ -2153,6 +2172,7 @@
     "attributesTitle": "Đánh giá kỹ năng",
     "strengthsTitle": "Điểm mạnh",
     "gapsTitle": "Cần cải thiện",
+    "relatedContentLabel": "Nên đọc lại",
     "followUpTitle": "Câu hỏi gợi mở tiếp theo",
     "nextPhase": "Chuyển phase",
     "nextQuestion": "Câu tiếp theo",
@@ -2589,6 +2609,31 @@
     "empty": "Không có phiên đăng nhập nào.",
     "unknownDevice": "Thiết bị không xác định"
   },
+  "installmentPlans": {
+    "title": "Kế hoạch trả góp của tôi",
+    "subtitle": "Theo dõi tiến độ trả góp và thanh toán kỳ tiếp theo.",
+    "empty": "Bạn không có khoản trả góp nào",
+    "emptyDesc": "Khi mua khóa học, bạn có thể chọn trả góp 3/6/12 tháng thay vì trả 1 lần.",
+    "emptyCta": "Khám phá khóa học",
+    "termMonths": "Trả góp {months} tháng",
+    "flexiblePool": "Công nợ trả góp",
+    "perCycle": "/kỳ",
+    "progress": "Đã trả {paid}/{months} kỳ",
+    "remaining": "Còn nợ",
+    "minPaymentFormula": "Tối thiểu kỳ này: {percent}% số dư, tối thiểu {floor}",
+    "amountLabel": "Số tiền muốn trả",
+    "minLabel": "Tối thiểu {amount}",
+    "nextDue": "Kỳ tiếp theo đến hạn {date}",
+    "payThisCycle": "Trả kỳ này",
+    "pay": "Trả",
+    "unlock": "Thanh toán để mở khoá",
+    "status": {
+      "Active": "Đang trả góp",
+      "Overdue": "Quá hạn",
+      "Defaulted": "Đã khoá",
+      "Completed": "Đã hoàn tất"
+    }
+  },
   "follow": {
     "follow": "Theo dõi",
     "following": "Đang theo dõi"
@@ -3004,6 +3049,14 @@
     "noCardStored": "StarCi Academy không lưu thông tin thẻ của bạn",
     "aiPlanName": "Gói AI",
     "membershipName": "Hội viên StarCi",
+    "installment": {
+      "title": "Hình thức thanh toán",
+      "payFull": "Trả 1 lần",
+      "payInstallment": "Trả góp",
+      "months": "{months} tháng",
+      "perMonth": "{amount}/tháng",
+      "summary": "Tổng {total} (đã gồm phí trả góp +{markup}%) · chỉ hỗ trợ cổng nội địa (VND)"
+    },
     "loyalty": {
       "enrolled": "Bạn đã sở hữu {count} khóa học",
       "diligent": "Bạn duy trì streak học tập"
@@ -3249,7 +3302,9 @@
       "tasks": {
         "readContent": "Đọc nội dung",
         "passChallenge": "Pass challenge",
-        "reviewFlashcards": "Ôn flashcard"
+        "reviewFlashcards": "Ôn flashcard",
+        "mockInterview": "Hoàn thành 1 phiên Phỏng vấn thử",
+        "quizSession": "Hoàn thành 1 phiên Quiz nhanh"
       }
     },
     "identityStats": {
@@ -3902,8 +3957,11 @@
     "cannotAfford": "Không đủ Coin",
     "catalogError": "Không tải được cửa hàng.",
     "confirmRedeem": "Xác nhận đổi quà",
+    "confirmRedeemBody": "Bạn sẽ dùng {cost} Coin để đổi \"{title}\". Không thể hoàn lại sau khi xác nhận.",
     "cost": "{count} Coin",
     "noRedemptions": "Bạn chưa đổi phần quà nào.",
+    "catalogEmptyTitle": "Cửa hàng chưa có quà nào",
+    "catalogEmptyDescription": "Quay lại sau — quà mới sẽ sớm xuất hiện ở đây.",
     "redeem": "Đổi quà",
     "redeemedTitle": "Lịch sử đổi thưởng",
     "shipAddress": "Địa chỉ nhận hàng",
@@ -3930,7 +3988,7 @@
       "copy": "Sao chép",
       "copied": "Đã sao chép mã",
       "scopeAny": "Áp dụng cho mọi khóa học",
-      "scopeCourse": "Chỉ áp dụng cho {course}",
+      "scopeCourse": "Chỉ áp dụng cho <link>{course}</link>",
       "status": {
         "unused": "Khả dụng",
         "reserved": "Đang giữ chỗ",
@@ -3963,6 +4021,11 @@
     "markAllRead": "Đánh dấu tất cả đã đọc",
     "retry": "Thử lại",
     "title": "Thông báo"
+  },
+  "notification": {
+    "streakMilestone": {
+      "title": "Streak {days} ngày! +{coin} Coin đã cộng vào ví"
+    }
   },
   "streakFreeze": {
     "buy": "Mua băng bảo vệ ({cost} XP)",

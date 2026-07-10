@@ -10,6 +10,7 @@ import {
     SlidersHorizontalIcon as AiSettingsIcon,
     StarIcon as MembershipIcon,
     GraduationCapIcon as CourseHistoryIcon,
+    WalletIcon as InstallmentsIcon,
 } from "@phosphor-icons/react"
 import { pathConfig } from "@/resources/path"
 
@@ -72,6 +73,7 @@ export const getSettingsGroups = (locale: string): Array<SettingsNavGroup> => {
             items: [
                 { key: "bookmarks", href: profile.bookmarks().build(), icon: <BookmarkIcon className="size-5" /> },
                 { key: "membership", href: profile.membership().build(), icon: <MembershipIcon className="size-5" /> },
+                { key: "installments", href: profile.installments().build(), icon: <InstallmentsIcon className="size-5" /> },
             ],
         },
     ]

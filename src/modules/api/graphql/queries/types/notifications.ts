@@ -21,6 +21,8 @@ export enum NotificationType {
     SubscriptionGranted = "subscriptionGranted",
     /** A broadcast announcement fanned out to the recipient. */
     Announcement = "announcement",
+    /** The recipient's activity streak crossed a reward milestone. */
+    StreakMilestone = "streakMilestone",
 }
 
 /**

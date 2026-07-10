@@ -85,6 +85,13 @@ export const MiniCartDrawer = () => {
     const meterPercent = Math.min(itemCount / BUNDLE_MAX_ITEMS, 1) * 100
     const nextTierPercent = itemCount < BUNDLE_MAX_ITEMS ? BUNDLE_TIER[itemCount] : undefined
 
+    // cheapest installment cycle (lowest monthlyAmountVnd, usually the longest
+    // term) — surfaces that trả góp EXISTS before the buyer commits to checkout;
+    // full term picker lives in PaymentModal once they proceed.
+    const cheapestMonthlyVnd = preview?.installmentOptions.length
+        ? Math.min(...preview.installmentOptions.map((option) => option.monthlyAmountVnd))
+        : null
+
     const onCheckout = useCallback(() => {
         if (items.length === 0) {
             return
@@ -201,7 +208,7 @@ export const MiniCartDrawer = () => {
                             </ScrollShadow>
                         </Drawer.Body>
                         {items.length > 0 ? (
-                            <Drawer.Footer className="flex flex-col gap-3 border-t">
+                            <Drawer.Footer className="flex flex-col gap-3 border-t p-4">
                                 {/* summary: real charged total + saving; falls back to the plain list total on preview error */}
                                 <AsyncContent
                                     isLoading={previewLoading}
@@ -230,6 +237,11 @@ export const MiniCartDrawer = () => {
                                         {preview && preview.savingsVnd > 0 ? (
                                             <Typography type="body-sm" className="text-success">
                                                 {t("cart.savings", { amount: formatVnd(preview.savingsVnd) })}
+                                            </Typography>
+                                        ) : null}
+                                        {cheapestMonthlyVnd != null ? (
+                                            <Typography type="body-xs" color="muted">
+                                                {t("cart.installmentHint", { amount: formatVnd(cheapestMonthlyVnd) })}
                                             </Typography>
                                         ) : null}
                                     </div>

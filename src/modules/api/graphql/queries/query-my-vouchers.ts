@@ -16,6 +16,7 @@ const query1 = gql`
         value
         courseId
         courseTitle
+        courseDisplayId
         status
         expiresAt
         usedAt

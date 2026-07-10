@@ -67,6 +67,7 @@ import {
     PremiumPaywall,
 } from "./PremiumPaywall"
 import { SelectionHintCallout } from "../ContentAiSelectionAsk/SelectionHintCallout"
+import { RelatedContentList } from "@/components/blocks/learn/RelatedContentList"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { type WithClassNames } from "@/modules/types/base/class-name"
 import { DEFAULT_PROGRAMMING_LANGUAGES, isProgrammingLangAvailable, resolveActiveProgrammingLang } from "@/modules/types/utils/programming-language"
@@ -98,6 +99,7 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
     const params = useParams()
     const routeContentId = params.contentId as string | undefined
     const contentFromRedux = useAppSelector((state) => state.content.entity)
+    const course = useAppSelector((state) => state.course.entity)
     const contentTab = useAppSelector((state) => state.tabs.contentTab)
     const queryContentSwr = useQueryContentSwr()
     /** Prefer Redux; fall back to SWR cache so returning to a lesson does not stick on skeleton. */
@@ -394,6 +396,18 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
                                     onPress={() => onTabChange(ContentTab.Challenges)}
                                 />
                             ) : null}
+                        {/* quiet, self-hiding "may also want to read" — course-wide RAG search
+                            auto-queried on THIS lesson's own title (no typing). Additive to the
+                            chat's on-demand search (opt-in, typed), never a competing CTA. */}
+                        {course?.id && course.displayId && content?.title ? (
+                            <RelatedContentList
+                                className="mx-auto w-full max-w-3xl"
+                                courseId={course.id}
+                                courseDisplayId={course.displayId}
+                                query={content.title}
+                                label={t("content.relatedContent.label")}
+                            />
+                        ) : null}
                         <ContentDiscussion className="mx-auto w-full max-w-3xl" />
                         <LessonPager className="mx-auto w-full max-w-3xl" />
                         {hasE2e ? (

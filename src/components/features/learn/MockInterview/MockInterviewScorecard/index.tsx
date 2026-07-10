@@ -18,6 +18,7 @@ import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { CheckListCard, CheckListItem } from "@/components/blocks/cards/CheckListCard"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { RelatedContentList } from "@/components/blocks/learn/RelatedContentList"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
@@ -172,6 +173,12 @@ export const MockInterviewScorecard = ({
         : pathConfig().locale(locale).course(courseDisplayId).learn().content().build()
 
     const weakPhaseLabel = weakestPhase ? phaseDisplayLabel(weakestPhase.phase, t) : null
+
+    // query auto-built from the gaps + follow-up question — no typing. This is
+    // ADDITIVE to the primary CTA above (which already deep-links matchedContentIds[0]):
+    // a fresh course-wide RAG search surfaces a small passive list (may include
+    // challenges/flashcards/milestones the single-match CTA never considered).
+    const relatedContentQuery = [...grade.gaps, grade.followUpQuestion].filter(Boolean).join(" ")
 
     // design mode scores against the 5 canonical phases; qna scores are per-question
     // ("Câu N") — drives whether the breakdown reads "từng phase" or "từng câu".
@@ -332,6 +339,15 @@ export const MockInterviewScorecard = ({
                     </Button>
                 ) : null}
             </div>
+
+            {/* quiet, self-hiding "nên đọc lại" — a passive list below the primary CTA,
+                never a competing button. */}
+            <RelatedContentList
+                courseId={courseId}
+                courseDisplayId={courseDisplayId}
+                query={relatedContentQuery}
+                label={t("mockInterview.relatedContentLabel")}
+            />
         </div>
     )
 }

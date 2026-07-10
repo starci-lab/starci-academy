@@ -514,6 +514,11 @@
   "contentAi": {
     "title": "Ask StarCi AI",
     "hint": "Ask anything about this content.",
+    "toolResult": {
+      "intro": "Related content for this section — pick one to open:",
+      "empty": "No matching content found. Try asking differently.",
+      "viewAll": "See all in the course"
+    },
     "placeholder": "Ask about this content...",
     "ask": "Ask AI",
     "send": "Send",
@@ -3157,6 +3162,16 @@
       }
     }
   },
+  "entityResult": {
+    "read": "Read",
+    "review": "Review",
+    "practice": "Do",
+    "open": "Open",
+    "kindContent": "Lesson",
+    "kindChallenge": "Challenge",
+    "kindFlashcard": "Flashcard",
+    "kindMilestone": "Project"
+  },
   "common": {
     "loading": "Loading…",
     "tagsMore": "+{count}",
@@ -3174,6 +3189,7 @@
     "save": "Save",
     "edit": "Edit",
     "delete": "Delete",
+    "read": "Read",
     "streak": {
       "current": "Current Streak",
       "longest": "Longest Streak",

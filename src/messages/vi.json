@@ -514,6 +514,11 @@
   "contentAi": {
     "title": "Hỏi StarCi AI",
     "hint": "Hỏi bất cứ điều gì về nội dung này.",
+    "toolResult": {
+      "intro": "Nội dung liên quan phần này — chọn để mở:",
+      "empty": "Chưa tìm thấy nội dung khớp. Thử hỏi khác nhé.",
+      "viewAll": "Xem tất cả trong khóa"
+    },
     "placeholder": "Hỏi về nội dung này...",
     "ask": "Hỏi AI",
     "send": "Gửi",
@@ -3166,6 +3171,16 @@
       }
     }
   },
+  "entityResult": {
+    "read": "Đọc",
+    "review": "Ôn",
+    "practice": "Làm",
+    "open": "Mở",
+    "kindContent": "Bài học",
+    "kindChallenge": "Thử thách",
+    "kindFlashcard": "Flashcard",
+    "kindMilestone": "Dự án"
+  },
   "common": {
     "loading": "Đang tải…",
     "tagsMore": "+{count}",
@@ -3183,6 +3198,7 @@
     "save": "Lưu",
     "edit": "Sửa",
     "delete": "Xóa",
+    "read": "Đọc",
     "streak": {
       "current": "Chuỗi hiện tại",
       "longest": "Chuỗi dài nhất",

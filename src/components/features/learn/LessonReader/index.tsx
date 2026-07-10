@@ -405,6 +405,7 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
                                 courseId={course.id}
                                 courseDisplayId={course.displayId}
                                 query={content.title}
+                                excludeId={content.id}
                                 label={t("content.relatedContent.label")}
                             />
                         ) : null}

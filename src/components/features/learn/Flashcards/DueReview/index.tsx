@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useCallback, useMemo, useState } from "react"
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import useSWR, { useSWRConfig } from "swr"
 import { Button, Typography, cn } from "@heroui/react"
 import { ArrowRightIcon, CheckCircleIcon, CursorClickIcon } from "@phosphor-icons/react"
@@ -13,12 +13,18 @@ import { DueReviewSkeleton } from "./DueReviewSkeleton"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { mutateReviewFlashcard } from "@/modules/api/graphql/mutations/mutation-review-flashcard"
 import { queryMyDueFlashcards } from "@/modules/api/graphql/queries/query-my-due-flashcards"
+import type { QueryMyDueFlashcardData } from "@/modules/api/graphql/queries/types/my-due-flashcards"
+import { GraphQLHeadersKey, type GraphQLHeaders } from "@/modules/api/graphql/types"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { BackLink } from "@/components/blocks/navigation/BackLink"
 import { FlipCard } from "@/components/blocks/cards/FlipCard"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
 import { RatingBar } from "@/components/blocks/buttons/RatingBar"
+import { useMutateStartFlashcardDueReviewSessionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateStartFlashcardDueReviewSessionSwr"
+import { useMutateSyncFlashcardDueReviewSessionProgressSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardDueReviewSessionProgressSwr"
+import { useMutateCompleteFlashcardDueReviewSessionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateCompleteFlashcardDueReviewSessionSwr"
+import { useQueryMyInProgressFlashcardDueReviewSessionSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyInProgressFlashcardDueReviewSessionSwr"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import { useAppSelector } from "@/redux/hooks"
 
@@ -68,9 +74,96 @@ export const DueReview = ({ onExit, className }: DueReviewProps) => {
     })
 
     const cards = data?.cards ?? []
-    const card = cards[currentIndex]
+
+    // session-persistence (mirrors QuizSession's resumable-session idiom, scoped
+    // cross-deck by enrollment only — no deckId, unlike the single-deck reviewer):
+    // each rating is already saved immediately via `reviewFlashcard` (safe), but
+    // WHICH batch/position within it was not persisted, so leaving mid-batch used
+    // to lose the in-batch progress. `startFlashcardDueReviewSession` /
+    // `syncFlashcardDueReviewSessionProgress` / `completeFlashcardDueReviewSession`
+    // wrap that sequence with a resumable cursor, silently (no new UI/route).
+    const courseHeaders = useMemo<GraphQLHeaders | undefined>(
+        () => (courseId ? { [GraphQLHeadersKey.XCourseId]: courseId } : undefined),
+        [courseId],
+    )
+    const runStartSession = useMutateStartFlashcardDueReviewSessionSwr()
+    const runSyncSession = useMutateSyncFlashcardDueReviewSessionProgressSwr()
+    const runCompleteSession = useMutateCompleteFlashcardDueReviewSessionSwr()
+    const inProgressSessionSwr = useQueryMyInProgressFlashcardDueReviewSessionSwr(courseId)
+    // when a resumable session is found, the fetched due batch is reordered/filtered
+    // to match its persisted `cardIds` (never re-drawn) — null while resuming didn't
+    // apply (fresh draw, or no resumable session), in which case the raw fetched
+    // `cards` above is used as-is.
+    const [resumedCards, setResumedCards] = useState<Array<QueryMyDueFlashcardData> | null>(null)
+    // server-issued id for the current batch — set once on start OR resume
+    const sessionIdRef = useRef<string | null>(null)
+    // guards the one-shot resolve-or-start effect to run at most once per mount
+    const resolveAttemptedRef = useRef(false)
+    // guards the one-shot completion call on reaching `done`
+    const completedRef = useRef(false)
+
+    const effectiveCards = resumedCards ?? cards
+    const card = effectiveCards[currentIndex]
     // past the last card → the session is complete
-    const done = cards.length > 0 && currentIndex >= cards.length
+    const done = effectiveCards.length > 0 && currentIndex >= effectiveCards.length
+
+    // resolve-or-start, once the batch + the in-progress query have both settled:
+    // a matching resumable session hydrates `currentIndex`/`reviewedCount` and
+    // reorders the batch to the session's own persisted `cardIds` (never a fresh
+    // random draw); otherwise a fresh session is started for the batch just drawn.
+    useEffect(() => {
+        if (
+            resolveAttemptedRef.current
+            || !courseId
+            || cards.length === 0
+            || inProgressSessionSwr.isLoading
+        ) {
+            return
+        }
+        resolveAttemptedRef.current = true
+        const resumeData = inProgressSessionSwr.data
+        if (resumeData) {
+            const cardById = new Map(cards.map((dueCard) => [dueCard.cardId, dueCard]))
+            const ordered = resumeData.cardIds
+                .map((cardId) => cardById.get(cardId))
+                .filter((dueCard): dueCard is QueryMyDueFlashcardData => Boolean(dueCard))
+            if (ordered.length > 0) {
+                sessionIdRef.current = resumeData.sessionId
+                setResumedCards(ordered)
+                setCurrentIndex(Math.min(resumeData.currentIndex, ordered.length - 1))
+                setReviewedCount(resumeData.reviewedCount)
+                completedRef.current = false
+                return
+            }
+        }
+        // no resumable session (or none of its cards still match the batch) —
+        // persist a fresh draw so it becomes resumable going forward.
+        void runStartSession
+            .trigger({
+                request: { courseId, cardIds: cards.map((dueCard) => dueCard.cardId) },
+                headers: courseHeaders as GraphQLHeaders,
+            })
+            .then((started) => {
+                sessionIdRef.current = started.data?.startFlashcardDueReviewSession.data?.sessionId ?? null
+            })
+            .catch(() => {})
+    }, [courseId, cards, inProgressSessionSwr.isLoading, inProgressSessionSwr.data, runStartSession, courseHeaders])
+
+    // finish: record the finished batch once (guarded), best-effort — a failed
+    // complete call only means the row stays "in_progress" (still resumable),
+    // it never blocks the learner from leaving.
+    useEffect(() => {
+        if (!done || completedRef.current || !sessionIdRef.current) {
+            return
+        }
+        completedRef.current = true
+        void runCompleteSession
+            .trigger({
+                request: { sessionId: sessionIdRef.current, reviewedCount, xpEarned: 0 },
+                headers: courseHeaders as GraphQLHeaders,
+            })
+            .catch(() => {})
+    }, [done, reviewedCount, runCompleteSession, courseHeaders])
 
     // SM-2 grade buttons for the current card: localized label + next-interval
     // preview ("4 days") computed server-side from the card's current state
@@ -117,12 +210,29 @@ export const DueReview = ({ onExit, className }: DueReviewProps) => {
             )
             setReviewing(false)
             if (ok) {
-                setReviewedCount((count) => count + 1)
+                const nextIndex = currentIndex + 1
+                const nextReviewedCount = reviewedCount + 1
+                setReviewedCount(nextReviewedCount)
                 setRevealed(false)
-                setCurrentIndex((index) => index + 1)
+                setCurrentIndex(nextIndex)
+                // best-effort, fire-and-forget persistence for resume — never blocks
+                // advancing to the next card; a failed sync only degrades resumability
+                if (sessionIdRef.current) {
+                    void runSyncSession
+                        .trigger({
+                            request: {
+                                sessionId: sessionIdRef.current,
+                                currentIndex: nextIndex,
+                                reviewedCount: nextReviewedCount,
+                                xpEarned: 0,
+                            },
+                            headers: courseHeaders as GraphQLHeaders,
+                        })
+                        .catch(() => {})
+                }
             }
         },
-        [card, runGraphQL, t],
+        [card, runGraphQL, t, currentIndex, reviewedCount, runSyncSession, courseHeaders],
     )
 
     // finish: refresh the due queue (count changed) and return home
@@ -180,20 +290,21 @@ export const DueReview = ({ onExit, className }: DueReviewProps) => {
                 />
             ) : (
                 <div className={cn("flex flex-col gap-6", className)}>
-                    {/* back out early — this session has no persisted resume state (each
-                        grade is saved immediately via reviewFlashcard), so leaving mid-run
-                        loses nothing; no confirm modal needed (thầy 2026-07-09: "sao không
-                        có kết thúc sớm, trở về"). */}
+                    {/* back out early — no confirm modal needed (thầy 2026-07-09: "sao không
+                        có kết thúc sớm, trở về"): each grade is saved immediately via
+                        `reviewFlashcard`, AND (2026-07-11) the batch/position itself is now
+                        persisted too (`syncFlashcardDueReviewSessionProgress`) — leaving
+                        mid-run loses nothing, resumes exactly where it left off. */}
                     <BackLink target={t("flashcard.title")} onPress={onExit} />
 
                     <div className="flex flex-col gap-3">
                         {/* progress through this batch */}
                         <ProgressMeter
                             value={currentIndex + 1}
-                            max={cards.length}
+                            max={effectiveCards.length}
                             label={t("flashcard.cardProgress", {
                                 current: currentIndex + 1,
-                                total: cards.length,
+                                total: effectiveCards.length,
                             })}
                         />
 

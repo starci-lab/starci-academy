@@ -156,9 +156,11 @@ const ArcSection = ({ index, children }: { index?: number, children?: React.Reac
     const [expanded, setExpanded] = React.useState(isCore)
     // the label is `children[0]` (a `<strong>` for the lead-bold-paragraph shape, or
     // the whole `mutedblock` div for the `:::muted` shape) — force it onto its own
-    // line as a small foreground "eyebrow", overriding whatever colour/size its own
-    // renderer gave it (`!` = guaranteed win over the inline `text-muted` class).
-    const boxClassName = `[&>*:first-child]:!block [&>*:first-child]:!text-foreground [&>*:first-child]:!text-xs [&>*:first-child]:!font-medium [&>*:first-child]:!mb-1 py-2.5 ${position > 0 ? "border-t border-default" : ""}`
+    // line as a small MUTED "eyebrow" (thầy 2026-07-12: label = `text-xs text-muted`,
+    // no per-section colour — the section labels are authored inconsistently so a
+    // colour-by-label map rendered wrong; a uniform muted label reads cleaner).
+    // `!` = guaranteed win over whatever colour/size the label's own renderer gave it.
+    const boxClassName = `[&>*:first-child]:!block [&>*:first-child]:!text-muted [&>*:first-child]:!text-xs [&>*:first-child]:!font-medium [&>*:first-child]:!mb-1 border-l-2 border-default pl-3 ${position > 0 ? "mt-3" : ""}`
     if (expanded) {
         // the lead-bold-paragraph shape keeps its " — " separator right after the
         // label text — drop it now that the label sits on its own line above.

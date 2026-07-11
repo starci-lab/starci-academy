@@ -19,11 +19,13 @@ export const DueReviewSkeleton = ({ className }: WithClassNames<undefined> = {})
                 </div>
                 {/* deck-context line */}
                 <Skeleton.Typography type="body-xs" width="1/3" />
-                {/* the flashcard — mirrors FlipCard's front face */}
-                <div className="flex min-h-64 flex-col items-center justify-center gap-3 rounded-2xl bg-surface shadow-surface p-6 sm:min-h-72">
-                    <Skeleton.Typography type="body" width="3/4" />
-                    <Skeleton.Typography type="body" width="2/3" />
-                    <Skeleton.Typography type="body" width="1/2" />
+                {/* the flashcard — mirrors FlipCard's LabeledCard (label OUTSIDE + Card) */}
+                <div className="flex flex-col gap-3">
+                    <Skeleton.Typography type="body-xs" width="1/4" />
+                    <div className="flex flex-col gap-3 rounded-2xl bg-surface p-6 shadow-surface">
+                        <Skeleton.Typography type="body" width="3/4" />
+                        <Skeleton.Typography type="body" width="2/3" />
+                    </div>
                 </div>
                 {/* reveal control */}
                 <Skeleton.Button />

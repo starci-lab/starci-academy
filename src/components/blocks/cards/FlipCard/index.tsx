@@ -5,37 +5,41 @@ import { ScrollShadow, cn } from "@heroui/react"
 import { AnimatePresence, motion } from "framer-motion"
 import type { ReactNode } from "react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 
 /** Props for the {@link FlipCard} block. */
 export interface FlipCardProps extends WithClassNames<undefined> {
-    /** Whether the answer is currently expanded below the question. */
+    /** Whether the answer card is currently revealed below the question. */
     revealed: boolean
-    /** Front (prompt) content — composed by the caller; centered in the card. */
+    /** Label shown OUTSIDE (above) the question card — e.g. "Câu hỏi". */
+    questionLabel: ReactNode
+    /** Label shown OUTSIDE (above) the answer card — e.g. "Đáp án". */
+    answerLabel: ReactNode
+    /** Front (prompt) content — composed by the caller; sits in the question card. */
     front: ReactNode
     /** Back (answer) content — composed by the caller; shown once {@link revealed}. */
     back: ReactNode
 }
 
 /**
- * Anki-style "no-flip" prompt/answer card: the question sits on one plane and the
- * answer expands directly below it (dashed divider + a light success wash) instead
- * of a 3D flip. Retrieval-practice research (thầy 2026-07-11, see prototype notes
- * `.claude/fe/prototypes/flashcard-review-session-flow.html` màn 1a) says the thing
- * that matters for recall is committing to an answer BEFORE seeing it — not the
- * flip animation itself; a plain "Xem đáp án" reveal (Anki's own pattern) covers
- * that without the extra 3D-transform complexity. The caller owns the actual
- * reveal control (an outside "Xem đáp án"/"Ẩn đáp án" button, per the
- * `card-in-card` §5 rule: a card with a real action button stays static, not
- * whole-card-clickable) — this block is purely presentational, driven by
- * {@link FlipCardProps.revealed}.
+ * Anki-style "no-flip" prompt/answer pair: the question and the answer are TWO
+ * SEPARATE {@link LabeledCard}s — each label ("Câu hỏi" / "Đáp án") sits OUTSIDE,
+ * above its card (thầy 2026-07-12: "câu hỏi, đáp án ở ngoài kiểu labeled card"),
+ * not an eyebrow inside the card. The answer card reveals below the question one
+ * (height-animate) once {@link revealed}. Retrieval-practice research (thầy
+ * 2026-07-11) says what matters for recall is committing to an answer BEFORE
+ * seeing it — the caller owns the "Xem đáp án" reveal control and renders it
+ * BETWEEN this block and the rating; this block is purely presentational.
  * @param props - {@link FlipCardProps}
  */
-export const FlipCard = ({ revealed, front, back, className }: FlipCardProps) => {
+export const FlipCard = ({ revealed, questionLabel, answerLabel, front, back, className }: FlipCardProps) => {
     return (
-        <div className={cn("overflow-hidden rounded-2xl bg-surface shadow-surface", className)}>
-            <div className="flex min-h-64 flex-col items-center justify-center gap-3 p-6 text-center sm:min-h-72">
+        <div className={cn("flex flex-col gap-6", className)}>
+            <LabeledCard label={questionLabel} contentClassName="flex flex-col gap-3">
                 {front}
-            </div>
+            </LabeledCard>
+            {/* answer = its OWN labeled card, revealed below (height-animate so the
+                reveal still feels connected) */}
             <AnimatePresence initial={false}>
                 {revealed ? (
                     <motion.div
@@ -44,11 +48,13 @@ export const FlipCard = ({ revealed, front, back, className }: FlipCardProps) =>
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.25, ease: "easeInOut" }}
-                        className="overflow-hidden border-t border-dashed border-default bg-success/5"
+                        className="overflow-hidden"
                     >
-                        <ScrollShadow hideScrollBar className="flex max-h-96 flex-col gap-3 p-6 text-left">
-                            {back}
-                        </ScrollShadow>
+                        <LabeledCard label={answerLabel}>
+                            <ScrollShadow hideScrollBar className="flex max-h-[28rem] flex-col gap-3 overflow-y-auto text-left">
+                                {back}
+                            </ScrollShadow>
+                        </LabeledCard>
                     </motion.div>
                 ) : null}
             </AnimatePresence>

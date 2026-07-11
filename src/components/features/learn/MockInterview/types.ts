@@ -97,6 +97,35 @@ export interface MockInterviewAttributeScore {
 }
 
 /**
+ * One per-question model-answer review — the anti-ChatGPT breakdown that compares
+ * the candidate's OWN spoken answer against the seed flashcard's authored model
+ * answer, for one `mode="qna"` question. Rendered on the scorecard so the learner
+ * sees, per question, what a strong answer would have covered. Empty for a
+ * `mode="design"` run (design scores by phase, not per question) and for attempts
+ * graded before this field existed — the scorecard self-hides the section then.
+ */
+export interface MockInterviewQuestionReview {
+    /** 0-based index of this question within the session. */
+    questionIndex: number
+    /** This question's cognitive frame ("theory" | "reasoning" | "scenario"), as drawn. */
+    kind: string
+    /** The interviewer's question text for this question. */
+    question: string
+    /** The candidate's own answer for this question. */
+    candidateAnswer: string
+    /** The seed flashcard's authored model answer (Markdown), or null when unavailable. */
+    modelAnswer: string | null
+    /** A one-line summary of what the candidate's answer was missing relative to the reference. */
+    feedback: string
+    /** Score assigned to this question. */
+    score: number
+    /** Maximum possible score for this question (always 100 for qna). */
+    max: number
+    /** Best-effort matched course content (lesson) id for this question, or null when no confident match exists. */
+    matchedContentId: string | null
+}
+
+/**
  * The end-of-session grade for one interview run.
  * BE: a `gradeMockInterviewSession` mutation — grades the whole transcript (+ the
  * whiteboard graph, Pha 2) against the prompt's 5-phase rubric. Persists an attempt
@@ -124,4 +153,10 @@ export interface MockInterviewGradeResult {
      * treat empty as an error, and never fabricate a citation when it's empty.
      */
     matchedContentIds: Array<string>
+    /**
+     * Per-question model-answer review (the anti-ChatGPT breakdown), one entry per
+     * `mode="qna"` question. Empty for a `mode="design"` run or an attempt graded
+     * before this field existed — the scorecard self-hides the section then.
+     */
+    questionReviews: Array<MockInterviewQuestionReview>
 }

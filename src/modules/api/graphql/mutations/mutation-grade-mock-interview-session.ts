@@ -28,6 +28,17 @@ const mutation1 = gql`
         gaps
         followUpQuestion
         matchedContentIds
+        questionReviews {
+          questionIndex
+          kind
+          question
+          candidateAnswer
+          modelAnswer
+          feedback
+          score
+          max
+          matchedContentId
+        }
       }
     }
   }

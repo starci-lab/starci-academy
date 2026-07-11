@@ -7,10 +7,13 @@ import { useLocale, useTranslations } from "next-intl"
 import { pathConfig } from "@/resources/path"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
-import type { OauthAction } from "./enums"
+import { OauthAction } from "./enums"
 import { OAUTH_ACTION_MESSAGE_KEY_MAP } from "./map"
 import { Spacer } from "@/components/reuseable/Spacer"
 import { sleep } from "@/modules/utils/misc"
+import { SessionStorage } from "@/modules/storage/session/storage"
+import { SessionStorageId } from "@/modules/storage/session/enums/id"
+import { type SessionStoragePostLoginRedirect } from "@/modules/storage/session/types/post-login-redirect"
 
 export * from "./enums"
 
@@ -36,14 +39,24 @@ export const OauthRedirect = ({ action, className }: OauthRedirectProps) => {
     const locale = useLocale()
     const t = useTranslations()
 
-    // Hold the user briefly so the Keycloak session settles, then go home.
+    // Hold the user briefly so the Keycloak session settles, then continue on: a sign-in
+    // started from the `/login` guard stashed where the visitor was headed (query params
+    // don't survive the IdP round-trip); anything else (logout, generic authenticate) goes home.
     const onRedirect = useCallback(() => {
         sleep(1000).then(
             () => {
-                router.push(pathConfig().locale(locale).build())
+                let target: string | undefined
+                if (action === OauthAction.Login) {
+                    const stashed = SessionStorage.getItem<SessionStoragePostLoginRedirect>(
+                        SessionStorageId.PostLoginRedirect,
+                    )
+                    target = stashed?.target
+                    SessionStorage.removeItem(SessionStorageId.PostLoginRedirect)
+                }
+                router.push(target ?? pathConfig().locale(locale).build())
             }
         )
-    }, [locale, router])
+    }, [action, locale, router])
 
     useEffect(() => {
         onRedirect()

@@ -14,13 +14,18 @@ import { useTranslations } from "next-intl"
 import { useMutateSignInResendOtpSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSignInResendOtpSwr"
 import { useSignInForm } from "@/hooks/zustand/signIn/useSignInForm"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
+import type { WithClassNames } from "@/modules/types/base/class-name"
+
+/** Props for {@link OtpState}. */
+export interface OtpStateProps extends WithClassNames<undefined> {
+    /** Hides `Modal.CloseTrigger` when hosted outside a dismissible modal (the `/login` page). */
+    hideCloseButton?: boolean
+}
 
 /**
  * OTPState component.
- *
- * @param props Props for OTPState component.
  */
-export const OtpState = () => {
+export const OtpState = ({ hideCloseButton }: OtpStateProps = {}) => {
     const t = useTranslations()
     const runGraphQL = useGraphQLWithToast()
     const { trigger: mutateSignInResendOtp, isMutating: isResending } = useMutateSignInResendOtpSwr()
@@ -65,7 +70,7 @@ export const OtpState = () => {
 
     return (
         <>
-            <Modal.CloseTrigger />
+            {!hideCloseButton && <Modal.CloseTrigger />}
             <Modal.Header>
                 <div className="text-center">
                     <div className="font-semibold text-lg">{t("auth.signIn.otp.title")}</div>

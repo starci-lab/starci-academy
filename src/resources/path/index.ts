@@ -21,6 +21,19 @@ export const pathConfig = () => {
                 build,
             }
         }
+        /** The auth-guard redirect target (`/login`), optionally carrying `?redirect=<path>`
+         *  back to the originally-requested protected route. */
+        const login = (redirectTo?: string) => {
+            const loginPath = `${localePath}/login`
+            const build = () => {
+                return redirectTo
+                    ? `${loginPath}?redirect=${encodeURIComponent(redirectTo)}`
+                    : loginPath
+            }
+            return {
+                build,
+            }
+        }
         const profile = (username?: string) => {
             // when a username is given, point at that user's public profile
             // (`/profile/<username>`, GitHub-style); otherwise the viewer's own hub.
@@ -366,15 +379,34 @@ export const pathConfig = () => {
                             build,
                         }
                     }
-                    // resumable "Học thẻ" (SM-2 review) URL: the deck being reviewed rides
-                    // as a route segment (not `?deck=`) so it's traceable/shareable, mirroring
-                    // `quiz(sessionId)` above (thầy 2026-07-09: "trên url cũng không có cái
-                    // deck của phần ôn"). `useFlashcardNav` parses `deckId` back out of this
-                    // same shape — keep the two in sync if this ever changes.
+                    // deep-link into "Học thẻ" (SM-2 review) for ONE deck: the resolve-or-start
+                    // SHIM entry (`?deckId=`) — no `decks/<id>` route segment anymore (thầy
+                    // 2026-07-11: "bỏ deck đi, only session thôi" — deck-review and due-review
+                    // now share ONE live shape, `due(sessionId)` above; `deckId` travels as a
+                    // query hint both here (pre-session) and on the live URL (so a direct
+                    // link/refresh still knows which BE session-kind to resume). `useFlashcardNav`
+                    // parses `deckId` back out of this same query key — keep in sync.
                     const review = (deckId: string) => {
-                        const reviewPath = `${flashcardsPath}/review/decks/${deckId}`
+                        const reviewPath = `${flashcardsPath}/review?${new URLSearchParams({ deckId }).toString()}`
                         const build = () => {
                             return reviewPath
+                        }
+                        return {
+                            build,
+                        }
+                    }
+                    // resumable cross-deck "Đến hạn hôm nay" (due) session URL — mirrors
+                    // `review(deckId)`/`quiz(sessionId)` above: the session rides as its own
+                    // route segment instead of the old `?session=due` query marker, so it's
+                    // traceable/shareable/resumable-by-URL the same way (thầy 2026-07-11
+                    // đính chính: "due review cũng tạo session mới nhé" — parity with the
+                    // deck reviewer's own 2026-07-11 correction). `useFlashcardNav`/`DueReview`
+                    // still land on the bare `review?session=due` marker first (no id known
+                    // yet); that shim resolves-or-starts a session then redirects here.
+                    const due = (sessionId: string) => {
+                        const duePath = `${flashcardsPath}/review/sessions/${sessionId}`
+                        const build = () => {
+                            return duePath
                         }
                         return {
                             build,
@@ -384,6 +416,7 @@ export const pathConfig = () => {
                         build,
                         quiz,
                         review,
+                        due,
                     }
                 }
                 const mockInterview = () => {
@@ -693,6 +726,7 @@ export const pathConfig = () => {
         return {
             build,
             home,
+            login,
             course,
             profile,
             authentication,

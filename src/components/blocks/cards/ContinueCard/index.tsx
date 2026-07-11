@@ -1,7 +1,8 @@
 "use client"
 
 import React from "react"
-import { Typography, cn } from "@heroui/react"
+import { Button, Link, Typography, cn } from "@heroui/react"
+import { ArrowRightIcon } from "@phosphor-icons/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { SectionCard } from "@/components/reuseable/SectionCard"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
@@ -52,15 +53,18 @@ export interface ContinueCardProps extends WithClassNames<undefined> {
      */
     ctaLabel?: React.ReactNode
     /**
-     * Optional press handler. When provided the whole card is wrapped in a
-     * `<button>` so the entire surface is one accessible tap target. Prefer
-     * {@link href} for pure navigation.
+     * Optional press handler. With `ctaVariant="text"` (default), the whole
+     * card is wrapped in a `<button>` so the entire surface is one accessible
+     * tap target. With `ctaVariant="chip"`, this is instead wired directly to
+     * the CTA's own `Button` — the card itself is not separately wrapped (see
+     * {@link ctaVariant}). Prefer {@link href} for pure navigation.
      */
     onPress?: () => void
     /**
-     * Optional destination URL. When provided the card is wrapped in an `<a>`
-     * anchor — the whole surface becomes a single accessible link.
-     * Takes priority over {@link onPress}.
+     * Optional destination URL. With `ctaVariant="text"` (default), the card
+     * is wrapped in an `<a>` anchor — the whole surface becomes a single
+     * accessible link. With `ctaVariant="chip"`, this is instead wired
+     * directly to the CTA's own `Link`. Takes priority over {@link onPress}.
      */
     href?: string
     /**
@@ -72,6 +76,71 @@ export interface ContinueCardProps extends WithClassNames<undefined> {
      * Defaults to `false` (current muted look, unchanged for existing callers).
      */
     urgent?: boolean
+    /**
+     * Optional small circular badge icon rendered leading the info row (before
+     * the text column, same slot family as `cover` but round + tinted) — a
+     * semantic momentum cue (e.g. `FireIcon` for a daily streak/practice queue),
+     * NOT a generic illustration. `aria-hidden` (decorative alongside `title`).
+     * Omit when the resume item has no such momentum concept (e.g. a one-off
+     * mock-interview session) — never force one on for visual symmetry alone.
+     */
+    badgeIcon?: React.ReactNode
+    /**
+     * Optional decorative icon sunk behind the content as a large, low-opacity
+     * watermark bled off the bottom-right corner (`absolute`, `text-accent
+     * opacity-40`, `aria-hidden`, `pointer-events-none` — never affects
+     * layout/a11y). An alternative to `badgeIcon` for the same momentum concept
+     * when the caller wants it sunk into the background rather than an inline
+     * badge. Tuned up from an initial `opacity-15`/`size-24` pass (thầy
+     * 2026-07-11: "đồng hồ chả ai thấy" — too faint/small to register as its
+     * actual shape) to `opacity-40`/`size-32`. Bottom-right — pairs with
+     * `ctaBelow` (frees the row's right side) and reads clear of the
+     * left-aligned title/subtitle column. Mutually exclusive with `badgeIcon`
+     * in practice — pick one per usage.
+     */
+    watermarkIcon?: React.ReactNode
+    /**
+     * Forwards `SectionCard`'s own `accent` prop (`border-accent` ring, NOT a
+     * background fill) — the canonical "highlighted/mine" card treatment
+     * (`principles/accent-system` §3 "card của tôi": ring/border + 1 small
+     * accent detail, never a flooded tint). A flooded `bg-accent/5..15` across
+     * the whole card is the documented ACCENT-FLOOD anti-pattern (§5) — do NOT
+     * reintroduce it here. Defaults to `false` (plain look, unchanged for
+     * existing callers).
+     */
+    accented?: boolean
+    /**
+     * `"text"` (default) — `ctaLabel` as plain accent-coloured text; the whole
+     * card is wrapped in a real `<a>`/`<button>` via {@link href}/{@link onPress}
+     * so the entire surface is one tap target. `"chip"` — renders `ctaLabel` as
+     * a REAL HeroUI `Button` (`variant="primary"`, which this app's theme maps
+     * to `--accent`/`--accent-foreground` — see `button.css`) or `Link` (when
+     * `href` is used instead of `onPress`), with a trailing `ArrowRightIcon`.
+     * Native hover/focus/keyboard semantics instead of a hand-rolled `<span>` +
+     * `group-hover` (thầy 2026-07-11: "render dạng Button heroui ấy"). Because
+     * the Button/Link IS the real interactive element in this mode, the card
+     * itself is NOT also wrapped in an outer `<a>`/`<button>` (would be a
+     * nested-interactive-control a11y violation) — `href`/`onPress` apply
+     * directly to the CTA control, not the whole surface.
+     */
+    ctaVariant?: "text" | "chip"
+    /**
+     * Moves `ctaLabel` out of the info row into its own full-width row below
+     * the title/subtitle, instead of pinned to the far right of that row.
+     * Frees the row's right side (e.g. so a `watermarkIcon` can sit there
+     * without competing with the CTA) and reads better once `hideProgress`
+     * removes the meter that would otherwise visually anchor the CTA's old
+     * position. Defaults to `false` (original inline-right placement).
+     */
+    ctaBelow?: boolean
+    /**
+     * Omits the {@link ProgressMeter} entirely. For a resume card where the
+     * bar read as one more busy element rather than useful signal (thầy
+     * 2026-07-11: "nhìn phèn phèn" — cluttered look — on the flashcard resume
+     * cards). `value`/`max` are simply unused when this is `true`. Defaults to
+     * `false` (existing callers keep the meter).
+     */
+    hideProgress?: boolean
 }
 
 /**
@@ -99,17 +168,71 @@ export const ContinueCard = ({
     onPress,
     href,
     urgent = false,
+    badgeIcon,
+    watermarkIcon,
+    accented = false,
+    ctaVariant = "text",
+    ctaBelow = false,
+    hideProgress = false,
     className,
 }: ContinueCardProps) => {
-    const interactive = Boolean(onPress || href)
+    // "chip" mode makes the Button/Link below the ONE real interactive element —
+    // the card itself must NOT also be wrapped in an outer `<a>`/`<button>` (that
+    // would nest two interactive controls). "text" mode has no such control, so
+    // the whole card stays the tap target via the wrap below.
+    const chipIsInteractive = ctaVariant === "chip"
+    const interactive = !chipIsInteractive && Boolean(onPress || href)
+
+    const ctaNode = ctaLabel ? (
+        ctaVariant === "chip" ? (
+            href ? (
+                <Link
+                    href={href}
+                    className="inline-flex w-fit shrink-0 items-center gap-1.5 whitespace-nowrap rounded-3xl bg-accent px-4 py-2 text-sm font-medium text-accent-foreground no-underline"
+                >
+                    {ctaLabel}
+                    <ArrowRightIcon aria-hidden focusable="false" className="size-3.5" />
+                </Link>
+            ) : (
+                <Button variant="primary" size="sm" onPress={onPress} className="w-fit shrink-0">
+                    {ctaLabel}
+                    <ArrowRightIcon aria-hidden focusable="false" className="size-3.5" />
+                </Button>
+            )
+        ) : (
+            <Typography type="body-sm" className={cn("shrink-0 text-accent", !ctaBelow && "ml-auto")}>
+                {ctaLabel}
+            </Typography>
+        )
+    ) : null
 
     const card = (
         <SectionCard
-            className={cn("flex flex-col", !interactive && className)}
+            accent={accented}
+            className={cn("relative flex flex-col overflow-hidden", !interactive && className)}
             contentClassName="flex flex-col gap-3"
         >
-            {/* Info row: cover | text column | cta label */}
-            <div className="flex items-center gap-3">
+            {/* Decorative watermark — bled off the bottom-right corner, sunk behind
+                content, never affects layout/flow or a11y. Accent-toned (muted at low
+                opacity reads as an indistinct smudge, not a shape). */}
+            {watermarkIcon ? (
+                <div
+                    aria-hidden
+                    className="pointer-events-none absolute -bottom-6 -right-6 text-accent opacity-40 [&_svg]:size-32"
+                >
+                    {watermarkIcon}
+                </div>
+            ) : null}
+
+            {/* Info row: badge/cover | text column | (inline) cta label */}
+            <div className="relative flex items-center gap-3">
+                {/* Momentum badge — small circular tinted icon, same slot family as
+                    `cover` (shrink-0). Semantic (e.g. streak), never purely decorative. */}
+                {badgeIcon ? (
+                    <div aria-hidden className="flex size-9 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent [&_svg]:size-5">
+                        {badgeIcon}
+                    </div>
+                ) : null}
                 {/* Cover thumbnail — shrink-0 so it never compresses */}
                 {cover ? <div className="shrink-0">{cover}</div> : null}
 
@@ -128,21 +251,28 @@ export const ContinueCard = ({
                     ) : null}
                 </div>
 
-                {/* CTA label pinned to the right — accent colour, shrink-0 */}
-                {ctaLabel ? (
-                    <Typography
-                        type="body-sm"
-                        className="ml-auto shrink-0 text-accent"
-                    >
-                        {ctaLabel}
-                    </Typography>
-                ) : null}
+                {/* CTA — inline-right placement, rendered here only when NOT `ctaBelow`
+                    (otherwise it moves to its own row below the info row). */}
+                {!ctaBelow ? ctaNode : null}
             </div>
 
-            {/* Progress bar spanning the full card width */}
-            <ProgressMeter value={value} max={max} />
+            {/* CTA — `ctaBelow` placement: own row under the info row. */}
+            {ctaBelow ? <div className="relative">{ctaNode}</div> : null}
+
+            {/* Progress bar spanning the full card width — omitted entirely when
+                `hideProgress` (e.g. a resume card where it read as clutter rather
+                than useful signal). */}
+            {hideProgress ? null : <ProgressMeter value={value} max={max} />}
         </SectionCard>
     )
+
+    // "chip" mode: the Button/Link inside `card` IS the real interactive element
+    // already (and `interactive` above is always `false` for this mode, so
+    // `SectionCard` already received `className` directly) — never wrap `card`
+    // in another `<a>`/`<button>` here (nested-interactive-control violation).
+    if (chipIsInteractive) {
+        return card
+    }
 
     if (href) {
         return (

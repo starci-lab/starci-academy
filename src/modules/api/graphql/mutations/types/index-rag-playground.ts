@@ -29,6 +29,8 @@ export interface IndexRagPlaygroundRequest {
     fileName?: string
     /** `https://github.com/<owner>/<repo>` URL — required when `kind` is `github`. */
     githubUrl?: string
+    /** Chosen catalog entry's id — used when `kind` is `sample`; server defaults to the first entry when omitted. */
+    sampleId?: string
 }
 
 /** Payload inside `indexRagPlayground.data` after the standard API wrapper. */

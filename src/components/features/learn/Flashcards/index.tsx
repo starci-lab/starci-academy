@@ -8,7 +8,10 @@ import { cn } from "@heroui/react"
 import { EnrollGate } from "../shared/EnrollGate"
 import { LearnBreadcrumb } from "../shared/LearnBreadcrumb"
 import { FlashcardReviewer } from "./FlashcardReviewer"
+import { FlashcardReviewerSkeleton } from "./FlashcardReviewer/FlashcardReviewerSkeleton"
 import { QuizSession } from "./QuizSession"
+import { QuizSessionSkeleton } from "./QuizSession/QuizSessionSkeleton"
+import { FlashcardQuizResult } from "./FlashcardQuizResult"
 import { DueReview } from "./DueReview"
 import { DueReviewHero } from "./DueReviewHero"
 import { FlashcardStatsStrip } from "./FlashcardStatsStrip"
@@ -16,12 +19,16 @@ import { FlashcardDeckList } from "./FlashcardDeckList"
 import { FlashcardMobileNav } from "./FlashcardMobileNav"
 import { FlashcardReviewHistory } from "./FlashcardReviewHistory"
 import { FlashcardReviewStats } from "./FlashcardReviewStats"
+import { FlashcardSessionStats } from "./FlashcardSessionStats"
 import { useFlashcardNav, type FlashcardMode } from "./useFlashcardNav"
 import { type WithClassNames } from "@/modules/types/base/class-name"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryCourseEnrollmentStatusSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseEnrollmentStatusSwr"
+import { useQueryMyFlashcardReviewSessionBySessionIdSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyFlashcardReviewSessionBySessionIdSwr"
+import { useQueryMyFlashcardReviewSessionStatsBySessionIdSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyFlashcardReviewSessionStatsBySessionIdSwr"
+import { useQueryMyFlashcardQuizSessionBySessionIdSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyFlashcardQuizSessionBySessionIdSwr"
 import { queryFlashcardDeck } from "@/modules/api/graphql/queries/query-flashcard-deck"
 
 /** Props for {@link Flashcards}. */
@@ -35,13 +42,19 @@ export interface FlashcardsProps extends WithClassNames<undefined> {
     resumeQuizSessionId?: string
     /**
      * Present when reached via the dedicated, resumable
-     * `flashcards/review/decks/[deckId]/sessions/[sessionId]` route — threaded
-     * straight through to {@link FlashcardReviewer} as its `sessionId` prop, so
-     * it hydrates that server-persisted "Học thẻ" run instead of resolving one
-     * itself (thầy 2026-07-11 đính chính: "ôn thẻ giao diện y chang... để lưu
-     * lại phiên ôn"). Mirrors `resumeQuizSessionId`.
+     * `flashcards/review/sessions/[sessionId]` route — covers BOTH a
+     * single-deck "Học thẻ" run and the cross-deck "Đến hạn hôm nay" (due)
+     * run; ONE shared live route/prop for both kinds now (thầy 2026-07-11:
+     * "bỏ deck đi, only session thôi" — supersedes the earlier separate
+     * `resumeReviewSessionId`/`resumeDueReviewSessionId` props and the
+     * `decks/[deckId]` route segment). `Flashcards` resolves which kind it is
+     * (and the deck identity, when applicable) via
+     * `myFlashcardReviewSessionBySessionId` — the session already persists
+     * that context server-side (thầy: "session đã persist hết rồi"), no
+     * `deckId` query hint needed — before rendering `FlashcardReviewer` (deck)
+     * or `DueReview` (due). Mirrors `resumeQuizSessionId`.
      */
-    resumeReviewSessionId?: string
+    resumeStudySessionId?: string
 }
 
 /**
@@ -59,20 +72,58 @@ export interface FlashcardsProps extends WithClassNames<undefined> {
  * reasoning as `QuizSession`'s own exit link.
  * @param {FlashcardsProps} props Optional wrapper placement props.
  */
-export const Flashcards = ({ className, resumeQuizSessionId, resumeReviewSessionId }: FlashcardsProps) => {
+export const Flashcards = ({
+    className,
+    resumeQuizSessionId,
+    resumeStudySessionId,
+}: FlashcardsProps) => {
     const t = useTranslations()
     const pathname = usePathname()
     const router = useRouter()
     const searchParams = useSearchParams()
     const courseId = useAppSelector((state) => state.course.entity?.id)
-    const { mode, deckId, session, goMode, goDeck, goDue, goOverview } = useFlashcardNav()
-    // resumed straight into a live "Hỏi nhanh" (quiz) or "Học thẻ" (review) run
-    // (via the dedicated `flashcards/{quiz/sessions,review/decks/.../sessions}/
-    // [sessionId]` routes) — the session becomes a full-bleed focused work
-    // surface (its own `WorkSessionHeader`), so the surrounding chrome
-    // (breadcrumb, mode tabs, mobile nav, bounded column) steps aside instead
-    // of doubling up on the session's own header.
-    const isLive = Boolean(resumeQuizSessionId || resumeReviewSessionId)
+    // owning course slug — the finished-session stats recap deep-links study
+    // suggestions (RAG) back into the course with it.
+    const courseDisplayId = useAppSelector((state) => state.course.displayId)
+    const { mode, deckId, session, goMode, goDeck, goOverview } = useFlashcardNav()
+    // resumed straight into a live "Hỏi nhanh" (quiz) or "Học thẻ" (review/due)
+    // run (via the dedicated `flashcards/{quiz,review}/sessions/[sessionId]`
+    // routes) — the session becomes a full-bleed focused work surface (its own
+    // `WorkSessionHeader`), so the surrounding chrome (breadcrumb, mode tabs,
+    // mobile nav, bounded column) steps aside instead of doubling up on the
+    // session's own header.
+    const isLive = Boolean(resumeQuizSessionId || resumeStudySessionId)
+    // resolve WHICH kind a "Học thẻ" session id is (deck-review vs cross-deck
+    // due) + the deck identity when applicable — the session already persists
+    // that context server-side (thầy 2026-07-11: "bỏ deck đi, only session
+    // thôi" + "session đã persist hết rồi"), no `deckId` query hint needed.
+    const studySessionContextSwr = useQueryMyFlashcardReviewSessionBySessionIdSwr(resumeStudySessionId, courseId)
+    // recap stats for THAT session — its `status` is how we tell a finished
+    // (completed/abandoned) session apart from an in-progress one. A finished
+    // session reached by direct URL/refresh must render the STATS recap, NOT be
+    // handed to the reviewer (which would wrongly start a fresh session). The
+    // sibling context query above resolves ANY status, so without this a revisit
+    // used to fall through to `startSessionAndRedirect`.
+    const sessionStatsSwr = useQueryMyFlashcardReviewSessionStatsBySessionIdSwr(resumeStudySessionId, courseId)
+    const sessionStats = sessionStatsSwr.data
+    // A revisit must resolve the session's STATUS before routing. Only a
+    // POSITIVELY-confirmed `in_progress` session is handed to the reviewer /
+    // DueReview (whose own effect self-resumes-or-starts). Anything else —
+    // finished (completed/abandoned), not-found, or status-not-yet-known — must
+    // NOT reach them, or their start-a-fresh-session effect fires and appends a
+    // second `/sessions/…` (the revisit crash). Hold the skeleton until known.
+    const studyStatusKnown = Boolean(courseId) && !sessionStatsSwr.isLoading
+        && !studySessionContextSwr.isLoading && Boolean(studySessionContextSwr.data)
+    const studyIsInProgress = sessionStats?.status === "in_progress"
+    // ... and the same gate for a resumed "Hỏi nhanh" (quiz) id: a finished
+    // (completed/abandoned) or unknown session reached by direct URL/refresh must
+    // render the RESULT surface, NOT be handed to the live `QuizSession` (whose
+    // resume effect only accepts an in-progress session and would otherwise
+    // dead-end to setup — the revisit dead-end this fixes). Status-agnostic query,
+    // so a not-found id resolves too (→ the result surface's own null fallback).
+    const quizSessionSwr = useQueryMyFlashcardQuizSessionBySessionIdSwr(resumeQuizSessionId, courseId)
+    const quizStatusKnown = Boolean(courseId) && !quizSessionSwr.isLoading
+    const quizIsInProgress = quizSessionSwr.data?.status === "in_progress"
     // quiz is enrolled-only (it spends AI credits) — gate the tab for trial viewers
     const enrollmentSwr = useQueryCourseEnrollmentStatusSwr()
     const isEnrolled = enrollmentSwr.data?.courseEnrollmentStatus?.data?.isEnrolled === true
@@ -139,15 +190,46 @@ export const Flashcards = ({ className, resumeQuizSessionId, resumeReviewSession
     if (isLive) {
         return (
             <div className={className}>
-                {resumeReviewSessionId ? (
-                    deckId ? (
-                        <FlashcardReviewer
-                            key={deckId}
-                            deckId={deckId}
-                            sessionId={resumeReviewSessionId}
+                {resumeStudySessionId ? (
+                    !studyStatusKnown ? (
+                        // status/kind/course not all settled yet — hold the skeleton;
+                        // never fall through to the reviewer before we know the status.
+                        <FlashcardReviewerSkeleton />
+                    ) : !studyIsInProgress && courseId ? (
+                        // finished (completed/abandoned) or not-found session reached by
+                        // URL/refresh → STATS recap (its own AsyncContent handles the
+                        // not-found/degraded cases), NEVER the reviewer.
+                        <FlashcardSessionStats
+                            sessionId={resumeStudySessionId}
+                            courseId={courseId}
+                            courseDisplayId={courseDisplayId ?? ""}
                             onBack={goOverview}
                         />
-                    ) : null
+                    ) : studySessionContextSwr.data?.kind === "deck" && studySessionContextSwr.data.deckId ? (
+                        <FlashcardReviewer
+                            key={studySessionContextSwr.data.deckId}
+                            deckId={studySessionContextSwr.data.deckId}
+                            sessionId={resumeStudySessionId}
+                            onBack={goOverview}
+                        />
+                    ) : (
+                        <DueReview onExit={goOverview} sessionId={resumeStudySessionId} />
+                    )
+                ) : !quizStatusKnown ? (
+                    // status not settled yet — hold the skeleton; never hand a maybe-
+                    // finished session to the live QuizSession before we know its status.
+                    <QuizSessionSkeleton />
+                ) : !quizIsInProgress && courseId ? (
+                    // finished (completed/abandoned) or not-found session reached by
+                    // URL/refresh → the URL-addressable RESULT surface (its own
+                    // AsyncContent handles the not-found/degraded cases), NEVER the
+                    // live QuizSession's resumeFailed→setup dead-end.
+                    <FlashcardQuizResult
+                        sessionId={resumeQuizSessionId as string}
+                        courseId={courseId}
+                        courseDisplayId={courseDisplayId ?? ""}
+                        onBack={goOverview}
+                    />
                 ) : courseId ? (
                     <QuizSession
                         key={courseId}
@@ -241,7 +323,7 @@ export const Flashcards = ({ className, resumeQuizSessionId, resumeReviewSession
                                 ) : (
                                     <>
                                         {/* today's spaced-repetition queue + mastery overview */}
-                                        <DueReviewHero onStart={goDue} />
+                                        <DueReviewHero />
                                         <FlashcardStatsStrip />
                                         {/* deck topic picker — now in the pane (rail dropped) */}
                                         <FlashcardDeckList onSelectDeck={goDeck} />

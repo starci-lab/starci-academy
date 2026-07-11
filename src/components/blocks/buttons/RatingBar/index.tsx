@@ -1,15 +1,10 @@
 "use client"
 
-import React from "react"
+import React, { useEffect } from "react"
 import { Typography, cn } from "@heroui/react"
-import {
-    SmileyIcon,
-    SmileySadIcon,
-    SmileyWinkIcon,
-    SmileyXEyesIcon,
-} from "@phosphor-icons/react"
 import type { ReactNode } from "react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { PressableCard } from "@/components/blocks/cards/PressableCard"
 
 /** One selectable recall grade in a {@link RatingBar}. */
 export interface RatingOption {
@@ -32,67 +27,86 @@ export interface RatingBarProps extends WithClassNames<undefined> {
 }
 
 /**
- * Soft-tint per recall grade — ONE consistent treatment (every button is a
- * `bg-token/10 text-token` tile) across a weakest→strongest semantic ramp
- * (danger → warning → success → accent). Reads as a 4-step scale, not four
- * mismatched button variants. Plain `<button>` (not HeroUI `Button`, whose
- * unlayered variant bg would override the tint), so the block owns the look.
+ * Semantic dot per recall grade — the weakest→strongest ramp (danger → warning →
+ * success → accent) survives as a small COLOR DOT beside the label, not a full
+ * pastel-fill tile. Keeps the 4-step scanability without the toy/gamified look a
+ * solid rainbow tile carries (a spaced-repetition grader is a tool, not a sticker
+ * — see `learning-surface-grounded-in-pedagogy-not-superficial-gamify`).
  */
-const GRADE_TINT: Record<number, string> = {
-    0: "bg-danger/10 text-danger hover:bg-danger/20",
-    1: "bg-warning/10 text-warning hover:bg-warning/20",
-    2: "bg-success/10 text-success hover:bg-success/20",
-    3: "bg-accent/10 text-accent hover:bg-accent/20",
-}
-
-/** One glance-scannable face per recall grade — reinforces the label faster
- *  than color alone (thầy 2026-07-09 visual-polish pass). */
-const GRADE_ICON: Record<number, typeof SmileyIcon> = {
-    0: SmileyXEyesIcon,
-    1: SmileySadIcon,
-    2: SmileyIcon,
-    3: SmileyWinkIcon,
+const GRADE_DOT: Record<number, string> = {
+    0: "bg-danger",
+    1: "bg-warning",
+    2: "bg-success",
+    3: "bg-accent",
 }
 
 /**
- * The SM-2 recall-rating bar: a row of FOUR equal-width grade tiles (Again / Hard
- * / Good / Easy) the learner taps after revealing a flashcard's answer. Each press
- * reports its grade so the caller can reschedule the card. All tiles share one
- * soft-tint treatment across a red→green semantic ramp + carry an optional
- * next-interval preview; labels arrive localized from the caller.
+ * The SM-2 recall-rating bar: a row of FOUR equal-width grade TILES (Again / Hard
+ * / Good / Easy) the learner taps — or presses `1`–`4` — after revealing a
+ * flashcard's answer. Each tile is a neutral surface card carrying a small
+ * semantic dot (weakest→strongest ramp — the strongest grade's dot alone
+ * carries the accent, no extra border), a keyboard-key hint, and an optional
+ * next-interval preview. Each tile is a shared `PressableCard`
+ * (`hoverVariant="lift"` — default Card shadow at rest, unchanged on hover,
+ * only the tile lifts; pick-and-stay, not a fill/go-there row) instead of a
+ * hand-rolled `<button>`, per the no-style-in-features rule. Restrained
+ * "pro reviewer" look (Anki/RemNote),
+ * NOT a rainbow of emoji buttons. Labels/hints arrive localized from the caller.
  *
  * @param props - {@link RatingBarProps}
  */
 export const RatingBar = ({ options, onRate, isPending = false, className }: RatingBarProps) => {
+    // press 1–4 to grade without reaching for the mouse — a power-user affordance
+    // the toy version lacked. Ignored while a review is in flight or focus is in a
+    // text field (defensive — this surface has none today).
+    useEffect(() => {
+        const onKeyDown = (event: KeyboardEvent) => {
+            if (isPending) {
+                return
+            }
+            const target = event.target as HTMLElement | null
+            if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable)) {
+                return
+            }
+            const position = Number(event.key) - 1
+            if (Number.isInteger(position) && position >= 0 && position < options.length) {
+                event.preventDefault()
+                onRate(options[position].grade)
+            }
+        }
+        window.addEventListener("keydown", onKeyDown)
+        return () => window.removeEventListener("keydown", onKeyDown)
+    }, [options, onRate, isPending])
+
     return (
         <div className={cn("grid grid-cols-2 gap-2 sm:grid-cols-4", className)}>
-            {options.map((option) => {
-                const GradeIcon = GRADE_ICON[option.grade]
-                return (
-                    <button
-                        key={option.grade}
-                        type="button"
-                        disabled={isPending}
-                        onClick={() => onRate(option.grade)}
-                        className={cn(
-                            "flex w-full flex-col items-center justify-center gap-1 rounded-3xl px-3 py-3",
-                            "cursor-pointer text-sm font-medium outline-none transition-all",
-                            "hover:-translate-y-0.5 hover:shadow-surface",
-                            "focus-visible:ring-2 focus-visible:ring-accent",
-                            "disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0",
-                            GRADE_TINT[option.grade] ?? "bg-default text-foreground hover:bg-default/80",
-                        )}
-                    >
-                        {GradeIcon ? <GradeIcon className="size-5" aria-hidden focusable="false" /> : null}
-                        <span>{option.label}</span>
-                        {option.hint !== undefined ? (
-                            <Typography type="body-xs" className="opacity-80">
-                                {option.hint}
-                            </Typography>
-                        ) : null}
-                    </button>
-                )
-            })}
+            {options.map((option, position) => (
+                <PressableCard
+                    key={option.grade}
+                    onPress={() => onRate(option.grade)}
+                    isDisabled={isPending}
+                    hoverVariant="lift"
+                    className="flex flex-col gap-1.5 rounded-xl px-3 py-2.5"
+                >
+                    <span className="flex items-center justify-between gap-2">
+                        <span className="flex items-center gap-2">
+                            <span
+                                aria-hidden
+                                className={cn("size-2 shrink-0 rounded-full", GRADE_DOT[option.grade] ?? "bg-default")}
+                            />
+                            <span className="text-sm font-medium text-foreground">{option.label}</span>
+                        </span>
+                        <kbd className="rounded border border-default px-1.5 font-mono text-xs text-muted">
+                            {position + 1}
+                        </kbd>
+                    </span>
+                    {option.hint !== undefined ? (
+                        <Typography type="body-xs" color="muted">
+                            {option.hint}
+                        </Typography>
+                    ) : null}
+                </PressableCard>
+            ))}
         </div>
     )
 }

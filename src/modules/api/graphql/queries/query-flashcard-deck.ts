@@ -27,11 +27,12 @@ const query1 = gql`
           sortIndex
           defaultLocale
           isPremium
-        }
-        modules {
-          id
-          displayId
-          title
+          nextIntervals {
+            again
+            hard
+            good
+            easy
+          }
         }
       }
     }

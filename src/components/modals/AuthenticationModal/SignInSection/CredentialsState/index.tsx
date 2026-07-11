@@ -35,18 +35,24 @@ import { keycloakRedirect } from "@/modules/api/redirect/keycloak"
 import { SessionStorage } from "@/modules/storage/session/storage"
 import { SessionStorageId } from "@/modules/storage/session/enums/id"
 import { type SessionStorageOauthIdpHint } from "@/modules/storage/session/types/oauth-idp-hint"
+import { type SessionStoragePostLoginRedirect } from "@/modules/storage/session/types/post-login-redirect"
+import { useSearchParams } from "next/navigation"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { Turnstile } from "@/components/reuseable/Turnstile"
 import { publicEnv } from "@/resources/env/public"
 
-/** Props for {@link CredentialsState}; no own props (singleton-driven). */
-export type CredentialsStateProps = WithClassNames<undefined>
+/** Props for {@link CredentialsState}. */
+export interface CredentialsStateProps extends WithClassNames<undefined> {
+    /** Hides `Modal.CloseTrigger` when hosted outside a dismissible modal (the `/login` page). */
+    hideCloseButton?: boolean
+}
 
 /**
  * Credentials step container for the sign-in tab.
  */
-export const CredentialsState = () => {
+export const CredentialsState = ({ hideCloseButton }: CredentialsStateProps = {}) => {
     const t = useTranslations()
+    const searchParams = useSearchParams()
     const {
         values,
         errors,
@@ -74,6 +80,16 @@ export const CredentialsState = () => {
                 SessionStorageId.OauthIdpHint,
                 { provider },
             )
+            // carry the originally-requested protected route (set by the edge guard as
+            // `?redirect=`) through the Keycloak round-trip, since query params on THIS
+            // page don't survive the IdP hop.
+            const redirectTarget = searchParams.get("redirect")
+            if (redirectTarget) {
+                SessionStorage.setItem<SessionStoragePostLoginRedirect>(
+                    SessionStorageId.PostLoginRedirect,
+                    { target: redirectTarget },
+                )
+            }
             const url = provider === KeycloakIdentityProvider.Google
                 ? keycloakRedirect.google
                 : keycloakRedirect.github
@@ -82,6 +98,7 @@ export const CredentialsState = () => {
         },
         [
             router,
+            searchParams,
         ],
     )
 
@@ -153,7 +170,7 @@ export const CredentialsState = () => {
 
     return (
         <>
-            <Modal.CloseTrigger />
+            {!hideCloseButton && <Modal.CloseTrigger />}
             <Modal.Header>
                 <div className="text-center">
                     <div className="font-semibold text-lg">{t("auth.signIn.title")}</div>

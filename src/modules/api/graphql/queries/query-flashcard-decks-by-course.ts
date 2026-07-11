@@ -4,8 +4,8 @@ import { DocumentNode, gql } from "@apollo/client"
 import type { QueryFlashcardDecksByCourseResponse } from "./types"
 
 const query1 = gql`
-  query FlashcardDecksByCourse($courseId: ID!, $contentId: ID) {
-    flashcardDecksByCourse(courseId: $courseId, contentId: $contentId) {
+  query FlashcardDecksByCourse($courseId: ID!) {
+    flashcardDecksByCourse(courseId: $courseId) {
       success
       message
       error
@@ -40,8 +40,6 @@ const queryMap: Record<QueryFlashcardDecksByCourse, DocumentNode> = {
 export interface FlashcardDecksByCourseRequest {
     /** Owning course id. */
     courseId: string
-    /** Optional content id to filter the course's decks. */
-    contentId?: string
 }
 
 /**
@@ -65,7 +63,6 @@ export const queryFlashcardDecksByCourse = async ({
         query: queryMap[query],
         variables: {
             courseId: request?.courseId,
-            contentId: request?.contentId,
         },
     })
 }

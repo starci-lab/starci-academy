@@ -2,19 +2,20 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import useSWR from "swr"
-import { Button, Chip, Typography, cn } from "@heroui/react"
-import { CheckCircleIcon, LockIcon } from "@phosphor-icons/react"
+import { Button, Chip, Spinner, Typography, cn } from "@heroui/react"
+import { LockIcon } from "@phosphor-icons/react"
 import { useTranslations, useLocale } from "next-intl"
 import { usePathname, useRouter } from "next/navigation"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { SM2_GRADES } from "../constants"
 import { FlashcardReviewerSkeleton } from "./FlashcardReviewerSkeleton"
+import { FlashcardSessionStats } from "../FlashcardSessionStats"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { mutateReviewFlashcard } from "@/modules/api/graphql/mutations/mutation-review-flashcard"
 import { queryFlashcardDeck } from "@/modules/api/graphql/queries/query-flashcard-deck"
 import { type FlashcardCardEntity } from "@/modules/types/entities/flashcard-card"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { EmptyState } from "@/components/blocks/feedback/EmptyState"
+import { BackLink } from "@/components/blocks/navigation/BackLink"
 import { WorkSessionHeader } from "@/components/blocks/navigation/WorkSessionHeader"
 import { FlipCard } from "@/components/blocks/cards/FlipCard"
 import { RatingBar } from "@/components/blocks/buttons/RatingBar"
@@ -38,7 +39,7 @@ export interface FlashcardReviewerProps extends WithClassNames<undefined> {
      * call) instead of resolving one itself. Absent when reached via the bare
      * `.../decks/[deckId]` route (thầy 2026-07-11 đính chính: "để lưu lại phiên
      * ôn" — that bare route is now a RESOLVE-ONLY shim: it resolves-or-starts a
-     * session then `router.replace`s into the sessioned URL, mirroring
+     * session then `router.push`es into the sessioned URL, mirroring
      * `QuizSession`'s `startSession` → `router.push` idiom). Mirrors
      * `QuizSessionProps.resumeSessionId`.
      */
@@ -90,6 +91,9 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
     const [reviewing, setReviewing] = useState(false)
     // how many cards were graded this run (shown in the summary)
     const [reviewedCount, setReviewedCount] = useState(0)
+    // true while the completeSession mutation is in flight — a brief "saving"
+    // state between the last card and the stats recap.
+    const [completing, setCompleting] = useState(false)
 
     // load the full deck graph (cards with question + answer)
     const { data, isLoading, error, mutate } = useSWR(
@@ -130,13 +134,13 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
     //     back to (b) below instead of getting stuck.
     // (b) reached via the bare `.../decks/[deckId]` route (`sessionId` absent)
     //     → this is now a RESOLVE-ONLY shim: resume the caller's existing draw
-    //     if one exists, otherwise start a fresh one, THEN `router.replace` into
+    //     if one exists, otherwise start a fresh one, THEN `router.push` into
     //     the sessioned URL — mirrors `QuizSession`'s own `startSession` →
     //     `router.push` idiom. Never renders the live reviewer itself; `done`
     //     stays false the whole time (`AsyncContent`'s `isLoading` gate below
     //     covers this branch), so only the skeleton ever shows here.
-    // start a fresh session + redirect into its sessioned URL — shared by the
-    // resolve effect (2 branches below) AND `onRestart`. Routed through
+    // start a fresh session + redirect into its sessioned URL — used by the
+    // resolve effect (2 branches below). Routed through
     // `runGraphQL` (toast on failure, no success toast — best-effort/silent
     // success) instead of a bare `.catch(() => {})` (thầy 2026-07-11: "fe
     // không nuốt lỗi, dùng runGraphQL đi") — a failed start now surfaces to
@@ -161,7 +165,13 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
             )
             if (freshId) {
                 sessionIdRef.current = freshId
-                router.replace(`${redirectBase}/sessions/${freshId}`)
+                // the live URL carries ONLY the sessionId, no `?deckId=` (thầy
+                // 2026-07-11: "bỏ deck đi, only session thôi" — no more `decks/<id>`
+                // path segment either; `review/sessions/[sessionId]` is shared with
+                // `DueReview`). `Flashcards` resolves deck identity back out via
+                // `myFlashcardReviewSessionBySessionId` — the session already
+                // persists it, no query hint needed.
+                router.push(`${redirectBase}/sessions/${freshId}`)
             }
         },
         [cards, deckId, courseHeaders, runStartSession, runGraphQL, router, t],
@@ -196,19 +206,38 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
             sessionIdRef.current = resumable.sessionId
             setCurrentIndex(Math.min(resumable.currentIndex, cards.length - 1))
             setReviewedCount(resumable.reviewedCount)
-            router.replace(`${pathname}/sessions/${resumable.sessionId}`)
+            // strip any existing `/sessions/<id>` so we never append a second
+            // one (the `.../sessions/A//sessions/B` revisit crash); replace, not
+            // push, so the stale URL doesn't linger in history.
+            router.replace(`${pathname.replace(/\/sessions\/.+$/, "")}/sessions/${resumable.sessionId}`)
             return
         }
-        void startSessionAndRedirect(pathname)
+        void startSessionAndRedirect(pathname.replace(/\/sessions\/.+$/, ""))
     }, [cards, sessionId, courseHeaders, inProgressSessionSwr.isLoading, inProgressSessionSwr.data, router, pathname, startSessionAndRedirect])
 
-    // SM-2 grade buttons, localized for the rating bar
-    const ratingOptions = useMemo(
-        () => SM2_GRADES.map((grade) => ({ grade: grade.grade, label: t(grade.labelKey) })),
-        [t],
-    )
-
     const card = cards[currentIndex]
+
+    // SM-2 grade buttons for the current card: localized label + next-interval
+    // preview ("4 days") computed server-side from the card's current state
+    const ratingOptions = useMemo(() => {
+        const intervals = card?.nextIntervals
+        // map a grade to its previewed next-interval in days
+        const daysForGrade = (grade: number): number | undefined => {
+            if (!intervals) {
+                return undefined
+            }
+            return [intervals.again, intervals.hard, intervals.good, intervals.easy][grade]
+        }
+        return SM2_GRADES.map((grade) => {
+            const days = daysForGrade(grade.grade)
+            return {
+                grade: grade.grade,
+                label: t(grade.labelKey),
+                hint: days === undefined ? undefined : t("flashcard.review.intervalDays", { count: days }),
+            }
+        })
+    }, [t, card])
+
     // a premium card is locked for a non-enrolled viewer — its answer is withheld
     const isLocked = Boolean(card?.isPremium) && !enrolled
     const isFirst = currentIndex === 0
@@ -237,7 +266,9 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
             const ok = await runGraphQL(
                 async () => {
                     const response = await mutateReviewFlashcard({
-                        request: { cardId: card.id, grade },
+                        // thread the live session id so the review event links to
+                        // this session — powers the per-session stats aggregate.
+                        request: { cardId: card.id, grade, sessionId: sessionIdRef.current ?? undefined },
                     })
                     return (
                         response.data?.reviewFlashcard ?? {
@@ -297,45 +328,42 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
             return
         }
         completedRef.current = true
+        setCompleting(true)
         const completingSessionId = sessionIdRef.current
-        void runGraphQL(
-            async () => {
-                const result = await runCompleteSession.trigger({
-                    request: {
-                        sessionId: completingSessionId,
-                        reviewedCount,
-                        xpEarned: 0,
-                    },
-                    headers: courseHeaders,
-                })
-                return (
-                    result.data?.completeFlashcardReviewSession ?? {
-                        success: false,
-                        message: t("flashcard.review.error"),
-                    }
-                )
-            },
-            { showSuccessToast: false },
-        )
+        void (async () => {
+            await runGraphQL(
+                async () => {
+                    const result = await runCompleteSession.trigger({
+                        request: {
+                            sessionId: completingSessionId,
+                            reviewedCount,
+                            xpEarned: 0,
+                        },
+                        headers: courseHeaders,
+                    })
+                    return (
+                        result.data?.completeFlashcardReviewSession ?? {
+                            success: false,
+                            message: t("flashcard.review.error"),
+                        }
+                    )
+                },
+                { showSuccessToast: false },
+            )
+            // hand off to the stats recap once the session is closed out (the recap
+            // reads events by sessionId, independent of the session row's status).
+            setCompleting(false)
+        })()
     }, [done, reviewedCount, courseHeaders, runCompleteSession, runGraphQL, t])
 
-    // restart the deck from the first card — a fresh run, so start a NEW
-    // resumable session too (the finished one was already completed above),
-    // and correct the URL to the new session id (mirrors the resolve effect —
-    // otherwise a refresh after restarting would re-hydrate the JUST-completed
-    // session instead of the fresh one).
-    const onRestart = () => {
-        setCurrentIndex(0)
-        setRevealed(false)
-        setReviewedCount(0)
-        completedRef.current = false
-        sessionIdRef.current = null
-        void startSessionAndRedirect(pathname.replace(/\/sessions\/.+$/, ""))
-    }
+    // the session this run persisted to — snapshotted into a local so TS can
+    // narrow it (a ref's `.current` never narrows) before handing it to the stats
+    // recap, and so the recap has a stable id for the whole `done` render.
+    const finishedSessionId = sessionIdRef.current
 
     return (
         <AsyncContent
-            // no `sessionId` prop = the resolve-only shim (bare `.../decks/[deckId]`
+            // no `sessionId` prop = the resolve-only shim (bare `review?deckId=<id>`
             // route) — ALWAYS the skeleton, never error/empty/live UI; it
             // `router.replace`s into the sessioned URL as soon as resolving lands
             // (effect above). `AsyncContent` checks `error` BEFORE `isLoading`
@@ -353,30 +381,34 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
             }}
         >
             {done ? (
-                <div className={cn("flex flex-col gap-6", className)}>
-                    {/* same work-surface header as the active phase — current=total reads
-                        every segment as complete, mirrors QuizSession's recap header. */}
-                    <WorkSessionHeader
-                        backLabel={t("flashcard.title")}
+                !completing && finishedSessionId && courseId && courseDisplayId ? (
+                    // the completion screen IS the stats recap now (no flat "done" card) —
+                    // 4-grade distribution + weak tags + the study-again loop back in.
+                    <FlashcardSessionStats
+                        className={className}
+                        sessionId={finishedSessionId}
+                        courseId={courseId}
+                        courseDisplayId={courseDisplayId}
                         onBack={onBack ?? (() => {})}
-                        identity={data?.title ? { name: data.title } : undefined}
-                        counter={t("flashcard.review.sessionDoneTitle")}
-                        current={cards.length}
-                        total={cards.length}
                     />
-                    <div className="mx-auto flex w-full max-w-3xl flex-col">
-                        <EmptyState
-                            icon={<CheckCircleIcon aria-hidden focusable="false" />}
-                            title={t("flashcard.review.sessionDoneTitle")}
-                            description={t("flashcard.review.sessionDoneDescription", { count: reviewedCount })}
-                            action={
-                                <Button size="sm" variant="primary" onPress={onRestart}>
-                                    {t("flashcard.review.studyAgain")}
-                                </Button>
-                            }
-                        />
+                ) : (
+                    // brief "saving" state while completeSession commits — mirrors the
+                    // stats surface's own header so the hand-off reads as one screen.
+                    <div className={cn("flex flex-col gap-6", className)}>
+                        <div className="flex flex-wrap items-center justify-between gap-3">
+                            <BackLink label={t("flashcard.title")} onPress={onBack ?? (() => {})} />
+                            <Typography type="body-sm" color="muted">
+                                {t("flashcard.review.stats.headerCaption")}
+                            </Typography>
+                        </div>
+                        <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-3 py-10">
+                            <Spinner size="lg" />
+                            <Typography type="body-sm" color="muted">
+                                {t("flashcard.review.stats.savingLabel")}
+                            </Typography>
+                        </div>
                     </div>
-                </div>
+                )
             ) : (
                 <div className={cn("flex flex-col gap-6", className)}>
                     {/* shared header: WorkSessionHeader (deck identity + card counter +
@@ -413,19 +445,11 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
                         {/* the flip card: question → answer (+ optional depth) */}
                         <FlipCard
                             revealed={revealed}
-                            front={
-                                <>
-                                    <Typography type="body-xs" weight="medium" color="muted">
-                                        {t("flashcard.questionLabel")}
-                                    </Typography>
-                                    <MarkdownContent markdown={card?.question ?? ""} />
-                                </>
-                            }
+                            questionLabel={t("flashcard.questionLabel")}
+                            answerLabel={t("flashcard.answerLabel")}
+                            front={<MarkdownContent markdown={card?.question ?? ""} />}
                             back={
                                 <>
-                                    <Typography type="body-xs" weight="medium" color="muted">
-                                        {t("flashcard.answerLabel")}
-                                    </Typography>
                                     {isLocked ? (
                                     // premium card, viewer not enrolled → withhold the answer
                                         <div className="flex flex-1 flex-col items-center justify-center gap-3 text-center">

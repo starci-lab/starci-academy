@@ -23,6 +23,7 @@ import {
 } from "@phosphor-icons/react"
 import { BackLink } from "@/components/blocks/navigation/BackLink"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
+import { SelectableCardGroup } from "@/components/blocks/navigation/SelectableCardGroup"
 import { ErrorContent } from "@/components/blocks/async/ErrorContent"
 import { EmptyContent } from "@/components/blocks/async/EmptyContent"
 import { ListRow } from "@/components/blocks/lists/ListRow"
@@ -33,6 +34,7 @@ import { useAppSelector } from "@/redux/hooks"
 import { pathConfig } from "@/resources/path"
 import { useQueryPlaygroundSwr } from "@/hooks/swr/api/graphql/queries/useQueryPlaygroundSwr"
 import { useMutateCreatePlaygroundSessionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateCreatePlaygroundSessionSwr"
+import { PlaygroundSessionMode } from "@/modules/api/graphql/mutations/types/create-playground-session"
 import { usePlaygroundByomSocketIo } from "@/hooks/socketio/usePlaygroundByomSocketIo"
 
 /** Right-pane workspace tab. */
@@ -97,6 +99,9 @@ export const PlaygroundSession = () => {
 
     const [sessionId, setSessionId] = useState<string | null>(null)
     const [pairingCode, setPairingCode] = useState<string | null>(null)
+    // Chosen guidance level, picked BEFORE the session is created — Guided shows
+    // full command hints, Free redacts them server-side (learner types commands).
+    const [mode, setMode] = useState<PlaygroundSessionMode>(PlaygroundSessionMode.Guided)
     const [copied, setCopied] = useState(false)
     const [currentStepIndex, setCurrentStepIndex] = useState(0)
     const [workspaceTab, setWorkspaceTab] = useState<WorkspaceTab>("terminal")
@@ -114,14 +119,14 @@ export const PlaygroundSession = () => {
         if (!playground || createSessionMutation.isMutating) {
             return
         }
-        const response = await createSessionMutation.trigger({ playgroundId: playground.id })
+        const response = await createSessionMutation.trigger({ playgroundId: playground.id, mode })
         const data = response.data?.createPlaygroundSession.data
         if (data) {
             setSessionId(data.id)
             setPairingCode(data.pairingCode)
             subscribe(data.id)
         }
-    }, [playground, createSessionMutation, subscribe])
+    }, [playground, createSessionMutation, subscribe, mode])
 
     const onCopyPairingCode = useCallback(() => {
         if (!pairingCode) {
@@ -245,13 +250,35 @@ export const PlaygroundSession = () => {
 
                             <div className="border-t border-default pt-4">
                                 {!sessionId ? (
-                                    <Button
-                                        variant="primary"
-                                        isPending={createSessionMutation.isMutating}
-                                        onPress={() => void onConnectAgent()}
-                                    >
-                                        {t("playground.session.connectAgent")}
-                                    </Button>
+                                    <div className="flex flex-col gap-3">
+                                        <Typography type="body-sm" weight="medium">
+                                            {t("playground.session.modeTitle")}
+                                        </Typography>
+                                        <SelectableCardGroup
+                                            ariaLabel={t("playground.session.modeAria")}
+                                            value={mode}
+                                            onChange={setMode}
+                                            items={[
+                                                {
+                                                    value: PlaygroundSessionMode.Guided,
+                                                    label: t("playground.session.modeGuidedLabel"),
+                                                    description: t("playground.session.modeGuidedDescription"),
+                                                },
+                                                {
+                                                    value: PlaygroundSessionMode.Free,
+                                                    label: t("playground.session.modeFreeLabel"),
+                                                    description: t("playground.session.modeFreeDescription"),
+                                                },
+                                            ]}
+                                        />
+                                        <Button
+                                            variant="primary"
+                                            isPending={createSessionMutation.isMutating}
+                                            onPress={() => void onConnectAgent()}
+                                        >
+                                            {t("playground.session.connectAgent")}
+                                        </Button>
+                                    </div>
                                 ) : (
                                     <div className="flex flex-col gap-3">
                                         {!byomState.connected ? (

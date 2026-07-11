@@ -61,6 +61,33 @@ export interface MockInterviewAttributeScoreItem {
     score: number
 }
 
+/**
+ * One per-question model-answer review inside a freshly graded session — the
+ * anti-ChatGPT breakdown comparing the candidate's own answer against the seed
+ * flashcard's authored model answer, for a `mode="qna"` question. Mirrors backend
+ * `MockInterviewQuestionReviewItem`. Empty for a `mode="design"` session.
+ */
+export interface MockInterviewQuestionReviewItem {
+    /** 0-based index of this question within the session. */
+    questionIndex: number
+    /** This question's cognitive frame ("theory" | "reasoning" | "scenario"), as drawn. */
+    kind: string
+    /** The interviewer's question text for this question. */
+    question: string
+    /** The candidate's own answer for this question. */
+    candidateAnswer: string
+    /** The seed flashcard's authored model answer (Markdown), or null when unavailable. */
+    modelAnswer: string | null
+    /** A one-line summary of what the candidate's answer was missing relative to the reference. */
+    feedback: string
+    /** Score assigned to this question. */
+    score: number
+    /** Maximum possible score for this question (always 100 for qna). */
+    max: number
+    /** Best-effort matched course content (lesson) id for this question, or null when no confident match exists. */
+    matchedContentId: string | null
+}
+
 /** Payload inside `gradeMockInterviewSession.data` after the standard API wrapper. */
 export interface MockInterviewGradeSessionData {
     /** Overall score for the whole session, integer 0–100. */
@@ -86,6 +113,12 @@ export interface MockInterviewGradeSessionData {
      * predates this attempt — never fabricate a match when this is empty.
      */
     matchedContentIds: Array<string>
+    /**
+     * Per-question model-answer review — the anti-ChatGPT breakdown, one entry per
+     * `mode="qna"` question. Empty for a `mode="design"` session (design scores by
+     * phase, not per question).
+     */
+    questionReviews: Array<MockInterviewQuestionReviewItem>
 }
 
 /** Apollo response shape for `gradeMockInterviewSession`. */

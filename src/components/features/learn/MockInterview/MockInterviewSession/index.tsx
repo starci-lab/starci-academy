@@ -1148,6 +1148,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                 gaps: payload.data.gaps,
                 followUpQuestion: payload.data.followUpQuestion ?? null,
                 matchedContentIds: payload.data.matchedContentIds ?? [],
+                questionReviews: payload.data.questionReviews ?? [],
             })
             setPhase("scorecard")
         } catch {
@@ -1325,13 +1326,15 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                     value={resumeValue}
                     max={resumeMax}
                     ctaLabel={resumeExpired ? t("mockInterview.resumeCtaExpired") : t("mockInterview.resumeCta")}
-                    href={pathConfig()
+                    ctaVariant="chip"
+                    accented
+                    onPress={() => router.push(pathConfig()
                         .locale(locale)
                         .course(courseDisplayId)
                         .learn()
                         .mockInterview()
                         .interview(resumeSession.sessionId)
-                        .build()}
+                        .build())}
                 />
             )
         })() : null

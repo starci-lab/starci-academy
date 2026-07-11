@@ -21,13 +21,20 @@ const MODE_SLUG: Record<FlashcardMode, string> = {
 /**
  * URL-backed navigation for the flashcards surface. The MODE is a route segment
  * (`…/flashcards/review` | `…/flashcards/quiz`) so each mode is its own page
- * with a readable English slug; the open deck rides as ITS OWN route segment too
- * (`…/flashcards/review/decks/<id>`, traceable/shareable — thầy 2026-07-09: "trên
- * url cũng không có cái deck của phần ôn"), mirroring `quiz/sessions/<id>`. Only
- * the cross-deck due session (no id of its own) stays a query param
- * (`?session=due`). The LEFT RAIL (rendered by the learn layout) and the work
- * PANE (the page) both read this hook → one source of truth across the
- * layout↔page boundary, like the content-map rail drives the reader by route.
+ * with a readable English slug. Both "Học thẻ" session kinds — a single deck or
+ * the cross-deck due queue — now share ONE live shape,
+ * `…/flashcards/review/sessions/<sessionId>` (thầy 2026-07-11: "bỏ deck đi, only
+ * session thôi" — no more `decks/<id>` route segment, superseding the
+ * 2026-07-09 "deck rides its own segment" decision). `deckId` travels as a
+ * query hint (`?deckId=`) instead: on the bare shim (`review?deckId=<id>`) it
+ * says WHICH deck to start/resume; on the live sessioned URL it's a HINT so a
+ * direct link/refresh still knows to resume the DECK-scoped session (not the
+ * due one) — `useQueryMyInProgressFlashcardReviewSessionSwr` needs a deckId to
+ * scope its lookup, there is no id-only "which session is this" query. The
+ * cross-deck due session stays its own query marker (`?session=due`) on the
+ * bare shim; once live it carries no `deckId` at all. The LEFT RAIL (rendered
+ * by the learn layout) and the work PANE (the page) both read this hook → one
+ * source of truth across the layout↔page boundary.
  */
 export const useFlashcardNav = () => {
     const router = useRouter()
@@ -37,7 +44,7 @@ export const useFlashcardNav = () => {
     // the segment right after "flashcards" carries the mode slug; `…/flashcards`
     // (no slug) = study. Read it by position off the "flashcards" segment rather
     // than the LAST path segment, so the resumable `…/quiz/sessions/[id]` /
-    // `…/review/decks/[id]` routes (which have extra segments past the mode
+    // `…/review/sessions/[id]` routes (which have extra segments past the mode
     // slug) still resolve to the right mode.
     const segments = pathname.split("/")
     const flashcardsIndex = segments.indexOf("flashcards")
@@ -49,40 +56,38 @@ export const useFlashcardNav = () => {
             ? segments.slice(0, flashcardsIndex + 1).join("/")
             : pathname
 
-    // `…/flashcards/review/decks/<id>` — the deck id is the segment right after
-    // "decks", only meaningful in study mode.
-    const decksIndex = flashcardsIndex >= 0 ? segments.indexOf("decks", flashcardsIndex) : -1
-    const deckId = mode === "study" && decksIndex >= 0 ? (segments[decksIndex + 1] ?? null) : null
+    // `?deckId=` — the deck-review shim/resume hint, only meaningful in study mode.
+    const deckId = mode === "study" ? params.get("deckId") : null
     const session = params.get("session")
 
-    /** Build a flashcards URL: the mode's route + optional deck segment / session query. */
+    /** Build a flashcards URL: the mode's route + optional deck / session query hint. */
     const build = (
         nextMode: FlashcardMode,
         opts: { deck?: string | null; session?: string | null } = {},
     ): string => {
-        const path = opts.deck
-            ? `${root}/${MODE_SLUG[nextMode]}/decks/${opts.deck}`
-            : `${root}/${MODE_SLUG[nextMode]}`
-        if (opts.session) {
-            const qs = new URLSearchParams({ session: opts.session }).toString()
-            return `${path}?${qs}`
+        const path = `${root}/${MODE_SLUG[nextMode]}`
+        const qs = new URLSearchParams()
+        if (opts.deck) {
+            qs.set("deckId", opts.deck)
         }
-        return path
+        if (opts.session) {
+            qs.set("session", opts.session)
+        }
+        const qsStr = qs.toString()
+        return qsStr ? `${path}?${qsStr}` : path
     }
 
     return {
         /** Active mode (study | quiz). */
         mode,
-        /** Open deck id, or null (overview / topic picker). */
+        /** Deck-review shim/resume hint, or null (overview / due session / topic picker). */
         deckId,
         /** Active session marker (`"due"` = cross-deck due session). */
         session,
         /** Switch mode (its own route; clears any open deck / session). */
         goMode: (nextMode: FlashcardMode) => router.push(build(nextMode, {})),
-        /** Open a deck in the current mode's pane. */
+        /** Start/resume a deck's review (resolve-or-start shim, `?deckId=`). */
         goDeck: (id: string) => router.push(build(mode, { deck: id })),
-        /** Start the cross-deck due-review session. */
-        goDue: () => router.push(build("study", { session: "due" })),
         /** Return the study pane to its overview (due + mastery). */
         goOverview: () => router.push(build("study", {})),
     }

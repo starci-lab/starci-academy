@@ -13,11 +13,13 @@ export const FlashcardReviewerSkeleton = ({ className }: WithClassNames<undefine
             <div className="flex flex-col gap-6">
                 {/* progress bar */}
                 <Skeleton className="h-1.5 w-full rounded-full" />
-                {/* the flashcard — mirrors FlipCard's front face */}
-                <div className="flex min-h-64 flex-col items-center justify-center gap-3 rounded-2xl bg-surface shadow-surface p-6 sm:min-h-72">
-                    <Skeleton.Typography type="body" width="3/4" />
-                    <Skeleton.Typography type="body" width="2/3" />
-                    <Skeleton.Typography type="body" width="1/2" />
+                {/* the flashcard — mirrors FlipCard's LabeledCard (label OUTSIDE + Card) */}
+                <div className="flex flex-col gap-3">
+                    <Skeleton.Typography type="body-xs" width="1/4" />
+                    <div className="flex flex-col gap-3 rounded-2xl bg-surface p-6 shadow-surface">
+                        <Skeleton.Typography type="body" width="3/4" />
+                        <Skeleton.Typography type="body" width="2/3" />
+                    </div>
                 </div>
                 {/* prev / show answer */}
                 <div className="flex items-center justify-between gap-3">

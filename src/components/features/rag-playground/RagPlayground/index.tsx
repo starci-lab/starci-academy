@@ -31,11 +31,15 @@ import {
 } from "@phosphor-icons/react"
 import { HeroBanner } from "@/components/blocks/marketing/HeroBanner"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
+import { SelectableCardGroup } from "@/components/blocks/navigation/SelectableCardGroup"
 import { Callout } from "@/components/blocks/feedback/Callout"
 import { EmptyContent } from "@/components/blocks/async/EmptyContent"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { useMutateIndexRagPlaygroundSwr } from "@/hooks/swr/api/graphql/mutations/useMutateIndexRagPlaygroundSwr"
 import { useMutateAskRagPlaygroundSwr } from "@/hooks/swr/api/graphql/mutations/useMutateAskRagPlaygroundSwr"
+import { useQueryRagPlaygroundSamplesSwr } from "@/hooks/swr/api/graphql/queries/useQueryRagPlaygroundSamplesSwr"
 import { useRagPlaygroundRunStreamSocketIo } from "@/hooks/socketio/useRagPlaygroundRunStreamSocketIo"
 import { RagPlaygroundSourceKind } from "@/modules/api/graphql/mutations/types/index-rag-playground"
 import type { RagPlaygroundSourceChunk } from "@/modules/api/graphql/mutations/types/ask-rag-playground"
@@ -85,9 +89,20 @@ export const RagPlayground = ({ className }: RagPlaygroundProps) => {
     const [uploadFileName, setUploadFileName] = useState<string>()
     const [uploadCode, setUploadCode] = useState("")
     const [githubUrl, setGithubUrl] = useState("")
+    const [selectedSampleId, setSelectedSampleId] = useState<string>()
     const [indexed, setIndexed] = useState<{ chunkCount: number; sourceLabel?: string | null } | null>(null)
     const [importError, setImportError] = useState<string>()
     const indexMutation = useMutateIndexRagPlaygroundSwr()
+    const samplesQuery = useQueryRagPlaygroundSamplesSwr()
+
+    // Pre-select the first catalog entry once it loads, so the Sample tab stays
+    // "always ready" (no forced extra click) while still reflecting a real choice.
+    useEffect(() => {
+        if (selectedSampleId || !samplesQuery.data || samplesQuery.data.length === 0) {
+            return
+        }
+        setSelectedSampleId(samplesQuery.data[0].id)
+    }, [samplesQuery.data, selectedSampleId])
 
     const KIND_TABS = useMemo(
         () => [
@@ -122,7 +137,7 @@ export const RagPlayground = ({ className }: RagPlaygroundProps) => {
         case RagPlaygroundSourceKind.Upload:
             return uploadCode.trim().length > 0
         case RagPlaygroundSourceKind.Sample:
-            return true
+            return selectedSampleId != null
         case RagPlaygroundSourceKind.Github:
             return githubUrl.trim().length > 0
         default:
@@ -133,6 +148,7 @@ export const RagPlayground = ({ className }: RagPlaygroundProps) => {
         pasteCode,
         uploadCode,
         githubUrl,
+        selectedSampleId,
     ])
 
     const onFileChange = (file?: File) => {
@@ -158,6 +174,7 @@ export const RagPlayground = ({ className }: RagPlaygroundProps) => {
                         : undefined,
                 fileName: kind === RagPlaygroundSourceKind.Upload ? uploadFileName : undefined,
                 githubUrl: kind === RagPlaygroundSourceKind.Github ? githubUrl.trim() : undefined,
+                sampleId: kind === RagPlaygroundSourceKind.Sample ? selectedSampleId : undefined,
             })
             const payload = response.data?.indexRagPlayground
             if (payload?.success && payload.data) {
@@ -341,9 +358,40 @@ export const RagPlayground = ({ className }: RagPlaygroundProps) => {
                                 ) : null}
 
                                 {kind === RagPlaygroundSourceKind.Sample ? (
-                                    <Typography type="body-sm" color="muted">
-                                        {t("ragPlayground.import.sampleHint")}
-                                    </Typography>
+                                    <div className="flex flex-col gap-3">
+                                        <Typography type="body-sm" color="muted">
+                                            {t("ragPlayground.import.sampleHint")}
+                                        </Typography>
+                                        <AsyncContent
+                                            isLoading={samplesQuery.isLoading && !samplesQuery.data}
+                                            skeleton={(
+                                                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                                                    {[0, 1, 2, 3].map((cell) => (
+                                                        <Skeleton key={cell} className="h-[52px] w-full rounded-xl" />
+                                                    ))}
+                                                </div>
+                                            )}
+                                            error={samplesQuery.error}
+                                            errorContent={{
+                                                title: t("ragPlayground.import.samplePicker.loadError"),
+                                                onRetry: () => void samplesQuery.mutate(),
+                                                retryLabel: t("ragPlayground.import.cta"),
+                                            }}
+                                        >
+                                            {samplesQuery.data && samplesQuery.data.length > 0 ? (
+                                                <SelectableCardGroup
+                                                    ariaLabel={t("ragPlayground.import.samplePicker.ariaLabel")}
+                                                    items={samplesQuery.data.map((sample) => ({
+                                                        value: sample.id,
+                                                        label: sample.label,
+                                                    }))}
+                                                    value={selectedSampleId ?? samplesQuery.data[0].id}
+                                                    onChange={setSelectedSampleId}
+                                                    columns={2}
+                                                />
+                                            ) : null}
+                                        </AsyncContent>
+                                    </div>
                                 ) : null}
 
                                 {kind === RagPlaygroundSourceKind.Github ? (

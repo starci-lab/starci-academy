@@ -89,13 +89,15 @@ const resolveLocale = (request: NextRequest, urlLocale?: string): string =>
 /**
  * Edge middleware (Next.js 16 `proxy` convention).
  *
- * Two-way auth routing, decided purely from the edge-readable session signal
+ * Three-way auth routing, decided purely from the edge-readable session signal
  * ({@link AUTH_SIGNAL_COOKIE}) — the SPA still re-verifies the real session on
  * mount, so this is never trusted for authorization, only first-paint shell:
  * 1. Logged-in visitor on the marketing root → bounced to their dashboard
  *    (GitHub-style, zero landing flash).
- * 2. Logged-OUT visitor on a protected area → bounced to the ungated landing
- *    (`/home`) before any protected HTML renders.
+ * 2. Logged-OUT visitor on a protected area → bounced to `/login?redirect=<path>`
+ *    before any protected HTML renders, so a successful sign-in resumes there.
+ * 3. Logged-in visitor hitting `/login` directly → bounced to their dashboard
+ *    (never flashes the login form to an already-authenticated visitor).
  * Everything else falls through to the next-intl locale middleware unchanged.
  *
  * @param request - the incoming edge request
@@ -114,12 +116,25 @@ export default function proxy(request: NextRequest) {
         return NextResponse.redirect(url)
     }
 
-    // (2) Logged-out → keep out of protected areas.
+    // (2) Logged-out → keep out of protected areas, bounced to the login page (carrying
+    // where they were headed, so a successful sign-in resumes there).
     if (!isAuthed && isProtectedPath(pathname)) {
         const urlLocale = pathname.match(/^\/(en|vi)(?=\/|$)/)?.[1]
         const locale = resolveLocale(request, urlLocale)
         const url = request.nextUrl.clone()
-        url.pathname = `/${locale}/home`
+        const target = `${pathname}${request.nextUrl.search}`
+        url.pathname = `/${locale}/login`
+        url.search = `?redirect=${encodeURIComponent(target)}`
+        return NextResponse.redirect(url)
+    }
+
+    // (3) Logged-in → never show the login page itself.
+    if (isAuthed && stripLocale(pathname) === "/login") {
+        const urlLocale = pathname.match(/^\/(en|vi)(?=\/|$)/)?.[1]
+        const locale = resolveLocale(request, urlLocale)
+        const url = request.nextUrl.clone()
+        url.pathname = `/${locale}/dashboard`
+        url.search = ""
         return NextResponse.redirect(url)
     }
 

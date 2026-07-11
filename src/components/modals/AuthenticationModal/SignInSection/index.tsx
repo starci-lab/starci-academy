@@ -34,17 +34,23 @@ import { OtpState } from "./OtpState"
 import { useAppSelector } from "@/redux/hooks"
 import { SignInState } from "@/redux/slices/state"
 
+/** Props for {@link SignInSection}. */
+export interface SignInSectionProps {
+    /** Hides `Modal.CloseTrigger` on both steps when hosted outside a dismissible modal (the `/login` page). */
+    hideCloseButton?: boolean
+}
+
 /**
  * Renders the sign-in flow step (`Credentials` or `OTP`) based on `signInState`.
  */
-export const SignInSection = () => {
+export const SignInSection = ({ hideCloseButton }: SignInSectionProps = {}) => {
     const signInState = useAppSelector((state) => state.state.signInState)
     const renderContent = () => {
         switch (signInState) {
         case SignInState.Credentials:
-            return <CredentialsState />
+            return <CredentialsState hideCloseButton={hideCloseButton} />
         case SignInState.OTP:
-            return <OtpState />
+            return <OtpState hideCloseButton={hideCloseButton} />
         default:
             return null
         }

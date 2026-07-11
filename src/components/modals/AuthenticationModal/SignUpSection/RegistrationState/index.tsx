@@ -28,13 +28,16 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 import { Turnstile } from "@/components/reuseable/Turnstile"
 import { publicEnv } from "@/resources/env/public"
 
-/** Props for {@link RegistrationState}; no own props (singleton-driven). */
-export type RegistrationStateProps = WithClassNames<undefined>
+/** Props for {@link RegistrationState}. */
+export interface RegistrationStateProps extends WithClassNames<undefined> {
+    /** Hides `Modal.CloseTrigger` when hosted outside a dismissible modal (the `/login` page). */
+    hideCloseButton?: boolean
+}
 
 /**
  * Registration form container for the sign-up tab.
  */
-export const RegistrationState = () => {
+export const RegistrationState = ({ hideCloseButton }: RegistrationStateProps = {}) => {
     const dispatch = useAppDispatch()
     const t = useTranslations()
     const {
@@ -138,7 +141,7 @@ export const RegistrationState = () => {
 
     return (
         <>
-            <Modal.CloseTrigger />
+            {!hideCloseButton && <Modal.CloseTrigger />}
             <Modal.Header>
                 <div className="text-center">
                     <div className="font-semibold text-lg">{t("auth.signUp.title")}</div>

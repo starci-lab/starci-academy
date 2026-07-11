@@ -17,16 +17,22 @@ import { OtpState } from "./OtpState"
 import { useAppSelector } from "@/redux/hooks"
 import { SignUpState } from "@/redux/slices/state"
 
+/** Props for {@link SignUpSection}. */
+export interface SignUpSectionProps {
+    /** Hides `Modal.CloseTrigger` on both steps when hosted outside a dismissible modal (the `/login` page). */
+    hideCloseButton?: boolean
+}
+
 /**
  * Renders the active sign-up step from `signUpState`.
  */
-export const SignUpSection = () => {
+export const SignUpSection = ({ hideCloseButton }: SignUpSectionProps = {}) => {
     const signUpState = useAppSelector((state) => state.state.signUpState)
     switch (signUpState) {
     case SignUpState.Registration:
-        return <RegistrationState />
+        return <RegistrationState hideCloseButton={hideCloseButton} />
     case SignUpState.Otp:
-        return <OtpState />
+        return <OtpState hideCloseButton={hideCloseButton} />
     default:
         return null
     }

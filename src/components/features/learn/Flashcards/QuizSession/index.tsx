@@ -3,15 +3,14 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import useSWR from "swr"
 import { LayoutGroup, motion, useReducedMotion } from "framer-motion"
-import { Button, Chip, Label, ScrollShadow, Typography, cn } from "@heroui/react"
+import { Button, Chip, Label, Spinner, Typography, cn } from "@heroui/react"
 import {
     ArrowRightIcon,
     CheckCircleIcon,
+    ClockCounterClockwiseIcon,
     ClockIcon,
     FlameIcon,
     LightningIcon,
-    LockKeyIcon,
-    MicrophoneStageIcon,
     StackIcon,
     XCircleIcon,
 } from "@phosphor-icons/react"
@@ -31,8 +30,7 @@ import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { Callout } from "@/components/blocks/feedback/Callout"
 import { FlipCard } from "@/components/blocks/cards/FlipCard"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
-import { RelatedContentList } from "@/components/blocks/learn/RelatedContentList"
-import { StatPair } from "@/components/blocks/stats/StatPair"
+import { BackLink } from "@/components/blocks/navigation/BackLink"
 import { RatingBar } from "@/components/blocks/buttons/RatingBar"
 import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
@@ -46,12 +44,11 @@ import { useMutateSyncFlashcardQuizSessionProgressSwr } from "@/hooks/swr/api/gr
 import { useQueryMyInProgressFlashcardQuizSessionSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyInProgressFlashcardQuizSessionSwr"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import { useAppSelector } from "@/redux/hooks"
-import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
-import { PaymentFlow } from "@/modules/types/payment"
 import { pathConfig } from "@/resources/path"
 import { ContinueCard } from "@/components/blocks/cards/ContinueCard"
 import { WorkSessionHeader } from "@/components/blocks/navigation/WorkSessionHeader"
 import { QuizSessionSkeleton } from "./QuizSessionSkeleton"
+import { FlashcardQuizResult, type FlashcardQuizResultLiveExtras } from "../FlashcardQuizResult"
 
 /** Props for {@link QuizSession}. */
 export interface QuizSessionProps extends WithClassNames<undefined> {
@@ -172,13 +169,8 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
     const pathname = usePathname()
     const searchParams = useSearchParams()
     const runGraphQL = useGraphQLWithToast()
-    // trial vs enrolled — drives the recap's Zone E enroll-upsell (primary for trial viewers)
-    // and gates Zone D (AI Mock Interview cross-link, only relevant once actually enrolled).
-    // Populated globally by `learn/layout.tsx` (`useQueryCourseEnrollmentStatusSwr`).
-    const enrolled = useAppSelector((state) => state.user.enrolled)
-    // `enrolled` defaults to false, so only trust it once the status query has settled —
-    // otherwise a genuinely enrolled viewer would flash the trial-upsell (Zone E) on cold load.
-    const enrollKnown = useAppSelector((state) => state.user.enrollKnown)
+    // trial-vs-enrolled gating (enroll upsell + AI Mock Interview readiness) now lives
+    // in the converged `FlashcardQuizResult` surface, which reads it from redux itself.
     const displayId = useAppSelector((state) => state.course.displayId)
     // course name for the shared WorkSessionHeader's identity chip
     const course = useAppSelector((state) => state.course.entity)
@@ -249,9 +241,8 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
     const [rating, setRating] = useState(false)
     // per-card outcomes gathered this run
     const [results, setResults] = useState<Array<CardResult>>([])
-    // in-session combo (consecutive well-answered cards) + its peak
+    // in-session combo (consecutive well-answered cards) — drives the active HUD chip
     const [combo, setCombo] = useState(0)
-    const [bestCombo, setBestCombo] = useState(0)
     // true while `startSession` is drawing + persisting a fresh run — drives the
     // "Bắt đầu luyện" button's own isPending (stays ON this screen; only the
     // eventual navigation to `/quiz/[sessionId]` leaves it, restructured 2026-07-09).
@@ -272,6 +263,9 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
     const [readiness, setReadiness] = useState<QuizSessionReadinessData | null>(null)
     // guards the one-shot completion mutation on entering the recap
     const completedRef = useRef(false)
+    // true while the completion mutation commits — gates the recap's brief "saving"
+    // spinner before the converged result surface renders (mirrors FlashcardReviewer).
+    const [completing, setCompleting] = useState(false)
     // guards the one-shot resume rehydration to run at most once per mounted instance
     const resumeAttemptedRef = useRef(false)
     // set when `resumeSessionId` couldn't be resumed (no matching session / expired
@@ -448,7 +442,6 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
             setIndex(Math.min(data.currentIndex, restoredCards.length - 1))
             setResults(restoredResults)
             setCombo(0)
-            setBestCombo(0)
             setXpEarned(0)
             setDailyCapReached(false)
             setWeakTags([])
@@ -597,6 +590,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                 return
             }
             completedRef.current = true
+            setCompleting(true)
             const answers = finalResults.map((result) => ({
                 cardId: result.cardId,
                 correctBlanks: result.correctBlanks,
@@ -628,6 +622,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                 { showSuccessToast: false },
             )
             setXpEarned(awarded)
+            setCompleting(false)
             if (awarded > 0) {
                 // refresh the streak/XP chip now that this run counted
                 void weeklyStatsSwr.mutate()
@@ -681,11 +676,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                 { cardId: card.id, coverageRatio, correctBlanks, totalBlanks, correct, xp },
             ]
             setResults(nextResults)
-            setCombo((current) => {
-                const next = keptCombo ? current + 1 : 0
-                setBestCombo((peak) => Math.max(peak, next))
-                return next
-            })
+            setCombo((current) => (keptCombo ? current + 1 : 0))
             const nextIndex = index < sessionLength - 1 ? index + 1 : index
             // best-effort, fire-and-forget persistence for resume — never blocks
             // advancing the quiz; still routed through `runGraphQL` (toast on failure,
@@ -796,8 +787,13 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                                     urgent={resumeRemainingMinutes <= 15}
                                     value={resumeData.currentIndex}
                                     max={resumeData.cardIds.length}
+                                    hideProgress
                                     ctaLabel={t("flashcard.quiz.resumeCta")}
-                                    href={learnPath.flashcards().quiz(resumeData.sessionId).build()}
+                                    ctaVariant="chip"
+                                    ctaBelow
+                                    accented
+                                    watermarkIcon={<ClockCounterClockwiseIcon weight="fill" />}
+                                    onPress={() => router.push(learnPath.flashcards().quiz(resumeData.sessionId).build())}
                                 />
                             )
                         })() : null}
@@ -893,151 +889,72 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
     }
 
     // ── RECAP ────────────────────────────────────────────────────────────
+    // The live end-of-run now CONVERGES onto the same URL-addressable
+    // `FlashcardQuizResult` surface a revisit-by-URL lands on (mirrors
+    // FlashcardReviewer's own done→FlashcardSessionStats convergence): the run
+    // hands its just-finished snapshot + the query-absent readiness in directly, so
+    // no re-fetch is needed and both paths render one identical result surface.
     if (phase === "recap") {
+        const finishedId = sessionId.current
+        // brief "saving" state while the completion mutation commits — a bare header +
+        // spinner mirroring the result surface, so the hand-off reads as one screen.
+        if (completing || !finishedId || !displayId) {
+            return (
+                <div className={cn("flex flex-col gap-6", className)}>
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                        <BackLink label={t("flashcard.title")} onPress={exitToSetup} />
+                        <Typography type="body-sm" color="muted">
+                            {t("flashcard.quiz.result.title")}
+                        </Typography>
+                    </div>
+                    <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-3 py-10">
+                        <Spinner size="lg" />
+                        <Typography type="body-sm" color="muted">
+                            {t("flashcard.quiz.result.savingLabel")}
+                        </Typography>
+                    </div>
+                </div>
+            )
+        }
+
         const fullyCorrect = results.filter((result) => result.correct).length
         const withCoverage = results.filter((result) => result.coverageRatio !== null)
-        const avgCoverage =
-            withCoverage.length > 0
-                ? Math.round(
-                    (withCoverage.reduce((sum, result) => sum + (result.coverageRatio ?? 0), 0)
-                        / withCoverage.length) * 100,
-                )
-                : 0
-
-        // Zone C data: top-3 weak tags drive the primary demand-bridge row; anything past
-        // 3 scrolls INSIDE the same card (never truncated silently, never a separate drawer)
-        const topWeakTags = weakTags.slice(0, 3)
-        const overflowWeakTags = weakTags.slice(3)
-        const learn = pathConfig().locale(locale).course(displayId).learn()
-        const genericContinueHref = learn.module().build()
-        // resolve a weak tag straight to its lesson when the deck→lesson mapping was
-        // unambiguous; `null` → the caller falls back to `genericContinueHref`
-        const resolveTagHref = (tag: QuizSessionWeakTagData) =>
-            tag.moduleId && tag.contentId
-                ? learn.module(tag.moduleId).content(tag.contentId).build()
-                : tag.moduleId
-                    ? learn.module(tag.moduleId).build()
-                    : null
-
+        // 0..1 coverage (null when no cloze card was answered) — the result surface
+        // renders it as a percentage; server truth is echoed by a later revisit.
+        const coverage = withCoverage.length > 0
+            ? withCoverage.reduce((sum, result) => sum + (result.coverageRatio ?? 0), 0) / withCoverage.length
+            : null
+        const live: FlashcardQuizResultLiveExtras = {
+            data: {
+                sessionId: finishedId,
+                status: "completed",
+                mode,
+                level,
+                coverage,
+                xpEarned,
+                cardCount: sessionLength,
+                answeredCount: results.length,
+                fullyCorrectCount: fullyCorrect,
+                durationSeconds: null,
+                weakTags,
+                results: results.map((result) => ({
+                    cardId: result.cardId,
+                    correctBlanks: result.correctBlanks,
+                    totalBlanks: result.totalBlanks,
+                })),
+            },
+            readiness,
+            dailyCapReached,
+        }
         return (
-            <div className={cn("flex flex-col gap-6", className)}>
-                {/* same work-surface header as the active phase — current=total reads every
-                    segment as complete ("done") now that the run has ended. */}
-                <WorkSessionHeader
-                    backLabel={t("flashcard.quiz.exitToSetup")}
-                    onBack={exitToSetup}
-                    identity={course?.title ? { name: course.title } : undefined}
-                    counter={t("flashcard.quiz.recapTitle")}
-                    current={sessionLength}
-                    total={sessionLength}
-                />
-                {/* body reads as a centered column under the edge-to-edge header band —
-                    same split as MockInterviewSession's work-surface (header full width,
-                    body `mx-auto max-w-*`); recap previously stretched full-bleed. */}
-                <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
-                    {/* Zone A+B — `LabeledCard` (label OUTSIDE + a REAL framed `<Card>`), not a
-                    hand-rolled `bg-surface` div with the label stuffed inside (thầy
-                    2026-07-09: "cam render dạng labeled card"). */}
-                    <LabeledCard label={t("flashcard.quiz.recapTitle")} contentClassName="flex flex-col gap-6">
-                        <Typography type="h4" weight="semibold">
-                            {t("flashcard.quiz.answeredWithoutHint", {
-                                count: fullyCorrect,
-                                total: results.length,
-                            })}
-                        </Typography>
-
-                        {/* Zone B — metric readout: each cell is a bounded BORDERED sub-card
-                        (transparent bg, not another fill) — this row sits INSIDE the
-                        `LabeledCard`'s own framed `<Card>`, so per [[card]] §4
-                        surface-in-surface a nested cell gets a BORDER, not a 2nd opaque
-                        fill (thầy: "đỏ render dạng surface in surface, có border"; a
-                        totally frameless `StatPair` row read as no boundary at all —
-                        undercorrected the earlier card-in-card fix). `StatPair` still owns
-                        the value/label typography; the border wrapper is the only addition. */}
-                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                            <div className="rounded-xl border border-default p-3">
-                                <StatPair
-                                    value={`x${bestCombo}`}
-                                    label={t("flashcard.quiz.bestCombo")}
-                                />
-                            </div>
-                            <div className="rounded-xl border border-default p-3">
-                                <StatPair
-                                    value={`+${xpEarned}`}
-                                    label={t("flashcard.quiz.xpEarned")}
-                                />
-                            </div>
-                            <div className="rounded-xl border border-default p-3">
-                                <StatPair
-                                    value={`${avgCoverage}%`}
-                                    label={t("flashcard.quiz.avgCoverage")}
-                                />
-                            </div>
-                        </div>
-
-                        {dailyCapReached ? (
-                            <Typography type="body-xs" color="muted">
-                                {t("flashcard.quiz.dailyCapReached")}
-                            </Typography>
-                        ) : null}
-
-                        {xpEarned > 0 ? (
-                            <Typography type="body-xs" color="muted">
-                                {t("flashcard.quiz.xpAddedToLeaderboard")}
-                            </Typography>
-                        ) : null}
-                    </LabeledCard>
-
-                    {/* Zone E — enroll upsell (trial only): the recap's PRIMARY action for a trial
-                    viewer — keep the earned momentum going by unlocking the full course, framed
-                    as a reward, not a paywall. Gated on `enrollKnown` too: `enrolled` defaults to
-                    false, so without this a genuinely enrolled viewer would briefly see the
-                    upsell before the status query settles. */}
-                    {enrollKnown && !enrolled ? <RecapEnrollUpsell /> : null}
-
-                    {/* Zone C — weak-tags demand-bridge: PRIMARY when enrolled, a smaller secondary
-                    link under the upsell when trial (Zone E takes the primary slot instead).
-                    Treated as non-primary until enrollment is known, same reasoning as Zone E. */}
-                    <RecapWeakTagsCard
-                        weakTags={topWeakTags}
-                        overflowWeakTags={overflowWeakTags}
-                        resolveTagHref={resolveTagHref}
-                        genericHref={genericContinueHref}
-                        primary={enrollKnown && enrolled}
-                    />
-
-                    {/* quiet, self-hiding "practice this too" — course-wide RAG search auto-queried
-                    on the SAME weak tags Zone C already resolved to a lesson (no typing);
-                    additive since it can ALSO surface challenges/milestone tasks/other decks,
-                    which the tag→lesson-only mapping above never considers. */}
-                    {displayId && topWeakTags.length > 0 ? (
-                        <RelatedContentList
-                            courseId={courseId}
-                            courseDisplayId={displayId}
-                            query={topWeakTags.map((tag) => tag.tag).join(" ")}
-                            label={t("flashcard.quiz.relatedContentLabel")}
-                        />
-                    ) : null}
-
-                    {/* Zone D — AI Mock Interview readiness: only relevant once actually enrolled
-                    (state 5 in the matrix — hidden pre-enrollment/while enrollment is unknown). */}
-                    {enrollKnown && enrolled && readiness ? (
-                        <RecapReadinessCallout readiness={readiness} mockInterviewHref={learn.mockInterview().build()} />
-                    ) : null}
-
-                    {/* Zone F — footer note + "Practice more", demoted to secondary now that C/D/E
-                    exist: looping the quiz is no longer the screen's most-encouraged action. */}
-                    <Button
-                        variant="secondary"
-                        size="lg"
-                        className="self-start"
-                        onPress={() => setPhase("setup")}
-                    >
-                        {t("flashcard.quiz.practiceMore")}
-                        <ArrowRightIcon className="size-5" aria-hidden focusable="false" />
-                    </Button>
-                </div>
-            </div>
+            <FlashcardQuizResult
+                className={className}
+                sessionId={finishedId}
+                courseId={courseId}
+                courseDisplayId={displayId}
+                onBack={exitToSetup}
+                live={live}
+            />
         )
     }
 
@@ -1126,19 +1043,11 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                 <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
                     <FlipCard
                         revealed={showAnswer}
-                        front={
-                            <>
-                                <Typography type="body-xs" weight="medium" color="muted">
-                                    {t("flashcard.questionLabel")}
-                                </Typography>
-                                <MarkdownContent markdown={card.question} />
-                            </>
-                        }
+                        questionLabel={t("flashcard.questionLabel")}
+                        answerLabel={t("flashcard.answerLabel")}
+                        front={<MarkdownContent markdown={card.question} />}
                         back={
                             <>
-                                <Typography type="body-xs" weight="medium" color="muted">
-                                    {t("flashcard.answerLabel")}
-                                </Typography>
                                 {card.answer ? (
                                     <MarkdownContent markdown={card.answer} arcSections />
                                 ) : (
@@ -1198,22 +1107,22 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                 {header}
 
                 <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
-                    {/* question + cloze — plain Card shell (bo góc + shadow-surface), CÙNG kiểu
-                    với FlipCard — the earlier accent/5 + left-border tint (2026-07-09) was
+                    {/* question — plain Card shell (bo góc + shadow-surface), CÙNG kiểu với
+                    FlipCard — the earlier accent/5 + left-border tint (2026-07-09) was
                     reverted the same day (thầy: "ý là bỏ cái kiểu bg hồng với border...
                     render plain Card như bth thôi") — 1 Card duy nhất xuyên suốt feature,
-                    không mỗi màn 1 "ngôn ngữ" riêng. */}
-                    <div className="flex flex-col gap-3 rounded-2xl bg-surface p-6 shadow-surface">
-                        <Typography type="body-xs" weight="medium" color="muted">
-                            {t("flashcard.questionLabel")}
-                        </Typography>
+                    không mỗi màn 1 "ngôn ngữ" riêng. Tách RIÊNG khỏi phần điền cloze bên
+                    dưới (thầy 2026-07-11: "tách phần điền và câu hỏi ra làm 2 labeled card
+                    khác nhau") — đây là 2 bounded object khác BẢN CHẤT (nội dung đọc TĨNH
+                    vs bài tập điền TƯƠNG TÁC), khác với rule "1 item + thuộc tính riêng của
+                    nó ở chung 1 card" ([[concepts/card]] — case đó là 1 item + metadata CỦA
+                    CHÍNH nó, không phải nội dung + 1 bài tập riêng dựa trên nội dung đó). */}
+                    <LabeledCard label={t("flashcard.questionLabel")}>
                         <MarkdownContent markdown={card.question} />
-                        <Typography
-                            type="body-xs"
-                            weight="medium"
-                            color="muted"
-                            className="border-t border-divider pt-3"
-                        >
+                    </LabeledCard>
+
+                    <LabeledCard label={t("flashcard.quiz.fillLabel")} contentClassName="flex flex-col gap-3">
+                        <Typography type="body-xs" weight="medium" color="muted">
                             {t("flashcard.quiz.clozeInstruction")}
                         </Typography>
                         <p className="text-base leading-loose text-foreground">
@@ -1249,12 +1158,15 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                                         checked
                                         && value !== null
                                         && value.toLowerCase() === cloze.blanks[segment.index].toLowerCase()
-                                        // empty = dashed-outline "slot" chip; filled + unchecked = solid
-                                        // accent (primary-solid — canon `elements/color.md` §3, NOT a
-                                        // `/10` tint); checked = keep the existing success/danger tint +
-                                        // shake/pop animation.
+                                        // empty = dashed-outline "slot" chip, filled surface (canon
+                                        // `input.md` §1 — a fill-in affordance sitting on a surface must
+                                        // have a real bg-surface fill, never bg-transparent, or it reads
+                                        // as a dead patch of the page instead of a field); filled +
+                                        // unchecked = solid accent (primary-solid — canon
+                                        // `elements/color.md` §3, NOT a `/10` tint); checked = keep the
+                                        // existing success/danger tint + shake/pop animation.
                                         const chipToneClassName = value === null
-                                            ? "border border-dashed border-default bg-transparent text-muted"
+                                            ? "border border-dashed border-default bg-surface text-muted"
                                             : !checked
                                                 ? "border-0 bg-accent text-accent-foreground"
                                                 : isCorrect
@@ -1281,8 +1193,15 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                                                 >
                                                     <Chip
                                                         size="sm"
+                                                        // HeroUI bakes `.chip`/`.chip--sm`'s font-size as an
+                                                        // UNLAYERED style (same trap as radius.md's rounded-*
+                                                        // warning) — a `text-sm` utility class silently loses
+                                                        // to it. Only an inline style (always highest
+                                                        // specificity) actually overrides it; reuse the
+                                                        // design system's own `--text-sm` token, not a raw px.
+                                                        style={{ fontSize: "var(--text-sm)" }}
                                                         className={cn(
-                                                            "min-w-16 justify-center rounded-full px-3 py-0.5 text-sm font-medium transition-colors",
+                                                            "min-w-16 justify-center rounded-full px-3 py-0.5 font-medium transition-colors",
                                                             chipToneClassName,
                                                         )}
                                                     >
@@ -1304,7 +1223,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                                 })}
                             </Typography>
                         ) : null}
-                    </div>
+                    </LabeledCard>
 
                     {/* the word bank: correct terms + sibling distractors — a used term is
                     REMOVED here entirely (not just dimmed): it "flew" into its blank via
@@ -1316,9 +1235,10 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                     {!checked ? (
                         <div className="flex flex-col gap-6">
                             <div className="flex flex-col gap-3">
-                                <Typography type="body-xs" weight="medium" color="muted">
-                                    {t("flashcard.quiz.wordBankLabel")}
-                                </Typography>
+                                {/* label for a group of pickable chips below — canon `label.md`
+                                §1b: a section header naming a control/option GROUP uses `<Label>`,
+                                never a hand-rolled muted Typography caption. */}
+                                <Label>{t("flashcard.quiz.wordBankLabel")}</Label>
                                 <div className="flex flex-wrap items-center gap-2">
                                     {cloze.bank
                                         .filter((term) => !filled.includes(term))
@@ -1372,13 +1292,10 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
 
                             {/* read the full model answer (the 5-layer reasoning), then self-grade */}
                             {showAnswer ? (
-                                <div className="flex flex-col gap-3 rounded-2xl bg-surface p-6 shadow-surface">
-                                    <Typography type="body-xs" weight="medium" color="muted">
-                                        {t("flashcard.answerLabel")}
-                                    </Typography>
+                                <LabeledCard label={t("flashcard.answerLabel")} contentClassName="flex flex-col gap-3">
                                     <MarkdownContent markdown={card.answer ?? ""} arcSections />
                                     {card.explanation ? <MarkdownContent markdown={card.explanation} /> : null}
-                                </div>
+                                </LabeledCard>
                             ) : (
                                 <Button
                                     variant="outline"
@@ -1406,246 +1323,6 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                 </div>
             </div>
         </LayoutGroup>
-    )
-}
-
-/**
- * Recap Zone E — the enroll upsell shown ONLY to trial viewers, as the recap's
- * PRIMARY action (per `LAYOUT-BRAINSTORM.md`). Mirrors {@link EnrollGate}'s visual
- * anatomy (icon badge + title + description + button) but is embedded INLINE inside
- * the recap card rather than rendered full-page, and reads as an earned reward for
- * the streak/XP the learner just built — not a blocking paywall. Opens the same
- * shared course-enroll payment overlay {@link EnrollGate} uses.
- */
-const RecapEnrollUpsell = () => {
-    const t = useTranslations()
-    const { open } = usePaymentOverlayState()
-
-    const onEnroll = useCallback(
-        () => open({ flow: PaymentFlow.CourseEnroll }),
-        [open],
-    )
-
-    return (
-        <div className="flex flex-col items-center gap-3 rounded-2xl border border-default bg-default px-6 py-8 text-center">
-            <div className="flex size-12 items-center justify-center rounded-full bg-accent/15">
-                <FlameIcon aria-hidden focusable="false" className="size-6 text-accent" />
-            </div>
-            <div className="flex flex-col gap-1">
-                <Typography type="h4" weight="semibold">
-                    {t("flashcard.quiz.upsellTitle")}
-                </Typography>
-                <Typography type="body-sm" color="muted">
-                    {t("flashcard.quiz.upsellDescription")}
-                </Typography>
-            </div>
-            <Button
-                variant="primary"
-                size="lg"
-                className="mt-1 w-full max-w-xs"
-                onPress={onEnroll}
-            >
-                {t("flashcard.quiz.upsellCta")}
-                <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
-            </Button>
-        </div>
-    )
-}
-
-/** Props for {@link RecapWeakTagsCard}. */
-interface RecapWeakTagsCardProps {
-    /** Top-3 weakest tags to always show (empty when nothing qualifies — state "empty"). */
-    weakTags: Array<QuizSessionWeakTagData>
-    /** Any tags beyond the top-3 — scrolled INSIDE this same card, never truncated silently
-     *  and never a separate drawer (state "overflow"). */
-    overflowWeakTags: Array<QuizSessionWeakTagData>
-    /** Resolves a weak tag to its lesson route, or `null` when the deck→lesson mapping was
-     *  ambiguous (falls back to `genericHref` for that row). */
-    resolveTagHref: (tag: QuizSessionWeakTagData) => string | null
-    /** Generic "continue learning" destination — the empty-state CTA AND the fallback for
-     *  any weak tag whose lesson mapping was ambiguous. */
-    genericHref: string
-    /** Whether this card is the recap's PRIMARY demand-bridge (enrolled viewers) or a
-     *  smaller secondary link (trial viewers, where Zone E takes the primary slot instead). */
-    primary: boolean
-}
-
-/** One weak-tag row: tag label + coverage + a "review this lesson" link. */
-const WeakTagRow = ({
-    tag,
-    href,
-}: {
-    tag: QuizSessionWeakTagData
-    href: string
-}) => {
-    const t = useTranslations()
-    const router = useRouter()
-    return (
-        <button
-            type="button"
-            onClick={() => router.push(href)}
-            className="group flex w-full cursor-pointer items-center justify-between gap-3 rounded-xl border border-default bg-default px-4 py-3 text-left outline-none transition-colors hover:bg-default/70 focus-visible:ring-2 focus-visible:ring-accent"
-        >
-            <div className="flex min-w-0 flex-col gap-0.5">
-                <Typography type="body-sm" weight="medium" className="truncate">
-                    {tag.tag}
-                </Typography>
-                <Typography type="body-xs" color="muted">
-                    {t("flashcard.quiz.weakTagCoverage", { percent: Math.round(tag.coverage * 100) })}
-                </Typography>
-            </div>
-            <span className="flex shrink-0 items-center gap-1 text-sm font-medium text-accent">
-                {t("flashcard.quiz.reviewLesson")}
-                <ArrowRightIcon
-                    aria-hidden
-                    focusable="false"
-                    className="size-4 transition-transform group-hover:translate-x-1"
-                />
-            </span>
-        </button>
-    )
-}
-
-/**
- * Recap Zone C — the demand-bridge from "just played" to "go learn". Ranks the
- * session's weakest tags and links each straight back to the lesson that covers
- * it; falls back to a generic "keep learning" CTA when there's no weak-tag data
- * yet (first session, or the mapping was ambiguous). Overflow past the top-3
- * scrolls inside the same card via `ScrollShadow` — never a drawer (the card
- * always has room; see `LAYOUT-BRAINSTORM.md` state 4).
- */
-const RecapWeakTagsCard = ({
-    weakTags,
-    overflowWeakTags,
-    resolveTagHref,
-    genericHref,
-    primary,
-}: RecapWeakTagsCardProps) => {
-    const t = useTranslations()
-    const router = useRouter()
-
-    // no weak-tag data at all → the one, simple, generic bridge (state "empty"). When
-    // this card IS the recap's primary action (enrolled, no upsell competing), the CTA
-    // is a full primary button per LAYOUT-BRAINSTORM state 1; when it's demoted (trial),
-    // it's a standalone (no primary beside it) tertiary link.
-    if (weakTags.length === 0) {
-        return primary ? (
-            <LabeledCard label={t("flashcard.quiz.weakTagsTitle")} contentClassName="flex flex-col gap-3">
-                <Typography type="body-sm" color="muted">
-                    {t("flashcard.quiz.weakTagsEmpty")}
-                </Typography>
-                <Button
-                    variant="primary"
-                    className="self-start"
-                    onPress={() => router.push(genericHref)}
-                >
-                    {t("flashcard.quiz.continueLearning")}
-                    <ArrowRightIcon className="size-5" aria-hidden focusable="false" />
-                </Button>
-            </LabeledCard>
-        ) : (
-            <Button
-                variant="tertiary"
-                size="sm"
-                className="self-start"
-                onPress={() => router.push(genericHref)}
-            >
-                {t("flashcard.quiz.continueLearning")}
-                <ArrowRightIcon className="size-4" aria-hidden focusable="false" />
-            </Button>
-        )
-    }
-
-    // secondary (trial) rendering: a smaller link-style row, not the full card — Zone E
-    // (enroll upsell) is the primary action instead (state "mixed (trial)"). Standalone,
-    // no primary beside it → tertiary, per elements/button.md.
-    if (!primary) {
-        const first = weakTags[0]
-        const firstHref = resolveTagHref(first) ?? genericHref
-        return (
-            <Button
-                variant="tertiary"
-                size="sm"
-                className="self-start"
-                onPress={() => router.push(firstHref)}
-            >
-                {t("flashcard.quiz.weakTagSecondaryLink", { tag: first.tag })}
-                <ArrowRightIcon className="size-4" aria-hidden focusable="false" />
-            </Button>
-        )
-    }
-
-    return (
-        <LabeledCard label={t("flashcard.quiz.weakTagsTitle")} contentClassName="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                {weakTags.map((tag) => (
-                    <WeakTagRow key={tag.tag} tag={tag} href={resolveTagHref(tag) ?? genericHref} />
-                ))}
-            </div>
-            {overflowWeakTags.length > 0 ? (
-                <ScrollShadow hideScrollBar className="max-h-40 overflow-y-auto">
-                    <div className="flex flex-col gap-2 pt-0.5">
-                        {overflowWeakTags.map((tag) => (
-                            <WeakTagRow key={tag.tag} tag={tag} href={resolveTagHref(tag) ?? genericHref} />
-                        ))}
-                    </div>
-                </ScrollShadow>
-            ) : null}
-        </LabeledCard>
-    )
-}
-
-/** Props for {@link RecapReadinessCallout}. */
-interface RecapReadinessCalloutProps {
-    /** The readiness signal returned by `completeFlashcardQuizSession`. */
-    readiness: QuizSessionReadinessData
-    /** Route to the AI Mock Interview surface (only navigated to once unlocked). */
-    mockInterviewHref: string
-}
-
-/**
- * Recap Zone D — the cross-link toward the AI Mock Interview (StarCi's actual
- * AI-graded, credit-costing differentiator), so a learner who finishes "Hỏi
- * nhanh" feeling good is pointed at it instead of never hearing it exists.
- * Locked state stays visible (transparent about the threshold, per state
- * "special (daily-cap)"/readiness in `LAYOUT-BRAINSTORM.md`) rather than hiding.
- */
-const RecapReadinessCallout = ({ readiness, mockInterviewHref }: RecapReadinessCalloutProps) => {
-    const t = useTranslations()
-    const router = useRouter()
-
-    if (!readiness.unlocked) {
-        return (
-            <Callout
-                status="default"
-                icon={<LockKeyIcon className="size-5" aria-hidden focusable="false" />}
-                title={t("flashcard.quiz.readinessLockedTitle")}
-                description={t("flashcard.quiz.readinessLockedDescription", {
-                    currentAvg: readiness.currentAvg,
-                    threshold: readiness.threshold,
-                })}
-            />
-        )
-    }
-
-    return (
-        <Callout
-            status="success"
-            icon={<MicrophoneStageIcon className="size-5" aria-hidden focusable="false" />}
-            title={t("flashcard.quiz.readinessUnlockedTitle")}
-            description={t("flashcard.quiz.readinessUnlockedDescription")}
-            action={(
-                <Button
-                    variant="secondary"
-                    size="sm"
-                    className="shrink-0"
-                    onPress={() => router.push(mockInterviewHref)}
-                >
-                    {t("flashcard.quiz.readinessUnlockedCta")}
-                    <ArrowRightIcon className="size-4" aria-hidden focusable="false" />
-                </Button>
-            )}
-        />
     )
 }
 

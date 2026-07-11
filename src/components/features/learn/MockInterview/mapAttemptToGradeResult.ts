@@ -31,4 +31,9 @@ export const mapMockInterviewAttemptToGradeResult = (
     gaps: attempt.gaps,
     followUpQuestion: attempt.followUpQuestion,
     matchedContentIds: attempt.matchedContentIds,
+    // the history LIST query (myMockInterviewAttempts) does NOT select
+    // questionReviews (heavy per-row), so a list-sourced attempt has it
+    // undefined — default to [] so the scorecard's `.length`/.map never crash
+    // (the by-session + fresh-finish paths carry the real array).
+    questionReviews: attempt.questionReviews ?? [],
 })

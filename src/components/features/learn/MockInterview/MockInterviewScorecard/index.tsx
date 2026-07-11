@@ -4,6 +4,7 @@ import React, { useMemo } from "react"
 import {
     Alert,
     Button,
+    Link,
     Typography,
     cn,
 } from "@heroui/react"
@@ -26,7 +27,7 @@ import { useQueryMatchedContentSwr } from "@/hooks/swr/api/graphql/queries/useQu
 import { pathConfig } from "@/resources/path"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { MockInterviewTrackSnapshot } from "../MockInterviewTrackSnapshot"
-import type { MockInterviewGradeResult, MockInterviewPhaseKey } from "../types"
+import type { MockInterviewGradeResult, MockInterviewPhaseKey, MockInterviewQuestionReview } from "../types"
 
 /** Props for {@link MockInterviewScorecard}. */
 export interface MockInterviewScorecardProps extends WithClassNames<undefined> {
@@ -105,6 +106,100 @@ const phaseDisplayLabel = (phase: string, t: ReturnType<typeof useTranslations>)
     (DESIGN_PHASE_KEYS as ReadonlyArray<string>).includes(phase)
         ? t(`mockInterview.phase.${phase}`)
         : phase
+
+/** Score value → semantic text color (mirrors {@link scoreColorOf}) for the per-question score chip. */
+const SCORE_TEXT_COLOR: Record<"success" | "warning" | "danger", string> = {
+    success: "text-success",
+    warning: "text-warning",
+    danger: "text-danger",
+}
+
+/** The Q&A cognitive frames that carry a localized `mockInterview.kind.*` label — anything else renders raw. */
+const QNA_KINDS: ReadonlyArray<string> = ["theory", "reasoning", "scenario"]
+
+/**
+ * One per-question model-answer review card (the anti-ChatGPT breakdown): the
+ * question, the candidate's own answer (muted), the seed flashcard's model answer,
+ * a one-line "what was missing" note, a value-colored score chip, and a deep link
+ * into the matched lesson when one was confidently matched. Self-contained so each
+ * card resolves its OWN `matchedContentId` (one SWR key per question) — mirrors the
+ * scorecard's single-match citation mechanism, just per question instead of
+ * per session.
+ *
+ * @param review - one {@link MockInterviewQuestionReview} entry.
+ * @param courseDisplayId - course display id, for building the "view in lesson" deep link.
+ */
+const MockInterviewQuestionReviewCard = ({
+    review,
+    courseDisplayId,
+}: {
+    review: MockInterviewQuestionReview
+    courseDisplayId: string
+}) => {
+    const t = useTranslations()
+    const locale = useLocale()
+    const router = useRouter()
+
+    // resolve this question's matched lesson (title + owning module id) — the deep
+    // link needs BOTH segments; falls back to no link when nothing matched or the
+    // content is gone (never fabricate a citation).
+    const matchedContentSwr = useQueryMatchedContentSwr(review.matchedContentId ?? undefined)
+    const matchedModuleId = matchedContentSwr.data?.module?.id
+
+    const lessonHref = (review.matchedContentId && matchedModuleId)
+        ? pathConfig().locale(locale).course(courseDisplayId).learn().module(matchedModuleId).content(review.matchedContentId).build()
+        : null
+
+    const kindLabel = QNA_KINDS.includes(review.kind) ? t(`mockInterview.kind.${review.kind}`) : review.kind
+    const scoreColor = SCORE_TEXT_COLOR[scoreColorOf(review.score, review.max)]
+
+    return (
+        <SurfaceListCardItem>
+            <div className="flex flex-col gap-2">
+                <div className="flex items-start justify-between gap-3">
+                    <Typography type="body-sm" weight="medium" className="min-w-0">
+                        {t("mockInterview.questionReview.heading", { index: review.questionIndex + 1, kind: kindLabel })}
+                    </Typography>
+                    <Typography type="body-sm" weight="medium" className={cn("shrink-0", scoreColor)}>
+                        {t("mockInterview.questionReview.scoreOf", { score: review.score, max: review.max })}
+                    </Typography>
+                </div>
+
+                <MarkdownContent markdown={review.question} />
+
+                <div className="flex flex-col gap-1">
+                    <Typography type="body-xs" color="muted">{t("mockInterview.questionReview.yourAnswer")}</Typography>
+                    <MarkdownContent markdown={review.candidateAnswer} className="text-muted" />
+                </div>
+
+                {review.modelAnswer ? (
+                    <div className="flex flex-col gap-1">
+                        <Typography type="body-xs" color="muted">{t("mockInterview.questionReview.modelAnswer")}</Typography>
+                        <MarkdownContent markdown={review.modelAnswer} />
+                    </div>
+                ) : null}
+
+                <div className="flex items-start gap-2">
+                    <WarningCircleIcon className="mt-0.5 size-4 shrink-0 text-warning" aria-hidden focusable="false" />
+                    <Typography type="body-sm" className="min-w-0 flex-1">
+                        <span className="text-muted">{t("mockInterview.questionReview.feedback")} </span>
+                        {review.feedback}
+                    </Typography>
+                </div>
+
+                {lessonHref ? (
+                    <Link
+                        onPress={() => router.push(lessonHref)}
+                        className="group inline-flex cursor-pointer items-center gap-1 text-accent"
+                    >
+                        {t("mockInterview.viewInLesson")}
+                        <ArrowRightIcon aria-hidden focusable="false" className="size-4 transition-transform group-hover:translate-x-1" />
+                    </Link>
+                ) : null}
+            </div>
+        </SurfaceListCardItem>
+    )
+}
 
 /**
  * Read-only render of one graded mock-interview session — score, verdict, a
@@ -249,6 +344,23 @@ export const MockInterviewScorecard = ({
                     ))}
                 </div>
             </LabeledCard>
+
+            {/* Per-question model-answer breakdown (the anti-ChatGPT surface) — one card
+                per Q&A question comparing the candidate's own answer to the seed model
+                answer. Self-hides for a design run or an older attempt (empty list). */}
+            {grade.questionReviews.length > 0 ? (
+                <LabeledCard label={t("mockInterview.questionReview.title")} frameless>
+                    <SurfaceListCard>
+                        {grade.questionReviews.map((review) => (
+                            <MockInterviewQuestionReviewCard
+                                key={review.questionIndex}
+                                review={review}
+                                courseDisplayId={courseDisplayId}
+                            />
+                        ))}
+                    </SurfaceListCard>
+                </LabeledCard>
+            ) : null}
 
             {orderedAttributes.length > 0 ? (
                 <LabeledCard label={t("mockInterview.attributesTitle")}>

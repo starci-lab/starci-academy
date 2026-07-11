@@ -22,16 +22,28 @@ export interface PressableCardProps extends WithClassNames<undefined> {
     href?: string
     /** Disables interaction and dims the card (action cards only). */
     isDisabled?: boolean
+    /**
+     * Hover affordance — `"fill"` (default, tonal `bg-surface-secondary`) for
+     * navigation tiles/rows that GO somewhere; `"lift"` (default Card
+     * `shadow-surface` present AT REST, unchanged on hover — only the card
+     * translates up) for cards that are picked TO STAY on this screen (rating
+     * tiles, option cards) — the surface itself doesn't change ownership/route,
+     * so a fill read as "selected" would be misleading; lifting reads as "about
+     * to press" instead. Ref [[hover-style-matches-clickable-nature]] mode 4
+     * (pick-a-card — a standalone shadowed tile, not a bordered nested card and
+     * not an accordion-skin row).
+     */
+    hoverVariant?: "fill" | "lift"
 }
 
 /**
  * A whole-card press target with the default surface card look (surface fill,
  * concentric `rounded-3xl`, fixed `px-4 py-3` padding, no shadow) plus a hover
- * tint and keyboard focus ring. Exists because HeroUI v3 `Card` is a non-interactive
- * `<div>` — this block owns the card styling on a real `<button>` / `<a>` so
- * features can compose a clickable card without hand-rolling styles (per the
- * no-style-in-features rule). Use for navigation tiles, selectable option cards,
- * and bookmark rows.
+ * affordance and keyboard focus ring. Exists because HeroUI v3 `Card` is a
+ * non-interactive `<div>` — this block owns the card styling on a real
+ * `<button>` / `<a>` so features can compose a clickable card without
+ * hand-rolling styles (per the no-style-in-features rule). Use for navigation
+ * tiles, selectable option cards, and bookmark rows.
  *
  * @param props - {@link PressableCardProps}
  */
@@ -40,12 +52,19 @@ export const PressableCard = ({
     onPress,
     href,
     isDisabled = false,
+    hoverVariant = "fill",
     className,
 }: PressableCardProps) => {
     const base = cn(
-        "block w-full rounded-3xl bg-surface px-4 py-3 text-left outline-none transition-colors",
-        "hover:bg-surface-secondary focus-visible:ring-2 focus-visible:ring-accent",
-        isDisabled && "cursor-not-allowed opacity-60",
+        "block w-full rounded-3xl bg-surface px-4 py-3 text-left outline-none",
+        hoverVariant === "lift"
+            // default Card shadow present AT REST (unchanged on hover) — only
+            // the card itself lifts, per hover-style-matches-clickable-nature
+            // mode 4 (shadow ≠ hover-only accent; it's the card's own elevation)
+            ? "shadow-surface transition-transform hover:-translate-y-0.5"
+            : "transition-colors hover:bg-surface-secondary",
+        "focus-visible:ring-2 focus-visible:ring-accent",
+        isDisabled && "cursor-not-allowed opacity-60 hover:translate-y-0",
         className,
     )
 

@@ -44,7 +44,7 @@ export const QuizSessionSkeleton = ({ className }: WithClassNames<undefined> = {
                     <Skeleton.Chip />
                 </div>
 
-                {/* question card — same shell as the real cloze card (rounded-2xl bg-surface p-6 shadow-surface) */}
+                {/* question card — mirrors the real cloze card's LabeledCard (Card = shadow-surface, no border) */}
                 <div className="flex flex-col gap-3 rounded-2xl bg-surface p-6 shadow-surface">
                     <Skeleton.Typography type="body-xs" width="1/4" />
                     <Skeleton.Typography type="body" width="3/4" />

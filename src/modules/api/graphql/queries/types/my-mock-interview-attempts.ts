@@ -18,6 +18,34 @@ export interface MockInterviewAttemptAttributeScoreItem {
     score: number
 }
 
+/**
+ * One persisted per-question model-answer review inside a past attempt — the
+ * anti-ChatGPT breakdown comparing the candidate's own answer against the seed
+ * flashcard's authored model answer, for a `mode="qna"` session. Mirrors backend
+ * `MockInterviewAttemptQuestionReviewItem`. Always empty for a `mode="design"`
+ * attempt (or one graded before this field existed).
+ */
+export interface MockInterviewAttemptQuestionReviewItem {
+    /** 0-based index of this question within the session. */
+    questionIndex: number
+    /** This question's cognitive frame ("theory" | "reasoning" | "scenario"), as drawn. */
+    kind: string
+    /** The interviewer's question text for this question. */
+    question: string
+    /** The candidate's own answer for this question. */
+    candidateAnswer: string
+    /** The seed flashcard's authored model answer (Markdown), or null when unavailable. */
+    modelAnswer: string | null
+    /** A one-line summary of what the candidate's answer was missing relative to the reference. */
+    feedback: string
+    /** Score assigned to this question. */
+    score: number
+    /** Maximum possible score for this question (always 100 for qna). */
+    max: number
+    /** Best-effort matched course content (lesson) id for this question, or null when no confident match exists. */
+    matchedContentId: string | null
+}
+
 /** One past graded mock-interview session, for the viewer's history list. */
 export interface MockInterviewAttemptItem {
     /** Attempt row id. */
@@ -52,6 +80,12 @@ export interface MockInterviewAttemptItem {
      * index at grade time, retrieval found nothing, or the attempt predates this field.
      */
     matchedContentIds: Array<string>
+    /**
+     * Per-question model-answer review — the anti-ChatGPT breakdown, one entry per
+     * `mode="qna"` question. Empty for a `mode="design"` attempt (design scores by
+     * phase, not per question) or for an attempt graded before this field existed.
+     */
+    questionReviews: Array<MockInterviewAttemptQuestionReviewItem>
     /** ISO timestamp of when this attempt was graded. */
     createdAt: string
 }

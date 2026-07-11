@@ -9,11 +9,13 @@ import {
     Input,
     Pagination,
     Separator,
+    Spinner,
     TextField,
     Typography,
 } from "@heroui/react"
 import { ListIcon, SquaresFourIcon } from "@phosphor-icons/react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
 import { FlashcardDeckListSkeleton } from "./FlashcardDeckListSkeleton"
 import { SegmentedControl } from "@/components/blocks/navigation/SegmentedControl"
 import { queryFlashcardDecksByCourse } from "@/modules/api/graphql/queries/query-flashcard-decks-by-course"
@@ -22,6 +24,8 @@ import { ChallengeDifficulty } from "@/modules/types/enums/challenge-difficulty"
 import { type FlashcardDeckEntity } from "@/modules/types/entities/flashcard-deck"
 import { type WithClassNames } from "@/modules/types/base/class-name"
 import { useAppSelector } from "@/redux/hooks"
+import { pathConfig } from "@/resources/path"
+import { useStartFlashcardReviewSession } from "../useStartFlashcardReviewSession"
 
 /** Decks shown per page in the topic list before the pager kicks in. */
 const DECKS_PER_PAGE = 9
@@ -70,8 +74,17 @@ export const FlashcardDeckList = ({
     showProgress = true,
 }: FlashcardDeckListProps) => {
     const t = useTranslations()
+    const locale = useLocale()
+    const router = useRouter()
     // read the owning course id from the store — no prop drilling needed
     const courseId = useAppSelector((state) => state.course.entity?.id)
+    const displayId = useAppSelector((state) => state.course.displayId)
+    // eager resolve-or-start (thầy 2026-07-11: "bấm vô học thì isPending ở cái
+    // nút học ... tạo xong session xong là router push vào trang tương tự với
+    // học nhanh") — only meaningful in the study ("Học thẻ") context; a
+    // hypothetical future reuse with `showProgress={false}` (picking a deck for
+    // something OTHER than a review session) falls back to `onSelectDeck`.
+    const { start: startReview, startingDeckId } = useStartFlashcardReviewSession(courseId)
     // live search query filtering decks by title/description
     const [query, setQuery] = useState("")
     // 1-based page for the client-side deck pager
@@ -141,9 +154,38 @@ export const FlashcardDeckList = ({
                 {t("flashcard.deck.due", { count: deck.dueCount })}
             </Chip>
         ) : null
+    /** Resolve-or-start this deck's session right from the CTA, then `router.push`
+     *  straight into it (no instant navigation to the bare shim route). */
+    const onPressStart = useCallback(
+        async (deck: FlashcardDeckEntity) => {
+            if (!showProgress || !displayId) {
+                onSelectDeck(deck.id)
+                return
+            }
+            const cardIds = (deck.cards ?? []).map((deckCard) => deckCard.id)
+            const sessionId = await startReview(deck.id, cardIds)
+            if (sessionId) {
+                router.push(
+                    pathConfig().locale(locale).course(displayId).learn().flashcards().due(sessionId).build(),
+                )
+            }
+        },
+        [showProgress, displayId, startReview, router, locale, onSelectDeck],
+    )
     /** The "Học" CTA — the only action on a deck (card itself is not pressable). */
     const cta = (deck: FlashcardDeckEntity) => (
-        <Button size="sm" variant="primary" className="shrink-0" onPress={() => onSelectDeck(deck.id)}>
+        <Button
+            size="sm"
+            variant="primary"
+            className="shrink-0"
+            isPending={startingDeckId === deck.id}
+            isDisabled={startingDeckId !== null && startingDeckId !== deck.id}
+            onPress={() => { void onPressStart(deck) }}
+        >
+            {/* `isPending` only disables interaction (no built-in spinner — HeroUI's
+                Button ships no visual for it); render one ourselves, same idiom as
+                `FollowButton`/`TierCard`/every other pending CTA in the app. */}
+            {startingDeckId === deck.id ? <Spinner color="current" size="sm" /> : null}
             {ctaLabel ?? t("flashcard.study")}
         </Button>
     )

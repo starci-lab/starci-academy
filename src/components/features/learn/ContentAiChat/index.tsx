@@ -165,6 +165,7 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
     const router = useRouter()
     const locale = useLocale()
     const contentId = useAppSelector((state) => state.content.id)
+    const contentEntity = useAppSelector((state) => state.content.entity)
     const course = useAppSelector((state) => state.course.entity)
     const { ask, abort } = useContentAiStream()
     const { close: closeChat } = useContentAiChatOverlayState()
@@ -369,9 +370,15 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
             { role: "assistant", content: "", toolResult: { kind, query: raw, items: [], isLoading: true } },
         ])
         setInput("")
+        // ground the RAG search on the LESSON'S OWN topic, not the literal chat
+        // phrase — "tìm flashcard liên quan" carries no topical signal (embeds
+        // near nothing), so the search must run on what the learner is actually
+        // reading (mirrors RelatedContentList's query={content.title}, the
+        // pattern the eval measured at 93.8% recall@6).
+        const groundedQuery = contentEntity?.title || raw
         let items: Array<SearchCourseContentItem> = []
         try {
-            const res = await querySearchCourseContent({ courseId, searchQuery: raw })
+            const res = await querySearchCourseContent({ courseId, searchQuery: groundedQuery })
             const all = res.data?.searchCourseContent?.data?.results ?? []
             items = all
                 .filter((item) => (kind === "content"
@@ -389,7 +396,7 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
             }
             return next
         })
-    }, [course?.id])
+    }, [course?.id, contentEntity?.title])
 
     /** Send a question, creating a conversation lazily on the first message. */
     const onSend = useCallback(async (preset?: string) => {

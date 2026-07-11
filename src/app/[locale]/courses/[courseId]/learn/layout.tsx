@@ -73,6 +73,12 @@ const Layout = ({ children }: PropsWithChildren) => {
     // dedicated resumable route (`flashcards/quiz/sessions/[sessionId]`), same
     // pattern as the mock-interview's `isMockInterviewInterviewRoute` below.
     const isFlashcardQuizLive = isFlashcards && segments[1] === "quiz" && segments[2] === "sessions"
+    // "Học thẻ" review goes full-bleed ONLY during a live session — same idiom,
+    // detected off the dedicated resumable route (`flashcards/review/decks/
+    // [deckId]/sessions/[sessionId]`, 2026-07-11 đính chính: "ôn thẻ giao diện
+    // y chang"). The bare `.../decks/[deckId]` route (no `sessions` segment) is
+    // just the resolve-only shim — stays centered, never full-bleed.
+    const isFlashcardReviewLive = isFlashcards && segments[1] === "review" && segments[2] === "decks" && segments[4] === "sessions"
     // the mind-map is a full-bleed interactive canvas (fills the viewport edge-to-edge),
     // so it opts out of the shell's canonical p-6 reading-column padding.
     const isMindMap = segments[0] === "mind-map"
@@ -189,7 +195,7 @@ const Layout = ({ children }: PropsWithChildren) => {
             <LearnShell
                 leftRail={showSurface ? leftRail : undefined}
                 rightRail={showSurface ? rightRail : undefined}
-                fullBleed={isMindMap || isMockInterviewLive || isPlaygroundSession || isFlashcardQuizLive}
+                fullBleed={isMindMap || isMockInterviewLive || isPlaygroundSession || isFlashcardQuizLive || isFlashcardReviewLive}
                 simpleMobileBar={isLeaderboard || isFlashcards}
             >
                 {content}

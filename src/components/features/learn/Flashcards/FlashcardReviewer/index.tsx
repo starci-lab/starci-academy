@@ -5,7 +5,7 @@ import useSWR from "swr"
 import { Button, Chip, Typography, cn } from "@heroui/react"
 import { ArrowsClockwiseIcon, CheckCircleIcon, LockIcon } from "@phosphor-icons/react"
 import { useTranslations, useLocale } from "next-intl"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { SM2_GRADES } from "../constants"
 import { FlashcardReviewerSkeleton } from "./FlashcardReviewerSkeleton"
@@ -15,9 +15,8 @@ import { queryFlashcardDeck } from "@/modules/api/graphql/queries/query-flashcar
 import { type FlashcardCardEntity } from "@/modules/types/entities/flashcard-card"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
-import { BackLink } from "@/components/blocks/navigation/BackLink"
+import { WorkSessionHeader } from "@/components/blocks/navigation/WorkSessionHeader"
 import { FlipCard } from "@/components/blocks/cards/FlipCard"
-import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
 import { RatingBar } from "@/components/blocks/buttons/RatingBar"
 import { useAppSelector } from "@/redux/hooks"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
@@ -32,9 +31,22 @@ import { useQueryMyInProgressFlashcardReviewSessionSwr } from "@/hooks/swr/api/g
 export interface FlashcardReviewerProps extends WithClassNames<undefined> {
     /** Deck id being reviewed. */
     deckId: string
-    /** Returns to the study overview (due + mastery + deck list). Renders a
-     *  {@link BackLink} above the progress meter when given — thầy 2026-07-09:
-     *  "cả 2 phần review và quiz đều không có nút back về". */
+    /**
+     * Present when reached via the dedicated, resumable
+     * `flashcards/review/decks/[deckId]/sessions/[sessionId]` route — this
+     * component then hydrates straight from THAT session (no resolve-or-start
+     * call) instead of resolving one itself. Absent when reached via the bare
+     * `.../decks/[deckId]` route (thầy 2026-07-11 đính chính: "để lưu lại phiên
+     * ôn" — that bare route is now a RESOLVE-ONLY shim: it resolves-or-starts a
+     * session then `router.replace`s into the sessioned URL, mirroring
+     * `QuizSession`'s `startSession` → `router.push` idiom). Mirrors
+     * `QuizSessionProps.resumeSessionId`.
+     */
+    sessionId?: string
+    /** Returns to the study overview (due + mastery + deck list). Passed straight
+     *  through as `WorkSessionHeader`'s `onBack` (mirrors `QuizSession`'s own
+     *  `exitToSetup` — thầy 2026-07-09: "cả 2 phần review và quiz đều không có
+     *  nút back về"). */
     onBack?: () => void
 }
 
@@ -54,10 +66,11 @@ const LEVEL_COLOR: Record<string, "success" | "warning" | "danger" | "accent"> =
  * a summary closes the run. Data states go through {@link AsyncContent}.
  * @param props - {@link FlashcardReviewerProps}
  */
-export const FlashcardReviewer = ({ deckId, className, onBack }: FlashcardReviewerProps) => {
+export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: FlashcardReviewerProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
+    const pathname = usePathname()
     const runGraphQL = useGraphQLWithToast()
     // owning course slug drives the deep-links to referenced lessons/modules
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
@@ -109,11 +122,19 @@ export const FlashcardReviewer = ({ deckId, className, onBack }: FlashcardReview
     // guards `completeFlashcardReviewSession` so a re-render at `done` never double-fires it
     const completedRef = useRef(false)
 
-    // once the deck's cards AND the in-progress check have both settled: resume
-    // the caller's existing draw for this deck if one exists, otherwise start a
-    // fresh one — mirrors `QuizSession`'s own resume-or-start split, just
-    // automatic (no dedicated `/sessions/[id]` route for review — the deck id
-    // alone is the URL, per thầy's "trên url cũng không có cái deck của phần ôn").
+    // once the deck's cards AND the in-progress check have both settled — TWO
+    // routes into this component (2026-07-11 đính chính: "để lưu lại phiên ôn"):
+    // (a) reached via the dedicated `.../decks/[deckId]/sessions/[sessionId]`
+    //     route (`sessionId` prop set) → hydrate straight from THAT session
+    //     (no start call); a stale/invalid id (expired past 24h, or bogus) falls
+    //     back to (b) below instead of getting stuck.
+    // (b) reached via the bare `.../decks/[deckId]` route (`sessionId` absent)
+    //     → this is now a RESOLVE-ONLY shim: resume the caller's existing draw
+    //     if one exists, otherwise start a fresh one, THEN `router.replace` into
+    //     the sessioned URL — mirrors `QuizSession`'s own `startSession` →
+    //     `router.push` idiom. Never renders the live reviewer itself; `done`
+    //     stays false the whole time (`AsyncContent`'s `isLoading` gate below
+    //     covers this branch), so only the skeleton ever shows here.
     useEffect(() => {
         if (
             initAttemptedRef.current
@@ -125,10 +146,37 @@ export const FlashcardReviewer = ({ deckId, className, onBack }: FlashcardReview
         }
         initAttemptedRef.current = true
         const resumable = inProgressSessionSwr.data
+
+        if (sessionId) {
+            if (resumable && resumable.sessionId === sessionId) {
+                sessionIdRef.current = sessionId
+                setCurrentIndex(Math.min(resumable.currentIndex, cards.length - 1))
+                setReviewedCount(resumable.reviewedCount)
+                return
+            }
+            // stale/invalid session id — start a fresh one and correct the URL,
+            // same as the no-`sessionId` branch below.
+            void runStartSession
+                .trigger({
+                    request: { deckId, cardIds: cards.map((deckCard) => deckCard.id) },
+                    headers: courseHeaders,
+                })
+                .then((result) => {
+                    const freshId = result.data?.startFlashcardReviewSession.data?.sessionId
+                    if (freshId) {
+                        sessionIdRef.current = freshId
+                        router.replace(`${pathname.replace(/\/sessions\/.+$/, "")}/sessions/${freshId}`)
+                    }
+                })
+                .catch(() => {})
+            return
+        }
+
         if (resumable) {
             sessionIdRef.current = resumable.sessionId
             setCurrentIndex(Math.min(resumable.currentIndex, cards.length - 1))
             setReviewedCount(resumable.reviewedCount)
+            router.replace(`${pathname}/sessions/${resumable.sessionId}`)
             return
         }
         void runStartSession
@@ -137,10 +185,14 @@ export const FlashcardReviewer = ({ deckId, className, onBack }: FlashcardReview
                 headers: courseHeaders,
             })
             .then((result) => {
-                sessionIdRef.current = result.data?.startFlashcardReviewSession.data?.sessionId ?? null
+                const freshId = result.data?.startFlashcardReviewSession.data?.sessionId
+                if (freshId) {
+                    sessionIdRef.current = freshId
+                    router.replace(`${pathname}/sessions/${freshId}`)
+                }
             })
             .catch(() => {})
-    }, [cards, deckId, courseHeaders, inProgressSessionSwr.isLoading, inProgressSessionSwr.data, runStartSession])
+    }, [cards, deckId, sessionId, courseHeaders, inProgressSessionSwr.isLoading, inProgressSessionSwr.data, runStartSession, router, pathname])
 
     // SM-2 grade buttons, localized for the rating bar
     const ratingOptions = useMemo(
@@ -236,7 +288,10 @@ export const FlashcardReviewer = ({ deckId, className, onBack }: FlashcardReview
     }, [done, reviewedCount, courseHeaders, runCompleteSession])
 
     // restart the deck from the first card — a fresh run, so start a NEW
-    // resumable session too (the finished one was already completed above)
+    // resumable session too (the finished one was already completed above),
+    // and correct the URL to the new session id (mirrors the resolve effect —
+    // otherwise a refresh after restarting would re-hydrate the JUST-completed
+    // session instead of the fresh one).
     const onRestart = () => {
         setCurrentIndex(0)
         setRevealed(false)
@@ -250,7 +305,11 @@ export const FlashcardReviewer = ({ deckId, className, onBack }: FlashcardReview
                     headers: courseHeaders,
                 })
                 .then((result) => {
-                    sessionIdRef.current = result.data?.startFlashcardReviewSession.data?.sessionId ?? null
+                    const freshId = result.data?.startFlashcardReviewSession.data?.sessionId
+                    if (freshId) {
+                        sessionIdRef.current = freshId
+                        router.replace(`${pathname.replace(/\/sessions\/.+$/, "")}/sessions/${freshId}`)
+                    }
                 })
                 .catch(() => {})
         }
@@ -258,7 +317,10 @@ export const FlashcardReviewer = ({ deckId, className, onBack }: FlashcardReview
 
     return (
         <AsyncContent
-            isLoading={(isLoading || !data) && cards.length === 0}
+            // no `sessionId` prop = the resolve-only shim (bare `.../decks/[deckId]`
+            // route) — ALWAYS the skeleton, never the live UI; it `router.replace`s
+            // into the sessioned URL as soon as resolving lands (effect above).
+            isLoading={!sessionId || ((isLoading || !data) && cards.length === 0)}
             skeleton={<FlashcardReviewerSkeleton />}
             isEmpty={cards.length === 0}
             emptyContent={{ title: t("flashcard.empty") }}
@@ -269,138 +331,157 @@ export const FlashcardReviewer = ({ deckId, className, onBack }: FlashcardReview
             }}
         >
             {done ? (
-                <EmptyState
-                    icon={<CheckCircleIcon aria-hidden focusable="false" />}
-                    title={t("flashcard.review.sessionDoneTitle")}
-                    description={t("flashcard.review.sessionDoneDescription", { count: reviewedCount })}
-                    action={
-                        <Button size="sm" variant="primary" onPress={onRestart}>
-                            {t("flashcard.review.studyAgain")}
-                        </Button>
-                    }
-                />
+                <div className={cn("flex flex-col gap-6", className)}>
+                    {/* same work-surface header as the active phase — current=total reads
+                        every segment as complete, mirrors QuizSession's recap header. */}
+                    <WorkSessionHeader
+                        backLabel={t("flashcard.title")}
+                        onBack={onBack ?? (() => {})}
+                        identity={data?.title ? { name: data.title } : undefined}
+                        counter={t("flashcard.review.sessionDoneTitle")}
+                        current={cards.length}
+                        total={cards.length}
+                    />
+                    <div className="mx-auto flex w-full max-w-3xl flex-col">
+                        <EmptyState
+                            icon={<CheckCircleIcon aria-hidden focusable="false" />}
+                            title={t("flashcard.review.sessionDoneTitle")}
+                            description={t("flashcard.review.sessionDoneDescription", { count: reviewedCount })}
+                            action={
+                                <Button size="sm" variant="primary" onPress={onRestart}>
+                                    {t("flashcard.review.studyAgain")}
+                                </Button>
+                            }
+                        />
+                    </div>
+                </div>
             ) : (
                 <div className={cn("flex flex-col gap-6", className)}>
-                    {onBack ? <BackLink target={t("flashcard.title")} onPress={onBack} /> : null}
-                    {/* progress by position through the deck */}
-                    <ProgressMeter
-                        value={currentIndex + 1}
-                        max={cards.length}
-                        label={t("flashcard.cardProgress", {
+                    {/* shared header: WorkSessionHeader (deck identity + card counter +
+                        level/tag meta chips inline + progress segments) — same shell as
+                        QuizSession's "Hỏi nhanh" (thầy 2026-07-11: "ôn thẻ giao diện y
+                        chang"). Level/tag folded INTO the header row, no separate row below. */}
+                    <WorkSessionHeader
+                        backLabel={t("flashcard.title")}
+                        onBack={onBack ?? (() => {})}
+                        identity={data?.title ? { name: data.title } : undefined}
+                        counter={t("flashcard.cardProgress", {
                             current: currentIndex + 1,
                             total: cards.length,
                         })}
+                        current={currentIndex}
+                        total={cards.length}
+                        meta={card && (card.level || (card.tags?.length ?? 0) > 0) ? (
+                            <>
+                                {card.level ? (
+                                    <Chip size="sm" variant="soft" color={LEVEL_COLOR[card.level] ?? "default"}>
+                                        {t(`flashcard.level.${card.level}`)}
+                                    </Chip>
+                                ) : null}
+                                {card.tags?.map((tag) => (
+                                    <Chip key={tag} size="sm" variant="soft" color="default">
+                                        {tag}
+                                    </Chip>
+                                ))}
+                            </>
+                        ) : undefined}
                     />
 
-                    {/* current card meta: quiz level + technology tags */}
-                    {card && (card.level || (card.tags?.length ?? 0) > 0) ? (
-                        <div className="flex flex-wrap items-center gap-2">
-                            {card.level ? (
-                                <Chip size="sm" variant="soft" color={LEVEL_COLOR[card.level] ?? "default"}>
-                                    {t(`flashcard.level.${card.level}`)}
-                                </Chip>
-                            ) : null}
-                            {card.tags?.map((tag) => (
-                                <Chip key={tag} size="sm" variant="soft" color="default">
-                                    {tag}
-                                </Chip>
-                            ))}
-                        </div>
-                    ) : null}
-
-                    {/* the flip card: question → answer (+ optional depth) */}
-                    <FlipCard
-                        revealed={revealed}
-                        onToggle={() => setRevealed((flipped) => !flipped)}
-                        ariaLabel={revealed ? t("flashcard.showQuestion") : t("flashcard.showAnswer")}
-                        frontHint={
-                            <>
-                                <ArrowsClockwiseIcon className="size-3.5" aria-hidden focusable="false" />
-                                {t("flashcard.flipHint")}
-                            </>
-                        }
-                        backHint={isLocked ? undefined : (
-                            <>
-                                <ArrowsClockwiseIcon className="size-3.5" aria-hidden focusable="false" />
-                                {t("flashcard.flipBackHint")}
-                            </>
-                        )}
-                        front={
-                            <>
-                                <Typography type="body-xs" weight="medium" color="muted">
-                                    {t("flashcard.questionLabel")}
-                                </Typography>
-                                <MarkdownContent markdown={card?.question ?? ""} />
-                            </>
-                        }
-                        back={
-                            <>
-                                <Typography type="body-xs" weight="medium" color="muted">
-                                    {t("flashcard.answerLabel")}
-                                </Typography>
-                                {isLocked ? (
+                    <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
+                        {/* the flip card: question → answer (+ optional depth) */}
+                        <FlipCard
+                            revealed={revealed}
+                            onToggle={() => setRevealed((flipped) => !flipped)}
+                            ariaLabel={revealed ? t("flashcard.showQuestion") : t("flashcard.showAnswer")}
+                            frontHint={
+                                <>
+                                    <ArrowsClockwiseIcon className="size-3.5" aria-hidden focusable="false" />
+                                    {t("flashcard.flipHint")}
+                                </>
+                            }
+                            backHint={isLocked ? undefined : (
+                                <>
+                                    <ArrowsClockwiseIcon className="size-3.5" aria-hidden focusable="false" />
+                                    {t("flashcard.flipBackHint")}
+                                </>
+                            )}
+                            front={
+                                <>
+                                    <Typography type="body-xs" weight="medium" color="muted">
+                                        {t("flashcard.questionLabel")}
+                                    </Typography>
+                                    <MarkdownContent markdown={card?.question ?? ""} />
+                                </>
+                            }
+                            back={
+                                <>
+                                    <Typography type="body-xs" weight="medium" color="muted">
+                                        {t("flashcard.answerLabel")}
+                                    </Typography>
+                                    {isLocked ? (
                                     // premium card, viewer not enrolled → withhold the answer
-                                    <div className="flex flex-1 flex-col items-center justify-center gap-3 text-center">
-                                        <LockIcon aria-hidden focusable="false" className="size-8 text-muted" />
-                                        <Typography type="body-sm" weight="semibold">
-                                            {t("flashcard.premiumLockedTitle")}
-                                        </Typography>
-                                        <Typography type="body-xs" color="muted">
-                                            {t("flashcard.premiumLockedHint")}
-                                        </Typography>
-                                    </div>
-                                ) : (
-                                    <>
-                                        {card?.answer ? (
-                                            <MarkdownContent markdown={card.answer} />
-                                        ) : (
-                                            <Typography type="body-sm" color="muted">
-                                                {t("flashcard.noAnswer")}
+                                        <div className="flex flex-1 flex-col items-center justify-center gap-3 text-center">
+                                            <LockIcon aria-hidden focusable="false" className="size-8 text-muted" />
+                                            <Typography type="body-sm" weight="semibold">
+                                                {t("flashcard.premiumLockedTitle")}
                                             </Typography>
-                                        )}
-                                        {card?.explanation ? (
-                                            <MarkdownContent markdown={card.explanation} />
-                                        ) : null}
-                                    </>
-                                )}
-                            </>
-                        }
-                    />
+                                            <Typography type="body-xs" color="muted">
+                                                {t("flashcard.premiumLockedHint")}
+                                            </Typography>
+                                        </div>
+                                    ) : (
+                                        <>
+                                            {card?.answer ? (
+                                                <MarkdownContent markdown={card.answer} />
+                                            ) : (
+                                                <Typography type="body-sm" color="muted">
+                                                    {t("flashcard.noAnswer")}
+                                                </Typography>
+                                            )}
+                                            {card?.explanation ? (
+                                                <MarkdownContent markdown={card.explanation} />
+                                            ) : null}
+                                        </>
+                                    )}
+                                </>
+                            }
+                        />
 
-                    {/* reveal first, then grade recall (which advances) — unless the card is
+                        {/* reveal first, then grade recall (which advances) — unless the card is
                         locked premium, where we surface an enrol CTA instead of grading */}
-                    {revealed && isLocked ? (
-                        <div className="flex justify-center">
-                            <Button size="sm" variant="primary" onPress={onUnlock}>
-                                {t("flashcard.premiumCta")}
-                            </Button>
-                        </div>
-                    ) : revealed ? (
-                        <div className="flex flex-col gap-2">
-                            <Typography type="body-xs" color="muted" align="center">
-                                {t("flashcard.review.rateHint")}
-                            </Typography>
-                            <RatingBar
-                                options={ratingOptions}
-                                onRate={(grade) => void onRate(grade)}
-                                isPending={reviewing}
-                            />
-                        </div>
-                    ) : (
-                        <div className="flex items-center justify-between gap-3">
-                            <Button
-                                size="sm"
-                                variant="secondary"
-                                isDisabled={isFirst}
-                                onPress={goPrev}
-                            >
-                                {t("flashcard.previous")}
-                            </Button>
-                            <Button size="sm" variant="outline" onPress={() => setRevealed(true)}>
-                                {t("flashcard.showAnswer")}
-                            </Button>
-                        </div>
-                    )}
+                        {revealed && isLocked ? (
+                            <div className="flex justify-center">
+                                <Button size="sm" variant="primary" onPress={onUnlock}>
+                                    {t("flashcard.premiumCta")}
+                                </Button>
+                            </div>
+                        ) : revealed ? (
+                            <div className="flex flex-col gap-2">
+                                <Typography type="body-xs" color="muted" align="center">
+                                    {t("flashcard.review.rateHint")}
+                                </Typography>
+                                <RatingBar
+                                    options={ratingOptions}
+                                    onRate={(grade) => void onRate(grade)}
+                                    isPending={reviewing}
+                                />
+                            </div>
+                        ) : (
+                            <div className="flex items-center justify-between gap-3">
+                                <Button
+                                    size="sm"
+                                    variant="secondary"
+                                    isDisabled={isFirst}
+                                    onPress={goPrev}
+                                >
+                                    {t("flashcard.previous")}
+                                </Button>
+                                <Button size="sm" variant="outline" onPress={() => setRevealed(true)}>
+                                    {t("flashcard.showAnswer")}
+                                </Button>
+                            </div>
+                        )}
+                    </div>
                 </div>
             )}
         </AsyncContent>

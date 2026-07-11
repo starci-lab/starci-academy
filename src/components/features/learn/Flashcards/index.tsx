@@ -33,6 +33,15 @@ export interface FlashcardsProps extends WithClassNames<undefined> {
      * showing the setup screen. Mirrors `MockInterviewProps.resumeSessionId`.
      */
     resumeQuizSessionId?: string
+    /**
+     * Present when reached via the dedicated, resumable
+     * `flashcards/review/decks/[deckId]/sessions/[sessionId]` route — threaded
+     * straight through to {@link FlashcardReviewer} as its `sessionId` prop, so
+     * it hydrates that server-persisted "Học thẻ" run instead of resolving one
+     * itself (thầy 2026-07-11 đính chính: "ôn thẻ giao diện y chang... để lưu
+     * lại phiên ôn"). Mirrors `resumeQuizSessionId`.
+     */
+    resumeReviewSessionId?: string
 }
 
 /**
@@ -50,13 +59,20 @@ export interface FlashcardsProps extends WithClassNames<undefined> {
  * reasoning as `QuizSession`'s own exit link.
  * @param {FlashcardsProps} props Optional wrapper placement props.
  */
-export const Flashcards = ({ className, resumeQuizSessionId }: FlashcardsProps) => {
+export const Flashcards = ({ className, resumeQuizSessionId, resumeReviewSessionId }: FlashcardsProps) => {
     const t = useTranslations()
     const pathname = usePathname()
     const router = useRouter()
     const searchParams = useSearchParams()
     const courseId = useAppSelector((state) => state.course.entity?.id)
     const { mode, deckId, session, goMode, goDeck, goDue, goOverview } = useFlashcardNav()
+    // resumed straight into a live "Hỏi nhanh" (quiz) or "Học thẻ" (review) run
+    // (via the dedicated `flashcards/{quiz/sessions,review/decks/.../sessions}/
+    // [sessionId]` routes) — the session becomes a full-bleed focused work
+    // surface (its own `WorkSessionHeader`), so the surrounding chrome
+    // (breadcrumb, mode tabs, mobile nav, bounded column) steps aside instead
+    // of doubling up on the session's own header.
+    const isLive = Boolean(resumeQuizSessionId || resumeReviewSessionId)
     // quiz is enrolled-only (it spends AI credits) — gate the tab for trial viewers
     const enrollmentSwr = useQueryCourseEnrollmentStatusSwr()
     const isEnrolled = enrollmentSwr.data?.courseEnrollmentStatus?.data?.isEnrolled === true
@@ -114,6 +130,34 @@ export const Flashcards = ({ className, resumeQuizSessionId }: FlashcardsProps) 
     ) : (
         <LearnBreadcrumb current={t("flashcard.title")} />
     )
+
+    // live "Hỏi nhanh" run — full-bleed work surface, its own `WorkSessionHeader`
+    // IS the header, so the breadcrumb/PageHeader, mobile nav, and mode tabs
+    // (all "which surface am I on" chrome) step aside; nothing to switch away
+    // from mid-run. No bounded `max-w-3xl` column either — matches the sticky
+    // header band spanning edge-to-edge, same as `MockInterviewSession`.
+    if (isLive) {
+        return (
+            <div className={className}>
+                {resumeReviewSessionId ? (
+                    deckId ? (
+                        <FlashcardReviewer
+                            key={deckId}
+                            deckId={deckId}
+                            sessionId={resumeReviewSessionId}
+                            onBack={goOverview}
+                        />
+                    ) : null
+                ) : courseId ? (
+                    <QuizSession
+                        key={courseId}
+                        courseId={courseId}
+                        resumeSessionId={resumeQuizSessionId}
+                    />
+                ) : null}
+            </div>
+        )
+    }
 
     return (
         <div className={className}>

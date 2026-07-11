@@ -2,6 +2,7 @@ import React from "react"
 import type { Components } from "react-markdown"
 import { isInlineCode } from "react-shiki"
 import * as HeroUI from "@heroui/react"
+import { CaretDownIcon } from "@phosphor-icons/react"
 import {
     MarkdownTable,
     MarkdownTableBody,
@@ -138,6 +139,52 @@ const buildTocHeading = (level: 2 | 3 | 4, sizeClass: string, marginClass: strin
     }
 
 /**
+ * One "Interview Arc" section (see `remarkArcSections` in `./index`): the label
+ * (`children[0]`, already rendered by `mutedblock`/the `p` fake-heading case) boxed
+ * with its body. The first two sections in authoring order (TL;DR, mechanism — see
+ * `.claude/docs/rules/flashcard-answer.md` §2) stay always-expanded and divider-
+ * separated; the rest start collapsed behind a label chip so a 4-5 section answer
+ * doesn't read as one long crammed scroll. `stopPropagation` on the chip because
+ * `FlipCard`'s whole face is a click-to-flip target — an un-stopped click would flip
+ * the card back to front instead of expanding the section.
+ * @param props.index - 0-based position among arc sections in this answer.
+ * @param props.children - `[label, ...body]`, as grouped by the remark transform.
+ */
+const ArcSection = ({ index, children }: { index?: number, children?: React.ReactNode }) => {
+    const position = index ?? 0
+    const isCore = position < 2
+    const [expanded, setExpanded] = React.useState(isCore)
+    // the label is `children[0]` (a `<strong>` for the lead-bold-paragraph shape, or
+    // the whole `mutedblock` div for the `:::muted` shape) — force it onto its own
+    // line as a small foreground "eyebrow", overriding whatever colour/size its own
+    // renderer gave it (`!` = guaranteed win over the inline `text-muted` class).
+    const boxClassName = `[&>*:first-child]:!block [&>*:first-child]:!text-foreground [&>*:first-child]:!text-xs [&>*:first-child]:!font-medium [&>*:first-child]:!mb-1 py-2.5 ${position > 0 ? "border-t border-default" : ""}`
+    if (expanded) {
+        // the lead-bold-paragraph shape keeps its " — " separator right after the
+        // label text — drop it now that the label sits on its own line above.
+        const list = React.Children.toArray(children)
+        if (typeof list[1] === "string") {
+            list[1] = (list[1] as string).replace(/^\s*[—-]\s*/, "")
+        }
+        return <div className={boxClassName}>{list}</div>
+    }
+    const label = React.Children.toArray(children)[0]
+    return (
+        <button
+            type="button"
+            onClick={(event) => {
+                event.stopPropagation()
+                setExpanded(true)
+            }}
+            className="mr-1.5 mt-1.5 inline-flex items-center gap-1 rounded-full bg-default px-2.5 py-1 text-xs text-muted transition-colors hover:bg-default/80"
+        >
+            {getNodeText(label)}
+            <CaretDownIcon size={12} />
+        </button>
+    )
+}
+
+/**
  * Builds the element-renderer map handed to `ReactMarkdown` so headings, tables, code
  * blocks, mermaid diagrams and inline elements use the app's HeroUI typography.
  *
@@ -195,6 +242,9 @@ export const buildMarkdownRenderers = ({
         mutedtext: ({ children }: { children?: React.ReactNode }) => (
             <ProseText elementType="span" size="sm" className="font-semibold text-muted">{children}</ProseText>
         ),
+        // `:::muted`/bold-label + its body, boxed as one Interview Arc section — opt-in via
+        // `MarkdownContent`'s `arcSections` prop (see remarkArcSections in ./index).
+        arcsection: ArcSection,
         // Custom `:::chip` directive tag (see remarkChip in ./index): a wrapped row of soft chips,
         // one per authored keyword line. `items` is the `|`-joined keyword list.
         chipblock: ({ items }: { items?: string }) => (

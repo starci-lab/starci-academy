@@ -377,7 +377,7 @@ export const DueReview = ({ onExit, className }: DueReviewProps) => {
                                 <Typography type="body-xs" weight="medium" color="muted">
                                     {t("flashcard.answerLabel")}
                                 </Typography>
-                                <MarkdownContent markdown={card?.back ?? ""} />
+                                <MarkdownContent markdown={card?.back ?? ""} arcSections />
                             </>
                         }
                     />

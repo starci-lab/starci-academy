@@ -169,7 +169,150 @@ const remarkAccordion = () => (tree: unknown): void => {
     applyAccordionDirective(tree as Parameters<typeof applyAccordionDirective>[0])
 }
 
+/**
+ * True for a `:::muted` directive node — already tagged `hName: "mutedblock"` by
+ * {@link remarkMuted}. Its OWN content shape then decides how {@link groupArcSections}
+ * handles it — see {@link isSelfContainedLeadBoldMuted} / {@link isBareLabelMuted}.
+ * @param node - Current mdast node.
+ */
+const isMutedLabelNode = (node: { data?: { hName?: unknown } }): boolean => node.data?.hName === "mutedblock"
+
+/**
+ * True for the actual authoring idiom found in the card catalog: ONE paragraph
+ * that OPENS with a `**bold**` span and keeps going as prose on the same line/block
+ * (`**Giải pháp** — NestJS cung cấp ba hook...`) — label and body live in the SAME
+ * mdast paragraph node. Two places this shape shows up: as a bare top-level
+ * paragraph, OR (the actual catalog convention) as the sole child of a `:::muted`
+ * directive — see {@link isSelfContainedLeadBoldMuted}.
+ * @param node - Current mdast node.
+ */
+const isLeadBoldParagraph = (node: { type?: string, children?: Array<{ type?: string }> }): boolean =>
+    node.type === "paragraph"
+    && Array.isArray(node.children)
+    && node.children.length > 0
+    && node.children[0]?.type === "strong"
+
+/**
+ * True when a `:::muted` directive's ENTIRE content is one {@link isLeadBoldParagraph}
+ * — the real catalog shape (`:::muted\n**Giải pháp** — NestJS cung cấp...\n:::`),
+ * where the directive is a pointless extra wrapper around an already-self-contained
+ * section. {@link groupArcSections} unwraps it (tags the inner paragraph directly)
+ * instead of double-wrapping, which is what caused the infinite recursion this fixes
+ * — re-processing a wrapper whose only child is still `hName: "mutedblock"` kept
+ * re-matching {@link isMutedLabelNode} forever.
+ * @param node - Current mdast node (already confirmed a muted label via {@link isMutedLabelNode}).
+ */
+const isSelfContainedLeadBoldMuted = (node: { children?: Array<{ type?: string, children?: Array<{ type?: string }> }> }): boolean =>
+    Array.isArray(node.children) && node.children.length === 1 && isLeadBoldParagraph(node.children[0])
+
+/**
+ * True when a `:::muted` directive's ENTIRE content is ONE short inline node (the
+ * doc-documented shape: `:::muted\n<Label>\n:::\n<body>` — label alone, body
+ * follows as an external sibling). {@link groupArcSections} wraps this shape and
+ * absorbs the following siblings as its body, unlike {@link isSelfContainedLeadBoldMuted}
+ * which already has its body inside.
+ * @param node - Current mdast node (already confirmed a muted label via {@link isMutedLabelNode}).
+ */
+const isBareLabelMuted = (node: { children?: Array<{ type?: string, children?: Array<unknown> }> }): boolean => {
+    const only = node.children?.[0]
+    return Array.isArray(node.children) && node.children.length === 1
+        && only?.type === "paragraph"
+        && Array.isArray(only.children) && only.children.length === 1
+}
+
+/**
+ * Turns each Interview Arc section into one `arcsection` node so the renderer
+ * (`map.tsx`) can box/collapse a whole "label + body" unit instead of rendering it
+ * as flat, undifferentiated siblings/prose. Three authoring shapes exist in the card
+ * catalog and are handled differently:
+ * - `:::muted` wrapping a lead-bold paragraph (see {@link isSelfContainedLeadBoldMuted},
+ *   the actual catalog convention) — the directive is unwrapped; its inner paragraph
+ *   is retagged directly.
+ * - Bare `:::muted` label (see {@link isBareLabelMuted}, the shape documented in
+ *   `.claude/docs/rules/flashcard-answer.md` §2) — wrapped, absorbing every sibling
+ *   that follows up to the next label as its body.
+ * - Bare lead-bold paragraph, no `:::muted` at all — retagged in place.
+ * Every node this function tags or wraps is added to `skip` so the second pass never
+ * re-descends into it — re-visiting a `hName: "mutedblock"` node nested one level
+ * inside its own freshly-created wrapper is what caused unbounded recursion before
+ * this fix (a single-child wrapper around a still-muted-tagged node kept re-matching
+ * and re-wrapping itself forever). Each `arcsection` carries its position (`index`,
+ * 0-based) so the renderer can keep the first two sections (TL;DR / mechanism) always
+ * expanded and collapse the rest behind a chip — the fixed order documented in
+ * `.claude/docs/rules/flashcard-answer.md` §2.
+ * @param node - Current mdast node being walked.
+ */
+const groupArcSections = (node: { children?: Array<Record<string, unknown>> }): void => {
+    if (!Array.isArray(node.children)) {
+        return
+    }
+    const grouped: Array<Record<string, unknown>> = []
+    let current: { type: string, children: Array<unknown>, data: Record<string, unknown> } | null = null
+    let sectionIndex = 0
+    const skip = new Set<unknown>()
+    for (const child of node.children) {
+        if (isMutedLabelNode(child as Parameters<typeof isMutedLabelNode>[0])) {
+            if (isSelfContainedLeadBoldMuted(child as Parameters<typeof isSelfContainedLeadBoldMuted>[0])) {
+                const inner = (child.children as Array<Record<string, unknown>>)[0]
+                const data = (inner.data as Record<string, unknown>) || (inner.data = {})
+                data.hName = "arcsection"
+                data.hProperties = { index: sectionIndex }
+                sectionIndex += 1
+                current = null
+                grouped.push(inner)
+                skip.add(inner)
+            } else if (isBareLabelMuted(child as Parameters<typeof isBareLabelMuted>[0])) {
+                current = {
+                    type: "arcSection",
+                    children: [child],
+                    data: { hName: "arcsection", hProperties: { index: sectionIndex } },
+                }
+                sectionIndex += 1
+                grouped.push(current)
+                skip.add(current)
+            } else {
+                // muted content that's neither shape (multi-paragraph, code block…) —
+                // tag the directive itself as one section, keep its children as-is.
+                const data = (child.data as Record<string, unknown>) || (child.data = {})
+                data.hName = "arcsection"
+                data.hProperties = { index: sectionIndex }
+                sectionIndex += 1
+                current = null
+                grouped.push(child)
+                skip.add(child)
+            }
+        } else if (isLeadBoldParagraph(child as Parameters<typeof isLeadBoldParagraph>[0])) {
+            const data = (child.data as Record<string, unknown>) || (child.data = {})
+            data.hName = "arcsection"
+            data.hProperties = { index: sectionIndex }
+            sectionIndex += 1
+            current = null
+            grouped.push(child)
+            skip.add(child)
+        } else if (current) {
+            current.children.push(child)
+        } else {
+            grouped.push(child)
+        }
+    }
+    node.children = grouped
+    for (const child of node.children) {
+        if (skip.has(child)) {
+            continue
+        }
+        groupArcSections(child as Parameters<typeof groupArcSections>[0])
+    }
+}
+
+/** remark transformer: box each Interview Arc label + its following body into one `arcsection`. */
+const remarkArcSections = () => (tree: unknown): void => {
+    groupArcSections(tree as Parameters<typeof groupArcSections>[0])
+}
+
 const REMARK_PLUGINS = [remarkGfm, remarkDirective, remarkMuted, remarkTab, remarkChip, remarkAccordion]
+// Opt-in variant (flashcard/mock-interview answers, see `arcSections` prop) — same
+// stable module-level array so ReactMarkdown never sees a fresh array identity.
+const REMARK_PLUGINS_ARC = [...REMARK_PLUGINS, remarkArcSections]
 
 // Matches each ```mermaid fence and the figure caption paragraph that follows it.
 // Group 1 = diagram source; group 2 = the first non-blank line after the fence.
@@ -257,6 +400,14 @@ export interface MarkdownContentProps extends WithClassNames<undefined> {
      * cards, chat, flashcards and modals).
      */
     reading?: boolean
+    /**
+     * Boxes each Interview Arc label (`:::muted` / standalone-bold paragraph) together
+     * with its following body into one collapsible `arcsection` — see `map.tsx`.
+     * Opt-in (default off) so lesson/challenge content using the same `:::muted`
+     * shape for unrelated callouts (e.g. "Đầu vào"/"Đầu ra") is unaffected. Only the
+     * flashcard/mock-interview answer (FlipCard back face) turns this on.
+     */
+    arcSections?: boolean
 }
 
 /**
@@ -279,7 +430,7 @@ export interface MarkdownContentProps extends WithClassNames<undefined> {
 const stripClozeMarkers = (markdown: string): string =>
     markdown.replace(/\{\{c\d+::([\s\S]*?)(?:::[\s\S]*?)?\}\}/g, "$1")
 
-export const MarkdownContent = ({ markdown, reading = false, className }: MarkdownContentProps) => {
+export const MarkdownContent = ({ markdown, reading = false, arcSections = false, className }: MarkdownContentProps) => {
     const theme = useTheme()
     const t = useTranslations()
     // hold back an unterminated trailing mermaid fence FIRST — markdown streamed in
@@ -324,7 +475,7 @@ export const MarkdownContent = ({ markdown, reading = false, className }: Markdo
             )}
         >
             <ReactMarkdown
-                remarkPlugins={REMARK_PLUGINS}
+                remarkPlugins={arcSections ? REMARK_PLUGINS_ARC : REMARK_PLUGINS}
                 components={components}
             >
                 {renderedMarkdown}

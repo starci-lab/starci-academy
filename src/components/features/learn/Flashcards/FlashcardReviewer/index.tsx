@@ -454,7 +454,7 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
                                     ) : (
                                         <>
                                             {card?.answer ? (
-                                                <MarkdownContent markdown={card.answer} />
+                                                <MarkdownContent markdown={card.answer} arcSections />
                                             ) : (
                                                 <Typography type="body-sm" color="muted">
                                                     {t("flashcard.noAnswer")}

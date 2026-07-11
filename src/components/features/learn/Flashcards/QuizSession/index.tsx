@@ -1155,7 +1155,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                                     {t("flashcard.answerLabel")}
                                 </Typography>
                                 {card.answer ? (
-                                    <MarkdownContent markdown={card.answer} />
+                                    <MarkdownContent markdown={card.answer} arcSections />
                                 ) : (
                                     <Typography type="body-sm" color="muted">
                                         {t("flashcard.noAnswer")}
@@ -1391,7 +1391,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                                     <Typography type="body-xs" weight="medium" color="muted">
                                         {t("flashcard.answerLabel")}
                                     </Typography>
-                                    <MarkdownContent markdown={card.answer ?? ""} />
+                                    <MarkdownContent markdown={card.answer ?? ""} arcSections />
                                     {card.explanation ? <MarkdownContent markdown={card.explanation} /> : null}
                                 </div>
                             ) : (

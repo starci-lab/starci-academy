@@ -2337,15 +2337,21 @@
     },
     "session": {
       "leave": "Thoát",
+      "backToHub": "Về danh sách Playground",
+      "loadErrorTitle": "Không tải được bài tập",
+      "loadErrorDescription": "Đường truyền hoặc máy chủ đang gặp sự cố — thử lại sau vài giây.",
+      "notFoundTitle": "Không tìm thấy bài tập này",
+      "notFoundDescription": "Bài Playground này có thể chưa được thêm hoặc đã bị đổi tên.",
       "stepCounter": "Bước {current}/{total}",
       "connectAgent": "Kết nối máy thật",
-      "pairingHint": "Nhập mã này vào CLI agent trên máy bạn để kết nối vào phiên này.",
-      "copyPairingCode": "Sao chép mã ghép nối",
+      "pairingHint": "Chạy lệnh này trong terminal trên máy bạn để kết nối vào phiên này:",
+      "pairingRequirement": "Cần Node.js ≥ 18 đã cài sẵn (npx tự tải, không cần cài thường trực).",
+      "copyPairingCode": "Sao chép lệnh kết nối",
       "copied": "Đã sao chép!",
       "agentConnected": "Đã kết nối agent",
       "confirmStep": "Xác nhận đã xong bước này",
       "completeTitle": "Hoàn thành bài tập!",
-      "completeDescription": "Bạn đã hoàn thành mọi bước của playground này.",
+      "completeDescription": "Bạn đã hoàn thành mọi bước của playground này — còn nhiều bài học khác đang chờ trong khóa.",
       "tabsAria": "Tab khu vực làm việc",
       "tabs": {
         "terminal": "Terminal",
@@ -3232,6 +3238,7 @@
   },
   "common": {
     "loading": "Đang tải…",
+    "retry": "Thử lại",
     "tagsMore": "+{count}",
     "tagsMenuAria": "Tất cả thẻ",
     "pagination": {

@@ -23,6 +23,7 @@ import {
 } from "@phosphor-icons/react"
 import { BackLink } from "@/components/blocks/navigation/BackLink"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
+import { ErrorContent } from "@/components/blocks/async/ErrorContent"
 import { EmptyContent } from "@/components/blocks/async/EmptyContent"
 import { ListRow } from "@/components/blocks/lists/ListRow"
 import { IconTile } from "@/components/blocks/identity/IconTile"
@@ -91,7 +92,7 @@ export const PlaygroundSession = () => {
     const slug = String(params.slug ?? "")
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
 
-    const { data: playground, isLoading } = useQueryPlaygroundSwr(slug)
+    const { data: playground, isLoading, error, mutate: refetchPlayground } = useQueryPlaygroundSwr(slug)
     const createSessionMutation = useMutateCreatePlaygroundSessionSwr()
 
     const [sessionId, setSessionId] = useState<string | null>(null)
@@ -126,7 +127,7 @@ export const PlaygroundSession = () => {
         if (!pairingCode) {
             return
         }
-        void navigator.clipboard.writeText(pairingCode)
+        void navigator.clipboard.writeText(`npx @starci/playground-agent ${pairingCode}`)
         setCopied(true)
     }, [pairingCode])
 
@@ -166,12 +167,43 @@ export const PlaygroundSession = () => {
         },
     ]
 
-    if (isLoading || !playground) {
+    if (isLoading) {
         return (
             <div className="flex h-[calc(100vh-4rem)] items-center justify-center">
                 <Typography type="body-sm" color="muted">
                     {t("common.loading")}
                 </Typography>
+            </div>
+        )
+    }
+
+    // network/server error → distinct from "loading" (was falling through to a
+    // stuck loading spinner forever before this fix) — retryable, no dead-end.
+    if (error) {
+        return (
+            <div className="flex h-[calc(100vh-4rem)] items-center justify-center px-6">
+                <ErrorContent
+                    title={t("playground.session.loadErrorTitle")}
+                    description={t("playground.session.loadErrorDescription")}
+                    onRetry={() => void refetchPlayground()}
+                    retryLabel={t("common.retry")}
+                />
+            </div>
+        )
+    }
+
+    // resolved successfully but no such playground (bad slug / not seeded yet)
+    // → not-found, not "loading" — always an onward path, never a dead-end.
+    if (!playground) {
+        return (
+            <div className="flex h-[calc(100vh-4rem)] items-center justify-center px-6">
+                <EmptyContent
+                    icon={<TerminalWindowIcon aria-hidden focusable="false" className="size-8 text-muted" />}
+                    title={t("playground.session.notFoundTitle")}
+                    description={t("playground.session.notFoundDescription")}
+                    onRetry={onLeave}
+                    retryLabel={t("playground.session.backToHub")}
+                />
             </div>
         )
     }
@@ -228,8 +260,12 @@ export const PlaygroundSession = () => {
                                                     {t("playground.session.pairingHint")}
                                                 </Typography>
                                                 <div className="flex items-center gap-2 rounded-2xl bg-default px-4 py-3">
-                                                    <Typography type="h5" weight="bold" className="tracking-widest">
-                                                        {pairingCode}
+                                                    <Typography
+                                                        type="h6"
+                                                        weight="bold"
+                                                        className="min-w-0 flex-1 truncate font-mono"
+                                                    >
+                                                        {`npx @starci/playground-agent ${pairingCode}`}
                                                     </Typography>
                                                     <Button
                                                         isIconOnly
@@ -241,6 +277,9 @@ export const PlaygroundSession = () => {
                                                         <CopyIcon aria-hidden focusable="false" className="size-5" />
                                                     </Button>
                                                 </div>
+                                                <Typography type="body-xs" color="muted">
+                                                    {t("playground.session.pairingRequirement")}
+                                                </Typography>
                                                 {copied ? (
                                                     <Typography type="body-xs" color="muted">
                                                         {t("playground.session.copied")}
@@ -265,6 +304,8 @@ export const PlaygroundSession = () => {
                         <EmptyContent
                             title={t("playground.session.completeTitle")}
                             description={t("playground.session.completeDescription")}
+                            onRetry={onLeave}
+                            retryLabel={t("playground.session.backToHub")}
                         />
                     )}
                 </div>

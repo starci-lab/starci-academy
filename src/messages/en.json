@@ -2328,15 +2328,21 @@
     },
     "session": {
       "leave": "Exit",
+      "backToHub": "Back to Playground list",
+      "loadErrorTitle": "Couldn't load this exercise",
+      "loadErrorDescription": "A network or server issue — try again in a few seconds.",
+      "notFoundTitle": "Exercise not found",
+      "notFoundDescription": "This Playground exercise may not exist yet, or its slug changed.",
       "stepCounter": "Step {current}/{total}",
       "connectAgent": "Connect your machine",
-      "pairingHint": "Enter this code into the local CLI agent to connect it to this session.",
-      "copyPairingCode": "Copy pairing code",
+      "pairingHint": "Run this command in a terminal on your own machine to connect it to this session:",
+      "pairingRequirement": "Requires Node.js ≥ 18 (npx downloads on the fly, no persistent install).",
+      "copyPairingCode": "Copy connect command",
       "copied": "Copied!",
       "agentConnected": "Agent connected",
       "confirmStep": "Confirm this step is done",
       "completeTitle": "Exercise complete!",
-      "completeDescription": "You've finished every step of this playground.",
+      "completeDescription": "You've finished every step of this playground — there's more waiting in the course.",
       "tabsAria": "Workspace tabs",
       "tabs": {
         "terminal": "Terminal",
@@ -3223,6 +3229,7 @@
   },
   "common": {
     "loading": "Loading…",
+    "retry": "Retry",
     "tagsMore": "+{count}",
     "tagsMenuAria": "All tags",
     "pagination": {

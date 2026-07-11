@@ -45,6 +45,14 @@ import { useLeaderboardSwr } from "@/components/features/learn/Leaderboard/useLe
 const DEVOPS_COURSE_DISPLAY_ID = "devops-mastery"
 
 /**
+ * `displayId` of the AI & LLM Mastery course — the RAG Playground now lives
+ * there too (moved from its old standalone public `/rag-playground` route so
+ * all 3 accordion children share the same `learn/playground/<slug>` URL
+ * shape; thầy chốt 2026-07-11), reachable cross-course same as Docker/K8s.
+ */
+const AI_LLM_COURSE_DISPLAY_ID = "ai-llm-mastery"
+
+/**
  * Result of {@link useSidebarNavItems}.
  */
 export interface UseSidebarNavItemsResult {
@@ -94,7 +102,7 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
     // "active" is a plain pathname compare rather than a SidebarTab match.
     const dockerPlaygroundUrl = pathConfig().locale(locale).course(DEVOPS_COURSE_DISPLAY_ID).learn().playground("docker").build()
     const kubernetesPlaygroundUrl = pathConfig().locale(locale).course(DEVOPS_COURSE_DISPLAY_ID).learn().playground("kubernetes").build()
-    const ragPlaygroundUrl = pathConfig().locale(locale).ragPlayground().build()
+    const ragPlaygroundUrl = pathConfig().locale(locale).course(AI_LLM_COURSE_DISPLAY_ID).learn().playground("rag").build()
 
     /** Record the active sidebar tab in Redux (routing is handled in {@link onSelect}). */
     const onSelectSidebarTab = useCallback(

@@ -22,4 +22,14 @@ export enum PublicationEvent {
     AskMockInterviewTurn = "mock_interview.ask.publication",
     /** Abort an in-flight mock-interviewer turn stream (must match backend). */
     AbortMockInterviewTurn = "mock_interview.abort.publication",
+    /**
+     * Join a Playground BYOM session's room (browser side) — must match the
+     * exact event name the BE gateway uses (`browser:subscribe`), NOT the
+     * `<namespace>.<action>.publication` convention used elsewhere in this
+     * enum; the local CLI agent is a separate, non-browser client of the same
+     * gateway and this string is shared with it.
+     */
+    SubscribePlaygroundByom = "browser:subscribe",
+    /** Ask the connected CLI agent to run one command (must match backend). */
+    RunPlaygroundByomCommand = "command:run",
 }

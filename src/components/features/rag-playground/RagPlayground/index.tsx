@@ -5,7 +5,8 @@ import React, {
     useMemo,
     useState,
 } from "react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
 import {
     Button,
     Card,
@@ -23,6 +24,7 @@ import {
     CodeIcon,
     FileArrowUpIcon,
     GithubLogoIcon,
+    GraduationCapIcon,
     PaperPlaneTiltIcon,
     SparkleIcon,
     StackIcon,
@@ -38,6 +40,7 @@ import { useRagPlaygroundRunStreamSocketIo } from "@/hooks/socketio/useRagPlaygr
 import { RagPlaygroundSourceKind } from "@/modules/api/graphql/mutations/types/index-rag-playground"
 import type { RagPlaygroundSourceChunk } from "@/modules/api/graphql/mutations/types/ask-rag-playground"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { pathConfig } from "@/resources/path"
 
 /** One asked-and-(possibly-still-)answering turn in the local Q&A thread. */
 interface PlaygroundTurn {
@@ -68,6 +71,8 @@ export type RagPlaygroundProps = WithClassNames<undefined>
  */
 export const RagPlayground = ({ className }: RagPlaygroundProps) => {
     const t = useTranslations()
+    const locale = useLocale()
+    const router = useRouter()
     const [sessionId] = useState(() =>
         typeof crypto !== "undefined" && crypto.randomUUID
             ? crypto.randomUUID()
@@ -257,6 +262,14 @@ export const RagPlayground = ({ className }: RagPlaygroundProps) => {
 
     const onSeePlayground = () => {
         document.getElementById("playground")?.scrollIntoView({ behavior: "smooth" })
+    }
+
+    // house rule (call-to-action funnel): the demo has to point somewhere — the
+    // AI & LLM Mastery course is the outcome this free local-model demo funnels
+    // toward. ONE primary CTA on the surface (the import CTA above is a distinct
+    // in-page action, not a competing funnel exit).
+    const onSeeCourse = () => {
+        router.push(pathConfig().locale(locale).course("3-ai-llm-mastery").build())
     }
 
     return (
@@ -510,6 +523,23 @@ export const RagPlayground = ({ className }: RagPlaygroundProps) => {
                         </Card>
                     </div>
                 </div>
+
+                {/* closing course-CTA funnel — the demo has to point somewhere */}
+                <Card className="mx-auto w-full max-w-3xl">
+                    <CardContent className="flex flex-col items-center gap-3 py-10 text-center">
+                        <GraduationCapIcon aria-hidden focusable="false" className="size-8 text-accent" />
+                        <Typography type="h6" weight="bold">
+                            {t("ragPlayground.closingCta.title")}
+                        </Typography>
+                        <Typography type="body-sm" color="muted" className="max-w-lg">
+                            {t("ragPlayground.closingCta.description")}
+                        </Typography>
+                        <Button variant="primary" size="lg" onPress={onSeeCourse}>
+                            {t("ragPlayground.closingCta.cta")}
+                            <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
+                        </Button>
+                    </CardContent>
+                </Card>
             </div>
         </div>
     )

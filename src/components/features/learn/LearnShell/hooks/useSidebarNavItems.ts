@@ -8,6 +8,7 @@ import {
     MapPinLineIcon,
     MicrophoneStageIcon,
     StackIcon,
+    TerminalWindowIcon,
     UsersIcon,
 } from "@phosphor-icons/react"
 import {
@@ -31,6 +32,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { SidebarTab, setSidebar } from "@/redux/slices/sidebar"
 import { useQueryCourseEnrollmentStatusSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseEnrollmentStatusSwr"
 import { useQueryMyDueFlashcardsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyDueFlashcardsSwr"
+import { useQueryPlaygroundsSwr } from "@/hooks/swr/api/graphql/queries/useQueryPlaygroundsSwr"
 import { useLeaderboardSwr } from "@/components/features/learn/Leaderboard/useLeaderboardSwr"
 
 /**
@@ -78,6 +80,10 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
     // viewer's course rank → badge on the "Bảng xếp hạng" row (only when ranked)
     const leaderboardSwr = useLeaderboardSwr()
     const myRank = leaderboardSwr.data?.myRank?.rank ?? null
+    // Playground row only shows once this course actually has ≥1 exercise
+    // (Docker/K8s today) — an empty row would be a dead link.
+    const playgroundsSwr = useQueryPlaygroundsSwr()
+    const hasPlaygrounds = (playgroundsSwr.data?.length ?? 0) > 0
 
     /** Record the active sidebar tab in Redux (routing is handled in {@link onSelect}). */
     const onSelectSidebarTab = useCallback(
@@ -89,89 +95,105 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
 
     // build the ordered nav entries, grouped by ROLE (path → practice → track);
     // memoized so rows keep stable identity
-    const items = useMemo<Array<LearnNavItem>>(
-        () => [
+    const items = useMemo(
+        (): Array<LearnNavItem> => {
+            const rows: Array<LearnNavItem | null> = [
             // ── Lộ trình (the mandatory spine: content → capstone) ──
-            {
-                label: t("modules.title", { count: course?.modules?.length ?? 0 }),
-                value: "modules",
-                tab: SidebarTab.Modules,
-                icon: BracketsCurlyIcon,
-                group: "path",
-                // route to the course-contents index (the docs-style "chỉ mục" landing);
-                // selecting a lesson there drills into its module/content route.
-                url: pathConfig().locale(locale).course(courseDisplayId).learn().content().build(),
-            },
-            {
-                label: t("finalProject.title"),
-                value: "personal-project",
-                tab: SidebarTab.PersonalProject,
-                icon: GraduationCapIcon,
-                group: "path",
-                url: pathConfig().locale(locale).course(courseDisplayId).learn().personalProject().build(),
-                locked,
-            },
-            // ── Ôn & luyện (aids orbiting the spine) ──
-            {
-                label: t("flashcard.title"),
-                value: "flashcards",
-                tab: SidebarTab.Flashcards,
-                icon: CardsIcon,
-                group: "practice",
-                url: pathConfig().locale(locale).course(courseDisplayId).learn().flashcards().build(),
-                // due-card nudge — only when there's something to review
-                badge: dueCount > 0 ? { tone: "due", value: dueCount } : undefined,
-            },
-            {
-                label: t("mockInterview.navLabel"),
-                value: "mock-interview",
-                tab: SidebarTab.MockInterview,
-                icon: MicrophoneStageIcon,
-                group: "practice",
-                url: pathConfig().locale(locale).course(courseDisplayId).learn().mockInterview().build(),
-                // enrolled-only (spends AI credits) — mirror the personal-project lock
-                locked,
-            },
-            {
-                label: t("foundations.title"),
-                value: "foundations",
-                tab: SidebarTab.Foundations,
-                icon: StackIcon,
-                group: "practice",
-                url: pathConfig().locale(locale).course(courseDisplayId).learn().foundations().build(),
-            },
-            // ── Theo dõi (orientation + motivation) ──
-            {
-                label: t("mindMap.title"),
-                value: "mind-map",
-                tab: SidebarTab.MindMap,
-                icon: MapPinLineIcon,
-                group: "track",
-                url: pathConfig().locale(locale).course(courseDisplayId).learn().mindMap().build(),
-            },
-            {
-                label: t("leaderboard.title"),
-                value: "leaderboard",
-                tab: SidebarTab.Leaderboard,
-                icon: UsersIcon,
-                group: "track",
-                url: pathConfig().locale(locale).course(courseDisplayId).learn().leaderboard().build(),
-                // rank nudge — only when the viewer is ranked on this course
-                badge: myRank !== null ? { tone: "rank", value: myRank } : undefined,
-            },
-            {
-                label: t("courseQa.navLabel"),
-                value: "qa",
-                tab: SidebarTab.CourseQa,
-                icon: ChatsCircleIcon,
-                group: "track",
-                url: pathConfig().locale(locale).course(courseDisplayId).learn().qa().build(),
-            },
-        ],
+                {
+                    label: t("modules.title", { count: course?.modules?.length ?? 0 }),
+                    value: "modules",
+                    tab: SidebarTab.Modules,
+                    icon: BracketsCurlyIcon,
+                    group: "path",
+                    // route to the course-contents index (the docs-style "chỉ mục" landing);
+                    // selecting a lesson there drills into its module/content route.
+                    url: pathConfig().locale(locale).course(courseDisplayId).learn().content().build(),
+                },
+                {
+                    label: t("finalProject.title"),
+                    value: "personal-project",
+                    tab: SidebarTab.PersonalProject,
+                    icon: GraduationCapIcon,
+                    group: "path",
+                    url: pathConfig().locale(locale).course(courseDisplayId).learn().personalProject().build(),
+                    locked,
+                },
+                // ── Ôn & luyện (aids orbiting the spine) ──
+                {
+                    label: t("flashcard.title"),
+                    value: "flashcards",
+                    tab: SidebarTab.Flashcards,
+                    icon: CardsIcon,
+                    group: "practice",
+                    url: pathConfig().locale(locale).course(courseDisplayId).learn().flashcards().build(),
+                    // due-card nudge — only when there's something to review
+                    badge: dueCount > 0 ? { tone: "due", value: dueCount } : undefined,
+                },
+                {
+                    label: t("mockInterview.navLabel"),
+                    value: "mock-interview",
+                    tab: SidebarTab.MockInterview,
+                    icon: MicrophoneStageIcon,
+                    group: "practice",
+                    url: pathConfig().locale(locale).course(courseDisplayId).learn().mockInterview().build(),
+                    // enrolled-only (spends AI credits) — mirror the personal-project lock
+                    locked,
+                },
+                {
+                    label: t("foundations.title"),
+                    value: "foundations",
+                    tab: SidebarTab.Foundations,
+                    icon: StackIcon,
+                    group: "practice",
+                    url: pathConfig().locale(locale).course(courseDisplayId).learn().foundations().build(),
+                },
+                // Playground row: only when this course actually has ≥1 exercise
+                // (an empty row would be a dead link) — filtered out below.
+                hasPlaygrounds
+                    ? {
+                        label: t("playground.navLabel"),
+                        value: "playground",
+                        tab: SidebarTab.Playground,
+                        icon: TerminalWindowIcon,
+                        group: "practice",
+                        url: pathConfig().locale(locale).course(courseDisplayId).learn().playground().build(),
+                    }
+                    : null,
+                // ── Theo dõi (orientation + motivation) ──
+                {
+                    label: t("mindMap.title"),
+                    value: "mind-map",
+                    tab: SidebarTab.MindMap,
+                    icon: MapPinLineIcon,
+                    group: "track",
+                    url: pathConfig().locale(locale).course(courseDisplayId).learn().mindMap().build(),
+                },
+                {
+                    label: t("leaderboard.title"),
+                    value: "leaderboard",
+                    tab: SidebarTab.Leaderboard,
+                    icon: UsersIcon,
+                    group: "track",
+                    url: pathConfig().locale(locale).course(courseDisplayId).learn().leaderboard().build(),
+                    // rank nudge — only when the viewer is ranked on this course
+                    badge: myRank !== null ? { tone: "rank", value: myRank } : undefined,
+                },
+                {
+                    label: t("courseQa.navLabel"),
+                    value: "qa",
+                    tab: SidebarTab.CourseQa,
+                    icon: ChatsCircleIcon,
+                    group: "track",
+                    url: pathConfig().locale(locale).course(courseDisplayId).learn().qa().build(),
+                },
+            ]
+            return rows.filter((item): item is LearnNavItem => item !== null)
+        },
         [
             course?.modules?.length,
             courseDisplayId,
             dueCount,
+            hasPlaygrounds,
             locale,
             locked,
             myRank,

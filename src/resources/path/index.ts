@@ -418,6 +418,20 @@ export const pathConfig = () => {
                         build,
                     }
                 }
+                const playground = (slug?: string) => {
+                    // in-course hands-on Docker/K8s exercises: a hub list (`/playground`)
+                    // and one exercise's live work surface (`/playground/<slug>`), the
+                    // browser end of a local CLI agent relayed over Socket.IO.
+                    const playgroundPath = slug
+                        ? `${learnPath}/playground/${slug}`
+                        : `${learnPath}/playground`
+                    const build = () => {
+                        return playgroundPath
+                    }
+                    return {
+                        build,
+                    }
+                }
                 const foundations = (categoryId?: string) => {
                     const foundationsPath = categoryId
                         ? `${learnPath}/foundations/${categoryId}`
@@ -474,6 +488,7 @@ export const pathConfig = () => {
                     flashcards,
                     mockInterview,
                     practice,
+                    playground,
                     foundations,
                     module,
                 }

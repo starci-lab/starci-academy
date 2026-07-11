@@ -2320,6 +2320,50 @@
       "cao": "Kỹ sư chủ chốt"
     }
   },
+  "playground": {
+    "navLabel": "Playground",
+    "hub": {
+      "title": "Playground",
+      "subtitle": "Bài tập thực hành Docker/Kubernetes — chạy lệnh thật trên máy của bạn, có hướng dẫn từng bước.",
+      "cta": "Vào playground",
+      "stepCount": "{count} bước",
+      "emptyTitle": "Chưa có bài tập nào",
+      "emptyDescription": "Khóa học này chưa có bài Playground thực hành nào — quay lại sau nhé."
+    },
+    "session": {
+      "leave": "Thoát",
+      "stepCounter": "Bước {current}/{total}",
+      "connectAgent": "Kết nối máy thật",
+      "pairingHint": "Nhập mã này vào CLI agent trên máy bạn để kết nối vào phiên này.",
+      "copyPairingCode": "Sao chép mã ghép nối",
+      "copied": "Đã sao chép!",
+      "agentConnected": "Đã kết nối agent",
+      "confirmStep": "Xác nhận đã xong bước này",
+      "completeTitle": "Hoàn thành bài tập!",
+      "completeDescription": "Bạn đã hoàn thành mọi bước của playground này.",
+      "tabsAria": "Tab khu vực làm việc",
+      "tabs": {
+        "terminal": "Terminal",
+        "resources": "Tài nguyên ({count})"
+      },
+      "terminalEmptyTitle": "Chưa có kết quả nào",
+      "terminalEmptyDescription": "Kết nối máy của bạn và chạy lệnh của bước này để xem kết quả tại đây.",
+      "resourcesEmptyTitle": "Chưa có tài nguyên nào",
+      "resourcesEmptyDescription": "Pod, container, network và service mà agent báo cáo sẽ hiện ở đây.",
+      "resourceKind": {
+        "pod": "Pod",
+        "container": "Container",
+        "network": "Network",
+        "service": "Service"
+      },
+      "resourceStatus": {
+        "running": "Đang chạy",
+        "pending": "Đang chờ",
+        "stopped": "Đã dừng",
+        "error": "Lỗi"
+      }
+    }
+  },
   "jobReadiness": {
     "title": "Sẵn sàng đi làm",
     "subtitle": "Điểm tổng hợp từ CV, độ mạnh giải thử thách, và năng lực theo từng khóa — mọi chỉ số do AI chấm.",
@@ -4179,6 +4223,11 @@
       "stop": "Dừng",
       "send": "Gửi câu hỏi",
       "genericError": "AI hiện không trả lời được, thử lại sau."
+    },
+    "closingCta": {
+      "title": "Thích những gì stack RAG tự host này làm được?",
+      "description": "Khóa AI & LLM Mastery dạy bạn dựng chính pipeline này — chia nhỏ văn bản, nhúng vector, truy hồi, và model tự host — từ đầu.",
+      "cta": "Khám phá khóa học"
     }
   },
   "architecture": {

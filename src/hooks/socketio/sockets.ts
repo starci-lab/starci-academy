@@ -48,3 +48,15 @@ const ragPlaygroundManager = createManager()
  * (anonymous marketing demo, local self-hosted model).
  */
 export const ragPlaygroundSocket: Socket = ragPlaygroundManager.socket("/rag_playground")
+
+const playgroundByomManager = createManager()
+/**
+ * The `/playground_byom` namespace socket — relays "bring your own machine"
+ * command/output/resource traffic between the browser and the learner's local
+ * CLI agent for the course-scoped hands-on Docker/K8s Playground. UNAUTHENTICATED
+ * on the gateway (the CLI agent has no Keycloak session — gated by a short-lived
+ * pairing code instead of a JWT, see `PlaygroundByomGateway` on the backend); the
+ * browser side may still attach the usual bearer token via {@link createManager},
+ * the gateway simply ignores it.
+ */
+export const playgroundByomSocket: Socket = playgroundByomManager.socket("/playground_byom")

@@ -84,6 +84,11 @@ const Layout = ({ children }: PropsWithChildren) => {
     // for the same route too.
     const isMockInterviewInterviewRoute = isMockInterview && segments[1] === "interview"
     const isMockInterviewLive = isMockInterviewInterviewRoute || (isMockInterview && searchParams.get("phase") === "interview")
+    // a single playground exercise (`…/playground/<slug>`) is a full-bleed work
+    // surface (step guide + terminal/resources tabs), same reasoning as the live
+    // mock-interview route — the hub list (`…/playground`, no 2nd segment) stays
+    // in the normal reading column.
+    const isPlaygroundSession = segments[0] === "playground" && Boolean(segments[1])
     // the leaderboard shows its XP-category selector as a sidebar (like the content
     // page) on the LEFT; the board reads the selection from the `?category=` URL param.
     const isLeaderboard = segments[0] === "leaderboard"
@@ -179,7 +184,7 @@ const Layout = ({ children }: PropsWithChildren) => {
             <LearnShell
                 leftRail={showSurface ? leftRail : undefined}
                 rightRail={showSurface ? rightRail : undefined}
-                fullBleed={isMindMap || isMockInterviewLive}
+                fullBleed={isMindMap || isMockInterviewLive || isPlaygroundSession}
                 simpleMobileBar={isLeaderboard || isFlashcards}
             >
                 {content}

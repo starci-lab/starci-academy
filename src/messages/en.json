@@ -2311,6 +2311,50 @@
       "cao": "Staff engineer"
     }
   },
+  "playground": {
+    "navLabel": "Playground",
+    "hub": {
+      "title": "Playground",
+      "subtitle": "Hands-on Docker/Kubernetes exercises — run real commands on your own machine, guided step by step.",
+      "cta": "Enter playground",
+      "stepCount": "{count} steps",
+      "emptyTitle": "No exercises yet",
+      "emptyDescription": "This course has no hands-on Playground exercises published yet — check back soon."
+    },
+    "session": {
+      "leave": "Exit",
+      "stepCounter": "Step {current}/{total}",
+      "connectAgent": "Connect your machine",
+      "pairingHint": "Enter this code into the local CLI agent to connect it to this session.",
+      "copyPairingCode": "Copy pairing code",
+      "copied": "Copied!",
+      "agentConnected": "Agent connected",
+      "confirmStep": "Confirm this step is done",
+      "completeTitle": "Exercise complete!",
+      "completeDescription": "You've finished every step of this playground.",
+      "tabsAria": "Workspace tabs",
+      "tabs": {
+        "terminal": "Terminal",
+        "resources": "Resources ({count})"
+      },
+      "terminalEmptyTitle": "No output yet",
+      "terminalEmptyDescription": "Connect your machine and run the step's command to see output here.",
+      "resourcesEmptyTitle": "No resources yet",
+      "resourcesEmptyDescription": "Pods, containers, networks, and services your agent reports will show up here.",
+      "resourceKind": {
+        "pod": "Pod",
+        "container": "Container",
+        "network": "Network",
+        "service": "Service"
+      },
+      "resourceStatus": {
+        "running": "Running",
+        "pending": "Pending",
+        "stopped": "Stopped",
+        "error": "Error"
+      }
+    }
+  },
   "jobReadiness": {
     "title": "Job readiness",
     "subtitle": "A composite of your CV, challenge strength, and per-course competency — every metric AI-graded.",
@@ -4179,6 +4223,11 @@
       "stop": "Stop",
       "send": "Send question",
       "genericError": "The AI could not answer right now — try again later."
+    },
+    "closingCta": {
+      "title": "Like what a self-hosted RAG stack can do?",
+      "description": "The AI & LLM Mastery course teaches you to build this exact pipeline — chunking, embeddings, retrieval, and a self-hosted model — from scratch.",
+      "cta": "Explore the course"
     }
   },
   "architecture": {

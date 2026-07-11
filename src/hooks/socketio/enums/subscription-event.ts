@@ -25,4 +25,15 @@ export enum SubscriptionEvent {
     RagPlaygroundRunChunk = "rag_playground.run_chunk.subscription",
     /** A streamed token chunk for the mock interviewer's next turn (must match backend). */
     MockInterviewChunk = "mock_interview.chunk.subscription",
+    /**
+     * A command's output line from the connected CLI agent (must match backend
+     * gateway string `command:output`, NOT the dotted convention above — shared
+     * with the non-browser CLI-agent client of the same `/playground-byom`
+     * namespace).
+     */
+    PlaygroundByomCommandOutput = "command:output",
+    /** A live Pod/Container/Network/Service resource snapshot (must match backend). */
+    PlaygroundByomResourcesReport = "resources:report",
+    /** The current step was verified as complete (must match backend). */
+    PlaygroundByomStepVerified = "step:verified",
 }

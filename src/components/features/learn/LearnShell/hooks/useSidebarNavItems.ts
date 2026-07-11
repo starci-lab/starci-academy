@@ -20,6 +20,7 @@ import {
     useTranslations,
 } from "next-intl"
 import {
+    usePathname,
     useRouter,
 } from "next/navigation"
 import {
@@ -32,8 +33,16 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { SidebarTab, setSidebar } from "@/redux/slices/sidebar"
 import { useQueryCourseEnrollmentStatusSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseEnrollmentStatusSwr"
 import { useQueryMyDueFlashcardsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyDueFlashcardsSwr"
-import { useQueryPlaygroundsSwr } from "@/hooks/swr/api/graphql/queries/useQueryPlaygroundsSwr"
 import { useLeaderboardSwr } from "@/components/features/learn/Leaderboard/useLeaderboardSwr"
+
+/**
+ * `displayId` of the DevOps Mastery course — the Docker/Kubernetes Playground
+ * exercises live there regardless of which course the sidebar is currently
+ * rendering for (Playground is a cross-course perk, unlocked by enrolling in
+ * ANY course — see `hasAnyActiveEnrollment`), so the accordion's Docker/K8s
+ * children always deep-link into this specific course's learn routes.
+ */
+const DEVOPS_COURSE_DISPLAY_ID = "devops-mastery"
 
 /**
  * Result of {@link useSidebarNavItems}.
@@ -59,6 +68,7 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
+    const pathname = usePathname()
     const dispatch = useAppDispatch()
     // course catalog drives the module-count label on the "modules" row
     const course = useAppSelector((state) => state.course.entity)
@@ -80,10 +90,11 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
     // viewer's course rank → badge on the "Bảng xếp hạng" row (only when ranked)
     const leaderboardSwr = useLeaderboardSwr()
     const myRank = leaderboardSwr.data?.myRank?.rank ?? null
-    // Playground row only shows once this course actually has ≥1 exercise
-    // (Docker/K8s today) — an empty row would be a dead link.
-    const playgroundsSwr = useQueryPlaygroundsSwr()
-    const hasPlaygrounds = (playgroundsSwr.data?.length ?? 0) > 0
+    // Playground accordion children (Docker/Kubernetes/RAG) — fixed URLs, so
+    // "active" is a plain pathname compare rather than a SidebarTab match.
+    const dockerPlaygroundUrl = pathConfig().locale(locale).course(DEVOPS_COURSE_DISPLAY_ID).learn().playground("docker").build()
+    const kubernetesPlaygroundUrl = pathConfig().locale(locale).course(DEVOPS_COURSE_DISPLAY_ID).learn().playground("kubernetes").build()
+    const ragPlaygroundUrl = pathConfig().locale(locale).ragPlayground().build()
 
     /** Record the active sidebar tab in Redux (routing is handled in {@link onSelect}). */
     const onSelectSidebarTab = useCallback(
@@ -147,18 +158,34 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
                     group: "practice",
                     url: pathConfig().locale(locale).course(courseDisplayId).learn().foundations().build(),
                 },
-                // Playground row: only when this course actually has ≥1 exercise
-                // (an empty row would be a dead link) — filtered out below.
-                hasPlaygrounds
-                    ? {
-                        label: t("playground.navLabel"),
-                        value: "playground",
-                        tab: SidebarTab.Playground,
-                        icon: TerminalWindowIcon,
-                        group: "practice",
-                        url: pathConfig().locale(locale).course(courseDisplayId).learn().playground().build(),
-                    }
-                    : null,
+                {
+                    label: t("playground.navLabel"),
+                    value: "playground",
+                    tab: SidebarTab.Playground,
+                    icon: TerminalWindowIcon,
+                    group: "practice",
+                    // expands in place — no url of its own, see `children`
+                    children: [
+                        {
+                            value: "playground-docker",
+                            label: t("playground.navChildDocker"),
+                            url: dockerPlaygroundUrl,
+                            isActive: pathname === dockerPlaygroundUrl,
+                        },
+                        {
+                            value: "playground-kubernetes",
+                            label: t("playground.navChildKubernetes"),
+                            url: kubernetesPlaygroundUrl,
+                            isActive: pathname === kubernetesPlaygroundUrl,
+                        },
+                        {
+                            value: "playground-rag",
+                            label: t("playground.navChildRag"),
+                            url: ragPlaygroundUrl,
+                            isActive: pathname === ragPlaygroundUrl,
+                        },
+                    ],
+                },
                 // ── Theo dõi (orientation + motivation) ──
                 {
                     label: t("mindMap.title"),
@@ -193,10 +220,13 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
             course?.modules?.length,
             courseDisplayId,
             dueCount,
-            hasPlaygrounds,
+            dockerPlaygroundUrl,
+            kubernetesPlaygroundUrl,
             locale,
             locked,
             myRank,
+            pathname,
+            ragPlaygroundUrl,
             t,
         ],
     )

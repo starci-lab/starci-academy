@@ -2324,6 +2324,9 @@
   },
   "playground": {
     "navLabel": "Playground",
+    "navChildDocker": "Docker",
+    "navChildKubernetes": "Kubernetes",
+    "navChildRag": "RAG",
     "hub": {
       "title": "Playground",
       "subtitle": "Bài tập thực hành Docker/Kubernetes — chạy lệnh thật trên máy của bạn, có hướng dẫn từng bước.",

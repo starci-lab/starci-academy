@@ -2315,6 +2315,9 @@
   },
   "playground": {
     "navLabel": "Playground",
+    "navChildDocker": "Docker",
+    "navChildKubernetes": "Kubernetes",
+    "navChildRag": "RAG",
     "hub": {
       "title": "Playground",
       "subtitle": "Hands-on Docker/Kubernetes exercises — run real commands on your own machine, guided step by step.",

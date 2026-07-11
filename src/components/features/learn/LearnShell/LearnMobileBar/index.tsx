@@ -7,13 +7,14 @@ import {
 import React, { useEffect, useState } from "react"
 import { Button, cn, Drawer, ScrollShadow } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { useSelectedLayoutSegments } from "next/navigation"
+import { useRouter, useSelectedLayoutSegments } from "next/navigation"
 import { ContentMap } from "@/components/features/learn/ContentMap"
 import {
     useSidebarNavItems,
 } from "../hooks/useSidebarNavItems"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { SidebarNavItem } from "@/components/blocks/navigation/SidebarNavItem"
+import { SidebarNavAccordionGroup } from "@/components/blocks/navigation/SidebarNavAccordionGroup"
 
 /** Props for {@link LearnMobileBar}. */
 export type LearnMobileBarProps = WithClassNames<undefined>
@@ -30,6 +31,7 @@ export type LearnMobileBarProps = WithClassNames<undefined>
  */
 export const LearnMobileBar = ({ className }: LearnMobileBarProps) => {
     const t = useTranslations()
+    const router = useRouter()
     // shared course-nav entries (same list the desktop sidebar renders)
     const { items, selectedTab, onSelect } = useSidebarNavItems()
     // the module-outline (ContentMap) drawer only makes sense on the content reader
@@ -81,13 +83,30 @@ export const LearnMobileBar = ({ className }: LearnMobileBarProps) => {
                             <Drawer.Body className="p-3">
                                 <div className="flex flex-col gap-3">
                                     {items.map((item) => (
-                                        <SidebarNavItem
-                                            key={item.value}
-                                            icon={<item.icon className="size-5 shrink-0" />}
-                                            label={item.label}
-                                            isActive={selectedTab === item.tab}
-                                            onPress={() => onSelect(item)}
-                                        />
+                                        item.children ? (
+                                            <SidebarNavAccordionGroup
+                                                key={item.value}
+                                                icon={item.icon}
+                                                label={item.label}
+                                                items={item.children.map((child) => ({
+                                                    value: child.value,
+                                                    label: child.label,
+                                                    isActive: child.isActive,
+                                                    onPress: () => {
+                                                        setMenuOpen(false)
+                                                        router.push(child.url)
+                                                    },
+                                                }))}
+                                            />
+                                        ) : (
+                                            <SidebarNavItem
+                                                key={item.value}
+                                                icon={<item.icon className="size-5 shrink-0" />}
+                                                label={item.label}
+                                                isActive={selectedTab === item.tab}
+                                                onPress={() => onSelect(item)}
+                                            />
+                                        )
                                     ))}
                                 </div>
                             </Drawer.Body>

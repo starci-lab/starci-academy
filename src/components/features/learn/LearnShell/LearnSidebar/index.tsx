@@ -12,6 +12,9 @@ import {
     LockSimpleIcon,
 } from "@phosphor-icons/react"
 import {
+    useRouter,
+} from "next/navigation"
+import {
     useSidebarNavItems,
 } from "../hooks/useSidebarNavItems"
 import type {
@@ -25,6 +28,7 @@ import type {
 import { CollapsibleSidebar } from "@/components/blocks/navigation/CollapsibleSidebar"
 import { SidebarNavGroup } from "@/components/blocks/navigation/SidebarNavGroup"
 import { SidebarNavItem } from "@/components/blocks/navigation/SidebarNavItem"
+import { SidebarNavAccordionGroup } from "@/components/blocks/navigation/SidebarNavAccordionGroup"
 
 /** localStorage key persisting the learn course-nav collapsed flag. */
 const SIDEBAR_STORAGE_KEY = "starci.learn.sidebar.collapsed"
@@ -76,6 +80,7 @@ export type LearnSidebarProps = WithClassNames<undefined>
  */
 export const LearnSidebar = ({ className }: LearnSidebarProps) => {
     const t = useTranslations()
+    const router = useRouter()
     // shared entries + active tab (also used by the mobile drawer)
     const { items, selectedTab, onSelect } = useSidebarNavItems()
     // role-group captions (sentence case — no uppercase)
@@ -103,20 +108,34 @@ export const LearnSidebar = ({ className }: LearnSidebarProps) => {
                     // first cluster has no divider; later clusters get the full-width separator
                     <SidebarNavGroup key={group} divider={index > 0} label={groupLabels[group]}>
                         {groupItems.map((item) => (
-                            <SidebarNavItem
-                                key={item.value}
-                                icon={<item.icon className="size-5 shrink-0" />}
-                                label={item.label}
-                                isActive={selectedTab === item.tab}
-                                endContent={item.locked ? (
-                                    <LockSimpleIcon
-                                        aria-label={t("enrollGate.locked")}
-                                        focusable="false"
-                                        className="size-4 text-muted"
-                                    />
-                                ) : item.badge ? renderBadge(item.badge) : undefined}
-                                onPress={() => onSelect(item)}
-                            />
+                            item.children ? (
+                                <SidebarNavAccordionGroup
+                                    key={item.value}
+                                    icon={item.icon}
+                                    label={item.label}
+                                    items={item.children.map((child) => ({
+                                        value: child.value,
+                                        label: child.label,
+                                        isActive: child.isActive,
+                                        onPress: () => router.push(child.url),
+                                    }))}
+                                />
+                            ) : (
+                                <SidebarNavItem
+                                    key={item.value}
+                                    icon={<item.icon className="size-5 shrink-0" />}
+                                    label={item.label}
+                                    isActive={selectedTab === item.tab}
+                                    endContent={item.locked ? (
+                                        <LockSimpleIcon
+                                            aria-label={t("enrollGate.locked")}
+                                            focusable="false"
+                                            className="size-4 text-muted"
+                                        />
+                                    ) : item.badge ? renderBadge(item.badge) : undefined}
+                                    onPress={() => onSelect(item)}
+                                />
+                            )
                         ))}
                     </SidebarNavGroup>
                 )

@@ -2092,7 +2092,7 @@
       "readinessUnlockedDescription": "Độ thuộc của bạn đã đạt ngưỡng — thử buổi phỏng vấn được AI chấm điểm thật xem sao.",
       "readinessUnlockedCta": "Vào AI Mock Interview",
       "resumeTitle": "Hỏi nhanh dở dang",
-      "resumeSubtitle": "Câu {current}/{total}",
+      "resumeSubtitle": "Câu {current}/{total} · còn {minutes} phút",
       "resumeCta": "Tiếp tục",
       "resumeFailed": "Không thể tiếp tục phiên này — có thể đã hết hạn. Bắt đầu phiên mới bên dưới.",
       "setupTabBegin": "Bắt đầu",

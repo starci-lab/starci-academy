@@ -2083,7 +2083,7 @@
       "readinessUnlockedDescription": "Your mastery has hit the bar — try a real AI-graded mock interview session.",
       "readinessUnlockedCta": "Open AI Mock Interview",
       "resumeTitle": "Quick quiz in progress",
-      "resumeSubtitle": "Question {current}/{total}",
+      "resumeSubtitle": "Question {current}/{total} · {minutes} min left",
       "resumeCta": "Continue",
       "resumeFailed": "Couldn't resume that session — it may have expired. Start a new one below.",
       "setupTabBegin": "Start",

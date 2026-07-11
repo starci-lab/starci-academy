@@ -279,6 +279,10 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
     // `deadlineAt` contract as Mock Interview's own HUD (never a local clock start).
     const [deadlineAt, setDeadlineAt] = useState<string | null>(null)
     const [remainingSeconds, setRemainingSeconds] = useState<number | null>(null)
+    // dummy tick to force the setup screen's resume-card "còn N phút" to recompute
+    // every 30s while it's on screen — same idiom as MockInterviewSession's own
+    // `resumeCountdownTick` (the minutes value itself is computed inline in render).
+    const [, setResumeCountdownTick] = useState(0)
 
     // the setup screen's mode picker drives this pre-build; once cards are actually
     // drawn (fresh OR resumed), the real count wins — a resumed run's card count
@@ -469,6 +473,17 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
         const id = window.setInterval(tick, 1000)
         return () => window.clearInterval(id)
     }, [phase, deadlineAt])
+
+    // resume-card countdown (setup screen) — coarse 30s tick, only while there's
+    // an actual resumable session to show a deadline for. Mirrors
+    // MockInterviewSession's own resume-card countdown idiom.
+    useEffect(() => {
+        if (phase !== "setup" || !inProgressSessionSwr.data) {
+            return
+        }
+        const id = window.setInterval(() => setResumeCountdownTick((previous) => previous + 1), 30_000)
+        return () => window.clearInterval(id)
+    }, [phase, inProgressSessionSwr.data])
 
     const card = sessionCards[index]
 
@@ -737,19 +752,33 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                     straight back into it via the dedicated `.../quiz/[sessionId]` route,
                     ABOVE the ordinary setup zones. Demotes Zone 3's CTA to secondary below
                     so this reads as the screen's primary action while it's shown. */}
-                        {resumeData ? (
-                            <ContinueCard
-                                title={t("flashcard.quiz.resumeTitle")}
-                                subtitle={t("flashcard.quiz.resumeSubtitle", {
-                                    current: resumeData.currentIndex + 1,
-                                    total: resumeData.cardIds.length,
-                                })}
-                                value={resumeData.currentIndex}
-                                max={resumeData.cardIds.length}
-                                ctaLabel={t("flashcard.quiz.resumeCta")}
-                                href={learnPath.flashcards().quiz(resumeData.sessionId).build()}
-                            />
-                        ) : null}
+                        {resumeData ? (() => {
+                            // "session time limit" — HONEST urgency: minutes left derived from
+                            // the SAME server `deadlineAt` the live run enforces (never a made-up
+                            // countdown), same idiom as MockInterviewSession's own resume card.
+                            // The resume QUERY already hard-filters `createdAt >= now - duration`
+                            // (lazy-expiry, no cron), so an expired session simply never reaches
+                            // here — no "hết giờ" branch needed, unlike mock-interview's 2-gate resume.
+                            const resumeRemainingMinutes = Math.max(
+                                0,
+                                Math.ceil((new Date(resumeData.deadlineAt).getTime() - Date.now()) / 60_000),
+                            )
+                            return (
+                                <ContinueCard
+                                    title={t("flashcard.quiz.resumeTitle")}
+                                    subtitle={t("flashcard.quiz.resumeSubtitle", {
+                                        current: resumeData.currentIndex + 1,
+                                        total: resumeData.cardIds.length,
+                                        minutes: resumeRemainingMinutes,
+                                    })}
+                                    urgent={resumeRemainingMinutes <= 15}
+                                    value={resumeData.currentIndex}
+                                    max={resumeData.cardIds.length}
+                                    ctaLabel={t("flashcard.quiz.resumeCta")}
+                                    href={learnPath.flashcards().quiz(resumeData.sessionId).build()}
+                                />
+                            )
+                        })() : null}
 
                         {resumeError ? (
                             <Callout status="danger" title={resumeError} />

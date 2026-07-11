@@ -336,13 +336,17 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
     return (
         <AsyncContent
             // no `sessionId` prop = the resolve-only shim (bare `.../decks/[deckId]`
-            // route) — ALWAYS the skeleton, never the live UI; it `router.replace`s
-            // into the sessioned URL as soon as resolving lands (effect above).
+            // route) — ALWAYS the skeleton, never error/empty/live UI; it
+            // `router.replace`s into the sessioned URL as soon as resolving lands
+            // (effect above). `AsyncContent` checks `error` BEFORE `isLoading`
+            // (bug fixed 2026-07-11: gate `error`/`isEmpty` on `sessionId` too, not
+            // just `isLoading` — a genuine deck-query error used to leak through
+            // as "chưa có Flashcards" on the shim even while still resolving).
             isLoading={!sessionId || ((isLoading || !data) && cards.length === 0)}
             skeleton={<FlashcardReviewerSkeleton />}
-            isEmpty={cards.length === 0}
+            isEmpty={Boolean(sessionId) && cards.length === 0}
             emptyContent={{ title: t("flashcard.empty") }}
-            error={cards.length === 0 ? error : undefined}
+            error={sessionId && cards.length === 0 ? error : undefined}
             errorContent={{
                 title: t("flashcard.empty"),
                 onRetry: () => { void mutate() },

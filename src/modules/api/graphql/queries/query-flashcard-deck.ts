@@ -28,15 +28,6 @@ const query1 = gql`
           defaultLocale
           isPremium
         }
-        contents {
-          id
-          displayId
-          title
-          module {
-            id
-            displayId
-          }
-        }
         modules {
           id
           displayId

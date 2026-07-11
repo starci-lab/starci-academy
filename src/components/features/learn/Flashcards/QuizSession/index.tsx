@@ -287,11 +287,28 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
     // screen's current (unrelated) selection.
     const sessionLength = sessionCards.length > 0 ? sessionCards.length : MODE_LENGTH[mode]
 
-    // SM-2 grade buttons, localized for the rating bar
-    const ratingOptions = useMemo(
-        () => SM2_GRADES.map((grade) => ({ grade: grade.grade, label: t(grade.labelKey) })),
-        [t],
-    )
+    const card = sessionCards[index]
+
+    // SM-2 grade buttons for the current card: localized label + next-interval
+    // preview ("4 days") computed server-side from the card's current state
+    const ratingOptions = useMemo(() => {
+        const intervals = card?.nextIntervals
+        // map a grade to its previewed next-interval in days
+        const daysForGrade = (grade: number): number | undefined => {
+            if (!intervals) {
+                return undefined
+            }
+            return [intervals.again, intervals.hard, intervals.good, intervals.easy][grade]
+        }
+        return SM2_GRADES.map((grade) => {
+            const days = daysForGrade(grade.grade)
+            return {
+                grade: grade.grade,
+                label: t(grade.labelKey),
+                hint: days === undefined ? undefined : t("flashcard.review.intervalDays", { count: days }),
+            }
+        })
+    }, [t, card])
 
     // fetch the full cards of every deck (self-grading needs a model answer to compare
     // against). Each deck is fetched independently (allSettled) so ONE deck failing
@@ -480,8 +497,6 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
         const id = window.setInterval(() => setResumeCountdownTick((previous) => previous + 1), 30_000)
         return () => window.clearInterval(id)
     }, [phase, inProgressSessionSwr.data])
-
-    const card = sessionCards[index]
 
     // mirror the setup tab into the URL (`?tab=history` / `?tab=stats`) — same technique
     // as MockInterviewSession's own setupTab mirror, so "Lịch sử"/"Thống kê" are

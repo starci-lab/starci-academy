@@ -20,8 +20,7 @@ import { useLocale, useTranslations } from "next-intl"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { SM2_GRADES } from "../constants"
-import { parseAnswerKeywords } from "./parse-answer-keywords"
-import { buildCloze, type ClozeQuestion } from "./build-cloze"
+import { buildCloze, extractMarkerTerms, type ClozeQuestion } from "./build-cloze"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { mutateReviewFlashcard } from "@/modules/api/graphql/mutations/mutation-review-flashcard"
 import { queryFlashcardDecksByCourse } from "@/modules/api/graphql/queries/query-flashcard-decks-by-course"
@@ -121,8 +120,13 @@ const CLOZE_CHIP_TRANSITION = { type: "spring", stiffness: 500, damping: 32 } as
 
 /** A card drawn into a session, carrying the fields the quiz needs. */
 interface QuizCard extends FlashcardCardEntity {
-    /** Key terms parsed from the answer (empty when the card has no chip block). */
+    /** Key terms — union of the card's `:::chip` list and its own cloze marker
+     *  terms (a term already marked `{{cN::term}}` never needs retyping into
+     *  the chip block). Empty only when the card has neither. */
     keywords: Array<string>
+    /** Owning deck id — the source deck of the per-deck fetch in {@link fetchCardPool},
+     *  not a GraphQL field. Drives the same-deck distractor tier. */
+    deckId: string
 }
 
 /** Per-card outcome recorded during `active`, aggregated in the recap AND sent to
@@ -313,7 +317,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                 if (!payload?.success) {
                     throw new Error(payload?.message ?? "flashcard deck fetch failed")
                 }
-                return payload.data?.cards ?? []
+                return (payload.data?.cards ?? []).map((card) => ({ ...card, deckId: deck.id }))
             }),
         )
         const anyDeckFailed = settled.some((result) => result.status === "rejected")
@@ -323,7 +327,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
         const pool: Array<QuizCard> = deckPayloads
             .flat()
             .filter((card) => Boolean(card.answer))
-            .map((card) => ({ ...card, keywords: parseAnswerKeywords(card.answer ?? "") }))
+            .map((card) => ({ ...card, keywords: extractMarkerTerms(card.answer) }))
         return { pool, anyDeckFailed }
     }, [decks, courseHeaders])
 
@@ -506,8 +510,13 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
         router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false })
     }, [setupTab, pathname, searchParams, router])
 
-    // distractor pool: sibling cards' key terms, preferring the SAME tag (closer =
-    // more plausible, à la Duolingo/Quizlet drawing from the session's own vocab)
+    // distractor pool: sibling cards' key terms, closest-topic first (à la
+    // Duolingo/Quizlet drawing from the session's own vocab) — same TAG, then
+    // same DECK (still one coherent topic even without a shared tag), then the
+    // whole session as a last resort. Without the deck tier, a thin same-tag
+    // draw fell straight through to the WHOLE session/course pool, which is how
+    // an unrelated term (e.g. a SQL clause) ended up in a NestJS DI question's
+    // word bank (thầy 2026-07-11 bug report).
     const distractorPool = useMemo(() => {
         if (!card) {
             return []
@@ -516,7 +525,8 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
         const sameTag = others.filter((other) =>
             (other.tags ?? []).some((tag) => (card.tags ?? []).includes(tag)),
         )
-        const source = sameTag.length >= 2 ? sameTag : others
+        const sameDeck = others.filter((other) => other.deckId === card.deckId)
+        const source = sameTag.length >= 2 ? sameTag : sameDeck.length >= 2 ? sameDeck : others
         return [...new Set(source.flatMap((other) => other.keywords))]
     }, [card, sessionCards, index])
 

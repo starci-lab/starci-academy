@@ -4,8 +4,15 @@
  * markers that the content author (via the mechanical marking pass) placed in
  * the answer prose, so there is NO fragile string-matching of a separate key-
  * term list against the text: the marker IS the blank, exactly where it sits.
- * Distractors are drawn from SIBLING cards' key terms (same session / tag),
- * mirroring how Duolingo builds its word bank from the session's own vocabulary.
+ * A marker's own term IS that card's "keywords" now too (see
+ * {@link extractMarkerTerms}) — the separate `:::chip` list was retired
+ * 2026-07-12 (thầy: "xóa từ khóa ăn điểm đi") once every card had ≥1 marker,
+ * so there was no longer a card left that needed it as a fallback source.
+ * Distractors come from two
+ * tiers: a marker's own curated near-synonyms when authored inline
+ * (`{{c1::docker::k8s,vps}}`) are preferred, topped up with sibling cards' key
+ * terms (same tag, then same deck) — mirroring how Duolingo builds its word
+ * bank from the session's own vocabulary.
  */
 
 /** One piece of a cloze sentence: literal text, a lightweight inline markdown
@@ -39,14 +46,44 @@ export interface BuildClozeParams {
     distractorCount?: number
 }
 
-/** Global cloze-marker matcher: `{{c1::inner}}`. Group 1 = inner text. */
-const MARKER = /\{\{c\d+::([\s\S]*?)\}\}/g
+/** Global cloze-marker matcher: `{{c1::term}}` or `{{c1::term::distractorA,distractorB}}`.
+ *  Group 1 = the correct term. Group 2 (optional) = curated near-synonym
+ *  distractors, comma-separated — an author-supplied confuser set for THIS
+ *  blank specifically (thầy 2026-07-11: "docker" → "k8s, vps"), preferred over
+ *  the generic sibling-card pool when present. */
+const MARKER = /\{\{c\d+::([\s\S]*?)(?:::([\s\S]*?))?\}\}/g
 
 /** A parsed marker with its span in the raw answer. */
-interface Marker { start: number, end: number, inner: string }
+interface Marker { start: number, end: number, inner: string, curatedDistractors: Array<string> }
 
 /** Clean a term/segment for DISPLAY + matching: drop backticks, collapse whitespace, trim. */
 const clean = (value: string): string => value.replace(/`/g, "").replace(/\s+/g, " ").trim()
+
+/** Parses the optional `::distractorA,distractorB` group into cleaned, non-empty terms. */
+const parseCuratedDistractors = (raw: string | undefined): Array<string> =>
+    (raw ?? "")
+        .split(",")
+        .map((term) => clean(term))
+        .filter((term) => term.length > 0)
+
+/**
+ * Extracts just the correct-answer terms of every `{{cN::term}}` marker in an
+ * answer — used to seed a card's "keywords" (self-grading coverage + the
+ * distractor pool offered to SIBLING cards) directly from the markers, so a
+ * term never needs typing twice (once as a marker, once in `:::chip`).
+ * @param answer - Raw answer markdown (may be empty/undefined).
+ */
+export const extractMarkerTerms = (answer: string | null | undefined): Array<string> => {
+    if (!answer) {
+        return []
+    }
+    const terms: Array<string> = []
+    MARKER.lastIndex = 0
+    for (let m = MARKER.exec(answer); m; m = MARKER.exec(answer)) {
+        terms.push(clean(m[1]))
+    }
+    return terms
+}
 
 /** Sentence-start offsets (after `. ` / newline / `:::` directive fence). */
 const sentenceStarts = (source: string): Array<number> => {
@@ -89,7 +126,12 @@ export const buildCloze = (
     const markers: Array<Marker> = []
     MARKER.lastIndex = 0
     for (let m = MARKER.exec(answer); m; m = MARKER.exec(answer)) {
-        markers.push({ start: m.index, end: m.index + m[0].length, inner: m[1] })
+        markers.push({
+            start: m.index,
+            end: m.index + m[0].length,
+            inner: m[1],
+            curatedDistractors: parseCuratedDistractors(m[2]),
+        })
     }
     if (markers.length === 0) {
         return null
@@ -119,9 +161,31 @@ export const buildCloze = (
     // (`` `x` ``) > bold (`**x**`) > italic (`*x*`) — `**` must be tried before
     // `*` or the italic branch would eat one asterisk of a bold pair.
     const inlineSpan = /`([^`]+)`|\*\*([^*]+)\*\*|\*([^*]+)\*/g
+    // A code span in the source can straddle a `{{cN::…}}` marker (the marker
+    // sits INSIDE the backtick pair) — since markers are cut out into their own
+    // fragment before this scanner sees the surrounding text, each side only
+    // ever has an ORPHAN backtick, which used to fall through as a literal `
+    // character (thầy 2026-07-11 bug report). `openCode` carries "we're still
+    // inside an unclosed code span" across fragment/marker boundaries so the
+    // orphan backticks are consumed (never rendered) and both sides stay `code`.
+    let openCode = false
     const pushText = (raw: string) => {
         let cursor2 = 0
-        inlineSpan.lastIndex = 0
+        if (openCode) {
+            const closeIndex = raw.indexOf("`")
+            if (closeIndex === -1) {
+                if (raw.length > 0) {
+                    segments.push({ kind: "code", text: raw })
+                }
+                return
+            }
+            if (closeIndex > 0) {
+                segments.push({ kind: "code", text: raw.slice(0, closeIndex) })
+            }
+            openCode = false
+            cursor2 = closeIndex + 1
+        }
+        inlineSpan.lastIndex = cursor2
         for (let m = inlineSpan.exec(raw); m; m = inlineSpan.exec(raw)) {
             const before = raw.slice(cursor2, m.index)
             if (before.length > 0) {
@@ -137,9 +201,22 @@ export const buildCloze = (
             cursor2 = m.index + m[0].length
         }
         const rest = raw.slice(cursor2)
-        if (rest.length > 0) {
-            segments.push({ kind: "text", text: rest })
+        const openIndex = rest.indexOf("`")
+        if (openIndex === -1) {
+            if (rest.length > 0) {
+                segments.push({ kind: "text", text: rest })
+            }
+            return
         }
+        // unmatched backtick — a code span opens here and continues past this fragment
+        if (openIndex > 0) {
+            segments.push({ kind: "text", text: rest.slice(0, openIndex) })
+        }
+        const codeContent = rest.slice(openIndex + 1)
+        if (codeContent.length > 0) {
+            segments.push({ kind: "code", text: codeContent })
+        }
+        openCode = true
     }
     for (const marker of inWindow) {
         pushText(answer.slice(cursor, marker.start))
@@ -158,22 +235,28 @@ export const buildCloze = (
         return null
     }
 
-    // word bank: correct terms + plausible sibling distractors (drop dups / ones
-    // already visible in the sentence)
+    // word bank: correct terms + plausible distractors (drop dups / ones already
+    // visible in the sentence). Curated per-marker distractors (author-supplied
+    // near-synonyms, e.g. "docker" → "k8s, vps") are PREFERRED — they're a much
+    // sharper confuser than a random sibling-card term — and only top up with
+    // the generic sibling `distractorPool` when a blank has none / too few.
     const windowText = answer.slice(winStart, winEnd).toLowerCase()
     const seen = new Set(blanks.map((term) => term.toLowerCase()))
     const distractors: Array<string> = []
-    for (const candidate of shuffle(distractorPool)) {
-        if (distractors.length >= distractorCount) {
-            break
+    const curatedPool = shuffle(usedMarkers.flatMap((marker) => marker.curatedDistractors))
+    for (const pool of [curatedPool, shuffle(distractorPool)]) {
+        for (const candidate of pool) {
+            if (distractors.length >= distractorCount) {
+                break
+            }
+            const term = clean(candidate)
+            const key = term.toLowerCase()
+            if (!term || seen.has(key) || windowText.includes(key)) {
+                continue
+            }
+            seen.add(key)
+            distractors.push(term)
         }
-        const term = clean(candidate)
-        const key = term.toLowerCase()
-        if (!term || seen.has(key) || windowText.includes(key)) {
-            continue
-        }
-        seen.add(key)
-        distractors.push(term)
     }
 
     return {

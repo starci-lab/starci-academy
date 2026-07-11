@@ -68,6 +68,11 @@ const Layout = ({ children }: PropsWithChildren) => {
     // for the whole Ôn tập surface). The deck list lives IN the pane (study overview) and the
     // mode switch is in-pane on desktop too. `isFlashcards` only drives the mobile-bar choice.
     const isFlashcards = segments[0] === "flashcards"
+    // the "Hỏi nhanh" quiz goes full-bleed ONLY during a live run (a focused work
+    // surface: its own `WorkSessionHeader` band IS the header) — detected off the
+    // dedicated resumable route (`flashcards/quiz/sessions/[sessionId]`), same
+    // pattern as the mock-interview's `isMockInterviewInterviewRoute` below.
+    const isFlashcardQuizLive = isFlashcards && segments[1] === "quiz" && segments[2] === "sessions"
     // the mind-map is a full-bleed interactive canvas (fills the viewport edge-to-edge),
     // so it opts out of the shell's canonical p-6 reading-column padding.
     const isMindMap = segments[0] === "mind-map"
@@ -184,7 +189,7 @@ const Layout = ({ children }: PropsWithChildren) => {
             <LearnShell
                 leftRail={showSurface ? leftRail : undefined}
                 rightRail={showSurface ? rightRail : undefined}
-                fullBleed={isMindMap || isMockInterviewLive || isPlaygroundSession}
+                fullBleed={isMindMap || isMockInterviewLive || isPlaygroundSession || isFlashcardQuizLive}
                 simpleMobileBar={isLeaderboard || isFlashcards}
             >
                 {content}

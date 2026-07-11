@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import useSWR from "swr"
+import { LayoutGroup, motion, useReducedMotion } from "framer-motion"
 import { Button, Chip, Label, ScrollShadow, Typography, cn } from "@heroui/react"
 import {
     ArrowRightIcon,
@@ -33,7 +34,6 @@ import { FlipCard } from "@/components/blocks/cards/FlipCard"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { RelatedContentList } from "@/components/blocks/learn/RelatedContentList"
 import { StatPair } from "@/components/blocks/stats/StatPair"
-import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
 import { RatingBar } from "@/components/blocks/buttons/RatingBar"
 import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
@@ -51,7 +51,8 @@ import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { PaymentFlow } from "@/modules/types/payment"
 import { pathConfig } from "@/resources/path"
 import { ContinueCard } from "@/components/blocks/cards/ContinueCard"
-import { BackLink } from "@/components/blocks/navigation/BackLink"
+import { WorkSessionHeader } from "@/components/blocks/navigation/WorkSessionHeader"
+import { QuizSessionSkeleton } from "./QuizSessionSkeleton"
 
 /** Props for {@link QuizSession}. */
 export interface QuizSessionProps extends WithClassNames<undefined> {
@@ -100,6 +101,12 @@ const COMBO_GRADE_THRESHOLD = 2
 const XP_PER_CORRECT_BLANK = 2
 /** XP for a fallback (no-cloze) card with a Good/Easy self-grade. */
 const XP_PER_STRUCTURAL_CARD = 3
+/**
+ * Spring used for the word-bank ↔ blank shared-layout ("fly into place") chip
+ * animation — snappy pick/place feel, not floaty. Swapped for `{ duration: 0 }`
+ * under `prefers-reduced-motion` (same idiom as CollapsibleSidebar).
+ */
+const CLOZE_CHIP_TRANSITION = { type: "spring", stiffness: 500, damping: 32 } as const
 
 /** A card drawn into a session, carrying the fields the quiz needs. */
 interface QuizCard extends FlashcardCardEntity {
@@ -159,6 +166,8 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
     // otherwise a genuinely enrolled viewer would flash the trial-upsell (Zone E) on cold load.
     const enrollKnown = useAppSelector((state) => state.user.enrollKnown)
     const displayId = useAppSelector((state) => state.course.displayId)
+    // course name for the shared WorkSessionHeader's identity chip
+    const course = useAppSelector((state) => state.course.entity)
     // quiz cards are enrolled-only → send the course header for the backend guard
     const courseHeaders = useMemo(
         () => ({ [GraphQLHeadersKey.XCourseId]: courseId }),
@@ -195,6 +204,10 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
         () => (decks ?? []).reduce((sum, deck) => sum + (deck.cards?.length ?? 0), 0),
         [decks],
     )
+
+    // shared-layout "fly into the blank" animation (word-bank chip ↔ blank chip)
+    // is disabled under prefers-reduced-motion — same idiom as CollapsibleSidebar.
+    const reduceMotion = useReducedMotion()
 
     // ── session state ────────────────────────────────────────────────────
     const [phase, setPhase] = useState<QuizPhase>("setup")
@@ -642,6 +655,15 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
         [card, cloze, results, index, sessionLength, runGraphQL, t, finish, runSyncProgress, courseHeaders],
     )
 
+    // ── RESUMING ─────────────────────────────────────────────────────────
+    // reached via the dedicated `/quiz/[sessionId]` route and the rehydrate effect
+    // above hasn't landed on `active` yet — show the active-run skeleton instead of
+    // flashing the setup screen's tabs/CTA (which would be wrong for this route and
+    // never actually shown once the effect commits `active`).
+    if (resumeSessionId && phase === "setup" && !resumeError) {
+        return <QuizSessionSkeleton className={className} />
+    }
+
     // ── SETUP ────────────────────────────────────────────────────────────
     if (phase === "setup") {
         const resumeData = inProgressSessionSwr.data
@@ -813,18 +835,32 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
 
         return (
             <div className={cn("flex flex-col gap-6", className)}>
-                {/* Zone A+B — `LabeledCard` (label OUTSIDE + a REAL framed `<Card>`), not a
+                {/* same work-surface header as the active phase — current=total reads every
+                    segment as complete ("done") now that the run has ended. */}
+                <WorkSessionHeader
+                    backLabel={t("flashcard.quiz.exitToSetup")}
+                    onBack={exitToSetup}
+                    identity={course?.title ? { name: course.title } : undefined}
+                    counter={t("flashcard.quiz.recapTitle")}
+                    current={sessionLength}
+                    total={sessionLength}
+                />
+                {/* body reads as a centered column under the edge-to-edge header band —
+                    same split as MockInterviewSession's work-surface (header full width,
+                    body `mx-auto max-w-*`); recap previously stretched full-bleed. */}
+                <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
+                    {/* Zone A+B — `LabeledCard` (label OUTSIDE + a REAL framed `<Card>`), not a
                     hand-rolled `bg-surface` div with the label stuffed inside (thầy
                     2026-07-09: "cam render dạng labeled card"). */}
-                <LabeledCard label={t("flashcard.quiz.recapTitle")} contentClassName="flex flex-col gap-6">
-                    <Typography type="h4" weight="semibold">
-                        {t("flashcard.quiz.answeredWithoutHint", {
-                            count: fullyCorrect,
-                            total: results.length,
-                        })}
-                    </Typography>
+                    <LabeledCard label={t("flashcard.quiz.recapTitle")} contentClassName="flex flex-col gap-6">
+                        <Typography type="h4" weight="semibold">
+                            {t("flashcard.quiz.answeredWithoutHint", {
+                                count: fullyCorrect,
+                                total: results.length,
+                            })}
+                        </Typography>
 
-                    {/* Zone B — metric readout: each cell is a bounded BORDERED sub-card
+                        {/* Zone B — metric readout: each cell is a bounded BORDERED sub-card
                         (transparent bg, not another fill) — this row sits INSIDE the
                         `LabeledCard`'s own framed `<Card>`, so per [[card]] §4
                         surface-in-surface a nested cell gets a BORDER, not a 2nd opaque
@@ -832,88 +868,89 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                         totally frameless `StatPair` row read as no boundary at all —
                         undercorrected the earlier card-in-card fix). `StatPair` still owns
                         the value/label typography; the border wrapper is the only addition. */}
-                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                        <div className="rounded-xl border border-default p-3">
-                            <StatPair
-                                value={`x${bestCombo}`}
-                                label={t("flashcard.quiz.bestCombo")}
-                            />
+                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                            <div className="rounded-xl border border-default p-3">
+                                <StatPair
+                                    value={`x${bestCombo}`}
+                                    label={t("flashcard.quiz.bestCombo")}
+                                />
+                            </div>
+                            <div className="rounded-xl border border-default p-3">
+                                <StatPair
+                                    value={`+${xpEarned}`}
+                                    label={t("flashcard.quiz.xpEarned")}
+                                />
+                            </div>
+                            <div className="rounded-xl border border-default p-3">
+                                <StatPair
+                                    value={`${avgCoverage}%`}
+                                    label={t("flashcard.quiz.avgCoverage")}
+                                />
+                            </div>
                         </div>
-                        <div className="rounded-xl border border-default p-3">
-                            <StatPair
-                                value={`+${xpEarned}`}
-                                label={t("flashcard.quiz.xpEarned")}
-                            />
-                        </div>
-                        <div className="rounded-xl border border-default p-3">
-                            <StatPair
-                                value={`${avgCoverage}%`}
-                                label={t("flashcard.quiz.avgCoverage")}
-                            />
-                        </div>
-                    </div>
 
-                    {dailyCapReached ? (
-                        <Typography type="body-xs" color="muted">
-                            {t("flashcard.quiz.dailyCapReached")}
-                        </Typography>
-                    ) : null}
+                        {dailyCapReached ? (
+                            <Typography type="body-xs" color="muted">
+                                {t("flashcard.quiz.dailyCapReached")}
+                            </Typography>
+                        ) : null}
 
-                    {xpEarned > 0 ? (
-                        <Typography type="body-xs" color="muted">
-                            {t("flashcard.quiz.xpAddedToLeaderboard")}
-                        </Typography>
-                    ) : null}
-                </LabeledCard>
+                        {xpEarned > 0 ? (
+                            <Typography type="body-xs" color="muted">
+                                {t("flashcard.quiz.xpAddedToLeaderboard")}
+                            </Typography>
+                        ) : null}
+                    </LabeledCard>
 
-                {/* Zone E — enroll upsell (trial only): the recap's PRIMARY action for a trial
+                    {/* Zone E — enroll upsell (trial only): the recap's PRIMARY action for a trial
                     viewer — keep the earned momentum going by unlocking the full course, framed
                     as a reward, not a paywall. Gated on `enrollKnown` too: `enrolled` defaults to
                     false, so without this a genuinely enrolled viewer would briefly see the
                     upsell before the status query settles. */}
-                {enrollKnown && !enrolled ? <RecapEnrollUpsell /> : null}
+                    {enrollKnown && !enrolled ? <RecapEnrollUpsell /> : null}
 
-                {/* Zone C — weak-tags demand-bridge: PRIMARY when enrolled, a smaller secondary
+                    {/* Zone C — weak-tags demand-bridge: PRIMARY when enrolled, a smaller secondary
                     link under the upsell when trial (Zone E takes the primary slot instead).
                     Treated as non-primary until enrollment is known, same reasoning as Zone E. */}
-                <RecapWeakTagsCard
-                    weakTags={topWeakTags}
-                    overflowWeakTags={overflowWeakTags}
-                    resolveTagHref={resolveTagHref}
-                    genericHref={genericContinueHref}
-                    primary={enrollKnown && enrolled}
-                />
+                    <RecapWeakTagsCard
+                        weakTags={topWeakTags}
+                        overflowWeakTags={overflowWeakTags}
+                        resolveTagHref={resolveTagHref}
+                        genericHref={genericContinueHref}
+                        primary={enrollKnown && enrolled}
+                    />
 
-                {/* quiet, self-hiding "practice this too" — course-wide RAG search auto-queried
+                    {/* quiet, self-hiding "practice this too" — course-wide RAG search auto-queried
                     on the SAME weak tags Zone C already resolved to a lesson (no typing);
                     additive since it can ALSO surface challenges/milestone tasks/other decks,
                     which the tag→lesson-only mapping above never considers. */}
-                {displayId && topWeakTags.length > 0 ? (
-                    <RelatedContentList
-                        courseId={courseId}
-                        courseDisplayId={displayId}
-                        query={topWeakTags.map((tag) => tag.tag).join(" ")}
-                        label={t("flashcard.quiz.relatedContentLabel")}
-                    />
-                ) : null}
+                    {displayId && topWeakTags.length > 0 ? (
+                        <RelatedContentList
+                            courseId={courseId}
+                            courseDisplayId={displayId}
+                            query={topWeakTags.map((tag) => tag.tag).join(" ")}
+                            label={t("flashcard.quiz.relatedContentLabel")}
+                        />
+                    ) : null}
 
-                {/* Zone D — AI Mock Interview readiness: only relevant once actually enrolled
+                    {/* Zone D — AI Mock Interview readiness: only relevant once actually enrolled
                     (state 5 in the matrix — hidden pre-enrollment/while enrollment is unknown). */}
-                {enrollKnown && enrolled && readiness ? (
-                    <RecapReadinessCallout readiness={readiness} mockInterviewHref={learn.mockInterview().build()} />
-                ) : null}
+                    {enrollKnown && enrolled && readiness ? (
+                        <RecapReadinessCallout readiness={readiness} mockInterviewHref={learn.mockInterview().build()} />
+                    ) : null}
 
-                {/* Zone F — footer note + "Practice more", demoted to secondary now that C/D/E
+                    {/* Zone F — footer note + "Practice more", demoted to secondary now that C/D/E
                     exist: looping the quiz is no longer the screen's most-encouraged action. */}
-                <Button
-                    variant="secondary"
-                    size="lg"
-                    className="self-start"
-                    onPress={() => setPhase("setup")}
-                >
-                    {t("flashcard.quiz.practiceMore")}
-                    <ArrowRightIcon className="size-5" aria-hidden focusable="false" />
-                </Button>
+                    <Button
+                        variant="secondary"
+                        size="lg"
+                        className="self-start"
+                        onPress={() => setPhase("setup")}
+                    >
+                        {t("flashcard.quiz.practiceMore")}
+                        <ArrowRightIcon className="size-5" aria-hidden focusable="false" />
+                    </Button>
+                </div>
             </div>
         )
     }
@@ -939,29 +976,24 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
         )
     }
 
-    // shared header: back link + progress + combo + card meta
+    // shared header: WorkSessionHeader (course identity + step counter + level/tag
+    // meta chips inline + progress segments, combo chip in the right slot) — same
+    // shell as the mock-interview's work-surface header. Level/tag folded INTO the
+    // header row (thầy 2026-07-11: "bỏ mấy cái tag lên cái thanh navbar phụ") —
+    // no separate chip row underneath anymore.
     const header = (
-        <>
-            <BackLink label={t("flashcard.quiz.exitToSetup")} onPress={exitToSetup} />
-            <div className="flex flex-wrap items-center justify-between gap-3">
-                <ProgressMeter
-                    value={index + 1}
-                    max={sessionLength}
-                    label={t("flashcard.quiz.progress", {
-                        current: index + 1,
-                        total: sessionLength,
-                    })}
-                    className="min-w-40 flex-1"
-                />
-                {combo > 1 ? (
-                    <Chip size="sm" variant="soft" color="warning">
-                        <FlameIcon className="size-4" aria-hidden focusable="false" />
-                        {t("flashcard.quiz.comboChip", { combo })}
-                    </Chip>
-                ) : null}
-            </div>
-            {card.level || (card.tags?.length ?? 0) > 0 ? (
-                <div className="flex flex-wrap items-center gap-2">
+        <WorkSessionHeader
+            backLabel={t("flashcard.quiz.exitToSetup")}
+            onBack={exitToSetup}
+            identity={course?.title ? { name: course.title } : undefined}
+            counter={t("flashcard.quiz.progress", {
+                current: index + 1,
+                total: sessionLength,
+            })}
+            current={index}
+            total={sessionLength}
+            meta={card.level || (card.tags?.length ?? 0) > 0 ? (
+                <>
                     {card.level ? (
                         <Chip size="sm" variant="soft" color={LEVEL_COLOR[card.level] ?? "default"}>
                             {t(`flashcard.level.${card.level}`)}
@@ -972,9 +1004,15 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                             {tag}
                         </Chip>
                     ))}
-                </div>
-            ) : null}
-        </>
+                </>
+            ) : undefined}
+            rightSlot={combo > 1 ? (
+                <Chip size="sm" variant="soft" color="warning">
+                    <FlameIcon className="size-4" aria-hidden focusable="false" />
+                    {t("flashcard.quiz.comboChip", { combo })}
+                </Chip>
+            ) : undefined}
+        />
     )
 
     // ── FALLBACK: card has no clozable key terms → plain flip + self-grade ──
@@ -982,64 +1020,66 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
         return (
             <div className={cn("flex flex-col gap-6", className)}>
                 {header}
-                <FlipCard
-                    revealed={showAnswer}
-                    onToggle={() => setShowAnswer((flipped) => !flipped)}
-                    ariaLabel={showAnswer ? t("flashcard.showQuestion") : t("flashcard.showAnswer")}
-                    frontHint={
-                        <>
-                            <ArrowsClockwiseIcon className="size-3.5" aria-hidden focusable="false" />
-                            {t("flashcard.flipHint")}
-                        </>
-                    }
-                    backHint={
-                        <>
-                            <ArrowsClockwiseIcon className="size-3.5" aria-hidden focusable="false" />
-                            {t("flashcard.flipBackHint")}
-                        </>
-                    }
-                    front={
-                        <>
-                            <Typography type="body-xs" weight="medium" color="muted">
-                                {t("flashcard.questionLabel")}
-                            </Typography>
-                            <MarkdownContent markdown={card.question} />
-                        </>
-                    }
-                    back={
-                        <>
-                            <Typography type="body-xs" weight="medium" color="muted">
-                                {t("flashcard.answerLabel")}
-                            </Typography>
-                            {card.answer ? (
-                                <MarkdownContent markdown={card.answer} />
-                            ) : (
-                                <Typography type="body-sm" color="muted">
-                                    {t("flashcard.noAnswer")}
+                <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
+                    <FlipCard
+                        revealed={showAnswer}
+                        onToggle={() => setShowAnswer((flipped) => !flipped)}
+                        ariaLabel={showAnswer ? t("flashcard.showQuestion") : t("flashcard.showAnswer")}
+                        frontHint={
+                            <>
+                                <ArrowsClockwiseIcon className="size-3.5" aria-hidden focusable="false" />
+                                {t("flashcard.flipHint")}
+                            </>
+                        }
+                        backHint={
+                            <>
+                                <ArrowsClockwiseIcon className="size-3.5" aria-hidden focusable="false" />
+                                {t("flashcard.flipBackHint")}
+                            </>
+                        }
+                        front={
+                            <>
+                                <Typography type="body-xs" weight="medium" color="muted">
+                                    {t("flashcard.questionLabel")}
                                 </Typography>
-                            )}
-                            {card.explanation ? <MarkdownContent markdown={card.explanation} /> : null}
-                        </>
-                    }
-                />
-                {showAnswer ? (
-                    <div className="flex flex-col gap-2">
-                        <Typography type="body-xs" color="muted" align="center">
-                            {t("flashcard.review.rateHint")}
-                        </Typography>
-                        <RatingBar
-                            options={ratingOptions}
-                            onRate={(grade) => void commitCard(grade, null)}
-                            isPending={rating}
-                        />
-                    </div>
-                ) : (
-                    <div className="flex items-center justify-end gap-3">
-                        <Button size="sm" variant="outline" onPress={() => setShowAnswer(true)}>
-                            {t("flashcard.showAnswer")}
-                        </Button>
-                    </div>
-                )}
+                                <MarkdownContent markdown={card.question} />
+                            </>
+                        }
+                        back={
+                            <>
+                                <Typography type="body-xs" weight="medium" color="muted">
+                                    {t("flashcard.answerLabel")}
+                                </Typography>
+                                {card.answer ? (
+                                    <MarkdownContent markdown={card.answer} />
+                                ) : (
+                                    <Typography type="body-sm" color="muted">
+                                        {t("flashcard.noAnswer")}
+                                    </Typography>
+                                )}
+                                {card.explanation ? <MarkdownContent markdown={card.explanation} /> : null}
+                            </>
+                        }
+                    />
+                    {showAnswer ? (
+                        <div className="flex flex-col gap-2">
+                            <Typography type="body-xs" color="muted" align="center">
+                                {t("flashcard.review.rateHint")}
+                            </Typography>
+                            <RatingBar
+                                options={ratingOptions}
+                                onRate={(grade) => void commitCard(grade, null)}
+                                isPending={rating}
+                            />
+                        </div>
+                    ) : (
+                        <div className="flex items-center justify-end gap-3">
+                            <Button size="sm" variant="outline" onPress={() => setShowAnswer(true)}>
+                                {t("flashcard.showAnswer")}
+                            </Button>
+                        </div>
+                    )}
+                </div>
             </div>
         )
     }
@@ -1062,187 +1102,221 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
     const coverageRatio = cloze.blanks.length > 0 ? correctCount / cloze.blanks.length : 0
 
     return (
-        <div className={cn("flex flex-col gap-6", className)}>
-            {header}
+        // scoped per-card (`card.id`) so the word-bank ↔ blank `layoutId` FLIP never
+        // leaks its animation into the NEXT card's chips once `cloze` recomputes.
+        <LayoutGroup id={`quiz-cloze-${card.id}`}>
+            <div className={cn("flex flex-col gap-6", className)}>
+                {header}
 
-            {/* question + cloze — plain Card shell (bo góc + shadow-surface), CÙNG kiểu
-                với FlipCard — the earlier accent/5 + left-border tint (2026-07-09) was
-                reverted the same day (thầy: "ý là bỏ cái kiểu bg hồng với border...
-                render plain Card như bth thôi") — 1 Card duy nhất xuyên suốt feature,
-                không mỗi màn 1 "ngôn ngữ" riêng. */}
-            <div className="flex flex-col gap-3 rounded-2xl bg-surface p-6 shadow-surface">
-                <Typography type="body-xs" weight="medium" color="muted">
-                    {t("flashcard.questionLabel")}
-                </Typography>
-                <MarkdownContent markdown={card.question} />
-                <Typography
-                    type="body-xs"
-                    weight="medium"
-                    color="muted"
-                    className="border-t border-divider pt-3"
-                >
-                    {t("flashcard.quiz.clozeInstruction")}
-                </Typography>
-                <p className="text-base leading-loose text-foreground">
-                    {cloze.segments.map((segment, position) =>
-                        segment.kind === "text" ? (
-                            <span key={position}>{segment.text}</span>
-                        ) : segment.kind === "code" ? (
-                            // same inline-code styling as MarkdownContent's own renderer
-                            // (reuseable/MarkdownContent/map.tsx) — kept consistent since this
-                            // sentence sits right next to the question's own MarkdownContent.
-                            <code
-                                key={position}
-                                className="rounded-md bg-default px-1 py-0.5 font-mono text-sm text-foreground [overflow-wrap:anywhere]"
-                            >
-                                {segment.text}
-                            </code>
-                        ) : segment.kind === "bold" ? (
-                            <strong key={position} className="font-semibold">{segment.text}</strong>
-                        ) : segment.kind === "italic" ? (
-                            <em key={position}>{segment.text}</em>
-                        ) : (
-                            (() => {
-                                // `?? null` guards a real crash: for one render tick right after
-                                // `commitCard` advances `index` (before the card-change effect
-                                // resets `filled`), `cloze` has ALREADY recomputed for the new
-                                // (possibly longer) card while `filled` still holds the previous
-                                // card's (possibly shorter) array — `filled[segment.index]` then
-                                // reads `undefined`, which slips past a `!== null` guard and
-                                // crashes on `.toLowerCase()`. Coercing to `null` here makes every
-                                // downstream `=== null` check treat it the same as "not filled yet".
-                                const value = filled[segment.index] ?? null
-                                const isCorrect =
-                                    checked
-                                    && value !== null
-                                    && value.toLowerCase() === cloze.blanks[segment.index].toLowerCase()
-                                const tone = !checked
-                                    ? "border-accent/60 bg-accent/10 text-accent"
-                                    : isCorrect
-                                        ? "border-success/60 bg-success/10 text-success motion-safe:[animation:blankPop_0.35s_ease]"
-                                        : "border-danger/60 bg-danger/10 text-danger motion-safe:[animation:blankShake_0.4s_ease]"
-                                return (
-                                    <button
-                                        key={position}
-                                        type="button"
-                                        disabled={checked || value === null}
-                                        onClick={() => clearBlank(segment.index)}
-                                        className={cn(
-                                            "mx-1 inline-flex min-w-16 items-center justify-center rounded-lg border px-3 py-0.5 align-middle text-sm font-medium transition-colors",
-                                            value === null
-                                                ? "border-dashed border-default bg-default/60 text-muted"
-                                                : tone,
-                                            !checked && value !== null ? "cursor-pointer" : "",
-                                        )}
-                                    >
-                                        {value ?? "···"}
-                                    </button>
-                                )
-                            })()
-                        ),
-                    )}
-                </p>
-                {/* after checking, surface the right term for any blank got wrong */}
-                {checked && correctCount < cloze.blanks.length ? (
-                    <Typography type="body-xs" color="muted">
-                        {t("flashcard.quiz.clozeResult", {
-                            correct: correctCount,
-                            total: cloze.blanks.length,
-                        })}
-                    </Typography>
-                ) : null}
-            </div>
-
-            {/* the word bank: correct terms + sibling distractors (used chips dim out).
-                loose on the page (no card wrapper) — it's a bank of CHIPS to pick from,
-                not a content surface; the tinted question block above is the only card
-                here (thầy 2026-07-09: "ngân hàng từ để trong card làm gì? bỏ ra ngoài card"). */}
-            {!checked ? (
-                <div className="flex flex-col gap-6">
-                    <div className="flex flex-col gap-3">
+                <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
+                    {/* question + cloze — plain Card shell (bo góc + shadow-surface), CÙNG kiểu
+                    với FlipCard — the earlier accent/5 + left-border tint (2026-07-09) was
+                    reverted the same day (thầy: "ý là bỏ cái kiểu bg hồng với border...
+                    render plain Card như bth thôi") — 1 Card duy nhất xuyên suốt feature,
+                    không mỗi màn 1 "ngôn ngữ" riêng. */}
+                    <div className="flex flex-col gap-3 rounded-2xl bg-surface p-6 shadow-surface">
                         <Typography type="body-xs" weight="medium" color="muted">
-                            {t("flashcard.quiz.wordBankLabel")}
+                            {t("flashcard.questionLabel")}
                         </Typography>
-                        <div className="flex flex-wrap items-center gap-2">
-                            {cloze.bank.map((term) => {
-                                const used = filled.includes(term)
-                                return (
-                                    <Button
-                                        key={term}
-                                        size="sm"
-                                        variant="outline"
-                                        isDisabled={used}
-                                        onPress={() => placeTerm(term)}
-                                        // a "pick me" tile feel (Quizlet/Duolingo token
-                                        // convention) — lift on hover instead of sitting flat.
-                                        className="transition-transform hover:-translate-y-0.5"
+                        <MarkdownContent markdown={card.question} />
+                        <Typography
+                            type="body-xs"
+                            weight="medium"
+                            color="muted"
+                            className="border-t border-divider pt-3"
+                        >
+                            {t("flashcard.quiz.clozeInstruction")}
+                        </Typography>
+                        <p className="text-base leading-loose text-foreground">
+                            {cloze.segments.map((segment, position) =>
+                                segment.kind === "text" ? (
+                                    <span key={position}>{segment.text}</span>
+                                ) : segment.kind === "code" ? (
+                                // same inline-code styling as MarkdownContent's own renderer
+                                // (reuseable/MarkdownContent/map.tsx) — kept consistent since this
+                                // sentence sits right next to the question's own MarkdownContent.
+                                    <code
+                                        key={position}
+                                        className="rounded-md bg-default px-1 py-0.5 font-mono text-sm text-foreground [overflow-wrap:anywhere]"
                                     >
-                                        {term}
-                                    </Button>
-                                )
-                            })}
-                        </div>
-                    </div>
-                    <Button
-                        variant="primary"
-                        className="self-start"
-                        isDisabled={!allFilled}
-                        onPress={() => setChecked(true)}
-                    >
-                        {t("flashcard.quiz.checkAnswer")}
-                    </Button>
-                </div>
-            ) : (
-                <div className="flex flex-col gap-6">
-                    {/* verdict line */}
-                    <div className="flex items-center gap-2">
-                        {correctCount === cloze.blanks.length ? (
-                            <CheckCircleIcon className="size-5 text-success" aria-hidden focusable="false" />
-                        ) : (
-                            <XCircleIcon className="size-5 text-danger" aria-hidden focusable="false" />
-                        )}
-                        <Typography type="body-sm" weight="medium">
-                            {t("flashcard.quiz.clozeResult", {
-                                correct: correctCount,
-                                total: cloze.blanks.length,
-                            })}
-                        </Typography>
+                                        {segment.text}
+                                    </code>
+                                ) : segment.kind === "bold" ? (
+                                    <strong key={position} className="font-semibold">{segment.text}</strong>
+                                ) : segment.kind === "italic" ? (
+                                    <em key={position}>{segment.text}</em>
+                                ) : (
+                                    (() => {
+                                    // `?? null` guards a real crash: for one render tick right after
+                                    // `commitCard` advances `index` (before the card-change effect
+                                    // resets `filled`), `cloze` has ALREADY recomputed for the new
+                                    // (possibly longer) card while `filled` still holds the previous
+                                    // card's (possibly shorter) array — `filled[segment.index]` then
+                                    // reads `undefined`, which slips past a `!== null` guard and
+                                    // crashes on `.toLowerCase()`. Coercing to `null` here makes every
+                                    // downstream `=== null` check treat it the same as "not filled yet".
+                                        const value = filled[segment.index] ?? null
+                                        const isCorrect =
+                                        checked
+                                        && value !== null
+                                        && value.toLowerCase() === cloze.blanks[segment.index].toLowerCase()
+                                        // empty = dashed-outline "slot" chip; filled + unchecked = solid
+                                        // accent (primary-solid — canon `elements/color.md` §3, NOT a
+                                        // `/10` tint); checked = keep the existing success/danger tint +
+                                        // shake/pop animation.
+                                        const chipToneClassName = value === null
+                                            ? "border border-dashed border-default bg-transparent text-muted"
+                                            : !checked
+                                                ? "border-0 bg-accent text-accent-foreground"
+                                                : isCorrect
+                                                    ? "border border-success/60 bg-success/10 text-success motion-safe:[animation:blankPop_0.35s_ease]"
+                                                    : "border border-danger/60 bg-danger/10 text-danger motion-safe:[animation:blankShake_0.4s_ease]"
+                                        // shared `layoutId` with the SAME term's word-bank chip below — when
+                                        // `placeTerm`/`clearBlank` swaps `value`, framer-motion FLIPs the
+                                        // chip's bounding box across the two positions ("flies" into/out of
+                                        // the slot). `undefined` while empty — nothing to morph from/to yet.
+                                        const layoutId = value !== null ? `quiz-term-${card.id}-${value}` : undefined
+                                        return (
+                                            <motion.span
+                                                key={position}
+                                                layout
+                                                layoutId={layoutId}
+                                                transition={reduceMotion ? { duration: 0 } : CLOZE_CHIP_TRANSITION}
+                                                className="mx-1 inline-block align-middle"
+                                            >
+                                                <button
+                                                    type="button"
+                                                    disabled={checked || value === null}
+                                                    onClick={() => clearBlank(segment.index)}
+                                                    className={!checked && value !== null ? "cursor-pointer" : undefined}
+                                                >
+                                                    <Chip
+                                                        size="sm"
+                                                        className={cn(
+                                                            "min-w-16 justify-center rounded-full px-3 py-0.5 text-sm font-medium transition-colors",
+                                                            chipToneClassName,
+                                                        )}
+                                                    >
+                                                        {value ?? "···"}
+                                                    </Chip>
+                                                </button>
+                                            </motion.span>
+                                        )
+                                    })()
+                                ),
+                            )}
+                        </p>
+                        {/* after checking, surface the right term for any blank got wrong */}
+                        {checked && correctCount < cloze.blanks.length ? (
+                            <Typography type="body-xs" color="muted">
+                                {t("flashcard.quiz.clozeResult", {
+                                    correct: correctCount,
+                                    total: cloze.blanks.length,
+                                })}
+                            </Typography>
+                        ) : null}
                     </div>
 
-                    {/* read the full model answer (the 5-layer reasoning), then self-grade */}
-                    {showAnswer ? (
-                        <div className="flex flex-col gap-3 rounded-2xl bg-surface p-6 shadow-surface">
-                            <Typography type="body-xs" weight="medium" color="muted">
-                                {t("flashcard.answerLabel")}
-                            </Typography>
-                            <MarkdownContent markdown={card.answer ?? ""} />
-                            {card.explanation ? <MarkdownContent markdown={card.explanation} /> : null}
+                    {/* the word bank: correct terms + sibling distractors — a used term is
+                    REMOVED here entirely (not just dimmed): it "flew" into its blank via
+                    the shared `layoutId` above, so leaving a disabled ghost behind would
+                    read as 2 copies of the same chip. loose on the page (no card wrapper)
+                    — it's a bank of CHIPS to pick from, not a content surface; the tinted
+                    question block above is the only card here (thầy 2026-07-09: "ngân
+                    hàng từ để trong card làm gì? bỏ ra ngoài card"). */}
+                    {!checked ? (
+                        <div className="flex flex-col gap-6">
+                            <div className="flex flex-col gap-3">
+                                <Typography type="body-xs" weight="medium" color="muted">
+                                    {t("flashcard.quiz.wordBankLabel")}
+                                </Typography>
+                                <div className="flex flex-wrap items-center gap-2">
+                                    {cloze.bank
+                                        .filter((term) => !filled.includes(term))
+                                        .map((term) => (
+                                            <motion.button
+                                                key={term}
+                                                type="button"
+                                                layout
+                                                layoutId={`quiz-term-${card.id}-${term}`}
+                                                transition={reduceMotion ? { duration: 0 } : CLOZE_CHIP_TRANSITION}
+                                                onClick={() => placeTerm(term)}
+                                                // a "pick me" tile feel (Quizlet/Duolingo token
+                                                // convention) — lift on hover instead of sitting flat.
+                                                className="cursor-pointer transition-transform hover:-translate-y-0.5"
+                                            >
+                                                <Chip
+                                                    size="sm"
+                                                    className="rounded-full border border-default bg-surface px-3 py-0.5 text-sm font-medium"
+                                                >
+                                                    {term}
+                                                </Chip>
+                                            </motion.button>
+                                        ))}
+                                </div>
+                            </div>
+                            <Button
+                                variant="primary"
+                                className="self-start"
+                                isDisabled={!allFilled}
+                                onPress={() => setChecked(true)}
+                            >
+                                {t("flashcard.quiz.checkAnswer")}
+                            </Button>
                         </div>
                     ) : (
-                        <Button
-                            variant="outline"
-                            className="self-start"
-                            onPress={() => setShowAnswer(true)}
-                        >
-                            {t("flashcard.quiz.showSolution")}
-                        </Button>
-                    )}
+                        <div className="flex flex-col gap-6">
+                            {/* verdict line */}
+                            <div className="flex items-center gap-2">
+                                {correctCount === cloze.blanks.length ? (
+                                    <CheckCircleIcon className="size-5 text-success" aria-hidden focusable="false" />
+                                ) : (
+                                    <XCircleIcon className="size-5 text-danger" aria-hidden focusable="false" />
+                                )}
+                                <Typography type="body-sm" weight="medium">
+                                    {t("flashcard.quiz.clozeResult", {
+                                        correct: correctCount,
+                                        total: cloze.blanks.length,
+                                    })}
+                                </Typography>
+                            </div>
 
-                    {showAnswer ? (
-                        <div className="flex flex-col gap-2">
-                            <Typography type="body-xs" color="muted" align="center">
-                                {t("flashcard.review.rateHint")}
-                            </Typography>
-                            <RatingBar
-                                options={ratingOptions}
-                                onRate={(grade) => void commitCard(grade, coverageRatio)}
-                                isPending={rating}
-                            />
+                            {/* read the full model answer (the 5-layer reasoning), then self-grade */}
+                            {showAnswer ? (
+                                <div className="flex flex-col gap-3 rounded-2xl bg-surface p-6 shadow-surface">
+                                    <Typography type="body-xs" weight="medium" color="muted">
+                                        {t("flashcard.answerLabel")}
+                                    </Typography>
+                                    <MarkdownContent markdown={card.answer ?? ""} />
+                                    {card.explanation ? <MarkdownContent markdown={card.explanation} /> : null}
+                                </div>
+                            ) : (
+                                <Button
+                                    variant="outline"
+                                    className="self-start"
+                                    onPress={() => setShowAnswer(true)}
+                                >
+                                    {t("flashcard.quiz.showSolution")}
+                                </Button>
+                            )}
+
+                            {showAnswer ? (
+                                <div className="flex flex-col gap-2">
+                                    <Typography type="body-xs" color="muted" align="center">
+                                        {t("flashcard.review.rateHint")}
+                                    </Typography>
+                                    <RatingBar
+                                        options={ratingOptions}
+                                        onRate={(grade) => void commitCard(grade, coverageRatio)}
+                                        isPending={rating}
+                                    />
+                                </div>
+                            ) : null}
                         </div>
-                    ) : null}
+                    )}
                 </div>
-            )}
-        </div>
+            </div>
+        </LayoutGroup>
     )
 }
 

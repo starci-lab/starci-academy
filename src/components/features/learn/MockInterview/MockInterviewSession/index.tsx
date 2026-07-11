@@ -35,6 +35,7 @@ import { GradeModelDropdown, type GradeModelSelection } from "@/components/block
 import { GradeCreditCaption } from "@/components/blocks/grading/GradeCreditCaption"
 import { WorkSessionHeader } from "@/components/blocks/navigation/WorkSessionHeader"
 import { pathConfig } from "@/resources/path"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import { useQueryUserSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserSwr"
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition"
 import { useSpeechSynthesis } from "@/hooks/useSpeechSynthesis"
@@ -278,6 +279,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
     const locale = useLocale()
     const router = useRouter()
     const pathname = usePathname()
+    const runGraphQL = useGraphQLWithToast()
     const searchParams = useSearchParams()
     const recognitionLang = locale === "vi" ? "vi-VN" : "en-US"
 
@@ -963,9 +965,11 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
     // the turn list (or the current question/phase pointer) changes while live, so it
     // covers every append site (interviewer turns from `askNextTurn`/`deliverStaticQuestion`,
     // candidate turns from `submitAnswer`/`submitQnaAnswer`) without sprinkling a trigger
-    // call at each one. Never awaited by the caller, errors swallowed — a failed sync only
-    // degrades resumability (`myInProgressMockInterviewSession`), it never blocks the live
-    // interview.
+    // call at each one. Never awaited by the caller; still routed through `runGraphQL`
+    // (toast on failure, no success toast) rather than a silent catch (thầy 2026-07-11:
+    // "fe không nuốt lỗi, dùng runGraphQL đi") — a failed sync only degrades resumability
+    // (`myInProgressMockInterviewSession`), it never blocks the live interview, but the
+    // candidate should still see it.
     const syncTurnsTrigger = syncTurnsSwr.trigger
     useEffect(() => {
         if (phase !== "interview" || !sessionId.current || turns.length === 0) {
@@ -978,18 +982,30 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
             questionIndex: turn.questionIndex,
             artifactHint: turn.artifactHint,
         }))
-        syncTurnsTrigger({
-            sessionId: sessionId.current,
-            turns: turnsForSync,
-            questionIndex,
-            phaseIndex,
-        }).catch(() => {})
+        const syncingSessionId = sessionId.current
+        void runGraphQL(
+            async () => {
+                const result = await syncTurnsTrigger({
+                    sessionId: syncingSessionId,
+                    turns: turnsForSync,
+                    questionIndex,
+                    phaseIndex,
+                })
+                return (
+                    result.data?.syncMockInterviewSessionTurns ?? {
+                        success: false,
+                        message: t("mockInterview.syncError"),
+                    }
+                )
+            },
+            { showSuccessToast: false },
+        )
         // `syncTurnsTrigger` (not the whole `syncTurnsSwr` object) is the dep — `useSWRMutation`
         // returns a freshly-constructed wrapper object on every render (only `trigger`/`reset`
         // are individually memoized), so depending on the object itself re-fires this effect on
         // every unrelated re-render during the live interview (streaming deltas, the once-a-second
         // elapsed timer) — spamming the sync mutation far more than "the transcript changed".
-    }, [phase, turns, questionIndex, phaseIndex, syncTurnsTrigger])
+    }, [phase, turns, questionIndex, phaseIndex, syncTurnsTrigger, runGraphQL, t])
 
     // mode="design" only (Vòng 5) — record the current spoken answer as a candidate
     // turn, then ask the interviewer to probe/follow-up on it within the SAME phase,

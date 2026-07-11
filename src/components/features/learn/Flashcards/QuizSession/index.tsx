@@ -689,22 +689,35 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
             })
             const nextIndex = index < sessionLength - 1 ? index + 1 : index
             // best-effort, fire-and-forget persistence for resume — never blocks
-            // advancing the quiz, and a failed sync only degrades resumability
+            // advancing the quiz; still routed through `runGraphQL` (toast on failure,
+            // no success toast) rather than a silent catch (thầy 2026-07-11: "fe
+            // không nuốt lỗi, dùng runGraphQL đi") — a failed sync only degrades
+            // resumability, but the learner should still see it.
             if (sessionId.current) {
-                void runSyncProgress
-                    .trigger({
-                        request: {
-                            sessionId: sessionId.current,
-                            currentIndex: nextIndex,
-                            results: nextResults.map((result) => ({
-                                cardId: result.cardId,
-                                correctBlanks: result.correctBlanks,
-                                totalBlanks: result.totalBlanks,
-                            })),
-                        },
-                        headers: courseHeaders,
-                    })
-                    .catch(() => {})
+                const syncingSessionId = sessionId.current
+                void runGraphQL(
+                    async () => {
+                        const result = await runSyncProgress.trigger({
+                            request: {
+                                sessionId: syncingSessionId,
+                                currentIndex: nextIndex,
+                                results: nextResults.map((result) => ({
+                                    cardId: result.cardId,
+                                    correctBlanks: result.correctBlanks,
+                                    totalBlanks: result.totalBlanks,
+                                })),
+                            },
+                            headers: courseHeaders,
+                        })
+                        return (
+                            result.data?.syncFlashcardQuizSessionProgress ?? {
+                                success: false,
+                                message: t("flashcard.quiz.error"),
+                            }
+                        )
+                    },
+                    { showSuccessToast: false },
+                )
             }
             if (index < sessionLength - 1) {
                 setIndex((current) => current + 1)

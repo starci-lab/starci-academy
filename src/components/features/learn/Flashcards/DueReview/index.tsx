@@ -137,33 +137,50 @@ export const DueReview = ({ onExit, className }: DueReviewProps) => {
             }
         }
         // no resumable session (or none of its cards still match the batch) —
-        // persist a fresh draw so it becomes resumable going forward.
-        void runStartSession
-            .trigger({
-                request: { courseId, cardIds: cards.map((dueCard) => dueCard.cardId) },
-                headers: courseHeaders as GraphQLHeaders,
-            })
-            .then((started) => {
-                sessionIdRef.current = started.data?.startFlashcardDueReviewSession.data?.sessionId ?? null
-            })
-            .catch(() => {})
-    }, [courseId, cards, inProgressSessionSwr.isLoading, inProgressSessionSwr.data, runStartSession, courseHeaders])
+        // persist a fresh draw so it becomes resumable going forward. Routed
+        // through `runGraphQL` (toast on failure, no success toast) instead of a
+        // silent catch (thầy 2026-07-11: "fe không nuốt lỗi, dùng runGraphQL đi").
+        void runGraphQL(
+            async () => {
+                const started = await runStartSession.trigger({
+                    request: { courseId, cardIds: cards.map((dueCard) => dueCard.cardId) },
+                    headers: courseHeaders as GraphQLHeaders,
+                })
+                const response = started.data?.startFlashcardDueReviewSession
+                sessionIdRef.current = response?.data?.sessionId ?? null
+                return response ?? { success: false, message: t("flashcard.review.error") }
+            },
+            { showSuccessToast: false },
+        )
+    }, [courseId, cards, inProgressSessionSwr.isLoading, inProgressSessionSwr.data, runStartSession, courseHeaders, runGraphQL, t])
 
     // finish: record the finished batch once (guarded), best-effort — a failed
     // complete call only means the row stays "in_progress" (still resumable),
-    // it never blocks the learner from leaving.
+    // it never blocks the learner from leaving. Routed through `runGraphQL`
+    // (thầy 2026-07-11: "fe không nuốt lỗi, dùng runGraphQL đi") instead of a
+    // silent catch.
     useEffect(() => {
         if (!done || completedRef.current || !sessionIdRef.current) {
             return
         }
         completedRef.current = true
-        void runCompleteSession
-            .trigger({
-                request: { sessionId: sessionIdRef.current, reviewedCount, xpEarned: 0 },
-                headers: courseHeaders as GraphQLHeaders,
-            })
-            .catch(() => {})
-    }, [done, reviewedCount, runCompleteSession, courseHeaders])
+        const completingSessionId = sessionIdRef.current
+        void runGraphQL(
+            async () => {
+                const result = await runCompleteSession.trigger({
+                    request: { sessionId: completingSessionId, reviewedCount, xpEarned: 0 },
+                    headers: courseHeaders as GraphQLHeaders,
+                })
+                return (
+                    result.data?.completeFlashcardDueReviewSession ?? {
+                        success: false,
+                        message: t("flashcard.review.error"),
+                    }
+                )
+            },
+            { showSuccessToast: false },
+        )
+    }, [done, reviewedCount, runCompleteSession, courseHeaders, runGraphQL, t])
 
     // SM-2 grade buttons for the current card: localized label + next-interval
     // preview ("4 days") computed server-side from the card's current state
@@ -216,19 +233,31 @@ export const DueReview = ({ onExit, className }: DueReviewProps) => {
                 setRevealed(false)
                 setCurrentIndex(nextIndex)
                 // best-effort, fire-and-forget persistence for resume — never blocks
-                // advancing to the next card; a failed sync only degrades resumability
+                // advancing to the next card; still routed through `runGraphQL`
+                // (toast on failure, no success toast) rather than a silent catch
+                // (thầy 2026-07-11: "fe không nuốt lỗi, dùng runGraphQL đi").
                 if (sessionIdRef.current) {
-                    void runSyncSession
-                        .trigger({
-                            request: {
-                                sessionId: sessionIdRef.current,
-                                currentIndex: nextIndex,
-                                reviewedCount: nextReviewedCount,
-                                xpEarned: 0,
-                            },
-                            headers: courseHeaders as GraphQLHeaders,
-                        })
-                        .catch(() => {})
+                    const syncingSessionId = sessionIdRef.current
+                    void runGraphQL(
+                        async () => {
+                            const result = await runSyncSession.trigger({
+                                request: {
+                                    sessionId: syncingSessionId,
+                                    currentIndex: nextIndex,
+                                    reviewedCount: nextReviewedCount,
+                                    xpEarned: 0,
+                                },
+                                headers: courseHeaders as GraphQLHeaders,
+                            })
+                            return (
+                                result.data?.syncFlashcardDueReviewSessionProgress ?? {
+                                    success: false,
+                                    message: t("flashcard.review.error"),
+                                }
+                            )
+                        },
+                        { showSuccessToast: false },
+                    )
                 }
             }
         },

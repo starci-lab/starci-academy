@@ -135,6 +135,38 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
     //     `router.push` idiom. Never renders the live reviewer itself; `done`
     //     stays false the whole time (`AsyncContent`'s `isLoading` gate below
     //     covers this branch), so only the skeleton ever shows here.
+    // start a fresh session + redirect into its sessioned URL — shared by the
+    // resolve effect (2 branches below) AND `onRestart`. Routed through
+    // `runGraphQL` (toast on failure, no success toast — best-effort/silent
+    // success) instead of a bare `.catch(() => {})` (thầy 2026-07-11: "fe
+    // không nuốt lỗi, dùng runGraphQL đi") — a failed start now surfaces to
+    // the learner instead of leaving the shim route stuck silently.
+    const startSessionAndRedirect = useCallback(
+        async (redirectBase: string) => {
+            if (!courseHeaders) {
+                return
+            }
+            let freshId: string | undefined
+            await runGraphQL(
+                async () => {
+                    const result = await runStartSession.trigger({
+                        request: { deckId, cardIds: cards.map((deckCard) => deckCard.id) },
+                        headers: courseHeaders,
+                    })
+                    const response = result.data?.startFlashcardReviewSession
+                    freshId = response?.data?.sessionId
+                    return response ?? { success: false, message: t("flashcard.review.error") }
+                },
+                { showSuccessToast: false },
+            )
+            if (freshId) {
+                sessionIdRef.current = freshId
+                router.replace(`${redirectBase}/sessions/${freshId}`)
+            }
+        },
+        [cards, deckId, courseHeaders, runStartSession, runGraphQL, router, t],
+    )
+
     useEffect(() => {
         if (
             initAttemptedRef.current
@@ -156,19 +188,7 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
             }
             // stale/invalid session id — start a fresh one and correct the URL,
             // same as the no-`sessionId` branch below.
-            void runStartSession
-                .trigger({
-                    request: { deckId, cardIds: cards.map((deckCard) => deckCard.id) },
-                    headers: courseHeaders,
-                })
-                .then((result) => {
-                    const freshId = result.data?.startFlashcardReviewSession.data?.sessionId
-                    if (freshId) {
-                        sessionIdRef.current = freshId
-                        router.replace(`${pathname.replace(/\/sessions\/.+$/, "")}/sessions/${freshId}`)
-                    }
-                })
-                .catch(() => {})
+            void startSessionAndRedirect(pathname.replace(/\/sessions\/.+$/, ""))
             return
         }
 
@@ -179,20 +199,8 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
             router.replace(`${pathname}/sessions/${resumable.sessionId}`)
             return
         }
-        void runStartSession
-            .trigger({
-                request: { deckId, cardIds: cards.map((deckCard) => deckCard.id) },
-                headers: courseHeaders,
-            })
-            .then((result) => {
-                const freshId = result.data?.startFlashcardReviewSession.data?.sessionId
-                if (freshId) {
-                    sessionIdRef.current = freshId
-                    router.replace(`${pathname}/sessions/${freshId}`)
-                }
-            })
-            .catch(() => {})
-    }, [cards, deckId, sessionId, courseHeaders, inProgressSessionSwr.isLoading, inProgressSessionSwr.data, runStartSession, router, pathname])
+        void startSessionAndRedirect(pathname)
+    }, [cards, sessionId, courseHeaders, inProgressSessionSwr.isLoading, inProgressSessionSwr.data, router, pathname, startSessionAndRedirect])
 
     // SM-2 grade buttons, localized for the rating bar
     const ratingOptions = useMemo(
@@ -248,19 +256,31 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
                 setRevealed(false)
                 setCurrentIndex(nextIndex)
                 // best-effort, fire-and-forget persistence for resume — never blocks
-                // advancing the reviewer, and a failed sync only degrades resumability
+                // advancing the reviewer; still routed through `runGraphQL` (toast on
+                // failure, no success toast) rather than a silent catch — a failed sync
+                // only degrades resumability, but the learner should still see it.
                 if (sessionIdRef.current && courseHeaders) {
-                    void runSyncSession
-                        .trigger({
-                            request: {
-                                sessionId: sessionIdRef.current,
-                                currentIndex: nextIndex,
-                                reviewedCount: nextReviewedCount,
-                                xpEarned: 0,
-                            },
-                            headers: courseHeaders,
-                        })
-                        .catch(() => {})
+                    const syncSessionId = sessionIdRef.current
+                    void runGraphQL(
+                        async () => {
+                            const result = await runSyncSession.trigger({
+                                request: {
+                                    sessionId: syncSessionId,
+                                    currentIndex: nextIndex,
+                                    reviewedCount: nextReviewedCount,
+                                    xpEarned: 0,
+                                },
+                                headers: courseHeaders,
+                            })
+                            return (
+                                result.data?.syncFlashcardReviewSessionProgress ?? {
+                                    success: false,
+                                    message: t("flashcard.review.error"),
+                                }
+                            )
+                        },
+                        { showSuccessToast: false },
+                    )
                 }
             }
         },
@@ -269,23 +289,35 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
 
     // the run just finished (past the last card) — close out the persisted
     // session ONCE so `myFlashcardReviewHistory`/`myFlashcardReviewStats` can
-    // read it; guarded so a re-render at `done` never double-fires it.
+    // read it; guarded so a re-render at `done` never double-fires it. Routed
+    // through `runGraphQL` (thầy 2026-07-11: "fe không nuốt lỗi, dùng
+    // runGraphQL đi") instead of a silent catch.
     useEffect(() => {
         if (!done || completedRef.current || !sessionIdRef.current || !courseHeaders) {
             return
         }
         completedRef.current = true
-        void runCompleteSession
-            .trigger({
-                request: {
-                    sessionId: sessionIdRef.current,
-                    reviewedCount,
-                    xpEarned: 0,
-                },
-                headers: courseHeaders,
-            })
-            .catch(() => {})
-    }, [done, reviewedCount, courseHeaders, runCompleteSession])
+        const completingSessionId = sessionIdRef.current
+        void runGraphQL(
+            async () => {
+                const result = await runCompleteSession.trigger({
+                    request: {
+                        sessionId: completingSessionId,
+                        reviewedCount,
+                        xpEarned: 0,
+                    },
+                    headers: courseHeaders,
+                })
+                return (
+                    result.data?.completeFlashcardReviewSession ?? {
+                        success: false,
+                        message: t("flashcard.review.error"),
+                    }
+                )
+            },
+            { showSuccessToast: false },
+        )
+    }, [done, reviewedCount, courseHeaders, runCompleteSession, runGraphQL, t])
 
     // restart the deck from the first card — a fresh run, so start a NEW
     // resumable session too (the finished one was already completed above),
@@ -298,21 +330,7 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
         setReviewedCount(0)
         completedRef.current = false
         sessionIdRef.current = null
-        if (courseHeaders) {
-            void runStartSession
-                .trigger({
-                    request: { deckId, cardIds: cards.map((deckCard) => deckCard.id) },
-                    headers: courseHeaders,
-                })
-                .then((result) => {
-                    const freshId = result.data?.startFlashcardReviewSession.data?.sessionId
-                    if (freshId) {
-                        sessionIdRef.current = freshId
-                        router.replace(`${pathname.replace(/\/sessions\/.+$/, "")}/sessions/${freshId}`)
-                    }
-                })
-                .catch(() => {})
-        }
+        void startSessionAndRedirect(pathname.replace(/\/sessions\/.+$/, ""))
     }
 
     return (

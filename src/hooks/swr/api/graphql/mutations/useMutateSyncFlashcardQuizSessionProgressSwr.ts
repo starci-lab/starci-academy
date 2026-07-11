@@ -18,9 +18,11 @@ interface SyncFlashcardQuizSessionProgressArg {
 /**
  * SWR mutation for {@link mutateSyncFlashcardQuizSessionProgress}. Best-effort,
  * fire-and-forget persistence of the in-progress run — callers should NOT
- * `await` this before advancing the quiz, and should swallow errors
- * (`.catch(() => {})`): a failed sync only degrades resumability, it never
- * blocks the live run.
+ * `await` this before advancing the quiz, but must still route failures
+ * through `runGraphQL` (`useGraphQLWithToast`, `{ showSuccessToast: false }`)
+ * — NEVER a bare `.catch(() => {})` (thầy 2026-07-11: "fe không nuốt lỗi,
+ * dùng runGraphQL đi"). A failed sync only degrades resumability, it never
+ * blocks the live run — but should still toast.
  */
 export const useMutateSyncFlashcardQuizSessionProgressSwr = () => {
     const swr = useSWRMutation<

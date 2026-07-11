@@ -11,10 +11,13 @@ type MutateSyncMockInterviewSessionTurnsResult = Awaited<
 /**
  * SWR mutation for {@link mutateSyncMockInterviewSessionTurns}. Best-effort,
  * fire-and-forget persistence of the in-progress transcript — callers should
- * NOT `await` this before continuing the interview, and should swallow errors
- * (`.catch(() => {})`): a failed sync only degrades resumability, it never
- * blocks the live session. Sends the `X-Course-Id` header for the same
- * `GraphQLMustEnrolledGuard` the rest of the mock-interview mutations use.
+ * NOT `await` this before continuing the interview, but must still route
+ * failures through `runGraphQL` (`useGraphQLWithToast`, `{ showSuccessToast:
+ * false }`) — NEVER a bare `.catch(() => {})` (thầy 2026-07-11: "fe không
+ * nuốt lỗi, dùng runGraphQL đi"). A failed sync only degrades resumability, it
+ * never blocks the live session — but should still toast. Sends the
+ * `X-Course-Id` header for the same `GraphQLMustEnrolledGuard` the rest of the
+ * mock-interview mutations use.
  */
 export const useMutateSyncMockInterviewSessionTurnsSwr = () => {
     const authenticated = useAppSelector((state) => state.keycloak.authenticated)
@@ -28,7 +31,8 @@ export const useMutateSyncMockInterviewSessionTurnsSwr = () => {
         "MUTATE_SYNC_MOCK_INTERVIEW_SESSION_TURNS_SWR",
         async (_key, { arg }) => {
             // best-effort — fail fast when signed out / no course context, same as the
-            // rest of the mock-interview mutations, but the caller is expected to swallow it
+            // rest of the mock-interview mutations; the caller routes this through
+            // runGraphQL (toast), not a silent catch
             if (!authenticated) {
                 throw new Error("Not authenticated")
             }

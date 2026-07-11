@@ -4,7 +4,8 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Loading placeholder for the flashcard reviewer. Mirrors the real layout: a
- * progress bar, one fixed-height flashcard, and the prev/flip/next controls.
+ * progress bar, one no-flip prompt card (mirrors {@link import("@/components/blocks/cards/FlipCard").FlipCard}'s
+ * `min-h-64`/`sm:min-h-72` centered face), and the prev/show-answer controls.
  */
 export const FlashcardReviewerSkeleton = ({ className }: WithClassNames<undefined> = {}) => {
     return (
@@ -12,15 +13,14 @@ export const FlashcardReviewerSkeleton = ({ className }: WithClassNames<undefine
             <div className="flex flex-col gap-6">
                 {/* progress bar */}
                 <Skeleton className="h-1.5 w-full rounded-full" />
-                {/* the flashcard — fixed-height bordered surface (mirrors FlipCard) */}
-                <div className="flex h-80 flex-col gap-3 rounded-2xl bg-surface shadow-surface p-6 sm:h-[22rem]">
+                {/* the flashcard — mirrors FlipCard's front face */}
+                <div className="flex min-h-64 flex-col items-center justify-center gap-3 rounded-2xl bg-surface shadow-surface p-6 sm:min-h-72">
                     <Skeleton.Typography type="body" width="3/4" />
                     <Skeleton.Typography type="body" width="2/3" />
                     <Skeleton.Typography type="body" width="1/2" />
                 </div>
-                {/* prev / flip / next */}
+                {/* prev / show answer */}
                 <div className="flex items-center justify-between gap-3">
-                    <Skeleton.Button />
                     <Skeleton.Button />
                     <Skeleton.Button />
                 </div>

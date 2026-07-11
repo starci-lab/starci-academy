@@ -6,7 +6,6 @@ import { LayoutGroup, motion, useReducedMotion } from "framer-motion"
 import { Button, Chip, Label, ScrollShadow, Typography, cn } from "@heroui/react"
 import {
     ArrowRightIcon,
-    ArrowsClockwiseIcon,
     CheckCircleIcon,
     ClockIcon,
     FlameIcon,
@@ -1127,20 +1126,6 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                 <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
                     <FlipCard
                         revealed={showAnswer}
-                        onToggle={() => setShowAnswer((flipped) => !flipped)}
-                        ariaLabel={showAnswer ? t("flashcard.showQuestion") : t("flashcard.showAnswer")}
-                        frontHint={
-                            <>
-                                <ArrowsClockwiseIcon className="size-3.5" aria-hidden focusable="false" />
-                                {t("flashcard.flipHint")}
-                            </>
-                        }
-                        backHint={
-                            <>
-                                <ArrowsClockwiseIcon className="size-3.5" aria-hidden focusable="false" />
-                                {t("flashcard.flipBackHint")}
-                            </>
-                        }
                         front={
                             <>
                                 <Typography type="body-xs" weight="medium" color="muted">

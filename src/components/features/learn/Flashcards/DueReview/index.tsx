@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import useSWR, { useSWRConfig } from "swr"
 import { Button, Typography, cn } from "@heroui/react"
-import { ArrowRightIcon, CheckCircleIcon, CursorClickIcon } from "@phosphor-icons/react"
+import { ArrowRightIcon, CheckCircleIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { pathConfig } from "@/resources/path"
@@ -350,20 +350,6 @@ export const DueReview = ({ onExit, className }: DueReviewProps) => {
                     {/* the flip card: prompt → answer */}
                     <FlipCard
                         revealed={revealed}
-                        onToggle={() => setRevealed((flipped) => !flipped)}
-                        ariaLabel={revealed ? t("flashcard.showQuestion") : t("flashcard.showAnswer")}
-                        frontHint={
-                            <>
-                                <CursorClickIcon className="size-3.5" aria-hidden focusable="false" />
-                                {t("flashcard.flipHint")}
-                            </>
-                        }
-                        backHint={
-                            <>
-                                <CursorClickIcon className="size-3.5" aria-hidden focusable="false" />
-                                {t("flashcard.flipBackHint")}
-                            </>
-                        }
                         front={
                             <>
                                 <Typography type="body-xs" weight="medium" color="muted">

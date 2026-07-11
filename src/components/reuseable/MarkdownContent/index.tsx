@@ -268,14 +268,16 @@ export interface MarkdownContentProps extends WithClassNames<undefined> {
  * @param props - {@link MarkdownContentProps}
  */
 /**
- * Strips Anki-style cloze markers `{{cN::…}}` down to their inner text so a
- * flashcard answer renders cleanly everywhere (reviewer / due / quiz full
- * answer). The `cN::` prefix makes the pattern distinctive — it never collides
- * with template braces like `{{ user.name }}` in lesson code samples.
+ * Strips Anki-style cloze markers `{{cN::term}}` (or `{{cN::term::distractorA,
+ * distractorB}}` — the optional trailing group is the quiz's curated
+ * confuser set, dropped entirely here) down to just the term, so a flashcard
+ * answer renders cleanly everywhere (reviewer / due / quiz full answer). The
+ * `cN::` prefix makes the pattern distinctive — it never collides with
+ * template braces like `{{ user.name }}` in lesson code samples.
  * @param markdown - Raw markdown that may carry cloze markers.
  */
 const stripClozeMarkers = (markdown: string): string =>
-    markdown.replace(/\{\{c\d+::([\s\S]*?)\}\}/g, "$1")
+    markdown.replace(/\{\{c\d+::([\s\S]*?)(?:::[\s\S]*?)?\}\}/g, "$1")
 
 export const MarkdownContent = ({ markdown, reading = false, className }: MarkdownContentProps) => {
     const theme = useTheme()

@@ -33,7 +33,7 @@ import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButt
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { GradeModelDropdown, type GradeModelSelection } from "@/components/blocks/grading/GradeModelDropdown"
 import { GradeCreditCaption } from "@/components/blocks/grading/GradeCreditCaption"
-import { BackLink } from "@/components/blocks/navigation/BackLink"
+import { WorkSessionHeader } from "@/components/blocks/navigation/WorkSessionHeader"
 import { pathConfig } from "@/resources/path"
 import { useQueryUserSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserSwr"
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition"
@@ -67,6 +67,7 @@ import { MockInterviewHistory } from "../MockInterviewHistory"
 import { MockInterviewStats } from "../MockInterviewStats"
 import { MockInterviewTrackSnapshot } from "../MockInterviewTrackSnapshot"
 import { InterviewerPresence } from "../InterviewerPresence"
+import { MockInterviewSessionSkeleton } from "../MockInterviewSessionSkeleton"
 import { VoiceHero } from "../VoiceHero"
 import { VoiceUnavailableModal } from "../VoiceUnavailableModal"
 import { personaFor } from "../interviewPersona"
@@ -1247,6 +1248,17 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
         [],
     )
 
+    // ── RESUMING (dedicated /interview/[sessionId] route) ─────────────────
+    // `resumeSessionId` always lands here in the "interview" phase eventually — the
+    // rehydrate effect above flips `phase` once `authCheckSwr`/`inProgressSessionSwr`
+    // settle, guarded by `resumeAttemptedRef` so it fires once. Until then `phase` is
+    // still its initial "setup" value; without this gate the setup green-room screen
+    // would flash for a frame before jumping to the live interview surface. Show a
+    // skeleton that mirrors the FINAL interview surface instead of the wrong screen.
+    if (resumeSessionId && phase === "setup" && !resumeAttemptedRef.current) {
+        return <MockInterviewSessionSkeleton className={className} />
+    }
+
     // ── SETUP · GREEN ROOM ───────────────────────────────────────────────
     if (phase === "setup") {
         // rough time-ahead estimate for the pre-interview line (~3 min per question)
@@ -1716,51 +1728,43 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
         total: number
         current: number
         rightSlot?: React.ReactNode
-    }) => (
-        <div className="sticky top-16 z-10 border-b border-default bg-surface">
-            <div className="flex items-center gap-3 px-4 py-2.5 sm:px-6">
-                <BackLink label={t("mockInterview.leaveInterview")} onPress={leaveInterview} />
-                <span className="hidden h-5 w-px shrink-0 bg-default sm:block" aria-hidden />
-                <span className="flex min-w-0 items-center gap-2">
-                    <img src={persona.avatarSrc} alt="" className="size-7 shrink-0 rounded-full object-cover" aria-hidden />
-                    <Typography type="body-sm" weight="medium" className="hidden truncate sm:block">{persona.name}</Typography>
-                </span>
-                <span className="hidden h-5 w-px shrink-0 bg-default sm:block" aria-hidden />
-                <Typography type="body-sm" weight="medium" color="muted" className="whitespace-nowrap">{opts.counter}</Typography>
-                <span className="flex-1" />
-                {/* "session time limit" — counts DOWN to the server deadline (never a
-                    local clock start); turns warning-colored under 5 minutes left (real
-                    urgency, backed by an actual server-enforced deadline). */}
-                <span
-                    className={cn(
-                        "flex shrink-0 items-center gap-1.5",
-                        remainingSeconds !== null && remainingSeconds <= TIME_LIMIT_WARNING_SECONDS && "text-warning",
-                    )}
-                >
-                    <ClockIcon className="size-4" aria-hidden focusable="false" />
-                    <Typography type="body-sm" weight="medium" className="tabular-nums">{formatElapsed(remainingSeconds ?? 0)}</Typography>
-                </span>
-                {opts.rightSlot ? (
-                    <>
-                        <span className="hidden h-5 w-px shrink-0 bg-default sm:block" aria-hidden />
-                        {opts.rightSlot}
-                    </>
-                ) : null}
-            </div>
-            {/* progress meter = bottom edge, full width (goal-gradient) */}
-            <div className="flex gap-1 px-4 pb-2 sm:px-6" role="presentation">
-                {Array.from({ length: opts.total }, (_, position) => (
-                    <span
-                        key={position}
-                        className={cn(
-                            "h-1 flex-1 rounded-full",
-                            position < opts.current ? "bg-success" : position === opts.current ? "bg-accent" : "bg-default",
-                        )}
-                    />
-                ))}
-            </div>
-        </div>
-    )
+    }) => {
+        // "session time limit" — counts DOWN to the server deadline (never a
+        // local clock start); turns warning-colored under 5 minutes left (real
+        // urgency, backed by an actual server-enforced deadline).
+        const timer = (
+            <span
+                className={cn(
+                    "flex shrink-0 items-center gap-1.5",
+                    remainingSeconds !== null && remainingSeconds <= TIME_LIMIT_WARNING_SECONDS && "text-warning",
+                )}
+            >
+                <ClockIcon className="size-4" aria-hidden focusable="false" />
+                <Typography type="body-sm" weight="medium" className="tabular-nums">{formatElapsed(remainingSeconds ?? 0)}</Typography>
+            </span>
+        )
+        return (
+            <WorkSessionHeader
+                backLabel={t("mockInterview.leaveInterview")}
+                onBack={leaveInterview}
+                identity={{ avatarSrc: persona.avatarSrc, name: persona.name }}
+                counter={opts.counter}
+                total={opts.total}
+                current={opts.current}
+                rightSlot={
+                    <span className="flex shrink-0 items-center gap-3">
+                        {timer}
+                        {opts.rightSlot ? (
+                            <>
+                                <span className="hidden h-5 w-px shrink-0 bg-default sm:block" aria-hidden />
+                                {opts.rightSlot}
+                            </>
+                        ) : null}
+                    </span>
+                }
+            />
+        )
+    }
 
     // ── INTERVIEW, mode="qna" (Vòng 5 — "hỏi từng câu"): 1 câu, 1 ô trả lời ──
     // Full-bleed work surface: a shared header band on top, then the conversation as

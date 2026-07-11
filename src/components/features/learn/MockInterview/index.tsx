@@ -6,7 +6,10 @@ import { useSearchParams } from "next/navigation"
 import { EnrollGate } from "../shared/EnrollGate"
 import { LearnBreadcrumb } from "../shared/LearnBreadcrumb"
 import { MockInterviewSession } from "./MockInterviewSession"
+import { MockInterviewSetupSkeleton } from "./MockInterviewSetupSkeleton"
+import { MockInterviewSessionSkeleton } from "./MockInterviewSessionSkeleton"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryCourseEnrollmentStatusSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseEnrollmentStatusSwr"
@@ -33,6 +36,12 @@ export const MockInterview = ({ className, resumeSessionId }: MockInterviewProps
     const t = useTranslations()
     const courseId = useAppSelector((state) => state.course.entity?.id)
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
+    // enrollment status is only ever FETCHED while authenticated (the query's key is
+    // disabled otherwise — see `useQueryCourseEnrollmentStatusSwr`), so a guest's
+    // `enrollmentSwr.data` stays `undefined` forever; without checking `authenticated`
+    // below, `enrollmentResolved` would never flip and the skeleton would spin forever
+    // instead of settling straight into the enroll gate.
+    const authenticated = useAppSelector((state) => state.keycloak.authenticated)
     // enrolled-only (spends AI credits) — gate trial viewers behind an enroll CTA
     const enrollmentSwr = useQueryCourseEnrollmentStatusSwr()
     const isEnrolled = enrollmentSwr.data?.courseEnrollmentStatus?.data?.isEnrolled === true
@@ -43,6 +52,12 @@ export const MockInterview = ({ className, resumeSessionId }: MockInterviewProps
     // straight in the interview phase, so it counts as live immediately too — no
     // waiting on the query-param mirror to catch up after mount.
     const isLive = useSearchParams().get("phase") === "interview" || Boolean(resumeSessionId)
+    // resolved once the enrollment check has actually run (nullish, not `!enrollmentSwr.data` —
+    // an `{isEnrolled: false}` payload is falsy but IS resolved) — gates the green
+    // room / live surface behind a mirrored skeleton instead of rendering nothing.
+    // Guests (unauthenticated) never fire the query at all, so they resolve immediately
+    // (straight to the enroll gate) instead of waiting on a request that never runs.
+    const enrollmentResolved = !authenticated || (enrollmentSwr.data !== undefined && !enrollmentSwr.isLoading)
 
     return (
         <div className={className}>
@@ -55,19 +70,24 @@ export const MockInterview = ({ className, resumeSessionId }: MockInterviewProps
                     />
                 ) : null}
 
-                {!isEnrolled ? (
-                    <EnrollGate
-                        title={t("mockInterview.gateTitle")}
-                        description={t("mockInterview.gateDescription")}
-                    />
-                ) : courseId && courseDisplayId ? (
-                    <MockInterviewSession
-                        key={courseId}
-                        courseId={courseId}
-                        courseDisplayId={courseDisplayId}
-                        resumeSessionId={resumeSessionId}
-                    />
-                ) : null}
+                <AsyncContent
+                    isLoading={!enrollmentResolved}
+                    skeleton={isLive ? <MockInterviewSessionSkeleton /> : <MockInterviewSetupSkeleton />}
+                >
+                    {!isEnrolled ? (
+                        <EnrollGate
+                            title={t("mockInterview.gateTitle")}
+                            description={t("mockInterview.gateDescription")}
+                        />
+                    ) : courseId && courseDisplayId ? (
+                        <MockInterviewSession
+                            key={courseId}
+                            courseId={courseId}
+                            courseDisplayId={courseDisplayId}
+                            resumeSessionId={resumeSessionId}
+                        />
+                    ) : null}
+                </AsyncContent>
             </div>
         </div>
     )

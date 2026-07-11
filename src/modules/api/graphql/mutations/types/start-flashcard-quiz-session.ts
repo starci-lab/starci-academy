@@ -23,6 +23,9 @@ export interface StartFlashcardQuizSessionData {
     /** Server-issued id for this run — used by `syncFlashcardQuizSessionProgress`,
      *  `completeFlashcardQuizSession`, and the resumable `.../quiz/[sessionId]` route. */
     sessionId: string
+    /** ISO timestamp of the session's resumable-window deadline (createdAt + duration)
+     *  — drives the `WorkSessionHeader` countdown, same as Mock Interview's own `deadlineAt`. */
+    deadlineAt: string
 }
 
 /** Apollo response shape for `startFlashcardQuizSession`. */

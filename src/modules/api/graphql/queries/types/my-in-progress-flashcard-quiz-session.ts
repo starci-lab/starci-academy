@@ -27,6 +27,9 @@ export interface MyInProgressFlashcardQuizSessionData {
     results: Array<MyInProgressFlashcardQuizSessionResultItem>
     /** ISO timestamp of the session's last synced activity. */
     updatedAt: string
+    /** ISO timestamp of the session's resumable-window deadline (createdAt + duration)
+     *  — drives the `WorkSessionHeader` countdown, same as Mock Interview's own `deadlineAt`. */
+    deadlineAt: string
 }
 
 /** Apollo response shape for `myInProgressFlashcardQuizSession`. */

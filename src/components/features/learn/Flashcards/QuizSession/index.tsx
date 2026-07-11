@@ -8,6 +8,7 @@ import {
     ArrowRightIcon,
     ArrowsClockwiseIcon,
     CheckCircleIcon,
+    ClockIcon,
     FlameIcon,
     LightningIcon,
     LockKeyIcon,
@@ -99,6 +100,16 @@ const COMBO_COVERAGE_THRESHOLD = 0.6
 const COMBO_GRADE_THRESHOLD = 2
 /** XP awarded per blank filled correctly — the recap's local estimate. */
 const XP_PER_CORRECT_BLANK = 2
+
+/** Format elapsed/remaining seconds as mm:ss. Mirrors `MockInterviewSession`'s own. */
+const formatElapsed = (seconds: number): string => {
+    const mm = Math.floor(seconds / 60)
+    const ss = seconds % 60
+    return `${String(mm).padStart(2, "0")}:${String(ss).padStart(2, "0")}`
+}
+/** Below this many seconds remaining, the HUD countdown turns warning-colored
+ *  (session time limit, real urgency — not fake scarcity). Mirrors Mock Interview's own. */
+const TIME_LIMIT_WARNING_SECONDS = 5 * 60
 /** XP for a fallback (no-cloze) card with a Good/Easy self-grade. */
 const XP_PER_STRUCTURAL_CARD = 3
 /**
@@ -263,6 +274,11 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
     // set when `resumeSessionId` couldn't be resumed (no matching session / expired
     // past its 24h TTL) — shown as an inline note on the setup screen it falls back to
     const [resumeError, setResumeError] = useState<string | null>(null)
+    // server-issued deadline for THIS run (createdAt + duration) — set on start AND
+    // on resume rehydrate; drives the WorkSessionHeader countdown below, same
+    // `deadlineAt` contract as Mock Interview's own HUD (never a local clock start).
+    const [deadlineAt, setDeadlineAt] = useState<string | null>(null)
+    const [remainingSeconds, setRemainingSeconds] = useState<number | null>(null)
 
     // the setup screen's mode picker drives this pre-build; once cards are actually
     // drawn (fresh OR resumed), the real count wins — a resumed run's card count
@@ -420,6 +436,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                 }
             })
             sessionId.current = resumeSessionId
+            setDeadlineAt(data.deadlineAt)
             setSessionCards(restoredCards)
             setIndex(Math.min(data.currentIndex, restoredCards.length - 1))
             setResults(restoredResults)
@@ -434,6 +451,24 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
             setPhase("active")
         })()
     }, [resumeSessionId, decks, inProgressSessionSwr.isLoading, inProgressSessionSwr.data, fetchCardPool, t])
+
+    // "session time limit" — ticks every second while the run is active, counting
+    // DOWN to the server-issued `deadlineAt` (never a local clock start). Mirrors
+    // `MockInterviewSession`'s own countdown effect (thầy 2026-07-11: "thêm thời
+    // gian mỗi phiên là 60 phút" — the deadline itself was already server-enforced
+    // via `FLASHCARD_QUIZ_SESSION_DURATION_MS`; this makes it VISIBLE in the HUD).
+    useEffect(() => {
+        if (phase !== "active" || !deadlineAt) {
+            return
+        }
+        const deadlineMs = new Date(deadlineAt).getTime()
+        const tick = () => {
+            setRemainingSeconds(Math.max(0, Math.ceil((deadlineMs - Date.now()) / 1000)))
+        }
+        tick()
+        const id = window.setInterval(tick, 1000)
+        return () => window.clearInterval(id)
+    }, [phase, deadlineAt])
 
     const card = sessionCards[index]
 
@@ -1006,12 +1041,29 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                     ))}
                 </>
             ) : undefined}
-            rightSlot={combo > 1 ? (
-                <Chip size="sm" variant="soft" color="warning">
-                    <FlameIcon className="size-4" aria-hidden focusable="false" />
-                    {t("flashcard.quiz.comboChip", { combo })}
-                </Chip>
-            ) : undefined}
+            rightSlot={
+                <span className="flex shrink-0 items-center gap-3">
+                    {remainingSeconds !== null ? (
+                        <span
+                            className={cn(
+                                "flex shrink-0 items-center gap-1.5",
+                                remainingSeconds <= TIME_LIMIT_WARNING_SECONDS && "text-warning",
+                            )}
+                        >
+                            <ClockIcon className="size-4" aria-hidden focusable="false" />
+                            <Typography type="body-sm" weight="medium" className="tabular-nums">
+                                {formatElapsed(remainingSeconds)}
+                            </Typography>
+                        </span>
+                    ) : null}
+                    {combo > 1 ? (
+                        <Chip size="sm" variant="soft" color="warning">
+                            <FlameIcon className="size-4" aria-hidden focusable="false" />
+                            {t("flashcard.quiz.comboChip", { combo })}
+                        </Chip>
+                    ) : null}
+                </span>
+            }
         />
     )
 

@@ -14,6 +14,7 @@ const mutation1 = gql`
       error
       data {
         sessionId
+        deadlineAt
       }
     }
   }

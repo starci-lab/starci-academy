@@ -2,21 +2,26 @@
 
 import { useCallback, useState } from "react"
 import { useTranslations } from "next-intl"
-import { queryMyInProgressFlashcardReviewSession } from "@/modules/api/graphql/queries/query-my-in-progress-flashcard-review-session"
 import { useMutateStartFlashcardReviewSessionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateStartFlashcardReviewSessionSwr"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import { GraphQLHeadersKey, type GraphQLHeaders } from "@/modules/api/graphql/types"
 
 /**
- * Resolve-or-start a deck's "Học thẻ" review session EAGERLY, right from the
- * CTA that opens it (`FlashcardDeckList`'s "Học" button) — mirrors
- * `QuizSession`'s own `startSession`: the CTA goes `isPending` while a
- * resumable session is looked up (or a fresh one persisted), and the caller
- * only `router.push`es once a real sessionId comes back (thầy 2026-07-11:
- * "học là dùng router.push chứ không phải redirect", "bấm vô học thì isPending
- * ở cái nút học"). Replaces navigating INSTANTLY to the bare shim route
- * (`review?deckId=`) and showing a full-page skeleton there — that shim still
- * exists for direct/shared links, this is the fast in-place path for a click.
+ * Start a FRESH deck "Học thẻ" review session EAGERLY, right from the CTA
+ * that opens it (`FlashcardDeckList`'s "Học" button) — mirrors
+ * `QuizSession`'s own `startSession`: the CTA goes `isPending` while the
+ * session persists, and the caller only `router.push`es once a real
+ * sessionId comes back (thầy 2026-07-11: "học là dùng router.push chứ không
+ * phải redirect", "bấm vô học thì isPending ở cái nút học").
+ *
+ * ALWAYS calls `start` directly — no resumable-lookup-and-reuse here anymore
+ * (thầy 2026-07-12: "nếu đang có session bỏ dở => override lại session đó
+ * (xóa cũ tạo mới)", mirrors the identical fix on
+ * {@link import("./useStartFlashcardDueReviewSession").useStartFlashcardDueReviewSession}).
+ * The `start` mutation already retires any prior `in_progress` draw for the
+ * enrollment+deck before persisting the new one
+ * (`FlashcardReviewSessionService.start`), so this button always means
+ * "begin now" — resuming stays a separate, explicit choice elsewhere.
  */
 export const useStartFlashcardReviewSession = (courseId: string | undefined) => {
     const t = useTranslations()
@@ -32,13 +37,6 @@ export const useStartFlashcardReviewSession = (courseId: string | undefined) => 
             }
             setStartingDeckId(deckId)
             const headers: GraphQLHeaders = { [GraphQLHeadersKey.XCourseId]: courseId }
-
-            const resumable = await queryMyInProgressFlashcardReviewSession({ request: { deckId }, headers })
-                .then((result) => result.data?.myInProgressFlashcardReviewSession?.data ?? null)
-                .catch(() => null)
-            if (resumable) {
-                return resumable.sessionId
-            }
 
             let freshId: string | null = null
             const ok = await runGraphQL(

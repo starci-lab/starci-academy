@@ -2,19 +2,32 @@
 
 import { useCallback, useState } from "react"
 import { useTranslations } from "next-intl"
-import { queryMyInProgressFlashcardDueReviewSession } from "@/modules/api/graphql/queries/query-my-in-progress-flashcard-due-review-session"
 import { useMutateStartFlashcardDueReviewSessionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateStartFlashcardDueReviewSessionSwr"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import { GraphQLHeadersKey, type GraphQLHeaders } from "@/modules/api/graphql/types"
 
 /**
- * Resolve-or-start the cross-deck "Đến hạn hôm nay" (due) review session
- * EAGERLY, right from the CTA that opens it (`DueReviewHero`'s "Ôn N thẻ"
- * button) — mirrors {@link useStartFlashcardReviewSession} /
- * `QuizSession`'s own `startSession`: the CTA goes `isPending` while a
- * resumable session is looked up (or a fresh one persisted), and the caller
- * only `router.push`es once a real sessionId comes back (thầy 2026-07-11:
- * "bấm vô học thì isPending ở cái nút học, ôn 55 thẻ cũng isPending").
+ * Start a FRESH cross-deck "Đến hạn hôm nay" (due) review session EAGERLY,
+ * right from the CTA that opens it (`DueReviewHero`'s "Ôn N thẻ" button) —
+ * mirrors {@link useStartFlashcardReviewSession} / `QuizSession`'s own
+ * `startSession`: the CTA goes `isPending` while the session persists, and
+ * the caller only `router.push`es once a real sessionId comes back (thầy
+ * 2026-07-11: "bấm vô học thì isPending ở cái nút học, ôn 55 thẻ cũng
+ * isPending").
+ *
+ * ALWAYS calls `start` directly — no resumable-lookup-and-reuse here anymore
+ * (thầy 2026-07-12: "nếu đang có session bỏ dở => override lại session đó
+ * (xóa cũ tạo mới)"). The `start` mutation itself already retires any prior
+ * `in_progress` draw for the enrollment before persisting the new one
+ * (`FlashcardDueReviewSessionService.start`), so this button always means
+ * "begin now" — resuming a dangling session is a SEPARATE, explicit choice
+ * via the dedicated `ContinueCard` (`DueReviewHero`'s own resume card, fed by
+ * `useQueryMyInProgressFlashcardDueReviewSessionSwr`). Removing the
+ * check-then-reuse race here also fixes 2 bugs it caused: clicking "Học"
+ * sometimes landing straight on the results page (a resumable session that
+ * had already flipped to non-in_progress by the time it was reused), and the
+ * due-review sessionId changing on every click (two independent resolve-or-
+ * start paths racing each other to decide reuse-vs-create).
  */
 export const useStartFlashcardDueReviewSession = (courseId: string | undefined) => {
     const t = useTranslations()
@@ -29,13 +42,6 @@ export const useStartFlashcardDueReviewSession = (courseId: string | undefined) 
             }
             setStarting(true)
             const headers: GraphQLHeaders = { [GraphQLHeadersKey.XCourseId]: courseId }
-
-            const resumable = await queryMyInProgressFlashcardDueReviewSession({ request: { courseId }, headers })
-                .then((result) => result.data?.myInProgressFlashcardDueReviewSession?.data ?? null)
-                .catch(() => null)
-            if (resumable) {
-                return resumable.sessionId
-            }
 
             let freshId: string | null = null
             const ok = await runGraphQL(

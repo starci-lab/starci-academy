@@ -103,13 +103,17 @@ export const ProfileCoding = ({
         error,
         mutate,
     } = useQueryUserCodingProgressSwr(userId)
-    const { data: history } = useQueryUserCodingHistorySwr(userId)
-    const { data: skills } = useQueryUserCodingSkillsSwr(userId)
+    const historySwr = useQueryUserCodingHistorySwr(userId)
+    const skillsSwr = useQueryUserCodingSkillsSwr(userId)
     // coding standing — global rank + percentile by solved count (null when unranked)
-    const { data: standing } = useQueryUserCodingRankSwr(userId)
+    const standingSwr = useQueryUserCodingRankSwr(userId)
     // per-source XP breakdown — codingXp is the coding-only XP (ledger sum),
     // NOT the global users.points balance the legacy "Điểm code" metric read
-    const { data: xp } = useQueryUserXpSwr(userId)
+    const xpSwr = useQueryUserXpSwr(userId)
+    const history = historySwr.data
+    const skills = skillsSwr.data
+    const standing = standingSwr.data
+    const xp = xpSwr.data
 
     // null data (no coding activity yet) → treat every metric as zero
     const solved = data?.solvedProblemIds.length ?? 0
@@ -149,8 +153,16 @@ export const ProfileCoding = ({
     const [showAllHistory, setShowAllHistory] = useState(false)
     const visibleHistory = showAllHistory ? solvedHistory : solvedHistory.slice(0, INITIAL_HISTORY)
     const hiddenHistory = solvedHistory.length - INITIAL_HISTORY
-    // first load in flight only when no progress data has resolved yet
-    const isFirstLoad = !data && (isLoading || !userId)
+    // 2026-07-12: history/skills/standing/xp fire alongside `progress` but were
+    // not part of this gate — once `progress` resolved, the tab's sub-sections
+    // (metric row's rank/percentile, the stats card, solve history) popped in
+    // individually as each of those queries finished. Wait on all of them so the
+    // one skeleton below covers the whole chain instead of only the first hop.
+    const isFirstLoad = (!data && (isLoading || !userId))
+        || (historySwr.isLoading && !history)
+        || (skillsSwr.isLoading && !skills)
+        || (standingSwr.isLoading && !standing)
+        || (xpSwr.isLoading && !xp)
 
     return (
         <AsyncContent

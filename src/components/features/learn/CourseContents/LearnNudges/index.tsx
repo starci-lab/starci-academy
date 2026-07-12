@@ -28,6 +28,7 @@ import {
     SurfaceListCard,
     SurfaceListCardRow,
 } from "@/components/blocks/cards/SurfaceListCard"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /** One resolved nudge row. */
 interface Nudge {
@@ -102,6 +103,26 @@ export const LearnNudges = ({ className }: LearnNudgesProps) => {
             label: t("courseContents.nudges.rank", { rank }),
             href: learn.leaderboard().build(),
         })
+    }
+
+    // 2026-07-12: dueSwr/leaderboardSwr resolve strictly after `outline` (A) has
+    // already rendered the rest of the page — while they're still in flight,
+    // `dueCount`/`rank` default to 0/null, so this strip used to `return null`
+    // (indistinguishable from "genuinely no nudges") then pop in a beat later.
+    // Skeleton the strip while either is still pending; only self-hide once BOTH
+    // have resolved and there's truly nothing to nudge.
+    const nudgesPending = (dueSwr.isLoading && !dueSwr.data) || (leaderboardSwr.isLoading && !leaderboardSwr.data)
+    if (nudgesPending) {
+        return (
+            <SurfaceListCard className={className}>
+                {[0, 1].map((row) => (
+                    <div key={row} className="flex items-center gap-3 px-4 py-3">
+                        <Skeleton className="size-5 shrink-0 rounded" />
+                        <Skeleton.Typography type="body-sm" width="1/2" />
+                    </div>
+                ))}
+            </SurfaceListCard>
+        )
     }
 
     // no timely nudge → render nothing (no empty card)

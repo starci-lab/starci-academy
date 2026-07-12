@@ -20,6 +20,8 @@ export interface MyFlashcardReviewSessionBySessionIdData {
     currentIndex: number
     /** Cards actually graded so far this session. */
     reviewedCount: number
+    /** 0-indexed card positions graded this session (order-independent) — rehydrates the progress bar's per-segment green on resume. */
+    gradedIndexes: Array<number>
     /** Client-reported XP bookkeeping snapshot so far this session (not a server grant). */
     xpEarned: number
     /** ISO timestamp of the session's last synced activity. */

@@ -21,6 +21,7 @@ import {
 import {
     PriceTag,
 } from "@/components/blocks/commerce/PriceTag"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import {
     useLocale,
     useTranslations,
@@ -49,6 +50,12 @@ export interface CourseCardProps extends WithClassNames<undefined> {
     /** List/original VND price struck through under the loyalty price. */
     loyaltyOriginalVnd?: number | null
     /**
+     * Whether the loyalty preview is still resolving (authenticated viewer only —
+     * guests never set this). Skeletons the price line instead of showing the
+     * phase price and then swapping to the loyalty price a beat later.
+     */
+    loyaltyPending?: boolean
+    /**
      * Layout: a roomy `"grid"` card (default — cover + outcomes + price) or a
      * compact `"line"` row (thumbnail + title + price + CTA on one line). Lets the
      * catalog offer a grid ⇆ list view toggle without a second card component.
@@ -74,6 +81,7 @@ export const CourseCard = ({
     course,
     loyaltyPriceVnd,
     loyaltyOriginalVnd,
+    loyaltyPending = false,
     layout = "grid",
     action,
     className,
@@ -187,7 +195,9 @@ export const CourseCard = ({
                     </div>
                     {/* price + see-more CTA */}
                     <div className="flex shrink-0 flex-col items-end gap-1">
-                        {displayPrice != null ? (
+                        {loyaltyPending ? (
+                            <Skeleton.Typography type="body-sm" width="1/2" />
+                        ) : displayPrice != null ? (
                             <PriceTag
                                 discounted={displayPrice}
                                 original={displayOriginal}
@@ -271,7 +281,9 @@ export const CourseCard = ({
             <Card.Footer className="mt-auto flex flex-col gap-2">
                 {/* price block: single-source PriceTag — discounted (bold) + struck list +
                     real list→charge −% chip (computed by the block, never a loyalty flag) */}
-                {displayPrice != null ? (
+                {loyaltyPending ? (
+                    <Skeleton.Typography type="body-sm" width="1/2" />
+                ) : displayPrice != null ? (
                     <PriceTag
                         discounted={displayPrice}
                         original={displayOriginal}

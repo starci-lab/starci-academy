@@ -4,6 +4,7 @@ import React, { useCallback } from "react"
 import useSWR from "swr"
 import { useAppSelector } from "@/redux/hooks"
 import { InteractionBar } from "@/components/reuseable/Discussion/InteractionBar"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { GraphQLHeadersKey, type GraphQLHeaders } from "@/modules/api/graphql/types"
 import { mutateReactToContent } from "@/modules/api/graphql/mutations/mutation-react-to-content"
 import { queryContentReactions } from "@/modules/api/graphql/queries/query-content-reactions"
@@ -55,6 +56,21 @@ export const ContentReactionBar = ({ className }: WithClassNames<undefined>) => 
     // mirror the discussion guard: nothing to react to until both ids resolve
     if (!contentId || !courseId) {
         return null
+    }
+
+    // 2026-07-12: InteractionBar has no loading branch of its own, so rendering
+    // it with `summary=undefined` while the fetch is in flight reads as "0
+    // reactions" — then the real count pops in a beat later. Mirror the row
+    // (pill trigger + view count) until the summary actually resolves.
+    if (reactionsSwr.isLoading && !reactionsSwr.data) {
+        return (
+            <div className={className}>
+                <div className="flex items-center justify-between gap-3">
+                    <Skeleton className="h-8 w-24 rounded-full" />
+                    <Skeleton className="h-4 w-10 rounded" />
+                </div>
+            </div>
+        )
     }
 
     return (

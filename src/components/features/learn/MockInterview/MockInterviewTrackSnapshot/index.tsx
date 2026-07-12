@@ -4,6 +4,7 @@ import React from "react"
 import { Chip, Typography, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { StatPair } from "@/components/blocks/stats/StatPair"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { useQueryMyJobReadinessSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyJobReadinessSwr"
 import type { UserJobReadinessBand } from "@/modules/api/graphql/queries/types/user-job-readiness"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -39,8 +40,22 @@ const bandColorOf = (band: UserJobReadinessBand): "success" | "warning" | "defau
  */
 export const MockInterviewTrackSnapshot = ({ courseId, className }: MockInterviewTrackSnapshotProps) => {
     const t = useTranslations()
-    const { data } = useQueryMyJobReadinessSwr()
+    const readinessSwr = useQueryMyJobReadinessSwr()
+    const data = readinessSwr.data
     const track = data?.tracks.find((candidate) => candidate.courseId === courseId)
+
+    // 2026-07-12: this only mounts inside an already-rendered setup/scorecard
+    // screen, so a bare `return null` while `readinessSwr` is still loading was
+    // indistinguishable from "genuinely nothing to show" — it popped in above the
+    // persona card / into the alert stack a beat after the screen had settled.
+    if (readinessSwr.isLoading && !data) {
+        return (
+            <div className={cn("flex flex-wrap items-center gap-3 rounded-xl bg-default/40 p-4", className)}>
+                <Skeleton.Typography type="h4" width="1/4" />
+                <Skeleton className="h-6 w-20 rounded-full" />
+            </div>
+        )
+    }
 
     // no track yet (never enrolled-scored anything) — nothing meaningful to show
     if (!track) {

@@ -1,7 +1,8 @@
 "use client"
 
 import React from "react"
-import { ScrollShadow, Typography, cn } from "@heroui/react"
+import { useTranslations } from "next-intl"
+import { Button, ScrollShadow, Typography, cn } from "@heroui/react"
 import { BackLink } from "../BackLink"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
@@ -38,10 +39,45 @@ export interface WorkSessionHeaderProps extends WithClassNames<undefined> {
      * viewport; the text label is a desktop nicety, not load-bearing on mobile.
      */
     counter: React.ReactNode
-    /** Current step position (0-indexed) — drives the progress-segment bar. */
+    /**
+     * Currently-VIEWED step (0-indexed) — its segment reads `accent` (pink).
+     * With free navigation this is "which card am I looking at", NOT "how far
+     * I've progressed" — the done/green state comes from {@link doneSet}, not
+     * from `position < current` (that linear fallback only applies when
+     * `doneSet` is omitted).
+     */
     current: number
     /** Total steps — segment count of the progress bar. */
     total: number
+    /**
+     * Optional set of COMPLETED step positions (0-indexed) — each listed
+     * segment reads `success` (green) regardless of order, so a card graded
+     * out of sequence (jump ahead, grade, jump back) still shows green
+     * (2026-07-12, thầy: free-nav "chưa tới vẫn click được, cả trước và sau").
+     * When OMITTED the bar falls back to the old linear model (`position <
+     * current` = done) for callers that haven't adopted per-step tracking.
+     */
+    doneSet?: ReadonlyArray<number>
+    /**
+     * Optional — makes EVERY segment clickable to jump straight to that step
+     * (2026-07-12: free navigation, "cả trước và sau, chưa tới vẫn click
+     * được" — the old `position <= current` gate is gone). The thin 4px bar is
+     * wrapped in a taller transparent hit-zone so it's actually tappable (the
+     * old bare 4px target was the real reason "bấm hồng không đổi"). Omit for a
+     * read-only bar.
+     */
+    onSegmentClick?: (position: number) => void
+    /**
+     * Optional — renders a "Kết thúc" completion button pinned to the header's
+     * right edge (after {@link rightSlot}). Ends the session NOW (grade what's
+     * done → results), distinct from the back-link's "Thoát" (leave, keep the
+     * session resumable). `secondary` tone — a completion, not the primary
+     * in-session action. Omit for a session that only finishes by reaching the
+     * last step.
+     */
+    onFinish?: () => void
+    /** Label for the {@link onFinish} button (e.g. "Kết thúc"). Required to render it. */
+    finishLabel?: React.ReactNode
     /**
      * Optional small chips right after the counter (level/topic tags…) — part of
      * the ONE header row, not a separate line below it (thầy 2026-07-11: "bỏ mấy
@@ -63,10 +99,12 @@ export interface WorkSessionHeaderProps extends WithClassNames<undefined> {
  * identity chip, a step counter, optional right-aligned tools, and a full-width
  * progress-segment bar as the band's bottom edge. Sticky under the navbar so
  * every surface using it shares one aligned top instead of each hand-rolling
- * its own HUD row. Segments read `current` (0-indexed) against `total`:
- * before → `success` (done), at → `accent` (in progress), after → `default`
- * (upcoming). Extracted from `MockInterviewSession`'s own `renderWorkHeader`
- * so `QuizSession`'s "Hỏi nhanh" run can share the exact same shell.
+ * its own HUD row. Each of `total` segments reads: in {@link doneSet} → `success`
+ * (green, order-independent) · === `current` → `accent` (pink, viewed) · else →
+ * `default`. With {@link onSegmentClick} every segment jumps to that step (free
+ * nav); with {@link onFinish} a "Kết thúc" button ends the session. Extracted
+ * from `MockInterviewSession`'s own `renderWorkHeader` so the flashcard sessions
+ * can share the exact same shell.
  * @param props - {@link WorkSessionHeaderProps}
  */
 export const WorkSessionHeader = ({
@@ -77,74 +115,109 @@ export const WorkSessionHeader = ({
     counter,
     current,
     total,
+    doneSet,
     meta,
     rightSlot,
+    onSegmentClick,
+    onFinish,
+    finishLabel,
     className,
-}: WorkSessionHeaderProps) => (
-    <div className={cn("sticky top-16 z-10 border-b border-default bg-surface", className)}>
-        {/* `meta` already drops below `sm:` (least-essential piece, mirrors
+}: WorkSessionHeaderProps) => {
+    const t = useTranslations()
+    // per-step done lookup — `doneSet` (green regardless of order) when the
+    // caller tracks it, else the old linear "everything before current" model.
+    const doneLookup = doneSet ? new Set(doneSet) : null
+    const isDone = (position: number): boolean =>
+        doneLookup ? doneLookup.has(position) : position < current
+    return (
+        <div className={cn("sticky top-16 z-10 border-b border-default bg-surface", className)}>
+            {/* `meta` already drops below `sm:` (least-essential piece, mirrors
             `identity`'s own breakpoint) so the row fits the common case without
             scrolling — `ScrollShadow` is the SAFETY NET underneath that, not the
             primary fix: a long `identity`/`counter` string, or `rightSlot`
             carrying both a timer AND a combo chip, can still outrun even the
             trimmed row. `hideScrollBar` keeps the nav band from growing a
             visible scrollbar — the fade edge alone signals "more this way". */}
-        <ScrollShadow
-            orientation="horizontal"
-            hideScrollBar
-            className="flex items-center gap-3 px-4 py-2.5 sm:px-6"
-        >
-            <BackLink label={backLabel} onPress={onBack} />
-            {title ? (
-                <>
-                    <span className="h-5 w-px shrink-0 bg-default" aria-hidden />
-                    <Typography type="body-sm" weight="bold" className="shrink-0 whitespace-nowrap">
-                        {title}
-                    </Typography>
-                </>
-            ) : null}
-            {identity ? (
-                <>
-                    <span className="hidden h-5 w-px shrink-0 bg-default sm:block" aria-hidden />
-                    <span className="flex shrink-0 items-center gap-2">
-                        {identity.avatarSrc ? (
-                            <img
-                                src={identity.avatarSrc}
-                                alt=""
-                                className="size-7 shrink-0 rounded-full object-cover"
-                                aria-hidden
-                            />
-                        ) : null}
-                        <Typography type="body-sm" weight="medium" className="hidden truncate sm:block">
-                            {identity.name}
-                        </Typography>
-                    </span>
-                </>
-            ) : null}
-            <span className="hidden h-5 w-px shrink-0 bg-default sm:block" aria-hidden />
-            <Typography
-                type="body-sm"
-                weight="medium"
-                color="muted"
-                className="hidden shrink-0 whitespace-nowrap sm:block"
+            <ScrollShadow
+                orientation="horizontal"
+                hideScrollBar
+                className="flex items-center gap-3 px-4 py-2.5 sm:px-6"
             >
-                {counter}
-            </Typography>
-            {meta ? <span className="hidden shrink-0 items-center gap-2 sm:flex">{meta}</span> : null}
-            <span className="flex-1" />
-            {rightSlot ? <span className="shrink-0">{rightSlot}</span> : null}
-        </ScrollShadow>
-        {/* progress meter = bottom edge, full width (goal-gradient) */}
-        <div className="flex gap-1 px-4 pb-2 sm:px-6" role="presentation">
-            {Array.from({ length: total }, (_, position) => (
-                <span
-                    key={position}
-                    className={cn(
-                        "h-1 flex-1 rounded-full",
-                        position < current ? "bg-success" : position === current ? "bg-accent" : "bg-default",
-                    )}
-                />
-            ))}
+                <BackLink label={backLabel} onPress={onBack} />
+                {title ? (
+                    <>
+                        <span className="h-5 w-px shrink-0 bg-default" aria-hidden />
+                        <Typography type="body-sm" weight="bold" className="shrink-0 whitespace-nowrap">
+                            {title}
+                        </Typography>
+                    </>
+                ) : null}
+                {identity ? (
+                    <>
+                        <span className="hidden h-5 w-px shrink-0 bg-default sm:block" aria-hidden />
+                        <span className="flex shrink-0 items-center gap-2">
+                            {identity.avatarSrc ? (
+                                <img
+                                    src={identity.avatarSrc}
+                                    alt=""
+                                    className="size-7 shrink-0 rounded-full object-cover"
+                                    aria-hidden
+                                />
+                            ) : null}
+                            <Typography type="body-sm" weight="medium" className="hidden truncate sm:block">
+                                {identity.name}
+                            </Typography>
+                        </span>
+                    </>
+                ) : null}
+                <span className="hidden h-5 w-px shrink-0 bg-default sm:block" aria-hidden />
+                <Typography
+                    type="body-sm"
+                    weight="medium"
+                    color="muted"
+                    className="hidden shrink-0 whitespace-nowrap sm:block"
+                >
+                    {counter}
+                </Typography>
+                {meta ? <span className="hidden shrink-0 items-center gap-2 sm:flex">{meta}</span> : null}
+                <span className="flex-1" />
+                {rightSlot ? <span className="shrink-0">{rightSlot}</span> : null}
+                {/* "Kết thúc" — end the session NOW (→ results), distinct from the
+                    back-link's "Thoát" (leave, keep it resumable). ALWAYS visible
+                    (a completion action, not hidden on mobile like `meta`). */}
+                {onFinish && finishLabel ? (
+                    <Button variant="secondary" size="sm" className="shrink-0" onPress={onFinish}>
+                        {finishLabel}
+                    </Button>
+                ) : null}
+            </ScrollShadow>
+            {/* progress meter = bottom edge, full width (goal-gradient). When
+                `onSegmentClick` is given EVERY segment is clickable — jump to any
+                step, "cả trước và sau, chưa tới vẫn click được" (2026-07-12). The
+                thin 4px bar sits inside a taller transparent hit-zone (`py-2`) so
+                it's actually tappable — the bare 4px target was why "bấm hồng
+                không đổi". Colour per-step: `doneSet` → success (green, order-
+                independent), current → accent (pink), else default. */}
+            <div className="flex gap-1 px-4 sm:px-6">
+                {Array.from({ length: total }, (_, position) => {
+                    const colorClass = isDone(position) ? "bg-success" : position === current ? "bg-accent" : "bg-default"
+                    const bar = <span className={cn("block h-1 w-full rounded-full", colorClass)} />
+                    return onSegmentClick ? (
+                        <button
+                            key={position}
+                            type="button"
+                            aria-label={t("common.workSessionHeaderSegmentAria", { step: position + 1 })}
+                            aria-current={position === current ? "step" : undefined}
+                            onClick={() => onSegmentClick(position)}
+                            className="flex flex-1 cursor-pointer items-center rounded py-2 transition-opacity hover:opacity-70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                        >
+                            {bar}
+                        </button>
+                    ) : (
+                        <span key={position} aria-hidden className="flex flex-1 items-center py-2">{bar}</span>
+                    )
+                })}
+            </div>
         </div>
-    </div>
-)
+    )
+}

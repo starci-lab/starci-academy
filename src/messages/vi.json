@@ -1879,6 +1879,7 @@
   "flashcard": {
     "title": "Ôn tập",
     "exit": "Thoát",
+    "finish": "Kết thúc",
     "subtitle": "Khắc sâu kiến thức bằng lặp lại ngắt quãng, và luyện trả lời phỏng vấn.",
     "empty": "Khoá học này chưa có Flashcards nào.",
     "study": "Học",
@@ -3299,6 +3300,7 @@
   "common": {
     "loading": "Đang tải…",
     "retry": "Thử lại",
+    "workSessionHeaderSegmentAria": "Bước {step}",
     "tagsMore": "+{count}",
     "tagsMenuAria": "Tất cả thẻ",
     "pagination": {

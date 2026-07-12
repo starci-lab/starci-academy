@@ -21,6 +21,7 @@ import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 import { PriceTag } from "@/components/blocks/commerce/PriceTag"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { StickyBottomBar } from "@/components/blocks/layout/StickyBottomBar"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryCoursePricePreviewSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursePricePreviewSwr"
@@ -41,13 +42,18 @@ export const CourseMobileEnrollBar = ({ className }: CourseMobileEnrollBarProps)
     const { isEnrolled, onEnroll, onContinueLearning } = useCourseEnrollment()
     const courseId = useAppSelector((state) => state.course.entity?.id)
     // viewer's loyalty price (matches the rail / catalog) — fall back to phase price.
-    const { data: preview } = useQueryCoursePricePreviewSwr(courseId ?? null)
+    const { data: preview, isLoading: previewLoading } = useQueryCoursePricePreviewSwr(courseId ?? null)
     const hasLoyalty = preview != null && preview.discountPercent > 0
+    // same jump as CoursePricingRail (2026-07-12): don't flash the static price
+    // before the loyalty preview resolves — skeleton the price line instead.
+    const previewPending = previewLoading && !preview
 
     return (
         <StickyBottomBar className={className}>
             <div className="flex items-center justify-between gap-3">
-                {hasLoyalty && preview ? (
+                {previewPending ? (
+                    <Skeleton.Typography type="body" width="1/4" />
+                ) : hasLoyalty && preview ? (
                     <PriceTag
                         discounted={preview.discountedPriceVnd}
                         original={preview.originalPriceVnd}

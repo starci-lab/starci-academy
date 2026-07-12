@@ -1870,6 +1870,7 @@
   "flashcard": {
     "title": "Review",
     "exit": "Exit",
+    "finish": "Finish",
     "subtitle": "Lock in what you learned with spaced repetition, and drill interview answers.",
     "empty": "No flashcards for this course yet.",
     "study": "Study",
@@ -3290,6 +3291,7 @@
   "common": {
     "loading": "Loading…",
     "retry": "Retry",
+    "workSessionHeaderSegmentAria": "Step {step}",
     "tagsMore": "+{count}",
     "tagsMenuAria": "All tags",
     "pagination": {

@@ -19,6 +19,7 @@ import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQuery
 import { RankBadge } from "@/components/reuseable/RankBadge"
 import { UserAvatar } from "@/components/reuseable/UserAvatar"
 import { InfoTooltip } from "@/components/blocks/feedback/InfoTooltip"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { explainSeniority, rankInfo, resolveSeniorityRank } from "@/modules/utils/rank"
 
 /** Props for {@link ProfileRankAvatar}. */
@@ -32,7 +33,11 @@ export type ProfileRankAvatarProps = WithClassNames<undefined>
  *
  * Self-contained container: resolves the target user from the route, reads the
  * profile + achievement wall via SWR (deduped with the rest of the page).
- * Renders a plain avatar (no ring/pill) until the user has earned a badge.
+ * Renders a plain avatar (no ring/pill) once achievements resolve and none were
+ * earned; while achievements are still resolving, the ring slot is reserved as a
+ * pulsing placeholder (2026-07-12: rendering the avatar bare during that wait
+ * made the ring/pill pop onto an already-settled avatar the instant the fetch
+ * landed — this reserves the same padding/space from the start).
  *
  * @param props - optional className for the root element.
  */
@@ -43,7 +48,9 @@ export const ProfileRankAvatar = ({
     const username = useProfileUsername()
     const { data: user } = useQueryUserProfileSwr(username)
     const userId = user?.id ?? null
-    const { data: achievements } = useQueryUserAchievementsSwr(userId)
+    const achievementsSwr = useQueryUserAchievementsSwr(userId)
+    const achievements = achievementsSwr.data
+    const achievementsPending = achievementsSwr.isLoading && !achievements
 
     if (!user) {
         return null
@@ -63,10 +70,18 @@ export const ProfileRankAvatar = ({
         <div className={cn("flex flex-col items-start gap-3", className)}>
             {/* avatar framed by the rank colour (only when a rank is reached). The
                 ring is drawn via inline padding + the dynamic rank colour (a hex,
-                not a token) so we keep off the static spacing scale here. */}
+                not a token) so we keep off the static spacing scale here. While
+                achievements are still loading, the SAME padding is reserved with a
+                pulsing neutral fill instead of the real colour (or no wrapper at
+                all) — so there's no size/shape jump once the rank resolves. */}
             <div
-                className="relative w-fit rounded-full"
-                style={info.ring ? { backgroundColor: info.ring, padding: 4 } : undefined}
+                className={cn(
+                    "relative w-fit rounded-full",
+                    achievementsPending && "animate-pulse bg-default",
+                )}
+                style={achievementsPending
+                    ? { padding: 4 }
+                    : info.ring ? { backgroundColor: info.ring, padding: 4 } : undefined}
             >
                 <UserAvatar
                     username={user.displayName ?? user.username}
@@ -87,7 +102,9 @@ export const ProfileRankAvatar = ({
             </div>
             {/* rank label pill (the seniority flex) — hover explains WHY this rank
                 and what's left to climb (jargon → Tooltip) */}
-            {info.rank && info.labelKey ? (
+            {achievementsPending ? (
+                <Skeleton className="h-6 w-20 rounded-full" />
+            ) : info.rank && info.labelKey ? (
                 <InfoTooltip
                     content={(
                         <>

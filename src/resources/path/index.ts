@@ -375,8 +375,26 @@ export const pathConfig = () => {
                         const build = () => {
                             return quizPath
                         }
+                        // the dedicated RESULT URL for a FINISHED "Hỏi nhanh" run — a
+                        // separate route segment (not just a `phase`/status inferred at
+                        // the live URL) so "is this session done" is answered by the URL
+                        // itself, never by re-deriving `status` client-side (2026-07-12,
+                        // root-caused a class of F5-shows-stale-state bugs today: a session
+                        // that finished but whose `status` write never landed server-side
+                        // had no way to distinguish "about to answer the last card" from
+                        // "just answered it" — both read the same at the live URL).
+                        const result = () => {
+                            const resultPath = `${quizPath}/result`
+                            const build = () => {
+                                return resultPath
+                            }
+                            return {
+                                build,
+                            }
+                        }
                         return {
                             build,
+                            result,
                         }
                     }
                     // deep-link into "Học thẻ" (SM-2 review) for ONE deck: the resolve-or-start
@@ -408,8 +426,21 @@ export const pathConfig = () => {
                         const build = () => {
                             return duePath
                         }
+                        // dedicated RESULT URL — shared by BOTH kinds this route serves
+                        // (single-deck review AND cross-deck due), same reasoning as
+                        // `quiz(sessionId).result()` above.
+                        const result = () => {
+                            const resultPath = `${duePath}/result`
+                            const build = () => {
+                                return resultPath
+                            }
+                            return {
+                                build,
+                            }
+                        }
                         return {
                             build,
+                            result,
                         }
                     }
                     return {

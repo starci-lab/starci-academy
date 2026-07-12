@@ -28,6 +28,7 @@ import type {
 } from "@/modules/types/base/class-name"
 import { CoverImage } from "@/components/blocks/media/CoverImage"
 import { PriceTag } from "@/components/blocks/commerce/PriceTag"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryCoursePricePreviewSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursePricePreviewSwr"
 
@@ -54,8 +55,12 @@ export const CoursePricingRail = ({ className }: CoursePricingRailProps) => {
 
     // viewer's loyalty price (same source as the catalog / payment) — overrides the
     // phase headline so the price stays identical everywhere. Guests → no preview → phase.
-    const { data: preview } = useQueryCoursePricePreviewSwr(courseId ?? null)
+    const { data: preview, isLoading: previewLoading } = useQueryCoursePricePreviewSwr(courseId ?? null)
     const hasLoyalty = preview != null && preview.discountPercent > 0
+    // 2026-07-12: authenticated viewers briefly see the STATIC phase price before
+    // the loyalty preview resolves, then it silently swaps — a jump on the buy box's
+    // headline price. Skeleton the price line instead of flashing the wrong number.
+    const previewPending = previewLoading && !preview
 
     return (
         <div className={cn("md:sticky md:top-[88px] md:self-start", className)}>
@@ -71,7 +76,9 @@ export const CoursePricingRail = ({ className }: CoursePricingRailProps) => {
                             <div className="flex flex-wrap items-center gap-2">
                                 {/* single-source PriceTag — loyalty price when the viewer has one,
                                     else the active phase price (struck vs list). USD line stays beside it. */}
-                                {hasLoyalty && preview ? (
+                                {previewPending ? (
+                                    <Skeleton.Typography type="h3" width="1/3" />
+                                ) : hasLoyalty && preview ? (
                                     <PriceTag
                                         discounted={preview.discountedPriceVnd}
                                         original={preview.originalPriceVnd}

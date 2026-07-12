@@ -51,25 +51,40 @@ export const ProgressCockpit = ({
         error,
         mutate,
     } = useQueryUserCodingProgressSwr(userId)
-    const { data: skills } = useQueryUserCodingSkillsSwr(userId)
-    const { data: standing } = useQueryUserCodingRankSwr(userId)
+    const skillsSwr = useQueryUserCodingSkillsSwr(userId)
+    const standingSwr = useQueryUserCodingRankSwr(userId)
+    const skills = skillsSwr.data
+    const standing = standingSwr.data
 
     const solved = progress?.solvedProblemIds.length ?? 0
     const totalPoints = progress?.totalPoints ?? 0
+
+    // 2026-07-12: `skills`/`standing` fire alongside `progress` but the outer
+    // skeleton only watches `progress` — while they're still in flight, rank/
+    // percentile stat cards and the whole difficulty bar used to be silently
+    // absent, then pop in a beat after the "solved"/"points" cards had already
+    // rendered. Gate each dependent section on its OWN pending state instead of
+    // just omitting it.
+    const standingPending = standingSwr.isLoading && !standing
 
     // headline metric row; rank + percentile hide when the user is unranked
     const stats: Array<{ key: string; value: React.ReactNode }> = [
         { key: "solved", value: solved },
         { key: "points", value: totalPoints },
     ]
-    if (standing?.rank != null) {
-        stats.push({ key: "rank", value: `#${standing.rank}` })
-    }
-    if (standing?.percentile != null) {
-        stats.push({ key: "percentile", value: `${standing.percentile}%` })
+    if (standingPending) {
+        stats.push({ key: "rank", value: null }, { key: "percentile", value: null })
+    } else {
+        if (standing?.rank != null) {
+            stats.push({ key: "rank", value: `#${standing.rank}` })
+        }
+        if (standing?.percentile != null) {
+            stats.push({ key: "percentile", value: `${standing.percentile}%` })
+        }
     }
 
     // difficulty distribution (easy→hard), coloured by the coding 3-tone scale
+    const skillsPending = skillsSwr.isLoading && !skills
     const solvedByDifficulty = new Map((skills?.byDifficulty ?? []).map((item) => [item.key, item.solved]))
     const difficultySegments = COCKPIT_DIFFICULTY
         .filter((difficulty) => (solvedByDifficulty.get(difficulty) ?? 0) > 0)
@@ -109,19 +124,29 @@ export const ProgressCockpit = ({
             }}
         >
             <div className={cn("flex flex-col gap-6", className)}>
-                {/* headline metric row */}
+                {/* headline metric row — pending rank/percentile cards skeleton in place */}
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                     {stats.map((stat) => (
-                        <MetricCard
-                            key={stat.key}
-                            value={stat.value}
-                            label={t(`practice.cockpit.metric.${stat.key}`)}
-                        />
+                        stat.value === null ? (
+                            <Skeleton key={stat.key} className="h-24 w-full rounded-2xl" />
+                        ) : (
+                            <MetricCard
+                                key={stat.key}
+                                value={stat.value}
+                                label={t(`practice.cockpit.metric.${stat.key}`)}
+                            />
+                        )
                     ))}
                 </div>
 
-                {/* difficulty distribution — only when the user has solved something */}
-                {difficultySegments.length > 0 ? (
+                {/* difficulty distribution — skeleton while resolving, hidden once
+                    resolved with nothing solved yet, real bar otherwise */}
+                {skillsPending ? (
+                    <div className="flex flex-col gap-2">
+                        <Skeleton.Typography type="body-sm" width="1/4" />
+                        <Skeleton.SegmentBar legendItems={3} />
+                    </div>
+                ) : difficultySegments.length > 0 ? (
                     <div className="flex flex-col gap-2">
                         <Label>{t("practice.cockpit.byDifficulty")}</Label>
                         <SegmentBar

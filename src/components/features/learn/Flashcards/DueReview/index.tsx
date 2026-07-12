@@ -8,7 +8,6 @@ import { usePathname, useRouter } from "next/navigation"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { DUE_REVIEW_LIMIT, SM2_GRADES } from "../constants"
 import { DueReviewSkeleton } from "./DueReviewSkeleton"
-import { FlashcardSessionStats } from "../FlashcardSessionStats"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { mutateReviewFlashcard } from "@/modules/api/graphql/mutations/mutation-review-flashcard"
 import { queryMyDueFlashcards } from "@/modules/api/graphql/queries/query-my-due-flashcards"
@@ -23,6 +22,7 @@ import { useMutateStartFlashcardDueReviewSessionSwr } from "@/hooks/swr/api/grap
 import { useMutateSyncFlashcardDueReviewSessionProgressSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardDueReviewSessionProgressSwr"
 import { useMutateCompleteFlashcardDueReviewSessionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateCompleteFlashcardDueReviewSessionSwr"
 import { useQueryMyInProgressFlashcardDueReviewSessionSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyInProgressFlashcardDueReviewSessionSwr"
+import { useQueryMyFlashcardReviewSessionBySessionIdSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyFlashcardReviewSessionBySessionIdSwr"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import { useAppSelector } from "@/redux/hooks"
 
@@ -71,9 +71,6 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
     const { mutate: globalMutate } = useSWRConfig()
     // scope the due queue to THIS course; shared SWR key with the hero (DueReviewHero)
     const courseId = useAppSelector((state) => state.course.entity?.id)
-    // owning course slug — the finished-session stats surface uses it to deep-link
-    // study suggestions (RAG) back into the course.
-    const courseDisplayId = useAppSelector((state) => state.course.displayId)
     const dueKey = useMemo(
         () => ["my-due-flashcards", courseId ?? null, DUE_REVIEW_LIMIT] as const,
         [courseId],
@@ -85,9 +82,16 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
     const [reviewing, setReviewing] = useState(false)
     // how many cards were graded this session (shown in the summary)
     const [reviewedCount, setReviewedCount] = useState(0)
-    // true while the completeSession mutation is in flight — shows a brief
-    // "saving" state between the last card and the stats recap.
-    const [completing, setCompleting] = useState(false)
+    // WHICH card positions have been graded this session (0-indexed, order-
+    // independent) — drives the progress bar's per-segment green so a card
+    // graded out of order (free-nav jump ahead → grade → jump back) still
+    // reads green (2026-07-12, thầy: free-nav "cả trước và sau"). A Set for
+    // O(1) membership; persisted as an array via `gradedIndexes` sync so a
+    // resume rehydrates it.
+    const [gradedIndexes, setGradedIndexes] = useState<Set<number>>(() => new Set())
+    // explicit "Kết thúc" — end the session now regardless of position, distinct
+    // from reaching the last card. Feeds `done` below.
+    const [finished, setFinished] = useState(false)
 
     // the due queue (count + first batch of cards), shared key with the hero
     const { data, isLoading, error, mutate } = useSWR(dueKey, async () => {
@@ -114,7 +118,19 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
     const runStartSession = useMutateStartFlashcardDueReviewSessionSwr()
     const runSyncSession = useMutateSyncFlashcardDueReviewSessionProgressSwr()
     const runCompleteSession = useMutateCompleteFlashcardDueReviewSessionSwr()
+    // no-`sessionId` shim route only: MRU "is there a resumable draw at all"
+    // lookup, used to resolve-or-start before a sessioned URL exists yet.
     const inProgressSessionSwr = useQueryMyInProgressFlashcardDueReviewSessionSwr(courseId)
+    // sessioned route: resolve THIS EXACT session by id (not an MRU guess) —
+    // mirrors the identical fix in `FlashcardReviewer` (2026-07-12: "cái này
+    // cũng giật này"). The old code reused `inProgressSessionSwr` here too and
+    // manually checked `resumeData.sessionId === sessionId` as a workaround for
+    // using the wrong query.
+    const sessionByIdSwr = useQueryMyFlashcardReviewSessionBySessionIdSwr(sessionId, courseId)
+    // whichever of the two above is the resumable-session SOURCE OF TRUTH for
+    // this render — by-id when we have a concrete sessionId, MRU otherwise.
+    const resumableSessionData = sessionId ? sessionByIdSwr.data : inProgressSessionSwr.data
+    const resumableSessionLoading = sessionId ? sessionByIdSwr.isLoading : inProgressSessionSwr.isLoading
     // status-agnostic re-fetch of the resumable session's OWN cards, by exact id —
     // NOT filtered by "due today" like `cards` above. Feeds `applyResume` below: a
     // card already graded THIS run gets rescheduled (SM-2) and drops out of the due
@@ -125,7 +141,7 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
     // shape (only the live due query carries it) — `applyResume` falls back to
     // `undefined` for a card resolved this way, which `RatingBar`'s optional `hint`
     // already renders as "no preview" instead of crashing.
-    const resumeCardIds = inProgressSessionSwr.data?.cardIds ?? []
+    const resumeCardIds = resumableSessionData?.cardIds ?? []
     const resumeCardsByIdSwr = useQueryFlashcardCardsByIdsSwr(resumeCardIds, courseId)
     // when a resumable session is found, the fetched due batch is reordered/filtered
     // to match its persisted `cardIds` (never re-drawn) — null while resuming didn't
@@ -135,15 +151,25 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
     const [resumedCards, setResumedCards] = useState<Array<DueReviewCard> | null>(null)
     // server-issued id for the current batch — set once on start OR resume
     const sessionIdRef = useRef<string | null>(null)
-    // guards the one-shot resolve-or-start effect to run at most once per mount
+    // guards the one-shot resolve-or-start effect to run its work at most once
+    // per mount (prevents a duplicate `start` call on re-render).
     const resolveAttemptedRef = useRef(false)
+    // STATE, separate from the ref above — `AsyncContent`'s `isLoading` gate below
+    // reads THIS, so the skeleton stays up until the resumed cards/cursor are
+    // ACTUALLY applied, not just until the underlying query settles (2026-07-12
+    // fix: closes a 1-frame flash — card 1 appears, then jumps to the real resume
+    // position). Stays false on the redirect-away paths (fresh session / no-
+    // sessionId shim) — the skeleton correctly holds through the navigation.
+    const [resolveApplied, setResolveApplied] = useState(false)
     // guards the one-shot completion call on reaching `done`
     const completedRef = useRef(false)
 
     const effectiveCards = resumedCards ?? cards
     const card = effectiveCards[currentIndex]
-    // past the last card → the session is complete
-    const done = effectiveCards.length > 0 && currentIndex >= effectiveCards.length
+    // complete when the learner explicitly ends it ("Kết thúc") OR steps past
+    // the last card. With free navigation "past the last card" is no longer the
+    // only finish path, so the explicit `finished` flag is the primary one.
+    const done = effectiveCards.length > 0 && (finished || currentIndex >= effectiveCards.length)
 
     /**
      * Hydrate from an in-progress session's persisted batch/cursor; false if none
@@ -154,7 +180,7 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
      * silently dropped it, corrupting the resumed order/cursor (2026-07-12 fix).
      */
     const applyResume = useCallback(
-        (resumeData: NonNullable<typeof inProgressSessionSwr.data>): boolean => {
+        (resumeData: { sessionId: string, cardIds: Array<string>, currentIndex: number, reviewedCount: number, gradedIndexes?: Array<number> }): boolean => {
             const dueById = new Map(cards.map((dueCard) => [dueCard.cardId, dueCard]))
             const byId = new Map((resumeCardsByIdSwr.data ?? []).map((idCard) => [idCard.cardId, idCard]))
             const ordered = resumeData.cardIds
@@ -165,8 +191,31 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
             }
             sessionIdRef.current = resumeData.sessionId
             setResumedCards(ordered)
-            setCurrentIndex(Math.min(resumeData.currentIndex, ordered.length - 1))
+            setResolveApplied(true)
+            // every card in the batch was already graded (`reviewedCount` reaches
+            // the batch size) but `status` never flipped to "completed" — the
+            // earlier completion call never landed (2026-07-12, same root cause
+            // traced in `QuizSession`: "submit rồi mà F5 về câu cuối"). Clamping
+            // `currentIndex` to `ordered.length - 1` here would ALWAYS re-show the
+            // last card (an index at the last position can't tell "about to
+            // answer" from "just answered" apart) — set it to the FULL length
+            // instead so `done` computes true immediately and the "finish" effect
+            // below retries completion, instead of clamping into the last card
+            // every time this session gets revisited.
+            setCurrentIndex(
+                resumeData.reviewedCount >= ordered.length
+                    ? ordered.length
+                    : Math.min(resumeData.currentIndex, ordered.length - 1),
+            )
             setReviewedCount(resumeData.reviewedCount)
+            // rehydrate the graded-set from the resumed session; fall back to
+            // "first N contiguous" when the backend didn't send it (older row
+            // synced before `gradedIndexes` existed) so green isn't lost.
+            setGradedIndexes(
+                resumeData.gradedIndexes && resumeData.gradedIndexes.length > 0
+                    ? new Set(resumeData.gradedIndexes)
+                    : new Set(Array.from({ length: resumeData.reviewedCount }, (_, i) => i)),
+            )
             completedRef.current = false
             return true
         },
@@ -220,20 +269,22 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
             resolveAttemptedRef.current
             || !courseId
             || cards.length === 0
-            || inProgressSessionSwr.isLoading
+            || resumableSessionLoading
             // there IS a session to resume — wait for its status-agnostic by-id
             // cards to settle too, so `applyResume` can fall back to them for an
             // already-graded card the due queue no longer carries (see
             // `resumeCardsByIdSwr` above).
-            || (inProgressSessionSwr.data && resumeCardsByIdSwr.isLoading)
+            || (resumableSessionData && resumeCardsByIdSwr.isLoading)
         ) {
             return
         }
         resolveAttemptedRef.current = true
-        const resumeData = inProgressSessionSwr.data
+        const resumeData = resumableSessionData
 
         if (sessionId) {
-            if (resumeData && resumeData.sessionId === sessionId && applyResume(resumeData)) {
+            // `resumableSessionData` was resolved BY id when `sessionId` is set
+            // (see `sessionByIdSwr` above) — no need to re-check `.sessionId`.
+            if (resumeData && applyResume(resumeData)) {
                 return
             }
             // stale/invalid session id — start a fresh one and correct the URL
@@ -250,8 +301,8 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
         sessionId,
         courseId,
         cards,
-        inProgressSessionSwr.isLoading,
-        inProgressSessionSwr.data,
+        resumableSessionLoading,
+        resumableSessionData,
         resumeCardsByIdSwr.isLoading,
         applyResume,
         startSessionAndRedirect,
@@ -269,7 +320,6 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
             return
         }
         completedRef.current = true
-        setCompleting(true)
         const completingSessionId = sessionIdRef.current
         void (async () => {
             await runGraphQL(
@@ -288,11 +338,16 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
                 { showSuccessToast: false },
             )
             // whether it succeeded or the toast surfaced a failure, drop the
-            // saving state and hand off to the stats recap (which reads events
-            // directly by sessionId, independent of the session row's status).
-            setCompleting(false)
+            // saving state and hand off to the dedicated result route (reads
+            // events directly by sessionId, independent of the session row's
+            // status — "done" is now answered by the URL, not re-derived
+            // client-side; see `.../result/page.tsx` doc for the root cause).
+            // the due count changed — refresh the queue so the home hero reads correctly
+            // whenever the learner navigates back there.
+            void globalMutate(dueKey)
+            router.replace(`${reviewBasePath}/sessions/${completingSessionId}/result`)
         })()
-    }, [done, reviewedCount, runCompleteSession, courseHeaders, runGraphQL, t])
+    }, [done, reviewedCount, runCompleteSession, courseHeaders, runGraphQL, t, router, reviewBasePath, globalMutate, dueKey])
 
     // SM-2 grade buttons for the current card: localized label + next-interval
     // preview ("4 days") computed server-side from the card's current state
@@ -341,8 +396,12 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
             )
             setReviewing(false)
             if (ok) {
+                // mark THIS position graded (set dedupes a re-grade) — the source
+                // of truth for both the per-segment green and the reviewed count.
+                const nextGraded = new Set(gradedIndexes).add(currentIndex)
+                const nextReviewedCount = nextGraded.size
                 const nextIndex = currentIndex + 1
-                const nextReviewedCount = reviewedCount + 1
+                setGradedIndexes(nextGraded)
                 setReviewedCount(nextReviewedCount)
                 setRevealed(false)
                 setCurrentIndex(nextIndex)
@@ -359,6 +418,7 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
                                     sessionId: syncingSessionId,
                                     currentIndex: nextIndex,
                                     reviewedCount: nextReviewedCount,
+                                    gradedIndexes: Array.from(nextGraded),
                                     xpEarned: 0,
                                 },
                                 headers: courseHeaders as GraphQLHeaders,
@@ -371,18 +431,24 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
                             )
                         },
                         { showSuccessToast: false },
-                    )
+                    ).then(() => {
+                        // invalidate the Hub's "Ôn tập dở dang" (ContinueCard) cache —
+                        // it reads THIS exact key, and nothing else was invalidating it
+                        // per-grade (only on completion, see the `done` effect below) —
+                        // so a revisit to the Hub mid-session showed a stale currentIndex
+                        // from whenever that card first mounted, not the position just
+                        // synced here (2026-07-12, thầy: "bấm nút back thì về 2 trong khi
+                        // đang là 5" — the DB was correct the whole time; only this cache
+                        // was stale, verified directly against Postgres).
+                        if (courseId) {
+                            void globalMutate(["QUERY_MY_IN_PROGRESS_FLASHCARD_DUE_REVIEW_SESSION_SWR", courseId])
+                        }
+                    })
                 }
             }
         },
-        [card, runGraphQL, t, currentIndex, reviewedCount, runSyncSession, courseHeaders],
+        [card, runGraphQL, t, currentIndex, gradedIndexes, runSyncSession, courseHeaders, courseId, globalMutate],
     )
-
-    // finish: refresh the due queue (count changed) and return home
-    const onFinish = useCallback(() => {
-        void globalMutate(dueKey)
-        onExit()
-    }, [globalMutate, onExit, dueKey])
 
     // step back to re-see an earlier card (question side; no re-grade) — mirrors
     // `FlashcardReviewer`'s own `goPrev` (thầy: đồng bộ UI, cả 2 loại phiên đều
@@ -392,10 +458,16 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
         setRevealed(false)
         setCurrentIndex((index) => Math.max(index - 1, 0))
     }, [])
-
-    // the session this batch persisted to — snapshotted into a local so TS can
-    // narrow it (a ref's `.current` never narrows) before the stats recap.
-    const finishedSessionId = sessionIdRef.current
+    // jump straight to ANY step from the progress-segment bar — free navigation,
+    // "cả trước và sau, chưa tới vẫn click được" (2026-07-12). No re-grade; the
+    // card's graded/green state is independent of which one you're viewing.
+    const goToIndex = useCallback((position: number) => {
+        setRevealed(false)
+        setCurrentIndex(position)
+    }, [])
+    // end the session now → the completion effect (`done`) fires + navigates to
+    // results. Distinct from "Thoát" (back-link: leave, keep resumable).
+    const onFinish = useCallback(() => setFinished(true), [])
 
     return (
         <AsyncContent
@@ -403,7 +475,13 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
             // session and redirects (mirrors `FlashcardReviewer`'s own `!sessionId` gate)
             // — but only when there IS a batch to redirect with; an empty batch (no due
             // cards) must still fall through to `isEmpty` below instead of spinning forever.
-            isLoading={(isLoading && !data) || (!sessionId && cards.length > 0)}
+            // `cards.length > 0 && !resolveApplied` (2026-07-12 fix, mirrors the
+            // identical `FlashcardReviewer` fix): once the due batch itself has
+            // loaded, ALSO hold the skeleton until the resume/start effect has
+            // actually applied the resumed cursor — not just until its underlying
+            // query settled — closing a 1-frame flash (card 1 appears, then jumps
+            // to the real resume position).
+            isLoading={(isLoading && !data) || (!sessionId && cards.length > 0) || (Boolean(sessionId) && cards.length > 0 && !resolveApplied)}
             skeleton={<DueReviewSkeleton />}
             isEmpty={cards.length === 0}
             emptyContent={{
@@ -417,46 +495,36 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
             }}
         >
             {done ? (
-                !completing && finishedSessionId && courseId && courseDisplayId ? (
-                    // the completion screen IS the stats recap now (no flat "done" card,
-                    // no interview nudge) — 4-grade distribution + weak tags + study loop.
-                    <FlashcardSessionStats
-                        className={className}
-                        sessionId={finishedSessionId}
-                        courseId={courseId}
-                        courseDisplayId={courseDisplayId}
-                        onBack={onFinish}
+                // transient hand-off only — the "finish" effect above
+                // `router.replace`s into the dedicated `.../result` route once
+                // the completion mutation resolves (2026-07-12: "done" is now
+                // answered by the ROUTE, not re-derived client-side here), so
+                // this branch never has a real end state to render — just the
+                // "saving" interim until that navigation lands. KEEP the same
+                // `WorkSessionHeader` chrome the just-finished ACTIVE phase
+                // used (thầy wanted the loading state to render like the
+                // active session's header, not swap to `PageHeader` early).
+                <div className={cn("flex w-full flex-col", className)}>
+                    <WorkSessionHeader
+                        backLabel={t("flashcard.exit")}
+                        onBack={onExit}
+                        title={t("flashcard.mode.due")}
+                        counter={t("flashcard.cardProgress", {
+                            current: effectiveCards.length,
+                            total: effectiveCards.length,
+                        })}
+                        current={effectiveCards.length}
+                        total={effectiveCards.length}
                     />
-                ) : (
-                    // KEEP the same `WorkSessionHeader` chrome the just-finished
-                    // ACTIVE phase used (2026-07-12, corrected: thầy wanted the
-                    // loading state to render like the active session's header,
-                    // not swap to `PageHeader` early — that shape is for the REAL
-                    // destination `FlashcardSessionStats` once it mounts). Segment
-                    // bar reads full "done", no `identity` (deck varies card to
-                    // card, meaningless once the run has ended) or `meta`.
-                    <div className={cn("flex w-full flex-col", className)}>
-                        <WorkSessionHeader
-                            backLabel={t("flashcard.exit")}
-                            onBack={onExit}
-                            title={t("flashcard.mode.due")}
-                            counter={t("flashcard.cardProgress", {
-                                current: effectiveCards.length,
-                                total: effectiveCards.length,
-                            })}
-                            current={effectiveCards.length}
-                            total={effectiveCards.length}
-                        />
-                        <div className="px-4 pb-6 pt-10 sm:px-6">
-                            <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-3 py-10">
-                                <Spinner size="lg" />
-                                <Typography type="body-sm" color="muted">
-                                    {t("flashcard.review.stats.savingLabel")}
-                                </Typography>
-                            </div>
+                    <div className="px-4 pb-6 pt-10 sm:px-6">
+                        <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-3 py-10">
+                            <Spinner size="lg" />
+                            <Typography type="body-sm" color="muted">
+                                {t("flashcard.review.stats.savingLabel")}
+                            </Typography>
                         </div>
                     </div>
-                )
+                </div>
             ) : (
                 <div className={cn("flex w-full flex-col", className)}>
                     {/* shared header: WorkSessionHeader (current card's OWN deck as identity +
@@ -480,8 +548,19 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
                             current: currentIndex + 1,
                             total: effectiveCards.length,
                         })}
+                        // `current` = the VIEWED card (→ accent/pink follows what
+                        // you're looking at); the green/done state is per-card via
+                        // `doneSet={gradedIndexes}` so a card graded out of order
+                        // (free-nav jump-ahead → grade → jump-back) still reads green
+                        // regardless of where the cursor is (2026-07-12, thầy: free-
+                        // nav "cả trước và sau"). Every segment is clickable
+                        // (`onSegmentClick`), and "Kết thúc" ends the run explicitly.
                         current={currentIndex}
                         total={effectiveCards.length}
+                        doneSet={Array.from(gradedIndexes)}
+                        onSegmentClick={goToIndex}
+                        onFinish={onFinish}
+                        finishLabel={t("flashcard.finish")}
                         meta={<Chip size="sm" variant="soft" color="warning">{t("flashcard.due.label")}</Chip>}
                     />
 

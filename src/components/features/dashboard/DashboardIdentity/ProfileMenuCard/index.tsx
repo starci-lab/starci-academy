@@ -46,7 +46,12 @@ export const ProfileMenuCard = ({
 }: ProfileMenuCardProps) => {
     const locale = useLocale()
     const user = useAppSelector((state) => state.user.user)
-    const { data: achievements } = useQueryUserAchievementsSwr(user?.id ?? null)
+    const achievementsSwr = useQueryUserAchievementsSwr(user?.id ?? null)
+    const achievements = achievementsSwr.data
+    // 2026-07-12: no loading state here meant the avatar rendered bare, then the
+    // seniority ring popped on once achievements resolved — reserve the same
+    // padding with a pulsing neutral fill instead (mirrors ProfileRankAvatar).
+    const ringPending = achievementsSwr.isLoading && !achievements
 
     /**
      * Readable name next to the avatar: the chosen display name, else the handle
@@ -94,8 +99,12 @@ export const ProfileMenuCard = ({
             <div className="flex min-w-0 items-center gap-3">
                 {/* avatar framed by the seniority rank colour (when ranked) */}
                 <div
-                    className={cn("shrink-0 rounded-full", info.ring && "p-0.5")}
-                    style={info.ring ? { backgroundColor: info.ring } : undefined}
+                    className={cn(
+                        "shrink-0 rounded-full",
+                        (ringPending || info.ring) && "p-0.5",
+                        ringPending && "animate-pulse bg-default",
+                    )}
+                    style={!ringPending && info.ring ? { backgroundColor: info.ring } : undefined}
                 >
                     <UserAvatar
                         className="size-10"

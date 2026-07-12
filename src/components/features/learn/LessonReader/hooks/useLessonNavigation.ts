@@ -30,6 +30,12 @@ export interface UseLessonNavigationResult {
     previous?: AdjacentLesson
     /** The next lesson, or undefined at the end / when unknown. */
     next?: AdjacentLesson
+    /**
+     * Whether the underlying outline is still resolving — lets callers (the
+     * pager) tell "still finding out" apart from "genuinely no neighbour"
+     * instead of collapsing both into an empty `previous`/`next`.
+     */
+    isLoading: boolean
 }
 
 /**
@@ -53,7 +59,7 @@ export const useLessonNavigation = (): UseLessonNavigationResult => {
 
     return useMemo<UseLessonNavigationResult>(() => {
         if (!outline || !displayId) {
-            return { position: 0, total: 0 }
+            return { position: 0, total: 0, isLoading: outlineSwr.isLoading }
         }
         // flatten modules → lessons into the linear reading order, keeping the
         // owning module id so each lesson route can be rebuilt
@@ -66,7 +72,7 @@ export const useLessonNavigation = (): UseLessonNavigationResult => {
         const total = sequence.length
         const index = sequence.findIndex((entry) => entry.contentId === contentId)
         if (index === -1) {
-            return { position: 0, total }
+            return { position: 0, total, isLoading: outlineSwr.isLoading }
         }
 
         const toLesson = (entry: typeof sequence[number]): AdjacentLesson => ({
@@ -80,6 +86,7 @@ export const useLessonNavigation = (): UseLessonNavigationResult => {
             total,
             previous: index > 0 ? toLesson(sequence[index - 1]) : undefined,
             next: index < total - 1 ? toLesson(sequence[index + 1]) : undefined,
+            isLoading: outlineSwr.isLoading,
         }
-    }, [outline, displayId, locale, contentId])
+    }, [outline, displayId, locale, contentId, outlineSwr.isLoading])
 }

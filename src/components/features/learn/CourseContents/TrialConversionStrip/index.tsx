@@ -17,6 +17,7 @@ import {
 } from "@phosphor-icons/react"
 import { PriceTag } from "@/components/blocks/commerce/PriceTag"
 import { PhaseScarcityNote } from "@/components/blocks/commerce/PhaseScarcityNote"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { useQueryCoursePricePreviewSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursePricePreviewSwr"
 import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { PaymentFlow } from "@/modules/types/payment"
@@ -86,7 +87,15 @@ export const TrialConversionStrip = ({
             </div>
             <div className="flex flex-wrap items-end justify-between gap-3 border-t border-default pt-3">
                 <div className="flex flex-col gap-1">
-                    {price?.discountedPriceVnd != null ? (
+                    {priceSwr.isLoading && !price ? (
+                        // 2026-07-12: the CTA card renders instantly once the outline
+                        // resolves, but the price is a second fetch — mirror the price
+                        // line instead of showing an empty gap until it lands.
+                        <>
+                            <Skeleton.Typography type="h4" width="1/3" />
+                            <Skeleton.Typography type="body-xs" width="1/2" />
+                        </>
+                    ) : price?.discountedPriceVnd != null ? (
                         <>
                             <PriceTag
                                 discounted={price.discountedPriceVnd}

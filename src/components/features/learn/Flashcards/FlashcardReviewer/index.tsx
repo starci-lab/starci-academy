@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import useSWR from "swr"
+import useSWR, { useSWRConfig } from "swr"
 import { Button, Chip, Spinner, Typography, cn } from "@heroui/react"
 import { LockIcon } from "@phosphor-icons/react"
 import { useTranslations, useLocale } from "next-intl"
@@ -9,7 +9,6 @@ import { usePathname, useRouter } from "next/navigation"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { SM2_GRADES } from "../constants"
 import { FlashcardReviewerSkeleton } from "./FlashcardReviewerSkeleton"
-import { FlashcardSessionStats } from "../FlashcardSessionStats"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { mutateReviewFlashcard } from "@/modules/api/graphql/mutations/mutation-review-flashcard"
 import { queryFlashcardDeck } from "@/modules/api/graphql/queries/query-flashcard-deck"
@@ -26,6 +25,7 @@ import { useMutateStartFlashcardReviewSessionSwr } from "@/hooks/swr/api/graphql
 import { useMutateSyncFlashcardReviewSessionProgressSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardReviewSessionProgressSwr"
 import { useMutateCompleteFlashcardReviewSessionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateCompleteFlashcardReviewSessionSwr"
 import { useQueryMyInProgressFlashcardReviewSessionSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyInProgressFlashcardReviewSessionSwr"
+import { useQueryMyFlashcardReviewSessionBySessionIdSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyFlashcardReviewSessionBySessionIdSwr"
 
 /** Props for {@link FlashcardReviewer}. */
 export interface FlashcardReviewerProps extends WithClassNames<undefined> {
@@ -59,6 +59,17 @@ const LEVEL_COLOR: Record<string, "success" | "warning" | "danger" | "accent"> =
 }
 
 /**
+ * Rehydrate the graded-position set from a resumed session: prefer the
+ * server's `gradedIndexes` (order-independent, exact), else fall back to
+ * "first `reviewedCount` contiguous" for an older row synced before the
+ * column existed — so green isn't lost on resume of a legacy session.
+ */
+const seedGradedSet = (resumed: { gradedIndexes?: Array<number>, reviewedCount: number }): Set<number> =>
+    resumed.gradedIndexes && resumed.gradedIndexes.length > 0
+        ? new Set(resumed.gradedIndexes)
+        : new Set(Array.from({ length: resumed.reviewedCount }, (_, i) => i))
+
+/**
  * Spaced-repetition reviewer over one deck. One card at a time: the Markdown
  * question on the front, flipped to reveal the model answer plus optional depth,
  * then graded for recall (Again / Hard / Good / Easy) — each grade reschedules the
@@ -72,6 +83,7 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
     const router = useRouter()
     const pathname = usePathname()
     const runGraphQL = useGraphQLWithToast()
+    const { mutate: globalMutate } = useSWRConfig()
     // owning course slug drives the deep-links to referenced lessons/modules
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
     // owning course id (uuid) — for the review-session mutations' enrollment-guard header
@@ -90,9 +102,12 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
     const [reviewing, setReviewing] = useState(false)
     // how many cards were graded this run (shown in the summary)
     const [reviewedCount, setReviewedCount] = useState(0)
-    // true while the completeSession mutation is in flight — a brief "saving"
-    // state between the last card and the stats recap.
-    const [completing, setCompleting] = useState(false)
+    // WHICH card positions have been graded (0-indexed, order-independent) —
+    // drives the progress bar's per-segment green under free navigation
+    // (2026-07-12; mirrors `DueReview`). Persisted via `gradedIndexes` sync.
+    const [gradedIndexes, setGradedIndexes] = useState<Set<number>>(() => new Set())
+    // explicit "Kết thúc" — end the run now regardless of position.
+    const [finished, setFinished] = useState(false)
 
     // load the full deck graph (cards with question + answer)
     const { data, isLoading, error, mutate } = useSWR(
@@ -117,11 +132,29 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
     const runStartSession = useMutateStartFlashcardReviewSessionSwr()
     const runSyncSession = useMutateSyncFlashcardReviewSessionProgressSwr()
     const runCompleteSession = useMutateCompleteFlashcardReviewSessionSwr()
+    // no-`sessionId` shim route only: MRU "is there a resumable draw at all"
+    // lookup, used to resolve-or-start before a sessioned URL exists yet.
     const inProgressSessionSwr = useQueryMyInProgressFlashcardReviewSessionSwr(deckId, courseId)
+    // sessioned route: resolve THIS EXACT session by id (not an MRU guess) —
+    // fixes a visible jank on load (2026-07-12: "cái này cũng giật này"). The
+    // old code reused `inProgressSessionSwr` here too and manually checked
+    // `resumable.sessionId === sessionId` as a workaround for using the wrong
+    // query; worse, that query's `isLoading` wasn't part of `AsyncContent`'s
+    // gate below, so the skeleton could resolve before `currentIndex` was set,
+    // flashing card 1 before jumping to the real resume position.
+    const sessionByIdSwr = useQueryMyFlashcardReviewSessionBySessionIdSwr(sessionId, courseId)
     // the server-issued session id — a ref (not state) since it never drives a render
     const sessionIdRef = useRef<string | null>(null)
-    // guards the mount-time resume/start effect so it runs at most once per deck
+    // guards the mount-time resume/start effect so it runs its work at most once
+    // per deck (prevents a duplicate `start` call on re-render).
     const initAttemptedRef = useRef(false)
+    // STATE, separate from the ref above — `AsyncContent`'s `isLoading` gate below
+    // reads THIS, so the skeleton stays up until `currentIndex`/`reviewedCount` are
+    // ACTUALLY set, not just until the underlying query settles (closes a 1-frame
+    // flash this component used to show: card 1 appears, then jumps to the real
+    // resume position). Stays false on the redirect-away paths (fresh session /
+    // no-sessionId shim) — the skeleton correctly holds through the navigation.
+    const [initResolved, setInitResolved] = useState(false)
     // guards `completeFlashcardReviewSession` so a re-render at `done` never double-fires it
     const completedRef = useRef(false)
 
@@ -176,35 +209,62 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
         [cards, deckId, courseHeaders, runStartSession, runGraphQL, router, t],
     )
 
+    // every card in the deck was already graded (`reviewedCount` reaches the
+    // deck size) but `status` never flipped to "completed" — the earlier
+    // completion call never landed (2026-07-12, same root cause traced in
+    // `QuizSession`: "submit rồi mà F5 về câu cuối"). Clamping `currentIndex`
+    // to `cards.length - 1` would ALWAYS re-show the last card (that index
+    // can't tell "about to answer" from "just answered" apart) — resolve to
+    // the FULL length instead so `done` computes true immediately and the
+    // "finish" effect below retries completion.
+    const resolveIndex = useCallback(
+        (resumable: { reviewedCount: number, currentIndex: number }) =>
+            resumable.reviewedCount >= cards.length
+                ? cards.length
+                : Math.min(resumable.currentIndex, cards.length - 1),
+        [cards.length],
+    )
+
     useEffect(() => {
         if (
             initAttemptedRef.current
             || cards.length === 0
-            || inProgressSessionSwr.isLoading
             || !courseHeaders
         ) {
             return
         }
-        initAttemptedRef.current = true
-        const resumable = inProgressSessionSwr.data
 
         if (sessionId) {
-            if (resumable && resumable.sessionId === sessionId) {
-                sessionIdRef.current = sessionId
-                setCurrentIndex(Math.min(resumable.currentIndex, cards.length - 1))
-                setReviewedCount(resumable.reviewedCount)
+            if (sessionByIdSwr.isLoading) {
                 return
             }
-            // stale/invalid session id — start a fresh one and correct the URL,
-            // same as the no-`sessionId` branch below.
+            initAttemptedRef.current = true
+            const resolved = sessionByIdSwr.data
+            if (resolved) {
+                sessionIdRef.current = sessionId
+                setCurrentIndex(resolveIndex(resolved))
+                setReviewedCount(resolved.reviewedCount)
+                setGradedIndexes(seedGradedSet(resolved))
+                setInitResolved(true)
+                return
+            }
+            // stale/invalid session id (not found/not owned/expired past 24h) —
+            // start a fresh one and correct the URL, same as the no-`sessionId`
+            // branch below.
             void startSessionAndRedirect(pathname.replace(/\/sessions\/.+$/, ""))
             return
         }
 
+        if (inProgressSessionSwr.isLoading) {
+            return
+        }
+        initAttemptedRef.current = true
+        const resumable = inProgressSessionSwr.data
         if (resumable) {
             sessionIdRef.current = resumable.sessionId
-            setCurrentIndex(Math.min(resumable.currentIndex, cards.length - 1))
+            setCurrentIndex(resolveIndex(resumable))
             setReviewedCount(resumable.reviewedCount)
+            setGradedIndexes(seedGradedSet(resumable))
             // strip any existing `/sessions/<id>` so we never append a second
             // one (the `.../sessions/A//sessions/B` revisit crash); replace, not
             // push, so the stale URL doesn't linger in history.
@@ -212,7 +272,19 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
             return
         }
         void startSessionAndRedirect(pathname.replace(/\/sessions\/.+$/, ""))
-    }, [cards, sessionId, courseHeaders, inProgressSessionSwr.isLoading, inProgressSessionSwr.data, router, pathname, startSessionAndRedirect])
+    }, [
+        cards,
+        sessionId,
+        courseHeaders,
+        sessionByIdSwr.isLoading,
+        sessionByIdSwr.data,
+        inProgressSessionSwr.isLoading,
+        inProgressSessionSwr.data,
+        resolveIndex,
+        router,
+        pathname,
+        startSessionAndRedirect,
+    ])
 
     const card = cards[currentIndex]
 
@@ -246,13 +318,22 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
         router.push(pathConfig().locale(locale).course(courseDisplayId).build())
     }, [router, locale, courseDisplayId])
     // past the last card → the run is complete
-    const done = cards.length > 0 && currentIndex >= cards.length
+    const done = cards.length > 0 && (finished || currentIndex >= cards.length)
 
     // step back to re-grade an earlier card (always on its question side)
     const goPrev = () => {
         setRevealed(false)
         setCurrentIndex((index) => Math.max(index - 1, 0))
     }
+    // jump straight to ANY step from the progress-segment bar — free navigation,
+    // "cả trước và sau, chưa tới vẫn click được" (2026-07-12, mirrors `DueReview`).
+    const goToIndex = useCallback((position: number) => {
+        setRevealed(false)
+        setCurrentIndex(position)
+    }, [])
+    // end the run now → the completion effect (`done`) fires + navigates to the
+    // result route. Distinct from "Thoát" (back-link: leave, keep resumable).
+    const onFinish = useCallback(() => setFinished(true), [])
 
     // grade the current card, reschedule it (SM-2), then advance
     const onRate = useCallback(
@@ -280,8 +361,12 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
             )
             setReviewing(false)
             if (ok) {
-                const nextReviewedCount = reviewedCount + 1
+                // mark THIS position graded (set dedupes a re-grade) — source of
+                // truth for the per-segment green + the reviewed count.
+                const nextGraded = new Set(gradedIndexes).add(currentIndex)
+                const nextReviewedCount = nextGraded.size
                 const nextIndex = currentIndex + 1
+                setGradedIndexes(nextGraded)
                 setReviewedCount(nextReviewedCount)
                 setRevealed(false)
                 setCurrentIndex(nextIndex)
@@ -298,6 +383,7 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
                                     sessionId: syncSessionId,
                                     currentIndex: nextIndex,
                                     reviewedCount: nextReviewedCount,
+                                    gradedIndexes: Array.from(nextGraded),
                                     xpEarned: 0,
                                 },
                                 headers: courseHeaders,
@@ -310,11 +396,19 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
                             )
                         },
                         { showSuccessToast: false },
-                    )
+                    ).then(() => {
+                        // invalidate any resumable-session indicator elsewhere reading
+                        // THIS exact key (mirrors the identical fix on `DueReview`,
+                        // 2026-07-12: "bấm nút back thì về 2 trong khi đang là 5" — a
+                        // per-grade sync never invalidated the cache, only the `done`
+                        // completion path did, so a revisit mid-session could read a
+                        // stale currentIndex even though the DB itself was correct).
+                        void globalMutate(["QUERY_MY_IN_PROGRESS_FLASHCARD_REVIEW_SESSION_SWR", deckId])
+                    })
                 }
             }
         },
-        [card, runGraphQL, t, reviewedCount, currentIndex, courseHeaders, runSyncSession],
+        [card, runGraphQL, t, gradedIndexes, currentIndex, courseHeaders, runSyncSession, globalMutate, deckId],
     )
 
     // the run just finished (past the last card) — close out the persisted
@@ -327,7 +421,6 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
             return
         }
         completedRef.current = true
-        setCompleting(true)
         const completingSessionId = sessionIdRef.current
         void (async () => {
             await runGraphQL(
@@ -349,16 +442,13 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
                 },
                 { showSuccessToast: false },
             )
-            // hand off to the stats recap once the session is closed out (the recap
-            // reads events by sessionId, independent of the session row's status).
-            setCompleting(false)
+            // hand off to the dedicated result route once the session is closed out
+            // (reads events by sessionId, independent of the session row's status —
+            // "done" is now answered by the URL, not re-derived client-side; see
+            // `.../result/page.tsx` doc for the root cause).
+            router.replace(`${pathname.replace(/\/sessions\/.+$/, "")}/sessions/${completingSessionId}/result`)
         })()
-    }, [done, reviewedCount, courseHeaders, runCompleteSession, runGraphQL, t])
-
-    // the session this run persisted to — snapshotted into a local so TS can
-    // narrow it (a ref's `.current` never narrows) before handing it to the stats
-    // recap, and so the recap has a stable id for the whole `done` render.
-    const finishedSessionId = sessionIdRef.current
+    }, [done, reviewedCount, courseHeaders, runCompleteSession, runGraphQL, t, router, pathname])
 
     return (
         <AsyncContent
@@ -369,7 +459,15 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
             // (bug fixed 2026-07-11: gate `error`/`isEmpty` on `sessionId` too, not
             // just `isLoading` — a genuine deck-query error used to leak through
             // as "chưa có Flashcards" on the shim even while still resolving).
-            isLoading={!sessionId || ((isLoading || !data) && cards.length === 0)}
+            // `cards.length > 0 && !initResolved` (2026-07-12 fix): once the deck
+            // itself has loaded, ALSO hold the skeleton until the resume/start
+            // effect has actually applied `currentIndex`/`reviewedCount` — not just
+            // until its underlying query settled — closing a 1-frame flash (card 1
+            // appears, then jumps to the real resume position). Scoped to
+            // `cards.length > 0` so a genuinely empty deck still falls through to
+            // `isEmpty` below (that effect never runs — and never resolves
+            // `initResolved` — when there are no cards to resume into).
+            isLoading={!sessionId || ((isLoading || !data) && cards.length === 0) || (cards.length > 0 && !initResolved)}
             skeleton={<FlashcardReviewerSkeleton />}
             isEmpty={Boolean(sessionId) && cards.length === 0}
             emptyContent={{ title: t("flashcard.empty") }}
@@ -380,46 +478,36 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
             }}
         >
             {done ? (
-                !completing && finishedSessionId && courseId && courseDisplayId ? (
-                    // the completion screen IS the stats recap now (no flat "done" card) —
-                    // 4-grade distribution + weak tags + the study-again loop back in.
-                    <FlashcardSessionStats
-                        className={className}
-                        sessionId={finishedSessionId}
-                        courseId={courseId}
-                        courseDisplayId={courseDisplayId}
+                // transient hand-off only — the "finish" effect above `router.replace`s
+                // into the dedicated `.../result` route once the completion mutation
+                // resolves (2026-07-12: "done" is now answered by the ROUTE, not
+                // re-derived client-side here), so this branch never has a real end
+                // state to render — just the "saving" interim until that navigation
+                // lands. KEEP the same `WorkSessionHeader` chrome the just-finished
+                // ACTIVE phase used (thầy wanted the loading state to render like the
+                // active session's header, not swap to `PageHeader` early).
+                <div className={cn("flex w-full flex-col", className)}>
+                    <WorkSessionHeader
+                        backLabel={t("flashcard.exit")}
                         onBack={onBack ?? (() => {})}
+                        title={t("flashcard.mode.study")}
+                        identity={data?.title ? { name: data.title } : undefined}
+                        counter={t("flashcard.cardProgress", {
+                            current: cards.length,
+                            total: cards.length,
+                        })}
+                        current={cards.length}
+                        total={cards.length}
                     />
-                ) : (
-                    // KEEP the same `WorkSessionHeader` chrome the just-finished
-                    // ACTIVE phase used (2026-07-12, corrected: thầy wanted the
-                    // loading state to render like the active session's header,
-                    // not swap to `PageHeader` early — that shape is for the REAL
-                    // destination `FlashcardSessionStats` once it mounts). Segment
-                    // bar reads full "done".
-                    <div className={cn("flex w-full flex-col", className)}>
-                        <WorkSessionHeader
-                            backLabel={t("flashcard.exit")}
-                            onBack={onBack ?? (() => {})}
-                            title={t("flashcard.mode.study")}
-                            identity={data?.title ? { name: data.title } : undefined}
-                            counter={t("flashcard.cardProgress", {
-                                current: cards.length,
-                                total: cards.length,
-                            })}
-                            current={cards.length}
-                            total={cards.length}
-                        />
-                        <div className="px-4 pb-6 pt-10 sm:px-6">
-                            <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-3 py-10">
-                                <Spinner size="lg" />
-                                <Typography type="body-sm" color="muted">
-                                    {t("flashcard.review.stats.savingLabel")}
-                                </Typography>
-                            </div>
+                    <div className="px-4 pb-6 pt-10 sm:px-6">
+                        <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-3 py-10">
+                            <Spinner size="lg" />
+                            <Typography type="body-sm" color="muted">
+                                {t("flashcard.review.stats.savingLabel")}
+                            </Typography>
                         </div>
                     </div>
-                )
+                </div>
             ) : (
                 <div className={cn("flex w-full flex-col", className)}>
                     {/* shared header: WorkSessionHeader (deck identity + card counter +
@@ -438,8 +526,17 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
                             current: currentIndex + 1,
                             total: cards.length,
                         })}
+                        // `current` = VIEWED card (accent/pink follows the cursor);
+                        // green/done is per-card via `doneSet={gradedIndexes}` so a
+                        // card graded out of order stays green (2026-07-12, free-nav
+                        // "cả trước và sau"). Every segment clickable; "Kết thúc"
+                        // ends the run explicitly.
                         current={currentIndex}
                         total={cards.length}
+                        doneSet={Array.from(gradedIndexes)}
+                        onSegmentClick={goToIndex}
+                        onFinish={onFinish}
+                        finishLabel={t("flashcard.finish")}
                         meta={card && (card.level || (card.tags?.length ?? 0) > 0) ? (
                             <>
                                 {card.level ? (

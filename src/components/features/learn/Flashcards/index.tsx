@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react"
 import useSWR from "swr"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { cn } from "@heroui/react"
 import { EnrollGate } from "../shared/EnrollGate"
@@ -12,6 +12,7 @@ import { FlashcardReviewerSkeleton } from "./FlashcardReviewer/FlashcardReviewer
 import { QuizSession } from "./QuizSession"
 import { QuizSessionSkeleton } from "./QuizSession/QuizSessionSkeleton"
 import { FlashcardQuizResult } from "./FlashcardQuizResult"
+import { FlashcardQuizResultSkeleton } from "./FlashcardQuizResult/FlashcardQuizResultSkeleton"
 import { DueReview } from "./DueReview"
 import { DueReviewHero } from "./DueReviewHero"
 import { FlashcardStatsStrip } from "./FlashcardStatsStrip"
@@ -20,6 +21,7 @@ import { FlashcardMobileNav } from "./FlashcardMobileNav"
 import { FlashcardReviewHistory } from "./FlashcardReviewHistory"
 import { FlashcardReviewStats } from "./FlashcardReviewStats"
 import { FlashcardSessionStats } from "./FlashcardSessionStats"
+import { FlashcardSessionStatsSkeleton } from "./FlashcardSessionStats/FlashcardSessionStatsSkeleton"
 import { useFlashcardNav, type FlashcardMode } from "./useFlashcardNav"
 import { type WithClassNames } from "@/modules/types/base/class-name"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
@@ -30,6 +32,7 @@ import { useQueryMyFlashcardReviewSessionBySessionIdSwr } from "@/hooks/swr/api/
 import { useQueryMyFlashcardReviewSessionStatsBySessionIdSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyFlashcardReviewSessionStatsBySessionIdSwr"
 import { useQueryMyFlashcardQuizSessionBySessionIdSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyFlashcardQuizSessionBySessionIdSwr"
 import { queryFlashcardDeck } from "@/modules/api/graphql/queries/query-flashcard-deck"
+import { pathConfig } from "@/resources/path"
 
 /** Props for {@link Flashcards}. */
 export interface FlashcardsProps extends WithClassNames<undefined> {
@@ -55,6 +58,23 @@ export interface FlashcardsProps extends WithClassNames<undefined> {
      * or `DueReview` (due). Mirrors `resumeQuizSessionId`.
      */
     resumeStudySessionId?: string
+    /**
+     * Present when reached via the dedicated
+     * `flashcards/quiz/sessions/[sessionId]/result` route — renders
+     * `FlashcardQuizResult` DIRECTLY, no in-progress check (2026-07-12). This
+     * route only ever means "show the result"; `QuizSession` navigates here
+     * once its completion mutation resolves. See that route's own doc for the
+     * full root-cause this route split fixes.
+     */
+    resultQuizSessionId?: string
+    /**
+     * Present when reached via the dedicated
+     * `flashcards/review/sessions/[sessionId]/result` route — renders
+     * `FlashcardSessionStats` DIRECTLY (covers both single-deck review and
+     * cross-deck due), no in-progress check (2026-07-12). Mirrors
+     * `resultQuizSessionId`.
+     */
+    resultStudySessionId?: string
 }
 
 /**
@@ -76,8 +96,11 @@ export const Flashcards = ({
     className,
     resumeQuizSessionId,
     resumeStudySessionId,
+    resultQuizSessionId,
+    resultStudySessionId,
 }: FlashcardsProps) => {
     const t = useTranslations()
+    const locale = useLocale()
     const pathname = usePathname()
     const router = useRouter()
     const searchParams = useSearchParams()
@@ -127,6 +150,36 @@ export const Flashcards = ({
     // quiz is enrolled-only (it spends AI credits) — gate the tab for trial viewers
     const enrollmentSwr = useQueryCourseEnrollmentStatusSwr()
     const isEnrolled = enrollmentSwr.data?.courseEnrollmentStatus?.data?.isEnrolled === true
+
+    // once a resumed session's status resolves to "not in progress" (finished/
+    // abandoned) at the LIVE route, redirect to the dedicated RESULT route
+    // (2026-07-12) instead of rendering the result surface inline here — ONE
+    // place decides "is this session done" (the URL itself), so an old
+    // bookmark to the live route, or a session that self-heals its stuck
+    // completion on a later resume attempt, both converge on `/result`
+    // instead of silently rendering results at the live URL forever (which
+    // is exactly what made today's bugs hard to reproduce/trust — F5 kept
+    // landing back on ambiguous state). `replace` (not `push`) — the live URL
+    // was never a real navigation step the learner chose.
+    useEffect(() => {
+        if (!resumeStudySessionId || !studyStatusKnown || studyIsInProgress || !courseDisplayId) {
+            return
+        }
+        router.replace(
+            pathConfig().locale(locale).course(courseDisplayId).learn()
+                .flashcards().due(resumeStudySessionId).result().build(),
+        )
+    }, [resumeStudySessionId, studyStatusKnown, studyIsInProgress, courseDisplayId, locale, router])
+
+    useEffect(() => {
+        if (!resumeQuizSessionId || !quizStatusKnown || quizIsInProgress || !courseDisplayId) {
+            return
+        }
+        router.replace(
+            pathConfig().locale(locale).course(courseDisplayId).learn()
+                .flashcards().quiz(resumeQuizSessionId).result().build(),
+        )
+    }, [resumeQuizSessionId, quizStatusKnown, quizIsInProgress, courseDisplayId, locale, router])
 
     // which study-overview tab is active ("Ôn tập" / "Lịch sử" / "Thống kê") —
     // overview only (no deck open, no due session). Seeded from `?tab=` so a
@@ -182,6 +235,46 @@ export const Flashcards = ({
         <LearnBreadcrumb current={t("flashcard.title")} />
     )
 
+    // dedicated RESULT route (2026-07-12) — renders the result surface
+    // directly, no in-progress check. This URL only ever means "show the
+    // result"; both surfaces already handle not-found/degraded data via their
+    // own `AsyncContent`.
+    if (resultStudySessionId) {
+        return (
+            <div className={className}>
+                {courseId ? (
+                    <FlashcardSessionStats
+                        sessionId={resultStudySessionId}
+                        courseId={courseId}
+                        courseDisplayId={courseDisplayId ?? ""}
+                        onBack={goOverview}
+                    />
+                ) : (
+                    // brief courseId-not-resolved-yet flash — the stats surface's OWN
+                    // shape, not the full live-session skeleton (header + card +
+                    // buttons is the wrong shape for a result page).
+                    <FlashcardSessionStatsSkeleton />
+                )}
+            </div>
+        )
+    }
+    if (resultQuizSessionId) {
+        return (
+            <div className={className}>
+                {courseId ? (
+                    <FlashcardQuizResult
+                        sessionId={resultQuizSessionId}
+                        courseId={courseId}
+                        courseDisplayId={courseDisplayId ?? ""}
+                        onBack={goOverview}
+                    />
+                ) : (
+                    <FlashcardQuizResultSkeleton />
+                )}
+            </div>
+        )
+    }
+
     // live "Hỏi nhanh" run — full-bleed work surface, its own `WorkSessionHeader`
     // IS the header, so the breadcrumb/PageHeader, mobile nav, and mode tabs
     // (all "which surface am I on" chrome) step aside; nothing to switch away
@@ -191,20 +284,12 @@ export const Flashcards = ({
         return (
             <div className={className}>
                 {resumeStudySessionId ? (
-                    !studyStatusKnown ? (
-                        // status/kind/course not all settled yet — hold the skeleton;
-                        // never fall through to the reviewer before we know the status.
+                    !studyStatusKnown || !studyIsInProgress ? (
+                        // status not settled yet, OR resolved to "not in progress" — the
+                        // effect above is redirecting to `/result` in the latter case; hold
+                        // the skeleton through both, never fall through to the reviewer
+                        // before a POSITIVELY-confirmed in-progress session.
                         <FlashcardReviewerSkeleton />
-                    ) : !studyIsInProgress && courseId ? (
-                        // finished (completed/abandoned) or not-found session reached by
-                        // URL/refresh → STATS recap (its own AsyncContent handles the
-                        // not-found/degraded cases), NEVER the reviewer.
-                        <FlashcardSessionStats
-                            sessionId={resumeStudySessionId}
-                            courseId={courseId}
-                            courseDisplayId={courseDisplayId ?? ""}
-                            onBack={goOverview}
-                        />
                     ) : studySessionContextSwr.data?.kind === "deck" && studySessionContextSwr.data.deckId ? (
                         <FlashcardReviewer
                             key={studySessionContextSwr.data.deckId}
@@ -215,21 +300,12 @@ export const Flashcards = ({
                     ) : (
                         <DueReview onExit={goOverview} sessionId={resumeStudySessionId} />
                     )
-                ) : !quizStatusKnown ? (
-                    // status not settled yet — hold the skeleton; never hand a maybe-
-                    // finished session to the live QuizSession before we know its status.
+                ) : !quizStatusKnown || !quizIsInProgress ? (
+                    // status not settled yet, OR resolved to "not in progress" — the effect
+                    // above is redirecting to `/result` in the latter case; hold the
+                    // skeleton through both, never hand a maybe-finished session to the
+                    // live QuizSession (whose resume effect only accepts in-progress).
                     <QuizSessionSkeleton />
-                ) : !quizIsInProgress && courseId ? (
-                    // finished (completed/abandoned) or not-found session reached by
-                    // URL/refresh → the URL-addressable RESULT surface (its own
-                    // AsyncContent handles the not-found/degraded cases), NEVER the
-                    // live QuizSession's resumeFailed→setup dead-end.
-                    <FlashcardQuizResult
-                        sessionId={resumeQuizSessionId as string}
-                        courseId={courseId}
-                        courseDisplayId={courseDisplayId ?? ""}
-                        onBack={goOverview}
-                    />
                 ) : courseId ? (
                     <QuizSession
                         key={courseId}

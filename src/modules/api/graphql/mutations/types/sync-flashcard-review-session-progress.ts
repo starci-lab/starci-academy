@@ -15,6 +15,8 @@ export interface SyncFlashcardReviewSessionProgressRequest {
     currentIndex: number
     /** Cards actually graded so far this run (via `reviewFlashcard`). */
     reviewedCount: number
+    /** 0-indexed card positions graded this run (order-independent) — drives the progress bar's per-segment green + rehydrates on resume. Optional; omitted leaves the column untouched. */
+    gradedIndexes?: Array<number>
     /** Client-reported XP bookkeeping snapshot so far this run (not server-granted). */
     xpEarned: number
 }

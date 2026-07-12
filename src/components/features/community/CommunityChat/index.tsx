@@ -5,6 +5,7 @@ import { Typography } from "@heroui/react"
 import type { Key } from "react"
 import { useTranslations } from "next-intl"
 import { ChatPane } from "./ChatPane"
+import { ChatPaneSkeleton } from "./ChatPane/ChatPaneSkeleton"
 import { PageContainer } from "@/components/blocks/layout/PageContainer"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
@@ -62,9 +63,11 @@ export const CommunityChat = () => {
                         {conversationId ? (
                             <ChatPane key={conversationId} conversationId={conversationId} />
                         ) : (
-                            <Typography type="body-sm" color="muted">
-                                {t("community.chat.loading")}
-                            </Typography>
+                            // 2026-07-12: was a bare "loading…" caption while the active
+                            // conversation id resolves — mirror the real pane's shape
+                            // (message list + composer) so the tab switch/first load
+                            // doesn't jump into a differently-shaped panel afterward.
+                            <ChatPaneSkeleton withComposer />
                         )}
                     </div>
                 ) : (

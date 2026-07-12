@@ -11,6 +11,7 @@ import { SealCheckIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { ChatBubble } from "@/components/blocks/feed/ChatBubble"
+import { ChatPaneSkeleton } from "./ChatPaneSkeleton"
 import { UserAvatar } from "@/components/reuseable/UserAvatar"
 import { PublicationEvent } from "@/hooks/socketio/enums/publication-event"
 import { SubscriptionEvent } from "@/hooks/socketio/enums/subscription-event"
@@ -105,11 +106,7 @@ export const ChatPane = ({ conversationId }: ChatPaneProps) => {
         <div className="flex flex-col gap-3">
             <AsyncContent
                 isLoading={isLoading && messages.length === 0}
-                skeleton={(
-                    <Typography type="body-xs" color="muted">
-                        {t("community.chat.loading")}
-                    </Typography>
-                )}
+                skeleton={<ChatPaneSkeleton />}
                 isEmpty={messages.length === 0}
                 emptyContent={{ title: t("community.chat.empty") }}
                 error={messages.length === 0 ? error : undefined}

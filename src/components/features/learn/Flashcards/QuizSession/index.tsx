@@ -24,7 +24,6 @@ import { mutateReviewFlashcard } from "@/modules/api/graphql/mutations/mutation-
 import { queryFlashcardDecksByCourse } from "@/modules/api/graphql/queries/query-flashcard-decks-by-course"
 import { queryFlashcardDeck } from "@/modules/api/graphql/queries/query-flashcard-deck"
 import { type FlashcardCardEntity } from "@/modules/types/entities/flashcard-card"
-import { type QuizSessionReadinessData, type QuizSessionWeakTagData } from "@/modules/api/graphql/mutations/types/complete-flashcard-quiz-session"
 import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { Callout } from "@/components/blocks/feedback/Callout"
@@ -47,7 +46,6 @@ import { pathConfig } from "@/resources/path"
 import { ContinueCard } from "@/components/blocks/cards/ContinueCard"
 import { WorkSessionHeader } from "@/components/blocks/navigation/WorkSessionHeader"
 import { QuizSessionSkeleton } from "./QuizSessionSkeleton"
-import { FlashcardQuizResult, type FlashcardQuizResultLiveExtras } from "../FlashcardQuizResult"
 
 /** Props for {@link QuizSession}. */
 export interface QuizSessionProps extends WithClassNames<undefined> {
@@ -252,19 +250,8 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
     const [startError, setStartError] = useState<string | null>(null)
     // client-generated id shared by this run → idempotent XP grant
     const sessionId = useRef<string | null>(null)
-    // XP awarded by the backend for this run (shown in the recap)
-    const [xpEarned, setXpEarned] = useState(0)
-    // whether today's daily XP cap for this source clamped the grant (recap transparency note)
-    const [dailyCapReached, setDailyCapReached] = useState(false)
-    // weakest tags this session, ranked worst-first (recap Zone C demand-bridge)
-    const [weakTags, setWeakTags] = useState<Array<QuizSessionWeakTagData>>([])
-    // AI Mock Interview readiness signal (recap Zone D)
-    const [readiness, setReadiness] = useState<QuizSessionReadinessData | null>(null)
     // guards the one-shot completion mutation on entering the recap
     const completedRef = useRef(false)
-    // true while the completion mutation commits — gates the recap's brief "saving"
-    // spinner before the converged result surface renders (mirrors FlashcardReviewer).
-    const [completing, setCompleting] = useState(false)
     // guards the one-shot resume rehydration to run at most once per mounted instance
     const resumeAttemptedRef = useRef(false)
     // set when `resumeSessionId` couldn't be resumed (no matching session / expired
@@ -415,6 +402,67 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
         )
     }, [router, locale, displayId])
 
+    // finalize the run: send the per-card breakdown so the server re-derives coverage/XP
+    // itself (no client-trusted aggregate), grant XP once (idempotent), then show the recap.
+    // Defined here (not just above `commitCard`) so the resume effect below can call it too
+    // (2026-07-12, mirrors the same move made for `MockInterviewSession`'s `renderWorkHeader`).
+    const finish = useCallback(
+        async (finalResults: Array<CardResult>) => {
+            setPhase("recap")
+            if (completedRef.current || !sessionId.current) {
+                return
+            }
+            completedRef.current = true
+            const answers = finalResults.map((result) => ({
+                cardId: result.cardId,
+                correctBlanks: result.correctBlanks,
+                totalBlanks: result.totalBlanks,
+            }))
+            let awarded = 0
+            await runGraphQL(
+                async () => {
+                    const response = await runComplete.trigger({
+                        request: {
+                            sessionId: sessionId.current as string,
+                            courseId,
+                            answers,
+                        },
+                        headers: courseHeaders,
+                    })
+                    const payload = response.data?.completeFlashcardQuizSession
+                    awarded = payload?.data?.xpEarned ?? 0
+                    return (
+                        payload ?? {
+                            success: false,
+                            message: t("flashcard.review.error"),
+                        }
+                    )
+                },
+                { showSuccessToast: false },
+            )
+            if (awarded > 0) {
+                // refresh the streak/XP chip now that this run counted
+                void weeklyStatsSwr.mutate()
+            }
+            // Navigate to the dedicated result route instead of rendering the
+            // result inline here — "done" is now answered by the URL, not
+            // re-derived client-side (see result/page.tsx doc for root cause).
+            if (displayId) {
+                router.replace(
+                    pathConfig()
+                        .locale(locale)
+                        .course(displayId)
+                        .learn()
+                        .flashcards()
+                        .quiz(sessionId.current as string)
+                        .result()
+                        .build(),
+                )
+            }
+        },
+        [runComplete, runGraphQL, courseId, courseHeaders, t, weeklyStatsSwr, router, locale, displayId],
+    )
+
     // resume, on mount, when reached via the dedicated `flashcards/quiz/sessions/[sessionId]`
     // route — waits for both the deck pool AND the in-progress query to settle, then
     // either rehydrates straight into the active phase at the persisted card/index or
@@ -455,18 +503,32 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
             sessionId.current = resumeSessionId
             setDeadlineAt(data.deadlineAt)
             setSessionCards(restoredCards)
+            setCombo(0)
+            setResumeError(null)
+
+            // every card already has a recorded outcome — the run WAS finished,
+            // but `status` never flipped to "completed" (the earlier `finish()`
+            // call never landed server-side for whatever reason — network drop,
+            // a duplicate-submit race, etc. — 2026-07-12, thầy: "submit rồi mà
+            // F5 về câu cuối"). `currentIndex` alone can't tell "about to answer
+            // the LAST card" from "just answered it" apart — both persist the
+            // same last-valid-index value — only `results` coverage can. Retry
+            // completion instead of silently resuming into the (already
+            // answered) last card again.
+            if (restoredResults.length >= restoredCards.length) {
+                completedRef.current = false
+                setResults(restoredResults)
+                setIndex(restoredCards.length - 1)
+                void finish(restoredResults)
+                return
+            }
+
             setIndex(Math.min(data.currentIndex, restoredCards.length - 1))
             setResults(restoredResults)
-            setCombo(0)
-            setXpEarned(0)
-            setDailyCapReached(false)
-            setWeakTags([])
-            setReadiness(null)
             completedRef.current = false
-            setResumeError(null)
             setPhase("active")
         })()
-    }, [resumeSessionId, decks, inProgressSessionSwr.isLoading, inProgressSessionSwr.data, fetchCardPool, t])
+    }, [resumeSessionId, decks, inProgressSessionSwr.isLoading, inProgressSessionSwr.data, fetchCardPool, t, finish])
 
     // "session time limit" — ticks every second while the run is active, counting
     // DOWN to the server-issued `deadlineAt` (never a local clock start). Mirrors
@@ -593,56 +655,6 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
             })
         },
         [checked],
-    )
-
-    // finalize the run: send the per-card breakdown so the server re-derives coverage/XP
-    // itself (no client-trusted aggregate), grant XP once (idempotent), then show the recap
-    const finish = useCallback(
-        async (finalResults: Array<CardResult>) => {
-            setPhase("recap")
-            if (completedRef.current || !sessionId.current) {
-                return
-            }
-            completedRef.current = true
-            setCompleting(true)
-            const answers = finalResults.map((result) => ({
-                cardId: result.cardId,
-                correctBlanks: result.correctBlanks,
-                totalBlanks: result.totalBlanks,
-            }))
-            let awarded = 0
-            await runGraphQL(
-                async () => {
-                    const response = await runComplete.trigger({
-                        request: {
-                            sessionId: sessionId.current as string,
-                            courseId,
-                            answers,
-                        },
-                        headers: courseHeaders,
-                    })
-                    const payload = response.data?.completeFlashcardQuizSession
-                    awarded = payload?.data?.xpEarned ?? 0
-                    setDailyCapReached(payload?.data?.dailyCapReached ?? false)
-                    setWeakTags(payload?.data?.weakTags ?? [])
-                    setReadiness(payload?.data?.readiness ?? null)
-                    return (
-                        payload ?? {
-                            success: false,
-                            message: t("flashcard.review.error"),
-                        }
-                    )
-                },
-                { showSuccessToast: false },
-            )
-            setXpEarned(awarded)
-            setCompleting(false)
-            if (awarded > 0) {
-                // refresh the streak/XP chip now that this run counted
-                void weeklyStatsSwr.mutate()
-            }
-        },
-        [runComplete, runGraphQL, courseId, courseHeaders, t, weeklyStatsSwr],
     )
 
     // record the current card's outcome + combo, reschedule via SM-2, then advance
@@ -903,88 +915,41 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
     }
 
     // ── RECAP ────────────────────────────────────────────────────────────
-    // The live end-of-run now CONVERGES onto the same URL-addressable
-    // `FlashcardQuizResult` surface a revisit-by-URL lands on (mirrors
-    // FlashcardReviewer's own done→FlashcardSessionStats convergence): the run
-    // hands its just-finished snapshot + the query-absent readiness in directly, so
-    // no re-fetch is needed and both paths render one identical result surface.
+    // Transient hand-off only — `finish()` navigates to the dedicated
+    // `flashcards/quiz/sessions/[sessionId]/result` route once the completion
+    // mutation resolves (2026-07-12: "done" is now answered by the ROUTE, not
+    // re-derived client-side here), so this phase never has a real end state
+    // to render — just the "saving" interim until that navigation lands.
     if (phase === "recap") {
-        const finishedId = sessionId.current
-        // brief "saving" state while the completion mutation commits — a bare header +
-        // spinner mirroring the result surface, so the hand-off reads as one screen.
-        if (completing || !finishedId || !displayId) {
-            return (
-                // KEEP the same `WorkSessionHeader` chrome the just-finished ACTIVE
-                // phase used (2026-07-12, corrected: thầy wanted the loading state
-                // to render like the active session's header, not swap to
-                // `PageHeader` early — the `PageHeader` shape is for the REAL
-                // destination `FlashcardQuizResult` once it actually mounts, not
-                // this transient 1-2s hand-off). Segment bar reads full "done"
-                // (`current === total` → every segment `success`), no `rightSlot`
-                // (timer no longer meaningful once the run has ended).
-                <div className={cn("flex w-full flex-col", className)}>
-                    <WorkSessionHeader
-                        backLabel={t("flashcard.exit")}
-                        onBack={exitToSetup}
-                        title={t("flashcard.mode.quiz")}
-                        identity={course?.title ? { name: course.title } : undefined}
-                        counter={t("flashcard.quiz.progress", {
-                            current: sessionLength,
-                            total: sessionLength,
-                        })}
-                        current={sessionLength}
-                        total={sessionLength}
-                    />
-                    <div className="px-4 pb-6 pt-10 sm:px-6">
-                        <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-3 py-10">
-                            <Spinner size="lg" />
-                            <Typography type="body-sm" color="muted">
-                                {t("flashcard.quiz.result.savingLabel")}
-                            </Typography>
-                        </div>
+        return (
+            // KEEP the same `WorkSessionHeader` chrome the just-finished ACTIVE
+            // phase used (2026-07-12, corrected: thầy wanted the loading state
+            // to render like the active session's header, not swap to
+            // `PageHeader` early). Segment bar reads full "done"
+            // (`current === total` → every segment `success`), no `rightSlot`
+            // (timer no longer meaningful once the run has ended).
+            <div className={cn("flex w-full flex-col", className)}>
+                <WorkSessionHeader
+                    backLabel={t("flashcard.exit")}
+                    onBack={exitToSetup}
+                    title={t("flashcard.mode.quiz")}
+                    identity={course?.title ? { name: course.title } : undefined}
+                    counter={t("flashcard.quiz.progress", {
+                        current: sessionLength,
+                        total: sessionLength,
+                    })}
+                    current={sessionLength}
+                    total={sessionLength}
+                />
+                <div className="px-4 pb-6 pt-10 sm:px-6">
+                    <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-3 py-10">
+                        <Spinner size="lg" />
+                        <Typography type="body-sm" color="muted">
+                            {t("flashcard.quiz.result.savingLabel")}
+                        </Typography>
                     </div>
                 </div>
-            )
-        }
-
-        const fullyCorrect = results.filter((result) => result.correct).length
-        const withCoverage = results.filter((result) => result.coverageRatio !== null)
-        // 0..1 coverage (null when no cloze card was answered) — the result surface
-        // renders it as a percentage; server truth is echoed by a later revisit.
-        const coverage = withCoverage.length > 0
-            ? withCoverage.reduce((sum, result) => sum + (result.coverageRatio ?? 0), 0) / withCoverage.length
-            : null
-        const live: FlashcardQuizResultLiveExtras = {
-            data: {
-                sessionId: finishedId,
-                status: "completed",
-                mode,
-                level,
-                coverage,
-                xpEarned,
-                cardCount: sessionLength,
-                answeredCount: results.length,
-                fullyCorrectCount: fullyCorrect,
-                durationSeconds: null,
-                weakTags,
-                results: results.map((result) => ({
-                    cardId: result.cardId,
-                    correctBlanks: result.correctBlanks,
-                    totalBlanks: result.totalBlanks,
-                })),
-            },
-            readiness,
-            dailyCapReached,
-        }
-        return (
-            <FlashcardQuizResult
-                className={className}
-                sessionId={finishedId}
-                courseId={courseId}
-                courseDisplayId={displayId}
-                onBack={exitToSetup}
-                live={live}
-            />
+            </div>
         )
     }
 

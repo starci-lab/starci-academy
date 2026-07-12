@@ -14,6 +14,7 @@ const query1 = gql`
         cardIds
         currentIndex
         reviewedCount
+        gradedIndexes
         xpEarned
         updatedAt
       }

@@ -1878,6 +1878,7 @@
   },
   "flashcard": {
     "title": "Ôn tập",
+    "exit": "Thoát",
     "subtitle": "Khắc sâu kiến thức bằng lặp lại ngắt quãng, và luyện trả lời phỏng vấn.",
     "empty": "Khoá học này chưa có Flashcards nào.",
     "study": "Học",
@@ -1999,7 +2000,8 @@
     "searchEmpty": "Không có bộ nào khớp với \"{query}\".",
     "mode": {
       "study": "Học thẻ",
-      "quiz": "Hỏi nhanh"
+      "quiz": "Hỏi nhanh",
+      "due": "Ôn thẻ đến hạn"
     },
     "quiz": {
       "record": "Trả lời bằng giọng nói",

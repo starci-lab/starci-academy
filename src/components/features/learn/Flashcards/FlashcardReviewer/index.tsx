@@ -15,7 +15,6 @@ import { mutateReviewFlashcard } from "@/modules/api/graphql/mutations/mutation-
 import { queryFlashcardDeck } from "@/modules/api/graphql/queries/query-flashcard-deck"
 import { type FlashcardCardEntity } from "@/modules/types/entities/flashcard-card"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { BackLink } from "@/components/blocks/navigation/BackLink"
 import { WorkSessionHeader } from "@/components/blocks/navigation/WorkSessionHeader"
 import { FlipCard } from "@/components/blocks/cards/FlipCard"
 import { RatingBar } from "@/components/blocks/buttons/RatingBar"
@@ -392,32 +391,48 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
                         onBack={onBack ?? (() => {})}
                     />
                 ) : (
-                    // brief "saving" state while completeSession commits — mirrors the
-                    // stats surface's own header so the hand-off reads as one screen.
-                    <div className={cn("flex flex-col gap-6", className)}>
-                        <div className="flex flex-wrap items-center justify-between gap-3">
-                            <BackLink label={t("flashcard.title")} onPress={onBack ?? (() => {})} />
-                            <Typography type="body-sm" color="muted">
-                                {t("flashcard.review.stats.headerCaption")}
-                            </Typography>
-                        </div>
-                        <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-3 py-10">
-                            <Spinner size="lg" />
-                            <Typography type="body-sm" color="muted">
-                                {t("flashcard.review.stats.savingLabel")}
-                            </Typography>
+                    // KEEP the same `WorkSessionHeader` chrome the just-finished
+                    // ACTIVE phase used (2026-07-12, corrected: thầy wanted the
+                    // loading state to render like the active session's header,
+                    // not swap to `PageHeader` early — that shape is for the REAL
+                    // destination `FlashcardSessionStats` once it mounts). Segment
+                    // bar reads full "done".
+                    <div className={cn("flex w-full flex-col", className)}>
+                        <WorkSessionHeader
+                            backLabel={t("flashcard.exit")}
+                            onBack={onBack ?? (() => {})}
+                            title={t("flashcard.mode.study")}
+                            identity={data?.title ? { name: data.title } : undefined}
+                            counter={t("flashcard.cardProgress", {
+                                current: cards.length,
+                                total: cards.length,
+                            })}
+                            current={cards.length}
+                            total={cards.length}
+                        />
+                        <div className="px-4 pb-6 pt-10 sm:px-6">
+                            <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-3 py-10">
+                                <Spinner size="lg" />
+                                <Typography type="body-sm" color="muted">
+                                    {t("flashcard.review.stats.savingLabel")}
+                                </Typography>
+                            </div>
                         </div>
                     </div>
                 )
             ) : (
-                <div className={cn("flex flex-col gap-6", className)}>
+                <div className={cn("flex w-full flex-col", className)}>
                     {/* shared header: WorkSessionHeader (deck identity + card counter +
                         level/tag meta chips inline + progress segments) — same shell as
                         QuizSession's "Hỏi nhanh" (thầy 2026-07-11: "ôn thẻ giao diện y
-                        chang"). Level/tag folded INTO the header row, no separate row below. */}
+                        chang"). Level/tag folded INTO the header row, no separate row below.
+                        `title` disambiguates this single-deck study mode from DueReview's
+                        cross-deck due-review sharing the exact same shell (thầy 2026-07-12:
+                        "2 cái trang này y chang nhau"). */}
                     <WorkSessionHeader
-                        backLabel={t("flashcard.title")}
+                        backLabel={t("flashcard.exit")}
                         onBack={onBack ?? (() => {})}
+                        title={t("flashcard.mode.study")}
                         identity={data?.title ? { name: data.title } : undefined}
                         counter={t("flashcard.cardProgress", {
                             current: currentIndex + 1,
@@ -441,78 +456,80 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
                         ) : undefined}
                     />
 
-                    <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
-                        {/* the flip card: question → answer (+ optional depth) */}
-                        <FlipCard
-                            revealed={revealed}
-                            questionLabel={t("flashcard.questionLabel")}
-                            answerLabel={t("flashcard.answerLabel")}
-                            front={<MarkdownContent markdown={card?.question ?? ""} />}
-                            back={
-                                <>
-                                    {isLocked ? (
-                                    // premium card, viewer not enrolled → withhold the answer
-                                        <div className="flex flex-1 flex-col items-center justify-center gap-3 text-center">
-                                            <LockIcon aria-hidden focusable="false" className="size-8 text-muted" />
-                                            <Typography type="body-sm" weight="semibold">
-                                                {t("flashcard.premiumLockedTitle")}
-                                            </Typography>
-                                            <Typography type="body-xs" color="muted">
-                                                {t("flashcard.premiumLockedHint")}
-                                            </Typography>
-                                        </div>
-                                    ) : (
-                                        <>
-                                            {card?.answer ? (
-                                                <MarkdownContent markdown={card.answer} arcSections />
-                                            ) : (
-                                                <Typography type="body-sm" color="muted">
-                                                    {t("flashcard.noAnswer")}
+                    <div className="px-4 pb-6 pt-10 sm:px-6">
+                        <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
+                            {/* the flip card: question → answer (+ optional depth) */}
+                            <FlipCard
+                                revealed={revealed}
+                                questionLabel={t("flashcard.questionLabel")}
+                                answerLabel={t("flashcard.answerLabel")}
+                                front={<MarkdownContent markdown={card?.question ?? ""} />}
+                                back={
+                                    <>
+                                        {isLocked ? (
+                                        // premium card, viewer not enrolled → withhold the answer
+                                            <div className="flex flex-1 flex-col items-center justify-center gap-3 text-center">
+                                                <LockIcon aria-hidden focusable="false" className="size-8 text-muted" />
+                                                <Typography type="body-sm" weight="semibold">
+                                                    {t("flashcard.premiumLockedTitle")}
                                                 </Typography>
-                                            )}
-                                            {card?.explanation ? (
-                                                <MarkdownContent markdown={card.explanation} />
-                                            ) : null}
-                                        </>
-                                    )}
-                                </>
-                            }
-                        />
+                                                <Typography type="body-xs" color="muted">
+                                                    {t("flashcard.premiumLockedHint")}
+                                                </Typography>
+                                            </div>
+                                        ) : (
+                                            <>
+                                                {card?.answer ? (
+                                                    <MarkdownContent markdown={card.answer} arcSections />
+                                                ) : (
+                                                    <Typography type="body-sm" color="muted">
+                                                        {t("flashcard.noAnswer")}
+                                                    </Typography>
+                                                )}
+                                                {card?.explanation ? (
+                                                    <MarkdownContent markdown={card.explanation} />
+                                                ) : null}
+                                            </>
+                                        )}
+                                    </>
+                                }
+                            />
 
-                        {/* reveal first, then grade recall (which advances) — unless the card is
+                            {/* reveal first, then grade recall (which advances) — unless the card is
                         locked premium, where we surface an enrol CTA instead of grading */}
-                        {revealed && isLocked ? (
-                            <div className="flex justify-center">
-                                <Button size="sm" variant="primary" onPress={onUnlock}>
-                                    {t("flashcard.premiumCta")}
-                                </Button>
-                            </div>
-                        ) : revealed ? (
-                            <div className="flex flex-col gap-2">
-                                <Typography type="body-xs" color="muted" align="center">
-                                    {t("flashcard.review.rateHint")}
-                                </Typography>
-                                <RatingBar
-                                    options={ratingOptions}
-                                    onRate={(grade) => void onRate(grade)}
-                                    isPending={reviewing}
-                                />
-                            </div>
-                        ) : (
-                            <div className="flex items-center justify-between gap-3">
-                                <Button
-                                    size="sm"
-                                    variant="secondary"
-                                    isDisabled={isFirst}
-                                    onPress={goPrev}
-                                >
-                                    {t("flashcard.previous")}
-                                </Button>
-                                <Button size="sm" variant="outline" onPress={() => setRevealed(true)}>
-                                    {t("flashcard.showAnswer")}
-                                </Button>
-                            </div>
-                        )}
+                            {revealed && isLocked ? (
+                                <div className="flex justify-center">
+                                    <Button size="sm" variant="primary" onPress={onUnlock}>
+                                        {t("flashcard.premiumCta")}
+                                    </Button>
+                                </div>
+                            ) : revealed ? (
+                                <div className="flex flex-col gap-2">
+                                    <Typography type="body-xs" color="muted" align="center">
+                                        {t("flashcard.review.rateHint")}
+                                    </Typography>
+                                    <RatingBar
+                                        options={ratingOptions}
+                                        onRate={(grade) => void onRate(grade)}
+                                        isPending={reviewing}
+                                    />
+                                </div>
+                            ) : (
+                                <div className="flex items-center justify-between gap-3">
+                                    <Button
+                                        size="sm"
+                                        variant="secondary"
+                                        isDisabled={isFirst}
+                                        onPress={goPrev}
+                                    >
+                                        {t("flashcard.previous")}
+                                    </Button>
+                                    <Button size="sm" variant="outline" onPress={() => setRevealed(true)}>
+                                        {t("flashcard.showAnswer")}
+                                    </Button>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
             )}

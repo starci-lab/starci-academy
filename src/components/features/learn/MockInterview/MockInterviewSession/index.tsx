@@ -1265,6 +1265,61 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
         [],
     )
 
+    // ── the shared WORK-SURFACE HEADER BAND ────────────────────────────────
+    // The full-bleed interview is a focused work surface, so it has NO PageHeader;
+    // instead this one aligned top band IS its header — back-link ("Thoát"), the
+    // StarCi identity, the question/phase counter, the timer, and (Q&A) the tools
+    // toggle, with a full-width progress meter as its bottom edge. One band spans
+    // the whole surface so the two panes share an aligned top (fixes the old
+    // ragged HUD-in-the-left-column look). Sticky under the navbar. Defined here
+    // (not just above the `qna`/`design` returns) so `grading` can reuse the EXACT
+    // same chrome as the just-finished interview instead of switching to a
+    // headerless centered card (2026-07-12, mirrors the same correction made for
+    // Flashcards Quiz/Review: "ý là bỏ màu đen vào màu đỏ" — keep the active
+    // phase's header through the brief loading hand-off, don't swap early).
+    const renderWorkHeader = (opts: {
+        counter: React.ReactNode
+        total: number
+        current: number
+        rightSlot?: React.ReactNode
+    }) => {
+        // "session time limit" — counts DOWN to the server deadline (never a
+        // local clock start); turns warning-colored under 5 minutes left (real
+        // urgency, backed by an actual server-enforced deadline).
+        const timer = (
+            <span
+                className={cn(
+                    "flex shrink-0 items-center gap-1.5",
+                    remainingSeconds !== null && remainingSeconds <= TIME_LIMIT_WARNING_SECONDS && "text-warning",
+                )}
+            >
+                <ClockIcon className="size-4" aria-hidden focusable="false" />
+                <Typography type="body-sm" weight="medium" className="tabular-nums">{formatElapsed(remainingSeconds ?? 0)}</Typography>
+            </span>
+        )
+        return (
+            <WorkSessionHeader
+                backLabel={t("mockInterview.leaveInterview")}
+                onBack={leaveInterview}
+                identity={{ avatarSrc: persona.avatarSrc, name: persona.name }}
+                counter={opts.counter}
+                total={opts.total}
+                current={opts.current}
+                rightSlot={
+                    <span className="flex shrink-0 items-center gap-3">
+                        {timer}
+                        {opts.rightSlot ? (
+                            <>
+                                <span className="hidden h-5 w-px shrink-0 bg-default sm:block" aria-hidden />
+                                {opts.rightSlot}
+                            </>
+                        ) : null}
+                    </span>
+                }
+            />
+        )
+    }
+
     // ── RESUMING (dedicated /interview/[sessionId] route) ─────────────────
     // `resumeSessionId` always lands here in the "interview" phase eventually — the
     // rehydrate effect above flips `phase` once `authCheckSwr`/`inProgressSessionSwr`
@@ -1616,24 +1671,33 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
     // ── GRADING (debrief opening) ────────────────────────────────────────
     if (phase === "grading") {
         return (
-            <div className={cn("mx-auto flex w-full max-w-3xl flex-col gap-4", className)}>
-                {/* "session time limit" — HONEST: never let a timeout-triggered grade
-                    read as a random/silent cutoff. Only shown when THIS grade was
-                    auto-triggered by the 1-hour deadline, not a manual "Kết thúc sớm". */}
-                {timedOut ? (
-                    <Callout status="warning" title={t("mockInterview.sessionExpiredBanner")} />
-                ) : null}
-                <div className="flex w-full flex-col items-center gap-4 rounded-2xl bg-surface p-8 shadow-surface">
-                    <img src={persona.avatarSrc} alt="" className="size-12 shrink-0 rounded-full object-cover" aria-hidden />
+            // KEEP the interview's own `WorkSessionHeader` chrome through this
+            // brief grading hand-off (2026-07-12) — single segment, fully "done".
+            // Route stays `fullBleed` through this phase (see `learn/layout.tsx`
+            // `isMockInterviewLive`), so this screen owns its own page padding.
+            <div className={cn("flex w-full flex-col", className)}>
+                {renderWorkHeader({ counter: t("mockInterview.grading"), total: 1, current: 1 })}
+                <div className="px-4 pb-6 pt-10 sm:px-6">
+                    <div className="mx-auto flex w-full max-w-3xl flex-col gap-4">
+                        {/* "session time limit" — HONEST: never let a timeout-triggered grade
+                            read as a random/silent cutoff. Only shown when THIS grade was
+                            auto-triggered by the 1-hour deadline, not a manual "Kết thúc sớm". */}
+                        {timedOut ? (
+                            <Callout status="warning" title={t("mockInterview.sessionExpiredBanner")} />
+                        ) : null}
+                        <div className="flex w-full flex-col items-center gap-4 rounded-2xl bg-surface p-8 shadow-surface">
+                            <img src={persona.avatarSrc} alt="" className="size-12 shrink-0 rounded-full object-cover" aria-hidden />
 
-                    <div className="flex flex-col items-center gap-2">
-                        <Typography type="body" weight="medium" align="center">
-                            {t("mockInterview.interviewerGrading", { name: persona.name })}
-                        </Typography>
-                        <Spinner size="sm" />
-                        <Typography type="body-sm" color="muted" align="center">
-                            {t("mockInterview.gradingPending")}
-                        </Typography>
+                            <div className="flex flex-col items-center gap-2">
+                                <Typography type="body" weight="medium" align="center">
+                                    {t("mockInterview.interviewerGrading", { name: persona.name })}
+                                </Typography>
+                                <Spinner size="sm" />
+                                <Typography type="body-sm" color="muted" align="center">
+                                    {t("mockInterview.gradingPending")}
+                                </Typography>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1641,10 +1705,16 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
     }
 
     // ── SCORECARD ────────────────────────────────────────────────────────
+    // The REAL destination (mirrors `FlashcardQuizResult`) — reached via the same
+    // route as `interview`/`grading`, which stays `fullBleed` regardless of phase
+    // (`isMockInterviewInterviewRoute` is path-based, doesn't check `phase`), so
+    // this screen owns its own page padding directly rather than relying on the
+    // shell's ambient `p-6` (2026-07-12, same gap as Flashcards Quiz/Review —
+    // `full-bleed-work-surface.md` §Padding ownership).
     if (phase === "scorecard") {
         if (!grade) {
             return (
-                <div className={cn("mx-auto flex w-full max-w-3xl flex-col items-center gap-3 py-10", className)}>
+                <div className={cn("mx-auto flex w-full max-w-3xl flex-col items-center gap-3 px-4 py-10 sm:px-6", className)}>
                     <Typography type="body-sm" color="muted" align="center">
                         {t("mockInterview.scorecardPending")}
                     </Typography>
@@ -1655,7 +1725,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
             )
         }
         return (
-            <div className={cn("mx-auto flex w-full max-w-3xl flex-col gap-6", className)}>
+            <div className={cn("mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 py-6 sm:px-6", className)}>
                 {/* debrief header — the interviewer "sits down" to give feedback */}
                 <div className="flex items-center gap-3">
                     <img src={persona.avatarSrc} alt="" className="size-10 shrink-0 rounded-full object-cover" aria-hidden />
@@ -1734,56 +1804,6 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
             </div>
         </ModalShell>
     )
-
-    // ── the shared WORK-SURFACE HEADER BAND ────────────────────────────────
-    // The full-bleed interview is a focused work surface, so it has NO PageHeader;
-    // instead this one aligned top band IS its header — back-link ("Thoát"), the
-    // StarCi identity, the question/phase counter, the timer, and (Q&A) the tools
-    // toggle, with a full-width progress meter as its bottom edge. One band spans
-    // the whole surface so the two panes share an aligned top (fixes the old
-    // ragged HUD-in-the-left-column look). Sticky under the navbar.
-    const renderWorkHeader = (opts: {
-        counter: React.ReactNode
-        total: number
-        current: number
-        rightSlot?: React.ReactNode
-    }) => {
-        // "session time limit" — counts DOWN to the server deadline (never a
-        // local clock start); turns warning-colored under 5 minutes left (real
-        // urgency, backed by an actual server-enforced deadline).
-        const timer = (
-            <span
-                className={cn(
-                    "flex shrink-0 items-center gap-1.5",
-                    remainingSeconds !== null && remainingSeconds <= TIME_LIMIT_WARNING_SECONDS && "text-warning",
-                )}
-            >
-                <ClockIcon className="size-4" aria-hidden focusable="false" />
-                <Typography type="body-sm" weight="medium" className="tabular-nums">{formatElapsed(remainingSeconds ?? 0)}</Typography>
-            </span>
-        )
-        return (
-            <WorkSessionHeader
-                backLabel={t("mockInterview.leaveInterview")}
-                onBack={leaveInterview}
-                identity={{ avatarSrc: persona.avatarSrc, name: persona.name }}
-                counter={opts.counter}
-                total={opts.total}
-                current={opts.current}
-                rightSlot={
-                    <span className="flex shrink-0 items-center gap-3">
-                        {timer}
-                        {opts.rightSlot ? (
-                            <>
-                                <span className="hidden h-5 w-px shrink-0 bg-default sm:block" aria-hidden />
-                                {opts.rightSlot}
-                            </>
-                        ) : null}
-                    </span>
-                }
-            />
-        )
-    }
 
     // ── INTERVIEW, mode="qna" (Vòng 5 — "hỏi từng câu"): 1 câu, 1 ô trả lời ──
     // Full-bleed work surface: a shared header band on top, then the conversation as

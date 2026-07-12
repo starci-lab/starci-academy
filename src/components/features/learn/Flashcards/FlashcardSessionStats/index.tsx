@@ -94,7 +94,11 @@ export const FlashcardSessionStats = ({
     const relatedQuery = (stats?.weakTags ?? []).map((weak) => weak.tag).join(" ")
 
     return (
-        <div className={cn("flex flex-col gap-6", className)}>
+        // reached via the "Học thẻ"/"Ôn thẻ đến hạn" LIVE session route
+        // (`review/sessions/[sessionId]`), `fullBleed` for the whole session
+        // including this recap phase — same gap as `FlashcardQuizResult`
+        // (2026-07-12, thầy: "thiếu padding p-6"). Owns its own page padding.
+        <div className={cn("flex flex-col gap-6 px-4 py-6 sm:px-6", className)}>
             <PageHeader
                 className="mx-auto w-full max-w-3xl"
                 breadcrumb={<BackLink label={t("flashcard.title")} onPress={onBack} />}

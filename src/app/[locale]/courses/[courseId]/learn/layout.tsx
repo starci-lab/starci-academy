@@ -73,12 +73,20 @@ const Layout = ({ children }: PropsWithChildren) => {
     // dedicated resumable route (`flashcards/quiz/sessions/[sessionId]`), same
     // pattern as the mock-interview's `isMockInterviewInterviewRoute` below.
     const isFlashcardQuizLive = isFlashcards && segments[1] === "quiz" && segments[2] === "sessions"
-    // "Học thẻ" review goes full-bleed ONLY during a live session — same idiom,
-    // detected off the dedicated resumable route (`flashcards/review/decks/
-    // [deckId]/sessions/[sessionId]`, 2026-07-11 đính chính: "ôn thẻ giao diện
-    // y chang"). The bare `.../decks/[deckId]` route (no `sessions` segment) is
-    // just the resolve-only shim — stays centered, never full-bleed.
-    const isFlashcardReviewLive = isFlashcards && segments[1] === "review" && segments[2] === "decks" && segments[4] === "sessions"
+    // "Học thẻ"/"Ôn thẻ đến hạn" review goes full-bleed ONLY during a live session
+    // — same idiom, detected off the dedicated resumable route
+    // (`flashcards/review/sessions/[sessionId]`, 2026-07-11 đính chính: "ôn thẻ
+    // giao diện y chang"). This ONE route now serves BOTH FlashcardReviewer
+    // (single-deck) and DueReview (cross-deck) — the old deck-scoped route
+    // (`review/decks/[deckId]/sessions/[sessionId]`) was consolidated away; the
+    // bare `.../review` overview route (no `sessions` segment) is just the
+    // resolve-only shim — stays centered, never full-bleed. Correction
+    // 2026-07-12: the gate still checked the DELETED deck-scoped shape and
+    // never matched the real route, so the shell kept applying its `p-6`
+    // reading-column padding ON TOP of the surface's own full-bleed padding
+    // (thầy: "bỏ padding-6 ở đây này", pointed at DevTools showing the shell's
+    // `p-6 max-lg:pb-16` wrapper still active on a live review session).
+    const isFlashcardReviewLive = isFlashcards && segments[1] === "review" && segments[2] === "sessions"
     // the mind-map is a full-bleed interactive canvas (fills the viewport edge-to-edge),
     // so it opts out of the shell's canonical p-6 reading-column padding.
     const isMindMap = segments[0] === "mind-map"

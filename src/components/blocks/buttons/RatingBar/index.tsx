@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect } from "react"
-import { Typography, cn } from "@heroui/react"
+import { Chip, Typography, cn } from "@heroui/react"
 import type { ReactNode } from "react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { PressableCard } from "@/components/blocks/cards/PressableCard"
@@ -45,7 +45,8 @@ const GRADE_DOT: Record<number, string> = {
  * / Good / Easy) the learner taps — or presses `1`–`4` — after revealing a
  * flashcard's answer. Each tile is a neutral surface card carrying a small
  * semantic dot (weakest→strongest ramp — the strongest grade's dot alone
- * carries the accent, no extra border), a keyboard-key hint, and an optional
+ * carries the accent, no extra border), a keyboard-key hint (a neutral `Chip`
+ * — canon `elements/chip.md` §1, no hand-rolled `<kbd>` pill), and an optional
  * next-interval preview. Each tile is a shared `PressableCard`
  * (`hoverVariant="lift"` — default Card shadow at rest, unchanged on hover,
  * only the tile lifts; pick-and-stay, not a fill/go-there row) instead of a
@@ -96,9 +97,9 @@ export const RatingBar = ({ options, onRate, isPending = false, className }: Rat
                             />
                             <span className="text-sm font-medium text-foreground">{option.label}</span>
                         </span>
-                        <kbd className="rounded border border-default px-1.5 font-mono text-xs text-muted">
-                            {position + 1}
-                        </kbd>
+                        <Chip size="sm" variant="soft" color="default">
+                            <Chip.Label>{position + 1}</Chip.Label>
+                        </Chip>
                     </span>
                     {option.hint !== undefined ? (
                         <Typography type="body-xs" color="muted">

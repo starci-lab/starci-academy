@@ -15,10 +15,10 @@ import { queryMyDueFlashcards } from "@/modules/api/graphql/queries/query-my-due
 import type { QueryMyDueFlashcardData } from "@/modules/api/graphql/queries/types/my-due-flashcards"
 import { GraphQLHeadersKey, type GraphQLHeaders } from "@/modules/api/graphql/types"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { BackLink } from "@/components/blocks/navigation/BackLink"
 import { WorkSessionHeader } from "@/components/blocks/navigation/WorkSessionHeader"
 import { FlipCard } from "@/components/blocks/cards/FlipCard"
 import { RatingBar } from "@/components/blocks/buttons/RatingBar"
+import { useQueryFlashcardCardsByIdsSwr } from "@/hooks/swr/api/graphql/queries/useQueryFlashcardCardsByIdsSwr"
 import { useMutateStartFlashcardDueReviewSessionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateStartFlashcardDueReviewSessionSwr"
 import { useMutateSyncFlashcardDueReviewSessionProgressSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardDueReviewSessionProgressSwr"
 import { useMutateCompleteFlashcardDueReviewSessionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateCompleteFlashcardDueReviewSessionSwr"
@@ -42,6 +42,17 @@ export interface DueReviewProps extends WithClassNames<undefined> {
      * Mirrors `FlashcardReviewerProps.sessionId`.
      */
     sessionId?: string
+}
+
+/**
+ * A card as rendered in this session — the live "due" shape (carries
+ * `nextIntervals`, used for the RatingBar's day-preview hints) OR a card
+ * resolved status-agnostically by id during resume (no `nextIntervals` — see
+ * `resumeCardsByIdSwr` in the component body). `RatingBar`'s `hint` is already
+ * optional, so a card without `nextIntervals` just renders without the preview.
+ */
+type DueReviewCard = Omit<QueryMyDueFlashcardData, "nextIntervals"> & {
+    nextIntervals?: QueryMyDueFlashcardData["nextIntervals"]
 }
 
 /**
@@ -104,11 +115,24 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
     const runSyncSession = useMutateSyncFlashcardDueReviewSessionProgressSwr()
     const runCompleteSession = useMutateCompleteFlashcardDueReviewSessionSwr()
     const inProgressSessionSwr = useQueryMyInProgressFlashcardDueReviewSessionSwr(courseId)
+    // status-agnostic re-fetch of the resumable session's OWN cards, by exact id —
+    // NOT filtered by "due today" like `cards` above. Feeds `applyResume` below: a
+    // card already graded THIS run gets rescheduled (SM-2) and drops out of the due
+    // queue instantly, so matching purely against `cards` silently lost it on resume
+    // (misaligning `currentIndex`, or failing resume outright once enough cards had
+    // been graded — 2026-07-12, thầy: "sao render ra trang này vậy" → traced to a
+    // reload-after-grading orphaning the session). `nextIntervals` isn't part of this
+    // shape (only the live due query carries it) — `applyResume` falls back to
+    // `undefined` for a card resolved this way, which `RatingBar`'s optional `hint`
+    // already renders as "no preview" instead of crashing.
+    const resumeCardIds = inProgressSessionSwr.data?.cardIds ?? []
+    const resumeCardsByIdSwr = useQueryFlashcardCardsByIdsSwr(resumeCardIds, courseId)
     // when a resumable session is found, the fetched due batch is reordered/filtered
     // to match its persisted `cardIds` (never re-drawn) — null while resuming didn't
     // apply (fresh draw, or no resumable session), in which case the raw fetched
-    // `cards` above is used as-is.
-    const [resumedCards, setResumedCards] = useState<Array<QueryMyDueFlashcardData> | null>(null)
+    // `cards` above is used as-is. `nextIntervals` optional (not `QueryMyDueFlashcardData`'s
+    // own required field) — see `resumeCardsByIdSwr` comment above.
+    const [resumedCards, setResumedCards] = useState<Array<DueReviewCard> | null>(null)
     // server-issued id for the current batch — set once on start OR resume
     const sessionIdRef = useRef<string | null>(null)
     // guards the one-shot resolve-or-start effect to run at most once per mount
@@ -121,13 +145,21 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
     // past the last card → the session is complete
     const done = effectiveCards.length > 0 && currentIndex >= effectiveCards.length
 
-    /** Hydrate from an in-progress session's persisted batch/cursor; false if none of its cards still match. */
+    /**
+     * Hydrate from an in-progress session's persisted batch/cursor; false if none
+     * of its cards resolve. Looks up the LIVE due queue FIRST (carries
+     * `nextIntervals`), falling back to the status-agnostic by-id fetch
+     * (`resumeCardsByIdSwr`) for a card already graded this run — grading
+     * reschedules a card (SM-2) OUT of "due" immediately, so a due-only lookup
+     * silently dropped it, corrupting the resumed order/cursor (2026-07-12 fix).
+     */
     const applyResume = useCallback(
         (resumeData: NonNullable<typeof inProgressSessionSwr.data>): boolean => {
-            const cardById = new Map(cards.map((dueCard) => [dueCard.cardId, dueCard]))
+            const dueById = new Map(cards.map((dueCard) => [dueCard.cardId, dueCard]))
+            const byId = new Map((resumeCardsByIdSwr.data ?? []).map((idCard) => [idCard.cardId, idCard]))
             const ordered = resumeData.cardIds
-                .map((cardId) => cardById.get(cardId))
-                .filter((dueCard): dueCard is QueryMyDueFlashcardData => Boolean(dueCard))
+                .map((cardId): DueReviewCard | undefined => dueById.get(cardId) ?? byId.get(cardId))
+                .filter((resolvedCard): resolvedCard is DueReviewCard => Boolean(resolvedCard))
             if (ordered.length === 0) {
                 return false
             }
@@ -138,7 +170,7 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
             completedRef.current = false
             return true
         },
-        [cards],
+        [cards, resumeCardsByIdSwr.data],
     )
 
     // start a fresh session over the batch just drawn, then redirect into its
@@ -189,6 +221,11 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
             || !courseId
             || cards.length === 0
             || inProgressSessionSwr.isLoading
+            // there IS a session to resume — wait for its status-agnostic by-id
+            // cards to settle too, so `applyResume` can fall back to them for an
+            // already-graded card the due queue no longer carries (see
+            // `resumeCardsByIdSwr` above).
+            || (inProgressSessionSwr.data && resumeCardsByIdSwr.isLoading)
         ) {
             return
         }
@@ -209,7 +246,18 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
             return
         }
         void startSessionAndRedirect()
-    }, [sessionId, courseId, cards, inProgressSessionSwr.isLoading, inProgressSessionSwr.data, applyResume, startSessionAndRedirect, router, reviewBasePath])
+    }, [
+        sessionId,
+        courseId,
+        cards,
+        inProgressSessionSwr.isLoading,
+        inProgressSessionSwr.data,
+        resumeCardsByIdSwr.isLoading,
+        applyResume,
+        startSessionAndRedirect,
+        router,
+        reviewBasePath,
+    ])
 
     // finish: record the finished batch once (guarded), best-effort — a failed
     // complete call only means the row stays "in_progress" (still resumable),
@@ -380,38 +428,53 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
                         onBack={onFinish}
                     />
                 ) : (
-                    // brief "saving" state while completeSession commits — mirrors the
-                    // stats surface's own header so the hand-off reads as one screen.
-                    <div className={cn("flex flex-col gap-6", className)}>
-                        <div className="flex flex-wrap items-center justify-between gap-3">
-                            <BackLink label={t("flashcard.title")} onPress={onExit} />
-                            <Typography type="body-sm" color="muted">
-                                {t("flashcard.review.stats.headerCaption")}
-                            </Typography>
-                        </div>
-                        <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-3 py-10">
-                            <Spinner size="lg" />
-                            <Typography type="body-sm" color="muted">
-                                {t("flashcard.review.stats.savingLabel")}
-                            </Typography>
+                    // KEEP the same `WorkSessionHeader` chrome the just-finished
+                    // ACTIVE phase used (2026-07-12, corrected: thầy wanted the
+                    // loading state to render like the active session's header,
+                    // not swap to `PageHeader` early — that shape is for the REAL
+                    // destination `FlashcardSessionStats` once it mounts). Segment
+                    // bar reads full "done", no `identity` (deck varies card to
+                    // card, meaningless once the run has ended) or `meta`.
+                    <div className={cn("flex w-full flex-col", className)}>
+                        <WorkSessionHeader
+                            backLabel={t("flashcard.exit")}
+                            onBack={onExit}
+                            title={t("flashcard.mode.due")}
+                            counter={t("flashcard.cardProgress", {
+                                current: effectiveCards.length,
+                                total: effectiveCards.length,
+                            })}
+                            current={effectiveCards.length}
+                            total={effectiveCards.length}
+                        />
+                        <div className="px-4 pb-6 pt-10 sm:px-6">
+                            <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-3 py-10">
+                                <Spinner size="lg" />
+                                <Typography type="body-sm" color="muted">
+                                    {t("flashcard.review.stats.savingLabel")}
+                                </Typography>
+                            </div>
                         </div>
                     </div>
                 )
             ) : (
-                <div className={cn("flex flex-col gap-6", className)}>
+                <div className={cn("flex w-full flex-col", className)}>
                     {/* shared header: WorkSessionHeader (current card's OWN deck as identity +
                         counter + progress segments), same shell as FlashcardReviewer/QuizSession
                         (thầy 2026-07-11: "đồng bộ UI, đều render navbar" + "render ra which deck
                         ... có đang due hay không"). Identity changes PER CARD here (a due batch
                         spans multiple decks) — the "Đến hạn" chip marks this as the cross-deck
-                        kind, mirroring `FlashcardReviewer`'s level/tag chips slot. No confirm modal
+                        kind, mirroring `FlashcardReviewer`'s level/tag chips slot. `title` disambiguates
+                        this mode from FlashcardReviewer/QuizSession sharing the exact same shell
+                        (thầy 2026-07-12: "2 cái trang này y chang nhau"). No confirm modal
                         on back (thầy 2026-07-09: "sao không có kết thúc sớm, trở về"): each grade
                         is saved immediately via `reviewFlashcard`, AND the batch/position itself
                         is persisted too (`syncFlashcardDueReviewSessionProgress`) — leaving
                         mid-run loses nothing, resumes exactly where it left off. */}
                     <WorkSessionHeader
-                        backLabel={t("flashcard.title")}
+                        backLabel={t("flashcard.exit")}
                         onBack={onExit}
+                        title={t("flashcard.mode.due")}
                         identity={card ? { name: card.deckTitle } : undefined}
                         counter={t("flashcard.cardProgress", {
                             current: currentIndex + 1,
@@ -422,43 +485,45 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
                         meta={<Chip size="sm" variant="soft" color="warning">{t("flashcard.due.label")}</Chip>}
                     />
 
-                    <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
-                        {/* the flip card: prompt → answer */}
-                        <FlipCard
-                            revealed={revealed}
-                            questionLabel={t("flashcard.questionLabel")}
-                            answerLabel={t("flashcard.answerLabel")}
-                            front={<MarkdownContent markdown={card?.front ?? ""} />}
-                            back={<MarkdownContent markdown={card?.back ?? ""} arcSections />}
-                        />
+                    <div className="px-4 pb-6 pt-10 sm:px-6">
+                        <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
+                            {/* the flip card: prompt → answer */}
+                            <FlipCard
+                                revealed={revealed}
+                                questionLabel={t("flashcard.questionLabel")}
+                                answerLabel={t("flashcard.answerLabel")}
+                                front={<MarkdownContent markdown={card?.front ?? ""} />}
+                                back={<MarkdownContent markdown={card?.back ?? ""} arcSections />}
+                            />
 
-                        {/* reveal first, then grade recall (which advances) */}
-                        {revealed ? (
-                            <div className="flex flex-col gap-2">
-                                <Typography type="body-xs" color="muted" align="center">
-                                    {t("flashcard.review.rateHint")}
-                                </Typography>
-                                <RatingBar
-                                    options={ratingOptions}
-                                    onRate={(grade) => void onRate(grade)}
-                                    isPending={reviewing}
-                                />
-                            </div>
-                        ) : (
-                            <div className="flex items-center justify-between gap-3">
-                                <Button
-                                    size="sm"
-                                    variant="secondary"
-                                    isDisabled={isFirst}
-                                    onPress={goPrev}
-                                >
-                                    {t("flashcard.previous")}
-                                </Button>
-                                <Button size="sm" variant="outline" onPress={() => setRevealed(true)}>
-                                    {t("flashcard.showAnswer")}
-                                </Button>
-                            </div>
-                        )}
+                            {/* reveal first, then grade recall (which advances) */}
+                            {revealed ? (
+                                <div className="flex flex-col gap-2">
+                                    <Typography type="body-xs" color="muted" align="center">
+                                        {t("flashcard.review.rateHint")}
+                                    </Typography>
+                                    <RatingBar
+                                        options={ratingOptions}
+                                        onRate={(grade) => void onRate(grade)}
+                                        isPending={reviewing}
+                                    />
+                                </div>
+                            ) : (
+                                <div className="flex items-center justify-between gap-3">
+                                    <Button
+                                        size="sm"
+                                        variant="secondary"
+                                        isDisabled={isFirst}
+                                        onPress={goPrev}
+                                    >
+                                        {t("flashcard.previous")}
+                                    </Button>
+                                    <Button size="sm" variant="outline" onPress={() => setRevealed(true)}>
+                                        {t("flashcard.showAnswer")}
+                                    </Button>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
             )}

@@ -1869,6 +1869,7 @@
   },
   "flashcard": {
     "title": "Review",
+    "exit": "Exit",
     "subtitle": "Lock in what you learned with spaced repetition, and drill interview answers.",
     "empty": "No flashcards for this course yet.",
     "study": "Study",
@@ -1990,7 +1991,8 @@
     "searchEmpty": "No decks match \"{query}\".",
     "mode": {
       "study": "Study",
-      "quiz": "Rapid recall"
+      "quiz": "Rapid recall",
+      "due": "Due review"
     },
     "quiz": {
       "record": "Answer aloud",

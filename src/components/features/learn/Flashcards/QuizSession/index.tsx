@@ -30,7 +30,6 @@ import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { Callout } from "@/components/blocks/feedback/Callout"
 import { FlipCard } from "@/components/blocks/cards/FlipCard"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
-import { BackLink } from "@/components/blocks/navigation/BackLink"
 import { RatingBar } from "@/components/blocks/buttons/RatingBar"
 import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
@@ -915,18 +914,34 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
         // spinner mirroring the result surface, so the hand-off reads as one screen.
         if (completing || !finishedId || !displayId) {
             return (
-                <div className={cn("flex flex-col gap-6", className)}>
-                    <div className="flex flex-wrap items-center justify-between gap-3">
-                        <BackLink label={t("flashcard.title")} onPress={exitToSetup} />
-                        <Typography type="body-sm" color="muted">
-                            {t("flashcard.quiz.result.title")}
-                        </Typography>
-                    </div>
-                    <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-3 py-10">
-                        <Spinner size="lg" />
-                        <Typography type="body-sm" color="muted">
-                            {t("flashcard.quiz.result.savingLabel")}
-                        </Typography>
+                // KEEP the same `WorkSessionHeader` chrome the just-finished ACTIVE
+                // phase used (2026-07-12, corrected: thầy wanted the loading state
+                // to render like the active session's header, not swap to
+                // `PageHeader` early — the `PageHeader` shape is for the REAL
+                // destination `FlashcardQuizResult` once it actually mounts, not
+                // this transient 1-2s hand-off). Segment bar reads full "done"
+                // (`current === total` → every segment `success`), no `rightSlot`
+                // (timer no longer meaningful once the run has ended).
+                <div className={cn("flex w-full flex-col", className)}>
+                    <WorkSessionHeader
+                        backLabel={t("flashcard.exit")}
+                        onBack={exitToSetup}
+                        title={t("flashcard.mode.quiz")}
+                        identity={course?.title ? { name: course.title } : undefined}
+                        counter={t("flashcard.quiz.progress", {
+                            current: sessionLength,
+                            total: sessionLength,
+                        })}
+                        current={sessionLength}
+                        total={sessionLength}
+                    />
+                    <div className="px-4 pb-6 pt-10 sm:px-6">
+                        <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-3 py-10">
+                            <Spinner size="lg" />
+                            <Typography type="body-sm" color="muted">
+                                {t("flashcard.quiz.result.savingLabel")}
+                            </Typography>
+                        </div>
                     </div>
                 </div>
             )
@@ -1001,8 +1016,9 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
     // no separate chip row underneath anymore.
     const header = (
         <WorkSessionHeader
-            backLabel={t("flashcard.quiz.exitToSetup")}
+            backLabel={t("flashcard.exit")}
             onBack={exitToSetup}
+            title={t("flashcard.mode.quiz")}
             identity={course?.title ? { name: course.title } : undefined}
             counter={t("flashcard.quiz.progress", {
                 current: index + 1,
@@ -1053,45 +1069,47 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
     // ── FALLBACK: card has no clozable key terms → plain flip + self-grade ──
     if (!cloze) {
         return (
-            <div className={cn("flex flex-col gap-6", className)}>
+            <div className={cn("flex w-full flex-col", className)}>
                 {header}
-                <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
-                    <FlipCard
-                        revealed={showAnswer}
-                        questionLabel={t("flashcard.questionLabel")}
-                        answerLabel={t("flashcard.answerLabel")}
-                        front={<MarkdownContent markdown={card.question} />}
-                        back={
-                            <>
-                                {card.answer ? (
-                                    <MarkdownContent markdown={card.answer} arcSections />
-                                ) : (
-                                    <Typography type="body-sm" color="muted">
-                                        {t("flashcard.noAnswer")}
-                                    </Typography>
-                                )}
-                                {card.explanation ? <MarkdownContent markdown={card.explanation} /> : null}
-                            </>
-                        }
-                    />
-                    {showAnswer ? (
-                        <div className="flex flex-col gap-2">
-                            <Typography type="body-xs" color="muted" align="center">
-                                {t("flashcard.review.rateHint")}
-                            </Typography>
-                            <RatingBar
-                                options={ratingOptions}
-                                onRate={(grade) => void commitCard(grade, null)}
-                                isPending={rating}
-                            />
-                        </div>
-                    ) : (
-                        <div className="flex items-center justify-end gap-3">
-                            <Button size="sm" variant="outline" onPress={() => setShowAnswer(true)}>
-                                {t("flashcard.showAnswer")}
-                            </Button>
-                        </div>
-                    )}
+                <div className="px-4 pb-6 pt-10 sm:px-6">
+                    <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
+                        <FlipCard
+                            revealed={showAnswer}
+                            questionLabel={t("flashcard.questionLabel")}
+                            answerLabel={t("flashcard.answerLabel")}
+                            front={<MarkdownContent markdown={card.question} />}
+                            back={
+                                <>
+                                    {card.answer ? (
+                                        <MarkdownContent markdown={card.answer} arcSections />
+                                    ) : (
+                                        <Typography type="body-sm" color="muted">
+                                            {t("flashcard.noAnswer")}
+                                        </Typography>
+                                    )}
+                                    {card.explanation ? <MarkdownContent markdown={card.explanation} /> : null}
+                                </>
+                            }
+                        />
+                        {showAnswer ? (
+                            <div className="flex flex-col gap-2">
+                                <Typography type="body-xs" color="muted" align="center">
+                                    {t("flashcard.review.rateHint")}
+                                </Typography>
+                                <RatingBar
+                                    options={ratingOptions}
+                                    onRate={(grade) => void commitCard(grade, null)}
+                                    isPending={rating}
+                                />
+                            </div>
+                        ) : (
+                            <div className="flex items-center justify-end gap-3">
+                                <Button size="sm" variant="outline" onPress={() => setShowAnswer(true)}>
+                                    {t("flashcard.showAnswer")}
+                                </Button>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         )
@@ -1118,11 +1136,12 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
         // scoped per-card (`card.id`) so the word-bank ↔ blank `layoutId` FLIP never
         // leaks its animation into the NEXT card's chips once `cloze` recomputes.
         <LayoutGroup id={`quiz-cloze-${card.id}`}>
-            <div className={cn("flex flex-col gap-6", className)}>
+            <div className={cn("flex w-full flex-col", className)}>
                 {header}
 
-                <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
-                    {/* question — plain Card shell (bo góc + shadow-surface), CÙNG kiểu với
+                <div className="px-4 pb-6 pt-10 sm:px-6">
+                    <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
+                        {/* question — plain Card shell (bo góc + shadow-surface), CÙNG kiểu với
                     FlipCard — the earlier accent/5 + left-border tint (2026-07-09) was
                     reverted the same day (thầy: "ý là bỏ cái kiểu bg hồng với border...
                     render plain Card như bth thôi") — 1 Card duy nhất xuyên suốt feature,
@@ -1132,44 +1151,44 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                     vs bài tập điền TƯƠNG TÁC), khác với rule "1 item + thuộc tính riêng của
                     nó ở chung 1 card" ([[concepts/card]] — case đó là 1 item + metadata CỦA
                     CHÍNH nó, không phải nội dung + 1 bài tập riêng dựa trên nội dung đó). */}
-                    <LabeledCard label={t("flashcard.questionLabel")}>
-                        <MarkdownContent markdown={card.question} />
-                    </LabeledCard>
+                        <LabeledCard label={t("flashcard.questionLabel")}>
+                            <MarkdownContent markdown={card.question} />
+                        </LabeledCard>
 
-                    <LabeledCard label={t("flashcard.quiz.fillLabel")} contentClassName="flex flex-col gap-3">
-                        <Typography type="body-xs" weight="medium" color="muted">
-                            {t("flashcard.quiz.clozeInstruction")}
-                        </Typography>
-                        <p className="text-base leading-loose text-foreground">
-                            {cloze.segments.map((segment, position) =>
-                                segment.kind === "text" ? (
-                                    <span key={position}>{segment.text}</span>
-                                ) : segment.kind === "code" ? (
-                                // same inline-code styling as MarkdownContent's own renderer
-                                // (reuseable/MarkdownContent/map.tsx) — kept consistent since this
-                                // sentence sits right next to the question's own MarkdownContent.
-                                    <code
-                                        key={position}
-                                        className="rounded-md bg-default px-1 py-0.5 font-mono text-sm text-foreground [overflow-wrap:anywhere]"
-                                    >
-                                        {segment.text}
-                                    </code>
-                                ) : segment.kind === "bold" ? (
-                                    <strong key={position} className="font-semibold">{segment.text}</strong>
-                                ) : segment.kind === "italic" ? (
-                                    <em key={position}>{segment.text}</em>
-                                ) : (
-                                    (() => {
-                                    // `?? null` guards a real crash: for one render tick right after
-                                    // `commitCard` advances `index` (before the card-change effect
-                                    // resets `filled`), `cloze` has ALREADY recomputed for the new
-                                    // (possibly longer) card while `filled` still holds the previous
-                                    // card's (possibly shorter) array — `filled[segment.index]` then
-                                    // reads `undefined`, which slips past a `!== null` guard and
-                                    // crashes on `.toLowerCase()`. Coercing to `null` here makes every
-                                    // downstream `=== null` check treat it the same as "not filled yet".
-                                        const value = filled[segment.index] ?? null
-                                        const isCorrect =
+                        <LabeledCard label={t("flashcard.quiz.fillLabel")} contentClassName="flex flex-col gap-3">
+                            <Typography type="body-xs" weight="medium" color="muted">
+                                {t("flashcard.quiz.clozeInstruction")}
+                            </Typography>
+                            <p className="text-base leading-loose text-foreground">
+                                {cloze.segments.map((segment, position) =>
+                                    segment.kind === "text" ? (
+                                        <span key={position}>{segment.text}</span>
+                                    ) : segment.kind === "code" ? (
+                                    // same inline-code styling as MarkdownContent's own renderer
+                                    // (reuseable/MarkdownContent/map.tsx) — kept consistent since this
+                                    // sentence sits right next to the question's own MarkdownContent.
+                                        <code
+                                            key={position}
+                                            className="rounded-md bg-default px-1 py-0.5 font-mono text-sm text-foreground [overflow-wrap:anywhere]"
+                                        >
+                                            {segment.text}
+                                        </code>
+                                    ) : segment.kind === "bold" ? (
+                                        <strong key={position} className="font-semibold">{segment.text}</strong>
+                                    ) : segment.kind === "italic" ? (
+                                        <em key={position}>{segment.text}</em>
+                                    ) : (
+                                        (() => {
+                                            // `?? null` guards a real crash: for one render tick right after
+                                            // `commitCard` advances `index` (before the card-change effect
+                                            // resets `filled`), `cloze` has ALREADY recomputed for the new
+                                            // (possibly longer) card while `filled` still holds the previous
+                                            // card's (possibly shorter) array — `filled[segment.index]` then
+                                            // reads `undefined`, which slips past a `!== null` guard and
+                                            // crashes on `.toLowerCase()`. Coercing to `null` here makes every
+                                            // downstream `=== null` check treat it the same as "not filled yet".
+                                            const value = filled[segment.index] ?? null
+                                            const isCorrect =
                                         checked
                                         && value !== null
                                         && value.toLowerCase() === cloze.blanks[segment.index].toLowerCase()
@@ -1180,161 +1199,162 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                                         // unchecked = solid accent (primary-solid — canon
                                         // `elements/color.md` §3, NOT a `/10` tint); checked = keep the
                                         // existing success/danger tint + shake/pop animation.
-                                        const chipToneClassName = value === null
-                                            ? "border border-dashed border-default bg-surface text-muted"
-                                            : !checked
-                                                ? "border-0 bg-accent text-accent-foreground"
-                                                : isCorrect
-                                                    ? "border border-success/60 bg-success/10 text-success motion-safe:[animation:blankPop_0.35s_ease]"
-                                                    : "border border-danger/60 bg-danger/10 text-danger motion-safe:[animation:blankShake_0.4s_ease]"
-                                        // shared `layoutId` with the SAME term's word-bank chip below — when
-                                        // `placeTerm`/`clearBlank` swaps `value`, framer-motion FLIPs the
-                                        // chip's bounding box across the two positions ("flies" into/out of
-                                        // the slot). `undefined` while empty — nothing to morph from/to yet.
-                                        const layoutId = value !== null ? `quiz-term-${card.id}-${value}` : undefined
-                                        return (
-                                            <motion.span
-                                                key={position}
-                                                layout
-                                                layoutId={layoutId}
-                                                transition={reduceMotion ? { duration: 0 } : CLOZE_CHIP_TRANSITION}
-                                                className="mx-1 inline-block align-middle"
-                                            >
-                                                <button
-                                                    type="button"
-                                                    disabled={checked || value === null}
-                                                    onClick={() => clearBlank(segment.index)}
-                                                    className={!checked && value !== null ? "cursor-pointer" : undefined}
+                                            const chipToneClassName = value === null
+                                                ? "border border-dashed border-default bg-surface text-muted"
+                                                : !checked
+                                                    ? "border-0 bg-accent text-accent-foreground"
+                                                    : isCorrect
+                                                        ? "border border-success/60 bg-success/10 text-success motion-safe:[animation:blankPop_0.35s_ease]"
+                                                        : "border border-danger/60 bg-danger/10 text-danger motion-safe:[animation:blankShake_0.4s_ease]"
+                                            // shared `layoutId` with the SAME term's word-bank chip below — when
+                                            // `placeTerm`/`clearBlank` swaps `value`, framer-motion FLIPs the
+                                            // chip's bounding box across the two positions ("flies" into/out of
+                                            // the slot). `undefined` while empty — nothing to morph from/to yet.
+                                            const layoutId = value !== null ? `quiz-term-${card.id}-${value}` : undefined
+                                            return (
+                                                <motion.span
+                                                    key={position}
+                                                    layout
+                                                    layoutId={layoutId}
+                                                    transition={reduceMotion ? { duration: 0 } : CLOZE_CHIP_TRANSITION}
+                                                    className="mx-1 inline-block align-middle"
                                                 >
-                                                    <Chip
-                                                        size="sm"
-                                                        // HeroUI bakes `.chip`/`.chip--sm`'s font-size as an
-                                                        // UNLAYERED style (same trap as radius.md's rounded-*
-                                                        // warning) — a `text-sm` utility class silently loses
-                                                        // to it. Only an inline style (always highest
-                                                        // specificity) actually overrides it; reuse the
-                                                        // design system's own `--text-sm` token, not a raw px.
-                                                        style={{ fontSize: "var(--text-sm)" }}
-                                                        className={cn(
-                                                            "min-w-16 justify-center rounded-full px-3 py-0.5 font-medium transition-colors",
-                                                            chipToneClassName,
-                                                        )}
+                                                    <button
+                                                        type="button"
+                                                        disabled={checked || value === null}
+                                                        onClick={() => clearBlank(segment.index)}
+                                                        className={!checked && value !== null ? "cursor-pointer" : undefined}
                                                     >
-                                                        {value ?? "···"}
-                                                    </Chip>
-                                                </button>
-                                            </motion.span>
-                                        )
-                                    })()
-                                ),
-                            )}
-                        </p>
-                        {/* after checking, surface the right term for any blank got wrong */}
-                        {checked && correctCount < cloze.blanks.length ? (
-                            <Typography type="body-xs" color="muted">
-                                {t("flashcard.quiz.clozeResult", {
-                                    correct: correctCount,
-                                    total: cloze.blanks.length,
-                                })}
-                            </Typography>
-                        ) : null}
-                    </LabeledCard>
+                                                        <Chip
+                                                            size="sm"
+                                                            // HeroUI bakes `.chip`/`.chip--sm`'s font-size as an
+                                                            // UNLAYERED style (same trap as radius.md's rounded-*
+                                                            // warning) — a `text-sm` utility class silently loses
+                                                            // to it. Only an inline style (always highest
+                                                            // specificity) actually overrides it; reuse the
+                                                            // design system's own `--text-sm` token, not a raw px.
+                                                            style={{ fontSize: "var(--text-sm)" }}
+                                                            className={cn(
+                                                                "min-w-16 justify-center rounded-full px-3 py-0.5 font-medium transition-colors",
+                                                                chipToneClassName,
+                                                            )}
+                                                        >
+                                                            {value ?? "···"}
+                                                        </Chip>
+                                                    </button>
+                                                </motion.span>
+                                            )
+                                        })()
+                                    ),
+                                )}
+                            </p>
+                            {/* after checking, surface the right term for any blank got wrong */}
+                            {checked && correctCount < cloze.blanks.length ? (
+                                <Typography type="body-xs" color="muted">
+                                    {t("flashcard.quiz.clozeResult", {
+                                        correct: correctCount,
+                                        total: cloze.blanks.length,
+                                    })}
+                                </Typography>
+                            ) : null}
+                        </LabeledCard>
 
-                    {/* the word bank: correct terms + sibling distractors — a used term is
+                        {/* the word bank: correct terms + sibling distractors — a used term is
                     REMOVED here entirely (not just dimmed): it "flew" into its blank via
                     the shared `layoutId` above, so leaving a disabled ghost behind would
                     read as 2 copies of the same chip. loose on the page (no card wrapper)
                     — it's a bank of CHIPS to pick from, not a content surface; the tinted
                     question block above is the only card here (thầy 2026-07-09: "ngân
                     hàng từ để trong card làm gì? bỏ ra ngoài card"). */}
-                    {!checked ? (
-                        <div className="flex flex-col gap-6">
-                            <div className="flex flex-col gap-3">
-                                {/* label for a group of pickable chips below — canon `label.md`
+                        {!checked ? (
+                            <div className="flex flex-col gap-6">
+                                <div className="flex flex-col gap-3">
+                                    {/* label for a group of pickable chips below — canon `label.md`
                                 §1b: a section header naming a control/option GROUP uses `<Label>`,
                                 never a hand-rolled muted Typography caption. */}
-                                <Label>{t("flashcard.quiz.wordBankLabel")}</Label>
-                                <div className="flex flex-wrap items-center gap-2">
-                                    {cloze.bank
-                                        .filter((term) => !filled.includes(term))
-                                        .map((term) => (
-                                            <motion.button
-                                                key={term}
-                                                type="button"
-                                                layout
-                                                layoutId={`quiz-term-${card.id}-${term}`}
-                                                transition={reduceMotion ? { duration: 0 } : CLOZE_CHIP_TRANSITION}
-                                                onClick={() => placeTerm(term)}
-                                                // a "pick me" tile feel (Quizlet/Duolingo token
-                                                // convention) — lift on hover instead of sitting flat.
-                                                className="cursor-pointer transition-transform hover:-translate-y-0.5"
-                                            >
-                                                <Chip
-                                                    size="sm"
-                                                    className="rounded-full border border-default bg-surface px-3 py-0.5 text-sm font-medium"
+                                    <Label>{t("flashcard.quiz.wordBankLabel")}</Label>
+                                    <div className="flex flex-wrap items-center gap-2">
+                                        {cloze.bank
+                                            .filter((term) => !filled.includes(term))
+                                            .map((term) => (
+                                                <motion.button
+                                                    key={term}
+                                                    type="button"
+                                                    layout
+                                                    layoutId={`quiz-term-${card.id}-${term}`}
+                                                    transition={reduceMotion ? { duration: 0 } : CLOZE_CHIP_TRANSITION}
+                                                    onClick={() => placeTerm(term)}
+                                                    // a "pick me" tile feel (Quizlet/Duolingo token
+                                                    // convention) — lift on hover instead of sitting flat.
+                                                    className="cursor-pointer transition-transform hover:-translate-y-0.5"
                                                 >
-                                                    {term}
-                                                </Chip>
-                                            </motion.button>
-                                        ))}
+                                                    <Chip
+                                                        size="sm"
+                                                        className="rounded-full border border-default bg-surface px-3 py-0.5 text-sm font-medium"
+                                                    >
+                                                        {term}
+                                                    </Chip>
+                                                </motion.button>
+                                            ))}
+                                    </div>
                                 </div>
-                            </div>
-                            <Button
-                                variant="primary"
-                                className="self-start"
-                                isDisabled={!allFilled}
-                                onPress={() => setChecked(true)}
-                            >
-                                {t("flashcard.quiz.checkAnswer")}
-                            </Button>
-                        </div>
-                    ) : (
-                        <div className="flex flex-col gap-6">
-                            {/* verdict line */}
-                            <div className="flex items-center gap-2">
-                                {correctCount === cloze.blanks.length ? (
-                                    <CheckCircleIcon className="size-5 text-success" aria-hidden focusable="false" />
-                                ) : (
-                                    <XCircleIcon className="size-5 text-danger" aria-hidden focusable="false" />
-                                )}
-                                <Typography type="body-sm" weight="medium">
-                                    {t("flashcard.quiz.clozeResult", {
-                                        correct: correctCount,
-                                        total: cloze.blanks.length,
-                                    })}
-                                </Typography>
-                            </div>
-
-                            {/* read the full model answer (the 5-layer reasoning), then self-grade */}
-                            {showAnswer ? (
-                                <LabeledCard label={t("flashcard.answerLabel")} contentClassName="flex flex-col gap-3">
-                                    <MarkdownContent markdown={card.answer ?? ""} arcSections />
-                                    {card.explanation ? <MarkdownContent markdown={card.explanation} /> : null}
-                                </LabeledCard>
-                            ) : (
                                 <Button
-                                    variant="outline"
+                                    variant="primary"
                                     className="self-start"
-                                    onPress={() => setShowAnswer(true)}
+                                    isDisabled={!allFilled}
+                                    onPress={() => setChecked(true)}
                                 >
-                                    {t("flashcard.quiz.showSolution")}
+                                    {t("flashcard.quiz.checkAnswer")}
                                 </Button>
-                            )}
-
-                            {showAnswer ? (
-                                <div className="flex flex-col gap-2">
-                                    <Typography type="body-xs" color="muted" align="center">
-                                        {t("flashcard.review.rateHint")}
+                            </div>
+                        ) : (
+                            <div className="flex flex-col gap-6">
+                                {/* verdict line */}
+                                <div className="flex items-center gap-2">
+                                    {correctCount === cloze.blanks.length ? (
+                                        <CheckCircleIcon className="size-5 text-success" aria-hidden focusable="false" />
+                                    ) : (
+                                        <XCircleIcon className="size-5 text-danger" aria-hidden focusable="false" />
+                                    )}
+                                    <Typography type="body-sm" weight="medium">
+                                        {t("flashcard.quiz.clozeResult", {
+                                            correct: correctCount,
+                                            total: cloze.blanks.length,
+                                        })}
                                     </Typography>
-                                    <RatingBar
-                                        options={ratingOptions}
-                                        onRate={(grade) => void commitCard(grade, coverageRatio)}
-                                        isPending={rating}
-                                    />
                                 </div>
-                            ) : null}
-                        </div>
-                    )}
+
+                                {/* read the full model answer (the 5-layer reasoning), then self-grade */}
+                                {showAnswer ? (
+                                    <LabeledCard label={t("flashcard.answerLabel")} contentClassName="flex flex-col gap-3">
+                                        <MarkdownContent markdown={card.answer ?? ""} arcSections />
+                                        {card.explanation ? <MarkdownContent markdown={card.explanation} /> : null}
+                                    </LabeledCard>
+                                ) : (
+                                    <Button
+                                        variant="outline"
+                                        className="self-start"
+                                        onPress={() => setShowAnswer(true)}
+                                    >
+                                        {t("flashcard.quiz.showSolution")}
+                                    </Button>
+                                )}
+
+                                {showAnswer ? (
+                                    <div className="flex flex-col gap-2">
+                                        <Typography type="body-xs" color="muted" align="center">
+                                            {t("flashcard.review.rateHint")}
+                                        </Typography>
+                                        <RatingBar
+                                            options={ratingOptions}
+                                            onRate={(grade) => void commitCard(grade, coverageRatio)}
+                                            isPending={rating}
+                                        />
+                                    </div>
+                                ) : null}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </LayoutGroup>

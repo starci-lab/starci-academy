@@ -114,7 +114,15 @@ export const FlashcardQuizResult = ({
     )
 
     return (
-        <div className={cn("flex flex-col gap-6", className)}>
+        // this screen is reached via the "Hỏi nhanh" LIVE session route
+        // (`quiz/sessions/[sessionId]`), which stays `fullBleed` for the whole
+        // session including this recap phase (the URL never changes active→
+        // recap, unlike Mock Interview's `?phase=` mirror) — the shell's own
+        // `p-6` never applies here, so this screen owns its page padding
+        // directly instead of relying on it (2026-07-12, thầy: "thiếu padding
+        // p-6"). `PageHeader` itself only owns header→content spacing (gap-10),
+        // never page-level padding.
+        <div className={cn("flex flex-col gap-6 px-4 py-6 sm:px-6", className)}>
             <PageHeader
                 className="mx-auto w-full max-w-3xl"
                 breadcrumb={<BackLink label={t("flashcard.title")} onPress={onBack} />}
@@ -171,11 +179,7 @@ export const FlashcardQuizResult = ({
                                         label={t("flashcard.quiz.result.coverageLabel")}
                                     />
                                     <MetricCard
-                                        value={(
-                                            <span className={cn(data.xpEarned === 0 && "text-muted")}>
-                                                {`+${data.xpEarned}`}
-                                            </span>
-                                        )}
+                                        value={`+${data.xpEarned}`}
                                         label={t("flashcard.quiz.result.xpLabel")}
                                     />
                                     <MetricCard

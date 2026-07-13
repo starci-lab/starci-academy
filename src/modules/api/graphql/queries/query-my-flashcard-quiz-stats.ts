@@ -33,6 +33,16 @@ const query1 = gql`
           moduleId
           contentId
         }
+        hardCards {
+          cardId
+          question
+          attempts
+          wrongCount
+          coverage
+          deckId
+          deckTitle
+        }
+        completedSessionCount
       }
     }
   }

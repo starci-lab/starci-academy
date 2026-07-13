@@ -31,6 +31,29 @@ const query1 = gql`
           learning
           new
         }
+        leechCards {
+          cardId
+          question
+          forgotCount
+          deckId
+          deckTitle
+        }
+        weakReviewTag {
+          tag
+          retention
+          reviewCount
+        }
+        deckRetention {
+          deckId
+          deckTitle
+          retention
+          reviewCount
+        }
+        retentionTrend {
+          date
+          retention
+          reviewCount
+        }
       }
     }
   }

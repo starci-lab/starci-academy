@@ -9,7 +9,6 @@ import {
     Input,
     Pagination,
     Separator,
-    Spinner,
     TextField,
     Typography,
 } from "@heroui/react"
@@ -26,9 +25,11 @@ import { type WithClassNames } from "@/modules/types/base/class-name"
 import { useAppSelector } from "@/redux/hooks"
 import { pathConfig } from "@/resources/path"
 import { useStartFlashcardReviewSession } from "../useStartFlashcardReviewSession"
+import { FlashcardReviewModeModal } from "../FlashcardReviewModeModal"
+import type { FlashcardReviewMode } from "@/modules/api/graphql/mutations/types/start-flashcard-review-session"
 
 /** Decks shown per page in the topic list before the pager kicks in. */
-const DECKS_PER_PAGE = 9
+const DECKS_PER_PAGE = 10
 
 /** How the deck list is laid out — a roomy card grid or a compact row list. */
 type DeckView = "grid" | "line"
@@ -85,6 +86,10 @@ export const FlashcardDeckList = ({
     // hypothetical future reuse with `showProgress={false}` (picking a deck for
     // something OTHER than a review session) falls back to `onSelectDeck`.
     const { start: startReview, startingDeckId } = useStartFlashcardReviewSession(courseId)
+    // deck whose review-mode modal is open (thầy 2026-07-13: "Học" mở modal chọn
+    // full/quên trước khi vào), null = closed. Held as the whole deck so the modal
+    // reads its title + total + dueCount without a re-fetch.
+    const [modeDeck, setModeDeck] = useState<FlashcardDeckEntity | null>(null)
     // live search query filtering decks by title/description
     const [query, setQuery] = useState("")
     // 1-based page for the client-side deck pager
@@ -154,23 +159,36 @@ export const FlashcardDeckList = ({
                 {t("flashcard.deck.due", { count: deck.dueCount })}
             </Chip>
         ) : null
-    /** Resolve-or-start this deck's session right from the CTA, then `router.push`
-     *  straight into it (no instant navigation to the bare shim route). */
+    /** "Học" pressed → open the mode modal (study context), or fall straight
+     *  through to `onSelectDeck` for a non-study reuse (`showProgress={false}`). */
     const onPressStart = useCallback(
-        async (deck: FlashcardDeckEntity) => {
+        (deck: FlashcardDeckEntity) => {
             if (!showProgress || !displayId) {
                 onSelectDeck(deck.id)
                 return
             }
-            const cardIds = (deck.cards ?? []).map((deckCard) => deckCard.id)
-            const sessionId = await startReview(deck.id, cardIds)
+            setModeDeck(deck)
+        },
+        [showProgress, displayId, onSelectDeck],
+    )
+    /** Chosen a mode in the modal → resolve-or-start with that scope, then
+     *  `router.push` into the live session (mirrors the old eager idiom, now
+     *  gated behind the modal's "Bắt đầu"). */
+    const onStartWithMode = useCallback(
+        async (mode: FlashcardReviewMode) => {
+            if (!modeDeck || !displayId) {
+                return
+            }
+            const cardIds = (modeDeck.cards ?? []).map((deckCard) => deckCard.id)
+            const sessionId = await startReview(modeDeck.id, cardIds, mode)
             if (sessionId) {
+                setModeDeck(null)
                 router.push(
                     pathConfig().locale(locale).course(displayId).learn().flashcards().due(sessionId).build(),
                 )
             }
         },
-        [showProgress, displayId, startReview, router, locale, onSelectDeck],
+        [modeDeck, displayId, startReview, router, locale],
     )
     /** The "Học" CTA — the only action on a deck (card itself is not pressable). */
     const cta = (deck: FlashcardDeckEntity) => (
@@ -178,204 +196,213 @@ export const FlashcardDeckList = ({
             size="sm"
             variant="primary"
             className="shrink-0"
-            isPending={startingDeckId === deck.id}
-            isDisabled={startingDeckId !== null && startingDeckId !== deck.id}
-            onPress={() => { void onPressStart(deck) }}
+            onPress={() => onPressStart(deck)}
         >
-            {/* `isPending` only disables interaction (no built-in spinner — HeroUI's
-                Button ships no visual for it); render one ourselves, same idiom as
-                `FollowButton`/`TierCard`/every other pending CTA in the app. */}
-            {startingDeckId === deck.id ? <Spinner color="current" size="sm" /> : null}
             {ctaLabel ?? t("flashcard.study")}
         </Button>
     )
 
     return (
-        <AsyncContent
-            isLoading={(isLoading || !courseId) && decks.length === 0}
-            skeleton={<FlashcardDeckListSkeleton />}
-            isEmpty={decks.length === 0}
-            emptyContent={{ title: t("flashcard.empty") }}
-            error={decks.length === 0 ? error : undefined}
-            errorContent={{
-                title: t("flashcard.empty"),
-                onRetry: () => { void mutate() },
-            }}
-        >
-            <div className="flex flex-col gap-3">
-                {/* search row: filter input (left) + result count & view toggle (right).
+        <>
+            {/* one modal instance, driven by `modeDeck` — the picked mode + resolve-or-start
+            live here (the CTA no longer starts directly). */}
+            {modeDeck ? (
+                <FlashcardReviewModeModal
+                    isOpen={Boolean(modeDeck)}
+                    onClose={() => { if (startingDeckId !== modeDeck.id) setModeDeck(null) }}
+                    deckTitle={modeDeck.title}
+                    totalCount={modeDeck.cards?.length ?? 0}
+                    dueCount={modeDeck.dueCount ?? 0}
+                    isPending={startingDeckId === modeDeck.id}
+                    onStart={(mode) => { void onStartWithMode(mode) }}
+                />
+            ) : null}
+            <AsyncContent
+                isLoading={(isLoading || !courseId) && decks.length === 0}
+                skeleton={<FlashcardDeckListSkeleton />}
+                isEmpty={decks.length === 0}
+                emptyContent={{ title: t("flashcard.empty") }}
+                error={decks.length === 0 ? error : undefined}
+                errorContent={{
+                    title: t("flashcard.empty"),
+                    onRetry: () => { void mutate() },
+                }}
+            >
+                <div className="flex flex-col gap-3">
+                    {/* search row: filter input (left) + result count & view toggle (right).
                     The input sits on the page background → no variant (clean bg-field). */}
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                    <TextField className="w-full sm:max-w-sm">
-                        <Input
-                            type="search"
-                            aria-label={t("flashcard.searchPlaceholder")}
-                            placeholder={t("flashcard.searchPlaceholder")}
-                            value={query}
-                            onChange={(event) => setQuery(event.target.value)}
-                        />
-                    </TextField>
-                    <div className="flex shrink-0 items-center gap-3">
-                        <Typography type="body-sm" color="muted">
-                            {t("flashcard.deck.found", { count: filteredDecks.length })}
-                        </Typography>
-                        {/* grid ⇆ line layout toggle (icon-only; persisted) */}
-                        <SegmentedControl<DeckView>
-                            ariaLabel={t("flashcard.deck.viewAria")}
-                            value={view}
-                            onChange={onChangeView}
-                            items={[
-                                {
-                                    value: "grid",
-                                    label: (
-                                        <SquaresFourIcon
-                                            className="size-5"
-                                            aria-label={t("flashcard.deck.viewGrid")}
-                                            focusable="false"
-                                        />
-                                    ),
-                                },
-                                {
-                                    value: "line",
-                                    label: (
-                                        <ListIcon
-                                            className="size-5"
-                                            aria-label={t("flashcard.deck.viewLine")}
-                                            focusable="false"
-                                        />
-                                    ),
-                                },
-                            ]}
-                        />
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                        <TextField className="w-full sm:max-w-sm">
+                            <Input
+                                type="search"
+                                aria-label={t("flashcard.searchPlaceholder")}
+                                placeholder={t("flashcard.searchPlaceholder")}
+                                value={query}
+                                onChange={(event) => setQuery(event.target.value)}
+                            />
+                        </TextField>
+                        <div className="flex shrink-0 items-center gap-3">
+                            <Typography type="body-sm" color="muted">
+                                {t("flashcard.deck.found", { count: filteredDecks.length })}
+                            </Typography>
+                            {/* grid ⇆ line layout toggle (icon-only; persisted) */}
+                            <SegmentedControl<DeckView>
+                                ariaLabel={t("flashcard.deck.viewAria")}
+                                value={view}
+                                onChange={onChangeView}
+                                items={[
+                                    {
+                                        value: "grid",
+                                        label: (
+                                            <SquaresFourIcon
+                                                className="size-5"
+                                                aria-label={t("flashcard.deck.viewGrid")}
+                                                focusable="false"
+                                            />
+                                        ),
+                                    },
+                                    {
+                                        value: "line",
+                                        label: (
+                                            <ListIcon
+                                                className="size-5"
+                                                aria-label={t("flashcard.deck.viewLine")}
+                                                focusable="false"
+                                            />
+                                        ),
+                                    },
+                                ]}
+                            />
+                        </div>
                     </div>
-                </div>
 
-                {filteredDecks.length === 0 ? (
-                    <Typography type="body-sm" color="muted">
-                        {t("flashcard.searchEmpty", { query: query.trim() })}
-                    </Typography>
-                ) : (
-                    <div className="flex flex-col gap-3">
-                        {view === "grid" ? (
+                    {filteredDecks.length === 0 ? (
+                        <Typography type="body-sm" color="muted">
+                            {t("flashcard.searchEmpty", { query: query.trim() })}
+                        </Typography>
+                    ) : (
+                        <div className="flex flex-col gap-3">
+                            {view === "grid" ? (
                             /* GRID — roomy cards in a responsive grid; keeps the description. */
-                            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                                {pagedDecks.map((deck: FlashcardDeckEntity) => {
-                                    const total = deck.cards?.length ?? 0
-                                    const mastered = deck.masteredCount ?? 0
-                                    return (
-                                        <Card key={deck.id}>
-                                            <div className="flex h-full flex-col gap-2">
-                                                <div className="flex items-start justify-between gap-2">
-                                                    <Typography type="body-sm" weight="medium" className="line-clamp-2">
+                                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                                    {pagedDecks.map((deck: FlashcardDeckEntity) => {
+                                        const total = deck.cards?.length ?? 0
+                                        const mastered = deck.masteredCount ?? 0
+                                        return (
+                                            <Card key={deck.id}>
+                                                <div className="flex h-full flex-col gap-2">
+                                                    <div className="flex items-start justify-between gap-2">
+                                                        <Typography type="body-sm" weight="medium" className="line-clamp-2">
+                                                            {deck.title}
+                                                        </Typography>
+                                                        <div className="flex shrink-0 items-center gap-2">
+                                                            {dueChip(deck)}
+                                                            {difficultyChip(deck)}
+                                                        </div>
+                                                    </div>
+                                                    {deck.description ? (
+                                                        <Typography type="body-xs" color="muted" className="line-clamp-2">
+                                                            {deck.description}
+                                                        </Typography>
+                                                    ) : null}
+                                                    {/* per-viewer mastery — count + a plain divider (study only) */}
+                                                    {showProgress && total > 0 ? (
+                                                        <div className="mt-auto flex flex-col gap-2">
+                                                            <Typography type="body-xs" color="muted">
+                                                                {t("flashcard.deck.mastered", { mastered, total })}
+                                                            </Typography>
+                                                            <Separator />
+                                                        </div>
+                                                    ) : null}
+                                                    <div className="flex items-center justify-between gap-2 pt-1">
+                                                        <Typography type="body-xs" color="muted">
+                                                            {t("flashcard.cardCount", { count: total })}
+                                                        </Typography>
+                                                        {cta(deck)}
+                                                    </div>
+                                                </div>
+                                            </Card>
+                                        )
+                                    })}
+                                </div>
+                            ) : (
+                            /* LINE — one compact row per deck (title + chips + mastery + CTA). */
+                                <div className="flex flex-col gap-2">
+                                    {pagedDecks.map((deck: FlashcardDeckEntity) => {
+                                        const total = deck.cards?.length ?? 0
+                                        const mastered = deck.masteredCount ?? 0
+                                        return (
+                                            <Card key={deck.id}>
+                                                <div className="flex items-center gap-3">
+                                                    <Typography type="body-sm" weight="medium" className="min-w-0 flex-1 truncate">
                                                         {deck.title}
                                                     </Typography>
-                                                    <div className="flex shrink-0 items-center gap-2">
-                                                        {dueChip(deck)}
-                                                        {difficultyChip(deck)}
-                                                    </div>
-                                                </div>
-                                                {deck.description ? (
-                                                    <Typography type="body-xs" color="muted" className="line-clamp-2">
-                                                        {deck.description}
-                                                    </Typography>
-                                                ) : null}
-                                                {/* per-viewer mastery — count + a plain divider (study only) */}
-                                                {showProgress && total > 0 ? (
-                                                    <div className="mt-auto flex flex-col gap-2">
-                                                        <Typography type="body-xs" color="muted">
+                                                    {dueChip(deck)}
+                                                    {difficultyChip(deck)}
+                                                    {showProgress && total > 0 ? (
+                                                        <Typography type="body-xs" color="muted" className="shrink-0">
                                                             {t("flashcard.deck.mastered", { mastered, total })}
                                                         </Typography>
-                                                        <Separator />
-                                                    </div>
-                                                ) : null}
-                                                <div className="flex items-center justify-between gap-2 pt-1">
-                                                    <Typography type="body-xs" color="muted">
-                                                        {t("flashcard.cardCount", { count: total })}
-                                                    </Typography>
+                                                    ) : (
+                                                        <Typography type="body-xs" color="muted" className="shrink-0">
+                                                            {t("flashcard.cardCount", { count: total })}
+                                                        </Typography>
+                                                    )}
                                                     {cta(deck)}
                                                 </div>
-                                            </div>
-                                        </Card>
-                                    )
-                                })}
-                            </div>
-                        ) : (
-                            /* LINE — one compact row per deck (title + chips + mastery + CTA). */
-                            <div className="flex flex-col gap-2">
-                                {pagedDecks.map((deck: FlashcardDeckEntity) => {
-                                    const total = deck.cards?.length ?? 0
-                                    const mastered = deck.masteredCount ?? 0
-                                    return (
-                                        <Card key={deck.id}>
-                                            <div className="flex items-center gap-3">
-                                                <Typography type="body-sm" weight="medium" className="min-w-0 flex-1 truncate">
-                                                    {deck.title}
-                                                </Typography>
-                                                {dueChip(deck)}
-                                                {difficultyChip(deck)}
-                                                {showProgress && total > 0 ? (
-                                                    <Typography type="body-xs" color="muted" className="shrink-0">
-                                                        {t("flashcard.deck.mastered", { mastered, total })}
-                                                    </Typography>
-                                                ) : (
-                                                    <Typography type="body-xs" color="muted" className="shrink-0">
-                                                        {t("flashcard.cardCount", { count: total })}
-                                                    </Typography>
-                                                )}
-                                                {cta(deck)}
-                                            </div>
-                                        </Card>
-                                    )
-                                })}
-                            </div>
-                        )}
+                                            </Card>
+                                        )
+                                    })}
+                                </div>
+                            )}
 
-                        {/* pager: left-aligned with the cards, hidden on a single page.
+                            {/* pager: left-aligned with the cards, hidden on a single page.
                             HeroUI Pagination bakes no hover/cursor → add per the rule. */}
-                        {totalPages > 1 ? (
-                            <Pagination
-                                aria-label={t("common.pagination.navAria")}
-                                className="justify-start"
-                                size="sm"
-                            >
-                                <Pagination.Content className="flex flex-wrap justify-start gap-2">
-                                    <Pagination.Item>
-                                        <Pagination.Previous
-                                            aria-label={t("common.pagination.previous")}
-                                            isDisabled={page <= 1}
-                                            className="cursor-pointer rounded-medium transition-colors hover:bg-default"
-                                            onPress={() => setPage((current) => Math.max(1, current - 1))}
-                                        >
-                                            <Pagination.PreviousIcon />
-                                        </Pagination.Previous>
-                                    </Pagination.Item>
-                                    {pageNumbers.map((pageNumber) => (
-                                        <Pagination.Item key={pageNumber}>
-                                            <Pagination.Link
-                                                isActive={pageNumber === page}
-                                                className="cursor-pointer rounded-medium transition-colors hover:bg-default data-[active=true]:hover:bg-accent"
-                                                onPress={() => setPage(pageNumber)}
+                            {totalPages > 1 ? (
+                                <Pagination
+                                    aria-label={t("common.pagination.navAria")}
+                                    className="justify-start"
+                                    size="sm"
+                                >
+                                    <Pagination.Content className="flex flex-wrap justify-start gap-2">
+                                        <Pagination.Item>
+                                            <Pagination.Previous
+                                                aria-label={t("common.pagination.previous")}
+                                                isDisabled={page <= 1}
+                                                className="cursor-pointer rounded-medium transition-colors hover:bg-default"
+                                                onPress={() => setPage((current) => Math.max(1, current - 1))}
                                             >
-                                                {pageNumber}
-                                            </Pagination.Link>
+                                                <Pagination.PreviousIcon />
+                                            </Pagination.Previous>
                                         </Pagination.Item>
-                                    ))}
-                                    <Pagination.Item>
-                                        <Pagination.Next
-                                            aria-label={t("common.pagination.next")}
-                                            isDisabled={page >= totalPages}
-                                            className="cursor-pointer rounded-medium transition-colors hover:bg-default"
-                                            onPress={() => setPage((current) => Math.min(totalPages, current + 1))}
-                                        >
-                                            <Pagination.NextIcon />
-                                        </Pagination.Next>
-                                    </Pagination.Item>
-                                </Pagination.Content>
-                            </Pagination>
-                        ) : null}
-                    </div>
-                )}
-            </div>
-        </AsyncContent>
+                                        {pageNumbers.map((pageNumber) => (
+                                            <Pagination.Item key={pageNumber}>
+                                                <Pagination.Link
+                                                    isActive={pageNumber === page}
+                                                    className="cursor-pointer rounded-medium transition-colors hover:bg-default data-[active=true]:hover:bg-accent"
+                                                    onPress={() => setPage(pageNumber)}
+                                                >
+                                                    {pageNumber}
+                                                </Pagination.Link>
+                                            </Pagination.Item>
+                                        ))}
+                                        <Pagination.Item>
+                                            <Pagination.Next
+                                                aria-label={t("common.pagination.next")}
+                                                isDisabled={page >= totalPages}
+                                                className="cursor-pointer rounded-medium transition-colors hover:bg-default"
+                                                onPress={() => setPage((current) => Math.min(totalPages, current + 1))}
+                                            >
+                                                <Pagination.NextIcon />
+                                            </Pagination.Next>
+                                        </Pagination.Item>
+                                    </Pagination.Content>
+                                </Pagination>
+                            ) : null}
+                        </div>
+                    )}
+                </div>
+            </AsyncContent>
+        </>
     )
 }

@@ -6,7 +6,9 @@ import { LayoutGroup, motion, useReducedMotion } from "framer-motion"
 import { Button, Chip, Label, Spinner, Typography, cn } from "@heroui/react"
 import {
     ArrowRightIcon,
+    CardsIcon,
     CheckCircleIcon,
+    ClockCountdownIcon,
     ClockCounterClockwiseIcon,
     ClockIcon,
     FlameIcon,
@@ -17,7 +19,8 @@ import {
 import { useLocale, useTranslations } from "next-intl"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
-import { SM2_GRADES } from "../constants"
+import { DUE_REVIEW_LIMIT, SM2_GRADES } from "../constants"
+import { queryMyDueFlashcards } from "@/modules/api/graphql/queries/query-my-due-flashcards"
 import { buildCloze, extractMarkerTerms, type ClozeQuestion } from "./build-cloze"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { mutateReviewFlashcard } from "@/modules/api/graphql/mutations/mutation-review-flashcard"
@@ -190,6 +193,28 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
     )
     const decks = decksSwr.data
 
+    // today's due-card ids — same SWR key/shape `DueReviewHero` already reads, so
+    // the scope-picker's "Chỉ thẻ cần ôn" and `startSession`'s draw-time filter
+    // (below) share one fetch. `dueCount` also gates/dims the scope option when
+    // nothing is due (mirrors `FlashcardReviewModeModal`'s `dueDisabled`).
+    const dueSwr = useSWR(
+        ["my-due-flashcards", courseId, DUE_REVIEW_LIMIT],
+        async () => {
+            const response = await queryMyDueFlashcards({ request: { courseId, limit: DUE_REVIEW_LIMIT } })
+            return response.data?.myDueFlashcards.data ?? null
+        },
+    )
+    const dueCardIds = useMemo(
+        () => new Set((dueSwr.data?.cards ?? []).map((dueCard) => dueCard.cardId)),
+        [dueSwr.data],
+    )
+    const dueDisabled = (dueSwr.data?.dueCount ?? 0) <= 0
+    useEffect(() => {
+        if (dueDisabled) {
+            setScope("all")
+        }
+    }, [dueDisabled])
+
     // refreshed after a session grants XP (the setup's progress zone reads its own
     // streak from `FlashcardStatsStrip` instead)
     const weeklyStatsSwr = useQueryMyWeeklyStatsSwr()
@@ -224,6 +249,10 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
     })
     const [mode, setMode] = useState<QuizMode>("quick")
     const [level, setLevel] = useState<string | null>(null)
+    // "Ôn tất cả" (draw from the whole pool) vs "Chỉ thẻ cần ôn" (draw only from
+    // today's due queue) — same 2 options + wording as `FlashcardReviewModeModal`
+    // (thầy 2026-07-13: "cấu hình luyện thêm ôn tất cả và chỉ thẻ cần ôn").
+    const [scope, setScope] = useState<"all" | "due">("all")
     // cards drawn for the current run
     const [sessionCards, setSessionCards] = useState<Array<QuizCard>>([])
     // zero-based index of the current card
@@ -344,7 +373,9 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
         try {
             const { pool, anyDeckFailed } = await fetchCardPool()
             const drawn = shuffle(
-                pool.filter((card) => level === null || card.level === level),
+                pool
+                    .filter((card) => level === null || card.level === level)
+                    .filter((card) => scope !== "due" || dueCardIds.has(card.id)),
             ).slice(0, sessionLength)
 
             if (drawn.length === 0) {
@@ -353,7 +384,9 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                 setStartError(
                     anyDeckFailed
                         ? t("flashcard.quiz.sessionLoadErrorTitle")
-                        : t("flashcard.quiz.emptyAtLevel"),
+                        : scope === "due"
+                            ? t("flashcard.quiz.emptyAtScope")
+                            : t("flashcard.quiz.emptyAtLevel"),
                 )
                 setStarting(false)
                 return
@@ -389,7 +422,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
             setStartError(t("flashcard.quiz.sessionLoadErrorTitle"))
             setStarting(false)
         }
-    }, [decks, starting, level, sessionLength, t, courseHeaders, courseId, mode, runStart, inProgressSessionSwr, displayId, locale, router])
+    }, [decks, starting, level, scope, dueCardIds, sessionLength, t, courseHeaders, courseId, mode, runStart, inProgressSessionSwr, displayId, locale, router])
 
     // "Thoát" — leaves the active run for the setup screen. No confirm modal (unlike
     // Mock Interview's leave, which is destructive/abandon-ungraded): a quiz run is
@@ -838,13 +871,47 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                         {/* Zone 2 — config: mode + level, its own labeled card so it reads as a
                     distinct block from the progress zone above (was one dense card before). */}
                         <LabeledCard label={t("flashcard.quiz.configLabel")} contentClassName="flex flex-col gap-6">
+                            {/* Scope — same 2 options/wording as `FlashcardReviewModeModal`
+                                ("Ôn tất cả" / "Chỉ thẻ cần ôn"), reused verbatim rather than
+                                duplicated copy (thầy 2026-07-13: "cấu hình luyện thêm ôn tất
+                                cả và chỉ thẻ cần ôn"). Disabled + auto-reset to "all" when
+                                nothing is due, same guard as the modal's `dueDisabled`. */}
+                            <div className="flex flex-col gap-3">
+                                <Label>{t("flashcard.quiz.scopeLabel")}</Label>
+                                <FlexWrapButtonRadio
+                                    ariaLabel={t("flashcard.quiz.scopeLabel")}
+                                    value={scope}
+                                    onChange={setScope}
+                                    items={[
+                                        {
+                                            value: "all",
+                                            content: (
+                                                <span className="flex items-center gap-2">
+                                                    <CardsIcon className="size-4" aria-hidden focusable="false" />
+                                                    {t("flashcard.mode.fullLabel")}
+                                                </span>
+                                            ),
+                                        },
+                                        {
+                                            value: "due",
+                                            isDisabled: dueDisabled,
+                                            content: (
+                                                <span className="flex items-center gap-2">
+                                                    <ClockCountdownIcon className="size-4" aria-hidden focusable="false" />
+                                                    {t("flashcard.mode.dueLabel")}
+                                                </span>
+                                            ),
+                                        },
+                                    ]}
+                                />
+                            </div>
+
                             <div className="flex flex-col gap-3">
                                 <Label>{t("flashcard.quiz.modeLabel")}</Label>
                                 <FlexWrapButtonRadio
                                     ariaLabel={t("flashcard.quiz.modeLabel")}
                                     value={mode}
                                     onChange={setMode}
-                                    insideCard
                                     items={[
                                         {
                                             value: "quick",
@@ -874,7 +941,6 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                                     ariaLabel={t("flashcard.quiz.levelLabel")}
                                     value={level ?? "all"}
                                     onChange={(value) => setLevel(value === "all" ? null : value)}
-                                    insideCard
                                     items={[
                                         { value: "all", content: t("flashcard.quiz.levelAll") },
                                         ...LEVELS.map((value) => ({
@@ -974,11 +1040,14 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
         )
     }
 
-    // shared header: WorkSessionHeader (course identity + step counter + level/tag
-    // meta chips inline + progress segments, combo chip in the right slot) — same
-    // shell as the mock-interview's work-surface header. Level/tag folded INTO the
-    // header row (thầy 2026-07-11: "bỏ mấy cái tag lên cái thanh navbar phụ") —
-    // no separate chip row underneath anymore.
+    // shared header: WorkSessionHeader (course identity + step counter +
+    // progress segments, combo chip in the right slot) — same shell as the
+    // mock-interview's work-surface header. Level/tag chips moved OUT of this
+    // header into the question card's own body via `belowFront`/inline (thầy
+    // 2026-07-13: "chip của hỏi nhanh bỏ dưới câu hỏi theo rules ôn tập" —
+    // matching the same move already done for `FlashcardReviewer`/`DueReview`,
+    // per-card meta belongs to the card body, not the fixed session chrome —
+    // `components/card.md` Đính chính 2026-07-13).
     const header = (
         <WorkSessionHeader
             backLabel={t("flashcard.exit")}
@@ -991,20 +1060,6 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
             })}
             current={index}
             total={sessionLength}
-            meta={card.level || (card.tags?.length ?? 0) > 0 ? (
-                <>
-                    {card.level ? (
-                        <Chip size="sm" variant="soft" color={LEVEL_COLOR[card.level] ?? "default"}>
-                            {t(`flashcard.level.${card.level}`)}
-                        </Chip>
-                    ) : null}
-                    {card.tags?.map((tag) => (
-                        <Chip key={tag} size="sm" variant="soft" color="default">
-                            {tag}
-                        </Chip>
-                    ))}
-                </>
-            ) : undefined}
             rightSlot={
                 <span className="flex shrink-0 items-center gap-3">
                     {remainingSeconds !== null ? (
@@ -1043,6 +1098,20 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                             questionLabel={t("flashcard.questionLabel")}
                             answerLabel={t("flashcard.answerLabel")}
                             front={<MarkdownContent markdown={card.question} />}
+                            belowFront={card.level || (card.tags?.length ?? 0) > 0 ? (
+                                <div className="flex flex-wrap items-center gap-2">
+                                    {card.level ? (
+                                        <Chip size="sm" variant="soft" color={LEVEL_COLOR[card.level] ?? "default"}>
+                                            {t(`flashcard.level.${card.level}`)}
+                                        </Chip>
+                                    ) : null}
+                                    {card.tags?.map((tag) => (
+                                        <Chip key={tag} size="sm" variant="soft" color="default">
+                                            {tag}
+                                        </Chip>
+                                    ))}
+                                </div>
+                            ) : undefined}
                             back={
                                 <>
                                     {card.answer ? (
@@ -1057,10 +1126,8 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                             }
                         />
                         {showAnswer ? (
-                            <div className="flex flex-col gap-2">
-                                <Typography type="body-xs" color="muted" align="center">
-                                    {t("flashcard.review.rateHint")}
-                                </Typography>
+                            <div className="flex flex-col gap-3">
+                                <Label>{t("flashcard.review.rateHint")}</Label>
                                 <RatingBar
                                     options={ratingOptions}
                                     onRate={(grade) => void commitCard(grade, null)}
@@ -1116,9 +1183,30 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                     vs bài tập điền TƯƠNG TÁC), khác với rule "1 item + thuộc tính riêng của
                     nó ở chung 1 card" ([[concepts/card]] — case đó là 1 item + metadata CỦA
                     CHÍNH nó, không phải nội dung + 1 bài tập riêng dựa trên nội dung đó). */}
-                        <LabeledCard label={t("flashcard.questionLabel")}>
-                            <MarkdownContent markdown={card.question} />
-                        </LabeledCard>
+                        {/* question card + its level/tag chips as a `gap-3` group — chips
+                            ride OUTSIDE/BELOW the card (thầy: "nằm ngoài card cách card
+                            gap-3 ấy"), not inside its content — mirrors `FlipCard`'s own
+                            internal `belowFront` structure (question + chips = gap-3,
+                            that whole group ↔ next card = the outer gap-6). */}
+                        <div className="flex flex-col gap-3">
+                            <LabeledCard label={t("flashcard.questionLabel")}>
+                                <MarkdownContent markdown={card.question} />
+                            </LabeledCard>
+                            {card.level || (card.tags?.length ?? 0) > 0 ? (
+                                <div className="flex flex-wrap items-center gap-2">
+                                    {card.level ? (
+                                        <Chip size="sm" variant="soft" color={LEVEL_COLOR[card.level] ?? "default"}>
+                                            {t(`flashcard.level.${card.level}`)}
+                                        </Chip>
+                                    ) : null}
+                                    {card.tags?.map((tag) => (
+                                        <Chip key={tag} size="sm" variant="soft" color="default">
+                                            {tag}
+                                        </Chip>
+                                    ))}
+                                </div>
+                            ) : null}
+                        </div>
 
                         <LabeledCard label={t("flashcard.quiz.fillLabel")} contentClassName="flex flex-col gap-3">
                             <Typography type="body-xs" weight="medium" color="muted">
@@ -1306,10 +1394,8 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                                 )}
 
                                 {showAnswer ? (
-                                    <div className="flex flex-col gap-2">
-                                        <Typography type="body-xs" color="muted" align="center">
-                                            {t("flashcard.review.rateHint")}
-                                        </Typography>
+                                    <div className="flex flex-col gap-3">
+                                        <Label>{t("flashcard.review.rateHint")}</Label>
                                         <RatingBar
                                             options={ratingOptions}
                                             onRate={(grade) => void commitCard(grade, coverageRatio)}

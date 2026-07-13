@@ -8,6 +8,15 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 export interface SurfaceListCardProps extends WithClassNames<undefined> {
     /** The rows ({@link SurfaceListCardRow}) of the joined list. */
     children: React.ReactNode
+    /**
+     * Renders `border border-default` instead of `shadow-surface` — for when
+     * this list sits NESTED inside another surface (a modal/drawer body),
+     * where `--surface-shadow` can render invisible against the parent surface
+     * (dark mode) — nested cards need a border to delineate (`components/card.md`
+     * §"surface-in-surface / nested" — GIỮ border, KHÔNG convert to shadow).
+     * Defaults to `false` (existing top-level usages keep the shadow look).
+     */
+    bordered?: boolean
 }
 
 /**
@@ -22,8 +31,14 @@ export interface SurfaceListCardProps extends WithClassNames<undefined> {
  *
  * @param props - {@link SurfaceListCardProps}
  */
-export const SurfaceListCard = ({ children, className }: SurfaceListCardProps) => (
-    <div className={cn("overflow-hidden rounded-3xl bg-surface shadow-surface", className)}>
+export const SurfaceListCard = ({ children, bordered = false, className }: SurfaceListCardProps) => (
+    <div
+        className={cn(
+            "overflow-hidden rounded-3xl bg-surface",
+            bordered ? "border border-default" : "shadow-surface",
+            className,
+        )}
+    >
         {children}
     </div>
 )
@@ -34,6 +49,16 @@ export interface SurfaceListCardRowProps extends WithClassNames<undefined> {
     leading?: React.ReactNode
     /** Primary line — medium foreground, single-line truncate. */
     title: React.ReactNode
+    /**
+     * Extra className applied directly to the title's own `Typography` element
+     * (e.g. `text-accent` for a selected row) — NOT a wrapper span around
+     * `title`. `text-decoration-color` for `hover="underline"` is resolved from
+     * THIS element's own `color` (the one carrying `group-hover:underline`),
+     * not from a nested child's — a child-only color override leaves the
+     * hover underline in the default colour while the text itself changes,
+     * a visible mismatch. Ref `components/icon.md` §6.
+     */
+    titleClassName?: string
     /** Optional secondary line — muted, smaller, single-line truncate. */
     subtitle?: React.ReactNode
     /** Optional right-aligned metadata (chips/counts) before the trailing node. */
@@ -69,6 +94,7 @@ export interface SurfaceListCardRowProps extends WithClassNames<undefined> {
 export const SurfaceListCardRow = ({
     leading,
     title,
+    titleClassName,
     subtitle,
     meta,
     trailing,
@@ -103,7 +129,7 @@ export const SurfaceListCardRow = ({
                     type="body-sm"
                     weight="medium"
                     truncate
-                    className={cn(underlineHover && "group-hover:underline")}
+                    className={cn(underlineHover && "group-hover:underline", titleClassName)}
                 >
                     {title}
                 </Typography>

@@ -280,7 +280,7 @@ export const PersonalProjectTaskResult = ({
                     <div className="flex flex-col gap-3">
                         <Label>{t("personalProjectResult.attempts")}</Label>
                         <FlexWrapButtonRadio
-                            insideCard={false}
+                            insideCard
                             ariaLabel={t("personalProjectResult.history")}
                             value={selectedAttempt?.id ?? ""}
                             onChange={(id) => router.push(attemptHref(id))}

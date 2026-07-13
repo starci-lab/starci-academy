@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation"
 import { EnrollGate } from "../shared/EnrollGate"
 import { LearnBreadcrumb } from "../shared/LearnBreadcrumb"
 import { MockInterviewSession } from "./MockInterviewSession"
+import { MockInterviewResult } from "./MockInterviewResult"
 import { MockInterviewSetupSkeleton } from "./MockInterviewSetupSkeleton"
 import { MockInterviewSessionSkeleton } from "./MockInterviewSessionSkeleton"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -23,6 +24,13 @@ export interface MockInterviewProps extends WithClassNames<undefined> {
      * green room.
      */
     resumeSessionId?: string
+    /**
+     * Present when reached via the dedicated `/mock-interview/interview/[sessionId]/result`
+     * route — renders {@link MockInterviewResult} instead of the live session state
+     * machine. Mutually exclusive with {@link resumeSessionId} (never both set — the
+     * two routes are siblings, not nested).
+     */
+    resultSessionId?: string
 }
 
 /**
@@ -32,7 +40,7 @@ export interface MockInterviewProps extends WithClassNames<undefined> {
  * with the standard learn header + breadcrumb.
  * @param props - {@link MockInterviewProps}
  */
-export const MockInterview = ({ className, resumeSessionId }: MockInterviewProps) => {
+export const MockInterview = ({ className, resumeSessionId, resultSessionId }: MockInterviewProps) => {
     const t = useTranslations()
     const courseId = useAppSelector((state) => state.course.entity?.id)
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
@@ -52,6 +60,11 @@ export const MockInterview = ({ className, resumeSessionId }: MockInterviewProps
     // straight in the interview phase, so it counts as live immediately too — no
     // waiting on the query-param mirror to catch up after mount.
     const isLive = useSearchParams().get("phase") === "interview" || Boolean(resumeSessionId)
+    // result: its own centered page (like the flashcard quiz result), NOT the
+    // full-bleed live shell — but it owns its OWN PageHeader/BackLink internally
+    // (`MockInterviewResult`), so it skips this wrapper's generic title/description
+    // header the same way the live surface does.
+    const isResult = Boolean(resultSessionId)
     // resolved once the enrollment check has actually run (nullish, not `!enrollmentSwr.data` —
     // an `{isEnrolled: false}` payload is falsy but IS resolved) — gates the green
     // room / live surface behind a mirrored skeleton instead of rendering nothing.
@@ -61,8 +74,8 @@ export const MockInterview = ({ className, resumeSessionId }: MockInterviewProps
 
     return (
         <div className={className}>
-            <div className={isLive ? "flex flex-col" : "mx-auto flex max-w-3xl flex-col gap-10"}>
-                {!isLive ? (
+            <div className={isLive || isResult ? "flex flex-col" : "mx-auto flex max-w-3xl flex-col gap-10"}>
+                {!isLive && !isResult ? (
                     <PageHeader
                         breadcrumb={<LearnBreadcrumb current={t("mockInterview.title")} />}
                         title={t("mockInterview.title")}
@@ -72,21 +85,28 @@ export const MockInterview = ({ className, resumeSessionId }: MockInterviewProps
 
                 <AsyncContent
                     isLoading={!enrollmentResolved}
-                    skeleton={isLive ? <MockInterviewSessionSkeleton /> : <MockInterviewSetupSkeleton />}
+                    skeleton={isLive || isResult ? <MockInterviewSessionSkeleton /> : <MockInterviewSetupSkeleton />}
                 >
                     {!isEnrolled ? (
                         <EnrollGate
                             title={t("mockInterview.gateTitle")}
                             description={t("mockInterview.gateDescription")}
                         />
-                    ) : courseId && courseDisplayId ? (
+                    ) : !(courseId && courseDisplayId) ? null : resultSessionId ? (
+                        <MockInterviewResult
+                            key={courseId}
+                            sessionId={resultSessionId}
+                            courseId={courseId}
+                            courseDisplayId={courseDisplayId}
+                        />
+                    ) : (
                         <MockInterviewSession
                             key={courseId}
                             courseId={courseId}
                             courseDisplayId={courseDisplayId}
                             resumeSessionId={resumeSessionId}
                         />
-                    ) : null}
+                    )}
                 </AsyncContent>
             </div>
         </div>

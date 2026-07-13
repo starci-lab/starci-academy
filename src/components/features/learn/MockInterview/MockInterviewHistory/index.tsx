@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react"
 import { Button, Chip, cn } from "@heroui/react"
 import { CaretRightIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
@@ -11,7 +12,7 @@ import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/S
 import { SkeletonListRow } from "@/components/blocks/skeleton/Skeleton/ListRow"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { useQueryMyMockInterviewAttemptsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyMockInterviewAttemptsSwr"
-import { MockInterviewAttemptDrawer } from "@/components/drawers/MockInterviewAttemptDrawer"
+import { pathConfig } from "@/resources/path"
 import type { MockInterviewAttemptItem } from "@/modules/api/graphql/queries/types/my-mock-interview-attempts"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
@@ -47,7 +48,7 @@ const verdictColorOf = (verdict: string): "success" | "warning" | "danger" =>
 export const MockInterviewHistory = ({ courseId, courseDisplayId, onStartInterview, className }: MockInterviewHistoryProps) => {
     const t = useTranslations()
     const locale = useLocale()
-    const [selectedAttempt, setSelectedAttempt] = useState<MockInterviewAttemptItem | null>(null)
+    const router = useRouter()
     const [modeFilter, setModeFilter] = useState<HistoryModeFilter>("all")
 
     const [offset, setOffset] = useState(0)
@@ -160,25 +161,22 @@ export const MockInterviewHistory = ({ courseId, courseDisplayId, onStartIntervi
                                         </Chip>
                                     )}
                                     trailing={<CaretRightIcon className="size-4 text-muted" aria-hidden focusable="false" />}
-                                    onPress={() => setSelectedAttempt(attempt)}
+                                    onPress={() => router.push(
+                                        pathConfig()
+                                            .locale(locale)
+                                            .course(courseDisplayId)
+                                            .learn()
+                                            .mockInterview()
+                                            .interview(attempt.sessionId)
+                                            .result()
+                                            .build(),
+                                    )}
                                 />
                             ))}
                         </SurfaceListCard>
                     )}
                 </AsyncContent>
             </LabeledCard>
-
-            <MockInterviewAttemptDrawer
-                isOpen={selectedAttempt !== null}
-                onOpenChange={(open) => {
-                    if (!open) {
-                        setSelectedAttempt(null)
-                    }
-                }}
-                attempt={selectedAttempt}
-                courseId={courseId}
-                courseDisplayId={courseDisplayId}
-            />
         </div>
     )
 }

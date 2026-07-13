@@ -190,7 +190,18 @@ export const Flashcards = ({
         const initial = searchParams.get("tab")
         return initial === "history" || initial === "stats" ? initial : "overview"
     })
+    // Only the STUDY OVERVIEW owns the `?tab=` param. In quiz mode `QuizSession`
+    // mirrors its OWN setup tab into `?tab=`, and while a deck/due session is open
+    // there are no overview tabs at all — so this effect MUST NOT run then, else two
+    // components write the same param with different state and clobber each other in
+    // a loop (thầy 2026-07-13: "lịch sử bên này cứ bị giật cái url"). Gate on the
+    // exact condition the overview `TabsCard` is rendered under (mode=study, no deck,
+    // not a due run).
+    const overviewTabsVisible = mode === "study" && session !== "due" && !deckId
     useEffect(() => {
+        if (!overviewTabsVisible) {
+            return
+        }
         const want = overviewTab === "overview" ? null : overviewTab
         if (searchParams.get("tab") === want) {
             return
@@ -203,7 +214,7 @@ export const Flashcards = ({
         }
         const qs = params.toString()
         router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false })
-    }, [overviewTab, pathname, searchParams, router])
+    }, [overviewTabsVisible, overviewTab, pathname, searchParams, router])
 
     // deck name for the breadcrumb when reviewing one deck (shared SWR key with the
     // reviewer → one fetch). The reviewer owns the heavy card states.

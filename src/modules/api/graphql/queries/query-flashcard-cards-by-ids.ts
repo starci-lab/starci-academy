@@ -15,6 +15,8 @@ const query1 = gql`
           deckTitle
           front
           back
+          level
+          tags
         }
       }
     }

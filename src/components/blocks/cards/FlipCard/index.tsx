@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useState } from "react"
 import { ScrollShadow, cn } from "@heroui/react"
 import { AnimatePresence, motion } from "framer-motion"
 import type { ReactNode } from "react"
@@ -17,6 +17,13 @@ export interface FlipCardProps extends WithClassNames<undefined> {
     answerLabel: ReactNode
     /** Front (prompt) content — composed by the caller; sits in the question card. */
     front: ReactNode
+    /**
+     * Optional content rendered DIRECTLY under the question card (grouped with it,
+     * `gap-3`) — ABOVE the answer, so it stays anchored to the question when the
+     * answer reveals below (thầy 2026-07-13: "chip gap-3 ở dưới câu hỏi"). Used for
+     * the card's level/tag chips.
+     */
+    belowFront?: ReactNode
     /** Back (answer) content — composed by the caller; shown once {@link revealed}. */
     back: ReactNode
 }
@@ -32,12 +39,25 @@ export interface FlipCardProps extends WithClassNames<undefined> {
  * BETWEEN this block and the rating; this block is purely presentational.
  * @param props - {@link FlipCardProps}
  */
-export const FlipCard = ({ revealed, questionLabel, answerLabel, front, back, className }: FlipCardProps) => {
+export const FlipCard = ({ revealed, questionLabel, answerLabel, front, belowFront, back, className }: FlipCardProps) => {
+    // `overflow-hidden` is only needed WHILE the height animates — left on at
+    // rest, it permanently clips the answer `Card`'s own box-shadow along every
+    // edge, so it read flatter than the question card right above it (thầy:
+    // "cái màu vàng render dạng card giống cái màu đỏ được không? có
+    // shadow..."). Drop it once the reveal animation settles so the shadow
+    // shows in full, same as the un-clipped question card.
+    const [animating, setAnimating] = useState(false)
     return (
         <div className={cn("flex flex-col gap-6", className)}>
-            <LabeledCard label={questionLabel} contentClassName="flex flex-col gap-3">
-                {front}
-            </LabeledCard>
+            {/* question card + its `belowFront` chips grouped `gap-3` — the chips
+                stay under the QUESTION when the answer reveals below (not pushed
+                to the bottom of the answer). */}
+            <div className="flex flex-col gap-3">
+                <LabeledCard label={questionLabel} contentClassName="flex flex-col gap-3">
+                    {front}
+                </LabeledCard>
+                {belowFront}
+            </div>
             {/* answer = its OWN labeled card, revealed below (height-animate so the
                 reveal still feels connected) */}
             <AnimatePresence initial={false}>
@@ -48,7 +68,9 @@ export const FlipCard = ({ revealed, questionLabel, answerLabel, front, back, cl
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.25, ease: "easeInOut" }}
-                        className="overflow-hidden"
+                        onAnimationStart={() => setAnimating(true)}
+                        onAnimationComplete={() => setAnimating(false)}
+                        className={cn(animating && "overflow-hidden")}
                     >
                         <LabeledCard label={answerLabel}>
                             <ScrollShadow hideScrollBar className="flex max-h-[28rem] flex-col gap-3 overflow-y-auto text-left">

@@ -464,8 +464,25 @@ export const pathConfig = () => {
                         const build = () => {
                             return interviewPath
                         }
+                        // the dedicated RESULT URL for a GRADED run — same reasoning as
+                        // `flashcards().quiz(sessionId).result()`: "is this session done" is
+                        // answered by the URL segment itself (2026-07-13), not by a `?phase=`
+                        // query mirror re-derived client-side. `finishAndGrade` navigates here
+                        // right after grading succeeds; resuming a session that turns out to
+                        // already be graded also redirects here instead of rendering the
+                        // scorecard inline at the live URL.
+                        const result = () => {
+                            const resultPath = `${interviewPath}/result`
+                            const build = () => {
+                                return resultPath
+                            }
+                            return {
+                                build,
+                            }
+                        }
                         return {
                             build,
+                            result,
                         }
                     }
                     return {

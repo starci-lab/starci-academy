@@ -22,6 +22,10 @@ export interface QueryMyDueFlashcardData {
     front: string
     /** Back (answer) text revealed after flipping. */
     back: string
+    /** Interview seniority level (junior/middle/senior/staff), or null — drives the level chip. */
+    level: string | null
+    /** Technology tags for this card — drives the tag chips (same as deck-review). */
+    tags: Array<string>
     /** Per-grade next-interval preview (days), from the card's current SM-2 state. */
     nextIntervals: QueryFlashcardNextIntervals
 }

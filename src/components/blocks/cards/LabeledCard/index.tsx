@@ -51,6 +51,14 @@ export interface LabeledCardProps extends WithClassNames<undefined> {
      * equal height. Ignored when `frameless`.
      */
     fillHeight?: boolean
+    /**
+     * Renders the label as a SUBTLE eyebrow (`text-xs text-muted`) with a tighter
+     * `gap-2` to the content, instead of the default section `Label` + `gap-3`. For
+     * a minor/secondary header over a block — e.g. a time-bucket "Hôm nay" over a run
+     * list — where a full section label reads too heavy (thầy 2026-07-13: "nếu card
+     * cần label phụ thì label-gap-2"). `labelEnd` shrinks to `text-xs` to match.
+     */
+    subtleLabel?: boolean
 }
 
 /**
@@ -75,13 +83,18 @@ export const LabeledCard = ({
     frameless = false,
     flushContent = false,
     fillHeight = false,
+    subtleLabel = false,
 }: LabeledCardProps) => {
     return (
-        <section className={cn("flex flex-col gap-3", fillHeight && "h-full", className)}>
+        <section className={cn("flex flex-col", subtleLabel ? "gap-2" : "gap-3", fillHeight && "h-full", className)}>
             <div className="flex items-center justify-between gap-3">
                 <div className="flex min-w-0 items-center gap-2">
                     {icon}
-                    <Label>{label}</Label>
+                    {subtleLabel ? (
+                        <span className="truncate text-xs text-muted">{label}</span>
+                    ) : (
+                        <Label>{label}</Label>
+                    )}
                 </div>
                 {action ?? (onSeeMore ? (
                     <Link
@@ -96,7 +109,7 @@ export const LabeledCard = ({
                         />
                     </Link>
                 ) : labelEnd != null ? (
-                    <span className="shrink-0 text-sm text-muted">{labelEnd}</span>
+                    <span className={cn("shrink-0 text-muted", subtleLabel ? "text-xs" : "text-sm")}>{labelEnd}</span>
                 ) : null)}
             </div>
             {/* frameless = content is itself card(s) → no inner Card (avoid nesting) */}

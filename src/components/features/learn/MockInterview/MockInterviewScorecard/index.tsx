@@ -2,6 +2,7 @@
 
 import React, { useMemo } from "react"
 import {
+    Accordion,
     Alert,
     Button,
     Link,
@@ -154,50 +155,60 @@ const MockInterviewQuestionReviewCard = ({
     const scoreColor = SCORE_TEXT_COLOR[scoreColorOf(review.score, review.max)]
 
     return (
-        <SurfaceListCardItem>
-            <div className="flex flex-col gap-2">
-                <div className="flex items-start justify-between gap-3">
-                    <Typography type="body-sm" weight="medium" className="min-w-0">
-                        {t("mockInterview.questionReview.heading", { index: review.questionIndex + 1, kind: kindLabel })}
-                    </Typography>
-                    <Typography type="body-sm" weight="medium" className={cn("shrink-0", scoreColor)}>
-                        {t("mockInterview.questionReview.scoreOf", { score: review.score, max: review.max })}
-                    </Typography>
-                </div>
-
-                <MarkdownContent markdown={review.question} />
-
-                <div className="flex flex-col gap-1">
-                    <Typography type="body-xs" color="muted">{t("mockInterview.questionReview.yourAnswer")}</Typography>
-                    <MarkdownContent markdown={review.candidateAnswer} className="text-muted" />
-                </div>
-
-                {review.modelAnswer ? (
-                    <div className="flex flex-col gap-1">
-                        <Typography type="body-xs" color="muted">{t("mockInterview.questionReview.modelAnswer")}</Typography>
-                        <MarkdownContent markdown={review.modelAnswer} />
+        <Accordion.Item id={`question-review-${review.questionIndex}`} aria-label={t("mockInterview.questionReview.heading", { index: review.questionIndex + 1, kind: kindLabel })}>
+            <Accordion.Heading>
+                <Accordion.Trigger className="w-full">
+                    <div className="flex w-full items-center justify-between gap-3 text-start">
+                        <Typography type="body-sm" weight="medium" className="min-w-0">
+                            {t("mockInterview.questionReview.heading", { index: review.questionIndex + 1, kind: kindLabel })}
+                        </Typography>
+                        <div className="flex shrink-0 items-center gap-2">
+                            <Typography type="body-sm" weight="medium" className={scoreColor}>
+                                {t("mockInterview.questionReview.scoreOf", { score: review.score, max: review.max })}
+                            </Typography>
+                            <Accordion.Indicator />
+                        </div>
                     </div>
-                ) : null}
+                </Accordion.Trigger>
+            </Accordion.Heading>
+            <Accordion.Panel>
+                <Accordion.Body>
+                    <div className="flex flex-col gap-2">
+                        <MarkdownContent markdown={review.question} />
 
-                <div className="flex items-start gap-2">
-                    <WarningCircleIcon className="mt-0.5 size-4 shrink-0 text-warning" aria-hidden focusable="false" />
-                    <Typography type="body-sm" className="min-w-0 flex-1">
-                        <span className="text-muted">{t("mockInterview.questionReview.feedback")} </span>
-                        {review.feedback}
-                    </Typography>
-                </div>
+                        <div className="flex flex-col gap-1">
+                            <Typography type="body-xs" color="muted">{t("mockInterview.questionReview.yourAnswer")}</Typography>
+                            <MarkdownContent markdown={review.candidateAnswer} className="text-muted" />
+                        </div>
 
-                {lessonHref ? (
-                    <Link
-                        onPress={() => router.push(lessonHref)}
-                        className="group inline-flex cursor-pointer items-center gap-1 text-accent"
-                    >
-                        {t("mockInterview.viewInLesson")}
-                        <ArrowRightIcon aria-hidden focusable="false" className="size-4 transition-transform group-hover:translate-x-1" />
-                    </Link>
-                ) : null}
-            </div>
-        </SurfaceListCardItem>
+                        {review.modelAnswer ? (
+                            <div className="flex flex-col gap-1">
+                                <Typography type="body-xs" color="muted">{t("mockInterview.questionReview.modelAnswer")}</Typography>
+                                <MarkdownContent markdown={review.modelAnswer} />
+                            </div>
+                        ) : null}
+
+                        <div className="flex items-start gap-2">
+                            <WarningCircleIcon className="mt-0.5 size-4 shrink-0 text-warning" aria-hidden focusable="false" />
+                            <Typography type="body-sm" className="min-w-0 flex-1">
+                                <span className="text-muted">{t("mockInterview.questionReview.feedback")} </span>
+                                {review.feedback}
+                            </Typography>
+                        </div>
+
+                        {lessonHref ? (
+                            <Link
+                                onPress={() => router.push(lessonHref)}
+                                className="group inline-flex cursor-pointer items-center gap-1 text-accent"
+                            >
+                                {t("mockInterview.viewInLesson")}
+                                <ArrowRightIcon aria-hidden focusable="false" className="size-4 transition-transform group-hover:translate-x-1" />
+                            </Link>
+                        ) : null}
+                    </div>
+                </Accordion.Body>
+            </Accordion.Panel>
+        </Accordion.Item>
     )
 }
 
@@ -345,12 +356,16 @@ export const MockInterviewScorecard = ({
                 </div>
             </LabeledCard>
 
-            {/* Per-question model-answer breakdown (the anti-ChatGPT surface) — one card
-                per Q&A question comparing the candidate's own answer to the seed model
-                answer. Self-hides for a design run or an older attempt (empty list). */}
+            {/* Per-question model-answer breakdown (the anti-ChatGPT surface) — one
+                ACCORDION item per Q&A question (2026-07-13, thầy: "đáp án dài lê thê,
+                render kiểu accordion"), collapsed by default so the question+score stay
+                scannable without walls of text; comparing the candidate's own answer to
+                the seed model answer only once expanded. `variant="surface"` +
+                `border border-default` = standalone-page accordion skin ([[accordion]]
+                §3). Self-hides for a design run or an older attempt (empty list). */}
             {grade.questionReviews.length > 0 ? (
                 <LabeledCard label={t("mockInterview.questionReview.title")} frameless>
-                    <SurfaceListCard>
+                    <Accordion variant="surface" className="overflow-hidden border border-default" allowsMultipleExpanded>
                         {grade.questionReviews.map((review) => (
                             <MockInterviewQuestionReviewCard
                                 key={review.questionIndex}
@@ -358,7 +373,7 @@ export const MockInterviewScorecard = ({
                                 courseDisplayId={courseDisplayId}
                             />
                         ))}
-                    </SurfaceListCard>
+                    </Accordion>
                 </LabeledCard>
             ) : null}
 

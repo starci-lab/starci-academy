@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl"
 import { useMutateStartFlashcardReviewSessionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateStartFlashcardReviewSessionSwr"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import { GraphQLHeadersKey, type GraphQLHeaders } from "@/modules/api/graphql/types"
+import type { FlashcardReviewMode } from "@/modules/api/graphql/mutations/types/start-flashcard-review-session"
 
 /**
  * Start a FRESH deck "Học thẻ" review session EAGERLY, right from the CTA
@@ -31,7 +32,7 @@ export const useStartFlashcardReviewSession = (courseId: string | undefined) => 
     const [startingDeckId, setStartingDeckId] = useState<string | null>(null)
 
     const start = useCallback(
-        async (deckId: string, cardIds: Array<string>): Promise<string | null> => {
+        async (deckId: string, cardIds: Array<string>, mode: FlashcardReviewMode = "full"): Promise<string | null> => {
             if (!courseId || startingDeckId) {
                 return null
             }
@@ -41,7 +42,10 @@ export const useStartFlashcardReviewSession = (courseId: string | undefined) => 
             let freshId: string | null = null
             const ok = await runGraphQL(
                 async () => {
-                    const result = await runStartSession.trigger({ request: { deckId, cardIds }, headers })
+                    // `mode` picks the scope server-side: "due" persists only the
+                    // cards needing review (thầy 2026-07-13 mode modal); "full"
+                    // (default) keeps the whole deck.
+                    const result = await runStartSession.trigger({ request: { deckId, cardIds, mode }, headers })
                     const response = result.data?.startFlashcardReviewSession
                     freshId = response?.data?.sessionId ?? null
                     return response ?? { success: false, message: t("flashcard.review.error") }

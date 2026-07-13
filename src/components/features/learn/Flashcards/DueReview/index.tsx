@@ -2,7 +2,8 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import useSWR, { useSWRConfig } from "swr"
-import { Button, Chip, Spinner, Typography, cn } from "@heroui/react"
+import { Button, Chip, Label, Spinner, Typography, cn } from "@heroui/react"
+import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { usePathname, useRouter } from "next/navigation"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
@@ -25,6 +26,14 @@ import { useQueryMyInProgressFlashcardDueReviewSessionSwr } from "@/hooks/swr/ap
 import { useQueryMyFlashcardReviewSessionBySessionIdSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyFlashcardReviewSessionBySessionIdSwr"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import { useAppSelector } from "@/redux/hooks"
+
+/** HeroUI Chip color per quiz seniority level (mirrors `FlashcardReviewer`). */
+const LEVEL_COLOR: Record<string, "success" | "warning" | "danger" | "accent"> = {
+    junior: "success",
+    middle: "warning",
+    senior: "danger",
+    staff: "accent",
+}
 
 /** Props for {@link DueReview}. */
 export interface DueReviewProps extends WithClassNames<undefined> {
@@ -454,10 +463,18 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
     // `FlashcardReviewer`'s own `goPrev` (thầy: đồng bộ UI, cả 2 loại phiên đều
     // có nút "Trước", ảnh due-review trước đó thiếu nút này).
     const isFirst = currentIndex === 0
+    const isLast = currentIndex >= effectiveCards.length - 1
     const goPrev = useCallback(() => {
         setRevealed(false)
         setCurrentIndex((index) => Math.max(index - 1, 0))
     }, [])
+    // "Tiếp" — explicit, symmetric counterpart to "Trước": browse forward
+    // WITHOUT grading (mirrors `FlashcardReviewer`'s own `goNext`, thầy
+    // 2026-07-12: "next prev" flanking the primary "Xem đáp án" CTA).
+    const goNext = useCallback(() => {
+        setRevealed(false)
+        setCurrentIndex((index) => Math.min(index + 1, effectiveCards.length - 1))
+    }, [effectiveCards.length])
     // jump straight to ANY step from the progress-segment bar — free navigation,
     // "cả trước và sau, chưa tới vẫn click được" (2026-07-12). No re-grade; the
     // card's graded/green state is independent of which one you're viewing.
@@ -561,26 +578,42 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
                         onSegmentClick={goToIndex}
                         onFinish={onFinish}
                         finishLabel={t("flashcard.finish")}
-                        meta={<Chip size="sm" variant="soft" color="warning">{t("flashcard.due.label")}</Chip>}
                     />
 
                     <div className="px-4 pb-6 pt-10 sm:px-6">
                         <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
-                            {/* the flip card: prompt → answer */}
+                            {/* the flip card: prompt → answer; the level/tag chips ride under
+                                the QUESTION via `belowFront` (thầy 2026-07-13: "chip gap-3 ở
+                                dưới câu hỏi" + "due render chip label giống bên deck") — same
+                                per-card level+tag chips as `FlashcardReviewer`, NOT the old
+                                generic "Đến hạn" chip (the header title already says "Ôn thẻ
+                                đến hạn"). */}
                             <FlipCard
                                 revealed={revealed}
                                 questionLabel={t("flashcard.questionLabel")}
                                 answerLabel={t("flashcard.answerLabel")}
                                 front={<MarkdownContent markdown={card?.front ?? ""} />}
+                                belowFront={card && (card.level || (card.tags?.length ?? 0) > 0) ? (
+                                    <div className="flex flex-wrap items-center gap-2">
+                                        {card.level ? (
+                                            <Chip size="sm" variant="soft" color={LEVEL_COLOR[card.level] ?? "default"}>
+                                                {t(`flashcard.level.${card.level}`)}
+                                            </Chip>
+                                        ) : null}
+                                        {card.tags?.map((tag) => (
+                                            <Chip key={tag} size="sm" variant="soft" color="default">
+                                                {tag}
+                                            </Chip>
+                                        ))}
+                                    </div>
+                                ) : undefined}
                                 back={<MarkdownContent markdown={card?.back ?? ""} arcSections />}
                             />
 
                             {/* reveal first, then grade recall (which advances) */}
                             {revealed ? (
-                                <div className="flex flex-col gap-2">
-                                    <Typography type="body-xs" color="muted" align="center">
-                                        {t("flashcard.review.rateHint")}
-                                    </Typography>
+                                <div className="flex flex-col gap-3">
+                                    <Label>{t("flashcard.review.rateHint")}</Label>
                                     <RatingBar
                                         options={ratingOptions}
                                         onRate={(grade) => void onRate(grade)}
@@ -588,17 +621,37 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
                                     />
                                 </div>
                             ) : (
-                                <div className="flex items-center justify-between gap-3">
+                                // "Xem đáp án" (primary, lấp hết chỗ trống còn lại) · "Tiếp"/"Trước"
+                                // ICON-ONLY (caret, không text) — mirrors `FlashcardReviewer` y hệt
+                                // (thầy 2026-07-13, devtools, đổi lần 3). `flex` + `flex-1` thay `grid`
+                                // cột cố định (chỉ primary co giãn). gap-2.
+                                <div className="flex flex-wrap items-center gap-2">
+                                    {/* KHÔNG expand full-width trên desktop — hug-content, nằm bên trái
+                                        cùng 2 nút caret (thầy 2026-07-13: "tất cả nằm bên trái, không
+                                        expand trừ khi card nhỏ"). `w-full` chỉ dưới `sm:` (mobile, tap
+                                        target rộng hơn dễ bấm), `sm:w-auto` trở lên hug-content. */}
+                                    <Button size="sm" variant="primary" className="w-full sm:w-auto" onPress={() => setRevealed(true)}>
+                                        {t("flashcard.showAnswer")}
+                                    </Button>
                                     <Button
                                         size="sm"
                                         variant="secondary"
+                                        isIconOnly
                                         isDisabled={isFirst}
+                                        aria-label={t("flashcard.previous")}
                                         onPress={goPrev}
                                     >
-                                        {t("flashcard.previous")}
+                                        <CaretLeftIcon className="size-4" aria-hidden focusable="false" />
                                     </Button>
-                                    <Button size="sm" variant="outline" onPress={() => setRevealed(true)}>
-                                        {t("flashcard.showAnswer")}
+                                    <Button
+                                        size="sm"
+                                        variant="secondary"
+                                        isIconOnly
+                                        isDisabled={isLast}
+                                        aria-label={t("flashcard.next")}
+                                        onPress={goNext}
+                                    >
+                                        <CaretRightIcon className="size-4" aria-hidden focusable="false" />
                                     </Button>
                                 </div>
                             )}

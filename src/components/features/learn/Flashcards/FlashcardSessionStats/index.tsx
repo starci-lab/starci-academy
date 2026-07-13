@@ -17,6 +17,7 @@ import { RelatedContentList } from "@/components/blocks/learn/RelatedContentList
 import { SectionCard } from "@/components/reuseable/SectionCard"
 import { FlashcardSessionStatsSkeleton } from "./FlashcardSessionStatsSkeleton"
 import { useQueryMyFlashcardReviewSessionStatsBySessionIdSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyFlashcardReviewSessionStatsBySessionIdSwr"
+import { useQueryMyFlashcardReviewSessionBySessionIdSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyFlashcardReviewSessionBySessionIdSwr"
 import type { MyFlashcardReviewSessionStatsBySessionIdData } from "@/modules/api/graphql/queries/types/my-flashcard-review-session-stats-by-session-id"
 
 /** Props for {@link FlashcardSessionStats}. */
@@ -73,6 +74,12 @@ export const FlashcardSessionStats = ({
     const locale = useLocale()
     const statsSwr = useQueryMyFlashcardReviewSessionStatsBySessionIdSwr(sessionId, courseId)
     const stats = statsSwr.data
+    // which kind of run this was (single deck vs cross-deck "Đến hạn") + the deck
+    // identity when applicable — resolved purely from the sessionId (thầy
+    // 2026-07-13: "render lại kết quả phiên ôn gì, due hay deck"), same query the
+    // LIVE session already uses to pick its chrome.
+    const sessionContextSwr = useQueryMyFlashcardReviewSessionBySessionIdSwr(sessionId, courseId)
+    const sessionContext = sessionContextSwr.data
 
     // next-due date — short "DD Mon" per locale; null when nothing scheduled.
     const dueDateFormatter = useMemo(
@@ -93,6 +100,18 @@ export const FlashcardSessionStats = ({
     // weak-tag terms drive the RAG "study this" query — the learner types nothing.
     const relatedQuery = (stats?.weakTags ?? []).map((weak) => weak.tag).join(" ")
 
+    // which run this was, folded straight into the TITLE text (not a separate
+    // chip — thầy 2026-07-13: "kiểu label ấy, bỏ chip, ví dụ là ghi là kết quả
+    // phiên ôn due") — falls back to the generic caption while resolving/absent
+    // (legacy session with no matching row).
+    const headerCaption = !sessionContext
+        ? t("flashcard.review.stats.headerCaption")
+        : sessionContext.kind === "due"
+            ? t("flashcard.review.stats.headerCaptionDue")
+            : sessionContext.deckTitle
+                ? t("flashcard.review.stats.headerCaptionDeck", { deckTitle: sessionContext.deckTitle })
+                : t("flashcard.review.stats.headerCaption")
+
     return (
         // reached via the "Học thẻ"/"Ôn thẻ đến hạn" LIVE session route
         // (`review/sessions/[sessionId]`), `fullBleed` for the whole session
@@ -102,7 +121,7 @@ export const FlashcardSessionStats = ({
             <PageHeader
                 className="mx-auto w-full max-w-3xl"
                 breadcrumb={<BackLink label={t("flashcard.title")} onPress={onBack} />}
-                title={t("flashcard.review.stats.headerCaption")}
+                title={headerCaption}
                 description={t("flashcard.review.stats.heroSubtitle")}
             />
 

@@ -275,7 +275,7 @@ export const SubmissionResult = ({
                     <div className="flex flex-col gap-3">
                         <Label>{t("submissionResult.attempts")}</Label>
                         <FlexWrapButtonRadio
-                            insideCard={false}
+                            insideCard
                             ariaLabel={t("submissionResult.history")}
                             value={selectedAttempt?.id ?? ""}
                             onChange={(id) => router.push(attemptHref(id))}

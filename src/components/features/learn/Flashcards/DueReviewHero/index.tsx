@@ -75,7 +75,11 @@ export const DueReviewHero = ({ className }: DueReviewHeroProps) => {
     const newCount = data?.newCount ?? 0
 
     return (
-        <div className="flex flex-col gap-3">
+        // resume card (Ôn tập dở dang) vs the due-today block below are 2
+        // DIFFERENT-function sections (resume vs start-a-new-batch) — `gap-6`
+        // per `foundations/gap.md` ("giữa 2 khối khác chức năng"), not `gap-3`
+        // (same-block/same-function items).
+        <div className="flex flex-col gap-6">
             {resumeData && displayId ? (
                 <ContinueCard
                     title={t("flashcard.due.resumeTitle")}
@@ -118,7 +122,10 @@ export const DueReviewHero = ({ className }: DueReviewHeroProps) => {
                 >
                     <div className="flex flex-wrap items-center justify-between gap-3">
                         <div className="flex flex-col gap-0.5">
-                            <Typography type="body-sm" color="muted">
+                            {/* PRIMARY stat of this block — `color="default"` (thầy 2026-07-12:
+                                "text-foreground, chỉ muted ở text secondary") — only the
+                                breakdown line below is secondary/muted. */}
+                            <Typography type="body-sm">
                                 {t("flashcard.due.count", { count: dueCount })}
                             </Typography>
                             {/* breaks down the (possibly confusing) total into its 2 parts — only

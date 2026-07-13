@@ -10,6 +10,10 @@ export interface FlashcardByIdCard {
     front: string
     /** Card back / answer (localized markdown). */
     back: string
+    /** Interview seniority level (junior/middle/senior/staff), or null — drives the level chip. */
+    level: string | null
+    /** Technology tags for this card — drives the tag chips (same as deck-review). */
+    tags: Array<string>
 }
 
 /** Payload inside `flashcardCardsByIds.data` — the requested cards in input order. */

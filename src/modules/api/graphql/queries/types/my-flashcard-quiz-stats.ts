@@ -44,6 +44,24 @@ export interface QueryFlashcardQuizWeakTagLink {
     contentId: string | null
 }
 
+/** One "hard" quiz card the learner keeps under-answering — the quiz analogue of a review leech. */
+export interface QueryFlashcardQuizHardCard {
+    /** Id of the card (deep-link target). */
+    cardId: string
+    /** The card's question text. */
+    question: string
+    /** Times this card was answered across scanned sessions (sample size). */
+    attempts: number
+    /** Times this card was answered with at least one blank wrong (coverage < 1). */
+    wrongCount: number
+    /** Aggregate coverage for this card across attempts (0..1). */
+    coverage: number
+    /** Owning deck id (deep-link target). */
+    deckId: string
+    /** Owning deck title. */
+    deckTitle: string
+}
+
 /** Payload inside `myFlashcardQuizStats.data` after the standard API wrapper. */
 export interface QueryMyFlashcardQuizStatsData {
     /** True when the viewer has scanned too few completed quiz sessions for a trustworthy aggregate. */
@@ -56,6 +74,10 @@ export interface QueryMyFlashcardQuizStatsData {
     byDeck: Array<QueryFlashcardQuizDeckStat>
     /** Weakest tags with a study deep-link, each tag's most recent occurrence, ranked coverage ascending. */
     weakTagLinks: Array<QueryFlashcardQuizWeakTagLink>
+    /** Cards the learner keeps under-answering (lowest coverage), hardest first — the "câu hay sai" diagnosis. */
+    hardCards: Array<QueryFlashcardQuizHardCard>
+    /** Completed quiz sessions scanned — a raw count for the "N phiên" tile. */
+    completedSessionCount: number
 }
 
 /** Apollo response shape for the `myFlashcardQuizStats` query. */

@@ -40,6 +40,52 @@ export interface QueryFlashcardMasteryBreakdown {
     new: number
 }
 
+/** One "leech" card the learner keeps forgetting (graded Again), most-forgotten first. */
+export interface QueryFlashcardLeechCard {
+    /** The card id (open it in the reviewer). */
+    cardId: string
+    /** The card's question text (default-locale snapshot). */
+    question: string
+    /** How many times this card was graded Again (grade 0). */
+    forgotCount: number
+    /** Owning deck id (deep-link target). */
+    deckId: string
+    /** Owning deck title. */
+    deckTitle: string
+}
+
+/** The single weakest technology tag by review retention, or null when none qualifies. */
+export interface QueryFlashcardWeakReviewTag {
+    /** The technology tag (e.g. "NestJS"). */
+    tag: string
+    /** Retention for this tag = graded Good/Easy / total graded, 0..100. */
+    retention: number
+    /** Total graded reviews of cards carrying this tag. */
+    reviewCount: number
+}
+
+/** One deck's review RETENTION (recalled/total) — the outcome analogue of the footprint deck stat. */
+export interface QueryFlashcardDeckRetention {
+    /** Id of the deck. */
+    deckId: string
+    /** Title of the deck. */
+    deckTitle: string
+    /** Retention = graded Good/Easy / total graded for this deck, 0..100. */
+    retention: number
+    /** Total graded reviews for this deck. */
+    reviewCount: number
+}
+
+/** One VN-day's review retention — powers the "đang cải thiện?" trend line. */
+export interface QueryFlashcardRetentionTrendPoint {
+    /** The VN-calendar day (`YYYY-MM-DD`). */
+    date: string
+    /** Retention that day = recalled/total, 0..100. */
+    retention: number
+    /** Reviews graded that day. */
+    reviewCount: number
+}
+
 /** Payload inside `myFlashcardReviewStats.data` after the standard API wrapper. */
 export interface QueryMyFlashcardReviewStatsData {
     /** Cards reviewed per VN-day across the trailing window (zero-filled, oldest first). */
@@ -52,6 +98,14 @@ export interface QueryMyFlashcardReviewStatsData {
     dueForecast: Array<QueryFlashcardDueForecastPoint>
     /** The viewer's card-maturity breakdown for this course. */
     masteryBreakdown: QueryFlashcardMasteryBreakdown
+    /** Cards the learner keeps forgetting, most-forgotten first — the "cần ôn lại" hero. */
+    leechCards: Array<QueryFlashcardLeechCard>
+    /** The single weakest tag by review retention, or null when none qualifies. */
+    weakReviewTag: QueryFlashcardWeakReviewTag | null
+    /** Per-deck review retention (outcome), weakest first. */
+    deckRetention: Array<QueryFlashcardDeckRetention>
+    /** Per-VN-day review retention across the trailing window — the improvement trend. */
+    retentionTrend: Array<QueryFlashcardRetentionTrendPoint>
 }
 
 /** Apollo response shape for the `myFlashcardReviewStats` query. */

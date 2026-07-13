@@ -99,10 +99,12 @@ export interface WorkSessionHeaderProps extends WithClassNames<undefined> {
  * identity chip, a step counter, optional right-aligned tools, and a full-width
  * progress-segment bar as the band's bottom edge. Sticky under the navbar so
  * every surface using it shares one aligned top instead of each hand-rolling
- * its own HUD row. Each of `total` segments reads: in {@link doneSet} → `success`
- * (green, order-independent) · === `current` → `accent` (pink, viewed) · else →
- * `default`. With {@link onSegmentClick} every segment jumps to that step (free
- * nav); with {@link onFinish} a "Kết thúc" button ends the session. Extracted
+ * its own HUD row. Each of `total` segments FILLS `success` (green) when in
+ * {@link doneSet} (order-independent), else `default` (gray) — and INDEPENDENTLY
+ * gets a pink `accent` ring when it `=== current` (viewed), regardless of its
+ * fill, so "which step am I on" never disappears just because that step is
+ * already graded. With {@link onSegmentClick} every segment jumps to that step
+ * (free nav); with {@link onFinish} a "Kết thúc" button ends the session. Extracted
  * from `MockInterviewSession`'s own `renderWorkHeader` so the flashcard sessions
  * can share the exact same shell.
  * @param props - {@link WorkSessionHeaderProps}
@@ -194,27 +196,43 @@ export const WorkSessionHeader = ({
             {/* progress meter = bottom edge, full width (goal-gradient). When
                 `onSegmentClick` is given EVERY segment is clickable — jump to any
                 step, "cả trước và sau, chưa tới vẫn click được" (2026-07-12). The
-                thin 4px bar sits inside a taller transparent hit-zone (`py-2`) so
+                thin bar sits inside a taller transparent hit-zone (`py-2`) so
                 it's actually tappable — the bare 4px target was why "bấm hồng
-                không đổi". Colour per-step: `doneSet` → success (green, order-
-                independent), current → accent (pink), else default. */}
-            <div className="flex gap-1 px-4 sm:px-6">
+                không đổi". FILL (`doneSet` → success/green, else default/gray) and
+                CURRENT are 2 INDEPENDENT signals (2026-07-12 fix, thầy: "cái màu
+                xanh mà click vào là màu hồng" — before, `current` fell back to
+                the done color whenever the viewed step was already graded, so
+                "which step am I on" disappeared the moment you revisited a
+                graded card). success keeps meaning "graded" (matches the
+                mastery bar elsewhere, [[elements/color]]); accent keeps meaning
+                "viewing" ([[accent-system]]) — neither overrides the other. 2
+                earlier tries added a SEPARATE decoration (a ring around the bar,
+                then a dot above it) — thầy rejected both as "phèn" ("cái này
+                nhìn phèn lắm"), wanting the plain bar shape kept with NO added
+                element. Final: `current` is just a TALLER bar (`h-1.5` vs `h-1`)
+                — no new shape, no extra color, the SAME rectangle just reads
+                more prominent (mirrors how a waveform/equalizer highlights the
+                active bar by height alone). */}
+            <div className="flex items-center gap-1 px-4 sm:px-6">
                 {Array.from({ length: total }, (_, position) => {
-                    const colorClass = isDone(position) ? "bg-success" : position === current ? "bg-accent" : "bg-default"
-                    const bar = <span className={cn("block h-1 w-full rounded-full", colorClass)} />
+                    const fillClass = isDone(position) ? "bg-success" : "bg-default"
+                    const isCurrent = position === current
+                    const content = (
+                        <span className={cn("block w-full rounded-full", isCurrent ? "h-1.5" : "h-1", fillClass)} />
+                    )
                     return onSegmentClick ? (
                         <button
                             key={position}
                             type="button"
                             aria-label={t("common.workSessionHeaderSegmentAria", { step: position + 1 })}
-                            aria-current={position === current ? "step" : undefined}
+                            aria-current={isCurrent ? "step" : undefined}
                             onClick={() => onSegmentClick(position)}
                             className="flex flex-1 cursor-pointer items-center rounded py-2 transition-opacity hover:opacity-70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                         >
-                            {bar}
+                            {content}
                         </button>
                     ) : (
-                        <span key={position} aria-hidden className="flex flex-1 items-center py-2">{bar}</span>
+                        <span key={position} aria-hidden className="flex flex-1 items-center py-2">{content}</span>
                     )
                 })}
             </div>

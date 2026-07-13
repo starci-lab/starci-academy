@@ -8,7 +8,7 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 /** Selected-state colour token. */
 export type FlexWrapButtonRadioColor = "accent" | "success" | "danger" | "warning"
 
-/** Selected border class per colour (card-styled mode, `insideCard={false}`). */
+/** Selected border class per colour (card-styled mode, `insideCard={true}`). */
 const SELECTED_BORDER: Record<FlexWrapButtonRadioColor, string> = {
     accent: "border-accent",
     success: "border-success",
@@ -47,15 +47,21 @@ export interface FlexWrapButtonRadioProps<T extends string> extends WithClassNam
     /** Selected-state colour. Defaults to `accent`. */
     color?: FlexWrapButtonRadioColor
     /**
-     * Whether this selector sits INSIDE a card already:
-     * - `true` — native HeroUI variants (selected = `secondary`, else `ghost`).
-     *   Clean buttons, no surface of their own (the parent card is the surface).
-     *   NEVER `primary` here — a config card commonly sits on the SAME surface as
-     *   the page's one accent CTA, and a solid-primary selected pill would compete
-     *   with it (1 accent-solid / surface, Von Restorff — `accent-system`).
-     * - `false` (default) — standalone: each option is a card-styled `<Button>`
-     *   (`bg-surface` + border); the selected one is `bg-<color>/10` + `border-<color>`.
-     *   Still a real `<Button>` (consistent height), just given its own surface.
+     * Whether each option draws its OWN card-like surface. Defaults to `false`:
+     * standalone use should NOT wrap every option in a redundant card frame —
+     * too many framed pills make unnecessary blocks (thầy 2026-07-13 "button
+     * card-like nhiều quá tạo các khối không cần thiết"). Only opt IN (`true`)
+     * when the options genuinely read better as boxed cards (e.g. an attempt
+     * picker).
+     * - `false` (default) — native HeroUI variants (selected = `secondary`, else
+     *   `ghost`). Clean buttons, no surface of their own (the parent card, or the
+     *   bare page, is the surface). NEVER `primary` here — a config row commonly
+     *   sits on the SAME surface as the page's one accent CTA, and a solid-primary
+     *   selected pill would compete with it (1 accent-solid / surface, Von
+     *   Restorff — `accent-system`).
+     * - `true` — each option is a card-styled `<Button>` (`bg-surface` + border);
+     *   the selected one is `bg-<color>/10` + `border-<color>`. Still a real
+     *   `<Button>` (consistent height), just given its own surface.
      */
     insideCard?: boolean
     /**
@@ -79,10 +85,11 @@ export interface FlexWrapButtonRadioProps<T extends string> extends WithClassNam
  * height, so a text-only `trailing` lines up with icon-bearing options). Two looks
  * via `insideCard`:
  *
- * - `insideCard={true}` — native `secondary`/`ghost` variants (use when the group
- *   already sits inside a card; never `primary` — would compete with the surface's
- *   own accent CTA).
- * - `insideCard={false}` (default) — card-styled buttons (`bg-surface` + border,
+ * - `insideCard={false}` (default) — native `secondary`/`ghost` variants (clean,
+ *   no own surface; the default so standalone use isn't wrapped in a redundant
+ *   card-like frame; never `primary` — would compete with the surface's own
+ *   accent CTA).
+ * - `insideCard={true}` — card-styled buttons (`bg-surface` + border,
  *   selected `bg-<color>/10` + `border-<color>`). HeroUI buttons drive their fill
  *   via the `--button-bg` CSS var, so the surface/tint is set through inline style
  *   (a `border` utility adds the outline; the base button has none).
@@ -111,19 +118,6 @@ export const FlexWrapButtonRadio = <T extends string>({
                 const selected = item.value === value
                 let button: ReactNode
                 if (insideCard) {
-                    button = (
-                        <Button
-                            key={item.value}
-                            size="sm"
-                            variant={selected ? "secondary" : "ghost"}
-                            isDisabled={item.isDisabled}
-                            aria-pressed={selected}
-                            onPress={() => onChange(item.value)}
-                        >
-                            {item.content}
-                        </Button>
-                    )
-                } else {
                     // card-styled <Button>: bg-surface lifted by a SHADOW (matches the global
                     // card flip — shadow instead of an unselected border; shadow-surface is
                     // transparent in dark mode, same as cards). Selected = bg-<color>/10 + a
@@ -148,6 +142,21 @@ export const FlexWrapButtonRadio = <T extends string>({
                             onPress={() => onChange(item.value)}
                             style={style}
                             className={cn("shadow-surface", selected && cn("border", SELECTED_BORDER[color], "font-medium"))}
+                        >
+                            {item.content}
+                        </Button>
+                    )
+                } else {
+                    // clean (default): native HeroUI variants, no own surface — the
+                    // parent card / bare page IS the surface. Never `primary`.
+                    button = (
+                        <Button
+                            key={item.value}
+                            size="sm"
+                            variant={selected ? "secondary" : "ghost"}
+                            isDisabled={item.isDisabled}
+                            aria-pressed={selected}
+                            onPress={() => onChange(item.value)}
                         >
                             {item.content}
                         </Button>

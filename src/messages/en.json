@@ -2245,6 +2245,8 @@
     "designModeCta": "Practice system design",
     "tierLabel": "Level",
     "tierCaption": "The prompt and question kinds are drawn at random, just like a real interview",
+    "langLabel": "Language",
+    "langCaption": "Code questions are shown and graded in this language",
     "modelLabel": "Grading model",
     "autoCredit": "{remaining}/{quota} credit left this week",
     "begin": "Start interview",

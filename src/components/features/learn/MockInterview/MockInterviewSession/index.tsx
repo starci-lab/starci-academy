@@ -55,6 +55,7 @@ import type { MockInterviewSeedTopic } from "@/modules/api/graphql/mutations/typ
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { ProgrammingLanguage } from "@/modules/types/enums/programming-language"
 import { DEFAULT_PROGRAMMING_LANGUAGES, resolveActiveProgrammingLang } from "@/modules/types/utils/programming-language"
+import { getLanguageLabel } from "@/modules/utils/language"
 import {
     MOCK_INTERVIEW_CODE_STATE_DEFAULT,
     MockInterviewWorkspace,
@@ -352,6 +353,11 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
         return initial === "history" || initial === "stats" ? initial : "begin"
     })
     const [tier, setTier] = useState<MockInterviewTier>("trung")
+    // programming language chosen ONCE at setup (like tier) — a code question
+    // (debug/review/optimize) is then rendered AND graded in this language: the
+    // server hands back that language's own prompt + given code and grades against
+    // its own ideal answer. No-code questions ignore it. Defaults to TypeScript.
+    const [interviewLang, setInterviewLang] = useState<ProgrammingLanguage>(ProgrammingLanguage.TypeScript)
     // setup's "Tự động" vs "Tùy chỉnh" toggle — see MockInterviewConfigMode.
     const [configMode, setConfigMode] = useState<MockInterviewConfigMode>("auto")
     // "Tùy chỉnh" only — Số câu (single-select, kept as a string — see QUESTION_COUNT_OPTIONS).
@@ -761,6 +767,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                 courseId,
                 level: currentLevel,
                 mode: nextMode,
+                lang: interviewLang,
                 questionCount: isConfigurable ? Number(questionCount) : undefined,
                 kinds: isConfigurable && selectedKinds.length > 0 ? selectedKinds : undefined,
                 countsToReadiness: !isConfigurable,
@@ -831,7 +838,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
         // above navigates to `/interview/[id]`, unmounting this setup instance, so the
         // spinner naturally disappears with it (resetting here would flash the icon back
         // for a frame before the route swaps).
-    }, [courseId, courseDisplayId, currentLevel, mode, configMode, questionCount, selectedKinds, startSessionSwr, inProgressSessionSwr, router, locale, t])
+    }, [courseId, courseDisplayId, currentLevel, mode, configMode, interviewLang, questionCount, selectedKinds, startSessionSwr, inProgressSessionSwr, router, locale, t])
 
     // resume, on mount, when reached via the dedicated `/interview/[sessionId]` route —
     // waits for `inProgressSessionSwr` to settle, then either rehydrates straight into
@@ -1601,6 +1608,26 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                                         />
                                         <Typography type="body-xs" color="muted">
                                             {t("mockInterview.tierCaption")}
+                                        </Typography>
+                                    </div>
+
+                                    {/* Programming language — chosen ONCE here (like the tier). A code
+                        question (debug/review/optimize) is then rendered AND graded in this
+                        language: the server returns that language's own prompt + given code
+                        and grades against its own ideal answer. No-code questions ignore it. */}
+                                    <div className="flex flex-col gap-2">
+                                        <Label>{t("mockInterview.langLabel")}</Label>
+                                        <FlexWrapButtonRadio
+                                            ariaLabel={t("mockInterview.langLabel")}
+                                            value={interviewLang}
+                                            onChange={setInterviewLang}
+                                            items={DEFAULT_PROGRAMMING_LANGUAGES.map((value) => ({
+                                                value,
+                                                content: getLanguageLabel(value),
+                                            }))}
+                                        />
+                                        <Typography type="body-xs" color="muted">
+                                            {t("mockInterview.langCaption")}
                                         </Typography>
                                     </div>
 

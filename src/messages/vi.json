@@ -2254,6 +2254,8 @@
     "designModeCta": "Luyện thiết kế hệ thống",
     "tierLabel": "Mức",
     "tierCaption": "Đề & kiểu câu hỏi được chọn ngẫu nhiên như phỏng vấn thật",
+    "langLabel": "Ngôn ngữ",
+    "langCaption": "Câu đọc/sửa code sẽ hiện đề và được chấm bằng ngôn ngữ này",
     "modelLabel": "Model chấm điểm",
     "autoCredit": "Còn {remaining}/{quota} credit tuần này",
     "begin": "Bắt đầu phỏng vấn",

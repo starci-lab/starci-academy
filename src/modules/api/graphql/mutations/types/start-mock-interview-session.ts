@@ -14,6 +14,15 @@ export interface StartMockInterviewSessionRequest {
     /** Top-level flow to draw for ("qna" | "design"); unrecognized falls back to "qna". */
     mode: string
     /**
+     * Programming language chosen at session start ("typescript" | "java" |
+     * "csharp" | "go"). A code question (debug/review/optimize) is rendered AND
+     * graded in this language — the server returns that language's own prompt +
+     * given code and grades against its own ideal answer. Omitted/unrecognized
+     * falls back to "typescript" (or the question's agnostic root when its body
+     * for this language is absent). No-code questions ignore it.
+     */
+    lang?: string
+    /**
      * Number of questions to draw for a `mode="qna"` session — one of `3 | 5 | 10`.
      * Ignored for `mode="design"`. Omitted/unrecognized falls back to `5`.
      */

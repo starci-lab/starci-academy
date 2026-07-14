@@ -1,12 +1,12 @@
 
 > starci-academy@0.1.0 build-storybook
-> storybook build --output-dir=C:\Users\Hi\AppData\Local\Temp\chromatic--16524-eZOViLt2T7Xu
+> storybook build --output-dir=C:\Users\Hi\AppData\Local\Temp\chromatic--59652-C3aUyIWlQD7m
 
 
 [90m┌[39m  Building storybook v10.5.0
 [90m│[39m
 [32m◇[39m  Cleaning outputDir:
-[90m│[39m  [36mC:/Users/Hi/AppData/Local/Temp/chromatic--16524-eZOViLt2T7Xu[39m
+[90m│[39m  [36mC:/Users/Hi/AppData/Local/Temp/chromatic--59652-C3aUyIWlQD7m[39m
 [90m│[39m
 [32m◇[39m  Loading presets
 [90m│[39m
@@ -23,13 +23,13 @@
 [34m●[39m  Using default Webpack5 setup
 [90m│[39m
 [34m●[39m  Copying static files: [36mpublic[39m at
-[90m│[39m  [36mC:\Users\Hi\AppData\Local\Temp\chromatic--16524-eZOViLt2T7Xu[39m
+[90m│[39m  [36mC:\Users\Hi\AppData\Local\Temp\chromatic--59652-C3aUyIWlQD7m[39m
 [90m│[39m
 [33m▲[39m  asset size limit: The following asset(s) exceed the recommended size
 [90m│[39m  limit (244 KiB).
 [90m│[39m  This can impact web performance.
 [90m│[39m  Assets:
-[90m│[39m  main.75d161b0.iframe.bundle.js (1.35 MiB)
+[90m│[39m  main.b38e3d1b.iframe.bundle.js (1.35 MiB)
 [90m│[39m  356.360c2001.iframe.bundle.js (427 KiB)
 [90m│[39m  609.382e9dd0.iframe.bundle.js (812 KiB)
 [90m│[39m  596.96a324dd.iframe.bundle.js (1.2 MiB)
@@ -38,14 +38,14 @@
 [90m│[39m  exceeds the recommended limit (244 KiB). This can impact web
 [90m│[39m  performance.
 [90m│[39m  Entrypoints:
-[90m│[39m  main (2.55 MiB)
-[90m│[39m  runtime~main.04edca6b.iframe.bundle.js
+[90m│[39m  main (2.56 MiB)
+[90m│[39m  runtime~main.16191f0b.iframe.bundle.js
 [90m│[39m  596.96a324dd.iframe.bundle.js
-[90m│[39m  main.75d161b0.iframe.bundle.js
+[90m│[39m  main.b38e3d1b.iframe.bundle.js
 
 [90m│[39m
 [32m◇[39m  Output directory:
-[90m│[39m  C:/Users/Hi/AppData/Local/Temp/chromatic--16524-eZOViLt2T7Xu
+[90m│[39m  C:/Users/Hi/AppData/Local/Temp/chromatic--59652-C3aUyIWlQD7m
 [90m│[39m
 [90m└[39m  Storybook build completed successfully
 

@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import React from "react"
 import { Badge, Button } from "@heroui/react"
 import { BookOpenIcon, ClockIcon } from "@phosphor-icons/react"
 import { LabeledCard } from "./index"
@@ -27,6 +26,7 @@ const SampleBody = () => (
     </div>
 )
 
+/** Dùng làm khối nội dung mặc định trong dashboard/trang chi tiết — label ngoài, card chỉ chứa nội dung. */
 export const Default: Story = {
     args: {
         label: "Khóa học của tôi",
@@ -34,6 +34,7 @@ export const Default: Story = {
     },
 }
 
+/** Thêm icon khi label cần gợi ý nhanh về LOẠI nội dung (tài liệu, lịch, thông báo…) mà chữ không đủ rõ. */
 export const WithIcon: Story = {
     args: {
         label: "Tài liệu tham khảo",
@@ -42,6 +43,7 @@ export const WithIcon: Story = {
     },
 }
 
+/** Dùng khi cần gắn đơn vị/ghi chú ngắn ngay cạnh label (VND, đơn vị đo, trạng thái tóm tắt). */
 export const WithLabelEnd: Story = {
     args: {
         label: "Học phí còn lại",
@@ -50,23 +52,21 @@ export const WithLabelEnd: Story = {
     },
 }
 
-export const WithSeeMore: Story = {
-    args: {
-        label: "Khóa học nổi bật",
-        onSeeMore: () => {},
-        children: <SampleBody />,
-    },
+/** Dùng khi card là một DANH SÁCH rút gọn cần lối "xem thêm" dẫn sang trang đầy đủ — chỉnh `seeMoreLabel` khi "Xem thêm" mặc định không hợp ngữ cảnh (vd "Xem tất cả"). */
+export const SeeMoreVariants: Story = {
+    render: () => (
+        <div className="flex flex-col gap-4">
+            <LabeledCard label="Khóa học nổi bật" onSeeMore={() => {}}>
+                <SampleBody />
+            </LabeledCard>
+            <LabeledCard label="Bài viết mới" onSeeMore={() => {}} seeMoreLabel="Xem tất cả">
+                <SampleBody />
+            </LabeledCard>
+        </div>
+    ),
 }
 
-export const WithSeeMoreCustomLabel: Story = {
-    args: {
-        label: "Bài viết mới",
-        onSeeMore: () => {},
-        seeMoreLabel: "Xem tất cả",
-        children: <SampleBody />,
-    },
-}
-
+/** Dùng khi khối cần một hành động quản trị đi kèm label (thêm/sửa/quản lý) thay vì dẫn sang trang khác như "xem thêm". */
 export const WithAction: Story = {
     args: {
         label: "Người quản lý",
@@ -79,58 +79,42 @@ export const WithAction: Story = {
     },
 }
 
-export const Frameless: Story = {
-    args: {
-        label: "Khóa học đề xuất",
-        frameless: true,
-        children: (
-            <div className="grid grid-cols-2 gap-3">
-                <div className="rounded-lg border border-default p-3 text-sm">System Design Mastery</div>
-                <div className="rounded-lg border border-default p-3 text-sm">DevOps Mastery</div>
-            </div>
-        ),
-    },
-}
-
-export const FlushContent: Story = {
-    args: {
-        label: "Danh sách bài học",
-        flushContent: true,
-        children: (
-            <ul className="divide-y divide-default">
-                <li className="p-4 text-sm">Bài 1: Giới thiệu React Hooks</li>
-                <li className="p-4 text-sm">Bài 2: useState và useEffect</li>
-                <li className="p-4 text-sm">Bài 3: Custom Hooks</li>
-            </ul>
-        ),
-    },
-}
-
-export const FillHeight: Story = {
-    args: {
-        label: "Trạng thái",
-        fillHeight: true,
-        children: (
-            <div className="flex h-full items-center justify-center p-6">
-                <Badge color="success">Đang hoạt động</Badge>
-            </div>
-        ),
-    },
-    decorators: [
-        (StoryFn) => (
+/**
+ * Chọn biến thể layout theo bối cảnh đặt card: `frameless` khi card nằm trong khối đã có viền
+ * (tránh viền lồng viền), `flushContent` cho danh sách/table sát mép, `fillHeight` khi card phải
+ * lấp đầy một vùng cao cố định (grid đều hàng), `subtleLabel` khi label chỉ là eyebrow phụ, không phải tiêu đề chính.
+ */
+export const LayoutVariants: Story = {
+    render: () => (
+        <div className="flex flex-col gap-4">
+            <LabeledCard label="Khóa học đề xuất" frameless>
+                <div className="grid grid-cols-2 gap-3">
+                    <div className="rounded-lg border border-default p-3 text-sm">System Design Mastery</div>
+                    <div className="rounded-lg border border-default p-3 text-sm">DevOps Mastery</div>
+                </div>
+            </LabeledCard>
+            <LabeledCard label="Danh sách bài học" flushContent>
+                <ul className="divide-y divide-default">
+                    <li className="p-4 text-sm">Bài 1: Giới thiệu React Hooks</li>
+                    <li className="p-4 text-sm">Bài 2: useState và useEffect</li>
+                    <li className="p-4 text-sm">Bài 3: Custom Hooks</li>
+                </ul>
+            </LabeledCard>
             <div className="h-64">
-                <StoryFn />
+                <LabeledCard label="Trạng thái" fillHeight>
+                    <div className="flex h-full items-center justify-center p-6">
+                        <Badge color="success">Đang hoạt động</Badge>
+                    </div>
+                </LabeledCard>
             </div>
-        ),
-    ],
-}
-
-export const SubtleLabel: Story = {
-    args: {
-        label: "Hôm nay",
-        icon: <ClockIcon className="size-4 text-muted" aria-hidden focusable="false" />,
-        subtleLabel: true,
-        labelEnd: "3 phiên",
-        children: <SampleBody />,
-    },
+            <LabeledCard
+                label="Hôm nay"
+                icon={<ClockIcon className="size-4 text-muted" aria-hidden focusable="false" />}
+                subtleLabel
+                labelEnd="3 phiên"
+            >
+                <SampleBody />
+            </LabeledCard>
+        </div>
+    ),
 }

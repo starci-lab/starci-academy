@@ -117,6 +117,10 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
+/**
+ * Dùng cho chọn 1-trong-N phương án có mô tả kèm theo (chu kỳ thanh toán,
+ * gói dịch vụ…) — không phải danh sách điều hướng thuần.
+ */
 export const Default: Story = {
     render: () => (
         <ControlledGroup
@@ -128,31 +132,41 @@ export const Default: Story = {
     ),
 }
 
-export const OneColumn: Story = {
-    name: "Columns = 1",
+/**
+ * Chọn số cột theo bối cảnh: 1 cột cho khối hẹp/sidebar, 3 cột khi liệt kê
+ * nhiều lựa chọn ngang hàng (ví dụ chọn ngôn ngữ lập trình).
+ */
+export const Columns: Story = {
+    name: "Columns (1 / 3)",
     render: () => (
-        <ControlledGroup
-            items={PLAN_ITEMS}
-            initialValue="quarterly"
-            ariaLabel="Chọn chu kỳ thanh toán"
-            columns={1}
-        />
+        <div className="flex flex-col gap-4">
+            <div>
+                <p className="mb-2 text-xs text-default-500">columns = 1</p>
+                <ControlledGroup
+                    items={PLAN_ITEMS}
+                    initialValue="quarterly"
+                    ariaLabel="Chọn chu kỳ thanh toán"
+                    columns={1}
+                />
+            </div>
+            <div>
+                <p className="mb-2 text-xs text-default-500">columns = 3</p>
+                <ControlledGroup
+                    items={LANGUAGE_ITEMS}
+                    initialValue="ts"
+                    ariaLabel="Chọn ngôn ngữ"
+                    columns={3}
+                    width="640px"
+                />
+            </div>
+        </div>
     ),
 }
 
-export const ThreeColumns: Story = {
-    name: "Columns = 3",
-    render: () => (
-        <ControlledGroup
-            items={LANGUAGE_ITEMS}
-            initialValue="ts"
-            ariaLabel="Chọn ngôn ngữ"
-            columns={3}
-            width="640px"
-        />
-    ),
-}
-
+/**
+ * Dùng khi lựa chọn cần icon nhận diện (ngôn ngữ, công nghệ) và có phương án
+ * chưa khả dụng — card disabled vẫn hiển thị để báo "sắp ra mắt", không ẩn đi.
+ */
 export const WithIconAndDisabled: Story = {
     render: () => (
         <ControlledGroup
@@ -164,6 +178,10 @@ export const WithIconAndDisabled: Story = {
     ),
 }
 
+/**
+ * Gắn badge khi cần nhấn mạnh ưu đãi/khuyến khích chọn một phương án cụ thể
+ * (VD "Tiết kiệm 30%") — không lạm dụng cho mọi item, chỉ item muốn nổi bật.
+ */
 export const WithBadge: Story = {
     render: () => (
         <ControlledGroup

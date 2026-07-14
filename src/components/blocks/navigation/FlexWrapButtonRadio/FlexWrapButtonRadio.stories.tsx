@@ -71,75 +71,64 @@ const meta: Meta<typeof FlexWrapButtonRadio> = {
 export default meta
 type Story = StoryObj<typeof FlexWrapButtonRadio>
 
-/** Default: clean look (`insideCard=false`), accent selected color. */
+/** Dùng mặc định NGOÀI card (filter/toolbar rời) — không cần viền/nền riêng cho mỗi lựa chọn. */
 export const Default: Story = {
     render: () => (
         <Controlled items={DIFFICULTY_ITEMS} initialValue="medium" ariaLabel="Chọn độ khó" />
     ),
 }
 
-/** `insideCard=true`: each option renders as its own card-styled button. */
-export const InsideCard: Story = {
+/** Dùng `insideCard` + đổi `color` khi nhóm chọn nằm TRONG card và cần khớp ngữ nghĩa (success/danger/warning) hoặc mặc định — không tự tạo card lồng card kiểu khác. */
+export const InsideCardAndColors: Story = {
     render: () => (
-        <Controlled items={ATTEMPT_ITEMS} initialValue="attempt-2" ariaLabel="Chọn lần làm bài" insideCard />
+        <div className="flex flex-col gap-4">
+            <Controlled
+                items={ATTEMPT_ITEMS}
+                initialValue="attempt-2"
+                ariaLabel="Chọn lần làm bài (mặc định)"
+                insideCard
+            />
+            <Controlled
+                items={ATTEMPT_ITEMS}
+                initialValue="attempt-3"
+                ariaLabel="Chọn lần làm bài (success)"
+                insideCard
+                color="success"
+            />
+            <Controlled
+                items={[
+                    { value: "low", content: "Thấp" },
+                    { value: "med", content: "Trung bình" },
+                    { value: "high", content: "Cao" },
+                ]}
+                initialValue="high"
+                ariaLabel="Chọn mức độ rủi ro (danger)"
+                insideCard
+                color="danger"
+            />
+            <Controlled
+                items={[
+                    { value: "draft", content: "Bản nháp" },
+                    { value: "review", content: "Đang duyệt" },
+                    { value: "published", content: "Đã đăng" },
+                ]}
+                initialValue="review"
+                ariaLabel="Chọn trạng thái (warning)"
+                insideCard
+                color="warning"
+            />
+        </div>
     ),
 }
 
-/** Selected color = success (e.g. a "passed" state picker). */
-export const ColorSuccess: Story = {
-    render: () => (
-        <Controlled
-            items={ATTEMPT_ITEMS}
-            initialValue="attempt-3"
-            ariaLabel="Chọn lần làm bài"
-            insideCard
-            color="success"
-        />
-    ),
-}
-
-/** Selected color = danger (e.g. a risk/severity picker). */
-export const ColorDanger: Story = {
-    render: () => (
-        <Controlled
-            items={[
-                { value: "low", content: "Thấp" },
-                { value: "med", content: "Trung bình" },
-                { value: "high", content: "Cao" },
-            ]}
-            initialValue="high"
-            ariaLabel="Chọn mức độ rủi ro"
-            insideCard
-            color="danger"
-        />
-    ),
-}
-
-/** Selected color = warning. */
-export const ColorWarning: Story = {
-    render: () => (
-        <Controlled
-            items={[
-                { value: "draft", content: "Bản nháp" },
-                { value: "review", content: "Đang duyệt" },
-                { value: "published", content: "Đã đăng" },
-            ]}
-            initialValue="review"
-            ariaLabel="Chọn trạng thái"
-            insideCard
-            color="warning"
-        />
-    ),
-}
-
-/** One option disabled (e.g. a locked/premium tier). */
+/** Dùng khi trong nhóm có 1 lựa chọn CHƯA MỞ (gói/tier khoá) — item đó vẫn hiện nhưng không bấm được, không ẩn khỏi danh sách. */
 export const WithDisabledItem: Story = {
     render: () => (
         <Controlled items={TIER_ITEMS} initialValue="economy" ariaLabel="Chọn gói" />
     ),
 }
 
-/** `trailing`: an extra action node in the same wrap row (e.g. a "+N" overflow button). */
+/** Dùng `trailing` khi cần gắn thêm 1 nút phụ CÙNG HÀNG với các lựa chọn (vd nút "+N" mở rộng overflow), không phải một lựa chọn thật. */
 export const WithTrailing: Story = {
     render: () => (
         <Controlled
@@ -155,7 +144,7 @@ export const WithTrailing: Story = {
     ),
 }
 
-/** `itemAction`: a per-item sibling action (e.g. a delete button next to each option). */
+/** Dùng `itemAction` khi mỗi lựa chọn cần một hành động RIÊNG đi kèm (vd nút xoá attempt) — hành động không làm đổi lựa chọn đang chọn. */
 export const WithItemAction: Story = {
     render: () => (
         <Controlled

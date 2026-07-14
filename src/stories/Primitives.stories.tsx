@@ -14,6 +14,7 @@ const meta: Meta = {
 export default meta
 type Story = StoryObj
 
+/** Bảng biến thể Button — chọn variant theo VAI: primary = CTA chính, secondary/tertiary = phụ, ghost = tối giản; + 3 size + trạng thái disabled. */
 export const Buttons: Story = {
     render: () => (
         <div className="flex flex-col gap-6">
@@ -33,6 +34,7 @@ export const Buttons: Story = {
     ),
 }
 
+/** Bảng màu Chip theo trạng thái ngữ nghĩa (accent/success/warning/danger) — dùng cho NHÃN trạng thái, không phải nút bấm. */
 export const Chips: Story = {
     render: () => (
         <div className="flex items-center gap-3">

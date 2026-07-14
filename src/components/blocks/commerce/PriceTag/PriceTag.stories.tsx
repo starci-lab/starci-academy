@@ -1,91 +1,61 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { PriceTag } from "./index"
 
+/**
+ * PriceTag stories — content/state variants get their own story; pure style props
+ * (size) are grouped into ONE gallery story (side-by-side = one Chromatic snapshot,
+ * not N near-identical ones).
+ */
 const meta: Meta<typeof PriceTag> = {
     title: "Blocks/PriceTag",
     component: PriceTag,
-    parameters: {
-        layout: "centered",
-    },
+    parameters: { layout: "centered" },
 }
 
 export default meta
 
 type Story = StoryObj<typeof PriceTag>
 
-/** Plain price, no discount, no breakdown — the baseline case. */
+/** Dùng khi khóa CHƯA có ưu đãi — chỉ hiện giá bán, không gạch giá gốc. */
 export const Default: Story = {
-    args: {
-        discounted: 1990000,
-    },
+    args: { discounted: 1990000 },
 }
 
-/** Discounted price with the list price struck through and a −X% success chip. */
+/** Dùng khi khóa đang giảm giá — giá gốc gạch ngang + chip −X% để tạo cảm giác "hời". */
 export const WithDiscount: Story = {
-    args: {
-        discounted: 1490000,
-        original: 1990000,
-    },
+    args: { discounted: 1490000, original: 1990000 },
 }
 
-/** Hovering the chip opens a tooltip breaking the saving into phase tier + loyalty → you pay. */
-export const WithBreakdown: Story = {
-    args: {
-        discounted: 1290000,
-        original: 1990000,
-        breakdown: {
-            phase: 1590000,
-            phaseLabel: "Early-bird",
-            loyaltyPercent: 15,
-            loyaltyNote: "đã sở hữu 2 khóa",
-        },
-    },
+/** Dùng khi muốn GIẢI THÍCH mức giảm đến từ đâu (hover/tap chip) — ví dụ tách early-bird + ưu đãi học viên cũ, minh bạch thay vì chỉ đưa % khô khan. */
+export const Breakdown: Story = {
+    render: () => (
+        <div className="flex flex-col items-start gap-8">
+            <PriceTag
+                discounted={1290000}
+                original={1990000}
+                breakdown={{ phase: 1590000, phaseLabel: "Early-bird", loyaltyPercent: 15, loyaltyNote: "đã sở hữu 2 khóa" }}
+            />
+            <PriceTag
+                discounted={1690000}
+                original={1990000}
+                breakdown={{ phase: 1690000, loyaltyPercent: 0 }}
+            />
+        </div>
+    ),
 }
 
-/** Breakdown with no phase label and no loyalty note — the minimal breakdown shape. */
-export const WithBreakdownMinimal: Story = {
-    args: {
-        discounted: 1690000,
-        original: 1990000,
-        breakdown: {
-            phase: 1690000,
-            loyaltyPercent: 0,
-        },
-    },
+/** Chọn size theo bối cảnh đặt PriceTag: sm cho hàng list dày (bảng so sánh khóa), md cho card khóa mặc định, lg cho hero/trang checkout. */
+export const Sizes: Story = {
+    render: () => (
+        <div className="flex flex-col items-start gap-4">
+            <PriceTag discounted={1490000} original={1990000} size="sm" />
+            <PriceTag discounted={1490000} original={1990000} size="md" />
+            <PriceTag discounted={1490000} original={1990000} size="lg" />
+        </div>
+    ),
 }
 
-/** Small size — used inline in dense rows (e.g. list items). */
-export const SizeSmall: Story = {
-    args: {
-        discounted: 1490000,
-        original: 1990000,
-        size: "sm",
-    },
-}
-
-/** Medium size — the default scale used in most cards. */
-export const SizeMedium: Story = {
-    args: {
-        discounted: 1490000,
-        original: 1990000,
-        size: "md",
-    },
-}
-
-/** Large size — used on hero/checkout surfaces where the price is the focal point. */
-export const SizeLarge: Story = {
-    args: {
-        discounted: 1490000,
-        original: 1990000,
-        size: "lg",
-    },
-}
-
-/** USD currency formatting. */
+/** Dùng cho khách quốc tế / khóa niêm yết bằng USD — không tự quy đổi, chỉ đổi ký hiệu + định dạng tiền tệ. */
 export const CurrencyUsd: Story = {
-    args: {
-        discounted: 79,
-        original: 129,
-        currency: "USD",
-    },
+    args: { discounted: 79, original: 129, currency: "USD" },
 }

@@ -17,10 +17,20 @@ export default meta
 
 type Story = StoryObj<typeof UserCell>
 
-/** Base state: avatar (generated fallback) + display name + handle. */
+/** Dùng mặc định để hiển thị 1 user trong list/comment/bảng — avatar + tên + handle. */
 export const Default: Story = {}
 
-/** No `displayName` supplied — the primary label falls back to `username`. */
+/** Chọn size theo mật độ: sm cho list dày (comment, bảng), md cho khu vực rộng hơn (profile header, card). */
+export const Sizes: Story = {
+    render: (args) => (
+        <div className="flex flex-col gap-4">
+            <UserCell {...args} size="sm" />
+            <UserCell {...args} size="md" />
+        </div>
+    ),
+}
+
+/** Dùng khi user chưa đặt tên hiển thị — cell tự rơi về username làm nhãn chính, không để trống. */
 export const NoDisplayName: Story = {
     args: {
         username: "tranthib92",
@@ -29,7 +39,7 @@ export const NoDisplayName: Story = {
     },
 }
 
-/** No `handle` — only the primary name line renders. */
+/** Dùng ở nơi không cần/không có handle (VD nội bộ, hệ thống) — chỉ còn 1 dòng tên. */
 export const NoHandle: Story = {
     args: {
         username: "nguyenvana",
@@ -38,7 +48,7 @@ export const NoHandle: Story = {
     },
 }
 
-/** Uploaded avatar URL present — `UserAvatar` prefers it over the generated fallback. */
+/** Dùng khi user đã tải ảnh đại diện thật — ưu tiên ảnh upload thay vì avatar sinh tự động. */
 export const WithUploadedAvatar: Story = {
     args: {
         username: "phamthic",
@@ -48,17 +58,7 @@ export const WithUploadedAvatar: Story = {
     },
 }
 
-/** `size="md"` — larger avatar preset for denser-content contexts (e.g. profile headers). */
-export const MediumSize: Story = {
-    args: {
-        username: "hoangvane",
-        displayName: "Hoang Van E",
-        handle: "@hoangvane",
-        size: "md",
-    },
-}
-
-/** Right-aligned `trailing` slot — e.g. a role/status label next to the cell. */
+/** Gắn nhãn phụ bên phải (vai trò, badge, trạng thái) — VD đánh dấu Admin trong bảng thành viên. */
 export const WithTrailing: Story = {
     args: {
         username: "dothif",
@@ -70,7 +70,7 @@ export const WithTrailing: Story = {
     },
 }
 
-/** Long name/handle truncate instead of overflowing the row (`min-w-0` + `truncate`). */
+/** Đặt trong khung hẹp (sidebar, dropdown) để kiểm tra tên/handle dài bị cắt gọn thay vì vỡ layout. */
 export const LongNameTruncation: Story = {
     args: {
         username: "very.long.username.for.testing.truncation",

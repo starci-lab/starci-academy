@@ -5,9 +5,7 @@ import { StatPair } from "./index"
 const meta: Meta<typeof StatPair> = {
     title: "Blocks/StatPair",
     component: StatPair,
-    parameters: {
-        layout: "centered",
-    },
+    parameters: { layout: "centered" },
     args: {
         value: "1,204",
         label: "Người theo dõi",
@@ -20,41 +18,22 @@ export default meta
 
 type Story = StoryObj<typeof StatPair>
 
-export const Default: Story = {
-    args: {
-        value: "1,204",
-        label: "Người theo dõi",
-    },
+/** Dùng mặc định cho 1 số liệu đơn lẻ trong card/sidebar (VD: số người theo dõi). */
+export const Default: Story = {}
+
+/** Soi nhanh mọi tổ hợp canh lề × cỡ chữ cạnh nhau — dùng khi xếp nhiều StatPair trong 1 hàng thống kê (dashboard, hồ sơ). */
+export const Variants: Story = {
+    render: () => (
+        <div className="grid grid-cols-2 gap-10">
+            <StatPair value="1,204" label="Người theo dõi" align="start" size="md" />
+            <StatPair value="87%" label="Tỉ lệ hoàn thành" align="center" size="md" />
+            <StatPair value="12" label="Khóa học đã đăng ký" align="start" size="lg" />
+            <StatPair value="4.9" label="Đánh giá trung bình" align="center" size="lg" />
+        </div>
+    ),
 }
 
-export const CenterAligned: Story = {
-    args: {
-        value: "87%",
-        label: "Tỉ lệ hoàn thành",
-        align: "center",
-    },
-}
-
-export const LargeSize: Story = {
-    args: {
-        value: "12",
-        label: "Khóa học đã đăng ký",
-        size: "lg",
-    },
-}
-
-export const LargeCenterAligned: Story = {
-    args: {
-        value: "4.9",
-        label: "Đánh giá trung bình",
-        size: "lg",
-        align: "center",
-    },
-}
-
+/** Kiểm tra khi nhãn cực ngắn (VD: "XP") — đảm bảo không bị co lại lệch với các ô số liệu khác trong cùng hàng. */
 export const ShortLabel: Story = {
-    args: {
-        value: "320",
-        label: "XP",
-    },
+    args: { value: "320", label: "XP" },
 }

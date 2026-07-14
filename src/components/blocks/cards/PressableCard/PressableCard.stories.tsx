@@ -38,6 +38,7 @@ const OptionCardContent = ({ label, price }: { label: string; price: string }) =
     </div>
 )
 
+/** Dùng cho ô điều hướng bấm được (vào lộ trình, mở khóa học) — bấm là chuyển màn ngay, không phải chọn lựa. */
 export const Default: Story = {
     args: {
         hoverVariant: "fill",
@@ -46,24 +47,22 @@ export const Default: Story = {
     },
 }
 
-export const HoverFill: Story = {
-    name: "Hover variant — fill (navigation tile)",
-    args: {
-        hoverVariant: "fill",
-        onPress: () => {},
-        children: <NavTileContent />,
-    },
+/** So sánh 2 kiểu hover: `fill` cho tile điều hướng (đi đâu đó), `lift` cho card lựa chọn (chọn 1 trong nhiều gói) — chọn theo Ý ĐỊNH của cú bấm, không theo gu thẩm mỹ. */
+export const HoverVariants: Story = {
+    name: "Hover variants — fill vs lift",
+    render: () => (
+        <div className="flex flex-col gap-4">
+            <PressableCard hoverVariant="fill" onPress={() => {}}>
+                <NavTileContent />
+            </PressableCard>
+            <PressableCard hoverVariant="lift" onPress={() => {}}>
+                <OptionCardContent label="Gói 6 tháng" price="1.990.000đ" />
+            </PressableCard>
+        </div>
+    ),
 }
 
-export const HoverLift: Story = {
-    name: "Hover variant — lift (pick-a-card)",
-    args: {
-        hoverVariant: "lift",
-        onPress: () => {},
-        children: <OptionCardContent label="Gói 6 tháng" price="1.990.000đ" />,
-    },
-}
-
+/** Dùng khi đích đến là 1 URL thật (route sang trang khóa học) — render ra `<a>` để hỗ trợ mở tab mới/copy link, không chỉ gọi handler JS. */
 export const AsLink: Story = {
     name: "As link (href navigation)",
     args: {
@@ -73,6 +72,7 @@ export const AsLink: Story = {
     },
 }
 
+/** Dùng khi lựa chọn đó tạm thời không khả dụng (gói hết slot) — vẫn hiện để user biết nó tồn tại, nhưng chặn bấm + tắt hover. */
 export const Disabled: Story = {
     args: {
         hoverVariant: "lift",

@@ -18,7 +18,7 @@ export default meta
 
 type Story = StoryObj<typeof SurfaceListCard>
 
-/** Default: top-level surface (shadow skin) holding a few interactive rows. */
+/** Dùng làm khối danh sách điều hướng nổi trên nền trang (chọn khoá học, chọn mục cài đặt…). */
 export const Default: Story = {
     render: () => (
         <div className="max-w-md">
@@ -46,28 +46,71 @@ export const Default: Story = {
     ),
 }
 
-/** `bordered`: nested inside another surface (modal/drawer body) — border instead of shadow. */
-export const Bordered: Story = {
+/**
+ * Gallery các trạng thái hàng: `bordered` khi card nằm LỒNG trong 1 surface khác (ví dụ
+ * trong modal), `selected` để đánh dấu mục đang chọn (ngôn ngữ, phương thức thanh toán),
+ * `isDisabled` cho tuỳ chọn chưa mở, `hover="underline"` cho hàng dẫn tới bài viết/nội dung.
+ */
+export const RowVariants: Story = {
     render: () => (
-        <div className="max-w-md rounded-3xl bg-surface p-4 shadow-surface">
-            <SurfaceListCard bordered>
-                <SurfaceListCardRow
-                    title="Ví MoMo"
-                    subtitle="Liên kết ngày 12/06/2026"
-                    onPress={() => {}}
-                />
-                <SurfaceListCardRow
-                    title="Thẻ Visa •••• 4242"
-                    subtitle="Hết hạn 08/28"
-                    onPress={() => {}}
-                    selected
-                />
-            </SurfaceListCard>
+        <div className="flex flex-col gap-4">
+            <div className="max-w-md rounded-3xl bg-surface p-4 shadow-surface">
+                <p className="mb-2 text-body-xs text-muted">bordered (nested surface)</p>
+                <SurfaceListCard bordered>
+                    <SurfaceListCardRow
+                        title="Ví MoMo"
+                        subtitle="Liên kết ngày 12/06/2026"
+                        onPress={() => {}}
+                    />
+                    <SurfaceListCardRow
+                        title="Thẻ Visa •••• 4242"
+                        subtitle="Hết hạn 08/28"
+                        onPress={() => {}}
+                        selected
+                    />
+                </SurfaceListCard>
+            </div>
+            <div className="max-w-md">
+                <p className="mb-2 text-body-xs text-muted">selected</p>
+                <SurfaceListCard>
+                    <SurfaceListCardRow title="Tiếng Việt" onPress={() => {}} />
+                    <SurfaceListCardRow title="English" selected onPress={() => {}} />
+                </SurfaceListCard>
+            </div>
+            <div className="max-w-md">
+                <p className="mb-2 text-body-xs text-muted">isDisabled</p>
+                <SurfaceListCard>
+                    <SurfaceListCardRow title="Xuất hoá đơn PDF" onPress={() => {}} />
+                    <SurfaceListCardRow
+                        title="Xuất báo cáo Excel (sắp ra mắt)"
+                        subtitle="Chưa khả dụng cho gói hiện tại"
+                        isDisabled
+                        onPress={() => {}}
+                    />
+                </SurfaceListCard>
+            </div>
+            <div className="max-w-md">
+                <p className="mb-2 text-body-xs text-muted">hover=&quot;underline&quot;</p>
+                <SurfaceListCard>
+                    <SurfaceListCardRow
+                        title="Vì sao học viên bỏ dở khoá học?"
+                        subtitle="12.4k lượt đọc"
+                        hover="underline"
+                        href="#"
+                    />
+                    <SurfaceListCardRow
+                        title="Lộ trình trở thành Senior Backend"
+                        subtitle="9.1k lượt đọc"
+                        hover="underline"
+                        href="#"
+                    />
+                </SurfaceListCard>
+            </div>
         </div>
     ),
 }
 
-/** Rows with leading icon, `meta` chip content, and trailing caret. */
+/** Dùng khi mỗi hàng cần icon minh hoạ + nhãn phụ (ưu đãi, ghi chú) — ví dụ chọn phương thức thanh toán. */
 export const WithLeadingAndMeta: Story = {
     render: () => (
         <div className="max-w-md">
@@ -98,68 +141,7 @@ export const WithLeadingAndMeta: Story = {
     ),
 }
 
-/** `selected`: the tinted active row (`bg-accent/10`), often paired with `titleClassName="text-accent"`. */
-export const SelectedRow: Story = {
-    render: () => (
-        <div className="max-w-md">
-            <SurfaceListCard>
-                <SurfaceListCardRow title="Tiếng Việt" onPress={() => {}} />
-                <SurfaceListCardRow
-                    title="English"
-                    selected
-                    onPress={() => {}}
-                />
-            </SurfaceListCard>
-        </div>
-    ),
-}
-
-/** `isDisabled`: dimmed, non-interactive row. */
-export const DisabledRow: Story = {
-    render: () => (
-        <div className="max-w-md">
-            <SurfaceListCard>
-                <SurfaceListCardRow title="Xuất hoá đơn PDF" onPress={() => {}} />
-                <SurfaceListCardRow
-                    title="Xuất báo cáo Excel (sắp ra mắt)"
-                    subtitle="Chưa khả dụng cho gói hiện tại"
-                    isDisabled
-                    onPress={() => {}}
-                />
-            </SurfaceListCard>
-        </div>
-    ),
-}
-
-/** `hover="underline"`: link-style row (title underlines, no row fill) — for a nav/most-read list. */
-export const UnderlineHover: Story = {
-    render: () => (
-        <div className="max-w-md">
-            <SurfaceListCard>
-                <SurfaceListCardRow
-                    title="Vì sao học viên bỏ dở khoá học?"
-                    subtitle="12.4k lượt đọc"
-                    hover="underline"
-                    href="#"
-                />
-                <SurfaceListCardRow
-                    title="Lộ trình trở thành Senior Backend"
-                    subtitle="9.1k lượt đọc"
-                    hover="underline"
-                    href="#"
-                />
-                <SurfaceListCardRow
-                    title="5 sai lầm khi thiết kế API"
-                    subtitle="7.8k lượt đọc"
-                    hover="underline"
-                    href="#"
-                />
-            </SurfaceListCard>
-        </div>
-    ),
-}
-
-/** `href`: renders each row as an `<a>` that navigates on click, instead of a `<button>`. */
+/** Dùng cho hàng ĐIỀU HƯỚNG (điều khoản, chính sách) — mỗi hàng là 1 link `<a>`, không phải nút hành động. */
 export const LinkRows: Story = {
     render: () => (
         <div className="max-w-md">
@@ -179,7 +161,7 @@ export const LinkRows: Story = {
     ),
 }
 
-/** {@link SurfaceListCardItem}: free-form row content (not the fixed leading/title/subtitle slots). */
+/** Dùng khi nội dung hàng không khớp khuôn title/subtitle/leading — ví dụ hàng có thanh tiến độ riêng. */
 export const FreeFormItems: Story = {
     render: () => (
         <div className="max-w-md">
@@ -215,7 +197,7 @@ export const FreeFormItems: Story = {
     ),
 }
 
-/** `SurfaceListCardItem` with `hover="underline"`: a static (non-interactive) plain row for comparison. */
+/** Dùng cho hàng CHỈ ĐỌC không bấm được — ví dụ liệt kê nhật ký thay đổi (changelog). */
 export const StaticItem: Story = {
     render: () => (
         <div className="max-w-md">

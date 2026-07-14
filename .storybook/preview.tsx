@@ -11,6 +11,8 @@ import "../src/app/globals.css"
  * a11y addon runs axe on every story (fail-on-error surfaces contrast/aria bugs lint can't see).
  */
 const preview: Preview = {
+    // autodocs: render each story's JSDoc as its "cách dùng" description in the Docs tab.
+    tags: ["autodocs"],
     parameters: {
         a11y: { test: "error" },
         controls: { expanded: true },

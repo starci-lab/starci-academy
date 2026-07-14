@@ -12,6 +12,10 @@ import { EmptyState } from "./index"
 const meta = {
     title: "Blocks/EmptyState",
     component: EmptyState,
+    // default title satisfies the required prop for render-only stories (they render their own).
+    args: {
+        title: "Không có dữ liệu",
+    },
     parameters: {
         layout: "centered",
     },
@@ -22,7 +26,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 /**
- * Minimal usage — only the required `title` prop.
+ * Dùng khi chỉ cần báo "không có gì ở đây" nhanh gọn — chưa cần icon/mô tả/hành động, ví dụ ô kết quả phụ chưa có dữ liệu.
  */
 export const Default: Story = {
     args: {
@@ -31,41 +35,32 @@ export const Default: Story = {
 }
 
 /**
- * With a decorative icon above the title.
+ * Chọn mức đầy đủ theo tình huống thật: danh sách khoá học rỗng (chỉ icon), tìm kiếm không ra kết quả (icon+mô tả gợi ý), hoặc trang danh sách trống có nút hành động để tạo mục mới.
  */
-export const WithIcon: Story = {
-    args: {
-        icon: <TrayIcon weight="duotone" />,
-        title: "Chưa có khoá học nào",
-    },
+export const Compositions: Story = {
+    render: () => (
+        <div className="flex flex-col gap-4">
+            <EmptyState
+                icon={<TrayIcon weight="duotone" />}
+                title="Chưa có khoá học nào"
+            />
+            <EmptyState
+                icon={<MagnifyingGlassIcon weight="duotone" />}
+                title="Không tìm thấy kết quả"
+                description="Thử điều chỉnh bộ lọc hoặc từ khoá tìm kiếm để xem thêm kết quả."
+            />
+            <EmptyState
+                icon={<TrayIcon weight="duotone" />}
+                title="Danh sách trống"
+                description="Bạn chưa lưu mục nào vào danh sách này."
+                action={<Button variant="primary">Thêm mục mới</Button>}
+            />
+        </div>
+    ),
 }
 
 /**
- * With a supporting description below the title.
- */
-export const WithDescription: Story = {
-    args: {
-        icon: <MagnifyingGlassIcon weight="duotone" />,
-        title: "Không tìm thấy kết quả",
-        description: "Thử điều chỉnh bộ lọc hoặc từ khoá tìm kiếm để xem thêm kết quả.",
-    },
-}
-
-/**
- * With a call-to-action rendered below the description — typically a Button.
- */
-export const WithAction: Story = {
-    args: {
-        icon: <TrayIcon weight="duotone" />,
-        title: "Chưa có bài nộp nào",
-        description: "Hoàn thành thử thách đầu tiên để bắt đầu theo dõi tiến độ của bạn.",
-        action: <Button variant="primary">Bắt đầu thử thách</Button>,
-    },
-}
-
-/**
- * Error-flavored usage — this block has no built-in "error" variant, so the
- * error tone comes entirely from the caller-supplied icon/copy/action.
+ * Dùng khi tải dữ liệu thất bại (lỗi mạng, API lỗi) — icon cảnh báo + nút "Thử lại" để người dùng tự khôi phục, không phải trạng thái rỗng thông thường.
  */
 export const ErrorTone: Story = {
     args: {
@@ -73,18 +68,5 @@ export const ErrorTone: Story = {
         title: "Không thể tải dữ liệu",
         description: "Đã có lỗi xảy ra. Vui lòng thử lại sau.",
         action: <Button variant="danger">Thử lại</Button>,
-    },
-}
-
-/**
- * Fully populated — icon, title, description, and action together, the
- * densest real-world composition of this block.
- */
-export const FullyComposed: Story = {
-    args: {
-        icon: <TrayIcon weight="duotone" />,
-        title: "Danh sách trống",
-        description: "Bạn chưa lưu mục nào vào danh sách này.",
-        action: <Button variant="primary">Thêm mục mới</Button>,
     },
 }

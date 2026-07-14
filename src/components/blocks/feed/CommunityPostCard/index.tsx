@@ -110,7 +110,7 @@ export const CommunityPostCard = ({
                             type="button"
                             disabled={!onToggleComments}
                             onClick={onToggleComments}
-                            className="flex items-center gap-1 rounded-full px-2 py-0.5 text-muted transition-colors hover:bg-default/40 disabled:cursor-default disabled:hover:bg-transparent"
+                            className="flex items-center gap-1 rounded-full px-2 py-0 text-muted transition-colors hover:bg-default/40 disabled:cursor-default disabled:hover:bg-transparent"
                         >
                             <ChatCircleIcon className="size-4 shrink-0" />
                             <Typography type="body-xs" color="muted">

@@ -74,7 +74,7 @@ export const SettingsHome = ({
                     <Typography type="body-sm" className="text-default-500">
                         {t("profileSettings.loginMethod")}
                     </Typography>
-                    <Chip size="sm" variant="soft" color="default" className="gap-1.5">
+                    <Chip size="sm" variant="soft" color="default" className="gap-2">
                         {methodMeta.icon}
                         <Chip.Label>
                             {t(`profileSettings.loginMethodValue.${methodMeta.key}`)}

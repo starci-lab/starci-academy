@@ -180,7 +180,7 @@ export const FeedTabs = ({
                             <div className="flex flex-col gap-6">
                                 <ActivityFeed items={items} onResolve={onResolve} onReact={onReact} />
                                 {hasMore ? (
-                                    <div className="flex justify-center">
+                                    <div className="flex flex-col items-center gap-2">
                                         <Button
                                             variant="secondary"
                                             size="sm"
@@ -189,6 +189,20 @@ export const FeedTabs = ({
                                         >
                                             {t("dashboard.loadMore")}
                                         </Button>
+                                        {/* load-more failure (page 2+) doesn't clear existing items — surface an
+                                            inline retry instead of the full errorContent block. */}
+                                        {error && items.length > 0 && !isLoadingMore ? (
+                                            <div className="flex items-center gap-2 text-xs text-danger">
+                                                <span>{t("dashboard.feedError")}</span>
+                                                <Button
+                                                    variant="tertiary"
+                                                    size="sm"
+                                                    onPress={() => { void mutate() }}
+                                                >
+                                                    {t("dashboard.feedRetry")}
+                                                </Button>
+                                            </div>
+                                        ) : null}
                                     </div>
                                 ) : null}
                             </div>

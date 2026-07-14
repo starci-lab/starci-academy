@@ -12,9 +12,9 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    Plus as PlusIcon,
-    Xmark as XmarkIcon,
-} from "@gravity-ui/icons"
+    PlusIcon,
+    XIcon as XmarkIcon,
+} from "@phosphor-icons/react"
 import {
     useProfileUsername,
 } from "../useProfileUsername"

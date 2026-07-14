@@ -65,7 +65,7 @@ export const OauthRedirect = ({ action, className }: OauthRedirectProps) => {
     return (
         <div className={cn("flex min-h-[60vh] flex-col items-center justify-center", className)}>
             <div
-                className="flex flex-col items-center gap-1.5"
+                className="flex flex-col items-center gap-2"
             >
                 <Spinner
                     color="accent"

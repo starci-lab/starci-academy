@@ -15,7 +15,7 @@ export interface SkeletonUserCellProps extends WithClassNames<undefined> {
  *
  * - Avatar: `size-9` rounded-full (36px).
  * - Name bar: `h-3 w-24` in a 20px box (`my-1`) — matches name `leading-5`.
- * - Handle bar: `h-3 w-16` in a 16px box (`my-0.5`) — matches handle `leading-4`.
+ * - Handle bar: `h-3 w-16` in a 16px box (`my-0`) — matches handle `leading-4`.
  *   Name + handle = 36px, level with the avatar.
  */
 export const SkeletonUserCell = ({ withHandle = true, className }: SkeletonUserCellProps) => {
@@ -24,7 +24,7 @@ export const SkeletonUserCell = ({ withHandle = true, className }: SkeletonUserC
             <Skeleton className="size-9 shrink-0 rounded-full" />
             <div className="flex min-w-0 flex-col gap-0">
                 <Skeleton className="my-1 h-3 w-24 rounded" />
-                {withHandle ? <Skeleton className="my-0.5 h-3 w-16 rounded" /> : null}
+                {withHandle ? <Skeleton className="my-0 h-3 w-16 rounded" /> : null}
             </div>
         </div>
     )

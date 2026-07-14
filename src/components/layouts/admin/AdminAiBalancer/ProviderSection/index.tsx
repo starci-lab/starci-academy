@@ -96,7 +96,7 @@ export const ProviderSection = ({
                             {providerHealth.keysFilePath}
                         </p>
                     </div>
-                    <div className="flex flex-wrap gap-1.5 text-xs">
+                    <div className="flex flex-wrap gap-2 text-xs">
                         <span className="rounded-full bg-emerald-500/10 px-3 py-1 text-emerald-300">
                             {summaryLabels.active}: {providerHealth.activeKeys}
                         </span>

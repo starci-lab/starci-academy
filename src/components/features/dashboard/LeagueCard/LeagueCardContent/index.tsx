@@ -117,8 +117,8 @@ export const LeagueCardContent = ({
     const body = (
         <>
             {/* tier + reset countdown */}
-            <div className="flex flex-col gap-1.5">
-                <div className="flex items-center gap-1.5">
+            <div className="flex flex-col gap-2">
+                <div className="flex items-center gap-2">
                     <InfoTooltip description={t("dashboard.league.tierHelp")}>
                         <LeagueTierBadge
                             tier={data.tier as LeagueTier}
@@ -145,13 +145,13 @@ export const LeagueCardContent = ({
 
             {/* promote / demote legend */}
             <div className="flex items-center gap-3 text-[11px] text-muted">
-                <span className="flex items-center gap-1.5">
+                <span className="flex items-center gap-2">
                     <span className="size-2 shrink-0 rounded-3xl bg-success" />
                     {t("dashboard.league.promote", {
                         count: data.promoteCount,
                     })}
                 </span>
-                <span className="flex items-center gap-1.5">
+                <span className="flex items-center gap-2">
                     <span className="size-2 shrink-0 rounded-full bg-danger" />
                     {t("dashboard.league.demote", {
                         count: data.demoteCount,
@@ -160,13 +160,13 @@ export const LeagueCardContent = ({
             </div>
 
             {/* capped cohort — no inner scroll; viewer's row appended if outside top */}
-            <div className="flex w-full flex-col gap-1.5">
+            <div className="flex w-full flex-col gap-2">
                 {topRows.map(renderRow)}
                 {showMyRow && myEntry ? renderRow(myEntry) : null}
             </div>
 
             {/* "+N others" + full-board link, inline on one line */}
-            <div className="flex items-center gap-1.5 text-xs">
+            <div className="flex items-center gap-2 text-xs">
                 {hiddenCount > 0 ? (
                     <span className="text-muted">
                         {t("dashboard.league.others", {

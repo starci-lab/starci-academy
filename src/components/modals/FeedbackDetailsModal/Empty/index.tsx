@@ -2,7 +2,9 @@
 
 import React from "react"
 import { useTranslations } from "next-intl"
+import { CheckCircleIcon } from "@phosphor-icons/react"
 import { cn } from "@heroui/react"
+import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
@@ -11,7 +13,7 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 export type FeedbackDetailsEmptyProps = WithClassNames<undefined>
 
 /**
- * Empty state for feedback details list.
+ * Empty state for feedback details list — no grader notes on this attempt.
  *
  * @param props - Optional styling props.
  */
@@ -19,9 +21,11 @@ export const FeedbackDetailsEmpty = (props: FeedbackDetailsEmptyProps) => {
     const { className } = props
     const t = useTranslations()
     return (
-        <div className={cn("p-3 text-sm text-muted", className)}>
-            {t("feedback.empty")}
-        </div>
+        <EmptyState
+            icon={<CheckCircleIcon />}
+            title={t("feedback.empty")}
+            className={cn("rounded-medium border border-default", className)}
+        />
     )
 }
 

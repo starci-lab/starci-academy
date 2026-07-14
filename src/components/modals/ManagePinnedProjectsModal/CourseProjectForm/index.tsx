@@ -19,6 +19,7 @@ import { QUERY_USER_PINNED_PROJECTS_SWR } from "@/hooks/swr/api/graphql/queries/
 import { useMutatePinCourseProjectSwr } from "@/hooks/swr/api/graphql/mutations/useMutatePinCourseProjectSwr"
 import { useQueryMyPinnableCapstonesSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyPinnableCapstonesSwr"
 import { StatusChip } from "@/components/blocks/chips/StatusChip"
+import { Callout } from "@/components/blocks/feedback/Callout"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import { useAppSelector } from "@/redux/hooks"
 
@@ -51,7 +52,7 @@ export const CourseProjectForm = ({
     const viewerId = useAppSelector((state) => state.user.user?.id)
 
     // load the user's pinnable capstones (enrollment rows that have a project repo)
-    const { data: capstones, isLoading } = useQueryMyPinnableCapstonesSwr()
+    const { data: capstones, isLoading, error: capstonesError, mutate: mutateCapstones } = useQueryMyPinnableCapstonesSwr()
     const items = capstones ?? []
 
     // controlled selection: the enrollmentId of the chosen capstone, or null
@@ -176,8 +177,26 @@ export const CourseProjectForm = ({
                         </Select.Popover>
                     </Select.Root>
 
+                    {/* error: the capstones query failed — offer a retry */}
+                    {capstonesError ? (
+                        <Callout
+                            status="danger"
+                            title={t("pinnedProjects.errorTitle")}
+                            description={t("pinnedProjects.errorDescription")}
+                            action={(
+                                <Button
+                                    variant="secondary"
+                                    size="sm"
+                                    onPress={() => { void mutateCapstones() }}
+                                >
+                                    {t("pinnedProjects.retry")}
+                                </Button>
+                            )}
+                        />
+                    ) : null}
+
                     {/* empty state: user has no pinnable capstones at all */}
-                    {!isLoading && items.length === 0 ? (
+                    {!isLoading && !capstonesError && items.length === 0 ? (
                         <Typography type="body-xs" color="muted">
                             {t("pinnedProjects.course.noCourses")}
                         </Typography>

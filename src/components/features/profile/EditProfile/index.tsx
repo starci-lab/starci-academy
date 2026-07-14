@@ -6,8 +6,6 @@ import {
     Checkbox,
     Input,
     Label,
-    ListBox,
-    Select,
     Spinner,
     TextArea,
     TextField,
@@ -27,6 +25,7 @@ import { useAvatarUploadOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useEditProfileForm } from "@/hooks/rhf/useEditProfileForm"
 import { AvatarUploadButton } from "@/components/blocks/identity/AvatarUploadButton"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { SegmentedControl } from "@/components/blocks/navigation/SegmentedControl"
 import { WorkMode } from "@/modules/types/enums/work-mode"
 
 /** Max length of the display name (mirrors the `display_name` column). */
@@ -68,6 +67,7 @@ export const EditProfile = () => {
         onSubmit,
         formState: {
             isSubmitting,
+            isValid,
         },
         onAvatarFile,
         shownAvatar,
@@ -186,55 +186,26 @@ export const EditProfile = () => {
                     />
                 </TextField>
 
-                {/* preferred work mode */}
+                {/* preferred work mode — a setting with a small fixed choice → segmented, not dropdown */}
                 <div className="flex flex-col gap-2">
                     <Label htmlFor="profile-work-mode">{t("profileEdit.workMode")}</Label>
-                    <Select.Root<{ id: string }, "single">
-                        id="profile-work-mode"
-                        aria-label={t("profileEdit.workMode")}
-                        selectedKey={workMode === "" ? WORK_MODE_NONE : workMode}
-                        onSelectionChange={(key) =>
+                    <SegmentedControl
+                        items={[
+                            { value: WORK_MODE_NONE, label: t("profileEdit.workModeNone") },
+                            ...WORK_MODE_OPTIONS.map((option) => ({
+                                value: option.value as string,
+                                label: t(option.labelKey),
+                            })),
+                        ]}
+                        value={workMode === "" ? WORK_MODE_NONE : workMode}
+                        onChange={(value) =>
                             setValue(
                                 "workMode",
-                                key === WORK_MODE_NONE ? "" : (String(key) as WorkMode),
+                                value === WORK_MODE_NONE ? "" : (value as WorkMode),
                             )
                         }
-                    >
-                        <Select.Trigger aria-label={t("profileEdit.workMode")}>
-                            <Select.Value>
-                                {() => {
-                                    const found = WORK_MODE_OPTIONS.find(
-                                        (option) => option.value === workMode,
-                                    )
-                                    return (
-                                        <Typography type="body-sm">
-                                            {found ? t(found.labelKey) : t("profileEdit.workModeNone")}
-                                        </Typography>
-                                    )
-                                }}
-                            </Select.Value>
-                            <Select.Indicator />
-                        </Select.Trigger>
-                        <Select.Popover>
-                            <ListBox.Root aria-label={t("profileEdit.workMode")}>
-                                <ListBox.Item
-                                    id={WORK_MODE_NONE}
-                                    textValue={t("profileEdit.workModeNone")}
-                                >
-                                    {t("profileEdit.workModeNone")}
-                                </ListBox.Item>
-                                {WORK_MODE_OPTIONS.map((option) => (
-                                    <ListBox.Item
-                                        key={option.value}
-                                        id={option.value}
-                                        textValue={t(option.labelKey)}
-                                    >
-                                        {t(option.labelKey)}
-                                    </ListBox.Item>
-                                ))}
-                            </ListBox.Root>
-                        </Select.Popover>
-                    </Select.Root>
+                        ariaLabel={t("profileEdit.workMode")}
+                    />
                 </div>
 
                 {/* LinkedIn URL */}
@@ -314,7 +285,7 @@ export const EditProfile = () => {
                 <Button
                     variant="primary"
                     className="self-end"
-                    isDisabled={isSubmitting}
+                    isDisabled={isSubmitting || !isValid}
                     isPending={isSubmitting}
                     onPress={() => onSubmit()}
                 >

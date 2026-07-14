@@ -103,7 +103,7 @@ export const LeagueTierBadge = ({
     const visual = TIER_VISUAL[tier]
     return (
         <div className={cn("shrink-0", className)}>
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-2">
                 {/* real art from MinIO (badges/league/<tier>.png) once uploaded; until
                 then fall back to the multicolor fluent-emoji placeholder */}
                 <BadgeImage

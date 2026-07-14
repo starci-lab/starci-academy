@@ -133,10 +133,10 @@ const CodeBlock = ({ code }: { code: string }) => {
     const lines = code.split("\n")
     return (
         <div className="flex font-mono text-xs leading-relaxed">
-            <div aria-hidden className="flex flex-col items-end gap-1.5 border-r border-default/70 px-3 py-4 text-muted/60 select-none">
+            <div aria-hidden className="flex flex-col items-end gap-2 border-r border-default/70 px-3 py-4 text-muted/60 select-none">
                 {lines.map((_, index) => <span key={index}>{index + 1}</span>)}
             </div>
-            <div className="flex flex-col gap-1.5 overflow-x-auto px-4 py-4">
+            <div className="flex flex-col gap-2 overflow-x-auto px-4 py-4">
                 {lines.map((line, index) => <span key={index} className="whitespace-pre">{tintLine(line)}</span>)}
             </div>
         </div>
@@ -214,7 +214,7 @@ const StepVisual = ({ stepKey }: { stepKey: string }) => {
                     ))}
                 </motion.div>
                 <motion.div variants={childVariants} className="overflow-hidden rounded-xl border border-default bg-default">
-                    <div className="border-b border-default/70 px-3 py-1.5">
+                    <div className="border-b border-default/70 px-3 py-2">
                         <span className="font-mono text-xs text-muted">{READ_LESSON[readLang].file}</span>
                     </div>
                     <CodeBlock code={READ_LESSON[readLang].code} />
@@ -233,7 +233,7 @@ const StepVisual = ({ stepKey }: { stepKey: string }) => {
         return shell(
             <>
                 {/* verdict = HeroUI Alert style (đúng SubmissionResult): tint success + icon + điểm */}
-                <motion.div variants={childVariants} className="flex items-center gap-3 rounded-xl bg-success/10 px-3 py-2.5">
+                <motion.div variants={childVariants} className="flex items-center gap-3 rounded-xl bg-success/10 px-3 py-2">
                     <CheckCircleIcon weight="fill" aria-hidden focusable="false" className="size-7 shrink-0 text-success" />
                     <div className="flex flex-1 flex-col">
                         <span className="text-sm font-semibold text-success">{t("submissionResult.passed")} · 92/100</span>
@@ -241,7 +241,7 @@ const StepVisual = ({ stepKey }: { stepKey: string }) => {
                     </div>
                     <span className="shrink-0 rounded-full bg-success/15 px-3 py-1 text-xs font-medium text-success">+120 XP</span>
                 </motion.div>
-                <motion.div variants={childVariants} className="flex flex-col gap-1.5">
+                <motion.div variants={childVariants} className="flex flex-col gap-2">
                     {criteria.map((item) => (
                         <span key={item.text} className="flex items-center gap-2 text-sm text-muted">
                             {item.ok ? (
@@ -268,12 +268,12 @@ const StepVisual = ({ stepKey }: { stepKey: string }) => {
             <>
                 <motion.div variants={childVariants} className="flex items-center justify-between">
                     <span className="font-mono text-sm font-medium">the-shop</span>
-                    <span className="flex items-center gap-1.5 text-xs text-muted">
+                    <span className="flex items-center gap-2 text-xs text-muted">
                         <GithubLogoIcon aria-hidden focusable="false" className="size-3.5" />
                         main
                     </span>
                 </motion.div>
-                <motion.div variants={childVariants} className="flex flex-col gap-1.5">
+                <motion.div variants={childVariants} className="flex flex-col gap-2">
                     <div className="flex items-center justify-between text-xs text-muted">
                         <span>Tiến độ</span>
                         <span>8/20 chặng · 40%</span>
@@ -282,7 +282,7 @@ const StepVisual = ({ stepKey }: { stepKey: string }) => {
                         <div className="h-full rounded-full bg-accent" style={{ width: "40%" }} />
                     </div>
                 </motion.div>
-                <motion.div variants={childVariants} className="flex flex-col gap-1.5">
+                <motion.div variants={childVariants} className="flex flex-col gap-2">
                     {milestones.map((item) => (
                         <span key={item.label} className="flex items-center gap-2 text-sm">
                             {item.state === "done" ? (
@@ -303,7 +303,7 @@ const StepVisual = ({ stepKey }: { stepKey: string }) => {
     // rank
     const maxXp = RANK_ROWS[0].xp
     return shell(
-        <motion.div variants={childVariants} className="flex flex-col gap-2.5">
+        <motion.div variants={childVariants} className="flex flex-col gap-2">
             <div className="flex items-center justify-between">
                 <span className="text-sm font-semibold">Tuần này</span>
                 <span className="text-xs text-muted">XP tích luỹ</span>
@@ -377,7 +377,7 @@ const LoopStepList = ({ active, onSelect }: { active: number; onSelect: (index: 
                         id={key}
                         textValue={t(`landing.learnLoop.items.${key}.title`)}
                         className={cn(
-                            "group cursor-pointer rounded-xl px-4 py-2.5 transition-colors data-[hovered=true]:bg-accent/10",
+                            "group cursor-pointer rounded-xl px-4 py-2 transition-colors data-[hovered=true]:bg-accent/10",
                             selected && "bg-accent/10",
                         )}
                     >

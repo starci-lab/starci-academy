@@ -40,7 +40,7 @@ export const LeaderboardChampion = ({ entry, totalXp, viewerUserId, className }:
                     <CrownIcon
                         aria-hidden
                         focusable="false"
-                        className="absolute -top-3.5 left-1/2 size-5 -translate-x-1/2 text-warning"
+                        className="absolute -top-4 left-1/2 size-5 -translate-x-1/2 text-warning"
                     />
                     <UserAvatar
                         username={entry.username}

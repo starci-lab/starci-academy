@@ -273,7 +273,7 @@ export const Landing = ({ className }: LandingProps) => {
                                     alt={t("landing.founder.name")}
                                     icon={<UserIcon aria-hidden focusable="false" />}
                                 />
-                                <div className="flex min-w-0 flex-col gap-0.5">
+                                <div className="flex min-w-0 flex-col gap-2">
                                     <Typography type="body-sm" weight="semibold">
                                         {t("landing.founder.name")}
                                     </Typography>

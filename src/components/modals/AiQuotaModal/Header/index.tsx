@@ -3,6 +3,7 @@
 import React from "react"
 import {
     Chip,
+    Typography,
 } from "@heroui/react"
 import {
     useTranslations,
@@ -22,10 +23,10 @@ export const AiQuotaHeader = () => {
 
     return (
         <div className="pr-8">
-            <div className="flex items-center gap-1.5">
-                <span className="text-lg font-semibold text-foreground">
+            <div className="flex items-center gap-2">
+                <Typography type="body" weight="semibold">
                     {t("aiQuota.title")}
-                </span>
+                </Typography>
                 {quota?.tier ? (
                     <Chip size="sm" color={quota.tier === "max" ? "warning" : "default"} variant="soft">
                         {quota.tier.toUpperCase()}

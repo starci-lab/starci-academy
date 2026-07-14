@@ -189,7 +189,7 @@ const MockInterviewQuestionReviewCard = ({
                         ) : null}
 
                         <div className="flex items-start gap-2">
-                            <WarningCircleIcon className="mt-0.5 size-4 shrink-0 text-warning" aria-hidden focusable="false" />
+                            <WarningCircleIcon className="size-4 shrink-0 text-warning" aria-hidden focusable="false" />
                             <Typography type="body-sm" className="min-w-0 flex-1">
                                 <span className="text-muted">{t("mockInterview.questionReview.feedback")} </span>
                                 {review.feedback}
@@ -417,7 +417,7 @@ export const MockInterviewScorecard = ({
                         {grade.gaps.map((gap, position) => (
                             <SurfaceListCardItem key={position}>
                                 <div className="flex items-start gap-2">
-                                    <WarningCircleIcon className="mt-0.5 size-4 shrink-0 text-warning" aria-hidden focusable="false" />
+                                    <WarningCircleIcon className="size-4 shrink-0 text-warning" aria-hidden focusable="false" />
                                     <MarkdownContent markdown={gap} className="min-w-0 flex-1" />
                                 </div>
                             </SurfaceListCardItem>
@@ -429,7 +429,7 @@ export const MockInterviewScorecard = ({
             {grade.followUpQuestion ? (
                 <LabeledCard label={t("mockInterview.followUpTitle")}>
                     <div className="flex items-start gap-2">
-                        <ChatCircleIcon className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden focusable="false" />
+                        <ChatCircleIcon className="size-4 shrink-0 text-accent" aria-hidden focusable="false" />
                         <MarkdownContent markdown={grade.followUpQuestion} className="min-w-0 flex-1 italic" />
                     </div>
                 </LabeledCard>

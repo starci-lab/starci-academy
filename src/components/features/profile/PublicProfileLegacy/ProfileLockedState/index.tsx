@@ -2,17 +2,22 @@
 
 import React from "react"
 import {
+    Button,
     Card,
     CardContent,
     cn,
     Typography,
 } from "@heroui/react"
 import {
+    useLocale,
     useTranslations,
 } from "next-intl"
 import {
-    Lock as LockIcon,
-} from "@gravity-ui/icons"
+    useRouter,
+} from "next/navigation"
+import {
+    LockIcon,
+} from "@phosphor-icons/react"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -27,6 +32,7 @@ import { useAppSelector } from "@/redux/hooks"
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
 import { FollowButton } from "@/components/reuseable/FollowButton"
 import { UserAvatar } from "@/components/reuseable/UserAvatar"
+import { pathConfig } from "@/resources/path"
 
 /** Props for {@link ProfileLockedState}. */
 export type ProfileLockedStateProps = WithClassNames<undefined>
@@ -47,6 +53,8 @@ export const ProfileLockedState = ({
     className,
 }: ProfileLockedStateProps) => {
     const t = useTranslations()
+    const locale = useLocale()
+    const router = useRouter()
     // target username: the `/profile/[username]` segment, or — on the bare
     // `/profile` — the signed-in user's own username (one layout for self + others)
     const username = useProfileUsername()
@@ -111,6 +119,14 @@ export const ProfileLockedState = ({
                             icon={<LockIcon aria-hidden focusable="false" />}
                             title={t("publicProfile.locked.title")}
                             description={t("publicProfile.locked.description")}
+                            action={(
+                                <Button
+                                    variant="secondary"
+                                    onPress={() => router.push(pathConfig().locale(locale).course().build())}
+                                >
+                                    {t("nav.courses")}
+                                </Button>
+                            )}
                         />
                     </CardContent>
                 </Card>

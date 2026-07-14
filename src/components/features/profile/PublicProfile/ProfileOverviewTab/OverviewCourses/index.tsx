@@ -13,7 +13,7 @@ import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQuery
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { IconTile } from "@/components/blocks/identity/IconTile"
-import { SegmentBar } from "@/components/blocks/stats/SegmentBar"
+import { CourseProgressBar } from "@/components/blocks/stats/CourseProgressBar"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { useAppSelector } from "@/redux/hooks"
@@ -28,13 +28,6 @@ export interface OverviewCoursesProps extends WithClassNames<undefined> {
     onSeeMore?: () => void
     /** Text for the see-more link. */
     seeMoreLabel?: React.ReactNode
-}
-
-/** Segment colour per course progress dimension. */
-const DIM_COLOR: Record<string, string> = {
-    content: "var(--accent)",
-    challenge: "var(--success)",
-    milestone: "var(--warning)",
 }
 
 /**
@@ -132,14 +125,11 @@ export const OverviewCourses = ({ className, label, icon, onSeeMore, seeMoreLabe
                                                 {percent}%
                                             </Typography>
                                         </div>
-                                        <SegmentBar
-                                            max={totalTasks || 1}
+                                        <CourseProgressBar
                                             ariaLabel={`${item.label} · ${percent}%`}
-                                            segments={dims.map((d) => ({
-                                                key: d.key,
+                                            dims={dims.map((d) => ({
+                                                ...d,
                                                 label: t(`dashboard.courseProgress.${d.key}`),
-                                                value: d.completed,
-                                                color: DIM_COLOR[d.key],
                                             }))}
                                         />
                                     </div>

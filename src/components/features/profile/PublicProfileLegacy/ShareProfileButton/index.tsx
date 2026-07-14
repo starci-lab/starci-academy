@@ -9,8 +9,8 @@ import {
     toast,
 } from "@heroui/react"
 import {
-    NodesRight as ShareIcon,
-} from "@gravity-ui/icons"
+    ShareNetworkIcon as ShareIcon,
+} from "@phosphor-icons/react"
 import {
     useTranslations,
 } from "next-intl"

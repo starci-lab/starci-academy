@@ -48,9 +48,9 @@ const FilterRow = ({ label, on }: { label: string; on?: boolean }) => (
 export const SitePreview = () => (
     <div className="flex h-full flex-col bg-surface text-foreground">
         {/* app nav */}
-        <div className="flex shrink-0 items-center justify-between border-b border-default px-4 py-2.5">
+        <div className="flex shrink-0 items-center justify-between border-b border-default px-4 py-2">
             <div className="flex items-center gap-4">
-                <span className="flex items-center gap-1.5 font-semibold">
+                <span className="flex items-center gap-2 font-semibold">
                     <span aria-hidden className="size-3.5 rounded-md bg-accent" />
                     StarCi
                 </span>
@@ -66,13 +66,13 @@ export const SitePreview = () => (
         {/* body: sidebar filter + list khoá */}
         <div className="flex min-h-0 flex-1">
             <div className="hidden w-1/3 max-w-[180px] shrink-0 flex-col gap-3 border-r border-default p-3 text-xs sm:flex">
-                <div className="flex flex-col gap-1.5">
+                <div className="flex flex-col gap-2">
                     <span className="font-medium text-muted">Chủ đề</span>
                     <FilterRow label="Fullstack" on />
                     <FilterRow label="System Design" />
                     <FilterRow label="DevOps" />
                 </div>
-                <div className="flex flex-col gap-1.5">
+                <div className="flex flex-col gap-2">
                     <span className="font-medium text-muted">Hình thức</span>
                     <FilterRow label="Tự học" on />
                     <FilterRow label="Có mentor" />

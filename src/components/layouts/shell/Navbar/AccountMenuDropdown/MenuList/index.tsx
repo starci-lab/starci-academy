@@ -1,6 +1,6 @@
 "use client"
 
-import { Bookmark as BookmarkSimpleIcon, ChevronRight as CaretRightIcon } from "@gravity-ui/icons"
+import { BookmarkSimpleIcon, CaretRightIcon } from "@phosphor-icons/react"
 import { FaGithub } from "react-icons/fa6"
 import React, { useCallback, useMemo } from "react"
 import {
@@ -115,7 +115,7 @@ export const MenuList = ({ className }: MenuListProps) => {
                 >
                     <div className="flex items-center justify-between gap-3 w-full">
                         <div className="text-sm">{t("nav.toggleLanguage")}</div>
-                        <div className="flex items-center gap-1.5 text-sm text-muted">
+                        <div className="flex items-center gap-2 text-sm text-muted">
                             {currentLanguageLabel}
                             <CaretRightIcon className="size-5" />
                         </div>

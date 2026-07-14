@@ -121,7 +121,7 @@ export const DueReviewHero = ({ className }: DueReviewHeroProps) => {
                     }}
                 >
                     <div className="flex flex-wrap items-center justify-between gap-3">
-                        <div className="flex flex-col gap-0.5">
+                        <div className="flex flex-col gap-0">
                             {/* PRIMARY stat of this block — `color="default"` (thầy 2026-07-12:
                                 "text-foreground, chỉ muted ở text secondary") — only the
                                 breakdown line below is secondary/muted. */}

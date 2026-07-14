@@ -2,7 +2,7 @@ import { JobStatus } from "@/modules/types/enums/job-status"
 import { JobCategory } from "@/modules/types/enums/job-category"
 
 /**
- * Resolves `aiProcessing.*` title/description for a category + status (same keys as {@link AIProcessingModal}).
+ * Resolves `aiProcessing.*` title/description for a category + status (consumed by {@link AIProcessingText}).
  */
 export interface AiProcessingCopy {
     /** Short headline from locale. */
@@ -26,7 +26,7 @@ export interface ResolveAiProcessingCopyParams {
 }
 
 /**
- * Resolves `aiProcessing.*` title/description for a category + status (same keys as {@link AIProcessingModal}).
+ * Resolves `aiProcessing.*` title/description for a category + status (consumed by {@link AIProcessingText}).
  */
 export const resolveAiProcessingCopy = (
     /** Translations function. */

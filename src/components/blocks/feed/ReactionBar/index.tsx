@@ -110,6 +110,20 @@ export const ReactionBar = ({
         return () => document.removeEventListener("pointerdown", onPointerDown)
     }, [open])
 
+    // close the picker on Escape, from anywhere within the bar
+    useEffect(() => {
+        if (!open) {
+            return
+        }
+        const onKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                setOpen(false)
+            }
+        }
+        document.addEventListener("keydown", onKeyDown)
+        return () => document.removeEventListener("keydown", onKeyDown)
+    }, [open])
+
     // read-only: count + the viewer's emoji; nothing when there are no reactions
     if (!onReact) {
         if (count <= 0) {
@@ -133,18 +147,13 @@ export const ReactionBar = ({
         <div
             ref={rootRef}
             className={cn("relative flex items-center gap-2", className)}
-            onKeyDown={(event) => {
-                if (event.key === "Escape") {
-                    setOpen(false)
-                }
-            }}
         >
             <button
                 type="button"
                 aria-label="React"
                 aria-expanded={open}
                 onClick={() => setOpen((previous) => !previous)}
-                className="flex items-center gap-1 rounded-full px-2 py-0.5 text-muted transition-colors hover:bg-default/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                className="flex items-center gap-1 rounded-full px-2 py-0 text-muted transition-colors hover:bg-default/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
             >
                 <AnimatePresence mode="popLayout" initial={false}>
                     {myReaction ? (

@@ -143,7 +143,7 @@ export const WorkSessionHeader = ({
             <ScrollShadow
                 orientation="horizontal"
                 hideScrollBar
-                className="flex items-center gap-3 px-4 py-2.5 sm:px-6"
+                className="flex items-center gap-3 px-4 py-2 sm:px-6"
             >
                 <BackLink label={backLabel} onPress={onBack} />
                 {title ? (

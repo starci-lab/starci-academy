@@ -157,7 +157,7 @@ export const ShowcaseMockup = ({
                 )}
             >
                 {/* window chrome */}
-                <div className="flex items-center gap-2 border-b border-default px-4 py-2.5">
+                <div className="flex items-center gap-2 border-b border-default px-4 py-2">
                     <span aria-hidden className="size-2.5 rounded-full bg-danger" />
                     <span aria-hidden className="size-2.5 rounded-full bg-warning" />
                     <span aria-hidden className="size-2.5 rounded-full bg-success" />

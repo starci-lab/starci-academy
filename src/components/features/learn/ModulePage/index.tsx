@@ -47,7 +47,10 @@ import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { DifficultyChip } from "@/components/blocks/chips/DifficultyChip"
 import { HighlightChip } from "@/components/blocks/chips/HighlightChip"
 import { StatusChip } from "@/components/blocks/chips/StatusChip"
-import { ListRow } from "@/components/blocks/lists/ListRow"
+import {
+    SurfaceListCard,
+    SurfaceListCardRow,
+} from "@/components/blocks/cards/SurfaceListCard"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
 import { CourseContentTier } from "@/modules/types/enums/course-content-tier"
@@ -263,11 +266,10 @@ export const ModulePage = ({ className }: ModulePageProps) => {
                                     <Typography type="body-sm" weight="semibold" color="muted">
                                         {t("modulePage.lessonsHeading")}
                                     </Typography>
-                                    <div className="flex flex-col gap-2">
+                                    <SurfaceListCard>
                                         {lessons.map((lesson) => (
-                                            <ListRow
+                                            <SurfaceListCardRow
                                                 key={lesson.id}
-                                                className="px-3"
                                                 leading={lesson.id === resumeLesson?.id ? (
                                                     <PlayIcon
                                                         aria-hidden
@@ -311,7 +313,7 @@ export const ModulePage = ({ className }: ModulePageProps) => {
                                                 )}
                                             />
                                         ))}
-                                    </div>
+                                    </SurfaceListCard>
                                 </div>
 
                                 {/* challenge list — every challenge across this module's lessons */}
@@ -320,11 +322,10 @@ export const ModulePage = ({ className }: ModulePageProps) => {
                                         <Typography type="body-sm" weight="semibold" color="muted">
                                             {t("modulePage.challengesHeading")}
                                         </Typography>
-                                        <div className="flex flex-col gap-2">
+                                        <SurfaceListCard>
                                             {challenges.map((challenge) => (
-                                                <ListRow
+                                                <SurfaceListCardRow
                                                     key={challenge.id}
-                                                    className="px-3"
                                                     leading={(
                                                         <PuzzlePieceIcon
                                                             aria-hidden
@@ -338,7 +339,7 @@ export const ModulePage = ({ className }: ModulePageProps) => {
                                                     meta={<DifficultyChip difficulty={toDifficulty(challenge.difficulty)} />}
                                                 />
                                             ))}
-                                        </div>
+                                        </SurfaceListCard>
                                     </div>
                                 ) : null}
                             </div>

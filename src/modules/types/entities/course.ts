@@ -47,4 +47,6 @@ export interface CourseEntity extends AbstractEntity {
     enrollments?: Array<EnrollmentEntity>
     /** The number of enrollments of the course. */
     enrollmentCount: number
+    /** Whether the current viewer is enrolled in this course; null when anonymous. */
+    isEnrolled?: boolean | null
 }

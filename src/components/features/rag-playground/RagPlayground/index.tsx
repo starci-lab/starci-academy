@@ -30,6 +30,7 @@ import {
     StackIcon,
 } from "@phosphor-icons/react"
 import { HeroBanner } from "@/components/blocks/marketing/HeroBanner"
+import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { SelectableCardGroup } from "@/components/blocks/navigation/SelectableCardGroup"
 import { Callout } from "@/components/blocks/feedback/Callout"
@@ -500,23 +501,15 @@ export const RagPlayground = ({ className }: RagPlaygroundProps) => {
                                                             <Typography type="body-xs" color="muted">
                                                                 {t("ragPlayground.chat.sources")}
                                                             </Typography>
-                                                            {turn.sources.map((source, index) => (
-                                                                <div
-                                                                    key={`${turn.id}-${index}`}
-                                                                    className="rounded-lg border border-default bg-default px-2 py-1"
-                                                                >
-                                                                    <Typography type="body-xs" className="font-mono">
-                                                                        {source.filePath}
-                                                                    </Typography>
-                                                                    <Typography
-                                                                        type="body-xs"
-                                                                        color="muted"
-                                                                        className="line-clamp-2"
-                                                                    >
-                                                                        {source.snippet}
-                                                                    </Typography>
-                                                                </div>
-                                                            ))}
+                                                            <SurfaceListCard bordered>
+                                                                {turn.sources.map((source, index) => (
+                                                                    <SurfaceListCardRow
+                                                                        key={`${turn.id}-${index}`}
+                                                                        title={<span className="font-mono">{source.filePath}</span>}
+                                                                        subtitle={source.snippet}
+                                                                    />
+                                                                ))}
+                                                            </SurfaceListCard>
                                                         </div>
                                                     ) : null}
                                                 </div>

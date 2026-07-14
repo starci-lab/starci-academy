@@ -3213,6 +3213,12 @@
   "payment": {
     "title": "Thanh toán",
     "desc": "Chọn một phương thức để tiếp tục",
+    "tabsAria": "Các bước thanh toán",
+    "tabs": {
+      "summary": "Tóm tắt",
+      "payment": "Thanh toán"
+    },
+    "continueToPayment": "Tiếp tục thanh toán",
     "currency": {
       "vnd": "Trong nước · VND",
       "usd": "Quốc tế · USD"
@@ -3223,6 +3229,11 @@
     "noCardStored": "StarCi Academy không lưu thông tin thẻ của bạn",
     "aiPlanName": "Gói AI",
     "membershipName": "Hội viên StarCi",
+    "alreadyEnrolled": {
+      "title": "Bạn đã ghi danh khóa này rồi",
+      "description": "Vào học luôn?",
+      "action": "Vào khóa"
+    },
     "installment": {
       "title": "Hình thức thanh toán",
       "payFull": "Trả 1 lần",
@@ -4207,11 +4218,47 @@
     "loadError": "Không tải được thông báo",
     "markAllRead": "Đánh dấu tất cả đã đọc",
     "retry": "Thử lại",
-    "title": "Thông báo"
+    "title": "Thông báo",
+    "seeAll": "Xem tất cả",
+    "description": "Cập nhật về bài chấm, bình luận, người theo dõi và các hoạt động khác của bạn.",
+    "emptyFiltered": "Không có thông báo nào trong mục này",
+    "emptyCta": "Khám phá khóa học",
+    "tabsAria": "Lọc thông báo theo loại",
+    "pageInfo": "{from}–{to} / {total}",
+    "tabs": {
+      "all": "Tất cả",
+      "system": "Hệ thống",
+      "challengeGraded": "Chấm điểm Challenge",
+      "codingGraded": "Coding",
+      "milestoneGraded": "Chấm điểm Milestone",
+      "newFollower": "Người theo dõi",
+      "commentReply": "Bình luận",
+      "subscriptionGranted": "Gói AI",
+      "announcement": "Thông báo chung",
+      "streakMilestone": "Streak"
+    }
   },
   "notification": {
+    "challengeGraded": {
+      "title": "Challenge \"{title}\" đã được chấm: {result, select, passed {Đạt} failed {Chưa đạt} other {}}"
+    },
+    "codingGraded": {
+      "title": "Bài coding \"{title}\": {verdictLabel}"
+    },
+    "communityReply": {
+      "title": "{actor} đã trả lời bình luận của bạn"
+    },
+    "milestoneGraded": {
+      "title": "Task \"{title}\" đã được chấm: {result, select, passed {Đạt} failed {Chưa đạt} other {}}"
+    },
+    "newFollower": {
+      "title": "{actor} vừa theo dõi bạn"
+    },
     "streakMilestone": {
       "title": "Streak {days} ngày! +{coin} Coin đã cộng vào ví"
+    },
+    "subscriptionGranted": {
+      "title": "Gói AI {tier} đã được kích hoạt cho bạn"
     }
   },
   "streakFreeze": {

@@ -30,7 +30,7 @@ const TYPE_TO_BAR: Record<SkeletonTypographyType, string> = {
     h4: "h-5 my-1", // 20/28
     h5: "h-[18px] my-[5px]", // 18/28
     h6: "h-4 my-1", // 16/24
-    body: "h-4 my-1.5", // 16/28
+    body: "h-4 my-2", // 16/28
     "body-sm": "h-[14px] my-[5px]", // 14/24
     "body-xs": "h-3 my-1", // 12/20
 }

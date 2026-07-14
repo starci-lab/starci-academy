@@ -339,7 +339,7 @@ export const PlaygroundSession = () => {
 
                 {/* ── RIGHT: Terminal / Resources workspace ── */}
                 <div className="flex flex-col overflow-hidden">
-                    <div className="border-b border-default px-4 py-2.5">
+                    <div className="border-b border-default px-4 py-2">
                         <TabsCard
                             leftTabs={{
                                 items: WORKSPACE_TABS,

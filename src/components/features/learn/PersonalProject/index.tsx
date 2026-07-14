@@ -26,6 +26,7 @@ import {
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useAppSelector } from "@/redux/hooks"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { RichText } from "@/components/reuseable/RichText"
 import { useQueryMilestoneTaskSwr } from "@/hooks/swr/api/graphql/queries/useQueryMilestoneTaskSwr"
 import { RelatedContentList } from "@/components/blocks/learn/RelatedContentList"
@@ -84,15 +85,15 @@ export const Task = ({
             <TaskLockedAlert />
             <TaskBrief />
             {/* SCHEMA V2 tasks (with briefs) keep their rubric internal — the legacy
-                public criteria + codeImplementations are only shown for old tasks. */}
+                public criteria + codeImplementations are only shown for old tasks.
+                One LabeledCard for both (frameless — criteria accordion + the
+                implementation guide already frame themselves), instead of two
+                title-less blocks stacked with their own hand-rolled headers. */}
             {(displayTask?.briefs?.length ?? 0) === 0 && (
-                <div className="flex flex-col gap-3">
-                    <Typography type="body" weight="semibold">
-                        {t("task.criteriaTitle")}
-                    </Typography>
+                <LabeledCard label={t("task.criteriaTitle")} frameless contentClassName="flex flex-col gap-4">
                     <TaskCriteriaList />
                     <TaskCodeImplementations />
-                </div>
+                </LabeledCard>
             )}
             {/* quiet, self-hiding "read before you build" — query auto-built from the
                 task's own title+description, no typing. Sits ONLY in the reading column;

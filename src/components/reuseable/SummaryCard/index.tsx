@@ -5,8 +5,8 @@ import {
     cn,
 } from "@heroui/react"
 import {
-    ChevronRight as ChevronRightIcon,
-} from "@gravity-ui/icons"
+    CaretRightIcon as ChevronRightIcon,
+} from "@phosphor-icons/react"
 import {
     PressableCard,
 } from "../PressableCard"

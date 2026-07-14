@@ -1,7 +1,7 @@
 "use client"
 
 import { CheckCircleIcon, LightbulbIcon, MapPinIcon, WarningCircleIcon } from "@phosphor-icons/react"
-import { Card, Chip, cn, Link } from "@heroui/react"
+import { Chip, cn, Link } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import React, { useMemo } from "react"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
@@ -46,7 +46,7 @@ export const FeedbackCard = (props: FeedbackCardProps) => {
         if (!suggestion) {
             return (
                 <Chip color="success" size="sm" variant="soft" className="shrink-0">
-                    <CheckCircleIcon className="size-4" />
+                    <CheckCircleIcon className="size-3" />
                     <Chip.Label>{t("feedback.perfect")}</Chip.Label>
                 </Chip>
             )
@@ -55,28 +55,28 @@ export const FeedbackCard = (props: FeedbackCardProps) => {
         case SubmissionFeedbackSeverity.High:
             return (
                 <Chip color="danger" size="sm" variant="soft" className="shrink-0">
-                    <WarningCircleIcon className="size-4" />
+                    <WarningCircleIcon className="size-3" />
                     <Chip.Label>{t("feedback.severity.high")}</Chip.Label>
                 </Chip>
             )
         case SubmissionFeedbackSeverity.Medium:
             return (
                 <Chip color="warning" size="sm" variant="soft" className="shrink-0">
-                    <WarningCircleIcon className="size-4" />
+                    <WarningCircleIcon className="size-3" />
                     <Chip.Label>{t("feedback.severity.medium")}</Chip.Label>
                 </Chip>
             )
         case SubmissionFeedbackSeverity.Low:
             return (
                 <Chip color="default" size="sm" variant="soft" className="shrink-0">
-                    <WarningCircleIcon className="size-4" />
+                    <WarningCircleIcon className="size-3" />
                     <Chip.Label>{t("feedback.severity.low")}</Chip.Label>
                 </Chip>
             )
         default:
             return (
                 <Chip color="warning" size="sm" variant="soft" className="shrink-0">
-                    <WarningCircleIcon className="size-4" />
+                    <WarningCircleIcon className="size-3" />
                     <Chip.Label>{t("feedback.severity.unknown")}</Chip.Label>
                 </Chip>
             )
@@ -107,12 +107,12 @@ export const FeedbackCard = (props: FeedbackCardProps) => {
     const showFooter = Boolean(locationLabel || suggestion)
 
     const inner = (
-        <div className={cn("flex flex-col gap-3", frameless ? "px-4 py-4" : "p-3")}>
+        <div className="flex flex-col gap-3 px-4 py-3">
             <div>
                 {statusChip}
             </div>
             <div className="flex items-start justify-between gap-3">
-                <div className="min-w-0 flex-1 space-y-1.5">
+                <div className="min-w-0 flex-1 space-y-2">
                     <MarkdownContent markdown={message} className="text-sm font-medium" />
                     {detail ? (
                         <MarkdownContent markdown={detail} className="text-xs text-muted" />
@@ -120,14 +120,11 @@ export const FeedbackCard = (props: FeedbackCardProps) => {
                 </div>
             </div>
             {showFooter ? (
-                <div
-                    className={cn("border-t border-divider", frameless ? "-mx-4" : "-mx-3")}
-                    role="separator"
-                />
+                <div className="-mx-4 border-t border-divider" role="separator" />
             ) : null}
             {locationLabel ? (
-                <div className="flex items-center gap-1.5 text-xs text-muted">
-                    <MapPinIcon className="size-4 shrink-0" />
+                <div className="flex items-center gap-2 text-xs text-muted">
+                    <MapPinIcon className="size-3 shrink-0" />
                     {locationHref ? (
                         <Link
                             href={locationHref}
@@ -144,7 +141,7 @@ export const FeedbackCard = (props: FeedbackCardProps) => {
                 </div>
             ) : null}
             {suggestion ? (
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-2">
                     <LightbulbIcon className="size-4 shrink-0 text-muted" />
                     <MarkdownContent markdown={suggestion} className="text-sm text-muted" />
                 </div>
@@ -158,8 +155,8 @@ export const FeedbackCard = (props: FeedbackCardProps) => {
     }
 
     return (
-        <Card className={cn("bg-surface p-0", className)}>
-            <Card.Content>{inner}</Card.Content>
-        </Card>
+        <div className={cn("rounded-medium border border-default", className)}>
+            {inner}
+        </div>
     )
 }

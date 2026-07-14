@@ -128,7 +128,7 @@ export const ProgrammingLanguageTabs = ({
                                     ? PROGRAMMING_LANGUAGE_TABS_SECONDARY_TAB_CLASS_NAME
                                     : undefined}
                             >
-                                <span className="flex items-center gap-1.5">
+                                <span className="flex items-center gap-2">
                                     <Icon
                                         aria-hidden
                                         className={cn("shrink-0", isSecondary ? "size-5" : "size-5")}

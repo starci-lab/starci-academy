@@ -49,12 +49,12 @@ export const AiKeyGroup = ({ group }: AiKeyGroupProps) => {
                     </span>
                 </div>
                 {group.keys.length > 0 ? (
-                    <div className="flex flex-wrap gap-1.5">
+                    <div className="flex flex-wrap gap-2">
                         {group.keys.map((key, index) => (
                             <span
                                 key={`${key.keyMask}-${index}`}
                                 className={cn(
-                                    "inline-flex items-center rounded-full px-2.5 py-0.5 font-mono text-xs font-medium",
+                                    "inline-flex items-center rounded-full px-2 py-0 font-mono text-xs font-medium",
                                     key.healthy
                                         ? "bg-success/10 text-success"
                                         : "bg-danger/10 text-danger",

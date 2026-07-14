@@ -75,7 +75,7 @@ export const LeaderboardTable = ({
     }
 
     return (
-        <div className={cn("flex flex-col gap-0.5", className)}>
+        <div className={cn("flex flex-col gap-0", className)}>
             {rankedEntries.map(({ entry, displayRank }) => {
                 const isViewer = !!viewerUserId && entry.userId === viewerUserId
                 return (

@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl"
 import React from "react"
 import { GlobalSearchContentBlock } from "./Block"
 import { GlobalSearchEmpty } from "./Empty"
-import { ScrollShadow } from "@heroui/react"
+import { ScrollShadow, Typography } from "@heroui/react"
 import { useAppSelector } from "@/redux/hooks"
 import type { AutocompleteGlobalSearchItem } from "@/modules/api/graphql/queries/types/autocomplete-global-search"
 
@@ -100,10 +100,10 @@ export const GlobalSearchContent = () => {
             ) : (
                 <div className="flex flex-col gap-3 px-2">
                     {sections.map((section) => (
-                        <div key={section.kind} className="flex flex-col gap-1">
-                            <div className="px-2 text-xs font-medium text-muted">
+                        <div key={section.kind} className="flex flex-col gap-2">
+                            <Typography type="body-xs" weight="medium" color="muted" className="px-2">
                                 {`${section.label} (${section.items?.length ?? 0})`}
-                            </div>
+                            </Typography>
                             <GlobalSearchContentBlock kind={section.kind} items={section.items ?? []} />
                         </div>
                     ))}

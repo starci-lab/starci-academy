@@ -64,7 +64,7 @@ export const InputButtonLike = ({
                 </span>
             </span>
             {suffix ? (
-                <span className="inline-flex shrink-0 items-center gap-1.5">
+                <span className="inline-flex shrink-0 items-center gap-2">
                     {suffix}
                 </span>
             ) : null}

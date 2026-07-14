@@ -1065,7 +1065,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                     {remainingSeconds !== null ? (
                         <span
                             className={cn(
-                                "flex shrink-0 items-center gap-1.5",
+                                "flex shrink-0 items-center gap-2",
                                 remainingSeconds <= TIME_LIMIT_WARNING_SECONDS && "text-warning",
                             )}
                         >
@@ -1222,7 +1222,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                                     // sentence sits right next to the question's own MarkdownContent.
                                         <code
                                             key={position}
-                                            className="rounded-md bg-default px-1 py-0.5 font-mono text-sm text-foreground [overflow-wrap:anywhere]"
+                                            className="rounded-md bg-default px-1 py-0 font-mono text-sm text-foreground [overflow-wrap:anywhere]"
                                         >
                                             {segment.text}
                                         </code>
@@ -1288,7 +1288,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                                                             // design system's own `--text-sm` token, not a raw px.
                                                             style={{ fontSize: "var(--text-sm)" }}
                                                             className={cn(
-                                                                "min-w-16 justify-center rounded-full px-3 py-0.5 font-medium transition-colors",
+                                                                "min-w-16 justify-center rounded-full px-3 py-0 font-medium transition-colors",
                                                                 chipToneClassName,
                                                             )}
                                                         >
@@ -1343,7 +1343,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                                                 >
                                                     <Chip
                                                         size="sm"
-                                                        className="rounded-full border border-default bg-surface px-3 py-0.5 text-sm font-medium"
+                                                        className="rounded-full border border-default bg-surface px-3 py-0 text-sm font-medium"
                                                     >
                                                         {term}
                                                     </Chip>

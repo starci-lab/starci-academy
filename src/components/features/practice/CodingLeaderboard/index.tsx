@@ -8,7 +8,8 @@ import { useAppSelector } from "@/redux/hooks"
 import { queryCodingLeaderboard } from "@/modules/api/graphql/queries/query-coding-leaderboard"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
-import { UserAvatar } from "@/components/reuseable/UserAvatar"
+import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { UserCell } from "@/components/blocks/identity/UserCell"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Max ranked users to pull for the board (backend caps this too). */
@@ -74,47 +75,40 @@ export const CodingLeaderboard = ({ className }: CodingLeaderboardProps) => {
                 retryLabel: t("practice.retry"),
             }}
         >
-            <div className={cn("mx-auto flex w-full max-w-2xl flex-col gap-3", className)}>
+            <SurfaceListCard className={cn("mx-auto w-full max-w-2xl", className)}>
                 {entries.map((entry, index) => {
                     // rank is implicit array order (board is pre-sorted by solvedCount desc)
                     const rank = index + 1
                     const isViewer = !!viewerId && entry.userId === viewerId
                     return (
-                        <div
+                        <SurfaceListCardItem
                             key={entry.userId}
-                            className={cn(
-                                "flex items-center gap-3 rounded-2xl px-3 py-2 transition-colors",
-                                isViewer ? "bg-accent/10" : "hover:bg-default-50",
-                            )}
+                            className={cn(isViewer && "bg-accent/10")}
                         >
-                            {/* rank position */}
-                            <Typography type="body-sm" weight="semibold" color="muted" align="center" className="w-6 shrink-0">
-                                {rank}
-                            </Typography>
-                            <UserAvatar
-                                username={entry.username}
-                                size="sm"
-                                className={cn(isViewer && "ring-2 ring-accent")}
-                            />
-                            {/* learner name + "you" chip on the viewer's row */}
-                            <div className="flex min-w-0 flex-1 items-center gap-2">
-                                <Typography type="body-sm" weight="medium" className="line-clamp-1">
-                                    {entry.username}
+                            <div className="flex items-center gap-3">
+                                {/* rank position */}
+                                <Typography type="body-sm" weight="semibold" color="muted" align="center" className="w-6 shrink-0">
+                                    {rank}
                                 </Typography>
-                                {isViewer && (
-                                    <Chip size="sm" variant="soft" color="accent">
-                                        {t("practice.leaderboard.you")}
-                                    </Chip>
-                                )}
+                                <UserCell
+                                    username={entry.username}
+                                    size="sm"
+                                    className="flex-1"
+                                    trailing={isViewer ? (
+                                        <Chip size="sm" variant="soft" color="accent">
+                                            {t("practice.leaderboard.you")}
+                                        </Chip>
+                                    ) : undefined}
+                                />
+                                {/* the ranking metric — distinct problems solved (NOT points) */}
+                                <Typography type="body-sm" weight="semibold" className="shrink-0 text-accent">
+                                    {t("practice.leaderboard.solved", { count: entry.solvedCount })}
+                                </Typography>
                             </div>
-                            {/* the ranking metric — distinct problems solved (NOT points) */}
-                            <Typography type="body-sm" weight="semibold" className="shrink-0 text-accent">
-                                {t("practice.leaderboard.solved", { count: entry.solvedCount })}
-                            </Typography>
-                        </div>
+                        </SurfaceListCardItem>
                     )
                 })}
-            </div>
+            </SurfaceListCard>
         </AsyncContent>
     )
 }

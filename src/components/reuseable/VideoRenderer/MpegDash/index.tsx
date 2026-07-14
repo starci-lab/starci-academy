@@ -189,6 +189,7 @@ export const MpegDashPlayer = ({ src, className }: MpegDashPlayerProps) => {
             onMouseEnter={() => setHideControls(false)}
             onMouseLeave={() => setHideControls(true)}
         >
+            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- convenience click-to-toggle duplicate; play/pause is already keyboard-accessible via the VideoControls button below */}
             <video
                 ref={videoRef}
                 className="h-full w-full object-contain"

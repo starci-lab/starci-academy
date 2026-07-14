@@ -28,7 +28,7 @@ import { useQueryUserFollowingInfiniteSwr } from "@/hooks/swr/api/graphql/querie
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { InfiniteScrollSentinel } from "@/components/blocks/async/InfiniteScrollSentinel"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
-import { UserAvatar } from "@/components/reuseable/UserAvatar"
+import { UserCell } from "@/components/blocks/identity/UserCell"
 import { pathConfig } from "@/resources/path"
 import { ModalShell } from "@/components/blocks/layout/ModalShell"
 
@@ -90,13 +90,16 @@ export const FollowListModal = ({ className }: WithClassNames<undefined>) => {
             onOpenChange={setOpen}
             className={className}
             size="sm"
+            bodyStartsWithTabs
             header={(
-                <Typography type="h4" weight="bold">
+                <Typography type="body" weight="semibold">
                     {t("followList.title")}
                 </Typography>
             )}
         >
-            <div className="flex flex-col gap-3">
+            {/* Tabs ↔ list-below = 2 different-function zones (nav vs content) →
+                gap-6, not gap-3 (fe/foundations/gap.md's between-block rule). */}
+            <div className="flex flex-col gap-6">
                 <Tabs
                     variant="secondary"
                     selectedKey={tab}
@@ -107,7 +110,7 @@ export const FollowListModal = ({ className }: WithClassNames<undefined>) => {
                         <Tabs.List aria-label={t("followList.title")}>
                             {TABS.map((tabId) => (
                                 <Tabs.Tab key={tabId} id={tabId}>
-                                    <span className="flex items-center gap-1.5">
+                                    <span className="flex items-center gap-2">
                                         {t(`profile.${tabId}`)}
                                         <span className="tabular-nums text-muted">
                                             {counts[tabId]}
@@ -126,13 +129,7 @@ export const FollowListModal = ({ className }: WithClassNames<undefined>) => {
                         skeleton={(
                             <div className="flex flex-col gap-2">
                                 {[0, 1, 2, 3, 4].map((row) => (
-                                    <div key={row} className="flex items-center gap-3 p-2">
-                                        <Skeleton.Avatar size="sm" />
-                                        <div className="flex flex-col gap-2">
-                                            <Skeleton.Typography type="body-sm" width="1/2" />
-                                            <Skeleton.Typography type="body-xs" width="1/4" />
-                                        </div>
-                                    </div>
+                                    <Skeleton.UserCell key={row} className="p-2" />
                                 ))}
                             </div>
                         )}
@@ -152,22 +149,14 @@ export const FollowListModal = ({ className }: WithClassNames<undefined>) => {
                                 key={follow.globalId}
                                 type="button"
                                 onClick={() => onOpenUser(follow.username)}
-                                className="flex items-center gap-3 rounded-large p-2 text-left transition-colors hover:bg-default/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                                className="rounded-large p-2 text-left transition-opacity hover:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                             >
-                                <UserAvatar
-                                    username={follow.displayName ?? follow.username}
+                                <UserCell
+                                    username={follow.username}
+                                    displayName={follow.displayName ?? follow.username}
                                     avatar={follow.avatar}
-                                    seed={follow.username}
-                                    size="sm"
+                                    handle={`@${follow.username}`}
                                 />
-                                <div className="flex min-w-0 flex-col gap-0">
-                                    <Typography type="body-sm" weight="medium" truncate>
-                                        {follow.displayName ?? follow.username}
-                                    </Typography>
-                                    <Typography type="body-xs" color="muted" truncate>
-                                        @{follow.username}
-                                    </Typography>
-                                </div>
                             </button>
                         ))}
                         {/* grow the list as the sentinel scrolls into view */}

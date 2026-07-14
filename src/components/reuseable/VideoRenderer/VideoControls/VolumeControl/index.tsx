@@ -1,6 +1,6 @@
 "use client"
 
-import { Volume as SpeakerHighIcon, VolumeSlash as SpeakerSlashIcon } from "@gravity-ui/icons"
+import { SpeakerHighIcon, SpeakerSlashIcon } from "@phosphor-icons/react"
 import React from "react"
 import { Button, cn, Popover, Slider } from "@heroui/react"
 import { useCallback, useMemo } from "react"

@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowLeft as ArrowLeftIcon } from "@gravity-ui/icons"
+import { ArrowLeftIcon } from "@phosphor-icons/react"
 import React from "react"
 
 import {
@@ -42,7 +42,7 @@ export const SubPageHeader = ({
 
     return (
         <div className={className}>
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-2">
                 <Button
                     variant="ghost"
                     isIconOnly

@@ -31,33 +31,21 @@ import type {
 } from "@/modules/types/base/class-name"
 import { mutateMarkAllNotificationsAsRead } from "@/modules/api/graphql/mutations/mutation-mark-all-notifications-as-read"
 import { mutateMarkNotificationAsRead } from "@/modules/api/graphql/mutations/mutation-mark-notification-as-read"
-import { queryResolveRoute } from "@/modules/api/graphql/queries/query-resolve-route"
-import type { QueryNotificationData, QueryNotificationTargetData } from "@/modules/api/graphql/queries/types/notifications"
+import type { QueryNotificationData } from "@/modules/api/graphql/queries/types/notifications"
+import { resolveNotificationTargetPath } from "@/modules/notifications/resolve-notification-target"
 import { useQueryMyNotificationsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyNotificationsSwr"
 import { useAppSelector } from "@/redux/hooks"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { ListRow } from "@/components/blocks/lists/ListRow"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { pathConfig } from "@/resources/path"
 
 /** Largest unread count rendered verbatim on the badge before showing "9+". */
 const MAX_BADGE = 9
 
 /** Props for {@link NotificationBell}. */
 export type NotificationBellProps = WithClassNames<undefined>
-
-/**
- * Encode a notification target into the opaque global id the route index
- * expects: base64url of `"<entityName>:<id>"`.
- */
-const encodeGlobalId = (target: QueryNotificationTargetData): string => {
-    const raw = `${target.entityName}:${target.id}`
-    // base64 → base64url (route index decodes base64url(`<entityName>:<id>`))
-    return btoa(raw)
-        .replace(/\+/g, "-")
-        .replace(/\//g, "_")
-        .replace(/=+$/, "")
-}
 
 /**
  * NotificationBell — navbar bell with an unread-count badge and a popover list.
@@ -129,10 +117,7 @@ export const NotificationBell = ({ className }: NotificationBellProps) => {
             if (!target) {
                 return
             }
-            const response = await queryResolveRoute({
-                request: { globalId: encodeGlobalId(target) },
-            })
-            const path = response.data?.resolveRoute?.data?.path
+            const path = await resolveNotificationTargetPath(target)
             if (path) {
                 router.push(`/${locale}${path}`)
             }
@@ -254,6 +239,19 @@ export const NotificationBell = ({ className }: NotificationBellProps) => {
                             ))}
                         </div>
                     </AsyncContent>
+                    {/* footer: deep-link to the full notification center (all types +
+                        pager) — the bell only ever shows the most recent page. */}
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        className="mt-1 w-full"
+                        onPress={() => {
+                            setOpen(false)
+                            router.push(pathConfig().locale(locale).notifications().build())
+                        }}
+                    >
+                        {t("notifications.seeAll")}
+                    </Button>
                 </div>
             </PopoverContent>
         </Popover>

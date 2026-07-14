@@ -3,6 +3,7 @@
 import React from "react"
 import {
     Breadcrumbs,
+    Button,
     Typography,
 } from "@heroui/react"
 import {
@@ -51,7 +52,7 @@ const Section = ({ section }: { section: LegalSection }) => (
         {section.items ? (
             <ul className="flex flex-col gap-2">
                 {section.items.map((item) => (
-                    <li key={item.label ?? item.text} className="flex gap-2.5">
+                    <li key={item.label ?? item.text} className="flex gap-2">
                         <span className="mt-2 size-1.5 shrink-0 rounded-full bg-default-400" aria-hidden />
                         <Typography type="body" color="muted" className="leading-relaxed">
                             {item.label ? (
@@ -117,6 +118,15 @@ export const LegalPage = ({ kind }: LegalPageProps) => {
                         <Section key={section.heading} section={section} />
                     ))}
                 </div>
+                {/* quiet funnel out of the legal doc — never a dead end (§Conversion) */}
+                <Button
+                    variant="tertiary"
+                    size="sm"
+                    className="self-start"
+                    onPress={() => router.push(pathConfig().locale().course().build())}
+                >
+                    {`${t("cart.browseCourses")} →`}
+                </Button>
             </div>
         </PageContainer>
     )

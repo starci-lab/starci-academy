@@ -1,5 +1,5 @@
 "use client"
-import { Chip, cn, ListBox } from "@heroui/react"
+import { Chip, cn, ListBox, Typography } from "@heroui/react"
 import {
     CaretRightIcon,
     CardsIcon,
@@ -129,16 +129,22 @@ export const GlobalSearchContentBlock = (props: GlobalSearchContentBlockProps) =
                 return (
                     <ListBox.Item
                         key={item.id}
-                        className="group rounded-lg py-1 data-[hovered=true]:bg-default-100 data-[pressed=true]:bg-default-200"
+                        className="group rounded-lg py-1 data-[pressed=true]:bg-default"
                         id={item.id}
                         textValue={textValue}
                         onAction={() => onItemPress(item)}
                     >
                         <div className="flex items-start gap-2 py-1">
-                            <Icon aria-hidden focusable="false" className="mt-0.5 size-4 shrink-0 text-muted" />
+                            <Icon aria-hidden focusable="false" className="mt-0 size-4 shrink-0 text-muted" />
                             <div className="min-w-0 flex-1">
                                 <div className="flex items-center gap-2">
-                                    <span className="min-w-0 flex-1 truncate text-sm text-foreground">{titleLine}</span>
+                                    <Typography
+                                        type="body-sm"
+                                        truncate
+                                        className="min-w-0 flex-1 underline-offset-2 group-hover:underline"
+                                    >
+                                        {titleLine}
+                                    </Typography>
                                     {showEnrolledChip ? (
                                         <Chip size="sm" className="shrink-0 bg-success/10 text-success">
                                             <Chip.Label>{t("search.result.enrolled")}</Chip.Label>
@@ -150,7 +156,11 @@ export const GlobalSearchContentBlock = (props: GlobalSearchContentBlockProps) =
                                         </Chip>
                                     ) : null}
                                     {showPremiumLock ? (
-                                        <LockIcon aria-hidden focusable="false" className="size-4 shrink-0 text-muted" />
+                                        <LockIcon
+                                            aria-label={t("learning.outline.premium")}
+                                            focusable="false"
+                                            className="size-4 shrink-0 text-muted"
+                                        />
                                     ) : null}
                                     {kind === "course" ? (
                                         <span className="inline-flex shrink-0 items-center gap-1 text-xs text-accent">
@@ -164,10 +174,12 @@ export const GlobalSearchContentBlock = (props: GlobalSearchContentBlockProps) =
                                     ) : null}
                                 </div>
                                 {textLines.length > 0 ? (
-                                    <ul className="mt-1 list-none space-y-1.5 pl-0">
+                                    <ul className="mt-1 list-none space-y-2 pl-0">
                                         {textLines.map((line: string) => (
                                             <li key={line}>
-                                                <div className="text-xs text-muted">{renderEmText(line)}</div>
+                                                <Typography type="body-xs" color="muted">
+                                                    {renderEmText(line)}
+                                                </Typography>
                                             </li>
                                         ))}
                                     </ul>

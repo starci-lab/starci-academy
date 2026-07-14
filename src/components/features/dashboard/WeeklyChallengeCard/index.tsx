@@ -29,6 +29,10 @@ import type {
 import { useQueryWeeklyChallengeSwr } from "@/hooks/swr/api/graphql/queries/useQueryWeeklyChallengeSwr"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import {
+    SurfaceListCard,
+    SurfaceListCardRow,
+} from "@/components/blocks/cards/SurfaceListCard"
 
 /** How many leaderboard rows to show before truncating. */
 const TOP_ROWS = 5
@@ -147,27 +151,27 @@ export const WeeklyChallengeCard = ({
 
                 {/* recent finishers */}
                 {topRows.length > 0 ? (
-                    <div className="flex flex-col gap-2">
+                    <SurfaceListCard bordered>
                         {topRows.map((entry) => (
-                            <div
+                            <SurfaceListCardRow
                                 key={entry.username}
-                                className="flex items-center gap-2"
-                            >
-                                <UserAvatar
-                                    className="size-6 shrink-0"
-                                    username={entry.username}
-                                    avatar={entry.avatar}
-                                    seed={entry.username}
-                                />
-                                <Typography type="body-sm" className="flex-1 truncate">
-                                    {entry.username}
-                                </Typography>
-                                <Typography type="body-xs" color="muted" className="shrink-0">
-                                    {formatRelative(entry.passedAt)}
-                                </Typography>
-                            </div>
+                                leading={(
+                                    <UserAvatar
+                                        className="size-6 shrink-0"
+                                        username={entry.username}
+                                        avatar={entry.avatar}
+                                        seed={entry.username}
+                                    />
+                                )}
+                                title={entry.username}
+                                trailing={(
+                                    <Typography type="body-xs" color="muted" className="shrink-0">
+                                        {formatRelative(entry.passedAt)}
+                                    </Typography>
+                                )}
+                            />
                         ))}
-                    </div>
+                    </SurfaceListCard>
                 ) : null}
             </LabeledCard>
         </AsyncContent>

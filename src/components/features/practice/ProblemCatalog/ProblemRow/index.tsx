@@ -2,7 +2,6 @@
 
 import React from "react"
 import {
-    Link,
     Typography,
     cn,
 } from "@heroui/react"
@@ -16,6 +15,7 @@ import { CODING_DIFFICULTY_META } from "../../constants"
 import type { ProblemStatus } from "../../types"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { StatusChip } from "@/components/blocks/chips/StatusChip"
+import { SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import type { CodingProblem } from "@/modules/api/graphql/queries/types/coding"
 
 /** Props for {@link ProblemRow}. A list-item, so it accepts its data as props. */
@@ -50,10 +50,12 @@ const STATUS_META: Record<
 
 /**
  * One catalog row: a prominent status icon (✓ solved / ◐ attempted / ○ unsolved),
- * the problem title as a {@link Link} into the solve page, a difficulty
- * {@link StatusChip}, a domain chip, and the point value — with topic tags shown
- * secondary below. A list-item composed of blocks + HeroUI; styling lives in the
- * blocks, this only places them.
+ * the problem title (underlines on hover) navigating into the solve page, a
+ * difficulty {@link StatusChip}, a domain chip, and the point value — with topic
+ * tags shown secondary below. Renders as a {@link SurfaceListCardItem} (the WHOLE
+ * row is the single nav link — `hover="underline"` per the go-there row style) so
+ * it joins its siblings inside the parent {@link SurfaceListCard}, not a
+ * hand-rolled bordered div. Styling lives in the blocks, this only places them.
  *
  * @param props - {@link ProblemRowProps}.
  */
@@ -68,44 +70,53 @@ export const ProblemRow = ({
     const difficultyMeta = CODING_DIFFICULTY_META[problem.difficulty]
 
     return (
-        <div className={cn("flex min-w-0 items-center gap-3 py-2", className)}>
-            {/* status icon — colour + aria-label so status isn't conveyed by colour alone */}
-            <StatusIcon
-                weight={status === "unsolved" ? "regular" : "fill"}
-                aria-label={t(statusMeta.labelKey)}
-                className={cn("size-5 shrink-0", statusMeta.className)}
-            />
+        <SurfaceListCardItem
+            href={`/practice/${problem.slug}`}
+            hover="underline"
+            className={className}
+        >
+            <div className="flex min-w-0 items-center gap-3">
+                {/* status icon — colour + aria-label so status isn't conveyed by colour alone */}
+                <StatusIcon
+                    weight={status === "unsolved" ? "regular" : "fill"}
+                    aria-label={t(statusMeta.labelKey)}
+                    className={cn("size-5 shrink-0", statusMeta.className)}
+                />
 
-            {/* title + tags column */}
-            <div className="flex min-w-0 flex-col gap-2">
-                <Link href={`/practice/${problem.slug}`} className="w-fit">
-                    <Typography type="body-sm" weight="medium" truncate>
+                {/* title + tags column */}
+                <div className="flex min-w-0 flex-col gap-2">
+                    <Typography
+                        type="body-sm"
+                        weight="medium"
+                        truncate
+                        className="w-fit group-hover:underline"
+                    >
                         {problem.title}
                     </Typography>
-                </Link>
-                {problem.tags.length > 0 ? (
-                    <div className="flex flex-wrap items-center gap-2">
-                        {problem.tags.slice(0, 4).map((tag) => (
-                            <Typography key={tag} type="body-xs" color="muted">
-                                {tag}
-                            </Typography>
-                        ))}
-                    </div>
-                ) : null}
-            </div>
+                    {problem.tags.length > 0 ? (
+                        <div className="flex flex-wrap items-center gap-2">
+                            {problem.tags.slice(0, 4).map((tag) => (
+                                <Typography key={tag} type="body-xs" color="muted">
+                                    {tag}
+                                </Typography>
+                            ))}
+                        </div>
+                    ) : null}
+                </div>
 
-            {/* right cluster: difficulty + domain chips + points */}
-            <div className="ml-auto flex shrink-0 items-center gap-2">
-                <StatusChip tone={difficultyMeta.tone}>
-                    {t(difficultyMeta.labelKey)}
-                </StatusChip>
-                <StatusChip tone="neutral">
-                    {t(`codingPractice.domain.${problem.domain}`)}
-                </StatusChip>
-                <Typography type="body-xs" color="muted">
-                    {t("codingPractice.points", { points: problem.points })}
-                </Typography>
+                {/* right cluster: difficulty + domain chips + points */}
+                <div className="ml-auto flex shrink-0 items-center gap-2">
+                    <StatusChip tone={difficultyMeta.tone}>
+                        {t(difficultyMeta.labelKey)}
+                    </StatusChip>
+                    <StatusChip tone="neutral">
+                        {t(`codingPractice.domain.${problem.domain}`)}
+                    </StatusChip>
+                    <Typography type="body-xs" color="muted">
+                        {t("codingPractice.points", { points: problem.points })}
+                    </Typography>
+                </div>
             </div>
-        </div>
+        </SurfaceListCardItem>
     )
 }

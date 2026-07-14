@@ -29,6 +29,7 @@ import { useQueryMyDailyQuestSwr } from "@/hooks/swr/api/graphql/queries/useQuer
 import { useMutateClaimDailyQuestRewardSwr } from "@/hooks/swr/api/graphql/mutations/useMutateClaimDailyQuestRewardSwr"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 
 /** Props for {@link DailyQuest}. */
@@ -82,12 +83,11 @@ export const DailyQuest = ({
             isLoading={data === null || data === undefined || isLoading}
             skeleton={(
                 <div className="flex flex-col gap-3">
-                    {[0, 1, 2].map((row) => (
-                        <div key={row} className="flex items-center gap-2">
-                            <Skeleton className="size-5 shrink-0 rounded-full" />
-                            <Skeleton.Typography type="body-sm" width="1/2" />
-                        </div>
-                    ))}
+                    <SurfaceListCard bordered>
+                        {[0, 1, 2, 3, 4].map((row) => (
+                            <Skeleton.ListRow key={row} withSubtitle={false} withTrailing className="px-4" />
+                        ))}
+                    </SurfaceListCard>
                 </div>
             )}
             isEmpty={!data}
@@ -100,25 +100,32 @@ export const DailyQuest = ({
         >
             {data ? (
                 <div className={cn("flex flex-col gap-3", className)}>
-                    {data.tasks.map((task) => {
-                        const done = task.current >= task.target
-                        return (
-                            <div key={task.key} className="flex items-center gap-2">
-                                {done ? (
-                                    <CheckCircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-success" />
-                                ) : (
-                                    <CircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
-                                )}
-                                {DAILY_QUEST_ICON_MAP[task.key]}
-                                <Typography type="body-sm" className="flex-1 truncate">
-                                    {t(`dashboard.dailyQuest.tasks.${task.key}`)}
-                                </Typography>
-                                <Typography type="body-xs" color="muted">
-                                    {task.current}/{task.target}
-                                </Typography>
-                            </div>
-                        )
-                    })}
+                    <SurfaceListCard bordered>
+                        {data.tasks.map((task) => {
+                            const done = task.current >= task.target
+                            return (
+                                <SurfaceListCardRow
+                                    key={task.key}
+                                    leading={(
+                                        <div className="flex items-center gap-2">
+                                            {done ? (
+                                                <CheckCircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-success" />
+                                            ) : (
+                                                <CircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
+                                            )}
+                                            {DAILY_QUEST_ICON_MAP[task.key]}
+                                        </div>
+                                    )}
+                                    title={t(`dashboard.dailyQuest.tasks.${task.key}`)}
+                                    meta={(
+                                        <Typography type="body-xs" color="muted">
+                                            {task.current}/{task.target}
+                                        </Typography>
+                                    )}
+                                />
+                            )
+                        })}
+                    </SurfaceListCard>
 
                     {/* claim state: already claimed · ready to claim · still in progress */}
                     {data.claimed ? (

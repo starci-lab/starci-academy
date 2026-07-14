@@ -1,8 +1,8 @@
 "use client"
 
-import { Clock as ClockIcon, Sparkles as SparkleIcon } from "@gravity-ui/icons"
 import React from "react"
-import { Chip, cn } from "@heroui/react"
+import { ClockIcon, SparkleIcon } from "@phosphor-icons/react"
+import { Chip, Typography, cn } from "@heroui/react"
 
 import { useTranslations } from "next-intl"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -19,7 +19,10 @@ export interface PersonalProjectAttemptCardProps extends WithClassNames<undefine
 }
 
 /**
- * One milestone personal-task review attempt row in the attempts drawer.
+ * One milestone personal-task review attempt ROW content — rendered inside a
+ * {@link import("@/components/blocks/cards/SurfaceListCard").SurfaceListCardItem}
+ * of the attempts drawer's `SurfaceListCard`, which owns the bordered container +
+ * per-row separator/padding.
  *
  * @param props - Attempt display fields for the card.
  */
@@ -45,25 +48,23 @@ export const PersonalProjectAttemptCard = (props: PersonalProjectAttemptCardProp
         ) : null
 
     return (
-        <article className={cn("rounded-3xl border border-divider/70 bg-content1 p-4 shadow-sm transition hover:border-accent/50 hover:bg-accent/5", className)}>
-            <div className="flex flex-wrap items-start justify-between gap-3">
-                <div className="min-w-0 flex-1">
-                    <div className="text-xs font-semibold uppercase tracking-wide text-accent">
-                        {t("task.attemptNumber", { number: attemptNumber })}
-                    </div>
-                    <div className="mt-2 flex items-center gap-1.5">
-                        <SparkleIcon className="size-5 shrink-0 text-warning" />
-                        {scoreChip}
-                    </div>
-                    <p className="mt-2 text-sm text-foreground">
-                        {feedbackText}
-                    </p>
-                    <div className="mt-2 flex items-center gap-1.5 text-xs text-muted">
-                        <ClockIcon className="size-5 shrink-0" />
-                        {processedAtLabel}
-                    </div>
-                </div>
+        <div className={cn("flex min-w-0 flex-1 flex-col", className)}>
+            <Typography type="body-xs" color="muted">
+                {t("task.attemptNumber", { number: attemptNumber })}
+            </Typography>
+            <div className="mt-2 flex items-center gap-2">
+                <SparkleIcon className="size-4 shrink-0 text-warning" />
+                {scoreChip}
             </div>
-        </article>
+            <Typography type="body-sm" className="mt-2">
+                {feedbackText}
+            </Typography>
+            <div className="mt-2 flex items-center gap-2">
+                <ClockIcon className="size-3 shrink-0 text-muted" />
+                <Typography type="body-xs" color="muted">
+                    {processedAtLabel}
+                </Typography>
+            </div>
+        </div>
     )
 }

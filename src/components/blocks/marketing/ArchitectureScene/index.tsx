@@ -589,7 +589,7 @@ const Bar = ({ node, cell, shade, reduce, selected, onClick }: {
                         // long name/sub (e.g. "elasticsearch") WRAPS onto a second line instead of
                         // running wide enough to visually clip against/overlap a neighbouring
                         // node's mesh when several nodes sit close together (a tight fan/chain)
-                        "flex w-max max-w-28 select-none flex-col items-center gap-0.5 whitespace-normal break-words rounded-md border px-2 py-1 text-center",
+                        "flex w-max max-w-28 select-none flex-col items-center gap-0 whitespace-normal break-words rounded-md border px-2 py-1 text-center",
                         selected && "ring-2 ring-accent ring-offset-1 ring-offset-transparent",
                     )}
                     style={{ backgroundColor: "var(--surface)", borderColor: shade.tint }}
@@ -598,7 +598,7 @@ const Bar = ({ node, cell, shade, reduce, selected, onClick }: {
                     {node.sub ? <span className="font-mono text-[9px] lowercase leading-tight text-muted">{node.sub}</span> : null}
                     <TypeIcon className="size-3 text-muted" aria-hidden />
                     {node.status && StatusIcon ? (
-                        <span className={cn("mt-0.5 flex items-center gap-1 font-mono text-[9px] leading-tight", STATUS_CLASS[node.status.tone])}>
+                        <span className={cn("mt-0 flex items-center gap-1 font-mono text-[9px] leading-tight", STATUS_CLASS[node.status.tone])}>
                             <StatusIcon className="size-3 shrink-0" aria-hidden />
                             {node.status.text}
                         </span>

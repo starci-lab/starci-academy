@@ -56,7 +56,7 @@ export const PinnedProjectCard = ({ pin, className }: PinnedProjectCardProps) =>
                     {/* type badge — Capstone (success) vs Dự án (muted) */}
                     <span
                         className={cn(
-                            "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs",
+                            "inline-flex items-center gap-1 rounded-full px-2 py-0 text-xs",
                             isCourse
                                 ? "bg-success/10 text-success"
                                 : "border border-default text-muted",

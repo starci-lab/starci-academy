@@ -2,9 +2,9 @@
 
 import React from "react"
 import {
-    ChevronUp as CaretUpIcon,
-    ChevronDown as CaretDownIcon,
-} from "@gravity-ui/icons"
+    CaretUpIcon,
+    CaretDownIcon,
+} from "@phosphor-icons/react"
 import {
     cn,
 } from "@heroui/react"
@@ -50,7 +50,7 @@ export const RankDeltaCaret = ({
     return (
         <span
             className={cn(
-                "flex items-center gap-0.5 text-xs font-medium",
+                "flex items-center gap-0 text-xs font-medium",
                 climbed ? "text-success" : "text-danger",
                 className,
             )}

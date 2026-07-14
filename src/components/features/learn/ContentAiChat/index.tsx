@@ -4,11 +4,9 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import {
     Button,
     CloseButton,
-    Input,
     Label,
     Link,
     ScrollShadow,
-    TextField,
     Typography,
     cn,
 } from "@heroui/react"
@@ -64,6 +62,7 @@ import { querySearchCourseContent } from "@/modules/api/graphql/queries/query-se
 import type { SearchCourseContentItem } from "@/modules/api/graphql/queries/types/search-course-content"
 import { ChatToolResult } from "@/components/blocks/learn/ChatToolResult"
 import { EntityResultRow } from "@/components/blocks/learn/EntityResultRow"
+import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 
 /** Props for {@link ContentAiChat}. */
 export type ContentAiChatProps = WithClassNames<undefined>
@@ -543,25 +542,23 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
         />
     )
 
-    /** Fake input — parent composer/quote box owns fill + padding; Input is chỉ chỗ gõ (flat, no field chrome). */
-    const FLAT_CHAT_INPUT_CLASS =
-        "w-full !rounded-none border-0 !bg-transparent !p-0 !shadow-none ring-0 focus:ring-0 hover:!bg-transparent focus:!bg-transparent data-[hovered=true]:!bg-transparent data-[focused=true]:!bg-transparent"
-
+    /** Plain input — parent composer/quote box owns fill + padding; this is chỉ chỗ gõ
+     *  (no HeroUI field chrome, so it never nests a second border/ring inside the box). */
     const chatInputField = () => (
-        <TextField aria-label={t("contentAi.placeholder")} className="w-full">
-            <Input
-                className={FLAT_CHAT_INPUT_CLASS}
-                placeholder={t("contentAi.placeholder")}
-                value={input}
-                onChange={(event) => setInput(event.target.value)}
-                onKeyDown={(event) => {
-                    if (event.key === "Enter") {
-                        event.preventDefault()
-                        void onSend()
-                    }
-                }}
-            />
-        </TextField>
+        <input
+            type="text"
+            aria-label={t("contentAi.placeholder")}
+            className="w-full bg-transparent text-sm text-foreground outline-none placeholder:text-muted"
+            placeholder={t("contentAi.placeholder")}
+            value={input}
+            onChange={(event) => setInput(event.target.value)}
+            onKeyDown={(event) => {
+                if (event.key === "Enter") {
+                    event.preventDefault()
+                    void onSend()
+                }
+            }}
+        />
     )
 
     /** Render an in-chat tool-result turn: an intro line + the pickable widget
@@ -631,63 +628,70 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                 </div>
                 {/* list — self-bounded ScrollShadow + infinite scroll (mirror OutlineRail + followers infinite) */}
                 <ScrollShadow hideScrollBar className="-mx-1 max-h-[55vh] min-h-0 min-w-0 flex-1 overflow-y-auto px-1">
-                    <div className="flex flex-col gap-1">
-                        {drawerSessions.length === 0 && !sessionsInfinite.isValidating ? (
-                            <Typography type="body-sm" color="muted" className="px-1 py-2">
-                                {t("contentAi.noConversations")}
-                            </Typography>
-                        ) : (
-                            drawerSessions.map((session) => (
-                                <div
-                                    key={session.id}
-                                    role="button"
-                                    tabIndex={0}
-                                    className={cn(
-                                        "group flex cursor-pointer items-center gap-2 rounded-xl px-3 py-2 transition-colors hover:bg-default",
-                                        session.id === currentSessionId && "bg-accent/10",
-                                    )}
-                                    onClick={() => onSwitchConversation(session.id)}
-                                    onKeyDown={(event) => {
-                                        if (event.key === "Enter") {
-                                            onSwitchConversation(session.id)
-                                        }
-                                    }}
-                                >
-                                    <div className="flex min-w-0 flex-1 flex-col">
-                                        <Typography type="body-sm" className="truncate">
-                                            {session.title ?? t("contentAi.untitled")}
-                                        </Typography>
-                                        <Typography type="body-xs" color="muted" className="truncate">
-                                            {session.snippet
-                                                ? displayText(session.snippet)
-                                                : t("contentAi.turnsCount", { count: session.messageCount })}
-                                        </Typography>
-                                    </div>
-                                    <button
-                                        type="button"
-                                        aria-label={t("contentAi.deleteConversation")}
-                                        className="shrink-0 cursor-pointer text-muted opacity-0 transition-opacity hover:text-danger group-hover:opacity-100"
-                                        onClick={(event) => {
-                                            event.stopPropagation()
-                                            void onDeleteConversation(session.id)
-                                        }}
+                    <AsyncContent
+                        isLoading={sessionsInfinite.data === undefined}
+                        skeleton={
+                            <div className="flex flex-col gap-2">
+                                {[0, 1, 2].map((row) => (
+                                    <div key={row} className="h-14 animate-pulse rounded-xl bg-default" />
+                                ))}
+                            </div>
+                        }
+                        isEmpty={drawerSessions.length === 0}
+                        emptyContent={{
+                            title: t("contentAi.noConversations"),
+                        }}
+                        error={sessionsInfinite.error}
+                        errorContent={{
+                            title: t("contentAi.noConversations"),
+                        }}
+                    >
+                        <SurfaceListCard bordered>
+                            {drawerSessions.map((session) => (
+                                <SurfaceListCardItem key={session.id}>
+                                    <div
+                                        className={cn(
+                                            "group flex items-center gap-2",
+                                            session.id === currentSessionId && "text-accent",
+                                        )}
                                     >
-                                        <TrashIcon className="size-4" />
-                                    </button>
-                                </div>
-                            ))
-                        )}
-                        {/* grow on scroll instead of a "load more" button */}
-                        <InfiniteScrollSentinel
-                            onReach={() => sessionsInfinite.setSize((size) => size + 1)}
-                            disabled={!hasMoreSessions || sessionsInfinite.isValidating}
-                        />
-                        {sessionsInfinite.isValidating ? (
-                            <Typography type="body-xs" color="muted" className="px-1 py-2 text-center">
-                                {t("common.loading")}
-                            </Typography>
-                        ) : null}
-                    </div>
+                                        <button
+                                            type="button"
+                                            className="flex min-w-0 flex-1 cursor-pointer flex-col text-left"
+                                            onClick={() => onSwitchConversation(session.id)}
+                                        >
+                                            <Typography type="body-sm" className="truncate">
+                                                {session.title ?? t("contentAi.untitled")}
+                                            </Typography>
+                                            <Typography type="body-xs" color="muted" className="truncate">
+                                                {session.snippet
+                                                    ? displayText(session.snippet)
+                                                    : t("contentAi.turnsCount", { count: session.messageCount })}
+                                            </Typography>
+                                        </button>
+                                        <button
+                                            type="button"
+                                            aria-label={t("contentAi.deleteConversation")}
+                                            className="shrink-0 cursor-pointer text-muted opacity-0 transition-opacity hover:text-danger group-hover:opacity-100"
+                                            onClick={() => void onDeleteConversation(session.id)}
+                                        >
+                                            <TrashIcon className="size-4" />
+                                        </button>
+                                    </div>
+                                </SurfaceListCardItem>
+                            ))}
+                        </SurfaceListCard>
+                    </AsyncContent>
+                    {/* grow on scroll instead of a "load more" button */}
+                    <InfiniteScrollSentinel
+                        onReach={() => sessionsInfinite.setSize((size) => size + 1)}
+                        disabled={!hasMoreSessions || sessionsInfinite.isValidating}
+                    />
+                    {sessionsInfinite.isValidating && sessionsInfinite.data !== undefined ? (
+                        <Typography type="body-xs" color="muted" className="px-1 py-2 text-center">
+                            {t("common.loading")}
+                        </Typography>
+                    ) : null}
                 </ScrollShadow>
             </div>
         )

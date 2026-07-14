@@ -15,10 +15,8 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    Rocket as RocketIcon,
-} from "@gravity-ui/icons"
-import {
     CheckCircleIcon,
+    RocketIcon,
 } from "@phosphor-icons/react"
 import {
     EntityToken,
@@ -62,7 +60,7 @@ export const ProjectCard = ({
         <Card className={className}>
             <CardContent className="flex flex-col gap-3">
                 {/* project header: rocket + course token */}
-                <div className="flex min-w-0 items-center gap-1.5">
+                <div className="flex min-w-0 items-center gap-2">
                     <RocketIcon className="size-5 shrink-0 text-accent" />
                     <EntityToken
                         globalId={project.courseGlobalId}
@@ -71,7 +69,7 @@ export const ProjectCard = ({
                 </div>
 
                 {/* overall task progress + roll-up summary */}
-                <div className="flex flex-col gap-1.5">
+                <div className="flex flex-col gap-2">
                     <ProgressBar
                         aria-label={project.courseTitle}
                         value={project.completedTasks}
@@ -141,7 +139,7 @@ export const ProjectCard = ({
                         {milestones.map((milestone, milestoneIndex) => (
                             <div
                                 key={milestone.title + "-detail-" + milestoneIndex}
-                                className="flex flex-col gap-1.5"
+                                className="flex flex-col gap-2"
                             >
                                 <div className="flex items-center justify-between gap-3">
                                     <span className="truncate text-sm font-medium text-foreground">
@@ -151,7 +149,7 @@ export const ProjectCard = ({
                                         {milestone.passedTasks}/{milestone.totalTasks}
                                     </span>
                                 </div>
-                                <div className="flex flex-col gap-1.5">
+                                <div className="flex flex-col gap-2">
                                     {milestone.tasks.map((task, taskIndex) => (
                                         <div
                                             key={task.title + "-" + taskIndex}
@@ -160,7 +158,7 @@ export const ProjectCard = ({
                                                 !task.passed && "opacity-60",
                                             )}
                                         >
-                                            <div className="flex min-w-0 items-center gap-1.5">
+                                            <div className="flex min-w-0 items-center gap-2">
                                                 {task.passed ? (
                                                     <CheckCircleIcon className="size-5 shrink-0 text-success" />
                                                 ) : null}

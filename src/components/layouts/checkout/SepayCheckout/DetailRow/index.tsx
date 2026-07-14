@@ -1,6 +1,6 @@
 "use client"
 
-import { Copy } from "@gravity-ui/icons"
+import { CopyIcon } from "@phosphor-icons/react"
 import React from "react"
 import {
     Button,
@@ -43,7 +43,7 @@ export const DetailRow = ({
 }: DetailRowProps) => {
     const textToCopy = copyValue ?? value
     return (
-        <div className={cn("flex flex-col gap-1.5", className)}>
+        <div className={cn("flex flex-col gap-2", className)}>
             <span className="text-xs font-semibold uppercase tracking-wide text-muted">
                 {label}
             </span>
@@ -64,7 +64,7 @@ export const DetailRow = ({
                         variant="ghost"
                         onPress={() => onCopy?.(textToCopy)}
                     >
-                        <Copy className="h-5 w-5" />
+                        <CopyIcon className="h-5 w-5" />
                     </Button>
                 ) : null}
             </div>

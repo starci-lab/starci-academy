@@ -94,7 +94,7 @@ export const CommentItem = ({
                     size="sm"
                     username={comment.author.username}
                     avatar={comment.author.avatar}
-                    className="mt-0.5 shrink-0"
+                    className="mt-0 shrink-0"
                 />
                 <div className="flex min-w-0 flex-1 flex-col gap-2">
                     {/* author + founder badge + timestamp header */}

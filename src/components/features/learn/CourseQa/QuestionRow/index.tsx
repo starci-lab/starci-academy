@@ -12,9 +12,8 @@ import { getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
 import type { CourseQuestionNode } from "@/modules/api/graphql/queries/types/course-questions"
 import type { CommentNode, ReactionType } from "@/modules/api/graphql/queries/types/discussion"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { EntityLink } from "@/components/blocks/feed/EntityLink"
+import { UserCell } from "@/components/blocks/identity/UserCell"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
-import { UserAvatar } from "@/components/reuseable/UserAvatar"
 import { CommentComposer } from "@/components/reuseable/Discussion/CommentComposer"
 import { CommentItem } from "@/components/reuseable/Discussion/CommentItem"
 import { queryContentComments } from "@/modules/api/graphql/queries/query-content-comments"
@@ -142,32 +141,33 @@ export const QuestionRow = ({ question, currentUserId, currentUser, onAnswered, 
     return (
         <Card className={className}>
             <div className="flex flex-col gap-3">
-                {/* asker: avatar + name (+ founder badge) + relative time */}
-                <div className="flex items-center gap-3">
-                    <UserAvatar
+                {/* asker: avatar + name (+ founder badge) + relative time — the
+                    cell itself is pure-presentational, so the whole row is wrapped
+                    in a real anchor here to make it pressable (→ profile) */}
+                <Link
+                    href={pathConfig().locale(locale).profile(question.author.username).build()}
+                    className="flex min-w-0 items-center text-foreground no-underline"
+                >
+                    <UserCell
                         username={question.author.username}
+                        displayName={displayName}
                         avatar={question.author.avatar}
+                        trailing={(
+                            <div className="flex items-center gap-1">
+                                {question.isFounderAuthor ? (
+                                    <SealCheckIcon
+                                        weight="fill"
+                                        aria-label={t("courseQa.founderBadge")}
+                                        className="size-3.5 shrink-0 text-accent"
+                                    />
+                                ) : null}
+                                <Typography type="body-xs" color="muted">
+                                    {getTimeAgoLabel(getTimeAgoMessage(question.createdAt), t)}
+                                </Typography>
+                            </div>
+                        )}
                     />
-                    <div className="flex min-w-0 flex-1 items-center gap-1">
-                        <EntityLink
-                            label={displayName}
-                            onPress={() => router.push(
-                                pathConfig().locale(locale).profile(question.author.username).build(),
-                            )}
-                            className="truncate text-sm"
-                        />
-                        {question.isFounderAuthor ? (
-                            <SealCheckIcon
-                                weight="fill"
-                                aria-label={t("courseQa.founderBadge")}
-                                className="size-3.5 shrink-0 text-accent"
-                            />
-                        ) : null}
-                        <Typography type="body-xs" color="muted">
-                            {getTimeAgoLabel(getTimeAgoMessage(question.createdAt), t)}
-                        </Typography>
-                    </div>
-                </div>
+                </Link>
 
                 {/* question body — markdown, compact, clamped to 2 lines */}
                 <MarkdownContent
@@ -181,14 +181,18 @@ export const QuestionRow = ({ question, currentUserId, currentUser, onAnswered, 
                         course-general question ("hỏi chung khóa") has no lesson to link
                         to, so it gets a static, non-clickable "Chung" tag instead */}
                     {question.contentId ? (
-                        <Chip
-                            size="sm"
-                            variant="soft"
-                            className="cursor-pointer bg-default text-muted transition-colors hover:text-foreground"
-                            onClick={goToLesson}
+                        <Link
+                            onPress={goToLesson}
+                            className="cursor-pointer no-underline"
                         >
-                            {t("courseQa.lessonTag", { title: question.contentTitle ?? "" })}
-                        </Chip>
+                            <Chip
+                                size="sm"
+                                variant="soft"
+                                className="bg-default text-muted transition-colors hover:text-foreground"
+                            >
+                                {t("courseQa.lessonTag", { title: question.contentTitle ?? "" })}
+                            </Chip>
+                        </Link>
                     ) : (
                         <Chip size="sm" variant="soft" className="bg-default text-muted">
                             {t("courseQa.generalTag")}

@@ -19,9 +19,9 @@ import {
     useRouter,
 } from "next/navigation"
 import {
-    Layers as LayersIcon,
-    CircleCheck as CircleCheckIcon,
-} from "@gravity-ui/icons"
+    StackIcon,
+    CheckCircleIcon,
+} from "@phosphor-icons/react"
 import {
     pathConfig,
 } from "@/resources/path"
@@ -131,7 +131,7 @@ export const FlashcardReviewPage = ({
         const empty = cards.length === 0
         return (
             <div className={cn("mx-auto flex min-h-[60vh] w-full max-w-xl flex-col items-center justify-center gap-6 p-3", className)}>
-                <CircleCheckIcon className="size-12 text-success" />
+                <CheckCircleIcon className="size-12 text-success" />
                 <span className="text-center text-lg font-semibold text-foreground">
                     {empty
                         ? t("flashcardReview.empty")
@@ -153,8 +153,8 @@ export const FlashcardReviewPage = ({
         <div className={cn("mx-auto flex w-full max-w-xl flex-col gap-6 p-3", className)}>
             {/* progress header: deck context + position in the queue */}
             <div className="flex items-center justify-between gap-3">
-                <span className="flex min-w-0 items-center gap-1.5">
-                    <LayersIcon className="size-5 shrink-0 text-accent" />
+                <span className="flex min-w-0 items-center gap-2">
+                    <StackIcon className="size-5 shrink-0 text-accent" />
                     <span className="truncate text-sm font-medium text-foreground">
                         {current.deckTitle}
                     </span>
@@ -186,7 +186,7 @@ export const FlashcardReviewPage = ({
 
             {/* flip → reveal; revealed → grade buttons */}
             {flipped ? (
-                <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-4">
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                     {GRADES.map((item) => (
                         <Button
                             key={item.grade}

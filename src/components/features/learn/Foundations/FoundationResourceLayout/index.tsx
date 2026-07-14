@@ -22,6 +22,7 @@ import {
 import {
     FoundationResourceBody,
 } from "../FoundationResourceBody"
+import { TrialEnrollHook } from "../../shared/TrialEnrollHook"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryFoundationCategoriesSwr } from "@/hooks/swr/api/graphql/queries/useQueryFoundationCategoriesSwr"
 import { useQueryFoundationsSwr } from "@/hooks/swr/api/graphql/queries/useQueryFoundationsSwr"
@@ -105,6 +106,8 @@ export const FoundationResourceLayout = () => {
     return (
         <div className="mx-auto flex max-w-3xl flex-col gap-10">
             <FoundationsBreadcrumbs items={breadcrumbItems} />
+            {/* ambient trial → enroll hook (self-hides for paid learners) */}
+            <TrialEnrollHook />
             <AsyncContent
                 isLoading={isFirstLoad}
                 isEmpty={!isFirstLoad && !foundation}

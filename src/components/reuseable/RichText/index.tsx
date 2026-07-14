@@ -39,7 +39,7 @@ const RULES: Array<InlineRule> = [
         re: /`([^`]+)`/,
         recurse: false,
         render: (match) => (
-            <code className="rounded-md bg-default px-1.5 py-0.5 font-mono text-[0.9em] text-accent">
+            <code className="rounded-md bg-default px-2 py-0 font-mono text-[0.9em] text-accent">
                 {match[1]}
             </code>
         ),

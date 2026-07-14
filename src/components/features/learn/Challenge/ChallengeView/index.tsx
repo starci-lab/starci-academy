@@ -205,10 +205,10 @@ export const ChallengeView = ({ className, onBack }: ChallengeViewProps) => {
                         description={challenge?.description || undefined}
                         meta={(
                             <div className="flex flex-wrap items-center gap-2">
-                                <Chip color="accent" variant="soft">
+                                <Typography type="body-xs" color="muted" className="flex items-center gap-1">
                                     <TrophyIcon className="size-4" />
-                                    <Chip.Label>{t("challenge.score", { score: challenge?.score ?? 0 })}</Chip.Label>
-                                </Chip>
+                                    {t("challenge.score", { score: challenge?.score ?? 0 })}
+                                </Typography>
                                 <Chip className={difficultyPalette[challenge?.difficulty ?? ChallengeDifficulty.Easy].text} variant="soft">
                                     <FlameIcon className="size-4" />
                                     <Chip.Label>{t(challengeDifficultyKey)}</Chip.Label>

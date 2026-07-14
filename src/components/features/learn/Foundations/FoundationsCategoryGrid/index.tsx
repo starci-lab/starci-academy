@@ -28,6 +28,7 @@ import {
 import {
     FoundationsCategoryGridBody,
 } from "./FoundationsCategoryGridBody"
+import { TrialEnrollHook } from "../../shared/TrialEnrollHook"
 import { pathConfig } from "@/resources/path"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryFoundationCategoriesSwr } from "@/hooks/swr/api/graphql/queries/useQueryFoundationCategoriesSwr"
@@ -154,6 +155,8 @@ export const FoundationsCategoryGridLayout = () => {
         // tier layout: PageHeader (breadcrumb+title+desc) → content cluster, gap-10 between (debt page-heading)
         <div className="mx-auto flex max-w-3xl flex-col gap-10">
             <FoundationsCategoryGridHeader breadcrumb={<FoundationsBreadcrumbs items={breadcrumbItems} />} />
+            {/* ambient trial → enroll hook (self-hides for paid learners) */}
+            <TrialEnrollHook />
             {/* browse cluster: search row · grid · pager (gap-6 inside the cluster) */}
             <div className="flex flex-col gap-6">
                 {/* search row: box (server-side, debounced) on the left, topic count right-aligned */}

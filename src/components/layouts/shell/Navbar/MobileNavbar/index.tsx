@@ -1,7 +1,7 @@
 "use client"
 
 import type { IconComponent } from "@/types"
-import { Globe as TranslateIcon, Paintbrush as PaintBrushIcon } from "@gravity-ui/icons"
+import { GlobeIcon as TranslateIcon, PaintBrushIcon } from "@phosphor-icons/react"
 import React, { useMemo, useState } from "react"
 import {
     Link,
@@ -83,7 +83,7 @@ export const MobileNavbar = ({ className }: MobileNavbarProps) => {
             className={cn("backdrop-blur-xl bg-background/80 flex flex-col h-[calc(100vh-64px)] pb-10", className)}
             aria-label={t("nav.mobileMenu")}
         >
-            <div className="flex flex-col gap-1.5 mt-4 flex-grow">
+            <div className="flex flex-col gap-2 mt-4 flex-grow">
                 {navItems.map((item, index) => (
                     <div key={`${item.path}-${index}`} className="w-full">
                         <Link

@@ -12,12 +12,14 @@ import Editor from "@monaco-editor/react"
 import {
     Button,
     Chip,
+    Typography,
 } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useTheme } from "next-themes"
 import { useParams } from "next/navigation"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { AIProcessingText } from "@/components/reuseable/AIProcessingText"
+import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
 import { PracticeProblemSkeleton } from "./PracticeProblemSkeleton"
 import { queryCodingProblem } from "@/modules/api/graphql/queries/query-coding-problem"
 import { queryCodingProblemHint } from "@/modules/api/graphql/queries/query-coding-problem-hint"
@@ -279,13 +281,13 @@ export const PracticeProblem = () => {
                 {/* problem header */}
                 <div className="flex items-center justify-between gap-3 border-b px-6 py-4">
                     <h1 className="text-xl font-bold">{problem.title}</h1>
-                    <div className="flex items-center gap-1.5">
+                    <div className="flex items-center gap-2">
                         <Chip size="sm" variant="soft" color="default">
                             {t(`codingPractice.level.${LEVEL_KEY[problem.difficulty]}`)}
                         </Chip>
-                        <Chip size="sm" variant="soft" color="success">
+                        <Typography type="body-xs" color="muted">
                             {t("codingPractice.points", { points: problem.points })}
-                        </Chip>
+                        </Typography>
                     </div>
                 </div>
 
@@ -320,7 +322,7 @@ export const PracticeProblem = () => {
                     {hint && (
                         <div className="flex flex-col gap-3">
                             <div className="border-t" />
-                            <div className="flex items-center justify-between gap-1.5">
+                            <div className="flex items-center justify-between gap-2">
                                 <p className="font-semibold">{t("codingPractice.hintTitle")}</p>
                                 <Button
                                     size="sm"
@@ -338,7 +340,7 @@ export const PracticeProblem = () => {
                     {solutionLanguages.length > 0 && (
                         <div className="flex flex-col gap-3">
                             <div className="border-t" />
-                            <div className="flex items-center justify-between gap-1.5">
+                            <div className="flex items-center justify-between gap-2">
                                 <p className="font-semibold">{t("codingPractice.solutionTitle")}</p>
                                 <Button
                                     size="sm"
@@ -353,7 +355,7 @@ export const PracticeProblem = () => {
                             {showSolution && (
                                 <div className="flex flex-col gap-3">
                                     {/* language switcher for the revealed solution */}
-                                    <div className="flex flex-wrap items-center gap-1.5">
+                                    <div className="flex flex-wrap items-center gap-2">
                                         {solutionLanguages.map((option) => (
                                             <Button
                                                 key={option}
@@ -381,7 +383,7 @@ export const PracticeProblem = () => {
             {/* ── RIGHT: editor + submit + result + history ── */}
             <div className="flex flex-col overflow-y-auto">
                 {/* language selector */}
-                <div className="flex flex-wrap items-center gap-1.5 border-b px-6 py-3">
+                <div className="flex flex-wrap items-center gap-2 border-b px-6 py-3">
                     {languages.map((option) => (
                         <Button
                             key={option}
@@ -457,7 +459,7 @@ export const PracticeProblem = () => {
 
                 {/* result panel */}
                 {!pendingJobId && latestSubmission && (
-                    <div className="flex flex-col gap-1.5 border-b px-6 py-4">
+                    <div className="flex flex-col gap-2 border-b px-6 py-4">
                         <div className="flex items-center justify-between">
                             <p className="font-semibold">{t("codingPractice.result")}</p>
                             <Chip variant="soft" color={VERDICT_COLOR[latestSubmission.verdict]}>
@@ -483,28 +485,26 @@ export const PracticeProblem = () => {
 
                 {/* submission history */}
                 {(submissionsData?.submissions.length ?? 0) > 0 && (
-                    <div className="flex flex-col gap-1.5 px-6 py-4">
+                    <div className="flex flex-col gap-2 px-6 py-4">
                         <p className="font-semibold">{t("codingPractice.history")}</p>
-                        <div className="flex flex-col gap-1.5">
+                        <SurfaceListCard>
                             {submissionsData?.submissions.map((submission: CodingSubmission) => (
-                                <div
+                                <SurfaceListCardRow
                                     key={submission.id}
-                                    className="flex items-center justify-between py-1 text-sm"
-                                >
-                                    <span className="text-muted">
-                                        {new Date(submission.createdAt).toLocaleString()}
-                                    </span>
-                                    <span className="flex items-center gap-1.5">
-                                        <Chip size="sm" variant="soft" color="default">
-                                            {t(`codingPractice.language.${submission.language}`)}
-                                        </Chip>
-                                        <Chip size="sm" variant="soft" color={VERDICT_COLOR[submission.verdict]}>
-                                            {t(`codingPractice.verdict.${submission.verdict}`)}
-                                        </Chip>
-                                    </span>
-                                </div>
+                                    title={new Date(submission.createdAt).toLocaleString()}
+                                    meta={(
+                                        <>
+                                            <Typography type="body-xs" color="muted">
+                                                {t(`codingPractice.language.${submission.language}`)}
+                                            </Typography>
+                                            <Chip size="sm" variant="soft" color={VERDICT_COLOR[submission.verdict]}>
+                                                {t(`codingPractice.verdict.${submission.verdict}`)}
+                                            </Chip>
+                                        </>
+                                    )}
+                                />
                             ))}
-                        </div>
+                        </SurfaceListCard>
                     </div>
                 )}
             </div>

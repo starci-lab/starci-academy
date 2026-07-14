@@ -1,7 +1,6 @@
 "use client"
 
-import { Copy as CopyIcon } from "@gravity-ui/icons"
-import { CheckCircleIcon } from "@phosphor-icons/react"
+import { CheckCircleIcon, CopyIcon } from "@phosphor-icons/react"
 import React, { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 

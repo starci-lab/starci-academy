@@ -2,10 +2,11 @@ import { createAuthApolloClient } from "../clients"
 import { type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 import type { QueryMyNotificationsResponse } from "./types"
+import type { NotificationType } from "./types/notifications"
 
 const query1 = gql`
-  query MyNotifications($limit: Int, $offset: Int, $unreadOnly: Boolean) {
-    myNotifications(limit: $limit, offset: $offset, unreadOnly: $unreadOnly) {
+  query MyNotifications($limit: Int, $offset: Int, $unreadOnly: Boolean, $type: NotificationType) {
+    myNotifications(limit: $limit, offset: $offset, unreadOnly: $unreadOnly, type: $type) {
       success
       message
       error
@@ -53,6 +54,8 @@ export interface QueryMyNotificationsRequest {
     offset?: number
     /** When `true`, only unread notifications are returned. */
     unreadOnly?: boolean
+    /** Restrict to one notification kind (notification-center type filter tabs). */
+    type?: NotificationType
 }
 
 /**
@@ -80,6 +83,7 @@ export const queryMyNotifications = async ({
             limit: request?.limit,
             offset: request?.offset,
             unreadOnly: request?.unreadOnly,
+            type: request?.type,
         },
     })
 }

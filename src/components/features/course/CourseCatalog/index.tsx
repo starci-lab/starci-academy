@@ -167,7 +167,15 @@ export const CourseCatalog = ({ className }: CourseCatalogProps) => {
                             <Skeleton className="h-5 w-1/2 rounded" />
                             <Skeleton className="h-4 w-3/4 rounded" />
                         </div>
-                        <Skeleton className="h-9 w-24 shrink-0 rounded" />
+                        {/* price row + 2-button action row — mirrors real line CourseCard
+                            (primary "view/continue" + secondary flex-1 each), not 1 button */}
+                        <div className="flex w-40 shrink-0 flex-col items-end gap-2">
+                            <Skeleton className="h-4 w-1/2 rounded" />
+                            <div className="flex w-full items-center gap-2">
+                                <Skeleton className="h-9 flex-1 rounded" />
+                                <Skeleton className="h-9 flex-1 rounded" />
+                            </div>
+                        </div>
                     </div>
                 </Card>
             ))}

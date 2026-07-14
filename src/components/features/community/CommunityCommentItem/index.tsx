@@ -11,6 +11,7 @@ import {
 import { useTranslations } from "next-intl"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { CommunityCommentRow } from "@/components/blocks/feed/CommunityCommentRow"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
 import type { QueryCommunityCommentNode } from "@/modules/api/graphql/queries/types/community-comments"
 import { useMutateCreateCommunityPostCommentSwr } from "@/hooks/swr/api/graphql/mutations/useMutateCreateCommunityPostCommentSwr"
@@ -158,9 +159,10 @@ export const CommunityCommentItem = ({
                     <AsyncContent
                         isLoading={repliesSwr.isLoading && replies.length === 0}
                         skeleton={(
-                            <Typography type="body-xs" color="muted">
-                                {t("community.comments.loading")}
-                            </Typography>
+                            <div className="flex flex-col gap-3">
+                                <Skeleton.ListRow withSubtitle withTrailing={false} />
+                                <Skeleton.ListRow withSubtitle withTrailing={false} />
+                            </div>
                         )}
                         isEmpty={replies.length === 0}
                         emptyContent={{ title: t("community.comments.empty") }}

@@ -5,7 +5,6 @@ import {
     Button,
     Popover,
     PopoverContent,
-    Typography,
     cn,
 } from "@heroui/react"
 import { SparkleIcon } from "@phosphor-icons/react"
@@ -16,6 +15,7 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useAppSelector } from "@/redux/hooks"
 import { useContentAiChatOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { FloatingActionButton } from "@/components/blocks/buttons/FloatingActionButton"
+import { EntityLink } from "@/components/blocks/feed/EntityLink"
 
 /** localStorage key for the FAB's persisted vertical position (px from viewport bottom). */
 const STORAGE_KEY = "contentAiFabBottom"
@@ -158,9 +158,10 @@ export const ContentAiFab = ({ className }: ContentAiFabProps) => {
             </Button>
             <PopoverContent placement="left bottom" className="w-[380px] p-0">
                 <div className="p-3">
-                    <Typography type="body" className="font-medium">
-                        {contentTitle ?? t("contentAi.title")}
-                    </Typography>
+                    {/* entity reference to the content currently open (already the active
+                        route — no onPress: EntityLink renders it as a plain bold token
+                        rather than a dead/self-navigating link) */}
+                    <EntityLink label={contentTitle ?? t("contentAi.title")} />
                 </div>
                 <div className="p-3 pt-0">
                     <ContentAiChat />

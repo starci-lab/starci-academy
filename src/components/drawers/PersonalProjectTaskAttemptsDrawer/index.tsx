@@ -21,6 +21,8 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 import { usePersonalProjectTaskAttemptsDrawerOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useQueryUserPersonalTaskAttemptsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserPersonalTaskAttemptsSwr"
 import type { UserMilestoneTaskAttemptEntity } from "@/modules/types/entities/user-milestone-task"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 
 type AttemptRow = {
     /** Stable row key. */
@@ -84,8 +86,6 @@ export const PersonalProjectTaskAttemptsDrawer = (props: PersonalProjectTaskAtte
         ],
     )
 
-    const showSkeleton = isOpen && swr.isLoading && !(attemptList?.length) && !swr.error
-
     if (!isOpen) {
         return null
     }
@@ -98,7 +98,7 @@ export const PersonalProjectTaskAttemptsDrawer = (props: PersonalProjectTaskAtte
             >
                 <Drawer.Content placement={isMobile ? "bottom" : "right"}>
                     <Drawer.Dialog className={cn("flex h-full flex-col p-0", className)}>
-                        <div className="shrink-0 p-3">
+                        <div className="shrink-0 p-4">
                             <Drawer.CloseTrigger />
                             <Drawer.Header>
                                 <Drawer.Heading>
@@ -107,36 +107,34 @@ export const PersonalProjectTaskAttemptsDrawer = (props: PersonalProjectTaskAtte
                             </Drawer.Header>
                         </div>
                         <Drawer.Body className="flex min-h-0 flex-1 flex-col">
-                            {
-                                swr.error ? (
-                                    <div className="p-3 text-sm text-danger">
-                                        {t("finalProject.page.attemptsDrawer.loadError")}
-                                    </div>
-                                ) : showSkeleton ? (
-                                    <PersonalProjectAttemptsSkeleton />
-                                ) : rows.length ? (
-                                    <ScrollShadow
-                                        className="min-h-0 flex-1 overflow-x-hidden p-3"
-                                        hideScrollBar
-                                    >
-                                        <div className="flex flex-col gap-3">
-                                            {rows.map((row) => (
+                            <ScrollShadow
+                                className="min-h-0 flex-1 overflow-x-hidden p-4"
+                                hideScrollBar
+                            >
+                                <AsyncContent
+                                    isLoading={swr.isLoading && !(attemptList?.length)}
+                                    skeleton={<PersonalProjectAttemptsSkeleton />}
+                                    isEmpty={Boolean(attemptList) && rows.length === 0}
+                                    emptyContent={{ title: t("finalProject.page.attemptsDrawer.empty") }}
+                                    error={attemptList ? undefined : swr.error}
+                                    errorContent={{
+                                        title: t("finalProject.page.attemptsDrawer.loadError"),
+                                    }}
+                                >
+                                    <SurfaceListCard bordered>
+                                        {rows.map((row) => (
+                                            <SurfaceListCardItem key={row.key}>
                                                 <PersonalProjectAttemptCard
-                                                    key={row.key}
                                                     attemptNumber={row.attempt.attemptNumber}
                                                     score={row.attempt.score ?? null}
                                                     shortFeedback={row.attempt.shortFeedback}
                                                     processedAtLabel={row.processedAtLabel}
                                                 />
-                                            ))}
-                                        </div>
-                                    </ScrollShadow>
-                                ) : (
-                                    <div className="p-6 text-center text-sm text-muted">
-                                        {t("finalProject.page.attemptsDrawer.empty")}
-                                    </div>
-                                )
-                            }
+                                            </SurfaceListCardItem>
+                                        ))}
+                                    </SurfaceListCard>
+                                </AsyncContent>
+                            </ScrollShadow>
                         </Drawer.Body>
                     </Drawer.Dialog>
                 </Drawer.Content>

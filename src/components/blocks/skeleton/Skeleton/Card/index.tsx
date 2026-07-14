@@ -29,7 +29,7 @@ export const SkeletonCard = ({ className, lines = 3 }: SkeletonCardProps) => {
                     <Skeleton
                         key={index}
                         className={cn(
-                            "my-1.5 h-4 rounded",
+                            "my-2 h-4 rounded",
                             index === lines - 1 ? "w-2/3" : "w-full",
                         )}
                     />

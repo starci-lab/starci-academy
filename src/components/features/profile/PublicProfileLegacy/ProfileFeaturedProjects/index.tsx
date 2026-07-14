@@ -11,12 +11,12 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    Rocket as RocketIcon,
-    SealCheck as VerifiedIcon,
-    ArrowUpRightFromSquare as ExternalLinkIcon,
-    BriefcaseFill as BriefcaseIcon,
-    Hammer as HammerIcon,
-} from "@gravity-ui/icons"
+    RocketIcon,
+    SealCheckIcon as VerifiedIcon,
+    ArrowSquareOutIcon as ExternalLinkIcon,
+    BriefcaseIcon,
+    HammerIcon,
+} from "@phosphor-icons/react"
 import {
     useProfileUsername,
 } from "../useProfileUsername"

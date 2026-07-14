@@ -71,9 +71,10 @@ export const ConceptNode = ({ id, data }: NodeProps) => {
             {selected ? (
                 <div
                     className="nodrag nopan absolute bottom-full left-1/2 z-50 mb-2 w-60 -translate-x-1/2 cursor-default rounded-2xl border border-default bg-surface p-3 text-left"
+                    // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events -- chỉ chặn click-through xuống canvas; không có action nên keyboard không cần duplicate
                     onClick={(event) => event.stopPropagation()}
                 >
-                    <div className="mb-1 flex items-center gap-1.5">
+                    <div className="mb-1 flex items-center gap-2">
                         <span aria-hidden className={cn("size-1.5 shrink-0 rounded-full", cfg.dot)} />
                         <span className="text-xs font-semibold text-foreground">{label}</span>
                         <span className="ml-auto text-[10px] text-muted">{LANDING_TRACK_TAG[track]}</span>

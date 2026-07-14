@@ -188,7 +188,7 @@ export const ContinueCard = ({
             href ? (
                 <Link
                     href={href}
-                    className="inline-flex w-fit shrink-0 items-center gap-1.5 whitespace-nowrap rounded-3xl bg-accent px-4 py-2 text-sm font-medium text-accent-foreground no-underline"
+                    className="inline-flex w-fit shrink-0 items-center gap-2 whitespace-nowrap rounded-3xl bg-accent px-4 py-2 text-sm font-medium text-accent-foreground no-underline"
                 >
                     {ctaLabel}
                     <ArrowRightIcon aria-hidden focusable="false" className="size-3.5" />
@@ -237,7 +237,7 @@ export const ContinueCard = ({
                 {cover ? <div className="shrink-0">{cover}</div> : null}
 
                 {/* Text column: title + subtitle — min-w-0 allows truncation */}
-                <div className="flex min-w-0 flex-1 flex-col gap-1.5">
+                <div className="flex min-w-0 flex-1 flex-col gap-2">
                     <Typography weight="medium" truncate>
                         {title}
                     </Typography>

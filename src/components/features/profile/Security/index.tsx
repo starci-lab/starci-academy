@@ -32,6 +32,9 @@ import { useMutateDisableTwoFactorSwr } from "@/hooks/swr/api/graphql/mutations/
 import type { SetupTwoFactorData } from "@/modules/api/graphql/mutations/types/two-factor"
 import { QRCode } from "@/components/reuseable/QRCode"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { Callout } from "@/components/blocks/feedback/Callout"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /** Inline status shown after a 2FA action. */
 interface SecurityStatus {
@@ -55,7 +58,10 @@ interface SecurityStatus {
 export const Security = () => {
     const t = useTranslations()
     const user = useAppSelector((state) => state.user.user)
-    const { mutate: refreshUser } = useQueryUserSwr()
+    const {
+        mutate: refreshUser,
+        isLoading: userLoading,
+    } = useQueryUserSwr()
     const {
         trigger: triggerSetup,
         isMutating: settingUp,
@@ -183,132 +189,151 @@ export const Security = () => {
 
                 <Card>
                     <CardContent className="flex flex-col gap-3">
-                        <div className="flex items-center gap-3">
-                            <ShieldCheckIcon aria-hidden className="size-5 text-accent" />
-                            <div className="flex flex-1 flex-col gap-0">
-                                <Typography type="body-sm" weight="medium">
-                                    {t("security.twoFactor")}
-                                </Typography>
-                                <Typography type="body-xs" color="muted">
-                                    {enabled ? t("security.enabledDesc") : t("security.disabledDesc")}
-                                </Typography>
-                            </div>
-                            <Chip
-                                color={enabled ? "success" : "default"}
-                                variant="soft"
-                                size="sm"
-                            >
-                                <Chip.Label>
-                                    {enabled ? t("security.enabledLabel") : t("security.disabledLabel")}
-                                </Chip.Label>
-                            </Chip>
-                        </div>
-
-                        {/* status line */}
-                        {status ? (
-                            <Typography
-                                type="body-sm"
-                                className={status.kind === "success" ? "text-success" : "text-danger"}
-                            >
-                                {status.text}
-                            </Typography>
-                        ) : null}
-
-                        {/* ENABLED → offer disable (requires a code) */}
-                        {enabled ? (
+                        <AsyncContent
+                            isLoading={userLoading && !user}
+                            skeleton={(
+                                <div className="flex flex-col gap-3">
+                                    <div className="flex items-center gap-3">
+                                        <ShieldCheckIcon aria-hidden className="size-5 text-accent" />
+                                        <div className="flex flex-1 flex-col gap-0">
+                                            <Typography type="body-sm" weight="medium">
+                                                {t("security.twoFactor")}
+                                            </Typography>
+                                            <Skeleton.Typography type="body-xs" width="1/2" />
+                                        </div>
+                                        <Skeleton.Chip />
+                                    </div>
+                                    <Skeleton.Button width="w-full" />
+                                </div>
+                            )}
+                        >
                             <div className="flex flex-col gap-3">
-                                <TextField variant="secondary">
-                                    <Label>{t("security.codeLabel")}</Label>
-                                    <Input
-                                        variant="secondary"
-                                        inputMode="numeric"
-                                        autoComplete="one-time-code"
-                                        placeholder={t("security.codePlaceholder")}
-                                        value={code}
-                                        onChange={onCodeChange}
-                                    />
-                                </TextField>
-                                <Button
-                                    variant="danger"
-                                    isDisabled={!codeComplete || disabling}
-                                    isPending={disabling}
-                                    onPress={onDisable}
-                                >
-                                    {({ isPending }) => (
-                                        <>
-                                            {isPending ? <Spinner color="current" size="sm" /> : null}
-                                            {t("security.disable")}
-                                        </>
-                                    )}
-                                </Button>
-                            </div>
-                        ) : setup ? (
-                        /* ENROLLING → show QR + secret, ask for a code to confirm */
-                            <div className="flex flex-col gap-3">
-                                <Typography type="body-sm" color="muted">
-                                    {t("security.scanHint")}
-                                </Typography>
-                                <div className="flex flex-col items-center gap-3">
-                                    <QRCode size={180} data={setup.otpauthUrl} />
-                                    <div className="flex flex-col gap-2">
-                                        <Typography type="body-xs" color="muted" align="center">
-                                            {t("security.secretHint")}
+                                <div className="flex items-center gap-3">
+                                    <ShieldCheckIcon aria-hidden className="size-5 text-accent" />
+                                    <div className="flex flex-1 flex-col gap-0">
+                                        <Typography type="body-sm" weight="medium">
+                                            {t("security.twoFactor")}
                                         </Typography>
-                                        <Typography type="code" align="center" className="break-all">
-                                            {setup.secret}
+                                        <Typography type="body-xs" color="muted">
+                                            {enabled ? t("security.enabledDesc") : t("security.disabledDesc")}
                                         </Typography>
                                     </div>
+                                    <Chip
+                                        color={enabled ? "success" : "default"}
+                                        variant="soft"
+                                        size="sm"
+                                    >
+                                        <Chip.Label>
+                                            {enabled ? t("security.enabledLabel") : t("security.disabledLabel")}
+                                        </Chip.Label>
+                                    </Chip>
                                 </div>
-                                <TextField variant="secondary">
-                                    <Label>{t("security.codeLabel")}</Label>
-                                    <Input
-                                        variant="secondary"
-                                        inputMode="numeric"
-                                        autoComplete="one-time-code"
-                                        placeholder={t("security.codePlaceholder")}
-                                        value={code}
-                                        onChange={onCodeChange}
+
+                                {/* status line */}
+                                {status ? (
+                                    <Callout
+                                        status={status.kind === "success" ? "success" : "danger"}
+                                        title={status.text}
                                     />
-                                </TextField>
-                                <div className="flex gap-3">
+                                ) : null}
+
+                                {/* ENABLED → offer disable (requires a code) */}
+                                {enabled ? (
+                                    <div className="flex flex-col gap-3">
+                                        <TextField variant="secondary">
+                                            <Label>{t("security.codeLabel")}</Label>
+                                            <Input
+                                                variant="secondary"
+                                                inputMode="numeric"
+                                                autoComplete="one-time-code"
+                                                placeholder={t("security.codePlaceholder")}
+                                                value={code}
+                                                onChange={onCodeChange}
+                                            />
+                                        </TextField>
+                                        <Button
+                                            variant="danger"
+                                            isDisabled={!codeComplete || disabling}
+                                            isPending={disabling}
+                                            onPress={onDisable}
+                                        >
+                                            {({ isPending }) => (
+                                                <>
+                                                    {isPending ? <Spinner color="current" size="sm" /> : null}
+                                                    {t("security.disable")}
+                                                </>
+                                            )}
+                                        </Button>
+                                    </div>
+                                ) : setup ? (
+                                /* ENROLLING → show QR + secret, ask for a code to confirm */
+                                    <div className="flex flex-col gap-3">
+                                        <Typography type="body-sm" color="muted">
+                                            {t("security.scanHint")}
+                                        </Typography>
+                                        <div className="flex flex-col items-center gap-3">
+                                            <QRCode size={180} data={setup.otpauthUrl} />
+                                            <div className="flex flex-col gap-2">
+                                                <Typography type="body-xs" color="muted" align="center">
+                                                    {t("security.secretHint")}
+                                                </Typography>
+                                                <Typography type="code" align="center" className="break-all">
+                                                    {setup.secret}
+                                                </Typography>
+                                            </div>
+                                        </div>
+                                        <TextField variant="secondary">
+                                            <Label>{t("security.codeLabel")}</Label>
+                                            <Input
+                                                variant="secondary"
+                                                inputMode="numeric"
+                                                autoComplete="one-time-code"
+                                                placeholder={t("security.codePlaceholder")}
+                                                value={code}
+                                                onChange={onCodeChange}
+                                            />
+                                        </TextField>
+                                        <div className="flex gap-3">
+                                            <Button
+                                                variant="primary"
+                                                fullWidth
+                                                isDisabled={!codeComplete || confirming}
+                                                isPending={confirming}
+                                                onPress={onConfirm}
+                                            >
+                                                {({ isPending }) => (
+                                                    <>
+                                                        {isPending ? <Spinner color="current" size="sm" /> : null}
+                                                        {t("security.confirm")}
+                                                    </>
+                                                )}
+                                            </Button>
+                                            <Button
+                                                variant="ghost"
+                                                onPress={onCancelSetup}
+                                            >
+                                                {t("security.cancel")}
+                                            </Button>
+                                        </div>
+                                    </div>
+                                ) : (
+                                /* DISABLED → offer enable */
                                     <Button
                                         variant="primary"
-                                        fullWidth
-                                        isDisabled={!codeComplete || confirming}
-                                        isPending={confirming}
-                                        onPress={onConfirm}
+                                        isDisabled={settingUp}
+                                        isPending={settingUp}
+                                        onPress={onStartSetup}
                                     >
                                         {({ isPending }) => (
                                             <>
                                                 {isPending ? <Spinner color="current" size="sm" /> : null}
-                                                {t("security.confirm")}
+                                                {t("security.enable")}
                                             </>
                                         )}
                                     </Button>
-                                    <Button
-                                        variant="ghost"
-                                        onPress={onCancelSetup}
-                                    >
-                                        {t("security.cancel")}
-                                    </Button>
-                                </div>
-                            </div>
-                        ) : (
-                        /* DISABLED → offer enable */
-                            <Button
-                                variant="primary"
-                                isDisabled={settingUp}
-                                isPending={settingUp}
-                                onPress={onStartSetup}
-                            >
-                                {({ isPending }) => (
-                                    <>
-                                        {isPending ? <Spinner color="current" size="sm" /> : null}
-                                        {t("security.enable")}
-                                    </>
                                 )}
-                            </Button>
-                        )}
+                            </div>
+                        </AsyncContent>
                     </CardContent>
                 </Card>
 

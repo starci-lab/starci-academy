@@ -5,7 +5,6 @@ import {
     Checkbox,
     cn,
     Label,
-    Link,
 } from "@heroui/react"
 import type {
     WithClassNames,
@@ -13,6 +12,12 @@ import type {
 import {
     useTranslations,
 } from "next-intl"
+import {
+    Link,
+} from "@/i18n/navigation"
+import {
+    pathConfig,
+} from "@/resources/path"
 
 /** Props for {@link AgreeToTermsRow}. */
 export interface AgreeToTermsRowProps extends WithClassNames<undefined> {
@@ -29,8 +34,9 @@ export interface AgreeToTermsRowProps extends WithClassNames<undefined> {
 /**
  * Terms-and-privacy agreement checkbox with inline error.
  *
- * Presentational: checked state + validation driven by props; the terms /
- * privacy links are display-only (as in the original). No business logic.
+ * Presentational: checked state + validation driven by props. The terms /
+ * privacy links open the real `/terms` and `/privacy` pages in a new tab so
+ * the in-progress sign-up form isn't lost.
  * @param props - selected state, validation, and the change callback
  */
 export const AgreeToTermsRow = ({
@@ -41,9 +47,11 @@ export const AgreeToTermsRow = ({
     className,
 }: AgreeToTermsRowProps) => {
     const t = useTranslations()
+    const paths = pathConfig().locale()
+
     return (
-        <div className={cn("flex flex-col gap-1.5", className)}>
-            <div className="flex items-start gap-1.5">
+        <div className={cn("flex flex-col gap-2", className)}>
+            <div className="flex items-start gap-2">
                 <Checkbox
                     id="sign-up-agree-to-terms"
                     className="w-full"
@@ -58,14 +66,21 @@ export const AgreeToTermsRow = ({
                         <Label htmlFor="sign-up-agree-to-terms">
                             <div className="text-xs text-muted">
                                 <span>{t("auth.signUp.agreeToTerms.prefix")}{" "}</span>
-                                <Link className="text-xs underline inline ">
+                                <Link
+                                    href={paths.terms().build()}
+                                    target="_blank"
+                                    className="text-xs underline inline"
+                                >
                                     {t("auth.signUp.agreeToTerms.terms")}
                                 </Link>{" "}
                                 <span>{t("auth.signUp.agreeToTerms.and")}{" "}</span>
-                                <Link className="text-xs underline inline ">
+                                <Link
+                                    href={paths.privacy().build()}
+                                    target="_blank"
+                                    className="text-xs underline inline"
+                                >
                                     {t("auth.signUp.agreeToTerms.privacy")}
-                                </Link>{" "}
-                                <span>{t("auth.signUp.agreeToTerms.and")}{" "}</span>
+                                </Link>
                             </div>
                         </Label>
                     </Checkbox.Content>

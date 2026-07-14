@@ -9,6 +9,7 @@ import { useSmViewpoint } from "@/hooks/reuseables/useSmViewpoint"
 import { ContentAiChat } from "@/components/features/learn/ContentAiChat"
 import { useAppSelector } from "@/redux/hooks"
 import { useContentAiChatOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 
 /**
  * Global "ask StarCi AI" chat drawer — the PANEL half of the content-AI feature
@@ -40,7 +41,14 @@ export const ContentAiChatDrawer = () => {
                             <Drawer.CloseTrigger />
                             <Drawer.Header>
                                 <Drawer.Heading>
-                                    {contentTitle ?? t("contentAi.title")}
+                                    {contentTitle
+                                        ? (
+                                            <MarkdownContent
+                                                markdown={contentTitle}
+                                                className="[&_p]:m-0 [&_p]:inline"
+                                            />
+                                        )
+                                        : t("contentAi.title")}
                                 </Drawer.Heading>
                             </Drawer.Header>
                         </div>

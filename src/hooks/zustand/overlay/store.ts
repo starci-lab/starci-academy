@@ -30,14 +30,12 @@ export type PendingCartIntent =
 export type OverlayKey =
     | "accountMenu"
     | "adModal"
-    | "aiProcessing"
     | "avatarUpload"
     | "aiQuota"
     | "authentication"
     | "challenge"
     | "content"
     | "contentAiChat"
-    | "contentAiSettings"
     | "cookiePreferences"
     | "cvPreview"
     | "cvReviewLevelDetails"
@@ -64,14 +62,12 @@ export type OverlayKey =
 const OVERLAY_KEYS: ReadonlyArray<OverlayKey> = [
     "accountMenu",
     "adModal",
-    "aiProcessing",
     "avatarUpload",
     "aiQuota",
     "authentication",
     "challenge",
     "content",
     "contentAiChat",
-    "contentAiSettings",
     "cookiePreferences",
     "cvPreview",
     "cvReviewLevelDetails",

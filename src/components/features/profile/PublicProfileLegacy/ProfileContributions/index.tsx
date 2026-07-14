@@ -7,8 +7,8 @@ import {
     Typography,
 } from "@heroui/react"
 import {
-    Flame as FireIcon,
-} from "@gravity-ui/icons"
+    FireIcon,
+} from "@phosphor-icons/react"
 import {
     useTranslations,
 } from "next-intl"

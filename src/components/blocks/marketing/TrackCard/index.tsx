@@ -77,7 +77,7 @@ export const TrackCard = ({ icon, title, meta, color, tiers, viewLabel, onView, 
                             <span className={cn("mt-1 size-2.5 shrink-0 rounded-full", DOT[color])} />
                             {index < tiers.length - 1 ? <span className={cn("my-1 w-px flex-1", LINE[color])} /> : null}
                         </div>
-                        <div className={cn("flex flex-col gap-0.5", index < tiers.length - 1 && "pb-4")}>
+                        <div className={cn("flex flex-col gap-0", index < tiers.length - 1 && "pb-4")}>
                             <Typography type="body-xs" color="muted">
                                 {tier.label}
                             </Typography>

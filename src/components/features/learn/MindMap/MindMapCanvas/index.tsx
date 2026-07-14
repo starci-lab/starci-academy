@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl"
 import { Canvas } from "../Canvas"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useAppSelector } from "@/redux/hooks"
+import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 
 /** Props for {@link MindMapCanvas}. */
 export type MindMapCanvasProps = WithClassNames<undefined>
@@ -34,8 +35,8 @@ export const MindMapCanvas = ({
 
     if (!hasModules) {
         return (
-            <div className={cn("rounded-2xl border border-dashed  px-4 py-6 text-center text-sm text-muted dark:border-zinc-600", className)}>
-                {t("content.mindMapEmpty")}
+            <div className={cn("flex h-full w-full items-center justify-center rounded-2xl border border-dashed dark:border-zinc-600", className)}>
+                <EmptyState title={t("content.mindMapEmpty")} />
             </div>
         )
     }

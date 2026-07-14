@@ -21,6 +21,7 @@ import { ProblemRow } from "./ProblemRow"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { SurfaceListCard } from "@/components/blocks/cards/SurfaceListCard"
 import { CODING_DOMAIN_ORDER, type CodingDomain, type CodingProblem } from "@/modules/api/graphql/queries/types/coding"
 
 /** Props for {@link ProblemCatalog}. */
@@ -81,6 +82,9 @@ export const ProblemCatalog = ({
     return (
         <AsyncContent
             isLoading={isLoading && !problems}
+            // intentionally flat regardless of `filters.group` — real layout can be
+            // N domain-header sections when grouped, but we keep the skeleton a
+            // simple 5-row approximation rather than pre-guessing group shape
             skeleton={(
                 <div className={cn("flex flex-col gap-3", className)}>
                     {[0, 1, 2, 3, 4].map((row) => (
@@ -116,7 +120,7 @@ export const ProblemCatalog = ({
                                     <Chip.Label>{group.problems.length}</Chip.Label>
                                 </Chip>
                             </div>
-                            <div className="flex flex-col gap-0">
+                            <SurfaceListCard>
                                 {group.problems.map((problem) => (
                                     <ProblemRow
                                         key={problem.id}
@@ -124,12 +128,12 @@ export const ProblemCatalog = ({
                                         status={deriveStatus(problem.id, progress)}
                                     />
                                 ))}
-                            </div>
+                            </SurfaceListCard>
                         </section>
                     ))}
                 </div>
             ) : (
-                <div className={cn("flex flex-col gap-0", className)}>
+                <SurfaceListCard className={className}>
                     {filtered.map((problem) => (
                         <ProblemRow
                             key={problem.id}
@@ -137,7 +141,7 @@ export const ProblemCatalog = ({
                             status={deriveStatus(problem.id, progress)}
                         />
                     ))}
-                </div>
+                </SurfaceListCard>
             )}
         </AsyncContent>
     )

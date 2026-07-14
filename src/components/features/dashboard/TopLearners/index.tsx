@@ -19,9 +19,6 @@ import {
     FollowButton,
 } from "@/components/reuseable/FollowButton"
 import {
-    UserAvatar,
-} from "@/components/reuseable/UserAvatar"
-import {
     pathConfig,
 } from "@/resources/path"
 import {
@@ -38,6 +35,8 @@ import { useQueryGlobalLeaderboardSwr } from "@/hooks/swr/api/graphql/queries/us
 import { useAppSelector } from "@/redux/hooks"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { UserCell } from "@/components/blocks/identity/UserCell"
 
 /** How many leaders to show. */
 const TOP_N = 5
@@ -113,52 +112,48 @@ export const TopLearners = ({
         >
             {!isEmpty && data ? (
                 <LabeledCard
+                    frameless
                     label={t("dashboard.community.topLearners.title")}
                     icon={<TrophyIcon className="size-5" aria-hidden focusable="false" />}
                     className={className}
-                    contentClassName="flex flex-col"
                 >
-                    {data.entries.slice(0, TOP_N).map((entry) => {
-                        const isMe = Boolean(me?.username) && entry.username === me?.username
-                        return (
-                            <div
-                                key={entry.userGlobalId}
-                                className="flex items-center gap-3 border-b border-default py-3 first:pt-0 last:border-b-0 last:pb-0"
-                            >
-                                <span className="w-6 shrink-0 text-right text-xs text-muted">
-                                    {entry.rank}
-                                </span>
-                                {/* avatar + name: the only clickable target (→ profile),
-                                    dimming the whole cluster on hover — plain text, not a
-                                    coloured/underlined link (mirrors LeagueRow) */}
-                                <Link
-                                    href={pathConfig().locale(locale).profile(entry.username ?? undefined).build()}
-                                    className="flex min-w-0 flex-1 items-center gap-2 text-foreground no-underline transition-opacity hover:opacity-60"
-                                >
-                                    <UserAvatar
-                                        className="size-8 shrink-0"
-                                        username={entry.username}
-                                        avatar={entry.avatar ?? undefined}
-                                        seed={entry.username}
-                                    />
-                                    <span className="truncate text-sm font-medium">
-                                        {entry.username}
-                                    </span>
-                                </Link>
-                                <Typography type="body-xs" color="muted" className="shrink-0">
-                                    {t("dashboard.community.topLearners.xp", { points: entry.points })}
-                                </Typography>
-                                {!isMe ? (
-                                    <FollowButton
-                                        className="shrink-0"
-                                        following={followed.has(entry.userGlobalId)}
-                                        isPending={pending.has(entry.userGlobalId)}
-                                        onToggle={() => void onToggleFollow(entry.userGlobalId)}
-                                    />
-                                ) : null}
-                            </div>
-                        )
-                    })}
+                    <SurfaceListCard>
+                        {data.entries.slice(0, TOP_N).map((entry) => {
+                            const isMe = Boolean(me?.username) && entry.username === me?.username
+                            return (
+                                <SurfaceListCardItem key={entry.userGlobalId}>
+                                    <div className="flex items-center gap-3">
+                                        <span className="w-6 shrink-0 text-right text-xs text-muted">
+                                            {entry.rank}
+                                        </span>
+                                        {/* avatar + name: the only clickable target (→ profile),
+                                            dimming the whole cluster on hover — plain text, not a
+                                            coloured/underlined link (mirrors LeagueRow) */}
+                                        <Link
+                                            href={pathConfig().locale(locale).profile(entry.username ?? undefined).build()}
+                                            className="flex min-w-0 flex-1 items-center text-foreground no-underline transition-opacity hover:opacity-60"
+                                        >
+                                            <UserCell
+                                                username={entry.username ?? ""}
+                                                avatar={entry.avatar ?? undefined}
+                                            />
+                                        </Link>
+                                        <Typography type="body-xs" color="muted" className="shrink-0">
+                                            {t("dashboard.community.topLearners.xp", { points: entry.points })}
+                                        </Typography>
+                                        {!isMe ? (
+                                            <FollowButton
+                                                className="shrink-0"
+                                                following={followed.has(entry.userGlobalId)}
+                                                isPending={pending.has(entry.userGlobalId)}
+                                                onToggle={() => void onToggleFollow(entry.userGlobalId)}
+                                            />
+                                        ) : null}
+                                    </div>
+                                </SurfaceListCardItem>
+                            )
+                        })}
+                    </SurfaceListCard>
                 </LabeledCard>
             ) : null}
         </AsyncContent>

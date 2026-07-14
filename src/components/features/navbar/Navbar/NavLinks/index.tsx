@@ -1,26 +1,16 @@
 "use client"
 
-import React, {
-    useMemo,
-} from "react"
+import React from "react"
 import {
     Link,
     cn,
 } from "@heroui/react"
 import {
-    useLocale,
-    useTranslations,
-} from "next-intl"
-import {
-    usePathname,
     useRouter,
 } from "@/i18n/navigation"
 import {
-    pathConfig,
-} from "@/resources/path"
-import type {
-    NavbarItem,
-} from "../types"
+    useNavbarItems,
+} from "../useNavbarItems"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
@@ -37,38 +27,11 @@ export type NavLinksProps = WithClassNames<undefined>
  * @param props - optional root class name
  */
 export const NavLinks = ({ className }: NavLinksProps) => {
-    const t = useTranslations()
     const router = useRouter()
-    const pathname = usePathname()
-    const locale = useLocale()
-
-    const items = useMemo<Array<NavbarItem>>(
-        () => [
-            {
-                label: t("nav.home"),
-                path: pathConfig().locale().home().build(),
-                isActive: pathname === "/" || pathname === pathConfig().locale().home().build(),
-            },
-            {
-                label: t("nav.courses"),
-                path: pathConfig().locale().course().build(),
-                isActive: pathname.startsWith(pathConfig().locale(locale).course().build()),
-            },
-            {
-                label: t("nav.contact"),
-                path: pathConfig().locale().contact().build(),
-                isActive: pathname.startsWith(pathConfig().locale(locale).contact().build()),
-            },
-        ],
-        [
-            locale,
-            pathname,
-            t,
-        ],
-    )
+    const items = useNavbarItems()
 
     return (
-        <div className={cn("hidden flex-1 items-center justify-center gap-1.5 md:flex", className)}>
+        <div className={cn("hidden flex-1 items-center justify-center gap-2 md:flex", className)}>
             {items.map((item) => (
                 <Link key={item.path} onPress={() => router.push(item.path)}>
                     <span

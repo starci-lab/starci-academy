@@ -11,8 +11,8 @@ import { SealCheckIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { ChatBubble } from "@/components/blocks/feed/ChatBubble"
+import { UserCell } from "@/components/blocks/identity/UserCell"
 import { ChatPaneSkeleton } from "./ChatPaneSkeleton"
-import { UserAvatar } from "@/components/reuseable/UserAvatar"
 import { PublicationEvent } from "@/hooks/socketio/enums/publication-event"
 import { SubscriptionEvent } from "@/hooks/socketio/enums/subscription-event"
 import { communityChatSocketIoEventEmitter } from "@/hooks/socketio/useCommunityChatSocketIoLifecycle"
@@ -120,21 +120,18 @@ export const ChatPane = ({ conversationId }: ChatPaneProps) => {
                     {messages.map((message) => (
                         <div key={message.id} className="flex flex-col gap-1">
                             {!message.isMine ? (
-                                <div className="flex items-center gap-1">
-                                    <UserAvatar
-                                        username={message.author.username}
-                                        avatar={message.author.avatar}
-                                    />
-                                    <Typography type="body-xs" color="muted" truncate>
-                                        {message.author.displayName || message.author.username}
-                                    </Typography>
-                                    {message.isFounderAuthor ? (
+                                <UserCell
+                                    username={message.author.username}
+                                    displayName={message.author.displayName ?? undefined}
+                                    avatar={message.author.avatar ?? undefined}
+                                    size="sm"
+                                    trailing={message.isFounderAuthor ? (
                                         <SealCheckIcon
                                             weight="fill"
                                             className="size-3.5 shrink-0 text-accent"
                                         />
                                     ) : null}
-                                </div>
+                                />
                             ) : null}
                             <ChatBubble role={message.isMine ? "user" : "assistant"}>
                                 <Typography type="body-sm">{message.body}</Typography>

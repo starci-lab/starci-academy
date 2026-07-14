@@ -4,8 +4,8 @@ import React, {
     useMemo,
 } from "react"
 import {
-    ChevronRight as CaretRightIcon,
-} from "@gravity-ui/icons"
+    CaretRightIcon,
+} from "@phosphor-icons/react"
 import {
     cn,
 } from "@heroui/react"
@@ -101,7 +101,7 @@ export const ProfileMenuCard = ({
                 <div
                     className={cn(
                         "shrink-0 rounded-full",
-                        (ringPending || info.ring) && "p-0.5",
+                        (ringPending || info.ring) && "p-2",
                         ringPending && "animate-pulse bg-default",
                     )}
                     style={!ringPending && info.ring ? { backgroundColor: info.ring } : undefined}

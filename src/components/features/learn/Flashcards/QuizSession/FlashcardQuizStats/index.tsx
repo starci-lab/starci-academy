@@ -252,13 +252,13 @@ export const FlashcardQuizStats = ({ courseId, onStartQuiz, className }: Flashca
                         "N phiên" + avg-coverage tile. */}
                     <LabeledCard label={t("flashcard.quiz.quizStatsTrendLabel")} contentClassName="flex flex-col gap-3">
                         <div className="flex items-baseline gap-4">
-                            <div className="flex items-baseline gap-1.5">
+                            <div className="flex items-baseline gap-2">
                                 <Typography type="h2" weight="semibold">{avgCoverage}%</Typography>
                                 <Typography type="body-sm" color="muted">
                                     {t("flashcard.quiz.quizStatsAvgCoverageLabel")}
                                 </Typography>
                             </div>
-                            <div className="flex items-baseline gap-1.5">
+                            <div className="flex items-baseline gap-2">
                                 <Typography type="h2" weight="semibold">{completedSessionCount}</Typography>
                                 <Typography type="body-sm" color="muted">
                                     {t("flashcard.quiz.quizStatsSessionCountLabel")}

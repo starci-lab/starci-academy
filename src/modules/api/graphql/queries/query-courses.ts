@@ -1,4 +1,4 @@
-import { createNoAuthApolloClient } from "../clients"
+import { createAuthApolloClient } from "../clients"
 import {
     SortBy,
     SortOrder,
@@ -27,6 +27,7 @@ const query1 = gql`
           originalPriceUsd
           currentPhase
           enrollmentCount
+          isEnrolled
           pricingPhases {
             phase
             price
@@ -60,6 +61,11 @@ export const defaultCoursesSorts = [
 /**
  * Fetches a paginated course list via Apollo.
  *
+ * Uses the authenticated client (optional-auth on the BE resolver): a signed-in
+ * viewer's bearer token is attached when present so each row's `isEnrolled` reflects
+ * their real enrollment; a guest sends no token and every row comes back with
+ * `isEnrolled: null` — same anonymous behavior as before.
+ *
  * @param params - Document key, GraphQL variables, optional bearer token
  * @returns Rows at `data.courses.data.data`, total at `data.courses.data.count`
  */
@@ -69,7 +75,7 @@ export const queryCourses = async ({
     debug,
     signal,
 }: QueryParams<QueryCourses, QueryCoursesRequest>) => {
-    const apollo = createNoAuthApolloClient(
+    const apollo = createAuthApolloClient(
         {
             cache: false,
             debug,

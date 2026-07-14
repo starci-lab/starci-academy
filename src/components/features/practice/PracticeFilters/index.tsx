@@ -15,6 +15,7 @@ import {
     RowsIcon,
     SquaresFourIcon,
 } from "@phosphor-icons/react"
+import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
 import { usePracticeFilters } from "../hooks/usePracticeFilters"
 import {
     CODING_DIFFICULTY_META,
@@ -67,35 +68,27 @@ export const PracticeFilters = ({
             {/* difficulty + status chip groups */}
             <div className="flex flex-col gap-3">
                 {/* difficulty chips */}
-                <div className="flex flex-wrap items-center gap-2" role="group" aria-label={t("practice.filters.difficultyAria")}>
-                    {DIFFICULTY_FILTERS.map((value) => (
-                        <Button
-                            key={value}
-                            size="sm"
-                            variant={filters.difficulty === value ? "secondary" : "ghost"}
-                            aria-pressed={filters.difficulty === value}
-                            onPress={() => setFilters({ difficulty: value as DifficultyFilter })}
-                        >
-                            {value === "all"
-                                ? t("practice.filters.allDifficulties")
-                                : t(CODING_DIFFICULTY_META[value].labelKey)}
-                        </Button>
-                    ))}
-                </div>
+                <FlexWrapButtonRadio
+                    ariaLabel={t("practice.filters.difficultyAria")}
+                    value={filters.difficulty}
+                    onChange={(value) => setFilters({ difficulty: value as DifficultyFilter })}
+                    items={DIFFICULTY_FILTERS.map((value) => ({
+                        value,
+                        content: value === "all"
+                            ? t("practice.filters.allDifficulties")
+                            : t(CODING_DIFFICULTY_META[value].labelKey),
+                    }))}
+                />
                 {/* status chips */}
-                <div className="flex flex-wrap items-center gap-2" role="group" aria-label={t("practice.filters.statusAria")}>
-                    {STATUS_FILTERS.map((value) => (
-                        <Button
-                            key={value}
-                            size="sm"
-                            variant={filters.status === value ? "secondary" : "ghost"}
-                            aria-pressed={filters.status === value}
-                            onPress={() => setFilters({ status: value as StatusFilter })}
-                        >
-                            {t(`practice.filters.status.${value}`)}
-                        </Button>
-                    ))}
-                </div>
+                <FlexWrapButtonRadio
+                    ariaLabel={t("practice.filters.statusAria")}
+                    value={filters.status}
+                    onChange={(value) => setFilters({ status: value as StatusFilter })}
+                    items={STATUS_FILTERS.map((value) => ({
+                        value,
+                        content: t(`practice.filters.status.${value}`),
+                    }))}
+                />
             </div>
 
             {/* sort dropdown + group toggle */}

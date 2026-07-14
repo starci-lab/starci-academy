@@ -62,7 +62,7 @@ export const WeeklyBoard = ({
     // first load — placeholder rows so the column never jumps
     if (isLoading && !data) {
         return (
-            <div className={cn("flex flex-col gap-1.5", className)}>
+            <div className={cn("flex flex-col gap-2", className)}>
                 {Array.from({
                     length: 8,
                 }).map((_, index) => (
@@ -104,13 +104,13 @@ export const WeeklyBoard = ({
 
             {/* promote / demote legend */}
             <div className="flex items-center gap-3 text-[11px] text-muted">
-                <span className="flex items-center gap-1.5">
+                <span className="flex items-center gap-2">
                     <span className="size-2 shrink-0 rounded-full bg-success" />
                     {t("dashboard.league.promote", {
                         count: data.promoteCount,
                     })}
                 </span>
-                <span className="flex items-center gap-1.5">
+                <span className="flex items-center gap-2">
                     <span className="size-2 shrink-0 rounded-full bg-danger" />
                     {t("dashboard.league.demote", {
                         count: data.demoteCount,
@@ -119,7 +119,7 @@ export const WeeklyBoard = ({
             </div>
 
             {/* full cohort — every member, no cap */}
-            <div className="flex flex-col gap-1.5">
+            <div className="flex flex-col gap-2">
                 {data.entries.map((entry) => (
                     <LeagueRow
                         key={entry.userGlobalId}

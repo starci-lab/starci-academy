@@ -253,14 +253,14 @@ export const ContributionCalendarView = ({
                             year,
                         })}
                 </div>
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-2">
                     {years.map((option) => (
                         <button
                             key={option}
                             type="button"
                             onClick={() => onYearChange(option)}
                             className={cn(
-                                "rounded-medium px-1.5 py-0.5 text-xs",
+                                "rounded-medium px-2 py-0 text-xs",
                                 option === year
                                     ? "bg-primary/15 text-primary"
                                     : "text-muted hover:text-foreground",
@@ -284,7 +284,7 @@ export const ContributionCalendarView = ({
                     dragConstraints={viewportRef}
                     dragElastic={0.04}
                     dragMomentum={false}
-                    className="flex w-max flex-col gap-1.5"
+                    className="flex w-max flex-col gap-2"
                 >
 
                     {/* month labels aligned to the week columns */}
@@ -355,7 +355,7 @@ export const ContributionCalendarView = ({
             </div>
 
             {/* legend: Less → More */}
-            <div className="flex items-center justify-end gap-1.5 text-[10px] text-muted">
+            <div className="flex items-center justify-end gap-2 text-[10px] text-muted">
                 <span>{t("dashboard.contributions.less")}</span>
                 {LEVEL_CLASS.map((levelClass, index) => (
                     <span
@@ -376,7 +376,7 @@ export const ContributionCalendarView = ({
                         top: hovered.y - 8,
                         transform: "translate(-50%, -100%)",
                     }}
-                    className="pointer-events-none z-50 flex flex-col gap-0 rounded-medium border border-default bg-surface px-2 py-1.5 text-xs shadow-lg"
+                    className="pointer-events-none z-50 flex flex-col gap-0 rounded-medium border border-default bg-surface px-2 py-2 text-xs shadow-lg"
                 >
                     <span className="font-medium text-foreground">
                         {new Date(`${hovered.cell.dateStr}T00:00:00Z`).toLocaleDateString(locale)}

@@ -90,7 +90,7 @@ export const PricingCard = ({
             contentClassName="flex flex-col gap-6 h-full"
         >
             {/* Badge + name header */}
-            <div className="flex flex-col gap-1.5">
+            <div className="flex flex-col gap-2">
                 {/* Only render the badge slot when the card is highlighted and a badge is provided */}
                 {highlighted && badge ? (
                     <Chip size="sm" variant="soft" color="accent">
@@ -105,7 +105,7 @@ export const PricingCard = ({
             </div>
 
             {/* Price row: big price + optional struck original + muted period */}
-            <div className="flex flex-wrap items-baseline gap-1.5">
+            <div className="flex flex-wrap items-baseline gap-2">
                 {/* Main price — h3 size, semibold, prominent */}
                 <Typography type="h3" weight="semibold">
                     {price}

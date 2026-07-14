@@ -9,15 +9,13 @@ import { pathConfig } from "@/resources/path"
 import { useQueryRecommendedCoursesSwr } from "@/hooks/swr/api/graphql/queries/useQueryRecommendedCoursesSwr"
 import { useSearchOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { WithClassNames } from "@/modules/types/base/class-name"
+import { PriceTag } from "@/components/blocks/commerce/PriceTag"
 
 /** Props for {@link GlobalSearchEmpty}. */
 export interface GlobalSearchEmptyProps extends WithClassNames<undefined> {
     /** Whether the user has typed a (trimmed) query yet — switches idle hint vs no-match copy. */
     hasQuery: boolean
 }
-
-/** Format an integer VND amount as "1.020.000₫". */
-const formatVnd = (amount: number): string => `${amount.toLocaleString("vi-VN")}₫`
 
 /**
  * Empty state for the global search palette.
@@ -46,7 +44,7 @@ export const GlobalSearchEmpty = ({ hasQuery, className }: GlobalSearchEmptyProp
     }
 
     return (
-        <div className={cn("flex flex-col gap-1 px-2", className)}>
+        <div className={cn("flex flex-col gap-2 px-2", className)}>
             {/* query typed but no hits → keep the "not found" line, then fall through to Popular
                 so the palette is never a dead-end */}
             {hasQuery ? (
@@ -59,7 +57,7 @@ export const GlobalSearchEmpty = ({ hasQuery, className }: GlobalSearchEmptyProp
                         key={course.displayId}
                         id={course.displayId}
                         textValue={course.title}
-                        className="rounded-lg py-1 data-[hovered=true]:bg-default-100 data-[pressed=true]:bg-default-200"
+                        className="group rounded-lg py-1 data-[pressed=true]:bg-default"
                         onAction={() => {
                             router.push(pathConfig().locale(locale).course(course.displayId).build())
                             setOpen(false)
@@ -67,8 +65,14 @@ export const GlobalSearchEmpty = ({ hasQuery, className }: GlobalSearchEmptyProp
                     >
                         <div className="flex items-center gap-2 py-1">
                             <FlameIcon aria-hidden focusable="false" className="size-4 shrink-0 text-muted" />
-                            <span className="flex-1 truncate text-sm text-foreground">{course.title}</span>
-                            <span className="shrink-0 text-xs text-muted">{formatVnd(course.discountedPriceVnd)}</span>
+                            <Typography
+                                type="body-sm"
+                                truncate
+                                className="flex-1 underline-offset-2 group-hover:underline"
+                            >
+                                {course.title}
+                            </Typography>
+                            <PriceTag discounted={course.discountedPriceVnd} size="sm" className="shrink-0" />
                         </div>
                     </ListBox.Item>
                 ))}

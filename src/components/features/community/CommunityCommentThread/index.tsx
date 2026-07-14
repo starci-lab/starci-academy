@@ -5,11 +5,11 @@ import {
     Button,
     TextArea,
     TextField,
-    Typography,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { CommunityCommentItem } from "../CommunityCommentItem"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { useMutateCreateCommunityPostCommentSwr } from "@/hooks/swr/api/graphql/mutations/useMutateCreateCommunityPostCommentSwr"
 import { useQueryCommunityPostCommentsSwr } from "@/hooks/swr/api/graphql/queries/useQueryCommunityPostCommentsSwr"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
@@ -108,9 +108,11 @@ export const CommunityCommentThread = ({
             <AsyncContent
                 isLoading={isLoading && comments.length === 0}
                 skeleton={(
-                    <Typography type="body-xs" color="muted">
-                        {t("community.comments.loading")}
-                    </Typography>
+                    <div className="flex flex-col gap-3">
+                        <Skeleton.ListRow withSubtitle withTrailing={false} />
+                        <Skeleton.ListRow withSubtitle withTrailing={false} />
+                        <Skeleton.ListRow withSubtitle withTrailing={false} />
+                    </div>
                 )}
                 isEmpty={comments.length === 0}
                 emptyContent={{ title: t("community.comments.empty") }}

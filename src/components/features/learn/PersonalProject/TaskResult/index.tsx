@@ -27,6 +27,7 @@ import {
 import { dayjs, getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { Score } from "@/components/reuseable/Score"
 import { UpNextCard } from "@/components/blocks/learn/UpNextCard"
 import { ModelByline, VerdictIcon } from "@/components/blocks/grading/GradingByline"
 import { BackLink } from "@/components/blocks/navigation/BackLink"
@@ -121,7 +122,7 @@ const FindingAccordionItem = ({
                         ) : null}
                         {feedback.suggestion ? (
                             <div className="flex items-start gap-2">
-                                <LightbulbIcon aria-hidden focusable="false" className="mt-0.5 size-4 shrink-0 text-muted" />
+                                <LightbulbIcon aria-hidden focusable="false" className="size-4 shrink-0 text-muted" />
                                 <MarkdownContent markdown={feedback.suggestion} className="text-sm text-muted [&_p]:m-0" />
                             </div>
                         ) : null}
@@ -312,16 +313,9 @@ export const PersonalProjectTaskResult = ({
                 {selectedAttempt ? (
                     <div className="flex flex-col gap-6">
                         <LabeledCard label={t("personalProjectResult.resultLabel")} contentClassName="flex flex-col gap-3">
-                            {/* score hero — the #1 signal, tinted by pass/fail */}
+                            {/* score hero — the #1 signal; SSOT digit render via Score, verdict Chip kept separate */}
                             <div className="flex items-start gap-3">
-                                <div className="flex items-baseline">
-                                    <span className={cn("text-4xl font-bold leading-none", passing ? "text-success" : "text-danger")}>
-                                        {selectedAttempt.score ?? 0}
-                                    </span>
-                                    {maxScore > 0 ? (
-                                        <span className="text-base text-muted">/{maxScore}</span>
-                                    ) : null}
-                                </div>
+                                <Score current={selectedAttempt.score ?? 0} max={maxScore} />
                                 <div className="min-w-0 flex-1">
                                     <Chip color={passing ? "success" : "danger"} variant="soft" size="sm">
                                         <VerdictIcon pass={passing} />

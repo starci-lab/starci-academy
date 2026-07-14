@@ -85,14 +85,14 @@ export const ContentMapRow = ({
             )}
         >
             {/* one thin status marker per row (read / locked / premium / unread) */}
-            <Icon aria-hidden focusable="false" className={cn("mt-0.5 size-5 shrink-0", tone)} />
+            <Icon aria-hidden focusable="false" className={cn("mt-0 size-5 shrink-0", tone)} />
             <Typography
                 type="body-sm"
                 className={cn("line-clamp-2 min-w-0 flex-1", isActive && "text-accent")}
             >
                 {title}
             </Typography>
-            {meta ? <span className="mt-0.5 shrink-0">{meta}</span> : null}
+            {meta ? <span className="mt-0 shrink-0">{meta}</span> : null}
         </button>
     )
 }

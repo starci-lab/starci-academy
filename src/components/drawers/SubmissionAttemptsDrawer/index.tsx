@@ -110,13 +110,13 @@ export const SubmissionAttemptsDrawer = (props: SubmissionAttemptsDrawerProps = 
                             }
                         </Drawer.Body>
                         {count ? (
-                            <Drawer.Footer className="border-t  h-[52px]">
+                            <Drawer.Footer className="border-t p-4">
                                 <Pagination
                                     aria-label={t("common.pagination.navAria")}
                                     className="justify-center"
                                     size="sm"
                                 >
-                                    <Pagination.Content className="flex flex-wrap justify-center gap-1.5">
+                                    <Pagination.Content className="flex flex-wrap justify-center gap-2">
                                         <Pagination.Item>
                                             <Pagination.Previous
                                                 aria-label={t("common.pagination.previous")}

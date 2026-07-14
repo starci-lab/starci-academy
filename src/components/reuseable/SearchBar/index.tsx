@@ -1,6 +1,6 @@
 "use client"
 
-import { Sliders as SlidersHorizontalIcon } from "@gravity-ui/icons"
+import { SlidersHorizontalIcon } from "@phosphor-icons/react"
 import React, { useMemo } from "react"
 import {
     Autocomplete,
@@ -63,7 +63,7 @@ export const SearchBar = ({ className }: SearchBarProps) => {
                         placeholder={t("search.placeholder")}
                         variant="secondary"
                     >
-                        <Autocomplete.Trigger className="flex h-10 w-full min-w-0 items-center gap-1.5 rounded-r-none border-0 bg-transparent px-3 shadow-none ring-0">
+                        <Autocomplete.Trigger className="flex h-10 w-full min-w-0 items-center gap-2 rounded-r-none border-0 bg-transparent px-3 shadow-none ring-0">
                             <Autocomplete.Value />
                             <Autocomplete.ClearButton />
                             <Autocomplete.Indicator />

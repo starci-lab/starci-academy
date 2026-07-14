@@ -149,7 +149,7 @@ export const CommentComposer = ({
                     size="sm"
                     username={currentUser.username}
                     avatar={currentUser.avatar}
-                    className="mt-0.5 shrink-0"
+                    className="shrink-0"
                 />
             ) : null}
             {form}

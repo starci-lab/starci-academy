@@ -1,5 +1,5 @@
 import type { IconComponent } from "@/types"
-import { CircleCheck as CheckCircleIcon, CircleXmark as XCircleIcon, Stopwatch as HourglassIcon } from "@gravity-ui/icons"
+import { CheckCircleIcon, XCircleIcon, HourglassIcon } from "@phosphor-icons/react"
 import { AiBalancerKeyStatus } from "@/modules/api/graphql/queries/enums/ai-balancer-key-status"
 
 /** Visual token for one balancer key status badge. */

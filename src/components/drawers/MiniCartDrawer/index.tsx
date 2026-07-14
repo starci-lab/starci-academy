@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { SurfaceListCard } from "@/components/blocks/cards/SurfaceListCard"
 import { PriceTag } from "@/components/blocks/commerce/PriceTag"
+import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
 import { CartLine } from "@/components/features/cart/CartView/CartLine"
 import { useCart } from "@/components/features/cart/hooks/useCart"
 import { useQueryCoursesCheckoutPreviewSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursesCheckoutPreviewSwr"
@@ -16,6 +17,7 @@ import { useMiniCartOverlayState, usePaymentOverlayState, usePendingCartIntent }
 import { useAppSelector } from "@/redux/hooks"
 import { PaymentFlow } from "@/modules/types/payment"
 import { pathConfig } from "@/resources/path"
+import { publicEnv } from "@/resources/env/public"
 import type { CoursesCheckoutPreviewLine } from "@/modules/api/graphql/queries/types/courses-checkout-preview"
 
 /** Format an integer VND amount as "1.275.000₫". */
@@ -82,7 +84,6 @@ export const MiniCartDrawer = () => {
     // combo meter: fill toward the max bundle tier (3+ courses = full bar).
     const bundlePercent = preview?.bundleBonusPercent ?? 0
     const itemCount = preview?.itemCount ?? items.length
-    const meterPercent = Math.min(itemCount / BUNDLE_MAX_ITEMS, 1) * 100
     const nextTierPercent = itemCount < BUNDLE_MAX_ITEMS ? BUNDLE_TIER[itemCount] : undefined
 
     // cheapest installment cycle (lowest monthlyAmountVnd, usually the longest
@@ -91,6 +92,21 @@ export const MiniCartDrawer = () => {
     const cheapestMonthlyVnd = preview?.installmentOptions.length
         ? Math.min(...preview.installmentOptions.map((option) => option.monthlyAmountVnd))
         : null
+
+    // fallback total from entity display price (same math as `useCourseDisplayPrice`,
+    // inlined here since it must sum over ALL items, not one course at a time) — used
+    // only when the checkout-preview failed to load, so the footer total is never blank.
+    const fallbackTotalVnd = useMemo(() => {
+        const divisor = publicEnv().pricing.testDivisor
+        const toVnd = (amount: number): number => (divisor === 1 ? amount : Math.max(1, Math.round(amount / divisor)))
+        return items.reduce((sum, item) => {
+            const phasePrice = item.course.pricingPhases?.find(
+                (phase) => phase.phase === item.course.currentPhase,
+            )?.price
+            const rawPrice = phasePrice ?? item.course.originalPrice ?? 0
+            return sum + toVnd(rawPrice)
+        }, 0)
+    }, [items])
 
     const onCheckout = useCallback(() => {
         if (items.length === 0) {
@@ -123,7 +139,7 @@ export const MiniCartDrawer = () => {
             <Drawer.Backdrop isOpen={isOpen} onOpenChange={setOpen} className="backdrop-blur-sm">
                 <Drawer.Content placement={isMobile ? "bottom" : "right"}>
                     <Drawer.Dialog className="p-0 sm:max-w-md">
-                        <div className="p-3">
+                        <div className="p-4">
                             <Drawer.CloseTrigger />
                             <Drawer.Header>
                                 <Drawer.Heading>
@@ -136,7 +152,8 @@ export const MiniCartDrawer = () => {
                                 <AsyncContent
                                     isLoading={isLoading}
                                     skeleton={
-                                        <div className="overflow-hidden rounded-3xl bg-surface shadow-surface">
+                                        // mirror the bordered nested list (not shadow-surface)
+                                        <div className="overflow-hidden rounded-3xl border border-default bg-surface">
                                             {Array.from({ length: 2 }).map((_, index) => (
                                                 <div key={index} className="flex items-center gap-3 px-4 py-4">
                                                     <Skeleton className="size-12 shrink-0 rounded-xl" />
@@ -177,13 +194,9 @@ export const MiniCartDrawer = () => {
                                                     </Chip>
                                                 ) : null}
                                             </div>
-                                            {/* thin hairline meter — div track + accent fill (never a heavy bar) */}
-                                            <div className="h-1.5 w-full overflow-hidden rounded-full bg-default">
-                                                <div
-                                                    className="h-full rounded-full bg-accent transition-[width]"
-                                                    style={{ width: `${meterPercent}%` }}
-                                                />
-                                            </div>
+                                            {/* label + Chip row above owns the copy; ProgressMeter's own
+                                                top-row is skipped here since it doesn't host a Chip. */}
+                                            <ProgressMeter value={itemCount} max={BUNDLE_MAX_ITEMS} />
                                             <Typography type="body-xs" color="muted">
                                                 {nextTierPercent != null
                                                     ? t("cart.comboNextHint", { percent: nextTierPercent })
@@ -191,8 +204,13 @@ export const MiniCartDrawer = () => {
                                             </Typography>
                                         </div>
 
-                                        {/* line list — reuses the SAME CartLine as the /cart page */}
-                                        <SurfaceListCard>
+                                        {/* line list — reuses the SAME CartLine as the /cart page.
+                                            `bordered`: this list is NESTED inside the drawer surface,
+                                            where `shadow-surface` renders invisible against the parent
+                                            (dark mode) — nested cards need a border to delineate
+                                            (`card.md` §surface-in-surface). The /cart PAGE keeps it
+                                            un-bordered (top-level on `bg-background`, shadow shows). */}
+                                        <SurfaceListCard bordered>
                                             {items.map((item) => (
                                                 <CartLine
                                                     key={item.id}
@@ -213,14 +231,23 @@ export const MiniCartDrawer = () => {
                                 <AsyncContent
                                     isLoading={previewLoading}
                                     skeleton={
-                                        <div className="flex items-center justify-between gap-3">
+                                        // mirror the left-aligned, full-width total row
+                                        <div className="flex w-full items-center gap-3">
                                             <Skeleton className="h-5 w-20 rounded-lg" />
                                             <Skeleton className="h-7 w-32 rounded-lg" />
                                         </div>
                                     }
                                 >
-                                    <div className="flex flex-col gap-1">
-                                        <div className="flex items-center justify-between gap-3">
+                                    {/* `w-full`: `Drawer.Footer` (flex-col) does NOT stretch its
+                                        non-`fullWidth` children, so this summary block hugged its
+                                        content (~274px) while the `fullWidth` buttons below spanned
+                                        the footer — same gotcha as `Card.Footer` (CourseCard). Force
+                                        full width so the stack matches the buttons' edge. */}
+                                    <div className="flex w-full flex-col gap-1">
+                                        {/* total + price grouped on the LEFT (not spread edge-to-edge)
+                                            so the whole summary stack — total · saving · installment —
+                                            reads as one left-aligned column, per teacher feedback. */}
+                                        <div className="flex w-full items-center gap-3">
                                             <Typography type="body" weight="semibold">
                                                 {t("cart.total")}
                                             </Typography>
@@ -230,8 +257,12 @@ export const MiniCartDrawer = () => {
                                                     original={preview.totalListVnd}
                                                     currency="VND"
                                                     size="md"
-                                                    className="justify-end"
                                                 />
+                                            ) : previewSwr.error ? (
+                                                // preview failed to load — fall back to the plain
+                                                // list total (no bundle discount known) so the total
+                                                // is never blank.
+                                                <PriceTag discounted={fallbackTotalVnd} currency="VND" size="md" />
                                             ) : null}
                                         </div>
                                         {preview && preview.savingsVnd > 0 ? (

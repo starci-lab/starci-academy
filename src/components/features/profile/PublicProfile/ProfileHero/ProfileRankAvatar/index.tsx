@@ -93,7 +93,7 @@ export const ProfileRankAvatar = ({
                 {/* LinkedIn-style "open to work" badge: a green pill overlapping the
                     bottom of the avatar (the recruiter signal lives ON the photo) */}
                 {user.openToWork ? (
-                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-success px-2.5 py-0.5 ring-2 ring-background">
+                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-success px-2 py-0 ring-2 ring-background">
                         <Typography type="body-xs" weight="semibold" className="text-white">
                             {t("publicProfile.openToWork")}
                         </Typography>

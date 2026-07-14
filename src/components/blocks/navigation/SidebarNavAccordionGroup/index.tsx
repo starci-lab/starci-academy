@@ -91,7 +91,7 @@ export const SidebarNavAccordionGroup = ({
                                     aria-current={child.isActive ? "page" : undefined}
                                     onPress={child.onPress}
                                     className={cn(
-                                        "flex min-h-8 w-full cursor-pointer items-center rounded-large px-3 py-1.5 no-underline transition-colors",
+                                        "flex min-h-8 w-full cursor-pointer items-center rounded-large px-3 py-2 no-underline transition-colors",
                                         "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
                                         child.isActive
                                             ? "bg-accent/10 text-accent"

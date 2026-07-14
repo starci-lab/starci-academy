@@ -48,10 +48,10 @@ export const LeaderboardPodium = ({ top, selectedCategory, viewerUserId, classNa
                 const isViewer = !!viewerUserId && entry.userId === viewerUserId
                 const isLeader = rank === 1
                 return (
-                    <div key={rank} className="flex w-24 flex-col items-center gap-1.5">
+                    <div key={rank} className="flex w-24 flex-col items-center gap-2">
                         <Link
                             href={pathConfig().locale(locale).profile(entry.username ?? undefined).build()}
-                            className="flex flex-col items-center gap-1.5 text-foreground no-underline"
+                            className="flex flex-col items-center gap-2 text-foreground no-underline"
                         >
                             <div className="relative">
                                 {isLeader ? (

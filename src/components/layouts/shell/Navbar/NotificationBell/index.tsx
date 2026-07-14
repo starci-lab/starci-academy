@@ -1,9 +1,9 @@
 "use client"
 
 import {
-    Bell as BellIcon,
-    CheckDouble as CheckDoubleIcon,
-} from "@gravity-ui/icons"
+    BellIcon,
+    ChecksIcon as CheckDoubleIcon,
+} from "@phosphor-icons/react"
 import React, {
     useCallback,
     useMemo,
@@ -188,7 +188,7 @@ export const NotificationBell = ({ className }: NotificationBellProps) => {
                             size="sm"
                             variant="tertiary"
                             onPress={onMarkAllRead}
-                            className="gap-1.5"
+                            className="gap-2"
                         >
                             <CheckDoubleIcon className="size-5" />
                             <span className="text-xs">{t("notifications.markAllRead")}</span>
@@ -214,11 +214,11 @@ export const NotificationBell = ({ className }: NotificationBellProps) => {
                                 type="button"
                                 onClick={() => onPressItem(notification)}
                                 className={cn(
-                                    "flex flex-col gap-1.5 px-3 py-3 text-left hover:bg-default/40",
+                                    "flex flex-col gap-2 px-3 py-3 text-left hover:bg-default/40",
                                     !notification.isRead && "bg-primary/5",
                                 )}
                             >
-                                <div className="flex items-center gap-1.5">
+                                <div className="flex items-center gap-2">
                                     {!notification.isRead ? (
                                         <span className="size-2 shrink-0 rounded-full bg-primary" />
                                     ) : null}

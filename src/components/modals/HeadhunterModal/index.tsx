@@ -2,6 +2,8 @@
 
 import {
     BuildingsIcon,
+    ChatCircleIcon,
+    EnvelopeIcon,
     LinkedinLogoIcon,
     LockIcon,
     PhoneIcon,
@@ -16,6 +18,7 @@ import { pathConfig } from "@/resources/path"
 import { useAppSelector } from "@/redux/hooks"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { ModalShell } from "@/components/blocks/layout/ModalShell"
+import { Callout } from "@/components/blocks/feedback/Callout"
 
 /**
  * Props for {@link HeadhunterModal}.
@@ -65,54 +68,61 @@ export const HeadhunterModal = (props: HeadhunterModalProps) => {
             containerClassName="modal__container--narrow"
             scroll="inside"
             title={t("headhuntings.modalTitle")}
-            titleClassName="text-center text-xl font-bold"
         >
             {headhunter ? (
-                <div className="flex flex-col items-center gap-6 px-2 pb-4">
+                <div className="flex flex-col items-center gap-6">
                     <ConsultantAvatar
                         avatarUrl={headhunter.avatarUrl}
                         fullName={headhunter.fullName}
                         size="detail"
                     />
-                    <div className="w-full text-center">
-                        <div className="text-2xl font-semibold">{headhunter.fullName}</div>
+                    <div className="flex w-full flex-col items-center gap-2 text-center">
+                        <Typography type="h4" weight="semibold">
+                            {headhunter.fullName}
+                        </Typography>
                         {headhunter.jobTitle ? (
-                            <p className="text-muted mt-1 text-sm">{headhunter.jobTitle}</p>
+                            <Typography type="body-sm" color="muted">
+                                {headhunter.jobTitle}
+                            </Typography>
                         ) : null}
                     </div>
                     {headhunter.company?.title ? (
                         <Button
-                            className="mt-2"
+                            variant="tertiary"
                             onPress={onOpenCompany}
                         >
-                            <BuildingsIcon className="size-5" aria-hidden />
+                            <BuildingsIcon className="size-4" aria-hidden />
                             {headhunter.company.title}
                         </Button>
                     ) : null}
                     {headhunter.description ? (
-                        <p className="text-muted mt-4 w-full text-left text-sm leading-relaxed">
+                        <Typography
+                            type="body-sm"
+                            color="muted"
+                            className="w-full text-left leading-relaxed"
+                        >
                             {headhunter.description}
-                        </p>
+                        </Typography>
                     ) : null}
                     {headhunter.contactUnlocked ? (
-                        <div className="mt-2 flex w-full flex-wrap justify-center gap-3">
+                        <div className="flex w-full flex-wrap justify-center gap-3">
                             {headhunter.linkedinUrl ? (
                                 <Link
                                     href={headhunter.linkedinUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-1.5 text-sm text-accent"
+                                    className="inline-flex items-center gap-2 text-sm text-accent hover:underline"
                                 >
-                                    <LinkedinLogoIcon className="size-5" aria-hidden />
+                                    <LinkedinLogoIcon className="size-4" aria-hidden />
                                     {t("headhuntings.linkedin")}
                                 </Link>
                             ) : null}
                             {headhunter.phoneNumber ? (
                                 <Link
                                     href={`tel:${headhunter.phoneNumber.replace(/\D/g, "")}`}
-                                    className="inline-flex items-center gap-1.5 text-sm text-accent"
+                                    className="inline-flex items-center gap-2 text-sm text-accent hover:underline"
                                 >
-                                    <PhoneIcon className="size-5" aria-hidden />
+                                    <PhoneIcon className="size-4" aria-hidden />
                                     {t("headhuntings.phone")}: {headhunter.phoneNumber}
                                 </Link>
                             ) : null}
@@ -121,35 +131,39 @@ export const HeadhunterModal = (props: HeadhunterModalProps) => {
                                     href={`https://zalo.me/${headhunter.zaloNumber.replace(/\D/g, "")}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-1.5 text-sm text-accent"
+                                    className="inline-flex items-center gap-2 text-sm text-accent hover:underline"
                                 >
-                                    <PhoneIcon className="size-5" aria-hidden />
+                                    <ChatCircleIcon className="size-4" aria-hidden />
                                     {t("headhuntings.zalo")}: {headhunter.zaloNumber}
                                 </Link>
                             ) : null}
                             {headhunter.email ? (
                                 <Link
                                     href={`mailto:${headhunter.email}`}
-                                    className="inline-flex items-center gap-1.5 text-sm text-accent"
+                                    className="inline-flex items-center gap-2 text-sm text-accent hover:underline"
                                 >
+                                    <EnvelopeIcon className="size-4" aria-hidden />
                                     {t("headhuntings.email")}: {headhunter.email}
                                 </Link>
                             ) : null}
                         </div>
                     ) : (
-                        <div className="mt-2 flex w-full flex-col items-center gap-3 rounded-2xl border border-default px-4 py-4 text-center">
-                            <LockIcon aria-hidden focusable="false" className="size-6 text-muted" />
-                            <Typography type="body-sm" color="muted">
-                                {t("headhuntings.contactLocked", { score: headhunter.cvScoreUnlockThreshold })}
-                            </Typography>
-                            <Button
-                                variant="secondary"
-                                size="sm"
-                                onPress={onImproveCv}
-                            >
-                                {t("headhuntings.improveCv")}
-                            </Button>
-                        </div>
+                        <Callout
+                            className="w-full"
+                            icon={<LockIcon aria-hidden focusable="false" className="size-5" />}
+                            title={t("headhuntings.contactLocked", {
+                                score: headhunter.cvScoreUnlockThreshold,
+                            })}
+                            action={
+                                <Button
+                                    variant="secondary"
+                                    size="sm"
+                                    onPress={onImproveCv}
+                                >
+                                    {t("headhuntings.improveCv")}
+                                </Button>
+                            }
+                        />
                     )}
                 </div>
             ) : null}

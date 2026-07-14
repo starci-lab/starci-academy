@@ -77,7 +77,7 @@ export const AdminAiBalancer = () => {
         <div className="min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 p-4 pb-12">
             <div className="mx-auto flex max-w-5xl flex-col gap-6">
                 <TopBar />
-                <div className="space-y-1.5">
+                <div className="space-y-2">
                     <h1 className="text-2xl font-bold text-white">
                         {t("title")}
                     </h1>

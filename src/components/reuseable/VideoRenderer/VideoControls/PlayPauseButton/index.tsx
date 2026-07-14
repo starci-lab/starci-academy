@@ -1,6 +1,6 @@
 "use client"
 
-import { Pause as PauseIcon, Play as PlayIcon } from "@gravity-ui/icons"
+import { PauseIcon, PlayIcon } from "@phosphor-icons/react"
 import React from "react"
 import { Button, cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"

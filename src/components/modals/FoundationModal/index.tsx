@@ -35,9 +35,8 @@ export const FoundationModal = (props: FoundationModalProps) => {
         switch (foundation.kind) {
         case FoundationKind.Document:
             return (
-                <ScrollShadow hideScrollBar className="px-3">
+                <ScrollShadow hideScrollBar className="px-3 pb-6">
                     <MarkdownContent markdown={foundation.value ?? ""} />
-                    <div className="h-6" />
                 </ScrollShadow>
             )
         case FoundationKind.Video: {
@@ -50,7 +49,7 @@ export const FoundationModal = (props: FoundationModalProps) => {
                 <div className="flex flex-col items-center p-4">
                     <VideoRenderer
                         classNames={{
-                            base: "w-full overflow-hidden rounded-lg",
+                            base: "w-full overflow-hidden rounded-xl",
                             content: "w-full",
                         }}
                         url={url}
@@ -78,7 +77,6 @@ export const FoundationModal = (props: FoundationModalProps) => {
             size="full"
             scroll={foundation?.kind === FoundationKind.Document ? "inside" : undefined}
             title={foundation?.title ?? ""}
-            titleClassName="text-center text-2xl font-bold"
         >
             {renderBody()}
         </ModalShell>

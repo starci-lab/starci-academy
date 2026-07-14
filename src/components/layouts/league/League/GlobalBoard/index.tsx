@@ -43,7 +43,7 @@ export const GlobalBoard = ({
     // first load — placeholder rows
     if (isLoading && !data) {
         return (
-            <div className={cn("flex flex-col gap-1.5", className)}>
+            <div className={cn("flex flex-col gap-2", className)}>
                 {Array.from({
                     length: 8,
                 }).map((_, index) => (
@@ -67,7 +67,7 @@ export const GlobalBoard = ({
         const identity = entry.username ? (
             <Link
                 href={pathConfig().locale(locale).profile(entry.username).build()}
-                className="flex min-w-0 flex-1 items-center gap-1.5 text-foreground no-underline transition-opacity hover:opacity-60"
+                className="flex min-w-0 flex-1 items-center gap-2 text-foreground no-underline transition-opacity hover:opacity-60"
             >
                 <UserAvatar
                     className="size-8 shrink-0"
@@ -80,7 +80,7 @@ export const GlobalBoard = ({
                 </span>
             </Link>
         ) : (
-            <div className="flex min-w-0 flex-1 items-center gap-1.5">
+            <div className="flex min-w-0 flex-1 items-center gap-2">
                 <UserAvatar
                     className="size-8 shrink-0"
                     username=""
@@ -96,7 +96,7 @@ export const GlobalBoard = ({
             <div
                 key={entry.userGlobalId}
                 className={cn(
-                    "flex w-full items-center gap-1.5 rounded-3xl p-1.5",
+                    "flex w-full items-center gap-2 rounded-3xl p-2",
                     isMe && "bg-primary/10",
                 )}
             >
@@ -126,7 +126,7 @@ export const GlobalBoard = ({
             </div>
 
             {/* the global top N */}
-            <div className="flex flex-col gap-1.5">
+            <div className="flex flex-col gap-2">
                 {data.entries.map(renderRow)}
             </div>
         </div>

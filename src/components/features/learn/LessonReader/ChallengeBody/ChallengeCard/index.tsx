@@ -115,7 +115,7 @@ export const ChallengeCard = ({ challenge, className }: ChallengeCardProps) => {
                         <span className="text-xs text-muted">
                             {t("challenge.number", { index: challenge.sortIndex })}
                         </span>
-                        <span className={cn("inline-flex items-center gap-1.5 text-xs", statusMeta.className)}>
+                        <span className={cn("inline-flex items-center gap-2 text-xs", statusMeta.className)}>
                             <StatusIcon className="size-4 shrink-0" />
                             {t(statusMeta.labelKey)}
                         </span>
@@ -127,10 +127,10 @@ export const ChallengeCard = ({ challenge, className }: ChallengeCardProps) => {
                         <FlameIcon className="size-4" />
                         <Chip.Label>{t(DIFFICULTY_LABEL_KEY[challenge.difficulty] ?? "challenge.difficulty.easy")}</Chip.Label>
                     </Chip>
-                    <Chip variant="secondary" color="accent">
-                        <TrophyIcon className="size-4" />
-                        <Chip.Label>{challenge.score}</Chip.Label>
-                    </Chip>
+                    <span className="inline-flex items-center gap-1 text-xs text-muted">
+                        <TrophyIcon className="size-4 shrink-0" />
+                        {challenge.score}
+                    </span>
                     {challenge.hint ? (
                         <span className="inline-flex items-center gap-1 text-xs text-muted">
                             <LightbulbIcon className="size-4 shrink-0" />
@@ -145,7 +145,7 @@ export const ChallengeCard = ({ challenge, className }: ChallengeCardProps) => {
                     />
                 ) : null}
                 <div className="flex items-center justify-between gap-2">
-                    <span className="inline-flex items-center gap-1.5 text-xs text-muted">
+                    <span className="inline-flex items-center gap-2 text-xs text-muted">
                         <ArrowClockwiseIcon className="size-4 shrink-0" />
                         {attemptsLine}
                     </span>

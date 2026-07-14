@@ -9,8 +9,8 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    Rocket as RocketIcon,
-} from "@gravity-ui/icons"
+    RocketIcon,
+} from "@phosphor-icons/react"
 import {
     useProfileUsername,
 } from "../useProfileUsername"

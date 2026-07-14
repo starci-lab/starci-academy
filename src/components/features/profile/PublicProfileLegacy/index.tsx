@@ -7,11 +7,11 @@ import {
     Typography,
 } from "@heroui/react"
 import {
-    House as OverviewIcon,
-    Rocket as ProjectsIcon,
-    Code as SkillsIcon,
-    Pulse as ActivityIcon,
-} from "@gravity-ui/icons"
+    HouseIcon as OverviewIcon,
+    RocketLaunchIcon as ProjectsIcon,
+    CodeIcon as SkillsIcon,
+    PulseIcon as ActivityIcon,
+} from "@phosphor-icons/react"
 import {
     useTranslations,
 } from "next-intl"

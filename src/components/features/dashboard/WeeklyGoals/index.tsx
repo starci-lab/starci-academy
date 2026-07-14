@@ -5,6 +5,7 @@ import React, {
 } from "react"
 import {
     Button,
+    ProgressBar,
     Typography,
     cn,
 } from "@heroui/react"
@@ -102,10 +103,22 @@ export const WeeklyGoals = ({
                 retryLabel: t("dashboard.retry"),
             }}
             skeleton={(
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-3">
-                    {[0, 1, 2, 3].map((i) => (
-                        <Skeleton key={i} className="h-8 w-full rounded-medium" />
-                    ))}
+                <div className="flex flex-col gap-3">
+                    <Skeleton.Typography type="body-sm" width="2/3" />
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-3">
+                        {KPI_ORDER.map((key) => (
+                            <div key={key} className="flex flex-col gap-3">
+                                <div className="flex items-center justify-between gap-2">
+                                    <span className="flex items-center gap-2">
+                                        <Skeleton className="size-5 shrink-0 rounded-full" />
+                                        <Skeleton.Typography type="body-xs" width="1/2" />
+                                    </span>
+                                    <Skeleton.Typography type="body-xs" width="1/4" />
+                                </div>
+                                <Skeleton.Meter />
+                            </div>
+                        ))}
+                    </div>
                 </div>
             )}
         >
@@ -124,7 +137,6 @@ export const WeeklyGoals = ({
                         // effective target = the learner's custom goal, or a sensible default
                         // (so the meter tracks this week's activity out of the box)
                         const target = item?.target ?? DEFAULT_KPI_TARGETS[key]
-                        const percent = target > 0 ? Math.min(current / target, 1) * 100 : 0
                         return (
                             <div key={key} className="flex flex-col gap-3">
                                 <div className="flex items-center justify-between gap-2">
@@ -139,19 +151,17 @@ export const WeeklyGoals = ({
                                     </Typography>
                                 </div>
                                 {/* progress line — current toward the (custom or default) target */}
-                                <div
-                                    role="progressbar"
+                                <ProgressBar
                                     aria-label={t(`dashboard.kpi.labels.${key}`)}
-                                    aria-valuenow={current}
-                                    aria-valuemin={0}
-                                    aria-valuemax={target}
-                                    className="h-1.5 w-full overflow-hidden rounded-full bg-default"
+                                    value={current}
+                                    maxValue={target > 0 ? target : 1}
+                                    color="accent"
+                                    size="sm"
                                 >
-                                    <div
-                                        className="h-full rounded-full bg-accent transition-[width]"
-                                        style={{ width: `${percent}%` }}
-                                    />
-                                </div>
+                                    <ProgressBar.Track>
+                                        <ProgressBar.Fill />
+                                    </ProgressBar.Track>
+                                </ProgressBar>
                             </div>
                         )
                     })}

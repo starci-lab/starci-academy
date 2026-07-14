@@ -1,6 +1,6 @@
 "use client"
 
-import { Video as VideoIcon } from "@gravity-ui/icons"
+import { VideoCameraIcon } from "@phosphor-icons/react"
 import React from "react"
 import {
     cn,
@@ -22,9 +22,9 @@ export const AdminUploadVideoHeader = ({
     className,
 }: AdminUploadVideoHeaderProps = {}) => {
     return (
-        <div className={cn("text-center space-y-1.5 pb-2", className)}>
-            <div className="inline-flex items-center gap-1.5 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-4 py-1.5 text-xs font-semibold tracking-wider text-indigo-300 uppercase">
-                <VideoIcon className="h-3.5 w-3.5" />
+        <div className={cn("text-center space-y-2 pb-2", className)}>
+            <div className="inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-4 py-2 text-xs font-semibold tracking-wider text-indigo-300 uppercase">
+                <VideoCameraIcon className="h-3.5 w-3.5" />
                 Admin Tools
             </div>
             <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-white via-indigo-200 to-purple-300 bg-clip-text text-transparent">

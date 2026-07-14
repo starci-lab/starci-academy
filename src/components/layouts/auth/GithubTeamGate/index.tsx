@@ -150,7 +150,7 @@ export const GithubTeamGate = () => {
                 <button
                     type="button"
                     onClick={() => setModalOpen(true)}
-                    className="ml-auto shrink-0 rounded-full bg-warning px-4 py-1.5 text-sm font-medium text-warning-foreground transition-opacity hover:opacity-90">
+                    className="ml-auto shrink-0 rounded-full bg-warning px-4 py-2 text-sm font-medium text-warning-foreground transition-opacity hover:opacity-90">
                     {t("githubTeamGate.openCta")}
                 </button>
             </Alert>

@@ -103,12 +103,26 @@ export const QuotaLane = ({
         buildResetLabel,
     ])
 
+    const laneSkeleton = (
+        <div className={cn("flex flex-col gap-3", className)}>
+            {[0, 1].map((row) => (
+                <div key={row} className="flex flex-col gap-2">
+                    <div className="flex items-center justify-between gap-2">
+                        <Skeleton className="h-4 w-24 rounded-md" />
+                        <Skeleton className="h-4 w-16 rounded-md" />
+                    </div>
+                    <Skeleton className="h-2 w-full rounded-full" />
+                </div>
+            ))}
+        </div>
+    )
+
     if (variant === QuotaLaneVariant.Auto && (isCreditUsageLoading || !window5h || !windowWeek)) {
-        return <Skeleton className={cn("h-40 w-full rounded-xl", className)} />
+        return laneSkeleton
     }
 
     if (variant === QuotaLaneVariant.Premium && (!window5h || !windowWeek)) {
-        return <Skeleton className={cn("h-40 w-full rounded-xl", className)} />
+        return laneSkeleton
     }
 
     return (

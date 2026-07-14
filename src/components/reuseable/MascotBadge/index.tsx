@@ -5,8 +5,8 @@ import {
     cn,
 } from "@heroui/react"
 import {
-    Medal as MedalIcon,
-} from "@gravity-ui/icons"
+    MedalIcon,
+} from "@phosphor-icons/react"
 import {
     BadgeImage,
 } from "@/components/reuseable/BadgeImage"

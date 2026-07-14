@@ -1278,7 +1278,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
         const timer = (
             <span
                 className={cn(
-                    "flex shrink-0 items-center gap-1.5",
+                    "flex shrink-0 items-center gap-2",
                     remainingSeconds !== null && remainingSeconds <= TIME_LIMIT_WARNING_SECONDS && "text-warning",
                 )}
             >
@@ -1492,7 +1492,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                                 type="button"
                                 onClick={() => setConfigOpen((previous) => !previous)}
                                 aria-expanded={configOpen}
-                                className="group flex w-fit cursor-pointer items-center gap-1.5 text-muted hover:text-foreground"
+                                className="group flex w-fit cursor-pointer items-center gap-2 text-muted hover:text-foreground"
                             >
                                 <CaretDownIcon
                                     className={cn("size-4 transition-transform", configOpen && "rotate-180")}
@@ -1548,7 +1548,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                                                         aria-pressed={selectedKinds.length === 0}
                                                         onClick={() => setSelectedKinds([])}
                                                         className={cn(
-                                                            "cursor-pointer rounded-full border px-3 py-1.5 text-sm font-medium transition-colors",
+                                                            "cursor-pointer rounded-full border px-3 py-2 text-sm font-medium transition-colors",
                                                             selectedKinds.length === 0
                                                                 ? "border-accent bg-accent/10 text-foreground"
                                                                 : "border-default bg-surface text-muted shadow-surface hover:bg-default",
@@ -1567,7 +1567,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                                                                     ? previous.filter((value) => value !== kind)
                                                                     : [...previous, kind]))}
                                                                 className={cn(
-                                                                    "cursor-pointer rounded-full border px-3 py-1.5 text-sm font-medium transition-colors",
+                                                                    "cursor-pointer rounded-full border px-3 py-2 text-sm font-medium transition-colors",
                                                                     isSelected
                                                                         ? "border-accent bg-accent/10 text-foreground"
                                                                         : "border-default bg-surface text-muted shadow-surface hover:bg-default",
@@ -1783,9 +1783,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                 )}
             />
         ) : gradeError ? (
-            <div className="rounded-xl bg-danger/10 p-4">
-                <Typography type="body-sm" className="text-danger">{gradeError}</Typography>
-            </div>
+            <Callout status="danger" title={gradeError} />
         ) : null
 
         return (
@@ -2033,9 +2031,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                             )}
                         />
                     ) : gradeError ? (
-                        <div className="rounded-xl bg-danger/10 p-4">
-                            <Typography type="body-sm" className="text-danger">{gradeError}</Typography>
-                        </div>
+                        <Callout status="danger" title={gradeError} />
                     ) : null}
 
                     {/* thread — candidate turns (STT) + interviewer turns streamed over the socket */}

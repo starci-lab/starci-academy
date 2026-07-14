@@ -77,7 +77,7 @@ export const EntityToken = ({
         <Link
             onPress={onPress}
             isDisabled={pending}
-            className={cn("font-semibold text-foreground hover:underline disabled:opacity-6 text-sm", className)}
+            className={cn("font-semibold text-foreground hover:underline disabled:opacity-60 text-sm", className)}
         >
             {label}
         </Link>

@@ -1,14 +1,16 @@
 "use client"
 
 import React, { useMemo, useState } from "react"
-import { Typography } from "@heroui/react"
+import { Button } from "@heroui/react"
 import type { Key } from "react"
 import { useTranslations } from "next-intl"
 import { ChatPane } from "./ChatPane"
 import { ChatPaneSkeleton } from "./ChatPane/ChatPaneSkeleton"
+import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { PageContainer } from "@/components/blocks/layout/PageContainer"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
+import { useAuthenticationOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useQueryCommunityChatConversationSwr } from "@/hooks/swr/api/graphql/queries/useQueryCommunityChatConversationSwr"
 import { useQueryMyFounderConversationSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyFounderConversationSwr"
 import { useAppSelector } from "@/redux/hooks"
@@ -24,6 +26,7 @@ type ChatTab = "community" | "founder"
 export const CommunityChat = () => {
     const t = useTranslations()
     const authenticated = useAppSelector((state) => state.keycloak.authenticated)
+    const authentication = useAuthenticationOverlayState()
     const [tab, setTab] = useState<ChatTab>("community")
 
     const { data: communityConversation } = useQueryCommunityChatConversationSwr()
@@ -71,9 +74,18 @@ export const CommunityChat = () => {
                         )}
                     </div>
                 ) : (
-                    <Typography type="body-sm" color="muted">
-                        {t("community.chat.signInRequired")}
-                    </Typography>
+                    <EmptyState
+                        title={t("community.chat.signInRequired")}
+                        action={(
+                            <Button
+                                variant="primary"
+                                size="sm"
+                                onPress={() => authentication.open()}
+                            >
+                                {t("nav.signIn")}
+                            </Button>
+                        )}
+                    />
                 )}
             </div>
         </PageContainer>

@@ -118,7 +118,7 @@ const SampleCandidateCard = () => {
                         <Chip.Label>{skill}</Chip.Label>
                     </Chip>
                 ))}
-                <span className="ml-auto inline-flex items-center gap-1.5 text-sm text-muted">
+                <span className="ml-auto inline-flex items-center gap-2 text-sm text-muted">
                     <LightningIcon aria-hidden focusable="false" className="size-4 text-accent" />
                     {t("landing.outcome.card.xp", { xp: c.xp.toLocaleString(locale) })}
                 </span>
@@ -170,9 +170,9 @@ export const TalentMarketplace = ({ className }: TalentMarketplaceProps) => {
                             <RocketLaunchIcon aria-hidden focusable="false" className="size-5" />
                             {t("landing.outcome.items.engineer.cta")}
                         </Button>
-                        <Button variant="secondary" size="lg" onPress={onBrowseTalents}>
+                        <Button variant="secondary" size="md" onPress={onBrowseTalents}>
                             {t("landing.outcome.items.enterprise.cta")}
-                            <CaretRightIcon aria-hidden focusable="false" className="size-5" />
+                            <CaretRightIcon aria-hidden focusable="false" className="size-4" />
                         </Button>
                         <Button variant="tertiary" onPress={onBrowseJobs}>
                             {t("landing.outcome.items.engineer.jobsCta")}

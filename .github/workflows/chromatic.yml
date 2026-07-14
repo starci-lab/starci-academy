@@ -1,0 +1,28 @@
+name: Chromatic (visual regression)
+
+# Visual-regression cho Storybook (tầng VISUAL của enforcement — .claude/fe/methodology/enforcement.md).
+# CHỈ chạy khi secret CHROMATIC_PROJECT_TOKEN đã được set (xem .storybook/CHROMATIC.md).
+on:
+  push:
+    branches: [mtp, main]
+  pull_request:
+
+jobs:
+  chromatic:
+    if: ${{ secrets.CHROMATIC_PROJECT_TOKEN != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Chromatic cần full history để so baseline
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Publish to Chromatic
+        uses: chromaui/action@latest
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          buildScriptName: build-storybook
+          exitZeroOnChanges: true # không fail PR trên thay đổi visual — review trên Chromatic UI

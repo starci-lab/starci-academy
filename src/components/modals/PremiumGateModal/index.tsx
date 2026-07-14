@@ -20,6 +20,7 @@ import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { PriceTag } from "@/components/blocks/commerce/PriceTag"
 import { PhaseScarcityNote } from "@/components/blocks/commerce/PhaseScarcityNote"
 import { ModalShell } from "@/components/blocks/layout/ModalShell"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /**
  * Premium-gate modal: a VALUE-FIRST register/buy prompt shown when a viewer clicks
@@ -94,7 +95,7 @@ export const PremiumGateModal = ({ className }: WithClassNames<undefined>) => {
                     {/* price anchor — single-source PriceTag (struck original + % off) */}
                     <AsyncContent
                         isLoading={priceLoading}
-                        skeleton={<div className="h-7 w-32 animate-pulse rounded-xl bg-surface" />}
+                        skeleton={<Skeleton className="h-7 w-32 rounded-xl" />}
                         error={priceSwr.error}
                         errorContent={{ title: t("payment.priceError") }}
                     >

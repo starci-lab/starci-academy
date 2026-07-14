@@ -21,8 +21,8 @@ export const SkeletonBreadcrumbs = ({
         <div className={cn("flex items-center", className)}>
             {Array.from({ length: count }).map((_, index) => (
                 <React.Fragment key={index}>
-                    {/* Crumb item wrapper (px-0.5) */}
-                    <div className="flex shrink-0 items-center px-0.5">
+                    {/* Crumb item wrapper */}
+                    <div className="flex shrink-0 items-center">
                         <Skeleton className="my-[3px] h-[14px] w-16 rounded" />
                     </div>
                     {/* Separator (size-3), omitted after the last crumb */}

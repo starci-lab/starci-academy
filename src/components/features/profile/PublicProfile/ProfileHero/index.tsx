@@ -244,7 +244,7 @@ export const ProfileHero = ({
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label={`GitHub: ${user.githubUsername}`}
-                                className="flex items-center gap-2 py-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                                className="flex items-center gap-2 py-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                             >
                                 <FaGithub aria-hidden className="size-5 shrink-0 text-muted" />
                                 <Typography type="body-sm" color="muted" truncate>
@@ -258,7 +258,7 @@ export const ProfileHero = ({
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label={`LinkedIn: ${linkedinHandle}`}
-                                className="flex items-center gap-2 py-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                                className="flex items-center gap-2 py-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                             >
                                 <FaLinkedin aria-hidden className="size-5 shrink-0 text-muted" />
                                 <Typography type="body-sm" color="muted" truncate>
@@ -272,7 +272,7 @@ export const ProfileHero = ({
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label={`Website: ${websiteHost}`}
-                                className="flex items-center gap-2 py-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                                className="flex items-center gap-2 py-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                             >
                                 <GlobeIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
                                 <Typography type="body-sm" color="muted" truncate>
@@ -281,7 +281,7 @@ export const ProfileHero = ({
                             </Link>
                         ) : null}
                         {joinedLabel ? (
-                            <div className="flex items-center gap-2 py-0.5">
+                            <div className="flex items-center gap-2 py-0">
                                 <CalendarBlankIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
                                 <Typography type="body-sm" color="muted" truncate>
                                     {joinedLabel}

@@ -22,7 +22,7 @@ export const QuickTestUrls = ({ onSelect, className }: QuickTestUrlsProps) => (
             <h2 className="text-sm font-medium text-slate-400">
                 Quick Test URLs
             </h2>
-            <div className="space-y-1.5">
+            <div className="space-y-2">
                 {QUICK_TEST_URLS.map((item) => (
                     <QuickTestUrlButton
                         key={item.url}

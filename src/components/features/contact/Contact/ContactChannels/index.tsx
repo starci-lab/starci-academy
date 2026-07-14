@@ -1,11 +1,7 @@
 "use client"
 
 import React from "react"
-import {
-    Link,
-    Typography,
-    cn,
-} from "@heroui/react"
+import { cn } from "@heroui/react"
 import {
     EnvelopeSimpleIcon,
     PhoneIcon,
@@ -21,6 +17,7 @@ import {
 } from "../constants"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
 
 /** Props for {@link ContactChannels}. */
 export type ContactChannelsProps = WithClassNames<undefined>
@@ -36,45 +33,26 @@ export const ContactChannels = ({ className }: ContactChannelsProps) => {
     const t = useTranslations()
     return (
         <div className={cn("flex flex-col gap-6", className)}>
-            <LabeledCard label={t("contact.direct.title")}>
-                <div className="flex flex-col gap-4">
-                    {/* email */}
-                    <div className="flex items-center gap-3">
-                        <IconTile icon={<EnvelopeSimpleIcon />} tone="accent" size="sm" />
-                        <div className="flex min-w-0 flex-col">
-                            <Typography type="body-xs" color="muted">
-                                {t("contact.direct.emailLabel")}
-                            </Typography>
-                            <Link href={`mailto:${CONTACT_EMAIL}`}>
-                                {CONTACT_EMAIL}
-                            </Link>
-                        </div>
-                    </div>
-                    {/* phone */}
-                    <div className="flex items-center gap-3">
-                        <IconTile icon={<PhoneIcon />} tone="success" size="sm" />
-                        <div className="flex min-w-0 flex-col">
-                            <Typography type="body-xs" color="muted">
-                                {t("contact.direct.phoneLabel")}
-                            </Typography>
-                            <Link href={`tel:${CONTACT_PHONE_TEL}`}>
-                                {CONTACT_PHONE}
-                            </Link>
-                        </div>
-                    </div>
-                    {/* support hours (static) */}
-                    <div className="flex items-center gap-3">
-                        <IconTile icon={<ClockIcon />} tone="warning" size="sm" />
-                        <div className="flex min-w-0 flex-col">
-                            <Typography type="body-xs" color="muted">
-                                {t("contact.direct.hoursLabel")}
-                            </Typography>
-                            <Typography type="body-sm">
-                                {t("contact.direct.hoursValue")}
-                            </Typography>
-                        </div>
-                    </div>
-                </div>
+            <LabeledCard label={t("contact.direct.title")} flushContent>
+                <SurfaceListCard bordered>
+                    <SurfaceListCardRow
+                        leading={<IconTile icon={<EnvelopeSimpleIcon />} tone="accent" size="sm" />}
+                        title={CONTACT_EMAIL}
+                        subtitle={t("contact.direct.emailLabel")}
+                        href={`mailto:${CONTACT_EMAIL}`}
+                    />
+                    <SurfaceListCardRow
+                        leading={<IconTile icon={<PhoneIcon />} tone="success" size="sm" />}
+                        title={CONTACT_PHONE}
+                        subtitle={t("contact.direct.phoneLabel")}
+                        href={`tel:${CONTACT_PHONE_TEL}`}
+                    />
+                    <SurfaceListCardRow
+                        leading={<IconTile icon={<ClockIcon />} tone="warning" size="sm" />}
+                        title={t("contact.direct.hoursValue")}
+                        subtitle={t("contact.direct.hoursLabel")}
+                    />
+                </SurfaceListCard>
             </LabeledCard>
 
             <FounderCard />

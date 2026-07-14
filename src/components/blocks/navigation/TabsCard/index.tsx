@@ -83,7 +83,18 @@ export interface TabsCardProps extends WithClassNames<undefined> {
      * page-feature nav or in-page filter nav, not a mix).
      */
     variant?: "primary" | "secondary"
+    /**
+     * `"md"` (default) = full-width `"primary"` tabs (unchanged). `"sm"`
+     * shrinks BOTH groups to a compact `w-fit` strip with smaller
+     * padding/text — for a `"primary"` choice that's a secondary/nested
+     * setting, not a top-level page switch (e.g. a toggle inside a modal
+     * panel). No effect on `"secondary"` (already hug-content).
+     */
+    size?: "sm" | "md"
 }
+
+/** size → extra Tab className override (md = HeroUI's own default, no override). */
+const TAB_SIZE_SM = "h-auto! w-auto! px-3! py-2! text-xs!"
 
 /**
  * Selected-state TEXT color only (accent tab group) — the underline itself now
@@ -120,12 +131,14 @@ export const TabsCard = ({
     collapseRightOnMobile,
     rightTabsNeutral,
     variant = "secondary",
+    size = "md",
     className,
 }: TabsCardProps) => {
     /** Render one controlled tab group (`accent` = accent selected chrome, secondary-only). */
     const renderGroup = (group: TabsCardGroup, accent = true): ReactNode => (
         <ExtendedTabs
             variant={variant}
+            size={size}
             selectedKey={group.selectedKey}
             onSelectionChange={group.onSelectionChange}
         >
@@ -138,6 +151,7 @@ export const TabsCard = ({
                             isDisabled={item.isDisabled}
                             className={cn(
                                 variant === "secondary" && (accent ? TAB_CLASS_ACCENT : TAB_CLASS_NEUTRAL),
+                                size === "sm" && TAB_SIZE_SM,
                                 item.muted && "text-muted",
                             )}
                         >
@@ -165,6 +179,17 @@ export const TabsCard = ({
                     ))}
                 </Tabs.List>
             </Tabs.ListContainer>
+            {/* react-aria's useTab ALWAYS computes an `aria-controls` id pointing at
+                a tabpanel with this tab's key, whether or not one is ever rendered
+                (no console warning fires — see fe review 2026-07-14). Without this,
+                the selected tab's `aria-controls` dangles at a non-existent element,
+                an axe-core/Lighthouse-flagged a11y bug. `TabsCard` never shows panel
+                CONTENT here (callers render their own content elsewhere), so these
+                panels stay empty/`sr-only` — they exist purely to satisfy the
+                tab↔tabpanel ARIA relationship. */}
+            {group.items.map((item) => (
+                <Tabs.Panel key={item.key} id={item.key} className="sr-only">{null}</Tabs.Panel>
+            ))}
         </ExtendedTabs>
     )
 

@@ -1,6 +1,6 @@
 "use client"
 
-import { CircleCheck as CheckCircleIcon } from "@gravity-ui/icons"
+import { CheckCircleIcon } from "@phosphor-icons/react"
 import React from "react"
 import type {
     ProcessResult,
@@ -27,8 +27,8 @@ export const ProcessResultBanner = ({
         return null
     }
     return (
-        <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4 space-y-1.5">
-            <div className="flex items-center gap-1.5">
+        <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4 space-y-2">
+            <div className="flex items-center gap-2">
                 <CheckCircleIcon className="h-5 w-5 text-emerald-400" />
                 <span className="text-sm font-medium text-emerald-300">
                     {processResult.message}

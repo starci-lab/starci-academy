@@ -86,7 +86,7 @@ export const VoiceHero = ({
                     <button
                         type="button"
                         onClick={() => setShowText(false)}
-                        className="group flex w-fit cursor-pointer items-center gap-1.5 text-muted hover:text-foreground"
+                        className="group flex w-fit cursor-pointer items-center gap-2 text-muted hover:text-foreground"
                     >
                         <MicrophoneIcon className="size-4" aria-hidden focusable="false" />
                         {/* plain span (not Typography, which bakes its own text-foreground and would

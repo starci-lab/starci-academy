@@ -178,7 +178,7 @@ const ArcSection = ({ index, children }: { index?: number, children?: React.Reac
                 event.stopPropagation()
                 setExpanded(true)
             }}
-            className="mr-1.5 mt-1.5 inline-flex items-center gap-1 rounded-full bg-default px-2.5 py-1 text-xs text-muted transition-colors hover:bg-default/80"
+            className="mr-2 mt-2 inline-flex items-center gap-1 rounded-full bg-default px-2 py-1 text-xs text-muted transition-colors hover:bg-default/80"
         >
             {getNodeText(label)}
             <CaretDownIcon size={12} />
@@ -317,7 +317,7 @@ export const buildMarkdownRenderers = ({
             // Neutral inline code (GitHub/Stripe-style): subtle surface + foreground text, NOT
             // the brand accent — accent is reserved for links so a keyword-dense paragraph stays calm.
             return (
-                <code className="rounded-md bg-default px-1 py-0.5 font-mono text-sm text-foreground [overflow-wrap:anywhere]">
+                <code className="rounded-md bg-default px-1 py-0 font-mono text-sm text-foreground [overflow-wrap:anywhere]">
                     {code}
                 </code>
             )

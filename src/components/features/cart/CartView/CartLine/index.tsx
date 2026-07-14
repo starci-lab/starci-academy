@@ -73,9 +73,12 @@ export const CartLine = ({ item, previewLine, onRemove, isMutating }: CartLinePr
                     </Link>
                     <PriceTag discounted={discounted} original={original} size="sm" />
                 </div>
+                {/* remove = `danger-soft` (soft red tint), same family as the
+                    repeatable-delete / cart-remove ruling (button.md §4/§4b) — reads
+                    destructive without shouting when repeated down the list. */}
                 <Button
                     isIconOnly
-                    variant="tertiary"
+                    variant="danger-soft"
                     aria-label={t("cart.remove")}
                     isDisabled={isMutating}
                     onPress={() => onRemove(item.courseId)}

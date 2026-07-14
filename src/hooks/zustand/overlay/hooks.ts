@@ -44,8 +44,6 @@ const useOverlayHandle = (key: OverlayKey): OverlayStateHandle => {
 
 /** Account menu overlay state. */
 export const useAccountMenuOverlayState = () => useOverlayHandle("accountMenu")
-/** AI processing overlay state. */
-export const useAIProcessingOverlayState = () => useOverlayHandle("aiProcessing")
 /** AI quota overlay state. */
 export const useAiQuotaOverlayState = () => useOverlayHandle("aiQuota")
 /** Authentication overlay state. */
@@ -58,8 +56,6 @@ export const useChallengeOverlayState = () => useOverlayHandle("challenge")
 export const useContentOverlayState = () => useOverlayHandle("content")
 /** Content AI chat drawer overlay state (ask StarCi AI about the current content). */
 export const useContentAiChatOverlayState = () => useOverlayHandle("contentAiChat")
-/** Content AI settings modal overlay state (model picker + clear history). */
-export const useContentAiSettingsOverlayState = () => useOverlayHandle("contentAiSettings")
 /** Cookie preferences modal overlay state ("Tùy chỉnh" granular cookie consent). */
 export const useCookiePreferencesOverlayState = () => useOverlayHandle("cookiePreferences")
 /**

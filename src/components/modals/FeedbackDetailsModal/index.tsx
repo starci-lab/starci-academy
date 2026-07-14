@@ -45,7 +45,6 @@ export const FeedbackDetailsModal = (props: FeedbackDetailsModalProps) => {
             className={className}
             size="lg"
             title={t("feedback.detailsTitle")}
-            titleClassName="font-bold"
         >
             {showSkeleton ? (
                 <ScrollShadow className="max-h-[500px]" hideScrollBar>

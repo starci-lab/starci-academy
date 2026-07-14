@@ -732,6 +732,19 @@ export const pathConfig = () => {
                 build,
             }
         }
+        const notifications = () => {
+            // notification center: the bell's "Xem tất cả" destination — global,
+            // non-course-scoped, mirrors `review()`/`rewards()` above (top-level,
+            // NOT nested under `profile/settings` — this isn't an account-settings
+            // page, it's a feed the bell deep-links into).
+            const notificationsPath = `${localePath}/notifications`
+            const build = () => {
+                return notificationsPath
+            }
+            return {
+                build,
+            }
+        }
         const rewards = () => {
             // reward points store: spend reward points earned from learning on gifts
             const rewardsPath = `${localePath}/rewards`
@@ -785,6 +798,7 @@ export const pathConfig = () => {
             practice,
             ragPlayground,
             review,
+            notifications,
             talents,
             jobs,
             blog,

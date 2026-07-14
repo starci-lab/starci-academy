@@ -470,7 +470,7 @@ export const MarkdownContent = ({ markdown, reading = false, arcSections = false
                 // Compact (cards / chat / flashcards) keeps the tight uniform rhythm.
                 reading
                     ? "text-base leading-7 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0"
-                    : "space-y-1.5 text-sm leading-relaxed",
+                    : "space-y-2 text-sm leading-relaxed",
                 className,
             )}
         >

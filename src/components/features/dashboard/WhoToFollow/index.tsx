@@ -9,17 +9,12 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    useRouter,
-} from "next/navigation"
-import {
     UserPlusIcon,
 } from "@phosphor-icons/react"
+import Link from "next/link"
 import {
     FollowButton,
 } from "@/components/reuseable/FollowButton"
-import {
-    UserAvatar,
-} from "@/components/reuseable/UserAvatar"
 import {
     WhoToFollowSkeleton,
 } from "./WhoToFollowSkeleton"
@@ -33,6 +28,7 @@ import { useMutateSetFollowSwr } from "@/hooks/swr/api/graphql/mutations/useMuta
 import { useQuerySuggestedUsersSwr } from "@/hooks/swr/api/graphql/queries/useQuerySuggestedUsersSwr"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { SectionCard } from "@/components/reuseable/SectionCard"
+import { UserCell } from "@/components/blocks/identity/UserCell"
 
 /** Props for {@link WhoToFollow}. */
 export type WhoToFollowProps = WithClassNames<undefined>
@@ -52,7 +48,6 @@ export const WhoToFollow = ({
 }: WhoToFollowProps) => {
     const t = useTranslations()
     const locale = useLocale()
-    const router = useRouter()
     const { data, isLoading } = useQuerySuggestedUsersSwr()
     // owns the follow mutation; FollowButton rows stay presentational
     const { trigger: triggerSetFollow } = useMutateSetFollowSwr()
@@ -99,41 +94,29 @@ export const WhoToFollow = ({
                 title={t("dashboard.whoToFollow.title")}
                 className={className}
             >
-                <div className="flex flex-col gap-1.5">
+                <div className="flex flex-col gap-2">
                     {(data ?? []).map((user) => (
                         <div
                             key={user.globalId}
-                            className="flex items-center gap-3 rounded-medium px-1.5 py-1"
+                            className="flex items-center gap-3 rounded-medium px-2 py-1"
                         >
-                            <button
-                                type="button"
-                                onClick={() => router.push(
-                                    pathConfig().locale(locale).profile(user.username).build(),
-                                )}
-                                className="flex min-w-0 flex-1 items-center gap-1.5 text-left"
+                            <Link
+                                href={pathConfig().locale(locale).profile(user.username).build()}
+                                className="flex min-w-0 flex-1 items-center gap-2 text-left"
                             >
-                                <UserAvatar
-                                    className="size-6 shrink-0"
+                                <UserCell
+                                    className="min-w-0 flex-1"
                                     username={user.username}
+                                    displayName={user.displayName ?? undefined}
                                     avatar={user.avatar}
-                                    seed={user.username}
-                                />
-                                <div className="flex min-w-0 flex-col gap-0">
-                                    <span className="flex items-center gap-1.5">
-                                        <span className="truncate text-sm font-semibold text-foreground">
-                                            {user.displayName ?? user.username}
+                                    handle={`@${user.username}`}
+                                    trailing={user.openToWork ? (
+                                        <span className="shrink-0 rounded-full bg-success/10 px-2 text-[11px] font-medium text-success">
+                                            {t("dashboard.whoToFollow.openToWork")}
                                         </span>
-                                        {user.openToWork ? (
-                                            <span className="shrink-0 rounded-full bg-success/10 px-1.5 text-[11px] font-medium text-success">
-                                                {t("dashboard.whoToFollow.openToWork")}
-                                            </span>
-                                        ) : null}
-                                    </span>
-                                    <span className="truncate text-xs text-muted">
-                                        {`@${user.username}`}
-                                    </span>
-                                </div>
-                            </button>
+                                    ) : undefined}
+                                />
+                            </Link>
                             <FollowButton
                                 className="shrink-0"
                                 following={followed.has(user.globalId)}

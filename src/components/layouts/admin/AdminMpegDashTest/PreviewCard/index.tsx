@@ -31,7 +31,7 @@ export const PreviewCard = ({ url, activeType, className }: PreviewCardProps) =>
     return (
         <Card className={cn("border-slate-700/50 bg-slate-800/50 backdrop-blur-xl", className)}>
             <CardContent className="space-y-3 p-6">
-                <h2 className="text-lg font-semibold text-white flex items-center gap-1.5">
+                <h2 className="text-lg font-semibold text-white flex items-center gap-2">
                     Preview
                     <span className="text-xs font-normal text-slate-400">
                         ({activeLabel})

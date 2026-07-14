@@ -48,12 +48,20 @@ export const ProfileNotFoundState = ({
                     {t("publicProfile.notFoundDescription")}
                 </Typography>
             </div>
-            <Button
-                variant="primary"
-                onPress={() => router.push(pathConfig().locale(locale).build())}
-            >
-                {t("nav.home")}
-            </Button>
+            <div className="flex items-center gap-3">
+                <Button
+                    variant="primary"
+                    onPress={() => router.push(pathConfig().locale(locale).build())}
+                >
+                    {t("nav.home")}
+                </Button>
+                <Button
+                    variant="secondary"
+                    onPress={() => router.push(pathConfig().locale(locale).course().build())}
+                >
+                    {t("nav.courses")}
+                </Button>
+            </div>
         </div>
     )
 }

@@ -13,9 +13,9 @@ import {
     SiGithub,
 } from "@icons-pack/react-simple-icons"
 import {
-    Gear as SettingsIcon,
-    PaperPlane as PaperPlaneIcon,
-} from "@gravity-ui/icons"
+    GearIcon as SettingsIcon,
+    PaperPlaneIcon,
+} from "@phosphor-icons/react"
 import {
     useRouter,
 } from "next/navigation"

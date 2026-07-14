@@ -1,5 +1,5 @@
 "use client"
-import { Moon as MoonIcon, Sun as SunIcon } from "@gravity-ui/icons"
+import { MoonIcon, SunIcon } from "@phosphor-icons/react"
 import { Switch, cn } from "@heroui/react"
 
 import { useTheme } from "next-themes"

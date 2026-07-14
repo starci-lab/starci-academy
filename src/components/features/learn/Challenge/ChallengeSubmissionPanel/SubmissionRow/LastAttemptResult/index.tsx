@@ -81,9 +81,9 @@ export const LastAttemptResult = ({
                         <div key={feedback.id} className="flex gap-2">
                             <span
                                 aria-label={feedback.severity}
-                                className={cn("mt-1.5 size-2 shrink-0 rounded-full", SEVERITY_DOT[feedback.severity])}
+                                className={cn("mt-2 size-2 shrink-0 rounded-full", SEVERITY_DOT[feedback.severity])}
                             />
-                            <div className="flex min-w-0 flex-col gap-0.5">
+                            <div className="flex min-w-0 flex-col gap-0">
                                 <Typography type="body-xs" className="text-foreground">
                                     {feedback.message}
                                 </Typography>

@@ -50,7 +50,7 @@ export const ChatToolResult = ({
     return (
         <div className={cn("overflow-hidden rounded-xl border border-default bg-transparent", className)}>
             <div className="flex items-center justify-between gap-2 border-b border-default px-3 py-2">
-                <span className="flex min-w-0 items-center gap-1.5 text-muted">
+                <span className="flex min-w-0 items-center gap-2 text-muted">
                     {icon}
                     <Typography type="body-xs" color="muted" truncate>
                         {label}
@@ -84,7 +84,7 @@ export const ChatToolResult = ({
                         <button
                             type="button"
                             onClick={onViewAll}
-                            className="group flex w-full cursor-pointer items-center gap-1 px-4 py-2.5 text-left text-sm font-medium text-accent"
+                            className="group flex w-full cursor-pointer items-center gap-1 px-4 py-2 text-left text-sm font-medium text-accent"
                         >
                             {viewAllLabel}
                             <ArrowRightIcon

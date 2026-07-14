@@ -26,6 +26,15 @@ export interface ExtendedTabsProps extends WithClassNames<undefined> {
      * language-switcher riding alongside a reading column.
      */
     variant?: "primary" | "secondary"
+    /**
+     * `"md"` (default) = full-width (`w-full`), evenly-stretched tabs — the
+     * only size this block used to support. `"sm"` shrinks a `"primary"` tab
+     * strip to `w-fit` (segments size to their label, don't stretch) — for a
+     * compact secondary choice that shouldn't claim the full row (e.g. a
+     * setting nested inside a modal panel). Has no effect on `"secondary"`
+     * (already hug-content via `.extended-tabs`).
+     */
+    size?: "sm" | "md"
 }
 
 /**
@@ -46,13 +55,17 @@ export const ExtendedTabs = ({
     children,
     className,
     variant = "secondary",
+    size = "md",
 }: ExtendedTabsProps) => {
     return (
         <Tabs
             variant={variant}
             selectedKey={selectedKey}
             onSelectionChange={(key) => onSelectionChange(String(key))}
-            className={cn(variant === "secondary" ? "extended-tabs" : "w-full", className)}
+            className={cn(
+                variant === "secondary" ? "extended-tabs" : size === "sm" ? "w-fit" : "w-full",
+                className,
+            )}
         >
             {children}
         </Tabs>

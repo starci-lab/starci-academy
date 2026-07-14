@@ -1,6 +1,6 @@
 "use client"
 
-import { Filmstrip as FilmReelIcon, Sparkles as SparkleIcon } from "@gravity-ui/icons"
+import { FilmStripIcon as FilmReelIcon, SparkleIcon } from "@phosphor-icons/react"
 import React, { useMemo } from "react"
 import { Chip, Tooltip, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"

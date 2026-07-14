@@ -30,8 +30,7 @@ export const CvPreviewModal = ({ className }: CvPreviewModalProps = {}) => {
             onOpenChange={setOpen}
             className={className}
             containerClassName="h-[92vh] w-[96vw] max-w-[96vw]"
-            header={<div className="font-semibold">{t("cv.preview.title")}</div>}
-            bodyClassName="p-2"
+            title={t("cv.preview.title")}
         >
             <PDFView
                 src={previewPdfUrl ?? ""}

@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowUpFromLine as UploadIcon, Video as VideoIcon } from "@gravity-ui/icons"
+import { UploadSimpleIcon as UploadIcon, VideoCameraIcon as VideoIcon } from "@phosphor-icons/react"
 import React from "react"
 import {
     Chip,
@@ -45,20 +45,28 @@ export const DropZone = ({
     return (
         <div
             id="admin-video-dropzone"
+            role="button"
+            tabIndex={0}
             onClick={onClickZone}
+            onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault()
+                    onClickZone()
+                }
+            }}
             onDragOver={onDragOver}
             onDrop={onDrop}
             className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-white/10 bg-white/[0.02] p-8 transition-all hover:border-indigo-400/40 hover:bg-indigo-500/5"
         >
             {file ? (
-                <div className="flex flex-col items-center gap-1.5">
+                <div className="flex flex-col items-center gap-2">
                     <div className="rounded-full bg-emerald-500/10 p-3">
                         <VideoIcon className="h-8 w-8 text-emerald-400" />
                     </div>
                     <p className="text-sm font-medium text-white">
                         {file.name}
                     </p>
-                    <div className="flex items-center gap-1.5">
+                    <div className="flex items-center gap-2">
                         <Chip
                             size="sm"
                             variant="secondary"
@@ -66,13 +74,9 @@ export const DropZone = ({
                         >
                             {file.type || "unknown"}
                         </Chip>
-                        <Chip
-                            size="sm"
-                            variant="secondary"
-                            className="bg-white/5 text-slate-300"
-                        >
+                        <span className="text-xs text-slate-400">
                             {formatSize(file.size)}
-                        </Chip>
+                        </span>
                     </div>
                     <p className="text-xs text-slate-500">
                         Click or drag to replace

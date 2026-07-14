@@ -103,7 +103,7 @@ export const SettingsLayout = ({
                             type="button"
                             onClick={() => router.push(item.href)}
                             className={cn(
-                                "flex shrink-0 cursor-pointer items-center gap-2 rounded-full border px-3 py-1.5 text-sm transition-colors",
+                                "flex shrink-0 cursor-pointer items-center gap-2 rounded-full border px-3 py-2 text-sm transition-colors",
                                 pathname === item.href
                                     ? "border-accent bg-accent/10 text-accent"
                                     : "border-default text-muted hover:bg-default",

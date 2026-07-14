@@ -14,6 +14,7 @@ import {
     Button,
     Modal,
     Spinner,
+    Typography,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { EmailField } from "./EmailField"
@@ -143,50 +144,55 @@ export const RegistrationState = ({ hideCloseButton }: RegistrationStateProps = 
         <>
             {!hideCloseButton && <Modal.CloseTrigger />}
             <Modal.Header>
-                <div className="text-center">
-                    <div className="font-semibold text-lg">{t("auth.signUp.title")}</div>
-                    <div className="text-xs text-muted">{t("auth.signUp.desc")}</div>
-                </div>
+                <Typography type="body" weight="semibold" className="pr-8 text-center">
+                    {t("auth.signUp.title")}
+                </Typography>
+                <Typography type="body-xs" color="muted" className="text-center">
+                    {t("auth.signUp.desc")}
+                </Typography>
             </Modal.Header>
-            <Modal.Body>
-                <EmailField
-                    value={values.email}
-                    error={errors.email}
-                    touched={touched.email}
-                    onChangeValue={onChangeEmail}
-                    onBlurField={onBlurEmail}
-                />
-                <div className="h-3" />
-                <PasswordField
-                    fieldId="sign-up-password"
-                    name="password"
-                    label={t("auth.signUp.password.label")}
-                    placeholder={t("auth.signUp.password.placeholder")}
-                    value={values.password}
-                    error={errors.password}
-                    touched={touched.password}
-                    onChangeValue={onChangePassword}
-                    onBlurField={onBlurPassword}
-                />
-                <div className="h-3" />
-                <PasswordField
-                    fieldId="sign-up-confirm-password"
-                    name="confirmPassword"
-                    label={t("auth.signUp.confirmPassword.label")}
-                    placeholder={t("auth.signUp.confirmPassword.placeholder")}
-                    value={values.confirmPassword}
-                    error={errors.confirmPassword}
-                    touched={touched.confirmPassword}
-                    onChangeValue={onChangeConfirmPassword}
-                    onBlurField={onBlurConfirmPassword}
-                />
-                <div className="h-3" />
-                <AgreeToTermsRow
-                    isSelected={values.agreeToTerms}
-                    error={errors.agreeToTerms}
-                    touched={touched.agreeToTerms}
-                    onChangeSelected={onChangeAgreeToTerms}
-                />
+            <Modal.Body className="flex flex-col gap-6">
+                <div className="flex flex-col gap-3">
+                    <EmailField
+                        value={values.email}
+                        error={errors.email}
+                        touched={touched.email}
+                        onChangeValue={onChangeEmail}
+                        onBlurField={onBlurEmail}
+                    />
+                    <PasswordField
+                        fieldId="sign-up-password"
+                        name="password"
+                        label={t("auth.signUp.password.label")}
+                        placeholder={t("auth.signUp.password.placeholder")}
+                        value={values.password}
+                        error={errors.password}
+                        touched={touched.password}
+                        onChangeValue={onChangePassword}
+                        onBlurField={onBlurPassword}
+                        showLabel={t("auth.signUp.password.show")}
+                        hideLabel={t("auth.signUp.password.hide")}
+                    />
+                    <PasswordField
+                        fieldId="sign-up-confirm-password"
+                        name="confirmPassword"
+                        label={t("auth.signUp.confirmPassword.label")}
+                        placeholder={t("auth.signUp.confirmPassword.placeholder")}
+                        value={values.confirmPassword}
+                        error={errors.confirmPassword}
+                        touched={touched.confirmPassword}
+                        onChangeValue={onChangeConfirmPassword}
+                        onBlurField={onBlurConfirmPassword}
+                        showLabel={t("auth.signUp.confirmPassword.show")}
+                        hideLabel={t("auth.signUp.confirmPassword.hide")}
+                    />
+                    <AgreeToTermsRow
+                        isSelected={values.agreeToTerms}
+                        error={errors.agreeToTerms}
+                        touched={touched.agreeToTerms}
+                        onChangeSelected={onChangeAgreeToTerms}
+                    />
+                </div>
 
                 {publicEnv().captcha.enabled && (
                     <Turnstile
@@ -196,7 +202,6 @@ export const RegistrationState = ({ hideCloseButton }: RegistrationStateProps = 
                     />
                 )}
 
-                <div className="h-3" />
                 <Button
                     type="submit"
                     variant="primary"
@@ -212,7 +217,6 @@ export const RegistrationState = ({ hideCloseButton }: RegistrationStateProps = 
                         </>
                     )}
                 </Button>
-                <div className="h-3" />
                 <SignInPrompt onSwitchToSignIn={onSwitchToSignIn} />
             </Modal.Body>
         </>

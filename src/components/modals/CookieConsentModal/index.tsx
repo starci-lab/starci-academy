@@ -83,7 +83,7 @@ export const CookieConsentModal = ({ className }: WithClassNames<undefined>) => 
                 </div>
 
                 {/* actions — parity: save / reject equal, accept-all tertiary */}
-                <div className="flex flex-wrap items-center gap-2">
+                <div className="flex flex-nowrap items-center gap-2">
                     <Button
                         variant="primary"
                         size="sm"

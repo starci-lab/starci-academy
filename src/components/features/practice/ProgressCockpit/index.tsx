@@ -95,8 +95,12 @@ export const ProgressCockpit = ({
             color: CODING_DIFFICULTY_META[difficulty].color,
         }))
 
+    // anonymous viewers never fire the queries (key disabled) — bail out
+    // instead of `isLoading`/`!userId` feeding `isFirstLoad` forever.
+    if (!userId) return null
+
     // first load in flight only when no progress has resolved yet
-    const isFirstLoad = !progress && (isLoading || !userId)
+    const isFirstLoad = !progress && isLoading
 
     return (
         <AsyncContent

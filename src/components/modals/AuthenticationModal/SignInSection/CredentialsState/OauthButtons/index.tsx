@@ -38,22 +38,20 @@ export const OauthButtons = ({
 }: OauthButtonsProps) => {
     const t = useTranslations()
     return (
-        <div className={cn(className)}>
-            {items.map((item, idx) => (
-                <React.Fragment key={item.provider}>
-                    <Button
-                        type="button"
-                        variant="outline"
-                        className="w-full text-sm"
-                        onPress={() => onOauthPress(item.provider)}
-                    >
-                        <span className="inline-flex items-center justify-center gap-1.5">
-                            <item.icon className="w-5 h-5" />
-                            {t(item.labelKey)}
-                        </span>
-                    </Button>
-                    {idx === 0 && <div className="h-1.5" />}
-                </React.Fragment>
+        <div className={cn("flex flex-col gap-2", className)}>
+            {items.map((item) => (
+                <Button
+                    key={item.provider}
+                    type="button"
+                    variant="outline"
+                    className="w-full text-sm"
+                    onPress={() => onOauthPress(item.provider)}
+                >
+                    <span className="inline-flex items-center justify-center gap-2">
+                        <item.icon className="size-4" />
+                        {t(item.labelKey)}
+                    </span>
+                </Button>
             ))}
         </div>
     )

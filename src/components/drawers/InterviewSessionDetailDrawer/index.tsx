@@ -2,6 +2,7 @@
 
 import React from "react"
 import { Chip, Drawer, ScrollShadow, Typography, cn } from "@heroui/react"
+import { TagIcon } from "@phosphor-icons/react"
 import { useTranslations, useLocale } from "next-intl"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
@@ -40,7 +41,7 @@ const verdictColorOf = (verdict: string): "success" | "warning" | "danger" =>
 const AttemptCard = ({ attempt, position }: { attempt: InterviewSessionAttemptItem; position: number }) => {
     const t = useTranslations()
     return (
-        <div className="flex flex-col gap-3 rounded-xl border border-default bg-surface p-4">
+        <div className="flex flex-col gap-3 rounded-xl border border-default p-4">
             <div className="flex items-center justify-between gap-3">
                 <Chip size="sm" variant="soft" color={verdictColorOf(attempt.verdict)}>
                     {t(`flashcard.interview.${attempt.verdict === "pass" ? "pass" : attempt.verdict === "borderline" ? "borderline" : "fail"}`)}
@@ -55,7 +56,7 @@ const AttemptCard = ({ attempt, position }: { attempt: InterviewSessionAttemptIt
             <div className="text-foreground">
                 <MarkdownContent markdown={attempt.question} />
             </div>
-            {/* question meta — level + tags */}
+            {/* question meta — level chip (1 trục phân loại) + tags as plain text */}
             {attempt.level || attempt.tags.length > 0 ? (
                 <div className="flex flex-wrap items-center gap-2">
                     {attempt.level ? (
@@ -63,11 +64,12 @@ const AttemptCard = ({ attempt, position }: { attempt: InterviewSessionAttemptIt
                             {t(`flashcard.level.${attempt.level}`)}
                         </Chip>
                     ) : null}
-                    {attempt.tags.map((tag) => (
-                        <Chip key={tag} size="sm" variant="soft" color="default">
-                            {tag}
-                        </Chip>
-                    ))}
+                    {attempt.tags.length > 0 ? (
+                        <Typography type="body-xs" color="muted" className="inline-flex items-center gap-1">
+                            <TagIcon size={14} />
+                            {attempt.tags.join(" · ")}
+                        </Typography>
+                    ) : null}
                 </div>
             ) : null}
             {/* persisted feedback (empty for legacy runs) */}
@@ -145,7 +147,7 @@ export const InterviewSessionDetailDrawer = ({
     const skeleton = (
         <div className="flex flex-col gap-3">
             {Array.from({ length: 3 }).map((_, index) => (
-                <div key={index} className="flex flex-col gap-2 rounded-xl border border-default bg-surface p-4">
+                <div key={index} className="flex flex-col gap-2 rounded-xl border border-default p-4">
                     <Skeleton.Typography type="body-sm" width="1/3" />
                     <Skeleton.Typography type="body-sm" width="full" />
                     <Skeleton.Typography type="body-sm" width="2/3" />
@@ -177,29 +179,29 @@ export const InterviewSessionDetailDrawer = ({
                                 {/* run summary — average + verdict breakdown */}
                                 {session ? (
                                     <div className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-divider pb-4">
-                                        <div className="flex items-baseline gap-1">
-                                            <Typography className="text-2xl font-medium text-foreground">
+                                        <div className="flex items-baseline gap-2">
+                                            <Typography type="h4">
                                                 {session.averageScore}
                                             </Typography>
                                             <Typography type="body-xs" color="muted">
                                                 {t("flashcard.interview.avgScore").toLowerCase()}
                                             </Typography>
                                         </div>
-                                        <div className="ml-auto flex flex-wrap items-center gap-2">
+                                        <div className="ml-auto flex flex-wrap items-center gap-x-3 gap-y-1">
                                             {session.passCount > 0 ? (
-                                                <Chip size="sm" variant="soft" color="success">
+                                                <Typography type="body-sm" weight="medium" className="text-success">
                                                     {`${t("flashcard.interview.pass")} · ${session.passCount}`}
-                                                </Chip>
+                                                </Typography>
                                             ) : null}
                                             {session.borderlineCount > 0 ? (
-                                                <Chip size="sm" variant="soft" color="warning">
+                                                <Typography type="body-sm" weight="medium" className="text-warning">
                                                     {`${t("flashcard.interview.borderline")} · ${session.borderlineCount}`}
-                                                </Chip>
+                                                </Typography>
                                             ) : null}
                                             {session.failCount > 0 ? (
-                                                <Chip size="sm" variant="soft" color="danger">
+                                                <Typography type="body-sm" weight="medium" className="text-danger">
                                                     {`${t("flashcard.interview.fail")} · ${session.failCount}`}
-                                                </Chip>
+                                                </Typography>
                                             ) : null}
                                         </div>
                                     </div>

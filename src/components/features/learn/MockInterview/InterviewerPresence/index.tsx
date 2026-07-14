@@ -72,7 +72,7 @@ export const InterviewerPresence = ({
                     <div className="flex items-center gap-2">
                         <Typography type="body-sm" weight="medium" className="truncate">{persona.name}</Typography>
                         {speaking ? (
-                            <span className="flex items-center gap-1.5 text-accent">
+                            <span className="flex items-center gap-2 text-accent">
                                 <span className="flex items-end gap-[2px]" aria-hidden>
                                     <PulseBar delayMs={0} heightClass="h-2" />
                                     <PulseBar delayMs={150} heightClass="h-3" />

@@ -61,7 +61,7 @@ const CvGalleryCard = ({
                     <CvHtmlDocument doc={doc} />
                 </div>
                 <span className="absolute inset-0 flex items-end justify-center bg-foreground/0 pb-3 opacity-0 transition-opacity group-hover:bg-foreground/5 group-hover:opacity-100">
-                    <span className="rounded-full bg-accent px-4 py-1.5 text-sm text-accent-foreground">
+                    <span className="rounded-full bg-accent px-4 py-2 text-sm text-accent-foreground">
                         {t("cv.builder.openEditor")}
                     </span>
                 </span>

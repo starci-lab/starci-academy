@@ -41,7 +41,7 @@ const NodeChip = ({
             aria-pressed={selected}
             onClick={onSelect}
             className={cn(
-                "flex shrink-0 cursor-pointer items-center gap-2 rounded-full border px-3 py-1.5 text-sm transition-colors",
+                "flex shrink-0 cursor-pointer items-center gap-2 rounded-full border px-3 py-2 text-sm transition-colors",
                 selected ? "border-accent bg-accent/10 text-accent" : "border-default text-muted hover:bg-default",
             )}
         >
@@ -71,7 +71,7 @@ const ModuleChip = ({
             aria-pressed={selected}
             onClick={onSelect}
             className={cn(
-                "flex shrink-0 cursor-pointer items-center gap-2 rounded-full border px-3 py-1.5 text-sm transition-colors",
+                "flex shrink-0 cursor-pointer items-center gap-2 rounded-full border px-3 py-2 text-sm transition-colors",
                 selected ? "border-accent bg-accent/10 text-accent" : "border-default text-muted hover:bg-default",
             )}
         >
@@ -97,7 +97,7 @@ export const ArchitectureMobileNav = ({ healthByName, selectedId, onSelect, clas
 
     return (
         <div className={cn("flex flex-col gap-3 lg:hidden", className)}>
-            <div className="flex flex-col gap-1.5">
+            <div className="flex flex-col gap-2">
                 <Typography type="body-xs" color="muted">{t("rail.ownGroup")}</Typography>
                 <ScrollShadow orientation="horizontal" hideScrollBar className="flex gap-2 overflow-x-auto pb-1">
                     {ownComponents.map((component) => (
@@ -112,7 +112,7 @@ export const ArchitectureMobileNav = ({ healthByName, selectedId, onSelect, clas
                     ))}
                 </ScrollShadow>
             </div>
-            <div className="flex flex-col gap-1.5">
+            <div className="flex flex-col gap-2">
                 <Typography type="body-xs" color="muted">{t("rail.externalGroup")}</Typography>
                 <ScrollShadow orientation="horizontal" hideScrollBar className="flex gap-2 overflow-x-auto pb-1">
                     {externalComponents.map((component) => (
@@ -127,7 +127,7 @@ export const ArchitectureMobileNav = ({ healthByName, selectedId, onSelect, clas
                     ))}
                 </ScrollShadow>
             </div>
-            <div className="flex flex-col gap-1.5">
+            <div className="flex flex-col gap-2">
                 <Typography type="body-xs" color="muted">{t("rail.moduleGroup", { count: ARCHITECTURE_MODULES.length })}</Typography>
                 <ScrollShadow orientation="horizontal" hideScrollBar className="flex gap-2 overflow-x-auto pb-1">
                     {ARCHITECTURE_MODULES.map((module) => (

@@ -6,7 +6,6 @@ import {
 } from "@heroui/react"
 import {
     BookOpenIcon,
-    CaretRightIcon,
 } from "@phosphor-icons/react"
 import {
     useTranslations,
@@ -21,15 +20,8 @@ import type {
     QueryMyDashboardMilestoneProgressItemData,
 } from "@/modules/api/graphql/queries/types/my-dashboard"
 import { IconTile } from "@/components/blocks/identity/IconTile"
-import { SegmentBar } from "@/components/blocks/stats/SegmentBar"
+import { CourseProgressBar } from "@/components/blocks/stats/CourseProgressBar"
 import { SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
-
-/** Segment colour per course progress dimension. */
-const DIM_COLOR: Record<string, string> = {
-    content: "var(--accent)",
-    challenge: "var(--success)",
-    milestone: "var(--warning)",
-}
 
 /** Props for {@link CourseRow}. */
 export interface CourseRowProps {
@@ -50,11 +42,10 @@ export const CourseRow = ({ item }: CourseRowProps) => {
     const { onPress, pending, routable } = useResolveRouteNavigation({ globalId: item.globalId })
 
     const dims = [
-        { key: "content", value: item.contentCompleted, total: item.contentTotal },
-        { key: "challenge", value: item.challengeCompleted, total: item.challengeTotal },
-        { key: "milestone", value: item.completed, total: item.total },
+        { key: "content", completed: item.contentCompleted, total: item.contentTotal },
+        { key: "challenge", completed: item.challengeCompleted, total: item.challengeTotal },
+        { key: "milestone", completed: item.completed, total: item.total },
     ]
-    const totalTasks = dims.reduce((acc, d) => acc + d.total, 0)
 
     return (
         <SurfaceListCardItem onPress={onPress} isDisabled={!routable || pending} hover="underline">
@@ -70,18 +61,14 @@ export const CourseRow = ({ item }: CourseRowProps) => {
                             {item.completionPercent}%
                         </Typography>
                     </div>
-                    <SegmentBar
-                        max={totalTasks || 1}
+                    <CourseProgressBar
                         ariaLabel={`${item.label} · ${item.completionPercent}%`}
-                        segments={dims.map((d) => ({
-                            key: d.key,
+                        dims={dims.map((d) => ({
+                            ...d,
                             label: t(`dashboard.courseProgress.${d.key}`),
-                            value: d.value,
-                            color: DIM_COLOR[d.key],
                         }))}
                     />
                 </div>
-                <CaretRightIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
             </div>
         </SurfaceListCardItem>
     )

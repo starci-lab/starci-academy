@@ -8,7 +8,6 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    Button,
     Card,
     CardContent,
     cn,
@@ -30,9 +29,10 @@ const DEFAULT_CAROUSEL_INTERVAL = 4000
 
 /**
  * Renders a single advertisement banner, branching on `mediaType`
- * (image / video / carousel). The whole banner links to `ad.linkUrl` in a new
- * tab; a "Sponsored" tag shows for paid slots. `"use client"` for the carousel
- * timer + video element.
+ * (image / video / carousel). The whole card is ONE pressable target linking
+ * to `ad.linkUrl` in a new tab (media + title + CTA all share the same
+ * click-target — no duplicate affordances); a "Sponsored" tag shows for paid
+ * slots. `"use client"` for the carousel timer + video element.
  * @param props - the active ad
  */
 export const AdBanner = ({
@@ -105,7 +105,7 @@ export const AdBanner = ({
                     />
                     {/* slide dots */}
                     {media.slides.length > 1 ? (
-                        <div className="absolute inset-x-0 bottom-2 flex justify-center gap-1.5">
+                        <div className="absolute inset-x-0 bottom-2 flex justify-center gap-2">
                             {media.slides.map((item, index) => (
                                 <span
                                     key={item.url}
@@ -126,44 +126,42 @@ export const AdBanner = ({
 
     return (
         <Card className={cn(className)}>
-            <CardContent className="flex flex-col gap-3">
-                {/* "Sponsored" / "Ad" tag row */}
-                <div className="flex items-center justify-between">
-                    <span className="text-xs uppercase tracking-wide text-muted">
-                        {ad.sponsorName
-                            ? t("dashboard.sponsoredBy", {
-                                sponsor: ad.sponsorName,
-                            })
-                            : t("dashboard.sponsored")}
-                    </span>
-                </div>
+            {/* whole card = ONE pressable target → ad.linkUrl (no nested
+                affordances competing for the same destination) */}
+            <a
+                href={ad.linkUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+            >
+                <CardContent className="flex flex-col gap-3">
+                    {/* "Sponsored" / "Ad" tag row */}
+                    <div className="flex items-center justify-between">
+                        <span className="text-xs uppercase tracking-wide text-muted">
+                            {ad.sponsorName
+                                ? t("dashboard.sponsoredBy", {
+                                    sponsor: ad.sponsorName,
+                                })
+                                : t("dashboard.sponsored")}
+                        </span>
+                    </div>
 
-                {/* clickable media → external link */}
-                <a
-                    href={ad.linkUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block"
-                >
                     {renderMedia()}
-                </a>
 
-                <div className="text-sm font-semibold text-foreground">
-                    {ad.title}
-                </div>
+                    <div className="text-sm font-semibold text-foreground">
+                        {ad.title}
+                    </div>
 
-                {ad.ctaText ? (
-                    <Button
-                        variant="secondary"
-                        fullWidth
-                        onPress={() => window.open(ad.linkUrl,
-                            "_blank",
-                            "noopener,noreferrer")}
-                    >
-                        {ad.ctaText}
-                    </Button>
-                ) : null}
-            </CardContent>
+                    {/* presentational CTA affordance only — the anchor above
+                        already owns the click, so this is not a real
+                        (nested) interactive control */}
+                    {ad.ctaText ? (
+                        <span className="block w-full rounded-medium border border-default px-4 py-2 text-center text-sm font-medium text-foreground">
+                            {ad.ctaText}
+                        </span>
+                    ) : null}
+                </CardContent>
+            </a>
         </Card>
     )
 }

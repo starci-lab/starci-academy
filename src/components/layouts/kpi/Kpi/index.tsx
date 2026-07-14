@@ -114,7 +114,7 @@ export const Kpi = ({
     return (
         <div className={cn("mx-auto flex w-full max-w-2xl flex-col gap-6 p-3", className)}>
             {/* title + composite score */}
-            <div className="flex flex-col gap-1.5">
+            <div className="flex flex-col gap-2">
                 <h1 className="text-2xl font-bold text-foreground">
                     <InfoTooltip
                         title={t("dashboard.kpi.title")}
@@ -146,7 +146,7 @@ export const Kpi = ({
                             className="flex flex-col gap-3 rounded-3xl border border-divider p-3"
                         >
                             <div className="flex items-center justify-between gap-3">
-                                <div className="flex items-center gap-1.5">
+                                <div className="flex items-center gap-2">
                                     <Icon className="size-5 shrink-0 text-accent" />
                                     <span className="text-sm font-medium text-foreground">
                                         {t(`dashboard.kpi.labels.${labelKey}`)}
@@ -174,7 +174,7 @@ export const Kpi = ({
                             ) : null}
 
                             {/* preset target buttons (primary = the active target) */}
-                            <div className="flex flex-wrap items-center gap-1.5">
+                            <div className="flex flex-wrap items-center gap-2">
                                 {presets.map((preset) => (
                                     <Button
                                         key={preset}

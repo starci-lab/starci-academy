@@ -2,13 +2,18 @@
 
 import React from "react"
 import {
+    Button,
     Card,
     CardContent,
     cn,
 } from "@heroui/react"
 import {
+    useLocale,
     useTranslations,
 } from "next-intl"
+import {
+    useRouter,
+} from "next/navigation"
 import {
     LockIcon,
 } from "@phosphor-icons/react"
@@ -19,6 +24,7 @@ import {
     ProfileHero,
 } from "../ProfileHero"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
+import { pathConfig } from "@/resources/path"
 
 /** Props for {@link ProfileLockedState}. */
 export type ProfileLockedStateProps = WithClassNames<undefined>
@@ -36,6 +42,8 @@ export const ProfileLockedState = ({
     className,
 }: ProfileLockedStateProps) => {
     const t = useTranslations()
+    const router = useRouter()
+    const locale = useLocale()
 
     return (
         <div className={cn("mx-auto flex w-full max-w-4xl flex-col gap-6 px-6 py-6", className)}>
@@ -46,6 +54,14 @@ export const ProfileLockedState = ({
                         icon={<LockIcon aria-hidden focusable="false" className="size-8" />}
                         title={t("publicProfile.locked.title")}
                         description={t("publicProfile.locked.description")}
+                        action={(
+                            <Button
+                                variant="primary"
+                                onPress={() => router.push(pathConfig().locale(locale).course().build())}
+                            >
+                                {t("nav.courses")}
+                            </Button>
+                        )}
                     />
                 </CardContent>
             </Card>

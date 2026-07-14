@@ -39,7 +39,7 @@ export const AccordionSkeleton = (props: AccordionSkeletonProps) => {
                                 <div
                                     aria-label={item.ariaLabel}
                                 >
-                                    <div className="flex w-full items-center justify-between gap-1.5 p-3">
+                                    <div className="flex w-full items-center justify-between gap-2 p-3">
                                         <SkeletonText
                                             size={titleSize}
                                             width={item.titleWidth}
@@ -51,7 +51,7 @@ export const AccordionSkeleton = (props: AccordionSkeletonProps) => {
                                     </div>
                                     {
                                         item.expanded && renderExpandedBody ? (
-                                            <div className="rounded-none border-none p-3 pt-1.5">
+                                            <div className="rounded-none border-none p-3 pt-2">
                                                 {renderExpandedBody(index)}
                                             </div>
                                         ) : null

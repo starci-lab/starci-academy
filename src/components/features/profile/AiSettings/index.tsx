@@ -7,7 +7,7 @@ import React, {
 import {
     Label,
     Link,
-    Spinner,
+    Skeleton,
     Typography,
 } from "@heroui/react"
 import {
@@ -21,6 +21,8 @@ import { SettingsBreadcrumb } from "../Settings/SettingsBreadcrumb"
 import { pathConfig } from "@/resources/path"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { Callout } from "@/components/blocks/feedback/Callout"
 import { useQueryMyAiQuotaSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiQuotaSwr"
 import { useMutateSetAiCeilSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSetAiCeilSwr"
 import { AiModelCategory } from "@/modules/api/graphql/queries/query-ai-models"
@@ -132,117 +134,122 @@ export const AiSettings = () => {
                 description={t("aiSettings.ceil.description")}
             />
 
-            {quota.isLoading
-                ? (
-                    <div className="flex items-center gap-2">
-                        <Spinner size="sm" />
-                        <Typography type="body-sm" color="muted">
-                            {t("common.loading")}
+            <AsyncContent
+                isLoading={quota.isLoading}
+                skeleton={(
+                    <div className="flex flex-col gap-6">
+                        <Skeleton className="h-16 w-full rounded-2xl" />
+                        <div className="flex flex-col gap-3">
+                            <Skeleton className="h-4 w-32 rounded-lg" />
+                            <Skeleton className="h-9 w-full rounded-xl" />
+                        </div>
+                        <div className="flex flex-col gap-3">
+                            <Skeleton className="h-4 w-40 rounded-lg" />
+                            {SURFACES.map((surface) => (
+                                <Skeleton
+                                    key={surface}
+                                    className="h-9 w-full rounded-xl"
+                                />
+                            ))}
+                        </div>
+                    </div>
+                )}
+                error={quota.error}
+                errorContent={{
+                    title: t("aiSettings.ceil.error"),
+                    onRetry: () => { void quota.mutate() },
+                    retryLabel: t("common.retry"),
+                }}
+            >
+                <div className="flex flex-col gap-6">
+                    <Callout
+                        title={data?.tier
+                            ? t("aiSettings.ceil.plan", {
+                                tier: data.tier,
+                                max: label(planMax),
+                            })
+                            : t("aiSettings.ceil.planFree", {
+                                max: label(planMax),
+                            })}
+                        description={data
+                            ? t("aiSettings.ceil.creditLine", {
+                                used5h: data.credit.used5h,
+                                limit5h: data.credit.limit5h,
+                                usedWeek: data.credit.usedWeek,
+                                limitWeek: data.credit.limitWeek,
+                            })
+                            : undefined}
+                    />
+
+                    <div className="flex flex-col gap-3">
+                        <Label>{t("aiSettings.ceil.defaultLabel")}</Label>
+                        <FlexWrapButtonRadio
+                            ariaLabel={t("aiSettings.ceil.defaultLabel")}
+                            items={ladderItems}
+                            value={data?.ceil.default ?? planMax}
+                            onChange={(category) =>
+                                setCeil(
+                                    null,
+                                    category === planMax
+                                        ? null
+                                        : (category as AiModelCategory),
+                                )}
+                        />
+                        <Typography type="body-xs" color="muted">
+                            {t("aiSettings.ceil.creditCaption")}
+                            {" · "}
+                            {t("aiSettings.ceil.hardStop")}
                         </Typography>
                     </div>
-                )
-                : quota.error
-                    ? (
-                        <Typography type="body-sm" className="text-danger">
-                            {t("aiSettings.ceil.error")}
-                        </Typography>
-                    )
-                    : (
-                        <div className="flex flex-col gap-6">
-                            <div className="rounded-2xl bg-surface shadow-surface px-4 py-3">
-                                <Typography type="body-sm" color="muted">
-                                    {data?.tier
-                                        ? t("aiSettings.ceil.plan", {
-                                            tier: data.tier,
-                                            max: label(planMax),
-                                        })
-                                        : t("aiSettings.ceil.planFree", {
-                                            max: label(planMax),
-                                        })}
-                                </Typography>
-                                {data
-                                    ? (
-                                        <Typography type="body-xs" color="muted">
-                                            {t("aiSettings.ceil.creditLine", {
-                                                used5h: data.credit.used5h,
-                                                limit5h: data.credit.limit5h,
-                                                usedWeek: data.credit.usedWeek,
-                                                limitWeek: data.credit.limitWeek,
-                                            })}
-                                        </Typography>
-                                    )
-                                    : null}
-                            </div>
 
-                            <div className="flex flex-col gap-3">
-                                <Label>{t("aiSettings.ceil.defaultLabel")}</Label>
+                    <div className="flex flex-col gap-3">
+                        <Label>{t("aiSettings.ceil.surfacesLabel")}</Label>
+                        {SURFACES.map((surface) => (
+                            <div
+                                key={surface}
+                                className="flex flex-col gap-2"
+                            >
+                                <Typography type="body-sm">
+                                    {t(`aiSettings.ceil.surface.${surface}`)}
+                                </Typography>
                                 <FlexWrapButtonRadio
-                                    ariaLabel={t("aiSettings.ceil.defaultLabel")}
-                                    items={ladderItems}
-                                    value={data?.ceil.default ?? planMax}
-                                    onChange={(category) =>
+                                    ariaLabel={t(`aiSettings.ceil.surface.${surface}`)}
+                                    items={surfaceItems}
+                                    value={data?.ceil[surface] ?? INHERIT}
+                                    onChange={(value) =>
                                         setCeil(
-                                            null,
-                                            category === planMax
+                                            surface,
+                                            value === INHERIT
                                                 ? null
-                                                : (category as AiModelCategory),
+                                                : (value as AiModelCategory),
                                         )}
                                 />
-                                <Typography type="body-xs" color="muted">
-                                    {t("aiSettings.ceil.creditCaption")}
-                                    {" · "}
-                                    {t("aiSettings.ceil.hardStop")}
+                            </div>
+                        ))}
+                    </div>
+
+                    {!isPaid
+                        ? (
+                            <div className="flex flex-wrap items-center gap-2">
+                                <Typography type="body-sm" color="muted">
+                                    {t("aiSettings.upgradePrompt")}
                                 </Typography>
+                                <Link onPress={onNavigateSubscription}>
+                                    {t("aiSettings.byok.upsellCta")}
+                                </Link>
                             </div>
+                        )
+                        : null}
 
-                            <div className="flex flex-col gap-3">
-                                <Label>{t("aiSettings.ceil.surfacesLabel")}</Label>
-                                {SURFACES.map((surface) => (
-                                    <div
-                                        key={surface}
-                                        className="flex flex-col gap-2"
-                                    >
-                                        <Typography type="body-sm">
-                                            {t(`aiSettings.ceil.surface.${surface}`)}
-                                        </Typography>
-                                        <FlexWrapButtonRadio
-                                            ariaLabel={t(`aiSettings.ceil.surface.${surface}`)}
-                                            items={surfaceItems}
-                                            value={data?.ceil[surface] ?? INHERIT}
-                                            onChange={(value) =>
-                                                setCeil(
-                                                    surface,
-                                                    value === INHERIT
-                                                        ? null
-                                                        : (value as AiModelCategory),
-                                                )}
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-
-                            {!isPaid
-                                ? (
-                                    <div className="flex flex-wrap items-center gap-2">
-                                        <Typography type="body-sm" color="muted">
-                                            {t("aiSettings.upgradePrompt")}
-                                        </Typography>
-                                        <Link onPress={onNavigateSubscription}>
-                                            {t("aiSettings.byok.upsellCta")}
-                                        </Link>
-                                    </div>
-                                )
-                                : null}
-
-                            {isMutating
-                                ? (
-                                    <Typography type="body-xs" color="muted">
-                                        {t("aiSettings.ceil.saving")}
-                                    </Typography>
-                                )
-                                : null}
-                        </div>
-                    )}
+                    {isMutating
+                        ? (
+                            <Typography type="body-xs" color="muted">
+                                {t("aiSettings.ceil.saving")}
+                            </Typography>
+                        )
+                        : null}
+                </div>
+            </AsyncContent>
         </div>
     )
 }

@@ -104,7 +104,7 @@ export const SocketConnectionStatus = () => {
         <div className="pointer-events-none fixed inset-x-0 top-[4.5rem] z-40 flex justify-center">
             <div
                 className={cn(
-                    "pointer-events-auto flex items-center gap-2 rounded-full px-3 py-1.5 text-xs shadow-md",
+                    "pointer-events-auto flex items-center gap-2 rounded-full px-3 py-2 text-xs shadow-md",
                     recovered ? "bg-success/10 text-success" : "bg-warning/10 text-warning",
                 )}
             >

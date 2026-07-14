@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowLeft as ArrowLeftIcon, Filmstrip as FilmStripIcon } from "@gravity-ui/icons"
+import { ArrowLeftIcon, FilmStripIcon } from "@phosphor-icons/react"
 import React, {
     useCallback,
 } from "react"

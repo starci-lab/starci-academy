@@ -1,4 +1,4 @@
-import { CircleCheck as CheckCircleIcon, CircleXmark as XCircleIcon } from "@gravity-ui/icons"
+import { CheckCircleIcon, XCircleIcon } from "@phosphor-icons/react"
 import React from "react"
 import {
     Spinner,

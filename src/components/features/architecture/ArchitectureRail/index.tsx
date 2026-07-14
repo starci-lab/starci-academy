@@ -51,7 +51,7 @@ const ComponentRow = ({
                     simply stays 2 lines, no fake placeholder line */}
                 <MetricsInline metrics={metrics} className="text-xs text-muted" />
             </span>
-            <span className={cn("flex shrink-0 items-center gap-1.5 rounded-full px-2 py-0.5", visual.chipClassName)}>
+            <span className={cn("flex shrink-0 items-center gap-2 rounded-full px-2 py-0", visual.chipClassName)}>
                 <span className={cn("size-1.5 shrink-0 rounded-full", visual.dotClassName, visual.pulse && "animate-pulse")} aria-hidden />
                 <Typography type="body-xs" className="whitespace-nowrap">
                     {t(`status.${state}`)}

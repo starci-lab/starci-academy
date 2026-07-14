@@ -309,7 +309,7 @@ export const FlashcardReviewStats = ({ courseId, onStartReview, className }: Fla
                             </div>
                         ) : (
                             <>
-                                <div className="flex items-baseline gap-1.5">
+                                <div className="flex items-baseline gap-2">
                                     <Typography type="h2" weight="semibold">{dueToday}</Typography>
                                     <Typography type="body-sm" color="muted">
                                         {t("flashcard.review.dueTodayLabel")}

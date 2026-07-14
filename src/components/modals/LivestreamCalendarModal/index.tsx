@@ -1,7 +1,7 @@
 "use client"
 
-import { Clock as ClockIcon } from "@gravity-ui/icons"
-import { Calendar, Chip } from "@heroui/react"
+import { ClockIcon } from "@phosphor-icons/react"
+import { Calendar, Chip, Typography } from "@heroui/react"
 import { CalendarDate, getLocalTimeZone, today } from "@internationalized/date"
 import type { DateValue } from "@heroui/react/rac"
 import { useFormatter, useTranslations } from "next-intl"
@@ -12,7 +12,9 @@ import { useLivestreamCalendarOverlayState } from "@/hooks/zustand/overlay/hooks
 import type { LivestreamSessionEntity } from "@/modules/types/entities/livestream-session"
 import { DayOfWeek } from "@/modules/types/enums/day-of-week"
 import { useAppSelector } from "@/redux/hooks"
-import { Spacer } from "@/components/reuseable/Spacer"
+import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { EmptyContent } from "@/components/blocks/async/EmptyContent"
+import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { ModalShell } from "@/components/blocks/layout/ModalShell"
 
 /** JS `Date#getDay()` (0 = Sunday … 6 = Saturday). */
@@ -110,16 +112,13 @@ export const LivestreamCalendarModal = ({ className }: WithClassNames<undefined>
             containerClassName="max-w-lg"
             size="lg"
             title={t("livestream.calendar.modalTitle")}
-            titleClassName="text-2xl font-bold"
             bodyClassName="gap-0"
         >
             {
                 visibleSessions.length === 0 ? (
-                    <div className="text-center text-sm text-muted">
-                        {t("livestream.calendar.empty")}
-                    </div>
+                    <EmptyContent title={t("livestream.calendar.empty")} />
                 ) : (
-                    <>
+                    <div className="flex w-full flex-col gap-3">
                         <div className="flex w-full flex-col items-center">
                             <Calendar
                                 aria-label={t("livestream.calendar.aria")}
@@ -130,8 +129,7 @@ export const LivestreamCalendarModal = ({ className }: WithClassNames<undefined>
                                 isDateUnavailable={isDateUnavailable}
                             />
                         </div>
-                        <Spacer y={3} />
-                        <div className="flex flex-col gap-3">
+                        <SurfaceListCard bordered>
                             {
                                 visibleSessions
                                     .sort((prev, next) => {
@@ -142,43 +140,37 @@ export const LivestreamCalendarModal = ({ className }: WithClassNames<undefined>
                                         const next = nextOccurrenceForDayOfWeek(dow)
                                         const dayLabel = t(`livestream.calendar.days.${dow}`)
                                         return (
-                                            <div
-                                                key={session.id}
-                                                className="flex flex-col gap-3 rounded-large border  p-3"
-                                            >
-                                                <div className="flex flex-wrap items-center gap-1.5">
-                                                    <Chip color="accent" size="sm" variant="soft">
-                                                        <Chip.Label>{dayLabel}</Chip.Label>
-                                                    </Chip>
-                                                    <Chip color="accent" size="sm" variant="soft">
-                                                        <ClockIcon className="size-4" />
-                                                        <Chip.Label>
+                                            <SurfaceListCardItem key={session.id}>
+                                                <div className="flex flex-col gap-3">
+                                                    <div className="flex flex-wrap items-center gap-2">
+                                                        <Chip size="sm" variant="soft">
+                                                            <Chip.Label>{dayLabel}</Chip.Label>
+                                                        </Chip>
+                                                        <ClockIcon aria-hidden focusable="false" className="size-3 text-muted" />
+                                                        <Typography type="body-sm" color="muted">
                                                             {t("livestream.calendar.sessionTime", {
                                                                 start: formatTime(session.startTime),
                                                                 end: formatTime(session.expectedEndTime),
                                                             })}
-                                                        </Chip.Label>
-                                                    </Chip>
-                                                </div>
-                                                <div className="text-sm">
-                                                    {t("livestream.calendar.nextOn", {
-                                                        date: format.dateTime(next.toDate(), {
-                                                            dateStyle: "long",
-                                                        }),
-                                                    })}
-
-                                                </div>
-                                                {session.note?.trim() ? (
-                                                    <div className="text-sm text-muted">
-                                                        {session.note}
+                                                        </Typography>
                                                     </div>
-                                                ) : null}
-                                            </div>
+                                                    <Typography type="body-sm">
+                                                        {t("livestream.calendar.nextOn", {
+                                                            date: format.dateTime(next.toDate(), {
+                                                                dateStyle: "long",
+                                                            }),
+                                                        })}
+                                                    </Typography>
+                                                    {session.note?.trim() ? (
+                                                        <MarkdownContent markdown={session.note} className="text-sm text-muted" />
+                                                    ) : null}
+                                                </div>
+                                            </SurfaceListCardItem>
                                         )
                                     })
                             }
-                        </div>
-                    </>
+                        </SurfaceListCard>
+                    </div>
                 )}
         </ModalShell>
     )

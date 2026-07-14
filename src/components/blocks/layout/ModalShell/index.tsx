@@ -60,6 +60,17 @@ export interface ModalShellProps extends WithClassNames<undefined> {
      */
     bodyClassName?: string
     /**
+     * Whether {@link children}'s FIRST element is a tab strip (`Tabs`/
+     * `TabsCard`/`ExtendedTabs`) rather than plain content. Governs the
+     * header→body gap (`fe/foundations/gap.md`): header→plain-content =
+     * `gap-6` (default); header→tabs = `gap-3` (tabs sit closer to the
+     * title, as part of the same "identity" cluster — the CONTENT below the
+     * tabs still gets its own `gap-6` from the tabs, which the modal's own
+     * body layout is responsible for, not this prop). No effect without
+     * {@link title}/{@link header} (no header ⇒ no header-body gap to set).
+     */
+    bodyStartsWithTabs?: boolean
+    /**
      * Body content of the modal.
      */
     children: ReactNode
@@ -99,9 +110,11 @@ export const ModalShell = ({
     containerClassName,
     dialogClassName,
     bodyClassName,
+    bodyStartsWithTabs,
     className,
     children,
 }: ModalShellProps) => {
+    const hasHeader = header != null || title != null
     return (
         <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
             <Modal.Backdrop>
@@ -117,7 +130,19 @@ export const ModalShell = ({
                                 </div>
                             </Modal.Header>
                         ) : null}
-                        <Modal.Body className={bodyClassName}>{children}</Modal.Body>
+                        {/* HeroUI's own `.modal__header + .modal__body { mt-2 }` (8px) is
+                            tighter than fe/foundations/gap.md's scale — override to gap-6
+                            (header→plain content) or gap-3 (header→tabs) per §header rule.
+                            Only fires when a header actually precedes body (no header ⇒
+                            no sibling match ⇒ this class is inert). */}
+                        <Modal.Body
+                            className={cn(
+                                hasHeader && (bodyStartsWithTabs ? "mt-3!" : "mt-6!"),
+                                bodyClassName,
+                            )}
+                        >
+                            {children}
+                        </Modal.Body>
                     </Modal.Dialog>
                 </Modal.Container>
             </Modal.Backdrop>

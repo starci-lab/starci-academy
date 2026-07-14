@@ -152,7 +152,7 @@ export const MockInterviewStats = ({ courseId, courseDisplayId, onStartInterview
                             )
                             return (
                                 <>
-                                    <div className="flex items-baseline gap-1.5">
+                                    <div className="flex items-baseline gap-2">
                                         <Typography type="h2" weight="semibold" className={scoreTextColorOf(avgScore, 100)}>
                                             {avgScore}
                                         </Typography>
@@ -181,19 +181,19 @@ export const MockInterviewStats = ({ courseId, courseDisplayId, onStartInterview
                     {/* Hero 2: Phân bố verdict — "3/5 Đạt · 1 Cần cải thiện · 1 Chưa đạt". */}
                     <LabeledCard label={t("mockInterview.statsVerdictTitle")}>
                         <div className="flex flex-wrap items-center gap-2">
-                            <div className="flex items-center gap-1.5 rounded-full bg-success/10 px-3 py-1">
+                            <div className="flex items-center gap-2 rounded-full bg-success/10 px-3 py-1">
                                 <span className="size-2 rounded-full bg-success" aria-hidden />
                                 <Typography type="body-sm">
                                     {stats.verdictCounts.pass} {t("mockInterview.statsVerdictPass")}
                                 </Typography>
                             </div>
-                            <div className="flex items-center gap-1.5 rounded-full bg-warning/10 px-3 py-1">
+                            <div className="flex items-center gap-2 rounded-full bg-warning/10 px-3 py-1">
                                 <span className="size-2 rounded-full bg-warning" aria-hidden />
                                 <Typography type="body-sm">
                                     {stats.verdictCounts.borderline} {t("mockInterview.statsVerdictBorderline")}
                                 </Typography>
                             </div>
-                            <div className="flex items-center gap-1.5 rounded-full bg-danger/10 px-3 py-1">
+                            <div className="flex items-center gap-2 rounded-full bg-danger/10 px-3 py-1">
                                 <span className="size-2 rounded-full bg-danger" aria-hidden />
                                 <Typography type="body-sm">
                                     {stats.verdictCounts.fail} {t("mockInterview.statsVerdictFail")}

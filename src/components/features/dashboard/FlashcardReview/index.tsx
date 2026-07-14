@@ -13,8 +13,8 @@ import {
     useRouter,
 } from "next/navigation"
 import {
-    Layers as LayersIcon,
-} from "@gravity-ui/icons"
+    StackIcon as LayersIcon,
+} from "@phosphor-icons/react"
 import {
     pathConfig,
 } from "@/resources/path"
@@ -22,6 +22,8 @@ import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 import { useQueryMyDueFlashcardsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyDueFlashcardsSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /** Props for {@link FlashcardReview}. */
 export type FlashcardReviewProps = WithClassNames<undefined>
@@ -39,32 +41,43 @@ export const FlashcardReview = ({
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
-    const { data } = useQueryMyDueFlashcardsSwr()
+    const { data, error, isLoading } = useQueryMyDueFlashcardsSwr()
 
-    // not loaded yet, or nothing due → no widget
-    if (!data || data.dueCount === 0) {
-        return null
-    }
-
+    // widget PHỤ, không nhãn: nothing due, still loading (no cache), or fetch failed → self-hide
+    // (folded into `isEmpty` since AsyncContent's error branch needs an explicit errorContent).
     return (
-        <div className={cn("flex items-center justify-between gap-3 p-3", className)}>
-            <div className="flex min-w-0 items-center gap-1.5">
-                <LayersIcon className="size-5 shrink-0 text-accent" />
-                <span className="truncate text-sm font-medium text-foreground">
-                    {t("flashcardReview.due", {
-                        count: data.dueCount,
-                    })}
-                </span>
+        <AsyncContent
+            isLoading={isLoading && !data}
+            skeleton={(
+                <div className={cn("flex items-center justify-between gap-3 p-3", className)}>
+                    <div className="flex min-w-0 items-center gap-2">
+                        <Skeleton className="size-5 shrink-0 rounded-medium" />
+                        <Skeleton.Typography type="body-sm" width="3/4" />
+                    </div>
+                    <Skeleton.Button />
+                </div>
+            )}
+            isEmpty={!!error || !data || data.dueCount === 0}
+        >
+            <div className={cn("flex items-center justify-between gap-3 p-3", className)}>
+                <div className="flex min-w-0 items-center gap-2">
+                    <LayersIcon className="size-5 shrink-0 text-accent" />
+                    <span className="truncate text-sm font-medium text-foreground">
+                        {t("flashcardReview.due", {
+                            count: data?.dueCount ?? 0,
+                        })}
+                    </span>
+                </div>
+                <Button
+                    variant="primary"
+                    size="sm"
+                    onPress={() => router.push(
+                        pathConfig().locale(locale).review().build(),
+                    )}
+                >
+                    {t("flashcardReview.start")}
+                </Button>
             </div>
-            <Button
-                variant="primary"
-                size="sm"
-                onPress={() => router.push(
-                    pathConfig().locale(locale).review().build(),
-                )}
-            >
-                {t("flashcardReview.start")}
-            </Button>
-        </div>
+        </AsyncContent>
     )
 }

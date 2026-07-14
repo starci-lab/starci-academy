@@ -11,8 +11,6 @@ import React, {
 } from "react"
 import {
     Button,
-    Card,
-    CardContent,
     Chip,
     Spinner,
     Typography,
@@ -27,6 +25,7 @@ import {
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { useQueryMySessionsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMySessionsSwr"
 import { useMutateRevokeSessionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateRevokeSessionSwr"
 import type { LoginSession } from "@/modules/api/graphql/queries/types/my-sessions"
@@ -114,11 +113,19 @@ export const Sessions = () => {
             <AsyncContent
                 isLoading={isLoading && !sessions}
                 skeleton={(
-                    <div className="flex flex-col gap-3">
+                    <SurfaceListCard>
                         {[0, 1, 2].map((row) => (
-                            <Skeleton key={row} className="h-20 w-full rounded-2xl" />
+                            <SurfaceListCardItem key={row}>
+                                <div className="flex h-12 items-center gap-3">
+                                    <Skeleton className="size-5 shrink-0 rounded" />
+                                    <div className="flex min-w-0 flex-1 flex-col gap-2">
+                                        <Skeleton.Typography type="body-sm" width="1/2" />
+                                        <Skeleton className="h-3 w-1/3 rounded" />
+                                    </div>
+                                </div>
+                            </SurfaceListCardItem>
                         ))}
-                    </div>
+                    </SurfaceListCard>
                 )}
                 isEmpty={sessionList.length === 0}
                 emptyContent={{ title: t("sessions.empty") }}
@@ -126,10 +133,10 @@ export const Sessions = () => {
                 errorContent={{
                     title: t("sessions.empty"),
                     onRetry: () => { void mutate() },
-                    retryLabel: t("sessions.revoke"),
+                    retryLabel: t("common.retry"),
                 }}
             >
-                <div className="flex flex-col gap-3">
+                <SurfaceListCard>
                     {sessionList.map((session: LoginSession) => {
                         // pick a device glyph from the coarse device class
                         const isMobile =
@@ -144,56 +151,54 @@ export const Sessions = () => {
                             .filter(Boolean)
                             .join(" • ") || t("sessions.unknownDevice")
                         return (
-                            <Card key={session.id}>
-                                <CardContent>
-                                    <div className="flex items-center gap-3">
-                                        <DeviceIcon aria-hidden focusable="false" className="size-5 shrink-0 text-accent" />
-                                        <div className="flex min-w-0 flex-1 flex-col gap-0">
-                                            {/* device name + "this device" chip right next to it */}
-                                            <div className="flex flex-wrap items-center gap-2">
-                                                <Typography type="body-sm" weight="medium" truncate>
-                                                    {headline}
-                                                </Typography>
-                                                {session.current ? (
-                                                    <Chip color="accent" variant="soft" size="sm">
-                                                        <Chip.Label>{t("sessions.thisDevice")}</Chip.Label>
-                                                    </Chip>
-                                                ) : null}
-                                            </div>
-                                            {/* meta: location · ip · last seen */}
-                                            <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-                                                {session.location ? (
-                                                    <Typography type="body-xs" color="muted">{session.location}</Typography>
-                                                ) : null}
-                                                {session.ipAddress ? (
-                                                    <Typography type="body-xs" color="muted">{session.ipAddress}</Typography>
-                                                ) : null}
-                                                <Typography type="body-xs" color="muted">{formatSeen(session.lastSeenAt)}</Typography>
-                                            </div>
+                            <SurfaceListCardItem key={session.id}>
+                                <div className="flex items-center gap-3">
+                                    <DeviceIcon aria-hidden focusable="false" className="size-5 shrink-0 text-accent" />
+                                    <div className="flex min-w-0 flex-1 flex-col gap-0">
+                                        {/* device name + "this device" chip right next to it */}
+                                        <div className="flex flex-wrap items-center gap-2">
+                                            <Typography type="body-sm" weight="medium" truncate>
+                                                {headline}
+                                            </Typography>
+                                            {session.current ? (
+                                                <Chip color="accent" variant="soft" size="sm">
+                                                    <Chip.Label>{t("sessions.thisDevice")}</Chip.Label>
+                                                </Chip>
+                                            ) : null}
                                         </div>
-                                        {!session.current ? (
-                                            <Button
-                                                variant="ghost"
-                                                size="sm"
-                                                className="ml-auto shrink-0 text-danger"
-                                                isDisabled={revokingId === session.sessionId}
-                                                onPress={() => onRevoke(session.sessionId)}
-                                                aria-label={t("sessions.revoke")}
-                                            >
-                                                {revokingId === session.sessionId ? (
-                                                    <Spinner color="current" size="sm" />
-                                                ) : (
-                                                    <SignOutIcon aria-hidden focusable="false" className="size-5" />
-                                                )}
-                                                {t("sessions.revoke")}
-                                            </Button>
-                                        ) : null}
+                                        {/* meta: location · ip · last seen */}
+                                        <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+                                            {session.location ? (
+                                                <Typography type="body-xs" color="muted">{session.location}</Typography>
+                                            ) : null}
+                                            {session.ipAddress ? (
+                                                <Typography type="body-xs" color="muted">{session.ipAddress}</Typography>
+                                            ) : null}
+                                            <Typography type="body-xs" color="muted">{formatSeen(session.lastSeenAt)}</Typography>
+                                        </div>
                                     </div>
-                                </CardContent>
-                            </Card>
+                                    {!session.current ? (
+                                        <Button
+                                            variant="ghost"
+                                            size="sm"
+                                            className="ml-auto shrink-0 text-danger"
+                                            isDisabled={revokingId === session.sessionId}
+                                            onPress={() => onRevoke(session.sessionId)}
+                                            aria-label={t("sessions.revoke")}
+                                        >
+                                            {revokingId === session.sessionId ? (
+                                                <Spinner color="current" size="sm" />
+                                            ) : (
+                                                <SignOutIcon aria-hidden focusable="false" className="size-5" />
+                                            )}
+                                            {t("sessions.revoke")}
+                                        </Button>
+                                    ) : null}
+                                </div>
+                            </SurfaceListCardItem>
                         )
                     })}
-                </div>
+                </SurfaceListCard>
             </AsyncContent>
         </div>
     )

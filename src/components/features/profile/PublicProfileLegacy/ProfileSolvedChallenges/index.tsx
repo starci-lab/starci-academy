@@ -7,8 +7,8 @@ import {
     Typography,
 } from "@heroui/react"
 import {
-    Link as LinkIcon,
-} from "@gravity-ui/icons"
+    LinkIcon,
+} from "@phosphor-icons/react"
 import {
     useTranslations,
 } from "next-intl"

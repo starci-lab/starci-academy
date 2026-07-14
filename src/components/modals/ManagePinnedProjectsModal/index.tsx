@@ -2,7 +2,6 @@
 
 import React, { useState } from "react"
 import {
-    Spinner,
     Tabs,
     Typography,
 } from "@heroui/react"
@@ -16,7 +15,8 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 import { ExternalProjectForm } from "./ExternalProjectForm"
 import { CourseProjectForm } from "./CourseProjectForm"
 import { usePinnedProjectsOverlayState } from "@/hooks/zustand/overlay/hooks"
-import { EmptyState } from "@/components/blocks/feedback/EmptyState"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { ModalShell } from "@/components/blocks/layout/ModalShell"
 
 /** Tabs inside the manage-pinned-projects modal. */
@@ -54,6 +54,7 @@ export const ManagePinnedProjectsModal = ({
             onOpenChange={setOpen}
             className={className}
             size="lg"
+            bodyStartsWithTabs
             header={(
                 <Typography type="body" weight="semibold" className="pr-8">
                     {t("pinnedProjects.manageTitle")}
@@ -83,16 +84,21 @@ export const ManagePinnedProjectsModal = ({
 
                 {/* manage: reorder + remove the existing pins */}
                 <Tabs.Panel id="manage" className="pt-3">
-                    {isLoading && pins.length === 0 ? (
-                        <div className="flex justify-center py-6">
-                            <Spinner size="lg" />
-                        </div>
-                    ) : pins.length === 0 ? (
-                        <EmptyState
-                            title={t("pinnedProjects.emptyOwnerTitle")}
-                            description={t("pinnedProjects.emptyManage")}
-                        />
-                    ) : (
+                    <AsyncContent
+                        isLoading={isLoading && pins.length === 0}
+                        skeleton={(
+                            <div className="flex flex-col gap-3">
+                                <Skeleton.Card lines={2} />
+                                <Skeleton.Card lines={2} />
+                                <Skeleton.Card lines={2} />
+                            </div>
+                        )}
+                        isEmpty={pins.length === 0}
+                        emptyContent={{
+                            title: t("pinnedProjects.emptyOwnerTitle"),
+                            description: t("pinnedProjects.emptyManage"),
+                        }}
+                    >
                         <div className="flex flex-col gap-3">
                             {isFull ? (
                                 <Typography type="body-xs" color="muted">
@@ -113,7 +119,7 @@ export const ManagePinnedProjectsModal = ({
                                 />
                             ))}
                         </div>
-                    )}
+                    </AsyncContent>
                 </Tabs.Panel>
 
                 {/* external: free-form add form (switches back to manage on success) */}

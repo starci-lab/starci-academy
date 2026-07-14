@@ -119,9 +119,14 @@ export const StreakStrip = ({
                             </Chip>
                         </div>
                     ) : (
-                        <Typography type="body-sm" color="muted">
-                            {t("dashboard.streak.empty")}
-                        </Typography>
+                        <div className="flex flex-wrap items-center justify-between gap-3">
+                            <Typography type="body-sm" color="muted">
+                                {t("dashboard.streak.empty")}
+                            </Typography>
+                            <Button variant="primary" size="sm" onPress={onLearn}>
+                                {t("dashboard.dailyGoal.cta")}
+                            </Button>
+                        </div>
                     )}
                 </div>
 

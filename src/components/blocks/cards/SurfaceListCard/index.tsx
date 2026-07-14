@@ -22,8 +22,10 @@ export interface SurfaceListCardProps extends WithClassNames<undefined> {
 /**
  * Bounded SURFACE list card: one `bg-surface` container with a border + large
  * radius, holding {@link SurfaceListCardRow}s edge-to-edge (the `Accordion
- * variant="surface"` skin — NOT a real accordion). Each row owns the inset
- * separator + hover; the last row hides its separator automatically.
+ * variant="surface"` skin — NOT a real accordion). Each row owns the FULL-BLEED
+ * separator + hover; the last row hides its separator automatically (thầy
+ * 2026-07-14: "surface in surface cũng separator full width nhé" — full-bleed
+ * everywhere, no inset-vs-nested split).
  *
  * Use for a list of clickable items that should read as ONE card (foundation
  * categories/resources, payment methods…), not N separate cards. Style lives
@@ -113,8 +115,8 @@ export const SurfaceListCardRow = ({
         underlineHover ? "group" : "hover:bg-default",
         "focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent",
         "disabled:cursor-not-allowed disabled:opacity-60",
-        // inset separator, hidden on the last row of the card
-        "after:absolute after:bottom-0 after:left-[3%] after:h-px after:w-[94%] after:bg-surface-foreground/6 after:content-['']",
+        // full-bleed separator, hidden on the last row of the card
+        "after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-surface-foreground/6 after:content-['']",
         "last:after:hidden",
         !isDisabled && (onPress || href) && "cursor-pointer",
         selected && "bg-accent/10",
@@ -207,8 +209,8 @@ export const SurfaceListCardItem = ({
     const interactive = Boolean(onPress || href)
     const itemClassName = cn(
         "relative block w-full px-4 py-4 text-left",
-        // inset separator, hidden on the last row of the card
-        "after:absolute after:bottom-0 after:left-[3%] after:h-px after:w-[94%] after:bg-surface-foreground/6 after:content-['']",
+        // full-bleed separator, hidden on the last row of the card
+        "after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-surface-foreground/6 after:content-['']",
         "last:after:hidden",
         interactive && "outline-none transition-colors focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent",
         // link-style rows form a hover `group` (the title underlines) with NO fill;

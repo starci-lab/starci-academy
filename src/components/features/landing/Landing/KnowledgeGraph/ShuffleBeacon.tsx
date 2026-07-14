@@ -52,7 +52,7 @@ export const ShuffleBeacon = ({ onShuffle }: ShuffleBeaconProps) => {
             onClick={trigger}
             title={t("landing.treasure.beaconTap")}
             aria-label={t("landing.treasure.beaconTap")}
-            className="nodrag nopan group flex cursor-pointer items-center gap-2 rounded-full border border-default bg-surface/80 py-1.5 pr-3 pl-1.5 text-xs text-muted backdrop-blur-sm transition-colors hover:text-foreground"
+            className="nodrag nopan group flex cursor-pointer items-center gap-2 rounded-full border border-default bg-surface/80 py-2 pr-3 pl-2 text-xs text-muted backdrop-blur-sm transition-colors hover:text-foreground"
         >
             <span className="relative inline-flex size-6 items-center justify-center">
                 <svg viewBox="0 0 26 26" className="size-6 -rotate-90">

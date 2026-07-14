@@ -22,6 +22,12 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 /** Weekday initials shown in the streak strip (Mon–Sun). */
 const WEEK_DAYS: Array<string> = ["M", "T", "W", "T", "F", "S", "S"]
 
+/** Streak stat keys rendered in the summary grid (current/longest). */
+const STREAK_STATS: Array<{ key: string; labelKey: string; value: string }> = [
+    { key: "current", labelKey: "streak.current", value: "0" },
+    { key: "longest", labelKey: "streak.longest", value: "0" },
+]
+
 /** Props for {@link UserStreak}. */
 export type UserStreakProps = WithClassNames<undefined>
 
@@ -47,24 +53,17 @@ export const UserStreak = ({ className }: UserStreakProps) => {
                 <DropdownSection>
                     <DropdownItem key="streaks" className="cursor-default opacity-100 data-[hover=true]:bg-transparent">
                         <div className="grid grid-cols-2 gap-3">
-                            <Card>
-                                <CardContent className="flex flex-col items-center gap-2 text-center">
-                                    <Label>{t("streak.current")}</Label>
-                                    <div className="flex items-center justify-center gap-2">
-                                        <FireIcon aria-hidden weight="fill" className="size-5 text-accent" />
-                                        <Typography type="h5" weight="bold">0</Typography>
-                                    </div>
-                                </CardContent>
-                            </Card>
-                            <Card>
-                                <CardContent className="flex flex-col items-center gap-2 text-center">
-                                    <Label>{t("streak.longest")}</Label>
-                                    <div className="flex items-center justify-center gap-2">
-                                        <FireIcon aria-hidden weight="fill" className="size-5 text-accent" />
-                                        <Typography type="h5" weight="bold">0</Typography>
-                                    </div>
-                                </CardContent>
-                            </Card>
+                            {STREAK_STATS.map((stat) => (
+                                <Card key={stat.key}>
+                                    <CardContent className="flex flex-col items-center gap-2 text-center">
+                                        <Label>{t(stat.labelKey)}</Label>
+                                        <div className="flex items-center justify-center gap-2">
+                                            <FireIcon aria-hidden weight="fill" className="size-5 text-accent" />
+                                            <Typography type="h5" weight="bold">{stat.value}</Typography>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            ))}
                         </div>
                     </DropdownItem>
                 </DropdownSection>

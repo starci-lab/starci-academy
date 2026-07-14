@@ -51,7 +51,7 @@ export const CheckListItem = ({ showCheck = true, children }: CheckListItemProps
             <CheckCircleIcon
                 aria-hidden
                 focusable="false"
-                className="mt-0.5 size-5 shrink-0 text-success"
+                className="size-5 shrink-0 text-success"
             />
         ) : null}
         <div className="min-w-0 flex-1">{children}</div>

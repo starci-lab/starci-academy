@@ -40,7 +40,7 @@ const handleSessionSuperseded = (): void => {
     // flag in sessionStorage so we can show a toast after hard reload
     try {
         sessionStorage.setItem("superseded_toast", "true")
-    } catch (e) {
+    } catch {
         // ignore storage quota/security restrictions
     }
     // hard navigate home to reset all in-memory auth state (redux, apollo cache)

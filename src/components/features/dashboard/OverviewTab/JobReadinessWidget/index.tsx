@@ -90,8 +90,18 @@ export const JobReadinessWidget = ({ className }: JobReadinessWidgetProps) => {
             isLoading={isLoading && tracks.length === 0}
             skeleton={(
                 <div className="flex flex-col gap-3">
-                    <Skeleton.Metric />
-                    <Skeleton.Typography type="body-sm" width="1/3" />
+                    <div className="flex flex-wrap items-center gap-3">
+                        <Skeleton.Metric />
+                        <Skeleton.Chip />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                        <Skeleton.Typography type="body-xs" width="1/3" />
+                        <Skeleton.Meter />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                        <Skeleton.Typography type="body-xs" width="1/3" />
+                        <Skeleton.Meter />
+                    </div>
                     <Skeleton.Button />
                 </div>
             )}

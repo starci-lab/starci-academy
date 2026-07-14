@@ -12,8 +12,10 @@ import {
 } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { CODING_DOMAIN_ORDER } from "@/modules/api/graphql/queries/types/coding"
+import { SegmentedControl } from "@/components/blocks/navigation/SegmentedControl"
 import { usePracticeView } from "../../hooks/usePracticeView"
 import { usePracticeFilters } from "../../hooks/usePracticeFilters"
+import type { PracticeView } from "../../hooks/usePracticeView"
 import type { DomainFilter } from "../../types"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
@@ -39,27 +41,32 @@ export const PracticeMobileNav = ({ className }: PracticeMobileNavProps) => {
 
     return (
         <div className={cn("flex flex-col gap-3 lg:hidden", className)}>
-            {/* mode chips */}
-            <div className="flex gap-2" role="group" aria-label={t("practice.rail.modeAria")}>
-                <Button
-                    size="sm"
-                    variant={view === "problems" ? "secondary" : "ghost"}
-                    aria-pressed={view === "problems"}
-                    onPress={() => setView("problems")}
-                >
-                    <ListChecksIcon aria-hidden focusable="false" className="size-5" />
-                    {t("practice.tabs.problems")}
-                </Button>
-                <Button
-                    size="sm"
-                    variant={view === "leaderboard" ? "secondary" : "ghost"}
-                    aria-pressed={view === "leaderboard"}
-                    onPress={() => setView("leaderboard")}
-                >
-                    <TrophyIcon aria-hidden focusable="false" className="size-5" />
-                    {t("practice.tabs.leaderboard")}
-                </Button>
-            </div>
+            {/* mode switch — mirrors the desktop rail's SegmentedControl (see PracticeRail) */}
+            <SegmentedControl<PracticeView>
+                ariaLabel={t("practice.rail.modeAria")}
+                value={view}
+                onChange={setView}
+                items={[
+                    {
+                        value: "problems",
+                        label: (
+                            <span className="flex items-center gap-2">
+                                <ListChecksIcon className="size-4 shrink-0" aria-hidden focusable="false" />
+                                {t("practice.tabs.problems")}
+                            </span>
+                        ),
+                    },
+                    {
+                        value: "leaderboard",
+                        label: (
+                            <span className="flex items-center gap-2">
+                                <TrophyIcon className="size-4 shrink-0" aria-hidden focusable="false" />
+                                {t("practice.tabs.leaderboard")}
+                            </span>
+                        ),
+                    },
+                ]}
+            />
 
             {/* topic chips — problems mode only */}
             {view === "problems" ? (

@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowLeft as ArrowLeftIcon } from "@gravity-ui/icons"
+import { ArrowLeftIcon } from "@phosphor-icons/react"
 import React, { useCallback } from "react"
 import { Button, cn } from "@heroui/react"
 import { useRouter } from "next/navigation"

@@ -1,6 +1,6 @@
 "use client"
 
-import { Person as UserIcon } from "@gravity-ui/icons"
+import { UserIcon } from "@phosphor-icons/react"
 import React, { useCallback } from "react"
 import {
     Badge,

@@ -50,7 +50,7 @@ export const ChallengeChips = ({
     const overflow = challenges.length - visible.length
 
     return (
-        <div className={cn("flex flex-wrap gap-1.5", className)}>
+        <div className={cn("flex flex-wrap gap-2", className)}>
             {visible.map((challenge, index) => (
                 <a
                     key={challenge.submissionUrl + "-" + index}
@@ -58,7 +58,7 @@ export const ChallengeChips = ({
                     target="_blank"
                     rel="noopener noreferrer"
                     title={challenge.title}
-                    className="flex max-w-full items-center gap-1.5 rounded-full border border-default/40 px-3 py-1.5 outline-none hover:border-default focus-visible:ring-2 focus-visible:ring-accent"
+                    className="flex max-w-full items-center gap-2 rounded-full border border-default/40 px-3 py-2 outline-none hover:border-default focus-visible:ring-2 focus-visible:ring-accent"
                 >
                     <CheckCircleIcon className="size-5 shrink-0 text-success" />
                     <SiGithub className="size-5 shrink-0 text-muted" />
@@ -66,7 +66,7 @@ export const ChallengeChips = ({
                         {challenge.title}
                     </span>
                     {challenge.selectedLang ? (
-                        <span className="shrink-0 rounded-medium bg-default/40 px-1.5 py-0.5 text-[11px] text-foreground">
+                        <span className="shrink-0 rounded-medium bg-default/40 px-2 py-0 text-[11px] text-foreground">
                             {challenge.selectedLang}
                         </span>
                     ) : null}
@@ -76,7 +76,7 @@ export const ChallengeChips = ({
                 <button
                     type="button"
                     onClick={() => setShowAll(true)}
-                    className="flex items-center rounded-full border border-default/40 px-3 py-1.5 text-xs text-muted outline-none hover:border-default hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent"
+                    className="flex items-center rounded-full border border-default/40 px-3 py-2 text-xs text-muted outline-none hover:border-default hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent"
                 >
                     {t("publicProfile.capstone.more", { count: overflow })}
                 </button>

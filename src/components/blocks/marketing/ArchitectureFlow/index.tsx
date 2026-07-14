@@ -19,7 +19,7 @@ export interface ArchitectureFlowProps extends WithClassNames<undefined> {
  */
 export const ArchitectureFlow = ({ nodes, className }: ArchitectureFlowProps) => {
     return (
-        <div className={cn("flex flex-wrap items-center gap-1.5", className)}>
+        <div className={cn("flex flex-wrap items-center gap-2", className)}>
             {nodes.map((node, index) => (
                 <React.Fragment key={`${node}-${index}`}>
                     {index > 0 ? (

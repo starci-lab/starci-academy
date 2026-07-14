@@ -1,7 +1,8 @@
 "use client"
 
 import React, { useCallback, useMemo } from "react"
-import { Button, Card, Chip, cn } from "@heroui/react"
+import { Button, Chip, Typography, cn } from "@heroui/react"
+import { CheckCircleIcon, XCircleIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { dayjs, getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
 import { Spacer } from "@/components/reuseable/Spacer"
@@ -71,51 +72,53 @@ export const SubmissionAttemptCard = (props: SubmissionAttemptCardProps) => {
     }, [submissionAttempt.submissionUrl])
 
     return (
-        <Card className={cn("bg-surface", className)}>
-            <Card.Content>
-                <div>
-                    <div className="flex items-center justify-between gap-3">
-                        <div className="font-semibold text-foreground">
-                            {t("submissionAttempts.attemptLine", {
-                                number: submissionAttempt.attemptNumber,
-                            })}
-                            {processedAgo != null ? (
-                                <span className="font-normal text-muted">
-                                    {" · "}
-                                    {processedAgo}
-                                </span>
-                            ) : null}
-                        </div>
-                        <Chip
-                            color={scoreColor}
-                            size="sm"
-                            variant="soft"
-                        >
-                            <Chip.Label>
-                                {scoreLabel}
-                            </Chip.Label>
-                        </Chip>
-                    </div>
-                    <Spacer y={3} />
-                    <div className="text-sm text-muted">
-                        {submissionAttempt.shortFeedback ?? ""}
-                    </div>
-                    <Spacer y={3} />
-                    <div className="flex items-center gap-1.5">
-                        <Button
-                            onPress={onViewDetails}
-                        >
-                            {t("submissionAttempts.viewDetails")}
-                        </Button>
-                        <Button
-                            variant="secondary"
-                            onPress={onViewSubmission}
-                        >
-                            {t("submissionAttempts.viewSubmission")}
-                        </Button>
-                    </div>
-                </div>
-            </Card.Content>
-        </Card>
+        <div className={cn("rounded-2xl border border-default p-4", className)}>
+            <div className="flex items-center justify-between gap-3">
+                <Typography type="body" className="font-semibold">
+                    {t("submissionAttempts.attemptLine", {
+                        number: submissionAttempt.attemptNumber,
+                    })}
+                    {processedAgo != null ? (
+                        <span className="font-normal text-muted">
+                            {" · "}
+                            {processedAgo}
+                        </span>
+                    ) : null}
+                </Typography>
+                <Chip
+                    color={scoreColor}
+                    size="sm"
+                    variant="soft"
+                >
+                    {scoreColor === "success" ? (
+                        <CheckCircleIcon className="size-3" />
+                    ) : (
+                        <XCircleIcon className="size-3" />
+                    )}
+                    <Chip.Label>
+                        {scoreLabel}
+                    </Chip.Label>
+                </Chip>
+            </div>
+            <Spacer y={3} />
+            <Typography type="body-sm" className="text-muted">
+                {submissionAttempt.shortFeedback ?? ""}
+            </Typography>
+            <Spacer y={3} />
+            <div className="flex items-center gap-2">
+                <Button
+                    variant="secondary"
+                    onPress={onViewDetails}
+                >
+                    {t("submissionAttempts.viewDetails")}
+                </Button>
+                <Button
+                    variant="tertiary"
+                    onPress={onViewSubmission}
+                >
+                    {t("submissionAttempts.viewSubmission")}
+                </Button>
+            </div>
+        </div>
     )
 }

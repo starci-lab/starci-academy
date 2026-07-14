@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowUpFromLine as UploadIcon, Filmstrip as FilmSlateIcon, Gear as GearIcon, Link as LinkIcon } from "@gravity-ui/icons"
+import { FilmStripIcon as FilmSlateIcon, GearIcon, LinkIcon, UploadSimpleIcon as UploadIcon } from "@phosphor-icons/react"
 import React, {
     useCallback,
 } from "react"
@@ -94,7 +94,7 @@ export const FileSelectionCard = ({
         <Card className="bg-white/5 border border-white/10 backdrop-blur-xl shadow-2xl shadow-indigo-500/5">
             <CardContent className="space-y-6 p-6">
                 {/* Section header */}
-                <div className="flex items-center gap-1.5 pb-2">
+                <div className="flex items-center gap-2 pb-2">
                     <div className="rounded-lg bg-indigo-500/10 p-2">
                         <FilmSlateIcon className="h-5 w-5 text-indigo-400" />
                     </div>

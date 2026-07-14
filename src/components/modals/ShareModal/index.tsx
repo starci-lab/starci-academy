@@ -3,7 +3,6 @@
 import { SiFacebook as FacebookLogoIcon, SiTelegram as TelegramLogoIcon, SiX as TwitterLogoIcon } from "@icons-pack/react-simple-icons"
 import { FaLinkedin as LinkedinLogoIcon } from "react-icons/fa6"
 import React, { useMemo } from "react"
-import { Surface } from "@heroui/react"
 import { pathConfig } from "@/resources/path"
 import { useTranslations } from "next-intl"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -55,30 +54,40 @@ export const ShareModal = ({ className }: WithClassNames<undefined>) => {
             className={className}
             size="md"
             title={t("content.share")}
-            titleClassName="text-2xl font-bold text-center"
         >
             <div className="flex flex-col items-center gap-6 pb-4">
                 {shareUrl && (
-                    <div className="flex flex-col items-center gap-3">
-                        <Surface variant="secondary" className="rounded-xl p-2">
-                            <QRCode size={160} data={shareUrl} />
-                        </Surface>
-                        <div className="text-xs text-muted">
-                            {t("content.scanQr")}
+                    <>
+                        <div className="flex flex-col items-center gap-3">
+                            <div className="rounded-xl border-default p-2">
+                                <QRCode size={160} data={shareUrl} />
+                            </div>
+                            <div className="text-xs text-muted">
+                                {t("content.scanQr")}
+                            </div>
                         </div>
-                    </div>
+                        <div className="flex gap-2 items-center">
+                            <div className="text-sm text-muted">
+                                {shareUrl}
+                            </div>
+                            <SnippetIcon copyString={shareUrl} />
+                        </div>
+                        <div className="flex items-center gap-3">
+                            {socialLinks.map((socialLink) => (
+                                <a
+                                    key={socialLink.label}
+                                    href={socialLink.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={socialLink.label}
+                                    className="hover:opacity-70 transition-opacity focus-visible:ring-2 ring-accent rounded-md"
+                                >
+                                    {socialLink.icon}
+                                </a>
+                            ))}
+                        </div>
+                    </>
                 )}
-                <div className="flex gap-1.5 items-center">
-                    <div className="text-sm text-muted">
-                        {shareUrl}
-                    </div>
-                    <SnippetIcon copyString={shareUrl} />
-                </div>
-                <div className="flex items-center gap-3">
-                    {socialLinks.map((socialLink) => (
-                        <SnippetIcon key={socialLink.label} copyString={socialLink.url} />
-                    ))}
-                </div>
             </div>
         </ModalShell>
     )

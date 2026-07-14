@@ -8,6 +8,7 @@ import {
     Chip,
     ScrollShadow,
     Skeleton,
+    Typography,
 } from "@heroui/react"
 import {
     useTranslations,
@@ -25,6 +26,8 @@ import {
 import {
     useAiQuotaHistorySwr,
 } from "../hooks"
+import { EmptyContent } from "@/components/blocks/async/EmptyContent"
+import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { AiCeilSurface } from "@/modules/api/graphql/mutations/types/set-ai-ceil"
 import type { QueryMyCreditUsageHistoryItem } from "@/modules/api/graphql/queries/types/my-credit-usage-history"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -97,10 +100,10 @@ export const AiQuotaHistoryTab = ({
     return (
         <div className={cn("flex flex-col gap-6", className)}>
             {/* Chart — surface-in-surface: border only, no fill */}
-            <div className="flex flex-col gap-1.5">
-                <div className="text-sm font-semibold text-foreground">
+            <div className="flex flex-col gap-2">
+                <Typography type="body-sm" weight="semibold">
                     {t("aiQuota.history.chartTitle")}
-                </div>
+                </Typography>
                 <div className="overflow-hidden rounded-xl border border-default p-4">
                     <div className="h-44 w-full text-accent">
                         <ResponsiveContainer width="100%" height="100%">
@@ -129,38 +132,45 @@ export const AiQuotaHistoryTab = ({
             </div>
 
             {/* History list — surface-in-surface: border only, p-0, rows own their padding */}
-            <div className="flex flex-col gap-1.5">
-                <div className="text-sm font-semibold text-foreground">
+            <div className="flex flex-col gap-2">
+                <Typography type="body-sm" weight="semibold">
                     {t("aiQuota.history.title")}
-                </div>
+                </Typography>
                 {isLoading ? (
-                    <Skeleton className="h-24 w-full rounded-xl" />
-                ) : (history?.items.length ?? 0) === 0 ? (
-                    <div className="py-4 text-center text-sm text-muted">
-                        {t("aiQuota.history.empty")}
+                    <div className="flex flex-col gap-2 rounded-xl border border-default p-4">
+                        {[0, 1, 2].map((row) => (
+                            <div key={row} className="flex items-center justify-between gap-2">
+                                <Skeleton className="h-4 w-32 rounded-md" />
+                                <Skeleton className="h-5 w-16 rounded-full" />
+                            </div>
+                        ))}
                     </div>
+                ) : (history?.items.length ?? 0) === 0 ? (
+                    <EmptyContent title={t("aiQuota.history.empty")} />
                 ) : (
-                    <div className="overflow-hidden rounded-xl border border-default">
-                        <ScrollShadow className="flex max-h-64 flex-col divide-y divide-divider">
+                    <SurfaceListCard bordered>
+                        <ScrollShadow className="flex max-h-64 flex-col">
                             {history?.items.map((item) => (
-                                <div key={item.id} className="flex items-center justify-between gap-1.5 px-4 py-2">
-                                    <div className="min-w-0">
-                                        <div className="truncate text-sm font-medium text-foreground">
-                                            {item.model ?? t("aiQuota.history.autoModel")}
+                                <SurfaceListCardItem key={item.id}>
+                                    <div className="flex items-center justify-between gap-2">
+                                        <div className="min-w-0">
+                                            <Typography type="body-sm" weight="medium" truncate>
+                                                {item.model ?? t("aiQuota.history.autoModel")}
+                                            </Typography>
+                                            <Typography type="body-xs" color="muted" truncate>
+                                                {purposeLabel(item, t)}
+                                                {" · "}
+                                                {dayjs(item.createdAt).format("HH:mm DD/MM")}
+                                            </Typography>
                                         </div>
-                                        <div className="text-xs text-muted">
-                                            {purposeLabel(item, t)}
-                                            {" · "}
-                                            {dayjs(item.createdAt).format("HH:mm DD/MM")}
-                                        </div>
+                                        <Chip size="sm" variant="soft" color={item.credits > 0 ? "warning" : "success"}>
+                                            {`${item.credits} ${t("aiQuota.history.creditsUnit")}`}
+                                        </Chip>
                                     </div>
-                                    <Chip size="sm" variant="soft" color={item.credits > 0 ? "warning" : "success"}>
-                                        {`${item.credits} ${t("aiQuota.history.creditsUnit")}`}
-                                    </Chip>
-                                </div>
+                                </SurfaceListCardItem>
                             ))}
                         </ScrollShadow>
-                    </div>
+                    </SurfaceListCard>
                 )}
             </div>
         </div>

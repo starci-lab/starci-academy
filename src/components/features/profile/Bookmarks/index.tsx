@@ -5,6 +5,7 @@ import React, {
     useState,
 } from "react"
 import {
+    Button,
     Input,
     Pagination,
     TextField,
@@ -14,13 +15,18 @@ import {
     useTranslations,
 } from "next-intl"
 import {
+    useRouter,
+} from "next/navigation"
+import {
     SettingsBreadcrumb,
 } from "../Settings/SettingsBreadcrumb"
 import {
     BookmarkCard,
 } from "./BookmarkCard"
+import { pathConfig } from "@/resources/path"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { EmptyContent } from "@/components/blocks/async/EmptyContent"
+import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SurfaceListCard } from "@/components/blocks/cards/SurfaceListCard"
@@ -32,10 +38,15 @@ import { SAVED_CONTENTS_PAGE_SIZE, useQuerySavedContentsSwr } from "@/hooks/swr/
  * count, one {@link SurfaceListCard} of saved-lesson rows, and a left-aligned
  * {@link Pagination} (hidden on a single page). Search + paging are resolved
  * server-side (`savedContents(skip, take, search)`); typing snaps back to page 1.
- * Data states go through {@link AsyncContent}. Mounted by `/profile/bookmarks`.
+ * Data states go through {@link AsyncContent}. A truly-empty library (never
+ * bookmarked, no active search) renders {@link EmptyState} with a "browse
+ * courses" CTA instead of a dead end; a zero-match search stays inline with
+ * {@link EmptyContent} so the search box remains reachable. Mounted by
+ * `/profile/bookmarks`.
  */
 export const Bookmarks = () => {
     const t = useTranslations()
+    const router = useRouter()
 
     // search input (debounced → server-side title filter) + 1-based page
     const [search, setSearch] = useState("")
@@ -87,11 +98,6 @@ export const Bookmarks = () => {
                         ))}
                     </SurfaceListCard>
                 )}
-                isEmpty={!debounced && count === 0}
-                emptyContent={{
-                    title: t("bookmarks.empty"),
-                    description: t("bookmarks.emptyHint"),
-                }}
                 error={error}
                 errorContent={{
                     title: t("bookmarks.errorTitle"),
@@ -99,81 +105,98 @@ export const Bookmarks = () => {
                     retryLabel: t("dashboard.retry"),
                 }}
             >
-                <div className="flex flex-col gap-3">
-                    {/* search row: primary input (left, on the page background → no
-                        variant) balanced by the result count (right) */}
-                    <div className="flex flex-wrap items-center justify-between gap-3">
-                        <TextField className="w-full sm:max-w-sm">
-                            <Input
-                                type="search"
-                                aria-label={t("bookmarks.searchPlaceholder")}
-                                placeholder={t("bookmarks.searchPlaceholder")}
-                                value={search}
-                                onChange={(event) => setSearch(event.target.value)}
-                            />
-                        </TextField>
-                        <Typography type="body-sm" color="muted" className="shrink-0">
-                            {t("bookmarks.found", { count })}
-                        </Typography>
-                    </div>
+                {!debounced && count === 0 ? (
+                    // truly empty library (never bookmarked anything, no active
+                    // search) — an invite back into the catalog, not a dead end
+                    <EmptyState
+                        title={t("bookmarks.empty")}
+                        description={t("bookmarks.emptyHint")}
+                        action={(
+                            <Button
+                                variant="primary"
+                                onPress={() => router.push(pathConfig().locale().course().build())}
+                            >
+                                {`${t("dashboard.browseCourses")} →`}
+                            </Button>
+                        )}
+                    />
+                ) : (
+                    <div className="flex flex-col gap-3">
+                        {/* search row: primary input (left, on the page background → no
+                            variant) balanced by the result count (right) */}
+                        <div className="flex flex-wrap items-center justify-between gap-3">
+                            <TextField className="w-full sm:max-w-sm">
+                                <Input
+                                    type="search"
+                                    aria-label={t("bookmarks.searchPlaceholder")}
+                                    placeholder={t("bookmarks.searchPlaceholder")}
+                                    value={search}
+                                    onChange={(event) => setSearch(event.target.value)}
+                                />
+                            </TextField>
+                            <Typography type="body-sm" color="muted" className="shrink-0">
+                                {t("bookmarks.found", { count })}
+                            </Typography>
+                        </div>
 
-                    {contents.length === 0 ? (
-                        <EmptyContent title={t("bookmarks.noMatch")} />
-                    ) : (
-                        <>
-                            <SurfaceListCard>
-                                {contents.map((content) => (
-                                    <BookmarkCard key={content.id} content={content} />
-                                ))}
-                            </SurfaceListCard>
+                        {contents.length === 0 ? (
+                            <EmptyContent title={t("bookmarks.noMatch")} />
+                        ) : (
+                            <>
+                                <SurfaceListCard>
+                                    {contents.map((content) => (
+                                        <BookmarkCard key={content.id} content={content} />
+                                    ))}
+                                </SurfaceListCard>
 
-                            {/* pager: left-aligned with the list, hidden on a single
-                                page. HeroUI Pagination bakes no hover/cursor → add per
-                                the rule. */}
-                            {totalPages > 1 ? (
-                                <Pagination
-                                    aria-label={t("common.pagination.navAria")}
-                                    className="justify-start"
-                                    size="sm"
-                                >
-                                    <Pagination.Content className="flex flex-wrap justify-start gap-1.5">
-                                        <Pagination.Item>
-                                            <Pagination.Previous
-                                                aria-label={t("common.pagination.previous")}
-                                                isDisabled={page <= 1}
-                                                className="cursor-pointer rounded-medium transition-colors hover:bg-default"
-                                                onPress={() => setPage((current) => Math.max(1, current - 1))}
-                                            >
-                                                <Pagination.PreviousIcon />
-                                            </Pagination.Previous>
-                                        </Pagination.Item>
-                                        {pageNumbers.map((pageNumber) => (
-                                            <Pagination.Item key={pageNumber}>
-                                                <Pagination.Link
-                                                    isActive={pageNumber === page}
-                                                    className="cursor-pointer rounded-medium transition-colors hover:bg-default data-[active=true]:hover:bg-accent"
-                                                    onPress={() => setPage(pageNumber)}
+                                {/* pager: left-aligned with the list, hidden on a single
+                                    page. HeroUI Pagination bakes no hover/cursor → add per
+                                    the rule. */}
+                                {totalPages > 1 ? (
+                                    <Pagination
+                                        aria-label={t("common.pagination.navAria")}
+                                        className="justify-start"
+                                        size="sm"
+                                    >
+                                        <Pagination.Content className="flex flex-wrap justify-start gap-2">
+                                            <Pagination.Item>
+                                                <Pagination.Previous
+                                                    aria-label={t("common.pagination.previous")}
+                                                    isDisabled={page <= 1}
+                                                    className="cursor-pointer rounded-medium transition-colors hover:bg-default"
+                                                    onPress={() => setPage((current) => Math.max(1, current - 1))}
                                                 >
-                                                    {pageNumber}
-                                                </Pagination.Link>
+                                                    <Pagination.PreviousIcon />
+                                                </Pagination.Previous>
                                             </Pagination.Item>
-                                        ))}
-                                        <Pagination.Item>
-                                            <Pagination.Next
-                                                aria-label={t("common.pagination.next")}
-                                                isDisabled={page >= totalPages}
-                                                className="cursor-pointer rounded-medium transition-colors hover:bg-default"
-                                                onPress={() => setPage((current) => Math.min(totalPages, current + 1))}
-                                            >
-                                                <Pagination.NextIcon />
-                                            </Pagination.Next>
-                                        </Pagination.Item>
-                                    </Pagination.Content>
-                                </Pagination>
-                            ) : null}
-                        </>
-                    )}
-                </div>
+                                            {pageNumbers.map((pageNumber) => (
+                                                <Pagination.Item key={pageNumber}>
+                                                    <Pagination.Link
+                                                        isActive={pageNumber === page}
+                                                        className="cursor-pointer rounded-medium transition-colors hover:bg-default data-[active=true]:hover:bg-accent"
+                                                        onPress={() => setPage(pageNumber)}
+                                                    >
+                                                        {pageNumber}
+                                                    </Pagination.Link>
+                                                </Pagination.Item>
+                                            ))}
+                                            <Pagination.Item>
+                                                <Pagination.Next
+                                                    aria-label={t("common.pagination.next")}
+                                                    isDisabled={page >= totalPages}
+                                                    className="cursor-pointer rounded-medium transition-colors hover:bg-default"
+                                                    onPress={() => setPage((current) => Math.min(totalPages, current + 1))}
+                                                >
+                                                    <Pagination.NextIcon />
+                                                </Pagination.Next>
+                                            </Pagination.Item>
+                                        </Pagination.Content>
+                                    </Pagination>
+                                ) : null}
+                            </>
+                        )}
+                    </div>
+                )}
             </AsyncContent>
         </div>
     )

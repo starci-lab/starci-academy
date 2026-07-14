@@ -216,7 +216,7 @@ export const FlashcardQuizResult = ({
                                                     return (
                                                         <SurfaceListCardItem key={`${result.cardId}-${index}`}>
                                                             <div className="flex items-center justify-between gap-3">
-                                                                <div className="flex min-w-0 items-center gap-2.5">
+                                                                <div className="flex min-w-0 items-center gap-2">
                                                                     <span
                                                                         className={cn("size-2.5 shrink-0 rounded-full", STATUS_DOT[status])}
                                                                         role="img"

@@ -42,10 +42,12 @@ export interface FlashcardReviewModeModalProps extends WithClassNames<undefined>
  * border rather than the (invisible-in-dark) `shadow-surface` top-level default
  * (`components/card.md` §"surface-in-surface / nested").
  * Selected-row signal (thầy 2026-07-13 lượt 4, dropped the `CheckCircleIcon`
- * tried in lượt 3): the leading icon + title both turn `text-accent`, no
- * trailing checkmark. Leading icon otherwise matches the title's own colour
- * (`text-foreground`, not the previous `text-muted`) — `components/icon.md`
- * "icon cùng màu chữ cạnh nó".
+ * tried in lượt 3): the row itself tints `bg-accent/10` via `SurfaceListCardRow`'s
+ * `selected` prop (no `titleClassName` escape hatch — header/title styling stays
+ * on the block's own default, per `no-modal-title-classname`), and the leading
+ * icon turns `text-accent`, no trailing checkmark. Leading icon otherwise
+ * matches the title's own colour (`text-foreground`, not the previous
+ * `text-muted`) — `components/icon.md` "icon cùng màu chữ cạnh nó".
  * @param props - {@link FlashcardReviewModeModalProps}
  */
 export const FlashcardReviewModeModal = ({
@@ -87,8 +89,8 @@ export const FlashcardReviewModeModal = ({
                         hover="underline"
                         leading={<CardsIcon className={cn("size-6", mode === "full" ? "text-accent" : "text-foreground")} aria-hidden focusable="false" />}
                         title={t("flashcard.mode.fullLabel")}
-                        titleClassName={cn(mode === "full" && "text-accent")}
                         subtitle={t("flashcard.mode.fullDescription")}
+                        selected={mode === "full"}
                         isDisabled={isPending}
                         onPress={() => setMode("full")}
                         meta={(
@@ -101,8 +103,8 @@ export const FlashcardReviewModeModal = ({
                         hover="underline"
                         leading={<ClockCountdownIcon className={cn("size-6", mode === "due" ? "text-accent" : "text-foreground")} aria-hidden focusable="false" />}
                         title={t("flashcard.mode.dueLabel")}
-                        titleClassName={cn(mode === "due" && "text-accent")}
                         subtitle={t("flashcard.mode.dueDescription")}
+                        selected={mode === "due"}
                         isDisabled={isPending || dueDisabled}
                         onPress={() => setMode("due")}
                         meta={(

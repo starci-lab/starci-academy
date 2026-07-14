@@ -85,12 +85,10 @@ export const ContentHeader = () => {
                                 {t("content.minutesRead", { minutes: minutesRead })}
                             </Chip.Label>
                         </Chip>
-                        <Chip color="default">
+                        <Typography type="body-xs" color="muted" className="flex items-center gap-1">
                             <FlameIcon className="size-4" />
-                            <Chip.Label>
-                                {t("content.challengeCount", { count: challengeCount })}
-                            </Chip.Label>
-                        </Chip>
+                            {t("content.challengeCount", { count: challengeCount })}
+                        </Typography>
                     </div>
                 )}
             />

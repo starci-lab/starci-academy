@@ -70,7 +70,7 @@ export const EntityResultRow = ({
                 className,
             )}
         >
-            <div className="flex min-w-0 flex-col gap-0.5">
+            <div className="flex min-w-0 flex-col gap-2">
                 {showKindChip ? (
                     <Chip size="sm" variant="soft" color={meta.color} className="w-fit">
                         {t(meta.chip)}

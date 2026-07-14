@@ -1,8 +1,8 @@
 "use client"
 
 import React, { useCallback, useMemo } from "react"
-import { Button, Tooltip, cn } from "@heroui/react"
-import { CheckIcon, ShoppingCartIcon, TrashIcon } from "@phosphor-icons/react"
+import { Button, Spinner, Tooltip, cn } from "@heroui/react"
+import { ShoppingCartIcon, XIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { useCart } from "@/components/features/cart/hooks/useCart"
 import { useCartEntry } from "@/components/features/cart/hooks/useCartEntry"
@@ -36,11 +36,16 @@ export interface AddToCartButtonProps extends WithClassNames<undefined> {
 
 /**
  * "Add to cart" toggle for a course. Hides itself for FREE courses or courses the
- * viewer already owns (`isEnrolled`). When already in the cart it flips to a
- * "Remove" affordance. Adding routes through {@link useCartEntry} so a GUEST is sent
- * to the auth modal (with the add replayed after sign-in) instead of hitting the
- * auth-only cart mutation; removing (only reachable once signed in + in cart) goes
- * straight to {@link useCart}. `iconOnly` renders a compact tooltip'd icon button.
+ * viewer already owns (`isEnrolled`). When already in the cart it flips to a single
+ * "Remove from cart" button (leading X icon, no trailing icon) — `variant="danger-soft"`
+ * regardless of the caller's `variant` prop (removing a cart line IS a destructive
+ * toggle, just a repeated/low-drama one — same family as the repeatable-item delete
+ * button, not a lone `danger`-solid action; teacher: "ý là danger-soft ấy trò", after
+ * an earlier pass over-corrected to plain `secondary`). Adding routes through
+ * {@link useCartEntry} so a GUEST is sent to the auth modal (with the add replayed
+ * after sign-in) instead of hitting the auth-only cart mutation; removing (only
+ * reachable once signed in + in cart) goes straight to {@link useCart}. `iconOnly`
+ * renders a compact tooltip'd icon button.
  *
  * @param props - {@link AddToCartButtonProps}
  */
@@ -84,49 +89,49 @@ export const AddToCartButton = ({
         return null
     }
 
-    // compact icon-only (catalog card): a tooltip'd cart/remove icon button
+    // compact icon-only (catalog card): a tooltip'd cart/remove icon button.
     if (iconOnly) {
         return (
             <Tooltip>
                 <Tooltip.Trigger>
                     <Button
                         isIconOnly
-                        variant={variant}
+                        variant={inCart ? "danger-soft" : variant}
                         isPending={isMutating}
                         onPress={onToggle}
                         aria-label={inCart ? t("cart.remove") : t("cart.tooltipAdd")}
                         className={cn(className)}
                     >
-                        {inCart ? <CheckIcon className="size-5" /> : <ShoppingCartIcon className="size-5" />}
+                        {isMutating ? (
+                            <Spinner size="sm" color="current" />
+                        ) : inCart ? (
+                            <XIcon className="size-5" />
+                        ) : (
+                            <ShoppingCartIcon className="size-5" />
+                        )}
                     </Button>
                 </Tooltip.Trigger>
-                <Tooltip.Content>{inCart ? t("cart.inCart") : t("cart.tooltipAdd")}</Tooltip.Content>
+                <Tooltip.Content>{inCart ? t("cart.remove") : t("cart.tooltipAdd")}</Tooltip.Content>
             </Tooltip>
         )
     }
 
     return (
         <Button
-            variant={variant}
+            variant={inCart ? "danger-soft" : variant}
             fullWidth={fullWidth}
             isPending={isMutating}
             onPress={onToggle}
             className={cn(className)}
         >
-            {inCart ? (
-                <>
-                    <CheckIcon className="size-5" />
-                    {t("cart.inCart")}
-                </>
+            {isMutating ? (
+                <Spinner size="sm" color="current" />
+            ) : inCart ? (
+                <XIcon className="size-5" />
             ) : (
-                <>
-                    <ShoppingCartIcon className="size-5" />
-                    {t("cart.add")}
-                </>
+                <ShoppingCartIcon className="size-5" />
             )}
-            {inCart ? (
-                <TrashIcon aria-hidden className="size-4 text-muted" />
-            ) : null}
+            {inCart ? t("cart.remove") : t("cart.add")}
         </Button>
     )
 }

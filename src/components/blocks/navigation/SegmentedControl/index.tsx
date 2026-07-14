@@ -2,8 +2,8 @@
 
 import React from "react"
 import type { ReactNode } from "react"
-import { cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { TabsCard } from "../TabsCard"
 
 /** One option of a {@link SegmentedControl}. */
 export interface SegmentedControlItem<T extends string> {
@@ -15,6 +15,9 @@ export interface SegmentedControlItem<T extends string> {
     isDisabled?: boolean
 }
 
+/** Track/segment sizing for a {@link SegmentedControl}. */
+export type SegmentedControlSize = "sm" | "md"
+
 /** Props for the {@link SegmentedControl} block. */
 export interface SegmentedControlProps<T extends string> extends WithClassNames<undefined> {
     /** The selectable segments (2+). */
@@ -25,14 +28,28 @@ export interface SegmentedControlProps<T extends string> extends WithClassNames<
     onChange: (value: T) => void
     /** Accessible label for the group. */
     ariaLabel?: string
+    /**
+     * Track/segment size. `"md"` (default) segments are equal-width, stretch
+     * to fill the parent. `"sm"` segments shrink to their label (the track
+     * becomes `w-fit`) — for a compact inline switch that shouldn't claim the
+     * full row width (e.g. a secondary choice inside a modal panel).
+     */
+    size?: SegmentedControlSize
 }
 
 /**
- * A pill segmented control: a `bg-default` track holding equal-width segments, the
- * active one lifted onto a `bg-surface` chip. For a small mutually-exclusive choice
- * that drives content (e.g. a currency / region switch). The block owns the whole
- * look; the caller passes items + value + onChange only. Distinct from `TabsCard`
- * (underline tabs for navigating sections) — this is a compact inline switch.
+ * A pill segmented control for a small mutually-exclusive choice that drives
+ * LOCAL state (e.g. a currency toggle, a grid/line view switch) — never a
+ * whole-panel/route change (that's `TabsCard`, underline tabs). Kept as its
+ * own named block for that semantic distinction (a real `role="tablist"`
+ * implies associated tabpanels; a plain settings toggle shouldn't claim that
+ * relationship) — but internally it's a thin adapter over the real `TabsCard`
+ * (`variant="primary"`, HeroUI's own segmented-pill rendering) rather than a
+ * hand-rolled `<button>` group, so both surfaces share ONE real implementation
+ * (keyboard roving-tabindex, ARIA tab/tabpanel wiring, visual skin) instead of
+ * two components that happened to converge on the same look by coincidence.
+ * The caller's API is unchanged (items + value + onChange + size) — only the
+ * render internals moved onto `Tabs`.
  *
  * @param props - {@link SegmentedControlProps}
  */
@@ -41,24 +58,22 @@ export const SegmentedControl = <T extends string>({
     value,
     onChange,
     ariaLabel,
+    size = "md",
     className,
 }: SegmentedControlProps<T>) => (
-        <div role="group" aria-label={ariaLabel} className={cn("flex gap-1 rounded-2xl bg-default p-1", className)}>
-            {items.map((item) => (
-                <button
-                    key={item.value}
-                    type="button"
-                    disabled={item.isDisabled}
-                    aria-pressed={value === item.value}
-                    onClick={() => onChange(item.value)}
-                    className={cn(
-                        "flex-1 cursor-pointer rounded-xl px-3 py-2 text-center text-sm outline-none transition-colors focus-visible:ring-2 focus-visible:ring-accent",
-                        value === item.value ? "bg-surface font-medium" : "text-muted hover:text-foreground",
-                        item.isDisabled && "cursor-not-allowed opacity-50 hover:text-muted",
-                    )}
-                >
-                    {item.label}
-                </button>
-            ))}
-        </div>
+        <TabsCard
+            variant="primary"
+            size={size}
+            className={className}
+            leftTabs={{
+                items: items.map((item) => ({
+                    key: item.value,
+                    label: item.label,
+                    isDisabled: item.isDisabled,
+                })),
+                selectedKey: value,
+                ariaLabel: ariaLabel ?? "",
+                onSelectionChange: (key) => onChange(String(key) as T),
+            }}
+        />
     )

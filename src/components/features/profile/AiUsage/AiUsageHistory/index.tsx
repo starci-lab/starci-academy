@@ -6,7 +6,6 @@ import React, {
 import {
     Chip,
     ScrollShadow,
-    Typography,
     cn,
 } from "@heroui/react"
 import {
@@ -28,6 +27,7 @@ import type { QueryMyCreditUsageHistoryItem } from "@/modules/api/graphql/querie
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { InfiniteScrollSentinel } from "@/components/blocks/async/InfiniteScrollSentinel"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
 import { SegmentBar } from "@/components/blocks/stats/SegmentBar"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -192,31 +192,28 @@ export const AiUsageHistory = ({ className }: AiUsageHistoryProps) => {
                 ) : null}
 
                 {/* card 3 — charge history list */}
-                <LabeledCard label={t("aiQuota.history.title")}>
-                    <ScrollShadow className="flex max-h-96 flex-col divide-y divide-divider">
-                        {items.map((item) => (
-                            <div key={item.id} className="flex items-center justify-between gap-3 py-2">
-                                <div className="flex min-w-0 flex-col gap-0">
-                                    <Typography type="body-sm" weight="medium" truncate>
-                                        {item.model ?? t("aiQuota.history.autoModel")}
-                                    </Typography>
-                                    <Typography type="body-xs" color="muted">
-                                        {purposeLabel(item, t)}
-                                        {" · "}
-                                        {dayjs(item.createdAt).format("HH:mm DD/MM")}
-                                    </Typography>
-                                </div>
-                                <Chip
-                                    size="sm"
-                                    variant="soft"
-                                    color={item.credits > 0 ? "warning" : "success"}
-                                >
-                                    <Chip.Label>
-                                        {`${item.credits} ${t("aiQuota.history.creditsUnit")}`}
-                                    </Chip.Label>
-                                </Chip>
-                            </div>
-                        ))}
+                <LabeledCard label={t("aiQuota.history.title")} frameless>
+                    <ScrollShadow className="max-h-96">
+                        <SurfaceListCard>
+                            {items.map((item) => (
+                                <SurfaceListCardRow
+                                    key={item.id}
+                                    title={item.model ?? t("aiQuota.history.autoModel")}
+                                    subtitle={`${purposeLabel(item, t)} · ${dayjs(item.createdAt).format("HH:mm DD/MM")}`}
+                                    trailing={(
+                                        <Chip
+                                            size="sm"
+                                            variant="soft"
+                                            color={item.credits > 0 ? "warning" : "success"}
+                                        >
+                                            <Chip.Label>
+                                                {`${item.credits} ${t("aiQuota.history.creditsUnit")}`}
+                                            </Chip.Label>
+                                        </Chip>
+                                    )}
+                                />
+                            ))}
+                        </SurfaceListCard>
                         {/* grow the list as the sentinel scrolls into view */}
                         <InfiniteScrollSentinel
                             onReach={() => setSize((current) => current + 1)}

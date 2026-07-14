@@ -5,13 +5,6 @@ import React, {
     useState,
 } from "react"
 import {
-    Card,
-    CardContent,
-    Link,
-    Typography,
-    cn,
-} from "@heroui/react"
-import {
     useLocale,
     useTranslations,
 } from "next-intl"
@@ -19,7 +12,6 @@ import {
     useRouter,
 } from "next/navigation"
 import {
-    CaretRightIcon,
     PuzzlePieceIcon,
     BookOpenIcon,
 } from "@phosphor-icons/react"
@@ -27,6 +19,7 @@ import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 import { queryResolveRoute } from "@/modules/api/graphql/queries/query-resolve-route"
+import { ContinueCard } from "@/components/blocks/cards/ContinueCard"
 
 /** Kind of resume target — drives the chip icon + label. */
 export type ResumeKind = "challenge" | "lesson"
@@ -48,9 +41,10 @@ export interface ResumeCardProps extends WithClassNames<undefined> {
 }
 
 /**
- * A "continue" card — a STATIC frame (not whole-card pressable); the "Tiếp tục ›"
- * caret link is the action: it resolves the entity's canonical route via the index
- * on click, then navigates. The caret slides right on hover (see-more pattern).
+ * A "continue" card — thin wrapper over the canonical {@link ContinueCard}
+ * block. Resolves the entity's canonical route via the index on press, then
+ * navigates. No BE progress field is available for either kind yet, so the
+ * progress meter is hidden (never fabricate a number).
  * @param props - the resume target
  */
 export const ResumeCard = ({
@@ -94,31 +88,15 @@ export const ResumeCard = ({
     const ChipIcon = item.kind === "challenge" ? PuzzlePieceIcon : BookOpenIcon
 
     return (
-        <Card className={cn("h-full", className)}>
-            <CardContent className="flex h-full flex-col items-start gap-3">
-                <ChipIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
-                <div className="flex w-full min-w-0 flex-1 flex-col gap-0">
-                    <Typography type="body-sm" weight="semibold" truncate>
-                        {item.label}
-                    </Typography>
-                    <Typography type="body-xs" color="muted">
-                        {t(`dashboard.continueKind.${item.kind}`)}
-                    </Typography>
-                </div>
-                {/* the only action — caret slides right on hover (see-more pattern) */}
-                <Link
-                    onPress={onPress}
-                    isDisabled={pending}
-                    className="group inline-flex cursor-pointer items-center gap-2 text-accent"
-                >
-                    {t("dashboard.continue")}
-                    <CaretRightIcon
-                        aria-hidden
-                        focusable="false"
-                        className="size-4 transition-transform group-hover:translate-x-1"
-                    />
-                </Link>
-            </CardContent>
-        </Card>
+        <ContinueCard
+            className={className}
+            badgeIcon={<ChipIcon weight="fill" />}
+            title={item.label}
+            subtitle={t(`dashboard.continueKind.${item.kind}`)}
+            value={0}
+            hideProgress
+            ctaLabel={t("dashboard.continue")}
+            onPress={onPress}
+        />
     )
 }

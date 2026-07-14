@@ -2,7 +2,6 @@
 
 import React, { useMemo } from "react"
 import { cn } from "@heroui/react"
-import { useTranslations } from "next-intl"
 import { ImplementationCard } from "@/components/features/learn/LessonReader/CodeImplementationBody/ImplementationCard"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { usePersonalProjectGithubForm } from "@/hooks/zustand/personalProjectGithub/usePersonalProjectGithubForm"
@@ -24,7 +23,6 @@ export type TaskCodeImplementationsProps = WithClassNames<undefined>
 export const TaskCodeImplementations = ({
     className,
 }: TaskCodeImplementationsProps = {}) => {
-    const t = useTranslations()
     // active grading language lives in the shared github-form store (set by the top selector);
     // read-only here, so `enableSync` stays off (default) and no debounced sync runs
     const { lang } = usePersonalProjectGithubForm()
@@ -60,11 +58,11 @@ export const TaskCodeImplementations = ({
         return null
     }
 
+    // own title dropped — this section now renders under the parent's shared
+    // "task.criteriaTitle" LabeledCard (see PersonalProject/index.tsx) instead of
+    // stacking a second hand-rolled header right under the criteria one.
     return (
-        <div className={cn("flex flex-col gap-3", className)}>
-            <div className="font-semibold">
-                {t("task.codeImplementationsTitle")}
-            </div>
+        <div className={cn(className)}>
             <ImplementationCard item={selected} />
         </div>
     )

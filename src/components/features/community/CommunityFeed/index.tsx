@@ -11,6 +11,7 @@ import { CommunityComposer } from "./CommunityComposer"
 import { CommunityFeedSkeleton } from "./CommunityFeedSkeleton"
 import { CommunityPost } from "../CommunityPost"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { PageContainer } from "@/components/blocks/layout/PageContainer"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
@@ -123,8 +124,6 @@ export const CommunityFeed = () => {
                     <AsyncContent
                         isLoading={isLoading && items.length === 0}
                         skeleton={<CommunityFeedSkeleton />}
-                        isEmpty={items.length === 0}
-                        emptyContent={{ title: t("community.empty") }}
                         error={items.length === 0 ? error : undefined}
                         errorContent={{
                             title: t("community.error"),
@@ -132,29 +131,48 @@ export const CommunityFeed = () => {
                             retryLabel: t("community.retry"),
                         }}
                     >
-                        <div className="flex flex-col gap-6">
-                            {items.map((post) => (
-                                <CommunityPost
-                                    key={post.id}
-                                    post={post}
-                                    authenticated={authenticated}
-                                    onReact={authenticated ? onReact : undefined}
-                                    onChanged={() => void mutate()}
-                                />
-                            ))}
-                            {hasMore ? (
-                                <div className="flex justify-center">
+                        {items.length === 0 ? (
+                            // empty feed is still a conversion surface — invite into courses,
+                            // not a dead end (§Conversion: every empty region needs a funnel)
+                            <EmptyState
+                                title={t("community.empty")}
+                                action={(
                                     <Button
                                         variant="secondary"
                                         size="sm"
-                                        isPending={isLoadingMore}
-                                        onPress={() => void setSize(size + 1)}
+                                        onPress={() => router.push(
+                                            pathConfig().locale().course().build(),
+                                        )}
                                     >
-                                        {t("community.loadMore")}
+                                        {t("cart.browseCourses")}
                                     </Button>
-                                </div>
-                            ) : null}
-                        </div>
+                                )}
+                            />
+                        ) : (
+                            <div className="flex flex-col gap-6">
+                                {items.map((post) => (
+                                    <CommunityPost
+                                        key={post.id}
+                                        post={post}
+                                        authenticated={authenticated}
+                                        onReact={authenticated ? onReact : undefined}
+                                        onChanged={() => void mutate()}
+                                    />
+                                ))}
+                                {hasMore ? (
+                                    <div className="flex justify-center">
+                                        <Button
+                                            variant="secondary"
+                                            size="sm"
+                                            isPending={isLoadingMore}
+                                            onPress={() => void setSize(size + 1)}
+                                        >
+                                            {t("community.loadMore")}
+                                        </Button>
+                                    </div>
+                                ) : null}
+                            </div>
+                        )}
                     </AsyncContent>
                 </div>
             </div>

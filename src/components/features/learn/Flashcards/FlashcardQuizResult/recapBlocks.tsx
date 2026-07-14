@@ -93,7 +93,7 @@ const WeakTagRow = ({
             onClick={() => router.push(href)}
             className="group flex w-full cursor-pointer items-center justify-between gap-3 rounded-xl border border-default bg-default px-4 py-3 text-left outline-none transition-colors hover:bg-default/70 focus-visible:ring-2 focus-visible:ring-accent"
         >
-            <div className="flex min-w-0 flex-col gap-0.5">
+            <div className="flex min-w-0 flex-col gap-0">
                 <Typography type="body-sm" weight="medium" className="truncate">
                     {tag.tag}
                 </Typography>
@@ -189,7 +189,7 @@ export const RecapWeakTagsCard = ({
             </div>
             {overflowWeakTags.length > 0 ? (
                 <ScrollShadow hideScrollBar className="max-h-40 overflow-y-auto">
-                    <div className="flex flex-col gap-2 pt-0.5">
+                    <div className="flex flex-col gap-2 pt-0">
                         {overflowWeakTags.map((tag) => (
                             <WeakTagRow key={tag.tag} tag={tag} href={resolveTagHref(tag) ?? genericHref} />
                         ))}

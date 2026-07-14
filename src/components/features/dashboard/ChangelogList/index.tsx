@@ -71,7 +71,7 @@ export const ChangelogList = ({
                             {entry.category ? (
                                 <span
                                     className={cn(
-                                        "rounded-full px-2 py-0.5 text-xs font-medium",
+                                        "rounded-full px-2 py-0 text-xs font-medium",
                                         CATEGORY_CLASS[entry.category],
                                     )}
                                 >

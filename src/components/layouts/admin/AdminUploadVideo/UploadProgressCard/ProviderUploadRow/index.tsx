@@ -1,6 +1,6 @@
 "use client"
 
-import { Copy as CopyIcon } from "@gravity-ui/icons"
+import { CopyIcon } from "@phosphor-icons/react"
 import React, {
     useCallback,
 } from "react"
@@ -52,7 +52,7 @@ export const ProviderUploadRow = ({
     return (
         <div className="rounded-xl border border-white/5 bg-white/[0.02] p-4 space-y-3">
             <div className="flex items-center justify-between">
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-2">
                     <Chip
                         size="sm"
                         variant="secondary"
@@ -62,7 +62,7 @@ export const ProviderUploadRow = ({
                     </Chip>
                     {UPLOAD_STATUS_ICON_MAP[upload.status]}
                 </div>
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-2">
                     <span className="text-xs font-mono text-slate-400">
                         {upload.progress}%
                     </span>

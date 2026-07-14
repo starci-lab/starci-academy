@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 import { Tabs, cn } from "@heroui/react"
-import { Code, LayoutSplitSideContentLeft } from "@gravity-ui/icons"
+import { CodeIcon, SidebarIcon } from "@phosphor-icons/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link CodePreviewTabs}. */
@@ -14,7 +14,7 @@ export interface CodePreviewTabsProps extends WithClassNames<undefined> {
 }
 
 /**
- * Presentational **[ Preview | Code ]** tabs, self-contained (HeroUI `Tabs` + gravity icons).
+ * Presentational **[ Preview | Code ]** tabs, self-contained (HeroUI `Tabs` + phosphor icons).
  * Preview is selected first so the learner sees the rendered result, then flips to the code.
  * Shared by {@link RenderReactComponent} (single ` ```mdx ` source) and TabsBlock (dual
  * `:::tab` panes) so the tab shell stays identical and depends on NO layout component.
@@ -23,7 +23,7 @@ export interface CodePreviewTabsProps extends WithClassNames<undefined> {
 export const CodePreviewTabs = ({ preview, code, className }: CodePreviewTabsProps) => {
     const [tab, setTab] = useState<"preview" | "code">("preview")
     return (
-        <div className={cn("not-prose flex flex-col gap-1.5", className)}>
+        <div className={cn("not-prose flex flex-col gap-2", className)}>
             <Tabs
                 selectedKey={tab}
                 variant="secondary"
@@ -33,16 +33,16 @@ export const CodePreviewTabs = ({ preview, code, className }: CodePreviewTabsPro
                     <Tabs.List aria-label="Preview / Code" className="w-fit bg-transparent">
                         <Tabs.Tab
                             id="preview"
-                            className="gap-1.5 rounded-none data-[selected=true]:border-b-2 data-[selected=true]:border-accent data-[selected=true]:text-accent"
+                            className="gap-2 rounded-none data-[selected=true]:border-b-2 data-[selected=true]:border-accent data-[selected=true]:text-accent"
                         >
-                            <LayoutSplitSideContentLeft />
+                            <SidebarIcon />
                             Preview
                         </Tabs.Tab>
                         <Tabs.Tab
                             id="code"
-                            className="gap-1.5 rounded-none data-[selected=true]:border-b-2 data-[selected=true]:border-accent data-[selected=true]:text-accent"
+                            className="gap-2 rounded-none data-[selected=true]:border-b-2 data-[selected=true]:border-accent data-[selected=true]:text-accent"
                         >
-                            <Code />
+                            <CodeIcon />
                             Code
                         </Tabs.Tab>
                     </Tabs.List>

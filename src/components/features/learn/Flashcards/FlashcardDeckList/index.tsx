@@ -17,6 +17,7 @@ import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { FlashcardDeckListSkeleton } from "./FlashcardDeckListSkeleton"
 import { SegmentedControl } from "@/components/blocks/navigation/SegmentedControl"
+import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { queryFlashcardDecksByCourse } from "@/modules/api/graphql/queries/query-flashcard-decks-by-course"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { ChallengeDifficulty } from "@/modules/types/enums/challenge-difficulty"
@@ -326,13 +327,17 @@ export const FlashcardDeckList = ({
                                     })}
                                 </div>
                             ) : (
-                            /* LINE — one compact row per deck (title + chips + mastery + CTA). */
-                                <div className="flex flex-col gap-2">
+                            /* LINE — one compact row per deck (title + chips + mastery + CTA),
+                            joined into a single SurfaceListCard (bordered — this list sits
+                            nested under the search row/AsyncContent, not a bare top-level
+                            surface). Rows are static (own CTA button drives the action, not
+                            the row itself) — SurfaceListCardItem with no onPress/href. */
+                                <SurfaceListCard bordered>
                                     {pagedDecks.map((deck: FlashcardDeckEntity) => {
                                         const total = deck.cards?.length ?? 0
                                         const mastered = deck.masteredCount ?? 0
                                         return (
-                                            <Card key={deck.id}>
+                                            <SurfaceListCardItem key={deck.id}>
                                                 <div className="flex items-center gap-3">
                                                     <Typography type="body-sm" weight="medium" className="min-w-0 flex-1 truncate">
                                                         {deck.title}
@@ -350,10 +355,10 @@ export const FlashcardDeckList = ({
                                                     )}
                                                     {cta(deck)}
                                                 </div>
-                                            </Card>
+                                            </SurfaceListCardItem>
                                         )
                                     })}
-                                </div>
+                                </SurfaceListCard>
                             )}
 
                             {/* pager: left-aligned with the cards, hidden on a single page.

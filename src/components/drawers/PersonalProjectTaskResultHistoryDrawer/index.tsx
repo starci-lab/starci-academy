@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useMemo, useState } from "react"
-import { cn, Chip, Drawer, Pagination, ScrollShadow } from "@heroui/react"
+import { cn, Chip, Drawer, Pagination, ScrollShadow, Typography } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { dayjs, getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
@@ -71,7 +71,7 @@ export const PersonalProjectTaskResultHistoryDrawer = ({
             <Drawer.Backdrop isOpen={isOpen} onOpenChange={onOpenChange} className="backdrop-blur-sm">
                 <Drawer.Content placement={isMobile ? "bottom" : "right"}>
                     <Drawer.Dialog className="p-0">
-                        <div className="p-3">
+                        <div className="p-4">
                             <Drawer.CloseTrigger />
                             <Drawer.Header>
                                 <Drawer.Heading>
@@ -81,7 +81,7 @@ export const PersonalProjectTaskResultHistoryDrawer = ({
                         </div>
                         <Drawer.Body>
                             <ScrollShadow hideScrollBar className="h-full p-4">
-                                <SurfaceListCard>
+                                <SurfaceListCard bordered>
                                     {pagedAttempts.map((attempt) => {
                                         const selected = attempt.id === selectedAttemptId
                                         const attemptCategory = attempt.servedModel
@@ -101,17 +101,20 @@ export const PersonalProjectTaskResultHistoryDrawer = ({
                                             >
                                                 <div className="flex flex-col gap-2">
                                                     <div className="flex items-center gap-2">
-                                                        <span className="text-sm font-medium">
+                                                        <Typography type="body-sm" weight="medium">
                                                             {t("submissionAttempts.attemptLine", { number: attempt.attemptNumber })}
-                                                        </span>
+                                                        </Typography>
                                                         <Chip color={attempt.passed ? "success" : "danger"} variant="soft" size="sm">
                                                             <Chip.Label>
                                                                 {t(attempt.passed ? "personalProjectResult.passed" : "personalProjectResult.failed")}
                                                             </Chip.Label>
                                                         </Chip>
-                                                        <span className={cn("ml-auto text-sm", attempt.passed ? "text-success" : "text-muted")}>
+                                                        <Typography
+                                                            type="body-sm"
+                                                            className={cn("ml-auto", attempt.passed ? "text-success" : "text-muted")}
+                                                        >
                                                             {scoreLabel(attempt.score)}
-                                                        </span>
+                                                        </Typography>
                                                     </div>
                                                     <div className="flex flex-wrap items-center gap-2 text-xs text-muted">
                                                         <ModelByline model={attempt.servedModel} category={attemptCategory} />
@@ -125,7 +128,7 @@ export const PersonalProjectTaskResultHistoryDrawer = ({
                             </ScrollShadow>
                         </Drawer.Body>
                         {totalPages > 1 ? (
-                            <Drawer.Footer className="border-t">
+                            <Drawer.Footer className="border-t p-4">
                                 <Pagination aria-label={t("personalProjectResult.history")} size="sm" className="w-full justify-start">
                                     <Pagination.Content className="flex flex-wrap justify-start gap-2">
                                         <Pagination.Item>

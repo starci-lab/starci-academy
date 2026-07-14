@@ -1,5 +1,5 @@
 "use client"
-import { ArrowRight as ArrowRightIcon, Key as KeyIcon, Lock as LockIcon, ShieldCheck as ShieldCheckIcon } from "@gravity-ui/icons"
+import { ArrowRightIcon, KeyIcon, LockIcon, ShieldCheckIcon } from "@phosphor-icons/react"
 import React from "react"
 import {
     Button,
@@ -55,7 +55,7 @@ export const AdminLogin = ({ className }: AdminLoginProps) => {
                 <Card className="bg-white/5 border border-white/10 backdrop-blur-xl shadow-2xl shadow-indigo-500/5">
                     <CardContent className="flex flex-col gap-3 p-6">
                         {/* Section header */}
-                        <div className="flex items-center gap-1.5 pb-1">
+                        <div className="flex items-center gap-2 pb-1">
                             <div className="rounded-lg bg-amber-500/10 p-2">
                                 <KeyIcon className="h-5 w-5 text-amber-400" />
                             </div>

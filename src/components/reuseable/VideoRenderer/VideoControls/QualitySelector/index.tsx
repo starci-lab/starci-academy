@@ -1,6 +1,6 @@
 "use client"
 
-import { Gear as GearSixIcon } from "@gravity-ui/icons"
+import { GearIcon as GearSixIcon } from "@phosphor-icons/react"
 import React from "react"
 import {
     cn,

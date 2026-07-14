@@ -44,7 +44,7 @@ export const StatRibbon = ({
                 <div
                     key={item.key}
                     className={cn(
-                        "flex items-center gap-1.5",
+                        "flex items-center gap-2",
                         // vertical divider before every item except the first
                         index > 0 && "border-l border-default/40 pl-6",
                     )}

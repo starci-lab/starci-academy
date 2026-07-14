@@ -1,16 +1,16 @@
 "use client"
 
-import { Eye as EyeIcon, EyeSlash as EyeClosedIcon } from "@gravity-ui/icons"
+import { EyeIcon, EyeSlashIcon } from "@phosphor-icons/react"
 import React, {
     useCallback,
     useState,
 } from "react"
 import {
+    Button,
     cn,
     FieldError,
     Input,
     Label,
-    Link,
     TextField,
 } from "@heroui/react"
 import type {
@@ -65,16 +65,19 @@ export const PasswordField = ({
                 {t("auth.signIn.password.label")}
             </Label>
             <div className="relative">
-                <Link
-                    className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center rounded-md p-1 text-muted outline-none transition-opacity hover:opacity-80"
+                <Button
+                    isIconOnly
+                    variant="ghost"
+                    aria-label={showPassword ? t("auth.signIn.password.hide") : t("auth.signIn.password.show")}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 min-w-8 h-8 border-none text-muted hover:text-foreground"
                     onPress={onToggleVisibility}
                 >
                     {showPassword ? (
-                        <EyeIcon className="h-5 w-5" />
+                        <EyeIcon className="size-4" />
                     ) : (
-                        <EyeClosedIcon className="h-5 w-5" />
+                        <EyeSlashIcon className="size-4" />
                     )}
-                </Link>
+                </Button>
                 <Input
                     id="sign-in-password"
                     required

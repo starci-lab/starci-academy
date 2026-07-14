@@ -34,7 +34,21 @@ export const CatalogCourseCard = ({ course, layout = "grid" }: CatalogCourseCard
             // N simultaneous jumps across the catalog grid.
             loyaltyPending={isLoading && !data}
             layout={layout}
-            action={<AddToCartButton course={course} variant="secondary" iconOnly />}
+            // no `iconOnly` — the view CTA is now a real primary Button (not a
+            // subtle Link), so this secondary cart action gets a label+icon
+            // too instead of reading as a stray icon (starci-fe-block-variants
+            // round-2 direction "C"). `flex-1` so it splits the action row
+            // evenly with the primary "view/continue" button — without it the
+            // row was uneven card-to-card (button width = own content only,
+            // not the row's real available width).
+            action={(
+                <AddToCartButton
+                    course={course}
+                    isEnrolled={course.isEnrolled ?? undefined}
+                    variant="secondary"
+                    className="flex-1"
+                />
+            )}
         />
     )
 }

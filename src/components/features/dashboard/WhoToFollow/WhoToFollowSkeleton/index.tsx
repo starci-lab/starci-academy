@@ -35,13 +35,13 @@ export const WhoToFollowSkeleton = ({ className }: WhoToFollowSkeletonProps) => 
             title={t("dashboard.whoToFollow.title")}
             className={className}
         >
-            <div className="flex flex-col gap-1.5">
+            <div className="flex flex-col gap-2">
                 {Array.from({ length: SKELETON_ROW_COUNT }).map((_row, index) => (
                     <div
                         key={index}
-                        className="flex items-center gap-3 px-1.5 py-1"
+                        className="flex items-center gap-3 px-2 py-1"
                     >
-                        <div className="flex min-w-0 flex-1 items-center gap-1.5">
+                        <div className="flex min-w-0 flex-1 items-center gap-2">
                             <Skeleton className="size-6 shrink-0 rounded-full" />
                             <div className="flex min-w-0 flex-1 flex-col gap-0">
                                 <Skeleton.Typography type="body-sm" width="1/2" />

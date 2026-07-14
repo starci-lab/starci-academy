@@ -3204,6 +3204,12 @@
   "payment": {
     "title": "Payment",
     "desc": "Choose a payment method to continue",
+    "tabsAria": "Payment steps",
+    "tabs": {
+      "summary": "Summary",
+      "payment": "Payment"
+    },
+    "continueToPayment": "Continue to payment",
     "currency": {
       "vnd": "Domestic · VND",
       "usd": "International · USD"
@@ -3214,6 +3220,11 @@
     "noCardStored": "StarCi Academy never stores your card details",
     "aiPlanName": "AI plan",
     "membershipName": "StarCi membership",
+    "alreadyEnrolled": {
+      "title": "You're already enrolled in this course",
+      "description": "Jump into the lessons?",
+      "action": "Go to course"
+    },
     "installment": {
       "title": "Payment option",
       "payFull": "Pay in full",
@@ -4207,11 +4218,47 @@
     "loadError": "Couldn't load notifications",
     "markAllRead": "Mark all as read",
     "retry": "Try again",
-    "title": "Notifications"
+    "title": "Notifications",
+    "seeAll": "See all",
+    "description": "Updates on graded submissions, replies, followers, and other activity.",
+    "emptyFiltered": "No notifications in this category",
+    "emptyCta": "Explore courses",
+    "tabsAria": "Filter notifications by type",
+    "pageInfo": "{from}–{to} / {total}",
+    "tabs": {
+      "all": "All",
+      "system": "System",
+      "challengeGraded": "Challenge grading",
+      "codingGraded": "Coding",
+      "milestoneGraded": "Milestone grading",
+      "newFollower": "Followers",
+      "commentReply": "Comments",
+      "subscriptionGranted": "AI plan",
+      "announcement": "Announcements",
+      "streakMilestone": "Streak"
+    }
   },
   "notification": {
+    "challengeGraded": {
+      "title": "Challenge \"{title}\" was graded: {result, select, passed {Passed} failed {Not yet passed} other {}}"
+    },
+    "codingGraded": {
+      "title": "Coding problem \"{title}\": {verdictLabel}"
+    },
+    "communityReply": {
+      "title": "{actor} replied to your comment"
+    },
+    "milestoneGraded": {
+      "title": "Task \"{title}\" was graded: {result, select, passed {Passed} failed {Not yet passed} other {}}"
+    },
+    "newFollower": {
+      "title": "{actor} started following you"
+    },
     "streakMilestone": {
       "title": "{days}-day streak! +{coin} Coin added to your wallet"
+    },
+    "subscriptionGranted": {
+      "title": "Your AI {tier} subscription is now active"
     }
   },
   "streakFreeze": {

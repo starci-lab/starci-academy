@@ -20,7 +20,7 @@ export const BlogListSkeleton = () => {
             {Array.from({ length: 4 }).map((_, index) => (
                 <div
                     key={index}
-                    className="flex flex-col gap-1.5 border-b border-default py-4 last:border-b-0"
+                    className="flex flex-col gap-2 border-b border-default py-4 last:border-b-0"
                 >
                     <Skeleton className="h-6 w-2/3 rounded-medium" />
                     <Skeleton className="h-4 w-full rounded" />

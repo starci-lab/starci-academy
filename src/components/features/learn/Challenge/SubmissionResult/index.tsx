@@ -118,7 +118,7 @@ const FindingAccordionItem = ({
                         ) : null}
                         {feedback.suggestion ? (
                             <div className="flex items-start gap-2">
-                                <LightbulbIcon aria-hidden focusable="false" className="mt-0.5 size-4 shrink-0 text-muted" />
+                                <LightbulbIcon aria-hidden focusable="false" className="mt-0 size-4 shrink-0 text-muted" />
                                 <MarkdownContent markdown={feedback.suggestion} className="text-sm text-muted [&_p]:m-0" />
                             </div>
                         ) : null}

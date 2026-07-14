@@ -176,23 +176,26 @@ export const ContentAiSelectionAsk = () => {
     }
 
     return createPortal(
+        // eslint-disable-next-line jsx-a11y/no-static-element-interactions -- non-interactive
+        // positioning wrapper; onMouseDown only prevents the browser from collapsing the text
+        // selection before the real (keyboard-accessible) Button's press fires
         <div
             // keep the selection alive when pressing the button (mousedown would
             // otherwise collapse it before the click fires)
             onMouseDown={(event) => event.preventDefault()}
+            className="z-[70]"
             style={{
                 position: "fixed",
                 left: anchor.x,
                 top: Math.max(8, anchor.y - 8),
                 transform: "translate(-50%, -100%)",
-                zIndex: 80,
             }}
         >
             <Button size="sm" variant="primary" onPress={onAsk} className="shadow-lg">
                 <SparkleIcon className="size-4" />
                 {t("contentAi.askAboutSelection")}
                 {!seen ? (
-                    <span className="rounded-full bg-surface px-1.5 py-0.5 text-[11px] font-medium text-accent">
+                    <span className="rounded-full bg-surface px-2 py-0 text-[11px] font-medium text-accent">
                         {t("contentAi.new")}
                     </span>
                 ) : null}

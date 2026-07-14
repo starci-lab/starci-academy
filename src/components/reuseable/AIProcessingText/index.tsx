@@ -1,6 +1,6 @@
 "use client"
 
-import { CircleCheck as CheckCircleIcon, LayoutList as QueueIcon, OctagonXmark as WarningOctagonIcon, Sparkles as SparkleIcon } from "@gravity-ui/icons"
+import { CheckCircleIcon, QueueIcon, WarningOctagonIcon, SparkleIcon } from "@phosphor-icons/react"
 import React, { useMemo } from "react"
 import {
     motion,
@@ -49,7 +49,7 @@ const useSpinningBorder = (status: JobStatus): boolean =>
 || status === JobStatus.Failed
 
 /**
- * Localized title + description for an AI job (same keys as {@link AIProcessingModal}).
+ * Localized title + description for an AI job (from the `aiProcessing.*` locale namespace).
  * @param props - {@link AIProcessingTextProps}
  */
 export const AIProcessingText = (props: AIProcessingTextProps) => {
@@ -123,7 +123,7 @@ export const AIProcessingText = (props: AIProcessingTextProps) => {
             {textBlock}
         </div>
     ) : (
-        <div className="flex w-full items-center gap-1.5">
+        <div className="flex w-full items-center gap-2">
             {statusIcon}
             <div className="w-full min-w-0">
                 {textBlock}

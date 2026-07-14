@@ -36,7 +36,6 @@ export const AdModal = ({ className }: WithClassNames<undefined>) => {
             onOpenChange={setOpen}
             className={className}
             title={t("dashboard.adModalTitle")}
-            titleClassName="text-foreground"
             bodyClassName="gap-3"
         >
             <AdBanner ad={context} />

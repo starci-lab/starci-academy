@@ -4,6 +4,7 @@ import React, { useMemo } from "react"
 import { Card, CardContent, Link, Typography, cn } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { ArrowUpRightIcon, BookOpenTextIcon } from "@phosphor-icons/react"
+import { Callout } from "@/components/blocks/feedback/Callout"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { pathConfig } from "@/resources/path"
 import { getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
@@ -69,16 +70,16 @@ export const NodeDissectionPanel = ({ nodeId, healthByName, className }: NodeDis
                         </div>
                     </div>
 
-                    <div className="flex flex-col gap-1.5 border-t border-default pt-3">
+                    <div className="flex flex-col gap-2 border-t border-default pt-3">
                         <Typography type="body-sm" weight="medium">{t("panel.whyHeading")}</Typography>
                         <Typography type="body-sm" color="muted">{t(`module.${module.id}.role`)}</Typography>
                     </div>
 
-                    <div className="flex flex-col gap-1.5 border-t border-default pt-3">
+                    <div className="flex flex-col gap-2 border-t border-default pt-3">
                         <Typography type="body-sm" weight="medium">{t("panel.runsOn")}</Typography>
-                        <div className="flex flex-wrap gap-1.5">
+                        <div className="flex flex-wrap gap-2">
                             {infraNames.map((name) => (
-                                <span key={name} className="rounded-full bg-default px-2.5 py-1 font-mono text-xs text-muted">
+                                <span key={name} className="rounded-full bg-default px-2 py-1 font-mono text-xs text-muted">
                                     {name}
                                 </span>
                             ))}
@@ -111,7 +112,7 @@ export const NodeDissectionPanel = ({ nodeId, healthByName, className }: NodeDis
                             </Typography>
                         </div>
                     </div>
-                    <span className={cn("flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1", visual.chipClassName)}>
+                    <span className={cn("flex shrink-0 items-center gap-2 rounded-full px-2 py-1", visual.chipClassName)}>
                         <span className={cn("size-2 shrink-0 rounded-full", visual.dotClassName, visual.pulse && "animate-pulse")} aria-hidden />
                         <Typography type="body-xs" weight="medium" className="whitespace-nowrap">
                             {t(`status.${state}`)}
@@ -128,12 +129,10 @@ export const NodeDissectionPanel = ({ nodeId, healthByName, className }: NodeDis
                 </div>
 
                 {health?.message ? (
-                    <p className="rounded-xl bg-danger/10 px-3 py-2 text-xs text-danger">
-                        {health.message}
-                    </p>
+                    <Callout status="danger" title={health.message} />
                 ) : null}
 
-                <div className="flex flex-col gap-1.5 border-t border-default pt-3">
+                <div className="flex flex-col gap-2 border-t border-default pt-3">
                     <Typography type="body-sm" weight="medium">{t("panel.whyHeading")}</Typography>
                     <Typography type="body-sm" color="muted">{t(`why.${component.name}`)}</Typography>
                 </div>

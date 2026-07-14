@@ -30,7 +30,7 @@ export const SignUpPrompt = ({
 }: SignUpPromptProps) => {
     const t = useTranslations()
     return (
-        <div className={cn("flex justify-center items-center gap-1.5", className)}>
+        <div className={cn("flex justify-center items-center gap-2", className)}>
             <div className="text-xs text-muted">
                 {t("auth.signIn.noAccount")}
             </div>

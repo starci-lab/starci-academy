@@ -21,12 +21,13 @@ export const ContentModal = ({ className }: ContentModalProps = {}) => {
             className={className}
             size="full"
             scroll="inside"
-            title={content?.title ?? ""}
-            titleClassName="text-2xl font-bold text-center"
+            title={content?.title
+                ? <MarkdownContent markdown={content.title} className="[&_p]:m-0 [&_p]:inline" />
+                : null}
+            bodyClassName="pb-6"
         >
-            <ScrollShadow hideScrollBar={true} className="px-3">
+            <ScrollShadow hideScrollBar={true}>
                 <MarkdownContent markdown={content?.body ?? ""} />
-                <div className="h-6"/>
             </ScrollShadow>
         </ModalShell>
     )

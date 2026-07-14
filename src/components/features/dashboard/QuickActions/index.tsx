@@ -5,15 +5,12 @@ import React, {
 } from "react"
 import {
     Chip,
-    cn,
 } from "@heroui/react"
 import {
     useLocale,
     useTranslations,
 } from "next-intl"
-import {
-    useRouter,
-} from "next/navigation"
+import Link from "next/link"
 import {
     GraduationCapIcon,
     CardsIcon,
@@ -28,6 +25,7 @@ import {
 import {
     pathConfig,
 } from "@/resources/path"
+import { LabeledList } from "@/components/blocks/lists/LabeledList"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -43,7 +41,7 @@ export type QuickActionsProps = WithClassNames<undefined>
  * reaches for most (catalog, practice, bookmarks, own profile). Pure navigation;
  * self-reads the viewer's username from redux for the profile-scoped links. Rows
  * are flush-left (aligned with the heading + the identity stats above), not the
- * indented HeroUI ListBox. `"use client"` for redux + the router.
+ * indented HeroUI ListBox. `"use client"` for the redux read.
  * @param props - optional className for the root element.
  */
 export const QuickActions = ({
@@ -51,7 +49,6 @@ export const QuickActions = ({
 }: QuickActionsProps) => {
     const t = useTranslations()
     const locale = useLocale()
-    const router = useRouter()
     const username = useAppSelector((state) => state.user.user?.username)
     // spendable reward balance — surfaced as a chip on the rewards shortcut
     const { data: wallet } = useQueryMyRewardWalletSwr()
@@ -118,44 +115,37 @@ export const QuickActions = ({
     )
 
     return (
-        <div className={cn("flex flex-col gap-3", className)}>
-            <div className="text-base font-semibold text-foreground">
-                {t("dashboard.quickActions")}
-            </div>
-            {/* flush list (no ListBox indent): each row aligns left with the heading */}
-            <div className="flex flex-col">
-                {actions.map(({
-                    key,
-                    Icon,
-                    href,
-                }) => (
-                    <button
-                        key={key}
-                        type="button"
-                        onClick={() => router.push(href)}
-                        className="group flex w-full cursor-pointer items-center gap-3 py-2 text-left"
-                    >
-                        <Icon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
-                        <span className="truncate text-sm transition-colors group-hover:text-foreground group-hover:underline">
-                            {t(`dashboard.actions.${key}`)}
-                        </span>
-                        {key === "rewards" && wallet ? (
-                            <Chip className="ml-auto" size="sm" variant="soft" color="warning">
-                                <Chip.Label>
-                                    {t("dashboard.rewardBalance", { count: wallet.balance })}
-                                </Chip.Label>
-                            </Chip>
-                        ) : null}
-                        {key === "review" && dueCount > 0 ? (
-                            <Chip className="ml-auto" size="sm" variant="soft" color="accent">
-                                <Chip.Label>
-                                    {t("dashboard.dueCount", { count: dueCount })}
-                                </Chip.Label>
-                            </Chip>
-                        ) : null}
-                    </button>
-                ))}
-            </div>
-        </div>
+        <LabeledList className={className} label={t("dashboard.quickActions")}>
+            {actions.map(({
+                key,
+                Icon,
+                href,
+            }) => (
+                <Link
+                    key={key}
+                    href={href}
+                    className="group flex w-full items-center gap-3 py-2 text-left"
+                >
+                    <Icon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
+                    <span className="truncate text-sm transition-colors group-hover:text-foreground group-hover:underline">
+                        {t(`dashboard.actions.${key}`)}
+                    </span>
+                    {key === "rewards" && wallet ? (
+                        <Chip className="ml-auto" size="sm" variant="soft" color="warning">
+                            <Chip.Label>
+                                {t("dashboard.rewardBalance", { count: wallet.balance })}
+                            </Chip.Label>
+                        </Chip>
+                    ) : null}
+                    {key === "review" && dueCount > 0 ? (
+                        <Chip className="ml-auto" size="sm" variant="soft" color="accent">
+                            <Chip.Label>
+                                {t("dashboard.dueCount", { count: dueCount })}
+                            </Chip.Label>
+                        </Chip>
+                    ) : null}
+                </Link>
+            ))}
+        </LabeledList>
     )
 }

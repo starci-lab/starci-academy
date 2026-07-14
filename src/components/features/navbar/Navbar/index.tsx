@@ -2,7 +2,6 @@
 
 import React, {
     useEffect,
-    useMemo,
     useState,
 } from "react"
 import {
@@ -16,19 +15,14 @@ import {
     MagnifyingGlassIcon as SearchIcon,
 } from "@phosphor-icons/react"
 import {
-    useLocale,
     useTranslations,
 } from "next-intl"
 import {
-    usePathname,
     useRouter,
 } from "@/i18n/navigation"
 import {
-    pathConfig,
-} from "@/resources/path"
-import type {
-    NavbarItem,
-} from "./types"
+    useNavbarItems,
+} from "./useNavbarItems"
 import {
     Logo,
 } from "./Logo"
@@ -74,9 +68,7 @@ export type NavbarProps = WithClassNames<undefined>
  */
 export const Navbar = ({ className }: NavbarProps) => {
     const t = useTranslations()
-    const locale = useLocale()
     const router = useRouter()
-    const pathname = usePathname()
     const { open: openSearch } = useSearchOverlayState()
     const [isDrawerOpen, setDrawerOpen] = useState(false)
     // optional second layer (e.g. profile tabs) a page registered into the navbar
@@ -96,32 +88,8 @@ export const Navbar = ({ className }: NavbarProps) => {
         return () => window.removeEventListener("keydown", onKeyDown)
     }, [openSearch])
 
-    // mobile drawer nav entries (same targets as the desktop NavLinks)
-    const mobileNavItems = useMemo<Array<NavbarItem>>(
-        () => [
-            {
-                label: t("nav.home"),
-                path: pathConfig().locale().home().build(),
-                isActive: pathname === "/" || pathname === pathConfig().locale().home().build(),
-            },
-            {
-                label: t("nav.courses"),
-                path: pathConfig().locale().course().build(),
-                isActive: pathname.startsWith(pathConfig().locale(locale).course().build()),
-            },
-            {
-                label: t("nav.contact"),
-                path: pathConfig().locale().contact().build(),
-                isActive: pathname.startsWith(pathConfig().locale(locale).contact().build()),
-            },
-            {
-                label: t("cart.title"),
-                path: pathConfig().locale().cart().build(),
-                isActive: pathname.startsWith(pathConfig().locale(locale).cart().build()),
-            },
-        ],
-        [locale, pathname, t],
-    )
+    // mobile drawer nav entries (same source of truth as desktop NavLinks, plus cart)
+    const mobileNavItems = useNavbarItems({ includeCart: true })
 
     return (
         <nav className={cn("sticky top-0 z-50 border-b border-separator bg-background", className)}>

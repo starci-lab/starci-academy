@@ -79,7 +79,9 @@ export const LoginPage = ({ className }: LoginPageProps) => {
 
             {redirectTarget && (
                 <div className="text-center text-xs text-muted">
-                    {t("auth.signIn.desc")}
+                    {authenticationModalTab === AuthenticationModalTab.SignUp
+                        ? t("auth.signUp.desc")
+                        : t("auth.signIn.desc")}
                 </div>
             )}
 

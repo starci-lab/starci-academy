@@ -6,6 +6,7 @@ import React, {
 import {
     cn,
     ProgressBar,
+    Typography,
 } from "@heroui/react"
 import {
     resolveQuotaBarFillTone,
@@ -60,20 +61,20 @@ export const QuotaBar = ({
     ])
 
     return (
-        <div className={cn("flex flex-col gap-1.5", className)}>
-            <div className="flex items-center justify-between gap-1.5 text-sm">
-                <span className="text-muted">{label}</span>
-                <span className="font-medium text-foreground">
+        <div className={cn("flex flex-col gap-2", className)}>
+            <div className="flex items-center justify-between gap-2">
+                <Typography type="body-sm" color="muted">{label}</Typography>
+                <Typography type="body-sm" weight="medium">
                     {used}
                     {" / "}
                     {limit}
                     {showUnit && unit ? (
                         <>
                             {" "}
-                            <span className="text-muted">{unit}</span>
+                            <Typography type="body-sm" color="muted" className="inline">{unit}</Typography>
                         </>
                     ) : null}
-                </span>
+                </Typography>
             </div>
 
             <ProgressBar
@@ -90,7 +91,7 @@ export const QuotaBar = ({
                 </ProgressBar.Track>
             </ProgressBar>
             {resetLabel ? (
-                <div className="text-xs text-muted">{resetLabel}</div>
+                <Typography type="body-xs" color="muted">{resetLabel}</Typography>
             ) : null}
         </div>
     )

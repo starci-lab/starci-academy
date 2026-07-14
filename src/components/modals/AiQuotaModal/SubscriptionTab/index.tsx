@@ -6,7 +6,11 @@ import React, {
 import {
     Button,
     Skeleton,
+    Typography,
 } from "@heroui/react"
+import {
+    ArrowRightIcon,
+} from "@phosphor-icons/react"
 import {
     useTranslations,
     useLocale,
@@ -44,21 +48,28 @@ export const AiQuotaSubscriptionTab = () => {
     ])
 
     if (isLoading || !quota) {
-        return <Skeleton className="h-24 w-full rounded-xl" />
+        return (
+            <div className="flex flex-col gap-3">
+                <Skeleton className="h-4 w-40 rounded-md" />
+                <Skeleton className="h-9 w-40 rounded-xl" />
+            </div>
+        )
     }
 
     if (!quota.tier) {
         return (
-            <div className="flex flex-col gap-3">
-                <p className="text-sm text-muted">
+            <div className="flex flex-col gap-3 rounded-2xl border border-default p-4">
+                <Typography type="body-sm" color="muted">
                     {t("aiQuota.subscriptionNone")}
-                </p>
+                </Typography>
                 <Button
                     variant="primary"
+                    size="lg"
                     className="self-start"
                     onPress={onSubscribe}
                 >
                     {t("aiQuota.subscribeCta")}
+                    <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
                 </Button>
             </div>
         )
@@ -67,9 +78,9 @@ export const AiQuotaSubscriptionTab = () => {
     return (
         <div className="flex flex-col gap-3">
             <QuotaLane variant={QuotaLaneVariant.Premium} />
-            <p className="text-sm text-muted">
+            <Typography type="body-sm" color="muted">
                 {t("aiQuota.subscriptionActive", { tier: quota.tier.toUpperCase() })}
-            </p>
+            </Typography>
         </div>
     )
 }

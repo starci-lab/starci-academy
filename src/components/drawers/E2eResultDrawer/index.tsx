@@ -5,6 +5,7 @@ import {
     Drawer,
     ScrollShadow,
 } from "@heroui/react"
+import { useTranslations } from "next-intl"
 import { useSmViewpoint } from "@/hooks/reuseables/useSmViewpoint"
 import { E2eBody } from "@/components/features/learn/LessonReader/E2eBody"
 import { useAppSelector } from "@/redux/hooks"
@@ -18,6 +19,7 @@ import { useE2eResultOverlayState } from "@/hooks/zustand/overlay/hooks"
  * redux and rendered via {@link E2eBody}. Mounted once by {@link import("./../DrawerContainer").DrawerContainer}.
  */
 export const E2eResultDrawer = () => {
+    const t = useTranslations()
     const { isOpen, setOpen } = useE2eResultOverlayState()
     const { isMobile } = useSmViewpoint()
     const content = useAppSelector((state) => state.content.entity)
@@ -33,7 +35,7 @@ export const E2eResultDrawer = () => {
                         <div className="p-3">
                             <Drawer.CloseTrigger />
                             <Drawer.Header>
-                                <Drawer.Heading>E2E result</Drawer.Heading>
+                                <Drawer.Heading>{t("content.e2e.title")}</Drawer.Heading>
                             </Drawer.Header>
                         </div>
                         <Drawer.Body>

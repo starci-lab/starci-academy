@@ -23,7 +23,7 @@ export const MockInterviewSessionSkeleton = ({ className }: WithClassNames<undef
         <div className={cn("flex w-full flex-col", className)}>
             {/* sub-navbar band — mirrors WorkSessionHeader */}
             <div className="sticky top-16 z-10 border-b border-default bg-surface">
-                <div className="flex items-center gap-3 px-4 py-2.5 sm:px-6">
+                <div className="flex items-center gap-3 px-4 py-2 sm:px-6">
                     {/* back-link ("Rời") */}
                     <Skeleton className="h-4 w-14 rounded" />
                     <span className="hidden h-5 w-px shrink-0 bg-default sm:block" aria-hidden />

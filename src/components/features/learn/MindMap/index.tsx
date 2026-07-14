@@ -2,10 +2,12 @@
 
 import React from "react"
 import { Skeleton, cn } from "@heroui/react"
+import { useTranslations } from "next-intl"
 import { MindMapCanvas } from "./MindMapCanvas"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryCourseSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseSwr"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 
 /** Props for {@link MindMap}. */
 export type MindMapProps = WithClassNames<undefined>
@@ -24,19 +26,27 @@ export type MindMapProps = WithClassNames<undefined>
 export const MindMap = ({
     className,
 }: MindMapProps = {}) => {
+    const t = useTranslations()
     const course = useAppSelector((state) => state.course.entity)
     // Trigger the course fetch on this route (the /modules layout does it elsewhere, but a hard
     // refresh straight into /mind-map has no other loader, so the canvas would stay empty).
-    const { isLoading } = useQueryCourseSwr()
+    const { isLoading, error, mutate } = useQueryCourseSwr()
 
     return (
         // full-bleed canvas filling the viewport below the sticky h-16 navbar
         <div className={cn("h-[calc(100dvh-4rem)] w-full", className)}>
-            {!course && isLoading ? (
-                <Skeleton className="h-full w-full" />
-            ) : (
+            <AsyncContent
+                isLoading={isLoading && !course}
+                skeleton={<Skeleton className="h-full w-full" />}
+                error={error}
+                errorContent={{
+                    title: t("courseLanding.errorTitle"),
+                    onRetry: () => mutate(),
+                    retryLabel: t("courseLanding.retry"),
+                }}
+            >
                 <MindMapCanvas />
-            )}
+            </AsyncContent>
         </div>
     )
 }

@@ -11,7 +11,6 @@ import {
     FileTextIcon,
     ClockIcon,
     FireIcon,
-    CaretRightIcon,
 } from "@phosphor-icons/react"
 import {
     useRouter,
@@ -100,7 +99,6 @@ export const BookmarkCard = ({
                     ) : null}
                 </>
             )}
-            trailing={<CaretRightIcon aria-hidden className="size-5 text-muted" />}
         />
     )
 }

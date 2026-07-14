@@ -2,7 +2,6 @@
 
 import React from "react"
 import {
-    Chip,
     Typography,
 } from "@heroui/react"
 import {
@@ -26,13 +25,12 @@ import { useQueryRecommendedCoursesSwr } from "@/hooks/swr/api/graphql/queries/u
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { PriceTag } from "@/components/blocks/commerce/PriceTag"
 
 /** Props for {@link RecommendedCourses}. */
 export type RecommendedCoursesProps = WithClassNames<undefined>
-
-/** Format a VND amount with the vi-VN grouping + đồng sign. */
-const formatVnd = (amount: number) => `${amount.toLocaleString("vi-VN")}₫`
 
 /**
  * "Khóa học cho bạn" — courses the viewer has NOT bought yet, each priced with
@@ -55,27 +53,33 @@ export const RecommendedCourses = ({
     if (!isLoading && !error && items.length === 0) {
         return null
     }
+    // `frameless` computed here (not hardcoded) so the loaded list — self-framed
+    // as a `SurfaceListCard` — skips the outer `Card`, mirroring `MyCoursesProgress`.
+    const hasItems = !isLoading && !error && items.length > 0
 
     return (
         <LabeledCard
             label={t("dashboard.recommended.title")}
             icon={<CompassIcon aria-hidden focusable="false" className="size-5" />}
             className={className}
+            frameless={hasItems}
         >
             <AsyncContent
                 isLoading={isLoading && items.length === 0}
                 skeleton={(
-                    <div className="flex flex-col gap-3">
+                    <SurfaceListCard>
                         {[0, 1, 2].map((row) => (
-                            <div key={row} className="flex items-center gap-3">
-                                <Skeleton className="size-12 shrink-0 rounded-xl" />
-                                <div className="flex min-w-0 flex-1 flex-col gap-2">
-                                    <Skeleton.Typography type="body-sm" width="1/2" />
-                                    <Skeleton.Typography type="body-xs" width="1/4" />
+                            <SurfaceListCardItem key={row}>
+                                <div className="flex items-center gap-3">
+                                    <Skeleton className="size-12 shrink-0 rounded-xl" />
+                                    <div className="flex min-w-0 flex-1 flex-col gap-2">
+                                        <Skeleton.Typography type="body-sm" width="1/2" />
+                                        <Skeleton.Typography type="body-xs" width="1/4" />
+                                    </div>
                                 </div>
-                            </div>
+                            </SurfaceListCardItem>
                         ))}
-                    </div>
+                    </SurfaceListCard>
                 )}
                 error={items.length === 0 ? error : undefined}
                 errorContent={{
@@ -84,58 +88,48 @@ export const RecommendedCourses = ({
                     retryLabel: t("dashboard.retry"),
                 }}
             >
-                <div className="flex flex-col gap-3">
+                <SurfaceListCard>
                     {items.map((course) => {
                         const discounted = course.discountPercent > 0
                         return (
-                            <div key={course.displayId} className="flex items-center gap-3">
-                                <IconTile
-                                    size="sm"
-                                    src={course.thumbnailUrl}
-                                    alt={course.title}
-                                    icon={<BookOpenIcon aria-hidden focusable="false" />}
-                                />
-                                <div className="flex min-w-0 flex-1 flex-col gap-1">
-                                    <div className="flex items-center justify-between gap-2">
+                            <SurfaceListCardItem key={course.displayId}>
+                                <div className="flex items-center gap-3">
+                                    <IconTile
+                                        size="sm"
+                                        src={course.thumbnailUrl}
+                                        alt={course.title}
+                                        icon={<BookOpenIcon aria-hidden focusable="false" />}
+                                    />
+                                    <div className="flex min-w-0 flex-1 flex-col gap-1">
                                         {/* course title is a link into the course */}
                                         <EntityToken
                                             href={pathConfig().locale(locale).course(course.displayId).build()}
                                             label={course.title}
                                             className="min-w-0 flex-1 truncate"
                                         />
-                                        {discounted ? (
-                                            <Chip color="danger" variant="soft" size="sm">
-                                                <Chip.Label>{`-${course.discountPercent}%`}</Chip.Label>
-                                            </Chip>
+                                        {course.description ? (
+                                            <Typography type="body-xs" color="muted" truncate>
+                                                {course.description}
+                                            </Typography>
                                         ) : null}
-                                    </div>
-                                    {course.description ? (
-                                        <Typography type="body-xs" color="muted" truncate>
-                                            {course.description}
-                                        </Typography>
-                                    ) : null}
-                                    <div className="flex items-center gap-2">
-                                        <Typography type="body-sm" weight="medium">
-                                            {formatVnd(course.discountedPriceVnd)}
-                                        </Typography>
-                                        {discounted ? (
-                                            <Typography type="body-xs" color="muted" className="line-through">
-                                                {formatVnd(course.originalPriceVnd)}
+                                        <PriceTag
+                                            discounted={course.discountedPriceVnd}
+                                            original={discounted ? course.originalPriceVnd : null}
+                                            size="sm"
+                                        />
+                                        {discounted && course.discountReason !== "none" ? (
+                                            <Typography type="body-xs" className="text-accent">
+                                                {t(`dashboard.recommended.reason.${course.discountReason}`, {
+                                                    count: course.enrolledCount,
+                                                })}
                                             </Typography>
                                         ) : null}
                                     </div>
-                                    {discounted && course.discountReason !== "none" ? (
-                                        <Typography type="body-xs" className="text-accent">
-                                            {t(`dashboard.recommended.reason.${course.discountReason}`, {
-                                                count: course.enrolledCount,
-                                            })}
-                                        </Typography>
-                                    ) : null}
                                 </div>
-                            </div>
+                            </SurfaceListCardItem>
                         )
                     })}
-                </div>
+                </SurfaceListCard>
             </AsyncContent>
         </LabeledCard>
     )

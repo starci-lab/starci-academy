@@ -10,9 +10,6 @@ import {
     Typography,
 } from "@heroui/react"
 import {
-    CheckCircleIcon,
-} from "@phosphor-icons/react"
-import {
     useTranslations,
 } from "next-intl"
 import {
@@ -21,6 +18,7 @@ import {
 import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { PaymentFlow } from "@/modules/types/payment"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { CheckListCard, CheckListItem } from "@/components/blocks/cards/CheckListCard"
 
 /**
  * Community membership feature container.
@@ -98,17 +96,13 @@ export const Membership = () => {
                         </Typography>
                     </div>
                     {/* perks list — one check row per benefit */}
-                    <div className="flex flex-col gap-3">
+                    <CheckListCard>
                         {perks.map((perk) => (
-                            <div
-                                key={perk}
-                                className="flex items-start gap-2"
-                            >
-                                <CheckCircleIcon aria-hidden className="size-5 shrink-0 text-success" />
+                            <CheckListItem key={perk}>
                                 <Typography type="body-sm">{perk}</Typography>
-                            </div>
+                            </CheckListItem>
                         ))}
-                    </div>
+                    </CheckListCard>
                     <Button
                         variant="primary"
                         fullWidth

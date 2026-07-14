@@ -29,7 +29,7 @@ const ComponentCardSkeleton = () => (
 const AiKeyGroupSkeleton = () => (
     <div className="flex flex-col gap-3 rounded-large bg-surface shadow-surface p-4">
         <Skeleton className="h-4 w-2/3 rounded" />
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-wrap gap-2">
             {Array.from({ length: 5 }).map((_, index) => (
                 <Skeleton key={index} className="h-5 w-20 rounded-full" />
             ))}

@@ -20,7 +20,7 @@ export const useSessionSuperseded = () => {
                 })
                 sessionStorage.removeItem("superseded_toast")
             }
-        } catch (e) {
+        } catch {
             // ignore storage errors
         }
     }, [t])

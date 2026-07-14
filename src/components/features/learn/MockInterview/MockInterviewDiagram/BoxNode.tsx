@@ -64,6 +64,16 @@ export const BoxNode = ({ id, data, selected }: NodeProps<MockInterviewBoxNode>)
         [commit, data.label],
     )
 
+    const handleContainerKeyDown = useCallback(
+        (event: React.KeyboardEvent<HTMLDivElement>) => {
+            if (!isEditing && (event.key === "Enter" || event.key === " ")) {
+                event.preventDefault()
+                setIsEditing(true)
+            }
+        },
+        [isEditing],
+    )
+
     return (
         <div
             className={cn(
@@ -71,6 +81,10 @@ export const BoxNode = ({ id, data, selected }: NodeProps<MockInterviewBoxNode>)
                 selected ? "border-accent ring-2 ring-accent/40" : "border-divider",
             )}
             onDoubleClick={() => setIsEditing(true)}
+            onKeyDown={handleContainerKeyDown}
+            role={isEditing ? undefined : "button"}
+            tabIndex={isEditing ? -1 : 0}
+            aria-label={isEditing ? undefined : `${data.label}. Press Enter to rename.`}
         >
             <Handle className="opacity-0" position={Position.Top} type="target" />
             <Handle className="opacity-0" position={Position.Top} id="top-source" type="source" />

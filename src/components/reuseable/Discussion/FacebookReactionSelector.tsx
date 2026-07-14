@@ -52,7 +52,7 @@ export const FacebookReactionSelector = ({ active, onSelect, className }: Facebo
                         )}
                     >
                         {/* reaction name floats above on hover, à la Facebook */}
-                        <span className="pointer-events-none absolute -top-7 left-1/2 -translate-x-1/2 scale-90 whitespace-nowrap rounded-full bg-foreground px-2 py-0.5 text-[10px] font-medium text-background opacity-0 transition-all duration-150 group-hover/fbreact:scale-100 group-hover/fbreact:opacity-100">
+                        <span className="pointer-events-none absolute -top-7 left-1/2 -translate-x-1/2 scale-90 whitespace-nowrap rounded-full bg-foreground px-2 py-0 text-[10px] font-medium text-background opacity-0 transition-all duration-150 group-hover/fbreact:scale-100 group-hover/fbreact:opacity-100">
                             {label}
                         </span>
                         {/* emoji scales up + lifts on hover (transform isolated from the pop-in) */}

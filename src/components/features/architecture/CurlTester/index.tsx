@@ -7,6 +7,9 @@ import { CheckIcon, CopyIcon, PlayIcon } from "@phosphor-icons/react"
 import { publicEnv } from "@/resources/env/public"
 import { querySystemHealthStatus } from "@/modules/api/graphql/queries/query-system-health-status"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { Callout } from "@/components/blocks/feedback/Callout"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /**
  * The RAW GraphQL body sent to `/graphql` — the SAME query the "Run" button
@@ -104,15 +107,22 @@ export const CurlTester = ({ className }: CurlTesterProps) => {
                 {t("curl.run")}
             </Button>
 
-            {errorText ? (
-                <p className="rounded-xl bg-danger/10 px-3 py-2 text-xs text-danger">{errorText}</p>
-            ) : null}
+            {errorText ? <Callout status="danger" title={errorText} /> : null}
 
-            {result ? (
-                <pre className="overflow-x-auto rounded-xl bg-default p-3 font-mono text-xs text-foreground">
-                    {result}
-                </pre>
-            ) : null}
+            <AsyncContent
+                isLoading={running}
+                skeleton={
+                    <div className="rounded-xl bg-default p-3">
+                        <Skeleton.Paragraph lines={4} />
+                    </div>
+                }
+            >
+                {result ? (
+                    <pre className="overflow-x-auto rounded-xl bg-default p-3 font-mono text-xs text-foreground">
+                        {result}
+                    </pre>
+                ) : null}
+            </AsyncContent>
         </div>
     )
 }

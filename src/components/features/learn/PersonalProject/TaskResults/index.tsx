@@ -2,10 +2,6 @@
 
 import React, { useMemo } from "react"
 import {
-    Surface,
-    cn,
-} from "@heroui/react"
-import {
     useTranslations,
 } from "next-intl"
 import {
@@ -15,6 +11,7 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 import { Score } from "@/components/reuseable/Score"
 import { StarCiAIBadge } from "@/components/reuseable/StarCiAIBadge"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { useQueryUserPersonalTaskAttemptsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserPersonalTaskAttemptsSwr"
 
 /** Props for {@link TaskResults}. */
@@ -51,20 +48,17 @@ export const TaskResults = ({
             skeleton={<TaskResultsSkeleton className={className} />}
             isEmpty={!latestAttempt}
         >
-            <div className={cn("flex flex-col gap-3", className)}>
-                <div className="flex items-center gap-2">
-                    <div className="font-semibold">{t("task.resultsTitle")}</div>
-                    <StarCiAIBadge />
+            <LabeledCard
+                className={className}
+                label={t("task.resultsTitle")}
+                action={<StarCiAIBadge />}
+                contentClassName="flex flex-col gap-3"
+            >
+                <Score current={latestAttempt?.score ?? 0} max={20} />
+                <div className="text-sm text-muted">
+                    {shortFeedback}
                 </div>
-                <Surface className="p-3 rounded-3xl">
-                    <div className="text-4xl font-bold text-foreground">
-                        <Score current={latestAttempt?.score ?? 0} max={20} />
-                    </div>
-                    <div className="mt-3 text-sm text-muted">
-                        {shortFeedback}
-                    </div>
-                </Surface>
-            </div>
+            </LabeledCard>
         </AsyncContent>
     )
 }

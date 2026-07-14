@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowsRotateLeft as ArrowsClockwise } from "@gravity-ui/icons"
+import { ArrowClockwiseIcon as ArrowsClockwise } from "@phosphor-icons/react"
 import React, {
     useCallback,
 } from "react"
@@ -69,7 +69,7 @@ export const QrPanel = () => {
                 </div>
 
                 <div className="mt-8 flex w-full flex-col items-center gap-3">
-                    <div className="flex items-center gap-1.5">
+                    <div className="flex items-center gap-2">
                         <Spinner size="sm" />
                         <span className="text-sm italic text-muted">
                             {t("payment.sepay.waiting")}

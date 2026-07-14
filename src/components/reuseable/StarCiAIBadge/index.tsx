@@ -1,6 +1,6 @@
 "use client"
 
-import { Sparkles as SparkleIcon } from "@gravity-ui/icons"
+import { SparkleIcon } from "@phosphor-icons/react"
 import React from "react"
 import {
     Chip,

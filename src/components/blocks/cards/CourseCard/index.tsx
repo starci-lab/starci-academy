@@ -6,15 +6,15 @@ import React, {
     useState,
 } from "react"
 import {
+    ArrowRightIcon,
     BookOpenIcon,
-    CaretRightIcon,
     CheckCircleIcon,
     UsersIcon,
 } from "@phosphor-icons/react"
 import {
+    Button,
     Card,
     Chip,
-    Link,
     Typography,
     cn,
 } from "@heroui/react"
@@ -129,12 +129,42 @@ export const CourseCard = ({
         [course.valuePropositions],
     )
 
+    // enrolled → the marketing/detail page is the wrong destination for the PRIMARY
+    // action (the viewer already owns this course); route straight into the
+    // learning experience instead, mirroring
+    // CourseDetail's `useCourseEnrollment().onContinueLearning`. The marketing page
+    // is still a legitimate secondary destination even once enrolled (re-check the
+    // syllabus, share the link) — see `secondaryAction` below.
+    const isEnrolled = course.isEnrolled === true
+    const marketingHref = pathConfig().locale(locale).course(course.displayId).build()
+    const learnHref = pathConfig().locale(locale).course(course.displayId).learn().content().build()
     const onView = useCallback(
-        () => router.push(
-            pathConfig().locale(locale).course(course.displayId).build(),
-        ),
-        [router, locale, course.displayId],
+        () => router.push(isEnrolled ? learnHref : marketingHref),
+        [router, isEnrolled, learnHref, marketingHref],
     )
+    const onViewDetail = useCallback(
+        () => router.push(marketingHref),
+        [router, marketingHref],
+    )
+    const viewLabel = isEnrolled ? t("course.continueLearning") : t("courses.viewCourse")
+    // not enrolled → the feature-owned `action` slot (cart-add, hides itself for
+    // free/enrolled courses per its own logic). Enrolled → that slot would render
+    // null anyway, so replace it with a secondary "Xem khóa học" button (view the
+    // marketing page) — teacher: "tiếp tục học ở card đã mua nên có 2 phần: tiếp
+    // tục học (primary) và xem khóa học (secondary)", don't just drop the second
+    // button once enrolled.
+    const secondaryAction = isEnrolled ? (
+        // no trailing arrow — arrow marks the ONE primary CTA per surface
+        // (button.md §2: "nút KHÔNG icon = sub-CTA"); keeping it here as well
+        // as on "Tiếp tục học" made both buttons read as equally weighted.
+        <Button
+            variant="secondary"
+            onPress={onViewDetail}
+            className="flex-1"
+        >
+            {t("courses.viewCourse")}
+        </Button>
+    ) : action
 
     const showCover = Boolean(course.coverImageUrl) && !coverFailed
 
@@ -193,8 +223,12 @@ export const CourseCard = ({
                             {course.description}
                         </Typography>
                     </div>
-                    {/* price + see-more CTA */}
-                    <div className="flex shrink-0 flex-col items-end gap-1">
+                    {/* price row, then a button row below — view CTA is now a real primary
+                        Button (not a subtle Link), per starci-fe-block-variants round-2
+                        direction "C". `size="md"` per button.md §3's compact-context
+                        exception (a repeated grid card is a tight context — `lg` would
+                        blow up row height across many cards). */}
+                    <div className="flex shrink-0 flex-col items-end gap-2">
                         {loyaltyPending ? (
                             <Skeleton.Typography type="body-sm" width="1/2" />
                         ) : displayPrice != null ? (
@@ -204,18 +238,17 @@ export const CourseCard = ({
                                 size="sm"
                             />
                         ) : null}
-                        <Link
-                            onPress={onView}
-                            className="group inline-flex w-fit items-center gap-1 text-accent"
-                        >
-                            {t("courses.viewCourse")}
-                            <CaretRightIcon
-                                aria-hidden
-                                focusable="false"
-                                className="size-4 transition-transform group-hover:translate-x-1"
-                            />
-                        </Link>
-                        {action}
+                        <div className="flex w-full items-center gap-2">
+                            <Button
+                                variant="primary"
+                                onPress={onView}
+                                className="flex-1"
+                            >
+                                {viewLabel}
+                                <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
+                            </Button>
+                            {secondaryAction}
+                        </div>
                     </div>
                 </div>
             </Card>
@@ -268,7 +301,7 @@ export const CourseCard = ({
                         <ul className="mt-1 flex flex-col gap-2">
                             {topValueProps.map((valueProp, index) => (
                                 <li key={index} className="flex items-start gap-2">
-                                    <CheckCircleIcon aria-hidden className="mt-0.5 size-4 shrink-0 text-success" />
+                                    <CheckCircleIcon aria-hidden className="size-4 shrink-0 text-success" />
                                     <Typography type="body-xs" color="muted">
                                         {valueProp.text}
                                     </Typography>
@@ -279,37 +312,41 @@ export const CourseCard = ({
                 </div>
             </Card.Content>
             <Card.Footer className="mt-auto flex flex-col gap-2">
-                {/* price block: single-source PriceTag — discounted (bold) + struck list +
-                    real list→charge −% chip (computed by the block, never a loyalty flag) */}
-                {loyaltyPending ? (
-                    <Skeleton.Typography type="body-sm" width="1/2" />
-                ) : displayPrice != null ? (
-                    <PriceTag
-                        discounted={displayPrice}
-                        original={displayOriginal}
-                        size="sm"
-                    />
-                ) : null}
+                {/* price row (informational) */}
+                <div className="flex items-center gap-2">
+                    {loyaltyPending ? (
+                        <Skeleton.Typography type="body-sm" width="1/2" />
+                    ) : displayPrice != null ? (
+                        <PriceTag
+                            discounted={displayPrice}
+                            original={displayOriginal}
+                            size="sm"
+                        />
+                    ) : (
+                        <span />
+                    )}
+                </div>
                 {formattedPriceUsd != null ? (
                     <Typography type="body-xs" color="muted">
                         {t("course.priceUsdHint", { amount: formattedPriceUsd })}
                     </Typography>
                 ) : null}
-                {/* see-more style CTA: accent Link with a caret that slides right on
-                    hover (per starci-card.md) — the card itself is not pressable */}
-                <div className="flex items-center justify-between gap-2">
-                    <Link
+                {/* action row — view CTA is a real primary Button (not a subtle Link), per
+                    starci-fe-block-variants round-2 direction "C": the previous accent Link
+                    read as a secondary "see more" action rather than the card's actual primary
+                    action. `size="md"` per button.md §3's compact-context exception (a
+                    repeated grid card is tight — `lg` would blow up card height across many
+                    cards). Cart-add stays `action` (secondary, pairs with this primary). */}
+                <div className="flex w-full items-center gap-2">
+                    <Button
+                        variant="primary"
                         onPress={onView}
-                        className="group inline-flex w-fit items-center gap-1 text-accent"
+                        className="flex-1"
                     >
-                        {t("courses.viewCourse")}
-                        <CaretRightIcon
-                            aria-hidden
-                            focusable="false"
-                            className="size-4 transition-transform group-hover:translate-x-1"
-                        />
-                    </Link>
-                    {action}
+                        {viewLabel}
+                        <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
+                    </Button>
+                    {secondaryAction}
                 </div>
             </Card.Footer>
         </Card>

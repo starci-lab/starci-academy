@@ -1,16 +1,16 @@
 "use client"
 
-import { Eye as EyeIcon, EyeSlash as EyeClosedIcon } from "@gravity-ui/icons"
+import { EyeIcon, EyeSlashIcon } from "@phosphor-icons/react"
 import React, {
     useCallback,
     useState,
 } from "react"
 import {
+    Button,
     cn,
     FieldError,
     Input,
     Label,
-    Link,
     TextField,
 } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -35,6 +35,10 @@ export interface PasswordFieldProps extends WithClassNames<undefined> {
     onChangeValue: (value: string) => void
     /** Fired when the field loses focus. */
     onBlurField: () => void
+    /** aria-label shown when the password is currently plaintext (defaults to the sign-up password copy). */
+    hideLabel?: string
+    /** aria-label shown when the password is currently masked (defaults to the sign-up password copy). */
+    showLabel?: string
 }
 
 /**
@@ -56,6 +60,8 @@ export const PasswordField = ({
     onChangeValue,
     onBlurField,
     className,
+    hideLabel,
+    showLabel,
 }: PasswordFieldProps) => {
     // local UI-only state: whether this field is shown as plaintext
     const [showPassword, setShowPassword] = useState(false)
@@ -70,16 +76,19 @@ export const PasswordField = ({
                 {label}
             </Label>
             <div className="relative">
-                <Link
-                    className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center rounded-md p-1 text-muted outline-none transition-opacity hover:opacity-80"
+                <Button
+                    isIconOnly
+                    variant="ghost"
+                    aria-label={showPassword ? hideLabel : showLabel}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 min-w-8 h-8 border-none text-muted hover:text-foreground"
                     onPress={onToggleVisibility}
                 >
                     {showPassword ? (
-                        <EyeIcon className="h-5 w-5" />
+                        <EyeIcon className="size-4" />
                     ) : (
-                        <EyeClosedIcon className="h-5 w-5" />
+                        <EyeSlashIcon className="size-4" />
                     )}
-                </Link>
+                </Button>
                 <Input
                     id={fieldId}
                     required

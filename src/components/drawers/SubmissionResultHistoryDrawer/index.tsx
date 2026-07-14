@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useMemo, useState } from "react"
-import { cn, Chip, Drawer, Pagination, ScrollShadow } from "@heroui/react"
+import { cn, Chip, Drawer, Pagination, ScrollShadow, Typography } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { dayjs, getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
@@ -76,7 +76,7 @@ export const SubmissionResultHistoryDrawer = ({
             <Drawer.Backdrop isOpen={isOpen} onOpenChange={onOpenChange} className="backdrop-blur-sm">
                 <Drawer.Content placement={isMobile ? "bottom" : "right"}>
                     <Drawer.Dialog className="p-0">
-                        <div className="p-3">
+                        <div className="p-4">
                             <Drawer.CloseTrigger />
                             <Drawer.Header>
                                 <Drawer.Heading>
@@ -103,25 +103,32 @@ export const SubmissionResultHistoryDrawer = ({
                                                     onSelect(attempt.id)
                                                     onOpenChange(false)
                                                 }}
-                                                className={selected ? "bg-accent/10" : undefined}
+                                                className={selected ? "bg-accent/10 hover:bg-accent/10" : undefined}
                                             >
                                                 <div className="flex flex-col gap-2">
                                                     <div className="flex items-center gap-2">
-                                                        <span className="text-sm font-medium">
+                                                        <Typography type="body-sm" weight="medium">
                                                             {t("submissionAttempts.attemptLine", { number: attempt.attemptNumber })}
-                                                        </span>
+                                                        </Typography>
                                                         <Chip color={attemptPass ? "success" : "danger"} variant="soft" size="sm">
                                                             <Chip.Label>
                                                                 {t(attemptPass ? "submissionResult.passed" : "submissionResult.failed")}
                                                             </Chip.Label>
                                                         </Chip>
-                                                        <span className={cn("ml-auto text-sm", attemptPass ? "text-success" : "text-muted")}>
+                                                        <Typography
+                                                            type="body-sm"
+                                                            className={cn("ml-auto", attemptPass ? "text-success" : "text-muted")}
+                                                        >
                                                             {scoreLabel(attempt.score)}
-                                                        </span>
+                                                        </Typography>
                                                     </div>
-                                                    <div className="flex flex-wrap items-center gap-2 text-xs text-muted">
+                                                    <div className="flex flex-wrap items-center gap-2">
                                                         <ModelByline model={attempt.servedModel} category={attemptCategory} />
-                                                        {attemptTime ? <span className="ml-auto">{attemptTime}</span> : null}
+                                                        {attemptTime ? (
+                                                            <Typography type="body-xs" color="muted" className="ml-auto">
+                                                                {attemptTime}
+                                                            </Typography>
+                                                        ) : null}
                                                     </div>
                                                 </div>
                                             </SurfaceListCardItem>
@@ -131,7 +138,7 @@ export const SubmissionResultHistoryDrawer = ({
                             </ScrollShadow>
                         </Drawer.Body>
                         {totalPages > 1 ? (
-                            <Drawer.Footer className="border-t">
+                            <Drawer.Footer className="border-t p-4">
                                 <Pagination aria-label={t("submissionResult.history")} size="sm" className="w-full justify-start">
                                     <Pagination.Content className="flex flex-wrap justify-start gap-2">
                                         <Pagination.Item>

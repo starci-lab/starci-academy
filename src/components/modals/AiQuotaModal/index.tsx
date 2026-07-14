@@ -46,12 +46,12 @@ export const AiQuotaModal = ({ className }: AiQuotaModalProps = {}) => {
             isOpen={isOpen}
             onOpenChange={setOpen}
             className={className}
+            bodyStartsWithTabs
+            bodyClassName="flex flex-col gap-6"
             header={<AiQuotaHeader />}
         >
             <AiQuotaTabBar />
-            <div className="h-4.5"/>
             <AiQuotaBody />
-            <div className="h-4.5"/>
             <AiQuotaFullConfigLink />
         </ModalShell>
     )

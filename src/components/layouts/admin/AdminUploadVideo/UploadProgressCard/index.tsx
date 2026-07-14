@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowUpFromLine as UploadIcon, CircleCheck as CheckCircleIcon } from "@gravity-ui/icons"
+import { UploadSimpleIcon as UploadIcon, CheckCircleIcon } from "@phosphor-icons/react"
 import React from "react"
 import {
     Card,
@@ -41,7 +41,7 @@ export const UploadProgressCard = ({
         <Card className="bg-white/5 border border-white/10 backdrop-blur-xl shadow-2xl shadow-indigo-500/5">
             <CardContent className="space-y-6 p-6">
                 {/* Section header */}
-                <div className="flex items-center gap-1.5 pb-2">
+                <div className="flex items-center gap-2 pb-2">
                     <div className="rounded-lg bg-purple-500/10 p-2">
                         <UploadIcon className="h-5 w-5 text-purple-400" />
                     </div>

@@ -9,8 +9,8 @@ import {
 import type { KpiKey } from "@/modules/api/graphql/queries/types/my-kpis"
 
 /**
- * Phosphor icon per weekly-KPI key (dashboard runs phosphor `*Icon`; the legacy
- * `/kpi` editor's `KPI_META` carries `@gravity-ui` icons, so this card owns its own).
+ * Phosphor icon per weekly-KPI key (this card owns its own icon map, decoupled
+ * from the `/kpi` editor's `KPI_META`).
  */
 export const KPI_ICON_MAP: Record<KpiKey, React.ReactNode> = {
     lessons: <BookOpenIcon aria-hidden focusable="false" className="size-5 shrink-0" />,

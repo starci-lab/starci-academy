@@ -9,7 +9,7 @@
  * @see {@link SignInSection} for step routing; mirror this folder when sign-up adds a verify-email step.
  */
 import React from "react"
-import { Button, cn, FieldError, InputOTP, Link, Modal, Spinner, TextField } from "@heroui/react"
+import { Button, cn, FieldError, InputOTP, Link, Modal, Spinner, TextField, Typography } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { useMutateSignInResendOtpSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSignInResendOtpSwr"
 import { useSignInForm } from "@/hooks/zustand/signIn/useSignInForm"
@@ -72,59 +72,58 @@ export const OtpState = ({ hideCloseButton }: OtpStateProps = {}) => {
         <>
             {!hideCloseButton && <Modal.CloseTrigger />}
             <Modal.Header>
-                <div className="text-center">
-                    <div className="font-semibold text-lg">{t("auth.signIn.otp.title")}</div>
-                </div>
+                <Typography type="body" weight="semibold" className="pr-8 text-center">
+                    {t("auth.signIn.otp.title")}
+                </Typography>
             </Modal.Header>
-            <Modal.Body>
-                <div className="text-xs text-muted text-center">
+            <Modal.Body className="flex flex-col gap-6">
+                <Typography type="body-xs" color="muted" className="text-center">
                     {t.rich("auth.signIn.otp.desc", {
                         emailHighlight: (chunks) => (
                             <span className="text-accent">{chunks}</span>
                         ),
                         email: values.email,
                     })}
+                </Typography>
+                <div className="flex flex-col gap-3">
+                    <TextField variant="secondary" isInvalid={!!(touched.otp && errors.otp)}>
+                        <InputOTP
+                            id="sign-in-otp"
+                            name="otp"
+                            variant="secondary"
+                            maxLength={6}
+                            value={values.otp}
+                            onChange={(value) => setFieldValue("otp", value)}
+                            onBlur={() => setFieldTouched("otp", true)}
+                        >
+                            <InputOTP.Group>
+                                <InputOTP.Slot index={0} />
+                                <InputOTP.Slot index={1} />
+                                <InputOTP.Slot index={2} />
+                            </InputOTP.Group>
+                            <InputOTP.Separator />
+                            <InputOTP.Group>
+                                <InputOTP.Slot index={3} />
+                                <InputOTP.Slot index={4} />
+                                <InputOTP.Slot index={5} />
+                            </InputOTP.Group>
+                        </InputOTP>
+                        <FieldError className="text-center">{errors.otp}</FieldError>
+                    </TextField>
+                    <div className="flex flex-wrap items-center justify-center gap-2 text-center">
+                        <Typography type="body-xs" color="muted">{t("auth.signIn.otp.resend")}</Typography>
+                        <Link
+                            className={cn("text-xs text-accent", isResending ? "text-muted" : "")}
+                            data-disabled={isResending ? true : undefined}
+                            onPress={() => {
+                                if (isResending) return
+                                void onResend()
+                            }}
+                        >
+                            {t("auth.signIn.otp.resendLink")}
+                        </Link>
+                    </div>
                 </div>
-                <div className="h-3" />
-                <TextField variant="secondary" isInvalid={!!(touched.otp && errors.otp)}>
-                    <InputOTP
-                        id="sign-in-otp"
-                        name="otp"
-                        variant="secondary"
-                        maxLength={6}
-                        value={values.otp}
-                        onChange={(value) => setFieldValue("otp", value)}
-                        onBlur={() => setFieldTouched("otp", true)}
-                    >
-                        <InputOTP.Group>
-                            <InputOTP.Slot index={0} />
-                            <InputOTP.Slot index={1} />
-                            <InputOTP.Slot index={2} />
-                        </InputOTP.Group>
-                        <InputOTP.Separator />
-                        <InputOTP.Group>
-                            <InputOTP.Slot index={3} />
-                            <InputOTP.Slot index={4} />
-                            <InputOTP.Slot index={5} />
-                        </InputOTP.Group>
-                    </InputOTP>
-                    <FieldError className="text-center">{errors.otp}</FieldError>
-                </TextField>
-                <div className="h-3" />
-                <div className="flex flex-wrap items-center justify-center gap-1.5 text-center">
-                    <span className="text-xs text-muted">{t("auth.signIn.otp.resend")}</span>
-                    <Link
-                        className={cn("text-xs text-accent", isResending ? "text-muted" : "")}
-                        data-disabled={isResending ? true : undefined}
-                        onPress={() => {
-                            if (isResending) return
-                            void onResend()
-                        }}
-                    >
-                        {t("auth.signIn.otp.resendLink")}
-                    </Link>
-                </div>
-                <div className="h-3" />
                 <Button
                     type="submit"
                     variant="primary"

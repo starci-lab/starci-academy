@@ -1,4 +1,4 @@
-import { ArrowUpRightFromSquare as ArrowUpRightIcon } from "@gravity-ui/icons"
+import { ArrowSquareOutIcon as ArrowUpRightIcon } from "@phosphor-icons/react"
 import { Link, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import React from "react"
@@ -37,7 +37,7 @@ export const ReferenceLinks = ({ references, titleKey, className }: ReferenceLin
             <ul className="flex flex-col gap-3">
                 {references?.sort((prev, next) => prev.sortIndex - next.sortIndex).map((reference) => {
                     return (
-                        <li key={reference.id} className="flex flex-wrap items-center gap-1.5">
+                        <li key={reference.id} className="flex flex-wrap items-center gap-2">
                             <span className="text-sm text-muted">{reference.alias}</span>
                             <span className="text-sm text-foreground">•</span>
                             <Link

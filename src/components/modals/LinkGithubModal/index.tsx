@@ -1,4 +1,5 @@
-import { Button } from "@heroui/react"
+import { Button, Typography } from "@heroui/react"
+import { ArrowRightIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import React from "react"
 import { useRouter } from "next/navigation"
@@ -20,32 +21,35 @@ export const LinkGithubModal = ({ className }: WithClassNames<undefined>) => {
             size="xs"
             title={t("linkGithub.title")}
         >
-            <div className="flex items-center justify-center">
-                <div className="flex flex-col items-center gap-3 justify-center">
-                    <GithubIcon className="w-16 h-16" />
-                    <div className="text-sm text-muted">
-                        {t("linkGithub.description")}
+            <div className="flex flex-col gap-6">
+                <div className="flex items-center justify-center">
+                    <div className="flex flex-col items-center gap-3 justify-center">
+                        <GithubIcon className="w-16 h-16" />
+                        <Typography type="body-sm" color="muted" className="text-center">
+                            {t("linkGithub.description")}
+                        </Typography>
                     </div>
                 </div>
-            </div>
-            <div className="h-3" />
-            <Button
-                type="button"
-                className="w-full"
-                size="lg"
-                onPress={
-                    () => {
-                        const url = githubRedirect.redirect
-                        url.searchParams.set(
-                            "redirectUri",
-                            window.location.href
-                        )
-                        router.push(url.toString())
+                <Button
+                    type="button"
+                    className="w-full"
+                    size="lg"
+                    variant="primary"
+                    onPress={
+                        () => {
+                            const url = githubRedirect.redirect
+                            url.searchParams.set(
+                                "redirectUri",
+                                window.location.href
+                            )
+                            router.push(url.toString())
+                        }
                     }
-                }
-            >
-                {t("linkGithub.button")}
-            </Button>
+                >
+                    {t("linkGithub.button")}
+                    <ArrowRightIcon className="size-5" />
+                </Button>
+            </div>
         </ModalShell>
     )
 }

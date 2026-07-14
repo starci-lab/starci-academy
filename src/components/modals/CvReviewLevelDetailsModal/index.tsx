@@ -4,7 +4,7 @@ import React, {
     useMemo,
 } from "react"
 import {
-    Button,
+    Typography,
 } from "@heroui/react"
 import {
     useTranslations,
@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { setSelectedCvReviewTemplateId } from "@/redux/slices/cv-review-level"
 import { WithClassNames } from "@/modules/types/base/class-name"
 import { ModalShell } from "@/components/blocks/layout/ModalShell"
+import { SelectableCardGroup, SelectableCardItem } from "@/components/blocks/navigation/SelectableCardGroup"
 
 /**
  * One selectable CV rubric template row in the modal.
@@ -60,42 +61,14 @@ export const CvReviewLevelDetailsModal = ({ className }: CvReviewLevelDetailsMod
         setOpen(false)
     }
 
-    const optionElements = useMemo(
-        () => reviewLevelOptions.map((option) => {
-            const isSelected = option.id === selectedTemplateId
-            const description = option.description?.trim() || t("cv.submission.reviewLevelDetails.emptyDescription")
-
-            return (
-                <button
-                    key={option.id}
-                    type="button"
-                    className={[
-                        "rounded-2xl border p-4 text-left transition hover:border-accent hover:bg-accent/5",
-                        isSelected ? "border-accent bg-accent/10" : "border-divider/70 bg-content1",
-                    ].join(" ")}
-                    onClick={() => handleSelectReviewLevel(option.id)}
-                >
-                    <div className="flex items-start justify-between gap-1.5">
-                        <div className="font-semibold text-foreground">
-                            {option.title}
-                        </div>
-                        {isSelected && (
-                            <div className="shrink-0 rounded-full bg-accent px-2 py-0.5 text-xs text-white">
-                                {t("cv.submission.reviewLevelDetails.selected")}
-                            </div>
-                        )}
-                    </div>
-                    <div className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted">
-                        {description}
-                    </div>
-                </button>
-            )
-        }),
+    const cardItems = useMemo<Array<SelectableCardItem<string>>>(
+        () => reviewLevelOptions.map((option) => ({
+            value: option.id,
+            label: option.title,
+            description: option.description?.trim() || t("cv.submission.reviewLevelDetails.emptyDescription"),
+        })),
         [
-            dispatch,
             reviewLevelOptions,
-            selectedTemplateId,
-            setOpen,
             t,
         ],
     )
@@ -108,26 +81,24 @@ export const CvReviewLevelDetailsModal = ({ className }: CvReviewLevelDetailsMod
             size="md"
             header={(
                 <>
-                    <div className="text-base font-semibold">
+                    <Typography className="font-semibold">
                         {t("cv.submission.reviewLevelDetails.selectionTitle")}
-                    </div>
-                    <div className="text-xs text-muted">
+                    </Typography>
+                    <Typography type="body-xs" color="muted">
                         {t("cv.submission.reviewLevelDetails.subtitle")}
-                    </div>
+                    </Typography>
                 </>
             )}
             bodyClassName="flex flex-col gap-6"
         >
-            <div className="flex max-h-[60vh] flex-col gap-3 overflow-y-auto">
-                {optionElements}
-            </div>
-            <div className="flex justify-end">
-                <Button
-                    variant="primary"
-                    onPress={() => setOpen(false)}
-                >
-                    {t("cv.submission.reviewLevelDetails.close")}
-                </Button>
+            <div className="max-h-[60vh] overflow-y-auto">
+                <SelectableCardGroup
+                    items={cardItems}
+                    value={selectedTemplateId}
+                    onChange={handleSelectReviewLevel}
+                    ariaLabel={t("cv.submission.reviewLevelDetails.selectionTitle")}
+                    columns={1}
+                />
             </div>
         </ModalShell>
     )

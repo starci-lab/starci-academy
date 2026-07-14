@@ -1,6 +1,6 @@
 "use client"
 
-import { SquareDashedText as ArrowsOutIcon } from "@gravity-ui/icons"
+import { ArrowsOutIcon } from "@phosphor-icons/react"
 import React from "react"
 import { Button, cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"

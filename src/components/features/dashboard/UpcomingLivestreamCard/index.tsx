@@ -8,11 +8,8 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    useRouter,
-} from "next/navigation"
-import {
-    Video as VideoIcon,
-} from "@gravity-ui/icons"
+    VideoCameraIcon,
+} from "@phosphor-icons/react"
 import {
     pathConfig,
 } from "@/resources/path"
@@ -21,6 +18,10 @@ import type {
 } from "@/modules/types/base/class-name"
 import { useQueryMyUpcomingLivestreamsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyUpcomingLivestreamsSwr"
 import { SectionCard } from "@/components/reuseable/SectionCard"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
+import { IconTile } from "@/components/blocks/identity/IconTile"
 
 /** How many upcoming sessions to list (the soonest plus a few more). */
 const MAX_ROWS = 3
@@ -33,7 +34,9 @@ export type UpcomingLivestreamCardProps = WithClassNames<undefined>
  * courses (soonest first), so a scheduled stream is visible from the home surface
  * instead of buried in a course page. The soonest session leads with a relative
  * countdown ("in Nd Nh"); a short list of the next few follows. Self-fetches its
- * own leaf query and hides entirely when there is nothing upcoming.
+ * own leaf query; shows a skeleton while loading, then hides entirely (no
+ * emptyContent) when there is nothing upcoming — matches the sibling right-rail
+ * widgets (`WhoToFollow`) that self-hide rather than render an empty-state.
  * @param props - optional className for the root element.
  */
 export const UpcomingLivestreamCard = ({
@@ -41,8 +44,7 @@ export const UpcomingLivestreamCard = ({
 }: UpcomingLivestreamCardProps) => {
     const t = useTranslations()
     const locale = useLocale()
-    const router = useRouter()
-    const { data } = useQueryMyUpcomingLivestreamsSwr()
+    const { data, isLoading, error, mutate } = useQueryMyUpcomingLivestreamsSwr()
 
     /** The soonest few sessions, sorted defensively by start time. */
     const sessions = useMemo(
@@ -58,11 +60,6 @@ export const UpcomingLivestreamCard = ({
             data,
         ],
     )
-
-    // nothing scheduled (or not loaded yet) → no card
-    if (sessions.length === 0) {
-        return null
-    }
 
     /**
      * A short relative label until `iso` ("in Nd Nh" / "in Nh Nm" / "now"). Past
@@ -94,35 +91,53 @@ export const UpcomingLivestreamCard = ({
     }
 
     return (
-        <SectionCard
-            icon={<VideoIcon className="size-5 text-accent" />}
-            title={t("dashboard.upcomingLive.title")}
-            className={className}
+        <AsyncContent
+            isLoading={data === undefined || isLoading}
+            skeleton={(
+                <SectionCard
+                    icon={<VideoCameraIcon className="size-5 text-accent" />}
+                    title={t("dashboard.upcomingLive.title")}
+                    className={className}
+                >
+                    <SurfaceListCard bordered>
+                        {[0, 1, 2].map((row) => (
+                            <Skeleton.ListRow key={row} withSubtitle className="px-4" />
+                        ))}
+                    </SurfaceListCard>
+                </SectionCard>
+            )}
+            isEmpty={sessions.length === 0}
+            error={data === undefined ? error : undefined}
+            errorContent={{
+                title: t("dashboard.loadError"),
+                onRetry: () => { void mutate() },
+                retryLabel: t("dashboard.retry"),
+            }}
         >
-            <div className="flex flex-col gap-1.5">
-                {sessions.map((session) => (
-                    <button
-                        key={`${session.courseGlobalId}-${session.nextStartAt}`}
-                        type="button"
-                        onClick={() => router.push(
-                            pathConfig().locale(locale).course(session.courseDisplayId).build(),
-                        )}
-                        className="flex flex-col gap-0 rounded-medium px-2 py-1.5 text-left hover:bg-default/60"
-                    >
-                        <span className="truncate text-sm font-semibold text-foreground">
-                            {session.sessionTitle ?? session.courseTitle}
-                        </span>
-                        <span className="truncate text-xs text-muted">
-                            {session.sessionTitle ? session.courseTitle : null}
-                        </span>
-                        <span className="text-xs font-medium text-accent">
-                            {relativeLabel(session.nextStartAt)}
-                            {" · "}
-                            {new Date(session.nextStartAt).toLocaleDateString(locale)}
-                        </span>
-                    </button>
-                ))}
-            </div>
-        </SectionCard>
+            <SectionCard
+                icon={<VideoCameraIcon className="size-5 text-accent" />}
+                title={t("dashboard.upcomingLive.title")}
+                className={className}
+            >
+                <SurfaceListCard bordered>
+                    {sessions.map((session) => (
+                        <SurfaceListCardRow
+                            key={`${session.courseGlobalId}-${session.nextStartAt}`}
+                            leading={<IconTile icon={<VideoCameraIcon />} tone="accent" size="sm" />}
+                            title={session.sessionTitle ?? session.courseTitle}
+                            subtitle={session.sessionTitle ? session.courseTitle : undefined}
+                            meta={(
+                                <span className="text-xs font-medium text-accent">
+                                    {relativeLabel(session.nextStartAt)}
+                                    {" · "}
+                                    {new Date(session.nextStartAt).toLocaleDateString(locale)}
+                                </span>
+                            )}
+                            href={pathConfig().locale(locale).course(session.courseDisplayId).build()}
+                        />
+                    ))}
+                </SurfaceListCard>
+            </SectionCard>
+        </AsyncContent>
     )
 }

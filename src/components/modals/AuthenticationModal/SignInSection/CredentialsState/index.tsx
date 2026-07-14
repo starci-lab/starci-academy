@@ -18,6 +18,7 @@ import {
     Modal,
     Separator,
     Spinner,
+    Typography,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
@@ -172,47 +173,49 @@ export const CredentialsState = ({ hideCloseButton }: CredentialsStateProps = {}
         <>
             {!hideCloseButton && <Modal.CloseTrigger />}
             <Modal.Header>
-                <div className="text-center">
-                    <div className="font-semibold text-lg">{t("auth.signIn.title")}</div>
-                    <div className="text-xs text-muted">{t("auth.signIn.desc")}</div>
-                </div>
+                <Typography type="body" weight="semibold" className="pr-8 text-center">
+                    {t("auth.signIn.title")}
+                </Typography>
+                <Typography type="body-xs" color="muted" className="text-center">
+                    {t("auth.signIn.desc")}
+                </Typography>
             </Modal.Header>
-            <Modal.Body>
-                <OauthButtons
-                    items={oauthButtons}
-                    onOauthPress={onOauthPress}
-                />
+            <Modal.Body className="flex flex-col gap-6">
+                <div className="flex flex-col gap-3">
+                    <OauthButtons
+                        items={oauthButtons}
+                        onOauthPress={onOauthPress}
+                    />
 
-                <div className="h-3" />
-                <div className="flex items-center justify-center">
-                    <Separator className="flex-1" />
-                    <div className="text-xs text-muted">{t("auth.signIn.or")}</div>
-                    <Separator className="flex-1" />
+                    <div className="flex items-center justify-center gap-3">
+                        <Separator className="flex-1" />
+                        <Typography type="body-xs" color="muted">{t("auth.signIn.or")}</Typography>
+                        <Separator className="flex-1" />
+                    </div>
                 </div>
 
-                <div className="h-3" />
-                <EmailField
-                    value={values.email}
-                    error={errors.email}
-                    touched={touched.email}
-                    onChangeValue={onChangeEmail}
-                    onBlurField={onBlurEmail}
-                />
+                <div className="flex flex-col gap-3">
+                    <EmailField
+                        value={values.email}
+                        error={errors.email}
+                        touched={touched.email}
+                        onChangeValue={onChangeEmail}
+                        onBlurField={onBlurEmail}
+                    />
 
-                <div className="h-3" />
-                <PasswordField
-                    value={values.password}
-                    error={errors.password}
-                    touched={touched.password}
-                    onChangeValue={onChangePassword}
-                    onBlurField={onBlurPassword}
-                />
+                    <PasswordField
+                        value={values.password}
+                        error={errors.password}
+                        touched={touched.password}
+                        onChangeValue={onChangePassword}
+                        onBlurField={onBlurPassword}
+                    />
 
-                <div className="h-3" />
-                <RememberMeRow
-                    isSelected={values.rememberMe}
-                    onChangeSelected={onChangeRememberMe}
-                />
+                    <RememberMeRow
+                        isSelected={values.rememberMe}
+                        onChangeSelected={onChangeRememberMe}
+                    />
+                </div>
 
                 {publicEnv().captcha.enabled && (
                     <Turnstile
@@ -222,7 +225,6 @@ export const CredentialsState = ({ hideCloseButton }: CredentialsStateProps = {}
                     />
                 )}
 
-                <div className="h-3" />
                 <Button
                     type="submit"
                     variant="primary"
@@ -239,7 +241,6 @@ export const CredentialsState = ({ hideCloseButton }: CredentialsStateProps = {}
                     )}
                 </Button>
 
-                <div className="h-3" />
                 <SignUpPrompt onSwitchToSignUp={onSwitchToSignUp} />
             </Modal.Body>
         </>

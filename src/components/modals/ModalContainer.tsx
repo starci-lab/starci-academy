@@ -1,5 +1,4 @@
 import React from "react"
-// import { AIProcessingModal } from "./AIProcessingModal"
 import { AuthenticationModal } from "./AuthenticationModal"
 import { ContentModal } from "./ContentModal"
 import { LivestreamCalendarModal } from "./LivestreamCalendarModal"
@@ -46,7 +45,6 @@ export const ModalContainer = () => {
             <FollowListModal />
             <CookieConsentModal />
             <MaintenanceModal />
-            {/* <AIProcessingModal /> */}
         </>
     )
 }

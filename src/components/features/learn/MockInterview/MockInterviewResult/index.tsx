@@ -9,6 +9,7 @@ import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { BackLink } from "@/components/blocks/navigation/BackLink"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { pathConfig } from "@/resources/path"
 import { useQueryMyMockInterviewAttemptBySessionSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyMockInterviewAttemptBySessionSwr"
 import { mapMockInterviewAttemptToGradeResult } from "../mapAttemptToGradeResult"
@@ -67,10 +68,13 @@ export const MockInterviewResult = ({
             <AsyncContent
                 isLoading={attemptSwr.isLoading && !attemptSwr.data}
                 skeleton={(
-                    <div className="mx-auto flex w-full max-w-3xl flex-col gap-3 px-4 pb-6 sm:px-6">
-                        <div className="h-24 w-full animate-pulse rounded-xl bg-default" />
-                        <div className="h-40 w-full animate-pulse rounded-xl bg-default" />
-                        <div className="h-40 w-full animate-pulse rounded-xl bg-default" />
+                    // mirrors MockInterviewScorecard's real tree: verdict Alert, track
+                    // snapshot, phase breakdown — each is a bordered card in the real
+                    // render, so Skeleton.Card (not raw pulse bars) matches its box.
+                    <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 pb-6 sm:px-6">
+                        <Skeleton.Card lines={2} />
+                        <Skeleton.Card lines={3} />
+                        <Skeleton.Card lines={3} />
                     </div>
                 )}
                 error={!attemptSwr.data ? attemptSwr.error : undefined}

@@ -14,11 +14,11 @@ import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 
-/** Number of placeholder rows shown while trending contents load. */
-const SKELETON_ROW_COUNT = 5
+/** Number of placeholder rows shown while trending contents load (mirrors resolver DEFAULT_LIMIT). */
+const SKELETON_ROW_COUNT = 6
 
 /** Per-row token widths (varied so the list reads naturally, not a solid block). */
-const ROW_WIDTHS = ["3/4", "1/2", "1/3", "3/4", "1/2"] as const
+const ROW_WIDTHS = ["3/4", "1/2", "1/3", "3/4", "1/2", "2/3"] as const
 
 /** Props for {@link TrendingContentsSkeleton}. */
 export type TrendingContentsSkeletonProps = WithClassNames<undefined>

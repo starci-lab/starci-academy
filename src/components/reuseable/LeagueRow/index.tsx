@@ -58,7 +58,7 @@ export const LeagueRow = ({
     const identity = entry.username ? (
         <Link
             href={pathConfig().locale(locale).profile(entry.username).build()}
-            className="flex min-w-0 flex-1 items-center gap-1.5 text-foreground no-underline transition-opacity hover:opacity-60"
+            className="flex min-w-0 flex-1 items-center gap-2 text-foreground no-underline transition-opacity hover:opacity-60"
         >
             <UserAvatar
                 className="size-8 shrink-0"
@@ -71,7 +71,7 @@ export const LeagueRow = ({
             </span>
         </Link>
     ) : (
-        <div className="flex min-w-0 flex-1 items-center gap-1.5">
+        <div className="flex min-w-0 flex-1 items-center gap-2">
             <UserAvatar
                 className="size-8 shrink-0"
                 username=""
@@ -87,7 +87,7 @@ export const LeagueRow = ({
     return (
         <div
             className={cn(
-                "flex w-full items-center gap-1.5 rounded-3xl p-1.5",
+                "flex w-full items-center gap-2 rounded-3xl p-2",
                 isMe && "bg-primary/10",
                 !isMe && isPromote && "bg-success/10",
                 !isMe && isDemote && "bg-danger/10",

@@ -19,8 +19,10 @@ import {
 } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { CODING_DOMAIN_ORDER } from "@/modules/api/graphql/queries/types/coding"
+import { SegmentedControl } from "@/components/blocks/navigation/SegmentedControl"
 import { usePracticeView } from "../hooks/usePracticeView"
 import { usePracticeFilters } from "../hooks/usePracticeFilters"
+import type { PracticeView } from "../hooks/usePracticeView"
 import type { DomainFilter } from "../types"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
@@ -65,45 +67,31 @@ export const PracticeRail = ({ className }: PracticeRailProps) => {
         <div className={cn("relative flex min-h-0 min-w-0 flex-col gap-3 p-6", className)}>
             {/* pinned header: mode switch + topic search */}
             <div className="flex flex-col gap-3">
-                <ListBox
-                    aria-label={t("practice.rail.modeAria")}
-                    selectionMode="single"
-                    disallowEmptySelection
-                    selectedKeys={[view]}
-                    onSelectionChange={(keys) => {
-                        // controlled single-select → switch the view from the chosen key
-                        const key = [...keys][0]
-                        if (key === "problems" || key === "leaderboard") {
-                            setView(key)
-                        }
-                    }}
-                    className="gap-1 p-0"
-                >
-                    <ListBox.Item
-                        id="problems"
-                        textValue={t("practice.tabs.problems")}
-                        className="cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent/10"
-                    >
-                        <span className="flex items-center gap-2">
-                            <ListChecksIcon className="size-4 shrink-0" aria-hidden focusable="false" />
-                            <Typography type="body-sm" weight="medium">
-                                {t("practice.tabs.problems")}
-                            </Typography>
-                        </span>
-                    </ListBox.Item>
-                    <ListBox.Item
-                        id="leaderboard"
-                        textValue={t("practice.tabs.leaderboard")}
-                        className="cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent/10"
-                    >
-                        <span className="flex items-center gap-2">
-                            <TrophyIcon className="size-4 shrink-0" aria-hidden focusable="false" />
-                            <Typography type="body-sm" weight="medium">
-                                {t("practice.tabs.leaderboard")}
-                            </Typography>
-                        </span>
-                    </ListBox.Item>
-                </ListBox>
+                <SegmentedControl<PracticeView>
+                    ariaLabel={t("practice.rail.modeAria")}
+                    value={view}
+                    onChange={setView}
+                    items={[
+                        {
+                            value: "problems",
+                            label: (
+                                <span className="flex items-center gap-2">
+                                    <ListChecksIcon className="size-4 shrink-0" aria-hidden focusable="false" />
+                                    {t("practice.tabs.problems")}
+                                </span>
+                            ),
+                        },
+                        {
+                            value: "leaderboard",
+                            label: (
+                                <span className="flex items-center gap-2">
+                                    <TrophyIcon className="size-4 shrink-0" aria-hidden focusable="false" />
+                                    {t("practice.tabs.leaderboard")}
+                                </span>
+                            ),
+                        },
+                    ]}
+                />
 
                 {/* topic search — problems mode only (the leaderboard is topic-agnostic) */}
                 {view === "problems" ? (

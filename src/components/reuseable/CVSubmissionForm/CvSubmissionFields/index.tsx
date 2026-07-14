@@ -88,8 +88,11 @@ export const CvSubmissionFields = ({
 
     return (
         <Form className={cn("space-y-3", className)}>
-            <div className="space-y-1.5">
-                <label className="block text-sm font-medium">
+            <div className="space-y-2">
+                <label
+                    htmlFor={inputId}
+                    className="block text-sm font-medium"
+                >
                     Upload CV (PDF)
                 </label>
                 <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors cursor-pointer">
@@ -147,7 +150,7 @@ export const CvSubmissionFields = ({
             </div>
 
             {isUploading && (
-                <div className="space-y-1.5">
+                <div className="space-y-2">
                     <div className="flex items-center justify-between">
                         <span className="text-sm font-medium">
                             Uploading...

@@ -28,6 +28,7 @@ import type {
 } from "@/modules/types/base/class-name"
 import { useQueryWeeklyChallengeSwr } from "@/hooks/swr/api/graphql/queries/useQueryWeeklyChallengeSwr"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { EmptyContent } from "@/components/blocks/async/EmptyContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import {
     SurfaceListCard,
@@ -44,7 +45,8 @@ export type WeeklyChallengeCardProps = WithClassNames<undefined>
  * "Thử thách tuần" section — the featured challenge of the week: title (routable),
  * a live countdown, the viewer's pass status, total pass count, and a short
  * leaderboard of recent finishers. Owns its own `LabeledCard` frame (label outside)
- * and hides entirely when no event is active. Self-fetches its leaf query.
+ * and shows a standard empty state (frame stays) when no event is active.
+ * Self-fetches its leaf query.
  * @param props - optional className for the root element.
  */
 export const WeeklyChallengeCard = ({
@@ -99,12 +101,13 @@ export const WeeklyChallengeCard = ({
     const topRows = data?.leaderboard.slice(0, TOP_ROWS) ?? []
 
     return (
-        // self-hiding section: skeleton while loading, then hide when no event is active
-        // (empty / error → no emptyContent/errorContent → renders null).
+        // AsyncContent only owns the loading branch (skeleton mirrors the full
+        // LabeledCard frame). Once resolved, LabeledCard stays mounted and the
+        // empty state (no event active) renders INSIDE it instead of self-hiding,
+        // so the dashboard slot never disappears entirely.
         <AsyncContent
             isLoading={isLoading}
             skeleton={<WeeklyChallengeCardSkeleton className={className} />}
-            isEmpty={!data}
         >
             <LabeledCard
                 label={t("weeklyChallenge.title")}
@@ -112,67 +115,76 @@ export const WeeklyChallengeCard = ({
                 className={className}
                 contentClassName="flex flex-col gap-3"
             >
-                {/* featured challenge title (routable) */}
-                <EntityToken
-                    globalId={data?.challengeGlobalId}
-                    label={data?.title ?? ""}
-                />
+                {!data ? (
+                    <EmptyContent
+                        title={t("weeklyChallenge.emptyTitle")}
+                        description={t("weeklyChallenge.emptyDescription")}
+                    />
+                ) : (
+                    <>
+                        {/* featured challenge title (routable) */}
+                        <EntityToken
+                            globalId={data.challengeGlobalId}
+                            label={data.title}
+                        />
 
-                {/* countdown + viewer status */}
-                <div className="flex items-center justify-between gap-3">
-                    {countdown ? (
+                        {/* countdown + viewer status */}
+                        <div className="flex items-center justify-between gap-3">
+                            {countdown ? (
+                                <Typography type="body-xs" color="muted">
+                                    {t("weeklyChallenge.endsIn", {
+                                        days: countdown.days,
+                                        hours: countdown.hours,
+                                    })}
+                                </Typography>
+                            ) : <span />}
+                            {data.viewerPassed ? (
+                                <Chip color="success" size="sm" variant="soft">
+                                    <Chip.Label>
+                                        {t("weeklyChallenge.passed")}
+                                    </Chip.Label>
+                                </Chip>
+                            ) : (
+                                <EntityToken
+                                    globalId={data.challengeGlobalId}
+                                    label={t("weeklyChallenge.tryNow")}
+                                />
+                            )}
+                        </div>
+
+                        {/* total passers */}
                         <Typography type="body-xs" color="muted">
-                            {t("weeklyChallenge.endsIn", {
-                                days: countdown.days,
-                                hours: countdown.hours,
+                            {t("weeklyChallenge.passedCount", {
+                                count: data.passedCount,
                             })}
                         </Typography>
-                    ) : <span />}
-                    {data?.viewerPassed ? (
-                        <Chip color="success" size="sm" variant="soft">
-                            <Chip.Label>
-                                {t("weeklyChallenge.passed")}
-                            </Chip.Label>
-                        </Chip>
-                    ) : (
-                        <EntityToken
-                            globalId={data?.challengeGlobalId}
-                            label={t("weeklyChallenge.tryNow")}
-                        />
-                    )}
-                </div>
 
-                {/* total passers */}
-                <Typography type="body-xs" color="muted">
-                    {t("weeklyChallenge.passedCount", {
-                        count: data?.passedCount ?? 0,
-                    })}
-                </Typography>
-
-                {/* recent finishers */}
-                {topRows.length > 0 ? (
-                    <SurfaceListCard bordered>
-                        {topRows.map((entry) => (
-                            <SurfaceListCardRow
-                                key={entry.username}
-                                leading={(
-                                    <UserAvatar
-                                        className="size-6 shrink-0"
-                                        username={entry.username}
-                                        avatar={entry.avatar}
-                                        seed={entry.username}
+                        {/* recent finishers */}
+                        {topRows.length > 0 ? (
+                            <SurfaceListCard bordered>
+                                {topRows.map((entry) => (
+                                    <SurfaceListCardRow
+                                        key={entry.username}
+                                        leading={(
+                                            <UserAvatar
+                                                className="size-6 shrink-0"
+                                                username={entry.username}
+                                                avatar={entry.avatar}
+                                                seed={entry.username}
+                                            />
+                                        )}
+                                        title={entry.username}
+                                        trailing={(
+                                            <Typography type="body-xs" color="muted" className="shrink-0">
+                                                {formatRelative(entry.passedAt)}
+                                            </Typography>
+                                        )}
                                     />
-                                )}
-                                title={entry.username}
-                                trailing={(
-                                    <Typography type="body-xs" color="muted" className="shrink-0">
-                                        {formatRelative(entry.passedAt)}
-                                    </Typography>
-                                )}
-                            />
-                        ))}
-                    </SurfaceListCard>
-                ) : null}
+                                ))}
+                            </SurfaceListCard>
+                        ) : null}
+                    </>
+                )}
             </LabeledCard>
         </AsyncContent>
     )

@@ -20,6 +20,7 @@ import { useParams } from "next/navigation"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { AIProcessingText } from "@/components/reuseable/AIProcessingText"
 import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
+import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { PracticeProblemSkeleton } from "./PracticeProblemSkeleton"
 import { queryCodingProblem } from "@/modules/api/graphql/queries/query-coding-problem"
 import { queryCodingProblemHint } from "@/modules/api/graphql/queries/query-coding-problem-hint"
@@ -483,28 +484,33 @@ export const PracticeProblem = () => {
                     </div>
                 )}
 
-                {/* submission history */}
-                {(submissionsData?.submissions.length ?? 0) > 0 && (
+                {/* submission history — section keeps its label even when empty
+                    (no self-hide), rendering a proper empty-state instead */}
+                {submissionsData && (
                     <div className="flex flex-col gap-2 px-6 py-4">
                         <p className="font-semibold">{t("codingPractice.history")}</p>
-                        <SurfaceListCard>
-                            {submissionsData?.submissions.map((submission: CodingSubmission) => (
-                                <SurfaceListCardRow
-                                    key={submission.id}
-                                    title={new Date(submission.createdAt).toLocaleString()}
-                                    meta={(
-                                        <>
-                                            <Typography type="body-xs" color="muted">
-                                                {t(`codingPractice.language.${submission.language}`)}
-                                            </Typography>
-                                            <Chip size="sm" variant="soft" color={VERDICT_COLOR[submission.verdict]}>
-                                                {t(`codingPractice.verdict.${submission.verdict}`)}
-                                            </Chip>
-                                        </>
-                                    )}
-                                />
-                            ))}
-                        </SurfaceListCard>
+                        {submissionsData.submissions.length > 0 ? (
+                            <SurfaceListCard>
+                                {submissionsData.submissions.map((submission: CodingSubmission) => (
+                                    <SurfaceListCardRow
+                                        key={submission.id}
+                                        title={new Date(submission.createdAt).toLocaleString()}
+                                        meta={(
+                                            <>
+                                                <Typography type="body-xs" color="muted">
+                                                    {t(`codingPractice.language.${submission.language}`)}
+                                                </Typography>
+                                                <Chip size="sm" variant="soft" color={VERDICT_COLOR[submission.verdict]}>
+                                                    {t(`codingPractice.verdict.${submission.verdict}`)}
+                                                </Chip>
+                                            </>
+                                        )}
+                                    />
+                                ))}
+                            </SurfaceListCard>
+                        ) : (
+                            <EmptyState title={t("codingPractice.historyEmpty")} />
+                        )}
                     </div>
                 )}
             </div>

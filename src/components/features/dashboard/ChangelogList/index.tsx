@@ -50,11 +50,11 @@ export const ChangelogList = ({
 }: ChangelogListProps = {}) => {
     const t = useTranslations()
     const locale = useLocale()
-    const { data: changelog, isLoading } = useQueryChangelogEntriesSwr()
+    const { data: changelog, isLoading, error, mutate } = useQueryChangelogEntriesSwr()
     const entries = changelog ?? []
 
-    // loaded + empty → hide the whole block (label/frame included); loading shows the skeleton
-    if (!isLoading && entries.length === 0) {
+    // loaded + empty (no error) → hide the whole block (label/frame included); loading shows the skeleton
+    if (!isLoading && !error && entries.length === 0) {
         return null
     }
 
@@ -109,6 +109,12 @@ export const ChangelogList = ({
         <AsyncContent
             isLoading={isLoading && entries.length === 0}
             skeleton={<ChangelogListSkeleton />}
+            error={error}
+            errorContent={{
+                title: t("dashboard.changelogList.loadError"),
+                onRetry: () => mutate(),
+                retryLabel: t("common.retry"),
+            }}
         >
             {list}
         </AsyncContent>

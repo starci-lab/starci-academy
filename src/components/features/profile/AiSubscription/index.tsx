@@ -17,6 +17,7 @@ import {
 } from "./AiSubscriptionSkeleton"
 import { useQueryAiSubscriptionTiersSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiSubscriptionTiersSwr"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 
 /**
  * AI subscription feature container.
@@ -32,12 +33,11 @@ export const AiSubscription = () => {
     // need the tiers SWR here only to gate the skeleton vs grid
     const tiersSwr = useQueryAiSubscriptionTiersSwr()
 
-
     // gate only the data-dependent tier grid; breadcrumb + header are static
     // chrome (i18n/router only) so they render immediately, outside the gate.
     // isValidating is intentionally excluded — background revalidate keeps the
     // existing grid instead of flashing back to the skeleton
-    const tiersReady = !tiersSwr.isLoading && !!tiersSwr.data && !tiersSwr.error
+    const isLoading = tiersSwr.isLoading && !tiersSwr.data
 
     return (
         <div className="flex flex-col gap-10">
@@ -46,11 +46,19 @@ export const AiSubscription = () => {
                 title={t("aiSubscription.title")}
                 description={t("aiSubscription.subtitle")}
             />
-            {tiersReady ? (
+            <AsyncContent
+                isLoading={isLoading}
+                skeleton={<AiSubscriptionSkeleton />}
+                error={tiersSwr.error}
+                errorContent={{
+                    title: t("aiSubscription.loadError.title"),
+                    description: t("aiSubscription.loadError.description"),
+                    onRetry: () => tiersSwr.mutate(),
+                    retryLabel: t("aiSubscription.loadError.retry"),
+                }}
+            >
                 <TierGrid />
-            ) : (
-                <AiSubscriptionSkeleton />
-            )}
+            </AsyncContent>
         </div>
     )
 }

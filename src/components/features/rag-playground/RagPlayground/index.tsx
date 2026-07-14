@@ -390,7 +390,12 @@ export const RagPlayground = ({ className }: RagPlaygroundProps) => {
                                                     onChange={setSelectedSampleId}
                                                     columns={2}
                                                 />
-                                            ) : null}
+                                            ) : (
+                                                <EmptyContent
+                                                    title={t("ragPlayground.import.samplePicker.emptyTitle")}
+                                                    description={t("ragPlayground.import.samplePicker.emptyDescription")}
+                                                />
+                                            )}
                                         </AsyncContent>
                                     </div>
                                 ) : null}

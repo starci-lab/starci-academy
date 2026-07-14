@@ -16,6 +16,7 @@ import type {
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { CheckListCard, CheckListItem } from "@/components/blocks/cards/CheckListCard"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { useQueryCourseSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseSwr"
 import { useAppSelector } from "@/redux/hooks"
@@ -26,8 +27,9 @@ export type CourseValuePropsProps = WithClassNames<undefined>
 /**
  * "What you'll get" section: the course value propositions as a checked grid —
  * placed high (right after the hero) so the benefit lands before the price.
- * Self-contained (reads redux + the course SWR flags); hides entirely when the
- * course has no value props.
+ * Self-contained (reads redux + the course SWR flags); shows a standard
+ * empty-state when the course has no value props (this is a labeled section
+ * the user opens, not a self-hiding secondary widget).
  *
  * @param props - optional className (placement only).
  */
@@ -35,11 +37,6 @@ export const CourseValueProps = ({ className }: CourseValuePropsProps) => {
     const t = useTranslations()
     const { isLoading, error, mutate } = useQueryCourseSwr()
     const items = useAppSelector((state) => state.course.entity?.valuePropositions) ?? []
-
-    // settled + genuinely empty → hide the whole section (no empty card)
-    if (!isLoading && !error && items.length === 0) {
-        return null
-    }
 
     return (
         <LabeledCard
@@ -66,14 +63,22 @@ export const CourseValueProps = ({ className }: CourseValuePropsProps) => {
                     retryLabel: t("courseLanding.retry"),
                 }}
             >
-                {/* shared check-list card (elements/card.md §3b): surface list, tick-led rows */}
-                <CheckListCard>
-                    {items.map((item) => (
-                        <CheckListItem key={item.id}>
-                            <Typography type="body-sm">{item.text}</Typography>
-                        </CheckListItem>
-                    ))}
-                </CheckListCard>
+                {items.length === 0 ? (
+                    <EmptyState
+                        icon={<SealCheckIcon aria-hidden focusable="false" />}
+                        title={t("courseLanding.empty.valueProps.title")}
+                        description={t("courseLanding.empty.valueProps.hint")}
+                    />
+                ) : (
+                    // shared check-list card (elements/card.md §3b): surface list, tick-led rows
+                    <CheckListCard>
+                        {items.map((item) => (
+                            <CheckListItem key={item.id}>
+                                <Typography type="body-sm">{item.text}</Typography>
+                            </CheckListItem>
+                        ))}
+                    </CheckListCard>
+                )}
             </AsyncContent>
         </LabeledCard>
     )

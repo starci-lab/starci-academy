@@ -16,6 +16,9 @@ import {
     useTranslations,
 } from "next-intl"
 import {
+    useRouter,
+} from "next/navigation"
+import {
     FollowButton,
 } from "@/components/reuseable/FollowButton"
 import {
@@ -47,7 +50,8 @@ export type TopLearnersProps = WithClassNames<undefined>
 /**
  * Dashboard "Community" tab — the platform's top learners this period (avatar · name
  * · XP) with an inline follow on each stranger row. Self-fetches the global
- * leaderboard and self-hides when there are no entries.
+ * leaderboard; renders a standard empty-state when there are no entries, and a
+ * "see more" link to the full leaderboard when it overflows {@link TOP_N}.
  * @param props - optional root class name (placement only)
  */
 export const TopLearners = ({
@@ -55,6 +59,7 @@ export const TopLearners = ({
 }: TopLearnersProps) => {
     const t = useTranslations()
     const locale = useLocale()
+    const router = useRouter()
     const { data, isLoading } = useQueryGlobalLeaderboardSwr()
     const me = useAppSelector((state) => state.user.user)
     // owns the follow mutation; FollowButton rows stay presentational
@@ -103,18 +108,33 @@ export const TopLearners = ({
 
     // empty (after load) when the board has no entries
     const isEmpty = !data || data.entries.length === 0
+    // more leaders exist beyond the visible top slice → "see more" affordance
+    const hasOverflow = Boolean(data) && data!.entries.length > TOP_N
+
+    /** Open the full leaderboard page. */
+    const onSeeMore = useCallback(
+        () => router.push(pathConfig().locale(locale).league().build()),
+        [router, locale],
+    )
 
     return (
         <AsyncContent
             isLoading={data === null || data === undefined || isLoading}
             skeleton={<TopLearnersSkeleton className={className} />}
             isEmpty={isEmpty}
+            emptyContent={{
+                title: t("dashboard.community.topLearners.noLeadersTitle"),
+                description: t("dashboard.community.topLearners.noLeadersDescription"),
+                icon: <TrophyIcon className="size-8 text-muted" aria-hidden focusable="false" />,
+            }}
         >
             {!isEmpty && data ? (
                 <LabeledCard
                     frameless
                     label={t("dashboard.community.topLearners.title")}
                     icon={<TrophyIcon className="size-5" aria-hidden focusable="false" />}
+                    onSeeMore={hasOverflow ? onSeeMore : undefined}
+                    seeMoreLabel={t("dashboard.community.topLearners.seeMore")}
                     className={className}
                 >
                     <SurfaceListCard>

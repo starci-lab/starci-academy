@@ -132,22 +132,38 @@ export const CommunityFeed = () => {
                         }}
                     >
                         {items.length === 0 ? (
-                            // empty feed is still a conversion surface — invite into courses,
-                            // not a dead end (§Conversion: every empty region needs a funnel)
-                            <EmptyState
-                                title={t("community.empty")}
-                                action={(
-                                    <Button
-                                        variant="secondary"
-                                        size="sm"
-                                        onPress={() => router.push(
-                                            pathConfig().locale().course().build(),
-                                        )}
-                                    >
-                                        {t("cart.browseCourses")}
-                                    </Button>
-                                )}
-                            />
+                            // empty feed is still a conversion surface. Two distinct reasons need
+                            // two distinct empties (§State-matrix): filtered-empty offers a way
+                            // back to "all channels"; platform-empty invites into courses.
+                            channel !== null ? (
+                                <EmptyState
+                                    title={t("community.emptyFiltered")}
+                                    action={(
+                                        <Button
+                                            variant="secondary"
+                                            size="sm"
+                                            onPress={() => setChannel(null)}
+                                        >
+                                            {t("community.viewAllChannels")}
+                                        </Button>
+                                    )}
+                                />
+                            ) : (
+                                <EmptyState
+                                    title={t("community.empty")}
+                                    action={(
+                                        <Button
+                                            variant="secondary"
+                                            size="sm"
+                                            onPress={() => router.push(
+                                                pathConfig().locale().course().build(),
+                                            )}
+                                        >
+                                            {t("cart.browseCourses")}
+                                        </Button>
+                                    )}
+                                />
+                            )
                         ) : (
                             <div className="flex flex-col gap-6">
                                 {items.map((post) => (

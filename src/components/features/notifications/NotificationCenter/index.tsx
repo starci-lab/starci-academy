@@ -323,8 +323,11 @@ export const NotificationCenter = ({ className }: NotificationCenterProps) => {
                                         <ArrowRightIcon aria-hidden focusable="false" className="size-4" />
                                     </Button>
                                 ) : (
-                                    <Button size="sm" variant="secondary" onPress={goToCourses}>
-                                        {t("notifications.emptyCta")}
+                                    // Filtered-empty (tab có filter nhưng rỗng) — CTA phải quay lại
+                                    // xem đủ (xoá filter), không đẩy ra ngoài trang khóa học (canon
+                                    // §State-matrix: 2 lý do rỗng khác nhau → 2 CTA khác nghĩa).
+                                    <Button size="sm" variant="secondary" onPress={() => onSelectTab(ALL_TAB)}>
+                                        {t("notifications.clearFilters")}
                                     </Button>
                                 )}
                             />

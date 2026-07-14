@@ -254,7 +254,15 @@ export const CourseCatalog = ({ className }: CourseCatalogProps) => {
                         retryLabel: t("courses.retry"),
                     }}
                     isEmpty={!swr.isLoading && list.length === 0}
-                    emptyContent={{ title: t("courses.empty") }}
+                    emptyContent={debouncedQuery ? {
+                        title: t("courses.emptyFiltered.title", { query: debouncedQuery }),
+                        description: t("courses.emptyFiltered.description"),
+                        onRetry: () => {
+                            setQuery("")
+                            setDebouncedQuery("")
+                        },
+                        retryLabel: t("courses.emptyFiltered.clearFilter"),
+                    } : { title: t("courses.empty") }}
                     skeleton={view === "grid" ? gridSkeleton : lineSkeleton}
                 >
                     {view === "grid" ? (

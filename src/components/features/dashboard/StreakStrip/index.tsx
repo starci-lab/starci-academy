@@ -67,9 +67,9 @@ export const StreakStrip = ({
             isLoading={weekly === null || weekly === undefined || isLoading}
             error={error}
             errorContent={{
-                title: t("dashboard.streak.empty"),
+                title: t("dashboard.streak.error"),
                 onRetry: () => { void mutate() },
-                retryLabel: t("dashboard.dailyGoal.cta"),
+                retryLabel: t("dashboard.streak.retry"),
             }}
             skeleton={(
                 <div className="flex flex-col gap-3">

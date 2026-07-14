@@ -38,7 +38,9 @@
       "empty": "Chưa có tin nhắn. Chào một câu nào!",
       "error": "Không tải được tin nhắn",
       "signInRequired": "Đăng nhập bằng tài khoản có gói member để vào chat."
-    }
+    },
+    "emptyFiltered": "Chưa có bài nào trong kênh này",
+    "viewAllChannels": "Xem tất cả kênh"
   },
   "cart": {
     "label": "Giỏ hàng",
@@ -586,7 +588,12 @@
     "empty": "Chưa có khóa học nào",
     "loadError": "Không tải được khóa học",
     "retry": "Thử lại",
-    "count": "{count} khóa học"
+    "count": "{count} khóa học",
+    "emptyFiltered": {
+      "title": "Không tìm thấy khóa học nào khớp \"{query}\"",
+      "description": "Thử từ khóa khác hoặc xoá bộ lọc để xem lại toàn bộ khóa học.",
+      "clearFilter": "Xoá bộ lọc"
+    }
   },
   "course": {
     "enroll": "Đăng ký",
@@ -649,6 +656,24 @@
       "pioneer": "Tiên phong",
       "earlyBird": "Sớm",
       "regular": "Tiêu chuẩn"
+    },
+    "empty": {
+      "valueProps": {
+        "title": "Chưa có nội dung",
+        "hint": "Khóa học này chưa liệt kê những gì bạn sẽ học được."
+      },
+      "prerequisites": {
+        "title": "Chưa có điều kiện tiên quyết",
+        "hint": "Khóa học chưa liệt kê điều kiện tiên quyết nào."
+      },
+      "curriculum": {
+        "title": "Đang cập nhật giáo trình",
+        "hint": "Giáo trình khóa học đang được cập nhật, quay lại sau nhé."
+      },
+      "faq": {
+        "title": "Chưa có câu hỏi",
+        "hint": "Khóa học này chưa có câu hỏi thường gặp nào."
+      }
     }
   },
   "settings": {
@@ -869,7 +894,8 @@
           "skills": "Thêm các Kỹ năng của bạn",
           "education": "Thêm thông tin Học vấn"
         }
-      }
+      },
+      "emptyCoursesLinkCta": "Khám phá khóa học để có nội dung cho CV"
     },
     "blocks": {
       "common": {
@@ -1103,6 +1129,8 @@
       "uploadSuccess": "Tải lên thành công. Bấm \"Xử lý CV\" để tiếp tục.",
       "uploadCta": "Tải CV lên",
       "uploadingCta": "Đang tải lên S3...",
+      "uploadError": "Tải CV lên thất bại. Vui lòng thử lại.",
+      "processError": "Xử lý CV thất bại. Vui lòng thử lại.",
       "processCta": "Xử lý CV",
       "processingCta": "Đang xử lý CV...",
       "fileCardTitle": "Thông tin CV đã nộp",
@@ -1383,7 +1411,8 @@
       "processing": "Đang chấm điểm bằng AI...",
       "completed": "Chấm điểm hoàn tất!",
       "failed": "Chấm điểm thất bại."
-    }
+    },
+    "criteriaEmpty": "Task này chưa có tiêu chí chấm điểm nào."
   },
   "lesson": {
     "videos": "Bài giảng",
@@ -1780,7 +1809,8 @@
         "solved": "Đã giải",
         "attempted": "Đang làm",
         "unsolved": "Chưa giải"
-      }
+      },
+      "moreTags": "+{count} khác"
     },
     "catalog": {
       "noMatch": "Không có bài khớp bộ lọc",
@@ -1882,7 +1912,8 @@
       "runtimeError": "Lỗi thực thi",
       "compileError": "Lỗi biên dịch",
       "internalError": "Lỗi hệ thống"
-    }
+    },
+    "historyEmpty": "Chưa có lần nộp bài nào — nộp bài đầu tiên để bắt đầu theo dõi lịch sử."
   },
   "flashcard": {
     "title": "Ôn tập",
@@ -2638,6 +2669,11 @@
       "price": "0₫",
       "desc": "Lượt AI cơ bản kèm theo khoá học",
       "cta": "Gói mặc định"
+    },
+    "loadError": {
+      "title": "Không tải được các gói AI",
+      "description": "Có lỗi khi tải danh sách gói. Thử lại sau ít phút nhé.",
+      "retry": "Thử lại"
     }
   },
   "admin": {
@@ -2781,7 +2817,8 @@
     "websiteUrl": "Website",
     "websiteUrlPlaceholder": "https://trang-cua-ban.com",
     "workMode": "Hình thức làm việc",
-    "workModeNone": "Chưa xác định"
+    "workModeNone": "Chưa xác định",
+    "invalidUrl": "Đường dẫn không hợp lệ. Vui lòng nhập URL đầy đủ (vd: https://...)."
   },
   "sessions": {
     "title": "Thiết bị",
@@ -2814,7 +2851,9 @@
       "Overdue": "Quá hạn",
       "Defaulted": "Đã khoá",
       "Completed": "Đã hoàn tất"
-    }
+    },
+    "lockedTitle": "Kế hoạch đã bị khoá",
+    "lockedDesc": "Gói trả góp này quá hạn thanh toán nên đã bị khoá. Thanh toán đủ kỳ hiện tại để mở lại và tiếp tục học."
   },
   "follow": {
     "follow": "Theo dõi",
@@ -3451,7 +3490,9 @@
       "current": "Chuỗi {count} ngày",
       "longest": "Dài nhất {count}",
       "empty": "Học một nội dung để nhóm lửa chuỗi của bạn",
-      "help": "Học ít nhất một nội dung mỗi ngày để duy trì chuỗi của bạn."
+      "help": "Học ít nhất một nội dung mỗi ngày để duy trì chuỗi của bạn.",
+      "error": "Không tải được chuỗi ngày học",
+      "retry": "Thử lại"
     },
     "league": {
       "resetIn": "Reset sau {days} ngày {hours} giờ",
@@ -3467,7 +3508,9 @@
       "tabWeekly": "Tuần này",
       "tierHelp": "Hạng league hiện tại của bạn. Lọt top mỗi tuần để thăng hạng.",
       "title": "League tuần",
-      "yourRank": "Hạng của bạn"
+      "yourRank": "Hạng của bạn",
+      "emptyTitle": "Chưa vào bảng xếp hạng tuần này",
+      "emptyDescription": "Hoàn thành thêm bài học để được xếp vào một nhóm và bắt đầu leo hạng."
     },
     "community": {
       "globalStanding": {
@@ -3477,7 +3520,10 @@
       },
       "topLearners": {
         "title": "Top học viên tuần",
-        "xp": "{points} XP"
+        "xp": "{points} XP",
+        "noLeadersTitle": "Chưa có ai trên bảng xếp hạng",
+        "noLeadersDescription": "Học thêm bài để lọt top học viên tuần này.",
+        "seeMore": "Xem toàn bộ bảng xếp hạng"
       }
     },
     "sponsored": "Quảng cáo",
@@ -3648,6 +3694,18 @@
     "whoToFollow": {
       "openToWork": "Sẵn sàng nhận việc",
       "title": "Gợi ý theo dõi"
+    },
+    "changelogList": {
+      "loadError": "Không tải được changelog. Vui lòng thử lại."
+    },
+    "feedEmptyFiltered": {
+      "title": "Không có gì khớp với bộ lọc này",
+      "cta": "Xoá bộ lọc"
+    },
+    "feedEmptyPlatform": {
+      "title": "Bảng tin đang chờ bạn bắt đầu",
+      "description": "Vào khóa học để bắt đầu tích luỹ hoạt động, thành tích và kết nối với người học khác.",
+      "cta": "Vào khóa học →"
     }
   },
   "languages": {
@@ -4219,7 +4277,8 @@
     "again": "Lại",
     "hard": "Khó",
     "good": "Tốt",
-    "easy": "Dễ"
+    "easy": "Dễ",
+    "startWithCount": "{count, plural, other {Ôn # thẻ →}}"
   },
   "notifications": {
     "empty": "Bạn chưa có thông báo nào",
@@ -4244,7 +4303,8 @@
       "subscriptionGranted": "Gói AI",
       "announcement": "Thông báo chung",
       "streakMilestone": "Streak"
-    }
+    },
+    "clearFilters": "Xoá bộ lọc"
   },
   "notification": {
     "challengeGraded": {
@@ -4281,7 +4341,9 @@
     "passed": "Đã vượt qua",
     "passedCount": "{count, plural, other {# người đã vượt qua}}",
     "title": "Thử thách tuần",
-    "tryNow": "Thử ngay"
+    "tryNow": "Thử ngay",
+    "emptyTitle": "Chưa có thử thách tuần nào đang mở",
+    "emptyDescription": "Quay lại vào đầu tuần sau để tham gia thử thách mới, hoặc tiếp tục học ở khoá của bạn."
   },
   "bookmarks": {
     "noMatch": "Không có mục đã lưu nào khớp với tìm kiếm của bạn.",
@@ -4388,7 +4450,9 @@
       "sampleHint": "Chọn 1 trong các mẫu có sẵn bên dưới — không cần chuẩn bị gì.",
       "samplePicker": {
         "ariaLabel": "Chọn 1 mẫu",
-        "loadError": "Không tải được danh sách mẫu, thử lại."
+        "loadError": "Không tải được danh sách mẫu, thử lại.",
+        "emptyTitle": "Chưa có mẫu nào",
+        "emptyDescription": "Catalog mẫu hiện đang trống. Thử dán nội dung của riêng bạn hoặc quay lại sau."
       },
       "githubPlaceholder": "https://github.com/owner/repo",
       "cta": "Nạp & lập chỉ mục",
@@ -4471,7 +4535,8 @@
       "deepDive": "Đọc bài mổ xẻ kỹ thuật",
       "latency": "{ms} ms",
       "checked": "kiểm tra {ago}",
-      "runsOn": "Chạy trên"
+      "runsOn": "Chạy trên",
+      "notFound": "Không tìm thấy thành phần này trong sơ đồ kiến trúc."
     },
     "curl": {
       "heading": "Tự kiểm tra bằng API thật",

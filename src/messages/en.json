@@ -38,7 +38,9 @@
       "empty": "No messages yet. Say hello!",
       "error": "Could not load messages",
       "signInRequired": "Sign in with an active membership to join the chat."
-    }
+    },
+    "emptyFiltered": "No posts in this channel yet",
+    "viewAllChannels": "View all channels"
   },
   "cart": {
     "label": "Cart",
@@ -586,7 +588,12 @@
     "empty": "No courses yet",
     "loadError": "Couldn't load courses",
     "retry": "Try again",
-    "count": "{count} courses"
+    "count": "{count} courses",
+    "emptyFiltered": {
+      "title": "No courses match \"{query}\"",
+      "description": "Try a different keyword or clear the filter to see all courses.",
+      "clearFilter": "Clear filter"
+    }
   },
   "course": {
     "enroll": "Enroll",
@@ -649,6 +656,24 @@
       "pioneer": "Pioneer",
       "earlyBird": "Early bird",
       "regular": "Regular"
+    },
+    "empty": {
+      "valueProps": {
+        "title": "Nothing here yet",
+        "hint": "This course hasn't listed what you'll learn yet."
+      },
+      "prerequisites": {
+        "title": "No prerequisites listed",
+        "hint": "This course hasn't listed any prerequisites yet."
+      },
+      "curriculum": {
+        "title": "Curriculum coming soon",
+        "hint": "The curriculum for this course is being updated — check back soon."
+      },
+      "faq": {
+        "title": "No questions yet",
+        "hint": "There are no frequently asked questions for this course yet."
+      }
     }
   },
   "programmingLanguage": {
@@ -860,7 +885,8 @@
           "skills": "Add your Skills",
           "education": "Add your Education"
         }
-      }
+      },
+      "emptyCoursesLinkCta": "Explore courses to build content for your CV"
     },
     "blocks": {
       "common": {
@@ -1094,6 +1120,8 @@
       "uploadSuccess": "Upload successful. Click \"Process CV\" to continue.",
       "uploadCta": "Upload CV",
       "uploadingCta": "Uploading to S3...",
+      "uploadError": "CV upload failed. Please try again.",
+      "processError": "CV processing failed. Please try again.",
       "processCta": "Process CV",
       "processingCta": "Processing CV...",
       "fileCardTitle": "Submitted CV information",
@@ -1374,7 +1402,8 @@
       "processing": "Grading with AI...",
       "completed": "Grading complete!",
       "failed": "Grading failed."
-    }
+    },
+    "criteriaEmpty": "This task has no grading criteria yet."
   },
   "lesson": {
     "videos": "Videos",
@@ -1771,7 +1800,8 @@
         "solved": "Solved",
         "attempted": "Attempted",
         "unsolved": "Not started"
-      }
+      },
+      "moreTags": "+{count} more"
     },
     "catalog": {
       "noMatch": "No problems match your filters",
@@ -1873,7 +1903,8 @@
       "runtimeError": "Runtime Error",
       "compileError": "Compile Error",
       "internalError": "Internal Error"
-    }
+    },
+    "historyEmpty": "No submissions yet — submit your first attempt to start tracking history."
   },
   "flashcard": {
     "title": "Review",
@@ -2629,6 +2660,11 @@
       "price": "₫0",
       "desc": "Basic AI allowance bundled with your course",
       "cta": "Default plan"
+    },
+    "loadError": {
+      "title": "Couldn't load AI plans",
+      "description": "Something went wrong loading the plan list. Please try again in a moment.",
+      "retry": "Retry"
     }
   },
   "admin": {
@@ -2772,7 +2808,8 @@
     "linkedinUrl": "LinkedIn",
     "linkedinUrlPlaceholder": "https://linkedin.com/in/username",
     "workMode": "Work mode",
-    "workModeNone": "Not specified"
+    "workModeNone": "Not specified",
+    "invalidUrl": "Invalid URL. Please enter a full URL (e.g. https://...)."
   },
   "sessions": {
     "title": "Devices",
@@ -2805,7 +2842,9 @@
       "Overdue": "Overdue",
       "Defaulted": "Locked",
       "Completed": "Completed"
-    }
+    },
+    "lockedTitle": "Plan locked",
+    "lockedDesc": "This installment plan is overdue and has been locked. Pay the current cycle in full to unlock it and keep learning."
   },
   "follow": {
     "follow": "Follow",
@@ -3442,7 +3481,9 @@
       "current": "{count}-day streak",
       "longest": "Longest {count}",
       "empty": "Read content to start your streak",
-      "help": "Learn at least one piece of content each day to keep your streak going."
+      "help": "Learn at least one piece of content each day to keep your streak going.",
+      "error": "Couldn't load your streak",
+      "retry": "Retry"
     },
     "league": {
       "resetIn": "Resets in {days}d {hours}h",
@@ -3458,7 +3499,9 @@
       "tabWeekly": "This week",
       "tierHelp": "Your current league tier. Climb by finishing in the top each week.",
       "title": "Weekly league",
-      "yourRank": "Your rank"
+      "yourRank": "Your rank",
+      "emptyTitle": "Not ranked in this week's league yet",
+      "emptyDescription": "Complete a few more lessons to get placed in a cohort and start climbing."
     },
     "community": {
       "globalStanding": {
@@ -3468,7 +3511,10 @@
       },
       "topLearners": {
         "title": "Top learners",
-        "xp": "{points} XP"
+        "xp": "{points} XP",
+        "noLeadersTitle": "No one on the leaderboard yet",
+        "noLeadersDescription": "Finish more lessons to make this week's top learners.",
+        "seeMore": "View full leaderboard"
       }
     },
     "sponsored": "Sponsored",
@@ -3639,6 +3685,18 @@
     "whoToFollow": {
       "openToWork": "Open to work",
       "title": "Who to follow"
+    },
+    "changelogList": {
+      "loadError": "Couldn't load the changelog. Please try again."
+    },
+    "feedEmptyFiltered": {
+      "title": "Nothing matches this filter",
+      "cta": "Clear filter"
+    },
+    "feedEmptyPlatform": {
+      "title": "Your feed is waiting for you to get started",
+      "description": "Jump into a course to start building up activity, achievements, and connections with other learners.",
+      "cta": "Browse courses →"
     }
   },
   "languages": {
@@ -4219,7 +4277,8 @@
     "again": "Again",
     "hard": "Hard",
     "good": "Good",
-    "easy": "Easy"
+    "easy": "Easy",
+    "startWithCount": "{count, plural, one {Review # card →} other {Review # cards →}}"
   },
   "notifications": {
     "empty": "No notifications yet",
@@ -4244,7 +4303,8 @@
       "subscriptionGranted": "AI plan",
       "announcement": "Announcements",
       "streakMilestone": "Streak"
-    }
+    },
+    "clearFilters": "Clear filters"
   },
   "notification": {
     "challengeGraded": {
@@ -4281,7 +4341,9 @@
     "passed": "Passed",
     "passedCount": "{count, plural, one {# learner passed} other {# learners passed}}",
     "title": "Weekly challenge",
-    "tryNow": "Try it now"
+    "tryNow": "Try it now",
+    "emptyTitle": "No weekly challenge is open right now",
+    "emptyDescription": "Check back at the start of next week for a new challenge, or keep going in your course."
   },
   "bookmarks": {
     "noMatch": "No bookmarks match your search.",
@@ -4388,7 +4450,9 @@
       "sampleHint": "Pick one of the built-in samples below — nothing to prepare.",
       "samplePicker": {
         "ariaLabel": "Choose a sample",
-        "loadError": "Could not load the sample list — try again."
+        "loadError": "Could not load the sample list — try again.",
+        "emptyTitle": "No samples yet",
+        "emptyDescription": "The sample catalog is empty right now. Try pasting your own content, or check back later."
       },
       "githubPlaceholder": "https://github.com/owner/repo",
       "cta": "Import & index",
@@ -4471,7 +4535,8 @@
       "deepDive": "Read the engineering deep-dive",
       "latency": "{ms} ms",
       "checked": "checked {ago}",
-      "runsOn": "Runs on"
+      "runsOn": "Runs on",
+      "notFound": "This component isn't in the architecture catalog."
     },
     "curl": {
       "heading": "Try it with the real API",

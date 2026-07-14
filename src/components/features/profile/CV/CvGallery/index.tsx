@@ -8,6 +8,7 @@ import {
 } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 import {
     PlusIcon,
     TrashIcon,
@@ -106,6 +107,8 @@ export const CvGallery = ({ className, breadcrumb }: CvGalleryProps) => {
         router.push(pathConfig().locale(locale).profile().cv().document(id).build())
     }
 
+    const coursesHref = pathConfig().locale(locale).course().build()
+
     const onCreate = async () => {
         const result = await createDocument({
             label: t("cv.builder.untitled", { number: documents.length + 1 }),
@@ -154,7 +157,18 @@ export const CvGallery = ({ className, breadcrumb }: CvGalleryProps) => {
                 isEmpty={isEmpty}
                 emptyContent={{
                     title: t("cv.builder.emptyTitle"),
-                    description: t("cv.builder.emptyHint"),
+                    description: (
+                        <>
+                            {t("cv.builder.emptyHint")}
+                            {" "}
+                            <Link
+                                href={coursesHref}
+                                className="text-accent underline-offset-2 hover:underline"
+                            >
+                                {t("cv.builder.emptyCoursesLinkCta")}
+                            </Link>
+                        </>
+                    ),
                     onRetry: onCreate,
                     retryLabel: t("cv.builder.createFirst"),
                 }}

@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import { useTranslations } from "next-intl"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -27,18 +28,20 @@ export interface LeagueCardProps extends WithClassNames<undefined> {
 /**
  * Compact weekly-league card for the dashboard. Thin container: self-fetches the
  * league leaf query and runs the standard {@link AsyncContent} switch — a
- * layout-mirroring {@link LeagueCardSkeleton} while loading, self-hiding (no
- * emptyContent) until the viewer is placed in a cohort, then {@link LeagueCardContent}
- * once resolved. `isLoading` uses the nullish form so the skeleton holds until data
- * actually arrives (and never on a falsy-but-valid value).
+ * layout-mirroring {@link LeagueCardSkeleton} while loading, a translated
+ * {@link EmptyContent} inviting the viewer to join a cohort when not yet placed
+ * in one, then {@link LeagueCardContent} once resolved. `isLoading` uses the
+ * nullish form so the skeleton holds until data actually arrives (and never on
+ * a falsy-but-valid value).
  * @param props - {@link LeagueCardProps}
  */
 export const LeagueCard = ({
     className,
     framed = false,
 }: LeagueCardProps) => {
+    const t = useTranslations()
     const { data, isLoading } = useQueryMyLeagueSwr()
-    // nothing to show until the viewer is placed in a cohort (self-hide → no emptyContent)
+    // not yet placed in a cohort → translated empty state (join hint), not self-hide
     const isEmpty = data === null || data === undefined || data.entries.length === 0
 
     return (
@@ -46,6 +49,10 @@ export const LeagueCard = ({
             isLoading={data === null || data === undefined || isLoading}
             skeleton={<LeagueCardSkeleton className={className} />}
             isEmpty={isEmpty}
+            emptyContent={{
+                title: t("dashboard.league.emptyTitle"),
+                description: t("dashboard.league.emptyDescription"),
+            }}
         >
             {data ? (
                 <LeagueCardContent

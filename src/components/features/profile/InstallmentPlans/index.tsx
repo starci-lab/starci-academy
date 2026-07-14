@@ -23,6 +23,7 @@ import {
     SettingsBreadcrumb,
 } from "../Settings/SettingsBreadcrumb"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { Callout } from "@/components/blocks/feedback/Callout"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
@@ -245,6 +246,14 @@ export const InstallmentPlans = () => {
                                             </div>
                                         </>
                                     )}
+
+                                    {isLocked ? (
+                                        <Callout
+                                            status="danger"
+                                            title={t("installmentPlans.lockedTitle")}
+                                            description={t("installmentPlans.lockedDesc")}
+                                        />
+                                    ) : null}
 
                                     <div className="flex items-center justify-between gap-3 border-t border-default pt-3">
                                         <Typography type="body-xs" color="muted">

@@ -68,6 +68,7 @@ export const EditProfile = () => {
         formState: {
             isSubmitting,
             isValid,
+            errors,
         },
         onAvatarFile,
         shownAvatar,
@@ -220,6 +221,11 @@ export const EditProfile = () => {
                         value={linkedinUrl}
                         onChange={(event) => setValue("linkedinUrl", event.target.value)}
                     />
+                    {errors.linkedinUrl ? (
+                        <Typography slot="description" type="body-xs" className="text-danger">
+                            {t("profileEdit.invalidUrl")}
+                        </Typography>
+                    ) : null}
                 </TextField>
 
                 {/* website URL */}
@@ -234,6 +240,11 @@ export const EditProfile = () => {
                         value={websiteUrl}
                         onChange={(event) => setValue("websiteUrl", event.target.value)}
                     />
+                    {errors.websiteUrl ? (
+                        <Typography slot="description" type="body-xs" className="text-danger">
+                            {t("profileEdit.invalidUrl")}
+                        </Typography>
+                    ) : null}
                 </TextField>
 
                 {/* privacy: lock profile (FB-style) */}

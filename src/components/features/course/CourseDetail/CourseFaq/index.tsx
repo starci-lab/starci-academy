@@ -19,6 +19,7 @@ import type {
 } from "@/modules/types/base/class-name"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { useQueryCourseSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseSwr"
@@ -30,7 +31,8 @@ export type CourseFaqProps = WithClassNames<undefined>
 /**
  * FAQ section: the course Q&A pairs as an accordion (markdown answers). Removes a
  * common objection before the buy decision. Self-contained (reads redux + the
- * course SWR flags); hides entirely when the course has no Q&A.
+ * course SWR flags); shows a standard empty-state when the course has no Q&A yet
+ * (this is a labeled section the user opens, not a self-hiding secondary widget).
  *
  * @param props - optional className (placement only).
  */
@@ -43,10 +45,6 @@ export const CourseFaq = ({ className }: CourseFaqProps) => {
         () => _.cloneDeep(rawQnas ?? []).sort((a, b) => a.sortIndex - b.sortIndex),
         [rawQnas],
     )
-
-    if (!isLoading && !error && qnas.length === 0) {
-        return null
-    }
 
     // frameless ONLY once the accordion itself self-frames (surface variant); while
     // loading/erroring there is no bounded surface, so LabeledCard's own Card must
@@ -70,25 +68,33 @@ export const CourseFaq = ({ className }: CourseFaqProps) => {
                     retryLabel: t("courseLanding.retry"),
                 }}
             >
-                {/* Accordion Card (xem elements/card.md §3): surface accordion frameless + viền. */}
-                <Accordion variant="surface" className="overflow-hidden shadow-surface">
-                    {qnas.map((qna) => (
-                        <Accordion.Item key={qna.id} aria-label={qna.question}>
-                            <Accordion.Heading>
-                                <Accordion.Trigger>
-                                    <Typography type="body-sm" weight="medium">
-                                        {qna.question}
-                                    </Typography>
-                                </Accordion.Trigger>
-                            </Accordion.Heading>
-                            <Accordion.Panel>
-                                <Accordion.Body>
-                                    <MarkdownContent markdown={qna.answer} />
-                                </Accordion.Body>
-                            </Accordion.Panel>
-                        </Accordion.Item>
-                    ))}
-                </Accordion>
+                {hasQnas ? (
+                    // Accordion Card (xem elements/card.md §3): surface accordion frameless + viền.
+                    <Accordion variant="surface" className="overflow-hidden shadow-surface">
+                        {qnas.map((qna) => (
+                            <Accordion.Item key={qna.id} aria-label={qna.question}>
+                                <Accordion.Heading>
+                                    <Accordion.Trigger>
+                                        <Typography type="body-sm" weight="medium">
+                                            {qna.question}
+                                        </Typography>
+                                    </Accordion.Trigger>
+                                </Accordion.Heading>
+                                <Accordion.Panel>
+                                    <Accordion.Body>
+                                        <MarkdownContent markdown={qna.answer} />
+                                    </Accordion.Body>
+                                </Accordion.Panel>
+                            </Accordion.Item>
+                        ))}
+                    </Accordion>
+                ) : (
+                    <EmptyState
+                        icon={<QuestionIcon aria-hidden focusable="false" />}
+                        title={t("courseLanding.empty.faq.title")}
+                        description={t("courseLanding.empty.faq.hint")}
+                    />
+                )}
             </AsyncContent>
         </LabeledCard>
     )

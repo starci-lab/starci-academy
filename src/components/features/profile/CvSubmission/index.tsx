@@ -9,7 +9,9 @@ import type {
 } from "formik"
 import {
     cn,
+    toast,
 } from "@heroui/react"
+import { useTranslations } from "next-intl"
 import type {
     CvSubmissionFormValues,
 } from "@/types"
@@ -58,6 +60,7 @@ export const CvSubmission = ({
     const [uploadedS3Key, setUploadedS3Key] = useState<string | null>(null)
     /** Localized toast wrapper for REST calls. */
     const runRest = useRestWithToast()
+    const t = useTranslations("cv.submission")
 
     /** Upload the selected CV to S3 via a presigned URL. */
     const onSubmit = useCallback(
@@ -133,6 +136,7 @@ export const CvSubmission = ({
                 resetForm()
             } catch (error) {
                 console.error("CV upload error:", error)
+                toast.danger(t("uploadError"))
             } finally {
                 setIsUploading(false)
             }
@@ -140,6 +144,7 @@ export const CvSubmission = ({
         [
             token,
             runRest,
+            t,
         ],
     )
 
@@ -172,6 +177,7 @@ export const CvSubmission = ({
                 }
             } catch (error) {
                 console.error("CV process error:", error)
+                toast.danger(t("processError"))
             } finally {
                 setIsProcessing(false)
             }
@@ -180,6 +186,7 @@ export const CvSubmission = ({
             token,
             uploadedS3Key,
             uploadedFileName,
+            t,
         ],
     )
 

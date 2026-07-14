@@ -10,9 +10,11 @@ import {
     useTranslations,
 } from "next-intl"
 import _ from "lodash"
+import { ListChecksIcon } from "@phosphor-icons/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { useAppSelector } from "@/redux/hooks"
+import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 
 /** Props for {@link TaskCriteriaList}. */
 export type TaskCriteriaListProps = WithClassNames<undefined>
@@ -50,7 +52,16 @@ export const TaskCriteriaList = ({
     }, [displayTask?.criterias])
 
     if (sortedCriterias.length === 0) {
-        return null
+        // section sits under the visible "task.criteriaTitle" label, so an empty
+        // list needs a proper empty-state instead of a silent null (self-hide is
+        // only for un-labeled widgets)
+        return (
+            <EmptyState
+                className={cn(className)}
+                icon={<ListChecksIcon weight="duotone" />}
+                title={t("task.criteriaEmpty")}
+            />
+        )
     }
 
     return (

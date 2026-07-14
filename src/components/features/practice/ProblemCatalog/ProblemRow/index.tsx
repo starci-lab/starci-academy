@@ -100,6 +100,17 @@ export const ProblemRow = ({
                                     {tag}
                                 </Typography>
                             ))}
+                            {problem.tags.length > 4 ? (
+                                <Typography
+                                    type="body-xs"
+                                    color="muted"
+                                    title={problem.tags.slice(4).join(", ")}
+                                >
+                                    {t("practice.row.moreTags", {
+                                        count: problem.tags.length - 4,
+                                    })}
+                                </Typography>
+                            ) : null}
                         </div>
                     ) : null}
                 </div>

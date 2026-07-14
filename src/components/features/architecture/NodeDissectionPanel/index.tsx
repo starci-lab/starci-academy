@@ -5,6 +5,7 @@ import { Card, CardContent, Link, Typography, cn } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { ArrowUpRightIcon, BookOpenTextIcon } from "@phosphor-icons/react"
 import { Callout } from "@/components/blocks/feedback/Callout"
+import { SimpleEmptyState } from "@/components/blocks/feedback/SimpleEmptyState"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { pathConfig } from "@/resources/path"
 import { getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
@@ -90,7 +91,15 @@ export const NodeDissectionPanel = ({ nodeId, healthByName, className }: NodeDis
         )
     }
 
-    if (!component) return null
+    if (!component) {
+        return (
+            <Card className={cn(className)}>
+                <CardContent className="p-6">
+                    <SimpleEmptyState>{t("panel.notFound")}</SimpleEmptyState>
+                </CardContent>
+            </Card>
+        )
+    }
 
     const Icon = component.icon
     const blogHref = component.blogSlug

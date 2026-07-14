@@ -75,7 +75,9 @@ export const FlashcardReview = ({
                         pathConfig().locale(locale).review().build(),
                     )}
                 >
-                    {t("flashcardReview.start")}
+                    {t("flashcardReview.startWithCount", {
+                        count: data?.dueCount ?? 0,
+                    })}
                 </Button>
             </div>
         </AsyncContent>

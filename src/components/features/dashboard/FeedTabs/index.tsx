@@ -167,9 +167,22 @@ export const FeedTabs = ({
                             isLoading={isLoading && items.length === 0}
                             skeleton={<FeedTabsSkeleton />}
                             isEmpty={items.length === 0}
-                            emptyContent={{
-                                title: t("dashboard.feedEmpty"),
-                            }}
+                            emptyContent={
+                                category !== MyFeedCategory.All
+                                    ? {
+                                        // filtered-empty: this filter chip matched nothing — offer to reset it
+                                        title: t("dashboard.feedEmptyFiltered.title"),
+                                        retryLabel: t("dashboard.feedEmptyFiltered.cta"),
+                                        onRetry: () => setCategory(MyFeedCategory.All),
+                                    }
+                                    : {
+                                        // platform-empty: nothing to show at all (feed/following empty) — invite to courses
+                                        title: t("dashboard.feedEmptyPlatform.title"),
+                                        description: t("dashboard.feedEmptyPlatform.description"),
+                                        retryLabel: t("dashboard.feedEmptyPlatform.cta"),
+                                        onRetry: () => router.push(`/${locale}/courses`),
+                                    }
+                            }
                             error={items.length === 0 ? error : undefined}
                             errorContent={{
                                 title: t("dashboard.feedError"),

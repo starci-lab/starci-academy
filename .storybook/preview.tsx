@@ -10,6 +10,22 @@ import "../src/app/globals.css"
  * `theme` toolbar (light/dark) drives the `.dark`/`.light` class HeroUI/Tailwind read.
  * a11y addon runs axe on every story (fail-on-error surfaces contrast/aria bugs lint can't see).
  */
+/**
+ * Render inline markdown in the "Cách dùng" caption — backtick `code` spans become
+ * styled `<code>` (the usage strings are written in markdown). Lightweight on
+ * purpose: only inline code, no block parsing / heavy markdown pipeline needed.
+ */
+const renderUsage = (text: string): React.ReactNode =>
+    text.split(/(`[^`]+`)/g).map((part, index) =>
+        part.length > 1 && part.startsWith("`") && part.endsWith("`") ? (
+            <code key={index} className="rounded bg-default px-1 text-[13px] text-foreground">
+                {part.slice(1, -1)}
+            </code>
+        ) : (
+            <React.Fragment key={index}>{part}</React.Fragment>
+        ),
+    )
+
 const preview: Preview = {
     // autodocs: render each story's JSDoc as its "cách dùng" description in the Docs tab.
     tags: ["autodocs"],
@@ -48,7 +64,7 @@ const preview: Preview = {
                             {showUsage ? (
                                 <div className="mx-auto mb-6 max-w-2xl rounded-xl border border-default bg-surface px-4 py-2 text-sm text-muted">
                                     <span className="mr-1 font-medium text-foreground">Cách dùng:</span>
-                                    {usage}
+                                    {renderUsage(usage)}
                                 </div>
                             ) : null}
                             <Story />

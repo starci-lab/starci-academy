@@ -32,12 +32,18 @@ export const Default: Story = {
     args: {
         title: "Không có dữ liệu",
     },
+    parameters: {
+        usage: "Dùng khi chỉ cần báo \"không có gì ở đây\" nhanh gọn — chưa cần icon/mô tả/hành động, ví dụ ô kết quả phụ chưa có dữ liệu.",
+    },
 }
 
 /**
  * Chọn mức đầy đủ theo tình huống thật: danh sách khoá học rỗng (chỉ icon), tìm kiếm không ra kết quả (icon+mô tả gợi ý), hoặc trang danh sách trống có nút hành động để tạo mục mới.
  */
 export const Compositions: Story = {
+    parameters: {
+        usage: "Chọn mức đầy đủ theo tình huống thật: danh sách khoá học rỗng (chỉ icon), tìm kiếm không ra kết quả (icon+mô tả gợi ý), hoặc trang danh sách trống có nút hành động để tạo mục mới.",
+    },
     render: () => (
         <div className="flex flex-col gap-4">
             <EmptyState
@@ -68,5 +74,8 @@ export const ErrorTone: Story = {
         title: "Không thể tải dữ liệu",
         description: "Đã có lỗi xảy ra. Vui lòng thử lại sau.",
         action: <Button variant="danger">Thử lại</Button>,
+    },
+    parameters: {
+        usage: "Dùng khi tải dữ liệu thất bại (lỗi mạng, API lỗi) — icon cảnh báo + nút \"Thử lại\" để người dùng tự khôi phục, không phải trạng thái rỗng thông thường.",
     },
 }

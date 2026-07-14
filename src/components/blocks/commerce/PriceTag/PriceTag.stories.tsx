@@ -19,15 +19,18 @@ type Story = StoryObj<typeof PriceTag>
 /** Dùng khi khóa CHƯA có ưu đãi — chỉ hiện giá bán, không gạch giá gốc. */
 export const Default: Story = {
     args: { discounted: 1990000 },
+    parameters: { usage: "Dùng khi khóa CHƯA có ưu đãi — chỉ hiện giá bán, không gạch giá gốc." },
 }
 
 /** Dùng khi khóa đang giảm giá — giá gốc gạch ngang + chip −X% để tạo cảm giác "hời". */
 export const WithDiscount: Story = {
     args: { discounted: 1490000, original: 1990000 },
+    parameters: { usage: "Dùng khi khóa đang giảm giá — giá gốc gạch ngang + chip −X% để tạo cảm giác \"hời\"." },
 }
 
 /** Dùng khi muốn GIẢI THÍCH mức giảm đến từ đâu (hover/tap chip) — ví dụ tách early-bird + ưu đãi học viên cũ, minh bạch thay vì chỉ đưa % khô khan. */
 export const Breakdown: Story = {
+    parameters: { usage: "Dùng khi muốn GIẢI THÍCH mức giảm đến từ đâu (hover/tap chip) — ví dụ tách early-bird + ưu đãi học viên cũ, minh bạch thay vì chỉ đưa % khô khan." },
     render: () => (
         <div className="flex flex-col items-start gap-8">
             <PriceTag
@@ -46,6 +49,7 @@ export const Breakdown: Story = {
 
 /** Chọn size theo bối cảnh đặt PriceTag: sm cho hàng list dày (bảng so sánh khóa), md cho card khóa mặc định, lg cho hero/trang checkout. */
 export const Sizes: Story = {
+    parameters: { usage: "Chọn size theo bối cảnh đặt PriceTag: sm cho hàng list dày (bảng so sánh khóa), md cho card khóa mặc định, lg cho hero/trang checkout." },
     render: () => (
         <div className="flex flex-col items-start gap-4">
             <PriceTag discounted={1490000} original={1990000} size="sm" />
@@ -58,4 +62,5 @@ export const Sizes: Story = {
 /** Dùng cho khách quốc tế / khóa niêm yết bằng USD — không tự quy đổi, chỉ đổi ký hiệu + định dạng tiền tệ. */
 export const CurrencyUsd: Story = {
     args: { discounted: 79, original: 129, currency: "USD" },
+    parameters: { usage: "Dùng cho khách quốc tế / khóa niêm yết bằng USD — không tự quy đổi, chỉ đổi ký hiệu + định dạng tiền tệ." },
 }

@@ -18,7 +18,11 @@ export default meta
 type Story = StoryObj<typeof UserCell>
 
 /** Dùng mặc định để hiển thị 1 user trong list/comment/bảng — avatar + tên + handle. */
-export const Default: Story = {}
+export const Default: Story = {
+    parameters: {
+        usage: "Dùng mặc định để hiển thị 1 user trong list/comment/bảng — avatar + tên + handle.",
+    },
+}
 
 /** Chọn size theo mật độ: sm cho list dày (comment, bảng), md cho khu vực rộng hơn (profile header, card). */
 export const Sizes: Story = {
@@ -28,6 +32,9 @@ export const Sizes: Story = {
             <UserCell {...args} size="md" />
         </div>
     ),
+    parameters: {
+        usage: "Chọn size theo mật độ: sm cho list dày (comment, bảng), md cho khu vực rộng hơn (profile header, card).",
+    },
 }
 
 /** Dùng khi user chưa đặt tên hiển thị — cell tự rơi về username làm nhãn chính, không để trống. */
@@ -36,6 +43,9 @@ export const NoDisplayName: Story = {
         username: "tranthib92",
         displayName: undefined,
         handle: "@tranthib92",
+    },
+    parameters: {
+        usage: "Dùng khi user chưa đặt tên hiển thị — cell tự rơi về username làm nhãn chính, không để trống.",
     },
 }
 
@@ -46,6 +56,9 @@ export const NoHandle: Story = {
         displayName: "Nguyen Van A",
         handle: undefined,
     },
+    parameters: {
+        usage: "Dùng ở nơi không cần/không có handle (VD nội bộ, hệ thống) — chỉ còn 1 dòng tên.",
+    },
 }
 
 /** Dùng khi user đã tải ảnh đại diện thật — ưu tiên ảnh upload thay vì avatar sinh tự động. */
@@ -55,6 +68,9 @@ export const WithUploadedAvatar: Story = {
         displayName: "Pham Thi C",
         avatar: "https://i.pravatar.cc/150?img=47",
         handle: "@phamthic",
+    },
+    parameters: {
+        usage: "Dùng khi user đã tải ảnh đại diện thật — ưu tiên ảnh upload thay vì avatar sinh tự động.",
     },
 }
 
@@ -67,6 +83,9 @@ export const WithTrailing: Story = {
         trailing: (
             <span className="text-xs font-medium text-warning">Admin</span>
         ),
+    },
+    parameters: {
+        usage: "Gắn nhãn phụ bên phải (vai trò, badge, trạng thái) — VD đánh dấu Admin trong bảng thành viên.",
     },
 }
 
@@ -84,4 +103,7 @@ export const LongNameTruncation: Story = {
             </div>
         ),
     ],
+    parameters: {
+        usage: "Đặt trong khung hẹp (sidebar, dropdown) để kiểm tra tên/handle dài bị cắt gọn thay vì vỡ layout.",
+    },
 }

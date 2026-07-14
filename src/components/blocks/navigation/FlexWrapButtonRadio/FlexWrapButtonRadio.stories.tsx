@@ -76,6 +76,9 @@ export const Default: Story = {
     render: () => (
         <Controlled items={DIFFICULTY_ITEMS} initialValue="medium" ariaLabel="Chọn độ khó" />
     ),
+    parameters: {
+        usage: "Dùng mặc định NGOÀI card (filter/toolbar rời) — không cần viền/nền riêng cho mỗi lựa chọn.",
+    },
 }
 
 /** Dùng `insideCard` + đổi `color` khi nhóm chọn nằm TRONG card và cần khớp ngữ nghĩa (success/danger/warning) hoặc mặc định — không tự tạo card lồng card kiểu khác. */
@@ -119,6 +122,9 @@ export const InsideCardAndColors: Story = {
             />
         </div>
     ),
+    parameters: {
+        usage: "Dùng `insideCard` + đổi `color` khi nhóm chọn nằm TRONG card và cần khớp ngữ nghĩa (success/danger/warning) hoặc mặc định — không tự tạo card lồng card kiểu khác.",
+    },
 }
 
 /** Dùng khi trong nhóm có 1 lựa chọn CHƯA MỞ (gói/tier khoá) — item đó vẫn hiện nhưng không bấm được, không ẩn khỏi danh sách. */
@@ -126,6 +132,9 @@ export const WithDisabledItem: Story = {
     render: () => (
         <Controlled items={TIER_ITEMS} initialValue="economy" ariaLabel="Chọn gói" />
     ),
+    parameters: {
+        usage: "Dùng khi trong nhóm có 1 lựa chọn CHƯA MỞ (gói/tier khoá) — item đó vẫn hiện nhưng không bấm được, không ẩn khỏi danh sách.",
+    },
 }
 
 /** Dùng `trailing` khi cần gắn thêm 1 nút phụ CÙNG HÀNG với các lựa chọn (vd nút "+N" mở rộng overflow), không phải một lựa chọn thật. */
@@ -142,6 +151,9 @@ export const WithTrailing: Story = {
             }
         />
     ),
+    parameters: {
+        usage: "Dùng `trailing` khi cần gắn thêm 1 nút phụ CÙNG HÀNG với các lựa chọn (vd nút \"+N\" mở rộng overflow), không phải một lựa chọn thật.",
+    },
 }
 
 /** Dùng `itemAction` khi mỗi lựa chọn cần một hành động RIÊNG đi kèm (vd nút xoá attempt) — hành động không làm đổi lựa chọn đang chọn. */
@@ -158,4 +170,7 @@ export const WithItemAction: Story = {
             )}
         />
     ),
+    parameters: {
+        usage: "Dùng `itemAction` khi mỗi lựa chọn cần một hành động RIÊNG đi kèm (vd nút xoá attempt) — hành động không làm đổi lựa chọn đang chọn.",
+    },
 }

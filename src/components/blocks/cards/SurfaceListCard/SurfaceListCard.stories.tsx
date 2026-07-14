@@ -20,6 +20,9 @@ type Story = StoryObj<typeof SurfaceListCard>
 
 /** Dùng làm khối danh sách điều hướng nổi trên nền trang (chọn khoá học, chọn mục cài đặt…). */
 export const Default: Story = {
+    parameters: {
+        usage: "Dùng làm khối danh sách điều hướng nổi trên nền trang (chọn khoá học, chọn mục cài đặt…).",
+    },
     render: () => (
         <div className="max-w-md">
             <SurfaceListCard>
@@ -52,6 +55,9 @@ export const Default: Story = {
  * `isDisabled` cho tuỳ chọn chưa mở, `hover="underline"` cho hàng dẫn tới bài viết/nội dung.
  */
 export const RowVariants: Story = {
+    parameters: {
+        usage: "Gallery các trạng thái hàng: `bordered` khi card nằm LỒNG trong 1 surface khác (ví dụ trong modal), `selected` để đánh dấu mục đang chọn (ngôn ngữ, phương thức thanh toán), `isDisabled` cho tuỳ chọn chưa mở, `hover=\"underline\"` cho hàng dẫn tới bài viết/nội dung.",
+    },
     render: () => (
         <div className="flex flex-col gap-4">
             <div className="max-w-md rounded-3xl bg-surface p-4 shadow-surface">
@@ -112,6 +118,9 @@ export const RowVariants: Story = {
 
 /** Dùng khi mỗi hàng cần icon minh hoạ + nhãn phụ (ưu đãi, ghi chú) — ví dụ chọn phương thức thanh toán. */
 export const WithLeadingAndMeta: Story = {
+    parameters: {
+        usage: "Dùng khi mỗi hàng cần icon minh hoạ + nhãn phụ (ưu đãi, ghi chú) — ví dụ chọn phương thức thanh toán.",
+    },
     render: () => (
         <div className="max-w-md">
             <SurfaceListCard>
@@ -143,6 +152,9 @@ export const WithLeadingAndMeta: Story = {
 
 /** Dùng cho hàng ĐIỀU HƯỚNG (điều khoản, chính sách) — mỗi hàng là 1 link `<a>`, không phải nút hành động. */
 export const LinkRows: Story = {
+    parameters: {
+        usage: "Dùng cho hàng ĐIỀU HƯỚNG (điều khoản, chính sách) — mỗi hàng là 1 link `<a>`, không phải nút hành động.",
+    },
     render: () => (
         <div className="max-w-md">
             <SurfaceListCard>
@@ -163,6 +175,9 @@ export const LinkRows: Story = {
 
 /** Dùng khi nội dung hàng không khớp khuôn title/subtitle/leading — ví dụ hàng có thanh tiến độ riêng. */
 export const FreeFormItems: Story = {
+    parameters: {
+        usage: "Dùng khi nội dung hàng không khớp khuôn title/subtitle/leading — ví dụ hàng có thanh tiến độ riêng.",
+    },
     render: () => (
         <div className="max-w-md">
             <SurfaceListCard>
@@ -199,6 +214,9 @@ export const FreeFormItems: Story = {
 
 /** Dùng cho hàng CHỈ ĐỌC không bấm được — ví dụ liệt kê nhật ký thay đổi (changelog). */
 export const StaticItem: Story = {
+    parameters: {
+        usage: "Dùng cho hàng CHỈ ĐỌC không bấm được — ví dụ liệt kê nhật ký thay đổi (changelog).",
+    },
     render: () => (
         <div className="max-w-md">
             <SurfaceListCard>

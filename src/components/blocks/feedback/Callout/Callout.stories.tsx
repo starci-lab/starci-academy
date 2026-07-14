@@ -24,6 +24,9 @@ export const Default: Story = {
     args: {
         status: "default",
     },
+    parameters: {
+        usage: "Dùng cho thông báo trung tính trong card (đã lưu nháp, ghi chú hệ thống) — không mang sắc thái cảnh báo/thành công.",
+    },
 }
 
 const TONE_CONTENT: Record<CalloutStatus, { title: string; description: string }> = {
@@ -58,6 +61,9 @@ export const Tones: Story = {
             ))}
         </div>
     ),
+    parameters: {
+        usage: "Dùng báo trạng thái mềm TRONG card (nộp bài OK / sắp hết hạn / lỗi kết nối / có bản cập nhật…) — không tạo card-trong-card.",
+    },
 }
 
 /** Dùng khi thông báo gắn với một hành động cụ thể (hoàn thành module) — icon riêng giúp người dùng nhận diện nhanh hơn icon trạng thái mặc định. */
@@ -67,6 +73,9 @@ export const WithCustomIcon: Story = {
         title: "Hoàn thành module",
         description: "Bạn đã hoàn thành toàn bộ 8 bài học trong module này.",
         icon: <CheckCircleIcon />,
+    },
+    parameters: {
+        usage: "Dùng khi thông báo gắn với một hành động cụ thể (hoàn thành module) — icon riêng giúp người dùng nhận diện nhanh hơn icon trạng thái mặc định.",
     },
 }
 
@@ -83,6 +92,9 @@ export const WithAction: Story = {
             </Button>
         ),
     },
+    parameters: {
+        usage: "Dùng khi muốn người dùng THỬ NGAY một tính năng mới (nút hành động đi kèm) thay vì chỉ đọc rồi bỏ qua.",
+    },
 }
 
 /** Dùng cho cảnh báo người dùng có thể tự tắt sau khi đã đọc (kết nối chập chờn) — không nên dùng cho lỗi cần được xử lý bắt buộc. */
@@ -94,6 +106,9 @@ export const Closable: Story = {
         onClose: () => {},
         closeAriaLabel: "Đóng thông báo",
     },
+    parameters: {
+        usage: "Dùng cho cảnh báo người dùng có thể tự tắt sau khi đã đọc (kết nối chập chờn) — không nên dùng cho lỗi cần được xử lý bắt buộc.",
+    },
 }
 
 /** Dùng khi thông điệp đã đủ rõ trong một dòng ngắn (đã lưu nháp) — tránh thêm mô tả thừa gây rối mắt. */
@@ -102,5 +117,8 @@ export const TitleOnly: Story = {
         status: "default",
         title: "Đã lưu bản nháp",
         description: undefined,
+    },
+    parameters: {
+        usage: "Dùng khi thông điệp đã đủ rõ trong một dòng ngắn (đã lưu nháp) — tránh thêm mô tả thừa gây rối mắt.",
     },
 }

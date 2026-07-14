@@ -16,6 +16,7 @@ type Story = StoryObj
 
 /** Bảng biến thể Button — chọn variant theo VAI: primary = CTA chính, secondary/tertiary = phụ, ghost = tối giản; + 3 size + trạng thái disabled. */
 export const Buttons: Story = {
+    parameters: { usage: "Bảng biến thể Button — chọn variant theo VAI: primary = CTA chính, secondary/tertiary = phụ, ghost = tối giản; + 3 size + trạng thái disabled." },
     render: () => (
         <div className="flex flex-col gap-6">
             <div className="flex items-center gap-3">
@@ -36,6 +37,7 @@ export const Buttons: Story = {
 
 /** Bảng màu Chip theo trạng thái ngữ nghĩa (accent/success/warning/danger) — dùng cho NHÃN trạng thái, không phải nút bấm. */
 export const Chips: Story = {
+    parameters: { usage: "Bảng màu Chip theo trạng thái ngữ nghĩa (accent/success/warning/danger) — dùng cho NHÃN trạng thái, không phải nút bấm." },
     render: () => (
         <div className="flex items-center gap-3">
             <Chip color="accent" variant="soft"><Chip.Label>Accent</Chip.Label></Chip>

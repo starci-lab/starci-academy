@@ -19,6 +19,10 @@ type Story = StoryObj<typeof StatusChip>
  * Dùng cho trạng thái "chưa xác định/chưa xử lý" — bản nháp, item chờ nhập liệu — tông trung tính không gây chú ý.
  */
 export const Default: Story = {
+    parameters: {
+        usage:
+            "Dùng cho trạng thái \"chưa xác định/chưa xử lý\" — bản nháp, item chờ nhập liệu — tông trung tính không gây chú ý.",
+    },
     args: {
         tone: "neutral",
         children: "Nháp",
@@ -36,6 +40,10 @@ const TONES: { tone: NonNullable<StatusChipProps["tone"]>; label: string }[] = [
  * Chọn tone theo Ý NGHĨA trạng thái thật trong app: success = đã xong, warning = sắp hết hạn/cần chú ý, danger = đã huỷ/lỗi, accent = nổi bật/mới — không chọn theo thẩm mỹ.
  */
 export const Tones: Story = {
+    parameters: {
+        usage:
+            "Chọn tone theo Ý NGHĨA trạng thái thật trong app: success = đã xong, warning = sắp hết hạn/cần chú ý, danger = đã huỷ/lỗi, accent = nổi bật/mới — không chọn theo thẩm mỹ.",
+    },
     render: () => (
         <div className="flex flex-col gap-4">
             {TONES.map(({ tone, label }) => (
@@ -70,6 +78,10 @@ const CheckIcon = () => (
  * Thêm icon khi trạng thái cần xác nhận trực quan nhanh (đã xác minh, đã duyệt) — không dùng icon cho mọi chip, chỉ khi icon củng cố thêm ý nghĩa.
  */
 export const WithIcon: Story = {
+    parameters: {
+        usage:
+            "Thêm icon khi trạng thái cần xác nhận trực quan nhanh (đã xác minh, đã duyệt) — không dùng icon cho mọi chip, chỉ khi icon củng cố thêm ý nghĩa.",
+    },
     args: {
         tone: "success",
         icon: <CheckIcon />,

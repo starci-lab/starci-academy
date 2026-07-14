@@ -122,6 +122,9 @@ type Story = StoryObj<typeof meta>
  * gói dịch vụ…) — không phải danh sách điều hướng thuần.
  */
 export const Default: Story = {
+    parameters: {
+        usage: "Dùng cho chọn 1-trong-N phương án có mô tả kèm theo (chu kỳ thanh toán, gói dịch vụ…) — không phải danh sách điều hướng thuần.",
+    },
     render: () => (
         <ControlledGroup
             items={PLAN_ITEMS}
@@ -138,6 +141,9 @@ export const Default: Story = {
  */
 export const Columns: Story = {
     name: "Columns (1 / 3)",
+    parameters: {
+        usage: "Chọn số cột theo bối cảnh: 1 cột cho khối hẹp/sidebar, 3 cột khi liệt kê nhiều lựa chọn ngang hàng (ví dụ chọn ngôn ngữ lập trình).",
+    },
     render: () => (
         <div className="flex flex-col gap-4">
             <div>
@@ -168,6 +174,9 @@ export const Columns: Story = {
  * chưa khả dụng — card disabled vẫn hiển thị để báo "sắp ra mắt", không ẩn đi.
  */
 export const WithIconAndDisabled: Story = {
+    parameters: {
+        usage: "Dùng khi lựa chọn cần icon nhận diện (ngôn ngữ, công nghệ) và có phương án chưa khả dụng — card disabled vẫn hiển thị để báo \"sắp ra mắt\", không ẩn đi.",
+    },
     render: () => (
         <ControlledGroup
             items={LANGUAGE_ITEMS}
@@ -183,6 +192,9 @@ export const WithIconAndDisabled: Story = {
  * (VD "Tiết kiệm 30%") — không lạm dụng cho mọi item, chỉ item muốn nổi bật.
  */
 export const WithBadge: Story = {
+    parameters: {
+        usage: "Gắn badge khi cần nhấn mạnh ưu đãi/khuyến khích chọn một phương án cụ thể (VD \"Tiết kiệm 30%\") — không lạm dụng cho mọi item, chỉ item muốn nổi bật.",
+    },
     render: () => (
         <ControlledGroup
             items={PLAN_ITEMS}

@@ -32,6 +32,7 @@ export const Default: Story = {
         label: "Khóa học của tôi",
         children: <SampleBody />,
     },
+    parameters: { usage: "Dùng làm khối nội dung mặc định trong dashboard/trang chi tiết — label ngoài, card chỉ chứa nội dung." },
 }
 
 /** Thêm icon khi label cần gợi ý nhanh về LOẠI nội dung (tài liệu, lịch, thông báo…) mà chữ không đủ rõ. */
@@ -41,6 +42,7 @@ export const WithIcon: Story = {
         icon: <BookOpenIcon className="size-4 text-accent" aria-hidden focusable="false" />,
         children: <SampleBody />,
     },
+    parameters: { usage: "Thêm icon khi label cần gợi ý nhanh về LOẠI nội dung (tài liệu, lịch, thông báo…) mà chữ không đủ rõ." },
 }
 
 /** Dùng khi cần gắn đơn vị/ghi chú ngắn ngay cạnh label (VND, đơn vị đo, trạng thái tóm tắt). */
@@ -50,6 +52,7 @@ export const WithLabelEnd: Story = {
         labelEnd: "VND",
         children: <SampleBody />,
     },
+    parameters: { usage: "Dùng khi cần gắn đơn vị/ghi chú ngắn ngay cạnh label (VND, đơn vị đo, trạng thái tóm tắt)." },
 }
 
 /** Dùng khi card là một DANH SÁCH rút gọn cần lối "xem thêm" dẫn sang trang đầy đủ — chỉnh `seeMoreLabel` khi "Xem thêm" mặc định không hợp ngữ cảnh (vd "Xem tất cả"). */
@@ -64,6 +67,7 @@ export const SeeMoreVariants: Story = {
             </LabeledCard>
         </div>
     ),
+    parameters: { usage: "Dùng khi card là một DANH SÁCH rút gọn cần lối \"xem thêm\" dẫn sang trang đầy đủ — chỉnh `seeMoreLabel` khi \"Xem thêm\" mặc định không hợp ngữ cảnh (vd \"Xem tất cả\")." },
 }
 
 /** Dùng khi khối cần một hành động quản trị đi kèm label (thêm/sửa/quản lý) thay vì dẫn sang trang khác như "xem thêm". */
@@ -77,6 +81,7 @@ export const WithAction: Story = {
         ),
         children: <SampleBody />,
     },
+    parameters: { usage: "Dùng khi khối cần một hành động quản trị đi kèm label (thêm/sửa/quản lý) thay vì dẫn sang trang khác như \"xem thêm\"." },
 }
 
 /**
@@ -117,4 +122,5 @@ export const LayoutVariants: Story = {
             </LabeledCard>
         </div>
     ),
+    parameters: { usage: "Chọn biến thể layout theo bối cảnh đặt card: `frameless` khi card nằm trong khối đã có viền (tránh viền lồng viền), `flushContent` cho danh sách/table sát mép, `fillHeight` khi card phải lấp đầy một vùng cao cố định (grid đều hàng), `subtleLabel` khi label chỉ là eyebrow phụ, không phải tiêu đề chính." },
 }

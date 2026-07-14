@@ -5,13 +5,6 @@ import {
     cn,
 } from "@heroui/react"
 import {
-    BookOpenIcon,
-    FlameIcon,
-    TargetIcon,
-    ChartBarIcon,
-    ListChecksIcon,
-} from "@phosphor-icons/react"
-import {
     useTranslations,
 } from "next-intl"
 import {
@@ -37,7 +30,6 @@ import {
 } from "../ChangelogList"
 import {
     JobReadinessWidget,
-    JobReadinessWidgetIcon,
 } from "./JobReadinessWidget"
 import type {
     WithClassNames,
@@ -64,32 +56,27 @@ export const OverviewTab = ({
             {/* frameless: resume items are themselves cards → no card-in-card */}
             <LabeledCard
                 label={t("dashboard.sections.continue")}
-                icon={<BookOpenIcon aria-hidden focusable="false" className="size-5" />}
                 frameless
             >
                 <ContinueLearning />
             </LabeledCard>
             <LabeledCard
                 label={t("dashboard.dailyQuest.title")}
-                icon={<ListChecksIcon aria-hidden focusable="false" className="size-5" />}
             >
                 <DailyQuest />
             </LabeledCard>
             <LabeledCard
                 label={t("dashboard.sections.streak")}
-                icon={<FlameIcon aria-hidden focusable="false" className="size-5" />}
             >
                 <StreakStrip />
             </LabeledCard>
             <LabeledCard
                 label={t("dashboard.sections.goals")}
-                icon={<TargetIcon aria-hidden focusable="false" className="size-5" />}
             >
                 <WeeklyGoals />
             </LabeledCard>
             <LabeledCard
                 label={t("jobReadiness.myTitle")}
-                icon={<JobReadinessWidgetIcon aria-hidden focusable="false" className="size-5" />}
             >
                 <JobReadinessWidget />
             </LabeledCard>
@@ -97,7 +84,6 @@ export const OverviewTab = ({
             <WeeklyChallengeCard />
             <LabeledCard
                 label={t("dashboard.contributions.heading")}
-                icon={<ChartBarIcon aria-hidden focusable="false" className="size-5" />}
             >
                 <OverviewContributions />
             </LabeledCard>

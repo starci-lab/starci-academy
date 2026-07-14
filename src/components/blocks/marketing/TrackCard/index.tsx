@@ -95,7 +95,7 @@ export const TrackCard = ({ icon, title, meta, color, tiers, viewLabel, onView, 
                 className={cn("group mt-auto inline-flex cursor-pointer items-center gap-1 self-start text-sm font-medium", CTA[color])}
             >
                 {viewLabel}
-                <ArrowRightIcon aria-hidden focusable="false" className="size-5 transition-transform group-hover:translate-x-0.5" />
+                <ArrowRightIcon aria-hidden focusable="false" className="size-4 transition-transform group-hover:translate-x-0.5" />
             </button>
         </CardContent>
     </Card>

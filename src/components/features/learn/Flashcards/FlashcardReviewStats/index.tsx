@@ -4,7 +4,7 @@ import React, { useMemo } from "react"
 import useSWR from "swr"
 import dayjs from "dayjs"
 import { Button, Chip, Typography, cn } from "@heroui/react"
-import { ArrowRightIcon, ChartLineUpIcon, CheckCircleIcon, FireIcon, FlameIcon, TrophyIcon } from "@phosphor-icons/react"
+import { ArrowRightIcon, ChartLineUpIcon, CheckCircleIcon, FlameIcon, TrophyIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import {
@@ -207,7 +207,6 @@ export const FlashcardReviewStats = ({ courseId, onStartReview, className }: Fla
                     {leechCards.length > 0 ? (
                         <LabeledCard
                             label={t("flashcard.review.leechHeroLabel")}
-                            icon={<FireIcon className="size-5 text-danger" weight="fill" aria-hidden focusable="false" />}
                             contentClassName="flex flex-col gap-3"
                         >
                             <SurfaceListCard>

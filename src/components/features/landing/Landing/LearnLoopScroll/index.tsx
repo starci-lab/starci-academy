@@ -234,7 +234,7 @@ const StepVisual = ({ stepKey }: { stepKey: string }) => {
             <>
                 {/* verdict = HeroUI Alert style (đúng SubmissionResult): tint success + icon + điểm */}
                 <motion.div variants={childVariants} className="flex items-center gap-3 rounded-xl bg-success/10 px-3 py-2">
-                    <CheckCircleIcon weight="fill" aria-hidden focusable="false" className="size-7 shrink-0 text-success" />
+                    <CheckCircleIcon aria-hidden focusable="false" className="size-7 shrink-0 text-success" />
                     <div className="flex flex-1 flex-col">
                         <span className="text-sm font-semibold text-success">{t("submissionResult.passed")} · 92/100</span>
                         <span className="text-xs text-success/80">cần ≥ 70 để qua</span>

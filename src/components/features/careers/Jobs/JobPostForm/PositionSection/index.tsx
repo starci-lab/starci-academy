@@ -10,7 +10,6 @@ import {
     TextField,
     Typography,
 } from "@heroui/react"
-import { BriefcaseIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import type { UseFormSetValue } from "react-hook-form"
 import type { SubmitJobPostingFormValues } from "@/hooks/rhf/useSubmitJobPostingForm"
@@ -77,7 +76,6 @@ export const PositionSection = ({
     return (
         <LabeledCard
             label={t("jobs.post.sections.position")}
-            icon={<BriefcaseIcon aria-hidden focusable="false" className="size-5" />}
         >
             <div className="flex flex-col gap-3">
                 <TextField variant="secondary">

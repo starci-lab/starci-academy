@@ -191,9 +191,9 @@ export const FlashcardQuizHistory = ({ courseId, onStartQuiz, className }: Flash
                                         event.stopPropagation()
                                         router.push(resolveHref(tag))
                                     }}
-                                    className="flex items-center justify-between gap-3 rounded-xl border border-default bg-default px-3 py-2 text-left hover:bg-default/70"
+                                    className="group flex items-center justify-between gap-3 rounded-xl border border-default bg-default px-3 py-2 text-left"
                                 >
-                                    <Typography type="body-xs" weight="medium" className="truncate">
+                                    <Typography type="body-xs" weight="medium" className="truncate group-hover:underline">
                                         {tag.tag}
                                     </Typography>
                                     <Typography type="body-xs" color="muted" className="shrink-0">

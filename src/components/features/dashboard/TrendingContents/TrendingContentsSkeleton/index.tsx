@@ -4,9 +4,6 @@ import React from "react"
 import {
     useTranslations,
 } from "next-intl"
-import {
-    FlameIcon,
-} from "@phosphor-icons/react"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -38,7 +35,6 @@ export const TrendingContentsSkeleton = ({ className }: TrendingContentsSkeleton
             frameless
             className={className}
             label={t("dashboard.trending.title")}
-            icon={<FlameIcon aria-hidden focusable="false" className="size-5 text-accent" />}
         >
             <SurfaceListCard>
                 {ROW_WIDTHS.slice(0, SKELETON_ROW_COUNT).map((width, index) => (

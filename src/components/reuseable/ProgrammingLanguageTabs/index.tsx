@@ -135,11 +135,9 @@ export const ProgrammingLanguageTabs = ({
                                     />
                                     {t(`programmingLanguage.${lang}`)}
                                 </span>
-                                {isSecondary ? null : (
-                                    <Tabs.Indicator
-                                        className={PROGRAMMING_LANGUAGE_TABS_INDICATOR_CLASS_NAME}
-                                    />
-                                )}
+                                <Tabs.Indicator
+                                    className={isSecondary ? undefined : PROGRAMMING_LANGUAGE_TABS_INDICATOR_CLASS_NAME}
+                                />
                             </Tabs.Tab>
                         )
                     })}

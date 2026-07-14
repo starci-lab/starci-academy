@@ -360,12 +360,6 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
                                 {/* paywall lives INSIDE the body card, under the faded teaser
                                     (flat — not a 2nd card). */}
                                 {isLocked ? <PremiumPaywall /> : null}
-                                {/* reaction footer (belongs to the lesson) — end-of-article strip
-                                    inside the reading card, à la Medium / Substack; a border-t
-                                    divider, NOT a nested card. Hidden behind the paywall. */}
-                                {!isLocked ? (
-                                    <ContentReactionBar className="mt-6 border-t border-default pt-4" />
-                                ) : null}
                             </CardContent>
                         </Card>
                     </div>
@@ -376,6 +370,11 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
                     full-width tabs. */}
                 {!isLocked && !isFullWidthTab ? (
                     <div className="flex flex-col gap-6 pb-6">
+                        <Card className="mx-auto w-full max-w-3xl">
+                            <CardContent>
+                                <ContentReactionBar />
+                            </CardContent>
+                        </Card>
                         {/* completion handoff: after reading, the natural next rung is
                             this lesson's own challenges. MOBILE-ONLY (`lg:hidden`): on
                             desktop the right rail's "Luyện tập bài này" already surfaces

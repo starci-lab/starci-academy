@@ -16,9 +16,6 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    CodeIcon,
-} from "@phosphor-icons/react"
-import {
     FaGithub,
 } from "react-icons/fa6"
 import {
@@ -88,7 +85,6 @@ export const MySubmissions = ({
 
             <LabeledCard
                 label={t("profileSettings.learning.submissions.title")}
-                icon={<CodeIcon aria-hidden focusable="false" className="size-5 text-accent" />}
             >
                 <AsyncContent
                     isLoading={!swr.data && !swr.error}

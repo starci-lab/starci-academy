@@ -49,7 +49,7 @@ export const SitePreview = () => (
     <div className="flex h-full flex-col bg-surface text-foreground">
         {/* app nav */}
         <div className="flex shrink-0 items-center justify-between border-b border-default px-4 py-2">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
                 <span className="flex items-center gap-2 font-semibold">
                     <span aria-hidden className="size-3.5 rounded-md bg-accent" />
                     StarCi
@@ -91,7 +91,7 @@ export const SitePreview = () => (
                         <div className="flex min-w-0 flex-1 flex-col">
                             <span className="flex items-center gap-1 truncate text-sm font-medium">
                                 {course.name}
-                                <CheckCircleIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-success" />
+                                <CheckCircleIcon aria-hidden focusable="false" className="size-3.5 shrink-0 text-success" />
                             </span>
                             <span className="flex items-center gap-1 text-xs text-muted">
                                 <StarIcon weight="fill" aria-hidden focusable="false" className="size-3 text-warning" />

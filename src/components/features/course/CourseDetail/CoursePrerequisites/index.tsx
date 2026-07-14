@@ -49,7 +49,6 @@ export const CoursePrerequisites = ({ className }: CoursePrerequisitesProps) => 
         <LabeledCard
             className={className}
             label={t("courseLanding.prerequisites")}
-            icon={<ListBulletsIcon aria-hidden focusable="false" className="size-5" />}
             frameless
         >
             <AsyncContent

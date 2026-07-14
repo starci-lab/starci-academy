@@ -17,9 +17,6 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    ChatCircleIcon,
-} from "@phosphor-icons/react"
-import {
     SettingsBreadcrumb,
 } from "../SettingsBreadcrumb"
 import type {
@@ -82,7 +79,6 @@ export const MyFeedback = ({
 
             <LabeledCard
                 label={t("profileSettings.learning.feedback.title")}
-                icon={<ChatCircleIcon aria-hidden focusable="false" className="size-5 text-accent" />}
             >
                 <AsyncContent
                     isLoading={!swr.data && !swr.error}

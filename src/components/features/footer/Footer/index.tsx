@@ -79,7 +79,7 @@ export const Footer = ({ className }: FooterProps) => {
             <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
                 {/* top: brand+manifesto+socials (left) · link columns (right) */}
                 <div className="flex flex-col justify-between gap-10 md:flex-row">
-                    <div className="flex max-w-sm flex-col gap-4">
+                    <div className="flex max-w-sm flex-col gap-3">
                         {/* the column is a flex-col (align-items: stretch by default), which
                             would otherwise stretch the lockup's auto width to the full column
                             width while its height stays fixed — self-start opts it out */}
@@ -114,7 +114,7 @@ export const Footer = ({ className }: FooterProps) => {
                     <Typography type="body-xs" color="muted">
                         {t("footer.copyright", { year })} · {t("footer.madeBy")}
                     </Typography>
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-3">
                         <Link
                             onPress={() => router.push(paths.terms().build())}
                             className="cursor-pointer text-xs text-muted transition-colors hover:text-foreground"

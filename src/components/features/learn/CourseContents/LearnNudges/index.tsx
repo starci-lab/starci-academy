@@ -9,7 +9,6 @@ import {
     useRouter,
 } from "next/navigation"
 import {
-    ArrowRightIcon,
     CardsIcon,
     MicrophoneStageIcon,
     TrophyIcon,
@@ -138,13 +137,6 @@ export const LearnNudges = ({ className }: LearnNudgesProps) => {
                     hover="underline"
                     leading={nudge.icon}
                     title={nudge.label}
-                    trailing={(
-                        <ArrowRightIcon
-                            aria-hidden
-                            focusable="false"
-                            className="size-5 text-muted"
-                        />
-                    )}
                     onPress={() => router.push(nudge.href)}
                 />
             ))}

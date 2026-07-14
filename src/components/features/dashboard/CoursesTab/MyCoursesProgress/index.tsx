@@ -20,8 +20,6 @@ import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/
 export interface MyCoursesProgressProps extends WithClassNames<undefined> {
     /** Section label, rendered outside the card (owned here, like every other self-contained section). */
     label: React.ReactNode
-    /** Optional leading icon before the label. */
-    icon?: React.ReactNode
 }
 
 /**
@@ -36,7 +34,6 @@ export interface MyCoursesProgressProps extends WithClassNames<undefined> {
 export const MyCoursesProgress = ({
     className,
     label,
-    icon,
 }: MyCoursesProgressProps) => {
     const t = useTranslations()
     const { data, isLoading, error, mutate } = useQueryMyCoursesSwr()
@@ -44,7 +41,7 @@ export const MyCoursesProgress = ({
     const hasCourses = !isLoading && !error && courses.length > 0
 
     return (
-        <LabeledCard className={className} label={label} icon={icon} frameless={hasCourses}>
+        <LabeledCard className={className} label={label} frameless={hasCourses}>
             <AsyncContent
                 isLoading={isLoading && courses.length === 0}
                 skeleton={(

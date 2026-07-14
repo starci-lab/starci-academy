@@ -153,7 +153,6 @@ export const FlashcardQuizStats = ({ courseId, onStartQuiz, className }: Flashca
                     {weakest ? (
                         <LabeledCard
                             label={t("flashcard.quiz.quizStatsGapLabel")}
-                            icon={<TargetIcon className="size-5 text-danger" aria-hidden focusable="false" />}
                             contentClassName="flex flex-col gap-3"
                         >
                             <SurfaceListCard>

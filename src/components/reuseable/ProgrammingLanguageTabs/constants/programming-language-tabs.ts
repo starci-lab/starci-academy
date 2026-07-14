@@ -16,4 +16,4 @@ export const PROGRAMMING_LANGUAGE_TABS_SECONDARY_LIST_CLASS_NAME = "w-full borde
 
 /** Per-tab classes for secondary variant — accent underline when selected. */
 export const PROGRAMMING_LANGUAGE_TABS_SECONDARY_TAB_CLASS_NAME =
-    "rounded-none data-[selected=true]:border-b-2 data-[selected=true]:border-accent data-[selected=true]:text-accent"
+    "rounded-none data-[selected=true]:text-accent"

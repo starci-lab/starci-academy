@@ -22,8 +22,6 @@ import { useAppSelector } from "@/redux/hooks"
 export interface OverviewCoursesProps extends WithClassNames<undefined> {
     /** Section label, rendered outside the card (owned here, like every other self-contained section). */
     label: React.ReactNode
-    /** Optional leading icon before the label. */
-    icon?: React.ReactNode
     /** Optional "see more" link on the label row. */
     onSeeMore?: () => void
     /** Text for the see-more link. */
@@ -42,7 +40,7 @@ export interface OverviewCoursesProps extends WithClassNames<undefined> {
  *
  * @param props - {@link OverviewCoursesProps}
  */
-export const OverviewCourses = ({ className, label, icon, onSeeMore, seeMoreLabel }: OverviewCoursesProps) => {
+export const OverviewCourses = ({ className, label, onSeeMore, seeMoreLabel }: OverviewCoursesProps) => {
     const t = useTranslations()
     const username = useProfileUsername()
     const { data: user } = useQueryUserProfileSwr(username)
@@ -60,7 +58,6 @@ export const OverviewCourses = ({ className, label, icon, onSeeMore, seeMoreLabe
         <LabeledCard
             className={className}
             label={label}
-            icon={icon}
             onSeeMore={onSeeMore}
             seeMoreLabel={seeMoreLabel}
             frameless={hasCourses}

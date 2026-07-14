@@ -91,10 +91,10 @@ const WeakTagRow = ({
         <button
             type="button"
             onClick={() => router.push(href)}
-            className="group flex w-full cursor-pointer items-center justify-between gap-3 rounded-xl border border-default bg-default px-4 py-3 text-left outline-none transition-colors hover:bg-default/70 focus-visible:ring-2 focus-visible:ring-accent"
+            className="group flex w-full cursor-pointer items-center justify-between gap-3 rounded-xl border border-default bg-default px-4 py-3 text-left outline-none transition-colors focus-visible:ring-2 focus-visible:ring-accent"
         >
             <div className="flex min-w-0 flex-col gap-0">
-                <Typography type="body-sm" weight="medium" className="truncate">
+                <Typography type="body-sm" weight="medium" className="truncate group-hover:underline">
                     {tag.tag}
                 </Typography>
                 <Typography type="body-xs" color="muted">

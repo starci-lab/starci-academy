@@ -5,9 +5,6 @@ import {
     cn,
 } from "@heroui/react"
 import {
-    GraduationCapIcon,
-} from "@phosphor-icons/react"
-import {
     useTranslations,
 } from "next-intl"
 import {
@@ -40,7 +37,6 @@ export const CoursesTab = ({
         <div className={cn("flex flex-col gap-6", className)}>
             <MyCoursesProgress
                 label={t("dashboard.enrolledCourses")}
-                icon={<GraduationCapIcon aria-hidden focusable="false" className="size-5" />}
             />
             <RecommendedCourses />
             <UpcomingLivestreamCard />

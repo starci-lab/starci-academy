@@ -2,7 +2,6 @@
 
 import React from "react"
 import { Input, Label, TextField } from "@heroui/react"
-import { PaperPlaneTiltIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import type { UseFormSetValue } from "react-hook-form"
 import type { SubmitJobPostingFormValues } from "@/hooks/rhf/useSubmitJobPostingForm"
@@ -40,7 +39,6 @@ export const ApplyMethodSection = ({
     return (
         <LabeledCard
             label={t("jobs.post.sections.applyMethod")}
-            icon={<PaperPlaneTiltIcon aria-hidden focusable="false" className="size-5" />}
         >
             <div className="flex flex-col gap-3">
                 <SegmentedControl<JobApplyMethod>

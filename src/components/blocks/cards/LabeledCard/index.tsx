@@ -8,8 +8,6 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 export interface LabeledCardProps extends WithClassNames<undefined> {
     /** Section title rendered OUTSIDE (above) the card. */
     label: ReactNode
-    /** Optional leading icon shown before the label. */
-    icon?: ReactNode
     /**
      * Optional secondary label pinned to the RIGHT of the label row (muted) — a
      * passive tag, NOT an action (e.g. a currency "VND", a count, a unit). Rendered
@@ -59,6 +57,14 @@ export interface LabeledCardProps extends WithClassNames<undefined> {
      * cần label phụ thì label-gap-2"). `labelEnd` shrinks to `text-xs` to match.
      */
     subtleLabel?: boolean
+    /**
+     * When true, adds `border border-default` on top of the default
+     * `shadow-surface` — for shells that need to stand out as a distinct
+     * bounded surface even against a `bg-surface` sibling (e.g. FlipCard's
+     * question/answer pair). Default false preserves the elevation-only
+     * convention for every other LabeledCard consumer.
+     */
+    bordered?: boolean
 }
 
 /**
@@ -66,13 +72,12 @@ export interface LabeledCardProps extends WithClassNames<undefined> {
  * above the card, while the `Card` holds only content — `<Label/>` then
  * `<Card>…</Card>`. Optionally shows a right-aligned "see more →" link (the caret
  * slides right on hover). Replaces the legacy in-card header (SectionCard); owns
- * the whole look so features just pass label / icon / see-more / children.
+ * the whole look so features just pass label / see-more / children.
  *
  * @param props - {@link LabeledCardProps}
  */
 export const LabeledCard = ({
     label,
-    icon,
     labelEnd,
     onSeeMore,
     seeMoreLabel = "Xem thêm",
@@ -84,12 +89,12 @@ export const LabeledCard = ({
     flushContent = false,
     fillHeight = false,
     subtleLabel = false,
+    bordered = false,
 }: LabeledCardProps) => {
     return (
         <section className={cn("flex flex-col", subtleLabel ? "gap-2" : "gap-3", fillHeight && "h-full", className)}>
             <div className="flex items-center justify-between gap-3">
                 <div className="flex min-w-0 items-center gap-2">
-                    {icon}
                     {subtleLabel ? (
                         <span className="truncate text-xs text-muted">{label}</span>
                     ) : (
@@ -99,7 +104,10 @@ export const LabeledCard = ({
                 {action ?? (onSeeMore ? (
                     <Link
                         onPress={onSeeMore}
-                        className="group inline-flex shrink-0 cursor-pointer items-center gap-2 text-accent"
+                        className={cn(
+                            "group inline-flex shrink-0 cursor-pointer items-center gap-1 text-accent no-underline transition-opacity hover:opacity-60",
+                            subtleLabel ? "text-xs" : "text-sm",
+                        )}
                     >
                         {seeMoreLabel}
                         <CaretRightIcon
@@ -116,7 +124,7 @@ export const LabeledCard = ({
             {frameless ? (
                 <div className={cn(contentClassName)}>{children}</div>
             ) : (
-                <Card className={cn(fillHeight && "flex-1")}>
+                <Card className={cn(bordered && "border border-default", fillHeight && "flex-1")}>
                     <CardContent className={cn(flushContent && "p-0", fillHeight && "h-full", contentClassName)}>
                         {children}
                     </CardContent>

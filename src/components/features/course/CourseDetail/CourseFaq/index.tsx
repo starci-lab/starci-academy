@@ -55,7 +55,6 @@ export const CourseFaq = ({ className }: CourseFaqProps) => {
         <LabeledCard
             className={className}
             label={t("courseLanding.faq")}
-            icon={<QuestionIcon aria-hidden focusable="false" className="size-5" />}
             frameless={hasQnas}
         >
             <AsyncContent

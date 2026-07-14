@@ -8,10 +8,6 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import {
-    ChartBarIcon,
-    PuzzlePieceIcon,
-} from "@phosphor-icons/react"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -179,7 +175,6 @@ export const ProfileChallenges = ({
                 {/* distribution card — by difficulty + by language */}
                 <LabeledCard
                     label={t("publicProfile.challengesTab.statsHeading")}
-                    icon={<ChartBarIcon aria-hidden focusable="false" className="size-5" />}
                     frameless
                 >
                     <SurfaceListCard>
@@ -219,7 +214,6 @@ export const ProfileChallenges = ({
                 {/* submission list — one collapsible row per course, shared legend at the foot */}
                 <LabeledCard
                     label={t("publicProfile.challengesTab.repoHeading")}
-                    icon={<PuzzlePieceIcon aria-hidden focusable="false" className="size-5" />}
                     frameless
                 >
                     <SurfaceListCard>

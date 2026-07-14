@@ -5,9 +5,6 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    FlameIcon,
-} from "@phosphor-icons/react"
-import {
     TrendingRow,
 } from "./TrendingRow"
 import {
@@ -50,7 +47,6 @@ export const TrendingContents = ({
                 frameless
                 className={className}
                 label={t("dashboard.trending.title")}
-                icon={<FlameIcon aria-hidden focusable="false" className="size-5 text-accent" />}
             >
                 <SurfaceListCard>
                     {(data ?? []).map((item, index) => (

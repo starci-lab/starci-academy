@@ -13,10 +13,6 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    ChartBarIcon,
-    ClockCounterClockwiseIcon,
-} from "@phosphor-icons/react"
-import {
     useProfileUsername,
 } from "../../hooks/useProfileUsername"
 import type {
@@ -242,7 +238,6 @@ export const ProfileCoding = ({
                 {hasStats ? (
                     <LabeledCard
                         label={t("publicProfile.coding.statsHeading")}
-                        icon={<ChartBarIcon aria-hidden focusable="false" className="size-5" />}
                         frameless
                     >
                         <SurfaceListCard>
@@ -298,7 +293,6 @@ export const ProfileCoding = ({
                 {solvedHistory.length > 0 ? (
                     <LabeledCard
                         label={t("publicProfile.coding.history")}
-                        icon={<ClockCounterClockwiseIcon aria-hidden focusable="false" className="size-5" />}
                         frameless
                     >
                         <SurfaceListCard>

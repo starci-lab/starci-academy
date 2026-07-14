@@ -44,7 +44,7 @@ export const PhaseRow = ({ row, className }: PhaseRowProps) => {
         <div className={cn("flex items-center justify-between gap-3", className)}>
             <div className="flex min-w-0 items-center gap-2">
                 {row.soldOut ? (
-                    <CheckCircleIcon aria-hidden focusable="false" weight="fill" className="size-4 shrink-0 text-muted" />
+                    <CheckCircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-muted" />
                 ) : row.isActive ? (
                     <CircleIcon aria-hidden focusable="false" weight="fill" className="size-4 shrink-0 text-accent" />
                 ) : (

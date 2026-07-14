@@ -15,9 +15,6 @@ import {
     useRouter,
 } from "next/navigation"
 import {
-    PulseIcon,
-} from "@phosphor-icons/react"
-import {
     useProfileUsername,
 } from "../../hooks/useProfileUsername"
 import type {
@@ -115,7 +112,6 @@ export const ProfileActivity = ({
         <LabeledCard
             className={className}
             label={t("publicProfile.recentActivity")}
-            icon={<PulseIcon aria-hidden focusable="false" className="size-5" />}
         >
             <AsyncContent
                 isLoading={(isLoading || !userId) && items.length === 0}

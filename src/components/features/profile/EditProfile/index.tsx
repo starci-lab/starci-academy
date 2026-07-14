@@ -188,7 +188,7 @@ export const EditProfile = () => {
                 </TextField>
 
                 {/* preferred work mode — a setting with a small fixed choice → segmented, not dropdown */}
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-3">
                     <Label htmlFor="profile-work-mode">{t("profileEdit.workMode")}</Label>
                     <SegmentedControl
                         items={[

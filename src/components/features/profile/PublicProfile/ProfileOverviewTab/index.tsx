@@ -2,13 +2,6 @@
 
 import React from "react"
 import { cn } from "@heroui/react"
-import {
-    GraduationCapIcon,
-    ChartBarIcon,
-    TrendUpIcon,
-    PuzzlePieceIcon,
-    CodeIcon,
-} from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { ProfileJobReadiness } from "./ProfileJobReadiness"
@@ -51,19 +44,16 @@ export const ProfileOverviewTab = ({
                 rendering bare under a hardcoded `frameless`. */}
             <ProfileJobReadiness
                 label={t("jobReadiness.title")}
-                icon={<TrendUpIcon aria-hidden focusable="false" className="size-5" />}
             />
 
             <OverviewCourses
                 label={t("publicProfile.overview.courses")}
-                icon={<GraduationCapIcon aria-hidden focusable="false" className="size-5" />}
                 onSeeMore={() => setTab("activity")}
                 seeMoreLabel={t("publicProfile.overview.seeMore")}
             />
 
             <LabeledCard
                 label={t("publicProfile.contributions.heading")}
-                icon={<ChartBarIcon aria-hidden focusable="false" className="size-5" />}
             >
                 <OverviewContributions />
             </LabeledCard>
@@ -72,7 +62,6 @@ export const ProfileOverviewTab = ({
             <div className="grid gap-6 md:grid-cols-2">
                 <OverviewChallengeSkills
                     label={t("publicProfile.overview.challengeSkills")}
-                    icon={<PuzzlePieceIcon aria-hidden focusable="false" className="size-5" />}
                     onSeeMore={() => setTab("challenges")}
                     seeMoreLabel={t("publicProfile.overview.seeMore")}
                     fillHeight
@@ -80,7 +69,6 @@ export const ProfileOverviewTab = ({
 
                 <OverviewCodeSkills
                     label={t("publicProfile.overview.codeSkills")}
-                    icon={<CodeIcon aria-hidden focusable="false" className="size-5" />}
                     onSeeMore={() => setTab("skills")}
                     seeMoreLabel={t("publicProfile.overview.seeMore")}
                     fillHeight

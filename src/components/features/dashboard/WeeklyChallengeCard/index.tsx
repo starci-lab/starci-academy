@@ -8,9 +8,6 @@ import {
     Typography,
 } from "@heroui/react"
 import {
-    FlameIcon,
-} from "@phosphor-icons/react"
-import {
     useLocale,
     useTranslations,
 } from "next-intl"
@@ -111,7 +108,6 @@ export const WeeklyChallengeCard = ({
         >
             <LabeledCard
                 label={t("weeklyChallenge.title")}
-                icon={<FlameIcon aria-hidden focusable="false" className="size-5" />}
                 className={className}
                 contentClassName="flex flex-col gap-3"
             >

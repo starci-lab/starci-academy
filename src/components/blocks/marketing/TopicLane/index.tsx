@@ -35,7 +35,7 @@ export const TopicLane = ({ icon, title, items, className }: TopicLaneProps) => 
     return (
         <div className={cn("flex flex-col gap-3", className)}>
             <div className="flex items-center gap-2">
-                <span className="text-accent [&>svg]:size-5">{icon}</span>
+                <span className="text-accent [&>svg]:size-4">{icon}</span>
                 <Typography type="body-sm" weight="semibold">
                     {title}
                 </Typography>
@@ -46,9 +46,9 @@ export const TopicLane = ({ icon, title, items, className }: TopicLaneProps) => 
                         key={`${item.label}-${index}`}
                         type="button"
                         onClick={item.onPress}
-                        className="group flex w-full cursor-pointer items-center justify-between gap-3 rounded-xl border border-default bg-surface px-3 py-2 text-left outline-none transition-colors hover:bg-default focus-visible:ring-2 focus-visible:ring-accent"
+                        className="group flex w-full cursor-pointer items-center justify-between gap-3 rounded-xl border border-default bg-surface px-3 py-2 text-left outline-none transition-colors focus-visible:ring-2 focus-visible:ring-accent"
                     >
-                        <Typography type="body-sm" className="min-w-0 truncate group-hover:text-accent">
+                        <Typography type="body-sm" className="min-w-0 truncate underline-offset-2 group-hover:underline">
                             {item.label}
                         </Typography>
                         <Typography type="code" className="shrink-0 text-[10px] text-muted">

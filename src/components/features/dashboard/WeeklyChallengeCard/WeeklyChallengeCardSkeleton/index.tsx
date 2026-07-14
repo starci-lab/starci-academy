@@ -4,9 +4,6 @@ import React from "react"
 import {
     useTranslations,
 } from "next-intl"
-import {
-    FlameIcon,
-} from "@phosphor-icons/react"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -32,7 +29,6 @@ export const WeeklyChallengeCardSkeleton = ({ className }: WeeklyChallengeCardSk
     return (
         <LabeledCard
             label={t("weeklyChallenge.title")}
-            icon={<FlameIcon aria-hidden focusable="false" className="size-5" />}
             className={className}
             contentClassName="flex flex-col gap-3"
         >

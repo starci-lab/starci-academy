@@ -40,7 +40,7 @@ export const BackLink = ({ label, target, onPress, className }: BackLinkProps) =
             <ArrowLeftIcon
                 aria-hidden
                 focusable="false"
-                className="size-5 transition-transform group-hover:-translate-x-1"
+                className="size-4 transition-transform group-hover:-translate-x-1"
             />
             <span className="group-hover:underline">{text}</span>
         </Link>

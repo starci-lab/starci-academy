@@ -88,81 +88,83 @@ export const BlogList = () => {
             {/* masthead — operational 3D showcase of the real backend (the blog's subject) */}
             <Masthead />
 
-            {/* identity — reframed as an engineering publication */}
-            <PageHeader title={t("title")} description={t("subtitle")} />
+            {/* identity + browse — tier below the masthead, header separated from its content cluster */}
+            <div className="flex flex-col gap-10">
+                <PageHeader title={t("title")} description={t("subtitle")} />
 
-            {/* browse — topics framing + (optional) filter + results, one cluster */}
-            <div className="flex flex-col gap-3">
-                <TopicsStrip />
+                {/* browse — topics framing + (optional) filter + results, one cluster */}
+                <div className="flex flex-col gap-6">
+                    <TopicsStrip />
 
-                {showFilter && (
-                    <CategoryFilter
-                        value={category}
-                        onChange={changeCategory}
-                        categories={availableCategories}
-                    />
-                )}
+                    {showFilter && (
+                        <CategoryFilter
+                            value={category}
+                            onChange={changeCategory}
+                            categories={availableCategories}
+                        />
+                    )}
 
-                <AsyncContent
-                    isLoading={isLoading && posts.length === 0}
-                    skeleton={<BlogListSkeleton />}
-                    error={error}
-                    errorContent={{
-                        title: t("errorTitle"),
-                        description: t("errorHint"),
-                        onRetry: () => {
-                            void mutate()
-                        },
-                        retryLabel: t("retry"),
-                    }}
-                    isEmpty={posts.length === 0}
-                    emptyContent={
-                        category
-                            ? {
-                                title: t("emptyInFilter"),
-                                description: t("emptyInFilterHint"),
-                                onRetry: () => changeCategory(null),
-                                retryLabel: t("clearFilter"),
-                            }
-                            : {
-                                title: t("empty"),
-                                description: t("emptyHint"),
-                            }
-                    }
-                >
-                    <div className="flex flex-col gap-3">
-                        {pinned && <StartHereAnchor post={pinned} />}
-                        {featured && (
-                            <FeaturedPost
-                                post={featured}
-                                formattedDate={formatDate(featured.publishedAt)}
-                            />
-                        )}
-                        {rest.length > 0 && (
-                            <div className="flex flex-col">
-                                {rest.map((post) => (
-                                    <PostRow
-                                        key={post.id}
-                                        post={post}
-                                        formattedDate={formatDate(post.publishedAt)}
-                                    />
-                                ))}
-                            </div>
-                        )}
-                        {hasMore && (
-                            <div className="flex justify-center pt-2">
-                                <Button
-                                    variant="secondary"
-                                    size="md"
-                                    isPending={isValidating}
-                                    onPress={() => setLimit((current) => current + PAGE_SIZE)}
-                                >
-                                    {t("loadMore")}
-                                </Button>
-                            </div>
-                        )}
-                    </div>
-                </AsyncContent>
+                    <AsyncContent
+                        isLoading={isLoading && posts.length === 0}
+                        skeleton={<BlogListSkeleton />}
+                        error={error}
+                        errorContent={{
+                            title: t("errorTitle"),
+                            description: t("errorHint"),
+                            onRetry: () => {
+                                void mutate()
+                            },
+                            retryLabel: t("retry"),
+                        }}
+                        isEmpty={posts.length === 0}
+                        emptyContent={
+                            category
+                                ? {
+                                    title: t("emptyInFilter"),
+                                    description: t("emptyInFilterHint"),
+                                    onRetry: () => changeCategory(null),
+                                    retryLabel: t("clearFilter"),
+                                }
+                                : {
+                                    title: t("empty"),
+                                    description: t("emptyHint"),
+                                }
+                        }
+                    >
+                        <div className="flex flex-col gap-3">
+                            {pinned && <StartHereAnchor post={pinned} />}
+                            {featured && (
+                                <FeaturedPost
+                                    post={featured}
+                                    formattedDate={formatDate(featured.publishedAt)}
+                                />
+                            )}
+                            {rest.length > 0 && (
+                                <div className="flex flex-col">
+                                    {rest.map((post) => (
+                                        <PostRow
+                                            key={post.id}
+                                            post={post}
+                                            formattedDate={formatDate(post.publishedAt)}
+                                        />
+                                    ))}
+                                </div>
+                            )}
+                            {hasMore && (
+                                <div className="flex justify-center pt-2">
+                                    <Button
+                                        variant="secondary"
+                                        size="md"
+                                        isPending={isValidating}
+                                        onPress={() => setLimit((current) => current + PAGE_SIZE)}
+                                    >
+                                        {t("loadMore")}
+                                    </Button>
+                                </div>
+                            )}
+                        </div>
+                    </AsyncContent>
+                </div>
             </div>
         </div>
     )

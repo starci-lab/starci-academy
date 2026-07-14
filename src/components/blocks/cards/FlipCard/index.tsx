@@ -53,7 +53,7 @@ export const FlipCard = ({ revealed, questionLabel, answerLabel, front, belowFro
                 stay under the QUESTION when the answer reveals below (not pushed
                 to the bottom of the answer). */}
             <div className="flex flex-col gap-3">
-                <LabeledCard label={questionLabel} contentClassName="flex flex-col gap-3">
+                <LabeledCard label={questionLabel} bordered contentClassName="flex flex-col gap-3">
                     {front}
                 </LabeledCard>
                 {belowFront}
@@ -72,7 +72,7 @@ export const FlipCard = ({ revealed, questionLabel, answerLabel, front, belowFro
                         onAnimationComplete={() => setAnimating(false)}
                         className={cn(animating && "overflow-hidden")}
                     >
-                        <LabeledCard label={answerLabel}>
+                        <LabeledCard label={answerLabel} bordered>
                             <ScrollShadow hideScrollBar className="flex max-h-[28rem] flex-col gap-3 overflow-y-auto text-left">
                                 {back}
                             </ScrollShadow>

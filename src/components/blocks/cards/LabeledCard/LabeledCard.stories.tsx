@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Badge, Button } from "@heroui/react"
-import { BookOpenIcon, ClockIcon } from "@phosphor-icons/react"
+import { Link } from "@heroui/react"
+import { PencilIcon } from "@phosphor-icons/react"
+import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { LabeledCard } from "./index"
 
 /**
@@ -35,16 +36,6 @@ export const Default: Story = {
     parameters: { usage: "Dùng làm khối nội dung mặc định trong dashboard/trang chi tiết — label ngoài, card chỉ chứa nội dung." },
 }
 
-/** Thêm icon khi label cần gợi ý nhanh về LOẠI nội dung (tài liệu, lịch, thông báo…) mà chữ không đủ rõ. */
-export const WithIcon: Story = {
-    args: {
-        label: "Tài liệu tham khảo",
-        icon: <BookOpenIcon className="size-4 text-accent" aria-hidden focusable="false" />,
-        children: <SampleBody />,
-    },
-    parameters: { usage: "Thêm icon khi label cần gợi ý nhanh về LOẠI nội dung (tài liệu, lịch, thông báo…) mà chữ không đủ rõ." },
-}
-
 /** Dùng khi cần gắn đơn vị/ghi chú ngắn ngay cạnh label (VND, đơn vị đo, trạng thái tóm tắt). */
 export const WithLabelEnd: Story = {
     args: {
@@ -70,57 +61,89 @@ export const SeeMoreVariants: Story = {
     parameters: { usage: "Dùng khi card là một DANH SÁCH rút gọn cần lối \"xem thêm\" dẫn sang trang đầy đủ — chỉnh `seeMoreLabel` khi \"Xem thêm\" mặc định không hợp ngữ cảnh (vd \"Xem tất cả\")." },
 }
 
-/** Dùng khi khối cần một hành động quản trị đi kèm label (thêm/sửa/quản lý) thay vì dẫn sang trang khác như "xem thêm". */
+/**
+ * Dùng khi khối cần một hành động quản trị đi kèm label (thêm/sửa/quản lý) thay vì dẫn sang trang
+ * khác như "xem thêm". `action` LUÔN là `Link` (không phải Button/Chip đặc) — cùng công thức hover
+ * với `onSeeMore`: `no-underline` + `transition-opacity hover:opacity-60` (KHÔNG underline khi hover).
+ * Icon tuỳ chọn đặt đầu hoặc cuối chữ; chỉ riêng `CaretRightIcon` của `onSeeMore` mới có hiệu ứng
+ * trượt nhẹ (`group-hover:translate-x-1`), icon khác thì không cần.
+ */
 export const WithAction: Story = {
     args: {
         label: "Người quản lý",
         action: (
-            <Button variant="secondary" size="sm">
+            <Link className="inline-flex shrink-0 cursor-pointer items-center gap-1 text-sm text-accent no-underline transition-opacity hover:opacity-60">
+                <PencilIcon aria-hidden focusable="false" className="size-4" />
                 Thêm / quản lý
-            </Button>
+            </Link>
         ),
         children: <SampleBody />,
     },
-    parameters: { usage: "Dùng khi khối cần một hành động quản trị đi kèm label (thêm/sửa/quản lý) thay vì dẫn sang trang khác như \"xem thêm\"." },
+    parameters: { usage: "Dùng khi khối cần một hành động quản trị đi kèm label (thêm/sửa/quản lý) thay vì dẫn sang trang khác như \"xem thêm\". `action` luôn là Link, hover = opacity (không underline), icon tuỳ chọn đầu/cuối chữ." },
 }
 
 /**
- * Chọn biến thể layout theo bối cảnh đặt card: `frameless` khi card nằm trong khối đã có viền
- * (tránh viền lồng viền), `flushContent` cho danh sách/table sát mép, `fillHeight` khi card phải
- * lấp đầy một vùng cao cố định (grid đều hàng), `subtleLabel` khi label chỉ là eyebrow phụ, không phải tiêu đề chính.
+ * Surface-in-surface: một list surface NẰM LỒNG trong một surface CHA nhìn thấy được (thân
+ * modal/drawer/panel). Panel cha = `rounded-2xl bg-surface p-6 shadow-surface` (có label + nội
+ * dung riêng); bên trong lồng `SurfaceListCard bordered` — dùng VIỀN thay shadow vì shadow-surface
+ * gần như vô hình khi đặt trên một `bg-surface` khác. Đây mới là "surface trong surface" thật
+ * (KHÁC list card đứng riêng ở `CategorizedList`). Pattern thật: `PaymentModal` (list cổng thanh
+ * toán lồng trong thân modal).
  */
-export const LayoutVariants: Story = {
+export const SurfaceInSurface: Story = {
     render: () => (
-        <div className="flex flex-col gap-4">
-            <LabeledCard label="Khóa học đề xuất" frameless>
-                <div className="grid grid-cols-2 gap-3">
-                    <div className="rounded-lg border border-default p-3 text-sm">System Design Mastery</div>
-                    <div className="rounded-lg border border-default p-3 text-sm">DevOps Mastery</div>
-                </div>
-            </LabeledCard>
-            <LabeledCard label="Danh sách bài học" flushContent>
-                <ul className="divide-y divide-default">
-                    <li className="p-4 text-sm">Bài 1: Giới thiệu React Hooks</li>
-                    <li className="p-4 text-sm">Bài 2: useState và useEffect</li>
-                    <li className="p-4 text-sm">Bài 3: Custom Hooks</li>
-                </ul>
-            </LabeledCard>
-            <div className="h-64">
-                <LabeledCard label="Trạng thái" fillHeight>
-                    <div className="flex h-full items-center justify-center p-6">
-                        <Badge color="success">Đang hoạt động</Badge>
-                    </div>
-                </LabeledCard>
-            </div>
-            <LabeledCard
-                label="Hôm nay"
-                icon={<ClockIcon className="size-4 text-muted" aria-hidden focusable="false" />}
-                subtleLabel
-                labelEnd="3 phiên"
-            >
-                <SampleBody />
+        // panel cha = thân modal/drawer (surface CHA) — có label + nội dung của chính nó
+        <div className="rounded-2xl bg-surface p-6 shadow-surface">
+            <LabeledCard label="Phương thức thanh toán" frameless>
+                <SurfaceListCard bordered>
+                    <SurfaceListCardItem>
+                        <span className="text-sm">Ví Momo</span>
+                    </SurfaceListCardItem>
+                    <SurfaceListCardItem>
+                        <span className="text-sm">VNPay QR</span>
+                    </SurfaceListCardItem>
+                    <SurfaceListCardItem>
+                        <span className="text-sm">Thẻ tín dụng / ghi nợ</span>
+                    </SurfaceListCardItem>
+                </SurfaceListCard>
             </LabeledCard>
         </div>
     ),
-    parameters: { usage: "Chọn biến thể layout theo bối cảnh đặt card: `frameless` khi card nằm trong khối đã có viền (tránh viền lồng viền), `flushContent` cho danh sách/table sát mép, `fillHeight` khi card phải lấp đầy một vùng cao cố định (grid đều hàng), `subtleLabel` khi label chỉ là eyebrow phụ, không phải tiêu đề chính." },
+    parameters: { usage: "Surface-in-surface THẬT: 1 list surface lồng trong surface CHA nhìn thấy được (thân modal/panel: `bg-surface p-6 shadow-surface`). Inner dùng `SurfaceListCard bordered` (viền thay shadow vì shadow vô hình trên bg-surface). Khác list card đứng riêng. Pattern thật: PaymentModal." },
+}
+
+/**
+ * Sub-label theo category: chia 1 danh sách dài thành các NHÓM. Một `LabeledCard frameless`
+ * (label chính) bọc nhiều cụm `LabeledCard subtleLabel frameless` + `SurfaceListCard` — mỗi nhóm
+ * một sub-label eyebrow (`text-xs text-muted`) đặt ngay trên một LIST CARD đứng riêng (shadow,
+ * KHÔNG `bordered` — nó KHÔNG lồng trong surface nào, khác `SurfaceInSurface`). Khoảng giữa các
+ * nhóm là `gap-3` (chúng cùng thuộc 1 danh mục, không phải 2 vùng tách bạch). Dùng khi list cần
+ * phân mục (Cơ bản / Nâng cao…) thay vì đổ phẳng một mạch.
+ */
+export const CategorizedList: Story = {
+    render: () => (
+        <LabeledCard label="Danh sách bài học" frameless contentClassName="flex flex-col gap-3">
+            <LabeledCard label="Cơ bản" subtleLabel frameless>
+                <SurfaceListCard>
+                    <SurfaceListCardItem>
+                        <span className="text-sm">Bài 1: Giới thiệu React Hooks</span>
+                    </SurfaceListCardItem>
+                    <SurfaceListCardItem>
+                        <span className="text-sm">Bài 2: useState và useEffect</span>
+                    </SurfaceListCardItem>
+                </SurfaceListCard>
+            </LabeledCard>
+            <LabeledCard label="Nâng cao" subtleLabel frameless>
+                <SurfaceListCard>
+                    <SurfaceListCardItem>
+                        <span className="text-sm">Bài 3: Custom Hooks</span>
+                    </SurfaceListCardItem>
+                    <SurfaceListCardItem>
+                        <span className="text-sm">Bài 4: useReducer &amp; Context</span>
+                    </SurfaceListCardItem>
+                </SurfaceListCard>
+            </LabeledCard>
+        </LabeledCard>
+    ),
+    parameters: { usage: "Sub-label theo category: chia danh sách dài thành nhóm. 1 `LabeledCard frameless` (label chính) bọc nhiều cụm `LabeledCard subtleLabel frameless` + `SurfaceListCard` — mỗi nhóm 1 sub-label eyebrow trên 1 LIST CARD đứng riêng (shadow, KHÔNG bordered — không lồng surface). Khoảng giữa nhóm gap-3 (cùng 1 danh mục). Khác surface-in-surface." },
 }

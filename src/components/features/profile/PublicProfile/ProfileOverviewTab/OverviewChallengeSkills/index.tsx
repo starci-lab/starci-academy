@@ -20,8 +20,6 @@ import { getLanguageColor, getLanguageLabel } from "@/modules/utils/language"
 export interface OverviewChallengeSkillsProps extends WithClassNames<undefined> {
     /** Section label, rendered outside the card (owned here, like every other self-contained section). */
     label: React.ReactNode
-    /** Optional leading icon before the label. */
-    icon?: React.ReactNode
     /** Optional "see more" link on the label row. */
     onSeeMore?: () => void
     /** Text for the see-more link. */
@@ -43,7 +41,7 @@ export interface OverviewChallengeSkillsProps extends WithClassNames<undefined> 
  *
  * @param props - {@link OverviewChallengeSkillsProps}
  */
-export const OverviewChallengeSkills = ({ className, label, icon, onSeeMore, seeMoreLabel, fillHeight }: OverviewChallengeSkillsProps) => {
+export const OverviewChallengeSkills = ({ className, label, onSeeMore, seeMoreLabel, fillHeight }: OverviewChallengeSkillsProps) => {
     const t = useTranslations()
     const username = useProfileUsername()
     const { data: user } = useQueryUserProfileSwr(username)
@@ -68,7 +66,6 @@ export const OverviewChallengeSkills = ({ className, label, icon, onSeeMore, see
         <LabeledCard
             className={className}
             label={label}
-            icon={icon}
             onSeeMore={onSeeMore}
             seeMoreLabel={seeMoreLabel}
             fillHeight={fillHeight}

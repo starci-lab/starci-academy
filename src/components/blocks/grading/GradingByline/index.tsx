@@ -45,7 +45,7 @@ export const ModelByline = ({
     return (
         <>
             <span className="flex items-center gap-2 text-sm text-muted">
-                <SparkleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-accent" />
+                <SparkleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-accent" />
                 <span>
                     {withLabel ? `${t("submissionResult.gradedBy")} ` : null}
                     <span className="text-foreground">{model}</span>

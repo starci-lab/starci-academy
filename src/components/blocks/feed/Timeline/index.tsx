@@ -30,7 +30,7 @@ export const Timeline = ({ children, className }: TimelineProps) => {
     return (
         <div
             className={cn(
-                "relative flex flex-col gap-4",
+                "relative flex flex-col gap-3",
                 "border-l border-separator",
                 "pl-4",
                 className,

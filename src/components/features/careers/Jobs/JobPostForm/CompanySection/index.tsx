@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react"
 import { Button, Input, Label, TextField, Typography } from "@heroui/react"
-import { BuildingsIcon, XIcon } from "@phosphor-icons/react"
+import { XIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import type { UseFormSetValue } from "react-hook-form"
 import { useQueryHeadhuntingCompanySuggestionsSwr } from "@/hooks/swr/api/graphql/queries/useQueryHeadhuntingCompanySuggestionsSwr"
@@ -63,7 +63,6 @@ export const CompanySection = ({
     return (
         <LabeledCard
             label={t("jobs.post.sections.company")}
-            icon={<BuildingsIcon aria-hidden focusable="false" className="size-5" />}
         >
             <div className="flex flex-col gap-3">
                 {hasPickedCompany ? (

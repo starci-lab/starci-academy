@@ -42,7 +42,6 @@ export const CourseValueProps = ({ className }: CourseValuePropsProps) => {
         <LabeledCard
             className={className}
             label={t("courseLanding.valueProps")}
-            icon={<SealCheckIcon aria-hidden focusable="false" className="size-5" />}
             frameless
         >
             <AsyncContent

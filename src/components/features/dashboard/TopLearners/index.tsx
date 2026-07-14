@@ -132,7 +132,6 @@ export const TopLearners = ({
                 <LabeledCard
                     frameless
                     label={t("dashboard.community.topLearners.title")}
-                    icon={<TrophyIcon className="size-5" aria-hidden focusable="false" />}
                     onSeeMore={hasOverflow ? onSeeMore : undefined}
                     seeMoreLabel={t("dashboard.community.topLearners.seeMore")}
                     className={className}

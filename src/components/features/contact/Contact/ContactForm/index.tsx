@@ -61,7 +61,7 @@ export const ContactForm = ({ className }: ContactFormProps) => {
     const category = watch("category")
 
     return (
-        <form onSubmit={onSubmit} className={cn("flex flex-col gap-4", className)}>
+        <form onSubmit={onSubmit} className={cn("flex flex-col gap-3", className)}>
             <TextField variant="secondary">
                 <Label htmlFor="contact-name">{t("contact.form.name")}</Label>
                 <Input

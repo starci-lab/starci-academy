@@ -59,7 +59,6 @@ export const MyVouchers = ({ className }: MyVouchersProps) => {
         <div className={cn("flex flex-col gap-6", className)}>
             <LabeledCard
                 label={t("rewards.myVouchers.title")}
-                icon={<TicketIcon aria-hidden focusable="false" className="size-5" />}
                 frameless
             >
                 <AsyncContent
@@ -136,7 +135,6 @@ export const MyVouchers = ({ className }: MyVouchersProps) => {
 
             <LabeledCard
                 label={t("rewards.redeemedTitle")}
-                icon={<ReceiptIcon aria-hidden focusable="false" className="size-5" />}
                 frameless
             >
                 <AsyncContent

@@ -1189,7 +1189,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                             internal `belowFront` structure (question + chips = gap-3,
                             that whole group ↔ next card = the outer gap-6). */}
                         <div className="flex flex-col gap-3">
-                            <LabeledCard label={t("flashcard.questionLabel")}>
+                            <LabeledCard label={t("flashcard.questionLabel")} bordered>
                                 <MarkdownContent markdown={card.question} />
                             </LabeledCard>
                             {card.level || (card.tags?.length ?? 0) > 0 ? (
@@ -1208,7 +1208,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                             ) : null}
                         </div>
 
-                        <LabeledCard label={t("flashcard.quiz.fillLabel")} contentClassName="flex flex-col gap-3">
+                        <LabeledCard label={t("flashcard.quiz.fillLabel")} bordered contentClassName="flex flex-col gap-3">
                             <Typography type="body-xs" weight="medium" color="muted">
                                 {t("flashcard.quiz.clozeInstruction")}
                             </Typography>
@@ -1379,7 +1379,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
 
                                 {/* read the full model answer (the 5-layer reasoning), then self-grade */}
                                 {showAnswer ? (
-                                    <LabeledCard label={t("flashcard.answerLabel")} contentClassName="flex flex-col gap-3">
+                                    <LabeledCard label={t("flashcard.answerLabel")} bordered contentClassName="flex flex-col gap-3">
                                         <MarkdownContent markdown={card.answer ?? ""} arcSections />
                                         {card.explanation ? <MarkdownContent markdown={card.explanation} /> : null}
                                     </LabeledCard>

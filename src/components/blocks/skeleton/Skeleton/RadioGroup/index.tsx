@@ -12,7 +12,7 @@ export interface SkeletonRadioGroupProps extends WithClassNames<undefined> {
 
 /**
  * Skeleton matching a HeroUI <RadioGroup/>.
- * Group stacks vertically with gap-4. Each radio is a circular size-4 dot
+ * Group stacks vertically with gap-3. Each radio is a circular size-4 dot
  * (rounded-full) plus a text-sm (body-sm 14/24) label bar centered in its box,
  * separated by gap-3.
  */
@@ -22,7 +22,7 @@ export const SkeletonRadioGroup = ({
     labelWidth = "w-32",
 }: SkeletonRadioGroupProps) => {
     return (
-        <div className={cn("flex flex-col gap-4", className)}>
+        <div className={cn("flex flex-col gap-3", className)}>
             {Array.from({ length: items }).map((_, index) => (
                 <div key={index} className="flex items-center gap-3">
                     <Skeleton className="size-4 shrink-0 rounded-full" />

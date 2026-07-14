@@ -83,7 +83,7 @@ export const CommunityFeed = () => {
 
     return (
         <PageContainer>
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-10">
                 <PageHeader
                     title={t("community.title")}
                     description={t("community.description")}
@@ -101,7 +101,7 @@ export const CommunityFeed = () => {
                     )}
                 />
 
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-6">
                     <TabsCard
                         leftTabs={{
                             items: channelTabs,

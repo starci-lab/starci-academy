@@ -697,22 +697,18 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
         [courseId, selection, currentLevel, mode, turnStream],
     )
 
-    // deliver a PRE-AUTHORED interview-bank question with NO AI call — the
-    // question is fully written in `.mount`, so the interviewer just reads it
-    // (rendered as-is, incl. any folded diagram/code) and speaks it aloud (TTS).
-    // Only grading needs AI; asking a static question does not.
-    const deliverStaticQuestion = useCallback((index: number, prompt: DrawnMockInterviewPrompt) => {
-        const topic = prompt.seedTopics[index]
-        const questionText = topic?.title ?? ""
-        if (questionText.length === 0) {
-            return
-        }
-        // a debug/review/optimize question ships GIVEN code → seed it into the
-        // editable Code tool + surface the tool (open + switch to the Code tab) so
-        // the candidate FIXES it in place; the bubble then shows a "code loaded"
-        // chip, not the code inline. A voice-only question RESETS the code buffer so
-        // the previous question's code never lingers into — or is graded against —
-        // the next one (each question's own code is captured at submit time).
+    // reset the right-pane workspace (code buffer + which tool renders + open/closed)
+    // for a topic change — a debug/review/optimize question ships GIVEN code → seed it
+    // into the editable Code tool + surface it; a voice-only topic resets the code
+    // buffer to the blank whiteboard default so the previous question's code never
+    // lingers into — or is graded against — the next one. Shared by
+    // `deliverStaticQuestion` (static-bank questions) AND `submitQnaAnswer`'s
+    // AI-generated branch (`askNextTurn`), which previously left the workspace
+    // untouched across a question change (2026-07-14 fix).
+    const resetWorkspaceForTopic = useCallback((
+        isDesignMode: boolean,
+        topic: MockInterviewSeedTopic | undefined,
+    ): void => {
         const openingGivenCode = resolveOpeningGivenCode(topic?.givenCodes ?? [])
         if (openingGivenCode) {
             setCodeState({ lang: mapGivenLangToProgrammingLanguage(openingGivenCode.lang), code: openingGivenCode.code })
@@ -725,7 +721,26 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
         // step) or has NOTHING to submit there (the toggle is disabled — see the
         // header button — so there is no "candidate manually opened it" state to
         // preserve across questions anymore).
-        setWorkspaceOpen(Boolean(openingGivenCode))
+        setWorkspaceOpen(questionHasWorkspaceTool(isDesignMode, topic?.givenCodes))
+    }, [])
+
+    // deliver a PRE-AUTHORED interview-bank question with NO AI call — the
+    // question is fully written in `.mount`, so the interviewer just reads it
+    // (rendered as-is, incl. any folded diagram/code) and speaks it aloud (TTS).
+    // Only grading needs AI; asking a static question does not.
+    //
+    // Does NOT call resetWorkspaceForTopic itself — both callers already reset the
+    // workspace for this exact topic before invoking this function (submitQnaAnswer
+    // resets once up front for whichever branch follows; the resume/rehydrate path
+    // seeds it manually for the in-progress question). Calling it a third time here
+    // was a harmless but redundant no-op (2026-07-14 cleanup).
+    const deliverStaticQuestion = useCallback((index: number, prompt: DrawnMockInterviewPrompt) => {
+        const topic = prompt.seedTopics[index]
+        const questionText = topic?.title ?? ""
+        if (questionText.length === 0) {
+            return
+        }
+        const openingGivenCode = resolveOpeningGivenCode(topic?.givenCodes ?? [])
         ttsRef.current.cancel()
         setIsAsking(false)
         setStreamingText(null)
@@ -1198,6 +1213,13 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
         }
         const next = questionIndex + 1
         setQuestionIndex(next)
+        // reset the right-pane workspace for the UPCOMING question before either
+        // branch below — `deliverStaticQuestion` already resets it itself (via the
+        // shared helper), but the AI-generated branch (`askNextTurn`) never touched
+        // codeState/workspaceTool/workspaceOpen on a question change, so a debug
+        // question's leftover code (or open pane) could linger into the next plain
+        // theory/reasoning/scenario question. mode="qna" only → isDesignMode=false.
+        resetWorkspaceForTopic(false, selectedPrompt.seedTopics[next])
         // static bank → read the next authored question (no AI); flashcard → AI-frame
         if (isStaticBankPrompt(selectedPrompt)) {
             deliverStaticQuestion(next, selectedPrompt)
@@ -1211,7 +1233,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                 currentSeed: selectedPrompt.seedTopics[next]?.title ?? null,
             })
         }
-    }, [answerDraft, isAsking, selectedPrompt, listening, stop, turns, currentPhase, questionIndex, reset, isLastQuestion, finishAndGrade, askNextTurn, deliverStaticQuestion, codeState])
+    }, [answerDraft, isAsking, selectedPrompt, listening, stop, turns, currentPhase, questionIndex, reset, isLastQuestion, finishAndGrade, askNextTurn, deliverStaticQuestion, codeState, resetWorkspaceForTopic])
 
     // return to the mock-interview HOME route (the green room / setup). Since the live
     // interview + grading + scorecard now live on the dedicated `/interview/[sessionId]`
@@ -1425,7 +1447,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                         {/* green room — a calm pre-interview waiting room: the interviewer you're
                     about to meet, what's ahead, and the ONE way in. Config is tucked away
                     (collapsed) so this reads as an occasion, not a settings form. */}
-                        <div className="flex flex-col gap-4 rounded-2xl bg-surface p-6 shadow-surface">
+                        <div className="flex flex-col gap-3 rounded-2xl bg-surface p-6 shadow-surface">
                             <div className="flex items-center gap-3">
                                 <img src={persona.avatarSrc} alt="" className="size-12 shrink-0 rounded-full object-cover" aria-hidden />
                                 <div className="flex min-w-0 flex-col">
@@ -1512,7 +1534,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                                     labelEnd={configMode === "auto" ? t("mockInterview.autoCaption") : undefined}
                                     contentClassName="flex flex-col gap-6"
                                 >
-                                    <div className="flex flex-col gap-2">
+                                    <div className="flex flex-col gap-3">
                                         <Label>{t("mockInterview.modeToggleLabel")}</Label>
                                         <FlexWrapButtonRadio
                                             ariaLabel={t("mockInterview.modeToggleLabel")}
@@ -1527,7 +1549,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
 
                                     {configMode === "configurable" ? (
                                         <>
-                                            <div className="flex flex-col gap-2">
+                                            <div className="flex flex-col gap-3">
                                                 <Label>{t("mockInterview.questionCountLabel")}</Label>
                                                 <FlexWrapButtonRadio
                                                     ariaLabel={t("mockInterview.questionCountLabel")}
@@ -1540,7 +1562,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                                                 />
                                             </div>
 
-                                            <div className="flex flex-col gap-2">
+                                            <div className="flex flex-col gap-3">
                                                 <Label>{t("mockInterview.kindPickerLabel")}</Label>
                                                 <div role="group" aria-label={t("mockInterview.kindPickerLabel")} className="flex flex-wrap items-center gap-2">
                                                     <button
@@ -1580,7 +1602,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                                                 </div>
                                             </div>
 
-                                            <div className="flex flex-col gap-2">
+                                            <div className="flex flex-col gap-3">
                                                 <Label>{t("mockInterview.answerModeLabel")}</Label>
                                                 <FlexWrapButtonRadio
                                                     ariaLabel={t("mockInterview.answerModeLabel")}
@@ -1595,7 +1617,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                                         </>
                                     ) : null}
 
-                                    <div className="flex flex-col gap-2">
+                                    <div className="flex flex-col gap-3">
                                         <Label>{t("mockInterview.tierLabel")}</Label>
                                         <FlexWrapButtonRadio
                                             ariaLabel={t("mockInterview.tierLabel")}
@@ -1615,7 +1637,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                         question (debug/review/optimize) is then rendered AND graded in this
                         language: the server returns that language's own prompt + given code
                         and grades against its own ideal answer. No-code questions ignore it. */}
-                                    <div className="flex flex-col gap-2">
+                                    <div className="flex flex-col gap-3">
                                         <Label>{t("mockInterview.langLabel")}</Label>
                                         <FlexWrapButtonRadio
                                             ariaLabel={t("mockInterview.langLabel")}
@@ -1637,7 +1659,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                         reserved for surfaces mirroring a REAL adjacent Select (e.g. the CV
                         editor's language field) — this card has none. The Auto lane ALWAYS
                         carries its weekly credit beside it (unified-pool concept). */}
-                                    <div className="flex flex-col gap-2">
+                                    <div className="flex flex-col gap-3">
                                         <Label>{t("mockInterview.modelLabel")}</Label>
                                         <div className="flex flex-wrap items-center gap-3">
                                             <GradeModelDropdown
@@ -1681,14 +1703,14 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
             <div className={cn("flex w-full flex-col", className)}>
                 {renderWorkHeader({ counter: t("mockInterview.grading"), total: 1, current: 1 })}
                 <div className="px-4 pb-6 pt-10 sm:px-6">
-                    <div className="mx-auto flex w-full max-w-3xl flex-col gap-4">
+                    <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
                         {/* "session time limit" — HONEST: never let a timeout-triggered grade
                             read as a random/silent cutoff. Only shown when THIS grade was
                             auto-triggered by the 1-hour deadline, not a manual "Kết thúc sớm". */}
                         {timedOut ? (
                             <Callout status="warning" title={t("mockInterview.sessionExpiredBanner")} />
                         ) : null}
-                        <div className="flex w-full flex-col items-center gap-4 rounded-2xl bg-surface p-8 shadow-surface">
+                        <div className="flex w-full flex-col items-center gap-3 rounded-2xl bg-surface p-8 shadow-surface">
                             <img src={persona.avatarSrc} alt="" className="size-12 shrink-0 rounded-full object-cover" aria-hidden />
 
                             <div className="flex flex-col items-center gap-2">
@@ -1739,7 +1761,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
             }}
             title={confirmCopy?.title}
             size="sm"
-            bodyClassName="gap-4"
+            bodyClassName="gap-3"
         >
             <Typography type="body-sm" color="muted">{confirmCopy?.body}</Typography>
             <div className="flex justify-end gap-2">

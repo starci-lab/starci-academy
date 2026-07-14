@@ -30,7 +30,7 @@ export const OverallBanner = ({ allUp, label, className }: OverallBannerProps) =
             )}
         >
             {allUp ? (
-                <CheckCircleIcon aria-hidden focusable="false" className="size-6 shrink-0" weight="fill" />
+                <CheckCircleIcon aria-hidden focusable="false" className="size-6 shrink-0" />
             ) : (
                 <WarningOctagonIcon aria-hidden focusable="false" className="size-6 shrink-0" weight="fill" />
             )}

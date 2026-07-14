@@ -57,7 +57,6 @@ export const CourseCurriculum = ({ className }: CourseCurriculumProps) => {
         <LabeledCard
             className={className}
             label={t("courseLanding.curriculum")}
-            icon={<ListChecksIcon aria-hidden focusable="false" className="size-5" />}
             frameless={hasModules}
         >
             <AsyncContent

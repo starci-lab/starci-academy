@@ -406,7 +406,7 @@ export const GradeModelDropdown = ({
                                                 !selection.model && "text-accent",
                                             )}
                                         >
-                                            <SparkleIcon className="size-5 shrink-0" />
+                                            <SparkleIcon className="size-4 shrink-0" />
                                             <span>{t("aiSettings.lanes.auto.title")}</span>
                                         </div>
                                     </DropdownItem>

@@ -19,7 +19,7 @@ export const SkeletonTable = ({ rows = 5, cols = 4, className }: SkeletonTablePr
     return (
         <div className={cn("flex w-full flex-col", className)}>
             {Array.from({ length: rows }).map((_, rowIndex) => (
-                <div key={rowIndex} className="flex w-full items-center gap-4 px-4 py-3">
+                <div key={rowIndex} className="flex w-full items-center gap-3 px-4 py-3">
                     {Array.from({ length: cols }).map((_, colIndex) => (
                         <Skeleton
                             key={colIndex}

@@ -8,9 +8,6 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    RocketIcon,
-} from "@phosphor-icons/react"
-import {
     useProfileUsername,
 } from "../../hooks/useProfileUsername"
 import {
@@ -64,7 +61,6 @@ export const ProfileCapstone = ({
         <LabeledCard
             className={cn(className)}
             label={t("publicProfile.capstone.projectsHeading")}
-            icon={<RocketIcon aria-hidden focusable="false" className="size-5" />}
             frameless
         >
             <AsyncContent

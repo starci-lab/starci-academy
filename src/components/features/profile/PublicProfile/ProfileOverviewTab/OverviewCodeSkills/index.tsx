@@ -19,8 +19,6 @@ import { getLanguageColor, getLanguageLabel } from "@/modules/utils/language"
 export interface OverviewCodeSkillsProps extends WithClassNames<undefined> {
     /** Section label, rendered outside the card (owned here, like every other self-contained section). */
     label: React.ReactNode
-    /** Optional leading icon before the label. */
-    icon?: React.ReactNode
     /** Optional "see more" link on the label row. */
     onSeeMore?: () => void
     /** Text for the see-more link. */
@@ -51,7 +49,7 @@ const DIFF_COLOR: Record<string, string> = {
  *
  * @param props - {@link OverviewCodeSkillsProps}
  */
-export const OverviewCodeSkills = ({ className, label, icon, onSeeMore, seeMoreLabel, fillHeight }: OverviewCodeSkillsProps) => {
+export const OverviewCodeSkills = ({ className, label, onSeeMore, seeMoreLabel, fillHeight }: OverviewCodeSkillsProps) => {
     const t = useTranslations()
     const username = useProfileUsername()
     const { data: user } = useQueryUserProfileSwr(username)
@@ -79,7 +77,6 @@ export const OverviewCodeSkills = ({ className, label, icon, onSeeMore, seeMoreL
         <LabeledCard
             className={className}
             label={label}
-            icon={icon}
             onSeeMore={onSeeMore}
             seeMoreLabel={seeMoreLabel}
             fillHeight={fillHeight}

@@ -187,7 +187,7 @@ export const CourseCard = ({
                     (unlayered), so `items-center` on it centers vertically instead of
                     laying the row out horizontally. The card root already insets its
                     children (baked `p-4`), so this row carries no padding of its own. */}
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-3">
                     {/* thumbnail 16:9 (branded fallback); hidden on the narrowest screens.
                         rounded-2xl = the "inner" step under the card's rounded-3xl. */}
                     <div className="relative hidden aspect-video w-36 shrink-0 overflow-hidden rounded-2xl bg-surface sm:block">
@@ -245,7 +245,7 @@ export const CourseCard = ({
                                 className="flex-1"
                             >
                                 {viewLabel}
-                                <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
+                                <ArrowRightIcon aria-hidden focusable="false" className="size-4" />
                             </Button>
                             {secondaryAction}
                         </div>
@@ -344,7 +344,7 @@ export const CourseCard = ({
                         className="flex-1"
                     >
                         {viewLabel}
-                        <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
+                        <ArrowRightIcon aria-hidden focusable="false" className="size-4" />
                     </Button>
                     {secondaryAction}
                 </div>

@@ -63,7 +63,7 @@ export const PlaygroundCard = ({
             <Card.Footer className="mt-auto">
                 <Button variant="primary" className="w-full" onPress={onOpen}>
                     {t("playground.hub.cta")}
-                    <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
+                    <ArrowRightIcon aria-hidden focusable="false" className="size-4" />
                 </Button>
             </Card.Footer>
         </Card>

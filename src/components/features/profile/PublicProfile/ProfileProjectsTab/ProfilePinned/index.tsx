@@ -1,10 +1,9 @@
 "use client"
 
 import React from "react"
-import { Button } from "@heroui/react"
+import { Link } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import {
-    PushPinIcon as PinIcon,
     PencilIcon,
 } from "@phosphor-icons/react"
 import { useProfileUsername } from "../../hooks/useProfileUsername"
@@ -59,14 +58,13 @@ export const ProfilePinned = ({
     // header action shown only to the owner WHEN there are pins (→ manage). The
     // empty state owns its own add CTA, so we don't repeat an add button up here.
     const action = isSelf && pins.length > 0 ? (
-        <Button
-            size="sm"
-            variant="secondary"
+        <Link
             onPress={openManage}
+            className="inline-flex shrink-0 cursor-pointer items-center gap-1 text-sm text-accent no-underline transition-opacity hover:opacity-60"
         >
-            <PencilIcon className="size-5" aria-hidden="true" focusable="false" />
+            <PencilIcon className="size-4" aria-hidden="true" focusable="false" />
             {t("pinnedProjects.manage")}
-        </Button>
+        </Link>
     ) : undefined
 
     // visitor viewing a profile with no pins and nothing loading/erroring → hide the
@@ -84,7 +82,6 @@ export const ProfilePinned = ({
         <LabeledCard
             frameless={hasPins}
             label={t("pinnedProjects.heading")}
-            icon={<PinIcon className="size-5" aria-hidden="true" focusable="false" />}
             action={action}
             className={className}
         >

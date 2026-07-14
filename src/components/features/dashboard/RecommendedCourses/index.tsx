@@ -5,7 +5,6 @@ import {
     Typography,
 } from "@heroui/react"
 import {
-    CompassIcon,
     BookOpenIcon,
 } from "@phosphor-icons/react"
 import {
@@ -60,7 +59,6 @@ export const RecommendedCourses = ({
     return (
         <LabeledCard
             label={t("dashboard.recommended.title")}
-            icon={<CompassIcon aria-hidden focusable="false" className="size-5" />}
             className={className}
             frameless={hasItems}
         >

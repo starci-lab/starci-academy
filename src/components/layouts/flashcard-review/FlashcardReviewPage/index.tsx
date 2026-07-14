@@ -169,7 +169,7 @@ export const FlashcardReviewPage = ({
 
             {/* the card: front always, back after flip */}
             <Card>
-                <CardContent className="flex min-h-[16rem] flex-col items-center justify-center gap-6 text-center">
+                <CardContent className="flex flex-col gap-3 p-6 sm:p-7">
                     <span className="text-xl font-semibold text-foreground">
                         {current.front}
                     </span>

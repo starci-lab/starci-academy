@@ -94,14 +94,14 @@ export const PriceTag = ({
             <Typography type="body-xs" color="muted">
                 {t("priceTag.breakdownTitle")}
             </Typography>
-            <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center justify-between gap-3">
                 <Typography type="body-sm">{t("priceTag.listPrice")}</Typography>
                 <Typography type="body-sm">
                     {formatPrice(original ?? discounted, currency)}
                 </Typography>
             </div>
             {original != null && original > breakdown.phase ? (
-                <div className="flex items-center justify-between gap-4">
+                <div className="flex items-center justify-between gap-3">
                     <Typography type="body-sm" color="muted">
                         {breakdown.phaseLabel
                             ? t("priceTag.phaseNamed", { phase: breakdown.phaseLabel })
@@ -113,7 +113,7 @@ export const PriceTag = ({
                 </div>
             ) : null}
             {breakdown.loyaltyPercent > 0 && breakdown.phase > discounted ? (
-                <div className="flex items-center justify-between gap-4">
+                <div className="flex items-center justify-between gap-3">
                     <Typography type="body-sm" color="muted" className="min-w-0 truncate">
                         {breakdown.loyaltyNote
                             ? `${t("priceTag.loyalty")} · ${breakdown.loyaltyNote}`
@@ -124,7 +124,7 @@ export const PriceTag = ({
                     </Typography>
                 </div>
             ) : null}
-            <div className="mt-1 flex items-center justify-between gap-4 border-t border-default pt-1">
+            <div className="mt-1 flex items-center justify-between gap-3 border-t border-default pt-1">
                 <Typography type="body-sm" weight="semibold">{t("priceTag.youPay")}</Typography>
                 <Typography type="body-sm" weight="semibold">{formatPrice(discounted, currency)}</Typography>
             </div>

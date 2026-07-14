@@ -10,9 +10,6 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    TrophyIcon,
-} from "@phosphor-icons/react"
-import {
     useProfileUsername,
 } from "../../hooks/useProfileUsername"
 import type {
@@ -217,7 +214,6 @@ export const ProfileAchievements = ({
         <LabeledCard
             className={className}
             label={t("publicProfile.tabs.achievements")}
-            icon={<TrophyIcon aria-hidden focusable="false" className="size-5" />}
         >
             <AsyncContent
                 isLoading={(isLoading || !userId) && items.length === 0}

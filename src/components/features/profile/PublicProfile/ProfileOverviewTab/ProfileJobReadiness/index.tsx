@@ -21,8 +21,6 @@ import { pathConfig } from "@/resources/path"
 export interface ProfileJobReadinessProps extends WithClassNames<undefined> {
     /** Section label, rendered outside the card (owned here, like every other self-contained section). */
     label: React.ReactNode
-    /** Optional leading icon before the label. */
-    icon?: React.ReactNode
 }
 
 /** Maps a readiness band to the `Chip` color that reads correctly. */
@@ -110,7 +108,7 @@ const TrackCard = ({
  *
  * @param props - {@link ProfileJobReadinessProps}
  */
-export const ProfileJobReadiness = ({ className, label, icon }: ProfileJobReadinessProps) => {
+export const ProfileJobReadiness = ({ className, label }: ProfileJobReadinessProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const username = useProfileUsername()
@@ -123,7 +121,7 @@ export const ProfileJobReadiness = ({ className, label, icon }: ProfileJobReadin
     const hasTracks = !(isLoading || !userId) && !error && tracks.length > 0
 
     return (
-        <LabeledCard className={className} label={label} icon={icon} frameless={hasTracks}>
+        <LabeledCard className={className} label={label} frameless={hasTracks}>
             <AsyncContent
                 isLoading={(isLoading || !userId) && tracks.length === 0}
                 skeleton={(

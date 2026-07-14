@@ -59,16 +59,18 @@ export const League = ({
                         <Tabs.Tab
                             key={LeagueTab.Weekly}
                             id={LeagueTab.Weekly}
-                            className="rounded-none data-[selected=true]:border-b-2 data-[selected=true]:border-accent data-[selected=true]:text-accent"
+                            className="rounded-none data-[selected=true]:text-accent"
                         >
                             {t("dashboard.league.tabWeekly")}
+                            <Tabs.Indicator />
                         </Tabs.Tab>
                         <Tabs.Tab
                             key={LeagueTab.Global}
                             id={LeagueTab.Global}
-                            className="rounded-none data-[selected=true]:border-b-2 data-[selected=true]:border-accent data-[selected=true]:text-accent"
+                            className="rounded-none data-[selected=true]:text-accent"
                         >
                             {t("dashboard.league.tabGlobal")}
+                            <Tabs.Indicator />
                         </Tabs.Tab>
                     </Tabs.List>
                 </Tabs.ListContainer>

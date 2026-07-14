@@ -20,7 +20,7 @@ const PROGRESS_SEGMENTS = 5
  */
 export const MockInterviewSessionSkeleton = ({ className }: WithClassNames<undefined> = {}) => {
     return (
-        <div className={cn("flex w-full flex-col", className)}>
+        <div className={cn("flex h-[calc(100dvh-4rem)] w-full flex-col", className)}>
             {/* sub-navbar band — mirrors WorkSessionHeader */}
             <div className="sticky top-16 z-10 border-b border-default bg-surface">
                 <div className="flex items-center gap-3 px-4 py-2 sm:px-6">
@@ -47,34 +47,43 @@ export const MockInterviewSessionSkeleton = ({ className }: WithClassNames<undef
                 </div>
             </div>
 
-            <div className="mx-auto flex w-full max-w-2xl flex-col gap-6 px-4 py-6 sm:px-6">
-                {/* interviewer presence card — avatar + name/role + the question body */}
-                <div className="flex flex-col gap-3 rounded-2xl bg-surface p-4 shadow-surface">
-                    <div className="flex items-center gap-3">
-                        <Skeleton.Avatar />
-                        <div className="flex min-w-0 flex-col gap-1">
-                            <Skeleton.Typography type="body-sm" width="1/3" />
-                            <Skeleton.Typography type="body-xs" width="1/4" />
+            <div className="grid min-h-0 flex-1 gap-6 overflow-y-auto px-4 py-6 sm:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+                {/* LEFT — the conversation column (presence card + voice hero + action row) */}
+                <div className="flex min-w-0 flex-col gap-6">
+                    {/* interviewer presence card — avatar + name/role + the question body */}
+                    <div className="flex flex-col gap-3 rounded-2xl bg-surface p-4 shadow-surface">
+                        <div className="flex items-center gap-3">
+                            <Skeleton.Avatar />
+                            <div className="flex min-w-0 flex-col gap-1">
+                                <Skeleton.Typography type="body-sm" width="1/3" />
+                                <Skeleton.Typography type="body-xs" width="1/4" />
+                            </div>
+                        </div>
+                        <div className="flex flex-col gap-2 border-t border-default pt-3">
+                            <Skeleton.Typography type="body-sm" width="full" />
+                            <Skeleton.Typography type="body-sm" width="full" />
+                            <Skeleton.Typography type="body-sm" width="3/4" />
+                            <Skeleton.Typography type="body-sm" width="1/2" />
                         </div>
                     </div>
-                    <div className="flex flex-col gap-2 border-t border-default pt-3">
-                        <Skeleton.Typography type="body-sm" width="full" />
-                        <Skeleton.Typography type="body-sm" width="full" />
-                        <Skeleton.Typography type="body-sm" width="3/4" />
-                        <Skeleton.Typography type="body-sm" width="1/2" />
+
+                    {/* voice hero — big push-to-talk mic */}
+                    <div className="flex flex-col items-center gap-3">
+                        <Skeleton className="size-20 shrink-0 rounded-full" />
+                        <Skeleton.Typography type="body-sm" width="1/4" />
+                    </div>
+
+                    {/* answer action row — primary CTA + the quiet "finish early" link */}
+                    <div className="flex flex-col items-center gap-3">
+                        <Skeleton.Button width="w-48" />
+                        <Skeleton.Typography type="body-xs" width="1/4" />
                     </div>
                 </div>
 
-                {/* voice hero — big push-to-talk mic */}
-                <div className="flex flex-col items-center gap-3">
-                    <Skeleton className="size-20 shrink-0 rounded-full" />
-                    <Skeleton.Typography type="body-sm" width="1/4" />
-                </div>
-
-                {/* answer action row — primary CTA + the quiet "finish early" link */}
-                <div className="flex flex-col items-center gap-3">
-                    <Skeleton.Button width="w-48" />
-                    <Skeleton.Typography type="body-xs" width="1/4" />
+                {/* RIGHT — the workspace pane placeholder (no divider — gap-6 alone separates
+                    the panes, mirroring MockInterviewSession's loaded 2-pane split) */}
+                <div className="min-w-0">
+                    <Skeleton className="h-full min-h-64 w-full rounded-2xl" />
                 </div>
             </div>
         </div>

@@ -53,6 +53,7 @@
     "remove": "Bỏ khỏi giỏ",
     "removed": "Đã bỏ khỏi giỏ hàng",
     "clear": "Xóa giỏ hàng",
+    "clearConfirm": "Chắc chưa? Xoá tất cả",
     "cleared": "Đã xóa giỏ hàng",
     "checkout": "Thanh toán",
     "checkoutCount": "Thanh toán {count} khóa học",
@@ -1097,6 +1098,13 @@
       "noAchievementsHint": "Chưa có gì để dựng? Vào khóa học để tích lũy thành tích trước."
     },
     "submission": {
+      "uploadLabel": "Tải lên CV (PDF)",
+      "dropHint": "Kéo thả CV vào đây hoặc bấm để chọn — chỉ PDF, tối đa 10MB",
+      "uploadSuccess": "Tải lên thành công. Bấm \"Xử lý CV\" để tiếp tục.",
+      "uploadCta": "Tải CV lên",
+      "uploadingCta": "Đang tải lên S3...",
+      "processCta": "Xử lý CV",
+      "processingCta": "Đang xử lý CV...",
       "fileCardTitle": "Thông tin CV đã nộp",
       "submittedAtPending": "Chưa có thời gian nộp từ hệ thống.",
       "download": "Tải xuống",

@@ -1,13 +1,10 @@
 "use client"
 
-import React, {
-    useCallback,
-    useId,
-} from "react"
 import {
     Button,
     ProgressBar,
     Spinner,
+    Typography,
     cn,
 } from "@heroui/react"
 import {
@@ -17,10 +14,15 @@ import type {
     FormikErrors,
     FormikTouched,
 } from "formik"
+import { useTranslations } from "next-intl"
 import type {
     CvSubmissionFormValues,
 } from "@/types"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { Dropzone } from "@/components/reuseable/Dropzone"
+
+/** Max CV upload size (10MB), mirrored in the drop hint copy. */
+const MAX_CV_BYTES = 10 * 1024 * 1024
 
 /** Props for {@link CvSubmissionFields}. */
 export interface CvSubmissionFieldsProps extends WithClassNames<undefined> {
@@ -49,11 +51,10 @@ export interface CvSubmissionFieldsProps extends WithClassNames<undefined> {
 }
 
 /**
- * Inner field layout for the CV submission form: file dropzone, progress bar,
- * and the upload/process buttons.
- *
- * Presentational: renders the supplied Formik render-prop values + upload state,
- * no business logic.
+ * Inner field layout for the CV submission form: canonical {@link Dropzone}
+ * (real drag-drop + token styling + inline error), progress bar, and the
+ * upload/process buttons. Presentational — renders Formik render-prop values +
+ * upload state, no business logic. All copy via the `cv.submission.*` namespace.
  * @param props - {@link CvSubmissionFieldsProps}
  */
 export const CvSubmissionFields = ({
@@ -70,94 +71,36 @@ export const CvSubmissionFields = ({
     onProcess,
     className,
 }: CvSubmissionFieldsProps) => {
-    /** Stable id linking the hidden file input to its label. */
-    const inputId = useId()
-
-    /** Push the chosen file into the Formik `cv` field. */
-    const onFileChange = useCallback(
-        (event: React.ChangeEvent<HTMLInputElement>) => {
-            const file = event.currentTarget.files?.[0]
-            if (file) {
-                setFieldValue("cv", file)
-            }
-        },
-        [
-            setFieldValue,
-        ],
-    )
+    const t = useTranslations("cv.submission")
 
     return (
-        <Form className={cn("space-y-3", className)}>
-            <div className="space-y-2">
-                <label
-                    htmlFor={inputId}
-                    className="block text-sm font-medium"
-                >
-                    Upload CV (PDF)
-                </label>
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors cursor-pointer">
-                    <input
-                        type="file"
-                        accept=".pdf"
-                        onChange={onFileChange}
-                        disabled={isUploading || isProcessing}
-                        className="hidden"
-                        id={inputId}
-                    />
-                    <label
-                        htmlFor={inputId}
-                        className="cursor-pointer block"
-                    >
-                        <div className="text-gray-600">
-                            {values.cv ? (
-                                <div>
-                                    <p className="font-semibold text-blue-600">
-                                        {(values.cv as File).name}
-                                    </p>
-                                    <p className="text-sm text-gray-500">
-                                        {(
-                                            (values.cv as File).size /
-                                            1024
-                                        ).toFixed(2)}{" "}
-                                        KB
-                                    </p>
-                                </div>
-                            ) : (
-                                <div>
-                                    <p>
-                                        Drag and drop your CV or
-                                        click to select
-                                    </p>
-                                    <p className="text-xs text-gray-500 mt-1">
-                                        PDF files only, max 10MB
-                                    </p>
-                                </div>
-                            )}
-                        </div>
-                    </label>
-                </div>
-                {errors.cv && touched.cv && (
-                    <p className="text-sm text-red-500">
-                        {errors.cv as string}
-                    </p>
-                )}
-
-                {uploadedFileName && uploadedS3Key && (
-                    <p className="text-sm text-emerald-600">
-                        Upload successful. Click Process CV to trigger backend processing.
-                    </p>
-                )}
+        <Form className={cn("flex flex-col gap-3", className)}>
+            <div className="flex flex-col gap-2">
+                <Typography type="body-sm" weight="medium">{t("uploadLabel")}</Typography>
+                <Dropzone
+                    acceptedMimeTypes={["application/pdf"]}
+                    maxSizeInBytes={MAX_CV_BYTES}
+                    file={(values.cv as File | null) ?? null}
+                    hint={t("dropHint")}
+                    errorMessage={touched.cv && errors.cv ? String(errors.cv) : undefined}
+                    onChange={(file) => {
+                        if (file) {
+                            setFieldValue("cv", file)
+                        }
+                    }}
+                />
+                {uploadedFileName && uploadedS3Key ? (
+                    <Typography type="body-sm" className="text-success">
+                        {t("uploadSuccess")}
+                    </Typography>
+                ) : null}
             </div>
 
-            {isUploading && (
-                <div className="space-y-2">
+            {isUploading ? (
+                <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
-                        <span className="text-sm font-medium">
-                            Uploading...
-                        </span>
-                        <span className="text-sm text-gray-500">
-                            {uploadProgress}%
-                        </span>
+                        <Typography type="body-sm" weight="medium">{t("uploadingCta")}</Typography>
+                        <Typography type="body-sm" color="muted">{uploadProgress}%</Typography>
                     </div>
                     <ProgressBar
                         className="w-full"
@@ -170,43 +113,43 @@ export const CvSubmissionFields = ({
                         </ProgressBar.Track>
                     </ProgressBar>
                 </div>
-            )}
+            ) : null}
 
             <Button
                 type="submit"
                 isDisabled={isUploading || isProcessing || isSubmitting}
-                className="w-full"
+                fullWidth
                 variant="primary"
             >
                 {isUploading ? (
                     <>
                         <Spinner size="sm" />
-                        Uploading to S3...
+                        {t("uploadingCta")}
                     </>
                 ) : (
-                    "Upload CV"
+                    t("uploadCta")
                 )}
             </Button>
 
             <Button
                 type="button"
                 isDisabled={
-                    !uploadedFileName ||
-                    !uploadedS3Key ||
-                    isUploading ||
-                    isProcessing
+                    !uploadedFileName
+                    || !uploadedS3Key
+                    || isUploading
+                    || isProcessing
                 }
-                className="w-full"
+                fullWidth
                 variant="secondary"
                 onPress={onProcess}
             >
                 {isProcessing ? (
                     <>
                         <Spinner size="sm" />
-                        Processing CV...
+                        {t("processingCta")}
                     </>
                 ) : (
-                    "Process CV"
+                    t("processCta")
                 )}
             </Button>
         </Form>

@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useCallback, useEffect, useMemo } from "react"
+import React, { useCallback, useEffect, useMemo, useState } from "react"
 import { Button, Chip, Skeleton, Typography } from "@heroui/react"
 import { ArrowRightIcon, ShoppingCartIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
@@ -36,6 +36,39 @@ const displayPriceVnd = (course: CourseEntity): number => {
         (phase) => phase.phase === course.currentPhase,
     )?.price
     return toVnd(phasePrice ?? course.originalPrice ?? 0)
+}
+
+/**
+ * "Clear cart" with a lightweight inline 2-step confirm (no modal): first press
+ * arms a danger-soft "confirm" state that auto-disarms after 3s; second press
+ * within the window actually clears — so a destroy-all action can't fire on one
+ * stray click. (canon: destructive action needs confirmation.)
+ */
+const ClearCartButton = ({ isDisabled, onClear }: { isDisabled: boolean; onClear: () => void }) => {
+    const t = useTranslations()
+    const [confirming, setConfirming] = useState(false)
+    useEffect(() => {
+        if (!confirming) return
+        const timer = setTimeout(() => setConfirming(false), 3000)
+        return () => clearTimeout(timer)
+    }, [confirming])
+    return (
+        <Button
+            variant={confirming ? "danger-soft" : "tertiary"}
+            fullWidth
+            isDisabled={isDisabled}
+            onPress={() => {
+                if (confirming) {
+                    onClear()
+                    setConfirming(false)
+                } else {
+                    setConfirming(true)
+                }
+            }}
+        >
+            {confirming ? t("cart.clearConfirm") : t("cart.clear")}
+        </Button>
+    )
 }
 
 /**
@@ -240,14 +273,10 @@ export const CartView = () => {
                             {t("cart.checkoutCount", { count: items.length })}
                             <ArrowRightIcon className="size-5" />
                         </Button>
-                        <Button
-                            variant="tertiary"
-                            fullWidth
+                        <ClearCartButton
                             isDisabled={isMutating}
-                            onPress={() => { void clearCart() }}
-                        >
-                            {t("cart.clear")}
-                        </Button>
+                            onClear={() => { void clearCart() }}
+                        />
                     </div>
                 </div>
             </AsyncContent>

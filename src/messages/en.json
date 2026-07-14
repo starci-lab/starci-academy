@@ -53,6 +53,7 @@
     "remove": "Remove from cart",
     "removed": "Removed from your cart",
     "clear": "Clear cart",
+    "clearConfirm": "Confirm? Clear all",
     "cleared": "Cart cleared",
     "checkout": "Checkout",
     "checkoutCount": "Check out {count} courses",
@@ -1088,6 +1089,13 @@
       "noAchievementsHint": "Nothing to draw on yet? Enroll in a course to build up real achievements first."
     },
     "submission": {
+      "uploadLabel": "Upload CV (PDF)",
+      "dropHint": "Drag & drop your CV here or click to select — PDF only, max 10MB",
+      "uploadSuccess": "Upload successful. Click \"Process CV\" to continue.",
+      "uploadCta": "Upload CV",
+      "uploadingCta": "Uploading to S3...",
+      "processCta": "Process CV",
+      "processingCta": "Processing CV...",
       "fileCardTitle": "Submitted CV information",
       "submittedAtPending": "Submission time not available yet.",
       "download": "Download",

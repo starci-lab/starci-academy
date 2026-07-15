@@ -5,7 +5,7 @@ import { IconTile } from "@/components/blocks/identity/IconTile"
 import { PressableCard } from "./index"
 
 const meta: Meta<typeof PressableCard> = {
-    title: "Blocks/PressableCard",
+    title: "Blocks/Card/PressableCard",
     component: PressableCard,
 }
 
@@ -69,19 +69,6 @@ export const HoverVariants: Story = {
             </PressableCard>
         </div>
     ),
-}
-
-/** Dùng khi đích đến là 1 URL thật (route sang trang khóa học) — render ra `<a>` để hỗ trợ mở tab mới/copy link, không chỉ gọi handler JS. */
-export const AsLink: Story = {
-    name: "As link (href navigation)",
-    parameters: {
-        usage: "Dùng khi đích đến là 1 URL thật (route sang trang khóa học) — render ra `<a>` để hỗ trợ mở tab mới/copy link, không chỉ gọi handler JS.",
-    },
-    args: {
-        href: "/courses/0-fullstack-mastery",
-        hoverVariant: "fill",
-        children: <NavTileContent />,
-    },
 }
 
 /**

@@ -110,7 +110,7 @@ const ControlledGroup = <T extends string>({
 }
 
 const meta: Meta<typeof SelectableCardGroup> = {
-    title: "Blocks/SelectableCardGroup",
+    title: "Blocks/Navigation/SelectableCardGroup",
 }
 
 export default meta
@@ -183,24 +183,6 @@ export const WithIconAndDisabled: Story = {
             initialValue="java"
             ariaLabel="Chọn ngôn ngữ"
             columns={2}
-        />
-    ),
-}
-
-/**
- * Gắn badge khi cần nhấn mạnh ưu đãi/khuyến khích chọn một phương án cụ thể
- * (VD "Tiết kiệm 30%") — không lạm dụng cho mọi item, chỉ item muốn nổi bật.
- */
-export const WithBadge: Story = {
-    parameters: {
-        usage: "Gắn badge khi cần nhấn mạnh ưu đãi/khuyến khích chọn một phương án cụ thể (VD \"Tiết kiệm 30%\") — không lạm dụng cho mọi item, chỉ item muốn nổi bật.",
-    },
-    render: () => (
-        <ControlledGroup
-            items={PLAN_ITEMS}
-            initialValue="yearly"
-            ariaLabel="Chọn chu kỳ thanh toán"
-            columns={1}
         />
     ),
 }

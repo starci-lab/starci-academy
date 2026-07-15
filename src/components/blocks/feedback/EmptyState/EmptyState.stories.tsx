@@ -10,7 +10,7 @@ import { EmptyState } from "./index"
  * hook itself, so every story below uses static Vietnamese copy.
  */
 const meta = {
-    title: "Blocks/EmptyState",
+    title: "Blocks/Feedback/EmptyState",
     component: EmptyState,
     // default title satisfies the required prop for render-only stories (they render their own).
     args: {

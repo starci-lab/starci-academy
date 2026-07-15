@@ -8,7 +8,7 @@ import { PriceTag } from "./index"
  * not N near-identical ones).
  */
 const meta: Meta<typeof PriceTag> = {
-    title: "Blocks/PriceTag",
+    title: "Blocks/Commerce/PriceTag",
     component: PriceTag,
 }
 

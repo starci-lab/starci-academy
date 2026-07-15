@@ -37,7 +37,7 @@ export const EmptyContent = ({
 }: EmptyContentProps) => {
     return (
         <div className={cn("flex w-full flex-col items-center justify-center gap-3 px-6 py-6 text-center", className)}>
-            {icon ?? <TrayIcon aria-hidden focusable="false" className="size-8 text-muted" />}
+            {icon ?? <TrayIcon aria-hidden focusable="false" weight="duotone" className="size-8 text-foreground" />}
             <div className="flex flex-col gap-2">
                 <Typography type="body-sm" weight="medium" align="center">
                     {title}

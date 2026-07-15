@@ -8,7 +8,7 @@ import { Callout, type CalloutStatus, STATUS_ACTION_CLASS } from "./index"
  * `CloseButton` with a status-driven soft tint so it doesn't read as a card-in-card.
  */
 const meta = {
-    title: "Blocks/Callout",
+    title: "Blocks/Feedback/Callout",
     component: Callout,
     args: {
         title: "Bài học đã được lưu",
@@ -63,19 +63,6 @@ export const Tones: Story = {
     ),
     parameters: {
         usage: "Dùng báo trạng thái mềm TRONG card (nộp bài OK / sắp hết hạn / lỗi kết nối / có bản cập nhật…) — không tạo card-trong-card.",
-    },
-}
-
-/** Dùng khi thông báo gắn với một hành động cụ thể (hoàn thành module) — icon riêng giúp người dùng nhận diện nhanh hơn icon trạng thái mặc định. */
-export const WithCustomIcon: Story = {
-    args: {
-        status: "success",
-        title: "Hoàn thành module",
-        description: "Bạn đã hoàn thành toàn bộ 8 bài học trong module này.",
-        icon: <CheckCircleIcon />,
-    },
-    parameters: {
-        usage: "Dùng khi thông báo gắn với một hành động cụ thể (hoàn thành module) — icon riêng giúp người dùng nhận diện nhanh hơn icon trạng thái mặc định.",
     },
 }
 

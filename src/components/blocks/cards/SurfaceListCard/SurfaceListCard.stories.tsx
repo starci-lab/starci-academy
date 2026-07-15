@@ -7,7 +7,7 @@ import {
 import { SurfaceListCard, SurfaceListCardItem, SurfaceListCardRow } from "./index"
 
 const meta: Meta<typeof SurfaceListCard> = {
-    title: "Blocks/SurfaceListCard",
+    title: "Blocks/Card/SurfaceListCard",
     component: SurfaceListCard,
 }
 
@@ -147,29 +147,6 @@ export const WithLeadingAndMeta: Story = {
     ),
 }
 
-/** Dùng cho hàng ĐIỀU HƯỚNG (điều khoản, chính sách) — mỗi hàng là 1 link `<a>`, không phải nút hành động. */
-export const LinkRows: Story = {
-    parameters: {
-        usage: "Dùng cho hàng ĐIỀU HƯỚNG (điều khoản, chính sách) — mỗi hàng là 1 link `<a>`, không phải nút hành động.",
-    },
-    render: () => (
-        <div className="max-w-md">
-            <SurfaceListCard>
-                <SurfaceListCardRow
-                    title="Điều khoản dịch vụ"
-                    href="/legal/terms"
-                    trailing={<CaretRightIcon className="size-4 text-muted" aria-hidden focusable="false" />}
-                />
-                <SurfaceListCardRow
-                    title="Chính sách bảo mật"
-                    href="/legal/privacy"
-                    trailing={<CaretRightIcon className="size-4 text-muted" aria-hidden focusable="false" />}
-                />
-            </SurfaceListCard>
-        </div>
-    ),
-}
-
 /** Dùng khi nội dung hàng không khớp khuôn title/subtitle/leading — ví dụ hàng có thanh tiến độ riêng. */
 export const FreeFormItems: Story = {
     parameters: {
@@ -203,29 +180,6 @@ export const FreeFormItems: Story = {
                         </div>
                         <span className="shrink-0 text-xs text-muted">20%</span>
                     </div>
-                </SurfaceListCardItem>
-            </SurfaceListCard>
-        </div>
-    ),
-}
-
-/** Dùng cho hàng CHỈ ĐỌC không bấm được — ví dụ liệt kê nhật ký thay đổi (changelog). */
-export const StaticItem: Story = {
-    parameters: {
-        usage: "Dùng cho hàng CHỈ ĐỌC không bấm được — ví dụ liệt kê nhật ký thay đổi (changelog).",
-    },
-    render: () => (
-        <div className="max-w-md">
-            <SurfaceListCard>
-                <SurfaceListCardItem>
-                    <span className="text-sm text-muted">
-                        Nhật ký thay đổi v2.4.0 — thêm chế độ trả góp
-                    </span>
-                </SurfaceListCardItem>
-                <SurfaceListCardItem>
-                    <span className="text-sm text-muted">
-                        Nhật ký thay đổi v2.3.0 — cải thiện tốc độ tải trang khoá học
-                    </span>
                 </SurfaceListCardItem>
             </SurfaceListCard>
         </div>

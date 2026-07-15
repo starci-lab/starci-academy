@@ -11,7 +11,7 @@ import {
 import { ListRow } from "./index"
 
 const meta: Meta<typeof ListRow> = {
-    title: "Blocks/ListRow",
+    title: "Blocks/List/ListRow",
     component: ListRow,
 }
 

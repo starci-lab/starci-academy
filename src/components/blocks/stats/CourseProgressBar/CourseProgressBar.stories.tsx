@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { CourseProgressBar } from "./index"
 
 const meta: Meta<typeof CourseProgressBar> = {
-    title: "Blocks/CourseProgressBar",
+    title: "Blocks/Stat/CourseProgressBar",
     component: CourseProgressBar,
 }
 export default meta
@@ -19,23 +19,6 @@ export const Default: Story = {
                     { key: "content", label: "Nội dung", completed: 62, total: 87 },
                     { key: "challenge", label: "Thử thách", completed: 140, total: 329 },
                     { key: "milestone", label: "Dự án", completed: 3, total: 5 },
-                ]}
-            />
-        </div>
-    ),
-}
-
-/** Dùng khi muốn nhấn mạnh tỉ lệ hoàn thành ở gần mức tối đa để học viên thấy sắp cán đích. */
-export const GanHoanThanh: Story = {
-    parameters: { usage: "Dùng khi muốn nhấn mạnh tỉ lệ hoàn thành ở gần mức tối đa để học viên thấy sắp cán đích." },
-    render: () => (
-        <div className="w-80">
-            <CourseProgressBar
-                ariaLabel="Tiến độ khóa học sắp hoàn thành"
-                dims={[
-                    { key: "content", label: "Nội dung", completed: 85, total: 87 },
-                    { key: "challenge", label: "Thử thách", completed: 320, total: 329 },
-                    { key: "milestone", label: "Dự án", completed: 5, total: 5 },
                 ]}
             />
         </div>
@@ -71,23 +54,6 @@ export const AnLegend: Story = {
                     { key: "content", label: "Nội dung", completed: 62, total: 87 },
                     { key: "challenge", label: "Thử thách", completed: 140, total: 329 },
                     { key: "milestone", label: "Dự án", completed: 3, total: 5 },
-                ]}
-            />
-        </div>
-    ),
-}
-
-/** Dùng khi muốn dùng màu tùy chỉnh cho từng chiều thay vì bảng màu mặc định, ví dụ để khớp thương hiệu khóa học. */
-export const MauTuyChinh: Story = {
-    parameters: { usage: "Dùng khi muốn dùng màu tùy chỉnh cho từng chiều thay vì bảng màu mặc định, ví dụ để khớp thương hiệu khóa học." },
-    render: () => (
-        <div className="w-80">
-            <CourseProgressBar
-                ariaLabel="Tiến độ khóa học với màu tùy chỉnh"
-                dims={[
-                    { key: "content", label: "Nội dung", completed: 62, total: 87, color: "#6366f1" },
-                    { key: "challenge", label: "Thử thách", completed: 140, total: 329, color: "#ec4899" },
-                    { key: "milestone", label: "Dự án", completed: 3, total: 5, color: "#f59e0b" },
                 ]}
             />
         </div>

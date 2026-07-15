@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { LanguageChip } from "./index"
 
 const meta: Meta<typeof LanguageChip> = {
-    title: "Blocks/LanguageChip",
+    title: "Blocks/Chip/LanguageChip",
     component: LanguageChip,
 }
 export default meta
@@ -22,19 +22,6 @@ export const SpecialCasedName: Story = {
             <LanguageChip language="csharp" />
             <LanguageChip language="cpp" />
             <LanguageChip language="php" />
-        </div>
-    ),
-}
-
-/** Dùng khi liệt kê nhiều ngôn ngữ liền nhau, ví dụ bảng phân bố ngôn ngữ của một dự án. */
-export const MultipleLanguages: Story = {
-    parameters: { usage: "Dùng khi liệt kê nhiều ngôn ngữ liền nhau, ví dụ bảng phân bố ngôn ngữ của một dự án." },
-    render: () => (
-        <div className="flex flex-col gap-2">
-            <LanguageChip language="python" />
-            <LanguageChip language="java" />
-            <LanguageChip language="go" />
-            <LanguageChip language="rust" />
         </div>
     ),
 }

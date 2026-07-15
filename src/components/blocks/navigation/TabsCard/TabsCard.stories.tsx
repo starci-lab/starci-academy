@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { useState } from "react"
 import type { Key } from "react"
-
+import { GearIcon, GlobeIcon, PlusIcon } from "@phosphor-icons/react"
+import { Button } from "@heroui/react"
 import { TabsCard } from "./index"
 
 const meta: Meta<typeof TabsCard> = {
-    title: "Blocks/TabsCard",
+    title: "Blocks/Navigation/TabsCard",
     component: TabsCard,
+    parameters: { layout: "centered" },
 }
-
 export default meta
-
 type Story = StoryObj<typeof TabsCard>
 
 const CONTENT_TABS = [
@@ -19,20 +19,24 @@ const CONTENT_TABS = [
     { key: "reviews", label: "Đánh giá" },
 ]
 
-/** `secondary` (mặc định) — tab NỘI DUNG trong trang: gạch chân, ôm width label, không nền full. Cho filter/switch nội dung. */
-export const Secondary: Story = {
-    parameters: { usage: "secondary (mặc định): tab nội dung gạch chân, ôm label — cho filter/switch trong trang." },
+const LANGUAGE_TABS = [
+    { key: "vi", label: "Tiếng Việt", icon: <GlobeIcon size={16} /> },
+    { key: "en", label: "English", icon: <GlobeIcon size={16} /> },
+]
+
+/** Dùng khi một trang chỉ cần một dải tab nội dung đơn giản, không có nhóm phụ bên phải. */
+export const Default: Story = {
+    parameters: { usage: "Dùng khi một trang chỉ cần một dải tab nội dung đơn giản, không có nhóm phụ bên phải." },
     render: () => {
-        const [k, setK] = useState("overview")
+        const [selectedKey, setSelectedKey] = useState("overview")
         return (
-            <div className="max-w-2xl">
+            <div className="w-[36rem]">
                 <TabsCard
-                    variant="secondary"
                     leftTabs={{
                         items: CONTENT_TABS,
-                        selectedKey: k,
+                        selectedKey,
                         ariaLabel: "Mục khóa học",
-                        onSelectionChange: (key: Key) => setK(String(key)),
+                        onSelectionChange: (key: Key) => setSelectedKey(String(key)),
                     }}
                 />
             </div>
@@ -40,57 +44,78 @@ export const Secondary: Story = {
     },
 }
 
-/** `primary` — tab FEATURE đổi CẢ panel: pill segmented full-width, đều nhau. Cho chuyển section cấp cao (Bắt đầu/Lịch sử/Thống kê). */
-export const Primary: Story = {
-    parameters: { usage: "primary: tab feature đổi cả panel — pill segmented full-width. Cho chuyển section cấp cao." },
+/** Dùng khi cần thêm một bộ chuyển đổi phụ (ví dụ ngôn ngữ) tách biệt khỏi trục tab nội dung chính, với sắc thái trung tính để không cạnh tranh điểm nhấn accent, và thu gọn thành dropdown trên màn hình hẹp. */
+export const WithLanguageSwitcher: Story = {
+    parameters: { usage: "Dùng khi cần thêm một bộ chuyển đổi phụ (ví dụ ngôn ngữ) tách biệt khỏi trục tab nội dung chính, với sắc thái trung tính để không cạnh tranh điểm nhấn accent, và thu gọn thành dropdown trên màn hình hẹp." },
     render: () => {
-        const [k, setK] = useState("start")
+        const [selectedKey, setSelectedKey] = useState("overview")
+        const [lang, setLang] = useState("vi")
         return (
-            <div className="max-w-2xl">
+            <div className="w-[36rem]">
+                <TabsCard
+                    leftTabs={{
+                        items: CONTENT_TABS,
+                        selectedKey,
+                        ariaLabel: "Mục khóa học",
+                        onSelectionChange: (key: Key) => setSelectedKey(String(key)),
+                    }}
+                    rightTabs={{
+                        items: LANGUAGE_TABS,
+                        selectedKey: lang,
+                        ariaLabel: "Ngôn ngữ",
+                        onSelectionChange: (key: Key) => setLang(String(key)),
+                    }}
+                    rightTabsNeutral
+                    collapseRightOnMobile
+                />
+            </div>
+        )
+    },
+}
+
+/** Dùng khi cần gắn một hành động liên quan (thêm mới, quản lý) ngay sát nhóm tab trái mà không lồng nó vào trong chính tab. */
+export const WithLeftEndAction: Story = {
+    parameters: { usage: "Dùng khi cần gắn một hành động liên quan (thêm mới, quản lý) ngay sát nhóm tab trái mà không lồng nó vào trong chính tab." },
+    render: () => {
+        const [selectedKey, setSelectedKey] = useState("overview")
+        return (
+            <div className="w-[36rem]">
+                <TabsCard
+                    leftTabs={{
+                        items: CONTENT_TABS,
+                        selectedKey,
+                        ariaLabel: "Mục khóa học",
+                        onSelectionChange: (key: Key) => setSelectedKey(String(key)),
+                    }}
+                    leftEnd={(
+                        <Button isIconOnly variant="ghost" size="sm" aria-label="Thêm mục mới">
+                            <PlusIcon size={16} />
+                        </Button>
+                    )}
+                />
+            </div>
+        )
+    },
+}
+
+/** Dùng cho tab chuyển đổi khu vực cấp trang (không phải bộ lọc nội dung) — dải segmented đầy chiều rộng, có thể chứa tab bị khóa/disable. */
+export const PrimaryVariant: Story = {
+    parameters: { usage: "Dùng cho tab chuyển đổi khu vực cấp trang (không phải bộ lọc nội dung) — dải segmented đầy chiều rộng, có thể chứa tab bị khóa/disable." },
+    render: () => {
+        const [selectedKey, setSelectedKey] = useState("start")
+        return (
+            <div className="w-[36rem]">
                 <TabsCard
                     variant="primary"
                     leftTabs={{
                         items: [
-                            { key: "start", label: "Bắt đầu" },
+                            { key: "start", label: "Bắt đầu", icon: <GearIcon size={16} /> },
                             { key: "history", label: "Lịch sử" },
-                            { key: "stats", label: "Thống kê" },
+                            { key: "stats", label: "Thống kê", isDisabled: true },
                         ],
-                        selectedKey: k,
+                        selectedKey,
                         ariaLabel: "Khu vực",
-                        onSelectionChange: (key: Key) => setK(String(key)),
-                    }}
-                />
-            </div>
-        )
-    },
-}
-
-/** 2 nhóm: `leftTabs` (nội dung, accent) + `rightTabs` (đổi ngôn ngữ, `rightTabsNeutral` = gạch chân foreground) — toolbar chỉ MỘT tín hiệu accent. `collapseRightOnMobile` gộp nhóm phải thành dropdown dưới `sm`. */
-export const WithLanguageSwitcher: Story = {
-    parameters: { usage: "2 nhóm: leftTabs (nội dung, accent) + rightTabs (ngôn ngữ, neutral) — 1 tín hiệu accent. collapseRightOnMobile → dropdown dưới sm." },
-    render: () => {
-        const [k, setK] = useState("overview")
-        const [lang, setLang] = useState("vi")
-        return (
-            <div className="max-w-2xl">
-                <TabsCard
-                    variant="secondary"
-                    leftTabs={{
-                        items: CONTENT_TABS,
-                        selectedKey: k,
-                        ariaLabel: "Mục khóa học",
-                        onSelectionChange: (key: Key) => setK(String(key)),
-                    }}
-                    rightTabsNeutral
-                    collapseRightOnMobile
-                    rightTabs={{
-                        items: [
-                            { key: "vi", label: "Tiếng Việt" },
-                            { key: "en", label: "English" },
-                        ],
-                        selectedKey: lang,
-                        ariaLabel: "Ngôn ngữ",
-                        onSelectionChange: (key: Key) => setLang(String(key)),
+                        onSelectionChange: (key: Key) => setSelectedKey(String(key)),
                     }}
                 />
             </div>

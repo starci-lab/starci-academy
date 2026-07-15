@@ -6,7 +6,7 @@ import { LabeledList } from "./index"
 import { ListRow } from "../ListRow"
 
 const meta: Meta<typeof LabeledList> = {
-    title: "Blocks/LabeledList",
+    title: "Blocks/List/LabeledList",
     component: LabeledList,
 }
 
@@ -67,6 +67,16 @@ export const WithAction: Story = {
             >
                 {rows}
             </LabeledList>
+        </div>
+    ),
+}
+
+/** Bỏ icon khi label đã đủ rõ nghĩa và panel muốn giữ phần header tối giản. */
+export const WithoutIcon: Story = {
+    parameters: { usage: "Bỏ icon khi label đã đủ rõ nghĩa và panel muốn giữ phần header tối giản." },
+    render: () => (
+        <div className="max-w-sm">
+            <LabeledList label="Ghi chú bài học">{rows}</LabeledList>
         </div>
     ),
 }

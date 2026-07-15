@@ -41,7 +41,8 @@ export const ErrorContent = ({
                 <WarningOctagonIcon
                     aria-hidden
                     focusable="false"
-                    className="size-8 text-danger-soft-foreground"
+                    weight="duotone"
+                    className="size-8 text-foreground"
                 />
             )}
             <div className="flex flex-col gap-2">

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { TopicMasteryGrid } from "./index"
 
 const meta: Meta<typeof TopicMasteryGrid> = {
-    title: "Blocks/TopicMasteryGrid",
+    title: "Blocks/Stat/TopicMasteryGrid",
     component: TopicMasteryGrid,
 }
 export default meta
@@ -22,32 +22,6 @@ export const Default: Story = {
                 { key: "greedy", label: "Tham lam", solved: 8 },
                 { key: "backtrack", label: "Quay lui", solved: 5 },
             ]}
-        />
-    ),
-}
-
-/** Dùng khi học viên vừa bắt đầu và mọi chủ đề có số bài giải bằng nhau, chưa có chủ đề nổi bật. */
-export const EvenDistribution: Story = {
-    parameters: { usage: "Dùng khi học viên vừa bắt đầu và mọi chủ đề có số bài giải bằng nhau, chưa có chủ đề nổi bật." },
-    render: () => (
-        <TopicMasteryGrid
-            ariaLabel="Mức độ thành thạo theo chủ đề"
-            topics={[
-                { key: "array", label: "Mảng & Chuỗi", solved: 3 },
-                { key: "hash", label: "Bảng băm", solved: 3 },
-                { key: "stack", label: "Ngăn xếp", solved: 3 },
-            ]}
-        />
-    ),
-}
-
-/** Dùng khi học viên chỉ mới giải bài thuộc đúng một chủ đề duy nhất. */
-export const SingleTopic: Story = {
-    parameters: { usage: "Dùng khi học viên chỉ mới giải bài thuộc đúng một chủ đề duy nhất." },
-    render: () => (
-        <TopicMasteryGrid
-            ariaLabel="Mức độ thành thạo theo chủ đề"
-            topics={[{ key: "array", label: "Mảng & Chuỗi", solved: 6 }]}
         />
     ),
 }

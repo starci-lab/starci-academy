@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { LanguageDonut } from "./index"
 
 const meta: Meta<typeof LanguageDonut> = {
-    title: "Blocks/LanguageDonut",
+    title: "Blocks/Stat/LanguageDonut",
     component: LanguageDonut,
 }
 export default meta
@@ -21,23 +21,6 @@ export const Default: Story = {
             ]}
             unitLabel="bài đã giải"
             ariaLabel="Biểu đồ tỉ trọng ngôn ngữ đã dùng để giải bài"
-        />
-    ),
-}
-
-/** Thu nhỏ donut khi đặt trong một thẻ (card) hẹp hoặc cạnh các số liệu khác. */
-export const NhoGon: Story = {
-    parameters: { usage: "Thu nhỏ donut khi đặt trong một thẻ (card) hẹp hoặc cạnh các số liệu khác." },
-    render: () => (
-        <LanguageDonut
-            items={[
-                { key: "csharp", value: 18 },
-                { key: "cpp", value: 6 },
-            ]}
-            unitLabel="bài"
-            ariaLabel="Biểu đồ tỉ trọng ngôn ngữ đã dùng để giải bài"
-            size={80}
-            thickness={6}
         />
     ),
 }

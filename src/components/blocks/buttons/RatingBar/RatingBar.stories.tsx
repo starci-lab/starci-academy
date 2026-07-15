@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { RatingBar } from "./index"
 
 const meta: Meta<typeof RatingBar> = {
-    title: "Blocks/RatingBar",
+    title: "Blocks/Button/RatingBar",
     component: RatingBar,
 }
 export default meta

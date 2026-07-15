@@ -6,7 +6,7 @@ import { PaginatedList } from "./index"
 import { ListRow } from "../ListRow"
 
 const meta: Meta<typeof PaginatedList> = {
-    title: "Blocks/PaginatedList",
+    title: "Blocks/List/PaginatedList",
     component: PaginatedList,
 }
 
@@ -68,32 +68,27 @@ export const Default: Story = {
     ),
 }
 
-/** Nhánh LOADING: `isLoading` → render slot `skeleton` (placeholder nhấp nháy phản chiếu layout data). */
-export const Loading: Story = {
-    parameters: { usage: "Nhánh loading: isLoading → render slot skeleton (mirror layout data)." },
+/** So sánh cả 4 nhánh cạnh nhau theo đúng thứ tự ưu tiên error → loading → empty → data — mỗi nhánh có nhãn ngắn để đọc lướt. */
+export const AllBranches: Story = {
+    parameters: { usage: "Xem cả 4 nhánh cạnh nhau (error → loading → empty → data) để đối chiếu thứ tự ưu tiên và layout từng slot; dùng khi cần soi orchestrator chọn nhánh nào." },
     render: () => (
-        <div className="max-w-md">
-            <PaginatedList isLoading skeleton={skeleton}>{rows}</PaginatedList>
-        </div>
-    ),
-}
-
-/** Nhánh EMPTY: `isEmpty` → render slot `emptyState` (minh hoạ trống + gợi ý), khi không loading/không error. */
-export const Empty: Story = {
-    parameters: { usage: "Nhánh empty: isEmpty → render slot emptyState (trống + gợi ý)." },
-    render: () => (
-        <div className="max-w-md">
-            <PaginatedList isEmpty emptyState={emptyState}>{rows}</PaginatedList>
-        </div>
-    ),
-}
-
-/** Nhánh ERROR: `error` → render slot `errorState` (có retry). Ưu tiên CAO NHẤT — đè mọi nhánh khác. */
-export const Error: Story = {
-    parameters: { usage: "Nhánh error: error → render slot errorState (có retry). Ưu tiên cao nhất, đè mọi nhánh." },
-    render: () => (
-        <div className="max-w-md">
-            <PaginatedList error errorState={errorState}>{rows}</PaginatedList>
+        <div className="grid max-w-4xl grid-cols-1 gap-6 sm:grid-cols-2">
+            <div className="flex flex-col gap-2">
+                <Typography type="body-xs" color="muted">Nhánh error (ưu tiên cao nhất)</Typography>
+                <PaginatedList error errorState={errorState}>{rows}</PaginatedList>
+            </div>
+            <div className="flex flex-col gap-2">
+                <Typography type="body-xs" color="muted">Nhánh loading</Typography>
+                <PaginatedList isLoading skeleton={skeleton}>{rows}</PaginatedList>
+            </div>
+            <div className="flex flex-col gap-2">
+                <Typography type="body-xs" color="muted">Nhánh empty</Typography>
+                <PaginatedList isEmpty emptyState={emptyState}>{rows}</PaginatedList>
+            </div>
+            <div className="flex flex-col gap-2">
+                <Typography type="body-xs" color="muted">Nhánh data</Typography>
+                <PaginatedList pagination={pagination}>{rows}</PaginatedList>
+            </div>
         </div>
     ),
 }

@@ -4,7 +4,7 @@ import { Card } from "@heroui/react"
 import { StatPair } from "./index"
 
 const meta: Meta<typeof StatPair> = {
-    title: "Blocks/StatPair",
+    title: "Blocks/Stat/StatPair",
     component: StatPair,
     args: {
         value: "1,204",
@@ -57,10 +57,4 @@ export const Grid: Story = {
             </div>
         </Card>
     ),
-}
-
-/** Nhãn cực ngắn ("XP") — value+label vẫn dính chặt (`gap-0`), canh trái, không lệch với các ô khác trong cùng hàng. */
-export const ShortLabel: Story = {
-    args: { value: "320", label: "XP" },
-    parameters: { usage: "Nhãn cực ngắn (VD \"XP\") — value+label vẫn dính chặt, canh trái, không lệch với các ô khác cùng hàng." },
 }

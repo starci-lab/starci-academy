@@ -57,7 +57,7 @@ export const ErrorState = ({
                 className,
             )}
         >
-            <WarningIcon className="size-8 text-danger-soft-foreground" />
+            <WarningIcon weight="duotone" className="size-8 text-foreground" />
             {title ? (
                 <Typography weight="medium">{title}</Typography>
             ) : null}

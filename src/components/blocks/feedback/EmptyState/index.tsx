@@ -58,7 +58,7 @@ export const EmptyState = ({
             )}
         >
             {icon ? (
-                <span className="text-muted [&>svg]:size-8">{icon}</span>
+                <span className="text-foreground [&>svg]:size-8">{icon}</span>
             ) : null}
             <Typography weight="medium" align="center">{title}</Typography>
             {description ? (

@@ -1,68 +1,123 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import {
-    BookOpenIcon,
-    ChartBarIcon,
-    CubeIcon,
-    GearSixIcon,
     HouseIcon,
-    LockIcon,
+    BookOpenIcon,
+    UserIcon,
+    GearSixIcon,
+    TrophyIcon,
+    ChatCircleTextIcon,
 } from "@phosphor-icons/react"
-
 import { CollapsibleSidebar } from "./index"
 import { SidebarNavGroup } from "../SidebarNavGroup"
 import { SidebarNavItem } from "../SidebarNavItem"
-import { SidebarNavAccordionGroup } from "../SidebarNavAccordionGroup"
 
 const meta: Meta<typeof CollapsibleSidebar> = {
-    title: "Blocks/CollapsibleSidebar",
+    title: "Blocks/Navigation/CollapsibleSidebar",
     component: CollapsibleSidebar,
+    parameters: { layout: "centered" },
 }
-
 export default meta
-
 type Story = StoryObj<typeof CollapsibleSidebar>
 
-/**
- * Sidebar LẮP RÁP: `CollapsibleSidebar` (khung + toggle + context) chứa `SidebarNavGroup`
- * → `SidebarNavItem` + `SidebarNavAccordionGroup`. Bấm nút toggle ở header để thu gọn IN
- * PLACE (rail icon-only) — nội dung bên phải reflow, không overlay. Chỉ 1 item `isActive`.
- */
+/** Sidebar điều hướng chính của khu vực học tập, dùng khi cần một nhóm mục điều hướng có thể thu gọn lại thành dải icon để nhường chỗ cho nội dung. */
 export const Default: Story = {
-    parameters: { usage: "Sidebar lắp ráp: CollapsibleSidebar + NavGroup + NavItem + AccordionGroup. Toggle để thu gọn in-place (rail icon), nội dung reflow bên cạnh." },
+    parameters: { usage: "Sidebar điều hướng chính của khu vực học tập, dùng khi cần một nhóm mục điều hướng có thể thu gọn lại thành dải icon để nhường chỗ cho nội dung." },
     render: () => (
-        <div className="flex h-[560px] overflow-hidden rounded-2xl border border-separator bg-surface">
+        <div className="h-[32rem]">
             <CollapsibleSidebar
                 title="Học tập"
-                collapseLabel="Thu gọn thanh bên"
-                expandLabel="Mở rộng thanh bên"
-                storageKey="sb-story-demo"
+                collapseLabel="Thu gọn sidebar"
+                expandLabel="Mở rộng sidebar"
+                storageKey="storybook-sidebar-default"
             >
-                <SidebarNavGroup>
-                    <SidebarNavItem icon={<HouseIcon className="size-5 shrink-0" />} label="Tổng quan" isActive onPress={() => {}} />
-                    <SidebarNavItem icon={<BookOpenIcon className="size-5 shrink-0" />} label="Khóa học" onPress={() => {}} />
-                    <SidebarNavItem icon={<ChartBarIcon className="size-5 shrink-0" />} label="Tiến độ" onPress={() => {}} />
-                </SidebarNavGroup>
-                <SidebarNavGroup label="Luyện tập" divider>
-                    <SidebarNavAccordionGroup
-                        icon={CubeIcon}
-                        label="Playground"
-                        items={[
-                            { value: "docker", label: "Docker", onPress: () => {} },
-                            { value: "k8s", label: "Kubernetes", onPress: () => {} },
-                            { value: "rag", label: "RAG", onPress: () => {} },
-                        ]}
+                <SidebarNavGroup label="Tổng quan">
+                    <SidebarNavItem
+                        icon={<HouseIcon className="size-5" />}
+                        label="Trang chủ"
+                        isActive
+                        onPress={() => {}}
                     />
                     <SidebarNavItem
-                        icon={<GearSixIcon className="size-5 shrink-0" />}
+                        icon={<BookOpenIcon className="size-5" />}
+                        label="Khóa học của tôi"
+                        onPress={() => {}}
+                    />
+                </SidebarNavGroup>
+                <SidebarNavGroup label="Tài khoản" divider>
+                    <SidebarNavItem
+                        icon={<UserIcon className="size-5" />}
+                        label="Hồ sơ cá nhân"
+                        onPress={() => {}}
+                    />
+                    <SidebarNavItem
+                        icon={<GearSixIcon className="size-5" />}
                         label="Cài đặt"
-                        endContent={<LockIcon className="size-4 text-muted" aria-hidden focusable="false" />}
                         onPress={() => {}}
                     />
                 </SidebarNavGroup>
             </CollapsibleSidebar>
-            <div className="flex-1 p-6">
-                <p className="text-sm text-muted">Vùng nội dung — reflow bên cạnh sidebar khi thu gọn / mở rộng (không overlay).</p>
-            </div>
+        </div>
+    ),
+}
+
+/** Ghim một khối luôn hiển thị phía trên vùng cuộn (ví dụ pill tiếp tục học), dùng khi cần một lối tắt quan trọng không bị trôi theo danh sách điều hướng dài. */
+export const VoiTopSlot: Story = {
+    parameters: { usage: "Ghim một khối luôn hiển thị phía trên vùng cuộn (ví dụ pill tiếp tục học), dùng khi cần một lối tắt quan trọng không bị trôi theo danh sách điều hướng dài." },
+    render: () => (
+        <div className="h-[32rem]">
+            <CollapsibleSidebar
+                title="Học tập"
+                collapseLabel="Thu gọn sidebar"
+                expandLabel="Mở rộng sidebar"
+                storageKey="storybook-sidebar-top-slot"
+                topSlot={(
+                    <div className="mb-4 rounded-large bg-accent-soft px-3 py-2 text-accent-soft-foreground">
+                        Tiếp tục: Module 3
+                    </div>
+                )}
+            >
+                <SidebarNavGroup label="Tổng quan">
+                    <SidebarNavItem
+                        icon={<HouseIcon className="size-5" />}
+                        label="Trang chủ"
+                        onPress={() => {}}
+                    />
+                    <SidebarNavItem
+                        icon={<BookOpenIcon className="size-5" />}
+                        label="Khóa học của tôi"
+                        isActive
+                        onPress={() => {}}
+                    />
+                </SidebarNavGroup>
+            </CollapsibleSidebar>
+        </div>
+    ),
+}
+
+/** Tiêu đề panel dài cần rút gọn bằng dấu ba chấm, dùng để kiểm tra sidebar vẫn giữ được bề rộng cố định khi tên khu vực học tập dài hơn bình thường. */
+export const TieuDeDai: Story = {
+    parameters: { usage: "Tiêu đề panel dài cần rút gọn bằng dấu ba chấm, dùng để kiểm tra sidebar vẫn giữ được bề rộng cố định khi tên khu vực học tập dài hơn bình thường." },
+    render: () => (
+        <div className="h-[32rem]">
+            <CollapsibleSidebar
+                title="Lộ trình Full-stack Engineer nâng cao"
+                collapseLabel="Thu gọn sidebar"
+                expandLabel="Mở rộng sidebar"
+                storageKey="storybook-sidebar-long-title"
+            >
+                <SidebarNavGroup>
+                    <SidebarNavItem
+                        icon={<TrophyIcon className="size-5" />}
+                        label="Bảng xếp hạng"
+                        onPress={() => {}}
+                    />
+                    <SidebarNavItem
+                        icon={<ChatCircleTextIcon className="size-5" />}
+                        label="Hỏi đáp"
+                        onPress={() => {}}
+                    />
+                </SidebarNavGroup>
+            </CollapsibleSidebar>
         </div>
     ),
 }

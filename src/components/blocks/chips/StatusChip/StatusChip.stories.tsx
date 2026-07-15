@@ -5,7 +5,7 @@ import { StatusChip } from "./index"
 import type { StatusChipProps } from "./index"
 
 const meta: Meta<typeof StatusChip> = {
-    title: "Blocks/StatusChip",
+    title: "Blocks/Chip/StatusChip",
     component: StatusChip,
     args: {
         children: "Đang hoạt động",

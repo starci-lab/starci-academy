@@ -2,28 +2,31 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Logo } from "./index"
 
 const meta: Meta<typeof Logo> = {
-    title: "Blocks/Logo",
+    title: "Blocks/Identity/Logo",
     component: Logo,
 }
 export default meta
 type Story = StoryObj<typeof Logo>
 
-/** Kích thước mặc định (h-8), dùng cho hầu hết thanh điều hướng và header. */
-export const Default: Story = {
-    parameters: { usage: "Kích thước mặc định (h-8), dùng cho hầu hết thanh điều hướng và header." },
-    render: () => <Logo />,
-}
-
-/** Thu nhỏ logo (h-5) cho các khu vực chật như thanh điều hướng di động hoặc favicon-like badge. */
-export const Small: Story = {
-    parameters: { usage: "Thu nhỏ logo (h-5) cho các khu vực chật như thanh điều hướng di động hoặc favicon-like badge." },
-    render: () => <Logo className="h-5" />,
-}
-
-/** Phóng to logo (h-20) cho màn hình splash, trang đăng nhập hoặc trạng thái trống nổi bật thương hiệu. */
-export const Large: Story = {
-    parameters: { usage: "Phóng to logo (h-20) cho màn hình splash, trang đăng nhập hoặc trạng thái trống nổi bật thương hiệu." },
-    render: () => <Logo className="h-20" />,
+/** So sánh ba cỡ logo cạnh nhau — dùng khi cần chọn chiều cao phù hợp cho một khu vực (kích thước chỉ do className height quyết định). */
+export const Sizes: Story = {
+    parameters: { usage: "So sánh ba cỡ logo cạnh nhau — dùng khi cần chọn chiều cao phù hợp cho một khu vực (kích thước chỉ do className height quyết định)." },
+    render: () => (
+        <div className="flex items-end gap-8">
+            <div className="flex flex-col items-center gap-2">
+                <Logo className="h-5" />
+                <span className="text-xs text-default-500">Nhỏ (h-5)</span>
+            </div>
+            <div className="flex flex-col items-center gap-2">
+                <Logo />
+                <span className="text-xs text-default-500">Mặc định (h-8)</span>
+            </div>
+            <div className="flex flex-col items-center gap-2">
+                <Logo className="h-20" />
+                <span className="text-xs text-default-500">Lớn (h-20)</span>
+            </div>
+        </div>
+    ),
 }
 
 /** Đặt trên nền tối để kiểm chứng logo vẫn nổi rõ vì màu hồng thương hiệu là màu cố định, không đổi theo theme. */

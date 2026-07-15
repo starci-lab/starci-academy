@@ -3,7 +3,7 @@ import { Chip } from "@heroui/react"
 import { UserCell } from "./index"
 
 const meta: Meta<typeof UserCell> = {
-    title: "Blocks/UserCell",
+    title: "Blocks/Identity/UserCell",
     component: UserCell,
     args: {
         username: "levan.dev",
@@ -35,18 +35,6 @@ export const Sizes: Story = {
     ),
     parameters: {
         usage: "Chọn size theo mật độ: sm cho list dày (comment, bảng), md cho khu vực rộng hơn (profile header, card).",
-    },
-}
-
-/** Dùng khi user chưa đặt tên hiển thị — cell tự rơi về username làm nhãn chính, không để trống. */
-export const NoDisplayName: Story = {
-    args: {
-        username: "tranthib92",
-        displayName: undefined,
-        handle: "@tranthib92",
-    },
-    parameters: {
-        usage: "Dùng khi user chưa đặt tên hiển thị — cell tự rơi về username làm nhãn chính, không để trống.",
     },
 }
 

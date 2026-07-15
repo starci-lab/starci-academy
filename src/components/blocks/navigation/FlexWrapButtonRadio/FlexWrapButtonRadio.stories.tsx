@@ -52,7 +52,7 @@ const Controlled = <T extends string>(props: {
 }
 
 const meta: Meta<typeof FlexWrapButtonRadio> = {
-    title: "Blocks/FlexWrapButtonRadio",
+    title: "Blocks/Navigation/FlexWrapButtonRadio",
     component: FlexWrapButtonRadio,
     parameters: {
         docs: {

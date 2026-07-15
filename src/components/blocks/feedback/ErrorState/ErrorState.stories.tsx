@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { ErrorState } from "./index"
 
 const meta: Meta<typeof ErrorState> = {
-    title: "Blocks/ErrorState",
+    title: "Blocks/Feedback/ErrorState",
     component: ErrorState,
 }
 export default meta
@@ -21,20 +21,23 @@ export const Default: Story = {
     ),
 }
 
-/** Dùng khi chỉ cần báo lỗi ngắn gọn mà không có hành động khắc phục nào khả dụng (không có mô tả, không có nút thử lại). */
-export const TitleOnly: Story = {
-    parameters: { usage: "Dùng khi chỉ cần báo lỗi ngắn gọn mà không có hành động khắc phục nào khả dụng (không có mô tả, không có nút thử lại)." },
-    render: () => <ErrorState title="Đã xảy ra lỗi" />,
-}
-
-/** Dùng khi cần giải thích rõ nguyên nhân lỗi cho người dùng nhưng thao tác thử lại không áp dụng được ở màn này. */
+/** Dùng khi lỗi không kèm hành động khắc phục: so sánh biến thể chỉ có tiêu đề và biến thể có thêm mô tả, đều không hiện nút thử lại. */
 export const WithoutRetry: Story = {
-    parameters: { usage: "Dùng khi cần giải thích rõ nguyên nhân lỗi cho người dùng nhưng thao tác thử lại không áp dụng được ở màn này." },
+    parameters: { usage: "Dùng khi lỗi không kèm hành động khắc phục: so sánh biến thể chỉ có tiêu đề và biến thể có thêm mô tả, đều không hiện nút thử lại." },
     render: () => (
-        <ErrorState
-            title="Không tìm thấy khóa học"
-            description="Khóa học này có thể đã bị gỡ hoặc đường dẫn không còn hợp lệ."
-        />
+        <div className="flex flex-col gap-6 sm:flex-row">
+            <div className="flex flex-1 flex-col items-center gap-2">
+                <span className="text-xs text-default-500">Chỉ tiêu đề</span>
+                <ErrorState title="Đã xảy ra lỗi" />
+            </div>
+            <div className="flex flex-1 flex-col items-center gap-2">
+                <span className="text-xs text-default-500">Tiêu đề và mô tả</span>
+                <ErrorState
+                    title="Không tìm thấy khóa học"
+                    description="Khóa học này có thể đã bị gỡ hoặc đường dẫn không còn hợp lệ."
+                />
+            </div>
+        </div>
     ),
 }
 
@@ -46,20 +49,6 @@ export const LongDescription: Story = {
             title="Kết nối máy chủ bị gián đoạn"
             description="Hệ thống đang gặp sự cố kết nối tới máy chủ, có thể do đường truyền mạng không ổn định hoặc máy chủ đang bảo trì định kỳ. Vui lòng kiểm tra kết nối mạng của bạn rồi thử lại sau ít phút."
             retryLabel="Thử lại"
-            onRetry={() => {}}
-        />
-    ),
-}
-
-/** Dùng khi muốn tuỳ biến vị trí/khoảng cách của khối lỗi để phù hợp với khung chứa cụ thể (truyền className tuỳ biến). */
-export const CustomSpacing: Story = {
-    parameters: { usage: "Dùng khi muốn tuỳ biến vị trí/khoảng cách của khối lỗi để phù hợp với khung chứa cụ thể (truyền className tuỳ biến)." },
-    render: () => (
-        <ErrorState
-            className="py-12"
-            title="Không thể tải danh sách bài học"
-            description="Vui lòng thử tải lại trang."
-            retryLabel="Tải lại"
             onRetry={() => {}}
         />
     ),

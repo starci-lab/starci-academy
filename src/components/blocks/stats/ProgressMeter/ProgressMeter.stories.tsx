@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { ProgressMeter } from "./index"
 
 const meta: Meta<typeof ProgressMeter> = {
-    title: "Blocks/ProgressMeter",
+    title: "Blocks/Stat/ProgressMeter",
     component: ProgressMeter,
 }
 
@@ -53,21 +53,6 @@ export const Tones: Story = {
     ),
     parameters: {
         usage: "Đổi màu theo Ý NGHĨA của con số (mặc định trung tính, success khi đạt/qua bài, warning khi sắp hết hạn, danger khi điểm thấp) — không phải chọn màu tuỳ thích.",
-    },
-}
-
-/**
- * Dùng để kiểm tra 2 trạng thái biên (chưa bắt đầu 0% / đã hoàn thành 100%) render đúng, không vỡ thanh hay lệch số.
- */
-export const States: Story = {
-    render: () => (
-        <div className="flex flex-col gap-4">
-            <ProgressMeter value={0} label="Chưa bắt đầu" showValue />
-            <ProgressMeter value={100} label="Hoàn thành" showValue color="success" />
-        </div>
-    ),
-    parameters: {
-        usage: "Dùng để kiểm tra 2 trạng thái biên (chưa bắt đầu 0% / đã hoàn thành 100%) render đúng, không vỡ thanh hay lệch số.",
     },
 }
 

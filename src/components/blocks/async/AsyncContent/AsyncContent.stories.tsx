@@ -5,7 +5,7 @@ import { AsyncContent } from "./index"
 import { ListRow } from "@/components/blocks/lists/ListRow"
 
 const meta: Meta<typeof AsyncContent> = {
-    title: "Blocks/AsyncContent",
+    title: "Blocks/Async/AsyncContent",
     component: AsyncContent,
 }
 
@@ -30,56 +30,41 @@ const skeleton = (
     </div>
 )
 
-/** Nhánh CONTENT: loading resolve + có data → render children. Đây là switch 4 nhánh chuẩn cho MỌI vùng data-backed (error → loading → empty → content). */
-export const Content: Story = {
-    parameters: { usage: "Nhánh content: có data → render children. Switch 4 nhánh chuẩn cho vùng data-backed (error → loading → empty → content)." },
+/** Bốn nhánh của `AsyncContent` cạnh nhau theo đúng thứ tự ưu tiên error → loading → empty → content — logic duy nhất mà wrapper này giữ. */
+export const Branches: Story = {
+    parameters: { usage: "So sánh 4 nhánh cạnh nhau để thấy thứ tự ưu tiên error → loading → empty → content mà mọi vùng data-backed đều chạy qua. Dùng khi cần nhìn tổng thể switch async thay vì demo lẻ từng state." },
     render: () => (
-        <div className="max-w-md">
-            <AsyncContent isLoading={false} skeleton={skeleton}>{content}</AsyncContent>
-        </div>
-    ),
-}
-
-/** Nhánh LOADING: `isLoading` → render `skeleton` (tree Skeleton.* phản chiếu layout thật). */
-export const Loading: Story = {
-    parameters: { usage: "Nhánh loading: isLoading → render skeleton mirror layout thật (không sập/nhảy khi resolve)." },
-    render: () => (
-        <div className="max-w-md">
-            <AsyncContent isLoading skeleton={skeleton}>{content}</AsyncContent>
-        </div>
-    ),
-}
-
-/** Nhánh EMPTY: `isEmpty` → render `EmptyContent` (cấu hình bằng PROPS: `emptyContent={{ title, onRetry, retryLabel }}`). Bỏ `emptyContent` = section tự ẩn. */
-export const Empty: Story = {
-    parameters: { usage: "Nhánh empty: isEmpty → EmptyContent, cấu hình bằng props emptyContent={{ title, ... }}. Bỏ props = section tự ẩn." },
-    render: () => (
-        <div className="max-w-md">
-            <AsyncContent
-                isLoading={false}
-                isEmpty
-                skeleton={skeleton}
-                emptyContent={{ title: "Chưa có bài nộp nào", description: "Hoàn thành 1 thử thách để thấy nó ở đây." }}
-            >
-                {content}
-            </AsyncContent>
-        </div>
-    ),
-}
-
-/** Nhánh ERROR: `error` truthy → render `ErrorContent` (ưu tiên cao nhất). Chỉ truyền `error` khi KHÔNG có cache để fallback. */
-export const Error: Story = {
-    parameters: { usage: "Nhánh error: error truthy → ErrorContent (ưu tiên cao nhất). Chỉ truyền khi không có cache fallback." },
-    render: () => (
-        <div className="max-w-md">
-            <AsyncContent
-                isLoading={false}
-                error={new globalThis.Error("boom")}
-                skeleton={skeleton}
-                errorContent={{ title: "Không tải được danh sách", onRetry: () => {}, retryLabel: "Thử lại" }}
-            >
-                {content}
-            </AsyncContent>
+        <div className="grid max-w-4xl grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="flex flex-col gap-2">
+                <span className="text-xs text-muted">error (ưu tiên cao nhất)</span>
+                <AsyncContent
+                    isLoading={false}
+                    error={new globalThis.Error("boom")}
+                    skeleton={skeleton}
+                    errorContent={{ title: "Không tải được danh sách", onRetry: () => {}, retryLabel: "Thử lại" }}
+                >
+                    {content}
+                </AsyncContent>
+            </div>
+            <div className="flex flex-col gap-2">
+                <span className="text-xs text-muted">loading</span>
+                <AsyncContent isLoading skeleton={skeleton}>{content}</AsyncContent>
+            </div>
+            <div className="flex flex-col gap-2">
+                <span className="text-xs text-muted">empty</span>
+                <AsyncContent
+                    isLoading={false}
+                    isEmpty
+                    skeleton={skeleton}
+                    emptyContent={{ title: "Chưa có bài nộp nào", description: "Hoàn thành 1 thử thách để thấy nó ở đây." }}
+                >
+                    {content}
+                </AsyncContent>
+            </div>
+            <div className="flex flex-col gap-2">
+                <span className="text-xs text-muted">content</span>
+                <AsyncContent isLoading={false} skeleton={skeleton}>{content}</AsyncContent>
+            </div>
         </div>
     ),
 }

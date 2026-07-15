@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Legend } from "./index"
 
 const meta: Meta<typeof Legend> = {
-    title: "Blocks/Legend",
+    title: "Blocks/Stat/Legend",
     component: Legend,
 }
 export default meta
@@ -37,19 +37,6 @@ export const NhieuMuc: Story = {
                 ]}
             />
         </div>
-    ),
-}
-
-/** Dùng khi chỉ cần phân biệt hai trạng thái đối lập, ví dụ đã học và chưa học. */
-export const HaiMuc: Story = {
-    parameters: { usage: "Dùng khi chỉ cần phân biệt hai trạng thái đối lập, ví dụ đã học và chưa học." },
-    render: () => (
-        <Legend
-            items={[
-                { key: "done", label: "Đã hoàn thành", color: "var(--success)" },
-                { key: "pending", label: "Chưa hoàn thành", color: "var(--muted)" },
-            ]}
-        />
     ),
 }
 

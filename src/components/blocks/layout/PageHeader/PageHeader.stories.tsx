@@ -5,7 +5,7 @@ import { CaretRightIcon, PlusIcon } from "@phosphor-icons/react"
 import { PageHeader } from "./index"
 
 const meta: Meta<typeof PageHeader> = {
-    title: "Blocks/PageHeader",
+    title: "Blocks/Layout/PageHeader",
     component: PageHeader,
 }
 
@@ -56,6 +56,22 @@ export const Full: Story = {
                 }
                 actions={
                     <Button variant="primary" size="sm">Ghi danh</Button>
+                }
+            />
+        </div>
+    ),
+}
+
+/** Mô tả dài trên di động cần rút gọn 2 dòng (`line-clamp-2`) để header không chiếm quá nhiều chỗ, mở rộng đủ trên màn hình rộng hơn. */
+export const LongDescriptionClamped: Story = {
+    parameters: { usage: "Mô tả dài trên di động cần rút gọn 2 dòng (`line-clamp-2`) để header không chiếm quá nhiều chỗ, mở rộng đủ trên màn hình rộng hơn." },
+    render: () => (
+        <div className="max-w-sm">
+            <PageHeader
+                title="Cấu hình cổng thanh toán"
+                description="Thiết lập SePay và PayOS, chọn cổng mặc định cho học viên mới, cấu hình các gói trả góp áp dụng riêng cho từng khóa học và theo dõi trạng thái giao dịch theo thời gian thực."
+                actions={
+                    <Button variant="secondary" size="sm">Lưu</Button>
                 }
             />
         </div>

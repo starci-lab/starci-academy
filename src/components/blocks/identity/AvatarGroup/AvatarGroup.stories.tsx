@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { AvatarGroup } from "./index"
 
 const meta: Meta<typeof AvatarGroup> = {
-    title: "Blocks/AvatarGroup",
+    title: "Blocks/Identity/AvatarGroup",
     component: AvatarGroup,
 }
 export default meta
@@ -35,34 +35,6 @@ export const OverflowChip: Story = {
                 { username: "an.nguyen", displayName: "An Nguyễn", avatar: null },
                 { username: "thu.vo", displayName: "Thu Võ", avatar: null },
                 { username: "khoa.dinh", displayName: "Khoa Đinh", avatar: null },
-            ]}
-        />
-    ),
-}
-
-/** Dùng khi tổng số người tham gia lớn hơn danh sách avatar đang tải về, để chip "+N" phản ánh đúng tổng thật thay vì chỉ đếm phần đã render. */
-export const OverflowWithSeparateTotal: Story = {
-    parameters: { usage: "Dùng khi tổng số người tham gia lớn hơn danh sách avatar đang tải về, để chip \"+N\" phản ánh đúng tổng thật thay vì chỉ đếm phần đã render." },
-    render: () => (
-        <AvatarGroup
-            max={3}
-            total={128}
-            users={[
-                { username: "minh.tran", displayName: "Minh Trần", avatar: "https://i.pravatar.cc/150?img=1" },
-                { username: "lan.pham", displayName: "Lan Phạm", avatar: "https://i.pravatar.cc/150?img=2" },
-                { username: "hoang.le", displayName: "Hoàng Lê", avatar: null },
-            ]}
-        />
-    ),
-}
-
-/** Dùng khi chỉ có đúng một người (hoặc rất ít), để nhóm avatar vẫn hiển thị gọn mà không cần chip overflow. */
-export const SingleUser: Story = {
-    parameters: { usage: "Dùng khi chỉ có đúng một người (hoặc rất ít), để nhóm avatar vẫn hiển thị gọn mà không cần chip overflow." },
-    render: () => (
-        <AvatarGroup
-            users={[
-                { username: "minh.tran", displayName: "Minh Trần", avatar: "https://i.pravatar.cc/150?img=1" },
             ]}
         />
     ),

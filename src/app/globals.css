@@ -259,6 +259,13 @@ html {
  */
 .card {
     border: none !important;
+    /*
+     * Card padding = p-3 (override HeroUI's baked `.card { p-4 }`). House rule: EVERY
+     * card is p-3, not p-4. `!important` beats the unlayered HeroUI base. A card whose
+     * body is a divider-list goes FLUSH (its own flush variant sets p-0) so the dividers
+     * span edge-to-edge and each row owns its own p-3.
+     */
+    padding: calc(var(--spacing) * 3) !important;
 }
 
 .card--transparent {

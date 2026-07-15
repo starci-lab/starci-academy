@@ -194,7 +194,7 @@ export const Security = () => {
                             skeleton={(
                                 <div className="flex flex-col gap-3">
                                     <div className="flex items-center gap-3">
-                                        <ShieldCheckIcon aria-hidden className="size-5 text-accent" />
+                                        <ShieldCheckIcon aria-hidden className="size-5 text-accent-soft-foreground" />
                                         <div className="flex flex-1 flex-col gap-0">
                                             <Typography type="body-sm" weight="medium">
                                                 {t("security.twoFactor")}
@@ -209,7 +209,7 @@ export const Security = () => {
                         >
                             <div className="flex flex-col gap-3">
                                 <div className="flex items-center gap-3">
-                                    <ShieldCheckIcon aria-hidden className="size-5 text-accent" />
+                                    <ShieldCheckIcon aria-hidden className="size-5 text-accent-soft-foreground" />
                                     <div className="flex flex-1 flex-col gap-0">
                                         <Typography type="body-sm" weight="medium">
                                             {t("security.twoFactor")}

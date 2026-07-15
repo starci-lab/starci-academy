@@ -48,7 +48,7 @@ export const FacebookReactionSelector = ({ active, onSelect, className }: Facebo
                             "group/fbreact relative flex animate-[reactionPop_220ms_cubic-bezier(0.34,1.56,0.64,1)_both]",
                             "cursor-pointer items-center justify-center rounded-full p-1 outline-none",
                             "focus-visible:ring-2 focus-visible:ring-accent",
-                            active === reaction.type ? "bg-accent/10" : undefined,
+                            active === reaction.type ? "bg-accent-soft" : undefined,
                         )}
                     >
                         {/* reaction name floats above on hover, à la Facebook */}

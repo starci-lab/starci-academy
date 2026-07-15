@@ -31,7 +31,7 @@ export const WhoToFollowSkeleton = ({ className }: WhoToFollowSkeletonProps) => 
     const t = useTranslations()
     return (
         <SectionCard
-            icon={<UserPlusIcon className="size-5 text-accent" />}
+            icon={<UserPlusIcon className="size-5 text-accent-soft-foreground" />}
             title={t("dashboard.whoToFollow.title")}
             className={className}
         >

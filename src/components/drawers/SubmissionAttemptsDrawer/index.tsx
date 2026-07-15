@@ -113,7 +113,7 @@ export const SubmissionAttemptsDrawer = (props: SubmissionAttemptsDrawerProps = 
                             <Drawer.Footer className="border-t p-4">
                                 <Pagination
                                     aria-label={t("common.pagination.navAria")}
-                                    className="justify-center"
+                                    className="w-full justify-center"
                                     size="sm"
                                 >
                                     <Pagination.Content className="flex flex-wrap justify-center gap-2">

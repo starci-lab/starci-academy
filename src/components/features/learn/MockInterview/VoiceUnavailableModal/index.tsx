@@ -114,8 +114,8 @@ export const VoiceUnavailableModal = ({
                                     {justChecked ? (
                                         hasLocaleVoice ? (
                                             <div className="flex items-center gap-2">
-                                                <CheckCircleIcon className="size-4 shrink-0 text-success" aria-hidden focusable="false" />
-                                                <Typography type="body-xs" className="text-success">
+                                                <CheckCircleIcon className="size-4 shrink-0 text-success-soft-foreground" aria-hidden focusable="false" />
+                                                <Typography type="body-xs" className="text-success-soft-foreground">
                                                     {t("mockInterview.voiceUnavailable.found")}
                                                 </Typography>
                                             </div>

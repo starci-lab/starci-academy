@@ -106,7 +106,7 @@ export const CoursePricingRail = ({ className }: CoursePricingRailProps) => {
                                 ) : null}
                             </div>
                             {active?.slotAvailable != null ? (
-                                <Typography type="body-sm" className="text-warning">
+                                <Typography type="body-sm" className="text-warning-soft-foreground">
                                     {t("courseLanding.slotsLeftPhase", {
                                         count: active.slotAvailable,
                                         phase: t(PHASE_LABEL_KEY[active.phase]),

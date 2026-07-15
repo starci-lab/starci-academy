@@ -397,13 +397,13 @@ export const buildMarkdownRenderers = ({
             const isInternal = typeof href === "string" && href.startsWith("/")
             if (isInternal) {
                 return (
-                    <IntlLink href={href} className="!inline text-accent underline underline-offset-2">
+                    <IntlLink href={href} className="!inline text-accent-soft-foreground underline underline-offset-2">
                         {children}
                     </IntlLink>
                 )
             }
             return (
-                <Link href={href} target="_blank" className="!inline text-accent underline underline-offset-2">
+                <Link href={href} target="_blank" className="!inline text-accent-soft-foreground underline underline-offset-2">
                     {children}
                 </Link>
             )

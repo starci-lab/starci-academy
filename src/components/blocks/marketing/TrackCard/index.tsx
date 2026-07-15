@@ -37,11 +37,11 @@ export interface TrackCardProps {
 const DOT: Record<TrackColor, string> = { accent: "bg-accent", success: "bg-success", warning: "bg-warning" }
 const LINE: Record<TrackColor, string> = { accent: "bg-accent/25", success: "bg-success/25", warning: "bg-warning/25" }
 const TILE: Record<TrackColor, string> = {
-    accent: "bg-accent/10 text-accent",
-    success: "bg-success/10 text-success",
-    warning: "bg-warning/10 text-warning",
+    accent: "bg-accent-soft text-accent-soft-foreground",
+    success: "bg-success-soft text-success-soft-foreground",
+    warning: "bg-warning-soft text-warning-soft-foreground",
 }
-const CTA: Record<TrackColor, string> = { accent: "text-accent", success: "text-success", warning: "text-warning" }
+const CTA: Record<TrackColor, string> = { accent: "text-accent-soft-foreground", success: "text-success-soft-foreground", warning: "text-warning-soft-foreground" }
 
 /**
  * A learning-track card for the landing "Lộ trình" section: identity header

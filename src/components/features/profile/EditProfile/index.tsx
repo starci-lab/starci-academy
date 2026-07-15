@@ -222,7 +222,7 @@ export const EditProfile = () => {
                         onChange={(event) => setValue("linkedinUrl", event.target.value)}
                     />
                     {errors.linkedinUrl ? (
-                        <Typography slot="description" type="body-xs" className="text-danger">
+                        <Typography slot="description" type="body-xs" className="text-danger-soft-foreground">
                             {t("profileEdit.invalidUrl")}
                         </Typography>
                     ) : null}
@@ -241,7 +241,7 @@ export const EditProfile = () => {
                         onChange={(event) => setValue("websiteUrl", event.target.value)}
                     />
                     {errors.websiteUrl ? (
-                        <Typography slot="description" type="body-xs" className="text-danger">
+                        <Typography slot="description" type="body-xs" className="text-danger-soft-foreground">
                             {t("profileEdit.invalidUrl")}
                         </Typography>
                     ) : null}

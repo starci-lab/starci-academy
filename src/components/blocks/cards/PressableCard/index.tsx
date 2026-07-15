@@ -23,15 +23,19 @@ export interface PressableCardProps extends WithClassNames<undefined> {
     /** Disables interaction and dims the card (action cards only). */
     isDisabled?: boolean
     /**
-     * Hover affordance — `"fill"` (default, tonal `bg-surface-secondary`) for
-     * navigation tiles/rows that GO somewhere; `"lift"` (default Card
-     * `shadow-surface` present AT REST, unchanged on hover — only the card
-     * translates up) for cards that are picked TO STAY on this screen (rating
-     * tiles, option cards) — the surface itself doesn't change ownership/route,
-     * so a fill read as "selected" would be misleading; lifting reads as "about
-     * to press" instead. Ref [[hover-style-matches-clickable-nature]] mode 4
-     * (pick-a-card — a standalone shadowed tile, not a bordered nested card and
-     * not an accordion-skin row).
+     * Hover affordance — BOTH variants carry `shadow-surface` AT REST (a
+     * `PressableCard` is a top-level bounded card per `card.md` §0's elevation
+     * convention; it must read as a card even before the pointer arrives, not
+     * only on hover — thầy: "render dạng card"). They only differ in what
+     * happens ON HOVER: `"fill"` (default) tints `bg-surface-secondary` for
+     * navigation tiles/rows that GO somewhere; `"lift"` leaves the shadow
+     * unchanged and only translates the card up, for cards picked TO STAY on
+     * this screen (rating tiles, option cards) — the surface itself doesn't
+     * change ownership/route, so a fill read as "selected" would be
+     * misleading; lifting reads as "about to press" instead. Ref
+     * [[hover-style-matches-clickable-nature]] mode 4 (pick-a-card — a
+     * standalone shadowed tile, not a bordered nested card and not an
+     * accordion-skin row).
      */
     hoverVariant?: "fill" | "lift"
     /**
@@ -64,8 +68,10 @@ export interface PressableCardProps extends WithClassNames<undefined> {
 
 /**
  * A whole-card press target with the default surface card look (surface fill,
- * concentric `rounded-3xl`, fixed `px-4 py-3` padding, no shadow) plus a hover
- * affordance and keyboard focus ring. Exists because HeroUI v3 `Card` is a
+ * concentric `rounded-3xl`, fixed `px-4 py-3` padding, `shadow-surface`
+ * elevation AT REST — per `card.md` §0, a top-level bounded card, so it must
+ * read as a card even before hover) plus a hover affordance and keyboard
+ * focus ring. Exists because HeroUI v3 `Card` is a
  * non-interactive `<div>` — this block owns the card styling on a real
  * `<button>` / `<a>` so features can compose a clickable card without
  * hand-rolling styles (per the no-style-in-features rule). Use for navigation
@@ -91,13 +97,16 @@ export const PressableCard = ({
 }: PressableCardProps) => {
     // Shared card surface (fill / lift + disabled dim). Kept identical across
     // both render paths so a card reads the same with or without actions.
+    // `shadow-surface` is UNCONDITIONAL (both variants) — a PressableCard is a
+    // top-level bounded card (card.md §0 elevation convention) and must read
+    // as one at rest, not only once the pointer arrives (thầy: "render dạng
+    // card"). The two variants only ever differed in the HOVER treatment.
     const surface = cn(
-        "rounded-3xl bg-surface px-4 py-3 text-left",
+        "rounded-3xl bg-surface px-4 py-3 text-left shadow-surface",
         hoverVariant === "lift"
-            // default Card shadow present AT REST (unchanged on hover) — only the
-            // card itself lifts, per hover-style-matches-clickable-nature mode 4
-            // (shadow ≠ hover-only accent; it's the card's own elevation)
-            ? "shadow-surface transition-transform hover:-translate-y-0.5"
+            // shadow unchanged on hover — only the card itself lifts, per
+            // hover-style-matches-clickable-nature mode 4
+            ? "transition-transform hover:-translate-y-0.5"
             : "transition-colors hover:bg-surface-secondary",
         isDisabled && "cursor-not-allowed opacity-60 hover:translate-y-0",
         className,

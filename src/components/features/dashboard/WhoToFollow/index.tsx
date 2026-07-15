@@ -90,7 +90,7 @@ export const WhoToFollow = ({
             isEmpty={!data || data.length === 0}
         >
             <SectionCard
-                icon={<UserPlusIcon className="size-5 text-accent" />}
+                icon={<UserPlusIcon className="size-5 text-accent-soft-foreground" />}
                 title={t("dashboard.whoToFollow.title")}
                 className={className}
             >
@@ -111,7 +111,7 @@ export const WhoToFollow = ({
                                     avatar={user.avatar}
                                     handle={`@${user.username}`}
                                     trailing={user.openToWork ? (
-                                        <span className="shrink-0 rounded-full bg-success/10 px-2 text-[11px] font-medium text-success">
+                                        <span className="shrink-0 rounded-full bg-success-soft px-2 text-[11px] font-medium text-success-soft-foreground">
                                             {t("dashboard.whoToFollow.openToWork")}
                                         </span>
                                     ) : undefined}

@@ -89,7 +89,7 @@ export const ProfileSolvedChallenges = ({
                                     href={challenge.submissionUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex shrink-0 items-center gap-2 text-accent underline"
+                                    className="flex shrink-0 items-center gap-2 text-accent-soft-foreground underline"
                                     aria-label={t("publicProfile.openRepo", {
                                         title: challenge.title,
                                     })}

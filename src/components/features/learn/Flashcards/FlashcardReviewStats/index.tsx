@@ -40,7 +40,7 @@ const retentionColorOf = (percent: number): "success" | "warning" | "danger" =>
 /** {@link retentionColorOf}'s result as a `text-*` class, for the headline number. */
 const retentionTextColorOf = (percent: number): string => {
     const color = retentionColorOf(percent)
-    return color === "danger" ? "text-danger" : color === "warning" ? "text-warning" : "text-success"
+    return color === "danger" ? "text-danger-soft-foreground" : color === "warning" ? "text-warning-soft-foreground" : "text-success-soft-foreground"
 }
 
 /** How many of the trailing 90 daily-activity points the heatmap renders. */
@@ -259,7 +259,7 @@ export const FlashcardReviewStats = ({ courseId, onStartReview, className }: Fla
                     {/* ZONE 3 — "Đang cải thiện?" retention trend (TÁCH). */}
                     {retentionTrendData.length > 1 ? (
                         <LabeledCard label={t("flashcard.review.retentionTrendLabel")}>
-                            <div className="h-28 w-full text-accent">
+                            <div className="h-28 w-full text-accent-soft-foreground">
                                 <ResponsiveContainer width="100%" height="100%">
                                     <LineChart data={retentionTrendData} margin={{ top: 8, right: 8, bottom: 0, left: -16 }}>
                                         <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="text-divider" vertical={false} />
@@ -296,7 +296,7 @@ export const FlashcardReviewStats = ({ courseId, onStartReview, className }: Fla
                     <LabeledCard label={t("flashcard.review.volumeLabel")} contentClassName="flex flex-col gap-3">
                         {dueToday === 0 ? (
                             <div className="flex items-center gap-3">
-                                <CheckCircleIcon className="size-7 shrink-0 text-success" aria-hidden focusable="false" />
+                                <CheckCircleIcon className="size-7 shrink-0 text-success-soft-foreground" aria-hidden focusable="false" />
                                 <div className="flex flex-col">
                                     <Typography type="body-sm" weight="medium">
                                         {t("flashcard.review.caughtUpTitle")}
@@ -331,7 +331,7 @@ export const FlashcardReviewStats = ({ courseId, onStartReview, className }: Fla
                         else caption thật (all-zero window vẽ blank box đọc BROKEN). */}
                     <LabeledCard label={t("flashcard.review.dueForecastLabel")}>
                         {forecastData.some((point) => point.count > 0) ? (
-                            <div className="h-20 w-full text-accent">
+                            <div className="h-20 w-full text-accent-soft-foreground">
                                 <ResponsiveContainer width="100%" height="100%">
                                     <BarChart data={forecastData} margin={{ top: 4, right: 4, bottom: 0, left: -20 }}>
                                         <XAxis dataKey="day" tick={{ fontSize: 10 }} tickLine={false} axisLine={false} />
@@ -380,13 +380,13 @@ export const FlashcardReviewStats = ({ courseId, onStartReview, className }: Fla
                         {currentStreak > 0 || longestStreak > 0 ? (
                             <div className="flex flex-wrap items-center gap-2">
                                 {currentStreak > 0 ? (
-                                    <Chip size="sm" variant="secondary" color="warning" className="bg-warning/10 text-warning">
+                                    <Chip size="sm" variant="secondary" color="warning" className="bg-warning-soft text-warning-soft-foreground">
                                         <FlameIcon className="size-3.5" aria-hidden focusable="false" />
                                         {t("flashcard.stats.streakChip", { count: currentStreak })}
                                     </Chip>
                                 ) : null}
                                 {longestStreak > 0 ? (
-                                    <Chip size="sm" variant="secondary" className="bg-accent/10 text-accent">
+                                    <Chip size="sm" variant="secondary" className="bg-accent-soft text-accent-soft-foreground">
                                         <TrophyIcon className="size-3.5" aria-hidden focusable="false" />
                                         {t("flashcard.review.longestStreakChip", { count: longestStreak })}
                                     </Chip>

@@ -53,7 +53,7 @@ export const HeadhuntingCompanyProfile = () => {
                                         href={link.href}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="text-accent"
+                                        className="text-accent-soft-foreground"
                                     >
                                         {link.value}
                                     </Link>

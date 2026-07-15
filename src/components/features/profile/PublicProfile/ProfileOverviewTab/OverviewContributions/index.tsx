@@ -64,7 +64,7 @@ export const OverviewContributions = ({ className }: OverviewContributionsProps)
                     onYearChange={setYear}
                 />
                 <div className="flex items-center gap-2">
-                    <FireIcon aria-hidden focusable="false" className="size-5 text-accent" />
+                    <FireIcon aria-hidden focusable="false" className="size-5 text-accent-soft-foreground" />
                     <Typography type="body-sm" weight="medium">
                         {t("profile.streakLine", {
                             streak: weekly?.streak ?? 0,

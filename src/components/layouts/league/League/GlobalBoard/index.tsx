@@ -120,7 +120,7 @@ export const GlobalBoard = ({
                 <span className="text-xs text-muted">
                     {t("dashboard.league.globalSubtitle")}
                 </span>
-                <span className="text-sm font-semibold text-accent">
+                <span className="text-sm font-semibold text-accent-soft-foreground">
                     {t("dashboard.league.yourRank")} · {data.myRank}
                 </span>
             </div>

@@ -105,7 +105,7 @@ export const SocketConnectionStatus = () => {
             <div
                 className={cn(
                     "pointer-events-auto flex items-center gap-2 rounded-full px-3 py-2 text-xs shadow-md",
-                    recovered ? "bg-success/10 text-success" : "bg-warning/10 text-warning",
+                    recovered ? "bg-success-soft text-success-soft-foreground" : "bg-warning-soft text-warning-soft-foreground",
                 )}
             >
                 {recovered ? (

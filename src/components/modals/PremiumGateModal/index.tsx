@@ -86,7 +86,7 @@ export const PremiumGateModal = ({ className }: WithClassNames<undefined>) => {
                     <ul className="flex flex-col gap-2">
                         {unlocks.map((item) => (
                             <li key={item} className="flex items-center gap-2">
-                                <CheckCircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-success" />
+                                <CheckCircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-success-soft-foreground" />
                                 <Typography type="body-sm">{item}</Typography>
                             </li>
                         ))}

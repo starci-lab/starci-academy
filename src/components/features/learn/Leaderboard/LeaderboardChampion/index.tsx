@@ -40,7 +40,7 @@ export const LeaderboardChampion = ({ entry, totalXp, viewerUserId, className }:
                     <CrownIcon
                         aria-hidden
                         focusable="false"
-                        className="absolute -top-4 left-1/2 size-5 -translate-x-1/2 text-warning"
+                        className="absolute -top-4 left-1/2 size-5 -translate-x-1/2 text-warning-soft-foreground"
                     />
                     <UserAvatar
                         username={entry.username}
@@ -68,7 +68,7 @@ export const LeaderboardChampion = ({ entry, totalXp, viewerUserId, className }:
             <div className="shrink-0 text-right">
                 {/* accent XP only when it's the viewer's own card — consistent with
                     LeaderboardTable/Podium (accent value = "mine", not every #1) */}
-                <Typography type="h4" weight="bold" className={cn(isViewer ? "text-accent" : "text-foreground")}>
+                <Typography type="h4" weight="bold" className={cn(isViewer ? "text-accent-soft-foreground" : "text-foreground")}>
                     {totalXp}
                 </Typography>
                 <Typography type="body-xs" color="muted">

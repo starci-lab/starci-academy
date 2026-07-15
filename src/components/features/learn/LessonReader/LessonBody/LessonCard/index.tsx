@@ -18,7 +18,7 @@ export const LessonCard = ({ lessonVideo, className }: LessonCardProps) => {
     return (
         <Card className={cn("", className)}>
             <CardContent className="p-3">
-                <Link href={lessonVideo.url} target="_blank" className="text-sm font-medium text-accent">
+                <Link href={lessonVideo.url} target="_blank" className="text-sm font-medium text-accent-soft-foreground">
                     {lessonVideo.title}
                 </Link>
                 <div className="text-xs text-muted">{lessonVideo.description}</div>

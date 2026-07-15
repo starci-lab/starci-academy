@@ -50,13 +50,13 @@ const GROUP_ORDER: ReadonlyArray<LearnNavGroup> = ["path", "practice", "track"]
 const renderBadge = (badge: LearnNavBadge): React.ReactNode => {
     if (badge.tone === "rank") {
         return (
-            <Typography type="body-xs" className="text-accent">
+            <Typography type="body-xs" className="text-accent-soft-foreground">
                 {`#${badge.value}`}
             </Typography>
         )
     }
     return (
-        <Chip size="sm" className="bg-warning/10 text-warning">
+        <Chip size="sm" className="bg-warning-soft text-warning-soft-foreground">
             <Chip.Label>{badge.value}</Chip.Label>
         </Chip>
     )

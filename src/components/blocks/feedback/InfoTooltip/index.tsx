@@ -60,11 +60,11 @@ export const InfoTooltip = ({
                 className="max-w-[260px]"
             >
                 <Tooltip.Arrow />
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-1">
                     {content ?? (
                         <>
                             {title ? (
-                                <Typography type="body-sm" weight="semibold">
+                                <Typography type="body-sm">
                                     {title}
                                 </Typography>
                             ) : null}

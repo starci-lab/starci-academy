@@ -315,7 +315,7 @@ export const PlaygroundSession = () => {
                                             </div>
                                         ) : (
                                             <div className="flex items-center gap-2">
-                                                <Chip size="sm" className="bg-success/10 text-success">
+                                                <Chip size="sm" className="bg-success-soft text-success-soft-foreground">
                                                     <Chip.Label>{t("playground.session.agentConnected")}</Chip.Label>
                                                 </Chip>
                                                 <Button variant="primary" onPress={onConfirmStep}>

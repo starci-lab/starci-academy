@@ -251,7 +251,7 @@ export const FlashcardSessionStats = ({
                                                             <WarningCircleIcon
                                                                 aria-hidden
                                                                 focusable="false"
-                                                                className="size-4 shrink-0 text-warning"
+                                                                className="size-4 shrink-0 text-warning-soft-foreground"
                                                             />
                                                             <Typography type="body-sm" className="min-w-0 truncate">
                                                                 {weak.tag}

@@ -44,7 +44,7 @@ export const FreeTierCard = ({
             icon={(
                 <TierLevelIcon
                     level={1}
-                    className="size-6 shrink-0 text-accent"
+                    className="size-6 shrink-0 text-accent-soft-foreground"
                 />
             )}
             title={t("aiSubscription.free.title")}

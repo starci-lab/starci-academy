@@ -54,7 +54,7 @@ export const SummaryCard = ({
             )}
         >
             <div className="flex items-center justify-between gap-3">
-                <span className="text-accent">{icon}</span>
+                <span className="text-accent-soft-foreground">{icon}</span>
                 <ChevronRightIcon className="size-5 text-muted" />
             </div>
             <div className="flex flex-col gap-0">

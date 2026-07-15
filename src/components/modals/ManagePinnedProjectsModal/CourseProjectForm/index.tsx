@@ -19,7 +19,7 @@ import { QUERY_USER_PINNED_PROJECTS_SWR } from "@/hooks/swr/api/graphql/queries/
 import { useMutatePinCourseProjectSwr } from "@/hooks/swr/api/graphql/mutations/useMutatePinCourseProjectSwr"
 import { useQueryMyPinnableCapstonesSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyPinnableCapstonesSwr"
 import { StatusChip } from "@/components/blocks/chips/StatusChip"
-import { Callout } from "@/components/blocks/feedback/Callout"
+import { Callout, STATUS_ACTION_CLASS } from "@/components/blocks/feedback/Callout"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import { useAppSelector } from "@/redux/hooks"
 
@@ -187,6 +187,7 @@ export const CourseProjectForm = ({
                                 <Button
                                     variant="secondary"
                                     size="sm"
+                                    className={STATUS_ACTION_CLASS.danger}
                                     onPress={() => { void mutateCapstones() }}
                                 >
                                     {t("pinnedProjects.retry")}

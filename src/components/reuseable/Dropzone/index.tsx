@@ -61,7 +61,7 @@ export const Dropzone = ({
                 {...getRootProps()}
                 className={cn(
                     "cursor-pointer rounded-large border border-dashed  bg-surface border-2 rounded-3xl p-2 transition-colors",
-                    isDragActive ? "border-accent bg-accent/10" : "",
+                    isDragActive ? "border-accent bg-accent-soft" : "",
                     errorMessage ? "border-danger" : "",
                 )}
             >
@@ -74,7 +74,7 @@ export const Dropzone = ({
                 </div>
             </div>
             {errorMessage ? (
-                <div className="text-sm text-danger">{errorMessage}</div>
+                <div className="text-sm text-danger-soft-foreground">{errorMessage}</div>
             ) : null}
         </div>
     )

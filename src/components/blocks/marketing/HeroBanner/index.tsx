@@ -65,7 +65,7 @@ export const HeroBanner = ({
                 hasVisual ? "flex-1 items-start text-left" : "items-center text-center",
             )}
         >
-            <Chip size="sm" className="bg-accent/10 text-accent">
+            <Chip size="sm" className="bg-accent-soft text-accent-soft-foreground">
                 {eyebrowIcon}
                 <Chip.Label>{eyebrow}</Chip.Label>
             </Chip>

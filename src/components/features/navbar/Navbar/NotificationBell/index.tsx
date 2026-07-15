@@ -215,7 +215,7 @@ export const NotificationBell = ({ className }: NotificationBellProps) => {
                                             weight="fill"
                                             aria-hidden
                                             focusable="false"
-                                            className="size-2 text-accent"
+                                            className="size-2 text-accent-soft-foreground"
                                         />
                                     ) : undefined}
                                     title={t(

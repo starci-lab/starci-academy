@@ -117,7 +117,7 @@ export const ArchitectureMap = ({ healthByName, selectedId, onSelectNode, classN
                     className="w-full max-w-xs"
                 />
                 {era === "future" ? (
-                    <Chip size="sm" className="bg-accent/10 text-accent">
+                    <Chip size="sm" className="bg-accent-soft text-accent-soft-foreground">
                         <Chip.Label>{t("future.comingSoon")}</Chip.Label>
                     </Chip>
                 ) : null}

@@ -62,8 +62,8 @@ export type CourseModuleNodeData = {
 
 /** Card tint per completion status (token-based, dark-mode safe). */
 const STATUS_TINT: Record<MindMapModuleStatus, string> = {
-    done: "bg-success/10 border-success/40",
-    inProgress: "bg-warning/10 border-warning/40",
+    done: "bg-success-soft border-success/40",
+    inProgress: "bg-warning-soft border-warning/40",
     notStarted: "bg-surface border-separator",
 }
 
@@ -221,7 +221,7 @@ export const CourseModuleNode = (props: NodeProps<CourseModuleFlowNode>) => {
                         <LockIcon aria-label={t("mindMap.legend.locked")} focusable="false" className="size-4" />
                     ) : null}
                     {data.status === "done" ? (
-                        <CheckCircleIcon aria-label={t("mindMap.legend.done")} focusable="false" className="size-4 text-success" />
+                        <CheckCircleIcon aria-label={t("mindMap.legend.done")} focusable="false" className="size-4 text-success-soft-foreground" />
                     ) : null}
                     {data.hasProgress && data.lessonsTotal > 0 ? (
                         <span>
@@ -229,7 +229,7 @@ export const CourseModuleNode = (props: NodeProps<CourseModuleFlowNode>) => {
                         </span>
                     ) : null}
                     {data.isCurrent ? (
-                        <span className="font-medium text-accent">{t("mindMap.legend.current")}</span>
+                        <span className="font-medium text-accent-soft-foreground">{t("mindMap.legend.current")}</span>
                     ) : null}
                 </div>
             </button>

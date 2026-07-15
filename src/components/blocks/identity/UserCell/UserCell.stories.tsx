@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
+import { Chip } from "@heroui/react"
 import { UserCell } from "./index"
 
 const meta: Meta<typeof UserCell> = {
@@ -81,7 +82,7 @@ export const WithTrailing: Story = {
         displayName: "Do Thi F",
         handle: "@dothif",
         trailing: (
-            <span className="text-xs font-medium text-warning">Admin</span>
+            <Chip size="sm" variant="soft" color="warning">Admin</Chip>
         ),
     },
     parameters: {

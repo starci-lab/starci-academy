@@ -1,5 +1,7 @@
 import type { Preview } from "@storybook/nextjs"
 import React from "react"
+import { Alert } from "@heroui/react"
+import { InfoIcon } from "@phosphor-icons/react"
 import { NextIntlClientProvider } from "next-intl"
 import { HeroUIProvider } from "../src/components/providers/HeroUIProvider"
 import messages from "../src/messages/vi.json"
@@ -32,7 +34,13 @@ const preview: Preview = {
     parameters: {
         a11y: { test: "error" },
         controls: { expanded: true },
-        layout: "centered",
+        // full-bleed canvas for EVERY story — the decorator below fills it
+        // (`min-h-screen w-full p-8`) and content flows from the top-left. No
+        // per-story `layout` overrides: one uniform canvas across the whole book
+        // (thầy 2026-07-15: "full canvas trên trái"). `fullscreen` (not the SB
+        // default "padded"/"centered") is what lets the decorator's height reach
+        // the real iframe — "centered" shrink-wraps it and strands `h-full`.
+        layout: "fullscreen",
     },
     globalTypes: {
         theme: {
@@ -60,12 +68,24 @@ const preview: Preview = {
             return (
                 <NextIntlClientProvider locale="vi" messages={messages}>
                     <HeroUIProvider>
-                        <div className={`${theme} bg-background text-foreground p-8`}>
+                        <div className={`${theme} bg-background text-foreground min-h-screen w-full p-8`}>
                             {showUsage ? (
-                                <div className="mx-auto mb-6 max-w-2xl rounded-xl border border-default bg-surface px-4 py-2 text-sm text-muted">
-                                    <span className="mr-1 font-medium text-foreground">Cách dùng:</span>
-                                    {renderUsage(usage)}
-                                </div>
+                                // standalone on the page canvas (not nested in another
+                                // surface) → raw `Alert`, default surface+shadow is
+                                // correct here (alert.md §3 — Callout's tint/no-shadow
+                                // is only for surface-in-surface).
+                                <Alert status="accent" className="mb-6">
+                                    {/* same Phosphor-icon + size-6 rule as `Callout` (fe review
+                                        2026-07-14) — never HeroUI's own internal icon-family
+                                        fallback (`Alert`'s bare `getDefaultIcon()`). */}
+                                    <Alert.Indicator className="[&_svg]:size-6!">
+                                        <InfoIcon />
+                                    </Alert.Indicator>
+                                    <Alert.Content>
+                                        <Alert.Title>Cách dùng</Alert.Title>
+                                        <Alert.Description>{renderUsage(usage)}</Alert.Description>
+                                    </Alert.Content>
+                                </Alert>
                             ) : null}
                             <Story />
                         </div>

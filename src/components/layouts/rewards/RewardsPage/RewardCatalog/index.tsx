@@ -7,6 +7,7 @@ import React, {
 import type { ReactNode } from "react"
 import {
     Button,
+    Card,
     Chip,
     Input,
     Label,
@@ -14,8 +15,8 @@ import {
     TextField,
     Typography,
     cn,
-    toast,
 } from "@heroui/react"
+import { toast } from "@/modules/toast/toast"
 import { useTranslations } from "next-intl"
 import {
     CheckCircleIcon,
@@ -41,10 +42,10 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Icon per catalog item, keyed by its stable reward key (falls back to a generic gift). */
 const REWARD_ICON: Record<string, ReactNode> = {
-    streakFreeze: <SnowflakeIcon aria-hidden focusable="false" className="size-5 text-accent" />,
-    aiCreditBoost: <LightningIcon aria-hidden focusable="false" className="size-5 text-accent" />,
-    voucher10: <TicketIcon aria-hidden focusable="false" className="size-5 text-accent" />,
-    tshirt: <TShirtIcon aria-hidden focusable="false" className="size-5 text-accent" />,
+    streakFreeze: <SnowflakeIcon aria-hidden focusable="false" className="size-5 text-accent-soft-foreground" />,
+    aiCreditBoost: <LightningIcon aria-hidden focusable="false" className="size-5 text-accent-soft-foreground" />,
+    voucher10: <TicketIcon aria-hidden focusable="false" className="size-5 text-accent-soft-foreground" />,
+    tshirt: <TShirtIcon aria-hidden focusable="false" className="size-5 text-accent-soft-foreground" />,
 }
 
 /** One redeem effect's takeaway shown right after redeeming (voucher code / AI-credit bump). */
@@ -226,16 +227,13 @@ export const RewardCatalog = ({ className }: RewardCatalogProps) => {
                             && ship.address.trim(),
                         )
                         return (
-                            <div
-                                key={reward.key}
-                                className="flex flex-col gap-3 rounded-3xl bg-surface p-4 shadow-surface"
-                            >
+                            <Card key={reward.key}>
                                 <div className="flex items-start gap-3">
                                     <IconTile
                                         size="sm"
                                         tone="accent"
                                         icon={REWARD_ICON[reward.key] ?? (
-                                            <GiftIcon aria-hidden focusable="false" className="size-5 text-accent" />
+                                            <GiftIcon aria-hidden focusable="false" className="size-5 text-accent-soft-foreground" />
                                         )}
                                     />
                                     <div className="flex min-w-0 flex-1 flex-col gap-0">
@@ -340,7 +338,7 @@ export const RewardCatalog = ({ className }: RewardCatalogProps) => {
                                         </div>
                                     </div>
                                 ) : null}
-                            </div>
+                            </Card>
                         )
                     })}
                 </div>

@@ -158,7 +158,7 @@ export const QuestionRow = ({ question, currentUserId, currentUser, onAnswered, 
                                     <SealCheckIcon
                                         weight="fill"
                                         aria-label={t("courseQa.founderBadge")}
-                                        className="size-3.5 shrink-0 text-accent"
+                                        className="size-3.5 shrink-0 text-accent-soft-foreground"
                                     />
                                 ) : null}
                                 <Typography type="body-xs" color="muted">

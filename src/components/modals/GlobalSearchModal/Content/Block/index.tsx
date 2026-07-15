@@ -93,7 +93,7 @@ export const GlobalSearchContentBlock = (props: GlobalSearchContentBlockProps) =
                     if (part.startsWith("<em>") && part.endsWith("</em>")) {
                         const content = part.replace(/<\/?em>/g, "")
                         return (
-                            <span key={index} className="font-semibold text-accent underline decoration-accent/60">
+                            <span key={index} className="font-semibold text-accent-soft-foreground underline decoration-accent/60">
                                 {content}
                             </span>
                         )
@@ -146,12 +146,12 @@ export const GlobalSearchContentBlock = (props: GlobalSearchContentBlockProps) =
                                         {titleLine}
                                     </Typography>
                                     {showEnrolledChip ? (
-                                        <Chip size="sm" className="shrink-0 bg-success/10 text-success">
+                                        <Chip size="sm" className="shrink-0 bg-success-soft text-success-soft-foreground">
                                             <Chip.Label>{t("search.result.enrolled")}</Chip.Label>
                                         </Chip>
                                     ) : null}
                                     {showCourseFreeChip || showContentFreeChip ? (
-                                        <Chip size="sm" className="shrink-0 bg-success/10 text-success">
+                                        <Chip size="sm" className="shrink-0 bg-success-soft text-success-soft-foreground">
                                             <Chip.Label>{t("search.result.free")}</Chip.Label>
                                         </Chip>
                                     ) : null}
@@ -163,7 +163,7 @@ export const GlobalSearchContentBlock = (props: GlobalSearchContentBlockProps) =
                                         />
                                     ) : null}
                                     {kind === "course" ? (
-                                        <span className="inline-flex shrink-0 items-center gap-1 text-xs text-accent">
+                                        <span className="inline-flex shrink-0 items-center gap-1 text-xs text-accent-soft-foreground">
                                             {t("search.result.viewCourse")}
                                             <CaretRightIcon
                                                 aria-hidden

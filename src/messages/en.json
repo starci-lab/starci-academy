@@ -3246,7 +3246,8 @@
     "phase": "Phase offer",
     "phaseNamed": "{phase} phase",
     "loyalty": "Member discount",
-    "youPay": "You pay"
+    "youPay": "You pay",
+    "saved": "Save {amount}"
   },
   "payment": {
     "title": "Payment",

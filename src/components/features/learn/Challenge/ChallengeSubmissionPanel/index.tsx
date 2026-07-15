@@ -390,7 +390,7 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
                     aria-live="polite"
                     className={cn(
                         "text-xs",
-                        autosaveStatus === "failed" ? "text-danger" : "text-default-500",
+                        autosaveStatus === "failed" ? "text-danger-soft-foreground" : "text-default-500",
                     )}
                 >
                     {autosaveLabel}
@@ -414,9 +414,9 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
                                     <div className="flex w-full items-center justify-between gap-3 text-start">
                                         <div className="flex min-w-0 items-center gap-2">
                                             {status === "done" ? (
-                                                <CheckCircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-success" />
+                                                <CheckCircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-success-soft-foreground" />
                                             ) : status === "failed" ? (
-                                                <XCircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-danger" />
+                                                <XCircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-danger-soft-foreground" />
                                             ) : (
                                                 <CircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
                                             )}

@@ -71,7 +71,7 @@ export const ContactForm = ({ className }: ContactFormProps) => {
                     onChange={(event) => setValue("name", event.target.value)}
                 />
                 {errors.name ? (
-                    <Typography slot="description" type="body-xs" className="text-danger">
+                    <Typography slot="description" type="body-xs" className="text-danger-soft-foreground">
                         {errors.name.message}
                     </Typography>
                 ) : null}
@@ -87,7 +87,7 @@ export const ContactForm = ({ className }: ContactFormProps) => {
                     onChange={(event) => setValue("email", event.target.value)}
                 />
                 {errors.email ? (
-                    <Typography slot="description" type="body-xs" className="text-danger">
+                    <Typography slot="description" type="body-xs" className="text-danger-soft-foreground">
                         {errors.email.message}
                     </Typography>
                 ) : null}
@@ -140,7 +140,7 @@ export const ContactForm = ({ className }: ContactFormProps) => {
                     className="resize-none"
                 />
                 {errors.message ? (
-                    <Typography slot="description" type="body-xs" className="text-danger">
+                    <Typography slot="description" type="body-xs" className="text-danger-soft-foreground">
                         {errors.message.message}
                     </Typography>
                 ) : null}

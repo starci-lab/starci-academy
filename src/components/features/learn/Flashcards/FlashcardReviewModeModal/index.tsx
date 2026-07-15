@@ -42,10 +42,10 @@ export interface FlashcardReviewModeModalProps extends WithClassNames<undefined>
  * border rather than the (invisible-in-dark) `shadow-surface` top-level default
  * (`components/card.md` §"surface-in-surface / nested").
  * Selected-row signal (thầy 2026-07-13 lượt 4, dropped the `CheckCircleIcon`
- * tried in lượt 3): the row itself tints `bg-accent/10` via `SurfaceListCardRow`'s
+ * tried in lượt 3): the row itself tints `bg-accent-soft` via `SurfaceListCardRow`'s
  * `selected` prop (no `titleClassName` escape hatch — header/title styling stays
  * on the block's own default, per `no-modal-title-classname`), and the leading
- * icon turns `text-accent`, no trailing checkmark. Leading icon otherwise
+ * icon turns `text-accent-soft-foreground`, no trailing checkmark. Leading icon otherwise
  * matches the title's own colour (`text-foreground`, not the previous
  * `text-muted`) — `components/icon.md` "icon cùng màu chữ cạnh nó".
  * @param props - {@link FlashcardReviewModeModalProps}
@@ -87,7 +87,7 @@ export const FlashcardReviewModeModal = ({
                 <SurfaceListCard bordered>
                     <SurfaceListCardRow
                         hover="underline"
-                        leading={<CardsIcon className={cn("size-6", mode === "full" ? "text-accent" : "text-foreground")} aria-hidden focusable="false" />}
+                        leading={<CardsIcon className={cn("size-6", mode === "full" ? "text-accent-soft-foreground" : "text-foreground")} aria-hidden focusable="false" />}
                         title={t("flashcard.mode.fullLabel")}
                         subtitle={t("flashcard.mode.fullDescription")}
                         selected={mode === "full"}
@@ -101,14 +101,14 @@ export const FlashcardReviewModeModal = ({
                     />
                     <SurfaceListCardRow
                         hover="underline"
-                        leading={<ClockCountdownIcon className={cn("size-6", mode === "due" ? "text-accent" : "text-foreground")} aria-hidden focusable="false" />}
+                        leading={<ClockCountdownIcon className={cn("size-6", mode === "due" ? "text-accent-soft-foreground" : "text-foreground")} aria-hidden focusable="false" />}
                         title={t("flashcard.mode.dueLabel")}
                         subtitle={t("flashcard.mode.dueDescription")}
                         selected={mode === "due"}
                         isDisabled={isPending || dueDisabled}
                         onPress={() => setMode("due")}
                         meta={(
-                            <span className={`whitespace-nowrap text-xs font-medium ${dueDisabled ? "text-muted" : "text-warning"}`}>
+                            <span className={`whitespace-nowrap text-xs font-medium ${dueDisabled ? "text-muted" : "text-warning-soft-foreground"}`}>
                                 {dueDisabled
                                     ? t("flashcard.mode.dueBadgeEmpty")
                                     : t("flashcard.mode.dueBadge", { count: dueCount })}

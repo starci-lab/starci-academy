@@ -87,7 +87,7 @@ export const MascotBadge = ({
                     <MedalIcon
                         width={innerSize}
                         height={innerSize}
-                        className={cn(earned ? "text-warning" : "text-default-400")}
+                        className={cn(earned ? "text-warning-soft-foreground" : "text-default-400")}
                     />
                 )}
             />

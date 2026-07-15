@@ -81,7 +81,7 @@ export const ProfilePinned = ({
         return (
             <SectionCard
                 title={t("pinnedProjects.heading")}
-                icon={<PushPinIcon className="size-5 text-accent" aria-hidden="true" focusable="false" />}
+                icon={<PushPinIcon className="size-5 text-accent-soft-foreground" aria-hidden="true" focusable="false" />}
                 className={className}
             >
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -98,7 +98,7 @@ export const ProfilePinned = ({
         return (
             <SectionCard
                 title={t("pinnedProjects.heading")}
-                icon={<PushPinIcon className="size-5 text-accent" aria-hidden="true" focusable="false" />}
+                icon={<PushPinIcon className="size-5 text-accent-soft-foreground" aria-hidden="true" focusable="false" />}
                 className={className}
             >
                 <ErrorState
@@ -119,7 +119,7 @@ export const ProfilePinned = ({
         return (
             <SectionCard
                 title={t("pinnedProjects.heading")}
-                icon={<PushPinIcon className="size-5 text-accent" aria-hidden="true" focusable="false" />}
+                icon={<PushPinIcon className="size-5 text-accent-soft-foreground" aria-hidden="true" focusable="false" />}
                 action={action}
                 className={className}
             >
@@ -145,7 +145,7 @@ export const ProfilePinned = ({
     return (
         <SectionCard
             title={t("pinnedProjects.heading")}
-            icon={<PushPinIcon className="size-5 text-accent" aria-hidden="true" focusable="false" />}
+            icon={<PushPinIcon className="size-5 text-accent-soft-foreground" aria-hidden="true" focusable="false" />}
             action={action}
             className={className}
         >

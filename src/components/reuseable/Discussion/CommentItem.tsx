@@ -110,7 +110,7 @@ export const CommentItem = ({
                             <SealCheckIcon
                                 weight="fill"
                                 aria-label={t("discussion.founderBadge")}
-                                className="size-3.5 shrink-0 text-accent"
+                                className="size-3.5 shrink-0 text-accent-soft-foreground"
                             />
                         ) : null}
                         <span className="text-xs text-muted">
@@ -162,7 +162,7 @@ export const CommentItem = ({
                                         {t("common.edit")}
                                     </Link>
                                     <Link
-                                        className="cursor-pointer text-xs font-medium text-muted hover:text-danger"
+                                        className="cursor-pointer text-xs font-medium text-muted hover:text-danger-soft-foreground"
                                         onPress={() => onDelete(comment.id)}
                                     >
                                         {t("common.delete")}
@@ -191,7 +191,7 @@ export const CommentItem = ({
                     {/* replies toggle + recursive subtree */}
                     {comment.replyCount > 0 ? (
                         <Link
-                            className="cursor-pointer self-start text-xs font-medium text-accent hover:underline"
+                            className="cursor-pointer self-start text-xs font-medium text-accent-soft-foreground hover:underline"
                             onPress={toggleReplies}
                         >
                             {expanded

@@ -33,12 +33,12 @@ const STATUS_META: Record<
 > = {
     solved: {
         Icon: CheckCircleIcon,
-        className: "text-success",
+        className: "text-success-soft-foreground",
         labelKey: "practice.row.status.solved",
     },
     attempted: {
         Icon: CircleHalfIcon,
-        className: "text-warning",
+        className: "text-warning-soft-foreground",
         labelKey: "practice.row.status.attempted",
     },
     unsolved: {

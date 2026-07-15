@@ -147,7 +147,7 @@ export const Kpi = ({
                         >
                             <div className="flex items-center justify-between gap-3">
                                 <div className="flex items-center gap-2">
-                                    <Icon className="size-5 shrink-0 text-accent" />
+                                    <Icon className="size-5 shrink-0 text-accent-soft-foreground" />
                                     <span className="text-sm font-medium text-foreground">
                                         {t(`dashboard.kpi.labels.${labelKey}`)}
                                     </span>

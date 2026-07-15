@@ -51,7 +51,7 @@ export const PhaseScarcityNote = ({
     const phaseLabel = t(PHASE_LABEL_KEY[currentPhase])
 
     return (
-        <div className={cn("flex flex-wrap items-center gap-2 text-warning", className)}>
+        <div className={cn("flex flex-wrap items-center gap-2 text-warning-soft-foreground", className)}>
             <WarningCircleIcon aria-hidden focusable="false" className="size-4 shrink-0" />
             <span className="text-sm font-medium">
                 {t("courseLanding.slotsLeftPhase", {

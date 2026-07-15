@@ -187,7 +187,7 @@ export const MiniCartDrawer = () => {
                                                         : t("cart.comboStart")}
                                                 </Typography>
                                                 {bundlePercent > 0 ? (
-                                                    <Chip size="sm" className="bg-accent/10 text-accent">
+                                                    <Chip size="sm" className="bg-accent-soft text-accent-soft-foreground">
                                                         <Chip.Label>
                                                             {t("cart.bundleBonus", { percent: bundlePercent })}
                                                         </Chip.Label>
@@ -266,7 +266,7 @@ export const MiniCartDrawer = () => {
                                             ) : null}
                                         </div>
                                         {preview && preview.savingsVnd > 0 ? (
-                                            <Typography type="body-sm" className="text-success">
+                                            <Typography type="body-sm" className="text-success-soft-foreground">
                                                 {t("cart.savings", { amount: formatVnd(preview.savingsVnd) })}
                                             </Typography>
                                         ) : null}

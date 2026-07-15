@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
+import { CheckCircleIcon, XCircleIcon } from "@phosphor-icons/react"
 
 import { StatusChip } from "./index"
 import type { StatusChipProps } from "./index"
@@ -55,36 +56,54 @@ export const Tones: Story = {
     ),
 }
 
-const CheckIcon = () => (
-    <svg
-        width="12"
-        height="12"
-        viewBox="0 0 16 16"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true"
-    >
-        <path
-            d="M13.5 4.5L6 12L2.5 8.5"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        />
-    </svg>
-)
-
 /**
- * Thêm icon khi trạng thái cần xác nhận trực quan nhanh (đã xác minh, đã duyệt) — không dùng icon cho mọi chip, chỉ khi icon củng cố thêm ý nghĩa.
+ * Chip CÓ icon = CHỈ cho 2 status DỨT KHOÁT, icon LEADING (đầu), tĩnh:
+ * - thành công / đã xác minh → `CheckCircleIcon` (circle-check) THẬT của Phosphor + tone `success`.
+ * - lỗi / thất bại → `XCircleIcon` (circle-x) + tone `danger`.
+ * KHÔNG bare `CheckIcon`/`XIcon`, KHÔNG hand-roll SVG (icon.md §2 — dấu đạt/lỗi = circle).
+ * Các tone khác (neutral/warning/accent) KHÔNG icon. Component tự ép icon size-4.
  */
 export const WithIcon: Story = {
     parameters: {
         usage:
-            "Thêm icon khi trạng thái cần xác nhận trực quan nhanh (đã xác minh, đã duyệt) — không dùng icon cho mọi chip, chỉ khi icon củng cố thêm ý nghĩa.",
+            "Chip có icon chỉ cho 2 status dứt khoát: thành công = `CheckCircleIcon` (circle-check, tone success), lỗi = `XCircleIcon` (circle-x, tone danger). Icon leading, tĩnh. Tone khác không icon.",
     },
-    args: {
-        tone: "success",
-        icon: <CheckIcon />,
-        children: "Đã xác minh",
+    render: () => (
+        <div className="flex flex-col items-start gap-3">
+            <StatusChip tone="success" icon={<CheckCircleIcon />}>
+                Đã xác minh
+            </StatusChip>
+            <StatusChip tone="danger" icon={<XCircleIcon />}>
+                Lỗi xử lý
+            </StatusChip>
+        </div>
+    ),
+}
+
+/**
+ * Chip GỠ ĐƯỢC (filter/tag): prop `onCancel` → nút X TRAILING (cuối) bấm để gỡ/huỷ chip.
+ * Nút X = block chung **`ElementCloseButton`** (wrap HeroUI `CloseButton`): trong-suốt
+ * lúc-nghỉ + hover tô nền theo TONE của chip — CÙNG một cách với dismiss của `Callout`
+ * (không còn mỗi chỗ style hover một kiểu). Luật: chip có X-gỡ thì **KHÔNG có icon status
+ * leading** — 1 chip mang HOẶC status icon HOẶC X-gỡ, không cả hai (truyền cả `icon` lẫn
+ * `onCancel` thì icon bị bỏ).
+ */
+export const Removable: Story = {
+    parameters: {
+        usage:
+            "Chip gỡ được: `onCancel` render nút X trailing = `ElementCloseButton` (block chung, wrap HeroUI `CloseButton`; trong-suốt lúc nghỉ + hover tint theo tone chip, giống Callout). Chip có X-gỡ thì KHÔNG icon leading (mang HOẶC status icon HOẶC X-gỡ).",
     },
+    render: () => (
+        <div className="flex flex-wrap items-start gap-2">
+            <StatusChip tone="accent" onCancel={() => {}} cancelLabel="Gỡ bộ lọc React">
+                React
+            </StatusChip>
+            <StatusChip tone="accent" onCancel={() => {}} cancelLabel="Gỡ bộ lọc TypeScript">
+                TypeScript
+            </StatusChip>
+            <StatusChip tone="neutral" onCancel={() => {}} cancelLabel="Gỡ bộ lọc Junior">
+                Junior
+            </StatusChip>
+        </div>
+    ),
 }

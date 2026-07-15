@@ -346,7 +346,7 @@ export const NotificationCenter = ({ className }: NotificationCenterProps) => {
                                                     "flex size-9 shrink-0 items-center justify-center rounded-full [&>svg]:size-4",
                                                     notification.isRead
                                                         ? "bg-default text-muted"
-                                                        : "bg-accent/10 text-accent",
+                                                        : "bg-accent-soft text-accent-soft-foreground",
                                                 )}
                                             >
                                                 {TYPE_ICONS[notification.type]}
@@ -364,7 +364,7 @@ export const NotificationCenter = ({ className }: NotificationCenterProps) => {
                                                         weight="fill"
                                                         aria-hidden
                                                         focusable="false"
-                                                        className="size-1.5 shrink-0 text-accent"
+                                                        className="size-1.5 shrink-0 text-accent-soft-foreground"
                                                     />
                                                 ) : null}
                                                 {t(

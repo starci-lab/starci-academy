@@ -56,7 +56,7 @@ export const MindMapContinueButton = ({ resumeHref, allContentDone }: MindMapCon
     if (allContentDone) {
         return (
             <Panel className="!m-4 rounded-full bg-surface px-4 py-2 shadow-lg" position="top-center">
-                <Typography type="body-sm" weight="semibold" className="text-success">
+                <Typography type="body-sm" weight="semibold" className="text-success-soft-foreground">
                     {t("mindMap.allDone")}
                 </Typography>
             </Panel>

@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useMemo } from "react"
-import { Button, Chip, Typography, cn } from "@heroui/react"
+import { Button, Card, Chip, Typography, cn } from "@heroui/react"
 import { ArrowRightIcon, BuildingsIcon, MapPinIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useParams } from "next/navigation"
@@ -134,36 +134,38 @@ export const JobDetail = ({ className }: JobDetailProps) => {
                             )}
                         />
 
-                        <div className="flex items-center gap-3 rounded-3xl bg-surface p-4 shadow-surface">
-                            <IconTile
-                                icon={<BuildingsIcon aria-hidden focusable="false" />}
-                                src={job.company.logoUrl}
-                                alt={job.company.title}
-                                tone="neutral"
-                                size="md"
-                            />
-                            <div className="flex min-w-0 flex-1 flex-col gap-1">
-                                {companyHref ? (
-                                    <a href={companyHref} className="w-fit">
-                                        <Typography type="body" weight="semibold" className="hover:underline">
+                        <Card>
+                            <div className="flex items-center gap-3">
+                                <IconTile
+                                    icon={<BuildingsIcon aria-hidden focusable="false" />}
+                                    src={job.company.logoUrl}
+                                    alt={job.company.title}
+                                    tone="neutral"
+                                    size="md"
+                                />
+                                <div className="flex min-w-0 flex-1 flex-col gap-1">
+                                    {companyHref ? (
+                                        <a href={companyHref} className="w-fit">
+                                            <Typography type="body" weight="semibold" className="hover:underline">
+                                                {job.company.title}
+                                            </Typography>
+                                        </a>
+                                    ) : (
+                                        <Typography type="body" weight="semibold">
                                             {job.company.title}
                                         </Typography>
-                                    </a>
-                                ) : (
-                                    <Typography type="body" weight="semibold">
-                                        {job.company.title}
-                                    </Typography>
-                                )}
-                                {job.company.description ? (
-                                    <Typography type="body-sm" color="muted" className="line-clamp-2">
-                                        {job.company.description}
-                                    </Typography>
-                                ) : null}
+                                    )}
+                                    {job.company.description ? (
+                                        <Typography type="body-sm" color="muted" className="line-clamp-2">
+                                            {job.company.description}
+                                        </Typography>
+                                    ) : null}
+                                </div>
+                                <Typography type="h4" weight="bold" className="shrink-0">
+                                    {salaryLabel}
+                                </Typography>
                             </div>
-                            <Typography type="h4" weight="bold" className="shrink-0">
-                                {salaryLabel}
-                            </Typography>
-                        </div>
+                        </Card>
 
                         <div className="flex flex-col gap-6">
                             <div className="flex flex-col gap-2">

@@ -110,7 +110,7 @@ export const ProjectBlockEditor = ({ className, block, onChange, onAiRewrite }: 
                         headerEnd={(
                             <Chip
                                 size="sm"
-                                className={isVerified ? "bg-success/10 text-success" : "bg-default text-muted"}
+                                className={isVerified ? "bg-success-soft text-success-soft-foreground" : "bg-default text-muted"}
                             >
                                 {isVerified ? (
                                     <SealCheckIcon aria-hidden className="size-4" />

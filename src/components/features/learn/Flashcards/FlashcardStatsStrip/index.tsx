@@ -110,7 +110,7 @@ export const FlashcardStatsStrip = ({ className }: FlashcardStatsStripProps) => 
                                 size="sm"
                                 variant="secondary"
                                 color="warning"
-                                className="shrink-0 bg-warning/10 text-warning"
+                                className="shrink-0 bg-warning-soft text-warning-soft-foreground"
                             >
                                 <FlameIcon className="size-3.5" aria-hidden focusable="false" />
                                 {t("flashcard.stats.streakChip", { count: streak })}

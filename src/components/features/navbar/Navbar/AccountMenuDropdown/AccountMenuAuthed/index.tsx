@@ -94,11 +94,11 @@ export const AccountMenuAuthed = ({ className }: AccountMenuAuthedProps) => {
                 <Dropdown.Item
                     id="logout"
                     textValue={t("nav.logout")}
-                    className="text-danger"
+                    className="text-danger-soft-foreground"
                     onPress={onLogout}
                 >
                     <SignOutIcon className="size-5" />
-                    <Label className="text-danger">{t("nav.logout")}</Label>
+                    <Label className="text-danger-soft-foreground">{t("nav.logout")}</Label>
                 </Dropdown.Item>
             </Dropdown.Section>
         </Dropdown.Menu>

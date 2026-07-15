@@ -22,6 +22,7 @@ import {
     LaneModelPicker,
 } from "../LaneModelPicker"
 import { GradeCreditCaption } from "@/components/blocks/grading/GradeCreditCaption"
+import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import {
     ParamControls,
 } from "../ParamControls"
@@ -327,7 +328,7 @@ export const PromptPlayground = ({ playground, className }: PromptPlaygroundProp
 
             {/* Quota exhausted nudge → BYOK */}
             {quotaExhausted ? (
-                <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-warning/30 bg-warning/10 p-3">
+                <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-warning/30 bg-warning-soft p-3">
                     <span className="text-sm">
                         {t("aiLab.playground.quotaExhausted")} {t("aiLab.playground.byokNudge")}
                     </span>
@@ -358,7 +359,7 @@ export const PromptPlayground = ({ playground, className }: PromptPlaygroundProp
                 </div>
                 <div className="min-h-24 rounded-2xl border border-default bg-surface p-4">
                     {isFailed ? (
-                        <span className="text-sm text-danger">
+                        <span className="text-sm text-danger-soft-foreground">
                             {run?.errorMessage ?? t("aiLab.playground.failed")}
                         </span>
                     ) : outputText ? (
@@ -381,23 +382,22 @@ export const PromptPlayground = ({ playground, className }: PromptPlaygroundProp
             {priorRuns.length > 0 ? (
                 <div className="flex flex-col gap-2">
                     <span className="text-sm text-muted">{t("aiLab.playground.runHistory")}</span>
-                    <div className="flex flex-col overflow-hidden rounded-2xl border border-default">
+                    <SurfaceListCard bordered>
                         {priorRuns.map((priorRun) => (
-                            <div
-                                key={priorRun.id}
-                                className="flex items-center justify-between gap-3 border-b border-divider px-4 py-2 last:border-b-0"
-                            >
-                                <span className="min-w-0 truncate text-sm">{priorRun.userPrompt}</span>
-                                <Chip
-                                    size="sm"
-                                    color={priorRun.status === AiLabRunStatus.Failed ? "danger" : "default"}
-                                    variant="soft"
-                                >
-                                    {t(`aiLab.status.${priorRun.status}`)}
-                                </Chip>
-                            </div>
+                            <SurfaceListCardItem key={priorRun.id}>
+                                <div className="flex items-center justify-between gap-3">
+                                    <span className="min-w-0 truncate text-sm">{priorRun.userPrompt}</span>
+                                    <Chip
+                                        size="sm"
+                                        color={priorRun.status === AiLabRunStatus.Failed ? "danger" : "default"}
+                                        variant="soft"
+                                    >
+                                        {t(`aiLab.status.${priorRun.status}`)}
+                                    </Chip>
+                                </div>
+                            </SurfaceListCardItem>
                         ))}
-                    </div>
+                    </SurfaceListCard>
                 </div>
             ) : null}
         </div>

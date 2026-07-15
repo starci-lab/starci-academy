@@ -1,25 +1,27 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Button } from "@heroui/react"
+import { RocketLaunchIcon } from "@phosphor-icons/react"
+import { IconTile } from "@/components/blocks/identity/IconTile"
 import { PressableCard } from "./index"
 
 const meta: Meta<typeof PressableCard> = {
     title: "Blocks/PressableCard",
     component: PressableCard,
-    parameters: {
-        layout: "centered",
-    },
 }
 
 export default meta
 
 type Story = StoryObj<typeof PressableCard>
 
-/** Generic navigation-tile content — icon + title + subtitle. */
+/**
+ * Generic navigation-tile content — icon + title + subtitle. The leading icon is
+ * a real {@link IconTile} (this row represents ONE object — a course roadmap —
+ * per the biz→ui lookup "leading của row = 1 đối tượng → IconTile"), not a
+ * hand-rolled emoji circle (emoji are banned from UI copy either way).
+ */
 const NavTileContent = () => (
     <div className="flex items-center gap-3">
-        <div className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-surface-secondary text-lg">
-            🚀
-        </div>
+        <IconTile size="sm" icon={<RocketLaunchIcon />} />
         <div className="flex flex-col">
             <span className="text-sm font-medium text-foreground">
                 Lộ trình Fullstack Mastery
@@ -97,7 +99,7 @@ export const WithActions: Story = {
         usage: "Card bấm-được có nút riêng bên trong (card tiến độ: bấm card mở khóa, nút Tiếp tục vào bài dở). Dùng `actions` + `label` → stretched-link: overlay phủ cả card + nút đè lên (z-10), bấm độc lập, KHÔNG lồng interactive, không bị cao.",
     },
     render: () => (
-        <div className="w-[380px]">
+        <div className="w-full">
             <PressableCard
                 onPress={() => {}}
                 label="Mở lộ trình Fullstack Mastery"

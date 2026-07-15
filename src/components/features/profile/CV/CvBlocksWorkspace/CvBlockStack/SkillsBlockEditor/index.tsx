@@ -83,10 +83,10 @@ export const SkillsBlockEditor = ({ className, block, onChange }: SkillsBlockEdi
                     {block.items.map((item) => {
                         const name = typeof item.fields.name === "string" ? item.fields.name : ""
                         return (
-                            <Chip key={item.id} size="sm" className="bg-accent/10 text-accent">
+                            <Chip key={item.id} size="sm" className="bg-accent-soft text-accent-soft-foreground">
                                 <Chip.Label>{name}</Chip.Label>
                                 <Link
-                                    className="text-accent no-underline opacity-60 transition-opacity hover:opacity-100 hover:no-underline"
+                                    className="text-accent-soft-foreground no-underline opacity-60 transition-opacity hover:opacity-100 hover:no-underline"
                                     aria-label={t("cv.blocks.skills.removeSkill", { name })}
                                     onPress={() => onRemoveSkill(item.id)}
                                 >

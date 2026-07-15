@@ -103,7 +103,7 @@ const TAB_SIZE_SM = "h-auto! w-auto! px-3! py-2! text-xs!"
  * border-accent`, which — once `<Tabs.Indicator/>` was added per tabs.md §5 —
  * doubled up with the indicator's own bottom line under the same tab.
  */
-const TAB_CLASS_ACCENT = "rounded-none data-[selected=true]:text-accent"
+const TAB_CLASS_ACCENT = "rounded-none data-[selected=true]:text-accent-soft-foreground"
 
 /**
  * Selected-state chrome — NEUTRAL foreground underline (secondary toggle

@@ -1066,7 +1066,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                         <span
                             className={cn(
                                 "flex shrink-0 items-center gap-2",
-                                remainingSeconds <= TIME_LIMIT_WARNING_SECONDS && "text-warning",
+                                remainingSeconds <= TIME_LIMIT_WARNING_SECONDS && "text-warning-soft-foreground",
                             )}
                         >
                             <ClockIcon className="size-4" aria-hidden focusable="false" />
@@ -1257,8 +1257,8 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                                                 : !checked
                                                     ? "border-0 bg-accent text-accent-foreground"
                                                     : isCorrect
-                                                        ? "border border-success/60 bg-success/10 text-success motion-safe:[animation:blankPop_0.35s_ease]"
-                                                        : "border border-danger/60 bg-danger/10 text-danger motion-safe:[animation:blankShake_0.4s_ease]"
+                                                        ? "border border-success/60 bg-success-soft text-success-soft-foreground motion-safe:[animation:blankPop_0.35s_ease]"
+                                                        : "border border-danger/60 bg-danger-soft text-danger-soft-foreground motion-safe:[animation:blankShake_0.4s_ease]"
                                             // shared `layoutId` with the SAME term's word-bank chip below — when
                                             // `placeTerm`/`clearBlank` swaps `value`, framer-motion FLIPs the
                                             // chip's bounding box across the two positions ("flies" into/out of
@@ -1365,9 +1365,9 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                                 {/* verdict line */}
                                 <div className="flex items-center gap-2">
                                     {correctCount === cloze.blanks.length ? (
-                                        <CheckCircleIcon className="size-5 text-success" aria-hidden focusable="false" />
+                                        <CheckCircleIcon className="size-5 text-success-soft-foreground" aria-hidden focusable="false" />
                                     ) : (
-                                        <XCircleIcon className="size-5 text-danger" aria-hidden focusable="false" />
+                                        <XCircleIcon className="size-5 text-danger-soft-foreground" aria-hidden focusable="false" />
                                     )}
                                     <Typography type="body-sm" weight="medium">
                                         {t("flashcard.quiz.clozeResult", {

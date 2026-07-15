@@ -77,7 +77,7 @@ export const UpNextCard = ({
                         <CheckCircleIcon
                             aria-hidden
                             focusable="false"
-                            className="size-5 shrink-0 text-success"
+                            className="size-5 shrink-0 text-success-soft-foreground"
                         />
                     ) : null}
                     {eyebrow ? (

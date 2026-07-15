@@ -124,14 +124,14 @@ export const GithubTeamGate = () => {
         ? t("githubTeamGate.sending")
         : t(`githubTeamGate.state.${primaryState}`)
     const primaryStateColor = anySending || primaryState === "pending"
-        ? "text-warning"
+        ? "text-warning-soft-foreground"
         : primaryState === "active"
-            ? "text-success"
+            ? "text-success-soft-foreground"
             : "text-muted"
 
     /** Leading step number badge. */
     const stepBadge = (n: number) => (
-        <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-accent/10 text-xs font-medium text-accent">
+        <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-accent-soft text-xs font-medium text-accent-soft-foreground">
             {n}
         </span>
     )
@@ -139,7 +139,7 @@ export const GithubTeamGate = () => {
     return (
         <>
             {/* persistent, non-blocking warning on the learn page */}
-            <Alert status="warning" className="bg-warning/10 shadow-none">
+            <Alert status="warning" className="bg-warning-soft shadow-none">
                 <Alert.Indicator>
                     <GithubIcon className="size-5" />
                 </Alert.Indicator>

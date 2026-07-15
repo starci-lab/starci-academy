@@ -9,7 +9,6 @@ import { Button, Chip } from "@heroui/react"
  */
 const meta: Meta = {
     title: "Primitives/Button & Chip",
-    parameters: { layout: "centered" },
 }
 export default meta
 type Story = StoryObj

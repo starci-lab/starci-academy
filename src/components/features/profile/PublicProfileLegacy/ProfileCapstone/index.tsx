@@ -68,7 +68,7 @@ export const ProfileCapstone = ({
                     title={t("publicProfile.capstone.projectsHeading")}
                     icon={
                         <RocketIcon
-                            className="size-5 text-accent"
+                            className="size-5 text-accent-soft-foreground"
                             aria-hidden="true"
                             focusable="false"
                         />
@@ -125,7 +125,7 @@ export const ProfileCapstone = ({
                     title={t("publicProfile.capstone.projectsHeading")}
                     icon={
                         <RocketIcon
-                            className="size-5 text-accent"
+                            className="size-5 text-accent-soft-foreground"
                             aria-hidden="true"
                             focusable="false"
                         />

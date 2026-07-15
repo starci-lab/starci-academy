@@ -84,7 +84,7 @@ export const E2eBody = (): React.JSX.Element => {
                                         <span
                                             className={[
                                                 "inline-flex h-5 shrink-0 items-center rounded-full px-2 text-[11px] font-semibold capitalize",
-                                                ok ? "bg-success/15 text-success" : "bg-danger/15 text-danger",
+                                                ok ? "bg-success/15 text-success-soft-foreground" : "bg-danger/15 text-danger-soft-foreground",
                                             ].join(" ")}
                                         >
                                             {ok ? t("content.e2e.statusPass") : t("content.e2e.statusFail")}

@@ -85,9 +85,9 @@ export const AutosaveStatus = ({ status }: AutosaveStatusProps) => {
                     </>
                 )
                 : status === "saved"
-                    ? <Typography type="body-sm" className="text-success">{tAutosave("saved")}</Typography>
+                    ? <Typography type="body-sm" className="text-success-soft-foreground">{tAutosave("saved")}</Typography>
                     : status === "failed"
-                        ? <Typography type="body-sm" className="text-danger">{tAutosave("failed")}</Typography>
+                        ? <Typography type="body-sm" className="text-danger-soft-foreground">{tAutosave("failed")}</Typography>
                         : null}
         </div>
     )

@@ -43,7 +43,7 @@ export const LogoutMenu = ({ className }: LogoutMenuProps) => {
             <DropdownSection>
                 <DropdownItem
                     key="logout"
-                    className="py-3 text-danger"
+                    className="py-3 text-danger-soft-foreground"
                     onPress={onLogout}
                 >
                     {t("nav.logout")}

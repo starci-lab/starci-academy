@@ -157,7 +157,7 @@ const ModelRowLayout = ({
         <span className="flex min-w-0 items-center gap-2 overflow-hidden">
             {leading}
             <span
-                className={cn("min-w-0 truncate", isSelected && "text-accent")}
+                className={cn("min-w-0 truncate", isSelected && "text-accent-soft-foreground")}
                 title={name}
             >
                 {name}
@@ -403,7 +403,7 @@ export const GradeModelDropdown = ({
                                         <div
                                             className={cn(
                                                 "flex items-center gap-2",
-                                                !selection.model && "text-accent",
+                                                !selection.model && "text-accent-soft-foreground",
                                             )}
                                         >
                                             <SparkleIcon className="size-4 shrink-0" />
@@ -438,11 +438,10 @@ export const GradeModelDropdown = ({
                             </SearchField.Group>
                         </SearchField>
                     </div>
-                    {/* tier filter — FlexWrapButtonRadio inside popover surface (insideCard) */}
+                    {/* tier filter — FlexWrapButtonRadio inside popover surface */}
                     {tierChips.length > 1 ? (
                         <div className="px-2 pt-2">
                             <FlexWrapButtonRadio
-                                insideCard
                                 ariaLabel={t("aiSettings.filterTier")}
                                 value={tierFilter}
                                 onChange={setTierFilter}
@@ -566,12 +565,12 @@ export const GradeModelDropdown = ({
                                                             isSelected={isSelected}
                                                             name={model.model}
                                                             nameSuffix={selfHostMark}
-                                                            leading={<WarningIcon className="size-5 shrink-0 text-warning" />}
+                                                            leading={<WarningIcon className="size-5 shrink-0 text-warning-soft-foreground" />}
                                                             trailing={<>{healthChip}{categoryChip}</>}
                                                         />
                                                     </Tooltip.Trigger>
                                                     <Tooltip.Content>
-                                                        <Typography type="body-sm" className="text-warning">
+                                                        <Typography type="body-sm" className="text-warning-soft-foreground">
                                                             {belowFloor
                                                                 ? t("aiSettings.belowFloorWarning")
                                                                 : t("aiSettings.offTaskWarning")}

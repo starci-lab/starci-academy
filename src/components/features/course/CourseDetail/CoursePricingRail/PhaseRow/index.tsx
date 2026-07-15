@@ -46,7 +46,7 @@ export const PhaseRow = ({ row, className }: PhaseRowProps) => {
                 {row.soldOut ? (
                     <CheckCircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-muted" />
                 ) : row.isActive ? (
-                    <CircleIcon aria-hidden focusable="false" weight="fill" className="size-4 shrink-0 text-accent" />
+                    <CircleIcon aria-hidden focusable="false" weight="fill" className="size-4 shrink-0 text-accent-soft-foreground" />
                 ) : (
                     <CircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-muted" />
                 )}
@@ -54,7 +54,7 @@ export const PhaseRow = ({ row, className }: PhaseRowProps) => {
                     type="body-sm"
                     weight={row.isActive ? "semibold" : "normal"}
                     color={row.soldOut ? "muted" : "default"}
-                    className={row.isActive ? "text-accent" : undefined}
+                    className={row.isActive ? "text-accent-soft-foreground" : undefined}
                     truncate
                 >
                     {t(PHASE_LABEL_KEY[row.phase])}
@@ -65,7 +65,7 @@ export const PhaseRow = ({ row, className }: PhaseRowProps) => {
                     {t("courseLanding.soldOut")}
                 </Typography>
             ) : row.isActive ? (
-                <Typography type="body-xs" className="text-accent">
+                <Typography type="body-xs" className="text-accent-soft-foreground">
                     {t("courseLanding.currentOpen")}
                 </Typography>
             ) : (

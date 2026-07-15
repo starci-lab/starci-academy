@@ -77,7 +77,7 @@ export const ShuffleBeacon = ({ onShuffle }: ShuffleBeaconProps) => {
                 <ArrowsClockwiseIcon
                     aria-hidden
                     weight="bold"
-                    className="absolute size-3 text-accent transition-transform duration-300 group-hover:rotate-180"
+                    className="absolute size-3 text-accent-soft-foreground transition-transform duration-300 group-hover:rotate-180"
                 />
             </span>
             <span className="hidden sm:inline">{t("landing.treasure.beaconLabel")}</span>

@@ -56,7 +56,7 @@ export const UserStreak = ({ className }: UserStreakProps) => {
         <Dropdown>
             <DropdownTrigger>
                 <div className={cn("group relative flex size-10 cursor-pointer items-center justify-center rounded-full border-4 border-dashed border-accent/50 bg-accent/5 transition-all hover:scale-110 active:scale-95", className)}>
-                    <FireIcon aria-hidden weight="fill" className="size-6 text-accent" />
+                    <FireIcon aria-hidden weight="fill" className="size-6 text-accent-soft-foreground" />
                 </div>
             </DropdownTrigger>
             <DropdownMenu aria-label="User streak information" className="min-w-64">
@@ -68,7 +68,7 @@ export const UserStreak = ({ className }: UserStreakProps) => {
                                     <CardContent className="flex flex-col items-center gap-2 text-center">
                                         <Label>{t(stat.labelKey)}</Label>
                                         <div className="flex items-center justify-center gap-2">
-                                            <FireIcon aria-hidden weight="fill" className="size-5 text-accent" />
+                                            <FireIcon aria-hidden weight="fill" className="size-5 text-accent-soft-foreground" />
                                             <Typography type="h5" weight="bold">{stat.value}</Typography>
                                         </div>
                                     </CardContent>
@@ -93,7 +93,7 @@ export const UserStreak = ({ className }: UserStreakProps) => {
                                             day.isToday ? "ring-2 ring-accent/40" : null,
                                         )}
                                     >
-                                        <Typography type="body-xs" weight="bold" className={day.active ? "text-accent" : "text-muted"}>
+                                        <Typography type="body-xs" weight="bold" className={day.active ? "text-accent-soft-foreground" : "text-muted"}>
                                             {day.label}
                                         </Typography>
                                     </div>

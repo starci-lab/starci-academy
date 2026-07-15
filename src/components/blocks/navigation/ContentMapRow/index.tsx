@@ -44,7 +44,7 @@ export interface ContentMapRowProps extends WithClassNames<undefined> {
  */
 const resolveStatus = ({ isRead, isLocked, isPremium }: Pick<ContentMapRowProps, "isRead" | "isLocked" | "isPremium">) => {
     if (isRead) {
-        return { Icon: CheckCircleIcon, tone: "text-success" }
+        return { Icon: CheckCircleIcon, tone: "text-success-soft-foreground" }
     }
     if (isLocked) {
         return { Icon: LockIcon, tone: "text-muted" }
@@ -80,7 +80,7 @@ export const ContentMapRow = ({
             onClick={onPress}
             className={cn(
                 "flex w-full items-start gap-2 rounded-xl px-2 py-2 text-left transition-colors",
-                isActive ? "bg-accent/10" : "hover:bg-surface-secondary",
+                isActive ? "bg-accent-soft" : "hover:bg-surface-secondary",
                 className,
             )}
         >
@@ -88,7 +88,7 @@ export const ContentMapRow = ({
             <Icon aria-hidden focusable="false" className={cn("mt-0 size-5 shrink-0", tone)} />
             <Typography
                 type="body-sm"
-                className={cn("line-clamp-2 min-w-0 flex-1", isActive && "text-accent")}
+                className={cn("line-clamp-2 min-w-0 flex-1", isActive && "text-accent-soft-foreground")}
             >
                 {title}
             </Typography>

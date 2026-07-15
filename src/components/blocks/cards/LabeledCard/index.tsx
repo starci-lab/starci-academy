@@ -105,7 +105,7 @@ export const LabeledCard = ({
                     <Link
                         onPress={onSeeMore}
                         className={cn(
-                            "group inline-flex shrink-0 cursor-pointer items-center gap-1 text-accent no-underline transition-opacity hover:opacity-60",
+                            "group inline-flex shrink-0 cursor-pointer items-center gap-1 text-accent-soft-foreground no-underline transition-opacity hover:opacity-60",
                             subtleLabel ? "text-xs" : "text-sm",
                         )}
                     >

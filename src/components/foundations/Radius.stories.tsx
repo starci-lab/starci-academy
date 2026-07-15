@@ -8,7 +8,6 @@ import { Table } from "@heroui/react"
  */
 const meta: Meta = {
     title: "Foundations/Radius",
-    parameters: { layout: "padded" },
 }
 export default meta
 type Story = StoryObj

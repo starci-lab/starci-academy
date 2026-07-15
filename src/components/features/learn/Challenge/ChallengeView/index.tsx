@@ -337,7 +337,7 @@ export const ChallengeView = ({ className, onBack }: ChallengeViewProps) => {
                                         <Accordion.Trigger className="w-full">
                                             <div className="flex w-full items-center justify-between gap-3 text-start">
                                                 <div className="flex items-center gap-2 text-foreground">
-                                                    <LightbulbIcon className="size-5 text-warning" />
+                                                    <LightbulbIcon className="size-5 text-warning-soft-foreground" />
                                                     <span className="text-base font-semibold">
                                                         {t("challenge.hint")}
                                                     </span>

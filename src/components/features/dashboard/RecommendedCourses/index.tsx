@@ -116,7 +116,7 @@ export const RecommendedCourses = ({
                                             size="sm"
                                         />
                                         {discounted && course.discountReason !== "none" ? (
-                                            <Typography type="body-xs" className="text-accent">
+                                            <Typography type="body-xs" className="text-accent-soft-foreground">
                                                 {t(`dashboard.recommended.reason.${course.discountReason}`, {
                                                     count: course.enrolledCount,
                                                 })}

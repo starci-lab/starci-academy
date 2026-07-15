@@ -103,7 +103,7 @@ export const SubmissionResultHistoryDrawer = ({
                                                     onSelect(attempt.id)
                                                     onOpenChange(false)
                                                 }}
-                                                className={selected ? "bg-accent/10 hover:bg-accent/10" : undefined}
+                                                className={selected ? "bg-accent-soft hover:bg-accent-soft" : undefined}
                                             >
                                                 <div className="flex flex-col gap-2">
                                                     <div className="flex items-center gap-2">
@@ -117,7 +117,7 @@ export const SubmissionResultHistoryDrawer = ({
                                                         </Chip>
                                                         <Typography
                                                             type="body-sm"
-                                                            className={cn("ml-auto", attemptPass ? "text-success" : "text-muted")}
+                                                            className={cn("ml-auto", attemptPass ? "text-success-soft-foreground" : "text-muted")}
                                                         >
                                                             {scoreLabel(attempt.score)}
                                                         </Typography>

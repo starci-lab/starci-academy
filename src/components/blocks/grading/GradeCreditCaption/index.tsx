@@ -32,7 +32,7 @@ export interface GradeCreditCaptionProps extends WithClassNames<undefined> {
  * directly under (or beside) the model picker. Bound to the PICKER — NOT the CTA
  * button — so it's correct regardless of the button's width. Shows the unified
  * weekly pool for BOTH lanes (Auto AND a pinned model both debit it). Renders a
- * muted line normally, or a `text-danger` warning line (with icon) when the pool
+ * muted line normally, or a `text-danger-soft-foreground` warning line (with icon) when the pool
  * can't afford the next AUTO run. Free-lane surfaces (chatbot) don't consume the
  * pool → they simply don't render this.
  *
@@ -80,7 +80,7 @@ export const GradeCreditCaption = ({
     const content = (
         <span className={cn(
             "inline-flex items-center gap-1 text-sm",
-            blocked ? "font-medium text-danger" : "text-muted",
+            blocked ? "font-medium text-danger-soft-foreground" : "text-muted",
         )}
         >
             {blocked ? <WarningCircleIcon aria-hidden className="size-4 shrink-0" /> : null}

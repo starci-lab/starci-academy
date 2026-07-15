@@ -168,7 +168,7 @@ export const MicroservicesDiagram = ({ caption, className }: MicroservicesDiagra
                     </React.Fragment>
                 ))}
 
-                {/* failure points — Chip (bg-danger/10, đồng bộ chip toàn app) floated beside the
+                {/* failure points — Chip (bg-danger-soft, đồng bộ chip toàn app) floated beside the
                     area they threaten, drifting gently */}
                 {FAILURES.map((failure, index) => (
                     <motion.div
@@ -177,7 +177,7 @@ export const MicroservicesDiagram = ({ caption, className }: MicroservicesDiagra
                         animate={reduce ? undefined : { y: [0, -4, 0] }}
                         transition={reduce ? undefined : { repeat: Infinity, duration: 3 + index * 0.5, ease: "easeInOut" }}
                     >
-                        <Chip size="sm" className="bg-danger/10 text-danger">
+                        <Chip size="sm" className="bg-danger-soft text-danger-soft-foreground">
                             <WarningIcon aria-hidden focusable="false" className="size-4" />
                             <Chip.Label className="inline-flex items-center gap-1">
                                 {failure.from}

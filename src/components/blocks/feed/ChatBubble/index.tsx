@@ -30,7 +30,7 @@ export const ChatBubble = ({ role, children, className }: ChatBubbleProps) => {
             <div
                 className={cn(
                     "max-w-[85%] rounded-2xl px-3 py-2",
-                    isUser ? "bg-accent/10" : "bg-surface-secondary",
+                    isUser ? "bg-accent-soft" : "bg-surface-secondary",
                 )}
             >
                 {children}

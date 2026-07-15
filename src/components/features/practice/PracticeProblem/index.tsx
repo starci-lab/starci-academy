@@ -477,7 +477,7 @@ export const PracticeProblem = () => {
                             )}
                         </p>
                         {latestSubmission.compileOutput && (
-                            <pre className="whitespace-pre-wrap rounded-medium bg-danger-50 p-2 text-xs text-danger">
+                            <pre className="whitespace-pre-wrap rounded-medium bg-danger-50 p-2 text-xs text-danger-soft-foreground">
                                 {latestSubmission.compileOutput}
                             </pre>
                         )}

@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { Button, Link, Skeleton, Typography } from "@heroui/react"
+import { Alert, Button, Link, Skeleton, Typography } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { ArrowRightIcon, ArrowUpRightIcon } from "@phosphor-icons/react"
@@ -119,10 +119,13 @@ export const Architecture = () => {
                         ) : (
                             <>
                                 {error && !healthByName ? (
-                                    <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-default bg-surface px-4 py-3">
-                                        <Typography type="body-sm" color="muted">{t("map.errorDescription")}</Typography>
+                                    <Alert status="default">
+                                        <Alert.Indicator />
+                                        <Alert.Content>
+                                            <Alert.Title>{t("map.errorDescription")}</Alert.Title>
+                                        </Alert.Content>
                                         <Button variant="tertiary" size="sm" onPress={refresh}>{t("map.retry")}</Button>
-                                    </div>
+                                    </Alert>
                                 ) : null}
                                 <ArchitectureMap
                                     healthByName={healthByName}
@@ -140,7 +143,7 @@ export const Architecture = () => {
 
                         {/* course-CTA band — closes the loop: this real, live system is
                             exactly what the courses teach you to build → go learn to build it */}
-                        <div className="flex flex-col items-start gap-3 rounded-3xl bg-accent/10 p-6 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex flex-col items-start gap-3 rounded-3xl bg-accent-soft p-6 sm:flex-row sm:items-center sm:justify-between">
                             <div className="flex flex-col gap-1">
                                 <Typography type="body" weight="semibold">{t("courseCta.title")}</Typography>
                                 <Typography type="body-sm" color="muted">{t("courseCta.body")}</Typography>

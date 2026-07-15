@@ -200,7 +200,7 @@ export const CourseCard = ({
                             />
                         ) : (
                             <div className="flex size-full items-center justify-center bg-gradient-to-br from-accent/25 to-accent/5">
-                                <BookOpenIcon aria-hidden className="size-8 text-accent" />
+                                <BookOpenIcon aria-hidden className="size-8 text-accent-soft-foreground" />
                             </div>
                         )}
                     </div>
@@ -272,7 +272,7 @@ export const CourseCard = ({
                         />
                     ) : (
                         <div className="flex size-full items-center justify-center bg-gradient-to-br from-accent/25 to-accent/5 p-4">
-                            <BookOpenIcon aria-hidden className="size-10 text-accent" />
+                            <BookOpenIcon aria-hidden className="size-10 text-accent-soft-foreground" />
                             <Typography type="body-sm" weight="semibold" align="center" className="ml-2">
                                 {course.title}
                             </Typography>
@@ -301,7 +301,7 @@ export const CourseCard = ({
                         <ul className="mt-1 flex flex-col gap-2">
                             {topValueProps.map((valueProp, index) => (
                                 <li key={index} className="flex items-start gap-2">
-                                    <CheckCircleIcon aria-hidden className="size-4 shrink-0 text-success" />
+                                    <CheckCircleIcon aria-hidden className="size-4 shrink-0 text-success-soft-foreground" />
                                     <Typography type="body-xs" color="muted">
                                         {valueProp.text}
                                     </Typography>

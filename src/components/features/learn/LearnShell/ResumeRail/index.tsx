@@ -31,7 +31,7 @@ import {
  * Chrome: self-hides while the outline is loading or when there's nothing to resume
  * (all content done). Expanded → an accent-tinted pill (play + "Tiếp tục · n/m" +
  * target title). Collapsed rail → an icon-only play button (aria-label kept). Uses
- * the sanctioned tonal-active skin (`bg-accent/10 text-accent`) to match the active
+ * the sanctioned tonal-active skin (`bg-accent-soft text-accent-soft-foreground`) to match the active
  * nav row. `"use client"` for the hooks.
  */
 export const ResumeRail = () => {
@@ -55,7 +55,7 @@ export const ResumeRail = () => {
                 onPress={onResume}
                 className={cn(
                     "mx-auto mb-3 flex size-9 cursor-pointer items-center justify-center rounded-large",
-                    "bg-accent/10 text-accent no-underline transition-colors hover:bg-accent/15",
+                    "bg-accent-soft text-accent-soft-foreground no-underline transition-colors hover:bg-accent/15",
                     "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
                 )}
             >
@@ -69,14 +69,14 @@ export const ResumeRail = () => {
             aria-label={`${t("nav.resumeContinue")} · ${resumeTitle}`}
             onPress={onResume}
             className={cn(
-                "mb-3 flex w-full min-w-0 max-w-full cursor-pointer items-center gap-2 overflow-hidden rounded-large bg-accent/10 px-3 py-2",
+                "mb-3 flex w-full min-w-0 max-w-full cursor-pointer items-center gap-2 overflow-hidden rounded-large bg-accent-soft px-3 py-2",
                 "no-underline transition-colors hover:bg-accent/15",
                 "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
             )}
         >
-            <PlayIcon aria-hidden focusable="false" className="size-5 shrink-0 text-accent" />
+            <PlayIcon aria-hidden focusable="false" className="size-5 shrink-0 text-accent-soft-foreground" />
             <span className="flex min-w-0 flex-1 flex-col gap-0 overflow-hidden">
-                <Typography type="body-xs" className="min-w-0 text-accent" truncate>
+                <Typography type="body-xs" className="min-w-0 text-accent-soft-foreground" truncate>
                     {eyebrow}
                 </Typography>
                 <Typography type="body-sm" className="min-w-0 text-foreground" truncate title={resumeTitle}>

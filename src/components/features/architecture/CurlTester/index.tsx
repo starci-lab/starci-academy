@@ -90,7 +90,7 @@ export const CurlTester = ({ className }: CurlTesterProps) => {
                     <span className="text-xs text-muted">{t("curl.commandLabel")}</span>
                     <Button variant="tertiary" size="sm" onPress={onCopy}>
                         {copied ? (
-                            <CheckIcon aria-hidden focusable="false" className="size-4 text-success" />
+                            <CheckIcon aria-hidden focusable="false" className="size-4 text-success-soft-foreground" />
                         ) : (
                             <CopyIcon aria-hidden focusable="false" className="size-4" />
                         )}

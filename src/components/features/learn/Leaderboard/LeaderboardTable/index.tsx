@@ -86,7 +86,7 @@ export const LeaderboardTable = ({
                         {/* rank position — crown on the leader */}
                         <div className="flex w-5 shrink-0 justify-center">
                             {displayRank === 1 ? (
-                                <CrownIcon aria-hidden focusable="false" className="size-5 text-warning" />
+                                <CrownIcon aria-hidden focusable="false" className="size-5 text-warning-soft-foreground" />
                             ) : (
                                 <Typography type="body-sm" weight="semibold" color="muted">
                                     {displayRank}
@@ -126,7 +126,7 @@ export const LeaderboardTable = ({
                         <Typography
                             type="body-sm"
                             weight="semibold"
-                            className={cn("shrink-0", isViewer ? "text-accent" : "text-foreground")}
+                            className={cn("shrink-0", isViewer ? "text-accent-soft-foreground" : "text-foreground")}
                         >
                             {t("leaderboard.xp", { xp: categoryEntryXp(entry, selectedCategory) })}
                         </Typography>

@@ -6,6 +6,7 @@ import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { SurfaceListCard } from "@/components/blocks/cards/SurfaceListCard"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { EntityResultRow } from "@/components/blocks/learn/EntityResultRow"
 import { useQuerySearchCourseContentSwr } from "@/hooks/swr/api/graphql/queries/useQuerySearchCourseContentSwr"
@@ -83,7 +84,7 @@ export const RelatedContentList = ({
                     </div>
                 }
             >
-                <div className="overflow-hidden rounded-2xl border border-default bg-surface">
+                <SurfaceListCard bordered>
                     {results.map((item, index) => (
                         <EntityResultRow
                             key={`${item.kind}-${item.contentId ?? item.deckId ?? item.taskId ?? index}`}
@@ -97,7 +98,7 @@ export const RelatedContentList = ({
                             }}
                         />
                     ))}
-                </div>
+                </SurfaceListCard>
             </AsyncContent>
         </LabeledCard>
     )

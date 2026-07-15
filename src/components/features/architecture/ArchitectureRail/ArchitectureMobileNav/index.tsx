@@ -42,11 +42,11 @@ const NodeChip = ({
             onClick={onSelect}
             className={cn(
                 "flex shrink-0 cursor-pointer items-center gap-2 rounded-full border px-3 py-2 text-sm transition-colors",
-                selected ? "border-accent bg-accent/10 text-accent" : "border-default text-muted hover:bg-default",
+                selected ? "border-accent bg-accent-soft text-accent-soft-foreground" : "border-default text-muted hover:bg-default",
             )}
         >
             <Icon aria-hidden className="size-4 shrink-0" />
-            <Typography type="body-sm" className={selected ? "text-accent" : undefined}>{name}</Typography>
+            <Typography type="body-sm" className={selected ? "text-accent-soft-foreground" : undefined}>{name}</Typography>
             <span className={cn("size-2 shrink-0 rounded-full", visual.dotClassName, visual.pulse && "animate-pulse")} aria-hidden />
         </button>
     )
@@ -72,11 +72,11 @@ const ModuleChip = ({
             onClick={onSelect}
             className={cn(
                 "flex shrink-0 cursor-pointer items-center gap-2 rounded-full border px-3 py-2 text-sm transition-colors",
-                selected ? "border-accent bg-accent/10 text-accent" : "border-default text-muted hover:bg-default",
+                selected ? "border-accent bg-accent-soft text-accent-soft-foreground" : "border-default text-muted hover:bg-default",
             )}
         >
             <Icon aria-hidden className="size-4 shrink-0" />
-            <Typography type="body-sm" className={selected ? "text-accent" : undefined}>{t(`module.${id}.name`)}</Typography>
+            <Typography type="body-sm" className={selected ? "text-accent-soft-foreground" : undefined}>{t(`module.${id}.name`)}</Typography>
         </button>
     )
 }

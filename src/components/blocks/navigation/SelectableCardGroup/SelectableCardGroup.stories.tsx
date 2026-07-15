@@ -17,7 +17,7 @@ const PLAN_ITEMS: Array<SelectableCardItem<PlanValue>> = [
         label: "Hàng quý",
         description: "799.000đ / quý",
         badge: (
-            <span className="rounded-full bg-accent/10 px-2 py-0 text-xs font-medium text-accent">
+            <span className="rounded-full bg-accent-soft px-2 py-0 text-xs font-medium text-accent-soft-foreground">
                 Tiết kiệm 11%
             </span>
         ),
@@ -27,7 +27,7 @@ const PLAN_ITEMS: Array<SelectableCardItem<PlanValue>> = [
         label: "Hàng năm",
         description: "2.499.000đ / năm",
         badge: (
-            <span className="rounded-full bg-accent/10 px-2 py-0 text-xs font-medium text-accent">
+            <span className="rounded-full bg-accent-soft px-2 py-0 text-xs font-medium text-accent-soft-foreground">
                 Tiết kiệm 30%
             </span>
         ),

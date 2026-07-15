@@ -180,7 +180,7 @@ export const ReactionBar = ({
                     )}
                 </AnimatePresence>
                 {count > 0 ? (
-                    <Typography type="body-xs" className={cn(myReaction ? "text-accent" : "text-muted")}>
+                    <Typography type="body-xs" className={cn(myReaction ? "text-accent-soft-foreground" : "text-muted")}>
                         {count}
                     </Typography>
                 ) : null}
@@ -208,7 +208,7 @@ export const ReactionBar = ({
                                 onClick={() => pick(reaction.type)}
                                 className={cn(
                                     "flex size-7 items-center justify-center rounded-full text-base leading-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-accent",
-                                    myReaction === reaction.type && "bg-accent/10",
+                                    myReaction === reaction.type && "bg-accent-soft",
                                 )}
                             >
                                 <span aria-hidden>{reaction.emoji}</span>

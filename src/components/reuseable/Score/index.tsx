@@ -11,9 +11,9 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 type ScoreTone = "danger" | "warning" | "success"
 
 const toneTextClass: Record<ScoreTone, string> = {
-    danger: "text-danger",
-    warning: "text-warning",
-    success: "text-success",
+    danger: "text-danger-soft-foreground",
+    warning: "text-warning-soft-foreground",
+    success: "text-success-soft-foreground",
 }
 
 const resolveTone = (

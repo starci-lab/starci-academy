@@ -89,7 +89,7 @@ export const CvSplitFromTextModal = ({ className, isOpen, onOpenChange, onSplit 
                                 />
 
                                 {hasError ? (
-                                    <Typography type="body-sm" className="text-danger">
+                                    <Typography type="body-sm" className="text-danger-soft-foreground">
                                         {t("cv.builder.splitModalError")}
                                     </Typography>
                                 ) : null}

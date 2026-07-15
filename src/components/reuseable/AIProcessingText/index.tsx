@@ -91,11 +91,11 @@ export const AIProcessingText = (props: AIProcessingTextProps) => {
         case JobStatus.Queued:
             return <QueueIcon className={cn(classNames?.icon, defaultIconClassName, "text-muted animate-pulse")} />
         case JobStatus.Processing:
-            return <SparkleIcon className={cn(classNames?.icon, defaultIconClassName, "text-warning animate-pulse")} />
+            return <SparkleIcon className={cn(classNames?.icon, defaultIconClassName, "text-warning-soft-foreground animate-pulse")} />
         case JobStatus.Completed:
-            return <CheckCircleIcon className={cn(classNames?.icon, defaultIconClassName, "text-success")} />
+            return <CheckCircleIcon className={cn(classNames?.icon, defaultIconClassName, "text-success-soft-foreground")} />
         case JobStatus.Failed:
-            return <WarningOctagonIcon className={cn(classNames?.icon, defaultIconClassName, "text-danger")} />
+            return <WarningOctagonIcon className={cn(classNames?.icon, defaultIconClassName, "text-danger-soft-foreground")} />
         default:
             return null
         }
@@ -114,7 +114,7 @@ export const AIProcessingText = (props: AIProcessingTextProps) => {
             <div className="text-sm font-medium text-foreground mb-1">{copy.title}</div>
             <div className="text-xs text-muted">{copy.description}</div>
             {jobStatus === JobStatus.Failed && copy.error && (
-                <div className="mt-1 break-all text-xs text-danger">{copy.error}</div>
+                <div className="mt-1 break-all text-xs text-danger-soft-foreground">{copy.error}</div>
             )}
         </>
     )

@@ -35,7 +35,7 @@ export const TopicLane = ({ icon, title, items, className }: TopicLaneProps) => 
     return (
         <div className={cn("flex flex-col gap-3", className)}>
             <div className="flex items-center gap-2">
-                <span className="text-accent [&>svg]:size-4">{icon}</span>
+                <span className="text-accent-soft-foreground [&>svg]:size-4">{icon}</span>
                 <Typography type="body-sm" weight="semibold">
                     {title}
                 </Typography>

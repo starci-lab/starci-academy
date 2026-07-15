@@ -56,7 +56,7 @@ export const ConsultantAvatar = ({
     return (
         <div
             className={cn(
-                "relative shrink-0 overflow-hidden bg-accent/10",
+                "relative shrink-0 overflow-hidden bg-accent-soft",
                 size === "card"
                     ? "aspect-square w-full"
                     : "mx-auto aspect-square w-40 rounded-full",
@@ -79,7 +79,7 @@ export const ConsultantAvatar = ({
                         aria-hidden
                         focusable="false"
                         className={cn(
-                            "text-accent/60",
+                            "text-accent-soft-foreground/60",
                             size === "detail" ? "size-24" : "size-20",
                         )}
                     />

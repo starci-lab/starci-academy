@@ -93,7 +93,7 @@ const Stat = ({ icon, value, label }: { icon: React.ReactNode, value: number, la
             ref={ref}
             className="flex flex-col items-center gap-2 px-4 md:border-l md:border-default md:first:border-l-0"
         >
-            <span className="text-accent [&>svg]:size-6">{icon}</span>
+            <span className="text-accent-soft-foreground [&>svg]:size-6">{icon}</span>
             <div className="text-4xl font-semibold tracking-tight tabular-nums text-foreground md:text-5xl">
                 {shown.toLocaleString(locale)}
             </div>

@@ -218,9 +218,9 @@ export const CourseMilestoneOutline = ({
                                                     <ListRow
                                                         key={task.id}
                                                         leading={task.completed ? (
-                                                            <CheckCircleIcon aria-hidden focusable="false" className="size-5 text-success" />
+                                                            <CheckCircleIcon aria-hidden focusable="false" className="size-5 text-success-soft-foreground" />
                                                         ) : attempted ? (
-                                                            <CircleHalfIcon aria-hidden focusable="false" className="size-5 text-warning" />
+                                                            <CircleHalfIcon aria-hidden focusable="false" className="size-5 text-warning-soft-foreground" />
                                                         ) : (
                                                             <CircleIcon aria-hidden focusable="false" className="size-5 text-muted" />
                                                         )}

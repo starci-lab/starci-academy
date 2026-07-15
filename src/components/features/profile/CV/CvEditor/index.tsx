@@ -594,12 +594,12 @@ export const CvEditor = ({ className, cvId }: CvEditorProps) => {
                             narrow sidebar. */}
                             <div className="mt-auto">
                                 {capstoneCount > 0 ? (
-                                    <Chip className="bg-accent/10 text-accent">
+                                    <Chip className="bg-accent-soft text-accent-soft-foreground">
                                         <TrophyIcon aria-hidden className="size-4" />
                                         <Chip.Label>{t("cv.builder.trustBadge", { count: capstoneCount })}</Chip.Label>
                                     </Chip>
                                 ) : (
-                                    <Alert status="accent" className="bg-accent/10 shadow-none">
+                                    <Alert status="accent" className="bg-accent-soft shadow-none">
                                         <Alert.Content>
                                             <Alert.Title>{t("cv.builder.noCourseTitle")}</Alert.Title>
                                             <Alert.Description>{t("cv.builder.noCourseHint")}</Alert.Description>

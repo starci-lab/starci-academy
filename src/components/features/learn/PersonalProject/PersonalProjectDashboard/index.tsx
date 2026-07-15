@@ -188,7 +188,7 @@ export const PersonalProjectDashboard = ({
                     <div className="flex flex-wrap items-center gap-2">
                         <Chip
                             color={isConnected ? "success" : "default"}
-                            className={isConnected ? "bg-success/10 text-success" : undefined}
+                            className={isConnected ? "bg-success-soft text-success-soft-foreground" : undefined}
                         >
                             <GithubLogoIcon className="size-5" />
                             <Chip.Label>
@@ -281,13 +281,13 @@ export const PersonalProjectDashboard = ({
                                                 <PlayIcon
                                                     aria-hidden
                                                     focusable="false"
-                                                    className="size-5 text-accent"
+                                                    className="size-5 text-accent-soft-foreground"
                                                 />
                                             ) : isCompleted ? (
                                                 <CheckCircleIcon
                                                     aria-label={t("finalProject.dashboard.taskDone")}
                                                     focusable="false"
-                                                    className="size-5 text-success"
+                                                    className="size-5 text-success-soft-foreground"
                                                 />
                                             ) : isLocked ? (
                                                 <LockIcon

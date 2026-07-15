@@ -84,7 +84,7 @@ export const ChatToolResult = ({
                         <button
                             type="button"
                             onClick={onViewAll}
-                            className="group flex w-full cursor-pointer items-center gap-1 px-4 py-2 text-left text-sm font-medium text-accent"
+                            className="group flex w-full cursor-pointer items-center gap-1 px-4 py-2 text-left text-sm font-medium text-accent-soft-foreground"
                         >
                             {viewAllLabel}
                             <ArrowRightIcon

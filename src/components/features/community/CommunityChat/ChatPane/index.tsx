@@ -128,7 +128,7 @@ export const ChatPane = ({ conversationId }: ChatPaneProps) => {
                                     trailing={message.isFounderAuthor ? (
                                         <SealCheckIcon
                                             weight="fill"
-                                            className="size-3.5 shrink-0 text-accent"
+                                            className="size-3.5 shrink-0 text-accent-soft-foreground"
                                         />
                                     ) : null}
                                 />

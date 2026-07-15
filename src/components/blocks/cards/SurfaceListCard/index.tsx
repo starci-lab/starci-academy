@@ -53,7 +53,7 @@ export interface SurfaceListCardRowProps extends WithClassNames<undefined> {
     title: React.ReactNode
     /**
      * Extra className applied directly to the title's own `Typography` element
-     * (e.g. `text-accent` for a selected row) — NOT a wrapper span around
+     * (e.g. `text-accent-soft-foreground` for a selected row) — NOT a wrapper span around
      * `title`. `text-decoration-color` for `hover="underline"` is resolved from
      * THIS element's own `color` (the one carrying `group-hover:underline`),
      * not from a nested child's — a child-only color override leaves the
@@ -119,7 +119,7 @@ export const SurfaceListCardRow = ({
         "after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-surface-foreground/6 after:content-['']",
         "last:after:hidden",
         !isDisabled && (onPress || href) && "cursor-pointer",
-        selected && "bg-accent/10",
+        selected && "bg-accent-soft",
         className,
     )
 
@@ -129,7 +129,6 @@ export const SurfaceListCardRow = ({
             <div className="flex min-w-0 flex-col gap-0">
                 <Typography
                     type="body-sm"
-                    weight="medium"
                     truncate
                     className={cn(underlineHover && "group-hover:underline", titleClassName)}
                 >

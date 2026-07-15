@@ -31,10 +31,10 @@ export interface IconTileProps extends WithClassNames<undefined> {
 
 /** tone → tinted background + icon colour. */
 const TONE: Record<IconTileTone, string> = {
-    accent: "bg-accent/10 text-accent",
-    success: "bg-success/10 text-success",
-    warning: "bg-warning/10 text-warning",
-    danger: "bg-danger/10 text-danger",
+    accent: "bg-accent-soft text-accent-soft-foreground",
+    success: "bg-success-soft text-success-soft-foreground",
+    warning: "bg-warning-soft text-warning-soft-foreground",
+    danger: "bg-danger-soft text-danger-soft-foreground",
     neutral: "bg-default text-muted",
 }
 

@@ -129,7 +129,7 @@ export const Landing = ({ className }: LandingProps) => {
                         eyebrow={t("landing.hero.eyebrow")}
                         eyebrowIcon={<CubeIcon aria-hidden focusable="false" className="size-3" />}
                         headline={t.rich("landing.hero.headline", {
-                            accent: (chunks) => <span className="text-accent">{chunks}</span>,
+                            accent: (chunks) => <span className="text-accent-soft-foreground">{chunks}</span>,
                         })}
                         subline={t("landing.hero.subline")}
                         primary={(
@@ -289,13 +289,13 @@ export const Landing = ({ className }: LandingProps) => {
                                             href={href}
                                             target="_blank"
                                             aria-label={label}
-                                            className="text-muted transition-colors hover:text-accent"
+                                            className="text-muted transition-colors hover:text-accent-soft-foreground"
                                         >
                                             <Icon aria-hidden className="size-4" />
                                         </Link>
                                     ))}
                                     {/* blog = "go read + judge the quality yourself" CTA */}
-                                    <Link href={pathConfig().locale(locale).blog().build()} className="inline-flex items-center gap-2 text-accent">
+                                    <Link href={pathConfig().locale(locale).blog().build()} className="inline-flex items-center gap-2 text-accent-soft-foreground">
                                         {t("landing.founder.blog")}
                                         <ArrowRightIcon aria-hidden focusable="false" className="size-4" />
                                     </Link>

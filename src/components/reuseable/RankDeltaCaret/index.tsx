@@ -51,7 +51,7 @@ export const RankDeltaCaret = ({
         <span
             className={cn(
                 "flex items-center gap-0 text-xs font-medium",
-                climbed ? "text-success" : "text-danger",
+                climbed ? "text-success-soft-foreground" : "text-danger-soft-foreground",
                 className,
             )}
         >

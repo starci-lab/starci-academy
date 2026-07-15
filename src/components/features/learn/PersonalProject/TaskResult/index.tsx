@@ -55,8 +55,8 @@ export type PersonalProjectTaskResultProps = WithClassNames<undefined>
 
 /** Icon + tone per finding severity (drives the accordion item header). */
 const SEVERITY_VISUAL: Record<MilestoneSeverity, { Icon: typeof WarningCircleIcon, text: string, rank: number }> = {
-    [MilestoneSeverity.High]: { Icon: WarningCircleIcon, text: "text-danger", rank: 0 },
-    [MilestoneSeverity.Medium]: { Icon: WarningCircleIcon, text: "text-warning", rank: 1 },
+    [MilestoneSeverity.High]: { Icon: WarningCircleIcon, text: "text-danger-soft-foreground", rank: 0 },
+    [MilestoneSeverity.Medium]: { Icon: WarningCircleIcon, text: "text-warning-soft-foreground", rank: 1 },
     [MilestoneSeverity.Low]: { Icon: InfoIcon, text: "text-muted", rank: 2 },
 }
 
@@ -281,7 +281,6 @@ export const PersonalProjectTaskResult = ({
                     <div className="flex flex-col gap-3">
                         <Label>{t("personalProjectResult.attempts")}</Label>
                         <FlexWrapButtonRadio
-                            insideCard
                             ariaLabel={t("personalProjectResult.history")}
                             value={selectedAttempt?.id ?? ""}
                             onChange={(id) => router.push(attemptHref(id))}
@@ -334,7 +333,7 @@ export const PersonalProjectTaskResult = ({
                                         href={githubUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex shrink-0 items-center gap-2 text-sm text-accent hover:underline"
+                                        className="flex shrink-0 items-center gap-2 text-sm text-accent-soft-foreground hover:underline"
                                     >
                                         {t("personalProjectResult.viewRepo")}
                                         <ArrowSquareOutIcon aria-hidden focusable="false" className="size-5" />

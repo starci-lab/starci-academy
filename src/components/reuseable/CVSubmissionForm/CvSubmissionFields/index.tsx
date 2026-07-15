@@ -90,7 +90,7 @@ export const CvSubmissionFields = ({
                     }}
                 />
                 {uploadedFileName && uploadedS3Key ? (
-                    <Typography type="body-sm" className="text-success">
+                    <Typography type="body-sm" className="text-success-soft-foreground">
                         {t("uploadSuccess")}
                     </Typography>
                 ) : null}

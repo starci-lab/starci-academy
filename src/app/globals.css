@@ -267,6 +267,17 @@ html {
 }
 
 /*
+ * Toast (HeroUI imperative `toast.*`) — status indicator icon = size-6 (HeroUI bakes
+ * `[data-slot=toast-default-icon]` at size-4); the Phosphor GLYPH itself is supplied
+ * per-toast via the `indicator` option (HeroUI toast has no global icon config) — see
+ * `Toast.stories`. `!important` because the base `.toast__*` rule is unlayered.
+ */
+.toast__indicator [data-slot="toast-default-icon"] {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+}
+
+/*
  * Ambient ember background (blocks/layout/AmbientBackground) — slow brand-pink
  * sparks drifting upward behind the whole app. Each spark sets `--drift` (its
  * horizontal wander) inline; this keyframe rises it a full viewport while fading

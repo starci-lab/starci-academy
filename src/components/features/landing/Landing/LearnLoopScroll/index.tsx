@@ -118,7 +118,7 @@ const tintLine = (line: string): React.ReactNode => {
             out.push(line.slice(last, match.index))
         }
         const token = match[0]
-        const cls = match[1] ? "text-muted" : match[2] ? "text-warning" : "text-accent"
+        const cls = match[1] ? "text-muted" : match[2] ? "text-warning-soft-foreground" : "text-accent-soft-foreground"
         out.push(<span key={key++} className={cls}>{token}</span>)
         last = match.index + token.length
     }
@@ -205,7 +205,7 @@ const StepVisual = ({ stepKey }: { stepKey: string }) => {
                             className={cn(
                                 "-mb-px cursor-pointer border-b-2 pb-2 transition-colors",
                                 index === readLang
-                                    ? "border-accent font-medium text-accent"
+                                    ? "border-accent font-medium text-accent-soft-foreground"
                                     : "border-transparent text-muted hover:text-foreground",
                             )}
                         >
@@ -233,24 +233,24 @@ const StepVisual = ({ stepKey }: { stepKey: string }) => {
         return shell(
             <>
                 {/* verdict = HeroUI Alert style (đúng SubmissionResult): tint success + icon + điểm */}
-                <motion.div variants={childVariants} className="flex items-center gap-3 rounded-xl bg-success/10 px-3 py-2">
-                    <CheckCircleIcon aria-hidden focusable="false" className="size-7 shrink-0 text-success" />
+                <motion.div variants={childVariants} className="flex items-center gap-3 rounded-xl bg-success-soft px-3 py-2">
+                    <CheckCircleIcon aria-hidden focusable="false" className="size-7 shrink-0 text-success-soft-foreground" />
                     <div className="flex flex-1 flex-col">
-                        <span className="text-sm font-semibold text-success">{t("submissionResult.passed")} · 92/100</span>
-                        <span className="text-xs text-success/80">cần ≥ 70 để qua</span>
+                        <span className="text-sm font-semibold text-success-soft-foreground">{t("submissionResult.passed")} · 92/100</span>
+                        <span className="text-xs text-success-soft-foreground/80">cần ≥ 70 để qua</span>
                     </div>
-                    <span className="shrink-0 rounded-full bg-success/15 px-3 py-1 text-xs font-medium text-success">+120 XP</span>
+                    <span className="shrink-0 rounded-full bg-success/15 px-3 py-1 text-xs font-medium text-success-soft-foreground">+120 XP</span>
                 </motion.div>
                 <motion.div variants={childVariants} className="flex flex-col gap-2">
                     {criteria.map((item) => (
                         <span key={item.text} className="flex items-center gap-2 text-sm text-muted">
                             {item.ok ? (
-                                <CheckCircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-success" />
+                                <CheckCircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-success-soft-foreground" />
                             ) : (
-                                <WarningCircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-warning" />
+                                <WarningCircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-warning-soft-foreground" />
                             )}
                             <span className="flex-1">{item.text}</span>
-                            <span className={cn("shrink-0 font-medium", item.ok ? "text-success" : "text-warning")}>{item.pts}</span>
+                            <span className={cn("shrink-0 font-medium", item.ok ? "text-success-soft-foreground" : "text-warning-soft-foreground")}>{item.pts}</span>
                         </span>
                     ))}
                 </motion.div>
@@ -286,9 +286,9 @@ const StepVisual = ({ stepKey }: { stepKey: string }) => {
                     {milestones.map((item) => (
                         <span key={item.label} className="flex items-center gap-2 text-sm">
                             {item.state === "done" ? (
-                                <CheckCircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-success" />
+                                <CheckCircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-success-soft-foreground" />
                             ) : (
-                                <PlayCircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-accent" />
+                                <PlayCircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-accent-soft-foreground" />
                             )}
                             <span className={cn("flex-1", item.state === "active" ? "font-medium text-foreground" : "text-muted")}>
                                 {item.label}
@@ -311,12 +311,12 @@ const StepVisual = ({ stepKey }: { stepKey: string }) => {
             {RANK_ROWS.map((row) => (
                 <div key={row.rank} className="flex flex-col gap-1">
                     <div className="flex items-center gap-2">
-                        <span className={cn("w-5 text-center text-sm font-semibold", row.rank === 1 ? "text-accent" : "text-muted")}>
+                        <span className={cn("w-5 text-center text-sm font-semibold", row.rank === 1 ? "text-accent-soft-foreground" : "text-muted")}>
                             {row.rank}
                         </span>
                         <UserAvatar className="size-7" username={row.name} seed={row.name} />
                         <span className="flex-1 truncate text-sm">{row.name}</span>
-                        <span className={cn("text-sm", row.rank === 1 ? "font-semibold text-accent" : "text-muted")}>
+                        <span className={cn("text-sm", row.rank === 1 ? "font-semibold text-accent-soft-foreground" : "text-muted")}>
                             {row.xp.toLocaleString("vi-VN")}
                         </span>
                     </div>
@@ -328,11 +328,11 @@ const StepVisual = ({ stepKey }: { stepKey: string }) => {
                     </div>
                 </div>
             ))}
-            <div className="mt-1 flex items-center gap-2 rounded-xl bg-accent/10 px-3 py-2">
-                <span className="w-5 text-center text-sm font-semibold text-accent">12</span>
+            <div className="mt-1 flex items-center gap-2 rounded-xl bg-accent-soft px-3 py-2">
+                <span className="w-5 text-center text-sm font-semibold text-accent-soft-foreground">12</span>
                 <UserAvatar className="size-7" username="Bạn" seed="ban-viewer" />
-                <span className="flex-1 truncate text-sm text-accent">Bạn</span>
-                <span className="flex items-center gap-1 text-xs text-success">
+                <span className="flex-1 truncate text-sm text-accent-soft-foreground">Bạn</span>
+                <span className="flex items-center gap-1 text-xs text-success-soft-foreground">
                     <ArrowUpIcon aria-hidden focusable="false" className="size-3" />3
                 </span>
             </div>
@@ -368,8 +368,8 @@ const LoopStepList = ({ active, onSelect }: { active: number; onSelect: (index: 
                 const selected = key === activeKey
                 const done = index < active
                 const stepColor = cn(
-                    "transition-colors group-data-[hovered=true]:text-accent",
-                    done ? "text-success" : selected ? "text-accent" : "text-muted",
+                    "transition-colors group-data-[hovered=true]:text-accent-soft-foreground",
+                    done ? "text-success-soft-foreground" : selected ? "text-accent-soft-foreground" : "text-muted",
                 )
                 return (
                     <ListBox.Item
@@ -377,8 +377,8 @@ const LoopStepList = ({ active, onSelect }: { active: number; onSelect: (index: 
                         id={key}
                         textValue={t(`landing.learnLoop.items.${key}.title`)}
                         className={cn(
-                            "group cursor-pointer rounded-xl px-4 py-2 transition-colors data-[hovered=true]:bg-accent/10",
-                            selected && "bg-accent/10",
+                            "group cursor-pointer rounded-xl px-4 py-2 transition-colors data-[hovered=true]:bg-accent-soft",
+                            selected && "bg-accent-soft",
                         )}
                     >
                         <div className="flex items-center gap-3">

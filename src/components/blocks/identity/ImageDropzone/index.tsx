@@ -57,14 +57,14 @@ export const ImageDropzone = ({ onFile, label, hint, icon, className }: ImageDro
             {...getRootProps()}
             className={cn(
                 "flex cursor-pointer flex-col items-center gap-2 rounded-2xl border border-dashed border-separator px-6 py-8 text-center transition-colors hover:border-accent",
-                isDragActive && "border-solid border-accent bg-accent/10",
+                isDragActive && "border-solid border-accent bg-accent-soft",
                 className,
             )}
         >
             <input {...getInputProps()} />
             <span
                 aria-hidden
-                className={cn("text-muted [&_svg]:size-8", isDragActive && "text-accent")}
+                className={cn("text-muted [&_svg]:size-8", isDragActive && "text-accent-soft-foreground")}
             >
                 {icon ?? <ImageIcon focusable="false" />}
             </span>
@@ -72,7 +72,7 @@ export const ImageDropzone = ({ onFile, label, hint, icon, className }: ImageDro
                 type="body-sm"
                 weight="medium"
                 align="center"
-                className={cn(isDragActive && "text-accent")}
+                className={cn(isDragActive && "text-accent-soft-foreground")}
             >
                 {label}
             </Typography>

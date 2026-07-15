@@ -56,8 +56,8 @@ export const AiKeyGroup = ({ group }: AiKeyGroupProps) => {
                                 className={cn(
                                     "inline-flex items-center rounded-full px-2 py-0 font-mono text-xs font-medium",
                                     key.healthy
-                                        ? "bg-success/10 text-success"
-                                        : "bg-danger/10 text-danger",
+                                        ? "bg-success-soft text-success-soft-foreground"
+                                        : "bg-danger-soft text-danger-soft-foreground",
                                 )}
                             >
                                 {key.keyMask}

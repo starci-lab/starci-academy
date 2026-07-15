@@ -76,7 +76,7 @@ export const FlashcardStudyRail = ({ className }: FlashcardStudyRailProps) => {
                     <ListBox.Item
                         id="study"
                         textValue={t("flashcard.mode.study")}
-                        className="cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent/10"
+                        className="cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft"
                     >
                         <span className="flex items-center gap-2">
                             <CardsThreeIcon className="size-4 shrink-0" aria-hidden focusable="false" />
@@ -88,7 +88,7 @@ export const FlashcardStudyRail = ({ className }: FlashcardStudyRailProps) => {
                     <ListBox.Item
                         id="quiz"
                         textValue={t("flashcard.mode.quiz")}
-                        className="cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent/10"
+                        className="cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft"
                     >
                         <span className="flex items-center gap-2">
                             <MicrophoneStageIcon className="size-4 shrink-0" aria-hidden focusable="false" />
@@ -161,7 +161,7 @@ export const FlashcardStudyRail = ({ className }: FlashcardStudyRailProps) => {
                                     key={deck.id}
                                     id={deck.id}
                                     textValue={deck.title}
-                                    className="cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent/10"
+                                    className="cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft"
                                 >
                                     <span className="flex w-full min-w-0 items-center justify-between gap-2">
                                         <Typography type="body-sm" className="min-w-0 flex-1 truncate">
@@ -172,7 +172,7 @@ export const FlashcardStudyRail = ({ className }: FlashcardStudyRailProps) => {
                                                 size="sm"
                                                 variant="secondary"
                                                 color="warning"
-                                                className="shrink-0 bg-warning/10 text-warning"
+                                                className="shrink-0 bg-warning-soft text-warning-soft-foreground"
                                             >
                                                 {deck.dueCount}
                                             </Chip>

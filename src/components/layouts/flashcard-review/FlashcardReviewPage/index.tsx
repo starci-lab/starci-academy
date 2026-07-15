@@ -131,7 +131,7 @@ export const FlashcardReviewPage = ({
         const empty = cards.length === 0
         return (
             <div className={cn("mx-auto flex min-h-[60vh] w-full max-w-xl flex-col items-center justify-center gap-6 p-3", className)}>
-                <CheckCircleIcon className="size-12 text-success" />
+                <CheckCircleIcon className="size-12 text-success-soft-foreground" />
                 <span className="text-center text-lg font-semibold text-foreground">
                     {empty
                         ? t("flashcardReview.empty")
@@ -154,7 +154,7 @@ export const FlashcardReviewPage = ({
             {/* progress header: deck context + position in the queue */}
             <div className="flex items-center justify-between gap-3">
                 <span className="flex min-w-0 items-center gap-2">
-                    <StackIcon className="size-5 shrink-0 text-accent" />
+                    <StackIcon className="size-5 shrink-0 text-accent-soft-foreground" />
                     <span className="truncate text-sm font-medium text-foreground">
                         {current.deckTitle}
                     </span>

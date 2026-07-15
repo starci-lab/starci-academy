@@ -105,7 +105,7 @@ export const AiQuotaHistoryTab = ({
                     {t("aiQuota.history.chartTitle")}
                 </Typography>
                 <div className="overflow-hidden rounded-xl border border-default p-4">
-                    <div className="h-44 w-full text-accent">
+                    <div className="h-44 w-full text-accent-soft-foreground">
                         <ResponsiveContainer width="100%" height="100%">
                             <BarChart data={chartData} margin={{ top: 8, right: 8, bottom: 0, left: -16 }}>
                                 <CartesianGrid

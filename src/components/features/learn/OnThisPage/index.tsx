@@ -81,7 +81,7 @@ export const OnThisPage = ({ className, mobile = false }: OnThisPageProps) => {
                                 className={cn(
                                     "cursor-pointer text-start",
                                     heading.level >= 3 && "pl-3",
-                                    heading.id === activeId ? "text-accent" : "text-muted",
+                                    heading.id === activeId ? "text-accent-soft-foreground" : "text-muted",
                                 )}
                             >
                                 {heading.text}

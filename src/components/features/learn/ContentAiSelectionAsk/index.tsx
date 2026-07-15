@@ -195,7 +195,7 @@ export const ContentAiSelectionAsk = () => {
                 <SparkleIcon className="size-4" />
                 {t("contentAi.askAboutSelection")}
                 {!seen ? (
-                    <span className="rounded-full bg-surface px-2 py-0 text-[11px] font-medium text-accent">
+                    <span className="rounded-full bg-surface px-2 py-0 text-[11px] font-medium text-accent-soft-foreground">
                         {t("contentAi.new")}
                     </span>
                 ) : null}

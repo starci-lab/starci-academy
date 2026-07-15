@@ -26,17 +26,17 @@ const VISUAL: Record<ArchitectureStatusState, ArchitectureStatusVisual> = {
     },
     up: {
         dotClassName: "bg-success",
-        chipClassName: "bg-success/10 text-success",
+        chipClassName: "bg-success-soft text-success-soft-foreground",
         icon: <CheckCircleIcon aria-hidden focusable="false" className="size-3" />,
     },
     degraded: {
         dotClassName: "bg-warning",
-        chipClassName: "bg-warning/10 text-warning",
+        chipClassName: "bg-warning-soft text-warning-soft-foreground",
         icon: <WarningIcon aria-hidden focusable="false" className="size-3" />,
     },
     down: {
         dotClassName: "bg-danger",
-        chipClassName: "bg-danger/10 text-danger",
+        chipClassName: "bg-danger-soft text-danger-soft-foreground",
         icon: <XCircleIcon aria-hidden focusable="false" className="size-3" />,
     },
     unknown: {

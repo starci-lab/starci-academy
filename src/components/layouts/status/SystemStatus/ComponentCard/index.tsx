@@ -62,7 +62,7 @@ export const ComponentCard = ({ component }: ComponentCardProps) => {
                     </span>
                 </div>
                 {component.message ? (
-                    <p className="truncate text-xs text-danger" title={component.message}>
+                    <p className="truncate text-xs text-danger-soft-foreground" title={component.message}>
                         {component.message}
                     </p>
                 ) : null}

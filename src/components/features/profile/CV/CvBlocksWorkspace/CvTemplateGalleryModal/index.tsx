@@ -115,7 +115,7 @@ export const CvTemplateGalleryModal = ({
                                                     size="sm"
                                                     className={cn(
                                                         "shrink-0",
-                                                        isTwoColumn ? "bg-warning/10 text-warning" : "bg-success/10 text-success",
+                                                        isTwoColumn ? "bg-warning-soft text-warning-soft-foreground" : "bg-success-soft text-success-soft-foreground",
                                                     )}
                                                 >
                                                     <Chip.Label>

@@ -13,10 +13,10 @@ export type FlexWrapCardRadioColor = "accent" | "success" | "danger" | "warning"
  * Tailwind can see and build them.
  */
 const SELECTED_CLASS: Record<FlexWrapCardRadioColor, string> = {
-    accent: "border-accent bg-accent/10",
-    success: "border-success bg-success/10",
-    danger: "border-danger bg-danger/10",
-    warning: "border-warning bg-warning/10",
+    accent: "border-accent bg-accent-soft",
+    success: "border-success bg-success-soft",
+    danger: "border-danger bg-danger-soft",
+    warning: "border-warning bg-warning-soft",
 }
 
 /** One selectable card in a {@link FlexWrapCardRadio}. */

@@ -18,7 +18,7 @@ import { pathConfig } from "@/resources/path"
 import { useAppSelector } from "@/redux/hooks"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { ModalShell } from "@/components/blocks/layout/ModalShell"
-import { Callout } from "@/components/blocks/feedback/Callout"
+import { Callout, STATUS_ACTION_CLASS } from "@/components/blocks/feedback/Callout"
 
 /**
  * Props for {@link HeadhunterModal}.
@@ -111,7 +111,7 @@ export const HeadhunterModal = (props: HeadhunterModalProps) => {
                                     href={headhunter.linkedinUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2 text-sm text-accent hover:underline"
+                                    className="inline-flex items-center gap-2 text-sm text-accent-soft-foreground hover:underline"
                                 >
                                     <LinkedinLogoIcon className="size-4" aria-hidden />
                                     {t("headhuntings.linkedin")}
@@ -120,7 +120,7 @@ export const HeadhunterModal = (props: HeadhunterModalProps) => {
                             {headhunter.phoneNumber ? (
                                 <Link
                                     href={`tel:${headhunter.phoneNumber.replace(/\D/g, "")}`}
-                                    className="inline-flex items-center gap-2 text-sm text-accent hover:underline"
+                                    className="inline-flex items-center gap-2 text-sm text-accent-soft-foreground hover:underline"
                                 >
                                     <PhoneIcon className="size-4" aria-hidden />
                                     {t("headhuntings.phone")}: {headhunter.phoneNumber}
@@ -131,7 +131,7 @@ export const HeadhunterModal = (props: HeadhunterModalProps) => {
                                     href={`https://zalo.me/${headhunter.zaloNumber.replace(/\D/g, "")}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2 text-sm text-accent hover:underline"
+                                    className="inline-flex items-center gap-2 text-sm text-accent-soft-foreground hover:underline"
                                 >
                                     <ChatCircleIcon className="size-4" aria-hidden />
                                     {t("headhuntings.zalo")}: {headhunter.zaloNumber}
@@ -140,7 +140,7 @@ export const HeadhunterModal = (props: HeadhunterModalProps) => {
                             {headhunter.email ? (
                                 <Link
                                     href={`mailto:${headhunter.email}`}
-                                    className="inline-flex items-center gap-2 text-sm text-accent hover:underline"
+                                    className="inline-flex items-center gap-2 text-sm text-accent-soft-foreground hover:underline"
                                 >
                                     <EnvelopeIcon className="size-4" aria-hidden />
                                     {t("headhuntings.email")}: {headhunter.email}
@@ -158,6 +158,7 @@ export const HeadhunterModal = (props: HeadhunterModalProps) => {
                                 <Button
                                     variant="secondary"
                                     size="sm"
+                                    className={STATUS_ACTION_CLASS.default}
                                     onPress={onImproveCv}
                                 >
                                     {t("headhuntings.improveCv")}

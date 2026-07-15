@@ -5,9 +5,6 @@ import { ProgressMeter } from "./index"
 const meta: Meta<typeof ProgressMeter> = {
     title: "Blocks/ProgressMeter",
     component: ProgressMeter,
-    parameters: {
-        layout: "padded",
-    },
 }
 
 export default meta

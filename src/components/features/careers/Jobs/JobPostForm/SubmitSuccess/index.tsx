@@ -29,7 +29,7 @@ export const SubmitSuccess = ({ jobDisplayId }: SubmitSuccessProps) => {
 
     return (
         <div className="mx-auto flex max-w-lg flex-col items-center gap-4 p-6 py-16 text-center">
-            <CheckCircleIcon aria-hidden focusable="false" className="size-12 text-success" />
+            <CheckCircleIcon aria-hidden focusable="false" className="size-12 text-success-soft-foreground" />
             <Typography type="h4" weight="bold">
                 {t("jobs.post.success.title")}
             </Typography>

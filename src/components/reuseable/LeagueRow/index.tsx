@@ -89,8 +89,8 @@ export const LeagueRow = ({
             className={cn(
                 "flex w-full items-center gap-2 rounded-3xl p-2",
                 isMe && "bg-primary/10",
-                !isMe && isPromote && "bg-success/10",
-                !isMe && isDemote && "bg-danger/10",
+                !isMe && isPromote && "bg-success-soft",
+                !isMe && isDemote && "bg-danger-soft",
                 className,
             )}
         >

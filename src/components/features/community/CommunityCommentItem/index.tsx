@@ -117,7 +117,7 @@ export const CommunityCommentItem = ({
                         ) : null}
                         {comment.replyCount > 0 ? (
                             <Link onPress={() => setRepliesOpen((previous) => !previous)}>
-                                <Typography type="body-xs" className="text-accent">
+                                <Typography type="body-xs" className="text-accent-soft-foreground">
                                     {repliesOpen
                                         ? t("community.comments.hideReplies")
                                         : t("community.comments.viewReplies", { count: comment.replyCount })}

@@ -74,9 +74,9 @@ const VERDICT_ICON = {
  * often renders inside the history drawer surface. Mirrors {@link Callout}.
  */
 const VERDICT_TINT: Record<"success" | "warning" | "danger", string> = {
-    success: "bg-success/10",
-    warning: "bg-warning/10",
-    danger: "bg-danger/10",
+    success: "bg-success-soft",
+    warning: "bg-warning-soft",
+    danger: "bg-danger-soft",
 }
 
 /**
@@ -110,9 +110,9 @@ const phaseDisplayLabel = (phase: string, t: ReturnType<typeof useTranslations>)
 
 /** Score value → semantic text color (mirrors {@link scoreColorOf}) for the per-question score chip. */
 const SCORE_TEXT_COLOR: Record<"success" | "warning" | "danger", string> = {
-    success: "text-success",
-    warning: "text-warning",
-    danger: "text-danger",
+    success: "text-success-soft-foreground",
+    warning: "text-warning-soft-foreground",
+    danger: "text-danger-soft-foreground",
 }
 
 /** The Q&A cognitive frames that carry a localized `mockInterview.kind.*` label — anything else renders raw. */
@@ -189,7 +189,7 @@ const MockInterviewQuestionReviewCard = ({
                         ) : null}
 
                         <div className="flex items-start gap-2">
-                            <WarningCircleIcon className="size-4 shrink-0 text-warning" aria-hidden focusable="false" />
+                            <WarningCircleIcon className="size-4 shrink-0 text-warning-soft-foreground" aria-hidden focusable="false" />
                             <Typography type="body-sm" className="min-w-0 flex-1">
                                 <span className="text-muted">{t("mockInterview.questionReview.feedback")} </span>
                                 {review.feedback}
@@ -199,7 +199,7 @@ const MockInterviewQuestionReviewCard = ({
                         {lessonHref ? (
                             <Link
                                 onPress={() => router.push(lessonHref)}
-                                className="group inline-flex cursor-pointer items-center gap-1 text-accent"
+                                className="group inline-flex cursor-pointer items-center gap-1 text-accent-soft-foreground"
                             >
                                 {t("mockInterview.viewInLesson")}
                                 <ArrowRightIcon aria-hidden focusable="false" className="size-4 transition-transform group-hover:translate-x-1" />
@@ -417,7 +417,7 @@ export const MockInterviewScorecard = ({
                         {grade.gaps.map((gap, position) => (
                             <SurfaceListCardItem key={position}>
                                 <div className="flex items-start gap-2">
-                                    <WarningCircleIcon className="size-4 shrink-0 text-warning" aria-hidden focusable="false" />
+                                    <WarningCircleIcon className="size-4 shrink-0 text-warning-soft-foreground" aria-hidden focusable="false" />
                                     <MarkdownContent markdown={gap} className="min-w-0 flex-1" />
                                 </div>
                             </SurfaceListCardItem>
@@ -429,7 +429,7 @@ export const MockInterviewScorecard = ({
             {grade.followUpQuestion ? (
                 <LabeledCard label={t("mockInterview.followUpTitle")}>
                     <div className="flex items-start gap-2">
-                        <ChatCircleIcon className="size-4 shrink-0 text-accent" aria-hidden focusable="false" />
+                        <ChatCircleIcon className="size-4 shrink-0 text-accent-soft-foreground" aria-hidden focusable="false" />
                         <MarkdownContent markdown={grade.followUpQuestion} className="min-w-0 flex-1 italic" />
                     </div>
                 </LabeledCard>
@@ -450,7 +450,10 @@ export const MockInterviewScorecard = ({
                     <ArrowRightIcon className="size-5" aria-hidden focusable="false" />
                 </Button>
                 {/* next rung in the loop: turn the interview into a built artifact —
-                    a quiet handoff to the course's capstone (personal project). */}
+                    a quiet handoff to the course's capstone (personal project).
+                    No trailing arrow: arrow marks the ONE primary CTA per surface
+                    (button.md §2) — the weak-phase button above already carries it;
+                    the sibling "retry" tertiary button below already has none. */}
                 <Button
                     variant="tertiary"
                     onPress={() => router.push(
@@ -458,7 +461,6 @@ export const MockInterviewScorecard = ({
                     )}
                 >
                     {t("mockInterview.capstoneCta")}
-                    <ArrowRightIcon className="size-5" aria-hidden focusable="false" />
                 </Button>
                 {onRetry ? (
                     <Button variant="tertiary" onPress={onRetry}>

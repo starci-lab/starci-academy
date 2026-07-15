@@ -32,8 +32,8 @@ export interface ChangelogListProps extends WithClassNames<undefined> {
 
 /** Tailwind classes for each category chip. */
 const CATEGORY_CLASS: Record<ChangelogCategory, string> = {
-    [ChangelogCategory.Feature]: "bg-success/15 text-success",
-    [ChangelogCategory.Fix]: "bg-warning/15 text-warning",
+    [ChangelogCategory.Feature]: "bg-success/15 text-success-soft-foreground",
+    [ChangelogCategory.Fix]: "bg-warning/15 text-warning-soft-foreground",
     [ChangelogCategory.Announcement]: "bg-secondary/15 text-secondary",
 }
 

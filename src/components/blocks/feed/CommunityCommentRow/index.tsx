@@ -60,7 +60,7 @@ export const CommunityCommentRow = ({
                         {comment.isFounderAuthor ? (
                             <SealCheckIcon
                                 weight="fill"
-                                className="size-3.5 shrink-0 text-accent"
+                                className="size-3.5 shrink-0 text-accent-soft-foreground"
                             />
                         ) : null}
                         <Typography type="body-xs" color="muted">

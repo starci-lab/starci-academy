@@ -201,7 +201,7 @@ export const CourseOutline = ({
                                             </div>
                                             <div className="flex shrink-0 items-center gap-2">
                                                 {allRead ? (
-                                                    <Typography type="body-xs" className="text-success">
+                                                    <Typography type="body-xs" className="text-success-soft-foreground">
                                                         {t("profileSettings.learning.outline.readCount", { read, total })}
                                                     </Typography>
                                                 ) : (
@@ -238,7 +238,7 @@ export const CourseOutline = ({
                                                                     <CheckCircleIcon
                                                                         aria-label={t("profileSettings.learning.outline.read")}
                                                                         focusable="false"
-                                                                        className="size-5 text-success"
+                                                                        className="size-5 text-success-soft-foreground"
                                                                     />
                                                                 ) : (
                                                                     <CircleIcon

@@ -83,7 +83,7 @@ export const CodingLeaderboard = ({ className }: CodingLeaderboardProps) => {
                     return (
                         <SurfaceListCardItem
                             key={entry.userId}
-                            className={cn(isViewer && "bg-accent/10")}
+                            className={cn(isViewer && "bg-accent-soft")}
                         >
                             <div className="flex items-center gap-3">
                                 {/* rank position */}
@@ -101,7 +101,7 @@ export const CodingLeaderboard = ({ className }: CodingLeaderboardProps) => {
                                     ) : undefined}
                                 />
                                 {/* the ranking metric — distinct problems solved (NOT points) */}
-                                <Typography type="body-sm" weight="semibold" className="shrink-0 text-accent">
+                                <Typography type="body-sm" weight="semibold" className="shrink-0 text-accent-soft-foreground">
                                     {t("practice.leaderboard.solved", { count: entry.solvedCount })}
                                 </Typography>
                             </div>

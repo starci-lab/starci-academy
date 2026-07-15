@@ -98,7 +98,7 @@ export const EntityResultRow = ({
             </div>
             {/* accent CTA signal — arrow nudges on row hover (accent = the affordance,
                 not a competing solid button). */}
-            <span className="flex shrink-0 items-center gap-1 text-sm font-medium text-accent">
+            <span className="flex shrink-0 items-center gap-1 text-sm font-medium text-accent-soft-foreground">
                 {ctaLabel ?? t(meta.cta)}
                 <ArrowRightIcon
                     aria-hidden

@@ -136,7 +136,7 @@ export const ProfileFeaturedProjects = ({
             variant="ghost"
             size="sm"
             onPress={() => setTab("projects")}
-            className="h-auto min-w-0 px-0 py-0 text-accent"
+            className="h-auto min-w-0 px-0 py-0 text-accent-soft-foreground"
         >
             {t("publicProfile.featured.seeAll")}
         </Button>
@@ -145,7 +145,7 @@ export const ProfileFeaturedProjects = ({
     return (
         <SectionCard
             className={cn(className)}
-            icon={<BriefcaseIcon className="size-5 text-accent" />}
+            icon={<BriefcaseIcon className="size-5 text-accent-soft-foreground" />}
             title={t("publicProfile.featured.heading")}
             action={seeAllAction}
         >
@@ -260,7 +260,7 @@ function PinRow({ pin, divider, t }: PinRowProps) {
         <ListRow
             leading={
                 pin.isVerified ? (
-                    <RocketIcon className="size-5 text-accent" />
+                    <RocketIcon className="size-5 text-accent-soft-foreground" />
                 ) : (
                     <BriefcaseIcon className="size-5 text-muted" />
                 )
@@ -298,7 +298,7 @@ function CapstoneVerifiedRow({ capstone, divider, t }: CapstoneVerifiedRowProps)
 
     return (
         <ListRow
-            leading={<RocketIcon className="size-5 text-accent" />}
+            leading={<RocketIcon className="size-5 text-accent-soft-foreground" />}
             title={capstone.courseTitle}
             subtitle={progressSubtitle}
             meta={(

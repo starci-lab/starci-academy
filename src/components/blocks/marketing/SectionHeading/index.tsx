@@ -63,7 +63,7 @@ export const SectionHeading = ({
                     <a
                         href={`#${anchorId}`}
                         aria-label={`#${anchorId}`}
-                        className="text-xl leading-none text-muted opacity-50 transition hover:text-accent hover:opacity-100"
+                        className="text-xl leading-none text-muted opacity-50 transition hover:text-accent-soft-foreground hover:opacity-100"
                     >
                         #
                     </a>

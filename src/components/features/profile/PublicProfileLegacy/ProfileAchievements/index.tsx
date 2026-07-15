@@ -169,7 +169,7 @@ export const ProfileAchievements = ({
                         <Typography
                             type="body-xs"
                             weight="medium"
-                            className={cn(item.earned && "text-success")}
+                            className={cn(item.earned && "text-success-soft-foreground")}
                         >
                             {status}
                         </Typography>
@@ -178,7 +178,7 @@ export const ProfileAchievements = ({
                             <Typography
                                 type="body-xs"
                                 weight="medium"
-                                className="text-warning"
+                                className="text-warning-soft-foreground"
                             >
                                 {t("publicProfile.rarity", {
                                     percent: item.rarityPercent,

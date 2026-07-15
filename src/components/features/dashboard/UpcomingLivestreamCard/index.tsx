@@ -95,7 +95,7 @@ export const UpcomingLivestreamCard = ({
             isLoading={data === undefined || isLoading}
             skeleton={(
                 <SectionCard
-                    icon={<VideoCameraIcon className="size-5 text-accent" />}
+                    icon={<VideoCameraIcon className="size-5 text-accent-soft-foreground" />}
                     title={t("dashboard.upcomingLive.title")}
                     className={className}
                 >
@@ -115,7 +115,7 @@ export const UpcomingLivestreamCard = ({
             }}
         >
             <SectionCard
-                icon={<VideoCameraIcon className="size-5 text-accent" />}
+                icon={<VideoCameraIcon className="size-5 text-accent-soft-foreground" />}
                 title={t("dashboard.upcomingLive.title")}
                 className={className}
             >
@@ -127,7 +127,7 @@ export const UpcomingLivestreamCard = ({
                             title={session.sessionTitle ?? session.courseTitle}
                             subtitle={session.sessionTitle ? session.courseTitle : undefined}
                             meta={(
-                                <span className="text-xs font-medium text-accent">
+                                <span className="text-xs font-medium text-accent-soft-foreground">
                                     {relativeLabel(session.nextStartAt)}
                                     {" · "}
                                     {new Date(session.nextStartAt).toLocaleDateString(locale)}

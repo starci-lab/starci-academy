@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { CheckCircleIcon, RocketLaunchIcon } from "@phosphor-icons/react"
 import { Button } from "@heroui/react"
-import { Callout, type CalloutStatus } from "./index"
+import { Callout, type CalloutStatus, STATUS_ACTION_CLASS } from "./index"
 
 /**
  * A tinted, flat note for use **inside a card / surface** — wraps HeroUI `Alert` +
@@ -79,21 +79,66 @@ export const WithCustomIcon: Story = {
     },
 }
 
-/** Dùng khi muốn người dùng THỬ NGAY một tính năng mới (nút hành động đi kèm) thay vì chỉ đọc rồi bỏ qua. */
-export const WithAction: Story = {
-    args: {
+/** Action button per example — the callout's own tone/icon/copy + its CTA label. */
+const ACTION_EXAMPLES: Array<{
+    status: CalloutStatus
+    title: string
+    description: string
+    icon: React.ReactNode
+    actionLabel: string
+}> = [
+    {
         status: "accent",
         title: "Thử tính năng mới",
         description: "Luyện phỏng vấn AI vừa ra mắt, thử ngay hôm nay.",
         icon: <RocketLaunchIcon />,
-        action: (
-            <Button size="sm" variant="secondary">
-                Thử ngay
-            </Button>
-        ),
+        actionLabel: "Thử ngay",
     },
+    {
+        status: "success",
+        title: "Chấm điểm xong",
+        description: "Bài nộp của bạn đạt 92/100 — xem chi tiết nhận xét.",
+        icon: <CheckCircleIcon />,
+        actionLabel: "Xem nhận xét",
+    },
+    {
+        status: "warning",
+        title: "Còn 1 bài tập chưa nộp",
+        description: "Milestone \"API Gateway\" đóng sau 2 ngày nữa.",
+        icon: <RocketLaunchIcon />,
+        actionLabel: "Nộp bài ngay",
+    },
+]
+
+/**
+ * Dùng khi muốn người dùng THỬ NGAY một tính năng mới (nút hành động đi kèm) thay vì
+ * chỉ đọc rồi bỏ qua. Action luôn `variant="secondary"` + `STATUS_ACTION_CLASS` (KHÔNG
+ * HeroUI `secondary` mặc định — nền `--default` gần trắng hoà vào tint callout).
+ * `STATUS_ACTION_CLASS` = nền ĐẶC `bg-<status>` (không phải `/10` như tint callout) +
+ * `text-<status>-foreground` — tách biệt rõ khỏi nền nhạt của callout mà vẫn cùng
+ * family màu với tone riêng của từng callout, không đặc accent cho mọi tone.
+ */
+export const WithAction: Story = {
+    render: () => (
+        <div className="flex flex-col gap-4">
+            {ACTION_EXAMPLES.map((example) => (
+                <Callout
+                    key={example.status}
+                    status={example.status}
+                    title={example.title}
+                    description={example.description}
+                    icon={example.icon}
+                    action={(
+                        <Button size="sm" variant="secondary" className={STATUS_ACTION_CLASS[example.status]}>
+                            {example.actionLabel}
+                        </Button>
+                    )}
+                />
+            ))}
+        </div>
+    ),
     parameters: {
-        usage: "Dùng khi muốn người dùng THỬ NGAY một tính năng mới (nút hành động đi kèm) thay vì chỉ đọc rồi bỏ qua.",
+        usage: "Dùng khi muốn người dùng THỬ NGAY một tính năng mới (nút hành động đi kèm) thay vì chỉ đọc rồi bỏ qua. Action `variant=\"secondary\"` + nền đặc `bg-<status>` riêng theo tone (không phải `/10` như tint callout) — tách biệt rõ khỏi nền nhạt của callout mà vẫn cùng màu, không đặc accent cho mọi tone.",
     },
 }
 

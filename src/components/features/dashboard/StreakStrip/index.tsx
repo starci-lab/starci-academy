@@ -106,7 +106,7 @@ export const StreakStrip = ({
                     </div>
                     {hasAny ? (
                         <div className="flex items-center gap-2">
-                            <FlameIcon aria-hidden focusable="false" className="size-5 shrink-0 text-accent" />
+                            <FlameIcon aria-hidden focusable="false" className="size-5 shrink-0 text-accent-soft-foreground" />
                             <InfoTooltip
                                 className="text-sm font-medium"
                                 title={t("dashboard.streakLabel")}

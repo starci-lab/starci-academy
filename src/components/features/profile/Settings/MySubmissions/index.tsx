@@ -145,7 +145,7 @@ export const MySubmissions = ({
                                             href={item.submissionUrl}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="inline-flex items-center gap-2 text-accent"
+                                            className="inline-flex items-center gap-2 text-accent-soft-foreground"
                                         >
                                             <FaGithub aria-hidden focusable="false" className="size-5" />
                                             {t("profileSettings.learning.submissions.open")}

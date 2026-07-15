@@ -60,7 +60,7 @@ export const ProfilePinned = ({
     const action = isSelf && pins.length > 0 ? (
         <Link
             onPress={openManage}
-            className="inline-flex shrink-0 cursor-pointer items-center gap-1 text-sm text-accent no-underline transition-opacity hover:opacity-60"
+            className="inline-flex shrink-0 cursor-pointer items-center gap-1 text-sm text-accent-soft-foreground no-underline transition-opacity hover:opacity-60"
         >
             <PencilIcon className="size-4" aria-hidden="true" focusable="false" />
             {t("pinnedProjects.manage")}

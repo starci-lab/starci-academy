@@ -153,7 +153,7 @@ export const Sessions = () => {
                         return (
                             <SurfaceListCardItem key={session.id}>
                                 <div className="flex items-center gap-3">
-                                    <DeviceIcon aria-hidden focusable="false" className="size-5 shrink-0 text-accent" />
+                                    <DeviceIcon aria-hidden focusable="false" className="size-5 shrink-0 text-accent-soft-foreground" />
                                     <div className="flex min-w-0 flex-1 flex-col gap-0">
                                         {/* device name + "this device" chip right next to it */}
                                         <div className="flex flex-wrap items-center gap-2">
@@ -181,7 +181,7 @@ export const Sessions = () => {
                                         <Button
                                             variant="ghost"
                                             size="sm"
-                                            className="ml-auto shrink-0 text-danger"
+                                            className="ml-auto shrink-0 text-danger-soft-foreground"
                                             isDisabled={revokingId === session.sessionId}
                                             onPress={() => onRevoke(session.sessionId)}
                                             aria-label={t("sessions.revoke")}

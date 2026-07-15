@@ -113,7 +113,7 @@ export const TaskLockedAlert = ({
 
     return (
         <>
-            <Alert status="warning" className={cn("shadow-none bg-warning/10", className)}>
+            <Alert status="warning" className={cn("shadow-none bg-warning-soft", className)}>
                 <Alert.Indicator />
                 <Alert.Content className="gap-2">
                     <Alert.Title>{t("task.previewLockedAlertTitle")}</Alert.Title>
@@ -124,7 +124,7 @@ export const TaskLockedAlert = ({
                         <Button
                             size="sm"
                             variant="secondary"
-                            className="w-fit shrink-0 bg-background text-warning"
+                            className="w-fit shrink-0 bg-background text-warning-soft-foreground"
                             onPress={onGoToCurrentTask}
                         >
                             {t("task.previewLockedGoToCurrentTaskButton")}

@@ -40,12 +40,12 @@ const INITIAL_MILESTONES = 2
  */
 const scoreToneClass = (score: number): string => {
     if (score >= 90) {
-        return "text-success"
+        return "text-success-soft-foreground"
     }
     if (score >= 70) {
-        return "text-warning"
+        return "text-warning-soft-foreground"
     }
-    return "text-danger"
+    return "text-danger-soft-foreground"
 }
 
 /** Props for {@link ProjectCard}. */
@@ -148,7 +148,7 @@ export const ProjectCard = ({
             {milestones.length > 0 ? (
                 <Link
                     onPress={() => setExpanded((open) => !open)}
-                    className="group inline-flex w-fit cursor-pointer items-center gap-2 text-accent"
+                    className="group inline-flex w-fit cursor-pointer items-center gap-2 text-accent-soft-foreground"
                 >
                     {expanded
                         ? t("publicProfile.capstone.hideTasks")
@@ -180,7 +180,7 @@ export const ProjectCard = ({
                                     <ListRow
                                         key={`${task.title}-${taskIndex}`}
                                         leading={task.passed ? (
-                                            <CheckCircleIcon aria-hidden focusable="false" className="size-5 text-success" />
+                                            <CheckCircleIcon aria-hidden focusable="false" className="size-5 text-success-soft-foreground" />
                                         ) : undefined}
                                         title={task.title}
                                         meta={task.passed ? (
@@ -211,7 +211,7 @@ export const ProjectCard = ({
                     {hiddenMilestoneCount > 0 ? (
                         <Link
                             onPress={() => setShowAllMilestones((open) => !open)}
-                            className="inline-flex w-fit cursor-pointer items-center gap-2 text-accent"
+                            className="inline-flex w-fit cursor-pointer items-center gap-2 text-accent-soft-foreground"
                         >
                             {showAllMilestones
                                 ? t("publicProfile.capstone.showLess")

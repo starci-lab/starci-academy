@@ -32,7 +32,7 @@ export const FeaturedPost = ({ post, formattedDate }: FeaturedPostProps) => {
                 <Chip size="sm" variant="soft" color={CATEGORY_COLOR[post.category]}>
                     {t(`categories.${post.category}`)}
                 </Chip>
-                <span className="text-xs font-medium text-accent">
+                <span className="text-xs font-medium text-accent-soft-foreground">
                     {t("latest")}
                 </span>
                 {post.isPremium && (

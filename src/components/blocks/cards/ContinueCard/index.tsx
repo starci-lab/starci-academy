@@ -49,7 +49,7 @@ export interface ContinueCardProps extends WithClassNames<undefined> {
     /**
      * Optional call-to-action label rendered to the far right of the info row
      * (e.g. "Continue", "Resume"). Rendered via {@link Typography} type="body-sm"
-     * with `text-accent` so it stands out as a navigational affordance.
+     * with `text-accent-soft-foreground` so it stands out as a navigational affordance.
      */
     ctaLabel?: React.ReactNode
     /**
@@ -87,7 +87,7 @@ export interface ContinueCardProps extends WithClassNames<undefined> {
     badgeIcon?: React.ReactNode
     /**
      * Optional decorative icon sunk behind the content as a large, low-opacity
-     * watermark bled off the bottom-right corner (`absolute`, `text-accent
+     * watermark bled off the bottom-right corner (`absolute`, `text-accent-soft-foreground
      * opacity-40`, `aria-hidden`, `pointer-events-none` — never affects
      * layout/a11y). An alternative to `badgeIcon` for the same momentum concept
      * when the caller wants it sunk into the background rather than an inline
@@ -200,7 +200,7 @@ export const ContinueCard = ({
                 </Button>
             )
         ) : (
-            <Typography type="body-sm" className={cn("shrink-0 text-accent", !ctaBelow && "ml-auto")}>
+            <Typography type="body-sm" className={cn("shrink-0 text-accent-soft-foreground", !ctaBelow && "ml-auto")}>
                 {ctaLabel}
             </Typography>
         )
@@ -218,7 +218,7 @@ export const ContinueCard = ({
             {watermarkIcon ? (
                 <div
                     aria-hidden
-                    className="pointer-events-none absolute -bottom-6 -right-6 text-accent opacity-40 [&_svg]:size-32"
+                    className="pointer-events-none absolute -bottom-6 -right-6 text-accent-soft-foreground opacity-40 [&_svg]:size-32"
                 >
                     {watermarkIcon}
                 </div>
@@ -229,7 +229,7 @@ export const ContinueCard = ({
                 {/* Momentum badge — small circular tinted icon, same slot family as
                     `cover` (shrink-0). Semantic (e.g. streak), never purely decorative. */}
                 {badgeIcon ? (
-                    <div aria-hidden className="flex size-9 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent [&_svg]:size-5">
+                    <div aria-hidden className="flex size-9 shrink-0 items-center justify-center rounded-full bg-accent-soft text-accent-soft-foreground [&_svg]:size-5">
                         {badgeIcon}
                     </div>
                 ) : null}
@@ -243,9 +243,9 @@ export const ContinueCard = ({
                     </Typography>
                     {subtitle ? (
                         // `color` only supports "default"/"muted" (HeroUI Typography has no
-                        // semantic-tone color prop) — `text-warning` via className is the
-                        // same documented exception `ctaLabel`'s `text-accent` already uses.
-                        <Typography type="body-xs" color={urgent ? undefined : "muted"} className={cn(urgent && "text-warning")} truncate>
+                        // semantic-tone color prop) — `text-warning-soft-foreground` via className is the
+                        // same documented exception `ctaLabel`'s `text-accent-soft-foreground` already uses.
+                        <Typography type="body-xs" color={urgent ? undefined : "muted"} className={cn(urgent && "text-warning-soft-foreground")} truncate>
                             {subtitle}
                         </Typography>
                     ) : null}

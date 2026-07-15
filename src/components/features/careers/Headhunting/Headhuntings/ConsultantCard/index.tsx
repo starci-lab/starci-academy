@@ -82,10 +82,10 @@ export const ConsultantCard = ({ consultant, className }: ConsultantCardProps) =
                     {companyTitle ? (
                         <Link
                             onPress={onOpenCompany}
-                            className="inline-flex w-fit cursor-pointer items-center gap-2 text-accent"
+                            className="inline-flex w-fit cursor-pointer items-center gap-2 text-accent-soft-foreground"
                         >
                             <BuildingsIcon aria-hidden focusable="false" className="size-5 shrink-0" />
-                            <Typography type="body-sm" weight="medium" className="text-accent">{companyTitle}</Typography>
+                            <Typography type="body-sm" weight="medium" className="text-accent-soft-foreground">{companyTitle}</Typography>
                         </Link>
                     ) : null}
                     {consultant.description ? (

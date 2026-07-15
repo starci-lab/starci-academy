@@ -44,8 +44,8 @@ export const MilestoneIndexStrip = ({
                                     "font-semibold cursor-pointer items-center justify-center transition-colors p-2 outline-none",
                                     "focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-full",
                                     String(milestone.id) === String(activeMilestoneId)
-                                        ? "text-accent"
-                                        : "text-muted hover:text-accent"
+                                        ? "text-accent-soft-foreground"
+                                        : "text-muted hover:text-accent-soft-foreground"
                                 )
                             }
                             onClick={

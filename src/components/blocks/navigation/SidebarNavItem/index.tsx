@@ -58,7 +58,7 @@ export const SidebarNavItem = ({
                 "flex min-h-9 w-full cursor-pointer items-center gap-2 rounded-large px-3 py-2 no-underline transition-colors",
                 "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
                 isActive
-                    ? "bg-accent/10 text-accent"
+                    ? "bg-accent-soft text-accent-soft-foreground"
                     : "text-foreground hover:bg-default/40",
                 collapsed && "mx-auto w-fit justify-center gap-0 px-2",
                 className,
@@ -68,7 +68,7 @@ export const SidebarNavItem = ({
             {!collapsed ? (
                 <Typography
                     type="body-sm"
-                    className={cn("min-w-0 flex-1", isActive ? "text-accent" : undefined)}
+                    className={cn("min-w-0 flex-1", isActive ? "text-accent-soft-foreground" : undefined)}
                     weight={isActive ? "medium" : "normal"}
                     truncate
                 >

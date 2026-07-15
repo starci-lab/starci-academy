@@ -143,7 +143,7 @@ export const Discussion = ({
                     {hasMore ? (
                         <Button
                             variant="tertiary"
-                            className="self-center text-sm text-accent"
+                            className="self-center text-sm text-accent-soft-foreground"
                             isDisabled={isLoadingMore}
                             onPress={onLoadMore}
                         >

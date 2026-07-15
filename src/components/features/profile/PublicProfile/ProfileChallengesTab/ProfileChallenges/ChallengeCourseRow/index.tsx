@@ -41,12 +41,12 @@ const INITIAL_ROWS = 3
  */
 const scoreToneClass = (score: number): string => {
     if (score >= 90) {
-        return "text-success"
+        return "text-success-soft-foreground"
     }
     if (score >= 70) {
-        return "text-warning"
+        return "text-warning-soft-foreground"
     }
-    return "text-danger"
+    return "text-danger-soft-foreground"
 }
 
 /** Props for {@link ChallengeCourseRow}. */
@@ -119,7 +119,7 @@ export const ChallengeCourseRow = ({
             {/* disclosure → the submission list (on demand) */}
             <Link
                 onPress={() => setExpanded((open) => !open)}
-                className="inline-flex w-fit cursor-pointer items-center gap-2 text-accent"
+                className="inline-flex w-fit cursor-pointer items-center gap-2 text-accent-soft-foreground"
             >
                 {expanded
                     ? t("publicProfile.challengesTab.hideSubmissions")
@@ -180,13 +180,13 @@ export const ChallengeCourseRow = ({
                                                 href={challenge.submissionUrl}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="flex shrink-0 items-center gap-2 text-accent underline"
+                                                className="flex shrink-0 items-center gap-2 text-accent-soft-foreground underline"
                                                 aria-label={t("publicProfile.openRepo", { title: challenge.title })}
                                             >
                                                 <LinkIcon aria-hidden focusable="false" className="size-5" />
                                                 {/* Typography bakes its own text-foreground and ignores the
-                                                    Link's text-accent — explicit color keeps icon+label matching. */}
-                                                <Typography type="body-xs" className="text-accent">
+                                                    Link's text-accent-soft-foreground — explicit color keeps icon+label matching. */}
+                                                <Typography type="body-xs" className="text-accent-soft-foreground">
                                                     {t("publicProfile.repoLink")}
                                                 </Typography>
                                             </Link>

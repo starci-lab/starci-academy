@@ -85,7 +85,7 @@ export const CourseModuleSlotNode = (props: NodeProps<CourseModuleSlotFlowNode>)
                 "border bg-background/90 text-sm font-medium text-foreground shadow-sm outline-none",
                 "transition-all duration-200 hover:border-accent hover:bg-accent/5 hover:shadow-md hover:ring-2 hover:ring-accent/30",
                 "focus-visible:ring-2 focus-visible:ring-accent/40",
-                "dark:border-zinc-600/80 dark:bg-zinc-900/90 dark:hover:bg-accent/10 dark:hover:ring-accent/40",
+                "dark:border-zinc-600/80 dark:bg-zinc-900/90 dark:hover:bg-accent-soft dark:hover:ring-accent/40",
                 selected && "ring-2 ring-accent",
             )}
             style={{ width: SLOT_NODE_WIDTH, minHeight: SLOT_NODE_HEIGHT }}
@@ -97,7 +97,7 @@ export const CourseModuleSlotNode = (props: NodeProps<CourseModuleSlotFlowNode>)
                 type="target"
             />
             {data.isRead ? (
-                <CheckCircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-success" />
+                <CheckCircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-success-soft-foreground" />
             ) : null}
             <span className="line-clamp-2 leading-snug">{data.label}</span>
         </button>

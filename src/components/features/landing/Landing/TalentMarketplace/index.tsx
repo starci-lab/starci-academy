@@ -119,7 +119,7 @@ const SampleCandidateCard = () => {
                     </Chip>
                 ))}
                 <span className="ml-auto inline-flex items-center gap-2 text-sm text-muted">
-                    <LightningIcon aria-hidden focusable="false" className="size-4 text-accent" />
+                    <LightningIcon aria-hidden focusable="false" className="size-4 text-accent-soft-foreground" />
                     {t("landing.outcome.card.xp", { xp: c.xp.toLocaleString(locale) })}
                 </span>
             </div>

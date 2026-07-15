@@ -48,8 +48,8 @@ export const PremiumPaywall = () => {
         // FLAT — no card frame: lives INSIDE the lesson body card (concepts/card.md:
         // no card-in-card), right under the faded teaser, as one continuous surface.
         <div className="flex flex-col items-center gap-3 pt-6 text-center">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-warning/10">
-                <LockKeyIcon className="h-6 w-6 text-warning" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-warning-soft">
+                <LockKeyIcon className="h-6 w-6 text-warning-soft-foreground" />
             </div>
             <div className="text-xl font-semibold text-foreground">
                 {t("course.paywall.title")}

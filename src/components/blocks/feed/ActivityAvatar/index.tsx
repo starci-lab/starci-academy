@@ -17,7 +17,7 @@ export interface ActivityAvatarProps extends WithClassNames<undefined> {
 /**
  * Facebook-style feed avatar: a {@link UserAvatar} with a small activity-type icon
  * badge at the bottom-right. The badge is an OPAQUE soft-accent disc (a `bg-surface`
- * base under a `bg-accent/10` tint so the avatar never bleeds through) with an
+ * base under a `bg-accent-soft` tint so the avatar never bleeds through) with an
  * accent icon, and a surface ring cuts it cleanly from the avatar. The owning
  * feature decides whose avatar is the main one (e.g. the followed user on a
  * "followed" event). Pure/props-only; owns its look.
@@ -42,7 +42,7 @@ export const ActivityAvatar = ({
                 aria-hidden
                 className="absolute -bottom-1 -right-1 flex size-5 items-center justify-center rounded-full bg-surface ring-2 ring-surface"
             >
-                <span className="flex size-full items-center justify-center rounded-full bg-accent/10 text-accent [&_svg]:size-3">
+                <span className="flex size-full items-center justify-center rounded-full bg-accent-soft text-accent-soft-foreground [&_svg]:size-3">
                     {icon}
                 </span>
             </span>

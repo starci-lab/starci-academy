@@ -72,13 +72,13 @@ export const InterviewerPresence = ({
                     <div className="flex items-center gap-2">
                         <Typography type="body-sm" weight="medium" className="truncate">{persona.name}</Typography>
                         {speaking ? (
-                            <span className="flex items-center gap-2 text-accent">
+                            <span className="flex items-center gap-2 text-accent-soft-foreground">
                                 <span className="flex items-end gap-[2px]" aria-hidden>
                                     <PulseBar delayMs={0} heightClass="h-2" />
                                     <PulseBar delayMs={150} heightClass="h-3" />
                                     <PulseBar delayMs={300} heightClass="h-1.5" />
                                 </span>
-                                <Typography type="body-xs" className="text-accent">{speakingLabel}</Typography>
+                                <Typography type="body-xs" className="text-accent-soft-foreground">{speakingLabel}</Typography>
                             </span>
                         ) : null}
                     </div>
@@ -92,7 +92,7 @@ export const InterviewerPresence = ({
                         onClick={onToggleTts}
                         className={cn(
                             "ml-auto flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full transition-colors",
-                            ttsEnabled ? "text-accent hover:bg-accent/10" : "text-muted hover:bg-default hover:text-foreground",
+                            ttsEnabled ? "text-accent-soft-foreground hover:bg-accent-soft" : "text-muted hover:bg-default hover:text-foreground",
                         )}
                     >
                         {ttsEnabled ? (

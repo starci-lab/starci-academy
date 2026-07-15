@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { toast } from "@heroui/react"
+import { toast } from "@/modules/toast/toast"
 import { useTranslations } from "next-intl"
 
 /**

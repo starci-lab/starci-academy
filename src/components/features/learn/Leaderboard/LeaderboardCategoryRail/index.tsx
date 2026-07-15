@@ -117,14 +117,14 @@ export const LeaderboardCategoryRail = ({ variant, className }: LeaderboardCateg
                             onClick={() => onSelect(item.key)}
                             className={cn(
                                 "flex shrink-0 cursor-pointer items-center gap-2 rounded-full border px-3 py-2 text-sm transition-colors",
-                                isSelected ? "border-accent bg-accent/10 text-accent" : "border-default text-muted hover:bg-default",
+                                isSelected ? "border-accent bg-accent-soft text-accent-soft-foreground" : "border-default text-muted hover:bg-default",
                                 item.disabled && "cursor-not-allowed opacity-55",
                             )}
                         >
                             <item.icon
                                 aria-hidden
                                 focusable="false"
-                                className={cn("size-4 shrink-0", isSelected && "text-accent")}
+                                className={cn("size-4 shrink-0", isSelected && "text-accent-soft-foreground")}
                                 style={!isSelected && item.color ? { color: item.color } : undefined}
                             />
                             <span>{item.label}</span>
@@ -162,13 +162,13 @@ export const LeaderboardCategoryRail = ({ variant, className }: LeaderboardCateg
                         id={item.key}
                         textValue={item.label}
                         isDisabled={item.disabled}
-                        className="cursor-pointer rounded-2xl px-3 py-2 data-[disabled=true]:cursor-not-allowed data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent/10 data-[disabled=true]:opacity-55"
+                        className="cursor-pointer rounded-2xl px-3 py-2 data-[disabled=true]:cursor-not-allowed data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft data-[disabled=true]:opacity-55"
                     >
                         <div className="flex items-center gap-3">
                             <item.icon
                                 aria-hidden
                                 focusable="false"
-                                className={cn("size-5 shrink-0", !item.color && "text-accent")}
+                                className={cn("size-5 shrink-0", !item.color && "text-accent-soft-foreground")}
                                 style={item.color ? { color: item.color } : undefined}
                             />
                             <div className="flex min-w-0 flex-1 flex-col gap-0">
@@ -184,7 +184,7 @@ export const LeaderboardCategoryRail = ({ variant, className }: LeaderboardCateg
                             <Typography
                                 type="body-sm"
                                 weight="medium"
-                                className={cn("shrink-0", item.key === selected ? "text-accent" : "text-muted")}
+                                className={cn("shrink-0", item.key === selected ? "text-accent-soft-foreground" : "text-muted")}
                             >
                                 {item.disabled ? "—" : t("leaderboard.xp", { xp: item.xp })}
                             </Typography>

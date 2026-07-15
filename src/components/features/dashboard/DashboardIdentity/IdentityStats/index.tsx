@@ -61,7 +61,7 @@ export const IdentityStats = ({
                 isEmpty={!weekly}
             >
                 <div className="flex items-center gap-2">
-                    <FlameIcon aria-hidden focusable="false" className="size-5 shrink-0 text-accent" />
+                    <FlameIcon aria-hidden focusable="false" className="size-5 shrink-0 text-accent-soft-foreground" />
                     <Typography type="body-sm" color="muted" className="flex-1 truncate">
                         {t("dashboard.identityStats.streak")}
                     </Typography>
@@ -76,7 +76,7 @@ export const IdentityStats = ({
                 isEmpty={!quota}
             >
                 <div className="flex items-center gap-2">
-                    <LightningIcon aria-hidden focusable="false" className="size-5 shrink-0 text-accent" />
+                    <LightningIcon aria-hidden focusable="false" className="size-5 shrink-0 text-accent-soft-foreground" />
                     <Typography type="body-sm" color="muted" className="flex-1 truncate">
                         {t("dashboard.identityStats.credit")}
                     </Typography>
@@ -91,7 +91,7 @@ export const IdentityStats = ({
                 isEmpty={!wallet}
             >
                 <div className="flex items-center gap-2">
-                    <GiftIcon aria-hidden focusable="false" className="size-5 shrink-0 text-accent" />
+                    <GiftIcon aria-hidden focusable="false" className="size-5 shrink-0 text-accent-soft-foreground" />
                     <Typography type="body-sm" color="muted" className="flex-1 truncate">
                         {t("dashboard.identityStats.reward")}
                     </Typography>

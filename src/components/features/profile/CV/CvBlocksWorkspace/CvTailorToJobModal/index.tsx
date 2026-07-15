@@ -109,7 +109,7 @@ export const CvTailorToJobModal = ({
                                 />
 
                                 {hasError ? (
-                                    <Typography type="body-sm" className="text-danger">
+                                    <Typography type="body-sm" className="text-danger-soft-foreground">
                                         {t("cv.builder.tailorModalError")}
                                     </Typography>
                                 ) : null}

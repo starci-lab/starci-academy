@@ -61,7 +61,7 @@ export const ProjectCard = ({
             <CardContent className="flex flex-col gap-3">
                 {/* project header: rocket + course token */}
                 <div className="flex min-w-0 items-center gap-2">
-                    <RocketIcon className="size-5 shrink-0 text-accent" />
+                    <RocketIcon className="size-5 shrink-0 text-accent-soft-foreground" />
                     <EntityToken
                         globalId={project.courseGlobalId}
                         label={project.courseTitle}
@@ -160,7 +160,7 @@ export const ProjectCard = ({
                                         >
                                             <div className="flex min-w-0 items-center gap-2">
                                                 {task.passed ? (
-                                                    <CheckCircleIcon className="size-5 shrink-0 text-success" />
+                                                    <CheckCircleIcon className="size-5 shrink-0 text-success-soft-foreground" />
                                                 ) : null}
                                                 <span className="truncate text-sm text-foreground">
                                                     {task.title}

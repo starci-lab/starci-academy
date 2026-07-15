@@ -177,7 +177,7 @@ export const JobList = ({ className }: JobListProps) => {
                                 {t("jobs.list.emptyPlatform.description")}
                                 <Link
                                     href={pathConfig().locale(locale).jobs().post().build()}
-                                    className="text-accent"
+                                    className="text-accent-soft-foreground"
                                 >
                                     {t("jobs.list.emptyPlatform.cta")}
                                 </Link>

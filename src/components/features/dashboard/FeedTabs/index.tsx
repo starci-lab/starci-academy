@@ -205,7 +205,7 @@ export const FeedTabs = ({
                                         {/* load-more failure (page 2+) doesn't clear existing items — surface an
                                             inline retry instead of the full errorContent block. */}
                                         {error && items.length > 0 && !isLoadingMore ? (
-                                            <div className="flex items-center gap-2 text-xs text-danger">
+                                            <div className="flex items-center gap-2 text-xs text-danger-soft-foreground">
                                                 <span>{t("dashboard.feedError")}</span>
                                                 <Button
                                                     variant="tertiary"

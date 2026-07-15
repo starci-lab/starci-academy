@@ -3,6 +3,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import {
     Button,
+    Card,
     Chip,
     Label,
     Spinner,
@@ -24,7 +25,7 @@ import { useLocale, useTranslations } from "next-intl"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
 import { ChatBubble } from "@/components/blocks/feed/ChatBubble"
-import { Callout } from "@/components/blocks/feedback/Callout"
+import { Callout, STATUS_ACTION_CLASS } from "@/components/blocks/feedback/Callout"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { ModalShell } from "@/components/blocks/layout/ModalShell"
@@ -1301,7 +1302,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
             <span
                 className={cn(
                     "flex shrink-0 items-center gap-2",
-                    remainingSeconds !== null && remainingSeconds <= TIME_LIMIT_WARNING_SECONDS && "text-warning",
+                    remainingSeconds !== null && remainingSeconds <= TIME_LIMIT_WARNING_SECONDS && "text-warning-soft-foreground",
                 )}
             >
                 <ClockIcon className="size-4" aria-hidden focusable="false" />
@@ -1447,7 +1448,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                         {/* green room — a calm pre-interview waiting room: the interviewer you're
                     about to meet, what's ahead, and the ONE way in. Config is tucked away
                     (collapsed) so this reads as an occasion, not a settings form. */}
-                        <div className="flex flex-col gap-3 rounded-2xl bg-surface p-6 shadow-surface">
+                        <Card>
                             <div className="flex items-center gap-3">
                                 <img src={persona.avatarSrc} alt="" className="size-12 shrink-0 rounded-full object-cover" aria-hidden />
                                 <div className="flex min-w-0 flex-col">
@@ -1504,7 +1505,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                                     </Button>
                                 ) : null}
                             </div>
-                        </div>
+                        </Card>
 
                         {/* Tùy chỉnh phiên — collapsed by default; all run config lives here so the
                     green room stays calm. Every control is a WrapButton/chip; the grading
@@ -1572,7 +1573,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                                                         className={cn(
                                                             "cursor-pointer rounded-full border px-3 py-2 text-sm font-medium transition-colors",
                                                             selectedKinds.length === 0
-                                                                ? "border-accent bg-accent/10 text-foreground"
+                                                                ? "border-accent bg-accent-soft text-foreground"
                                                                 : "border-default bg-surface text-muted shadow-surface hover:bg-default",
                                                         )}
                                                     >
@@ -1591,7 +1592,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                                                                 className={cn(
                                                                     "cursor-pointer rounded-full border px-3 py-2 text-sm font-medium transition-colors",
                                                                     isSelected
-                                                                        ? "border-accent bg-accent/10 text-foreground"
+                                                                        ? "border-accent bg-accent-soft text-foreground"
                                                                         : "border-default bg-surface text-muted shadow-surface hover:bg-default",
                                                                 )}
                                                             >
@@ -1710,7 +1711,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                         {timedOut ? (
                             <Callout status="warning" title={t("mockInterview.sessionExpiredBanner")} />
                         ) : null}
-                        <div className="flex w-full flex-col items-center gap-3 rounded-2xl bg-surface p-8 shadow-surface">
+                        <Card className="w-full items-center">
                             <img src={persona.avatarSrc} alt="" className="size-12 shrink-0 rounded-full object-cover" aria-hidden />
 
                             <div className="flex flex-col items-center gap-2">
@@ -1722,7 +1723,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                                     {t("mockInterview.gradingPending")}
                                 </Typography>
                             </div>
-                        </div>
+                        </Card>
                     </div>
                 </div>
             </div>
@@ -1798,6 +1799,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                     <Button
                         variant="secondary"
                         size="sm"
+                        className={STATUS_ACTION_CLASS.warning}
                         onPress={() => router.push(pathConfig().locale(locale).profile().aiSubscription().build())}
                     >
                         {t("mockInterview.quotaExceededCta")}
@@ -1880,7 +1882,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                                         <MarkdownContent markdown={currentQuestionTurn.content} />
                                     </div>
                                     {currentQuestionTurn.artifactHint === "code" ? (
-                                        <Chip size="sm" className="w-fit bg-accent/10 text-accent">
+                                        <Chip size="sm" className="w-fit bg-accent-soft text-accent-soft-foreground">
                                             <CodeIcon className="size-4" aria-hidden focusable="false" />
                                             <Chip.Label>{t("mockInterview.workspace.codeLoadedHint")}</Chip.Label>
                                         </Chip>
@@ -2006,17 +2008,17 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                             return (
                                 <li key={phaseKey} className="flex items-center gap-2 px-1 py-2">
                                     {done ? (
-                                        <CheckCircleIcon className="size-5 shrink-0 text-success" aria-hidden focusable="false" />
+                                        <CheckCircleIcon className="size-5 shrink-0 text-success-soft-foreground" aria-hidden focusable="false" />
                                     ) : (
                                         <CircleIcon
-                                            className={cn("size-5 shrink-0", current ? "text-accent" : "text-muted")}
+                                            className={cn("size-5 shrink-0", current ? "text-accent-soft-foreground" : "text-muted")}
                                             aria-hidden
                                             focusable="false"
                                         />
                                     )}
                                     <Typography
                                         type="body-sm"
-                                        className={cn(current ? "text-accent" : done ? "text-foreground" : "text-muted")}
+                                        className={cn(current ? "text-accent-soft-foreground" : done ? "text-foreground" : "text-muted")}
                                         aria-current={current ? "step" : undefined}
                                     >
                                         {t(`mockInterview.phase.${phaseKey}`)}
@@ -2046,6 +2048,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                                 <Button
                                     variant="secondary"
                                     size="sm"
+                                    className={STATUS_ACTION_CLASS.warning}
                                     onPress={() => router.push(pathConfig().locale(locale).profile().aiSubscription().build())}
                                 >
                                     {t("mockInterview.quotaExceededCta")}
@@ -2120,7 +2123,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                                 {listening ? (
                                     <span className="flex items-center gap-2">
                                         <span className="size-2 animate-pulse rounded-full bg-danger" />
-                                        <Typography type="body-xs" className="text-danger">
+                                        <Typography type="body-xs" className="text-danger-soft-foreground">
                                             {t("flashcard.interview.recording")}
                                         </Typography>
                                     </span>

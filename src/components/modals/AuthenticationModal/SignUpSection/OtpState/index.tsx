@@ -79,7 +79,7 @@ export const OtpState = ({ hideCloseButton }: OtpStateProps = {}) => {
                     {
                         t.rich("auth.signUp.otp.desc", {
                             emailHighlight: (chunks) => (
-                                <span className="text-accent">{chunks}</span>
+                                <span className="text-accent-soft-foreground">{chunks}</span>
                             ),
                             email: values.email,
                         }
@@ -114,7 +114,7 @@ export const OtpState = ({ hideCloseButton }: OtpStateProps = {}) => {
                     <div className="flex flex-wrap items-center justify-center gap-2 text-center">
                         <Typography type="body-xs" color="muted">{t("auth.signUp.otp.resend")}</Typography>
                         <Link
-                            className={cn("text-xs text-accent", isResending ? "text-muted" : "")}
+                            className={cn("text-xs text-accent-soft-foreground", isResending ? "text-muted" : "")}
                             data-disabled={isResending ? true : undefined}
                             onPress={() => {
                                 if (isResending) return

@@ -164,7 +164,7 @@ export const PublicProfile = ({
                                         aria-controls={`profile-panel-${tabId}`}
                                         // rounded-none keeps strip flush; active underline via border-b-2
                                         // data-focus-visible ring from HeroUI is preserved (no outline: none)
-                                        className="rounded-none data-[selected=true]:text-accent"
+                                        className="rounded-none data-[selected=true]:text-accent-soft-foreground"
                                     >
                                         <span className="flex items-center gap-2">
                                             <TabIcon

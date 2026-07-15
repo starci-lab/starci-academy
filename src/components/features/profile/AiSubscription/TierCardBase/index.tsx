@@ -74,8 +74,8 @@ export const TierCardBase = ({
                     {price}
                 </div>
                 {isCurrent ? (
-                    <div className="flex w-full items-center justify-center rounded-3xl bg-success/10 px-3 py-2">
-                        <Typography type="body-sm" weight="medium" className="text-success">
+                    <div className="flex w-full items-center justify-center rounded-3xl bg-success-soft px-3 py-2">
+                        <Typography type="body-sm" weight="medium" className="text-success-soft-foreground">
                             {t("aiSubscription.currentPlan")}
                         </Typography>
                     </div>

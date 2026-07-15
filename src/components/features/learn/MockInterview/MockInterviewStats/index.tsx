@@ -36,7 +36,7 @@ const scoreColorOf = (score: number, max: number): "success" | "warning" | "dang
 /** `scoreColorOf`'s result as a `text-*` class, for the headline number + trend bar labels. */
 const scoreTextColorOf = (score: number, max: number): string => {
     const color = scoreColorOf(score, max)
-    return color === "danger" ? "text-danger" : color === "warning" ? "text-warning" : "text-success"
+    return color === "danger" ? "text-danger-soft-foreground" : color === "warning" ? "text-warning-soft-foreground" : "text-success-soft-foreground"
 }
 
 /**
@@ -181,19 +181,19 @@ export const MockInterviewStats = ({ courseId, courseDisplayId, onStartInterview
                     {/* Hero 2: Phân bố verdict — "3/5 Đạt · 1 Cần cải thiện · 1 Chưa đạt". */}
                     <LabeledCard label={t("mockInterview.statsVerdictTitle")}>
                         <div className="flex flex-wrap items-center gap-2">
-                            <div className="flex items-center gap-2 rounded-full bg-success/10 px-3 py-1">
+                            <div className="flex items-center gap-2 rounded-full bg-success-soft px-3 py-1">
                                 <span className="size-2 rounded-full bg-success" aria-hidden />
                                 <Typography type="body-sm">
                                     {stats.verdictCounts.pass} {t("mockInterview.statsVerdictPass")}
                                 </Typography>
                             </div>
-                            <div className="flex items-center gap-2 rounded-full bg-warning/10 px-3 py-1">
+                            <div className="flex items-center gap-2 rounded-full bg-warning-soft px-3 py-1">
                                 <span className="size-2 rounded-full bg-warning" aria-hidden />
                                 <Typography type="body-sm">
                                     {stats.verdictCounts.borderline} {t("mockInterview.statsVerdictBorderline")}
                                 </Typography>
                             </div>
-                            <div className="flex items-center gap-2 rounded-full bg-danger/10 px-3 py-1">
+                            <div className="flex items-center gap-2 rounded-full bg-danger-soft px-3 py-1">
                                 <span className="size-2 rounded-full bg-danger" aria-hidden />
                                 <Typography type="body-sm">
                                     {stats.verdictCounts.fail} {t("mockInterview.statsVerdictFail")}
@@ -249,7 +249,7 @@ export const MockInterviewStats = ({ courseId, courseDisplayId, onStartInterview
                     ) : null}
 
                     {weakest && weakestLabel ? (
-                        <Alert status="warning" className="shadow-none bg-warning/10">
+                        <Alert status="warning" className="shadow-none bg-warning-soft">
                             <Alert.Content>
                                 <Alert.Title>
                                     {t("mockInterview.statsWeakestCallout", {

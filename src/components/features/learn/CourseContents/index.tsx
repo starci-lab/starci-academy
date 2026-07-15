@@ -8,8 +8,8 @@ import React, {
 import {
     Button,
     Typography,
-    toast,
 } from "@heroui/react"
+import { toast } from "@/modules/toast/toast"
 import {
     useLocale,
     useTranslations,
@@ -335,13 +335,13 @@ export const CourseContents = ({ className }: CourseContentsProps) => {
                                                     <PlayIcon
                                                         aria-hidden
                                                         focusable="false"
-                                                        className="size-5 text-accent"
+                                                        className="size-5 text-accent-soft-foreground"
                                                     />
                                                 ) : lesson.isRead ? (
                                                     <CheckCircleIcon
                                                         aria-label={t("courseContents.read")}
                                                         focusable="false"
-                                                        className="size-5 text-success"
+                                                        className="size-5 text-success-soft-foreground"
                                                     />
                                                 ) : (
                                                     <CircleIcon

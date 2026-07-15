@@ -90,7 +90,7 @@ export const StreakFreezeCard = ({
             isLoading={isLoading}
             skeleton={(
                 <SectionCard
-                    icon={<SnowflakeIcon className="size-5 text-accent" />}
+                    icon={<SnowflakeIcon className="size-5 text-accent-soft-foreground" />}
                     title={t("streakFreeze.title")}
                     className={className}
                 >
@@ -111,7 +111,7 @@ export const StreakFreezeCard = ({
         >
             {data ? (
                 <SectionCard
-                    icon={<SnowflakeIcon className="size-5 text-accent" />}
+                    icon={<SnowflakeIcon className="size-5 text-accent-soft-foreground" />}
                     title={t("streakFreeze.title")}
                     className={className}
                 >

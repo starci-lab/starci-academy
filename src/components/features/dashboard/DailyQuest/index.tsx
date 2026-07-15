@@ -109,7 +109,7 @@ export const DailyQuest = ({
                                     leading={(
                                         <div className="flex items-center gap-2">
                                             {done ? (
-                                                <CheckCircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-success" />
+                                                <CheckCircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-success-soft-foreground" />
                                             ) : (
                                                 <CircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
                                             )}

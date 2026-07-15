@@ -15,6 +15,7 @@ import {
 } from "@phosphor-icons/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { MediaCard } from "@/components/blocks/cards/MediaCard"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { pathConfig } from "@/resources/path"
 import { useQueryMyCvBlocksSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCvBlocksSwr"
@@ -46,40 +47,45 @@ const CvGalleryCard = ({
 }) => {
     const t = useTranslations()
     return (
-        <div className="group relative overflow-hidden rounded-2xl border border-default bg-surface shadow-surface">
-            <button
-                type="button"
-                onClick={onOpen}
-                aria-label={t("cv.builder.editCta", { name: label })}
-                className="relative block h-52 w-full cursor-pointer overflow-hidden bg-white outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent"
-            >
-                {/* Scaled live render of the CV as a thumbnail. */}
-                <div
-                    aria-hidden
-                    className="pointer-events-none absolute inset-0"
-                    style={{ transform: "scale(0.42)", transformOrigin: "top left", width: "238%" }}
+        <MediaCard
+            className="group"
+            cover={(
+                <button
+                    type="button"
+                    onClick={onOpen}
+                    aria-label={t("cv.builder.editCta", { name: label })}
+                    className="relative block h-52 w-full cursor-pointer overflow-hidden bg-white outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent"
                 >
-                    <CvHtmlDocument doc={doc} />
-                </div>
-                <span className="absolute inset-0 flex items-end justify-center bg-foreground/0 pb-3 opacity-0 transition-opacity group-hover:bg-foreground/5 group-hover:opacity-100">
-                    <span className="rounded-full bg-accent px-4 py-2 text-sm text-accent-foreground">
-                        {t("cv.builder.openEditor")}
+                    {/* Scaled live render of the CV as a thumbnail. */}
+                    <div
+                        aria-hidden
+                        className="pointer-events-none absolute inset-0"
+                        style={{ transform: "scale(0.42)", transformOrigin: "top left", width: "238%" }}
+                    >
+                        <CvHtmlDocument doc={doc} />
+                    </div>
+                    <span className="absolute inset-0 flex items-end justify-center bg-foreground/0 pb-3 opacity-0 transition-opacity group-hover:bg-foreground/5 group-hover:opacity-100">
+                        <span className="rounded-full bg-accent px-4 py-2 text-sm text-accent-foreground">
+                            {t("cv.builder.openEditor")}
+                        </span>
                     </span>
-                </span>
-            </button>
-            <div className="flex items-center justify-between gap-2 border-t border-default px-4 py-3">
-                <span className="min-w-0 truncate text-sm font-medium">{label}</span>
-                <Button
-                    isIconOnly
-                    size="sm"
-                    variant="ghost"
-                    aria-label={t("cv.builder.deleteCta")}
-                    onPress={onDelete}
-                >
-                    <TrashIcon aria-hidden className="size-4 text-muted" />
-                </Button>
-            </div>
-        </div>
+                </button>
+            )}
+            title={<span className="block truncate">{label}</span>}
+            footer={(
+                <div className="flex justify-end">
+                    <Button
+                        isIconOnly
+                        size="sm"
+                        variant="ghost"
+                        aria-label={t("cv.builder.deleteCta")}
+                        onPress={onDelete}
+                    >
+                        <TrashIcon aria-hidden className="size-4 text-muted" />
+                    </Button>
+                </div>
+            )}
+        />
     )
 }
 
@@ -163,7 +169,7 @@ export const CvGallery = ({ className, breadcrumb }: CvGalleryProps) => {
                             {" "}
                             <Link
                                 href={coursesHref}
-                                className="text-accent underline-offset-2 hover:underline"
+                                className="text-accent-soft-foreground underline-offset-2 hover:underline"
                             >
                                 {t("cv.builder.emptyCoursesLinkCta")}
                             </Link>
@@ -197,7 +203,7 @@ export const CvGallery = ({ className, breadcrumb }: CvGalleryProps) => {
                         type="button"
                         onClick={onCreate}
                         disabled={isCreating}
-                        className="flex h-[19rem] cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-default text-accent outline-none transition-colors hover:bg-default focus-visible:ring-2 focus-visible:ring-accent disabled:cursor-not-allowed disabled:opacity-60"
+                        className="flex h-[19rem] cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-default text-accent-soft-foreground outline-none transition-colors hover:bg-default focus-visible:ring-2 focus-visible:ring-accent disabled:cursor-not-allowed disabled:opacity-60"
                     >
                         <PlusIcon aria-hidden className="size-8" />
                         <span className="text-sm font-medium">{t("cv.builder.createCta")}</span>

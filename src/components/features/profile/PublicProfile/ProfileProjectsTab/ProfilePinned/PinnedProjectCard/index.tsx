@@ -58,7 +58,7 @@ export const PinnedProjectCard = ({ pin, className }: PinnedProjectCardProps) =>
                         className={cn(
                             "inline-flex items-center gap-1 rounded-full px-2 py-0 text-xs",
                             isCourse
-                                ? "bg-success/10 text-success"
+                                ? "bg-success-soft text-success-soft-foreground"
                                 : "border border-default text-muted",
                         )}
                     >
@@ -100,13 +100,13 @@ export const PinnedProjectCard = ({ pin, className }: PinnedProjectCardProps) =>
                 ) : null}
             </div>
             {pin.isVerified ? (
-                <div className="flex items-center gap-2 border-t border-success/30 bg-success/10 px-4 py-2">
+                <div className="flex items-center gap-2 border-t border-success/30 bg-success-soft px-4 py-2">
                     <SealCheckIcon
-                        className="size-4 shrink-0 text-success"
+                        className="size-4 shrink-0 text-success-soft-foreground"
                         aria-hidden="true"
                         focusable="false"
                     />
-                    <Typography type="body-xs" weight="medium" className="text-success">
+                    <Typography type="body-xs" weight="medium" className="text-success-soft-foreground">
                         {t("pinnedProjects.verifiedByStarci")}
                     </Typography>
                 </div>

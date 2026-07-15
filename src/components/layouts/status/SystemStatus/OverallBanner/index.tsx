@@ -24,8 +24,8 @@ export const OverallBanner = ({ allUp, label, className }: OverallBannerProps) =
             className={cn(
                 "flex items-center gap-3 rounded-2xl border px-4 py-3",
                 allUp
-                    ? "border-success/40 bg-success/10 text-success"
-                    : "border-danger/40 bg-danger/10 text-danger",
+                    ? "border-success/40 bg-success-soft text-success-soft-foreground"
+                    : "border-danger/40 bg-danger-soft text-danger-soft-foreground",
                 className,
             )}
         >

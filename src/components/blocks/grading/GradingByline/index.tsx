@@ -15,9 +15,9 @@ import type { AiModelCategory } from "@/modules/api/graphql/queries/query-ai-mod
  */
 export const VerdictIcon = ({ pass, className }: { pass: boolean, className?: string }) =>
     pass ? (
-        <CheckCircleIcon aria-hidden focusable="false" className={cn("size-4 shrink-0 text-success", className)} />
+        <CheckCircleIcon aria-hidden focusable="false" className={cn("size-4 shrink-0 text-success-soft-foreground", className)} />
     ) : (
-        <XCircleIcon aria-hidden focusable="false" className={cn("size-4 shrink-0 text-danger", className)} />
+        <XCircleIcon aria-hidden focusable="false" className={cn("size-4 shrink-0 text-danger-soft-foreground", className)} />
     )
 
 /**
@@ -45,7 +45,7 @@ export const ModelByline = ({
     return (
         <>
             <span className="flex items-center gap-2 text-sm text-muted">
-                <SparkleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-accent" />
+                <SparkleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-accent-soft-foreground" />
                 <span>
                     {withLabel ? `${t("submissionResult.gradedBy")} ` : null}
                     <span className="text-foreground">{model}</span>

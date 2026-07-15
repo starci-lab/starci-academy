@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Link } from "@heroui/react"
+import { Card, CardContent, Link } from "@heroui/react"
 import { PencilIcon } from "@phosphor-icons/react"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { LabeledCard } from "./index"
@@ -11,13 +11,14 @@ import { LabeledCard } from "./index"
 const meta: Meta<typeof LabeledCard> = {
     title: "Blocks/LabeledCard",
     component: LabeledCard,
-    parameters: { layout: "padded" },
 }
 export default meta
 type Story = StoryObj<typeof LabeledCard>
 
 const SampleBody = () => (
-    <div className="flex flex-col gap-2 p-4">
+    // p-0: the Card this sits inside already bakes p-4 (card.md — root `.card`
+    // insets every child) — a padding class here would double-pad.
+    <div className="flex flex-col gap-2 p-0">
         <p className="text-sm text-foreground">
             Khóa học Fullstack Mastery — Module 3: React nâng cao
         </p>
@@ -72,7 +73,7 @@ export const WithAction: Story = {
     args: {
         label: "Người quản lý",
         action: (
-            <Link className="inline-flex shrink-0 cursor-pointer items-center gap-1 text-sm text-accent no-underline transition-opacity hover:opacity-60">
+            <Link className="inline-flex shrink-0 cursor-pointer items-center gap-1 text-sm text-accent-soft-foreground no-underline transition-opacity hover:opacity-60">
                 <PencilIcon aria-hidden focusable="false" className="size-4" />
                 Thêm / quản lý
             </Link>
@@ -84,32 +85,35 @@ export const WithAction: Story = {
 
 /**
  * Surface-in-surface: một list surface NẰM LỒNG trong một surface CHA nhìn thấy được (thân
- * modal/drawer/panel). Panel cha = `rounded-2xl bg-surface p-6 shadow-surface` (có label + nội
- * dung riêng); bên trong lồng `SurfaceListCard bordered` — dùng VIỀN thay shadow vì shadow-surface
- * gần như vô hình khi đặt trên một `bg-surface` khác. Đây mới là "surface trong surface" thật
- * (KHÁC list card đứng riêng ở `CategorizedList`). Pattern thật: `PaymentModal` (list cổng thanh
- * toán lồng trong thân modal).
+ * modal/drawer/panel). Panel cha là một `Card` THẬT (không hand-roll `<div>` mô phỏng lại đúng
+ * class của Card — Card đã là component sẵn có, mặc định `p-4 rounded-3xl shadow-surface` đúng
+ * y da "surface top-level" cần); bên trong lồng `SurfaceListCard bordered` — dùng VIỀN thay
+ * shadow vì shadow-surface gần như vô hình khi đặt trên một `bg-surface` khác. Đây mới là
+ * "surface trong surface" thật (KHÁC list card đứng riêng ở `CategorizedList`). Pattern thật:
+ * `PaymentModal` (list cổng thanh toán lồng trong thân modal).
  */
 export const SurfaceInSurface: Story = {
     render: () => (
         // panel cha = thân modal/drawer (surface CHA) — có label + nội dung của chính nó
-        <div className="rounded-2xl bg-surface p-6 shadow-surface">
-            <LabeledCard label="Phương thức thanh toán" frameless>
-                <SurfaceListCard bordered>
-                    <SurfaceListCardItem>
-                        <span className="text-sm">Ví Momo</span>
-                    </SurfaceListCardItem>
-                    <SurfaceListCardItem>
-                        <span className="text-sm">VNPay QR</span>
-                    </SurfaceListCardItem>
-                    <SurfaceListCardItem>
-                        <span className="text-sm">Thẻ tín dụng / ghi nợ</span>
-                    </SurfaceListCardItem>
-                </SurfaceListCard>
-            </LabeledCard>
-        </div>
+        <Card>
+            <CardContent>
+                <LabeledCard label="Phương thức thanh toán" frameless>
+                    <SurfaceListCard bordered>
+                        <SurfaceListCardItem>
+                            <span className="text-sm">Ví Momo</span>
+                        </SurfaceListCardItem>
+                        <SurfaceListCardItem>
+                            <span className="text-sm">VNPay QR</span>
+                        </SurfaceListCardItem>
+                        <SurfaceListCardItem>
+                            <span className="text-sm">Thẻ tín dụng / ghi nợ</span>
+                        </SurfaceListCardItem>
+                    </SurfaceListCard>
+                </LabeledCard>
+            </CardContent>
+        </Card>
     ),
-    parameters: { usage: "Surface-in-surface THẬT: 1 list surface lồng trong surface CHA nhìn thấy được (thân modal/panel: `bg-surface p-6 shadow-surface`). Inner dùng `SurfaceListCard bordered` (viền thay shadow vì shadow vô hình trên bg-surface). Khác list card đứng riêng. Pattern thật: PaymentModal." },
+    parameters: { usage: "Surface-in-surface THẬT: 1 list surface lồng trong surface CHA nhìn thấy được (thân modal/panel: `Card` THẬT, không hand-roll div). Inner dùng `SurfaceListCard bordered` (viền thay shadow vì shadow vô hình trên bg-surface). Khác list card đứng riêng. Pattern thật: PaymentModal." },
 }
 
 /**

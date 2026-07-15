@@ -108,7 +108,7 @@ export const LearnMobileTabBar = () => {
                             className={cn(
                                 "flex flex-1 flex-col items-center justify-center gap-2 outline-none",
                                 "focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset",
-                                isActive ? "text-accent" : "text-muted",
+                                isActive ? "text-accent-soft-foreground" : "text-muted",
                             )}
                         >
                             <tab.icon className="size-5" />

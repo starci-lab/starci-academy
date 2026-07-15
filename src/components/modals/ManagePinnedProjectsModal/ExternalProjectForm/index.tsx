@@ -58,7 +58,7 @@ export const ExternalProjectForm = ({
                         {...register("title")}
                     />
                     {errors.title ? (
-                        <Typography slot="errorMessage" type="body-xs" className="text-danger">
+                        <Typography slot="errorMessage" type="body-xs" className="text-danger-soft-foreground">
                             {t("pinnedProjects.form.titleRequired")}
                         </Typography>
                     ) : null}
@@ -73,7 +73,7 @@ export const ExternalProjectForm = ({
                         {...register("url")}
                     />
                     {errors.url ? (
-                        <Typography slot="errorMessage" type="body-xs" className="text-danger">
+                        <Typography slot="errorMessage" type="body-xs" className="text-danger-soft-foreground">
                             {t("pinnedProjects.form.urlInvalid")}
                         </Typography>
                     ) : null}

@@ -39,7 +39,7 @@ export const TrendingRow = ({ rank, title, globalId }: TrendingRowProps) => {
                     aria-hidden
                     className={cn(
                         "w-5 shrink-0 text-center text-sm font-medium tabular-nums",
-                        rank <= 3 ? "text-accent" : "text-muted",
+                        rank <= 3 ? "text-accent-soft-foreground" : "text-muted",
                     )}
                 >
                     {rank}

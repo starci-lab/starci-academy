@@ -22,7 +22,7 @@ export const SelfHostGpuMark = ({ className }: SelfHostGpuMarkProps) => {
                 aria-label={t("selfHostGpuAria")}
                 className={cn("inline-flex shrink-0 cursor-default", className)}
             >
-                <CpuIcon aria-hidden focusable="false" className="size-4 text-accent" />
+                <CpuIcon aria-hidden focusable="false" className="size-4 text-accent-soft-foreground" />
             </Tooltip.Trigger>
             <Tooltip.Content>
                 <span className="text-sm">{t("selfHostGpuTooltip")}</span>

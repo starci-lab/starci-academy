@@ -9,8 +9,8 @@ import React, {
 } from "react"
 import {
     cn,
-    toast,
 } from "@heroui/react"
+import { toast } from "@/modules/toast/toast"
 import {
     useRouter,
 } from "next/navigation"

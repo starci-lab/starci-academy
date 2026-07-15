@@ -33,7 +33,7 @@ export const PostRow = ({ post, formattedDate }: PostRowProps) => {
                 <p className="line-clamp-2 text-sm text-muted">{post.excerpt}</p>
             )}
             <div className="flex flex-wrap items-center gap-2 text-xs text-muted">
-                <span className="text-accent">{t(`categories.${post.category}`)}</span>
+                <span className="text-accent-soft-foreground">{t(`categories.${post.category}`)}</span>
                 <span aria-hidden>·</span>
                 <span>{formattedDate}</span>
                 {post.readingMinutes != null && (

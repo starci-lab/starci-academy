@@ -652,7 +652,7 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                                     <div
                                         className={cn(
                                             "group flex items-center gap-2",
-                                            session.id === currentSessionId && "text-accent",
+                                            session.id === currentSessionId && "text-accent-soft-foreground",
                                         )}
                                     >
                                         <button
@@ -672,7 +672,7 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                                         <button
                                             type="button"
                                             aria-label={t("contentAi.deleteConversation")}
-                                            className="shrink-0 cursor-pointer text-muted opacity-0 transition-opacity hover:text-danger group-hover:opacity-100"
+                                            className="shrink-0 cursor-pointer text-muted opacity-0 transition-opacity hover:text-danger-soft-foreground group-hover:opacity-100"
                                             onClick={() => void onDeleteConversation(session.id)}
                                         >
                                             <TrashIcon className="size-4" />

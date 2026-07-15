@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import React, { useState } from "react"
-import { TrashIcon } from "@phosphor-icons/react"
+import { DotsThreeVerticalIcon, TrashIcon } from "@phosphor-icons/react"
 import { Button } from "@heroui/react"
-import { FlexWrapButtonRadio, type FlexWrapButtonRadioColor, type FlexWrapButtonRadioItem } from "./index"
+import { FlexWrapButtonRadio, type FlexWrapButtonRadioItem } from "./index"
 
 /** Difficulty-picker items — mirrors a real config-row caller (plain text content). */
 const DIFFICULTY_ITEMS: Array<FlexWrapButtonRadioItem<string>> = [
@@ -12,7 +12,7 @@ const DIFFICULTY_ITEMS: Array<FlexWrapButtonRadioItem<string>> = [
     { value: "expert", content: "Chuyên gia" },
 ]
 
-/** Attempt-picker items — realistic candidate for `insideCard`. */
+/** Attempt-picker items — realistic candidate for `itemAction`. */
 const ATTEMPT_ITEMS: Array<FlexWrapButtonRadioItem<string>> = [
     { value: "attempt-1", content: "Lần 1 · 6/10đ" },
     { value: "attempt-2", content: "Lần 2 · 8/10đ" },
@@ -35,8 +35,6 @@ const Controlled = <T extends string>(props: {
     items: Array<FlexWrapButtonRadioItem<T>>
     initialValue: T
     ariaLabel: string
-    color?: FlexWrapButtonRadioColor
-    insideCard?: boolean
     trailing?: React.ReactNode
     itemAction?: (item: FlexWrapButtonRadioItem<T>) => React.ReactNode
 }) => {
@@ -47,8 +45,6 @@ const Controlled = <T extends string>(props: {
             value={value}
             onChange={setValue}
             ariaLabel={props.ariaLabel}
-            color={props.color}
-            insideCard={props.insideCard}
             trailing={props.trailing}
             itemAction={props.itemAction}
         />
@@ -62,7 +58,7 @@ const meta: Meta<typeof FlexWrapButtonRadio> = {
         docs: {
             description: {
                 component:
-                    "Single-select toggle-button group laid out as a flex-wrap row. `insideCard=false` (default) uses clean native HeroUI variants (secondary/ghost) with no own surface. `insideCard=true` gives each option a card-styled surface with a colored border on selection.",
+                    "Single-select toggle-button group laid out as a flex-wrap row of independent HeroUI Buttons (secondary/ghost) with no own surface. With `itemAction`, each item becomes one connected ButtonGroup (`[select | 🗑 | ⋮]`) with full-height dividers.",
             },
         },
     },
@@ -78,52 +74,6 @@ export const Default: Story = {
     ),
     parameters: {
         usage: "Dùng mặc định NGOÀI card (filter/toolbar rời) — không cần viền/nền riêng cho mỗi lựa chọn.",
-    },
-}
-
-/** Dùng `insideCard` + đổi `color` khi nhóm chọn nằm TRONG card và cần khớp ngữ nghĩa (success/danger/warning) hoặc mặc định — không tự tạo card lồng card kiểu khác. */
-export const InsideCardAndColors: Story = {
-    render: () => (
-        <div className="flex flex-col gap-4">
-            <Controlled
-                items={ATTEMPT_ITEMS}
-                initialValue="attempt-2"
-                ariaLabel="Chọn lần làm bài (mặc định)"
-                insideCard
-            />
-            <Controlled
-                items={ATTEMPT_ITEMS}
-                initialValue="attempt-3"
-                ariaLabel="Chọn lần làm bài (success)"
-                insideCard
-                color="success"
-            />
-            <Controlled
-                items={[
-                    { value: "low", content: "Thấp" },
-                    { value: "med", content: "Trung bình" },
-                    { value: "high", content: "Cao" },
-                ]}
-                initialValue="high"
-                ariaLabel="Chọn mức độ rủi ro (danger)"
-                insideCard
-                color="danger"
-            />
-            <Controlled
-                items={[
-                    { value: "draft", content: "Bản nháp" },
-                    { value: "review", content: "Đang duyệt" },
-                    { value: "published", content: "Đã đăng" },
-                ]}
-                initialValue="review"
-                ariaLabel="Chọn trạng thái (warning)"
-                insideCard
-                color="warning"
-            />
-        </div>
-    ),
-    parameters: {
-        usage: "Dùng `insideCard` + đổi `color` khi nhóm chọn nằm TRONG card và cần khớp ngữ nghĩa (success/danger/warning) hoặc mặc định — không tự tạo card lồng card kiểu khác.",
     },
 }
 
@@ -156,21 +106,24 @@ export const WithTrailing: Story = {
     },
 }
 
-/** Dùng `itemAction` khi mỗi lựa chọn cần một hành động RIÊNG đi kèm (vd nút xoá attempt) — hành động không làm đổi lựa chọn đang chọn. */
+/** Dùng `itemAction` khi mỗi lựa chọn cần hành động RIÊNG đi kèm (vd nút xoá + menu "⋮") — cả cụm nối liền thành 1 button group, hành động không làm đổi lựa chọn đang chọn. */
 export const WithItemAction: Story = {
     render: () => (
         <Controlled
             items={ATTEMPT_ITEMS}
             initialValue="attempt-1"
             ariaLabel="Chọn lần làm bài"
-            itemAction={(item) => (
-                <Button size="sm" variant="ghost" isIconOnly aria-label={`Xoá ${item.value}`}>
+            itemAction={(item) => [
+                <Button key="delete" size="sm" variant="tertiary" isIconOnly aria-label={`Xoá ${item.value}`}>
                     <TrashIcon className="size-4" />
-                </Button>
-            )}
+                </Button>,
+                <Button key="more" size="sm" variant="tertiary" isIconOnly aria-label={`Thêm tùy chọn cho ${item.value}`}>
+                    <DotsThreeVerticalIcon className="size-4" />
+                </Button>,
+            ]}
         />
     ),
     parameters: {
-        usage: "Dùng `itemAction` khi mỗi lựa chọn cần một hành động RIÊNG đi kèm (vd nút xoá attempt) — hành động không làm đổi lựa chọn đang chọn.",
+        usage: "Dùng `itemAction` khi mỗi lựa chọn cần hành động RIÊNG đi kèm (vd nút xoá + menu \"⋮\") — cả cụm nối liền thành 1 button group, hành động không làm đổi lựa chọn đang chọn.",
     },
 }

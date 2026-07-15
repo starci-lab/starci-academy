@@ -3255,7 +3255,8 @@
     "phase": "Ưu đãi giai đoạn",
     "phaseNamed": "Giai đoạn {phase}",
     "loyalty": "Ưu đãi thành viên",
-    "youPay": "Bạn trả"
+    "youPay": "Bạn trả",
+    "saved": "Tiết kiệm {amount}"
   },
   "payment": {
     "title": "Thanh toán",

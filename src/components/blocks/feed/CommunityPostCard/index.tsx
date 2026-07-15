@@ -74,7 +74,7 @@ export const CommunityPostCard = ({
                                 {post.isFounderAuthor ? (
                                     <SealCheckIcon
                                         weight="fill"
-                                        className="size-4 shrink-0 text-accent"
+                                        className="size-4 shrink-0 text-accent-soft-foreground"
                                     />
                                 ) : null}
                             </div>
@@ -88,13 +88,13 @@ export const CommunityPostCard = ({
                                 <Typography type="body-xs" color="muted">
                                     {timeAgo}
                                 </Typography>
-                                <Typography type="body-xs" className="text-accent">
+                                <Typography type="body-xs" className="text-accent-soft-foreground">
                                     {t(`community.channel.${post.channel}`)}
                                 </Typography>
                             </div>
                         </div>
                         {post.isPinned ? (
-                            <PushPinIcon weight="fill" className="size-4 shrink-0 text-accent" />
+                            <PushPinIcon weight="fill" className="size-4 shrink-0 text-accent-soft-foreground" />
                         ) : null}
                     </div>
 

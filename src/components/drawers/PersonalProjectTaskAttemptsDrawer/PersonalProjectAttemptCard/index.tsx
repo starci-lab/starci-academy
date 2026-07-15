@@ -53,7 +53,7 @@ export const PersonalProjectAttemptCard = (props: PersonalProjectAttemptCardProp
                 {t("task.attemptNumber", { number: attemptNumber })}
             </Typography>
             <div className="mt-2 flex items-center gap-2">
-                <SparkleIcon className="size-4 shrink-0 text-warning" />
+                <SparkleIcon className="size-4 shrink-0 text-warning-soft-foreground" />
                 {scoreChip}
             </div>
             <Typography type="body-sm" className="mt-2">

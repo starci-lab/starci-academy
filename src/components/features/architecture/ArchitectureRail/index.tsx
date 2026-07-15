@@ -127,7 +127,7 @@ export const ArchitectureRail = ({ healthByName, selectedId, onSelect, className
                                     key={component.name}
                                     id={component.name}
                                     textValue={component.name}
-                                    className="cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent/10"
+                                    className="cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft"
                                 >
                                     <ComponentRow name={component.name} icon={component.icon} healthByName={healthByName} />
                                 </ListBox.Item>
@@ -149,7 +149,7 @@ export const ArchitectureRail = ({ healthByName, selectedId, onSelect, className
                                     key={component.name}
                                     id={component.name}
                                     textValue={component.name}
-                                    className="cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent/10"
+                                    className="cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft"
                                 >
                                     <ComponentRow name={component.name} icon={component.icon} healthByName={healthByName} />
                                 </ListBox.Item>
@@ -173,7 +173,7 @@ export const ArchitectureRail = ({ healthByName, selectedId, onSelect, className
                                     key={module.id}
                                     id={module.id}
                                     textValue={module.id}
-                                    className="cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent/10"
+                                    className="cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft"
                                 >
                                     <ModuleRow id={module.id} icon={module.icon} />
                                 </ListBox.Item>

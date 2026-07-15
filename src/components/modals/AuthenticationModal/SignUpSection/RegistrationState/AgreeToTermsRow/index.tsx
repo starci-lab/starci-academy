@@ -87,7 +87,7 @@ export const AgreeToTermsRow = ({
                 </Checkbox>
             </div>
             {touched && error ? (
-                <div className="text-xs text-danger mt-1">
+                <div className="text-xs text-danger-soft-foreground mt-1">
                     {error}
                 </div>
             ) : null}

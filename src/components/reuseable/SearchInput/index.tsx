@@ -257,7 +257,7 @@ const SearchInputSuggestionRow = ({
                 className={cn(
                     "flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-sm transition-colors",
                     // hover + keyboard-active share the same soft accent fill (HeroUI listbox feel)
-                    active ? "bg-accent/10" : "hover:bg-accent/10",
+                    active ? "bg-accent-soft" : "hover:bg-accent-soft",
                 )}
                 onMouseDown={onMouseDown}
                 onMouseEnter={onHover}

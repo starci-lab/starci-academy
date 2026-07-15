@@ -274,13 +274,13 @@ export const ModulePage = ({ className }: ModulePageProps) => {
                                                     <PlayIcon
                                                         aria-hidden
                                                         focusable="false"
-                                                        className="size-5 text-accent"
+                                                        className="size-5 text-accent-soft-foreground"
                                                     />
                                                 ) : lesson.isRead ? (
                                                     <CheckCircleIcon
                                                         aria-label={t("modulePage.read")}
                                                         focusable="false"
-                                                        className="size-5 text-success"
+                                                        className="size-5 text-success-soft-foreground"
                                                     />
                                                 ) : (
                                                     <CircleIcon
@@ -330,7 +330,7 @@ export const ModulePage = ({ className }: ModulePageProps) => {
                                                         <PuzzlePieceIcon
                                                             aria-hidden
                                                             focusable="false"
-                                                            className={challenge.completed ? "size-5 text-success" : "size-5 text-muted"}
+                                                            className={challenge.completed ? "size-5 text-success-soft-foreground" : "size-5 text-muted"}
                                                         />
                                                     )}
                                                     title={challenge.title}

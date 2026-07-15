@@ -76,7 +76,7 @@ export const TierCard = ({
             icon={(
                 <TierLevelIcon
                     level={tierLevel}
-                    className="size-6 shrink-0 text-accent"
+                    className="size-6 shrink-0 text-accent-soft-foreground"
                 />
             )}
             title={tier.displayName}

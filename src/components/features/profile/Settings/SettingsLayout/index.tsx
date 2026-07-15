@@ -105,7 +105,7 @@ export const SettingsLayout = ({
                             className={cn(
                                 "flex shrink-0 cursor-pointer items-center gap-2 rounded-full border px-3 py-2 text-sm transition-colors",
                                 pathname === item.href
-                                    ? "border-accent bg-accent/10 text-accent"
+                                    ? "border-accent bg-accent-soft text-accent-soft-foreground"
                                     : "border-default text-muted hover:bg-default",
                             )}
                         >

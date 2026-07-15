@@ -30,7 +30,7 @@ export const CheckListCard = ({ children, className }: CheckListCardProps) => (
 /** Props for {@link CheckListItem}. */
 export interface CheckListItemProps {
     /**
-     * Show the leading success check (`CheckCircleIcon`, `text-success`). Default
+     * Show the leading success check (`CheckCircleIcon`, `text-success-soft-foreground`). Default
      * `true`. Pass `false` for "things you need beforehand" lists (prerequisites) —
      * those are requirements, NOT achievements, so they carry no tick.
      */
@@ -51,7 +51,7 @@ export const CheckListItem = ({ showCheck = true, children }: CheckListItemProps
             <CheckCircleIcon
                 aria-hidden
                 focusable="false"
-                className="size-5 shrink-0 text-success"
+                className="size-5 shrink-0 text-success-soft-foreground"
             />
         ) : null}
         <div className="min-w-0 flex-1">{children}</div>

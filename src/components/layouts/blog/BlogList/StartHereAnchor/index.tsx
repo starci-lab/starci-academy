@@ -21,11 +21,11 @@ export const StartHereAnchor = ({ post }: StartHereAnchorProps) => {
     return (
         <Link
             href={`/blog/${post.slug}`}
-            className="group flex cursor-pointer items-center gap-3 rounded-2xl border border-accent/40 bg-accent/5 px-4 py-3 transition-colors hover:bg-accent/10"
+            className="group flex cursor-pointer items-center gap-3 rounded-2xl border border-accent/40 bg-accent/5 px-4 py-3 transition-colors hover:bg-accent-soft"
         >
-            <MapPinIcon className="size-5 shrink-0 text-accent" aria-hidden />
+            <MapPinIcon className="size-5 shrink-0 text-accent-soft-foreground" aria-hidden />
             <div className="flex flex-col">
-                <span className="text-xs font-medium text-accent">{t("startHere")}</span>
+                <span className="text-xs font-medium text-accent-soft-foreground">{t("startHere")}</span>
                 <span className="text-sm font-semibold text-foreground group-hover:underline">
                     {post.title}
                 </span>

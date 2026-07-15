@@ -66,10 +66,11 @@ export const CourseCtaButtons = ({ className }: CourseCtaButtonsProps) => {
                 />
             ) : null}
             {/* "Try free" is the ACQUISITION entry for a non-payer — a peer secondary
-                CTA (not buried as quiet tertiary), so the funnel's front door is visible. */}
+                CTA (not buried as quiet tertiary), so the funnel's front door is visible.
+                No trailing arrow: arrow marks the ONE primary CTA per surface
+                (button.md §2) — "Enroll" above already carries it. */}
             <Button variant="secondary" size="lg" className="w-full" onPress={onTryLearning}>
                 {t("course.tryLearning")}
-                <ArrowRightIcon className="size-5" />
             </Button>
         </div>
     )

@@ -131,7 +131,7 @@ export const PDFView = ({
                     key={src}
                     file={file}
                     loading={<div className="text-sm text-muted">{title}</div>}
-                    error={<div className="text-sm text-danger">Failed to render PDF.</div>}
+                    error={<div className="text-sm text-danger-soft-foreground">Failed to render PDF.</div>}
                     noData={<div className="text-sm text-muted">No PDF selected.</div>}
                     onLoadSuccess={(pdf) => setNumPages(pdf.numPages)}
                 >

@@ -110,13 +110,13 @@ export const VoiceHero = ({
                 className={cn(
                     "flex size-20 cursor-pointer items-center justify-center rounded-full border-2 transition-colors",
                     listening
-                        ? "animate-pulse border-danger bg-danger/10 text-danger"
-                        : "border-accent bg-accent/10 text-accent hover:bg-accent/15",
+                        ? "animate-pulse border-danger bg-danger-soft text-danger-soft-foreground"
+                        : "border-accent bg-accent-soft text-accent-soft-foreground hover:bg-accent/15",
                 )}
             >
                 <MicrophoneIcon className="size-9" aria-hidden focusable="false" />
             </button>
-            <Typography type="body-sm" color="muted" className={cn(listening && "text-danger")} align="center">
+            <Typography type="body-sm" color="muted" className={cn(listening && "text-danger-soft-foreground")} align="center">
                 {listening ? labels.listening : labels.pushToTalk}
                 {!listening && canToggle ? (
                     <>
@@ -124,7 +124,7 @@ export const VoiceHero = ({
                         <button
                             type="button"
                             onClick={() => setShowText(true)}
-                            className="cursor-pointer text-accent hover:underline"
+                            className="cursor-pointer text-accent-soft-foreground hover:underline"
                         >
                             {labels.typeInstead}
                         </button>

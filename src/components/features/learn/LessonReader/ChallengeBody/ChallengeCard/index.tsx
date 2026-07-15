@@ -38,9 +38,9 @@ const DIFFICULTY_LABEL_KEY: Record<ChallengeDifficulty, string> = {
 /** Status → eyebrow chip (icon + label color). */
 const STATUS_META: Record<ChallengeProgressStatus, { labelKey: string; className: string; icon: Icon }> = {
     notStarted: { labelKey: "challenge.status.notStarted", className: "text-muted", icon: CircleIcon },
-    inProgress: { labelKey: "challenge.status.inProgress", className: "text-warning", icon: CircleNotchIcon },
-    failed: { labelKey: "challenge.status.failed", className: "text-danger", icon: XCircleIcon },
-    completed: { labelKey: "challenge.status.completed", className: "text-success", icon: CheckCircleIcon },
+    inProgress: { labelKey: "challenge.status.inProgress", className: "text-warning-soft-foreground", icon: CircleNotchIcon },
+    failed: { labelKey: "challenge.status.failed", className: "text-danger-soft-foreground", icon: XCircleIcon },
+    completed: { labelKey: "challenge.status.completed", className: "text-success-soft-foreground", icon: CheckCircleIcon },
 }
 
 /** Status → primary action label + icon (resume semantics). */

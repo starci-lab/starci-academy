@@ -76,7 +76,7 @@ export const ProfileSkillsSnapshot = ({
             size="sm"
             onPress={() => setTab("skills")}
             aria-label="Xem tất cả kỹ năng"
-            className="text-accent"
+            className="text-accent-soft-foreground"
         >
             Xem tất cả →
         </Button>

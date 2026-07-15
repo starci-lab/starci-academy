@@ -9,9 +9,6 @@ import { SurfaceListCard, SurfaceListCardItem, SurfaceListCardRow } from "./inde
 const meta: Meta<typeof SurfaceListCard> = {
     title: "Blocks/SurfaceListCard",
     component: SurfaceListCard,
-    parameters: {
-        layout: "padded",
-    },
 }
 
 export default meta
@@ -61,7 +58,7 @@ export const RowVariants: Story = {
     render: () => (
         <div className="flex flex-col gap-4">
             <div className="max-w-md rounded-3xl bg-surface p-4 shadow-surface">
-                <p className="mb-2 text-body-xs text-muted">bordered (nested surface)</p>
+                <p className="mb-2 text-xs text-muted">bordered (nested surface)</p>
                 <SurfaceListCard bordered>
                     <SurfaceListCardRow
                         title="Ví MoMo"
@@ -77,14 +74,14 @@ export const RowVariants: Story = {
                 </SurfaceListCard>
             </div>
             <div className="max-w-md">
-                <p className="mb-2 text-body-xs text-muted">selected</p>
+                <p className="mb-2 text-xs text-muted">selected</p>
                 <SurfaceListCard>
                     <SurfaceListCardRow title="Tiếng Việt" onPress={() => {}} />
                     <SurfaceListCardRow title="English" selected onPress={() => {}} />
                 </SurfaceListCard>
             </div>
             <div className="max-w-md">
-                <p className="mb-2 text-body-xs text-muted">isDisabled</p>
+                <p className="mb-2 text-xs text-muted">isDisabled</p>
                 <SurfaceListCard>
                     <SurfaceListCardRow title="Xuất hoá đơn PDF" onPress={() => {}} />
                     <SurfaceListCardRow
@@ -96,7 +93,7 @@ export const RowVariants: Story = {
                 </SurfaceListCard>
             </div>
             <div className="max-w-md">
-                <p className="mb-2 text-body-xs text-muted">hover=&quot;underline&quot;</p>
+                <p className="mb-2 text-xs text-muted">hover=&quot;underline&quot;</p>
                 <SurfaceListCard>
                     <SurfaceListCardRow
                         title="Vì sao học viên bỏ dở khoá học?"
@@ -126,13 +123,13 @@ export const WithLeadingAndMeta: Story = {
             <SurfaceListCard>
                 <SurfaceListCardRow
                     leading={
-                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent/10">
-                            <CreditCardIcon className="size-5 text-accent" aria-hidden focusable="false" />
+                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent-soft">
+                            <CreditCardIcon className="size-5 text-accent-soft-foreground" aria-hidden focusable="false" />
                         </div>
                     }
                     title="Thanh toán một lần"
                     subtitle="Thanh toán toàn bộ học phí ngay"
-                    meta={<span className="text-body-xs text-muted">Tiết kiệm 10%</span>}
+                    meta={<span className="text-xs text-muted">Tiết kiệm 10%</span>}
                     onPress={() => {}}
                 />
                 <SurfaceListCardRow
@@ -184,27 +181,27 @@ export const FreeFormItems: Story = {
                 <SurfaceListCardItem onPress={() => {}}>
                     <div className="flex items-center justify-between gap-3">
                         <div className="flex min-w-0 flex-col gap-1">
-                            <span className="truncate text-body-sm font-medium">
+                            <span className="truncate text-sm">
                                 Nhập môn Lập trình Backend
                             </span>
                             <div className="h-1.5 w-40 overflow-hidden rounded-full bg-default">
                                 <div className="h-full w-2/3 rounded-full bg-accent" />
                             </div>
                         </div>
-                        <span className="shrink-0 text-body-xs text-muted">65%</span>
+                        <span className="shrink-0 text-xs text-muted">65%</span>
                     </div>
                 </SurfaceListCardItem>
                 <SurfaceListCardItem onPress={() => {}}>
                     <div className="flex items-center justify-between gap-3">
                         <div className="flex min-w-0 flex-col gap-1">
-                            <span className="truncate text-body-sm font-medium">
+                            <span className="truncate text-sm">
                                 Cơ sở dữ liệu quan hệ
                             </span>
                             <div className="h-1.5 w-40 overflow-hidden rounded-full bg-default">
                                 <div className="h-full w-1/5 rounded-full bg-accent" />
                             </div>
                         </div>
-                        <span className="shrink-0 text-body-xs text-muted">20%</span>
+                        <span className="shrink-0 text-xs text-muted">20%</span>
                     </div>
                 </SurfaceListCardItem>
             </SurfaceListCard>
@@ -221,12 +218,12 @@ export const StaticItem: Story = {
         <div className="max-w-md">
             <SurfaceListCard>
                 <SurfaceListCardItem>
-                    <span className="text-body-sm text-muted">
+                    <span className="text-sm text-muted">
                         Nhật ký thay đổi v2.4.0 — thêm chế độ trả góp
                     </span>
                 </SurfaceListCardItem>
                 <SurfaceListCardItem>
-                    <span className="text-body-sm text-muted">
+                    <span className="text-sm text-muted">
                         Nhật ký thay đổi v2.3.0 — cải thiện tốc độ tải trang khoá học
                     </span>
                 </SurfaceListCardItem>

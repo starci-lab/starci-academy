@@ -176,7 +176,7 @@ export const LeagueCardContent = ({
                 ) : null}
                 <Link
                     href={pathConfig().locale(locale).league().build()}
-                    className="inline-flex items-center text-xs font-medium text-accent hover:underline"
+                    className="inline-flex items-center text-xs font-medium text-accent-soft-foreground hover:underline"
                 >
                     {t("dashboard.league.seeMore")}
                 </Link>

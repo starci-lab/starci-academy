@@ -19,9 +19,9 @@ const COURSES: ReadonlyArray<PreviewCourse> = [
 ]
 
 const TONE_TILE: Record<PreviewCourse["tone"], string> = {
-    accent: "bg-accent/10 text-accent",
-    success: "bg-success/10 text-success",
-    warning: "bg-warning/10 text-warning",
+    accent: "bg-accent-soft text-accent-soft-foreground",
+    success: "bg-success-soft text-success-soft-foreground",
+    warning: "bg-warning-soft text-warning-soft-foreground",
 }
 
 /** 1 dòng filter có ô tick (checked = accent). */
@@ -91,15 +91,15 @@ export const SitePreview = () => (
                         <div className="flex min-w-0 flex-1 flex-col">
                             <span className="flex items-center gap-1 truncate text-sm font-medium">
                                 {course.name}
-                                <CheckCircleIcon aria-hidden focusable="false" className="size-3.5 shrink-0 text-success" />
+                                <CheckCircleIcon aria-hidden focusable="false" className="size-3.5 shrink-0 text-success-soft-foreground" />
                             </span>
                             <span className="flex items-center gap-1 text-xs text-muted">
-                                <StarIcon weight="fill" aria-hidden focusable="false" className="size-3 text-warning" />
+                                <StarIcon weight="fill" aria-hidden focusable="false" className="size-3 text-warning-soft-foreground" />
                                 {course.rating} · {course.level}
                             </span>
                         </div>
                         <div className="shrink-0 text-right">
-                            <span className="block text-sm font-semibold text-accent">{course.price}</span>
+                            <span className="block text-sm font-semibold text-accent-soft-foreground">{course.price}</span>
                             <span className="block text-[10px] text-muted">/ khóa</span>
                         </div>
                     </div>

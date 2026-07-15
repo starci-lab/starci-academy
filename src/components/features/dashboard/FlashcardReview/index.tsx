@@ -61,7 +61,7 @@ export const FlashcardReview = ({
         >
             <div className={cn("flex items-center justify-between gap-3 p-3", className)}>
                 <div className="flex min-w-0 items-center gap-2">
-                    <LayersIcon className="size-5 shrink-0 text-accent" />
+                    <LayersIcon className="size-5 shrink-0 text-accent-soft-foreground" />
                     <span className="truncate text-sm font-medium text-foreground">
                         {t("flashcardReview.due", {
                             count: data?.dueCount ?? 0,

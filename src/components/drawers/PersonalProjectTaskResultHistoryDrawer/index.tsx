@@ -97,7 +97,7 @@ export const PersonalProjectTaskResultHistoryDrawer = ({
                                                     onSelect(attempt.id)
                                                     onOpenChange(false)
                                                 }}
-                                                className={selected ? "bg-accent/10" : undefined}
+                                                className={selected ? "bg-accent-soft" : undefined}
                                             >
                                                 <div className="flex flex-col gap-2">
                                                     <div className="flex items-center gap-2">
@@ -111,7 +111,7 @@ export const PersonalProjectTaskResultHistoryDrawer = ({
                                                         </Chip>
                                                         <Typography
                                                             type="body-sm"
-                                                            className={cn("ml-auto", attempt.passed ? "text-success" : "text-muted")}
+                                                            className={cn("ml-auto", attempt.passed ? "text-success-soft-foreground" : "text-muted")}
                                                         >
                                                             {scoreLabel(attempt.score)}
                                                         </Typography>

@@ -16,9 +16,6 @@ const meta = {
     args: {
         title: "Không có dữ liệu",
     },
-    parameters: {
-        layout: "centered",
-    },
 } satisfies Meta<typeof EmptyState>
 
 export default meta

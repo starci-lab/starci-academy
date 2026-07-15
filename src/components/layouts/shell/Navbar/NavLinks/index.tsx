@@ -80,7 +80,7 @@ export const NavLinks = ({ className }: NavLinksProps) => {
                         className={cn(
                             "whitespace-nowrap rounded-full px-3 py-2 text-sm transition-colors",
                             item.isActive
-                                ? "bg-accent/10 text-accent"
+                                ? "bg-accent-soft text-accent-soft-foreground"
                                 : "text-muted hover:text-foreground",
                         )}
                     >

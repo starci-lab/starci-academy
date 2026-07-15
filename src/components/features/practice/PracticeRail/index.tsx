@@ -140,7 +140,7 @@ export const PracticeRail = ({ className }: PracticeRailProps) => {
                                     key={domain}
                                     id={domain}
                                     textValue={topicLabel(domain)}
-                                    className="cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent/10"
+                                    className="cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft"
                                 >
                                     <Typography type="body-sm" className="min-w-0 flex-1 truncate">
                                         {topicLabel(domain)}

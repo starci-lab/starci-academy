@@ -11,8 +11,8 @@ import {
     Chip,
     Spinner,
     cn,
-    toast,
 } from "@heroui/react"
+import { toast } from "@/modules/toast/toast"
 import {
     useLocale,
     useTranslations,

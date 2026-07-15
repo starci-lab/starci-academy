@@ -299,7 +299,7 @@ export const RagPlayground = ({ className }: RagPlaygroundProps) => {
                         eyebrow={t("ragPlayground.hero.eyebrow")}
                         eyebrowIcon={<SparkleIcon aria-hidden focusable="false" className="size-3" />}
                         headline={t.rich("ragPlayground.hero.headline", {
-                            accent: (chunks) => <span className="text-accent">{chunks}</span>,
+                            accent: (chunks) => <span className="text-accent-soft-foreground">{chunks}</span>,
                         })}
                         subline={t("ragPlayground.hero.subline")}
                         primary={(
@@ -432,7 +432,7 @@ export const RagPlayground = ({ className }: RagPlaygroundProps) => {
 
                                 {indexed ? (
                                     <div className="flex flex-wrap items-center gap-2">
-                                        <Chip size="sm" className="bg-success/10 text-success">
+                                        <Chip size="sm" className="bg-success-soft text-success-soft-foreground">
                                             <Chip.Label>
                                                 {t("ragPlayground.import.indexed", { count: indexed.chunkCount })}
                                             </Chip.Label>
@@ -454,7 +454,7 @@ export const RagPlayground = ({ className }: RagPlaygroundProps) => {
                             <Typography type="body" weight="semibold">
                                 {t("ragPlayground.chat.title")}
                             </Typography>
-                            <Chip size="sm" className="bg-accent/10 text-accent">
+                            <Chip size="sm" className="bg-accent-soft text-accent-soft-foreground">
                                 <SparkleIcon aria-hidden focusable="false" className="size-4" />
                                 <Chip.Label>{t("ragPlayground.chat.freeBadge")}</Chip.Label>
                             </Chip>
@@ -488,7 +488,7 @@ export const RagPlayground = ({ className }: RagPlaygroundProps) => {
                                                 </div>
                                                 <div className="rounded-2xl border border-default bg-surface px-4 py-3">
                                                     {turn.errorMessage ? (
-                                                        <Typography type="body-sm" className="text-danger">
+                                                        <Typography type="body-sm" className="text-danger-soft-foreground">
                                                             {turn.errorMessage}
                                                         </Typography>
                                                     ) : turn.answerText ? (
@@ -573,7 +573,7 @@ export const RagPlayground = ({ className }: RagPlaygroundProps) => {
                 {/* closing course-CTA funnel — the demo has to point somewhere */}
                 <Card className="mx-auto w-full max-w-3xl">
                     <CardContent className="flex flex-col items-center gap-3 py-10 text-center">
-                        <GraduationCapIcon aria-hidden focusable="false" className="size-8 text-accent" />
+                        <GraduationCapIcon aria-hidden focusable="false" className="size-8 text-accent-soft-foreground" />
                         <Typography type="h6" weight="bold">
                             {t("ragPlayground.closingCta.title")}
                         </Typography>

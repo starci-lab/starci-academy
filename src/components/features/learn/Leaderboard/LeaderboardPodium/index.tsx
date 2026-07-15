@@ -58,7 +58,7 @@ export const LeaderboardPodium = ({ top, selectedCategory, viewerUserId, classNa
                                     <CrownIcon
                                         aria-hidden
                                         focusable="false"
-                                        className="absolute -top-4 left-1/2 size-5 -translate-x-1/2 text-warning"
+                                        className="absolute -top-4 left-1/2 size-5 -translate-x-1/2 text-warning-soft-foreground"
                                     />
                                 ) : null}
                                 <UserAvatar
@@ -72,7 +72,7 @@ export const LeaderboardPodium = ({ top, selectedCategory, viewerUserId, classNa
                                 {isViewer ? t("leaderboard.you") : entry.username}
                             </Typography>
                         </Link>
-                        <Typography type="body-xs" className={cn("shrink-0", isViewer ? "text-accent" : "text-muted")}>
+                        <Typography type="body-xs" className={cn("shrink-0", isViewer ? "text-accent-soft-foreground" : "text-muted")}>
                             {t("leaderboard.xp", { xp: categoryEntryXp(entry, selectedCategory) })}
                         </Typography>
                         <div

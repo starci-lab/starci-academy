@@ -147,7 +147,7 @@ export const NodeDissectionPanel = ({ nodeId, healthByName, className }: NodeDis
                 </div>
 
                 {blogHref ? (
-                    <Link href={blogHref} className="group inline-flex items-center gap-2 text-accent">
+                    <Link href={blogHref} className="group inline-flex items-center gap-2 text-accent-soft-foreground">
                         <BookOpenTextIcon aria-hidden focusable="false" className="size-4" />
                         {t("panel.deepDive")}
                         <ArrowUpRightIcon

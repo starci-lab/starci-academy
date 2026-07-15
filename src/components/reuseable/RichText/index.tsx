@@ -39,7 +39,7 @@ const RULES: Array<InlineRule> = [
         re: /`([^`]+)`/,
         recurse: false,
         render: (match) => (
-            <code className="rounded-md bg-default px-2 py-0 font-mono text-[0.9em] text-accent">
+            <code className="rounded-md bg-default px-2 py-0 font-mono text-[0.9em] text-accent-soft-foreground">
                 {match[1]}
             </code>
         ),
@@ -59,7 +59,7 @@ const RULES: Array<InlineRule> = [
                 href={match[2]}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-accent hover:underline"
+                className="text-accent-soft-foreground hover:underline"
             >
                 {children}
             </a>

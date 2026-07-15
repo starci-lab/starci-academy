@@ -75,7 +75,7 @@ const AttemptCard = ({ attempt, position }: { attempt: InterviewSessionAttemptIt
             {/* persisted feedback (empty for legacy runs) */}
             {attempt.strengths.length > 0 ? (
                 <div className="flex flex-col gap-2">
-                    <Typography type="body-xs" weight="medium" className="text-success">
+                    <Typography type="body-xs" weight="medium" className="text-success-soft-foreground">
                         {t("flashcard.interview.strengths")}
                     </Typography>
                     <ul className="flex list-disc flex-col gap-2 pl-5">
@@ -89,7 +89,7 @@ const AttemptCard = ({ attempt, position }: { attempt: InterviewSessionAttemptIt
             ) : null}
             {attempt.gaps.length > 0 ? (
                 <div className="flex flex-col gap-2">
-                    <Typography type="body-xs" weight="medium" className="text-danger">
+                    <Typography type="body-xs" weight="medium" className="text-danger-soft-foreground">
                         {t("flashcard.interview.gaps")}
                     </Typography>
                     <ul className="flex list-disc flex-col gap-2 pl-5">
@@ -189,17 +189,17 @@ export const InterviewSessionDetailDrawer = ({
                                         </div>
                                         <div className="ml-auto flex flex-wrap items-center gap-x-3 gap-y-1">
                                             {session.passCount > 0 ? (
-                                                <Typography type="body-sm" weight="medium" className="text-success">
+                                                <Typography type="body-sm" weight="medium" className="text-success-soft-foreground">
                                                     {`${t("flashcard.interview.pass")} · ${session.passCount}`}
                                                 </Typography>
                                             ) : null}
                                             {session.borderlineCount > 0 ? (
-                                                <Typography type="body-sm" weight="medium" className="text-warning">
+                                                <Typography type="body-sm" weight="medium" className="text-warning-soft-foreground">
                                                     {`${t("flashcard.interview.borderline")} · ${session.borderlineCount}`}
                                                 </Typography>
                                             ) : null}
                                             {session.failCount > 0 ? (
-                                                <Typography type="body-sm" weight="medium" className="text-danger">
+                                                <Typography type="body-sm" weight="medium" className="text-danger-soft-foreground">
                                                     {`${t("flashcard.interview.fail")} · ${session.failCount}`}
                                                 </Typography>
                                             ) : null}

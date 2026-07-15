@@ -6,8 +6,8 @@ import React, {
 import {
     Button,
     cn,
-    toast,
 } from "@heroui/react"
+import { toast } from "@/modules/toast/toast"
 import {
     ShareNetworkIcon as ShareIcon,
 } from "@phosphor-icons/react"

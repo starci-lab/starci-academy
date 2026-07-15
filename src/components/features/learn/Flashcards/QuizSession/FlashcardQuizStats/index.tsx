@@ -188,7 +188,7 @@ export const FlashcardQuizStats = ({ courseId, onStartQuiz, className }: Flashca
                             label={t("flashcard.quiz.quizStatsGapLabel")}
                             contentClassName="flex items-center gap-3"
                         >
-                            <TargetIcon className="size-7 shrink-0 text-success" aria-hidden focusable="false" />
+                            <TargetIcon className="size-7 shrink-0 text-success-soft-foreground" aria-hidden focusable="false" />
                             <div className="flex flex-col">
                                 <Typography type="body-sm" weight="medium">
                                     {t("flashcard.quiz.quizStatsNoGapTitle")}
@@ -265,7 +265,7 @@ export const FlashcardQuizStats = ({ courseId, onStartQuiz, className }: Flashca
                             </div>
                         </div>
                         {trendData.length > 1 ? (
-                            <div className="h-28 w-full text-accent">
+                            <div className="h-28 w-full text-accent-soft-foreground">
                                 <ResponsiveContainer width="100%" height="100%">
                                     <LineChart data={trendData} margin={{ top: 8, right: 8, bottom: 0, left: -16 }}>
                                         <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="text-divider" vertical={false} />

@@ -49,8 +49,8 @@ export type SubmissionResultProps = WithClassNames<undefined>
 
 /** Icon + tone per finding severity (drives the accordion item header). */
 const SEVERITY_VISUAL: Record<SubmissionFeedbackSeverity, { Icon: typeof WarningCircleIcon, text: string, rank: number }> = {
-    [SubmissionFeedbackSeverity.High]: { Icon: WarningCircleIcon, text: "text-danger", rank: 0 },
-    [SubmissionFeedbackSeverity.Medium]: { Icon: WarningCircleIcon, text: "text-warning", rank: 1 },
+    [SubmissionFeedbackSeverity.High]: { Icon: WarningCircleIcon, text: "text-danger-soft-foreground", rank: 0 },
+    [SubmissionFeedbackSeverity.Medium]: { Icon: WarningCircleIcon, text: "text-warning-soft-foreground", rank: 1 },
     [SubmissionFeedbackSeverity.Low]: { Icon: InfoIcon, text: "text-muted", rank: 2 },
 }
 
@@ -275,7 +275,6 @@ export const SubmissionResult = ({
                     <div className="flex flex-col gap-3">
                         <Label>{t("submissionResult.attempts")}</Label>
                         <FlexWrapButtonRadio
-                            insideCard
                             ariaLabel={t("submissionResult.history")}
                             value={selectedAttempt?.id ?? ""}
                             onChange={(id) => router.push(attemptHref(id))}
@@ -310,7 +309,7 @@ export const SubmissionResult = ({
                             {/* score hero — the #1 signal, tinted by pass/fail */}
                             <div className="flex items-start gap-3">
                                 <div className="flex items-baseline">
-                                    <span className={cn("text-4xl font-bold leading-none", passing ? "text-success" : "text-danger")}>
+                                    <span className={cn("text-4xl font-bold leading-none", passing ? "text-success-soft-foreground" : "text-danger-soft-foreground")}>
                                         {selectedAttempt.score ?? 0}
                                     </span>
                                     {maxScore > 0 ? (
@@ -342,7 +341,7 @@ export const SubmissionResult = ({
                                         href={selectedAttempt.submissionUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex shrink-0 items-center gap-2 text-sm text-accent hover:underline"
+                                        className="flex shrink-0 items-center gap-2 text-sm text-accent-soft-foreground hover:underline"
                                     >
                                         {t("submissionAttempts.viewSubmission")}
                                         <ArrowSquareOutIcon aria-hidden focusable="false" className="size-5" />

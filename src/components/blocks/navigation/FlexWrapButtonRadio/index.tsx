@@ -1,28 +1,9 @@
 "use client"
 
 import React from "react"
-import type { CSSProperties, ReactNode } from "react"
-import { Button, cn } from "@heroui/react"
+import type { ReactNode } from "react"
+import { Button, ButtonGroup, cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-
-/** Selected-state colour token. */
-export type FlexWrapButtonRadioColor = "accent" | "success" | "danger" | "warning"
-
-/** Selected border class per colour (card-styled mode, `insideCard={true}`). */
-const SELECTED_BORDER: Record<FlexWrapButtonRadioColor, string> = {
-    accent: "border-accent",
-    success: "border-success",
-    danger: "border-danger",
-    warning: "border-warning",
-}
-
-/** CSS colour variable per colour token (for the selected `--button-bg` tint). */
-const COLOR_VAR: Record<FlexWrapButtonRadioColor, string> = {
-    accent: "--accent",
-    success: "--success",
-    danger: "--danger",
-    warning: "--warning",
-}
 
 /** One selectable button in a {@link FlexWrapButtonRadio}. */
 export interface FlexWrapButtonRadioItem<T extends string> {
@@ -44,55 +25,53 @@ export interface FlexWrapButtonRadioProps<T extends string> extends WithClassNam
     onChange: (value: T) => void
     /** Accessible label for the group. */
     ariaLabel: string
-    /** Selected-state colour. Defaults to `accent`. */
-    color?: FlexWrapButtonRadioColor
     /**
-     * Whether each option draws its OWN card-like surface. Defaults to `false`:
-     * standalone use should NOT wrap every option in a redundant card frame —
-     * too many framed pills make unnecessary blocks (thầy 2026-07-13 "button
-     * card-like nhiều quá tạo các khối không cần thiết"). Only opt IN (`true`)
-     * when the options genuinely read better as boxed cards (e.g. an attempt
-     * picker).
-     * - `false` (default) — native HeroUI variants (selected = `secondary`, else
-     *   `ghost`). Clean buttons, no surface of their own (the parent card, or the
-     *   bare page, is the surface). NEVER `primary` here — a config row commonly
-     *   sits on the SAME surface as the page's one accent CTA, and a solid-primary
-     *   selected pill would compete with it (1 accent-solid / surface, Von
-     *   Restorff — `accent-system`).
-     * - `true` — each option is a card-styled `<Button>` (`bg-surface` + border);
-     *   the selected one is `bg-<color>/10` + `border-<color>`. Still a real
-     *   `<Button>` (consistent height), just given its own surface.
-     */
-    insideCard?: boolean
-    /**
-     * Optional trailing node placed after the buttons in the SAME wrap row (e.g. a
+     * Optional trailing node placed after the buttons in the SAME row (e.g. a
      * "+N" overflow button). Not part of the group's value — it's an action.
      */
     trailing?: ReactNode
     /**
-     * Optional per-item trailing action rendered as a SIBLING of the item's button
-     * (not nested inside it — a `<Button>` can't contain another interactive
-     * element). When provided, each item renders as `[button][action]`. Use for a
-     * per-item menu trigger (e.g. edit/delete). Omit for a plain single-select row
-     * (default — matches every existing caller's output exactly).
+     * Optional per-item trailing action(s) — e.g. a delete button and/or a "⋮"
+     * (kebab) menu trigger. When provided, the item's select button and these
+     * action buttons render as ONE connected {@link ButtonGroup} per item
+     * (`[select | 🗑 | ⋮]`) — touching, a full-height separator at every seam,
+     * rounded only at the two outer ends — instead of a detached button floating
+     * beside the pill. Return the action `<Button>`s as an ARRAY (with `key`s) so
+     * each is an individual segment the group can rounded/separate — NOT wrapped in
+     * a fragment (a fragment counts as one child and the per-button separator
+     * injection would misfire). Omit for a plain single-select row (default —
+     * matches every existing caller's output). The actions are SIBLINGS of the
+     * select button (a `<Button>` can't nest another interactive element), so a
+     * click on one never changes the selection.
      */
     itemAction?: (item: FlexWrapButtonRadioItem<T>) => ReactNode
 }
 
 /**
- * A single-select toggle-button group laid out as a flex-wrap row (buttons wrap to
- * the next line, never scroll). Every option is a real HeroUI `<Button>` (fixed
- * height, so a text-only `trailing` lines up with icon-bearing options). Two looks
- * via `insideCard`:
+ * A single-select toggle-button group laid out as a flex-wrap row (buttons wrap
+ * to the next line, never scroll). Every option is a real HeroUI `<Button>`,
+ * native `secondary`/`ghost` variants — clean, no own surface (the parent card,
+ * or the bare page, is the surface). NEVER `primary` here — a config row commonly
+ * sits on the SAME surface as the page's one accent CTA, and a solid-primary
+ * selected pill would compete with it (1 accent-solid / surface, Von Restorff —
+ * `accent-system`).
  *
- * - `insideCard={false}` (default) — native `secondary`/`ghost` variants (clean,
- *   no own surface; the default so standalone use isn't wrapped in a redundant
- *   card-like frame; never `primary` — would compete with the surface's own
- *   accent CTA).
- * - `insideCard={true}` — card-styled buttons (`bg-surface` + border,
- *   selected `bg-<color>/10` + `border-<color>`). HeroUI buttons drive their fill
- *   via the `--button-bg` CSS var, so the surface/tint is set through inline style
- *   (a `border` utility adds the outline; the base button has none).
+ * When `itemAction` is supplied, each item instead renders as one connected
+ * {@link ButtonGroup} — the select button + its action button(s) touching, only
+ * the two outer ends rounded (`[select | 🗑 | ⋮]`). No bordered frame: the button
+ * VARIANTS carry the look — EVERY segment is filled `--default` so the cluster
+ * reads as one solid control (the select pill is `secondary` = default fill +
+ * accent text when chosen, else `tertiary` = default fill + neutral text — NOT a
+ * hollow `ghost`, which would leave the unselected label floating on the page; the
+ * action buttons are `tertiary` too). The seam is HeroUI's own
+ * `ButtonGroup.Separator`, recoloured to the `--border` token (`!bg-border
+ * !opacity-100`, overriding its default muddy `bg-current opacity-15`) so it
+ * matches every other divider in the app. Because `.button` is
+ * `position: relative`, the separator MUST live INSIDE the button that follows the
+ * seam (its `left: -1px` then bites that button's left edge); so the component
+ * injects one at the head of each action button's children — callers just return
+ * plain `<Button>`s. Overridden to FULL height (`!top-0 !h-full`) from HeroUI's
+ * default 50%.
  *
  * `role="group"` + `aria-pressed` per button (single-select toggle group). Sibling
  * of `FlexWrapCardRadio` (a true `RadioGroup` of boxed cards). For a grid with
@@ -105,51 +84,18 @@ export const FlexWrapButtonRadio = <T extends string>({
     value,
     onChange,
     ariaLabel,
-    color = "accent",
-    insideCard = false,
     trailing,
     itemAction,
     className,
 }: FlexWrapButtonRadioProps<T>) => {
-    const colorVar = COLOR_VAR[color]
     return (
         <div role="group" aria-label={ariaLabel} className={cn("flex flex-wrap items-center gap-2", className)}>
             {items.map((item) => {
                 const selected = item.value === value
-                let button: ReactNode
-                if (insideCard) {
-                    // card-styled <Button>: bg-surface lifted by a SHADOW (matches the global
-                    // card flip — shadow instead of an unselected border; shadow-surface is
-                    // transparent in dark mode, same as cards). Selected = bg-<color>/10 + a
-                    // colored border as the selection signal. HeroUI fill = var(--button-bg) →
-                    // override it via inline style (utility bg loses to it).
-                    const style = (selected
-                        ? {
-                            "--button-bg": `color-mix(in oklab, var(${colorVar}) 10%, transparent)`,
-                            "--button-bg-hover": `color-mix(in oklab, var(${colorVar}) 14%, transparent)`,
-                        }
-                        : {
-                            "--button-bg": "var(--surface)",
-                            "--button-bg-hover": "var(--default)",
-                        }) as CSSProperties
-                    button = (
-                        <Button
-                            key={item.value}
-                            size="sm"
-                            variant="ghost"
-                            isDisabled={item.isDisabled}
-                            aria-pressed={selected}
-                            onPress={() => onChange(item.value)}
-                            style={style}
-                            className={cn("shadow-surface", selected && cn("border", SELECTED_BORDER[color], "font-medium"))}
-                        >
-                            {item.content}
-                        </Button>
-                    )
-                } else {
-                    // clean (default): native HeroUI variants, no own surface — the
-                    // parent card / bare page IS the surface. Never `primary`.
-                    button = (
+                if (!itemAction) {
+                    // standalone: unselected is a hollow `ghost` (no surface of its
+                    // own — the page/card is the surface).
+                    return (
                         <Button
                             key={item.value}
                             size="sm"
@@ -162,16 +108,35 @@ export const FlexWrapButtonRadio = <T extends string>({
                         </Button>
                     )
                 }
-                if (!itemAction) {
-                    return button
-                }
-                // per-item action is a SIBLING of the button (not nested inside it —
-                // a <Button> can't contain another interactive element).
+                // select button + its action(s) = ONE connected ButtonGroup per
+                // item. No border frame — the button variants carry the look; here
+                // the unselected select is `tertiary` (filled `--default`), NOT
+                // `ghost`, so it matches the filled action buttons instead of
+                // floating hollow. Each action button gets a `ButtonGroup.Separator`
+                // injected at the head of its children (HeroUI's separator must sit
+                // INSIDE the following button — see the class doc), full-height.
                 return (
-                    <div key={item.value} className="flex items-center gap-1">
-                        {button}
-                        {itemAction(item)}
-                    </div>
+                    <ButtonGroup key={item.value} size="sm" className="w-fit">
+                        <Button
+                            size="sm"
+                            variant={selected ? "secondary" : "tertiary"}
+                            isDisabled={item.isDisabled}
+                            aria-pressed={selected}
+                            onPress={() => onChange(item.value)}
+                        >
+                            {item.content}
+                        </Button>
+                        {React.Children.map(itemAction(item), (action) =>
+                            React.isValidElement<{ children?: ReactNode }>(action)
+                                ? React.cloneElement(
+                                    action,
+                                    undefined,
+                                    <ButtonGroup.Separator className="!top-0 !h-full !bg-border !opacity-100" />,
+                                    action.props.children,
+                                )
+                                : action,
+                        )}
+                    </ButtonGroup>
                 )
             })}
             {trailing}

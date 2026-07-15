@@ -1,7 +1,8 @@
 "use client"
 
 import React, { useEffect, useMemo, useState } from "react"
-import { Button, Label, Modal, Spinner, Tabs, Typography, cn, toast } from "@heroui/react"
+import { Button, Label, Modal, Spinner, Tabs, Typography, cn } from "@heroui/react"
+import { toast } from "@/modules/toast/toast"
 import useSWR from "swr"
 import { CombinedGraphQLErrors } from "@apollo/client"
 import { ArrowRightIcon, FlameIcon, GraduationCapIcon, LockSimpleIcon } from "@phosphor-icons/react"
@@ -28,6 +29,7 @@ import type { CoursesCheckoutPreviewLine } from "@/modules/api/graphql/queries/t
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
 import { PriceTag } from "@/components/blocks/commerce/PriceTag"
 import { SegmentedControl } from "@/components/blocks/navigation/SegmentedControl"
 import type { PriceCurrency } from "@/components/blocks/commerce/PriceTag"
@@ -270,14 +272,14 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
         if (reason === "enrolledCount" || reason === "both") {
             rows.push({
                 key: "enrolled",
-                icon: <GraduationCapIcon aria-hidden focusable="false" className="size-3 text-success" />,
+                icon: <GraduationCapIcon aria-hidden focusable="false" className="size-3 text-success-soft-foreground" />,
                 label: t("payment.loyalty.enrolled", { count: enrolledCount }),
             })
         }
         if (reason === "diligent" || reason === "both") {
             rows.push({
                 key: "diligent",
-                icon: <FlameIcon aria-hidden focusable="false" className="size-3 text-success" />,
+                icon: <FlameIcon aria-hidden focusable="false" className="size-3 text-success-soft-foreground" />,
                 label: t("payment.loyalty.diligent"),
             })
         }
@@ -422,36 +424,28 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
                 : (order?.priceVnd != null ? formatVnd(order.priceVnd) : null)
         const rowPending = isMutating && selectedPaymentMethod === method.type
         return (
-            <button
+            <SurfaceListCardRow
                 key={method.type}
-                type="button"
-                disabled={isMutating}
-                onClick={() => { void runCheckout(method.type) }}
-                // full-bleed separator (not the 3%-inset accordion mirror) — this
-                // list always sits NESTED inside Modal.Body (surface-in-surface,
-                // thầy 2026-07-14: "surface in surface thì separator phải full")
-                className="relative flex w-full cursor-pointer items-center gap-3 px-4 py-4 text-left outline-none transition-colors hover:bg-default focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent disabled:cursor-not-allowed disabled:opacity-60 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-surface-foreground/6 after:content-[''] last:after:hidden"
-            >
-                <img
-                    alt={method.name}
-                    className="h-8 w-12 shrink-0 object-contain object-left"
-                    src={method.iconUrl}
-                />
-                <div className="flex min-w-0 flex-1 flex-col">
-                    <Typography type="body-sm" weight="semibold">{method.name}</Typography>
-                    <Typography type="body-xs" color="muted" truncate>{method.description}</Typography>
-                </div>
-                <div className="flex shrink-0 items-center gap-2">
-                    {amountLabel ? (
-                        <Typography type="body-xs" color="muted">{amountLabel}</Typography>
-                    ) : null}
-                    {rowPending ? (
-                        <Spinner size="sm" />
-                    ) : (
-                        <ArrowRightIcon aria-hidden focusable="false" className="size-5 text-muted" />
-                    )}
-                </div>
-            </button>
+                leading={(
+                    <img
+                        alt={method.name}
+                        className="h-8 w-12 shrink-0 object-contain object-left"
+                        src={method.iconUrl}
+                    />
+                )}
+                title={method.name}
+                subtitle={method.description}
+                meta={amountLabel ? (
+                    <Typography type="body-xs" color="muted">{amountLabel}</Typography>
+                ) : undefined}
+                trailing={rowPending ? (
+                    <Spinner size="sm" />
+                ) : (
+                    <ArrowRightIcon aria-hidden focusable="false" className="size-5 text-muted" />
+                )}
+                onPress={() => { void runCheckout(method.type) }}
+                isDisabled={isMutating}
+            />
         )
     }
 
@@ -711,9 +705,12 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
                                                     labelEnd={activeGroup.currency}
                                                     frameless
                                                 >
-                                                    <div className="overflow-hidden rounded-3xl border border-default bg-surface">
+                                                    {/* gateway list = SurfaceListCard bordered + SurfaceListCardRow
+                                                        (nested-in-modal); separator = component's 3%-inset per the
+                                                        Storybook standard (storybook = source of truth). */}
+                                                    <SurfaceListCard bordered>
                                                         {activeGroup.methods.map((method) => renderMethodRow(method))}
-                                                    </div>
+                                                    </SurfaceListCard>
                                                 </LabeledCard>
                                             ) : null}
 

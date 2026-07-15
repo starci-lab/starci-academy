@@ -3,13 +3,12 @@ import type { ReactNode } from "react"
 import { HouseIcon } from "@phosphor-icons/react"
 
 /**
- * SURFACE & FILL — khi nào `bg-surface`, khi nào `bg-accent` SOLID, khi nào `bg-accent/10` TINT.
+ * SURFACE & FILL — khi nào `bg-surface`, khi nào `bg-accent` SOLID, khi nào `bg-accent-soft` TINT.
  * Nguồn: canon `foundations/elevation.md` + `foundations/color.md` §2-3 + `principles/accent-system.md`.
  * Token semantic ONLY (CẤM hex / slate-* / cyan-500). Giữ demo màu/tầng THẬT — không ép thành bảng chữ.
  */
 const meta: Meta = {
     title: "Foundations/Surfaces & Fills",
-    parameters: { layout: "padded" },
 }
 export default meta
 type Story = StoryObj
@@ -25,10 +24,10 @@ const DemoRow = ({ token, note, children }: { token: string; note: ReactNode; ch
 
 /** Nhãn nên/đừng — nghĩa nằm ở CHỮ (accessible, không chỉ dựa màu), màu chỉ tô đậm thêm. */
 const Do = ({ children }: { children: ReactNode }) => (
-    <span className="font-medium text-success">Nên: {children}</span>
+    <span className="font-medium text-success-soft-foreground">Nên: {children}</span>
 )
 const Dont = ({ children }: { children: ReactNode }) => (
-    <span className="font-medium text-danger">Đừng: {children}</span>
+    <span className="font-medium text-danger-soft-foreground">Đừng: {children}</span>
 )
 
 /** Nền theo TẦNG — bàn (background) → giấy (surface) → lồng thì border, không shadow. */
@@ -63,10 +62,10 @@ export const AccentSolidVsTint: Story = {
                 </button>
             </DemoRow>
             <DemoRow
-                token="bg-accent/10 (TINT / tonal)"
+                token="bg-accent-soft (TINT / tonal)"
                 note={<>ĐANG CHỌN — nav/tab/sidebar/chip/radio-card đang mở. Nền tint + label &amp; icon CÙNG <code className="rounded bg-default px-1 text-foreground">accent</code>. <Do>chỉ cho khối bounded NHỎ</Do></>}
             >
-                <div className="inline-flex items-center gap-2 rounded-xl bg-accent/10 px-4 py-2 text-sm font-medium text-accent">
+                <div className="inline-flex items-center gap-2 rounded-xl bg-accent-soft px-4 py-2 text-sm font-medium text-accent-soft-foreground">
                     <HouseIcon aria-hidden focusable="false" className="size-4" />
                     Trang chủ (đang chọn)
                 </div>
@@ -77,13 +76,13 @@ export const AccentSolidVsTint: Story = {
             >
                 <div className="inline-flex items-center gap-3 rounded-2xl border-2 border-accent bg-surface px-4 py-3 shadow-surface">
                     <span className="text-sm text-foreground">Hạng của tôi</span>
-                    <span className="text-sm font-semibold text-accent">#12</span>
+                    <span className="text-sm font-semibold text-accent-soft-foreground">#12</span>
                 </div>
             </DemoRow>
         </div>
     ),
     parameters: {
-        usage: "PRIMARY = SOLID `bg-accent` + chữ/icon trắng (`--accent-foreground`) — CTA chính, 1/màn. TINT `bg-accent/10` + label&icon accent = ĐANG CHỌN (nav/tab/chip/radio-card), CHỈ khối bounded NHỎ. 'Của tôi' = ring/border-accent + 1 value accent, nền bg-surface. Mỗi element CHỈ 1 KÊNH accent (nền HOẶC chữ HOẶC icon HOẶC border — không gộp).",
+        usage: "PRIMARY = SOLID `bg-accent` + chữ/icon trắng (`--accent-foreground`) — CTA chính, 1/màn. TINT `bg-accent-soft` + label&icon accent = ĐANG CHỌN (nav/tab/chip/radio-card), CHỈ khối bounded NHỎ. 'Của tôi' = ring/border-accent + 1 value accent, nền bg-surface. Mỗi element CHỈ 1 KÊNH accent (nền HOẶC chữ HOẶC icon HOẶC border — không gộp).",
     },
 }
 
@@ -96,8 +95,8 @@ export const AccentAntiPatterns: Story = {
                 note={<><Dont>Tô <code className="rounded bg-default px-1 text-foreground">bg-accent/5..15</code> lên card/section/thumbnail LỚN</Dont> — nền khối phải <code className="rounded bg-default px-1 text-foreground">bg-surface</code>/<code className="rounded bg-default px-1 text-foreground">bg-default</code>. Accent là chi tiết nhỏ.</>}
             >
                 <div className="flex gap-3">
-                    <div className="flex h-20 w-40 items-center justify-center rounded-2xl bg-accent/10 text-xs text-accent line-through opacity-70">
-                        cả card bg-accent/10
+                    <div className="flex h-20 w-40 items-center justify-center rounded-2xl bg-accent-soft text-xs text-accent-soft-foreground line-through opacity-70">
+                        cả card bg-accent-soft
                     </div>
                     <div className="flex h-20 w-40 items-center justify-center rounded-2xl border border-default bg-surface text-xs text-muted shadow-surface">
                         đúng: bg-surface + accent ở chi tiết
@@ -106,16 +105,16 @@ export const AccentAntiPatterns: Story = {
             </DemoRow>
             <DemoRow
                 token="STATUS-TINT (CẤM)"
-                note={<><Dont>Tô <code className="rounded bg-default px-1 text-foreground">bg-accent/10</code> lên row TRẠNG THÁI (current/in-progress)</Dont> — nó giả dạng 'selected'. Status = ICON gánh màu, text foreground, nền trong suốt.</>}
+                note={<><Dont>Tô <code className="rounded bg-default px-1 text-foreground">bg-accent-soft</code> lên row TRẠNG THÁI (current/in-progress)</Dont> — nó giả dạng 'selected'. Status = ICON gánh màu, text foreground, nền trong suốt.</>}
             >
                 <div className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-foreground">
-                    <HouseIcon aria-hidden focusable="false" className="size-4 text-accent" weight="fill" />
+                    <HouseIcon aria-hidden focusable="false" className="size-4 text-accent-soft-foreground" weight="fill" />
                     Bài đang học (đúng: chỉ icon accent, không tint)
                 </div>
             </DemoRow>
         </div>
     ),
     parameters: {
-        usage: "Accent = TÍN HIỆU, không trang trí — 1 màn vài điểm (60-30-10). CẤM: ACCENT-FLOOD (tint mảng nền lớn) · STATUS-TINT (tô nền row trạng thái → giả selected; status để icon gánh màu) · ACCENT-FOR-DONE (done phải `text-success` xanh, không accent) · 3-KÊNH cho 1 nghĩa. Accent CHỈ cho 4 vai: CTA chính · đang chọn · brand · của tôi.",
+        usage: "Accent = TÍN HIỆU, không trang trí — 1 màn vài điểm (60-30-10). CẤM: ACCENT-FLOOD (tint mảng nền lớn) · STATUS-TINT (tô nền row trạng thái → giả selected; status để icon gánh màu) · ACCENT-FOR-DONE (done phải `text-success-soft-foreground` xanh, không accent) · 3-KÊNH cho 1 nghĩa. Accent CHỈ cho 4 vai: CTA chính · đang chọn · brand · của tôi.",
     },
 }

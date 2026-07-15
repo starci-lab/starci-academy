@@ -9,8 +9,8 @@ import type {
 } from "formik"
 import {
     cn,
-    toast,
 } from "@heroui/react"
+import { toast } from "@/modules/toast/toast"
 import { useTranslations } from "next-intl"
 import type {
     CvSubmissionFormValues,

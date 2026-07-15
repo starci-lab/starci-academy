@@ -171,10 +171,10 @@ const LABEL_Y = 2.5
 
 /** Status text colour (HeroUI tokens — theme-aware via Tailwind, labels are real DOM). */
 const STATUS_CLASS: Record<StatusTone, string> = {
-    danger: "text-danger",
-    warning: "text-warning",
-    success: "text-success",
-    info: "text-accent",
+    danger: "text-danger-soft-foreground",
+    warning: "text-warning-soft-foreground",
+    success: "text-success-soft-foreground",
+    info: "text-accent-soft-foreground",
 }
 
 /** Status leading icon by tone (phosphor, not a glyph). */

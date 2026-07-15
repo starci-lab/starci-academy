@@ -100,7 +100,7 @@ export const AiUsage = () => {
                 {/* upsell prompt — urges free users to buy / paid users to upgrade; hidden on MAX */}
                 {showUpsell ? (
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                        <Typography type="body-sm" className="text-warning">
+                        <Typography type="body-sm" className="text-warning-soft-foreground">
                             {upsellText}
                         </Typography>
                         <Button

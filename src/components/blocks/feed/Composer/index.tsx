@@ -48,7 +48,8 @@ export interface ComposerProps extends WithClassNames<undefined> {
 
 /**
  * Composer is a controlled message-input row: an optional leading avatar, an
- * auto-growing {@link TextArea} (HeroUI compound field), and a trailing action
+ * auto-growing {@link TextArea} (HeroUI compound field, `variant="secondary"` —
+ * composer luôn nằm trên surface), and a trailing action
  * cluster made of an optional attach slot plus a primary Send button. The Send
  * button is disabled whenever the trimmed draft is empty OR a submit is in flight;
  * Ctrl/Cmd+Enter submits under the same guard. The field grows with its content
@@ -111,7 +112,7 @@ export const Composer = ({
             ) : null}
 
             {/* auto-growing field */}
-            <TextField variant="primary" className="min-w-0 flex-1">
+            <TextField variant="secondary" className="min-w-0 flex-1">
                 <TextArea
                     ref={textareaRef}
                     rows={1}

@@ -2,7 +2,7 @@ import { useState } from "react"
 import type { ReactNode } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Label, Typography } from "@heroui/react"
-import { ArrowRightIcon, ChatCircleDotsIcon, StackIcon } from "@phosphor-icons/react"
+import { ChatCircleDotsIcon, StackIcon } from "@phosphor-icons/react"
 import { ChatPanel, type ChatPanelMessage } from "./index"
 import { NestedCard, NestedCardSection } from "@/components/blocks/cards/NestedCard"
 
@@ -12,14 +12,6 @@ const meta: Meta<typeof ChatPanel> = {
 }
 export default meta
 type Story = StoryObj<typeof ChatPanel>
-
-/** Link kiểu "Đọc →" cho action mỗi section của NestedCard bài liên quan. */
-const ActionLink = ({ children }: { children: string }) => (
-    <span className="flex items-center gap-1 text-accent-soft-foreground">
-        <Typography type="body-sm" weight="medium">{children}</Typography>
-        <ArrowRightIcon aria-hidden focusable="false" className="size-4" />
-    </span>
-)
 
 /** Một đoạn hội thoại có sẵn để dựng nhanh các story tĩnh. */
 const baseMessages: Array<ChatPanelMessage> = [
@@ -35,13 +27,12 @@ const baseMessages: Array<ChatPanelMessage> = [
         toolResult: (
             <NestedCard
                 title="Bài liên quan"
+                bordered
                 icon={<StackIcon aria-hidden focusable="false" className="size-4 text-muted" />}
-                trailing={<Typography type="body-xs" color="muted">2</Typography>}
             >
                 <NestedCardSection
                     eyebrow="Cơ sở dữ liệu quan hệ"
                     title="Chuẩn hoá dữ liệu và các dạng chuẩn"
-                    action={<ActionLink>Đọc</ActionLink>}
                 >
                     <Typography type="body-sm" color="muted">
                         Chuẩn hoá tách dữ liệu thành nhiều bảng để giảm trùng lặp và bất thường khi cập nhật.
@@ -50,7 +41,6 @@ const baseMessages: Array<ChatPanelMessage> = [
                 <NestedCardSection
                     eyebrow="Bộ thẻ ôn cơ sở dữ liệu"
                     title="Khi nào nên khử chuẩn hoá để tối ưu đọc?"
-                    action={<ActionLink>Ôn</ActionLink>}
                 />
             </NestedCard>
         ),

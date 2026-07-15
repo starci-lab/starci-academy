@@ -33,7 +33,7 @@ export const Default: Story = {
 export const SurfaceInSurface: Story = {
     parameters: { usage: "Trong modal/drawer/panel: truyền `bordered` — dùng viền thay shadow (shadow vô hình trên nền surface). Giống rule `CheckListCard bordered` / `SurfaceListCard bordered`." },
     render: () => (
-        <div className="w-80 rounded-3xl bg-surface p-4 shadow-surface">
+        <div className="w-80 rounded-3xl bg-surface p-3 shadow-surface">
             <CrossListCard bordered>
                 <CrossListItem><Typography type="body-sm">Xuất chứng chỉ PDF</Typography></CrossListItem>
                 <CrossListItem><Typography type="body-sm">Cố vấn 1-1 hằng tuần</Typography></CrossListItem>

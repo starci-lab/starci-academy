@@ -73,7 +73,7 @@ export const RowVariants: Story = {
     },
     render: () => (
         <div className="flex flex-col gap-6">
-            <div className="flex max-w-md flex-col gap-3 rounded-3xl bg-surface p-4 shadow-surface">
+            <div className="flex max-w-md flex-col gap-3 rounded-3xl bg-surface p-3 shadow-surface">
                 <div className="flex flex-col gap-2">
                     <Label>Bordered</Label>
                     <Typography type="body-sm" color="muted">

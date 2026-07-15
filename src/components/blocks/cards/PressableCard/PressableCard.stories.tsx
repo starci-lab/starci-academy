@@ -52,7 +52,7 @@ const LinkCardPrototype = ({ title, subtitle }: { title: string; subtitle: strin
     <button
         type="button"
         onClick={() => {}}
-        className="group block w-full cursor-pointer rounded-3xl bg-surface px-4 py-3 text-left shadow-surface outline-none focus-visible:ring-2 focus-visible:ring-accent"
+        className="group block w-full cursor-pointer rounded-3xl bg-surface p-3 text-left shadow-surface outline-none focus-visible:ring-2 focus-visible:ring-accent"
     >
         <div className="flex flex-col gap-0">
             <Typography type="body-sm" className="group-hover:underline">

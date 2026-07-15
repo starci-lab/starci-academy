@@ -5,7 +5,7 @@ A single count + label statistic stacked vertically; a tier-3 presentational blo
 ## When to use
 
 - Use when you need to display one headline number (follower count, XP, lesson count, etc.) alongside its short descriptive label.
-- Use inside a ribbon or row of sibling `StatPair` elements — the block has no card frame of its own and expects the parent (`StatRibbon` or equivalent) to supply the surface and dividers.
+- Use inside a card / row of sibling `StatPair` elements — the block has no card frame of its own and expects the parent card to supply the surface, columns, and any dividers.
 - Do **not** use when you need a badge, chip, or icon alongside the value — reach for a richer stat component instead.
 - Do **not** use as a standalone card; without a surrounding container it will appear frameless and unstyled.
 
@@ -13,10 +13,13 @@ A single count + label statistic stacked vertically; a tier-3 presentational blo
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `value` | `React.ReactNode` | — | The headline statistic (e.g. `"1,204"` or `12`). Rendered large (`text-xl font-semibold`). |
+| `value` | `React.ReactNode` | — | The headline statistic (e.g. `"1,204"` or `12`). Rendered large (`h4`, `font-semibold`). |
 | `label` | `React.ReactNode` | — | Caption describing the metric (e.g. `"Followers"`). Rendered small and muted beneath the value. |
-| `align` | `"start" \| "center"` | `"start"` | Horizontal alignment of the stacked value + label. `"start"` = left-aligned; `"center"` = centered. |
 | `className` | `string` | `undefined` | Extra Tailwind classes merged onto the root `<div>` via `cn()`. |
+
+> Always left-aligned at a single (`md`) size — no `align`/`size` props. In practice no
+> call-site ever varied these, so the surface stays deliberately fixed; the parent card
+> owns the layout (columns, centering) instead.
 
 > `StatPairProps` extends `WithClassNames<undefined>`, so only the root `className` is available — there are no slot class overrides.
 
@@ -31,7 +34,7 @@ export const ProfileStats = () => (
         <StatPair value="1,204" label="Followers" />
         <StatPair value="87" label="Following" />
         <StatPair value="42" label="Lessons done" />
-        <StatPair value="3,800" label="XP" align="center" />
+        <StatPair value="3,800" label="XP" />
     </div>
 )
 ```

@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { Chip, Tooltip, Typography, cn } from "@heroui/react"
+import { Chip, Popover, Typography, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
@@ -34,10 +34,17 @@ export interface PriceTagProps extends WithClassNames<undefined> {
     /** Size of the discounted amount. Defaults to "md". */
     size?: PriceTagSize
     /**
-     * When provided, the price becomes hoverable (cursor-help + ⓘ) and shows a
-     * tooltip breaking the saving into phase tier + loyalty → "you pay".
+     * Optional phase-tier + loyalty rows for the breakdown {@link Popover}. Whenever
+     * there IS a saving the `−X%` chip is ALWAYS a button that opens the popover (at
+     * minimum list price → "you pay"); `breakdown` just adds the middle steps that
+     * explain WHERE the drop came from. Click/tap (not hover) so it works on touch too.
      */
     breakdown?: PriceBreakdown
+    /**
+     * Show the concrete "save N₫" line under the price (the real VND saved, not just
+     * the percent). Defaults to `true`; set `false` where space is tight (dense cards).
+     */
+    showSavingLine?: boolean
 }
 
 /** size → discounted-amount type. */
@@ -61,9 +68,10 @@ const savingPercent = (before: number, after: number): number =>
  * The single source of truth for rendering a course/product price: the discounted
  * amount (bold), the list price struck through (only when there IS a saving), and a
  * `−X%` success chip whose percent is the REAL list → charge gap (phase tier +
- * loyalty), not a loyalty flag. Optionally hoverable — `breakdown` shows why the
- * price dropped (phase + loyalty → you pay). Works in VND or USD. Use everywhere a
- * price is shown so the discount logic never drifts between copies.
+ * loyalty), not a loyalty flag. Whenever there is a saving the chip is a clickable
+ * button opening a {@link Popover} (at minimum list price → you pay; `breakdown` adds
+ * the phase + loyalty steps). Works in VND or USD. Use everywhere a price is shown so
+ * the discount logic never drifts between copies.
  *
  * @param props - {@link PriceTagProps}
  */
@@ -73,24 +81,32 @@ export const PriceTag = ({
     currency = "VND",
     size = "md",
     breakdown,
+    showSavingLine = true,
     className,
 }: PriceTagProps) => {
     const t = useTranslations()
     const hasSaving = original != null && original > discounted
     const savePercent = hasSaving ? savingPercent(original, discounted) : 0
 
-    // the −X% chip — when a breakdown is given, hovering IT (not the whole row) opens
-    // the price-breakdown tooltip (no extra ⓘ glyph; the chip IS the affordance).
-    const chip = savePercent > 0 ? (
-        <Chip size="sm" variant="soft" color="success">
-            <Chip.Label>{`−${savePercent}%`}</Chip.Label>
-        </Chip>
-    ) : null
+    // the −X% saving chip — a plain Chip (span). The pressable/focusable button role
+    // lives on the canonical `Popover.Trigger` wrapper (react-aria: role=button,
+    // aria-expanded/controls, tabindex), so there is exactly ONE interactive element —
+    // NOT a <button> nested inside the trigger's role=button div. No caret; the whole
+    // chip is the affordance.
+    const chip =
+        savePercent > 0 ? (
+            <Chip size="sm" variant="soft" color="success">
+                <Chip.Label>{`−${savePercent}%`}</Chip.Label>
+            </Chip>
+        ) : null
 
     // phase saving = list → phase ; loyalty saving = phase → charge
     const phaseSave = original != null ? savingPercent(original, breakdown?.phase ?? discounted) : 0
-    const breakdownContent = breakdown ? (
-        <div className="flex flex-col gap-1 p-1">
+    // Popover content — shown for EVERY saving (so the chip is always clickable), at
+    // minimum list price → you pay. The phase-tier & loyalty rows only appear when a
+    // full `breakdown` is supplied.
+    const breakdownContent = hasSaving ? (
+        <div className="flex flex-col gap-1 p-3">
             <Typography type="body-xs" color="muted">
                 {t("priceTag.breakdownTitle")}
             </Typography>
@@ -100,31 +116,31 @@ export const PriceTag = ({
                     {formatPrice(original ?? discounted, currency)}
                 </Typography>
             </div>
-            {original != null && original > breakdown.phase ? (
+            {breakdown && original != null && original > breakdown.phase ? (
                 <div className="flex items-center justify-between gap-3">
                     <Typography type="body-sm" color="muted">
                         {breakdown.phaseLabel
                             ? t("priceTag.phaseNamed", { phase: breakdown.phaseLabel })
                             : t("priceTag.phase")}
                     </Typography>
-                    <Typography type="body-sm" className="text-success">
+                    <Typography type="body-sm" className="text-success-soft-foreground">
                         {`−${formatPrice(original - breakdown.phase, currency)} (−${phaseSave}%)`}
                     </Typography>
                 </div>
             ) : null}
-            {breakdown.loyaltyPercent > 0 && breakdown.phase > discounted ? (
+            {breakdown && breakdown.loyaltyPercent > 0 && breakdown.phase > discounted ? (
                 <div className="flex items-center justify-between gap-3">
                     <Typography type="body-sm" color="muted" className="min-w-0 truncate">
                         {breakdown.loyaltyNote
                             ? `${t("priceTag.loyalty")} · ${breakdown.loyaltyNote}`
                             : t("priceTag.loyalty")}
                     </Typography>
-                    <Typography type="body-sm" className="shrink-0 text-success">
+                    <Typography type="body-sm" className="shrink-0 text-success-soft-foreground">
                         {`−${formatPrice(breakdown.phase - discounted, currency)} (−${breakdown.loyaltyPercent}%)`}
                     </Typography>
                 </div>
             ) : null}
-            <div className="mt-1 flex items-center justify-between gap-3 border-t border-default pt-1">
+            <div className="flex items-center justify-between gap-3 border-t border-default pt-1">
                 <Typography type="body-sm" weight="semibold">{t("priceTag.youPay")}</Typography>
                 <Typography type="body-sm" weight="semibold">{formatPrice(discounted, currency)}</Typography>
             </div>
@@ -132,25 +148,37 @@ export const PriceTag = ({
     ) : null
 
     return (
-        <div className={cn("flex flex-wrap items-baseline gap-2", className)}>
-            <Typography type={AMOUNT_TYPE[size]} weight="bold">
-                {formatPrice(discounted, currency)}
-            </Typography>
-            {hasSaving ? (
-                <Typography
-                    type={size === "sm" ? "body-xs" : "body-sm"}
-                    color="muted"
-                    className="line-through"
-                >
-                    {formatPrice(original, currency)}
+        <div className={cn("flex flex-col gap-1", className)}>
+            <div className="flex flex-wrap items-baseline gap-2">
+                <Typography type={AMOUNT_TYPE[size]} weight="bold">
+                    {formatPrice(discounted, currency)}
+                </Typography>
+                {hasSaving ? (
+                    <Typography
+                        type={size === "sm" ? "body-xs" : "body-sm"}
+                        color="muted"
+                        className="line-through"
+                    >
+                        {formatPrice(original, currency)}
+                    </Typography>
+                ) : null}
+                {savePercent > 0 ? (
+                    <Popover>
+                        <Popover.Trigger
+                            aria-label={t("priceTag.breakdownTitle")}
+                            className="cursor-pointer rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                        >
+                            {chip}
+                        </Popover.Trigger>
+                        <Popover.Content className="max-w-xs">{breakdownContent}</Popover.Content>
+                    </Popover>
+                ) : null}
+            </div>
+            {showSavingLine && hasSaving ? (
+                <Typography type="body-xs" color="muted">
+                    {t("priceTag.saved", { amount: formatPrice(original - discounted, currency) })}
                 </Typography>
             ) : null}
-            {chip && breakdownContent ? (
-                <Tooltip>
-                    <Tooltip.Trigger className="cursor-help">{chip}</Tooltip.Trigger>
-                    <Tooltip.Content className="max-w-xs">{breakdownContent}</Tooltip.Content>
-                </Tooltip>
-            ) : chip}
         </div>
     )
 }

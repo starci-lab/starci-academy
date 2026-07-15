@@ -2,7 +2,7 @@
 
 import React from "react"
 import type { ReactNode } from "react"
-import { Radio, RadioGroup, cn } from "@heroui/react"
+import { Card, Radio, RadioGroup, cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** One selectable card in a {@link SelectableCardGroup}. */
@@ -43,15 +43,18 @@ const COLUMNS_CLASS: Record<1 | 2 | 3, string> = {
 }
 
 /**
- * A single-select group of surface cards: each option is a bounded `bg-surface`
- * card; choosing one lights it up (`bg-accent/10` + accent border) while the text
- * stays neutral (`text-foreground`). Built on HeroUI `RadioGroup`/`Radio` (React
- * Aria) so it is a real radio group — arrow-key roving, single-select semantics,
- * focus ring — not a hand-rolled toggle-button grid.
+ * A single-select group of surface cards: each option is a canonical HeroUI `Card`;
+ * choosing one draws an accent OUTLINE ring around it (never a fill / colour change,
+ * so the card stays neutral `bg-surface`). Built on HeroUI `RadioGroup`/`Radio`
+ * (React Aria) so it is a real radio group — arrow-key roving, single-select
+ * semantics, focus ring — not a hand-rolled toggle-button grid.
  *
- * The visible card is an inner `<div>` styled off the `Radio` render-prop state
- * (`isSelected`/`isDisabled`/`isFocusVisible`); the `Radio` root keeps its own
- * unlayered `.radio` base, so utilities never fight it.
+ * The visible card is a `Card` styled off the `Radio` render-prop state
+ * (`isSelected`/`isDisabled`/`isFocusVisible`). Selection/focus use `outline` (its own
+ * CSS property) rather than a Tailwind `ring-*` — the `.card` base bakes an unlayered
+ * `shadow-surface` box-shadow that would swallow a box-shadow ring, but never touches
+ * `outline`. That same shadow is dropped (`!shadow-none`) while the ring is up so the
+ * ring and the card elevation don't stack.
  *
  * Pick this for a larger "choose one of N cards" with icon / description / badge.
  * For a compact pill switch use `SegmentedControl`; for section navigation use
@@ -77,28 +80,36 @@ export const SelectableCardGroup = <T extends string>({
                 <Radio key={item.value} value={item.value} isDisabled={item.isDisabled} className="w-full">
                     <Radio.Content className="block w-full">
                         {({ isSelected, isDisabled, isFocusVisible }) => (
-                            <div
+                            <Card
+                                variant="default"
                                 className={cn(
-                                    "flex w-full items-center gap-2 rounded-xl border bg-surface px-3 py-3 text-sm text-foreground transition-colors",
-                                    isSelected ? "border-accent bg-accent/10 font-medium" : "border-default",
+                                    "w-full text-sm text-foreground transition-colors",
+                                    // selection & keyboard focus = an accent OUTLINE ring, NO
+                                    // fill / colour change (see block doc for why outline, not
+                                    // ring). Drop the card's `shadow-surface` while the ring is
+                                    // up so the two elevations don't stack — `!` beats the
+                                    // unlayered `.card` box-shadow.
+                                    (isSelected || isFocusVisible) &&
+                                        "outline outline-2 outline-accent outline-offset-0 !shadow-none",
                                     !isSelected && !isDisabled && "hover:bg-default",
                                     isDisabled && "opacity-60",
-                                    isFocusVisible && "ring-2 ring-accent",
                                 )}
                             >
-                            {item.icon ? (
-                                <span className="shrink-0" aria-hidden>
-                                    {item.icon}
-                                </span>
-                            ) : null}
-                            <span className="flex min-w-0 flex-col">
-                                <span className="truncate">{item.label}</span>
-                                {item.description ? (
-                                    <span className="truncate text-xs text-muted">{item.description}</span>
-                                ) : null}
-                            </span>
-                            {item.badge ? <span className="ml-auto shrink-0">{item.badge}</span> : null}
-                        </div>
+                                <div className="flex w-full items-center gap-2">
+                                    {item.icon ? (
+                                        <span className="shrink-0" aria-hidden>
+                                            {item.icon}
+                                        </span>
+                                    ) : null}
+                                    <span className="flex min-w-0 flex-col">
+                                        <span className="truncate">{item.label}</span>
+                                        {item.description ? (
+                                            <span className="truncate text-xs text-muted">{item.description}</span>
+                                        ) : null}
+                                    </span>
+                                    {item.badge ? <span className="ml-auto shrink-0">{item.badge}</span> : null}
+                                </div>
+                            </Card>
                         )}
                     </Radio.Content>
                 </Radio>

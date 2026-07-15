@@ -19,44 +19,24 @@ export interface StatPairProps extends WithClassNames<undefined> {
      * Rendered small and muted beneath the value.
      */
     label: React.ReactNode
-    /**
-     * Horizontal alignment of the stacked value + label.
-     * - "start": left-aligned (default).
-     * - "center": centered.
-     */
-    align?: "start" | "center"
-    /**
-     * Visual size of the headline value.
-     * - "md": `h4` (default — stat strips / ribbons).
-     * - "lg": `h2` (a prominent hero count).
-     */
-    size?: "md" | "lg"
 }
 
 /**
- * A single count + label statistic, stacked vertically. Presentational only:
- * it takes its content via props and is meant to sit inside a stat strip /
- * StatRibbon alongside sibling pairs. No frame of its own — the surrounding
- * ribbon supplies the card and dividers.
+ * A single count + label statistic, stacked vertically and left-aligned (value
+ * `h4` over a muted caption). Presentational only: it takes its content via props
+ * and is meant to sit inside a card / stat row alongside sibling pairs. No frame of
+ * its own — the surrounding card supplies the surface and any dividers.
  *
  * @param props - {@link StatPairProps}
  */
 export const StatPair = ({
     value,
     label,
-    align = "start",
-    size = "md",
     className,
 }: StatPairProps) => {
     return (
-        <div
-            className={cn(
-                "flex flex-col gap-0",
-                align === "center" ? "items-center" : "items-start",
-                className,
-            )}
-        >
-            <Typography type={size === "lg" ? "h2" : "h4"} weight="semibold">{value}</Typography>
+        <div className={cn("flex flex-col items-start gap-0", className)}>
+            <Typography type="h4" weight="semibold">{value}</Typography>
             <Typography type="body-xs" color="muted">{label}</Typography>
         </div>
     )

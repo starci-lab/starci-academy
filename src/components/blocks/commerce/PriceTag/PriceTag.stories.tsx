@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
+import { expect, screen, userEvent, waitFor, within } from "storybook/test"
 import { PriceTag } from "./index"
 
 /**
@@ -9,7 +10,6 @@ import { PriceTag } from "./index"
 const meta: Meta<typeof PriceTag> = {
     title: "Blocks/PriceTag",
     component: PriceTag,
-    parameters: { layout: "centered" },
 }
 
 export default meta
@@ -22,15 +22,9 @@ export const Default: Story = {
     parameters: { usage: "Dùng khi khóa CHƯA có ưu đãi — chỉ hiện giá bán, không gạch giá gốc." },
 }
 
-/** Dùng khi khóa đang giảm giá — giá gốc gạch ngang + chip −X% để tạo cảm giác "hời". */
-export const WithDiscount: Story = {
-    args: { discounted: 1490000, original: 1990000 },
-    parameters: { usage: "Dùng khi khóa đang giảm giá — giá gốc gạch ngang + chip −X% để tạo cảm giác \"hời\"." },
-}
-
-/** Dùng khi muốn GIẢI THÍCH mức giảm đến từ đâu (hover/tap chip) — ví dụ tách early-bird + ưu đãi học viên cũ, minh bạch thay vì chỉ đưa % khô khan. */
+/** Dùng khi muốn GIẢI THÍCH mức giảm đến từ đâu (bấm/chạm chip −X% → Popover) — ví dụ tách early-bird + ưu đãi học viên cũ, minh bạch thay vì chỉ đưa % khô khan. */
 export const Breakdown: Story = {
-    parameters: { usage: "Dùng khi muốn GIẢI THÍCH mức giảm đến từ đâu (hover/tap chip) — ví dụ tách early-bird + ưu đãi học viên cũ, minh bạch thay vì chỉ đưa % khô khan." },
+    parameters: { usage: "Dùng khi muốn GIẢI THÍCH mức giảm đến từ đâu (bấm/chạm chip −X% → Popover) — ví dụ tách early-bird + ưu đãi học viên cũ, minh bạch thay vì chỉ đưa % khô khan." },
     render: () => (
         <div className="flex flex-col items-start gap-8">
             <PriceTag
@@ -45,6 +39,30 @@ export const Breakdown: Story = {
             />
         </div>
     ),
+}
+
+/**
+ * Popover breakdown Ở TRẠNG THÁI MỞ — `play` bấm chip `−X%` để mở panel (đây là
+ * `Popover` click/tap, KHÔNG phải hover-`Tooltip`). Dùng để soi/nhìn layout panel +
+ * chụp Chromatic state mở mà không cần rê chuột.
+ */
+export const BreakdownOpen: Story = {
+    parameters: { usage: "Popover chi tiết giá ở trạng thái MỞ (bấm chip −X% → Popover, không phải hover-Tooltip) — soi layout panel + snapshot Chromatic state mở." },
+    render: () => (
+        <PriceTag
+            discounted={1290000}
+            original={1990000}
+            breakdown={{ phase: 1590000, phaseLabel: "Early-bird", loyaltyPercent: 15, loyaltyNote: "đã sở hữu 2 khóa" }}
+        />
+    ),
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement)
+        // chip is the Popover trigger (aria-label = breakdown title); clicking opens it
+        const trigger = await canvas.findByRole("button", { name: "Chi tiết giá" })
+        await userEvent.click(trigger)
+        // Popover.Content portals to document.body → assert via screen, not canvas
+        await waitFor(() => expect(screen.getByText("Bạn trả")).toBeInTheDocument())
+    },
 }
 
 /** Chọn size theo bối cảnh đặt PriceTag: sm cho hàng list dày (bảng so sánh khóa), md cho card khóa mặc định, lg cho hero/trang checkout. */

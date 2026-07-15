@@ -1,15 +1,17 @@
 "use client"
 
-import React, { useMemo } from "react"
-import { Chip, cn } from "@heroui/react"
+import React from "react"
+import { cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import {
     SiGoogledrive,
     SiYoutube,
     SiVimeo,
-    SiCloudflare
+    SiCloudflare,
 } from "@icons-pack/react-simple-icons"
 import { VideoHostPlatform } from "@/modules/types/enums/video-host-platform"
+import { EnumChip } from "@/components/blocks/chips/EnumChip"
+import type { EnumChipEntry } from "@/components/blocks/chips/EnumChip"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
@@ -22,44 +24,19 @@ export interface HostPlatformChipProps extends WithClassNames<undefined> {
 }
 
 /**
- * A chip that displays the host platform of a lesson video.
+ * A chip that displays the host platform of a lesson video (accent, brand icon +
+ * label). Thin domain map over the shared {@link EnumChip} primitive.
  * @param hostPlatform - The host platform of the lesson video.
- * @returns A chip that displays the host platform of a lesson video.
  */
 export const HostPlatformChip = ({ hostPlatform, className }: HostPlatformChipProps) => {
     const t = useTranslations()
-    // switch case to return the icon and label
-    const renderHostPlatform = () => {
-        switch (hostPlatform) {
-        case VideoHostPlatform.Youtube:
-            return {
-                icon: <SiYoutube size={16} />,
-                label: "videoHostPlatform.youtube",
-            }
-        case VideoHostPlatform.GoogleDrive:
-            return {
-                icon: <SiGoogledrive size={16} />,
-                label: "videoHostPlatform.googleDrive",
-            }
-        case VideoHostPlatform.Vimeo:
-            return {
-                icon: <SiVimeo size={16} />,
-                label: "videoHostPlatform.vimeo",
-            }
-        case VideoHostPlatform.CloudflareStream:
-            return {
-                icon: <SiCloudflare size={16} />,
-                label: "videoHostPlatform.cloudflareStream",
-            }
-        default:
-            throw new Error(`Invalid host platform: ${hostPlatform}`)
-        }
+    // `Other` is intentionally unhandled — EnumChip throws on it, matching the
+    // original switch `default` throw. Hence Partial rather than a full Record.
+    const map: Partial<Record<VideoHostPlatform, EnumChipEntry>> = {
+        [VideoHostPlatform.Youtube]: { color: "accent", icon: <SiYoutube size={16} />, label: t("videoHostPlatform.youtube") },
+        [VideoHostPlatform.GoogleDrive]: { color: "accent", icon: <SiGoogledrive size={16} />, label: t("videoHostPlatform.googleDrive") },
+        [VideoHostPlatform.Vimeo]: { color: "accent", icon: <SiVimeo size={16} />, label: t("videoHostPlatform.vimeo") },
+        [VideoHostPlatform.CloudflareStream]: { color: "accent", icon: <SiCloudflare size={16} />, label: t("videoHostPlatform.cloudflareStream") },
     }
-    const { icon, label } = useMemo(() => renderHostPlatform(), [hostPlatform])
-    return (
-        <Chip color="accent" size="sm" variant="soft" className={cn(className)}>
-            {icon}
-            <Chip.Label>{t(label)}</Chip.Label>
-        </Chip>
-    )
+    return <EnumChip value={hostPlatform} map={map} className={cn(className)} />
 }

@@ -1,21 +1,10 @@
 import React from "react"
-import { Chip, cn } from "@heroui/react"
+import { cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { AiModelCategory } from "@/modules/api/graphql/queries/query-ai-models"
+import { EnumChip } from "../EnumChip"
+import type { EnumChipEntry } from "../EnumChip"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-
-/**
- * Maps an AI model cost/quality category to the semantic HeroUI Chip color:
- * free → neutral (foreground), economy → green, balanced → yellow, premium +
- * frontier → red (both are the top, highest-cost tiers).
- */
-const CATEGORY_COLOR: Record<AiModelCategory, "default" | "success" | "warning" | "danger"> = {
-    [AiModelCategory.Free]: "default",
-    [AiModelCategory.Economy]: "success",
-    [AiModelCategory.Balanced]: "warning",
-    [AiModelCategory.Premium]: "danger",
-    [AiModelCategory.Frontier]: "danger",
-}
 
 /** Props for {@link AiCategoryChip}. */
 export interface AiCategoryChipProps extends WithClassNames<undefined> {
@@ -24,22 +13,22 @@ export interface AiCategoryChipProps extends WithClassNames<undefined> {
 }
 
 /**
- * Presentational badge for an AI model's cost/quality category. The single
- * source for the model-category badge across the grade picker and the AI lab:
- * maps the category to its semantic chip color and renders the localized label.
+ * Presentational badge for an AI model's cost/quality category — the single source
+ * for the model-category badge across the grade picker and the AI lab. A thin domain
+ * map over the shared {@link EnumChip} primitive: free → neutral, economy → green,
+ * balanced → yellow, premium + frontier → red (both are the top, highest-cost tiers).
+ * This map is the color source of truth for the category tier scale.
  *
  * @param props - {@link AiCategoryChipProps}
  */
 export const AiCategoryChip = ({ category, className }: AiCategoryChipProps) => {
     const t = useTranslations()
-    return (
-        <Chip
-            color={CATEGORY_COLOR[category]}
-            variant="soft"
-            size="sm"
-            className={cn("w-fit", className)}
-        >
-            <Chip.Label>{t(`aiSettings.categories.${category}`)}</Chip.Label>
-        </Chip>
-    )
+    const map: Record<AiModelCategory, EnumChipEntry> = {
+        [AiModelCategory.Free]: { color: "default", label: t(`aiSettings.categories.${AiModelCategory.Free}`) },
+        [AiModelCategory.Economy]: { color: "success", label: t(`aiSettings.categories.${AiModelCategory.Economy}`) },
+        [AiModelCategory.Balanced]: { color: "warning", label: t(`aiSettings.categories.${AiModelCategory.Balanced}`) },
+        [AiModelCategory.Premium]: { color: "danger", label: t(`aiSettings.categories.${AiModelCategory.Premium}`) },
+        [AiModelCategory.Frontier]: { color: "danger", label: t(`aiSettings.categories.${AiModelCategory.Frontier}`) },
+    }
+    return <EnumChip value={category} map={map} className={cn("w-fit", className)} />
 }

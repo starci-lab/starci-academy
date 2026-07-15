@@ -1,0 +1,72 @@
+import type { Meta, StoryObj } from "@storybook/nextjs"
+import { Button } from "@heroui/react"
+import { CaretRightIcon, LightningIcon, PlusIcon } from "@phosphor-icons/react"
+
+import { LabeledList } from "./index"
+import { ListRow } from "../ListRow"
+
+const meta: Meta<typeof LabeledList> = {
+    title: "Blocks/LabeledList",
+    component: LabeledList,
+}
+
+export default meta
+
+type Story = StoryObj<typeof LabeledList>
+
+/** Rows dùng chung cho các story dưới. */
+const rows = (
+    <>
+        <ListRow
+            title="Ôn tập spaced-repetition"
+            subtitle="8 thẻ đến hạn hôm nay"
+            trailing={<CaretRightIcon className="size-4 text-muted" aria-hidden focusable="false" />}
+            onPress={() => {}}
+        />
+        <ListRow
+            title="Thử thách coding"
+            subtitle="2 bài chưa nộp"
+            trailing={<CaretRightIcon className="size-4 text-muted" aria-hidden focusable="false" />}
+            onPress={() => {}}
+        />
+        <ListRow
+            title="Phỏng vấn thử"
+            subtitle="mở khoá sau bài 5"
+            trailing={<CaretRightIcon className="size-4 text-muted" aria-hidden focusable="false" />}
+            onPress={() => {}}
+        />
+    </>
+)
+
+/** Label + icon header trên một stack `gap-2` các hàng — KHÔNG khung card. Cho rail/panel dạng "nhãn + danh sách ngắn" mà card đầy đủ là quá nặng. */
+export const Default: Story = {
+    parameters: { usage: "Nhãn + icon trên một stack hàng, không khung card — cho rail/panel dạng \"nhãn + danh sách ngắn\"." },
+    render: () => (
+        <div className="max-w-sm">
+            <LabeledList label="Ôn tập & luyện" icon={<LightningIcon className="size-4 text-muted" aria-hidden focusable="false" />}>
+                {rows}
+            </LabeledList>
+        </div>
+    ),
+}
+
+/** Có footer action pinned dưới list (`gap-3` từ list) — ví dụ CTA "Thêm mục" ở panel do người dùng sở hữu. */
+export const WithAction: Story = {
+    parameters: { usage: "Có footer action dưới list (gap-3) — ví dụ CTA thêm mục ở panel người dùng sở hữu." },
+    render: () => (
+        <div className="max-w-sm">
+            <LabeledList
+                label="Ôn tập & luyện"
+                icon={<LightningIcon className="size-4 text-muted" aria-hidden focusable="false" />}
+                action={
+                    <Button variant="secondary" size="sm" className="w-fit">
+                        <PlusIcon className="size-4" aria-hidden focusable="false" />
+                        Thêm mục
+                    </Button>
+                }
+            >
+                {rows}
+            </LabeledList>
+        </div>
+    ),
+}

@@ -33,7 +33,7 @@ const PANEL_CONTENT: Record<string, { title: string; body: string }> = {
 }
 
 /** Panel card đổi theo tab đang chọn — TabsCard bấm tab thì render lại cả khối card bên dưới.
- * Card top-level: HeroUI `Card` bake sẵn shadow-surface + no-border + p-4 (đừng tự chế div border). */
+ * Card top-level: HeroUI `Card` bake sẵn shadow-surface + no-border + p-3 (đừng tự chế div border). */
 const TabPanel = ({ selectedKey }: { selectedKey: string }) => {
     const panel = PANEL_CONTENT[selectedKey]
     return (

@@ -27,7 +27,7 @@ type Story = StoryObj<typeof ScrollShadow>
  */
 export const Vertical: Story = {
     parameters: {
-        usage: "Cuộn dọc trong section có tiêu đề → bọc `LabeledCard flushContent` (zero luôn `p-4` gốc `.card` + `CardContent`) + `ScrollShadow` `max-h-* overflow-y-auto`. Divider full-bleed bằng `SurfaceListCardRow` (`after:left-0 after:w-full`). Chỉ `p-0` trên Content thì divider vẫn inset vì Card gốc còn padding. `offset` (vd 8) để mờ tắt sát đầu/cuối.",
+        usage: "Cuộn dọc trong section có tiêu đề → bọc `LabeledCard flushContent` (zero luôn `p-3` gốc `.card` + `CardContent`) + `ScrollShadow` `max-h-* overflow-y-auto`. Divider full-bleed bằng `SurfaceListCardRow` (`after:left-0 after:w-full`). Chỉ `p-0` trên Content thì divider vẫn inset vì Card gốc còn padding. `offset` (vd 8) để mờ tắt sát đầu/cuối.",
     },
     render: () => (
         <div className="flex max-w-sm flex-col gap-3">

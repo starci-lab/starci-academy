@@ -16,7 +16,7 @@ export default meta
 type Story = StoryObj<typeof LabeledCard>
 
 const SampleBody = () => (
-    // p-0: the Card this sits inside already bakes p-4 (card.md — root `.card`
+    // p-0: the Card this sits inside already bakes p-3 (card.md — root `.card`
     // insets every child) — a padding class here would double-pad.
     <div className="flex flex-col gap-2 p-0">
         <p className="text-sm text-foreground">
@@ -144,7 +144,7 @@ export const WithAction: Story = {
 /**
  * Surface-in-surface: một list surface NẰM LỒNG trong một surface CHA nhìn thấy được (thân
  * modal/drawer/panel). Panel cha là một `Card` THẬT (không hand-roll `<div>` mô phỏng lại đúng
- * class của Card — Card đã là component sẵn có, mặc định `p-4 rounded-3xl shadow-surface` đúng
+ * class của Card — Card đã là component sẵn có, mặc định `p-3 rounded-3xl shadow-surface` đúng
  * y da "surface top-level" cần); bên trong lồng `SurfaceListCard bordered` — dùng VIỀN thay
  * shadow vì shadow-surface gần như vô hình khi đặt trên một `bg-surface` khác. Đây mới là
  * "surface trong surface" thật (KHÁC list card đứng riêng ở `CategorizedList`). Pattern thật:

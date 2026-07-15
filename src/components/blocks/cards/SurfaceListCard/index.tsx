@@ -109,7 +109,7 @@ export const SurfaceListCardRow = ({
 }: SurfaceListCardRowProps) => {
     const underlineHover = hover === "underline"
     const rowClassName = cn(
-        "relative flex w-full items-center gap-3 px-4 py-4 text-left outline-none transition-colors",
+        "relative flex w-full items-center gap-3 p-3 text-left outline-none transition-colors",
         // link-style rows form a hover `group` (the title underlines) with no fill;
         // card-style rows tint the whole row
         underlineHover ? "group" : "hover:bg-default",
@@ -207,7 +207,7 @@ export const SurfaceListCardItem = ({
 }: SurfaceListCardItemProps) => {
     const interactive = Boolean(onPress || href)
     const itemClassName = cn(
-        "relative block w-full px-4 py-4 text-left",
+        "relative block w-full p-3 text-left",
         // full-bleed separator, hidden on the last row of the card
         "after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-surface-foreground/6 after:content-['']",
         "last:after:hidden",

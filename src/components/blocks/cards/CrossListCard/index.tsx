@@ -57,7 +57,7 @@ export interface CrossListItemProps {
  * @param props - See {@link CrossListItemProps}.
  */
 export const CrossListItem = ({ showCross = true, children }: CrossListItemProps) => (
-    <li className="relative flex items-start gap-3 px-4 py-4 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-surface-foreground/6 after:content-[''] last:after:hidden">
+    <li className="relative flex items-start gap-3 p-3 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-surface-foreground/6 after:content-[''] last:after:hidden">
         {showCross ? (
             <XCircleIcon
                 aria-hidden
